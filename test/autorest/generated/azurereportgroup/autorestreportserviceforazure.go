@@ -67,7 +67,7 @@ func (client *autoRestReportServiceForAzureOperations) getReportHandleResponse(r
 
 // getReportHandleError handles the GetReport error response.
 func (client *autoRestReportServiceForAzureOperations) getReportHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

@@ -68,7 +68,7 @@ func (client *autoRestReportServiceOperations) getOptionalReportHandleResponse(r
 
 // getOptionalReportHandleError handles the GetOptionalReport error response.
 func (client *autoRestReportServiceOperations) getOptionalReportHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -119,7 +119,7 @@ func (client *autoRestReportServiceOperations) getReportHandleResponse(resp *azc
 
 // getReportHandleError handles the GetReport error response.
 func (client *autoRestReportServiceOperations) getReportHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

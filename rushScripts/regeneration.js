@@ -19,6 +19,7 @@ const goMappings = {
     'datetimerfc1123group': 'body-datetime-rfc1123.json',
     'dictionarygroup': 'body-dictionary.json',
     //'durationgroup': 'body-duration.json',
+    'errorsgroup': 'xms-error-responses.json',
     'filegroup': 'body-file.json',
     //'formdatagroup': 'body-formdata.json',
     'headergroup': 'header.json',

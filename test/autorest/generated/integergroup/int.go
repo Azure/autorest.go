@@ -88,7 +88,7 @@ func (client *intOperations) getInvalidHandleResponse(resp *azcore.Response) (*I
 
 // getInvalidHandleError handles the GetInvalid error response.
 func (client *intOperations) getInvalidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -134,7 +134,7 @@ func (client *intOperations) getInvalidUnixTimeHandleResponse(resp *azcore.Respo
 
 // getInvalidUnixTimeHandleError handles the GetInvalidUnixTime error response.
 func (client *intOperations) getInvalidUnixTimeHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -180,7 +180,7 @@ func (client *intOperations) getNullHandleResponse(resp *azcore.Response) (*Int3
 
 // getNullHandleError handles the GetNull error response.
 func (client *intOperations) getNullHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -226,7 +226,7 @@ func (client *intOperations) getNullUnixTimeHandleResponse(resp *azcore.Response
 
 // getNullUnixTimeHandleError handles the GetNullUnixTime error response.
 func (client *intOperations) getNullUnixTimeHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -272,7 +272,7 @@ func (client *intOperations) getOverflowInt32HandleResponse(resp *azcore.Respons
 
 // getOverflowInt32HandleError handles the GetOverflowInt32 error response.
 func (client *intOperations) getOverflowInt32HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -318,7 +318,7 @@ func (client *intOperations) getOverflowInt64HandleResponse(resp *azcore.Respons
 
 // getOverflowInt64HandleError handles the GetOverflowInt64 error response.
 func (client *intOperations) getOverflowInt64HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -364,7 +364,7 @@ func (client *intOperations) getUnderflowInt32HandleResponse(resp *azcore.Respon
 
 // getUnderflowInt32HandleError handles the GetUnderflowInt32 error response.
 func (client *intOperations) getUnderflowInt32HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -410,7 +410,7 @@ func (client *intOperations) getUnderflowInt64HandleResponse(resp *azcore.Respon
 
 // getUnderflowInt64HandleError handles the GetUnderflowInt64 error response.
 func (client *intOperations) getUnderflowInt64HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -456,7 +456,7 @@ func (client *intOperations) getUnixTimeHandleResponse(resp *azcore.Response) (*
 
 // getUnixTimeHandleError handles the GetUnixTime error response.
 func (client *intOperations) getUnixTimeHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -501,7 +501,7 @@ func (client *intOperations) putMax32HandleResponse(resp *azcore.Response) (*htt
 
 // putMax32HandleError handles the PutMax32 error response.
 func (client *intOperations) putMax32HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -546,7 +546,7 @@ func (client *intOperations) putMax64HandleResponse(resp *azcore.Response) (*htt
 
 // putMax64HandleError handles the PutMax64 error response.
 func (client *intOperations) putMax64HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -591,7 +591,7 @@ func (client *intOperations) putMin32HandleResponse(resp *azcore.Response) (*htt
 
 // putMin32HandleError handles the PutMin32 error response.
 func (client *intOperations) putMin32HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -636,7 +636,7 @@ func (client *intOperations) putMin64HandleResponse(resp *azcore.Response) (*htt
 
 // putMin64HandleError handles the PutMin64 error response.
 func (client *intOperations) putMin64HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -681,7 +681,7 @@ func (client *intOperations) putUnixTimeDateHandleResponse(resp *azcore.Response
 
 // putUnixTimeDateHandleError handles the PutUnixTimeDate error response.
 func (client *intOperations) putUnixTimeDateHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

@@ -240,7 +240,7 @@ func (client *lrOSOperations) delete202NoRetry204HandleResponse(resp *azcore.Res
 
 // delete202NoRetry204HandleError handles the Delete202NoRetry204 error response.
 func (client *lrOSOperations) delete202NoRetry204HandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -310,7 +310,7 @@ func (client *lrOSOperations) delete202Retry200HandleResponse(resp *azcore.Respo
 
 // delete202Retry200HandleError handles the Delete202Retry200 error response.
 func (client *lrOSOperations) delete202Retry200HandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -380,7 +380,7 @@ func (client *lrOSOperations) delete204SucceededHandleResponse(resp *azcore.Resp
 
 // delete204SucceededHandleError handles the Delete204Succeeded error response.
 func (client *lrOSOperations) delete204SucceededHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -449,7 +449,7 @@ func (client *lrOSOperations) deleteAsyncNoHeaderInRetryHandleResponse(resp *azc
 
 // deleteAsyncNoHeaderInRetryHandleError handles the DeleteAsyncNoHeaderInRetry error response.
 func (client *lrOSOperations) deleteAsyncNoHeaderInRetryHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -518,7 +518,7 @@ func (client *lrOSOperations) deleteAsyncNoRetrySucceededHandleResponse(resp *az
 
 // deleteAsyncNoRetrySucceededHandleError handles the DeleteAsyncNoRetrySucceeded error response.
 func (client *lrOSOperations) deleteAsyncNoRetrySucceededHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -587,7 +587,7 @@ func (client *lrOSOperations) deleteAsyncRetryFailedHandleResponse(resp *azcore.
 
 // deleteAsyncRetryFailedHandleError handles the DeleteAsyncRetryFailed error response.
 func (client *lrOSOperations) deleteAsyncRetryFailedHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -656,7 +656,7 @@ func (client *lrOSOperations) deleteAsyncRetrySucceededHandleResponse(resp *azco
 
 // deleteAsyncRetrySucceededHandleError handles the DeleteAsyncRetrySucceeded error response.
 func (client *lrOSOperations) deleteAsyncRetrySucceededHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -725,7 +725,7 @@ func (client *lrOSOperations) deleteAsyncRetrycanceledHandleResponse(resp *azcor
 
 // deleteAsyncRetrycanceledHandleError handles the DeleteAsyncRetrycanceled error response.
 func (client *lrOSOperations) deleteAsyncRetrycanceledHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -794,7 +794,7 @@ func (client *lrOSOperations) deleteNoHeaderInRetryHandleResponse(resp *azcore.R
 
 // deleteNoHeaderInRetryHandleError handles the DeleteNoHeaderInRetry error response.
 func (client *lrOSOperations) deleteNoHeaderInRetryHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -864,7 +864,7 @@ func (client *lrOSOperations) deleteProvisioning202Accepted200SucceededHandleRes
 
 // deleteProvisioning202Accepted200SucceededHandleError handles the DeleteProvisioning202Accepted200Succeeded error response.
 func (client *lrOSOperations) deleteProvisioning202Accepted200SucceededHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -934,7 +934,7 @@ func (client *lrOSOperations) deleteProvisioning202DeletingFailed200HandleRespon
 
 // deleteProvisioning202DeletingFailed200HandleError handles the DeleteProvisioning202DeletingFailed200 error response.
 func (client *lrOSOperations) deleteProvisioning202DeletingFailed200HandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1004,7 +1004,7 @@ func (client *lrOSOperations) deleteProvisioning202Deletingcanceled200HandleResp
 
 // deleteProvisioning202Deletingcanceled200HandleError handles the DeleteProvisioning202Deletingcanceled200 error response.
 func (client *lrOSOperations) deleteProvisioning202Deletingcanceled200HandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1074,7 +1074,7 @@ func (client *lrOSOperations) post200WithPayloadHandleResponse(resp *azcore.Resp
 
 // post200WithPayloadHandleError handles the Post200WithPayload error response.
 func (client *lrOSOperations) post200WithPayloadHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1147,7 +1147,7 @@ func (client *lrOSOperations) post202NoRetry204HandleResponse(resp *azcore.Respo
 
 // post202NoRetry204HandleError handles the Post202NoRetry204 error response.
 func (client *lrOSOperations) post202NoRetry204HandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1219,7 +1219,7 @@ func (client *lrOSOperations) post202Retry200HandleResponse(resp *azcore.Respons
 
 // post202Retry200HandleError handles the Post202Retry200 error response.
 func (client *lrOSOperations) post202Retry200HandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1292,7 +1292,7 @@ func (client *lrOSOperations) postAsyncNoRetrySucceededHandleResponse(resp *azco
 
 // postAsyncNoRetrySucceededHandleError handles the PostAsyncNoRetrySucceeded error response.
 func (client *lrOSOperations) postAsyncNoRetrySucceededHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1364,7 +1364,7 @@ func (client *lrOSOperations) postAsyncRetryFailedHandleResponse(resp *azcore.Re
 
 // postAsyncRetryFailedHandleError handles the PostAsyncRetryFailed error response.
 func (client *lrOSOperations) postAsyncRetryFailedHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1437,7 +1437,7 @@ func (client *lrOSOperations) postAsyncRetrySucceededHandleResponse(resp *azcore
 
 // postAsyncRetrySucceededHandleError handles the PostAsyncRetrySucceeded error response.
 func (client *lrOSOperations) postAsyncRetrySucceededHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1509,7 +1509,7 @@ func (client *lrOSOperations) postAsyncRetrycanceledHandleResponse(resp *azcore.
 
 // postAsyncRetrycanceledHandleError handles the PostAsyncRetrycanceled error response.
 func (client *lrOSOperations) postAsyncRetrycanceledHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1579,7 +1579,7 @@ func (client *lrOSOperations) postDoubleHeadersFinalAzureHeaderGetHandleResponse
 
 // postDoubleHeadersFinalAzureHeaderGetHandleError handles the PostDoubleHeadersFinalAzureHeaderGet error response.
 func (client *lrOSOperations) postDoubleHeadersFinalAzureHeaderGetHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1649,7 +1649,7 @@ func (client *lrOSOperations) postDoubleHeadersFinalAzureHeaderGetDefaultHandleR
 
 // postDoubleHeadersFinalAzureHeaderGetDefaultHandleError handles the PostDoubleHeadersFinalAzureHeaderGetDefault error response.
 func (client *lrOSOperations) postDoubleHeadersFinalAzureHeaderGetDefaultHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1719,7 +1719,7 @@ func (client *lrOSOperations) postDoubleHeadersFinalLocationGetHandleResponse(re
 
 // postDoubleHeadersFinalLocationGetHandleError handles the PostDoubleHeadersFinalLocationGet error response.
 func (client *lrOSOperations) postDoubleHeadersFinalLocationGetHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1792,7 +1792,7 @@ func (client *lrOSOperations) put200Acceptedcanceled200HandleResponse(resp *azco
 
 // put200Acceptedcanceled200HandleError handles the Put200Acceptedcanceled200 error response.
 func (client *lrOSOperations) put200Acceptedcanceled200HandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1865,7 +1865,7 @@ func (client *lrOSOperations) put200SucceededHandleResponse(resp *azcore.Respons
 
 // put200SucceededHandleError handles the Put200Succeeded error response.
 func (client *lrOSOperations) put200SucceededHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1938,7 +1938,7 @@ func (client *lrOSOperations) put200SucceededNoStateHandleResponse(resp *azcore.
 
 // put200SucceededNoStateHandleError handles the Put200SucceededNoState error response.
 func (client *lrOSOperations) put200SucceededNoStateHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -2011,7 +2011,7 @@ func (client *lrOSOperations) put200UpdatingSucceeded204HandleResponse(resp *azc
 
 // put200UpdatingSucceeded204HandleError handles the Put200UpdatingSucceeded204 error response.
 func (client *lrOSOperations) put200UpdatingSucceeded204HandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -2084,7 +2084,7 @@ func (client *lrOSOperations) put201CreatingFailed200HandleResponse(resp *azcore
 
 // put201CreatingFailed200HandleError handles the Put201CreatingFailed200 error response.
 func (client *lrOSOperations) put201CreatingFailed200HandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -2157,7 +2157,7 @@ func (client *lrOSOperations) put201CreatingSucceeded200HandleResponse(resp *azc
 
 // put201CreatingSucceeded200HandleError handles the Put201CreatingSucceeded200 error response.
 func (client *lrOSOperations) put201CreatingSucceeded200HandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -2230,7 +2230,7 @@ func (client *lrOSOperations) put202Retry200HandleResponse(resp *azcore.Response
 
 // put202Retry200HandleError handles the Put202Retry200 error response.
 func (client *lrOSOperations) put202Retry200HandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -2303,7 +2303,7 @@ func (client *lrOSOperations) putAsyncNoHeaderInRetryHandleResponse(resp *azcore
 
 // putAsyncNoHeaderInRetryHandleError handles the PutAsyncNoHeaderInRetry error response.
 func (client *lrOSOperations) putAsyncNoHeaderInRetryHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -2376,7 +2376,7 @@ func (client *lrOSOperations) putAsyncNoRetrySucceededHandleResponse(resp *azcor
 
 // putAsyncNoRetrySucceededHandleError handles the PutAsyncNoRetrySucceeded error response.
 func (client *lrOSOperations) putAsyncNoRetrySucceededHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -2449,7 +2449,7 @@ func (client *lrOSOperations) putAsyncNoRetrycanceledHandleResponse(resp *azcore
 
 // putAsyncNoRetrycanceledHandleError handles the PutAsyncNoRetrycanceled error response.
 func (client *lrOSOperations) putAsyncNoRetrycanceledHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -2522,7 +2522,7 @@ func (client *lrOSOperations) putAsyncNonResourceHandleResponse(resp *azcore.Res
 
 // putAsyncNonResourceHandleError handles the PutAsyncNonResource error response.
 func (client *lrOSOperations) putAsyncNonResourceHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -2595,7 +2595,7 @@ func (client *lrOSOperations) putAsyncRetryFailedHandleResponse(resp *azcore.Res
 
 // putAsyncRetryFailedHandleError handles the PutAsyncRetryFailed error response.
 func (client *lrOSOperations) putAsyncRetryFailedHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -2668,7 +2668,7 @@ func (client *lrOSOperations) putAsyncRetrySucceededHandleResponse(resp *azcore.
 
 // putAsyncRetrySucceededHandleError handles the PutAsyncRetrySucceeded error response.
 func (client *lrOSOperations) putAsyncRetrySucceededHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -2741,7 +2741,7 @@ func (client *lrOSOperations) putAsyncSubResourceHandleResponse(resp *azcore.Res
 
 // putAsyncSubResourceHandleError handles the PutAsyncSubResource error response.
 func (client *lrOSOperations) putAsyncSubResourceHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -2814,7 +2814,7 @@ func (client *lrOSOperations) putNoHeaderInRetryHandleResponse(resp *azcore.Resp
 
 // putNoHeaderInRetryHandleError handles the PutNoHeaderInRetry error response.
 func (client *lrOSOperations) putNoHeaderInRetryHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -2887,7 +2887,7 @@ func (client *lrOSOperations) putNonResourceHandleResponse(resp *azcore.Response
 
 // putNonResourceHandleError handles the PutNonResource error response.
 func (client *lrOSOperations) putNonResourceHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -2960,7 +2960,7 @@ func (client *lrOSOperations) putSubResourceHandleResponse(resp *azcore.Response
 
 // putSubResourceHandleError handles the PutSubResource error response.
 func (client *lrOSOperations) putSubResourceHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

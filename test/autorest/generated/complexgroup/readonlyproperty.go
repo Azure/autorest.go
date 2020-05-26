@@ -63,7 +63,7 @@ func (client *readonlypropertyOperations) getValidHandleResponse(resp *azcore.Re
 
 // getValidHandleError handles the GetValid error response.
 func (client *readonlypropertyOperations) getValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -108,7 +108,7 @@ func (client *readonlypropertyOperations) putValidHandleResponse(resp *azcore.Re
 
 // putValidHandleError handles the PutValid error response.
 func (client *readonlypropertyOperations) putValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

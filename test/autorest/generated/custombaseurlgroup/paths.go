@@ -60,7 +60,7 @@ func (client *pathsOperations) getEmptyHandleResponse(resp *azcore.Response) (*h
 
 // getEmptyHandleError handles the GetEmpty error response.
 func (client *pathsOperations) getEmptyHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

@@ -75,7 +75,7 @@ func (client *subscriptionInCredentialsOperations) postMethodGlobalNotProvidedVa
 
 // postMethodGlobalNotProvidedValidHandleError handles the PostMethodGlobalNotProvidedValid error response.
 func (client *subscriptionInCredentialsOperations) postMethodGlobalNotProvidedValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -121,7 +121,7 @@ func (client *subscriptionInCredentialsOperations) postMethodGlobalNullHandleRes
 
 // postMethodGlobalNullHandleError handles the PostMethodGlobalNull error response.
 func (client *subscriptionInCredentialsOperations) postMethodGlobalNullHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -167,7 +167,7 @@ func (client *subscriptionInCredentialsOperations) postMethodGlobalValidHandleRe
 
 // postMethodGlobalValidHandleError handles the PostMethodGlobalValid error response.
 func (client *subscriptionInCredentialsOperations) postMethodGlobalValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -213,7 +213,7 @@ func (client *subscriptionInCredentialsOperations) postPathGlobalValidHandleResp
 
 // postPathGlobalValidHandleError handles the PostPathGlobalValid error response.
 func (client *subscriptionInCredentialsOperations) postPathGlobalValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -259,7 +259,7 @@ func (client *subscriptionInCredentialsOperations) postSwaggerGlobalValidHandleR
 
 // postSwaggerGlobalValidHandleError handles the PostSwaggerGlobalValid error response.
 func (client *subscriptionInCredentialsOperations) postSwaggerGlobalValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

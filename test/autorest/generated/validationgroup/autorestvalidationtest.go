@@ -165,7 +165,7 @@ func (client *autoRestValidationTestOperations) validationOfBodyHandleResponse(r
 
 // validationOfBodyHandleError handles the ValidationOfBody error response.
 func (client *autoRestValidationTestOperations) validationOfBodyHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -217,7 +217,7 @@ func (client *autoRestValidationTestOperations) validationOfMethodParametersHand
 
 // validationOfMethodParametersHandleError handles the ValidationOfMethodParameters error response.
 func (client *autoRestValidationTestOperations) validationOfMethodParametersHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

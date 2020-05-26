@@ -37,6 +37,16 @@ export async function generatePolymorphicHelpers(session: Session<CodeModel>): P
     // generate unmarshallers for each discriminator
     for (const root of values(roots)) {
       const discName = root.language.go!.discriminatorInterface;
+      if (root.language.go!.errorType) {
+        text += `type ${root.language.go!.internalErrorType} struct {\n`;
+        text += `\twrapped ${discName}\n`;
+        text += '}\n\n';
+        const receiver = <string>root.language.go!.internalErrorType[0];
+        text += `func (${receiver} *${root.language.go!.internalErrorType}) UnmarshalJSON(data []byte) (err error) {\n`;
+        text += `\t${receiver}.wrapped, err = unmarshal${discName}(data)\n`;
+        text += '\treturn\n';
+        text += '}\n\n';
+      }
       // scalar unmarshaller
       text += `func unmarshal${discName}(body []byte) (${discName}, error) {\n`;
       text += '\tvar m map[string]interface{}\n';

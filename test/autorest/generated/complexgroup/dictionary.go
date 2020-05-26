@@ -71,7 +71,7 @@ func (client *dictionaryOperations) getEmptyHandleResponse(resp *azcore.Response
 
 // getEmptyHandleError handles the GetEmpty error response.
 func (client *dictionaryOperations) getEmptyHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -117,7 +117,7 @@ func (client *dictionaryOperations) getNotProvidedHandleResponse(resp *azcore.Re
 
 // getNotProvidedHandleError handles the GetNotProvided error response.
 func (client *dictionaryOperations) getNotProvidedHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -163,7 +163,7 @@ func (client *dictionaryOperations) getNullHandleResponse(resp *azcore.Response)
 
 // getNullHandleError handles the GetNull error response.
 func (client *dictionaryOperations) getNullHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -209,7 +209,7 @@ func (client *dictionaryOperations) getValidHandleResponse(resp *azcore.Response
 
 // getValidHandleError handles the GetValid error response.
 func (client *dictionaryOperations) getValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -254,7 +254,7 @@ func (client *dictionaryOperations) putEmptyHandleResponse(resp *azcore.Response
 
 // putEmptyHandleError handles the PutEmpty error response.
 func (client *dictionaryOperations) putEmptyHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -299,7 +299,7 @@ func (client *dictionaryOperations) putValidHandleResponse(resp *azcore.Response
 
 // putValidHandleError handles the PutValid error response.
 func (client *dictionaryOperations) putValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

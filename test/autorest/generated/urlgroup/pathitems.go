@@ -84,7 +84,7 @@ func (client *pathItemsOperations) getAllWithValuesHandleResponse(resp *azcore.R
 
 // getAllWithValuesHandleError handles the GetAllWithValues error response.
 func (client *pathItemsOperations) getAllWithValuesHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -143,7 +143,7 @@ func (client *pathItemsOperations) getGlobalAndLocalQueryNullHandleResponse(resp
 
 // getGlobalAndLocalQueryNullHandleError handles the GetGlobalAndLocalQueryNull error response.
 func (client *pathItemsOperations) getGlobalAndLocalQueryNullHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -202,7 +202,7 @@ func (client *pathItemsOperations) getGlobalQueryNullHandleResponse(resp *azcore
 
 // getGlobalQueryNullHandleError handles the GetGlobalQueryNull error response.
 func (client *pathItemsOperations) getGlobalQueryNullHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -261,7 +261,7 @@ func (client *pathItemsOperations) getLocalPathItemQueryNullHandleResponse(resp 
 
 // getLocalPathItemQueryNullHandleError handles the GetLocalPathItemQueryNull error response.
 func (client *pathItemsOperations) getLocalPathItemQueryNullHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

@@ -102,7 +102,7 @@ func (client *lrOSCustomHeaderOperations) post202Retry200HandleResponse(resp *az
 
 // post202Retry200HandleError handles the Post202Retry200 error response.
 func (client *lrOSCustomHeaderOperations) post202Retry200HandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -174,7 +174,7 @@ func (client *lrOSCustomHeaderOperations) postAsyncRetrySucceededHandleResponse(
 
 // postAsyncRetrySucceededHandleError handles the PostAsyncRetrySucceeded error response.
 func (client *lrOSCustomHeaderOperations) postAsyncRetrySucceededHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -247,7 +247,7 @@ func (client *lrOSCustomHeaderOperations) put201CreatingSucceeded200HandleRespon
 
 // put201CreatingSucceeded200HandleError handles the Put201CreatingSucceeded200 error response.
 func (client *lrOSCustomHeaderOperations) put201CreatingSucceeded200HandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -320,7 +320,7 @@ func (client *lrOSCustomHeaderOperations) putAsyncRetrySucceededHandleResponse(r
 
 // putAsyncRetrySucceededHandleError handles the PutAsyncRetrySucceeded error response.
 func (client *lrOSCustomHeaderOperations) putAsyncRetrySucceededHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

@@ -172,7 +172,7 @@ func (client *pageBlobOperations) clearPagesHandleResponse(resp *azcore.Response
 
 // clearPagesHandleError handles the ClearPages error response.
 func (client *pageBlobOperations) clearPagesHandleError(resp *azcore.Response) error {
-	err := StorageError{}
+	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
@@ -269,7 +269,7 @@ func (client *pageBlobOperations) copyIncrementalHandleResponse(resp *azcore.Res
 
 // copyIncrementalHandleError handles the CopyIncremental error response.
 func (client *pageBlobOperations) copyIncrementalHandleError(resp *azcore.Response) error {
-	err := StorageError{}
+	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
@@ -420,7 +420,7 @@ func (client *pageBlobOperations) createHandleResponse(resp *azcore.Response) (*
 
 // createHandleError handles the Create error response.
 func (client *pageBlobOperations) createHandleError(resp *azcore.Response) error {
-	err := StorageError{}
+	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
@@ -526,7 +526,7 @@ func (client *pageBlobOperations) getPageRangesHandleResponse(resp *azcore.Respo
 
 // getPageRangesHandleError handles the GetPageRanges error response.
 func (client *pageBlobOperations) getPageRangesHandleError(resp *azcore.Response) error {
-	err := StorageError{}
+	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
@@ -638,7 +638,7 @@ func (client *pageBlobOperations) getPageRangesDiffHandleResponse(resp *azcore.R
 
 // getPageRangesDiffHandleError handles the GetPageRangesDiff error response.
 func (client *pageBlobOperations) getPageRangesDiffHandleError(resp *azcore.Response) error {
-	err := StorageError{}
+	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
@@ -748,7 +748,7 @@ func (client *pageBlobOperations) resizeHandleResponse(resp *azcore.Response) (*
 
 // resizeHandleError handles the Resize error response.
 func (client *pageBlobOperations) resizeHandleError(resp *azcore.Response) error {
-	err := StorageError{}
+	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
@@ -852,7 +852,7 @@ func (client *pageBlobOperations) updateSequenceNumberHandleResponse(resp *azcor
 
 // updateSequenceNumberHandleError handles the UpdateSequenceNumber error response.
 func (client *pageBlobOperations) updateSequenceNumberHandleError(resp *azcore.Response) error {
-	err := StorageError{}
+	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
@@ -1008,7 +1008,7 @@ func (client *pageBlobOperations) uploadPagesHandleResponse(resp *azcore.Respons
 
 // uploadPagesHandleError handles the UploadPages error response.
 func (client *pageBlobOperations) uploadPagesHandleError(resp *azcore.Response) error {
-	err := StorageError{}
+	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
@@ -1173,7 +1173,7 @@ func (client *pageBlobOperations) uploadPagesFromUrlHandleResponse(resp *azcore.
 
 // uploadPagesFromUrlHandleError handles the UploadPagesFromURL error response.
 func (client *pageBlobOperations) uploadPagesFromUrlHandleError(resp *azcore.Response) error {
-	err := StorageError{}
+	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}

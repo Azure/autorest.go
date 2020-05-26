@@ -592,7 +592,7 @@ func (client *xmlOperations) getSimpleHandleResponse(resp *azcore.Response) (*Sl
 
 // getSimpleHandleError handles the GetSimple error response.
 func (client *xmlOperations) getSimpleHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
@@ -1287,7 +1287,7 @@ func (client *xmlOperations) putSimpleHandleResponse(resp *azcore.Response) (*ht
 
 // putSimpleHandleError handles the PutSimple error response.
 func (client *xmlOperations) putSimpleHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
@@ -1332,7 +1332,7 @@ func (client *xmlOperations) putWrappedListsHandleResponse(resp *azcore.Response
 
 // putWrappedListsHandleError handles the PutWrappedLists error response.
 func (client *xmlOperations) putWrappedListsHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}

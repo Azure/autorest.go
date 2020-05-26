@@ -94,7 +94,7 @@ func (client *httpRedirectsOperations) delete307HandleResponse(resp *azcore.Resp
 
 // delete307HandleError handles the Delete307 error response.
 func (client *httpRedirectsOperations) delete307HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -143,7 +143,7 @@ func (client *httpRedirectsOperations) get300HandleResponse(resp *azcore.Respons
 
 // get300HandleError handles the Get300 error response.
 func (client *httpRedirectsOperations) get300HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -192,7 +192,7 @@ func (client *httpRedirectsOperations) get301HandleResponse(resp *azcore.Respons
 
 // get301HandleError handles the Get301 error response.
 func (client *httpRedirectsOperations) get301HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -241,7 +241,7 @@ func (client *httpRedirectsOperations) get302HandleResponse(resp *azcore.Respons
 
 // get302HandleError handles the Get302 error response.
 func (client *httpRedirectsOperations) get302HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -290,7 +290,7 @@ func (client *httpRedirectsOperations) get307HandleResponse(resp *azcore.Respons
 
 // get307HandleError handles the Get307 error response.
 func (client *httpRedirectsOperations) get307HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -339,7 +339,7 @@ func (client *httpRedirectsOperations) head300HandleResponse(resp *azcore.Respon
 
 // head300HandleError handles the Head300 error response.
 func (client *httpRedirectsOperations) head300HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -388,7 +388,7 @@ func (client *httpRedirectsOperations) head301HandleResponse(resp *azcore.Respon
 
 // head301HandleError handles the Head301 error response.
 func (client *httpRedirectsOperations) head301HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -437,7 +437,7 @@ func (client *httpRedirectsOperations) head302HandleResponse(resp *azcore.Respon
 
 // head302HandleError handles the Head302 error response.
 func (client *httpRedirectsOperations) head302HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -486,7 +486,7 @@ func (client *httpRedirectsOperations) head307HandleResponse(resp *azcore.Respon
 
 // head307HandleError handles the Head307 error response.
 func (client *httpRedirectsOperations) head307HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -535,7 +535,7 @@ func (client *httpRedirectsOperations) options307HandleResponse(resp *azcore.Res
 
 // options307HandleError handles the Options307 error response.
 func (client *httpRedirectsOperations) options307HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -584,7 +584,7 @@ func (client *httpRedirectsOperations) patch302HandleResponse(resp *azcore.Respo
 
 // patch302HandleError handles the Patch302 error response.
 func (client *httpRedirectsOperations) patch302HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -633,7 +633,7 @@ func (client *httpRedirectsOperations) patch307HandleResponse(resp *azcore.Respo
 
 // patch307HandleError handles the Patch307 error response.
 func (client *httpRedirectsOperations) patch307HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -682,7 +682,7 @@ func (client *httpRedirectsOperations) post303HandleResponse(resp *azcore.Respon
 
 // post303HandleError handles the Post303 error response.
 func (client *httpRedirectsOperations) post303HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -731,7 +731,7 @@ func (client *httpRedirectsOperations) post307HandleResponse(resp *azcore.Respon
 
 // post307HandleError handles the Post307 error response.
 func (client *httpRedirectsOperations) post307HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -780,7 +780,7 @@ func (client *httpRedirectsOperations) put301HandleResponse(resp *azcore.Respons
 
 // put301HandleError handles the Put301 error response.
 func (client *httpRedirectsOperations) put301HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -829,7 +829,7 @@ func (client *httpRedirectsOperations) put307HandleResponse(resp *azcore.Respons
 
 // put307HandleError handles the Put307 error response.
 func (client *httpRedirectsOperations) put307HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
