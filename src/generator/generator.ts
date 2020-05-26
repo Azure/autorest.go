@@ -15,6 +15,7 @@ import { generateTimeHelpers } from './time';
 import { generatePagers } from './pagers';
 import { generatePollers, generatePollersHelper } from './pollers';
 import { generatePolymorphicHelpers } from './polymorphics';
+import { generateGoModFile } from './gomod';
 
 // The generator emits Go source code files to disk.
 export async function protocolGen(host: Host) {
@@ -63,6 +64,10 @@ export async function protocolGen(host: Host) {
     const polymorphics = await generatePolymorphicHelpers(session);
     if (polymorphics.length > 0) {
       host.WriteFile('polymorphic_helpers.go', polymorphics, undefined, 'source-file-go');
+    }
+    const gomod = await generateGoModFile(session);
+    if (gomod.length > 0) {
+      host.WriteFile('go.mod', gomod, undefined, 'source-file-go');
     }
   } catch (E) {
     if (debug) {
