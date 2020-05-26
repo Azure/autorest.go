@@ -264,9 +264,6 @@ type pollingTracker interface {
   // converts an *azcore.Response to an error
   handleError(resp *azcore.Response) error
 
-  // returns the desired configuration for the final GET URI that overrides the value set in the finalGetURL
-	finalStateVia() string
-
   // sets the FinalGetURI to the value pointed to in FinalStateVia
 	setFinalState() error
 }
@@ -302,7 +299,7 @@ type pollingTrackerBase struct {
 		FinalGetURI string \`json:"resultURI"\`
 
     // stores the name of the header that the final get should be performed on, 
-    //can be empty which will go to default behavior
+    // can be empty which will go to default behavior
     FinalStateVia string \`json:"finalStateVia"\`
 
 	  // the original request URL of the initial request for the polling operation
@@ -536,10 +533,6 @@ type pollingTrackerBase struct {
   
   func (pt *pollingTrackerBase) handleError(resp *azcore.Response) error {
     return pt.errorHandler(resp)
-  }
-
-  func (pt *pollingTrackerBase) finalStateVia() string {
-    return pt.FinalStateVia
   }
 
 func (pt *pollingTrackerBase) setFinalState() error {
