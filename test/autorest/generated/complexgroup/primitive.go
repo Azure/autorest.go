@@ -103,7 +103,7 @@ func (client *primitiveOperations) getBoolHandleResponse(resp *azcore.Response) 
 
 // getBoolHandleError handles the GetBool error response.
 func (client *primitiveOperations) getBoolHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -149,7 +149,7 @@ func (client *primitiveOperations) getByteHandleResponse(resp *azcore.Response) 
 
 // getByteHandleError handles the GetByte error response.
 func (client *primitiveOperations) getByteHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -195,7 +195,7 @@ func (client *primitiveOperations) getDateHandleResponse(resp *azcore.Response) 
 
 // getDateHandleError handles the GetDate error response.
 func (client *primitiveOperations) getDateHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -241,7 +241,7 @@ func (client *primitiveOperations) getDateTimeHandleResponse(resp *azcore.Respon
 
 // getDateTimeHandleError handles the GetDateTime error response.
 func (client *primitiveOperations) getDateTimeHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -287,7 +287,7 @@ func (client *primitiveOperations) getDateTimeRfc1123HandleResponse(resp *azcore
 
 // getDateTimeRfc1123HandleError handles the GetDateTimeRFC1123 error response.
 func (client *primitiveOperations) getDateTimeRfc1123HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -333,7 +333,7 @@ func (client *primitiveOperations) getDoubleHandleResponse(resp *azcore.Response
 
 // getDoubleHandleError handles the GetDouble error response.
 func (client *primitiveOperations) getDoubleHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -379,7 +379,7 @@ func (client *primitiveOperations) getDurationHandleResponse(resp *azcore.Respon
 
 // getDurationHandleError handles the GetDuration error response.
 func (client *primitiveOperations) getDurationHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -425,7 +425,7 @@ func (client *primitiveOperations) getFloatHandleResponse(resp *azcore.Response)
 
 // getFloatHandleError handles the GetFloat error response.
 func (client *primitiveOperations) getFloatHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -471,7 +471,7 @@ func (client *primitiveOperations) getIntHandleResponse(resp *azcore.Response) (
 
 // getIntHandleError handles the GetInt error response.
 func (client *primitiveOperations) getIntHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -517,7 +517,7 @@ func (client *primitiveOperations) getLongHandleResponse(resp *azcore.Response) 
 
 // getLongHandleError handles the GetLong error response.
 func (client *primitiveOperations) getLongHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -563,7 +563,7 @@ func (client *primitiveOperations) getStringHandleResponse(resp *azcore.Response
 
 // getStringHandleError handles the GetString error response.
 func (client *primitiveOperations) getStringHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -608,7 +608,7 @@ func (client *primitiveOperations) putBoolHandleResponse(resp *azcore.Response) 
 
 // putBoolHandleError handles the PutBool error response.
 func (client *primitiveOperations) putBoolHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -653,7 +653,7 @@ func (client *primitiveOperations) putByteHandleResponse(resp *azcore.Response) 
 
 // putByteHandleError handles the PutByte error response.
 func (client *primitiveOperations) putByteHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -698,7 +698,7 @@ func (client *primitiveOperations) putDateHandleResponse(resp *azcore.Response) 
 
 // putDateHandleError handles the PutDate error response.
 func (client *primitiveOperations) putDateHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -743,7 +743,7 @@ func (client *primitiveOperations) putDateTimeHandleResponse(resp *azcore.Respon
 
 // putDateTimeHandleError handles the PutDateTime error response.
 func (client *primitiveOperations) putDateTimeHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -788,7 +788,7 @@ func (client *primitiveOperations) putDateTimeRfc1123HandleResponse(resp *azcore
 
 // putDateTimeRfc1123HandleError handles the PutDateTimeRFC1123 error response.
 func (client *primitiveOperations) putDateTimeRfc1123HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -833,7 +833,7 @@ func (client *primitiveOperations) putDoubleHandleResponse(resp *azcore.Response
 
 // putDoubleHandleError handles the PutDouble error response.
 func (client *primitiveOperations) putDoubleHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -878,7 +878,7 @@ func (client *primitiveOperations) putDurationHandleResponse(resp *azcore.Respon
 
 // putDurationHandleError handles the PutDuration error response.
 func (client *primitiveOperations) putDurationHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -923,7 +923,7 @@ func (client *primitiveOperations) putFloatHandleResponse(resp *azcore.Response)
 
 // putFloatHandleError handles the PutFloat error response.
 func (client *primitiveOperations) putFloatHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -968,7 +968,7 @@ func (client *primitiveOperations) putIntHandleResponse(resp *azcore.Response) (
 
 // putIntHandleError handles the PutInt error response.
 func (client *primitiveOperations) putIntHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1013,7 +1013,7 @@ func (client *primitiveOperations) putLongHandleResponse(resp *azcore.Response) 
 
 // putLongHandleError handles the PutLong error response.
 func (client *primitiveOperations) putLongHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1058,7 +1058,7 @@ func (client *primitiveOperations) putStringHandleResponse(resp *azcore.Response
 
 // putStringHandleError handles the PutString error response.
 func (client *primitiveOperations) putStringHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

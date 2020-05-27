@@ -83,7 +83,7 @@ func (client *implicitOperations) getOptionalGlobalQueryHandleResponse(resp *azc
 
 // getOptionalGlobalQueryHandleError handles the GetOptionalGlobalQuery error response.
 func (client *implicitOperations) getOptionalGlobalQueryHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -129,7 +129,7 @@ func (client *implicitOperations) getRequiredGlobalPathHandleResponse(resp *azco
 
 // getRequiredGlobalPathHandleError handles the GetRequiredGlobalPath error response.
 func (client *implicitOperations) getRequiredGlobalPathHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -177,7 +177,7 @@ func (client *implicitOperations) getRequiredGlobalQueryHandleResponse(resp *azc
 
 // getRequiredGlobalQueryHandleError handles the GetRequiredGlobalQuery error response.
 func (client *implicitOperations) getRequiredGlobalQueryHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -223,7 +223,7 @@ func (client *implicitOperations) getRequiredPathHandleResponse(resp *azcore.Res
 
 // getRequiredPathHandleError handles the GetRequiredPath error response.
 func (client *implicitOperations) getRequiredPathHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -271,7 +271,7 @@ func (client *implicitOperations) putOptionalBodyHandleResponse(resp *azcore.Res
 
 // putOptionalBodyHandleError handles the PutOptionalBody error response.
 func (client *implicitOperations) putOptionalBodyHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -319,7 +319,7 @@ func (client *implicitOperations) putOptionalHeaderHandleResponse(resp *azcore.R
 
 // putOptionalHeaderHandleError handles the PutOptionalHeader error response.
 func (client *implicitOperations) putOptionalHeaderHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -369,7 +369,7 @@ func (client *implicitOperations) putOptionalQueryHandleResponse(resp *azcore.Re
 
 // putOptionalQueryHandleError handles the PutOptionalQuery error response.
 func (client *implicitOperations) putOptionalQueryHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

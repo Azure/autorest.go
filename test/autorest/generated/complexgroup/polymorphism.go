@@ -77,7 +77,7 @@ func (client *polymorphismOperations) getComplicatedHandleResponse(resp *azcore.
 
 // getComplicatedHandleError handles the GetComplicated error response.
 func (client *polymorphismOperations) getComplicatedHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -123,7 +123,7 @@ func (client *polymorphismOperations) getComposedWithDiscriminatorHandleResponse
 
 // getComposedWithDiscriminatorHandleError handles the GetComposedWithDiscriminator error response.
 func (client *polymorphismOperations) getComposedWithDiscriminatorHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -169,7 +169,7 @@ func (client *polymorphismOperations) getComposedWithoutDiscriminatorHandleRespo
 
 // getComposedWithoutDiscriminatorHandleError handles the GetComposedWithoutDiscriminator error response.
 func (client *polymorphismOperations) getComposedWithoutDiscriminatorHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -215,7 +215,7 @@ func (client *polymorphismOperations) getDotSyntaxHandleResponse(resp *azcore.Re
 
 // getDotSyntaxHandleError handles the GetDotSyntax error response.
 func (client *polymorphismOperations) getDotSyntaxHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -261,7 +261,7 @@ func (client *polymorphismOperations) getValidHandleResponse(resp *azcore.Respon
 
 // getValidHandleError handles the GetValid error response.
 func (client *polymorphismOperations) getValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -306,7 +306,7 @@ func (client *polymorphismOperations) putComplicatedHandleResponse(resp *azcore.
 
 // putComplicatedHandleError handles the PutComplicated error response.
 func (client *polymorphismOperations) putComplicatedHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -352,7 +352,7 @@ func (client *polymorphismOperations) putMissingDiscriminatorHandleResponse(resp
 
 // putMissingDiscriminatorHandleError handles the PutMissingDiscriminator error response.
 func (client *polymorphismOperations) putMissingDiscriminatorHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -397,7 +397,7 @@ func (client *polymorphismOperations) putValidHandleResponse(resp *azcore.Respon
 
 // putValidHandleError handles the PutValid error response.
 func (client *polymorphismOperations) putValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -442,7 +442,7 @@ func (client *polymorphismOperations) putValidMissingRequiredHandleResponse(resp
 
 // putValidMissingRequiredHandleError handles the PutValidMissingRequired error response.
 func (client *polymorphismOperations) putValidMissingRequiredHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

@@ -190,7 +190,7 @@ func (client *dictionaryOperations) getArrayEmptyHandleResponse(resp *azcore.Res
 
 // getArrayEmptyHandleError handles the GetArrayEmpty error response.
 func (client *dictionaryOperations) getArrayEmptyHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -236,7 +236,7 @@ func (client *dictionaryOperations) getArrayItemEmptyHandleResponse(resp *azcore
 
 // getArrayItemEmptyHandleError handles the GetArrayItemEmpty error response.
 func (client *dictionaryOperations) getArrayItemEmptyHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -282,7 +282,7 @@ func (client *dictionaryOperations) getArrayItemNullHandleResponse(resp *azcore.
 
 // getArrayItemNullHandleError handles the GetArrayItemNull error response.
 func (client *dictionaryOperations) getArrayItemNullHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -328,7 +328,7 @@ func (client *dictionaryOperations) getArrayNullHandleResponse(resp *azcore.Resp
 
 // getArrayNullHandleError handles the GetArrayNull error response.
 func (client *dictionaryOperations) getArrayNullHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -374,7 +374,7 @@ func (client *dictionaryOperations) getArrayValidHandleResponse(resp *azcore.Res
 
 // getArrayValidHandleError handles the GetArrayValid error response.
 func (client *dictionaryOperations) getArrayValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -420,7 +420,7 @@ func (client *dictionaryOperations) getBase64UrlHandleResponse(resp *azcore.Resp
 
 // getBase64UrlHandleError handles the GetBase64URL error response.
 func (client *dictionaryOperations) getBase64UrlHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -466,7 +466,7 @@ func (client *dictionaryOperations) getBooleanInvalidNullHandleResponse(resp *az
 
 // getBooleanInvalidNullHandleError handles the GetBooleanInvalidNull error response.
 func (client *dictionaryOperations) getBooleanInvalidNullHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -512,7 +512,7 @@ func (client *dictionaryOperations) getBooleanInvalidStringHandleResponse(resp *
 
 // getBooleanInvalidStringHandleError handles the GetBooleanInvalidString error response.
 func (client *dictionaryOperations) getBooleanInvalidStringHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -558,7 +558,7 @@ func (client *dictionaryOperations) getBooleanTfftHandleResponse(resp *azcore.Re
 
 // getBooleanTfftHandleError handles the GetBooleanTfft error response.
 func (client *dictionaryOperations) getBooleanTfftHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -604,7 +604,7 @@ func (client *dictionaryOperations) getByteInvalidNullHandleResponse(resp *azcor
 
 // getByteInvalidNullHandleError handles the GetByteInvalidNull error response.
 func (client *dictionaryOperations) getByteInvalidNullHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -650,7 +650,7 @@ func (client *dictionaryOperations) getByteValidHandleResponse(resp *azcore.Resp
 
 // getByteValidHandleError handles the GetByteValid error response.
 func (client *dictionaryOperations) getByteValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -696,7 +696,7 @@ func (client *dictionaryOperations) getComplexEmptyHandleResponse(resp *azcore.R
 
 // getComplexEmptyHandleError handles the GetComplexEmpty error response.
 func (client *dictionaryOperations) getComplexEmptyHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -742,7 +742,7 @@ func (client *dictionaryOperations) getComplexItemEmptyHandleResponse(resp *azco
 
 // getComplexItemEmptyHandleError handles the GetComplexItemEmpty error response.
 func (client *dictionaryOperations) getComplexItemEmptyHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -788,7 +788,7 @@ func (client *dictionaryOperations) getComplexItemNullHandleResponse(resp *azcor
 
 // getComplexItemNullHandleError handles the GetComplexItemNull error response.
 func (client *dictionaryOperations) getComplexItemNullHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -834,7 +834,7 @@ func (client *dictionaryOperations) getComplexNullHandleResponse(resp *azcore.Re
 
 // getComplexNullHandleError handles the GetComplexNull error response.
 func (client *dictionaryOperations) getComplexNullHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -880,7 +880,7 @@ func (client *dictionaryOperations) getComplexValidHandleResponse(resp *azcore.R
 
 // getComplexValidHandleError handles the GetComplexValid error response.
 func (client *dictionaryOperations) getComplexValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -926,7 +926,7 @@ func (client *dictionaryOperations) getDateInvalidCharsHandleResponse(resp *azco
 
 // getDateInvalidCharsHandleError handles the GetDateInvalidChars error response.
 func (client *dictionaryOperations) getDateInvalidCharsHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -972,7 +972,7 @@ func (client *dictionaryOperations) getDateInvalidNullHandleResponse(resp *azcor
 
 // getDateInvalidNullHandleError handles the GetDateInvalidNull error response.
 func (client *dictionaryOperations) getDateInvalidNullHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1025,7 +1025,7 @@ func (client *dictionaryOperations) getDateTimeInvalidCharsHandleResponse(resp *
 
 // getDateTimeInvalidCharsHandleError handles the GetDateTimeInvalidChars error response.
 func (client *dictionaryOperations) getDateTimeInvalidCharsHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1078,7 +1078,7 @@ func (client *dictionaryOperations) getDateTimeInvalidNullHandleResponse(resp *a
 
 // getDateTimeInvalidNullHandleError handles the GetDateTimeInvalidNull error response.
 func (client *dictionaryOperations) getDateTimeInvalidNullHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1131,7 +1131,7 @@ func (client *dictionaryOperations) getDateTimeRfc1123ValidHandleResponse(resp *
 
 // getDateTimeRfc1123ValidHandleError handles the GetDateTimeRFC1123Valid error response.
 func (client *dictionaryOperations) getDateTimeRfc1123ValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1184,7 +1184,7 @@ func (client *dictionaryOperations) getDateTimeValidHandleResponse(resp *azcore.
 
 // getDateTimeValidHandleError handles the GetDateTimeValid error response.
 func (client *dictionaryOperations) getDateTimeValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1230,7 +1230,7 @@ func (client *dictionaryOperations) getDateValidHandleResponse(resp *azcore.Resp
 
 // getDateValidHandleError handles the GetDateValid error response.
 func (client *dictionaryOperations) getDateValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1276,7 +1276,7 @@ func (client *dictionaryOperations) getDictionaryEmptyHandleResponse(resp *azcor
 
 // getDictionaryEmptyHandleError handles the GetDictionaryEmpty error response.
 func (client *dictionaryOperations) getDictionaryEmptyHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1322,7 +1322,7 @@ func (client *dictionaryOperations) getDictionaryItemEmptyHandleResponse(resp *a
 
 // getDictionaryItemEmptyHandleError handles the GetDictionaryItemEmpty error response.
 func (client *dictionaryOperations) getDictionaryItemEmptyHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1368,7 +1368,7 @@ func (client *dictionaryOperations) getDictionaryItemNullHandleResponse(resp *az
 
 // getDictionaryItemNullHandleError handles the GetDictionaryItemNull error response.
 func (client *dictionaryOperations) getDictionaryItemNullHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1414,7 +1414,7 @@ func (client *dictionaryOperations) getDictionaryNullHandleResponse(resp *azcore
 
 // getDictionaryNullHandleError handles the GetDictionaryNull error response.
 func (client *dictionaryOperations) getDictionaryNullHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1460,7 +1460,7 @@ func (client *dictionaryOperations) getDictionaryValidHandleResponse(resp *azcor
 
 // getDictionaryValidHandleError handles the GetDictionaryValid error response.
 func (client *dictionaryOperations) getDictionaryValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1506,7 +1506,7 @@ func (client *dictionaryOperations) getDoubleInvalidNullHandleResponse(resp *azc
 
 // getDoubleInvalidNullHandleError handles the GetDoubleInvalidNull error response.
 func (client *dictionaryOperations) getDoubleInvalidNullHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1552,7 +1552,7 @@ func (client *dictionaryOperations) getDoubleInvalidStringHandleResponse(resp *a
 
 // getDoubleInvalidStringHandleError handles the GetDoubleInvalidString error response.
 func (client *dictionaryOperations) getDoubleInvalidStringHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1598,7 +1598,7 @@ func (client *dictionaryOperations) getDoubleValidHandleResponse(resp *azcore.Re
 
 // getDoubleValidHandleError handles the GetDoubleValid error response.
 func (client *dictionaryOperations) getDoubleValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1644,7 +1644,7 @@ func (client *dictionaryOperations) getDurationValidHandleResponse(resp *azcore.
 
 // getDurationValidHandleError handles the GetDurationValid error response.
 func (client *dictionaryOperations) getDurationValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1690,7 +1690,7 @@ func (client *dictionaryOperations) getEmptyHandleResponse(resp *azcore.Response
 
 // getEmptyHandleError handles the GetEmpty error response.
 func (client *dictionaryOperations) getEmptyHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1736,7 +1736,7 @@ func (client *dictionaryOperations) getEmptyStringKeyHandleResponse(resp *azcore
 
 // getEmptyStringKeyHandleError handles the GetEmptyStringKey error response.
 func (client *dictionaryOperations) getEmptyStringKeyHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1782,7 +1782,7 @@ func (client *dictionaryOperations) getFloatInvalidNullHandleResponse(resp *azco
 
 // getFloatInvalidNullHandleError handles the GetFloatInvalidNull error response.
 func (client *dictionaryOperations) getFloatInvalidNullHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1828,7 +1828,7 @@ func (client *dictionaryOperations) getFloatInvalidStringHandleResponse(resp *az
 
 // getFloatInvalidStringHandleError handles the GetFloatInvalidString error response.
 func (client *dictionaryOperations) getFloatInvalidStringHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1874,7 +1874,7 @@ func (client *dictionaryOperations) getFloatValidHandleResponse(resp *azcore.Res
 
 // getFloatValidHandleError handles the GetFloatValid error response.
 func (client *dictionaryOperations) getFloatValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1920,7 +1920,7 @@ func (client *dictionaryOperations) getIntInvalidNullHandleResponse(resp *azcore
 
 // getIntInvalidNullHandleError handles the GetIntInvalidNull error response.
 func (client *dictionaryOperations) getIntInvalidNullHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1966,7 +1966,7 @@ func (client *dictionaryOperations) getIntInvalidStringHandleResponse(resp *azco
 
 // getIntInvalidStringHandleError handles the GetIntInvalidString error response.
 func (client *dictionaryOperations) getIntInvalidStringHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -2012,7 +2012,7 @@ func (client *dictionaryOperations) getIntegerValidHandleResponse(resp *azcore.R
 
 // getIntegerValidHandleError handles the GetIntegerValid error response.
 func (client *dictionaryOperations) getIntegerValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -2058,7 +2058,7 @@ func (client *dictionaryOperations) getInvalidHandleResponse(resp *azcore.Respon
 
 // getInvalidHandleError handles the GetInvalid error response.
 func (client *dictionaryOperations) getInvalidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -2104,7 +2104,7 @@ func (client *dictionaryOperations) getLongInvalidNullHandleResponse(resp *azcor
 
 // getLongInvalidNullHandleError handles the GetLongInvalidNull error response.
 func (client *dictionaryOperations) getLongInvalidNullHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -2150,7 +2150,7 @@ func (client *dictionaryOperations) getLongInvalidStringHandleResponse(resp *azc
 
 // getLongInvalidStringHandleError handles the GetLongInvalidString error response.
 func (client *dictionaryOperations) getLongInvalidStringHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -2196,7 +2196,7 @@ func (client *dictionaryOperations) getLongValidHandleResponse(resp *azcore.Resp
 
 // getLongValidHandleError handles the GetLongValid error response.
 func (client *dictionaryOperations) getLongValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -2242,7 +2242,7 @@ func (client *dictionaryOperations) getNullHandleResponse(resp *azcore.Response)
 
 // getNullHandleError handles the GetNull error response.
 func (client *dictionaryOperations) getNullHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -2288,7 +2288,7 @@ func (client *dictionaryOperations) getNullKeyHandleResponse(resp *azcore.Respon
 
 // getNullKeyHandleError handles the GetNullKey error response.
 func (client *dictionaryOperations) getNullKeyHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -2334,7 +2334,7 @@ func (client *dictionaryOperations) getNullValueHandleResponse(resp *azcore.Resp
 
 // getNullValueHandleError handles the GetNullValue error response.
 func (client *dictionaryOperations) getNullValueHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -2380,7 +2380,7 @@ func (client *dictionaryOperations) getStringValidHandleResponse(resp *azcore.Re
 
 // getStringValidHandleError handles the GetStringValid error response.
 func (client *dictionaryOperations) getStringValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -2426,7 +2426,7 @@ func (client *dictionaryOperations) getStringWithInvalidHandleResponse(resp *azc
 
 // getStringWithInvalidHandleError handles the GetStringWithInvalid error response.
 func (client *dictionaryOperations) getStringWithInvalidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -2472,7 +2472,7 @@ func (client *dictionaryOperations) getStringWithNullHandleResponse(resp *azcore
 
 // getStringWithNullHandleError handles the GetStringWithNull error response.
 func (client *dictionaryOperations) getStringWithNullHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -2517,7 +2517,7 @@ func (client *dictionaryOperations) putArrayValidHandleResponse(resp *azcore.Res
 
 // putArrayValidHandleError handles the PutArrayValid error response.
 func (client *dictionaryOperations) putArrayValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -2562,7 +2562,7 @@ func (client *dictionaryOperations) putBooleanTfftHandleResponse(resp *azcore.Re
 
 // putBooleanTfftHandleError handles the PutBooleanTfft error response.
 func (client *dictionaryOperations) putBooleanTfftHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -2607,7 +2607,7 @@ func (client *dictionaryOperations) putByteValidHandleResponse(resp *azcore.Resp
 
 // putByteValidHandleError handles the PutByteValid error response.
 func (client *dictionaryOperations) putByteValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -2652,7 +2652,7 @@ func (client *dictionaryOperations) putComplexValidHandleResponse(resp *azcore.R
 
 // putComplexValidHandleError handles the PutComplexValid error response.
 func (client *dictionaryOperations) putComplexValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -2701,7 +2701,7 @@ func (client *dictionaryOperations) putDateTimeRfc1123ValidHandleResponse(resp *
 
 // putDateTimeRfc1123ValidHandleError handles the PutDateTimeRFC1123Valid error response.
 func (client *dictionaryOperations) putDateTimeRfc1123ValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -2750,7 +2750,7 @@ func (client *dictionaryOperations) putDateTimeValidHandleResponse(resp *azcore.
 
 // putDateTimeValidHandleError handles the PutDateTimeValid error response.
 func (client *dictionaryOperations) putDateTimeValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -2795,7 +2795,7 @@ func (client *dictionaryOperations) putDateValidHandleResponse(resp *azcore.Resp
 
 // putDateValidHandleError handles the PutDateValid error response.
 func (client *dictionaryOperations) putDateValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -2840,7 +2840,7 @@ func (client *dictionaryOperations) putDictionaryValidHandleResponse(resp *azcor
 
 // putDictionaryValidHandleError handles the PutDictionaryValid error response.
 func (client *dictionaryOperations) putDictionaryValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -2885,7 +2885,7 @@ func (client *dictionaryOperations) putDoubleValidHandleResponse(resp *azcore.Re
 
 // putDoubleValidHandleError handles the PutDoubleValid error response.
 func (client *dictionaryOperations) putDoubleValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -2930,7 +2930,7 @@ func (client *dictionaryOperations) putDurationValidHandleResponse(resp *azcore.
 
 // putDurationValidHandleError handles the PutDurationValid error response.
 func (client *dictionaryOperations) putDurationValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -2975,7 +2975,7 @@ func (client *dictionaryOperations) putEmptyHandleResponse(resp *azcore.Response
 
 // putEmptyHandleError handles the PutEmpty error response.
 func (client *dictionaryOperations) putEmptyHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -3020,7 +3020,7 @@ func (client *dictionaryOperations) putFloatValidHandleResponse(resp *azcore.Res
 
 // putFloatValidHandleError handles the PutFloatValid error response.
 func (client *dictionaryOperations) putFloatValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -3065,7 +3065,7 @@ func (client *dictionaryOperations) putIntegerValidHandleResponse(resp *azcore.R
 
 // putIntegerValidHandleError handles the PutIntegerValid error response.
 func (client *dictionaryOperations) putIntegerValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -3110,7 +3110,7 @@ func (client *dictionaryOperations) putLongValidHandleResponse(resp *azcore.Resp
 
 // putLongValidHandleError handles the PutLongValid error response.
 func (client *dictionaryOperations) putLongValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -3155,7 +3155,7 @@ func (client *dictionaryOperations) putStringValidHandleResponse(resp *azcore.Re
 
 // putStringValidHandleError handles the PutStringValid error response.
 func (client *dictionaryOperations) putStringValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

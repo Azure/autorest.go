@@ -107,7 +107,7 @@ func (client *explicitOperations) postOptionalArrayHeaderHandleResponse(resp *az
 
 // postOptionalArrayHeaderHandleError handles the PostOptionalArrayHeader error response.
 func (client *explicitOperations) postOptionalArrayHeaderHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -155,7 +155,7 @@ func (client *explicitOperations) postOptionalArrayParameterHandleResponse(resp 
 
 // postOptionalArrayParameterHandleError handles the PostOptionalArrayParameter error response.
 func (client *explicitOperations) postOptionalArrayParameterHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -203,7 +203,7 @@ func (client *explicitOperations) postOptionalArrayPropertyHandleResponse(resp *
 
 // postOptionalArrayPropertyHandleError handles the PostOptionalArrayProperty error response.
 func (client *explicitOperations) postOptionalArrayPropertyHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -251,7 +251,7 @@ func (client *explicitOperations) postOptionalClassParameterHandleResponse(resp 
 
 // postOptionalClassParameterHandleError handles the PostOptionalClassParameter error response.
 func (client *explicitOperations) postOptionalClassParameterHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -299,7 +299,7 @@ func (client *explicitOperations) postOptionalClassPropertyHandleResponse(resp *
 
 // postOptionalClassPropertyHandleError handles the PostOptionalClassProperty error response.
 func (client *explicitOperations) postOptionalClassPropertyHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -347,7 +347,7 @@ func (client *explicitOperations) postOptionalIntegerHeaderHandleResponse(resp *
 
 // postOptionalIntegerHeaderHandleError handles the PostOptionalIntegerHeader error response.
 func (client *explicitOperations) postOptionalIntegerHeaderHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -395,7 +395,7 @@ func (client *explicitOperations) postOptionalIntegerParameterHandleResponse(res
 
 // postOptionalIntegerParameterHandleError handles the PostOptionalIntegerParameter error response.
 func (client *explicitOperations) postOptionalIntegerParameterHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -443,7 +443,7 @@ func (client *explicitOperations) postOptionalIntegerPropertyHandleResponse(resp
 
 // postOptionalIntegerPropertyHandleError handles the PostOptionalIntegerProperty error response.
 func (client *explicitOperations) postOptionalIntegerPropertyHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -491,7 +491,7 @@ func (client *explicitOperations) postOptionalStringHeaderHandleResponse(resp *a
 
 // postOptionalStringHeaderHandleError handles the PostOptionalStringHeader error response.
 func (client *explicitOperations) postOptionalStringHeaderHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -539,7 +539,7 @@ func (client *explicitOperations) postOptionalStringParameterHandleResponse(resp
 
 // postOptionalStringParameterHandleError handles the PostOptionalStringParameter error response.
 func (client *explicitOperations) postOptionalStringParameterHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -587,7 +587,7 @@ func (client *explicitOperations) postOptionalStringPropertyHandleResponse(resp 
 
 // postOptionalStringPropertyHandleError handles the PostOptionalStringProperty error response.
 func (client *explicitOperations) postOptionalStringPropertyHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -633,7 +633,7 @@ func (client *explicitOperations) postRequiredArrayHeaderHandleResponse(resp *az
 
 // postRequiredArrayHeaderHandleError handles the PostRequiredArrayHeader error response.
 func (client *explicitOperations) postRequiredArrayHeaderHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -678,7 +678,7 @@ func (client *explicitOperations) postRequiredArrayParameterHandleResponse(resp 
 
 // postRequiredArrayParameterHandleError handles the PostRequiredArrayParameter error response.
 func (client *explicitOperations) postRequiredArrayParameterHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -723,7 +723,7 @@ func (client *explicitOperations) postRequiredArrayPropertyHandleResponse(resp *
 
 // postRequiredArrayPropertyHandleError handles the PostRequiredArrayProperty error response.
 func (client *explicitOperations) postRequiredArrayPropertyHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -768,7 +768,7 @@ func (client *explicitOperations) postRequiredClassParameterHandleResponse(resp 
 
 // postRequiredClassParameterHandleError handles the PostRequiredClassParameter error response.
 func (client *explicitOperations) postRequiredClassParameterHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -813,7 +813,7 @@ func (client *explicitOperations) postRequiredClassPropertyHandleResponse(resp *
 
 // postRequiredClassPropertyHandleError handles the PostRequiredClassProperty error response.
 func (client *explicitOperations) postRequiredClassPropertyHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -859,7 +859,7 @@ func (client *explicitOperations) postRequiredIntegerHeaderHandleResponse(resp *
 
 // postRequiredIntegerHeaderHandleError handles the PostRequiredIntegerHeader error response.
 func (client *explicitOperations) postRequiredIntegerHeaderHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -904,7 +904,7 @@ func (client *explicitOperations) postRequiredIntegerParameterHandleResponse(res
 
 // postRequiredIntegerParameterHandleError handles the PostRequiredIntegerParameter error response.
 func (client *explicitOperations) postRequiredIntegerParameterHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -949,7 +949,7 @@ func (client *explicitOperations) postRequiredIntegerPropertyHandleResponse(resp
 
 // postRequiredIntegerPropertyHandleError handles the PostRequiredIntegerProperty error response.
 func (client *explicitOperations) postRequiredIntegerPropertyHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -995,7 +995,7 @@ func (client *explicitOperations) postRequiredStringHeaderHandleResponse(resp *a
 
 // postRequiredStringHeaderHandleError handles the PostRequiredStringHeader error response.
 func (client *explicitOperations) postRequiredStringHeaderHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1040,7 +1040,7 @@ func (client *explicitOperations) postRequiredStringParameterHandleResponse(resp
 
 // postRequiredStringParameterHandleError handles the PostRequiredStringParameter error response.
 func (client *explicitOperations) postRequiredStringParameterHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1085,7 +1085,7 @@ func (client *explicitOperations) postRequiredStringPropertyHandleResponse(resp 
 
 // postRequiredStringPropertyHandleError handles the PostRequiredStringProperty error response.
 func (client *explicitOperations) postRequiredStringPropertyHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

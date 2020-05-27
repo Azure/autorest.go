@@ -105,7 +105,7 @@ func (client *xmsClientRequestIdoperations) paramGetHandleResponse(resp *azcore.
 
 // paramGetHandleError handles the ParamGet error response.
 func (client *xmsClientRequestIdoperations) paramGetHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

@@ -96,7 +96,7 @@ func (client *httpSuccessOperations) delete200HandleResponse(resp *azcore.Respon
 
 // delete200HandleError handles the Delete200 error response.
 func (client *httpSuccessOperations) delete200HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -141,7 +141,7 @@ func (client *httpSuccessOperations) delete202HandleResponse(resp *azcore.Respon
 
 // delete202HandleError handles the Delete202 error response.
 func (client *httpSuccessOperations) delete202HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -186,7 +186,7 @@ func (client *httpSuccessOperations) delete204HandleResponse(resp *azcore.Respon
 
 // delete204HandleError handles the Delete204 error response.
 func (client *httpSuccessOperations) delete204HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -232,7 +232,7 @@ func (client *httpSuccessOperations) get200HandleResponse(resp *azcore.Response)
 
 // get200HandleError handles the Get200 error response.
 func (client *httpSuccessOperations) get200HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -277,7 +277,7 @@ func (client *httpSuccessOperations) head200HandleResponse(resp *azcore.Response
 
 // head200HandleError handles the Head200 error response.
 func (client *httpSuccessOperations) head200HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -322,7 +322,7 @@ func (client *httpSuccessOperations) head204HandleResponse(resp *azcore.Response
 
 // head204HandleError handles the Head204 error response.
 func (client *httpSuccessOperations) head204HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -367,7 +367,7 @@ func (client *httpSuccessOperations) head404HandleResponse(resp *azcore.Response
 
 // head404HandleError handles the Head404 error response.
 func (client *httpSuccessOperations) head404HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -413,7 +413,7 @@ func (client *httpSuccessOperations) options200HandleResponse(resp *azcore.Respo
 
 // options200HandleError handles the Options200 error response.
 func (client *httpSuccessOperations) options200HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -458,7 +458,7 @@ func (client *httpSuccessOperations) patch200HandleResponse(resp *azcore.Respons
 
 // patch200HandleError handles the Patch200 error response.
 func (client *httpSuccessOperations) patch200HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -503,7 +503,7 @@ func (client *httpSuccessOperations) patch202HandleResponse(resp *azcore.Respons
 
 // patch202HandleError handles the Patch202 error response.
 func (client *httpSuccessOperations) patch202HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -548,7 +548,7 @@ func (client *httpSuccessOperations) patch204HandleResponse(resp *azcore.Respons
 
 // patch204HandleError handles the Patch204 error response.
 func (client *httpSuccessOperations) patch204HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -593,7 +593,7 @@ func (client *httpSuccessOperations) post200HandleResponse(resp *azcore.Response
 
 // post200HandleError handles the Post200 error response.
 func (client *httpSuccessOperations) post200HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -638,7 +638,7 @@ func (client *httpSuccessOperations) post201HandleResponse(resp *azcore.Response
 
 // post201HandleError handles the Post201 error response.
 func (client *httpSuccessOperations) post201HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -683,7 +683,7 @@ func (client *httpSuccessOperations) post202HandleResponse(resp *azcore.Response
 
 // post202HandleError handles the Post202 error response.
 func (client *httpSuccessOperations) post202HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -728,7 +728,7 @@ func (client *httpSuccessOperations) post204HandleResponse(resp *azcore.Response
 
 // post204HandleError handles the Post204 error response.
 func (client *httpSuccessOperations) post204HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -773,7 +773,7 @@ func (client *httpSuccessOperations) put200HandleResponse(resp *azcore.Response)
 
 // put200HandleError handles the Put200 error response.
 func (client *httpSuccessOperations) put200HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -818,7 +818,7 @@ func (client *httpSuccessOperations) put201HandleResponse(resp *azcore.Response)
 
 // put201HandleError handles the Put201 error response.
 func (client *httpSuccessOperations) put201HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -863,7 +863,7 @@ func (client *httpSuccessOperations) put202HandleResponse(resp *azcore.Response)
 
 // put202HandleError handles the Put202 error response.
 func (client *httpSuccessOperations) put202HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -908,7 +908,7 @@ func (client *httpSuccessOperations) put204HandleResponse(resp *azcore.Response)
 
 // put204HandleError handles the Put204 error response.
 func (client *httpSuccessOperations) put204HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

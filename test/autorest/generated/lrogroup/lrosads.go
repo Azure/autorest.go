@@ -187,7 +187,7 @@ func (client *lrosaDsOperations) delete202NonRetry400HandleResponse(resp *azcore
 
 // delete202NonRetry400HandleError handles the Delete202NonRetry400 error response.
 func (client *lrosaDsOperations) delete202NonRetry400HandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -256,7 +256,7 @@ func (client *lrosaDsOperations) delete202RetryInvalidHeaderHandleResponse(resp 
 
 // delete202RetryInvalidHeaderHandleError handles the Delete202RetryInvalidHeader error response.
 func (client *lrosaDsOperations) delete202RetryInvalidHeaderHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -325,7 +325,7 @@ func (client *lrosaDsOperations) delete204SucceededHandleResponse(resp *azcore.R
 
 // delete204SucceededHandleError handles the Delete204Succeeded error response.
 func (client *lrosaDsOperations) delete204SucceededHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -394,7 +394,7 @@ func (client *lrosaDsOperations) deleteAsyncRelativeRetry400HandleResponse(resp 
 
 // deleteAsyncRelativeRetry400HandleError handles the DeleteAsyncRelativeRetry400 error response.
 func (client *lrosaDsOperations) deleteAsyncRelativeRetry400HandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -463,7 +463,7 @@ func (client *lrosaDsOperations) deleteAsyncRelativeRetryInvalidHeaderHandleResp
 
 // deleteAsyncRelativeRetryInvalidHeaderHandleError handles the DeleteAsyncRelativeRetryInvalidHeader error response.
 func (client *lrosaDsOperations) deleteAsyncRelativeRetryInvalidHeaderHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -532,7 +532,7 @@ func (client *lrosaDsOperations) deleteAsyncRelativeRetryInvalidJsonPollingHandl
 
 // deleteAsyncRelativeRetryInvalidJsonPollingHandleError handles the DeleteAsyncRelativeRetryInvalidJSONPolling error response.
 func (client *lrosaDsOperations) deleteAsyncRelativeRetryInvalidJsonPollingHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -601,7 +601,7 @@ func (client *lrosaDsOperations) deleteAsyncRelativeRetryNoStatusHandleResponse(
 
 // deleteAsyncRelativeRetryNoStatusHandleError handles the DeleteAsyncRelativeRetryNoStatus error response.
 func (client *lrosaDsOperations) deleteAsyncRelativeRetryNoStatusHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -670,7 +670,7 @@ func (client *lrosaDsOperations) deleteNonRetry400HandleResponse(resp *azcore.Re
 
 // deleteNonRetry400HandleError handles the DeleteNonRetry400 error response.
 func (client *lrosaDsOperations) deleteNonRetry400HandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -742,7 +742,7 @@ func (client *lrosaDsOperations) post202NoLocationHandleResponse(resp *azcore.Re
 
 // post202NoLocationHandleError handles the Post202NoLocation error response.
 func (client *lrosaDsOperations) post202NoLocationHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -814,7 +814,7 @@ func (client *lrosaDsOperations) post202NonRetry400HandleResponse(resp *azcore.R
 
 // post202NonRetry400HandleError handles the Post202NonRetry400 error response.
 func (client *lrosaDsOperations) post202NonRetry400HandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -886,7 +886,7 @@ func (client *lrosaDsOperations) post202RetryInvalidHeaderHandleResponse(resp *a
 
 // post202RetryInvalidHeaderHandleError handles the Post202RetryInvalidHeader error response.
 func (client *lrosaDsOperations) post202RetryInvalidHeaderHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -958,7 +958,7 @@ func (client *lrosaDsOperations) postAsyncRelativeRetry400HandleResponse(resp *a
 
 // postAsyncRelativeRetry400HandleError handles the PostAsyncRelativeRetry400 error response.
 func (client *lrosaDsOperations) postAsyncRelativeRetry400HandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1030,7 +1030,7 @@ func (client *lrosaDsOperations) postAsyncRelativeRetryInvalidHeaderHandleRespon
 
 // postAsyncRelativeRetryInvalidHeaderHandleError handles the PostAsyncRelativeRetryInvalidHeader error response.
 func (client *lrosaDsOperations) postAsyncRelativeRetryInvalidHeaderHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1102,7 +1102,7 @@ func (client *lrosaDsOperations) postAsyncRelativeRetryInvalidJsonPollingHandleR
 
 // postAsyncRelativeRetryInvalidJsonPollingHandleError handles the PostAsyncRelativeRetryInvalidJSONPolling error response.
 func (client *lrosaDsOperations) postAsyncRelativeRetryInvalidJsonPollingHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1174,7 +1174,7 @@ func (client *lrosaDsOperations) postAsyncRelativeRetryNoPayloadHandleResponse(r
 
 // postAsyncRelativeRetryNoPayloadHandleError handles the PostAsyncRelativeRetryNoPayload error response.
 func (client *lrosaDsOperations) postAsyncRelativeRetryNoPayloadHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1246,7 +1246,7 @@ func (client *lrosaDsOperations) postNonRetry400HandleResponse(resp *azcore.Resp
 
 // postNonRetry400HandleError handles the PostNonRetry400 error response.
 func (client *lrosaDsOperations) postNonRetry400HandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1319,7 +1319,7 @@ func (client *lrosaDsOperations) put200InvalidJsonHandleResponse(resp *azcore.Re
 
 // put200InvalidJsonHandleError handles the Put200InvalidJSON error response.
 func (client *lrosaDsOperations) put200InvalidJsonHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1392,7 +1392,7 @@ func (client *lrosaDsOperations) putAsyncRelativeRetry400HandleResponse(resp *az
 
 // putAsyncRelativeRetry400HandleError handles the PutAsyncRelativeRetry400 error response.
 func (client *lrosaDsOperations) putAsyncRelativeRetry400HandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1465,7 +1465,7 @@ func (client *lrosaDsOperations) putAsyncRelativeRetryInvalidHeaderHandleRespons
 
 // putAsyncRelativeRetryInvalidHeaderHandleError handles the PutAsyncRelativeRetryInvalidHeader error response.
 func (client *lrosaDsOperations) putAsyncRelativeRetryInvalidHeaderHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1538,7 +1538,7 @@ func (client *lrosaDsOperations) putAsyncRelativeRetryInvalidJsonPollingHandleRe
 
 // putAsyncRelativeRetryInvalidJsonPollingHandleError handles the PutAsyncRelativeRetryInvalidJSONPolling error response.
 func (client *lrosaDsOperations) putAsyncRelativeRetryInvalidJsonPollingHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1611,7 +1611,7 @@ func (client *lrosaDsOperations) putAsyncRelativeRetryNoStatusHandleResponse(res
 
 // putAsyncRelativeRetryNoStatusHandleError handles the PutAsyncRelativeRetryNoStatus error response.
 func (client *lrosaDsOperations) putAsyncRelativeRetryNoStatusHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1684,7 +1684,7 @@ func (client *lrosaDsOperations) putAsyncRelativeRetryNoStatusPayloadHandleRespo
 
 // putAsyncRelativeRetryNoStatusPayloadHandleError handles the PutAsyncRelativeRetryNoStatusPayload error response.
 func (client *lrosaDsOperations) putAsyncRelativeRetryNoStatusPayloadHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1757,7 +1757,7 @@ func (client *lrosaDsOperations) putError201NoProvisioningStatePayloadHandleResp
 
 // putError201NoProvisioningStatePayloadHandleError handles the PutError201NoProvisioningStatePayload error response.
 func (client *lrosaDsOperations) putError201NoProvisioningStatePayloadHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1830,7 +1830,7 @@ func (client *lrosaDsOperations) putNonRetry201Creating400HandleResponse(resp *a
 
 // putNonRetry201Creating400HandleError handles the PutNonRetry201Creating400 error response.
 func (client *lrosaDsOperations) putNonRetry201Creating400HandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1903,7 +1903,7 @@ func (client *lrosaDsOperations) putNonRetry201Creating400InvalidJsonHandleRespo
 
 // putNonRetry201Creating400InvalidJsonHandleError handles the PutNonRetry201Creating400InvalidJSON error response.
 func (client *lrosaDsOperations) putNonRetry201Creating400InvalidJsonHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1976,7 +1976,7 @@ func (client *lrosaDsOperations) putNonRetry400HandleResponse(resp *azcore.Respo
 
 // putNonRetry400HandleError handles the PutNonRetry400 error response.
 func (client *lrosaDsOperations) putNonRetry400HandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

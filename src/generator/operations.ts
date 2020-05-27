@@ -718,20 +718,58 @@ function createProtocolErrHandler(client: string, op: Operation, imports: Import
   const name = info.protocolNaming.errorMethod;
   let text = `${comment(name, '// ')} handles the ${info.name} error response.\n`;
   text += `func (client *${client}) ${name}(resp *azcore.Response) error {\n`;
-  // if the response doesn't define a 'default' section return a generic error
-  // TODO: can be multiple exceptions when x-ms-error-response is in use (rare)
-  if (!op.exceptions || op.exceptions[0].language.go!.genericError) {
+  // if the response doesn't define any error types return a generic error
+  if (!op.exceptions) {
     imports.add('errors');
     text += `\treturn errors.New(resp.Status)\n`;
-  } else {
-    const schemaError = (<SchemaResponse>op.exceptions![0]).schema;
-    const errFormat = <string>schemaError.language.go!.marshallingFormat;
-    text += `\terr := ${schemaError.language.go!.name}{}\n`;
-    text += `\tif err := resp.UnmarshalAs${errFormat.toUpperCase()}(&err); err != nil {\n`;
-    text += `\t\treturn err\n`;
-    text += `\t}\n`;
-    text += '\treturn err\n';
+    text += '}\n\n';
+    return text;
   }
+  const generateUnmarshaller = function (exception: Response, prefix: string) {
+    let unmarshaller = '';
+    if (exception.language.go!.genericError) {
+      imports.add('errors');
+      unmarshaller += `${prefix}return errors.New(resp.Status)\n`;
+      return unmarshaller;
+    }
+    const schemaError = (<SchemaResponse>exception).schema;
+    const errFormat = <string>schemaError.language.go!.marshallingFormat;
+    let typeName = schemaError.language.go!.name;
+    if (schemaError.language.go!.internalErrorType) {
+      typeName = schemaError.language.go!.internalErrorType;
+    }
+    unmarshaller += `var err ${typeName}\n`;
+    unmarshaller += `${prefix}if err := resp.UnmarshalAs${errFormat.toUpperCase()}(&err); err != nil {\n`;
+    unmarshaller += `${prefix}\treturn err\n`;
+    unmarshaller += `${prefix}}\n`;
+    if (schemaError.language.go!.internalErrorType) {
+      unmarshaller += `${prefix}return err.wrapped\n`;
+    } else if (schemaError.type === SchemaType.Object) {
+      unmarshaller += `${prefix}return err\n`;
+    } else {
+      imports.add('fmt');
+      unmarshaller += `${prefix}return fmt.Errorf("%v", err)\n`;
+    }
+    return unmarshaller;
+  };
+  if (op.exceptions.length === 1) {
+    text += generateUnmarshaller(op.exceptions![0], '\t');
+    text += '}\n\n';
+    return text;
+  }
+  text += '\tswitch resp.StatusCode {\n';
+  for (const exception of values(op.exceptions)) {
+    for (const statusCode of values(<Array<string>>exception.protocol.http!.statusCodes)) {
+      if (statusCode === 'default') {
+        text += '\tdefault:\n';
+        text += generateUnmarshaller(exception, '\t\t');
+      } else {
+        text += `\tcase ${formatStatusCodes([statusCode])}:\n`;
+        text += generateUnmarshaller(exception, '\t\t');
+      }
+    }
+  }
+  text += '\t}\n';
   text += '}\n\n';
   return text;
 }
@@ -846,6 +884,12 @@ function formatStatusCodes(statusCodes: Array<string>): string {
         break;
       case '409':
         asHTTPStatus.push('http.StatusConflict');
+        break;
+      case '500':
+        asHTTPStatus.push('http.StatusInternalServerError');
+        break;
+      case '501':
+        asHTTPStatus.push('http.StatusNotImplemented');
         break;
       default:
         throw console.error(`unhandled status code ${rawCode}`);

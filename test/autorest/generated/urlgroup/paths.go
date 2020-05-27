@@ -117,7 +117,7 @@ func (client *pathsOperations) arrayCsvInPathHandleResponse(resp *azcore.Respons
 
 // arrayCsvInPathHandleError handles the ArrayCSVInPath error response.
 func (client *pathsOperations) arrayCsvInPathHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -163,7 +163,7 @@ func (client *pathsOperations) base64UrlHandleResponse(resp *azcore.Response) (*
 
 // base64UrlHandleError handles the Base64URL error response.
 func (client *pathsOperations) base64UrlHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -209,7 +209,7 @@ func (client *pathsOperations) byteEmptyHandleResponse(resp *azcore.Response) (*
 
 // byteEmptyHandleError handles the ByteEmpty error response.
 func (client *pathsOperations) byteEmptyHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -255,7 +255,7 @@ func (client *pathsOperations) byteMultiByteHandleResponse(resp *azcore.Response
 
 // byteMultiByteHandleError handles the ByteMultiByte error response.
 func (client *pathsOperations) byteMultiByteHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -301,7 +301,7 @@ func (client *pathsOperations) byteNullHandleResponse(resp *azcore.Response) (*h
 
 // byteNullHandleError handles the ByteNull error response.
 func (client *pathsOperations) byteNullHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -347,7 +347,7 @@ func (client *pathsOperations) dateNullHandleResponse(resp *azcore.Response) (*h
 
 // dateNullHandleError handles the DateNull error response.
 func (client *pathsOperations) dateNullHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -393,7 +393,7 @@ func (client *pathsOperations) dateTimeNullHandleResponse(resp *azcore.Response)
 
 // dateTimeNullHandleError handles the DateTimeNull error response.
 func (client *pathsOperations) dateTimeNullHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -439,7 +439,7 @@ func (client *pathsOperations) dateTimeValidHandleResponse(resp *azcore.Response
 
 // dateTimeValidHandleError handles the DateTimeValid error response.
 func (client *pathsOperations) dateTimeValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -485,7 +485,7 @@ func (client *pathsOperations) dateValidHandleResponse(resp *azcore.Response) (*
 
 // dateValidHandleError handles the DateValid error response.
 func (client *pathsOperations) dateValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -531,7 +531,7 @@ func (client *pathsOperations) doubleDecimalNegativeHandleResponse(resp *azcore.
 
 // doubleDecimalNegativeHandleError handles the DoubleDecimalNegative error response.
 func (client *pathsOperations) doubleDecimalNegativeHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -577,7 +577,7 @@ func (client *pathsOperations) doubleDecimalPositiveHandleResponse(resp *azcore.
 
 // doubleDecimalPositiveHandleError handles the DoubleDecimalPositive error response.
 func (client *pathsOperations) doubleDecimalPositiveHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -623,7 +623,7 @@ func (client *pathsOperations) enumNullHandleResponse(resp *azcore.Response) (*h
 
 // enumNullHandleError handles the EnumNull error response.
 func (client *pathsOperations) enumNullHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -669,7 +669,7 @@ func (client *pathsOperations) enumValidHandleResponse(resp *azcore.Response) (*
 
 // enumValidHandleError handles the EnumValid error response.
 func (client *pathsOperations) enumValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -715,7 +715,7 @@ func (client *pathsOperations) floatScientificNegativeHandleResponse(resp *azcor
 
 // floatScientificNegativeHandleError handles the FloatScientificNegative error response.
 func (client *pathsOperations) floatScientificNegativeHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -761,7 +761,7 @@ func (client *pathsOperations) floatScientificPositiveHandleResponse(resp *azcor
 
 // floatScientificPositiveHandleError handles the FloatScientificPositive error response.
 func (client *pathsOperations) floatScientificPositiveHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -807,7 +807,7 @@ func (client *pathsOperations) getBooleanFalseHandleResponse(resp *azcore.Respon
 
 // getBooleanFalseHandleError handles the GetBooleanFalse error response.
 func (client *pathsOperations) getBooleanFalseHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -853,7 +853,7 @@ func (client *pathsOperations) getBooleanTrueHandleResponse(resp *azcore.Respons
 
 // getBooleanTrueHandleError handles the GetBooleanTrue error response.
 func (client *pathsOperations) getBooleanTrueHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -899,7 +899,7 @@ func (client *pathsOperations) getIntNegativeOneMillionHandleResponse(resp *azco
 
 // getIntNegativeOneMillionHandleError handles the GetIntNegativeOneMillion error response.
 func (client *pathsOperations) getIntNegativeOneMillionHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -945,7 +945,7 @@ func (client *pathsOperations) getIntOneMillionHandleResponse(resp *azcore.Respo
 
 // getIntOneMillionHandleError handles the GetIntOneMillion error response.
 func (client *pathsOperations) getIntOneMillionHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -991,7 +991,7 @@ func (client *pathsOperations) getNegativeTenBillionHandleResponse(resp *azcore.
 
 // getNegativeTenBillionHandleError handles the GetNegativeTenBillion error response.
 func (client *pathsOperations) getNegativeTenBillionHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1037,7 +1037,7 @@ func (client *pathsOperations) getTenBillionHandleResponse(resp *azcore.Response
 
 // getTenBillionHandleError handles the GetTenBillion error response.
 func (client *pathsOperations) getTenBillionHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1083,7 +1083,7 @@ func (client *pathsOperations) stringEmptyHandleResponse(resp *azcore.Response) 
 
 // stringEmptyHandleError handles the StringEmpty error response.
 func (client *pathsOperations) stringEmptyHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1129,7 +1129,7 @@ func (client *pathsOperations) stringNullHandleResponse(resp *azcore.Response) (
 
 // stringNullHandleError handles the StringNull error response.
 func (client *pathsOperations) stringNullHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1175,7 +1175,7 @@ func (client *pathsOperations) stringUrlEncodedHandleResponse(resp *azcore.Respo
 
 // stringUrlEncodedHandleError handles the StringURLEncoded error response.
 func (client *pathsOperations) stringUrlEncodedHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1221,7 +1221,7 @@ func (client *pathsOperations) stringUrlNonEncodedHandleResponse(resp *azcore.Re
 
 // stringUrlNonEncodedHandleError handles the StringURLNonEncoded error response.
 func (client *pathsOperations) stringUrlNonEncodedHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1267,7 +1267,7 @@ func (client *pathsOperations) stringUnicodeHandleResponse(resp *azcore.Response
 
 // stringUnicodeHandleError handles the StringUnicode error response.
 func (client *pathsOperations) stringUnicodeHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1313,7 +1313,7 @@ func (client *pathsOperations) unixTimeUrlHandleResponse(resp *azcore.Response) 
 
 // unixTimeUrlHandleError handles the UnixTimeURL error response.
 func (client *pathsOperations) unixTimeUrlHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

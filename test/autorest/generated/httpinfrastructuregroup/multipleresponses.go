@@ -128,7 +128,7 @@ func (client *multipleResponsesOperations) get200Model201ModelDefaultError200Val
 
 // get200Model201ModelDefaultError200ValidHandleError handles the Get200Model201ModelDefaultError200Valid error response.
 func (client *multipleResponsesOperations) get200Model201ModelDefaultError200ValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -174,7 +174,7 @@ func (client *multipleResponsesOperations) get200Model201ModelDefaultError201Val
 
 // get200Model201ModelDefaultError201ValidHandleError handles the Get200Model201ModelDefaultError201Valid error response.
 func (client *multipleResponsesOperations) get200Model201ModelDefaultError201ValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -220,7 +220,7 @@ func (client *multipleResponsesOperations) get200Model201ModelDefaultError400Val
 
 // get200Model201ModelDefaultError400ValidHandleError handles the Get200Model201ModelDefaultError400Valid error response.
 func (client *multipleResponsesOperations) get200Model201ModelDefaultError400ValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -266,7 +266,7 @@ func (client *multipleResponsesOperations) get200Model204NoModelDefaultError200V
 
 // get200Model204NoModelDefaultError200ValidHandleError handles the Get200Model204NoModelDefaultError200Valid error response.
 func (client *multipleResponsesOperations) get200Model204NoModelDefaultError200ValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -312,7 +312,7 @@ func (client *multipleResponsesOperations) get200Model204NoModelDefaultError201I
 
 // get200Model204NoModelDefaultError201InvalidHandleError handles the Get200Model204NoModelDefaultError201Invalid error response.
 func (client *multipleResponsesOperations) get200Model204NoModelDefaultError201InvalidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -358,7 +358,7 @@ func (client *multipleResponsesOperations) get200Model204NoModelDefaultError202N
 
 // get200Model204NoModelDefaultError202NoneHandleError handles the Get200Model204NoModelDefaultError202None error response.
 func (client *multipleResponsesOperations) get200Model204NoModelDefaultError202NoneHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -404,7 +404,7 @@ func (client *multipleResponsesOperations) get200Model204NoModelDefaultError204V
 
 // get200Model204NoModelDefaultError204ValidHandleError handles the Get200Model204NoModelDefaultError204Valid error response.
 func (client *multipleResponsesOperations) get200Model204NoModelDefaultError204ValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -450,7 +450,7 @@ func (client *multipleResponsesOperations) get200Model204NoModelDefaultError400V
 
 // get200Model204NoModelDefaultError400ValidHandleError handles the Get200Model204NoModelDefaultError400Valid error response.
 func (client *multipleResponsesOperations) get200Model204NoModelDefaultError400ValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -622,7 +622,7 @@ func (client *multipleResponsesOperations) get200ModelA201ModelC404ModelDDefault
 
 // get200ModelA201ModelC404ModelDDefaultError200ValidHandleError handles the Get200ModelA201ModelC404ModelDDefaultError200Valid error response.
 func (client *multipleResponsesOperations) get200ModelA201ModelC404ModelDDefaultError200ValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -668,7 +668,7 @@ func (client *multipleResponsesOperations) get200ModelA201ModelC404ModelDDefault
 
 // get200ModelA201ModelC404ModelDDefaultError201ValidHandleError handles the Get200ModelA201ModelC404ModelDDefaultError201Valid error response.
 func (client *multipleResponsesOperations) get200ModelA201ModelC404ModelDDefaultError201ValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -714,7 +714,7 @@ func (client *multipleResponsesOperations) get200ModelA201ModelC404ModelDDefault
 
 // get200ModelA201ModelC404ModelDDefaultError400ValidHandleError handles the Get200ModelA201ModelC404ModelDDefaultError400Valid error response.
 func (client *multipleResponsesOperations) get200ModelA201ModelC404ModelDDefaultError400ValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -760,7 +760,7 @@ func (client *multipleResponsesOperations) get200ModelA201ModelC404ModelDDefault
 
 // get200ModelA201ModelC404ModelDDefaultError404ValidHandleError handles the Get200ModelA201ModelC404ModelDDefaultError404Valid error response.
 func (client *multipleResponsesOperations) get200ModelA201ModelC404ModelDDefaultError404ValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -973,7 +973,7 @@ func (client *multipleResponsesOperations) get202None204NoneDefaultError202NoneH
 
 // get202None204NoneDefaultError202NoneHandleError handles the Get202None204NoneDefaultError202None error response.
 func (client *multipleResponsesOperations) get202None204NoneDefaultError202NoneHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1018,7 +1018,7 @@ func (client *multipleResponsesOperations) get202None204NoneDefaultError204NoneH
 
 // get202None204NoneDefaultError204NoneHandleError handles the Get202None204NoneDefaultError204None error response.
 func (client *multipleResponsesOperations) get202None204NoneDefaultError204NoneHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1063,7 +1063,7 @@ func (client *multipleResponsesOperations) get202None204NoneDefaultError400Valid
 
 // get202None204NoneDefaultError400ValidHandleError handles the Get202None204NoneDefaultError400Valid error response.
 func (client *multipleResponsesOperations) get202None204NoneDefaultError400ValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1356,7 +1356,7 @@ func (client *multipleResponsesOperations) getDefaultModelA400NoneHandleResponse
 
 // getDefaultModelA400NoneHandleError handles the GetDefaultModelA400None error response.
 func (client *multipleResponsesOperations) getDefaultModelA400NoneHandleError(resp *azcore.Response) error {
-	err := MyException{}
+	var err MyException
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1401,7 +1401,7 @@ func (client *multipleResponsesOperations) getDefaultModelA400ValidHandleRespons
 
 // getDefaultModelA400ValidHandleError handles the GetDefaultModelA400Valid error response.
 func (client *multipleResponsesOperations) getDefaultModelA400ValidHandleError(resp *azcore.Response) error {
-	err := MyException{}
+	var err MyException
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

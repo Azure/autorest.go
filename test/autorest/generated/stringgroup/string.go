@@ -85,7 +85,7 @@ func (client *stringOperations) getBase64EncodedHandleResponse(resp *azcore.Resp
 
 // getBase64EncodedHandleError handles the GetBase64Encoded error response.
 func (client *stringOperations) getBase64EncodedHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -131,7 +131,7 @@ func (client *stringOperations) getBase64UrlEncodedHandleResponse(resp *azcore.R
 
 // getBase64UrlEncodedHandleError handles the GetBase64URLEncoded error response.
 func (client *stringOperations) getBase64UrlEncodedHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -177,7 +177,7 @@ func (client *stringOperations) getEmptyHandleResponse(resp *azcore.Response) (*
 
 // getEmptyHandleError handles the GetEmpty error response.
 func (client *stringOperations) getEmptyHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -223,7 +223,7 @@ func (client *stringOperations) getMbcsHandleResponse(resp *azcore.Response) (*S
 
 // getMbcsHandleError handles the GetMBCS error response.
 func (client *stringOperations) getMbcsHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -269,7 +269,7 @@ func (client *stringOperations) getNotProvidedHandleResponse(resp *azcore.Respon
 
 // getNotProvidedHandleError handles the GetNotProvided error response.
 func (client *stringOperations) getNotProvidedHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -315,7 +315,7 @@ func (client *stringOperations) getNullHandleResponse(resp *azcore.Response) (*S
 
 // getNullHandleError handles the GetNull error response.
 func (client *stringOperations) getNullHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -361,7 +361,7 @@ func (client *stringOperations) getNullBase64UrlEncodedHandleResponse(resp *azco
 
 // getNullBase64UrlEncodedHandleError handles the GetNullBase64URLEncoded error response.
 func (client *stringOperations) getNullBase64UrlEncodedHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -407,7 +407,7 @@ func (client *stringOperations) getWhitespaceHandleResponse(resp *azcore.Respons
 
 // getWhitespaceHandleError handles the GetWhitespace error response.
 func (client *stringOperations) getWhitespaceHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -452,7 +452,7 @@ func (client *stringOperations) putBase64UrlEncodedHandleResponse(resp *azcore.R
 
 // putBase64UrlEncodedHandleError handles the PutBase64URLEncoded error response.
 func (client *stringOperations) putBase64UrlEncodedHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -497,7 +497,7 @@ func (client *stringOperations) putEmptyHandleResponse(resp *azcore.Response) (*
 
 // putEmptyHandleError handles the PutEmpty error response.
 func (client *stringOperations) putEmptyHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -542,7 +542,7 @@ func (client *stringOperations) putMbcsHandleResponse(resp *azcore.Response) (*h
 
 // putMbcsHandleError handles the PutMBCS error response.
 func (client *stringOperations) putMbcsHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -590,7 +590,7 @@ func (client *stringOperations) putNullHandleResponse(resp *azcore.Response) (*h
 
 // putNullHandleError handles the PutNull error response.
 func (client *stringOperations) putNullHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -635,7 +635,7 @@ func (client *stringOperations) putWhitespaceHandleResponse(resp *azcore.Respons
 
 // putWhitespaceHandleError handles the PutWhitespace error response.
 func (client *stringOperations) putWhitespaceHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

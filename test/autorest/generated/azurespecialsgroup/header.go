@@ -69,7 +69,7 @@ func (client *headerOperations) customNamedRequestIdHandleResponse(resp *azcore.
 
 // customNamedRequestIdHandleError handles the CustomNamedRequestID error response.
 func (client *headerOperations) customNamedRequestIdHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -119,7 +119,7 @@ func (client *headerOperations) customNamedRequestIdHeadHandleResponse(resp *azc
 
 // customNamedRequestIdHeadHandleError handles the CustomNamedRequestIDHead error response.
 func (client *headerOperations) customNamedRequestIdHeadHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -169,7 +169,7 @@ func (client *headerOperations) customNamedRequestIdParamGroupingHandleResponse(
 
 // customNamedRequestIdParamGroupingHandleError handles the CustomNamedRequestIDParamGrouping error response.
 func (client *headerOperations) customNamedRequestIdParamGroupingHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

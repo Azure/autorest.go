@@ -72,7 +72,7 @@ func (client *odataOperations) getWithFilterHandleResponse(resp *azcore.Response
 
 // getWithFilterHandleError handles the GetWithFilter error response.
 func (client *odataOperations) getWithFilterHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

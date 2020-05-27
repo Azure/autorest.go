@@ -69,7 +69,7 @@ func (client *arrayOperations) getEmptyHandleResponse(resp *azcore.Response) (*A
 
 // getEmptyHandleError handles the GetEmpty error response.
 func (client *arrayOperations) getEmptyHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -115,7 +115,7 @@ func (client *arrayOperations) getNotProvidedHandleResponse(resp *azcore.Respons
 
 // getNotProvidedHandleError handles the GetNotProvided error response.
 func (client *arrayOperations) getNotProvidedHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -161,7 +161,7 @@ func (client *arrayOperations) getValidHandleResponse(resp *azcore.Response) (*A
 
 // getValidHandleError handles the GetValid error response.
 func (client *arrayOperations) getValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -206,7 +206,7 @@ func (client *arrayOperations) putEmptyHandleResponse(resp *azcore.Response) (*h
 
 // putEmptyHandleError handles the PutEmpty error response.
 func (client *arrayOperations) putEmptyHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -251,7 +251,7 @@ func (client *arrayOperations) putValidHandleResponse(resp *azcore.Response) (*h
 
 // putValidHandleError handles the PutValid error response.
 func (client *arrayOperations) putValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

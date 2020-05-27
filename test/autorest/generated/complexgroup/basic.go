@@ -71,7 +71,7 @@ func (client *basicOperations) getEmptyHandleResponse(resp *azcore.Response) (*B
 
 // getEmptyHandleError handles the GetEmpty error response.
 func (client *basicOperations) getEmptyHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -117,7 +117,7 @@ func (client *basicOperations) getInvalidHandleResponse(resp *azcore.Response) (
 
 // getInvalidHandleError handles the GetInvalid error response.
 func (client *basicOperations) getInvalidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -163,7 +163,7 @@ func (client *basicOperations) getNotProvidedHandleResponse(resp *azcore.Respons
 
 // getNotProvidedHandleError handles the GetNotProvided error response.
 func (client *basicOperations) getNotProvidedHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -209,7 +209,7 @@ func (client *basicOperations) getNullHandleResponse(resp *azcore.Response) (*Ba
 
 // getNullHandleError handles the GetNull error response.
 func (client *basicOperations) getNullHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -255,7 +255,7 @@ func (client *basicOperations) getValidHandleResponse(resp *azcore.Response) (*B
 
 // getValidHandleError handles the GetValid error response.
 func (client *basicOperations) getValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -303,7 +303,7 @@ func (client *basicOperations) putValidHandleResponse(resp *azcore.Response) (*h
 
 // putValidHandleError handles the PutValid error response.
 func (client *basicOperations) putValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

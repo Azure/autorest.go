@@ -71,7 +71,7 @@ func (client *enumOperations) getNotExpandableHandleResponse(resp *azcore.Respon
 
 // getNotExpandableHandleError handles the GetNotExpandable error response.
 func (client *enumOperations) getNotExpandableHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -117,7 +117,7 @@ func (client *enumOperations) getReferencedHandleResponse(resp *azcore.Response)
 
 // getReferencedHandleError handles the GetReferenced error response.
 func (client *enumOperations) getReferencedHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -163,7 +163,7 @@ func (client *enumOperations) getReferencedConstantHandleResponse(resp *azcore.R
 
 // getReferencedConstantHandleError handles the GetReferencedConstant error response.
 func (client *enumOperations) getReferencedConstantHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -208,7 +208,7 @@ func (client *enumOperations) putNotExpandableHandleResponse(resp *azcore.Respon
 
 // putNotExpandableHandleError handles the PutNotExpandable error response.
 func (client *enumOperations) putNotExpandableHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -253,7 +253,7 @@ func (client *enumOperations) putReferencedHandleResponse(resp *azcore.Response)
 
 // putReferencedHandleError handles the PutReferenced error response.
 func (client *enumOperations) putReferencedHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -298,7 +298,7 @@ func (client *enumOperations) putReferencedConstantHandleResponse(resp *azcore.R
 
 // putReferencedConstantHandleError handles the PutReferencedConstant error response.
 func (client *enumOperations) putReferencedConstantHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

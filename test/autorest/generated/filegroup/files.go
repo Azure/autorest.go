@@ -65,7 +65,7 @@ func (client *filesOperations) getEmptyFileHandleResponse(resp *azcore.Response)
 
 // getEmptyFileHandleError handles the GetEmptyFile error response.
 func (client *filesOperations) getEmptyFileHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -111,7 +111,7 @@ func (client *filesOperations) getFileHandleResponse(resp *azcore.Response) (*ht
 
 // getFileHandleError handles the GetFile error response.
 func (client *filesOperations) getFileHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -157,7 +157,7 @@ func (client *filesOperations) getFileLargeHandleResponse(resp *azcore.Response)
 
 // getFileLargeHandleError handles the GetFileLarge error response.
 func (client *filesOperations) getFileLargeHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

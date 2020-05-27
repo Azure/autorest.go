@@ -66,7 +66,7 @@ func (client *httpFailureOperations) getEmptyErrorHandleResponse(resp *azcore.Re
 
 // getEmptyErrorHandleError handles the GetEmptyError error response.
 func (client *httpFailureOperations) getEmptyErrorHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
