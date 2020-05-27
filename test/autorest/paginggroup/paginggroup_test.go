@@ -368,3 +368,29 @@ func TestGetSinglePagesFailure(t *testing.T) {
 		t.Fatal("expected nil payload")
 	}
 }
+
+// GetWithQueryParams - A paging operation that includes a next operation. It has a different query parameter from it's next operation nextOperationWithQueryParams. Returns a ProductResult
+func TestGetWithQueryParams(t *testing.T) {
+	client := getPagingOperations(t)
+	page, err := client.GetWithQueryParams(100)
+	if err != nil {
+		t.Fatal(err)
+	}
+	count := 0
+	for page.NextPage(context.Background()) {
+		resp := page.PageResponse()
+		if len(*resp.ProductResult.Values) == 0 {
+			t.Fatal("missing payload")
+		}
+		count++
+	}
+	if err = page.Err(); err != nil {
+		t.Fatal(err)
+	}
+	if count != 0 {
+		helpers.DeepEqualOrFatal(t, count, 2)
+	}
+	if page.PageResponse() == nil {
+		t.Fatal("unexpected nil payload")
+	}
+}

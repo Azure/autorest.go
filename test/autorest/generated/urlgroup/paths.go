@@ -65,7 +65,7 @@ type PathsOperations interface {
 	StringNull(ctx context.Context, stringPath string) (*http.Response, error)
 	// StringURLEncoded - Get 'begin!*'();:@ &=+$,/?#[]end
 	StringURLEncoded(ctx context.Context) (*http.Response, error)
-	// StringURLNonEncoded - Get 'begin!*'();:@&=+$,end
+	// StringURLNonEncoded - https://tools.ietf.org/html/rfc3986#appendix-A 'path' accept any 'pchar' not encoded
 	StringURLNonEncoded(ctx context.Context) (*http.Response, error)
 	// StringUnicode - Get '啊齄丂狛狜隣郎隣兀﨩' multi-byte string value
 	StringUnicode(ctx context.Context) (*http.Response, error)
@@ -1182,7 +1182,7 @@ func (client *pathsOperations) stringUrlEncodedHandleError(resp *azcore.Response
 	return err
 }
 
-// StringURLNonEncoded - Get 'begin!*'();:@&=+$,end
+// StringURLNonEncoded - https://tools.ietf.org/html/rfc3986#appendix-A 'path' accept any 'pchar' not encoded
 func (client *pathsOperations) StringURLNonEncoded(ctx context.Context) (*http.Response, error) {
 	req, err := client.stringUrlNonEncodedCreateRequest()
 	if err != nil {

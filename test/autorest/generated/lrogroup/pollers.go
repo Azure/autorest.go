@@ -78,6 +78,111 @@ func (p *httpPoller) pollUntilDone(ctx context.Context, frequency time.Duration)
 	return p.FinalResponse(), nil
 }
 
+// ProductArrayPoller provides polling facilities until the operation completes
+type ProductArrayPoller interface {
+	Done() bool
+	Poll(ctx context.Context) (*http.Response, error)
+	FinalResponse(ctx context.Context) (*ProductArrayResponse, error)
+	ResumeToken() (string, error)
+}
+
+type productArrayPoller struct {
+	// the client for making the request
+	pipeline azcore.Pipeline
+	// polling tracker
+	pt pollingTracker
+}
+
+// Done returns true if there was an error or polling has reached a terminal state
+func (p *productArrayPoller) Done() bool {
+	return p.pt.hasTerminated()
+}
+
+// Poll will send poll the service endpoint and return an http.Response or error received from the service
+func (p *productArrayPoller) Poll(ctx context.Context) (*http.Response, error) {
+	if lroPollDone(ctx, p.pipeline, p.pt) {
+		return p.pt.latestResponse().Response, p.pt.pollingError()
+	}
+	return nil, p.pt.pollingError()
+}
+
+func (p *productArrayPoller) FinalResponse(ctx context.Context) (*ProductArrayResponse, error) {
+	// checking if there was a FinalStateVia configuration to re-route the final GET
+	// request to the value specified in the FinalStateVia property on the poller
+	err := p.pt.setFinalState()
+	if err != nil {
+		return nil, err
+	}
+	if p.pt.finalGetURL() == "" {
+		// we can end up in this situation if the async operation returns a 200
+		// with no polling URLs.  in that case return the response which should
+		// contain the JSON payload (only do this for successful terminal cases).
+		if lr := p.pt.latestResponse(); lr != nil && p.pt.hasSucceeded() {
+			result, err := p.handleResponse(lr)
+			if err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, errors.New("missing URL for retrieving result")
+	}
+	u, err := url.Parse(p.pt.finalGetURL())
+	if err != nil {
+		return nil, err
+	}
+	req := azcore.NewRequest(http.MethodGet, *u)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := p.pipeline.Do(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	return p.handleResponse(resp)
+}
+
+// ResumeToken generates the string token that can be used with the ResumeProductArrayPoller method
+// on the client to create a new poller from the data held in the current poller type
+func (p *productArrayPoller) ResumeToken() (string, error) {
+	if p.pt.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.pt)
+	if err != nil {
+		return "", err
+	}
+	return string(js), nil
+}
+
+func (p *productArrayPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*ProductArrayResponse, error) {
+	for {
+		resp, err := p.Poll(ctx)
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			break
+		}
+		if delay := azcore.RetryAfter(resp); delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(frequency)
+		}
+	}
+	return p.FinalResponse(ctx)
+}
+
+func (p *productArrayPoller) handleResponse(resp *azcore.Response) (*ProductArrayResponse, error) {
+	result := ProductArrayResponse{RawResponse: resp.Response}
+	if resp.HasStatusCode(http.StatusNoContent) {
+		return &result, nil
+	}
+	if !resp.HasStatusCode(pollingCodes[:]...) {
+		return nil, p.pt.handleError(resp)
+	}
+	return &result, resp.UnmarshalAsJSON(&result.ProductArray)
+}
+
 // ProductPoller provides polling facilities until the operation completes
 type ProductPoller interface {
 	Done() bool
