@@ -1158,7 +1158,7 @@ func (client *lrOSOperations) post202ListHandleResponse(resp *azcore.Response) (
 
 // post202ListHandleError handles the Post202List error response.
 func (client *lrOSOperations) post202ListHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -2314,7 +2314,7 @@ func (client *lrOSOperations) put201SucceededHandleResponse(resp *azcore.Respons
 
 // put201SucceededHandleError handles the Put201Succeeded error response.
 func (client *lrOSOperations) put201SucceededHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

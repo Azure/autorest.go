@@ -293,7 +293,7 @@ func (client *datetimeOperations) getLocalNoOffsetMinDateTimeHandleResponse(resp
 
 // getLocalNoOffsetMinDateTimeHandleError handles the GetLocalNoOffsetMinDateTime error response.
 func (client *datetimeOperations) getLocalNoOffsetMinDateTimeHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
