@@ -5,6 +5,7 @@ package lrogrouptest
 
 import (
 	"context"
+	"errors"
 	"generatortests/autorest/generated/lrogroup"
 	"generatortests/helpers"
 	"net/http"
@@ -122,7 +123,6 @@ func TestLROBeginDelete204Succeeded(t *testing.T) {
 }
 
 func TestLROBeginDeleteAsyncNoHeaderInRetry(t *testing.T) {
-	t.Skip("pending on CloudError field fix")
 	op := getLROSOperations(t)
 	resp, err := op.BeginDeleteAsyncNoHeaderInRetry(context.Background())
 	if err != nil {
@@ -141,7 +141,7 @@ func TestLROBeginDeleteAsyncNoHeaderInRetry(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, res, 204)
+	helpers.VerifyStatusCode(t, res, 200)
 }
 
 func TestLROBeginDeleteAsyncNoRetrySucceeded(t *testing.T) {
@@ -167,7 +167,6 @@ func TestLROBeginDeleteAsyncNoRetrySucceeded(t *testing.T) {
 }
 
 func TestLROBeginDeleteAsyncRetryFailed(t *testing.T) {
-	t.Skip("CloudError unmarshalling is failing")
 	op := getLROSOperations(t)
 	resp, err := op.BeginDeleteAsyncRetryFailed(context.Background())
 	if err != nil {
@@ -183,10 +182,16 @@ func TestLROBeginDeleteAsyncRetryFailed(t *testing.T) {
 		t.Fatal(err)
 	}
 	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
-	if err != nil {
-		t.Fatal(err)
+	if err == nil {
+		t.Fatal("expected an error but did not receive one")
 	}
-	helpers.VerifyStatusCode(t, res, 200)
+	if res != nil {
+		t.Fatal("expected a nil response from the polling operation")
+	}
+	var cloudErr lrogroup.CloudError
+	if !errors.Is(err, cloudErr) {
+		t.Fatal("expected a CloudError but did not receive one")
+	}
 }
 
 func TestLROBeginDeleteAsyncRetrySucceeded(t *testing.T) {
@@ -212,7 +217,6 @@ func TestLROBeginDeleteAsyncRetrySucceeded(t *testing.T) {
 }
 
 func TestLROBeginDeleteAsyncRetrycanceled(t *testing.T) {
-	t.Skip("CloudError unmarshalling is failing")
 	op := getLROSOperations(t)
 	resp, err := op.BeginDeleteAsyncRetrycanceled(context.Background())
 	if err != nil {
@@ -228,10 +232,16 @@ func TestLROBeginDeleteAsyncRetrycanceled(t *testing.T) {
 		t.Fatal(err)
 	}
 	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
-	if err != nil {
-		t.Fatal(err)
+	if err == nil {
+		t.Fatal("expected an error but did not receive one")
 	}
-	helpers.VerifyStatusCode(t, res, 200)
+	if res != nil {
+		t.Fatal("expected a nil response from the polling operation")
+	}
+	var cloudErr lrogroup.CloudError
+	if !errors.Is(err, cloudErr) {
+		t.Fatal("expected a CloudError but did not receive one")
+	}
 }
 
 func TestLROBeginDeleteNoHeaderInRetry(t *testing.T) {
@@ -346,6 +356,36 @@ func TestLROBeginPost200WithPayload(t *testing.T) {
 	})
 }
 
+func TestLROBeginPost202List(t *testing.T) {
+	op := getLROSOperations(t)
+	resp, err := op.BeginPost202List(context.Background())
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller := resp.Poller
+	rt, err := poller.ResumeToken()
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller, err = op.ResumePost202List(rt)
+	if err != nil {
+		t.Fatal(err)
+	}
+	resp, err = resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
+	helpers.DeepEqualOrFatal(t, resp.ProductArray, &[]lrogroup.Product{
+		lrogroup.Product{
+			Resource: lrogroup.Resource{
+				ID:   to.StringPtr("100"),
+				Name: to.StringPtr("foo"),
+			},
+		},
+	})
+}
+
 func TestLROBeginPost202NoRetry204(t *testing.T) {
 	op := getLROSOperations(t)
 	resp, err := op.BeginPost202NoRetry204(context.Background(), nil)
@@ -415,11 +455,13 @@ func TestLROBeginPostAsyncNoRetrySucceeded(t *testing.T) {
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
 		},
+		Properties: &lrogroup.ProductProperties{
+			ProvisioningState: to.StringPtr("Succeeded"),
+		},
 	})
 }
 
 func TestLROBeginPostAsyncRetryFailed(t *testing.T) {
-	t.Skip("CloudError unmarshalling fails")
 	op := getLROSOperations(t)
 	resp, err := op.BeginPostAsyncRetryFailed(context.Background(), nil)
 	if err != nil {
@@ -434,9 +476,16 @@ func TestLROBeginPostAsyncRetryFailed(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	_, err = resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
+	}
+	if res != nil {
+		t.Fatal("expected a nil response from the polling operation")
+	}
+	var cloudErr lrogroup.CloudError
+	if !errors.Is(err, cloudErr) {
+		t.Fatal("expected a CloudError but did not receive one")
 	}
 }
 
@@ -465,11 +514,13 @@ func TestLROBeginPostAsyncRetrySucceeded(t *testing.T) {
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
 		},
+		Properties: &lrogroup.ProductProperties{
+			ProvisioningState: to.StringPtr("Succeeded"),
+		},
 	})
 }
 
 func TestLROBeginPostAsyncRetrycanceled(t *testing.T) {
-	t.Skip("CloudError unmarshalling failed")
 	op := getLROSOperations(t)
 	resp, err := op.BeginPostAsyncRetrycanceled(context.Background(), nil)
 	if err != nil {
@@ -484,9 +535,16 @@ func TestLROBeginPostAsyncRetrycanceled(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	_, err = resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
+	}
+	if res != nil {
+		t.Fatal("expected a nil response from the polling operation")
+	}
+	var cloudErr lrogroup.CloudError
+	if !errors.Is(err, cloudErr) {
+		t.Fatal("expected a CloudError but did not receive one")
 	}
 }
 
@@ -569,7 +627,6 @@ func TestLROBeginPostDoubleHeadersFinalLocationGet(t *testing.T) {
 }
 
 func TestLROBeginPut200Acceptedcanceled200(t *testing.T) {
-	t.Skip("missing error info returned for error")
 	op := getLROSOperations(t)
 	resp, err := op.BeginPut200Acceptedcanceled200(context.Background(), nil)
 	if err != nil {
@@ -584,9 +641,16 @@ func TestLROBeginPut200Acceptedcanceled200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	_, err = resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
 	if err == nil {
-		t.Fatal("Expected an error but did not receive one")
+		t.Fatal("expected an error but did not receive one")
+	}
+	if res != nil {
+		t.Fatal("expected a nil response from the polling operation")
+	}
+	var cloudErr lrogroup.CloudError
+	if !errors.Is(err, cloudErr) {
+		t.Fatal("expected a CloudError but did not receive one")
 	}
 }
 
@@ -673,7 +737,6 @@ func TestLROBeginPut200UpdatingSucceeded204(t *testing.T) {
 }
 
 func TestLROBeginPut201CreatingFailed200(t *testing.T) {
-	t.Skip("missing error info message returned for error")
 	op := getLROSOperations(t)
 	resp, err := op.BeginPut201CreatingFailed200(context.Background(), nil)
 	if err != nil {
@@ -688,9 +751,16 @@ func TestLROBeginPut201CreatingFailed200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	_, err = resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
+	}
+	if res != nil {
+		t.Fatal("expected a nil response from the polling operation")
+	}
+	var cloudErr lrogroup.CloudError
+	if !errors.Is(err, cloudErr) {
+		t.Fatal("expected a CloudError but did not receive one")
 	}
 }
 
@@ -820,7 +890,6 @@ func TestLROBeginPutAsyncNoRetrySucceeded(t *testing.T) {
 }
 
 func TestLROBeginPutAsyncNoRetrycanceled(t *testing.T) {
-	t.Skip("CloudError unmarshalling failed")
 	op := getLROSOperations(t)
 	resp, err := op.BeginPutAsyncNoRetrycanceled(context.Background(), nil)
 	if err != nil {
@@ -840,14 +909,12 @@ func TestLROBeginPutAsyncNoRetrycanceled(t *testing.T) {
 		t.Fatal("expected an error but did not receive one")
 	}
 	if res != nil {
-		t.Fatal("expected a nil response with the error")
+		t.Fatal("expected a nil response from the polling operation")
 	}
-	// var cloudErr lrogroup.CloudError
-	// if !errors.As(err, &cloudErr) {
-	// 	t.Fatal("expected a CloudError but did not receive one")
-	// } else {
-	// 	helpers.DeepEqualOrFatal(t, cloudErr, lrogroup.CloudError{})
-	// }
+	var cloudErr lrogroup.CloudError
+	if !errors.Is(err, cloudErr) {
+		t.Fatal("expected a CloudError but did not receive one")
+	}
 }
 
 func TestLROBeginPutAsyncNonResource(t *testing.T) {
@@ -877,7 +944,6 @@ func TestLROBeginPutAsyncNonResource(t *testing.T) {
 }
 
 func TestLROBeginPutAsyncRetryFailed(t *testing.T) {
-	t.Skip("CloudError unmarshalling failed")
 	op := getLROSOperations(t)
 	resp, err := op.BeginPutAsyncRetryFailed(context.Background(), nil)
 	if err != nil {
@@ -892,9 +958,16 @@ func TestLROBeginPutAsyncRetryFailed(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	_, err = resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
+	}
+	if res != nil {
+		t.Fatal("expected a nil response from the polling operation")
+	}
+	var cloudErr lrogroup.CloudError
+	if !errors.Is(err, cloudErr) {
+		t.Fatal("expected a CloudError but did not receive one")
 	}
 }
 

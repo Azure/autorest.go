@@ -46,6 +46,8 @@ type PagingOperations interface {
 	GetSinglePages() (ProductResultPager, error)
 	// GetSinglePagesFailure - A paging operation that receives a 400 on the first call
 	GetSinglePagesFailure() (ProductResultPager, error)
+	// GetWithQueryParams - A paging operation that includes a next operation. It has a different query parameter from it's next operation nextOperationWithQueryParams. Returns a ProductResult
+	GetWithQueryParams(requiredQueryParameter int32) (ProductResultPager, error)
 }
 
 // pagingOperations implements the PagingOperations interface.
@@ -732,6 +734,51 @@ func (client *pagingOperations) getSinglePagesFailureHandleError(resp *azcore.Re
 	return errors.New(resp.Status)
 }
 
+// GetWithQueryParams - A paging operation that includes a next operation. It has a different query parameter from it's next operation nextOperationWithQueryParams. Returns a ProductResult
+func (client *pagingOperations) GetWithQueryParams(requiredQueryParameter int32) (ProductResultPager, error) {
+	req, err := client.getWithQueryParamsCreateRequest(requiredQueryParameter)
+	if err != nil {
+		return nil, err
+	}
+	return &productResultPager{
+		pipeline:  client.p,
+		request:   req,
+		responder: client.getWithQueryParamsHandleResponse,
+		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
+			return client.nextOperationWithQueryParamsCreateRequest()
+		},
+	}, nil
+}
+
+// getWithQueryParamsCreateRequest creates the GetWithQueryParams request.
+func (client *pagingOperations) getWithQueryParamsCreateRequest(requiredQueryParameter int32) (*azcore.Request, error) {
+	urlPath := "/paging/multiple/getWithQueryParams"
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
+	query := u.Query()
+	query.Set("requiredQueryParameter", strconv.FormatInt(int64(requiredQueryParameter), 10))
+	query.Set("queryConstant", "true")
+	u.RawQuery = query.Encode()
+	req := azcore.NewRequest(http.MethodGet, *u)
+	return req, nil
+}
+
+// getWithQueryParamsHandleResponse handles the GetWithQueryParams response.
+func (client *pagingOperations) getWithQueryParamsHandleResponse(resp *azcore.Response) (*ProductResultResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.getWithQueryParamsHandleError(resp)
+	}
+	result := ProductResultResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.ProductResult)
+}
+
+// getWithQueryParamsHandleError handles the GetWithQueryParams error response.
+func (client *pagingOperations) getWithQueryParamsHandleError(resp *azcore.Response) error {
+	return errors.New(resp.Status)
+}
+
 // nextFragmentCreateRequest creates the NextFragment request.
 func (client *pagingOperations) nextFragmentCreateRequest(apiVersion string, tenant string, nextLink string) (*azcore.Request, error) {
 	urlPath := "/paging/multiple/fragment/{tenant}/{nextLink}"
@@ -789,5 +836,33 @@ func (client *pagingOperations) nextFragmentWithGroupingHandleResponse(resp *azc
 
 // nextFragmentWithGroupingHandleError handles the NextFragmentWithGrouping error response.
 func (client *pagingOperations) nextFragmentWithGroupingHandleError(resp *azcore.Response) error {
+	return errors.New(resp.Status)
+}
+
+// nextOperationWithQueryParamsCreateRequest creates the NextOperationWithQueryParams request.
+func (client *pagingOperations) nextOperationWithQueryParamsCreateRequest() (*azcore.Request, error) {
+	urlPath := "/paging/multiple/nextOperationWithQueryParams"
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
+	query := u.Query()
+	query.Set("queryConstant", "true")
+	u.RawQuery = query.Encode()
+	req := azcore.NewRequest(http.MethodGet, *u)
+	return req, nil
+}
+
+// nextOperationWithQueryParamsHandleResponse handles the NextOperationWithQueryParams response.
+func (client *pagingOperations) nextOperationWithQueryParamsHandleResponse(resp *azcore.Response) (*ProductResultResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.nextOperationWithQueryParamsHandleError(resp)
+	}
+	result := ProductResultResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.ProductResult)
+}
+
+// nextOperationWithQueryParamsHandleError handles the NextOperationWithQueryParams error response.
+func (client *pagingOperations) nextOperationWithQueryParamsHandleError(resp *azcore.Response) error {
 	return errors.New(resp.Status)
 }

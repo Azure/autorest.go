@@ -66,6 +66,10 @@ type LrOSOperations interface {
 	BeginPost200WithPayload(ctx context.Context) (*SkuResponse, error)
 	// ResumePost200WithPayload - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumePost200WithPayload(token string) (SkuPoller, error)
+	// BeginPost202List - Long running put request, service returns a 202 with empty body to first request, returns a 200 with body [{ 'id': '100', 'name': 'foo' }].
+	BeginPost202List(ctx context.Context) (*ProductArrayResponse, error)
+	// ResumePost202List - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
+	ResumePost202List(token string) (ProductArrayPoller, error)
 	// BeginPost202NoRetry204 - Long running post request, service returns a 202 to the initial request, with 'Location' header, 204 with noresponse body after success
 	BeginPost202NoRetry204(ctx context.Context, lrOSPost202NoRetry204Options *LrOSPost202NoRetry204Options) (*ProductResponse, error)
 	// ResumePost202NoRetry204 - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
@@ -126,6 +130,10 @@ type LrOSOperations interface {
 	BeginPut201CreatingSucceeded200(ctx context.Context, lrOSPut201CreatingSucceeded200Options *LrOSPut201CreatingSucceeded200Options) (*ProductResponse, error)
 	// ResumePut201CreatingSucceeded200 - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumePut201CreatingSucceeded200(token string) (ProductPoller, error)
+	// BeginPut201Succeeded - Long running put request, service returns a 201 to the initial request, with an entity that contains ProvisioningState=’Succeeded’.
+	BeginPut201Succeeded(ctx context.Context, lrOSPut201SucceededOptions *LrOSPut201SucceededOptions) (*ProductResponse, error)
+	// ResumePut201Succeeded - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
+	ResumePut201Succeeded(token string) (ProductPoller, error)
 	// BeginPut202Retry200 - Long running put request, service returns a 202 to the initial request, with a location header that points to a polling URL that returns a 200 and an entity that doesn't contains ProvisioningState
 	BeginPut202Retry200(ctx context.Context, lrOSPut202Retry200Options *LrOSPut202Retry200Options) (*ProductResponse, error)
 	// ResumePut202Retry200 - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
@@ -1074,6 +1082,82 @@ func (client *lrOSOperations) post200WithPayloadHandleResponse(resp *azcore.Resp
 
 // post200WithPayloadHandleError handles the Post200WithPayload error response.
 func (client *lrOSOperations) post200WithPayloadHandleError(resp *azcore.Response) error {
+	var err CloudError
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
+}
+
+// Post202List - Long running put request, service returns a 202 with empty body to first request, returns a 200 with body [{ 'id': '100', 'name': 'foo' }].
+func (client *lrOSOperations) BeginPost202List(ctx context.Context) (*ProductArrayResponse, error) {
+	req, err := client.post202ListCreateRequest()
+	if err != nil {
+		return nil, err
+	}
+	// send the first request to initialize the poller
+	resp, err := client.p.Do(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	result, err := client.post202ListHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	pt, err := createPollingTracker("lrOSOperations.Post202List", "", resp, client.post202ListHandleError)
+	if err != nil {
+		return nil, err
+	}
+	poller := &productArrayPoller{
+		pt:       pt,
+		pipeline: client.p,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductArrayResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
+}
+
+func (client *lrOSOperations) ResumePost202List(token string) (ProductArrayPoller, error) {
+	pt, err := resumePollingTracker("lrOSOperations.Post202List", token, client.post202ListHandleError)
+	if err != nil {
+		return nil, err
+	}
+	return &productArrayPoller{
+		pipeline: client.p,
+		pt:       pt,
+	}, nil
+}
+
+// post202ListCreateRequest creates the Post202List request.
+func (client *lrOSOperations) post202ListCreateRequest() (*azcore.Request, error) {
+	urlPath := "/lro/list"
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
+	req := azcore.NewRequest(http.MethodPost, *u)
+	return req, nil
+}
+
+// post202ListHandleResponse handles the Post202List response.
+func (client *lrOSOperations) post202ListHandleResponse(resp *azcore.Response) (*ProductArrayResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.post202ListHandleError(resp)
+	}
+	result := ProductArrayResponse{RawResponse: resp.Response}
+	if val := resp.Header.Get("Azure-AsyncOperation"); val != "" {
+		result.AzureAsyncOperation = &val
+	}
+	if val := resp.Header.Get("Location"); val != "" {
+		result.Location = &val
+	}
+	return &result, resp.UnmarshalAsJSON(&result.ProductArray)
+}
+
+// post202ListHandleError handles the Post202List error response.
+func (client *lrOSOperations) post202ListHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2157,6 +2241,79 @@ func (client *lrOSOperations) put201CreatingSucceeded200HandleResponse(resp *azc
 
 // put201CreatingSucceeded200HandleError handles the Put201CreatingSucceeded200 error response.
 func (client *lrOSOperations) put201CreatingSucceeded200HandleError(resp *azcore.Response) error {
+	var err CloudError
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
+}
+
+// Put201Succeeded - Long running put request, service returns a 201 to the initial request, with an entity that contains ProvisioningState=’Succeeded’.
+func (client *lrOSOperations) BeginPut201Succeeded(ctx context.Context, lrOSPut201SucceededOptions *LrOSPut201SucceededOptions) (*ProductResponse, error) {
+	req, err := client.put201SucceededCreateRequest(lrOSPut201SucceededOptions)
+	if err != nil {
+		return nil, err
+	}
+	// send the first request to initialize the poller
+	resp, err := client.p.Do(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	result, err := client.put201SucceededHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	pt, err := createPollingTracker("lrOSOperations.Put201Succeeded", "", resp, client.put201SucceededHandleError)
+	if err != nil {
+		return nil, err
+	}
+	poller := &productPoller{
+		pt:       pt,
+		pipeline: client.p,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
+}
+
+func (client *lrOSOperations) ResumePut201Succeeded(token string) (ProductPoller, error) {
+	pt, err := resumePollingTracker("lrOSOperations.Put201Succeeded", token, client.put201SucceededHandleError)
+	if err != nil {
+		return nil, err
+	}
+	return &productPoller{
+		pipeline: client.p,
+		pt:       pt,
+	}, nil
+}
+
+// put201SucceededCreateRequest creates the Put201Succeeded request.
+func (client *lrOSOperations) put201SucceededCreateRequest(lrOSPut201SucceededOptions *LrOSPut201SucceededOptions) (*azcore.Request, error) {
+	urlPath := "/lro/put/201/succeeded"
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
+	req := azcore.NewRequest(http.MethodPut, *u)
+	if lrOSPut201SucceededOptions != nil {
+		return req, req.MarshalAsJSON(lrOSPut201SucceededOptions.Product)
+	}
+	return req, nil
+}
+
+// put201SucceededHandleResponse handles the Put201Succeeded response.
+func (client *lrOSOperations) put201SucceededHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
+	if !resp.HasStatusCode(http.StatusCreated, http.StatusNoContent) {
+		return nil, client.put201SucceededHandleError(resp)
+	}
+	result := ProductResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Product)
+}
+
+// put201SucceededHandleError handles the Put201Succeeded error response.
+func (client *lrOSOperations) put201SucceededHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

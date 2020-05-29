@@ -245,7 +245,7 @@ function formatHeaderResponseValue(propName: string, header: string, schema: Sch
 }
 
 function generateOperation(clientName: string, op: Operation, imports: ImportManager): string {
-  if (isPageableOperation(op) && op.language.go!.paging.member === op.language.go!.name) {
+  if (op.language.go!.paging && op.language.go!.paging.isNextOp) {
     // don't generate a public API for the methods used to advance pages
     return '';
   }
@@ -337,22 +337,19 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
     const schemaResponse = <SchemaResponse>pager.op.responses![0];
     const nextLink = pager.op.language.go!.paging.nextLinkName;
     if (op.language.go!.paging.member) {
-      // find the location of the nextLink param
-      const nextLinkOpParams = getMethodParameters(op.language.go!.paging.nextLinkOperation);
-      let found = false;
-      for (let i = 0; i < nextLinkOpParams.length; ++i) {
-        if (nextLinkOpParams[i].schema.type === SchemaType.String && nextLinkOpParams[i].language.go!.name.startsWith('next')) {
-          // found it
-          reqParams.splice(i, 0, `*resp.${schemaResponse.schema.language.go!.name}.${nextLink}`);
-          found = true;
-          break;
+      const nextOpParams = getCreateRequestParametersSig(op.language.go!.paging.nextLinkOperation).split(',');
+      // keep the parameter names from the name/type tuples and find nextLink param
+      for (let i = 0; i < nextOpParams.length; ++i) {
+        const paramName = nextOpParams[i].trim().split(' ')[0];
+        const paramType = nextOpParams[i].trim().split(' ')[1];
+        if (paramName.startsWith('next') && paramType === 'string') {
+          nextOpParams[i] = `*resp.${schemaResponse.schema.language.go!.name}.${nextLink}`;
+        } else {
+          nextOpParams[i] = paramName;
         }
       }
-      if (!found) {
-        throw console.error(`failed to find nextLink parameter for operation ${op.language.go!.paging.nextLinkOperation.language.go!.name}`);
-      }
       text += `\t\tadvancer: func(resp *${schemaResponse.schema.language.go!.responseType.name}) (*azcore.Request, error) {\n`;
-      text += `\t\t\treturn client.${camelCase(op.language.go!.paging.member)}CreateRequest(${reqParams.join(', ')})\n`;
+      text += `\t\t\treturn client.${camelCase(op.language.go!.paging.member)}CreateRequest(${nextOpParams.join(', ')})\n`;
       text += '\t\t},\n';
     } else {
       imports.add('fmt');
@@ -800,7 +797,7 @@ function createInterfaceDefinition(group: OperationGroup, imports: ImportManager
   interfaceText += `type ${group.language.go!.clientName} interface {\n`;
   for (const op of values(group.operations)) {
     let opName = op.language.go!.name;
-    if (isPageableOperation(op) && op.language.go!.paging.member === op.language.go!.name) {
+    if (op.language.go!.paging && op.language.go!.paging.isNextOp) {
       // don't generate a public API for the methods used to advance pages
       continue;
     }

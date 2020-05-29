@@ -216,6 +216,12 @@ function processOperationRequests(session: Session<CodeModel>) {
               break;
             }
           }
+          for (const internalOp of values(group.operations)) {
+            if (internalOp.language.go!.name === dupeOp.language.default.name) {
+              internalOp.language.go!.paging.isNextOp = true;
+              break;
+            }
+          }
         }
         const inBody = param.protocol.http !== undefined && param.protocol.http!.in === 'body';
         param.schema.language.go!.name = schemaTypeToGoType(session.model, param.schema, inBody);

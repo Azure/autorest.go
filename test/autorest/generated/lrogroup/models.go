@@ -13,17 +13,17 @@ import (
 )
 
 type CloudError struct {
+	Code    *int32  `json:"code,omitempty"`
 	Message *string `json:"message,omitempty"`
-	Status  *int32  `json:"status,omitempty"`
 }
 
 func (e CloudError) Error() string {
 	msg := ""
+	if e.Code != nil {
+		msg += fmt.Sprintf("Code: %v\n", *e.Code)
+	}
 	if e.Message != nil {
 		msg += fmt.Sprintf("Message: %v\n", *e.Message)
-	}
-	if e.Status != nil {
-		msg += fmt.Sprintf("Status: %v\n", *e.Status)
 	}
 	if msg == "" {
 		msg = "missing error info"
@@ -138,6 +138,12 @@ type LrOSPut201CreatingFailed200Options struct {
 
 // LrOSPut201CreatingSucceeded200Options contains the optional parameters for the LrOS.Put201CreatingSucceeded200 method.
 type LrOSPut201CreatingSucceeded200Options struct {
+	// Product to put
+	Product *Product
+}
+
+// LrOSPut201SucceededOptions contains the optional parameters for the LrOS.Put201Succeeded method.
+type LrOSPut201SucceededOptions struct {
 	// Product to put
 	Product *Product
 }
@@ -370,6 +376,27 @@ type OperationResultError struct {
 type Product struct {
 	Resource
 	Properties *ProductProperties `json:"properties,omitempty"`
+}
+
+// ProductArrayResponse is the response envelope for operations that return a []Product type.
+type ProductArrayResponse struct {
+	// AzureAsyncOperation contains the information returned from the Azure-AsyncOperation header response.
+	AzureAsyncOperation *string
+
+	// Location contains the information returned from the Location header response.
+	Location *string
+
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (*ProductArrayResponse, error)
+
+	// Poller contains an initialized poller
+	Poller ProductArrayPoller
+
+	// Array of Product
+	ProductArray *[]Product
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 type ProductProperties struct {

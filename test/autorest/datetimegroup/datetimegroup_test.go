@@ -93,6 +93,19 @@ func TestGetLocalPositiveOffsetMinDateTime(t *testing.T) {
 	helpers.DeepEqualOrFatal(t, result.Value, &expected)
 }
 
+func TestGetLocalNoOffsetMinDateTime(t *testing.T) {
+	client := getDatetimeOperations(t)
+	result, err := client.GetLocalNoOffsetMinDateTime(context.Background())
+	if err != nil {
+		t.Fatal(err)
+	}
+	expected, err := time.Parse(time.RFC3339, "0001-01-01T00:00:00Z")
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.DeepEqualOrFatal(t, result.Value, &expected)
+}
+
 func TestGetLocalPositiveOffsetUppercaseMaxDateTime(t *testing.T) {
 	client := getDatetimeOperations(t)
 	result, err := client.GetLocalPositiveOffsetUppercaseMaxDateTime(context.Background())
