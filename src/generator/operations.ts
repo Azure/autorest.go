@@ -245,7 +245,7 @@ function formatHeaderResponseValue(propName: string, header: string, schema: Sch
 }
 
 function generateOperation(clientName: string, op: Operation, imports: ImportManager): string {
-  if (isPageableOperation(op) && op.language.go!.paging.member === op.language.go!.name) {
+  if (isPageableOperation(op) && op.language.go!.paging.member === op.language.go!.name || op.language.go!.name.startsWith('Next')) {
     // don't generate a public API for the methods used to advance pages
     return '';
   }
@@ -797,7 +797,7 @@ function createInterfaceDefinition(group: OperationGroup, imports: ImportManager
   interfaceText += `type ${group.language.go!.clientName} interface {\n`;
   for (const op of values(group.operations)) {
     let opName = op.language.go!.name;
-    if (isPageableOperation(op) && op.language.go!.paging.member === op.language.go!.name) {
+    if (isPageableOperation(op) && op.language.go!.paging.member === opName || opName.startsWith('Next')) {
       // don't generate a public API for the methods used to advance pages
       continue;
     }
