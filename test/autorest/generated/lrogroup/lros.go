@@ -205,6 +205,7 @@ func (client *lrOSOperations) BeginDelete202NoRetry204(ctx context.Context) (*Pr
 		return nil, err
 	}
 	poller := &productPoller{
+		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -275,6 +276,7 @@ func (client *lrOSOperations) BeginDelete202Retry200(ctx context.Context) (*Prod
 		return nil, err
 	}
 	poller := &productPoller{
+		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -345,6 +347,7 @@ func (client *lrOSOperations) BeginDelete204Succeeded(ctx context.Context) (*HTT
 		return nil, err
 	}
 	poller := &httpPoller{
+		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -415,6 +418,7 @@ func (client *lrOSOperations) BeginDeleteAsyncNoHeaderInRetry(ctx context.Contex
 		return nil, err
 	}
 	poller := &httpPoller{
+		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -484,6 +488,7 @@ func (client *lrOSOperations) BeginDeleteAsyncNoRetrySucceeded(ctx context.Conte
 		return nil, err
 	}
 	poller := &httpPoller{
+		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -553,6 +558,7 @@ func (client *lrOSOperations) BeginDeleteAsyncRetryFailed(ctx context.Context) (
 		return nil, err
 	}
 	poller := &httpPoller{
+		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -622,6 +628,7 @@ func (client *lrOSOperations) BeginDeleteAsyncRetrySucceeded(ctx context.Context
 		return nil, err
 	}
 	poller := &httpPoller{
+		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -691,6 +698,7 @@ func (client *lrOSOperations) BeginDeleteAsyncRetrycanceled(ctx context.Context)
 		return nil, err
 	}
 	poller := &httpPoller{
+		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -760,6 +768,7 @@ func (client *lrOSOperations) BeginDeleteNoHeaderInRetry(ctx context.Context) (*
 		return nil, err
 	}
 	poller := &httpPoller{
+		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -829,6 +838,7 @@ func (client *lrOSOperations) BeginDeleteProvisioning202Accepted200Succeeded(ctx
 		return nil, err
 	}
 	poller := &productPoller{
+		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -899,6 +909,7 @@ func (client *lrOSOperations) BeginDeleteProvisioning202DeletingFailed200(ctx co
 		return nil, err
 	}
 	poller := &productPoller{
+		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -969,6 +980,7 @@ func (client *lrOSOperations) BeginDeleteProvisioning202Deletingcanceled200(ctx 
 		return nil, err
 	}
 	poller := &productPoller{
+		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -1039,6 +1051,7 @@ func (client *lrOSOperations) BeginPost200WithPayload(ctx context.Context) (*Sku
 		return nil, err
 	}
 	poller := &skuPoller{
+		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -1109,6 +1122,7 @@ func (client *lrOSOperations) BeginPost202List(ctx context.Context) (*ProductArr
 		return nil, err
 	}
 	poller := &productArrayPoller{
+		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -1185,6 +1199,7 @@ func (client *lrOSOperations) BeginPost202NoRetry204(ctx context.Context, lrOSPo
 		return nil, err
 	}
 	poller := &productPoller{
+		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -1258,6 +1273,7 @@ func (client *lrOSOperations) BeginPost202Retry200(ctx context.Context, lrOSPost
 		return nil, err
 	}
 	poller := &httpPoller{
+		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -1330,6 +1346,7 @@ func (client *lrOSOperations) BeginPostAsyncNoRetrySucceeded(ctx context.Context
 		return nil, err
 	}
 	poller := &productPoller{
+		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -1403,6 +1420,7 @@ func (client *lrOSOperations) BeginPostAsyncRetryFailed(ctx context.Context, lrO
 		return nil, err
 	}
 	poller := &httpPoller{
+		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -1475,6 +1493,7 @@ func (client *lrOSOperations) BeginPostAsyncRetrySucceeded(ctx context.Context, 
 		return nil, err
 	}
 	poller := &productPoller{
+		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -1548,6 +1567,7 @@ func (client *lrOSOperations) BeginPostAsyncRetrycanceled(ctx context.Context, l
 		return nil, err
 	}
 	poller := &httpPoller{
+		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -1620,6 +1640,7 @@ func (client *lrOSOperations) BeginPostDoubleHeadersFinalAzureHeaderGet(ctx cont
 		return nil, err
 	}
 	poller := &productPoller{
+		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -1690,6 +1711,7 @@ func (client *lrOSOperations) BeginPostDoubleHeadersFinalAzureHeaderGetDefault(c
 		return nil, err
 	}
 	poller := &productPoller{
+		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -1760,6 +1782,7 @@ func (client *lrOSOperations) BeginPostDoubleHeadersFinalLocationGet(ctx context
 		return nil, err
 	}
 	poller := &productPoller{
+		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -1830,6 +1853,7 @@ func (client *lrOSOperations) BeginPut200Acceptedcanceled200(ctx context.Context
 		return nil, err
 	}
 	poller := &productPoller{
+		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -1903,6 +1927,7 @@ func (client *lrOSOperations) BeginPut200Succeeded(ctx context.Context, lrOSPut2
 		return nil, err
 	}
 	poller := &productPoller{
+		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -1976,6 +2001,7 @@ func (client *lrOSOperations) BeginPut200SucceededNoState(ctx context.Context, l
 		return nil, err
 	}
 	poller := &productPoller{
+		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -2049,6 +2075,7 @@ func (client *lrOSOperations) BeginPut200UpdatingSucceeded204(ctx context.Contex
 		return nil, err
 	}
 	poller := &productPoller{
+		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -2122,6 +2149,7 @@ func (client *lrOSOperations) BeginPut201CreatingFailed200(ctx context.Context, 
 		return nil, err
 	}
 	poller := &productPoller{
+		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -2195,6 +2223,7 @@ func (client *lrOSOperations) BeginPut201CreatingSucceeded200(ctx context.Contex
 		return nil, err
 	}
 	poller := &productPoller{
+		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -2268,6 +2297,7 @@ func (client *lrOSOperations) BeginPut201Succeeded(ctx context.Context, lrOSPut2
 		return nil, err
 	}
 	poller := &productPoller{
+		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -2341,6 +2371,7 @@ func (client *lrOSOperations) BeginPut202Retry200(ctx context.Context, lrOSPut20
 		return nil, err
 	}
 	poller := &productPoller{
+		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -2414,6 +2445,7 @@ func (client *lrOSOperations) BeginPutAsyncNoHeaderInRetry(ctx context.Context, 
 		return nil, err
 	}
 	poller := &productPoller{
+		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -2487,6 +2519,7 @@ func (client *lrOSOperations) BeginPutAsyncNoRetrySucceeded(ctx context.Context,
 		return nil, err
 	}
 	poller := &productPoller{
+		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -2560,6 +2593,7 @@ func (client *lrOSOperations) BeginPutAsyncNoRetrycanceled(ctx context.Context, 
 		return nil, err
 	}
 	poller := &productPoller{
+		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -2633,6 +2667,7 @@ func (client *lrOSOperations) BeginPutAsyncNonResource(ctx context.Context, lrOS
 		return nil, err
 	}
 	poller := &skuPoller{
+		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -2706,6 +2741,7 @@ func (client *lrOSOperations) BeginPutAsyncRetryFailed(ctx context.Context, lrOS
 		return nil, err
 	}
 	poller := &productPoller{
+		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -2779,6 +2815,7 @@ func (client *lrOSOperations) BeginPutAsyncRetrySucceeded(ctx context.Context, l
 		return nil, err
 	}
 	poller := &productPoller{
+		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -2852,6 +2889,7 @@ func (client *lrOSOperations) BeginPutAsyncSubResource(ctx context.Context, lrOS
 		return nil, err
 	}
 	poller := &subProductPoller{
+		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -2925,6 +2963,7 @@ func (client *lrOSOperations) BeginPutNoHeaderInRetry(ctx context.Context, lrOSP
 		return nil, err
 	}
 	poller := &productPoller{
+		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -2998,6 +3037,7 @@ func (client *lrOSOperations) BeginPutNonResource(ctx context.Context, lrOSPutNo
 		return nil, err
 	}
 	poller := &skuPoller{
+		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -3071,6 +3111,7 @@ func (client *lrOSOperations) BeginPutSubResource(ctx context.Context, lrOSPutSu
 		return nil, err
 	}
 	poller := &subProductPoller{
+		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}

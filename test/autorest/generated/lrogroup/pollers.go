@@ -24,10 +24,10 @@ type HTTPPoller interface {
 }
 
 type httpPoller struct {
+	resp *HTTPResponse
 	// the client for making the request
 	pipeline azcore.Pipeline
-	// polling tracker
-	pt pollingTracker
+	pt       pollingTracker
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
@@ -87,10 +87,10 @@ type ProductArrayPoller interface {
 }
 
 type productArrayPoller struct {
+	resp *ProductArrayResponse
 	// the client for making the request
 	pipeline azcore.Pipeline
-	// polling tracker
-	pt pollingTracker
+	pt       pollingTracker
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
@@ -107,6 +107,9 @@ func (p *productArrayPoller) Poll(ctx context.Context) (*http.Response, error) {
 }
 
 func (p *productArrayPoller) FinalResponse(ctx context.Context) (*ProductArrayResponse, error) {
+	if p.resp != nil && p.resp.ProductArray != nil {
+		return p.resp, nil
+	}
 	// checking if there was a FinalStateVia configuration to re-route the final GET
 	// request to the value specified in the FinalStateVia property on the poller
 	err := p.pt.setFinalState()
@@ -155,12 +158,16 @@ func (p *productArrayPoller) ResumeToken() (string, error) {
 }
 
 func (p *productArrayPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*ProductArrayResponse, error) {
+	if p.resp != nil && p.resp.ProductArray != nil {
+		return p.resp, nil
+	}
 	for {
 		resp, err := p.Poll(ctx)
 		if err != nil {
 			return nil, err
 		}
 		if p.Done() {
+			p.resp, _ = p.handleResponse(p.pt.latestResponse())
 			break
 		}
 		if delay := azcore.RetryAfter(resp); delay > 0 {
@@ -192,10 +199,10 @@ type ProductPoller interface {
 }
 
 type productPoller struct {
+	resp *ProductResponse
 	// the client for making the request
 	pipeline azcore.Pipeline
-	// polling tracker
-	pt pollingTracker
+	pt       pollingTracker
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
@@ -212,6 +219,9 @@ func (p *productPoller) Poll(ctx context.Context) (*http.Response, error) {
 }
 
 func (p *productPoller) FinalResponse(ctx context.Context) (*ProductResponse, error) {
+	if p.resp != nil && p.resp.Product != nil {
+		return p.resp, nil
+	}
 	// checking if there was a FinalStateVia configuration to re-route the final GET
 	// request to the value specified in the FinalStateVia property on the poller
 	err := p.pt.setFinalState()
@@ -260,12 +270,16 @@ func (p *productPoller) ResumeToken() (string, error) {
 }
 
 func (p *productPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
+	if p.resp != nil && p.resp.Product != nil {
+		return p.resp, nil
+	}
 	for {
 		resp, err := p.Poll(ctx)
 		if err != nil {
 			return nil, err
 		}
 		if p.Done() {
+			p.resp, _ = p.handleResponse(p.pt.latestResponse())
 			break
 		}
 		if delay := azcore.RetryAfter(resp); delay > 0 {
@@ -297,10 +311,10 @@ type SkuPoller interface {
 }
 
 type skuPoller struct {
+	resp *SkuResponse
 	// the client for making the request
 	pipeline azcore.Pipeline
-	// polling tracker
-	pt pollingTracker
+	pt       pollingTracker
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
@@ -317,6 +331,9 @@ func (p *skuPoller) Poll(ctx context.Context) (*http.Response, error) {
 }
 
 func (p *skuPoller) FinalResponse(ctx context.Context) (*SkuResponse, error) {
+	if p.resp != nil && p.resp.Sku != nil {
+		return p.resp, nil
+	}
 	// checking if there was a FinalStateVia configuration to re-route the final GET
 	// request to the value specified in the FinalStateVia property on the poller
 	err := p.pt.setFinalState()
@@ -365,12 +382,16 @@ func (p *skuPoller) ResumeToken() (string, error) {
 }
 
 func (p *skuPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*SkuResponse, error) {
+	if p.resp != nil && p.resp.Sku != nil {
+		return p.resp, nil
+	}
 	for {
 		resp, err := p.Poll(ctx)
 		if err != nil {
 			return nil, err
 		}
 		if p.Done() {
+			p.resp, _ = p.handleResponse(p.pt.latestResponse())
 			break
 		}
 		if delay := azcore.RetryAfter(resp); delay > 0 {
@@ -402,10 +423,10 @@ type SubProductPoller interface {
 }
 
 type subProductPoller struct {
+	resp *SubProductResponse
 	// the client for making the request
 	pipeline azcore.Pipeline
-	// polling tracker
-	pt pollingTracker
+	pt       pollingTracker
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
@@ -422,6 +443,9 @@ func (p *subProductPoller) Poll(ctx context.Context) (*http.Response, error) {
 }
 
 func (p *subProductPoller) FinalResponse(ctx context.Context) (*SubProductResponse, error) {
+	if p.resp != nil && p.resp.SubProduct != nil {
+		return p.resp, nil
+	}
 	// checking if there was a FinalStateVia configuration to re-route the final GET
 	// request to the value specified in the FinalStateVia property on the poller
 	err := p.pt.setFinalState()
@@ -470,12 +494,16 @@ func (p *subProductPoller) ResumeToken() (string, error) {
 }
 
 func (p *subProductPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*SubProductResponse, error) {
+	if p.resp != nil && p.resp.SubProduct != nil {
+		return p.resp, nil
+	}
 	for {
 		resp, err := p.Poll(ctx)
 		if err != nil {
 			return nil, err
 		}
 		if p.Done() {
+			p.resp, _ = p.handleResponse(p.pt.latestResponse())
 			break
 		}
 		if delay := azcore.RetryAfter(resp); delay > 0 {

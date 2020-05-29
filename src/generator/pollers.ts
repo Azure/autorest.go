@@ -41,6 +41,8 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
     }`;
     let pollUntilDoneResponse = '(*http.Response, error)';
     let pollUntilDoneReturn = 'p.FinalResponse(), nil';
+    let pollUntilDoneWidgetCheck = '';
+    let pollUntilDoneHandleResponse = '';
     let handleResponse = '';
     let rawResponse = ''; // used to access the raw response field on response envelopes
     const schemaResponse = <SchemaResponse>poller.op.responses![0];
@@ -49,11 +51,20 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
       responseType = schemaResponse.schema.language.go!.responseType.name;
       pollUntilDoneResponse = `(*${responseType}, error)`;
       pollUntilDoneReturn = 'p.FinalResponse(ctx)';
+      pollUntilDoneWidgetCheck = `if p.resp != nil && p.resp.${schemaResponse.schema.language.go!.responseType.value} != nil {
+      return p.resp, nil
+    }
+    `;
+      pollUntilDoneHandleResponse = `p.resp, _ = p.handleResponse(p.pt.latestResponse())
+      `;
       rawResponse = '.RawResponse';
       unmarshalResponse = `resp.UnmarshalAsJSON(&result.${schemaResponse.schema.language.go!.responseType.value})`;
       // for operations that do return a model add a final response method that handles the final get URL scenario
       finalResponseDeclaration = `FinalResponse(ctx context.Context) (*${responseType}, error)`;
       finalResponse = `FinalResponse(ctx context.Context) (*${responseType}, error) {
+        if p.resp != nil && p.resp.${schemaResponse.schema.language.go!.responseType.value} != nil {
+          return p.resp, nil
+        }
         // checking if there was a FinalStateVia configuration to re-route the final GET
         // request to the value specified in the FinalStateVia property on the poller
         err := p.pt.setFinalState()
@@ -109,9 +120,9 @@ type ${pollerInterface} interface {
 }
 
 type ${pollerName} struct {
+  resp *${responseType}
 	// the client for making the request
 	pipeline azcore.Pipeline
-	// polling tracker
   pt pollingTracker
 }
 
@@ -144,13 +155,13 @@ func (p *${pollerName}) ResumeToken() (string, error) {
 }
 
 func (p *${pollerName}) pollUntilDone(ctx context.Context, frequency time.Duration) ${pollUntilDoneResponse} {
-    for {
+    ${pollUntilDoneWidgetCheck}for {
         resp, err := p.Poll(ctx)
         if err != nil {
             return nil, err
         }
         if p.Done() {
-          break
+          ${pollUntilDoneHandleResponse}break
         }
         if delay := azcore.RetryAfter(resp); delay > 0 {
             time.Sleep(delay)

@@ -655,7 +655,6 @@ func TestLROBeginPut200Acceptedcanceled200(t *testing.T) {
 }
 
 func TestLROBeginPut200Succeeded(t *testing.T) {
-	t.Skip("problem with poller code")
 	op := getLROSOperations(t)
 	resp, err := op.BeginPut200Succeeded(context.Background(), nil)
 	if err != nil {
@@ -675,6 +674,9 @@ func TestLROBeginPut200Succeeded(t *testing.T) {
 		Resource: lrogroup.Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
+		},
+		Properties: &lrogroup.ProductProperties{
+			ProvisioningState: to.StringPtr("Succeeded"),
 		},
 	})
 }
@@ -796,7 +798,6 @@ func TestLROBeginPut201CreatingSucceeded200(t *testing.T) {
 }
 
 func TestLROBeginPut202Retry200(t *testing.T) {
-	t.Skip("problem with the poller")
 	op := getLROSOperations(t)
 	resp, err := op.BeginPut202Retry200(context.Background(), &lrogroup.LrOSPut202Retry200Options{Product: &lrogroup.Product{}})
 	if err != nil {
@@ -820,9 +821,6 @@ func TestLROBeginPut202Retry200(t *testing.T) {
 		Resource: lrogroup.Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
-		},
-		Properties: &lrogroup.ProductProperties{
-			ProvisioningState: to.StringPtr("Succeeded"),
 		},
 	})
 }
