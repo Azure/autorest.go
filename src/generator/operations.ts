@@ -188,7 +188,11 @@ function formatHeaderResponseValue(propName: string, header: string, schema: Sch
     case SchemaType.ByteArray:
       // ByteArray is a base-64 encoded value in string format
       imports.add('encoding/base64');
-      text += `\t\t${name}, err := base64.StdEncoding.DecodeString(val)\n`;
+      let byteFormat = 'Std';
+      if ((<ByteArraySchema>schema).format === 'base64url') {
+        byteFormat = 'RawURL';
+      }
+      text += `\t\t${name}, err := base64.${byteFormat}Encoding.DecodeString(val)\n`;
       break;
     case SchemaType.Choice:
     case SchemaType.SealedChoice:
