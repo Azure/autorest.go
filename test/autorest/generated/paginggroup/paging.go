@@ -42,6 +42,8 @@ type PagingOperations interface {
 	GetNullNextLinkNamePages(ctx context.Context) (*ProductResultResponse, error)
 	// GetOdataMultiplePages - A paging operation that includes a nextLink in odata format that has 10 pages
 	GetOdataMultiplePages(pagingGetOdataMultiplePagesOptions *PagingGetOdataMultiplePagesOptions) (OdataProductResultPager, error)
+	// GetPagingModelWithItemNameWithXmsClientName - A paging operation that returns a paging model whose item name is is overriden by x-ms-client-name 'indexes'.
+	GetPagingModelWithItemNameWithXmsClientName() (ProductResultValueWithXmsClientNamePager, error)
 	// GetSinglePages - A paging operation that finishes on the first call without a nextlink
 	GetSinglePages() (ProductResultPager, error)
 	// GetSinglePagesFailure - A paging operation that receives a 400 on the first call
@@ -635,6 +637,54 @@ func (client *pagingOperations) getOdataMultiplePagesHandleResponse(resp *azcore
 
 // getOdataMultiplePagesHandleError handles the GetOdataMultiplePages error response.
 func (client *pagingOperations) getOdataMultiplePagesHandleError(resp *azcore.Response) error {
+	return errors.New(resp.Status)
+}
+
+// GetPagingModelWithItemNameWithXmsClientName - A paging operation that returns a paging model whose item name is is overriden by x-ms-client-name 'indexes'.
+func (client *pagingOperations) GetPagingModelWithItemNameWithXmsClientName() (ProductResultValueWithXmsClientNamePager, error) {
+	req, err := client.getPagingModelWithItemNameWithXmsClientNameCreateRequest()
+	if err != nil {
+		return nil, err
+	}
+	return &productResultValueWithXmsClientNamePager{
+		pipeline:  client.p,
+		request:   req,
+		responder: client.getPagingModelWithItemNameWithXmsClientNameHandleResponse,
+		advancer: func(resp *ProductResultValueWithXmsClientNameResponse) (*azcore.Request, error) {
+			u, err := url.Parse(*resp.ProductResultValueWithXmsClientName.NextLink)
+			if err != nil {
+				return nil, fmt.Errorf("invalid NextLink: %w", err)
+			}
+			if u.Scheme == "" {
+				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.ProductResultValueWithXmsClientName.NextLink)
+			}
+			return azcore.NewRequest(http.MethodGet, *u), nil
+		},
+	}, nil
+}
+
+// getPagingModelWithItemNameWithXmsClientNameCreateRequest creates the GetPagingModelWithItemNameWithXmsClientName request.
+func (client *pagingOperations) getPagingModelWithItemNameWithXmsClientNameCreateRequest() (*azcore.Request, error) {
+	urlPath := "/paging/itemNameWithXMSClientName"
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
+	req := azcore.NewRequest(http.MethodGet, *u)
+	return req, nil
+}
+
+// getPagingModelWithItemNameWithXmsClientNameHandleResponse handles the GetPagingModelWithItemNameWithXmsClientName response.
+func (client *pagingOperations) getPagingModelWithItemNameWithXmsClientNameHandleResponse(resp *azcore.Response) (*ProductResultValueWithXmsClientNameResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.getPagingModelWithItemNameWithXmsClientNameHandleError(resp)
+	}
+	result := ProductResultValueWithXmsClientNameResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.ProductResultValueWithXmsClientName)
+}
+
+// getPagingModelWithItemNameWithXmsClientNameHandleError handles the GetPagingModelWithItemNameWithXmsClientName error response.
+func (client *pagingOperations) getPagingModelWithItemNameWithXmsClientNameHandleError(resp *azcore.Response) error {
 	return errors.New(resp.Status)
 }
 

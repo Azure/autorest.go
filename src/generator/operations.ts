@@ -5,7 +5,7 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, KnownMediaType, pascalCase, camelCase } from '@azure-tools/codegen'
-import { ArraySchema, CodeModel, ConstantSchema, DateTimeSchema, DictionarySchema, GroupProperty, ImplementationLocation, NumberSchema, Operation, OperationGroup, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType, SerializationStyle } from '@azure-tools/codemodel';
+import { ArraySchema, ByteArraySchema, CodeModel, ConstantSchema, DateTimeSchema, DictionarySchema, GroupProperty, ImplementationLocation, NumberSchema, Operation, OperationGroup, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType, SerializationStyle } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { aggregateParameters, isArraySchema, isPageableOperation, isSchemaResponse, PagerInfo, isLROOperation } from '../common/helpers';
 import { OperationNaming } from '../transform/namer';
@@ -572,11 +572,11 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
     }
     // TODO once non-required constants are fixed
     if (bodyParam!.required || bodyParam?.schema.type === SchemaType.Constant) {
-      text += `\treturn req, req.MarshalAs${mediaType}(${body})\n`;
+      text += `\treturn req, req.MarshalAs${getMediaFormat(bodyParam!.schema, mediaType, body)}\n`;
     } else {
       const paramGroup = <GroupProperty>bodyParam!.language.go!.paramGroup;
       text += `\tif ${camelCase(paramGroup.language.go!.name)} != nil {\n`;
-      text += `\t\treturn req, req.MarshalAs${mediaType}(${body})\n`;
+      text += `\t\treturn req, req.MarshalAs${getMediaFormat(bodyParam!.schema, mediaType, body)}\n`;
       text += '\t}\n';
       text += '\treturn req, nil\n';
     }
@@ -588,6 +588,19 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
   }
   text += '}\n\n';
   return text;
+}
+
+function getMediaFormat(schema: Schema, mediaType: 'JSON' | 'XML', param: string): string {
+  let marshaller: 'JSON' | 'XML' | 'ByteArray' = mediaType;
+  let format = '';
+  if (schema.type === SchemaType.ByteArray) {
+    marshaller = 'ByteArray';
+    format = ', azcore.Base64StdFormat';
+    if ((<ByteArraySchema>schema).format === 'base64url') {
+      format = ', azcore.Base64URLFormat';
+    }
+  }
+  return `${marshaller}(${param}${format})`;
 }
 
 function isArrayOfRFC1123(schema: Schema): boolean {
@@ -708,7 +721,7 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
   if ((mediaType === 'XML' && schemaResponse.schema.type === SchemaType.Array) || schemaResponse.schema.language.go!.discriminatorInterface) {
     target = 'result';
   }
-  text += `\treturn &result, resp.UnmarshalAs${mediaType}(&${target})\n`;
+  text += `\treturn &result, resp.UnmarshalAs${getMediaFormat(firstResp.schema, mediaType, `&${target}`)}\n`;
   text += '}\n\n';
   return text;
 }

@@ -207,3 +207,69 @@ func (p *productResultValuePager) NextPage(ctx context.Context) bool {
 func (p *productResultValuePager) PageResponse() *ProductResultValueResponse {
 	return p.current
 }
+
+// ProductResultValueWithXmsClientNamePager provides iteration over ProductResultValueWithXmsClientName pages.
+type ProductResultValueWithXmsClientNamePager interface {
+	// NextPage returns true if the pager advanced to the next page.
+	// Returns false if there are no more pages or an error occurred.
+	NextPage(context.Context) bool
+
+	// Page returns the current ProductResultValueWithXmsClientNameResponse.
+	PageResponse() *ProductResultValueWithXmsClientNameResponse
+
+	// Err returns the last error encountered while paging.
+	Err() error
+}
+
+type productResultValueWithXmsClientNameHandleResponse func(*azcore.Response) (*ProductResultValueWithXmsClientNameResponse, error)
+
+type productResultValueWithXmsClientNameAdvancePage func(*ProductResultValueWithXmsClientNameResponse) (*azcore.Request, error)
+
+type productResultValueWithXmsClientNamePager struct {
+	// the pipeline for making the request
+	pipeline azcore.Pipeline
+	// contains the pending request
+	request *azcore.Request
+	// callback for handling the HTTP response
+	responder productResultValueWithXmsClientNameHandleResponse
+	// callback for advancing to the next page
+	advancer productResultValueWithXmsClientNameAdvancePage
+	// contains the current response
+	current *ProductResultValueWithXmsClientNameResponse
+	// any error encountered
+	err error
+}
+
+func (p *productResultValueWithXmsClientNamePager) Err() error {
+	return p.err
+}
+
+func (p *productResultValueWithXmsClientNamePager) NextPage(ctx context.Context) bool {
+	if p.current != nil {
+		if p.current.ProductResultValueWithXmsClientName.NextLink == nil || len(*p.current.ProductResultValueWithXmsClientName.NextLink) == 0 {
+			return false
+		}
+		req, err := p.advancer(p.current)
+		if err != nil {
+			p.err = err
+			return false
+		}
+		p.request = req
+	}
+	resp, err := p.pipeline.Do(ctx, p.request)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	result, err := p.responder(resp)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	p.current = result
+	return true
+}
+
+func (p *productResultValueWithXmsClientNamePager) PageResponse() *ProductResultValueWithXmsClientNameResponse {
+	return p.current
+}

@@ -105,3 +105,17 @@ type ProductResultValueResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
+
+type ProductResultValueWithXmsClientName struct {
+	Indexes  *[]Product `json:"values,omitempty"`
+	NextLink *string    `json:"nextLink,omitempty"`
+}
+
+// ProductResultValueWithXmsClientNameResponse is the response envelope for operations that return a ProductResultValueWithXmsClientName
+// type.
+type ProductResultValueWithXmsClientNameResponse struct {
+	ProductResultValueWithXmsClientName *ProductResultValueWithXmsClientName
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}

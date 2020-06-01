@@ -80,7 +80,7 @@ func (client *stringOperations) getBase64EncodedHandleResponse(resp *azcore.Resp
 		return nil, client.getBase64EncodedHandleError(resp)
 	}
 	result := ByteArrayResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Value)
+	return &result, resp.UnmarshalAsByteArray(&result.Value, azcore.Base64StdFormat)
 }
 
 // getBase64EncodedHandleError handles the GetBase64Encoded error response.
@@ -126,7 +126,7 @@ func (client *stringOperations) getBase64UrlEncodedHandleResponse(resp *azcore.R
 		return nil, client.getBase64UrlEncodedHandleError(resp)
 	}
 	result := ByteArrayResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Value)
+	return &result, resp.UnmarshalAsByteArray(&result.Value, azcore.Base64URLFormat)
 }
 
 // getBase64UrlEncodedHandleError handles the GetBase64URLEncoded error response.
@@ -356,7 +356,7 @@ func (client *stringOperations) getNullBase64UrlEncodedHandleResponse(resp *azco
 		return nil, client.getNullBase64UrlEncodedHandleError(resp)
 	}
 	result := ByteArrayResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Value)
+	return &result, resp.UnmarshalAsByteArray(&result.Value, azcore.Base64URLFormat)
 }
 
 // getNullBase64UrlEncodedHandleError handles the GetNullBase64URLEncoded error response.
@@ -439,7 +439,7 @@ func (client *stringOperations) putBase64UrlEncodedCreateRequest(stringBody []by
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	return req, req.MarshalAsJSON(stringBody)
+	return req, req.MarshalAsByteArray(stringBody, azcore.Base64URLFormat)
 }
 
 // putBase64UrlEncodedHandleResponse handles the PutBase64URLEncoded response.

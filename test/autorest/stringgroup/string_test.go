@@ -51,15 +51,15 @@ func TestStringGetBase64Encoded(t *testing.T) {
 	helpers.DeepEqualOrFatal(t, result.Value, &val)
 }
 
-// func TestStringGetBase64URLEncoded(t *testing.T) {
-// 	client := getStringClient(t)
-// 	result, err := client.GetBase64URLEncoded(context.Background())
-// 	if err != nil {
-// 		t.Fatalf("GetBase64URLEncoded: %v", err)
-// 	}
-// 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
-// 	helpers.DeepEqualOrFatal(t, result.Value, []byte("a string that gets encoded with base64url"))
-// }
+func TestStringGetBase64URLEncoded(t *testing.T) {
+	client := getStringClient(t)
+	result, err := client.GetBase64URLEncoded(context.Background())
+	if err != nil {
+		t.Fatalf("GetBase64URLEncoded: %v", err)
+	}
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.DeepEqualOrFatal(t, *result.Value, []byte("a string that gets encoded with base64url"))
+}
 
 func TestStringGetEmpty(t *testing.T) {
 	client := getStringClient(t)
@@ -109,14 +109,14 @@ func TestStringGetWhitespace(t *testing.T) {
 	helpers.DeepEqualOrFatal(t, result.Value, to.StringPtr("    Now is the time for all good men to come to the aid of their country    "))
 }
 
-// func TestStringPutBase64URLEncoded(t *testing.T) {
-// 	client := getStringClient(t)
-// 	result, err := client.PutBase64URLEncoded(context.Background(), []byte("a string that gets encoded with base64url"))
-// 	if err != nil {
-// 		t.Fatalf("PutBase64URLEncoded: %v", err)
-// 	}
-// 	helpers.VerifyStatusCode(t, result, http.StatusOK)
-// }
+func TestStringPutBase64URLEncoded(t *testing.T) {
+	client := getStringClient(t)
+	result, err := client.PutBase64URLEncoded(context.Background(), []byte("a string that gets encoded with base64url"))
+	if err != nil {
+		t.Fatalf("PutBase64URLEncoded: %v", err)
+	}
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
+}
 
 func TestStringPutEmpty(t *testing.T) {
 	client := getStringClient(t)
