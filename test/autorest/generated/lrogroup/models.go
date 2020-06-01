@@ -13,7 +13,7 @@ import (
 )
 
 type CloudError struct {
-	Code *int32 `json:"code,omitempty"`
+	Code    *int32  `json:"code,omitempty"`
 	Message *string `json:"message,omitempty"`
 }
 
@@ -400,7 +400,7 @@ type ProductArrayResponse struct {
 }
 
 type ProductProperties struct {
-	ProvisioningState *string `json:"provisioningState,omitempty"`
+	ProvisioningState       *string                                   `json:"provisioningState,omitempty"`
 	ProvisioningStateValues *ProductPropertiesProvisioningStateValues `json:"provisioningStateValues,omitempty"`
 }
 
@@ -410,7 +410,7 @@ type ProductResponse struct {
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*ProductResponse, error)
 
 	// Poller contains an initialized poller
-	Poller ProductPoller
+	Poller  ProductPoller
 	Product *Product
 
 	// RawResponse contains the underlying HTTP response.
@@ -435,7 +435,7 @@ type Resource struct {
 }
 
 type Sku struct {
-	ID *string `json:"id,omitempty"`
+	ID   *string `json:"id,omitempty"`
 	Name *string `json:"name,omitempty"`
 }
 
@@ -449,7 +449,7 @@ type SkuResponse struct {
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-	Sku *Sku
+	Sku         *Sku
 }
 
 type SubProduct struct {
@@ -458,7 +458,7 @@ type SubProduct struct {
 }
 
 type SubProductProperties struct {
-	ProvisioningState *string `json:"provisioningState,omitempty"`
+	ProvisioningState       *string                                      `json:"provisioningState,omitempty"`
 	ProvisioningStateValues *SubProductPropertiesProvisioningStateValues `json:"provisioningStateValues,omitempty"`
 }
 
@@ -472,11 +472,10 @@ type SubProductResponse struct {
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-	SubProduct *SubProduct
+	SubProduct  *SubProduct
 }
 
 type SubResource struct {
 	// Sub Resource Id
 	ID *string `json:"id,omitempty"`
 }
-
