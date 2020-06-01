@@ -168,9 +168,6 @@ func (p *productArrayPoller) ResumeToken() (string, error) {
 }
 
 func (p *productArrayPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*ProductArrayResponse, error) {
-	if p.Done() && p.pollerMethodVerb() == "PUT" && p.resp != nil && p.resp.ProductArray != nil {
-		return p.resp, nil
-	}
 	for {
 		resp, err := p.Poll(ctx)
 		if err != nil {
@@ -286,9 +283,6 @@ func (p *productPoller) ResumeToken() (string, error) {
 }
 
 func (p *productPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
-	if p.Done() && p.pollerMethodVerb() == "PUT" && p.resp != nil && p.resp.Product != nil {
-		return p.resp, nil
-	}
 	for {
 		resp, err := p.Poll(ctx)
 		if err != nil {
@@ -404,9 +398,6 @@ func (p *skuPoller) ResumeToken() (string, error) {
 }
 
 func (p *skuPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*SkuResponse, error) {
-	if p.Done() && p.pollerMethodVerb() == "PUT" && p.resp != nil && p.resp.Sku != nil {
-		return p.resp, nil
-	}
 	for {
 		resp, err := p.Poll(ctx)
 		if err != nil {
@@ -522,9 +513,6 @@ func (p *subProductPoller) ResumeToken() (string, error) {
 }
 
 func (p *subProductPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*SubProductResponse, error) {
-	if p.Done() && p.pollerMethodVerb() == "PUT" && p.resp != nil && p.resp.SubProduct != nil {
-		return p.resp, nil
-	}
 	for {
 		resp, err := p.Poll(ctx)
 		if err != nil {

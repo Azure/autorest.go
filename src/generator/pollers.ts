@@ -58,7 +58,6 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
     }`;
     let pollUntilDoneResponse = '(*http.Response, error)';
     let pollUntilDoneReturn = 'p.FinalResponse(), nil';
-    let pollUntilDoneWidgetCheck = '';
     let pollUntilDoneHandleResponse = '';
     let handleResponse = '';
     let rawResponse = ''; // used to access the raw response field on response envelopes
@@ -68,10 +67,6 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
       responseType = schemaResponse.schema.language.go!.responseType.name;
       pollUntilDoneResponse = `(*${responseType}, error)`;
       pollUntilDoneReturn = 'p.FinalResponse(ctx)';
-      pollUntilDoneWidgetCheck = `if p.Done() && p.pollerMethodVerb() == "PUT" && p.resp != nil && p.resp.${schemaResponse.schema.language.go!.responseType.value} != nil {
-      return p.resp, nil
-    }
-    `;
       pollUntilDoneHandleResponse = `p.resp, _ = p.handleResponse(p.pt.latestResponse())
       `;
       rawResponse = '.RawResponse';
@@ -175,7 +170,7 @@ func (p *${pollerName}) ResumeToken() (string, error) {
 }
 
 func (p *${pollerName}) pollUntilDone(ctx context.Context, frequency time.Duration) ${pollUntilDoneResponse} {
-    ${pollUntilDoneWidgetCheck}for {
+    for {
         resp, err := p.Poll(ctx)
         if err != nil {
             return nil, err
