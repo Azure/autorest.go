@@ -30,11 +30,6 @@ type httpPoller struct {
 	pt       pollingTracker
 }
 
-// returns the method verb used in the initial request for the operation
-func (p *httpPoller) pollerMethodVerb() string {
-	return p.pt.pollerMethodVerb()
-}
-
 // Done returns true if there was an error or polling has reached a terminal state
 func (p *httpPoller) Done() bool {
 	return p.pt.hasTerminated()
@@ -98,11 +93,6 @@ type productArrayPoller struct {
 	pt       pollingTracker
 }
 
-// returns the method verb used in the initial request for the operation
-func (p *productArrayPoller) pollerMethodVerb() string {
-	return p.pt.pollerMethodVerb()
-}
-
 // Done returns true if there was an error or polling has reached a terminal state
 func (p *productArrayPoller) Done() bool {
 	return p.pt.hasTerminated()
@@ -117,7 +107,10 @@ func (p *productArrayPoller) Poll(ctx context.Context) (*http.Response, error) {
 }
 
 func (p *productArrayPoller) FinalResponse(ctx context.Context) (*ProductArrayResponse, error) {
-	if p.Done() && p.pollerMethodVerb() == "PUT" && p.resp != nil && p.resp.ProductArray != nil {
+	if !p.Done() {
+		return nil, errors.New("cannot return a final response from a poller in a non-terminal state")
+	}
+	if (p.pt.pollerMethodVerb() == http.MethodPut || p.pt.pollerMethodVerb() == http.MethodPatch) && p.resp != nil && p.resp.ProductArray != nil {
 		return p.resp, nil
 	}
 	// checking if there was a FinalStateVia configuration to re-route the final GET
@@ -212,11 +205,6 @@ type productPoller struct {
 	pt       pollingTracker
 }
 
-// returns the method verb used in the initial request for the operation
-func (p *productPoller) pollerMethodVerb() string {
-	return p.pt.pollerMethodVerb()
-}
-
 // Done returns true if there was an error or polling has reached a terminal state
 func (p *productPoller) Done() bool {
 	return p.pt.hasTerminated()
@@ -231,8 +219,11 @@ func (p *productPoller) Poll(ctx context.Context) (*http.Response, error) {
 }
 
 func (p *productPoller) FinalResponse(ctx context.Context) (*ProductResponse, error) {
+	if !p.Done() {
+		return nil, errors.New("cannot return a final response from a poller in a non-terminal state")
+	}
 	product := Product{}
-	if p.Done() && p.pollerMethodVerb() == "PUT" && p.resp != nil && *p.resp.Product != product {
+	if (p.pt.pollerMethodVerb() == http.MethodPut || p.pt.pollerMethodVerb() == http.MethodPatch) && p.resp != nil && *p.resp.Product != product {
 		return p.resp, nil
 	}
 	// checking if there was a FinalStateVia configuration to re-route the final GET
@@ -327,11 +318,6 @@ type skuPoller struct {
 	pt       pollingTracker
 }
 
-// returns the method verb used in the initial request for the operation
-func (p *skuPoller) pollerMethodVerb() string {
-	return p.pt.pollerMethodVerb()
-}
-
 // Done returns true if there was an error or polling has reached a terminal state
 func (p *skuPoller) Done() bool {
 	return p.pt.hasTerminated()
@@ -346,8 +332,11 @@ func (p *skuPoller) Poll(ctx context.Context) (*http.Response, error) {
 }
 
 func (p *skuPoller) FinalResponse(ctx context.Context) (*SkuResponse, error) {
+	if !p.Done() {
+		return nil, errors.New("cannot return a final response from a poller in a non-terminal state")
+	}
 	sku := Sku{}
-	if p.Done() && p.pollerMethodVerb() == "PUT" && p.resp != nil && *p.resp.Sku != sku {
+	if (p.pt.pollerMethodVerb() == http.MethodPut || p.pt.pollerMethodVerb() == http.MethodPatch) && p.resp != nil && *p.resp.Sku != sku {
 		return p.resp, nil
 	}
 	// checking if there was a FinalStateVia configuration to re-route the final GET
@@ -442,11 +431,6 @@ type subProductPoller struct {
 	pt       pollingTracker
 }
 
-// returns the method verb used in the initial request for the operation
-func (p *subProductPoller) pollerMethodVerb() string {
-	return p.pt.pollerMethodVerb()
-}
-
 // Done returns true if there was an error or polling has reached a terminal state
 func (p *subProductPoller) Done() bool {
 	return p.pt.hasTerminated()
@@ -461,8 +445,11 @@ func (p *subProductPoller) Poll(ctx context.Context) (*http.Response, error) {
 }
 
 func (p *subProductPoller) FinalResponse(ctx context.Context) (*SubProductResponse, error) {
+	if !p.Done() {
+		return nil, errors.New("cannot return a final response from a poller in a non-terminal state")
+	}
 	subproduct := SubProduct{}
-	if p.Done() && p.pollerMethodVerb() == "PUT" && p.resp != nil && *p.resp.SubProduct != subproduct {
+	if (p.pt.pollerMethodVerb() == http.MethodPut || p.pt.pollerMethodVerb() == http.MethodPatch) && p.resp != nil && *p.resp.SubProduct != subproduct {
 		return p.resp, nil
 	}
 	// checking if there was a FinalStateVia configuration to re-route the final GET
