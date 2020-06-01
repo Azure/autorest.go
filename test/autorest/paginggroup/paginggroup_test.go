@@ -317,6 +317,32 @@ func TestGetOdataMultiplePages(t *testing.T) {
 	}
 }
 
+// GetPagingModelWithItemNameWithXmsClientName - A paging operation that returns a paging model whose item name is is overriden by x-ms-client-name 'indexes'.
+func TestGetPagingModelWithItemNameWithXmsClientName(t *testing.T) {
+	client := getPagingOperations(t)
+	page, err := client.GetPagingModelWithItemNameWithXmsClientName()
+	if err != nil {
+		t.Fatal(err)
+	}
+	count := 0
+	for page.NextPage(context.Background()) {
+		resp := page.PageResponse()
+		if len(*resp.ProductResultValueWithXmsClientName.Indexes) == 0 {
+			t.Fatal("missing payload")
+		}
+		count++
+	}
+	if err = page.Err(); err != nil {
+		t.Fatal(err)
+	}
+	if count != 1 {
+		helpers.DeepEqualOrFatal(t, count, 1)
+	}
+	if page.PageResponse() == nil {
+		t.Fatal("unexpected nil payload")
+	}
+}
+
 // GetSinglePages - A paging operation that finishes on the first call without a nextlink
 func TestGetSinglePages(t *testing.T) {
 	client := getPagingOperations(t)

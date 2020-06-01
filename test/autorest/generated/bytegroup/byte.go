@@ -64,7 +64,7 @@ func (client *byteOperations) getEmptyHandleResponse(resp *azcore.Response) (*By
 		return nil, client.getEmptyHandleError(resp)
 	}
 	result := ByteArrayResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Value)
+	return &result, resp.UnmarshalAsByteArray(&result.Value, azcore.Base64StdFormat)
 }
 
 // getEmptyHandleError handles the GetEmpty error response.
@@ -110,7 +110,7 @@ func (client *byteOperations) getInvalidHandleResponse(resp *azcore.Response) (*
 		return nil, client.getInvalidHandleError(resp)
 	}
 	result := ByteArrayResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Value)
+	return &result, resp.UnmarshalAsByteArray(&result.Value, azcore.Base64StdFormat)
 }
 
 // getInvalidHandleError handles the GetInvalid error response.
@@ -156,7 +156,7 @@ func (client *byteOperations) getNonAsciiHandleResponse(resp *azcore.Response) (
 		return nil, client.getNonAsciiHandleError(resp)
 	}
 	result := ByteArrayResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Value)
+	return &result, resp.UnmarshalAsByteArray(&result.Value, azcore.Base64StdFormat)
 }
 
 // getNonAsciiHandleError handles the GetNonASCII error response.
@@ -202,7 +202,7 @@ func (client *byteOperations) getNullHandleResponse(resp *azcore.Response) (*Byt
 		return nil, client.getNullHandleError(resp)
 	}
 	result := ByteArrayResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Value)
+	return &result, resp.UnmarshalAsByteArray(&result.Value, azcore.Base64StdFormat)
 }
 
 // getNullHandleError handles the GetNull error response.
@@ -239,7 +239,7 @@ func (client *byteOperations) putNonAsciiCreateRequest(byteBody []byte) (*azcore
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	return req, req.MarshalAsJSON(byteBody)
+	return req, req.MarshalAsByteArray(byteBody, azcore.Base64StdFormat)
 }
 
 // putNonAsciiHandleResponse handles the PutNonASCII response.
