@@ -20,8 +20,7 @@ function getPutCheck(resp: SchemaResponse): string {
         }
       `;
     default:
-      return `${resp.schema.language.go!.responseType.value.toLowerCase()} := ${resp.schema.language.go!.responseType.value}{}
-        if (p.pt.pollerMethodVerb() == http.MethodPut || p.pt.pollerMethodVerb() == http.MethodPatch) && p.resp != nil && *p.resp.${resp.schema.language.go!.responseType.value} != ${resp.schema.language.go!.responseType.value.toLowerCase()} {
+      return `if (p.pt.pollerMethodVerb() == http.MethodPut || p.pt.pollerMethodVerb() == http.MethodPatch) && p.resp != nil && (*p.resp.${resp.schema.language.go!.responseType.value} != ${resp.schema.language.go!.responseType.value}{}) {
           return p.resp, nil
         }
       `;

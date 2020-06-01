@@ -222,8 +222,7 @@ func (p *productPoller) FinalResponse(ctx context.Context) (*ProductResponse, er
 	if !p.Done() {
 		return nil, errors.New("cannot return a final response from a poller in a non-terminal state")
 	}
-	product := Product{}
-	if (p.pt.pollerMethodVerb() == http.MethodPut || p.pt.pollerMethodVerb() == http.MethodPatch) && p.resp != nil && *p.resp.Product != product {
+	if (p.pt.pollerMethodVerb() == http.MethodPut || p.pt.pollerMethodVerb() == http.MethodPatch) && p.resp != nil && (*p.resp.Product != Product{}) {
 		return p.resp, nil
 	}
 	// checking if there was a FinalStateVia configuration to re-route the final GET
@@ -335,8 +334,7 @@ func (p *skuPoller) FinalResponse(ctx context.Context) (*SkuResponse, error) {
 	if !p.Done() {
 		return nil, errors.New("cannot return a final response from a poller in a non-terminal state")
 	}
-	sku := Sku{}
-	if (p.pt.pollerMethodVerb() == http.MethodPut || p.pt.pollerMethodVerb() == http.MethodPatch) && p.resp != nil && *p.resp.Sku != sku {
+	if (p.pt.pollerMethodVerb() == http.MethodPut || p.pt.pollerMethodVerb() == http.MethodPatch) && p.resp != nil && (*p.resp.Sku != Sku{}) {
 		return p.resp, nil
 	}
 	// checking if there was a FinalStateVia configuration to re-route the final GET
@@ -448,8 +446,7 @@ func (p *subProductPoller) FinalResponse(ctx context.Context) (*SubProductRespon
 	if !p.Done() {
 		return nil, errors.New("cannot return a final response from a poller in a non-terminal state")
 	}
-	subproduct := SubProduct{}
-	if (p.pt.pollerMethodVerb() == http.MethodPut || p.pt.pollerMethodVerb() == http.MethodPatch) && p.resp != nil && *p.resp.SubProduct != subproduct {
+	if (p.pt.pollerMethodVerb() == http.MethodPut || p.pt.pollerMethodVerb() == http.MethodPatch) && p.resp != nil && (*p.resp.SubProduct != SubProduct{}) {
 		return p.resp, nil
 	}
 	// checking if there was a FinalStateVia configuration to re-route the final GET
