@@ -5,11 +5,28 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { camelCase, pascalCase } from '@azure-tools/codegen';
-import { CodeModel, SchemaResponse, Operation } from '@azure-tools/codemodel';
+import { CodeModel, SchemaResponse, Operation, SchemaType } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { PollerInfo, isSchemaResponse } from '../common/helpers';
 import { contentPreamble, sortAscending } from './helpers';
 import { ImportManager } from './imports';
+
+function getPutCheck(resp: SchemaResponse): string {
+  switch (resp.schema.type) {
+    case SchemaType.Array:
+    case SchemaType.Dictionary:
+      return `if p.Done() && p.pollerMethodVerb() == "PUT" && p.resp != nil && p.resp.${resp.schema.language.go!.responseType.value} != nil {
+          return p.resp, nil
+        }
+        `;
+    default:
+      return `${resp.schema.language.go!.responseType.value.toLowerCase()} := ${resp.schema.language.go!.responseType.value}{}
+        if p.Done() && p.pollerMethodVerb() == "PUT" && p.resp != nil && *p.resp.${resp.schema.language.go!.responseType.value} != ${resp.schema.language.go!.responseType.value.toLowerCase()} {
+          return p.resp, nil
+        }
+        `;
+  }
+}
 
 // Creates the content in pollers.go
 export async function generatePollers(session: Session<CodeModel>): Promise<string> {
@@ -41,6 +58,8 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
     }`;
     let pollUntilDoneResponse = '(*http.Response, error)';
     let pollUntilDoneReturn = 'p.FinalResponse(), nil';
+    let pollUntilDoneWidgetCheck = '';
+    let pollUntilDoneHandleResponse = '';
     let handleResponse = '';
     let rawResponse = ''; // used to access the raw response field on response envelopes
     const schemaResponse = <SchemaResponse>poller.op.responses![0];
@@ -49,12 +68,19 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
       responseType = schemaResponse.schema.language.go!.responseType.name;
       pollUntilDoneResponse = `(*${responseType}, error)`;
       pollUntilDoneReturn = 'p.FinalResponse(ctx)';
+      pollUntilDoneWidgetCheck = `if p.Done() && p.pollerMethodVerb() == "PUT" && p.resp != nil && p.resp.${schemaResponse.schema.language.go!.responseType.value} != nil {
+      return p.resp, nil
+    }
+    `;
+      pollUntilDoneHandleResponse = `p.resp, _ = p.handleResponse(p.pt.latestResponse())
+      `;
       rawResponse = '.RawResponse';
+      const putCheck = getPutCheck(schemaResponse);
       unmarshalResponse = `resp.UnmarshalAsJSON(&result.${schemaResponse.schema.language.go!.responseType.value})`;
       // for operations that do return a model add a final response method that handles the final get URL scenario
       finalResponseDeclaration = `FinalResponse(ctx context.Context) (*${responseType}, error)`;
       finalResponse = `FinalResponse(ctx context.Context) (*${responseType}, error) {
-        // checking if there was a FinalStateVia configuration to re-route the final GET
+        ${putCheck}// checking if there was a FinalStateVia configuration to re-route the final GET
         // request to the value specified in the FinalStateVia property on the poller
         err := p.pt.setFinalState()
         if err != nil {
@@ -109,10 +135,15 @@ type ${pollerInterface} interface {
 }
 
 type ${pollerName} struct {
+  resp *${responseType}
 	// the client for making the request
 	pipeline azcore.Pipeline
-	// polling tracker
   pt pollingTracker
+}
+
+// returns the method verb used in the initial request for the operation
+func (p *${pollerName}) pollerMethodVerb() string {
+  return p.pt.pollerMethodVerb()
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
@@ -144,13 +175,13 @@ func (p *${pollerName}) ResumeToken() (string, error) {
 }
 
 func (p *${pollerName}) pollUntilDone(ctx context.Context, frequency time.Duration) ${pollUntilDoneResponse} {
-    for {
+    ${pollUntilDoneWidgetCheck}for {
         resp, err := p.Poll(ctx)
         if err != nil {
             return nil, err
         }
         if p.Done() {
-          break
+          ${pollUntilDoneHandleResponse}break
         }
         if delay := azcore.RetryAfter(resp); delay > 0 {
             time.Sleep(delay)
@@ -192,8 +223,7 @@ export async function generatePollersHelper(session: Session<CodeModel>): Promis
   imports.add('errors');
   text += imports.text();
   // TODO separate this into manageable chunks of text by section of functionality
-  text += `
-const (
+  text += `const (
   headerAsyncOperation = "Azure-AsyncOperation"
 	headerLocation       = "Location"
 	)
@@ -265,7 +295,10 @@ type pollingTracker interface {
   handleError(resp *azcore.Response) error
 
   // sets the FinalGetURI to the value pointed to in FinalStateVia
-	setFinalState() error
+  setFinalState() error
+  
+  // returns the verb used with the initial request
+  pollerMethodVerb() string
 }
 
 type methodErrorHandler func(resp *azcore.Response) error
@@ -557,6 +590,9 @@ func (pt *pollingTrackerBase) setFinalState() error {
 	return nil
 }
 
+func (pt *pollingTrackerBase) pollerMethodVerb() string {
+	return pt.Method
+}
 
 	// DELETE
 	
