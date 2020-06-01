@@ -29,9 +29,7 @@ func TestArrayCSVInPath(t *testing.T) {
 	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
-// TODO skip this test until base64 encoding/decoding is sorted out
 func TestPathsBase64URL(t *testing.T) {
-	t.Skip()
 	client := getPathsOperations(t)
 	result, err := client.Base64URL(context.Background(), []byte("lorem"))
 	if err != nil {

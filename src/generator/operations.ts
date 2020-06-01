@@ -111,7 +111,11 @@ function formatParamValue(param: Parameter, imports: ImportManager): string {
     case SchemaType.ByteArray:
       // ByteArray is a base-64 encoded value in string format
       imports.add('encoding/base64');
-      return `base64.StdEncoding.EncodeToString(${paramName})`;
+      let byteFormat = 'Std';
+      if ((<ByteArraySchema>param.schema).format === 'base64url') {
+        byteFormat = 'RawURL';
+      }
+      return `base64.${byteFormat}Encoding.EncodeToString(${paramName})`;
     case SchemaType.Choice:
     case SchemaType.SealedChoice:
       return `string(${paramName})`;

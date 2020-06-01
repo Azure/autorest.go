@@ -144,7 +144,7 @@ func (client *pathsOperations) Base64URL(ctx context.Context, base64UrlPath []by
 // base64UrlCreateRequest creates the Base64URL request.
 func (client *pathsOperations) base64UrlCreateRequest(base64UrlPath []byte) (*azcore.Request, error) {
 	urlPath := "/paths/string/bG9yZW0/{base64UrlPath}"
-	urlPath = strings.ReplaceAll(urlPath, "{base64UrlPath}", url.PathEscape(base64.StdEncoding.EncodeToString(base64UrlPath)))
+	urlPath = strings.ReplaceAll(urlPath, "{base64UrlPath}", url.PathEscape(base64.RawURLEncoding.EncodeToString(base64UrlPath)))
 	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
