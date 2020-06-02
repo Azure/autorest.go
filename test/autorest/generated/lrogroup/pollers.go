@@ -26,8 +26,7 @@ type HTTPPoller interface {
 type httpPoller struct {
 	// the client for making the request
 	pipeline azcore.Pipeline
-	// polling tracker
-	pt pollingTracker
+	pt       pollingTracker
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
@@ -89,8 +88,7 @@ type ProductArrayPoller interface {
 type productArrayPoller struct {
 	// the client for making the request
 	pipeline azcore.Pipeline
-	// polling tracker
-	pt pollingTracker
+	pt       pollingTracker
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
@@ -107,6 +105,18 @@ func (p *productArrayPoller) Poll(ctx context.Context) (*http.Response, error) {
 }
 
 func (p *productArrayPoller) FinalResponse(ctx context.Context) (*ProductArrayResponse, error) {
+	if !p.Done() {
+		return nil, errors.New("cannot return a final response from a poller in a non-terminal state")
+	}
+	if p.pt.pollerMethodVerb() == http.MethodPut || p.pt.pollerMethodVerb() == http.MethodPatch {
+		res, err := p.handleResponse(p.pt.latestResponse())
+		if err != nil {
+			return nil, err
+		}
+		if res != nil && res.ProductArray != nil {
+			return res, nil
+		}
+	}
 	// checking if there was a FinalStateVia configuration to re-route the final GET
 	// request to the value specified in the FinalStateVia property on the poller
 	err := p.pt.setFinalState()
@@ -194,8 +204,7 @@ type ProductPoller interface {
 type productPoller struct {
 	// the client for making the request
 	pipeline azcore.Pipeline
-	// polling tracker
-	pt pollingTracker
+	pt       pollingTracker
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
@@ -212,6 +221,18 @@ func (p *productPoller) Poll(ctx context.Context) (*http.Response, error) {
 }
 
 func (p *productPoller) FinalResponse(ctx context.Context) (*ProductResponse, error) {
+	if !p.Done() {
+		return nil, errors.New("cannot return a final response from a poller in a non-terminal state")
+	}
+	if p.pt.pollerMethodVerb() == http.MethodPut || p.pt.pollerMethodVerb() == http.MethodPatch {
+		res, err := p.handleResponse(p.pt.latestResponse())
+		if err != nil {
+			return nil, err
+		}
+		if res != nil && (*res.Product != Product{}) {
+			return res, nil
+		}
+	}
 	// checking if there was a FinalStateVia configuration to re-route the final GET
 	// request to the value specified in the FinalStateVia property on the poller
 	err := p.pt.setFinalState()
@@ -299,8 +320,7 @@ type SkuPoller interface {
 type skuPoller struct {
 	// the client for making the request
 	pipeline azcore.Pipeline
-	// polling tracker
-	pt pollingTracker
+	pt       pollingTracker
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
@@ -317,6 +337,18 @@ func (p *skuPoller) Poll(ctx context.Context) (*http.Response, error) {
 }
 
 func (p *skuPoller) FinalResponse(ctx context.Context) (*SkuResponse, error) {
+	if !p.Done() {
+		return nil, errors.New("cannot return a final response from a poller in a non-terminal state")
+	}
+	if p.pt.pollerMethodVerb() == http.MethodPut || p.pt.pollerMethodVerb() == http.MethodPatch {
+		res, err := p.handleResponse(p.pt.latestResponse())
+		if err != nil {
+			return nil, err
+		}
+		if res != nil && (*res.Sku != Sku{}) {
+			return res, nil
+		}
+	}
 	// checking if there was a FinalStateVia configuration to re-route the final GET
 	// request to the value specified in the FinalStateVia property on the poller
 	err := p.pt.setFinalState()
@@ -404,8 +436,7 @@ type SubProductPoller interface {
 type subProductPoller struct {
 	// the client for making the request
 	pipeline azcore.Pipeline
-	// polling tracker
-	pt pollingTracker
+	pt       pollingTracker
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
@@ -422,6 +453,18 @@ func (p *subProductPoller) Poll(ctx context.Context) (*http.Response, error) {
 }
 
 func (p *subProductPoller) FinalResponse(ctx context.Context) (*SubProductResponse, error) {
+	if !p.Done() {
+		return nil, errors.New("cannot return a final response from a poller in a non-terminal state")
+	}
+	if p.pt.pollerMethodVerb() == http.MethodPut || p.pt.pollerMethodVerb() == http.MethodPatch {
+		res, err := p.handleResponse(p.pt.latestResponse())
+		if err != nil {
+			return nil, err
+		}
+		if res != nil && (*res.SubProduct != SubProduct{}) {
+			return res, nil
+		}
+	}
 	// checking if there was a FinalStateVia configuration to re-route the final GET
 	// request to the value specified in the FinalStateVia property on the poller
 	err := p.pt.setFinalState()

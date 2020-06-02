@@ -90,6 +90,9 @@ type pollingTracker interface {
 
 	// sets the FinalGetURI to the value pointed to in FinalStateVia
 	setFinalState() error
+
+	// returns the verb used with the initial request
+	pollerMethodVerb() string
 }
 
 type methodErrorHandler func(resp *azcore.Response) error
@@ -379,6 +382,10 @@ func (pt *pollingTrackerBase) setFinalState() error {
 		pt.FinalGetURI = pt.OriginalURI
 	}
 	return nil
+}
+
+func (pt *pollingTrackerBase) pollerMethodVerb() string {
+	return pt.Method
 }
 
 // DELETE

@@ -310,17 +310,17 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
       finalState = op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via'];
     }
     text += `\tpt, err := createPollingTracker("${clientName}.${op.language.go!.name}", "${finalState}", resp, client.${info.protocolNaming.errorMethod})\n`;
-    text += `\tif err != nil {\n`;
-    text += `\t\treturn nil, err\n`;
-    text += `\t}\n`;
+    text += '\tif err != nil {\n';
+    text += '\t\treturn nil, err\n';
+    text += '\t}\n';
     text += `\tpoller := &${camelCase(op.language.go!.pollerType.name)}{\n`;
-    text += `\t\t\tpt: pt,\n`;
-    text += `\t\t\tpipeline: client.p,\n`;
-    text += `\t}\n`;
+    text += '\t\t\tpt: pt,\n';
+    text += '\t\t\tpipeline: client.p,\n';
+    text += '\t}\n';
     text += '\tresult.Poller = poller\n';
     // http pollers will simply return an *http.Response
     if (op.language.go!.pollerType.name === 'HTTPPoller') {
-      text += `\tresult.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {\n`;
+      text += '\tresult.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {\n';
     } else {
       text += `\tresult.PollUntilDone = func(ctx context.Context, frequency time.Duration)(*${op.language.go!.pollerType.responseType}Response, error) {\n`;
     }
@@ -1028,6 +1028,6 @@ function addResumePollerMethod(op: Operation, clientName: string): string {
   text += '\t\tpipeline: client.p,\n';
   text += '\t\tpt: pt,\n';
   text += '\t}, nil\n';
-  text += '}\n';
+  text += '}\n\n';
   return text;
 }

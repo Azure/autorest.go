@@ -4,12 +4,35 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@azure-tools/autorest-extension-base';
-import { camelCase, pascalCase } from '@azure-tools/codegen';
-import { CodeModel, SchemaResponse, Operation } from '@azure-tools/codemodel';
+import { camelCase } from '@azure-tools/codegen';
+import { CodeModel, SchemaResponse, SchemaType } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { PollerInfo, isSchemaResponse } from '../common/helpers';
 import { contentPreamble, sortAscending } from './helpers';
 import { ImportManager } from './imports';
+
+function getPutCheck(resp: SchemaResponse): string {
+  let text = `if p.pt.pollerMethodVerb() == http.MethodPut || p.pt.pollerMethodVerb() == http.MethodPatch {
+      res, err := p.handleResponse(p.pt.latestResponse())
+      if err != nil {
+        return nil, err
+      }
+      `;
+  switch (resp.schema.type) {
+    case SchemaType.Array:
+    case SchemaType.Dictionary:
+      text += `if res != nil && res.${resp.schema.language.go!.responseType.value} != nil {`;
+      break;
+    default:
+      text += `if res != nil && (*res.${resp.schema.language.go!.responseType.value} != ${resp.schema.language.go!.responseType.value}{}) {`;
+  }
+  text += `
+        return res, nil
+      }
+    }
+    `;
+  return text;
+}
 
 // Creates the content in pollers.go
 export async function generatePollers(session: Session<CodeModel>): Promise<string> {
@@ -37,24 +60,25 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
     // HTTP Pollers do not need to perform the final get request since they do not return a model
     let finalResponseDeclaration = 'FinalResponse() *http.Response';
     let finalResponse = `${finalResponseDeclaration} {
-      return p.pt.latestResponse().Response;
-    }`;
+        return p.pt.latestResponse().Response;
+      }`;
     let pollUntilDoneResponse = '(*http.Response, error)';
     let pollUntilDoneReturn = 'p.FinalResponse(), nil';
     let handleResponse = '';
-    let rawResponse = ''; // used to access the raw response field on response envelopes
     const schemaResponse = <SchemaResponse>poller.op.responses![0];
     let unmarshalResponse = 'nil';
     if (isSchemaResponse(schemaResponse) && schemaResponse.schema.language.go!.responseType.value != undefined) {
       responseType = schemaResponse.schema.language.go!.responseType.name;
       pollUntilDoneResponse = `(*${responseType}, error)`;
       pollUntilDoneReturn = 'p.FinalResponse(ctx)';
-      rawResponse = '.RawResponse';
       unmarshalResponse = `resp.UnmarshalAsJSON(&result.${schemaResponse.schema.language.go!.responseType.value})`;
       // for operations that do return a model add a final response method that handles the final get URL scenario
       finalResponseDeclaration = `FinalResponse(ctx context.Context) (*${responseType}, error)`;
       finalResponse = `FinalResponse(ctx context.Context) (*${responseType}, error) {
-        // checking if there was a FinalStateVia configuration to re-route the final GET
+        if !p.Done() {
+          return nil, errors.New("cannot return a final response from a poller in a non-terminal state")
+        }
+        ${getPutCheck(schemaResponse)}// checking if there was a FinalStateVia configuration to re-route the final GET
         // request to the value specified in the FinalStateVia property on the poller
         err := p.pt.setFinalState()
         if err != nil {
@@ -101,67 +125,66 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
       `;
     }
     bodyText += `// ${pollerInterface} provides polling facilities until the operation completes
-type ${pollerInterface} interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
-	${finalResponseDeclaration}
-	ResumeToken() (string, error)
-}
+      type ${pollerInterface} interface {
+        Done() bool
+        Poll(ctx context.Context) (*http.Response, error)
+        ${finalResponseDeclaration}
+        ResumeToken() (string, error)
+      }
 
-type ${pollerName} struct {
-	// the client for making the request
-	pipeline azcore.Pipeline
-	// polling tracker
-  pt pollingTracker
-}
+      type ${pollerName} struct {
+        // the client for making the request
+        pipeline azcore.Pipeline
+        pt pollingTracker
+      }
 
-// Done returns true if there was an error or polling has reached a terminal state
-func (p *${pollerName}) Done() bool {
-  return p.pt.hasTerminated()
-}
+      // Done returns true if there was an error or polling has reached a terminal state
+      func (p *${pollerName}) Done() bool {
+        return p.pt.hasTerminated()
+      }
 
-// Poll will send poll the service endpoint and return an http.Response or error received from the service
-func (p *${pollerName}) Poll(ctx context.Context) (*http.Response, error) {
-  if lroPollDone(ctx, p.pipeline, p.pt) {
-    return p.pt.latestResponse().Response, p.pt.pollingError()
-  }
-  return nil, p.pt.pollingError()
-}
+      // Poll will send poll the service endpoint and return an http.Response or error received from the service
+      func (p *${pollerName}) Poll(ctx context.Context) (*http.Response, error) {
+        if lroPollDone(ctx, p.pipeline, p.pt) {
+          return p.pt.latestResponse().Response, p.pt.pollingError()
+        }
+        return nil, p.pt.pollingError()
+      }
 
-func (p *${pollerName}) ${finalResponse}
+      func (p *${pollerName}) ${finalResponse}
 
-// ResumeToken generates the string token that can be used with the Resume${pollerInterface} method
-// on the client to create a new poller from the data held in the current poller type
-func (p *${pollerName}) ResumeToken() (string, error) {
-  if p.pt.hasTerminated() {
-    return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
-  }
-  js, err := json.Marshal(p.pt)
-  if err != nil {
-    return "", err
-  }
-  return string(js), nil
-}
+      // ResumeToken generates the string token that can be used with the Resume${pollerInterface} method
+      // on the client to create a new poller from the data held in the current poller type
+      func (p *${pollerName}) ResumeToken() (string, error) {
+        if p.pt.hasTerminated() {
+          return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+        }
+        js, err := json.Marshal(p.pt)
+        if err != nil {
+          return "", err
+        }
+        return string(js), nil
+      }
 
-func (p *${pollerName}) pollUntilDone(ctx context.Context, frequency time.Duration) ${pollUntilDoneResponse} {
-    for {
-        resp, err := p.Poll(ctx)
+      func (p *${pollerName}) pollUntilDone(ctx context.Context, frequency time.Duration) ${pollUntilDoneResponse} {
+        for {
+          resp, err := p.Poll(ctx)
         if err != nil {
             return nil, err
-        }
+          }
         if p.Done() {
-          break
-        }
+            break
+          }
         if delay := azcore.RetryAfter(resp); delay > 0 {
-            time.Sleep(delay)
+          time.Sleep(delay)
         } else {
-            time.Sleep(frequency)
+          time.Sleep(frequency)
         }
-    }
-    return ${pollUntilDoneReturn}
-}
-${handleResponse}
-`;
+      }
+      return ${pollUntilDoneReturn}
+  }
+  ${handleResponse}
+  `;
   }
   text += imports.text();
   text += bodyText;
@@ -192,90 +215,92 @@ export async function generatePollersHelper(session: Session<CodeModel>): Promis
   imports.add('errors');
   text += imports.text();
   // TODO separate this into manageable chunks of text by section of functionality
-  text += `
-const (
-  headerAsyncOperation = "Azure-AsyncOperation"
+  text += `const (
+    headerAsyncOperation = "Azure-AsyncOperation"
 	headerLocation       = "Location"
 	)
 
-const (
-  operationInProgress string = "InProgress"
-operationCanceled   string = "Canceled"
-operationFailed     string = "Failed"
-operationSucceeded  string = "Succeeded"
+  const (
+    operationInProgress string = "InProgress"
+  operationCanceled   string = "Canceled"
+  operationFailed     string = "Failed"
+  operationSucceeded  string = "Succeeded"
 	)
 
-var pollingCodes = [...]int{http.StatusNoContent, http.StatusAccepted, http.StatusCreated, http.StatusOK}
+  var pollingCodes = [...]int{http.StatusNoContent, http.StatusAccepted, http.StatusCreated, http.StatusOK}
 
-type pollingTracker interface {
-  // these methods can differ per tracker
+  type pollingTracker interface {
+    // these methods can differ per tracker
 
-  // checks the response headers and status code to determine the polling mechanism
-  updatePollingMethod() error
+    // checks the response headers and status code to determine the polling mechanism
+    updatePollingMethod() error
 
-  // checks the response for tracker-specific error conditions
-  checkForErrors() error
+    // checks the response for tracker-specific error conditions
+    checkForErrors() error
 
-  // returns true if provisioning state should be checked
-  provisioningStateApplicable() bool
+    // returns true if provisioning state should be checked
+    provisioningStateApplicable() bool
 
-  // methods common to all trackers
+    // methods common to all trackers
 
-  // initializes a tracker's polling URL and method, called for each iteration.
-  // these values can be overridden by each polling tracker as required.
-  initPollingMethod() error
+    // initializes a tracker's polling URL and method, called for each iteration.
+    // these values can be overridden by each polling tracker as required.
+    initPollingMethod() error
 
-  // initializes the tracker's internal state, call this when the tracker is created
-  initializeState() error
+    // initializes the tracker's internal state, call this when the tracker is created
+    initializeState() error
 
-  // makes an HTTP request to check the status of the LRO
-  pollForStatus(ctx context.Context, client azcore.Pipeline) error
+    // makes an HTTP request to check the status of the LRO
+    pollForStatus(ctx context.Context, client azcore.Pipeline) error
 
-  // updates internal tracker state, call this after each call to pollForStatus
-  updatePollingState(provStateApl bool) error
+    // updates internal tracker state, call this after each call to pollForStatus
+    updatePollingState(provStateApl bool) error
 
-  // returns the error response from the service, can be nil
-  pollingError() error
+    // returns the error response from the service, can be nil
+    pollingError() error
 
-  // returns the polling method being used
-  pollingMethod() pollingMethodType
+    // returns the polling method being used
+    pollingMethod() pollingMethodType
 
-  // returns the state of the LRO as returned from the service
-  pollingStatus() string
+    // returns the state of the LRO as returned from the service
+    pollingStatus() string
 
-  // returns the URL used for polling status
-  pollingURL() string
+    // returns the URL used for polling status
+    pollingURL() string
 
-  // returns the URL used for the final GET to retrieve the resource
-  finalGetURL() string
+    // returns the URL used for the final GET to retrieve the resource
+    finalGetURL() string
 
-  // returns true if the LRO is in a terminal state
-  hasTerminated() bool
+    // returns true if the LRO is in a terminal state
+    hasTerminated() bool
 
-  // returns true if the LRO is in a failed terminal state
-  hasFailed() bool
+    // returns true if the LRO is in a failed terminal state
+    hasFailed() bool
 
-  // returns true if the LRO is in a successful terminal state
-  hasSucceeded() bool
+    // returns true if the LRO is in a successful terminal state
+    hasSucceeded() bool
 
-  // returns the cached HTTP response after a call to pollForStatus(), can be nil
-  latestResponse() *azcore.Response
+    // returns the cached HTTP response after a call to pollForStatus(), can be nil
+    latestResponse() *azcore.Response
 
-  // converts an *azcore.Response to an error
-  handleError(resp *azcore.Response) error
+    // converts an *azcore.Response to an error
+    handleError(resp *azcore.Response) error
 
-  // sets the FinalGetURI to the value pointed to in FinalStateVia
-	setFinalState() error
-}
+    // sets the FinalGetURI to the value pointed to in FinalStateVia
+    setFinalState() error
 
-type methodErrorHandler func(resp *azcore.Response) error
+    // returns the verb used with the initial request
+    pollerMethodVerb() string
+  }
 
-type pollingTrackerBase struct {
-  // resp is the last response, either from the submission of the LRO or from polling
-  resp *azcore.Response
+  type methodErrorHandler func(resp *azcore.Response) error
 
-  // PollerType is the name of the type of poller that is created
-  PollerType string \`json:"pollerType"\`
+  type pollingTrackerBase struct {
+    // resp is the last response, either from the submission of the LRO or from polling
+    resp *azcore.Response
+
+    // PollerType is the name of the type of poller that is created
+    PollerType string \`json:"pollerType"\`
 
 	// errorHandler is the method to invoke to unmarshall an error response
 	errorHandler methodErrorHandler
@@ -557,6 +582,9 @@ func (pt *pollingTrackerBase) setFinalState() error {
 	return nil
 }
 
+func (pt *pollingTrackerBase) pollerMethodVerb() string {
+	return pt.Method
+}
 
 	// DELETE
 	
