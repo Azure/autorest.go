@@ -145,7 +145,6 @@ func (client *lrosaDsOperations) BeginDelete202NonRetry400(ctx context.Context) 
 		return nil, err
 	}
 	poller := &httpPoller{
-		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -215,7 +214,6 @@ func (client *lrosaDsOperations) BeginDelete202RetryInvalidHeader(ctx context.Co
 		return nil, err
 	}
 	poller := &httpPoller{
-		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -285,7 +283,6 @@ func (client *lrosaDsOperations) BeginDelete204Succeeded(ctx context.Context) (*
 		return nil, err
 	}
 	poller := &httpPoller{
-		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -355,7 +352,6 @@ func (client *lrosaDsOperations) BeginDeleteAsyncRelativeRetry400(ctx context.Co
 		return nil, err
 	}
 	poller := &httpPoller{
-		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -425,7 +421,6 @@ func (client *lrosaDsOperations) BeginDeleteAsyncRelativeRetryInvalidHeader(ctx 
 		return nil, err
 	}
 	poller := &httpPoller{
-		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -495,7 +490,6 @@ func (client *lrosaDsOperations) BeginDeleteAsyncRelativeRetryInvalidJSONPolling
 		return nil, err
 	}
 	poller := &httpPoller{
-		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -565,7 +559,6 @@ func (client *lrosaDsOperations) BeginDeleteAsyncRelativeRetryNoStatus(ctx conte
 		return nil, err
 	}
 	poller := &httpPoller{
-		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -635,7 +628,6 @@ func (client *lrosaDsOperations) BeginDeleteNonRetry400(ctx context.Context) (*H
 		return nil, err
 	}
 	poller := &httpPoller{
-		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -705,7 +697,6 @@ func (client *lrosaDsOperations) BeginPost202NoLocation(ctx context.Context, lro
 		return nil, err
 	}
 	poller := &httpPoller{
-		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -778,7 +769,6 @@ func (client *lrosaDsOperations) BeginPost202NonRetry400(ctx context.Context, lr
 		return nil, err
 	}
 	poller := &httpPoller{
-		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -851,7 +841,6 @@ func (client *lrosaDsOperations) BeginPost202RetryInvalidHeader(ctx context.Cont
 		return nil, err
 	}
 	poller := &httpPoller{
-		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -924,7 +913,6 @@ func (client *lrosaDsOperations) BeginPostAsyncRelativeRetry400(ctx context.Cont
 		return nil, err
 	}
 	poller := &httpPoller{
-		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -997,7 +985,6 @@ func (client *lrosaDsOperations) BeginPostAsyncRelativeRetryInvalidHeader(ctx co
 		return nil, err
 	}
 	poller := &httpPoller{
-		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -1070,7 +1057,6 @@ func (client *lrosaDsOperations) BeginPostAsyncRelativeRetryInvalidJSONPolling(c
 		return nil, err
 	}
 	poller := &httpPoller{
-		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -1143,7 +1129,6 @@ func (client *lrosaDsOperations) BeginPostAsyncRelativeRetryNoPayload(ctx contex
 		return nil, err
 	}
 	poller := &httpPoller{
-		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -1216,7 +1201,6 @@ func (client *lrosaDsOperations) BeginPostNonRetry400(ctx context.Context, lrosa
 		return nil, err
 	}
 	poller := &httpPoller{
-		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -1289,7 +1273,6 @@ func (client *lrosaDsOperations) BeginPut200InvalidJSON(ctx context.Context, lro
 		return nil, err
 	}
 	poller := &productPoller{
-		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -1363,7 +1346,6 @@ func (client *lrosaDsOperations) BeginPutAsyncRelativeRetry400(ctx context.Conte
 		return nil, err
 	}
 	poller := &productPoller{
-		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -1437,7 +1419,6 @@ func (client *lrosaDsOperations) BeginPutAsyncRelativeRetryInvalidHeader(ctx con
 		return nil, err
 	}
 	poller := &productPoller{
-		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -1511,7 +1492,6 @@ func (client *lrosaDsOperations) BeginPutAsyncRelativeRetryInvalidJSONPolling(ct
 		return nil, err
 	}
 	poller := &productPoller{
-		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -1585,7 +1565,6 @@ func (client *lrosaDsOperations) BeginPutAsyncRelativeRetryNoStatus(ctx context.
 		return nil, err
 	}
 	poller := &productPoller{
-		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -1659,7 +1638,6 @@ func (client *lrosaDsOperations) BeginPutAsyncRelativeRetryNoStatusPayload(ctx c
 		return nil, err
 	}
 	poller := &productPoller{
-		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -1733,7 +1711,6 @@ func (client *lrosaDsOperations) BeginPutError201NoProvisioningStatePayload(ctx 
 		return nil, err
 	}
 	poller := &productPoller{
-		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -1807,7 +1784,6 @@ func (client *lrosaDsOperations) BeginPutNonRetry201Creating400(ctx context.Cont
 		return nil, err
 	}
 	poller := &productPoller{
-		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -1881,7 +1857,6 @@ func (client *lrosaDsOperations) BeginPutNonRetry201Creating400InvalidJSON(ctx c
 		return nil, err
 	}
 	poller := &productPoller{
-		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -1955,7 +1930,6 @@ func (client *lrosaDsOperations) BeginPutNonRetry400(ctx context.Context, lrosaD
 		return nil, err
 	}
 	poller := &productPoller{
-		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}

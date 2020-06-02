@@ -69,7 +69,6 @@ func (client *lroRetrysOperations) BeginDelete202Retry200(ctx context.Context) (
 		return nil, err
 	}
 	poller := &httpPoller{
-		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -139,7 +138,6 @@ func (client *lroRetrysOperations) BeginDeleteAsyncRelativeRetrySucceeded(ctx co
 		return nil, err
 	}
 	poller := &httpPoller{
-		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -209,7 +207,6 @@ func (client *lroRetrysOperations) BeginDeleteProvisioning202Accepted200Succeede
 		return nil, err
 	}
 	poller := &productPoller{
-		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -280,7 +277,6 @@ func (client *lroRetrysOperations) BeginPost202Retry200(ctx context.Context, lro
 		return nil, err
 	}
 	poller := &httpPoller{
-		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -353,7 +349,6 @@ func (client *lroRetrysOperations) BeginPostAsyncRelativeRetrySucceeded(ctx cont
 		return nil, err
 	}
 	poller := &httpPoller{
-		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -426,7 +421,6 @@ func (client *lroRetrysOperations) BeginPut201CreatingSucceeded200(ctx context.C
 		return nil, err
 	}
 	poller := &productPoller{
-		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -500,7 +494,6 @@ func (client *lroRetrysOperations) BeginPutAsyncRelativeRetrySucceeded(ctx conte
 		return nil, err
 	}
 	poller := &productPoller{
-		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}

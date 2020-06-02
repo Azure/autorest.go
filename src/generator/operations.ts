@@ -306,7 +306,6 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
     text += '\t\treturn nil, err\n';
     text += '\t}\n';
     text += `\tpoller := &${camelCase(op.language.go!.pollerType.name)}{\n`;
-    text += '\t\t\tresp: result,\n';
     text += '\t\t\tpt: pt,\n';
     text += '\t\t\tpipeline: client.p,\n';
     text += '\t}\n';

@@ -4,8 +4,8 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@azure-tools/autorest-extension-base';
-import { camelCase, pascalCase } from '@azure-tools/codegen';
-import { CodeModel, SchemaResponse, Operation, SchemaType } from '@azure-tools/codemodel';
+import { camelCase } from '@azure-tools/codegen';
+import { CodeModel, SchemaResponse, SchemaType } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { PollerInfo, isSchemaResponse } from '../common/helpers';
 import { contentPreamble, sortAscending } from './helpers';
@@ -134,7 +134,6 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
       }
 
       type ${pollerName} struct {
-        resp *${responseType}
         // the client for making the request
         pipeline azcore.Pipeline
         pt pollingTracker

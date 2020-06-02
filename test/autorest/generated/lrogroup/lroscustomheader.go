@@ -57,7 +57,6 @@ func (client *lrOSCustomHeaderOperations) BeginPost202Retry200(ctx context.Conte
 		return nil, err
 	}
 	poller := &httpPoller{
-		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -130,7 +129,6 @@ func (client *lrOSCustomHeaderOperations) BeginPostAsyncRetrySucceeded(ctx conte
 		return nil, err
 	}
 	poller := &httpPoller{
-		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -203,7 +201,6 @@ func (client *lrOSCustomHeaderOperations) BeginPut201CreatingSucceeded200(ctx co
 		return nil, err
 	}
 	poller := &productPoller{
-		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}
@@ -277,7 +274,6 @@ func (client *lrOSCustomHeaderOperations) BeginPutAsyncRetrySucceeded(ctx contex
 		return nil, err
 	}
 	poller := &productPoller{
-		resp:     result,
 		pt:       pt,
 		pipeline: client.p,
 	}

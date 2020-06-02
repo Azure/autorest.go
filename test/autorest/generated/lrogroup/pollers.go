@@ -24,7 +24,6 @@ type HTTPPoller interface {
 }
 
 type httpPoller struct {
-	resp *HTTPResponse
 	// the client for making the request
 	pipeline azcore.Pipeline
 	pt       pollingTracker
@@ -87,7 +86,6 @@ type ProductArrayPoller interface {
 }
 
 type productArrayPoller struct {
-	resp *ProductArrayResponse
 	// the client for making the request
 	pipeline azcore.Pipeline
 	pt       pollingTracker
@@ -204,7 +202,6 @@ type ProductPoller interface {
 }
 
 type productPoller struct {
-	resp *ProductResponse
 	// the client for making the request
 	pipeline azcore.Pipeline
 	pt       pollingTracker
@@ -321,7 +318,6 @@ type SkuPoller interface {
 }
 
 type skuPoller struct {
-	resp *SkuResponse
 	// the client for making the request
 	pipeline azcore.Pipeline
 	pt       pollingTracker
@@ -438,7 +434,6 @@ type SubProductPoller interface {
 }
 
 type subProductPoller struct {
-	resp *SubProductResponse
 	// the client for making the request
 	pipeline azcore.Pipeline
 	pt       pollingTracker
