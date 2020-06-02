@@ -71,7 +71,6 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
       responseType = schemaResponse.schema.language.go!.responseType.name;
       pollUntilDoneResponse = `(*${responseType}, error)`;
       pollUntilDoneReturn = 'p.FinalResponse(ctx)';
-      const putCheck = getPutCheck(schemaResponse);
       unmarshalResponse = `resp.UnmarshalAsJSON(&result.${schemaResponse.schema.language.go!.responseType.value})`;
       // for operations that do return a model add a final response method that handles the final get URL scenario
       finalResponseDeclaration = `FinalResponse(ctx context.Context) (*${responseType}, error)`;
@@ -79,7 +78,7 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
         if !p.Done() {
           return nil, errors.New("cannot return a final response from a poller in a non-terminal state")
         }
-        ${putCheck}// checking if there was a FinalStateVia configuration to re-route the final GET
+        ${getPutCheck(schemaResponse)}// checking if there was a FinalStateVia configuration to re-route the final GET
         // request to the value specified in the FinalStateVia property on the poller
         err := p.pt.setFinalState()
         if err != nil {
