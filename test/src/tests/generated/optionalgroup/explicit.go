@@ -88,7 +88,6 @@ func (client ExplicitClient) PostOptionalArrayHeaderSender(req *http.Request) (*
 func (client ExplicitClient) PostOptionalArrayHeaderResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -153,7 +152,6 @@ func (client ExplicitClient) PostOptionalArrayParameterSender(req *http.Request)
 func (client ExplicitClient) PostOptionalArrayParameterResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -218,7 +216,6 @@ func (client ExplicitClient) PostOptionalArrayPropertySender(req *http.Request) 
 func (client ExplicitClient) PostOptionalArrayPropertyResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -290,7 +287,6 @@ func (client ExplicitClient) PostOptionalClassParameterSender(req *http.Request)
 func (client ExplicitClient) PostOptionalClassParameterResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -365,7 +361,6 @@ func (client ExplicitClient) PostOptionalClassPropertySender(req *http.Request) 
 func (client ExplicitClient) PostOptionalClassPropertyResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -429,7 +424,6 @@ func (client ExplicitClient) PostOptionalIntegerHeaderSender(req *http.Request) 
 func (client ExplicitClient) PostOptionalIntegerHeaderResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -494,7 +488,6 @@ func (client ExplicitClient) PostOptionalIntegerParameterSender(req *http.Reques
 func (client ExplicitClient) PostOptionalIntegerParameterResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -559,7 +552,6 @@ func (client ExplicitClient) PostOptionalIntegerPropertySender(req *http.Request
 func (client ExplicitClient) PostOptionalIntegerPropertyResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -623,7 +615,6 @@ func (client ExplicitClient) PostOptionalStringHeaderSender(req *http.Request) (
 func (client ExplicitClient) PostOptionalStringHeaderResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -688,7 +679,6 @@ func (client ExplicitClient) PostOptionalStringParameterSender(req *http.Request
 func (client ExplicitClient) PostOptionalStringParameterResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -753,7 +743,6 @@ func (client ExplicitClient) PostOptionalStringPropertySender(req *http.Request)
 func (client ExplicitClient) PostOptionalStringPropertyResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -821,7 +810,6 @@ func (client ExplicitClient) PostRequiredArrayHeaderSender(req *http.Request) (*
 func (client ExplicitClient) PostRequiredArrayHeaderResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -890,7 +878,6 @@ func (client ExplicitClient) PostRequiredArrayParameterSender(req *http.Request)
 func (client ExplicitClient) PostRequiredArrayParameterResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -959,7 +946,6 @@ func (client ExplicitClient) PostRequiredArrayPropertySender(req *http.Request) 
 func (client ExplicitClient) PostRequiredArrayPropertyResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1028,7 +1014,6 @@ func (client ExplicitClient) PostRequiredClassParameterSender(req *http.Request)
 func (client ExplicitClient) PostRequiredClassParameterResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1098,7 +1083,6 @@ func (client ExplicitClient) PostRequiredClassPropertySender(req *http.Request) 
 func (client ExplicitClient) PostRequiredClassPropertyResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1160,7 +1144,6 @@ func (client ExplicitClient) PostRequiredIntegerHeaderSender(req *http.Request) 
 func (client ExplicitClient) PostRequiredIntegerHeaderResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1223,7 +1206,6 @@ func (client ExplicitClient) PostRequiredIntegerParameterSender(req *http.Reques
 func (client ExplicitClient) PostRequiredIntegerParameterResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1292,7 +1274,6 @@ func (client ExplicitClient) PostRequiredIntegerPropertySender(req *http.Request
 func (client ExplicitClient) PostRequiredIntegerPropertyResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1354,7 +1335,6 @@ func (client ExplicitClient) PostRequiredStringHeaderSender(req *http.Request) (
 func (client ExplicitClient) PostRequiredStringHeaderResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1417,7 +1397,6 @@ func (client ExplicitClient) PostRequiredStringParameterSender(req *http.Request
 func (client ExplicitClient) PostRequiredStringParameterResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1486,7 +1465,6 @@ func (client ExplicitClient) PostRequiredStringPropertySender(req *http.Request)
 func (client ExplicitClient) PostRequiredStringPropertyResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp

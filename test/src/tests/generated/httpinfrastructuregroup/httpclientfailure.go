@@ -91,7 +91,6 @@ func (client HTTPClientFailureClient) Delete400Sender(req *http.Request) (*http.
 func (client HTTPClientFailureClient) Delete400Responder(resp *http.Response) (result Error, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -159,7 +158,6 @@ func (client HTTPClientFailureClient) Delete407Sender(req *http.Request) (*http.
 func (client HTTPClientFailureClient) Delete407Responder(resp *http.Response) (result Error, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -227,7 +225,6 @@ func (client HTTPClientFailureClient) Delete417Sender(req *http.Request) (*http.
 func (client HTTPClientFailureClient) Delete417Responder(resp *http.Response) (result Error, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -288,7 +285,6 @@ func (client HTTPClientFailureClient) Get400Sender(req *http.Request) (*http.Res
 func (client HTTPClientFailureClient) Get400Responder(resp *http.Response) (result Error, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -349,7 +345,6 @@ func (client HTTPClientFailureClient) Get402Sender(req *http.Request) (*http.Res
 func (client HTTPClientFailureClient) Get402Responder(resp *http.Response) (result Error, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -410,7 +405,6 @@ func (client HTTPClientFailureClient) Get403Sender(req *http.Request) (*http.Res
 func (client HTTPClientFailureClient) Get403Responder(resp *http.Response) (result Error, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -471,7 +465,6 @@ func (client HTTPClientFailureClient) Get411Sender(req *http.Request) (*http.Res
 func (client HTTPClientFailureClient) Get411Responder(resp *http.Response) (result Error, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -532,7 +525,6 @@ func (client HTTPClientFailureClient) Get412Sender(req *http.Request) (*http.Res
 func (client HTTPClientFailureClient) Get412Responder(resp *http.Response) (result Error, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -593,7 +585,6 @@ func (client HTTPClientFailureClient) Get416Sender(req *http.Request) (*http.Res
 func (client HTTPClientFailureClient) Get416Responder(resp *http.Response) (result Error, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -654,7 +645,6 @@ func (client HTTPClientFailureClient) Head400Sender(req *http.Request) (*http.Re
 func (client HTTPClientFailureClient) Head400Responder(resp *http.Response) (result Error, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -715,7 +705,6 @@ func (client HTTPClientFailureClient) Head401Sender(req *http.Request) (*http.Re
 func (client HTTPClientFailureClient) Head401Responder(resp *http.Response) (result Error, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -776,7 +765,6 @@ func (client HTTPClientFailureClient) Head410Sender(req *http.Request) (*http.Re
 func (client HTTPClientFailureClient) Head410Responder(resp *http.Response) (result Error, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -837,7 +825,6 @@ func (client HTTPClientFailureClient) Head429Sender(req *http.Request) (*http.Re
 func (client HTTPClientFailureClient) Head429Responder(resp *http.Response) (result Error, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -905,7 +892,6 @@ func (client HTTPClientFailureClient) Patch400Sender(req *http.Request) (*http.R
 func (client HTTPClientFailureClient) Patch400Responder(resp *http.Response) (result Error, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -973,7 +959,6 @@ func (client HTTPClientFailureClient) Patch405Sender(req *http.Request) (*http.R
 func (client HTTPClientFailureClient) Patch405Responder(resp *http.Response) (result Error, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -1041,7 +1026,6 @@ func (client HTTPClientFailureClient) Patch414Sender(req *http.Request) (*http.R
 func (client HTTPClientFailureClient) Patch414Responder(resp *http.Response) (result Error, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -1109,7 +1093,6 @@ func (client HTTPClientFailureClient) Post400Sender(req *http.Request) (*http.Re
 func (client HTTPClientFailureClient) Post400Responder(resp *http.Response) (result Error, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -1177,7 +1160,6 @@ func (client HTTPClientFailureClient) Post406Sender(req *http.Request) (*http.Re
 func (client HTTPClientFailureClient) Post406Responder(resp *http.Response) (result Error, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -1245,7 +1227,6 @@ func (client HTTPClientFailureClient) Post415Sender(req *http.Request) (*http.Re
 func (client HTTPClientFailureClient) Post415Responder(resp *http.Response) (result Error, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -1313,7 +1294,6 @@ func (client HTTPClientFailureClient) Put400Sender(req *http.Request) (*http.Res
 func (client HTTPClientFailureClient) Put400Responder(resp *http.Response) (result Error, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -1381,7 +1361,6 @@ func (client HTTPClientFailureClient) Put404Sender(req *http.Request) (*http.Res
 func (client HTTPClientFailureClient) Put404Responder(resp *http.Response) (result Error, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -1449,7 +1428,6 @@ func (client HTTPClientFailureClient) Put409Sender(req *http.Request) (*http.Res
 func (client HTTPClientFailureClient) Put409Responder(resp *http.Response) (result Error, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -1517,7 +1495,6 @@ func (client HTTPClientFailureClient) Put413Sender(req *http.Request) (*http.Res
 func (client HTTPClientFailureClient) Put413Responder(resp *http.Response) (result Error, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())

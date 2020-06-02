@@ -84,7 +84,6 @@ func (client ReadonlypropertyClient) GetValidSender(req *http.Request) (*http.Re
 func (client ReadonlypropertyClient) GetValidResponder(resp *http.Response) (result ReadonlyObj, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -148,7 +147,6 @@ func (client ReadonlypropertyClient) PutValidSender(req *http.Request) (*http.Re
 func (client ReadonlypropertyClient) PutValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp

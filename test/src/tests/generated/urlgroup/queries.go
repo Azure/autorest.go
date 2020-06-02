@@ -92,7 +92,6 @@ func (client QueriesClient) ArrayStringCsvEmptySender(req *http.Request) (*http.
 func (client QueriesClient) ArrayStringCsvEmptyResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -160,7 +159,6 @@ func (client QueriesClient) ArrayStringCsvNullSender(req *http.Request) (*http.R
 func (client QueriesClient) ArrayStringCsvNullResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -230,7 +228,6 @@ func (client QueriesClient) ArrayStringCsvValidSender(req *http.Request) (*http.
 func (client QueriesClient) ArrayStringCsvValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -300,7 +297,6 @@ func (client QueriesClient) ArrayStringPipesValidSender(req *http.Request) (*htt
 func (client QueriesClient) ArrayStringPipesValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -370,7 +366,6 @@ func (client QueriesClient) ArrayStringSsvValidSender(req *http.Request) (*http.
 func (client QueriesClient) ArrayStringSsvValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -440,7 +435,6 @@ func (client QueriesClient) ArrayStringTsvValidSender(req *http.Request) (*http.
 func (client QueriesClient) ArrayStringTsvValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -505,7 +499,6 @@ func (client QueriesClient) ByteEmptySender(req *http.Request) (*http.Response, 
 func (client QueriesClient) ByteEmptyResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -573,7 +566,6 @@ func (client QueriesClient) ByteMultiByteSender(req *http.Request) (*http.Respon
 func (client QueriesClient) ByteMultiByteResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -641,7 +633,6 @@ func (client QueriesClient) ByteNullSender(req *http.Request) (*http.Response, e
 func (client QueriesClient) ByteNullResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -709,7 +700,6 @@ func (client QueriesClient) DateNullSender(req *http.Request) (*http.Response, e
 func (client QueriesClient) DateNullResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -777,7 +767,6 @@ func (client QueriesClient) DateTimeNullSender(req *http.Request) (*http.Respons
 func (client QueriesClient) DateTimeNullResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -842,7 +831,6 @@ func (client QueriesClient) DateTimeValidSender(req *http.Request) (*http.Respon
 func (client QueriesClient) DateTimeValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -907,7 +895,6 @@ func (client QueriesClient) DateValidSender(req *http.Request) (*http.Response, 
 func (client QueriesClient) DateValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -972,7 +959,6 @@ func (client QueriesClient) DoubleDecimalNegativeSender(req *http.Request) (*htt
 func (client QueriesClient) DoubleDecimalNegativeResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1037,7 +1023,6 @@ func (client QueriesClient) DoubleDecimalPositiveSender(req *http.Request) (*htt
 func (client QueriesClient) DoubleDecimalPositiveResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1105,7 +1090,6 @@ func (client QueriesClient) DoubleNullSender(req *http.Request) (*http.Response,
 func (client QueriesClient) DoubleNullResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1173,7 +1157,6 @@ func (client QueriesClient) EnumNullSender(req *http.Request) (*http.Response, e
 func (client QueriesClient) EnumNullResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1241,7 +1224,6 @@ func (client QueriesClient) EnumValidSender(req *http.Request) (*http.Response, 
 func (client QueriesClient) EnumValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1309,7 +1291,6 @@ func (client QueriesClient) FloatNullSender(req *http.Request) (*http.Response, 
 func (client QueriesClient) FloatNullResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1352,7 +1333,7 @@ func (client QueriesClient) FloatScientificNegative(ctx context.Context) (result
 // FloatScientificNegativePreparer prepares the FloatScientificNegative request.
 func (client QueriesClient) FloatScientificNegativePreparer(ctx context.Context) (*http.Request, error) {
 	queryParameters := map[string]interface{}{
-		"floatQuery": autorest.Encode("query", -1.034E-20),
+		"floatQuery": autorest.Encode("query", -1.034e-20),
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -1374,7 +1355,6 @@ func (client QueriesClient) FloatScientificNegativeSender(req *http.Request) (*h
 func (client QueriesClient) FloatScientificNegativeResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1417,7 +1397,7 @@ func (client QueriesClient) FloatScientificPositive(ctx context.Context) (result
 // FloatScientificPositivePreparer prepares the FloatScientificPositive request.
 func (client QueriesClient) FloatScientificPositivePreparer(ctx context.Context) (*http.Request, error) {
 	queryParameters := map[string]interface{}{
-		"floatQuery": autorest.Encode("query", 1.034E+20),
+		"floatQuery": autorest.Encode("query", 1.034e+20),
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -1439,7 +1419,6 @@ func (client QueriesClient) FloatScientificPositiveSender(req *http.Request) (*h
 func (client QueriesClient) FloatScientificPositiveResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1504,7 +1483,6 @@ func (client QueriesClient) GetBooleanFalseSender(req *http.Request) (*http.Resp
 func (client QueriesClient) GetBooleanFalseResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1572,7 +1550,6 @@ func (client QueriesClient) GetBooleanNullSender(req *http.Request) (*http.Respo
 func (client QueriesClient) GetBooleanNullResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1637,7 +1614,6 @@ func (client QueriesClient) GetBooleanTrueSender(req *http.Request) (*http.Respo
 func (client QueriesClient) GetBooleanTrueResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1702,7 +1678,6 @@ func (client QueriesClient) GetIntNegativeOneMillionSender(req *http.Request) (*
 func (client QueriesClient) GetIntNegativeOneMillionResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1770,7 +1745,6 @@ func (client QueriesClient) GetIntNullSender(req *http.Request) (*http.Response,
 func (client QueriesClient) GetIntNullResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1835,7 +1809,6 @@ func (client QueriesClient) GetIntOneMillionSender(req *http.Request) (*http.Res
 func (client QueriesClient) GetIntOneMillionResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1903,7 +1876,6 @@ func (client QueriesClient) GetLongNullSender(req *http.Request) (*http.Response
 func (client QueriesClient) GetLongNullResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1968,7 +1940,6 @@ func (client QueriesClient) GetNegativeTenBillionSender(req *http.Request) (*htt
 func (client QueriesClient) GetNegativeTenBillionResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -2033,7 +2004,6 @@ func (client QueriesClient) GetTenBillionSender(req *http.Request) (*http.Respon
 func (client QueriesClient) GetTenBillionResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -2098,7 +2068,6 @@ func (client QueriesClient) StringEmptySender(req *http.Request) (*http.Response
 func (client QueriesClient) StringEmptyResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -2166,7 +2135,6 @@ func (client QueriesClient) StringNullSender(req *http.Request) (*http.Response,
 func (client QueriesClient) StringNullResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -2231,7 +2199,6 @@ func (client QueriesClient) StringUnicodeSender(req *http.Request) (*http.Respon
 func (client QueriesClient) StringUnicodeResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -2296,7 +2263,6 @@ func (client QueriesClient) StringURLEncodedSender(req *http.Request) (*http.Res
 func (client QueriesClient) StringURLEncodedResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp

@@ -83,7 +83,6 @@ func (client BoolClient) GetFalseSender(req *http.Request) (*http.Response, erro
 func (client BoolClient) GetFalseResponder(resp *http.Response) (result BoolModel, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -144,7 +143,6 @@ func (client BoolClient) GetInvalidSender(req *http.Request) (*http.Response, er
 func (client BoolClient) GetInvalidResponder(resp *http.Response) (result BoolModel, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -205,7 +203,6 @@ func (client BoolClient) GetNullSender(req *http.Request) (*http.Response, error
 func (client BoolClient) GetNullResponder(resp *http.Response) (result BoolModel, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -266,7 +263,6 @@ func (client BoolClient) GetTrueSender(req *http.Request) (*http.Response, error
 func (client BoolClient) GetTrueResponder(resp *http.Response) (result BoolModel, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -329,7 +325,6 @@ func (client BoolClient) PutFalseSender(req *http.Request) (*http.Response, erro
 func (client BoolClient) PutFalseResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -391,7 +386,6 @@ func (client BoolClient) PutTrueSender(req *http.Request) (*http.Response, error
 func (client BoolClient) PutTrueResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp

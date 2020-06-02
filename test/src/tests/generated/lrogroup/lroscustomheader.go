@@ -93,7 +93,6 @@ func (client LROsCustomHeaderClient) Post202Retry200Sender(req *http.Request) (f
 func (client LROsCustomHeaderClient) Post202Retry200Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted),
 		autorest.ByClosing())
 	result.Response = resp
@@ -162,7 +161,6 @@ func (client LROsCustomHeaderClient) PostAsyncRetrySucceededSender(req *http.Req
 func (client LROsCustomHeaderClient) PostAsyncRetrySucceededResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted),
 		autorest.ByClosing())
 	result.Response = resp
@@ -232,7 +230,6 @@ func (client LROsCustomHeaderClient) Put201CreatingSucceeded200Sender(req *http.
 func (client LROsCustomHeaderClient) Put201CreatingSucceeded200Responder(resp *http.Response) (result Product, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusCreated),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -302,7 +299,6 @@ func (client LROsCustomHeaderClient) PutAsyncRetrySucceededSender(req *http.Requ
 func (client LROsCustomHeaderClient) PutAsyncRetrySucceededResponder(resp *http.Response) (result Product, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())

@@ -90,7 +90,6 @@ func (client HTTPRedirectsClient) Delete307Sender(req *http.Request) (*http.Resp
 func (client HTTPRedirectsClient) Delete307Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusTemporaryRedirect),
 		autorest.ByClosing())
 	result.Response = resp
@@ -150,7 +149,6 @@ func (client HTTPRedirectsClient) Get300Sender(req *http.Request) (*http.Respons
 func (client HTTPRedirectsClient) Get300Responder(resp *http.Response) (result ListString, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusMultipleChoices),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -211,7 +209,6 @@ func (client HTTPRedirectsClient) Get301Sender(req *http.Request) (*http.Respons
 func (client HTTPRedirectsClient) Get301Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusMovedPermanently),
 		autorest.ByClosing())
 	result.Response = resp
@@ -271,7 +268,6 @@ func (client HTTPRedirectsClient) Get302Sender(req *http.Request) (*http.Respons
 func (client HTTPRedirectsClient) Get302Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusFound),
 		autorest.ByClosing())
 	result.Response = resp
@@ -331,7 +327,6 @@ func (client HTTPRedirectsClient) Get307Sender(req *http.Request) (*http.Respons
 func (client HTTPRedirectsClient) Get307Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusTemporaryRedirect),
 		autorest.ByClosing())
 	result.Response = resp
@@ -391,7 +386,6 @@ func (client HTTPRedirectsClient) Head300Sender(req *http.Request) (*http.Respon
 func (client HTTPRedirectsClient) Head300Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusMultipleChoices),
 		autorest.ByClosing())
 	result.Response = resp
@@ -451,7 +445,6 @@ func (client HTTPRedirectsClient) Head301Sender(req *http.Request) (*http.Respon
 func (client HTTPRedirectsClient) Head301Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusMovedPermanently),
 		autorest.ByClosing())
 	result.Response = resp
@@ -511,7 +504,6 @@ func (client HTTPRedirectsClient) Head302Sender(req *http.Request) (*http.Respon
 func (client HTTPRedirectsClient) Head302Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusFound),
 		autorest.ByClosing())
 	result.Response = resp
@@ -571,7 +563,6 @@ func (client HTTPRedirectsClient) Head307Sender(req *http.Request) (*http.Respon
 func (client HTTPRedirectsClient) Head307Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusTemporaryRedirect),
 		autorest.ByClosing())
 	result.Response = resp
@@ -639,7 +630,6 @@ func (client HTTPRedirectsClient) Patch302Sender(req *http.Request) (*http.Respo
 func (client HTTPRedirectsClient) Patch302Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusFound),
 		autorest.ByClosing())
 	result.Response = resp
@@ -706,7 +696,6 @@ func (client HTTPRedirectsClient) Patch307Sender(req *http.Request) (*http.Respo
 func (client HTTPRedirectsClient) Patch307Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusTemporaryRedirect),
 		autorest.ByClosing())
 	result.Response = resp
@@ -774,7 +763,6 @@ func (client HTTPRedirectsClient) Post303Sender(req *http.Request) (*http.Respon
 func (client HTTPRedirectsClient) Post303Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusSeeOther),
 		autorest.ByClosing())
 	result.Response = resp
@@ -841,7 +829,6 @@ func (client HTTPRedirectsClient) Post307Sender(req *http.Request) (*http.Respon
 func (client HTTPRedirectsClient) Post307Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusTemporaryRedirect),
 		autorest.ByClosing())
 	result.Response = resp
@@ -909,7 +896,6 @@ func (client HTTPRedirectsClient) Put301Sender(req *http.Request) (*http.Respons
 func (client HTTPRedirectsClient) Put301Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusMovedPermanently),
 		autorest.ByClosing())
 	result.Response = resp
@@ -976,7 +962,6 @@ func (client HTTPRedirectsClient) Put307Sender(req *http.Request) (*http.Respons
 func (client HTTPRedirectsClient) Put307Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusTemporaryRedirect),
 		autorest.ByClosing())
 	result.Response = resp

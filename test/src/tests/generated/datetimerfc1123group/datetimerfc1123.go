@@ -84,7 +84,6 @@ func (client Datetimerfc1123Client) GetInvalidSender(req *http.Request) (*http.R
 func (client Datetimerfc1123Client) GetInvalidResponder(resp *http.Response) (result DateTimeRfc1123, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -145,7 +144,6 @@ func (client Datetimerfc1123Client) GetNullSender(req *http.Request) (*http.Resp
 func (client Datetimerfc1123Client) GetNullResponder(resp *http.Response) (result DateTimeRfc1123, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -206,7 +204,6 @@ func (client Datetimerfc1123Client) GetOverflowSender(req *http.Request) (*http.
 func (client Datetimerfc1123Client) GetOverflowResponder(resp *http.Response) (result DateTimeRfc1123, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -267,7 +264,6 @@ func (client Datetimerfc1123Client) GetUnderflowSender(req *http.Request) (*http
 func (client Datetimerfc1123Client) GetUnderflowResponder(resp *http.Response) (result DateTimeRfc1123, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -328,7 +324,6 @@ func (client Datetimerfc1123Client) GetUtcLowercaseMaxDateTimeSender(req *http.R
 func (client Datetimerfc1123Client) GetUtcLowercaseMaxDateTimeResponder(resp *http.Response) (result DateTimeRfc1123, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -389,7 +384,6 @@ func (client Datetimerfc1123Client) GetUtcMinDateTimeSender(req *http.Request) (
 func (client Datetimerfc1123Client) GetUtcMinDateTimeResponder(resp *http.Response) (result DateTimeRfc1123, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -450,7 +444,6 @@ func (client Datetimerfc1123Client) GetUtcUppercaseMaxDateTimeSender(req *http.R
 func (client Datetimerfc1123Client) GetUtcUppercaseMaxDateTimeResponder(resp *http.Response) (result DateTimeRfc1123, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -513,7 +506,6 @@ func (client Datetimerfc1123Client) PutUtcMaxDateTimeSender(req *http.Request) (
 func (client Datetimerfc1123Client) PutUtcMaxDateTimeResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -575,7 +567,6 @@ func (client Datetimerfc1123Client) PutUtcMinDateTimeSender(req *http.Request) (
 func (client Datetimerfc1123Client) PutUtcMinDateTimeResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp

@@ -83,7 +83,6 @@ func (client FlattencomplexClient) GetValidSender(req *http.Request) (*http.Resp
 func (client FlattencomplexClient) GetValidResponder(resp *http.Response) (result MyBaseTypeModel, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())

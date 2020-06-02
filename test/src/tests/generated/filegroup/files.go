@@ -84,7 +84,6 @@ func (client FilesClient) GetEmptyFileResponder(resp *http.Response) (result Rea
 	result.Value = &resp.Body
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK))
 	result.Response = autorest.Response{Response: resp}
 	return
@@ -144,7 +143,6 @@ func (client FilesClient) GetFileResponder(resp *http.Response) (result ReadClos
 	result.Value = &resp.Body
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK))
 	result.Response = autorest.Response{Response: resp}
 	return
@@ -204,7 +202,6 @@ func (client FilesClient) GetFileLargeResponder(resp *http.Response) (result Rea
 	result.Value = &resp.Body
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK))
 	result.Response = autorest.Response{Response: resp}
 	return

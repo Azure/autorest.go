@@ -84,7 +84,6 @@ func (client DatetimeClient) GetInvalidSender(req *http.Request) (*http.Response
 func (client DatetimeClient) GetInvalidResponder(resp *http.Response) (result DateTime, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -146,7 +145,6 @@ func (client DatetimeClient) GetLocalNegativeOffsetLowercaseMaxDateTimeSender(re
 func (client DatetimeClient) GetLocalNegativeOffsetLowercaseMaxDateTimeResponder(resp *http.Response) (result DateTime, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -207,7 +205,6 @@ func (client DatetimeClient) GetLocalNegativeOffsetMinDateTimeSender(req *http.R
 func (client DatetimeClient) GetLocalNegativeOffsetMinDateTimeResponder(resp *http.Response) (result DateTime, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -269,7 +266,6 @@ func (client DatetimeClient) GetLocalNegativeOffsetUppercaseMaxDateTimeSender(re
 func (client DatetimeClient) GetLocalNegativeOffsetUppercaseMaxDateTimeResponder(resp *http.Response) (result DateTime, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -331,7 +327,6 @@ func (client DatetimeClient) GetLocalPositiveOffsetLowercaseMaxDateTimeSender(re
 func (client DatetimeClient) GetLocalPositiveOffsetLowercaseMaxDateTimeResponder(resp *http.Response) (result DateTime, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -392,7 +387,6 @@ func (client DatetimeClient) GetLocalPositiveOffsetMinDateTimeSender(req *http.R
 func (client DatetimeClient) GetLocalPositiveOffsetMinDateTimeResponder(resp *http.Response) (result DateTime, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -454,7 +448,6 @@ func (client DatetimeClient) GetLocalPositiveOffsetUppercaseMaxDateTimeSender(re
 func (client DatetimeClient) GetLocalPositiveOffsetUppercaseMaxDateTimeResponder(resp *http.Response) (result DateTime, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -515,7 +508,6 @@ func (client DatetimeClient) GetNullSender(req *http.Request) (*http.Response, e
 func (client DatetimeClient) GetNullResponder(resp *http.Response) (result DateTime, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -576,7 +568,6 @@ func (client DatetimeClient) GetOverflowSender(req *http.Request) (*http.Respons
 func (client DatetimeClient) GetOverflowResponder(resp *http.Response) (result DateTime, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -637,7 +628,6 @@ func (client DatetimeClient) GetUnderflowSender(req *http.Request) (*http.Respon
 func (client DatetimeClient) GetUnderflowResponder(resp *http.Response) (result DateTime, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -698,7 +688,6 @@ func (client DatetimeClient) GetUtcLowercaseMaxDateTimeSender(req *http.Request)
 func (client DatetimeClient) GetUtcLowercaseMaxDateTimeResponder(resp *http.Response) (result DateTime, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -759,7 +748,6 @@ func (client DatetimeClient) GetUtcMinDateTimeSender(req *http.Request) (*http.R
 func (client DatetimeClient) GetUtcMinDateTimeResponder(resp *http.Response) (result DateTime, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -820,7 +808,6 @@ func (client DatetimeClient) GetUtcUppercaseMaxDateTimeSender(req *http.Request)
 func (client DatetimeClient) GetUtcUppercaseMaxDateTimeResponder(resp *http.Response) (result DateTime, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -883,7 +870,6 @@ func (client DatetimeClient) PutLocalNegativeOffsetMaxDateTimeSender(req *http.R
 func (client DatetimeClient) PutLocalNegativeOffsetMaxDateTimeResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -945,7 +931,6 @@ func (client DatetimeClient) PutLocalNegativeOffsetMinDateTimeSender(req *http.R
 func (client DatetimeClient) PutLocalNegativeOffsetMinDateTimeResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1007,7 +992,6 @@ func (client DatetimeClient) PutLocalPositiveOffsetMaxDateTimeSender(req *http.R
 func (client DatetimeClient) PutLocalPositiveOffsetMaxDateTimeResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1069,7 +1053,6 @@ func (client DatetimeClient) PutLocalPositiveOffsetMinDateTimeSender(req *http.R
 func (client DatetimeClient) PutLocalPositiveOffsetMinDateTimeResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1131,7 +1114,6 @@ func (client DatetimeClient) PutUtcMaxDateTimeSender(req *http.Request) (*http.R
 func (client DatetimeClient) PutUtcMaxDateTimeResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1193,7 +1175,6 @@ func (client DatetimeClient) PutUtcMinDateTimeSender(req *http.Request) (*http.R
 func (client DatetimeClient) PutUtcMinDateTimeResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp

@@ -84,7 +84,6 @@ func (client ByteClient) GetEmptySender(req *http.Request) (*http.Response, erro
 func (client ByteClient) GetEmptyResponder(resp *http.Response) (result ByteArray, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -145,7 +144,6 @@ func (client ByteClient) GetInvalidSender(req *http.Request) (*http.Response, er
 func (client ByteClient) GetInvalidResponder(resp *http.Response) (result ByteArray, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -206,7 +204,6 @@ func (client ByteClient) GetNonASCIISender(req *http.Request) (*http.Response, e
 func (client ByteClient) GetNonASCIIResponder(resp *http.Response) (result ByteArray, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -267,7 +264,6 @@ func (client ByteClient) GetNullSender(req *http.Request) (*http.Response, error
 func (client ByteClient) GetNullResponder(resp *http.Response) (result ByteArray, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -338,7 +334,6 @@ func (client ByteClient) PutNonASCIISender(req *http.Request) (*http.Response, e
 func (client ByteClient) PutNonASCIIResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp

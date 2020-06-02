@@ -84,7 +84,6 @@ func (client IntClient) GetInvalidSender(req *http.Request) (*http.Response, err
 func (client IntClient) GetInvalidResponder(resp *http.Response) (result Int32, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -145,7 +144,6 @@ func (client IntClient) GetInvalidUnixTimeSender(req *http.Request) (*http.Respo
 func (client IntClient) GetInvalidUnixTimeResponder(resp *http.Response) (result UnixTime, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -206,7 +204,6 @@ func (client IntClient) GetNullSender(req *http.Request) (*http.Response, error)
 func (client IntClient) GetNullResponder(resp *http.Response) (result Int32, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -267,7 +264,6 @@ func (client IntClient) GetNullUnixTimeSender(req *http.Request) (*http.Response
 func (client IntClient) GetNullUnixTimeResponder(resp *http.Response) (result UnixTime, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -328,7 +324,6 @@ func (client IntClient) GetOverflowInt32Sender(req *http.Request) (*http.Respons
 func (client IntClient) GetOverflowInt32Responder(resp *http.Response) (result Int32, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -389,7 +384,6 @@ func (client IntClient) GetOverflowInt64Sender(req *http.Request) (*http.Respons
 func (client IntClient) GetOverflowInt64Responder(resp *http.Response) (result Int64, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -450,7 +444,6 @@ func (client IntClient) GetUnderflowInt32Sender(req *http.Request) (*http.Respon
 func (client IntClient) GetUnderflowInt32Responder(resp *http.Response) (result Int32, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -511,7 +504,6 @@ func (client IntClient) GetUnderflowInt64Sender(req *http.Request) (*http.Respon
 func (client IntClient) GetUnderflowInt64Responder(resp *http.Response) (result Int64, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -572,7 +564,6 @@ func (client IntClient) GetUnixTimeSender(req *http.Request) (*http.Response, er
 func (client IntClient) GetUnixTimeResponder(resp *http.Response) (result UnixTime, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -635,7 +626,6 @@ func (client IntClient) PutMax32Sender(req *http.Request) (*http.Response, error
 func (client IntClient) PutMax32Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -697,7 +687,6 @@ func (client IntClient) PutMax64Sender(req *http.Request) (*http.Response, error
 func (client IntClient) PutMax64Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -759,7 +748,6 @@ func (client IntClient) PutMin32Sender(req *http.Request) (*http.Response, error
 func (client IntClient) PutMin32Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -821,7 +809,6 @@ func (client IntClient) PutMin64Sender(req *http.Request) (*http.Response, error
 func (client IntClient) PutMin64Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -883,7 +870,6 @@ func (client IntClient) PutUnixTimeDateSender(req *http.Request) (*http.Response
 func (client IntClient) PutUnixTimeDateResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp

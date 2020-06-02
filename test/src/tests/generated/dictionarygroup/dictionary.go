@@ -85,7 +85,6 @@ func (client DictionaryClient) GetArrayEmptySender(req *http.Request) (*http.Res
 func (client DictionaryClient) GetArrayEmptyResponder(resp *http.Response) (result SetListString, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -146,7 +145,6 @@ func (client DictionaryClient) GetArrayItemEmptySender(req *http.Request) (*http
 func (client DictionaryClient) GetArrayItemEmptyResponder(resp *http.Response) (result SetListString, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -207,7 +205,6 @@ func (client DictionaryClient) GetArrayItemNullSender(req *http.Request) (*http.
 func (client DictionaryClient) GetArrayItemNullResponder(resp *http.Response) (result SetListString, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -268,7 +265,6 @@ func (client DictionaryClient) GetArrayNullSender(req *http.Request) (*http.Resp
 func (client DictionaryClient) GetArrayNullResponder(resp *http.Response) (result SetListString, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -329,7 +325,6 @@ func (client DictionaryClient) GetArrayValidSender(req *http.Request) (*http.Res
 func (client DictionaryClient) GetArrayValidResponder(resp *http.Response) (result SetListString, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -391,7 +386,6 @@ func (client DictionaryClient) GetBase64URLSender(req *http.Request) (*http.Resp
 func (client DictionaryClient) GetBase64URLResponder(resp *http.Response) (result SetBase64URL, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -452,7 +446,6 @@ func (client DictionaryClient) GetBooleanInvalidNullSender(req *http.Request) (*
 func (client DictionaryClient) GetBooleanInvalidNullResponder(resp *http.Response) (result SetBool, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -513,7 +506,6 @@ func (client DictionaryClient) GetBooleanInvalidStringSender(req *http.Request) 
 func (client DictionaryClient) GetBooleanInvalidStringResponder(resp *http.Response) (result SetBool, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -574,7 +566,6 @@ func (client DictionaryClient) GetBooleanTfftSender(req *http.Request) (*http.Re
 func (client DictionaryClient) GetBooleanTfftResponder(resp *http.Response) (result SetBool, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -635,7 +626,6 @@ func (client DictionaryClient) GetByteInvalidNullSender(req *http.Request) (*htt
 func (client DictionaryClient) GetByteInvalidNullResponder(resp *http.Response) (result SetByteArray, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -697,7 +687,6 @@ func (client DictionaryClient) GetByteValidSender(req *http.Request) (*http.Resp
 func (client DictionaryClient) GetByteValidResponder(resp *http.Response) (result SetByteArray, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -758,7 +747,6 @@ func (client DictionaryClient) GetComplexEmptySender(req *http.Request) (*http.R
 func (client DictionaryClient) GetComplexEmptyResponder(resp *http.Response) (result SetWidget, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -820,7 +808,6 @@ func (client DictionaryClient) GetComplexItemEmptySender(req *http.Request) (*ht
 func (client DictionaryClient) GetComplexItemEmptyResponder(resp *http.Response) (result SetWidget, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -882,7 +869,6 @@ func (client DictionaryClient) GetComplexItemNullSender(req *http.Request) (*htt
 func (client DictionaryClient) GetComplexItemNullResponder(resp *http.Response) (result SetWidget, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -943,7 +929,6 @@ func (client DictionaryClient) GetComplexNullSender(req *http.Request) (*http.Re
 func (client DictionaryClient) GetComplexNullResponder(resp *http.Response) (result SetWidget, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -1005,7 +990,6 @@ func (client DictionaryClient) GetComplexValidSender(req *http.Request) (*http.R
 func (client DictionaryClient) GetComplexValidResponder(resp *http.Response) (result SetWidget, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -1066,7 +1050,6 @@ func (client DictionaryClient) GetDateInvalidCharsSender(req *http.Request) (*ht
 func (client DictionaryClient) GetDateInvalidCharsResponder(resp *http.Response) (result SetDate, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -1127,7 +1110,6 @@ func (client DictionaryClient) GetDateInvalidNullSender(req *http.Request) (*htt
 func (client DictionaryClient) GetDateInvalidNullResponder(resp *http.Response) (result SetDate, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -1188,7 +1170,6 @@ func (client DictionaryClient) GetDateTimeInvalidCharsSender(req *http.Request) 
 func (client DictionaryClient) GetDateTimeInvalidCharsResponder(resp *http.Response) (result SetDateTime, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -1249,7 +1230,6 @@ func (client DictionaryClient) GetDateTimeInvalidNullSender(req *http.Request) (
 func (client DictionaryClient) GetDateTimeInvalidNullResponder(resp *http.Response) (result SetDateTime, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -1311,7 +1291,6 @@ func (client DictionaryClient) GetDateTimeRfc1123ValidSender(req *http.Request) 
 func (client DictionaryClient) GetDateTimeRfc1123ValidResponder(resp *http.Response) (result SetDateTimeRfc1123, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -1373,7 +1352,6 @@ func (client DictionaryClient) GetDateTimeValidSender(req *http.Request) (*http.
 func (client DictionaryClient) GetDateTimeValidResponder(resp *http.Response) (result SetDateTime, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -1434,7 +1412,6 @@ func (client DictionaryClient) GetDateValidSender(req *http.Request) (*http.Resp
 func (client DictionaryClient) GetDateValidResponder(resp *http.Response) (result SetDate, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -1495,7 +1472,6 @@ func (client DictionaryClient) GetDictionaryEmptySender(req *http.Request) (*htt
 func (client DictionaryClient) GetDictionaryEmptyResponder(resp *http.Response) (result SetSetString, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -1557,7 +1533,6 @@ func (client DictionaryClient) GetDictionaryItemEmptySender(req *http.Request) (
 func (client DictionaryClient) GetDictionaryItemEmptyResponder(resp *http.Response) (result SetSetString, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -1619,7 +1594,6 @@ func (client DictionaryClient) GetDictionaryItemNullSender(req *http.Request) (*
 func (client DictionaryClient) GetDictionaryItemNullResponder(resp *http.Response) (result SetSetString, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -1680,7 +1654,6 @@ func (client DictionaryClient) GetDictionaryNullSender(req *http.Request) (*http
 func (client DictionaryClient) GetDictionaryNullResponder(resp *http.Response) (result SetSetString, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -1742,7 +1715,6 @@ func (client DictionaryClient) GetDictionaryValidSender(req *http.Request) (*htt
 func (client DictionaryClient) GetDictionaryValidResponder(resp *http.Response) (result SetSetString, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -1803,7 +1775,6 @@ func (client DictionaryClient) GetDoubleInvalidNullSender(req *http.Request) (*h
 func (client DictionaryClient) GetDoubleInvalidNullResponder(resp *http.Response) (result SetFloat64, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -1864,7 +1835,6 @@ func (client DictionaryClient) GetDoubleInvalidStringSender(req *http.Request) (
 func (client DictionaryClient) GetDoubleInvalidStringResponder(resp *http.Response) (result SetFloat64, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -1925,7 +1895,6 @@ func (client DictionaryClient) GetDoubleValidSender(req *http.Request) (*http.Re
 func (client DictionaryClient) GetDoubleValidResponder(resp *http.Response) (result SetFloat64, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -1986,7 +1955,6 @@ func (client DictionaryClient) GetDurationValidSender(req *http.Request) (*http.
 func (client DictionaryClient) GetDurationValidResponder(resp *http.Response) (result SetTimeSpan, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -2047,7 +2015,6 @@ func (client DictionaryClient) GetEmptySender(req *http.Request) (*http.Response
 func (client DictionaryClient) GetEmptyResponder(resp *http.Response) (result SetInt32, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -2108,7 +2075,6 @@ func (client DictionaryClient) GetEmptyStringKeySender(req *http.Request) (*http
 func (client DictionaryClient) GetEmptyStringKeyResponder(resp *http.Response) (result SetString, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -2169,7 +2135,6 @@ func (client DictionaryClient) GetFloatInvalidNullSender(req *http.Request) (*ht
 func (client DictionaryClient) GetFloatInvalidNullResponder(resp *http.Response) (result SetFloat64, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -2230,7 +2195,6 @@ func (client DictionaryClient) GetFloatInvalidStringSender(req *http.Request) (*
 func (client DictionaryClient) GetFloatInvalidStringResponder(resp *http.Response) (result SetFloat64, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -2291,7 +2255,6 @@ func (client DictionaryClient) GetFloatValidSender(req *http.Request) (*http.Res
 func (client DictionaryClient) GetFloatValidResponder(resp *http.Response) (result SetFloat64, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -2352,7 +2315,6 @@ func (client DictionaryClient) GetIntegerValidSender(req *http.Request) (*http.R
 func (client DictionaryClient) GetIntegerValidResponder(resp *http.Response) (result SetInt32, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -2413,7 +2375,6 @@ func (client DictionaryClient) GetIntInvalidNullSender(req *http.Request) (*http
 func (client DictionaryClient) GetIntInvalidNullResponder(resp *http.Response) (result SetInt32, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -2474,7 +2435,6 @@ func (client DictionaryClient) GetIntInvalidStringSender(req *http.Request) (*ht
 func (client DictionaryClient) GetIntInvalidStringResponder(resp *http.Response) (result SetInt32, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -2535,7 +2495,6 @@ func (client DictionaryClient) GetInvalidSender(req *http.Request) (*http.Respon
 func (client DictionaryClient) GetInvalidResponder(resp *http.Response) (result SetString, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -2596,7 +2555,6 @@ func (client DictionaryClient) GetLongInvalidNullSender(req *http.Request) (*htt
 func (client DictionaryClient) GetLongInvalidNullResponder(resp *http.Response) (result SetInt64, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -2657,7 +2615,6 @@ func (client DictionaryClient) GetLongInvalidStringSender(req *http.Request) (*h
 func (client DictionaryClient) GetLongInvalidStringResponder(resp *http.Response) (result SetInt64, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -2718,7 +2675,6 @@ func (client DictionaryClient) GetLongValidSender(req *http.Request) (*http.Resp
 func (client DictionaryClient) GetLongValidResponder(resp *http.Response) (result SetInt64, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -2779,7 +2735,6 @@ func (client DictionaryClient) GetNullSender(req *http.Request) (*http.Response,
 func (client DictionaryClient) GetNullResponder(resp *http.Response) (result SetInt32, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -2840,7 +2795,6 @@ func (client DictionaryClient) GetNullKeySender(req *http.Request) (*http.Respon
 func (client DictionaryClient) GetNullKeyResponder(resp *http.Response) (result SetString, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -2901,7 +2855,6 @@ func (client DictionaryClient) GetNullValueSender(req *http.Request) (*http.Resp
 func (client DictionaryClient) GetNullValueResponder(resp *http.Response) (result SetString, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -2962,7 +2915,6 @@ func (client DictionaryClient) GetStringValidSender(req *http.Request) (*http.Re
 func (client DictionaryClient) GetStringValidResponder(resp *http.Response) (result SetString, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -3023,7 +2975,6 @@ func (client DictionaryClient) GetStringWithInvalidSender(req *http.Request) (*h
 func (client DictionaryClient) GetStringWithInvalidResponder(resp *http.Response) (result SetString, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -3084,7 +3035,6 @@ func (client DictionaryClient) GetStringWithNullSender(req *http.Request) (*http
 func (client DictionaryClient) GetStringWithNullResponder(resp *http.Response) (result SetString, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -3153,7 +3103,6 @@ func (client DictionaryClient) PutArrayValidSender(req *http.Request) (*http.Res
 func (client DictionaryClient) PutArrayValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -3221,7 +3170,6 @@ func (client DictionaryClient) PutBooleanTfftSender(req *http.Request) (*http.Re
 func (client DictionaryClient) PutBooleanTfftResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -3290,7 +3238,6 @@ func (client DictionaryClient) PutByteValidSender(req *http.Request) (*http.Resp
 func (client DictionaryClient) PutByteValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -3359,7 +3306,6 @@ func (client DictionaryClient) PutComplexValidSender(req *http.Request) (*http.R
 func (client DictionaryClient) PutComplexValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -3428,7 +3374,6 @@ func (client DictionaryClient) PutDateTimeRfc1123ValidSender(req *http.Request) 
 func (client DictionaryClient) PutDateTimeRfc1123ValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -3497,7 +3442,6 @@ func (client DictionaryClient) PutDateTimeValidSender(req *http.Request) (*http.
 func (client DictionaryClient) PutDateTimeValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -3565,7 +3509,6 @@ func (client DictionaryClient) PutDateValidSender(req *http.Request) (*http.Resp
 func (client DictionaryClient) PutDateValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -3634,7 +3577,6 @@ func (client DictionaryClient) PutDictionaryValidSender(req *http.Request) (*htt
 func (client DictionaryClient) PutDictionaryValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -3702,7 +3644,6 @@ func (client DictionaryClient) PutDoubleValidSender(req *http.Request) (*http.Re
 func (client DictionaryClient) PutDoubleValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -3770,7 +3711,6 @@ func (client DictionaryClient) PutDurationValidSender(req *http.Request) (*http.
 func (client DictionaryClient) PutDurationValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -3838,7 +3778,6 @@ func (client DictionaryClient) PutEmptySender(req *http.Request) (*http.Response
 func (client DictionaryClient) PutEmptyResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -3906,7 +3845,6 @@ func (client DictionaryClient) PutFloatValidSender(req *http.Request) (*http.Res
 func (client DictionaryClient) PutFloatValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -3974,7 +3912,6 @@ func (client DictionaryClient) PutIntegerValidSender(req *http.Request) (*http.R
 func (client DictionaryClient) PutIntegerValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -4042,7 +3979,6 @@ func (client DictionaryClient) PutLongValidSender(req *http.Request) (*http.Resp
 func (client DictionaryClient) PutLongValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -4110,7 +4046,6 @@ func (client DictionaryClient) PutStringValidSender(req *http.Request) (*http.Re
 func (client DictionaryClient) PutStringValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp

@@ -91,7 +91,6 @@ func (client HTTPServerFailureClient) Delete505Sender(req *http.Request) (*http.
 func (client HTTPServerFailureClient) Delete505Responder(resp *http.Response) (result Error, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -152,7 +151,6 @@ func (client HTTPServerFailureClient) Get501Sender(req *http.Request) (*http.Res
 func (client HTTPServerFailureClient) Get501Responder(resp *http.Response) (result Error, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -213,7 +211,6 @@ func (client HTTPServerFailureClient) Head501Sender(req *http.Request) (*http.Re
 func (client HTTPServerFailureClient) Head501Responder(resp *http.Response) (result Error, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -281,7 +278,6 @@ func (client HTTPServerFailureClient) Post505Sender(req *http.Request) (*http.Re
 func (client HTTPServerFailureClient) Post505Responder(resp *http.Response) (result Error, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())

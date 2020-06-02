@@ -83,7 +83,6 @@ func (client DurationClient) GetInvalidSender(req *http.Request) (*http.Response
 func (client DurationClient) GetInvalidResponder(resp *http.Response) (result TimeSpan, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -144,7 +143,6 @@ func (client DurationClient) GetNullSender(req *http.Request) (*http.Response, e
 func (client DurationClient) GetNullResponder(resp *http.Response) (result TimeSpan, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -205,7 +203,6 @@ func (client DurationClient) GetPositiveDurationSender(req *http.Request) (*http
 func (client DurationClient) GetPositiveDurationResponder(resp *http.Response) (result TimeSpan, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -268,7 +265,6 @@ func (client DurationClient) PutPositiveDurationSender(req *http.Request) (*http
 func (client DurationClient) PutPositiveDurationResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp

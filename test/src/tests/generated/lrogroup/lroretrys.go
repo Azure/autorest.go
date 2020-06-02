@@ -84,7 +84,6 @@ func (client LRORetrysClient) Delete202Retry200Sender(req *http.Request) (future
 func (client LRORetrysClient) Delete202Retry200Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted),
 		autorest.ByClosing())
 	result.Response = resp
@@ -145,7 +144,6 @@ func (client LRORetrysClient) DeleteAsyncRelativeRetrySucceededSender(req *http.
 func (client LRORetrysClient) DeleteAsyncRelativeRetrySucceededResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted),
 		autorest.ByClosing())
 	result.Response = resp
@@ -207,7 +205,6 @@ func (client LRORetrysClient) DeleteProvisioning202Accepted200SucceededSender(re
 func (client LRORetrysClient) DeleteProvisioning202Accepted200SucceededResponder(resp *http.Response) (result Product, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -276,7 +273,6 @@ func (client LRORetrysClient) Post202Retry200Sender(req *http.Request) (future L
 func (client LRORetrysClient) Post202Retry200Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted),
 		autorest.ByClosing())
 	result.Response = resp
@@ -345,7 +341,6 @@ func (client LRORetrysClient) PostAsyncRelativeRetrySucceededSender(req *http.Re
 func (client LRORetrysClient) PostAsyncRelativeRetrySucceededResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted),
 		autorest.ByClosing())
 	result.Response = resp
@@ -414,7 +409,6 @@ func (client LRORetrysClient) Put201CreatingSucceeded200Sender(req *http.Request
 func (client LRORetrysClient) Put201CreatingSucceeded200Responder(resp *http.Response) (result Product, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusCreated),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -484,7 +478,6 @@ func (client LRORetrysClient) PutAsyncRelativeRetrySucceededSender(req *http.Req
 func (client LRORetrysClient) PutAsyncRelativeRetrySucceededResponder(resp *http.Response) (result Product, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())

@@ -83,7 +83,6 @@ func (client HTTPFailureClient) GetEmptyErrorSender(req *http.Request) (*http.Re
 func (client HTTPFailureClient) GetEmptyErrorResponder(resp *http.Response) (result Bool, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -144,7 +143,6 @@ func (client HTTPFailureClient) GetNoModelEmptySender(req *http.Request) (*http.
 func (client HTTPFailureClient) GetNoModelEmptyResponder(resp *http.Response) (result Bool, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -205,7 +203,6 @@ func (client HTTPFailureClient) GetNoModelErrorSender(req *http.Request) (*http.
 func (client HTTPFailureClient) GetNoModelErrorResponder(resp *http.Response) (result Bool, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
