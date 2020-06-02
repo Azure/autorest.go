@@ -110,8 +110,14 @@ func (p *productArrayPoller) FinalResponse(ctx context.Context) (*ProductArrayRe
 	if !p.Done() {
 		return nil, errors.New("cannot return a final response from a poller in a non-terminal state")
 	}
-	if (p.pt.pollerMethodVerb() == http.MethodPut || p.pt.pollerMethodVerb() == http.MethodPatch) && p.resp != nil && p.resp.ProductArray != nil {
-		return p.resp, nil
+	if p.pt.pollerMethodVerb() == http.MethodPut || p.pt.pollerMethodVerb() == http.MethodPatch {
+		res, err := p.handleResponse(p.pt.latestResponse())
+		if err != nil {
+			return nil, err
+		}
+		if res != nil && res.ProductArray != nil {
+			return res, nil
+		}
 	}
 	// checking if there was a FinalStateVia configuration to re-route the final GET
 	// request to the value specified in the FinalStateVia property on the poller
@@ -167,7 +173,6 @@ func (p *productArrayPoller) pollUntilDone(ctx context.Context, frequency time.D
 			return nil, err
 		}
 		if p.Done() {
-			p.resp, _ = p.handleResponse(p.pt.latestResponse())
 			break
 		}
 		if delay := azcore.RetryAfter(resp); delay > 0 {
@@ -222,8 +227,14 @@ func (p *productPoller) FinalResponse(ctx context.Context) (*ProductResponse, er
 	if !p.Done() {
 		return nil, errors.New("cannot return a final response from a poller in a non-terminal state")
 	}
-	if (p.pt.pollerMethodVerb() == http.MethodPut || p.pt.pollerMethodVerb() == http.MethodPatch) && p.resp != nil && (*p.resp.Product != Product{}) {
-		return p.resp, nil
+	if p.pt.pollerMethodVerb() == http.MethodPut || p.pt.pollerMethodVerb() == http.MethodPatch {
+		res, err := p.handleResponse(p.pt.latestResponse())
+		if err != nil {
+			return nil, err
+		}
+		if res != nil && (*res.Product != Product{}) {
+			return res, nil
+		}
 	}
 	// checking if there was a FinalStateVia configuration to re-route the final GET
 	// request to the value specified in the FinalStateVia property on the poller
@@ -279,7 +290,6 @@ func (p *productPoller) pollUntilDone(ctx context.Context, frequency time.Durati
 			return nil, err
 		}
 		if p.Done() {
-			p.resp, _ = p.handleResponse(p.pt.latestResponse())
 			break
 		}
 		if delay := azcore.RetryAfter(resp); delay > 0 {
@@ -334,8 +344,14 @@ func (p *skuPoller) FinalResponse(ctx context.Context) (*SkuResponse, error) {
 	if !p.Done() {
 		return nil, errors.New("cannot return a final response from a poller in a non-terminal state")
 	}
-	if (p.pt.pollerMethodVerb() == http.MethodPut || p.pt.pollerMethodVerb() == http.MethodPatch) && p.resp != nil && (*p.resp.Sku != Sku{}) {
-		return p.resp, nil
+	if p.pt.pollerMethodVerb() == http.MethodPut || p.pt.pollerMethodVerb() == http.MethodPatch {
+		res, err := p.handleResponse(p.pt.latestResponse())
+		if err != nil {
+			return nil, err
+		}
+		if res != nil && (*res.Sku != Sku{}) {
+			return res, nil
+		}
 	}
 	// checking if there was a FinalStateVia configuration to re-route the final GET
 	// request to the value specified in the FinalStateVia property on the poller
@@ -391,7 +407,6 @@ func (p *skuPoller) pollUntilDone(ctx context.Context, frequency time.Duration) 
 			return nil, err
 		}
 		if p.Done() {
-			p.resp, _ = p.handleResponse(p.pt.latestResponse())
 			break
 		}
 		if delay := azcore.RetryAfter(resp); delay > 0 {
@@ -446,8 +461,14 @@ func (p *subProductPoller) FinalResponse(ctx context.Context) (*SubProductRespon
 	if !p.Done() {
 		return nil, errors.New("cannot return a final response from a poller in a non-terminal state")
 	}
-	if (p.pt.pollerMethodVerb() == http.MethodPut || p.pt.pollerMethodVerb() == http.MethodPatch) && p.resp != nil && (*p.resp.SubProduct != SubProduct{}) {
-		return p.resp, nil
+	if p.pt.pollerMethodVerb() == http.MethodPut || p.pt.pollerMethodVerb() == http.MethodPatch {
+		res, err := p.handleResponse(p.pt.latestResponse())
+		if err != nil {
+			return nil, err
+		}
+		if res != nil && (*res.SubProduct != SubProduct{}) {
+			return res, nil
+		}
 	}
 	// checking if there was a FinalStateVia configuration to re-route the final GET
 	// request to the value specified in the FinalStateVia property on the poller
@@ -503,7 +524,6 @@ func (p *subProductPoller) pollUntilDone(ctx context.Context, frequency time.Dur
 			return nil, err
 		}
 		if p.Done() {
-			p.resp, _ = p.handleResponse(p.pt.latestResponse())
 			break
 		}
 		if delay := azcore.RetryAfter(resp); delay > 0 {

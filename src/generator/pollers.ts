@@ -12,19 +12,26 @@ import { contentPreamble, sortAscending } from './helpers';
 import { ImportManager } from './imports';
 
 function getPutCheck(resp: SchemaResponse): string {
+  let text = `if p.pt.pollerMethodVerb() == http.MethodPut || p.pt.pollerMethodVerb() == http.MethodPatch {
+      res, err := p.handleResponse(p.pt.latestResponse())
+      if err != nil {
+        return nil, err
+      }
+      `;
   switch (resp.schema.type) {
     case SchemaType.Array:
     case SchemaType.Dictionary:
-      return `if (p.pt.pollerMethodVerb() == http.MethodPut || p.pt.pollerMethodVerb() == http.MethodPatch) && p.resp != nil && p.resp.${resp.schema.language.go!.responseType.value} != nil {
-          return p.resp, nil
-        }
-      `;
+      text += `if res != nil && res.${resp.schema.language.go!.responseType.value} != nil {`;
+      break;
     default:
-      return `if (p.pt.pollerMethodVerb() == http.MethodPut || p.pt.pollerMethodVerb() == http.MethodPatch) && p.resp != nil && (*p.resp.${resp.schema.language.go!.responseType.value} != ${resp.schema.language.go!.responseType.value}{}) {
-          return p.resp, nil
-        }
-      `;
+      text += `if res != nil && (*res.${resp.schema.language.go!.responseType.value} != ${resp.schema.language.go!.responseType.value}{}) {`;
   }
+  text += `
+        return res, nil
+      }
+    }
+    `;
+  return text;
 }
 
 // Creates the content in pollers.go
@@ -57,18 +64,13 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
       }`;
     let pollUntilDoneResponse = '(*http.Response, error)';
     let pollUntilDoneReturn = 'p.FinalResponse(), nil';
-    let pollUntilDoneHandleResponse = '';
     let handleResponse = '';
-    let rawResponse = ''; // used to access the raw response field on response envelopes
     const schemaResponse = <SchemaResponse>poller.op.responses![0];
     let unmarshalResponse = 'nil';
     if (isSchemaResponse(schemaResponse) && schemaResponse.schema.language.go!.responseType.value != undefined) {
       responseType = schemaResponse.schema.language.go!.responseType.name;
       pollUntilDoneResponse = `(*${responseType}, error)`;
       pollUntilDoneReturn = 'p.FinalResponse(ctx)';
-      pollUntilDoneHandleResponse = `p.resp, _ = p.handleResponse(p.pt.latestResponse())
-        `;
-      rawResponse = '.RawResponse';
       const putCheck = getPutCheck(schemaResponse);
       unmarshalResponse = `resp.UnmarshalAsJSON(&result.${schemaResponse.schema.language.go!.responseType.value})`;
       // for operations that do return a model add a final response method that handles the final get URL scenario
@@ -173,7 +175,7 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
             return nil, err
           }
         if p.Done() {
-            ${pollUntilDoneHandleResponse}break
+            break
           }
         if delay := azcore.RetryAfter(resp); delay > 0 {
           time.Sleep(delay)
