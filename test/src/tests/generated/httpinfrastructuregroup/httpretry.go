@@ -90,7 +90,6 @@ func (client HTTPRetryClient) Delete503Sender(req *http.Request) (*http.Response
 func (client HTTPRetryClient) Delete503Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -150,7 +149,6 @@ func (client HTTPRetryClient) Get502Sender(req *http.Request) (*http.Response, e
 func (client HTTPRetryClient) Get502Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -210,7 +208,6 @@ func (client HTTPRetryClient) Head408Sender(req *http.Request) (*http.Response, 
 func (client HTTPRetryClient) Head408Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -277,7 +274,6 @@ func (client HTTPRetryClient) Patch500Sender(req *http.Request) (*http.Response,
 func (client HTTPRetryClient) Patch500Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -344,7 +340,6 @@ func (client HTTPRetryClient) Patch504Sender(req *http.Request) (*http.Response,
 func (client HTTPRetryClient) Patch504Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -411,7 +406,6 @@ func (client HTTPRetryClient) Post503Sender(req *http.Request) (*http.Response, 
 func (client HTTPRetryClient) Post503Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -478,7 +472,6 @@ func (client HTTPRetryClient) Put500Sender(req *http.Request) (*http.Response, e
 func (client HTTPRetryClient) Put500Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -545,7 +538,6 @@ func (client HTTPRetryClient) Put504Sender(req *http.Request) (*http.Response, e
 func (client HTTPRetryClient) Put504Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp

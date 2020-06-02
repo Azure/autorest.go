@@ -101,7 +101,6 @@ func (client PathsClient) GetEmptySender(req *http.Request) (*http.Response, err
 func (client PathsClient) GetEmptyResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp

@@ -108,7 +108,6 @@ func (client PathItemsClient) GetAllWithValuesSender(req *http.Request) (*http.R
 func (client PathItemsClient) GetAllWithValuesResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -193,7 +192,6 @@ func (client PathItemsClient) GetGlobalAndLocalQueryNullSender(req *http.Request
 func (client PathItemsClient) GetGlobalAndLocalQueryNullResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -278,7 +276,6 @@ func (client PathItemsClient) GetGlobalQueryNullSender(req *http.Request) (*http
 func (client PathItemsClient) GetGlobalQueryNullResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -363,7 +360,6 @@ func (client PathItemsClient) GetLocalPathItemQueryNullSender(req *http.Request)
 func (client PathItemsClient) GetLocalPathItemQueryNullResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp

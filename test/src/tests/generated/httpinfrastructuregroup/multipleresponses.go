@@ -84,7 +84,6 @@ func (client MultipleResponsesClient) Get200Model201ModelDefaultError200ValidSen
 func (client MultipleResponsesClient) Get200Model201ModelDefaultError200ValidResponder(resp *http.Response) (result A, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusCreated),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -146,7 +145,6 @@ func (client MultipleResponsesClient) Get200Model201ModelDefaultError201ValidSen
 func (client MultipleResponsesClient) Get200Model201ModelDefaultError201ValidResponder(resp *http.Response) (result A, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusCreated),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -208,7 +206,6 @@ func (client MultipleResponsesClient) Get200Model201ModelDefaultError400ValidSen
 func (client MultipleResponsesClient) Get200Model201ModelDefaultError400ValidResponder(resp *http.Response) (result A, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusCreated),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -269,7 +266,6 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError200ValidS
 func (client MultipleResponsesClient) Get200Model204NoModelDefaultError200ValidResponder(resp *http.Response) (result A, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusNoContent),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -330,7 +326,6 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError201Invali
 func (client MultipleResponsesClient) Get200Model204NoModelDefaultError201InvalidResponder(resp *http.Response) (result A, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusNoContent),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -391,7 +386,6 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError202NoneSe
 func (client MultipleResponsesClient) Get200Model204NoModelDefaultError202NoneResponder(resp *http.Response) (result A, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusNoContent),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -452,7 +446,6 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError204ValidS
 func (client MultipleResponsesClient) Get200Model204NoModelDefaultError204ValidResponder(resp *http.Response) (result A, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusNoContent),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -514,7 +507,6 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError400ValidS
 func (client MultipleResponsesClient) Get200Model204NoModelDefaultError400ValidResponder(resp *http.Response) (result A, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusNoContent),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -575,7 +567,6 @@ func (client MultipleResponsesClient) Get200ModelA200InvalidSender(req *http.Req
 func (client MultipleResponsesClient) Get200ModelA200InvalidResponder(resp *http.Response) (result A, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -637,7 +628,6 @@ func (client MultipleResponsesClient) Get200ModelA200NoneSender(req *http.Reques
 func (client MultipleResponsesClient) Get200ModelA200NoneResponder(resp *http.Response) (result A, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -698,7 +688,6 @@ func (client MultipleResponsesClient) Get200ModelA200ValidSender(req *http.Reque
 func (client MultipleResponsesClient) Get200ModelA200ValidResponder(resp *http.Response) (result A, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -759,7 +748,6 @@ func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError
 func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError200ValidResponder(resp *http.Response) (result SetObject, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusCreated, http.StatusNotFound),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -820,7 +808,6 @@ func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError
 func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError201ValidResponder(resp *http.Response) (result SetObject, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusCreated, http.StatusNotFound),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -882,7 +869,6 @@ func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError
 func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError400ValidResponder(resp *http.Response) (result SetObject, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusCreated, http.StatusNotFound),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -943,7 +929,6 @@ func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError
 func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError404ValidResponder(resp *http.Response) (result SetObject, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusCreated, http.StatusNotFound),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -1004,7 +989,6 @@ func (client MultipleResponsesClient) Get200ModelA202ValidSender(req *http.Reque
 func (client MultipleResponsesClient) Get200ModelA202ValidResponder(resp *http.Response) (result A, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -1065,7 +1049,6 @@ func (client MultipleResponsesClient) Get200ModelA400InvalidSender(req *http.Req
 func (client MultipleResponsesClient) Get200ModelA400InvalidResponder(resp *http.Response) (result A, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -1126,7 +1109,6 @@ func (client MultipleResponsesClient) Get200ModelA400NoneSender(req *http.Reques
 func (client MultipleResponsesClient) Get200ModelA400NoneResponder(resp *http.Response) (result A, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -1187,7 +1169,6 @@ func (client MultipleResponsesClient) Get200ModelA400ValidSender(req *http.Reque
 func (client MultipleResponsesClient) Get200ModelA400ValidResponder(resp *http.Response) (result A, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -1248,7 +1229,6 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultError202NoneSender
 func (client MultipleResponsesClient) Get202None204NoneDefaultError202NoneResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1308,7 +1288,6 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultError204NoneSender
 func (client MultipleResponsesClient) Get202None204NoneDefaultError204NoneResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1369,7 +1348,6 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultError400ValidSende
 func (client MultipleResponsesClient) Get202None204NoneDefaultError400ValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1429,7 +1407,6 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultNone202InvalidSend
 func (client MultipleResponsesClient) Get202None204NoneDefaultNone202InvalidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1489,7 +1466,6 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultNone204NoneSender(
 func (client MultipleResponsesClient) Get202None204NoneDefaultNone204NoneResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1549,7 +1525,6 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultNone400InvalidSend
 func (client MultipleResponsesClient) Get202None204NoneDefaultNone400InvalidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1609,7 +1584,6 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultNone400NoneSender(
 func (client MultipleResponsesClient) Get202None204NoneDefaultNone400NoneResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1669,7 +1643,6 @@ func (client MultipleResponsesClient) GetDefaultModelA200NoneSender(req *http.Re
 func (client MultipleResponsesClient) GetDefaultModelA200NoneResponder(resp *http.Response) (result A, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -1730,7 +1703,6 @@ func (client MultipleResponsesClient) GetDefaultModelA200ValidSender(req *http.R
 func (client MultipleResponsesClient) GetDefaultModelA200ValidResponder(resp *http.Response) (result A, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -1791,7 +1763,6 @@ func (client MultipleResponsesClient) GetDefaultModelA400NoneSender(req *http.Re
 func (client MultipleResponsesClient) GetDefaultModelA400NoneResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1851,7 +1822,6 @@ func (client MultipleResponsesClient) GetDefaultModelA400ValidSender(req *http.R
 func (client MultipleResponsesClient) GetDefaultModelA400ValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1911,7 +1881,6 @@ func (client MultipleResponsesClient) GetDefaultNone200InvalidSender(req *http.R
 func (client MultipleResponsesClient) GetDefaultNone200InvalidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1971,7 +1940,6 @@ func (client MultipleResponsesClient) GetDefaultNone200NoneSender(req *http.Requ
 func (client MultipleResponsesClient) GetDefaultNone200NoneResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -2031,7 +1999,6 @@ func (client MultipleResponsesClient) GetDefaultNone400InvalidSender(req *http.R
 func (client MultipleResponsesClient) GetDefaultNone400InvalidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -2091,7 +2058,6 @@ func (client MultipleResponsesClient) GetDefaultNone400NoneSender(req *http.Requ
 func (client MultipleResponsesClient) GetDefaultNone400NoneResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp

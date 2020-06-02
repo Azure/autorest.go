@@ -83,7 +83,6 @@ func (client InheritanceClient) GetValidSender(req *http.Request) (*http.Respons
 func (client InheritanceClient) GetValidResponder(resp *http.Response) (result Siamese, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -150,7 +149,6 @@ func (client InheritanceClient) PutValidSender(req *http.Request) (*http.Respons
 func (client InheritanceClient) PutValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp

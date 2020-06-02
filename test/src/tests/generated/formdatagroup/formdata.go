@@ -94,7 +94,6 @@ func (client FormdataClient) UploadFileResponder(resp *http.Response) (result Re
 	result.Value = &resp.Body
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK))
 	result.Response = autorest.Response{Response: resp}
 	return
@@ -158,7 +157,6 @@ func (client FormdataClient) UploadFileViaBodyResponder(resp *http.Response) (re
 	result.Value = &resp.Body
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK))
 	result.Response = autorest.Response{Response: resp}
 	return

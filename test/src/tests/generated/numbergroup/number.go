@@ -84,7 +84,6 @@ func (client NumberClient) GetBigDecimalSender(req *http.Request) (*http.Respons
 func (client NumberClient) GetBigDecimalResponder(resp *http.Response) (result Decimal, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -145,7 +144,6 @@ func (client NumberClient) GetBigDecimalNegativeDecimalSender(req *http.Request)
 func (client NumberClient) GetBigDecimalNegativeDecimalResponder(resp *http.Response) (result Decimal, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -206,7 +204,6 @@ func (client NumberClient) GetBigDecimalPositiveDecimalSender(req *http.Request)
 func (client NumberClient) GetBigDecimalPositiveDecimalResponder(resp *http.Response) (result Decimal, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -267,7 +264,6 @@ func (client NumberClient) GetBigDoubleSender(req *http.Request) (*http.Response
 func (client NumberClient) GetBigDoubleResponder(resp *http.Response) (result Float64, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -328,7 +324,6 @@ func (client NumberClient) GetBigDoubleNegativeDecimalSender(req *http.Request) 
 func (client NumberClient) GetBigDoubleNegativeDecimalResponder(resp *http.Response) (result Float64, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -389,7 +384,6 @@ func (client NumberClient) GetBigDoublePositiveDecimalSender(req *http.Request) 
 func (client NumberClient) GetBigDoublePositiveDecimalResponder(resp *http.Response) (result Float64, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -450,7 +444,6 @@ func (client NumberClient) GetBigFloatSender(req *http.Request) (*http.Response,
 func (client NumberClient) GetBigFloatResponder(resp *http.Response) (result Float64, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -511,7 +504,6 @@ func (client NumberClient) GetInvalidDecimalSender(req *http.Request) (*http.Res
 func (client NumberClient) GetInvalidDecimalResponder(resp *http.Response) (result Decimal, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -572,7 +564,6 @@ func (client NumberClient) GetInvalidDoubleSender(req *http.Request) (*http.Resp
 func (client NumberClient) GetInvalidDoubleResponder(resp *http.Response) (result Float64, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -633,7 +624,6 @@ func (client NumberClient) GetInvalidFloatSender(req *http.Request) (*http.Respo
 func (client NumberClient) GetInvalidFloatResponder(resp *http.Response) (result Float64, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -694,7 +684,6 @@ func (client NumberClient) GetNullSender(req *http.Request) (*http.Response, err
 func (client NumberClient) GetNullResponder(resp *http.Response) (result Float64, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -755,7 +744,6 @@ func (client NumberClient) GetSmallDecimalSender(req *http.Request) (*http.Respo
 func (client NumberClient) GetSmallDecimalResponder(resp *http.Response) (result Decimal, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -816,7 +804,6 @@ func (client NumberClient) GetSmallDoubleSender(req *http.Request) (*http.Respon
 func (client NumberClient) GetSmallDoubleResponder(resp *http.Response) (result Float64, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -877,7 +864,6 @@ func (client NumberClient) GetSmallFloatSender(req *http.Request) (*http.Respons
 func (client NumberClient) GetSmallFloatResponder(resp *http.Response) (result Float64, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -940,7 +926,6 @@ func (client NumberClient) PutBigDecimalSender(req *http.Request) (*http.Respons
 func (client NumberClient) PutBigDecimalResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1002,7 +987,6 @@ func (client NumberClient) PutBigDecimalNegativeDecimalSender(req *http.Request)
 func (client NumberClient) PutBigDecimalNegativeDecimalResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1064,7 +1048,6 @@ func (client NumberClient) PutBigDecimalPositiveDecimalSender(req *http.Request)
 func (client NumberClient) PutBigDecimalPositiveDecimalResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1126,7 +1109,6 @@ func (client NumberClient) PutBigDoubleSender(req *http.Request) (*http.Response
 func (client NumberClient) PutBigDoubleResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1188,7 +1170,6 @@ func (client NumberClient) PutBigDoubleNegativeDecimalSender(req *http.Request) 
 func (client NumberClient) PutBigDoubleNegativeDecimalResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1250,7 +1231,6 @@ func (client NumberClient) PutBigDoublePositiveDecimalSender(req *http.Request) 
 func (client NumberClient) PutBigDoublePositiveDecimalResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1312,7 +1292,6 @@ func (client NumberClient) PutBigFloatSender(req *http.Request) (*http.Response,
 func (client NumberClient) PutBigFloatResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1374,7 +1353,6 @@ func (client NumberClient) PutSmallDecimalSender(req *http.Request) (*http.Respo
 func (client NumberClient) PutSmallDecimalResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1436,7 +1414,6 @@ func (client NumberClient) PutSmallDoubleSender(req *http.Request) (*http.Respon
 func (client NumberClient) PutSmallDoubleResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1498,7 +1475,6 @@ func (client NumberClient) PutSmallFloatSender(req *http.Request) (*http.Respons
 func (client NumberClient) PutSmallFloatResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp

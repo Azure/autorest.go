@@ -102,7 +102,6 @@ func (client BaseClient) GetWithConstantInPathSender(req *http.Request) (*http.R
 func (client BaseClient) GetWithConstantInPathResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -197,7 +196,6 @@ func (client BaseClient) PostWithConstantInBodySender(req *http.Request) (*http.
 func (client BaseClient) PostWithConstantInBodyResponder(resp *http.Response) (result Product, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -312,7 +310,6 @@ func (client BaseClient) ValidationOfBodySender(req *http.Request) (*http.Respon
 func (client BaseClient) ValidationOfBodyResponder(resp *http.Response) (result Product, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -400,7 +397,6 @@ func (client BaseClient) ValidationOfMethodParametersSender(req *http.Request) (
 func (client BaseClient) ValidationOfMethodParametersResponder(resp *http.Response) (result Product, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())

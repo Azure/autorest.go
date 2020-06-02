@@ -84,7 +84,6 @@ func (client DateClient) GetInvalidDateSender(req *http.Request) (*http.Response
 func (client DateClient) GetInvalidDateResponder(resp *http.Response) (result DateModel, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -145,7 +144,6 @@ func (client DateClient) GetMaxDateSender(req *http.Request) (*http.Response, er
 func (client DateClient) GetMaxDateResponder(resp *http.Response) (result DateModel, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -206,7 +204,6 @@ func (client DateClient) GetMinDateSender(req *http.Request) (*http.Response, er
 func (client DateClient) GetMinDateResponder(resp *http.Response) (result DateModel, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -267,7 +264,6 @@ func (client DateClient) GetNullSender(req *http.Request) (*http.Response, error
 func (client DateClient) GetNullResponder(resp *http.Response) (result DateModel, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -328,7 +324,6 @@ func (client DateClient) GetOverflowDateSender(req *http.Request) (*http.Respons
 func (client DateClient) GetOverflowDateResponder(resp *http.Response) (result DateModel, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -389,7 +384,6 @@ func (client DateClient) GetUnderflowDateSender(req *http.Request) (*http.Respon
 func (client DateClient) GetUnderflowDateResponder(resp *http.Response) (result DateModel, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -452,7 +446,6 @@ func (client DateClient) PutMaxDateSender(req *http.Request) (*http.Response, er
 func (client DateClient) PutMaxDateResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -514,7 +507,6 @@ func (client DateClient) PutMinDateSender(req *http.Request) (*http.Response, er
 func (client DateClient) PutMinDateResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp

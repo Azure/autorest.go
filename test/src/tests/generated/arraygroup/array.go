@@ -86,7 +86,6 @@ func (client ArrayClient) GetArrayEmptySender(req *http.Request) (*http.Response
 func (client ArrayClient) GetArrayEmptyResponder(resp *http.Response) (result ListListString, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -147,7 +146,6 @@ func (client ArrayClient) GetArrayItemEmptySender(req *http.Request) (*http.Resp
 func (client ArrayClient) GetArrayItemEmptyResponder(resp *http.Response) (result ListListString, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -208,7 +206,6 @@ func (client ArrayClient) GetArrayItemNullSender(req *http.Request) (*http.Respo
 func (client ArrayClient) GetArrayItemNullResponder(resp *http.Response) (result ListListString, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -269,7 +266,6 @@ func (client ArrayClient) GetArrayNullSender(req *http.Request) (*http.Response,
 func (client ArrayClient) GetArrayNullResponder(resp *http.Response) (result ListListString, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -330,7 +326,6 @@ func (client ArrayClient) GetArrayValidSender(req *http.Request) (*http.Response
 func (client ArrayClient) GetArrayValidResponder(resp *http.Response) (result ListListString, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -392,7 +387,6 @@ func (client ArrayClient) GetBase64URLSender(req *http.Request) (*http.Response,
 func (client ArrayClient) GetBase64URLResponder(resp *http.Response) (result ListBase64URL, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -453,7 +447,6 @@ func (client ArrayClient) GetBooleanInvalidNullSender(req *http.Request) (*http.
 func (client ArrayClient) GetBooleanInvalidNullResponder(resp *http.Response) (result ListBool, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -514,7 +507,6 @@ func (client ArrayClient) GetBooleanInvalidStringSender(req *http.Request) (*htt
 func (client ArrayClient) GetBooleanInvalidStringResponder(resp *http.Response) (result ListBool, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -575,7 +567,6 @@ func (client ArrayClient) GetBooleanTfftSender(req *http.Request) (*http.Respons
 func (client ArrayClient) GetBooleanTfftResponder(resp *http.Response) (result ListBool, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -636,7 +627,6 @@ func (client ArrayClient) GetByteInvalidNullSender(req *http.Request) (*http.Res
 func (client ArrayClient) GetByteInvalidNullResponder(resp *http.Response) (result ListByteArray, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -698,7 +688,6 @@ func (client ArrayClient) GetByteValidSender(req *http.Request) (*http.Response,
 func (client ArrayClient) GetByteValidResponder(resp *http.Response) (result ListByteArray, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -759,7 +748,6 @@ func (client ArrayClient) GetComplexEmptySender(req *http.Request) (*http.Respon
 func (client ArrayClient) GetComplexEmptyResponder(resp *http.Response) (result ListProduct, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -821,7 +809,6 @@ func (client ArrayClient) GetComplexItemEmptySender(req *http.Request) (*http.Re
 func (client ArrayClient) GetComplexItemEmptyResponder(resp *http.Response) (result ListProduct, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -883,7 +870,6 @@ func (client ArrayClient) GetComplexItemNullSender(req *http.Request) (*http.Res
 func (client ArrayClient) GetComplexItemNullResponder(resp *http.Response) (result ListProduct, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -944,7 +930,6 @@ func (client ArrayClient) GetComplexNullSender(req *http.Request) (*http.Respons
 func (client ArrayClient) GetComplexNullResponder(resp *http.Response) (result ListProduct, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -1006,7 +991,6 @@ func (client ArrayClient) GetComplexValidSender(req *http.Request) (*http.Respon
 func (client ArrayClient) GetComplexValidResponder(resp *http.Response) (result ListProduct, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -1067,7 +1051,6 @@ func (client ArrayClient) GetDateInvalidCharsSender(req *http.Request) (*http.Re
 func (client ArrayClient) GetDateInvalidCharsResponder(resp *http.Response) (result ListDate, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -1128,7 +1111,6 @@ func (client ArrayClient) GetDateInvalidNullSender(req *http.Request) (*http.Res
 func (client ArrayClient) GetDateInvalidNullResponder(resp *http.Response) (result ListDate, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -1189,7 +1171,6 @@ func (client ArrayClient) GetDateTimeInvalidCharsSender(req *http.Request) (*htt
 func (client ArrayClient) GetDateTimeInvalidCharsResponder(resp *http.Response) (result ListDateTime, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -1250,7 +1231,6 @@ func (client ArrayClient) GetDateTimeInvalidNullSender(req *http.Request) (*http
 func (client ArrayClient) GetDateTimeInvalidNullResponder(resp *http.Response) (result ListDateTime, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -1312,7 +1292,6 @@ func (client ArrayClient) GetDateTimeRfc1123ValidSender(req *http.Request) (*htt
 func (client ArrayClient) GetDateTimeRfc1123ValidResponder(resp *http.Response) (result ListDateTimeRfc1123, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -1374,7 +1353,6 @@ func (client ArrayClient) GetDateTimeValidSender(req *http.Request) (*http.Respo
 func (client ArrayClient) GetDateTimeValidResponder(resp *http.Response) (result ListDateTime, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -1435,7 +1413,6 @@ func (client ArrayClient) GetDateValidSender(req *http.Request) (*http.Response,
 func (client ArrayClient) GetDateValidResponder(resp *http.Response) (result ListDate, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -1496,7 +1473,6 @@ func (client ArrayClient) GetDictionaryEmptySender(req *http.Request) (*http.Res
 func (client ArrayClient) GetDictionaryEmptyResponder(resp *http.Response) (result ListSetString, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -1558,7 +1534,6 @@ func (client ArrayClient) GetDictionaryItemEmptySender(req *http.Request) (*http
 func (client ArrayClient) GetDictionaryItemEmptyResponder(resp *http.Response) (result ListSetString, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -1620,7 +1595,6 @@ func (client ArrayClient) GetDictionaryItemNullSender(req *http.Request) (*http.
 func (client ArrayClient) GetDictionaryItemNullResponder(resp *http.Response) (result ListSetString, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -1681,7 +1655,6 @@ func (client ArrayClient) GetDictionaryNullSender(req *http.Request) (*http.Resp
 func (client ArrayClient) GetDictionaryNullResponder(resp *http.Response) (result ListSetString, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -1743,7 +1716,6 @@ func (client ArrayClient) GetDictionaryValidSender(req *http.Request) (*http.Res
 func (client ArrayClient) GetDictionaryValidResponder(resp *http.Response) (result ListSetString, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -1804,7 +1776,6 @@ func (client ArrayClient) GetDoubleInvalidNullSender(req *http.Request) (*http.R
 func (client ArrayClient) GetDoubleInvalidNullResponder(resp *http.Response) (result ListFloat64, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -1865,7 +1836,6 @@ func (client ArrayClient) GetDoubleInvalidStringSender(req *http.Request) (*http
 func (client ArrayClient) GetDoubleInvalidStringResponder(resp *http.Response) (result ListFloat64, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -1926,7 +1896,6 @@ func (client ArrayClient) GetDoubleValidSender(req *http.Request) (*http.Respons
 func (client ArrayClient) GetDoubleValidResponder(resp *http.Response) (result ListFloat64, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -1987,7 +1956,6 @@ func (client ArrayClient) GetDurationValidSender(req *http.Request) (*http.Respo
 func (client ArrayClient) GetDurationValidResponder(resp *http.Response) (result ListTimeSpan, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -2048,7 +2016,6 @@ func (client ArrayClient) GetEmptySender(req *http.Request) (*http.Response, err
 func (client ArrayClient) GetEmptyResponder(resp *http.Response) (result ListInt32, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -2109,7 +2076,6 @@ func (client ArrayClient) GetEnumValidSender(req *http.Request) (*http.Response,
 func (client ArrayClient) GetEnumValidResponder(resp *http.Response) (result ListString, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -2170,7 +2136,6 @@ func (client ArrayClient) GetFloatInvalidNullSender(req *http.Request) (*http.Re
 func (client ArrayClient) GetFloatInvalidNullResponder(resp *http.Response) (result ListFloat64, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -2231,7 +2196,6 @@ func (client ArrayClient) GetFloatInvalidStringSender(req *http.Request) (*http.
 func (client ArrayClient) GetFloatInvalidStringResponder(resp *http.Response) (result ListFloat64, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -2292,7 +2256,6 @@ func (client ArrayClient) GetFloatValidSender(req *http.Request) (*http.Response
 func (client ArrayClient) GetFloatValidResponder(resp *http.Response) (result ListFloat64, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -2353,7 +2316,6 @@ func (client ArrayClient) GetIntegerValidSender(req *http.Request) (*http.Respon
 func (client ArrayClient) GetIntegerValidResponder(resp *http.Response) (result ListInt32, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -2414,7 +2376,6 @@ func (client ArrayClient) GetIntInvalidNullSender(req *http.Request) (*http.Resp
 func (client ArrayClient) GetIntInvalidNullResponder(resp *http.Response) (result ListInt32, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -2475,7 +2436,6 @@ func (client ArrayClient) GetIntInvalidStringSender(req *http.Request) (*http.Re
 func (client ArrayClient) GetIntInvalidStringResponder(resp *http.Response) (result ListInt32, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -2536,7 +2496,6 @@ func (client ArrayClient) GetInvalidSender(req *http.Request) (*http.Response, e
 func (client ArrayClient) GetInvalidResponder(resp *http.Response) (result ListInt32, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -2597,7 +2556,6 @@ func (client ArrayClient) GetLongInvalidNullSender(req *http.Request) (*http.Res
 func (client ArrayClient) GetLongInvalidNullResponder(resp *http.Response) (result ListInt64, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -2658,7 +2616,6 @@ func (client ArrayClient) GetLongInvalidStringSender(req *http.Request) (*http.R
 func (client ArrayClient) GetLongInvalidStringResponder(resp *http.Response) (result ListInt64, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -2719,7 +2676,6 @@ func (client ArrayClient) GetLongValidSender(req *http.Request) (*http.Response,
 func (client ArrayClient) GetLongValidResponder(resp *http.Response) (result ListInt64, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -2780,7 +2736,6 @@ func (client ArrayClient) GetNullSender(req *http.Request) (*http.Response, erro
 func (client ArrayClient) GetNullResponder(resp *http.Response) (result ListInt32, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -2841,7 +2796,6 @@ func (client ArrayClient) GetStringEnumValidSender(req *http.Request) (*http.Res
 func (client ArrayClient) GetStringEnumValidResponder(resp *http.Response) (result ListString, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -2902,7 +2856,6 @@ func (client ArrayClient) GetStringValidSender(req *http.Request) (*http.Respons
 func (client ArrayClient) GetStringValidResponder(resp *http.Response) (result ListString, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -2963,7 +2916,6 @@ func (client ArrayClient) GetStringWithInvalidSender(req *http.Request) (*http.R
 func (client ArrayClient) GetStringWithInvalidResponder(resp *http.Response) (result ListString, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -3024,7 +2976,6 @@ func (client ArrayClient) GetStringWithNullSender(req *http.Request) (*http.Resp
 func (client ArrayClient) GetStringWithNullResponder(resp *http.Response) (result ListString, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -3085,7 +3036,6 @@ func (client ArrayClient) GetUUIDInvalidCharsSender(req *http.Request) (*http.Re
 func (client ArrayClient) GetUUIDInvalidCharsResponder(resp *http.Response) (result ListUUID, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -3147,7 +3097,6 @@ func (client ArrayClient) GetUUIDValidSender(req *http.Request) (*http.Response,
 func (client ArrayClient) GetUUIDValidResponder(resp *http.Response) (result ListUUID, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -3216,7 +3165,6 @@ func (client ArrayClient) PutArrayValidSender(req *http.Request) (*http.Response
 func (client ArrayClient) PutArrayValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -3284,7 +3232,6 @@ func (client ArrayClient) PutBooleanTfftSender(req *http.Request) (*http.Respons
 func (client ArrayClient) PutBooleanTfftResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -3353,7 +3300,6 @@ func (client ArrayClient) PutByteValidSender(req *http.Request) (*http.Response,
 func (client ArrayClient) PutByteValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -3422,7 +3368,6 @@ func (client ArrayClient) PutComplexValidSender(req *http.Request) (*http.Respon
 func (client ArrayClient) PutComplexValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -3491,7 +3436,6 @@ func (client ArrayClient) PutDateTimeRfc1123ValidSender(req *http.Request) (*htt
 func (client ArrayClient) PutDateTimeRfc1123ValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -3559,7 +3503,6 @@ func (client ArrayClient) PutDateTimeValidSender(req *http.Request) (*http.Respo
 func (client ArrayClient) PutDateTimeValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -3627,7 +3570,6 @@ func (client ArrayClient) PutDateValidSender(req *http.Request) (*http.Response,
 func (client ArrayClient) PutDateValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -3696,7 +3638,6 @@ func (client ArrayClient) PutDictionaryValidSender(req *http.Request) (*http.Res
 func (client ArrayClient) PutDictionaryValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -3764,7 +3705,6 @@ func (client ArrayClient) PutDoubleValidSender(req *http.Request) (*http.Respons
 func (client ArrayClient) PutDoubleValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -3832,7 +3772,6 @@ func (client ArrayClient) PutDurationValidSender(req *http.Request) (*http.Respo
 func (client ArrayClient) PutDurationValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -3900,7 +3839,6 @@ func (client ArrayClient) PutEmptySender(req *http.Request) (*http.Response, err
 func (client ArrayClient) PutEmptyResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -3968,7 +3906,6 @@ func (client ArrayClient) PutEnumValidSender(req *http.Request) (*http.Response,
 func (client ArrayClient) PutEnumValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -4036,7 +3973,6 @@ func (client ArrayClient) PutFloatValidSender(req *http.Request) (*http.Response
 func (client ArrayClient) PutFloatValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -4104,7 +4040,6 @@ func (client ArrayClient) PutIntegerValidSender(req *http.Request) (*http.Respon
 func (client ArrayClient) PutIntegerValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -4172,7 +4107,6 @@ func (client ArrayClient) PutLongValidSender(req *http.Request) (*http.Response,
 func (client ArrayClient) PutLongValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -4240,7 +4174,6 @@ func (client ArrayClient) PutStringEnumValidSender(req *http.Request) (*http.Res
 func (client ArrayClient) PutStringEnumValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -4308,7 +4241,6 @@ func (client ArrayClient) PutStringValidSender(req *http.Request) (*http.Respons
 func (client ArrayClient) PutStringValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -4377,7 +4309,6 @@ func (client ArrayClient) PutUUIDValidSender(req *http.Request) (*http.Response,
 func (client ArrayClient) PutUUIDValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp

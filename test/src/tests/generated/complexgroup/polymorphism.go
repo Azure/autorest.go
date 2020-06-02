@@ -85,7 +85,6 @@ func (client PolymorphismClient) GetComplicatedSender(req *http.Request) (*http.
 func (client PolymorphismClient) GetComplicatedResponder(resp *http.Response) (result SalmonModel, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -148,7 +147,6 @@ func (client PolymorphismClient) GetComposedWithDiscriminatorSender(req *http.Re
 func (client PolymorphismClient) GetComposedWithDiscriminatorResponder(resp *http.Response) (result DotFishMarket, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -211,7 +209,6 @@ func (client PolymorphismClient) GetComposedWithoutDiscriminatorSender(req *http
 func (client PolymorphismClient) GetComposedWithoutDiscriminatorResponder(resp *http.Response) (result DotFishMarket, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -272,7 +269,6 @@ func (client PolymorphismClient) GetDotSyntaxSender(req *http.Request) (*http.Re
 func (client PolymorphismClient) GetDotSyntaxResponder(resp *http.Response) (result DotFishModel, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -333,7 +329,6 @@ func (client PolymorphismClient) GetValidSender(req *http.Request) (*http.Respon
 func (client PolymorphismClient) GetValidResponder(resp *http.Response) (result FishModel, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -397,7 +392,6 @@ func (client PolymorphismClient) PutComplicatedSender(req *http.Request) (*http.
 func (client PolymorphismClient) PutComplicatedResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -459,7 +453,6 @@ func (client PolymorphismClient) PutMissingDiscriminatorSender(req *http.Request
 func (client PolymorphismClient) PutMissingDiscriminatorResponder(resp *http.Response) (result SalmonModel, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -562,7 +555,6 @@ func (client PolymorphismClient) PutValidSender(req *http.Request) (*http.Respon
 func (client PolymorphismClient) PutValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -659,7 +651,6 @@ func (client PolymorphismClient) PutValidMissingRequiredSender(req *http.Request
 func (client PolymorphismClient) PutValidMissingRequiredResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp

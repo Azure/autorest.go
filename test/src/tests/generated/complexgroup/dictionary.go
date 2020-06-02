@@ -83,7 +83,6 @@ func (client DictionaryClient) GetEmptySender(req *http.Request) (*http.Response
 func (client DictionaryClient) GetEmptyResponder(resp *http.Response) (result DictionaryWrapper, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -144,7 +143,6 @@ func (client DictionaryClient) GetNotProvidedSender(req *http.Request) (*http.Re
 func (client DictionaryClient) GetNotProvidedResponder(resp *http.Response) (result DictionaryWrapper, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -205,7 +203,6 @@ func (client DictionaryClient) GetNullSender(req *http.Request) (*http.Response,
 func (client DictionaryClient) GetNullResponder(resp *http.Response) (result DictionaryWrapper, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -266,7 +263,6 @@ func (client DictionaryClient) GetValidSender(req *http.Request) (*http.Response
 func (client DictionaryClient) GetValidResponder(resp *http.Response) (result DictionaryWrapper, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -331,7 +327,6 @@ func (client DictionaryClient) PutEmptySender(req *http.Request) (*http.Response
 func (client DictionaryClient) PutEmptyResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -396,7 +391,6 @@ func (client DictionaryClient) PutValidSender(req *http.Request) (*http.Response
 func (client DictionaryClient) PutValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp

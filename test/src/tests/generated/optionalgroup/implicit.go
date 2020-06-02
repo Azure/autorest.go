@@ -89,7 +89,6 @@ func (client ImplicitClient) GetOptionalGlobalQuerySender(req *http.Request) (*h
 func (client ImplicitClient) GetOptionalGlobalQueryResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -153,7 +152,6 @@ func (client ImplicitClient) GetRequiredGlobalPathSender(req *http.Request) (*ht
 func (client ImplicitClient) GetRequiredGlobalPathResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -218,7 +216,6 @@ func (client ImplicitClient) GetRequiredGlobalQuerySender(req *http.Request) (*h
 func (client ImplicitClient) GetRequiredGlobalQueryResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -282,7 +279,6 @@ func (client ImplicitClient) GetRequiredPathSender(req *http.Request) (*http.Res
 func (client ImplicitClient) GetRequiredPathResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -347,7 +343,6 @@ func (client ImplicitClient) PutOptionalBodySender(req *http.Request) (*http.Res
 func (client ImplicitClient) PutOptionalBodyResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -411,7 +406,6 @@ func (client ImplicitClient) PutOptionalHeaderSender(req *http.Request) (*http.R
 func (client ImplicitClient) PutOptionalHeaderResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -477,7 +471,6 @@ func (client ImplicitClient) PutOptionalQuerySender(req *http.Request) (*http.Re
 func (client ImplicitClient) PutOptionalQueryResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp

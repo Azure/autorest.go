@@ -93,7 +93,6 @@ func (client PetsClient) CreateAPInPropertiesSender(req *http.Request) (*http.Re
 func (client PetsClient) CreateAPInPropertiesResponder(resp *http.Response) (result PetAPInProperties, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -164,7 +163,6 @@ func (client PetsClient) CreateAPInPropertiesWithAPStringSender(req *http.Reques
 func (client PetsClient) CreateAPInPropertiesWithAPStringResponder(resp *http.Response) (result PetAPInPropertiesWithAPString, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -234,7 +232,6 @@ func (client PetsClient) CreateAPObjectSender(req *http.Request) (*http.Response
 func (client PetsClient) CreateAPObjectResponder(resp *http.Response) (result PetAPObject, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -304,7 +301,6 @@ func (client PetsClient) CreateAPStringSender(req *http.Request) (*http.Response
 func (client PetsClient) CreateAPStringResponder(resp *http.Response) (result PetAPString, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -374,7 +370,6 @@ func (client PetsClient) CreateAPTrueSender(req *http.Request) (*http.Response, 
 func (client PetsClient) CreateAPTrueResponder(resp *http.Response) (result PetAPTrue, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -437,7 +432,6 @@ func (client PetsClient) CreateCatAPTrueSender(req *http.Request) (*http.Respons
 func (client PetsClient) CreateCatAPTrueResponder(resp *http.Response) (result CatAPTrue, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())

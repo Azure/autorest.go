@@ -84,7 +84,6 @@ func (client EnumClient) GetNotExpandableSender(req *http.Request) (*http.Respon
 func (client EnumClient) GetNotExpandableResponder(resp *http.Response) (result StringModel, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -145,7 +144,6 @@ func (client EnumClient) GetReferencedSender(req *http.Request) (*http.Response,
 func (client EnumClient) GetReferencedResponder(resp *http.Response) (result StringModel, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -206,7 +204,6 @@ func (client EnumClient) GetReferencedConstantSender(req *http.Request) (*http.R
 func (client EnumClient) GetReferencedConstantResponder(resp *http.Response) (result RefColorConstant, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -269,7 +266,6 @@ func (client EnumClient) PutNotExpandableSender(req *http.Request) (*http.Respon
 func (client EnumClient) PutNotExpandableResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -331,7 +327,6 @@ func (client EnumClient) PutReferencedSender(req *http.Request) (*http.Response,
 func (client EnumClient) PutReferencedResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -399,7 +394,6 @@ func (client EnumClient) PutReferencedConstantSender(req *http.Request) (*http.R
 func (client EnumClient) PutReferencedConstantResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp

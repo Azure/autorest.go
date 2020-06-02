@@ -91,7 +91,6 @@ func (client QueriesClient) ArrayStringMultiEmptySender(req *http.Request) (*htt
 func (client QueriesClient) ArrayStringMultiEmptyResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -159,7 +158,6 @@ func (client QueriesClient) ArrayStringMultiNullSender(req *http.Request) (*http
 func (client QueriesClient) ArrayStringMultiNullResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -229,7 +227,6 @@ func (client QueriesClient) ArrayStringMultiValidSender(req *http.Request) (*htt
 func (client QueriesClient) ArrayStringMultiValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp

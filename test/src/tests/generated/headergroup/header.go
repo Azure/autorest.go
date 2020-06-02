@@ -85,7 +85,6 @@ func (client HeaderClient) CustomRequestIDSender(req *http.Request) (*http.Respo
 func (client HeaderClient) CustomRequestIDResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -151,7 +150,6 @@ func (client HeaderClient) ParamBoolSender(req *http.Request) (*http.Response, e
 func (client HeaderClient) ParamBoolResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -222,7 +220,6 @@ func (client HeaderClient) ParamByteSender(req *http.Request) (*http.Response, e
 func (client HeaderClient) ParamByteResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -288,7 +285,6 @@ func (client HeaderClient) ParamDateSender(req *http.Request) (*http.Response, e
 func (client HeaderClient) ParamDateResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -354,7 +350,6 @@ func (client HeaderClient) ParamDatetimeSender(req *http.Request) (*http.Respons
 func (client HeaderClient) ParamDatetimeResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -424,7 +419,6 @@ func (client HeaderClient) ParamDatetimeRfc1123Sender(req *http.Request) (*http.
 func (client HeaderClient) ParamDatetimeRfc1123Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -490,7 +484,6 @@ func (client HeaderClient) ParamDoubleSender(req *http.Request) (*http.Response,
 func (client HeaderClient) ParamDoubleResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -555,7 +548,6 @@ func (client HeaderClient) ParamDurationSender(req *http.Request) (*http.Respons
 func (client HeaderClient) ParamDurationResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -624,7 +616,6 @@ func (client HeaderClient) ParamEnumSender(req *http.Request) (*http.Response, e
 func (client HeaderClient) ParamEnumResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -687,7 +678,6 @@ func (client HeaderClient) ParamExistingKeySender(req *http.Request) (*http.Resp
 func (client HeaderClient) ParamExistingKeyResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -753,7 +743,6 @@ func (client HeaderClient) ParamFloatSender(req *http.Request) (*http.Response, 
 func (client HeaderClient) ParamFloatResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -819,7 +808,6 @@ func (client HeaderClient) ParamIntegerSender(req *http.Request) (*http.Response
 func (client HeaderClient) ParamIntegerResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -885,7 +873,6 @@ func (client HeaderClient) ParamLongSender(req *http.Request) (*http.Response, e
 func (client HeaderClient) ParamLongResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -948,7 +935,6 @@ func (client HeaderClient) ParamProtectedKeySender(req *http.Request) (*http.Res
 func (client HeaderClient) ParamProtectedKeyResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1017,7 +1003,6 @@ func (client HeaderClient) ParamStringSender(req *http.Request) (*http.Response,
 func (client HeaderClient) ParamStringResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1080,7 +1065,6 @@ func (client HeaderClient) ResponseBoolSender(req *http.Request) (*http.Response
 func (client HeaderClient) ResponseBoolResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1143,7 +1127,6 @@ func (client HeaderClient) ResponseByteSender(req *http.Request) (*http.Response
 func (client HeaderClient) ResponseByteResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1206,7 +1189,6 @@ func (client HeaderClient) ResponseDateSender(req *http.Request) (*http.Response
 func (client HeaderClient) ResponseDateResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1269,7 +1251,6 @@ func (client HeaderClient) ResponseDatetimeSender(req *http.Request) (*http.Resp
 func (client HeaderClient) ResponseDatetimeResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1333,7 +1314,6 @@ func (client HeaderClient) ResponseDatetimeRfc1123Sender(req *http.Request) (*ht
 func (client HeaderClient) ResponseDatetimeRfc1123Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1396,7 +1376,6 @@ func (client HeaderClient) ResponseDoubleSender(req *http.Request) (*http.Respon
 func (client HeaderClient) ResponseDoubleResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1459,7 +1438,6 @@ func (client HeaderClient) ResponseDurationSender(req *http.Request) (*http.Resp
 func (client HeaderClient) ResponseDurationResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1522,7 +1500,6 @@ func (client HeaderClient) ResponseEnumSender(req *http.Request) (*http.Response
 func (client HeaderClient) ResponseEnumResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1582,7 +1559,6 @@ func (client HeaderClient) ResponseExistingKeySender(req *http.Request) (*http.R
 func (client HeaderClient) ResponseExistingKeyResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1645,7 +1621,6 @@ func (client HeaderClient) ResponseFloatSender(req *http.Request) (*http.Respons
 func (client HeaderClient) ResponseFloatResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1708,7 +1683,6 @@ func (client HeaderClient) ResponseIntegerSender(req *http.Request) (*http.Respo
 func (client HeaderClient) ResponseIntegerResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1771,7 +1745,6 @@ func (client HeaderClient) ResponseLongSender(req *http.Request) (*http.Response
 func (client HeaderClient) ResponseLongResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1831,7 +1804,6 @@ func (client HeaderClient) ResponseProtectedKeySender(req *http.Request) (*http.
 func (client HeaderClient) ResponseProtectedKeyResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1894,7 +1866,6 @@ func (client HeaderClient) ResponseStringSender(req *http.Request) (*http.Respon
 func (client HeaderClient) ResponseStringResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp

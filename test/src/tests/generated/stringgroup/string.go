@@ -83,7 +83,6 @@ func (client StringClient) GetBase64EncodedSender(req *http.Request) (*http.Resp
 func (client StringClient) GetBase64EncodedResponder(resp *http.Response) (result Base64URL, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -144,7 +143,6 @@ func (client StringClient) GetBase64URLEncodedSender(req *http.Request) (*http.R
 func (client StringClient) GetBase64URLEncodedResponder(resp *http.Response) (result Base64URL, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -205,7 +203,6 @@ func (client StringClient) GetEmptySender(req *http.Request) (*http.Response, er
 func (client StringClient) GetEmptyResponder(resp *http.Response) (result StringModel, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -266,7 +263,6 @@ func (client StringClient) GetMbcsSender(req *http.Request) (*http.Response, err
 func (client StringClient) GetMbcsResponder(resp *http.Response) (result StringModel, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -327,7 +323,6 @@ func (client StringClient) GetNotProvidedSender(req *http.Request) (*http.Respon
 func (client StringClient) GetNotProvidedResponder(resp *http.Response) (result StringModel, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -388,7 +383,6 @@ func (client StringClient) GetNullSender(req *http.Request) (*http.Response, err
 func (client StringClient) GetNullResponder(resp *http.Response) (result StringModel, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -449,7 +443,6 @@ func (client StringClient) GetNullBase64URLEncodedSender(req *http.Request) (*ht
 func (client StringClient) GetNullBase64URLEncodedResponder(resp *http.Response) (result Base64URL, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -511,7 +504,6 @@ func (client StringClient) GetWhitespaceSender(req *http.Request) (*http.Respons
 func (client StringClient) GetWhitespaceResponder(resp *http.Response) (result StringModel, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -574,7 +566,6 @@ func (client StringClient) PutBase64URLEncodedSender(req *http.Request) (*http.R
 func (client StringClient) PutBase64URLEncodedResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -636,7 +627,6 @@ func (client StringClient) PutEmptySender(req *http.Request) (*http.Response, er
 func (client StringClient) PutEmptyResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -698,7 +688,6 @@ func (client StringClient) PutMbcsSender(req *http.Request) (*http.Response, err
 func (client StringClient) PutMbcsResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -763,7 +752,6 @@ func (client StringClient) PutNullSender(req *http.Request) (*http.Response, err
 func (client StringClient) PutNullResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -826,7 +814,6 @@ func (client StringClient) PutWhitespaceSender(req *http.Request) (*http.Respons
 func (client StringClient) PutWhitespaceResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp

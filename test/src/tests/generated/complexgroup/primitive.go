@@ -83,7 +83,6 @@ func (client PrimitiveClient) GetBoolSender(req *http.Request) (*http.Response, 
 func (client PrimitiveClient) GetBoolResponder(resp *http.Response) (result BooleanWrapper, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -144,7 +143,6 @@ func (client PrimitiveClient) GetByteSender(req *http.Request) (*http.Response, 
 func (client PrimitiveClient) GetByteResponder(resp *http.Response) (result ByteWrapper, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -205,7 +203,6 @@ func (client PrimitiveClient) GetDateSender(req *http.Request) (*http.Response, 
 func (client PrimitiveClient) GetDateResponder(resp *http.Response) (result DateWrapper, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -266,7 +263,6 @@ func (client PrimitiveClient) GetDateTimeSender(req *http.Request) (*http.Respon
 func (client PrimitiveClient) GetDateTimeResponder(resp *http.Response) (result DatetimeWrapper, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -327,7 +323,6 @@ func (client PrimitiveClient) GetDateTimeRfc1123Sender(req *http.Request) (*http
 func (client PrimitiveClient) GetDateTimeRfc1123Responder(resp *http.Response) (result Datetimerfc1123Wrapper, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -388,7 +383,6 @@ func (client PrimitiveClient) GetDoubleSender(req *http.Request) (*http.Response
 func (client PrimitiveClient) GetDoubleResponder(resp *http.Response) (result DoubleWrapper, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -449,7 +443,6 @@ func (client PrimitiveClient) GetDurationSender(req *http.Request) (*http.Respon
 func (client PrimitiveClient) GetDurationResponder(resp *http.Response) (result DurationWrapper, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -510,7 +503,6 @@ func (client PrimitiveClient) GetFloatSender(req *http.Request) (*http.Response,
 func (client PrimitiveClient) GetFloatResponder(resp *http.Response) (result FloatWrapper, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -571,7 +563,6 @@ func (client PrimitiveClient) GetIntSender(req *http.Request) (*http.Response, e
 func (client PrimitiveClient) GetIntResponder(resp *http.Response) (result IntWrapper, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -632,7 +623,6 @@ func (client PrimitiveClient) GetLongSender(req *http.Request) (*http.Response, 
 func (client PrimitiveClient) GetLongResponder(resp *http.Response) (result LongWrapper, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -693,7 +683,6 @@ func (client PrimitiveClient) GetStringSender(req *http.Request) (*http.Response
 func (client PrimitiveClient) GetStringResponder(resp *http.Response) (result StringWrapper, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -758,7 +747,6 @@ func (client PrimitiveClient) PutBoolSender(req *http.Request) (*http.Response, 
 func (client PrimitiveClient) PutBoolResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -822,7 +810,6 @@ func (client PrimitiveClient) PutByteSender(req *http.Request) (*http.Response, 
 func (client PrimitiveClient) PutByteResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -886,7 +873,6 @@ func (client PrimitiveClient) PutDateSender(req *http.Request) (*http.Response, 
 func (client PrimitiveClient) PutDateResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -950,7 +936,6 @@ func (client PrimitiveClient) PutDateTimeSender(req *http.Request) (*http.Respon
 func (client PrimitiveClient) PutDateTimeResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1014,7 +999,6 @@ func (client PrimitiveClient) PutDateTimeRfc1123Sender(req *http.Request) (*http
 func (client PrimitiveClient) PutDateTimeRfc1123Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1078,7 +1062,6 @@ func (client PrimitiveClient) PutDoubleSender(req *http.Request) (*http.Response
 func (client PrimitiveClient) PutDoubleResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1142,7 +1125,6 @@ func (client PrimitiveClient) PutDurationSender(req *http.Request) (*http.Respon
 func (client PrimitiveClient) PutDurationResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1206,7 +1188,6 @@ func (client PrimitiveClient) PutFloatSender(req *http.Request) (*http.Response,
 func (client PrimitiveClient) PutFloatResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1270,7 +1251,6 @@ func (client PrimitiveClient) PutIntSender(req *http.Request) (*http.Response, e
 func (client PrimitiveClient) PutIntResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1334,7 +1314,6 @@ func (client PrimitiveClient) PutLongSender(req *http.Request) (*http.Response, 
 func (client PrimitiveClient) PutLongResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1398,7 +1377,6 @@ func (client PrimitiveClient) PutStringSender(req *http.Request) (*http.Response
 func (client PrimitiveClient) PutStringResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp

@@ -104,7 +104,6 @@ func (client BaseClient) GetReportSender(req *http.Request) (*http.Response, err
 func (client BaseClient) GetReportResponder(resp *http.Response) (result SetInt32, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())

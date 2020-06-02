@@ -90,7 +90,6 @@ func (client HTTPSuccessClient) Delete200Sender(req *http.Request) (*http.Respon
 func (client HTTPSuccessClient) Delete200Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -157,7 +156,6 @@ func (client HTTPSuccessClient) Delete202Sender(req *http.Request) (*http.Respon
 func (client HTTPSuccessClient) Delete202Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted),
 		autorest.ByClosing())
 	result.Response = resp
@@ -224,7 +222,6 @@ func (client HTTPSuccessClient) Delete204Sender(req *http.Request) (*http.Respon
 func (client HTTPSuccessClient) Delete204Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusNoContent),
 		autorest.ByClosing())
 	result.Response = resp
@@ -284,7 +281,6 @@ func (client HTTPSuccessClient) Get200Sender(req *http.Request) (*http.Response,
 func (client HTTPSuccessClient) Get200Responder(resp *http.Response) (result Bool, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -345,7 +341,6 @@ func (client HTTPSuccessClient) Head200Sender(req *http.Request) (*http.Response
 func (client HTTPSuccessClient) Head200Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -405,7 +400,6 @@ func (client HTTPSuccessClient) Head204Sender(req *http.Request) (*http.Response
 func (client HTTPSuccessClient) Head204Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusNoContent),
 		autorest.ByClosing())
 	result.Response = resp
@@ -465,7 +459,6 @@ func (client HTTPSuccessClient) Head404Sender(req *http.Request) (*http.Response
 func (client HTTPSuccessClient) Head404Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusNoContent, http.StatusNotFound),
 		autorest.ByClosing())
 	result.Response = resp
@@ -532,7 +525,6 @@ func (client HTTPSuccessClient) Patch200Sender(req *http.Request) (*http.Respons
 func (client HTTPSuccessClient) Patch200Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -599,7 +591,6 @@ func (client HTTPSuccessClient) Patch202Sender(req *http.Request) (*http.Respons
 func (client HTTPSuccessClient) Patch202Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted),
 		autorest.ByClosing())
 	result.Response = resp
@@ -666,7 +657,6 @@ func (client HTTPSuccessClient) Patch204Sender(req *http.Request) (*http.Respons
 func (client HTTPSuccessClient) Patch204Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusNoContent),
 		autorest.ByClosing())
 	result.Response = resp
@@ -733,7 +723,6 @@ func (client HTTPSuccessClient) Post200Sender(req *http.Request) (*http.Response
 func (client HTTPSuccessClient) Post200Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -800,7 +789,6 @@ func (client HTTPSuccessClient) Post201Sender(req *http.Request) (*http.Response
 func (client HTTPSuccessClient) Post201Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusCreated),
 		autorest.ByClosing())
 	result.Response = resp
@@ -867,7 +855,6 @@ func (client HTTPSuccessClient) Post202Sender(req *http.Request) (*http.Response
 func (client HTTPSuccessClient) Post202Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted),
 		autorest.ByClosing())
 	result.Response = resp
@@ -934,7 +921,6 @@ func (client HTTPSuccessClient) Post204Sender(req *http.Request) (*http.Response
 func (client HTTPSuccessClient) Post204Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusNoContent),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1001,7 +987,6 @@ func (client HTTPSuccessClient) Put200Sender(req *http.Request) (*http.Response,
 func (client HTTPSuccessClient) Put200Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1068,7 +1053,6 @@ func (client HTTPSuccessClient) Put201Sender(req *http.Request) (*http.Response,
 func (client HTTPSuccessClient) Put201Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusCreated),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1135,7 +1119,6 @@ func (client HTTPSuccessClient) Put202Sender(req *http.Request) (*http.Response,
 func (client HTTPSuccessClient) Put202Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1202,7 +1185,6 @@ func (client HTTPSuccessClient) Put204Sender(req *http.Request) (*http.Response,
 func (client HTTPSuccessClient) Put204Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusNoContent),
 		autorest.ByClosing())
 	result.Response = resp

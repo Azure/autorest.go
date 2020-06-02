@@ -83,7 +83,6 @@ func (client ArrayClient) GetEmptySender(req *http.Request) (*http.Response, err
 func (client ArrayClient) GetEmptyResponder(resp *http.Response) (result ArrayWrapper, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -144,7 +143,6 @@ func (client ArrayClient) GetNotProvidedSender(req *http.Request) (*http.Respons
 func (client ArrayClient) GetNotProvidedResponder(resp *http.Response) (result ArrayWrapper, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -205,7 +203,6 @@ func (client ArrayClient) GetValidSender(req *http.Request) (*http.Response, err
 func (client ArrayClient) GetValidResponder(resp *http.Response) (result ArrayWrapper, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -270,7 +267,6 @@ func (client ArrayClient) PutEmptySender(req *http.Request) (*http.Response, err
 func (client ArrayClient) PutEmptyResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -335,7 +331,6 @@ func (client ArrayClient) PutValidSender(req *http.Request) (*http.Response, err
 func (client ArrayClient) PutValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp

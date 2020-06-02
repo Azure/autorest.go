@@ -475,7 +475,6 @@ namespace AutoRest.Go.Model
                 var decorators = new List<string>
                 {
                     "resp",
-                    "client.ByInspecting()",
                     string.Format("azure.WithErrorUnlessStatusCode({0})", string.Join(",", ResponseCodes.ToArray()))
                 };
 

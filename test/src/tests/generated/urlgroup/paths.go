@@ -99,7 +99,6 @@ func (client PathsClient) ArrayCsvInPathSender(req *http.Request) (*http.Respons
 func (client PathsClient) ArrayCsvInPathResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -165,7 +164,6 @@ func (client PathsClient) Base64URLSender(req *http.Request) (*http.Response, er
 func (client PathsClient) Base64URLResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -229,7 +227,6 @@ func (client PathsClient) ByteEmptySender(req *http.Request) (*http.Response, er
 func (client PathsClient) ByteEmptyResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -301,7 +298,6 @@ func (client PathsClient) ByteMultiByteSender(req *http.Request) (*http.Response
 func (client PathsClient) ByteMultiByteResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -373,7 +369,6 @@ func (client PathsClient) ByteNullSender(req *http.Request) (*http.Response, err
 func (client PathsClient) ByteNullResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusBadRequest),
 		autorest.ByClosing())
 	result.Response = resp
@@ -439,7 +434,6 @@ func (client PathsClient) DateNullSender(req *http.Request) (*http.Response, err
 func (client PathsClient) DateNullResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusBadRequest),
 		autorest.ByClosing())
 	result.Response = resp
@@ -505,7 +499,6 @@ func (client PathsClient) DateTimeNullSender(req *http.Request) (*http.Response,
 func (client PathsClient) DateTimeNullResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusBadRequest),
 		autorest.ByClosing())
 	result.Response = resp
@@ -569,7 +562,6 @@ func (client PathsClient) DateTimeValidSender(req *http.Request) (*http.Response
 func (client PathsClient) DateTimeValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -633,7 +625,6 @@ func (client PathsClient) DateValidSender(req *http.Request) (*http.Response, er
 func (client PathsClient) DateValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -697,7 +688,6 @@ func (client PathsClient) DoubleDecimalNegativeSender(req *http.Request) (*http.
 func (client PathsClient) DoubleDecimalNegativeResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -761,7 +751,6 @@ func (client PathsClient) DoubleDecimalPositiveSender(req *http.Request) (*http.
 func (client PathsClient) DoubleDecimalPositiveResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -827,7 +816,6 @@ func (client PathsClient) EnumNullSender(req *http.Request) (*http.Response, err
 func (client PathsClient) EnumNullResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusBadRequest),
 		autorest.ByClosing())
 	result.Response = resp
@@ -893,7 +881,6 @@ func (client PathsClient) EnumValidSender(req *http.Request) (*http.Response, er
 func (client PathsClient) EnumValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -957,7 +944,6 @@ func (client PathsClient) FloatScientificNegativeSender(req *http.Request) (*htt
 func (client PathsClient) FloatScientificNegativeResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1021,7 +1007,6 @@ func (client PathsClient) FloatScientificPositiveSender(req *http.Request) (*htt
 func (client PathsClient) FloatScientificPositiveResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1085,7 +1070,6 @@ func (client PathsClient) GetBooleanFalseSender(req *http.Request) (*http.Respon
 func (client PathsClient) GetBooleanFalseResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1149,7 +1133,6 @@ func (client PathsClient) GetBooleanTrueSender(req *http.Request) (*http.Respons
 func (client PathsClient) GetBooleanTrueResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1213,7 +1196,6 @@ func (client PathsClient) GetIntNegativeOneMillionSender(req *http.Request) (*ht
 func (client PathsClient) GetIntNegativeOneMillionResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1277,7 +1259,6 @@ func (client PathsClient) GetIntOneMillionSender(req *http.Request) (*http.Respo
 func (client PathsClient) GetIntOneMillionResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1341,7 +1322,6 @@ func (client PathsClient) GetNegativeTenBillionSender(req *http.Request) (*http.
 func (client PathsClient) GetNegativeTenBillionResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1405,7 +1385,6 @@ func (client PathsClient) GetTenBillionSender(req *http.Request) (*http.Response
 func (client PathsClient) GetTenBillionResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1469,7 +1448,6 @@ func (client PathsClient) StringEmptySender(req *http.Request) (*http.Response, 
 func (client PathsClient) StringEmptyResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1535,7 +1513,6 @@ func (client PathsClient) StringNullSender(req *http.Request) (*http.Response, e
 func (client PathsClient) StringNullResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusBadRequest),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1599,7 +1576,6 @@ func (client PathsClient) StringUnicodeSender(req *http.Request) (*http.Response
 func (client PathsClient) StringUnicodeResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1663,7 +1639,6 @@ func (client PathsClient) StringURLEncodedSender(req *http.Request) (*http.Respo
 func (client PathsClient) StringURLEncodedResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -1729,7 +1704,6 @@ func (client PathsClient) UnixTimeURLSender(req *http.Request) (*http.Response, 
 func (client PathsClient) UnixTimeURLResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp

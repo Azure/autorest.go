@@ -96,7 +96,6 @@ func (client BaseClient) GetArraySender(req *http.Request) (*http.Response, erro
 func (client BaseClient) GetArrayResponder(resp *http.Response) (result ListFlattenedProduct, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -157,7 +156,6 @@ func (client BaseClient) GetDictionarySender(req *http.Request) (*http.Response,
 func (client BaseClient) GetDictionaryResponder(resp *http.Response) (result SetFlattenedProduct, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -218,7 +216,6 @@ func (client BaseClient) GetResourceCollectionSender(req *http.Request) (*http.R
 func (client BaseClient) GetResourceCollectionResponder(resp *http.Response) (result ResourceCollection, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -280,7 +277,6 @@ func (client BaseClient) GetWrappedArraySender(req *http.Request) (*http.Respons
 func (client BaseClient) GetWrappedArrayResponder(resp *http.Response) (result ListProductWrapper, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
@@ -359,7 +355,6 @@ func (client BaseClient) PostFlattenedSimpleProductSender(req *http.Request) (*h
 func (client BaseClient) PostFlattenedSimpleProductResponder(resp *http.Response) (result SimpleProduct, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -427,7 +422,6 @@ func (client BaseClient) PutArraySender(req *http.Request) (*http.Response, erro
 func (client BaseClient) PutArrayResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -494,7 +488,6 @@ func (client BaseClient) PutDictionarySender(req *http.Request) (*http.Response,
 func (client BaseClient) PutDictionaryResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -561,7 +554,6 @@ func (client BaseClient) PutResourceCollectionSender(req *http.Request) (*http.R
 func (client BaseClient) PutResourceCollectionResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
@@ -639,7 +631,6 @@ func (client BaseClient) PutSimpleProductSender(req *http.Request) (*http.Respon
 func (client BaseClient) PutSimpleProductResponder(resp *http.Response) (result SimpleProduct, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -723,7 +714,6 @@ func (client BaseClient) PutSimpleProductWithGroupingSender(req *http.Request) (
 func (client BaseClient) PutSimpleProductWithGroupingResponder(resp *http.Response) (result SimpleProduct, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -792,7 +782,6 @@ func (client BaseClient) PutWrappedArraySender(req *http.Request) (*http.Respons
 func (client BaseClient) PutWrappedArrayResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp

@@ -85,7 +85,6 @@ func (client PolymorphicrecursiveClient) GetValidSender(req *http.Request) (*htt
 func (client PolymorphicrecursiveClient) GetValidResponder(resp *http.Response) (result FishModel, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -208,7 +207,6 @@ func (client PolymorphicrecursiveClient) PutValidSender(req *http.Request) (*htt
 func (client PolymorphicrecursiveClient) PutValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp

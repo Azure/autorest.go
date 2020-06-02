@@ -104,7 +104,6 @@ func (client PagingClient) GetMultiplePagesSender(req *http.Request) (*http.Resp
 func (client PagingClient) GetMultiplePagesResponder(resp *http.Response) (result ProductResult, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -203,7 +202,6 @@ func (client PagingClient) GetMultiplePagesFailureSender(req *http.Request) (*ht
 func (client PagingClient) GetMultiplePagesFailureResponder(resp *http.Response) (result ProductResult, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -302,7 +300,6 @@ func (client PagingClient) GetMultiplePagesFailureURISender(req *http.Request) (
 func (client PagingClient) GetMultiplePagesFailureURIResponder(resp *http.Response) (result ProductResult, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -418,7 +415,6 @@ func (client PagingClient) GetMultiplePagesFragmentNextLinkSender(req *http.Requ
 func (client PagingClient) GetMultiplePagesFragmentNextLinkResponder(resp *http.Response) (result OdataProductResult, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -514,7 +510,6 @@ func (client PagingClient) GetMultiplePagesFragmentWithGroupingNextLinkSender(re
 func (client PagingClient) GetMultiplePagesFragmentWithGroupingNextLinkResponder(resp *http.Response) (result OdataProductResult, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -616,7 +611,6 @@ func (client PagingClient) GetMultiplePagesLROResponder(resp *http.Response) (re
 func (client PagingClient) getMultiplePagesLROResponder(resp *http.Response) (result ProductResult, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -714,7 +708,6 @@ func (client PagingClient) GetMultiplePagesRetryFirstSender(req *http.Request) (
 func (client PagingClient) GetMultiplePagesRetryFirstResponder(resp *http.Response) (result ProductResult, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -814,7 +807,6 @@ func (client PagingClient) GetMultiplePagesRetrySecondSender(req *http.Request) 
 func (client PagingClient) GetMultiplePagesRetrySecondResponder(resp *http.Response) (result ProductResult, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -937,7 +929,6 @@ func (client PagingClient) GetMultiplePagesWithOffsetSender(req *http.Request) (
 func (client PagingClient) GetMultiplePagesWithOffsetResponder(resp *http.Response) (result ProductResult, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -1036,7 +1027,6 @@ func (client PagingClient) GetNoItemNamePagesSender(req *http.Request) (*http.Re
 func (client PagingClient) GetNoItemNamePagesResponder(resp *http.Response) (result ProductResultValue, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -1134,7 +1124,6 @@ func (client PagingClient) GetNullNextLinkNamePagesSender(req *http.Request) (*h
 func (client PagingClient) GetNullNextLinkNamePagesResponder(resp *http.Response) (result ProductResult, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -1215,7 +1204,6 @@ func (client PagingClient) GetOdataMultiplePagesSender(req *http.Request) (*http
 func (client PagingClient) GetOdataMultiplePagesResponder(resp *http.Response) (result OdataProductResult, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -1314,7 +1302,6 @@ func (client PagingClient) GetSinglePagesSender(req *http.Request) (*http.Respon
 func (client PagingClient) GetSinglePagesResponder(resp *http.Response) (result ProductResult, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -1413,7 +1400,6 @@ func (client PagingClient) GetSinglePagesFailureSender(req *http.Request) (*http
 func (client PagingClient) GetSinglePagesFailureResponder(resp *http.Response) (result ProductResult, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -1525,7 +1511,6 @@ func (client PagingClient) NextFragmentSender(req *http.Request) (*http.Response
 func (client PagingClient) NextFragmentResponder(resp *http.Response) (result OdataProductResult, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
@@ -1600,7 +1585,6 @@ func (client PagingClient) NextFragmentWithGroupingSender(req *http.Request) (*h
 func (client PagingClient) NextFragmentWithGroupingResponder(resp *http.Response) (result OdataProductResult, err error) {
 	err = autorest.Respond(
 		resp,
-		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
