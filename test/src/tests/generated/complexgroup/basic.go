@@ -367,7 +367,7 @@ func (client BasicClient) PutValid(ctx context.Context, complexBody Basic) (resu
 
 // PutValidPreparer prepares the PutValid request.
 func (client BasicClient) PutValidPreparer(ctx context.Context, complexBody Basic) (*http.Request, error) {
-	const APIVersion = "2014-04-01-preview"
+	const APIVersion = "2016-02-29"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}

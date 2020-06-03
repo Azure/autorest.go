@@ -118,8 +118,14 @@ func PossibleStatusValues() []Status {
 
 // CloudError ...
 type CloudError struct {
-	Status  *int32  `json:"status,omitempty"`
+	Code    *int32  `json:"code,omitempty"`
 	Message *string `json:"message,omitempty"`
+}
+
+// ListProduct ...
+type ListProduct struct {
+	autorest.Response `json:"-"`
+	Value             *[]Product `json:"value,omitempty"`
 }
 
 // LRORetrysDelete202Retry200Future an abstraction for monitoring and retrieving the results of a
@@ -1398,6 +1404,35 @@ func (future *LROsPost200WithPayloadFuture) Result(client LROsClient) (s Sku, er
 	return
 }
 
+// LROsPost202ListFuture an abstraction for monitoring and retrieving the results of a long-running
+// operation.
+type LROsPost202ListFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *LROsPost202ListFuture) Result(client LROsClient) (lp ListProduct, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsPost202ListFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPost202ListFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if lp.Response.Response, err = future.GetResult(sender); err == nil && lp.Response.Response.StatusCode != http.StatusNoContent {
+		lp, err = client.Post202ListResponder(lp.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPost202ListFuture", "Result", lp.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
 // LROsPost202NoRetry204Future an abstraction for monitoring and retrieving the results of a long-running
 // operation.
 type LROsPost202NoRetry204Future struct {
@@ -1810,6 +1845,35 @@ func (future *LROsPut201CreatingSucceeded200Future) Result(client LROsClient) (p
 		p, err = client.Put201CreatingSucceeded200Responder(p.Response.Response)
 		if err != nil {
 			err = autorest.NewErrorWithError(err, "lrogroup.LROsPut201CreatingSucceeded200Future", "Result", p.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
+// LROsPut201SucceededFuture an abstraction for monitoring and retrieving the results of a long-running
+// operation.
+type LROsPut201SucceededFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *LROsPut201SucceededFuture) Result(client LROsClient) (p Product, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsPut201SucceededFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPut201SucceededFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.Put201SucceededResponder(p.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPut201SucceededFuture", "Result", p.Response.Response, "Failure responding to request")
 		}
 	}
 	return

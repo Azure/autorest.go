@@ -923,7 +923,7 @@ func (client PathsClient) FloatScientificNegative(ctx context.Context) (result a
 // FloatScientificNegativePreparer prepares the FloatScientificNegative request.
 func (client PathsClient) FloatScientificNegativePreparer(ctx context.Context) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
-		"floatPath": autorest.Encode("path", -1.034E-20),
+		"floatPath": autorest.Encode("path", -1.034e-20),
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -986,7 +986,7 @@ func (client PathsClient) FloatScientificPositive(ctx context.Context) (result a
 // FloatScientificPositivePreparer prepares the FloatScientificPositive request.
 func (client PathsClient) FloatScientificPositivePreparer(ctx context.Context) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
-		"floatPath": autorest.Encode("path", 1.034E+20),
+		"floatPath": autorest.Encode("path", 1.034e+20),
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -1637,6 +1637,69 @@ func (client PathsClient) StringURLEncodedSender(req *http.Request) (*http.Respo
 // StringURLEncodedResponder handles the response to the StringURLEncoded request. The method always
 // closes the http.Response Body.
 func (client PathsClient) StringURLEncodedResponder(resp *http.Response) (result autorest.Response, err error) {
+	err = autorest.Respond(
+		resp,
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByClosing())
+	result.Response = resp
+	return
+}
+
+// StringURLNonEncoded https://tools.ietf.org/html/rfc3986#appendix-A 'path' accept any 'pchar' not encoded
+func (client PathsClient) StringURLNonEncoded(ctx context.Context) (result autorest.Response, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PathsClient.StringURLNonEncoded")
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	req, err := client.StringURLNonEncodedPreparer(ctx)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "StringURLNonEncoded", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.StringURLNonEncodedSender(req)
+	if err != nil {
+		result.Response = resp
+		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "StringURLNonEncoded", resp, "Failure sending request")
+		return
+	}
+
+	result, err = client.StringURLNonEncodedResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "StringURLNonEncoded", resp, "Failure responding to request")
+	}
+
+	return
+}
+
+// StringURLNonEncodedPreparer prepares the StringURLNonEncoded request.
+func (client PathsClient) StringURLNonEncodedPreparer(ctx context.Context) (*http.Request, error) {
+	pathParameters := map[string]interface{}{
+		"stringPath": "begin!*'();:@&=+$,end",
+	}
+
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPathParameters("/paths/string/begin!*'();:@&=+$,end/{stringPath}", pathParameters))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// StringURLNonEncodedSender sends the StringURLNonEncoded request. The method will close the
+// http.Response Body if it receives an error.
+func (client PathsClient) StringURLNonEncodedSender(req *http.Request) (*http.Response, error) {
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+}
+
+// StringURLNonEncodedResponder handles the response to the StringURLNonEncoded request. The method always
+// closes the http.Response Body.
+func (client PathsClient) StringURLNonEncodedResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK),

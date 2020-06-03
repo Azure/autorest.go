@@ -92,7 +92,7 @@ func (client DatetimeClient) GetInvalidResponder(resp *http.Response) (result Da
 }
 
 // GetLocalNegativeOffsetLowercaseMaxDateTime get max datetime value with positive num offset
-// 9999-12-31t23:59:59.9999999-14:00
+// 9999-12-31t23:59:59.999-14:00
 func (client DatetimeClient) GetLocalNegativeOffsetLowercaseMaxDateTime(ctx context.Context) (result DateTime, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/DatetimeClient.GetLocalNegativeOffsetLowercaseMaxDateTime")
@@ -213,7 +213,7 @@ func (client DatetimeClient) GetLocalNegativeOffsetMinDateTimeResponder(resp *ht
 }
 
 // GetLocalNegativeOffsetUppercaseMaxDateTime get max datetime value with positive num offset
-// 9999-12-31T23:59:59.9999999-14:00
+// 9999-12-31T23:59:59.999-14:00
 func (client DatetimeClient) GetLocalNegativeOffsetUppercaseMaxDateTime(ctx context.Context) (result DateTime, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/DatetimeClient.GetLocalNegativeOffsetUppercaseMaxDateTime")
@@ -273,8 +273,68 @@ func (client DatetimeClient) GetLocalNegativeOffsetUppercaseMaxDateTimeResponder
 	return
 }
 
+// GetLocalNoOffsetMinDateTime get min datetime value 0001-01-01T00:00:00
+func (client DatetimeClient) GetLocalNoOffsetMinDateTime(ctx context.Context) (result DateTime, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/DatetimeClient.GetLocalNoOffsetMinDateTime")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	req, err := client.GetLocalNoOffsetMinDateTimePreparer(ctx)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalNoOffsetMinDateTime", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.GetLocalNoOffsetMinDateTimeSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalNoOffsetMinDateTime", resp, "Failure sending request")
+		return
+	}
+
+	result, err = client.GetLocalNoOffsetMinDateTimeResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalNoOffsetMinDateTime", resp, "Failure responding to request")
+	}
+
+	return
+}
+
+// GetLocalNoOffsetMinDateTimePreparer prepares the GetLocalNoOffsetMinDateTime request.
+func (client DatetimeClient) GetLocalNoOffsetMinDateTimePreparer(ctx context.Context) (*http.Request, error) {
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/datetime/min/localnooffset"))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// GetLocalNoOffsetMinDateTimeSender sends the GetLocalNoOffsetMinDateTime request. The method will close the
+// http.Response Body if it receives an error.
+func (client DatetimeClient) GetLocalNoOffsetMinDateTimeSender(req *http.Request) (*http.Response, error) {
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+}
+
+// GetLocalNoOffsetMinDateTimeResponder handles the response to the GetLocalNoOffsetMinDateTime request. The method always
+// closes the http.Response Body.
+func (client DatetimeClient) GetLocalNoOffsetMinDateTimeResponder(resp *http.Response) (result DateTime, err error) {
+	err = autorest.Respond(
+		resp,
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result.Value),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
+
 // GetLocalPositiveOffsetLowercaseMaxDateTime get max datetime value with positive num offset
-// 9999-12-31t23:59:59.9999999+14:00
+// 9999-12-31t23:59:59.999+14:00
 func (client DatetimeClient) GetLocalPositiveOffsetLowercaseMaxDateTime(ctx context.Context) (result DateTime, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/DatetimeClient.GetLocalPositiveOffsetLowercaseMaxDateTime")
@@ -395,7 +455,7 @@ func (client DatetimeClient) GetLocalPositiveOffsetMinDateTimeResponder(resp *ht
 }
 
 // GetLocalPositiveOffsetUppercaseMaxDateTime get max datetime value with positive num offset
-// 9999-12-31T23:59:59.9999999+14:00
+// 9999-12-31T23:59:59.999+14:00
 func (client DatetimeClient) GetLocalPositiveOffsetUppercaseMaxDateTime(ctx context.Context) (result DateTime, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/DatetimeClient.GetLocalPositiveOffsetUppercaseMaxDateTime")
@@ -635,7 +695,7 @@ func (client DatetimeClient) GetUnderflowResponder(resp *http.Response) (result 
 	return
 }
 
-// GetUtcLowercaseMaxDateTime get max datetime value 9999-12-31t23:59:59.9999999z
+// GetUtcLowercaseMaxDateTime get max datetime value 9999-12-31t23:59:59.999z
 func (client DatetimeClient) GetUtcLowercaseMaxDateTime(ctx context.Context) (result DateTime, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/DatetimeClient.GetUtcLowercaseMaxDateTime")
@@ -755,7 +815,7 @@ func (client DatetimeClient) GetUtcMinDateTimeResponder(resp *http.Response) (re
 	return
 }
 
-// GetUtcUppercaseMaxDateTime get max datetime value 9999-12-31T23:59:59.9999999Z
+// GetUtcUppercaseMaxDateTime get max datetime value 9999-12-31T23:59:59.999Z
 func (client DatetimeClient) GetUtcUppercaseMaxDateTime(ctx context.Context) (result DateTime, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/DatetimeClient.GetUtcUppercaseMaxDateTime")
@@ -815,7 +875,68 @@ func (client DatetimeClient) GetUtcUppercaseMaxDateTimeResponder(resp *http.Resp
 	return
 }
 
-// PutLocalNegativeOffsetMaxDateTime put max datetime value with positive numoffset 9999-12-31t23:59:59.9999999-14:00
+// GetUtcUppercaseMaxDateTime7Digits this is against the recommendation that asks for 3 digits, but allow to test what
+// happens in that scenario
+func (client DatetimeClient) GetUtcUppercaseMaxDateTime7Digits(ctx context.Context) (result DateTime, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/DatetimeClient.GetUtcUppercaseMaxDateTime7Digits")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	req, err := client.GetUtcUppercaseMaxDateTime7DigitsPreparer(ctx)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetUtcUppercaseMaxDateTime7Digits", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.GetUtcUppercaseMaxDateTime7DigitsSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetUtcUppercaseMaxDateTime7Digits", resp, "Failure sending request")
+		return
+	}
+
+	result, err = client.GetUtcUppercaseMaxDateTime7DigitsResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetUtcUppercaseMaxDateTime7Digits", resp, "Failure responding to request")
+	}
+
+	return
+}
+
+// GetUtcUppercaseMaxDateTime7DigitsPreparer prepares the GetUtcUppercaseMaxDateTime7Digits request.
+func (client DatetimeClient) GetUtcUppercaseMaxDateTime7DigitsPreparer(ctx context.Context) (*http.Request, error) {
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/datetime/max/utc7ms/uppercase"))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// GetUtcUppercaseMaxDateTime7DigitsSender sends the GetUtcUppercaseMaxDateTime7Digits request. The method will close the
+// http.Response Body if it receives an error.
+func (client DatetimeClient) GetUtcUppercaseMaxDateTime7DigitsSender(req *http.Request) (*http.Response, error) {
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+}
+
+// GetUtcUppercaseMaxDateTime7DigitsResponder handles the response to the GetUtcUppercaseMaxDateTime7Digits request. The method always
+// closes the http.Response Body.
+func (client DatetimeClient) GetUtcUppercaseMaxDateTime7DigitsResponder(resp *http.Response) (result DateTime, err error) {
+	err = autorest.Respond(
+		resp,
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result.Value),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
+
+// PutLocalNegativeOffsetMaxDateTime put max datetime value with positive numoffset 9999-12-31t23:59:59.999-14:00
 func (client DatetimeClient) PutLocalNegativeOffsetMaxDateTime(ctx context.Context, datetimeBody date.Time) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/DatetimeClient.PutLocalNegativeOffsetMaxDateTime")
@@ -937,7 +1058,7 @@ func (client DatetimeClient) PutLocalNegativeOffsetMinDateTimeResponder(resp *ht
 	return
 }
 
-// PutLocalPositiveOffsetMaxDateTime put max datetime value with positive numoffset 9999-12-31t23:59:59.9999999+14:00
+// PutLocalPositiveOffsetMaxDateTime put max datetime value with positive numoffset 9999-12-31t23:59:59.999+14:00
 func (client DatetimeClient) PutLocalPositiveOffsetMaxDateTime(ctx context.Context, datetimeBody date.Time) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/DatetimeClient.PutLocalPositiveOffsetMaxDateTime")
@@ -1059,7 +1180,7 @@ func (client DatetimeClient) PutLocalPositiveOffsetMinDateTimeResponder(resp *ht
 	return
 }
 
-// PutUtcMaxDateTime put max datetime value 9999-12-31T23:59:59.9999999Z
+// PutUtcMaxDateTime put max datetime value 9999-12-31T23:59:59.999Z
 func (client DatetimeClient) PutUtcMaxDateTime(ctx context.Context, datetimeBody date.Time) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/DatetimeClient.PutUtcMaxDateTime")
@@ -1112,6 +1233,68 @@ func (client DatetimeClient) PutUtcMaxDateTimeSender(req *http.Request) (*http.R
 // PutUtcMaxDateTimeResponder handles the response to the PutUtcMaxDateTime request. The method always
 // closes the http.Response Body.
 func (client DatetimeClient) PutUtcMaxDateTimeResponder(resp *http.Response) (result autorest.Response, err error) {
+	err = autorest.Respond(
+		resp,
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByClosing())
+	result.Response = resp
+	return
+}
+
+// PutUtcMaxDateTime7Digits this is against the recommendation that asks for 3 digits, but allow to test what happens
+// in that scenario
+func (client DatetimeClient) PutUtcMaxDateTime7Digits(ctx context.Context, datetimeBody date.Time) (result autorest.Response, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/DatetimeClient.PutUtcMaxDateTime7Digits")
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	req, err := client.PutUtcMaxDateTime7DigitsPreparer(ctx, datetimeBody)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutUtcMaxDateTime7Digits", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.PutUtcMaxDateTime7DigitsSender(req)
+	if err != nil {
+		result.Response = resp
+		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutUtcMaxDateTime7Digits", resp, "Failure sending request")
+		return
+	}
+
+	result, err = client.PutUtcMaxDateTime7DigitsResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutUtcMaxDateTime7Digits", resp, "Failure responding to request")
+	}
+
+	return
+}
+
+// PutUtcMaxDateTime7DigitsPreparer prepares the PutUtcMaxDateTime7Digits request.
+func (client DatetimeClient) PutUtcMaxDateTime7DigitsPreparer(ctx context.Context, datetimeBody date.Time) (*http.Request, error) {
+	preparer := autorest.CreatePreparer(
+		autorest.AsContentType("application/json; charset=utf-8"),
+		autorest.AsPut(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/datetime/max/utc7ms"),
+		autorest.WithJSON(datetimeBody))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// PutUtcMaxDateTime7DigitsSender sends the PutUtcMaxDateTime7Digits request. The method will close the
+// http.Response Body if it receives an error.
+func (client DatetimeClient) PutUtcMaxDateTime7DigitsSender(req *http.Request) (*http.Response, error) {
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+}
+
+// PutUtcMaxDateTime7DigitsResponder handles the response to the PutUtcMaxDateTime7Digits request. The method always
+// closes the http.Response Body.
+func (client DatetimeClient) PutUtcMaxDateTime7DigitsResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK),

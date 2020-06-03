@@ -818,6 +818,67 @@ func (client LROsClient) Post200WithPayloadResponder(resp *http.Response) (resul
 	return
 }
 
+// Post202List long running put request, service returns a 202 with empty body to first request, returns a 200 with
+// body [{ 'id': '100', 'name': 'foo' }].
+func (client LROsClient) Post202List(ctx context.Context) (result LROsPost202ListFuture, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/LROsClient.Post202List")
+		defer func() {
+			sc := -1
+			if result.Response() != nil {
+				sc = result.Response().StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	req, err := client.Post202ListPreparer(ctx)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsClient", "Post202List", nil, "Failure preparing request")
+		return
+	}
+
+	result, err = client.Post202ListSender(req)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsClient", "Post202List", result.Response(), "Failure sending request")
+		return
+	}
+
+	return
+}
+
+// Post202ListPreparer prepares the Post202List request.
+func (client LROsClient) Post202ListPreparer(ctx context.Context) (*http.Request, error) {
+	preparer := autorest.CreatePreparer(
+		autorest.AsPost(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/lro/list"))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// Post202ListSender sends the Post202List request. The method will close the
+// http.Response Body if it receives an error.
+func (client LROsClient) Post202ListSender(req *http.Request) (future LROsPost202ListFuture, err error) {
+	var resp *http.Response
+	resp, err = client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
+	return
+}
+
+// Post202ListResponder handles the response to the Post202List request. The method always
+// closes the http.Response Body.
+func (client LROsClient) Post202ListResponder(resp *http.Response) (result ListProduct, err error) {
+	err = autorest.Respond(
+		resp,
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
+
 // Post202NoRetry204 long running post request, service returns a 202 to the initial request, with 'Location' header,
 // 204 with noresponse body after success
 // Parameters:
@@ -1815,6 +1876,74 @@ func (client LROsClient) Put201CreatingSucceeded200Sender(req *http.Request) (fu
 // Put201CreatingSucceeded200Responder handles the response to the Put201CreatingSucceeded200 request. The method always
 // closes the http.Response Body.
 func (client LROsClient) Put201CreatingSucceeded200Responder(resp *http.Response) (result Product, err error) {
+	err = autorest.Respond(
+		resp,
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusCreated),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
+
+// Put201Succeeded long running put request, service returns a 201 to the initial request, with an entity that contains
+// ProvisioningState=’Succeeded’.
+// Parameters:
+// product - product to put
+func (client LROsClient) Put201Succeeded(ctx context.Context, product *Product) (result LROsPut201SucceededFuture, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/LROsClient.Put201Succeeded")
+		defer func() {
+			sc := -1
+			if result.Response() != nil {
+				sc = result.Response().StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	req, err := client.Put201SucceededPreparer(ctx, product)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsClient", "Put201Succeeded", nil, "Failure preparing request")
+		return
+	}
+
+	result, err = client.Put201SucceededSender(req)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsClient", "Put201Succeeded", result.Response(), "Failure sending request")
+		return
+	}
+
+	return
+}
+
+// Put201SucceededPreparer prepares the Put201Succeeded request.
+func (client LROsClient) Put201SucceededPreparer(ctx context.Context, product *Product) (*http.Request, error) {
+	preparer := autorest.CreatePreparer(
+		autorest.AsContentType("application/json; charset=utf-8"),
+		autorest.AsPut(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/lro/put/201/succeeded"))
+	if product != nil {
+		preparer = autorest.DecoratePreparer(preparer,
+			autorest.WithJSON(product))
+	}
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// Put201SucceededSender sends the Put201Succeeded request. The method will close the
+// http.Response Body if it receives an error.
+func (client LROsClient) Put201SucceededSender(req *http.Request) (future LROsPut201SucceededFuture, err error) {
+	var resp *http.Response
+	resp, err = client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
+	return
+}
+
+// Put201SucceededResponder handles the response to the Put201Succeeded request. The method always
+// closes the http.Response Body.
+func (client LROsClient) Put201SucceededResponder(resp *http.Response) (result Product, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusCreated),

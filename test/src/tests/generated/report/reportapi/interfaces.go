@@ -13,6 +13,7 @@ import (
 
 // BaseClientAPI contains the set of methods on the BaseClient type.
 type BaseClientAPI interface {
+	GetOptionalReport(ctx context.Context, qualifier string) (result report.SetInt32, err error)
 	GetReport(ctx context.Context, qualifier string) (result report.SetInt32, err error)
 }
 

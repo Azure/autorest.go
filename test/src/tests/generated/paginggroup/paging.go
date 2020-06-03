@@ -1248,6 +1248,105 @@ func (client PagingClient) GetOdataMultiplePagesComplete(ctx context.Context, cl
 	return
 }
 
+// GetPagingModelWithItemNameWithXMSClientName a paging operation that returns a paging model whose item name is is
+// overriden by x-ms-client-name 'indexes'.
+func (client PagingClient) GetPagingModelWithItemNameWithXMSClientName(ctx context.Context) (result ProductResultValueWithXMSClientNamePage, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PagingClient.GetPagingModelWithItemNameWithXMSClientName")
+		defer func() {
+			sc := -1
+			if result.prvwxcn.Response.Response != nil {
+				sc = result.prvwxcn.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	result.fn = client.getPagingModelWithItemNameWithXMSClientNameNextResults
+	req, err := client.GetPagingModelWithItemNameWithXMSClientNamePreparer(ctx)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetPagingModelWithItemNameWithXMSClientName", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.GetPagingModelWithItemNameWithXMSClientNameSender(req)
+	if err != nil {
+		result.prvwxcn.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetPagingModelWithItemNameWithXMSClientName", resp, "Failure sending request")
+		return
+	}
+
+	result.prvwxcn, err = client.GetPagingModelWithItemNameWithXMSClientNameResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetPagingModelWithItemNameWithXMSClientName", resp, "Failure responding to request")
+	}
+
+	return
+}
+
+// GetPagingModelWithItemNameWithXMSClientNamePreparer prepares the GetPagingModelWithItemNameWithXMSClientName request.
+func (client PagingClient) GetPagingModelWithItemNameWithXMSClientNamePreparer(ctx context.Context) (*http.Request, error) {
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/paging/itemNameWithXMSClientName"))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// GetPagingModelWithItemNameWithXMSClientNameSender sends the GetPagingModelWithItemNameWithXMSClientName request. The method will close the
+// http.Response Body if it receives an error.
+func (client PagingClient) GetPagingModelWithItemNameWithXMSClientNameSender(req *http.Request) (*http.Response, error) {
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+}
+
+// GetPagingModelWithItemNameWithXMSClientNameResponder handles the response to the GetPagingModelWithItemNameWithXMSClientName request. The method always
+// closes the http.Response Body.
+func (client PagingClient) GetPagingModelWithItemNameWithXMSClientNameResponder(resp *http.Response) (result ProductResultValueWithXMSClientName, err error) {
+	err = autorest.Respond(
+		resp,
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
+
+// getPagingModelWithItemNameWithXMSClientNameNextResults retrieves the next set of results, if any.
+func (client PagingClient) getPagingModelWithItemNameWithXMSClientNameNextResults(ctx context.Context, lastResults ProductResultValueWithXMSClientName) (result ProductResultValueWithXMSClientName, err error) {
+	req, err := lastResults.productResultValueWithXMSClientNamePreparer(ctx)
+	if err != nil {
+		return result, autorest.NewErrorWithError(err, "paginggroup.PagingClient", "getPagingModelWithItemNameWithXMSClientNameNextResults", nil, "Failure preparing next results request")
+	}
+	if req == nil {
+		return
+	}
+	resp, err := client.GetPagingModelWithItemNameWithXMSClientNameSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		return result, autorest.NewErrorWithError(err, "paginggroup.PagingClient", "getPagingModelWithItemNameWithXMSClientNameNextResults", resp, "Failure sending next results request")
+	}
+	result, err = client.GetPagingModelWithItemNameWithXMSClientNameResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "getPagingModelWithItemNameWithXMSClientNameNextResults", resp, "Failure responding to next results request")
+	}
+	return
+}
+
+// GetPagingModelWithItemNameWithXMSClientNameComplete enumerates all values, automatically crossing page boundaries as required.
+func (client PagingClient) GetPagingModelWithItemNameWithXMSClientNameComplete(ctx context.Context) (result ProductResultValueWithXMSClientNameIterator, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PagingClient.GetPagingModelWithItemNameWithXMSClientName")
+		defer func() {
+			sc := -1
+			if result.Response().Response.Response != nil {
+				sc = result.page.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	result.page, err = client.GetPagingModelWithItemNameWithXMSClientName(ctx)
+	return
+}
+
 // GetSinglePages a paging operation that finishes on the first call without a nextlink
 func (client PagingClient) GetSinglePages(ctx context.Context) (result ProductResultPage, err error) {
 	if tracing.IsEnabled() {
@@ -1444,6 +1543,97 @@ func (client PagingClient) GetSinglePagesFailureComplete(ctx context.Context) (r
 	return
 }
 
+// GetWithQueryParams a paging operation that includes a next operation. It has a different query parameter from it's
+// next operation nextOperationWithQueryParams. Returns a ProductResult
+// Parameters:
+// requiredQueryParameter - a required integer query parameter. Put in value '100' to pass test.
+func (client PagingClient) GetWithQueryParams(ctx context.Context, requiredQueryParameter int32) (result ProductResultPage, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PagingClient.GetWithQueryParams")
+		defer func() {
+			sc := -1
+			if result.pr.Response.Response != nil {
+				sc = result.pr.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	result.fn = func(ctx context.Context, lastResult ProductResult) (ProductResult, error) {
+		if lastResult.NextLink == nil || len(to.String(lastResult.NextLink)) < 1 {
+			return ProductResult{}, nil
+		}
+		return client.NextOperationWithQueryParams(ctx)
+	}
+	req, err := client.GetWithQueryParamsPreparer(ctx, requiredQueryParameter)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetWithQueryParams", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.GetWithQueryParamsSender(req)
+	if err != nil {
+		result.pr.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetWithQueryParams", resp, "Failure sending request")
+		return
+	}
+
+	result.pr, err = client.GetWithQueryParamsResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetWithQueryParams", resp, "Failure responding to request")
+	}
+
+	return
+}
+
+// GetWithQueryParamsPreparer prepares the GetWithQueryParams request.
+func (client PagingClient) GetWithQueryParamsPreparer(ctx context.Context, requiredQueryParameter int32) (*http.Request, error) {
+	queryParameters := map[string]interface{}{
+		"queryConstant":          autorest.Encode("query", true),
+		"requiredQueryParameter": autorest.Encode("query", requiredQueryParameter),
+	}
+
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/paging/multiple/getWithQueryParams"),
+		autorest.WithQueryParameters(queryParameters))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// GetWithQueryParamsSender sends the GetWithQueryParams request. The method will close the
+// http.Response Body if it receives an error.
+func (client PagingClient) GetWithQueryParamsSender(req *http.Request) (*http.Response, error) {
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+}
+
+// GetWithQueryParamsResponder handles the response to the GetWithQueryParams request. The method always
+// closes the http.Response Body.
+func (client PagingClient) GetWithQueryParamsResponder(resp *http.Response) (result ProductResult, err error) {
+	err = autorest.Respond(
+		resp,
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
+
+// GetWithQueryParamsComplete enumerates all values, automatically crossing page boundaries as required.
+func (client PagingClient) GetWithQueryParamsComplete(ctx context.Context, requiredQueryParameter int32) (result ProductResultIterator, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PagingClient.GetWithQueryParams")
+		defer func() {
+			sc := -1
+			if result.Response().Response.Response != nil {
+				sc = result.page.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	result.page, err = client.GetWithQueryParams(ctx, requiredQueryParameter)
+	return
+}
+
 // NextFragment a paging operation that doesn't return a full URL, just a fragment
 // Parameters:
 // APIVersion - sets the api version to use.
@@ -1583,6 +1773,72 @@ func (client PagingClient) NextFragmentWithGroupingSender(req *http.Request) (*h
 // NextFragmentWithGroupingResponder handles the response to the NextFragmentWithGrouping request. The method always
 // closes the http.Response Body.
 func (client PagingClient) NextFragmentWithGroupingResponder(resp *http.Response) (result OdataProductResult, err error) {
+	err = autorest.Respond(
+		resp,
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
+
+// NextOperationWithQueryParams next operation for getWithQueryParams. Pass in next=True to pass test. Returns a
+// ProductResult
+func (client PagingClient) NextOperationWithQueryParams(ctx context.Context) (result ProductResult, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PagingClient.NextOperationWithQueryParams")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	req, err := client.NextOperationWithQueryParamsPreparer(ctx)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "NextOperationWithQueryParams", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.NextOperationWithQueryParamsSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "NextOperationWithQueryParams", resp, "Failure sending request")
+		return
+	}
+
+	result, err = client.NextOperationWithQueryParamsResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "NextOperationWithQueryParams", resp, "Failure responding to request")
+	}
+
+	return
+}
+
+// NextOperationWithQueryParamsPreparer prepares the NextOperationWithQueryParams request.
+func (client PagingClient) NextOperationWithQueryParamsPreparer(ctx context.Context) (*http.Request, error) {
+	queryParameters := map[string]interface{}{
+		"queryConstant": autorest.Encode("query", true),
+	}
+
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/paging/multiple/nextOperationWithQueryParams"),
+		autorest.WithQueryParameters(queryParameters))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// NextOperationWithQueryParamsSender sends the NextOperationWithQueryParams request. The method will close the
+// http.Response Body if it receives an error.
+func (client PagingClient) NextOperationWithQueryParamsSender(req *http.Request) (*http.Response, error) {
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+}
+
+// NextOperationWithQueryParamsResponder handles the response to the NextOperationWithQueryParams request. The method always
+// closes the http.Response Body.
+func (client PagingClient) NextOperationWithQueryParamsResponder(resp *http.Response) (result ProductResult, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK),

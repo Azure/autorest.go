@@ -82,13 +82,17 @@ const (
 	Brown GoblinSharkColor = "brown"
 	// Gray ...
 	Gray GoblinSharkColor = "gray"
+	// LowerRed Lowercase RED
+	LowerRed GoblinSharkColor = "red"
 	// Pink ...
 	Pink GoblinSharkColor = "pink"
+	// UpperRed Uppercase RED
+	UpperRed GoblinSharkColor = "RED"
 )
 
 // PossibleGoblinSharkColorValues returns an array of possible values for the GoblinSharkColor const type.
 func PossibleGoblinSharkColorValues() []GoblinSharkColor {
-	return []GoblinSharkColor{Brown, Gray, Pink}
+	return []GoblinSharkColor{Brown, Gray, LowerRed, Pink, UpperRed}
 }
 
 // Kind enumerates the values for kind.
@@ -796,7 +800,7 @@ type FloatWrapper struct {
 // Goblinshark ...
 type Goblinshark struct {
 	Jawsize *int32 `json:"jawsize,omitempty"`
-	// Color - Colors possible. Possible values include: 'Pink', 'Gray', 'Brown'
+	// Color - Colors possible. Possible values include: 'Pink', 'Gray', 'Brown', 'UpperRed', 'LowerRed'
 	Color    GoblinSharkColor `json:"color,omitempty"`
 	Age      *int32           `json:"age,omitempty"`
 	Birthday *date.Time       `json:"birthday,omitempty"`

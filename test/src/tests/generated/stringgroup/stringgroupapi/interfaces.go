@@ -14,7 +14,7 @@ import (
 
 // StringClientAPI contains the set of methods on the StringClient type.
 type StringClientAPI interface {
-	GetBase64Encoded(ctx context.Context) (result stringgroup.Base64URL, err error)
+	GetBase64Encoded(ctx context.Context) (result stringgroup.ByteArray, err error)
 	GetBase64URLEncoded(ctx context.Context) (result stringgroup.Base64URL, err error)
 	GetEmpty(ctx context.Context) (result stringgroup.StringModel, err error)
 	GetMbcs(ctx context.Context) (result stringgroup.StringModel, err error)

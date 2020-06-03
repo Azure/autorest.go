@@ -21,7 +21,16 @@ namespace AutoRest.Go.Model
 
         public DictionaryTypeGo()
         {
-            Name.OnGet += value => string.Format(CultureInfo.InvariantCulture, FieldNameFormat, ValueType.Name);
+            Name.OnGet += value =>
+            {
+                if (ValueType.HasInterface())
+                {
+                    return $"map[string]{ValueType.GetInterfaceName()}";
+                }
+                return ValueType.CanBeNull() ?
+                    $"map[string]{ValueType.Name}" :
+                    $"map[string]*{ValueType.Name}";
+            };
         }
 
         /// <summary>

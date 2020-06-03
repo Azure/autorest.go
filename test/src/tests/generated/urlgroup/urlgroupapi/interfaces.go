@@ -40,6 +40,7 @@ type PathsClientAPI interface {
 	StringNull(ctx context.Context, stringPath string) (result autorest.Response, err error)
 	StringUnicode(ctx context.Context) (result autorest.Response, err error)
 	StringURLEncoded(ctx context.Context) (result autorest.Response, err error)
+	StringURLNonEncoded(ctx context.Context) (result autorest.Response, err error)
 	UnixTimeURL(ctx context.Context, unixTimeURLPath date.UnixTime) (result autorest.Response, err error)
 }
 
