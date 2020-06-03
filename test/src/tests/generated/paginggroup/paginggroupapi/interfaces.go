@@ -36,17 +36,12 @@ type PagingClientAPI interface {
 	GetNullNextLinkNamePages(ctx context.Context) (result paginggroup.ProductResult, err error)
 	GetOdataMultiplePages(ctx context.Context, clientRequestID string, maxresults *int32, timeout *int32) (result paginggroup.OdataProductResultPage, err error)
 	GetOdataMultiplePagesComplete(ctx context.Context, clientRequestID string, maxresults *int32, timeout *int32) (result paginggroup.OdataProductResultIterator, err error)
-	GetPagingModelWithItemNameWithXMSClientName(ctx context.Context) (result paginggroup.ProductResultValueWithXMSClientNamePage, err error)
-	GetPagingModelWithItemNameWithXMSClientNameComplete(ctx context.Context) (result paginggroup.ProductResultValueWithXMSClientNameIterator, err error)
 	GetSinglePages(ctx context.Context) (result paginggroup.ProductResultPage, err error)
 	GetSinglePagesComplete(ctx context.Context) (result paginggroup.ProductResultIterator, err error)
 	GetSinglePagesFailure(ctx context.Context) (result paginggroup.ProductResultPage, err error)
 	GetSinglePagesFailureComplete(ctx context.Context) (result paginggroup.ProductResultIterator, err error)
-	GetWithQueryParams(ctx context.Context, requiredQueryParameter int32) (result paginggroup.ProductResultPage, err error)
-	GetWithQueryParamsComplete(ctx context.Context, requiredQueryParameter int32) (result paginggroup.ProductResultIterator, err error)
 	NextFragment(ctx context.Context, APIVersion string, tenant string, nextLink string) (result paginggroup.OdataProductResult, err error)
 	NextFragmentWithGrouping(ctx context.Context, APIVersion string, tenant string, nextLink string) (result paginggroup.OdataProductResult, err error)
-	NextOperationWithQueryParams(ctx context.Context) (result paginggroup.ProductResult, err error)
 }
 
 var _ PagingClientAPI = (*paginggroup.PagingClient)(nil)

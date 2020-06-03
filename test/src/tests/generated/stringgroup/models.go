@@ -37,12 +37,6 @@ type Base64URL struct {
 	Value *string `json:"value,omitempty"`
 }
 
-// ByteArray ...
-type ByteArray struct {
-	autorest.Response `json:"-"`
-	Value             *[]byte `json:"value,omitempty"`
-}
-
 // Error ...
 type Error struct {
 	Status  *int32  `json:"status,omitempty"`
@@ -61,5 +55,6 @@ type RefColorConstant struct {
 // StringModel ...
 type StringModel struct {
 	autorest.Response `json:"-"`
-	Value             *string `json:"value,omitempty"`
+	// Value - Possible values include: ''
+	Value *string `json:"value,omitempty"`
 }

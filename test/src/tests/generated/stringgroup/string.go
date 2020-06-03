@@ -31,7 +31,7 @@ func NewStringClientWithBaseURI(baseURI string) StringClient {
 }
 
 // GetBase64Encoded get value that is base64 encoded
-func (client StringClient) GetBase64Encoded(ctx context.Context) (result ByteArray, err error) {
+func (client StringClient) GetBase64Encoded(ctx context.Context) (result Base64URL, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/StringClient.GetBase64Encoded")
 		defer func() {
@@ -80,7 +80,7 @@ func (client StringClient) GetBase64EncodedSender(req *http.Request) (*http.Resp
 
 // GetBase64EncodedResponder handles the response to the GetBase64Encoded request. The method always
 // closes the http.Response Body.
-func (client StringClient) GetBase64EncodedResponder(resp *http.Response) (result ByteArray, err error) {
+func (client StringClient) GetBase64EncodedResponder(resp *http.Response) (result Base64URL, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
@@ -734,7 +734,7 @@ func (client StringClient) PutNullPreparer(ctx context.Context, stringBody strin
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/string/null"))
-	if len(stringBody) > 0 {
+	if len(string(stringBody)) > 0 {
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(stringBody))
 	}

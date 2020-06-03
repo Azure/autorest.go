@@ -19,7 +19,6 @@ type DatetimeClientAPI interface {
 	GetLocalNegativeOffsetLowercaseMaxDateTime(ctx context.Context) (result datetimegroup.DateTime, err error)
 	GetLocalNegativeOffsetMinDateTime(ctx context.Context) (result datetimegroup.DateTime, err error)
 	GetLocalNegativeOffsetUppercaseMaxDateTime(ctx context.Context) (result datetimegroup.DateTime, err error)
-	GetLocalNoOffsetMinDateTime(ctx context.Context) (result datetimegroup.DateTime, err error)
 	GetLocalPositiveOffsetLowercaseMaxDateTime(ctx context.Context) (result datetimegroup.DateTime, err error)
 	GetLocalPositiveOffsetMinDateTime(ctx context.Context) (result datetimegroup.DateTime, err error)
 	GetLocalPositiveOffsetUppercaseMaxDateTime(ctx context.Context) (result datetimegroup.DateTime, err error)
@@ -29,13 +28,11 @@ type DatetimeClientAPI interface {
 	GetUtcLowercaseMaxDateTime(ctx context.Context) (result datetimegroup.DateTime, err error)
 	GetUtcMinDateTime(ctx context.Context) (result datetimegroup.DateTime, err error)
 	GetUtcUppercaseMaxDateTime(ctx context.Context) (result datetimegroup.DateTime, err error)
-	GetUtcUppercaseMaxDateTime7Digits(ctx context.Context) (result datetimegroup.DateTime, err error)
 	PutLocalNegativeOffsetMaxDateTime(ctx context.Context, datetimeBody date.Time) (result autorest.Response, err error)
 	PutLocalNegativeOffsetMinDateTime(ctx context.Context, datetimeBody date.Time) (result autorest.Response, err error)
 	PutLocalPositiveOffsetMaxDateTime(ctx context.Context, datetimeBody date.Time) (result autorest.Response, err error)
 	PutLocalPositiveOffsetMinDateTime(ctx context.Context, datetimeBody date.Time) (result autorest.Response, err error)
 	PutUtcMaxDateTime(ctx context.Context, datetimeBody date.Time) (result autorest.Response, err error)
-	PutUtcMaxDateTime7Digits(ctx context.Context, datetimeBody date.Time) (result autorest.Response, err error)
 	PutUtcMinDateTime(ctx context.Context, datetimeBody date.Time) (result autorest.Response, err error)
 }
 
