@@ -479,7 +479,7 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
         (<SchemaResponse>firstResp).schema = object;
       }
     }
-  } else if (!responseTypeCreated(codeModel, firstResp.schema)) {
+  } else if (!responseTypeCreated(codeModel, firstResp.schema) || isLROOperation(op)) {
     firstResp.schema.language.go!.responseType = generateResponseTypeName(firstResp.schema);
     if (isLROOperation(op)) {
       firstResp.schema.language.go!.responseType.name = `${firstResp.schema.language.go!.responseType.name}`;
@@ -523,6 +523,15 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
       // add this response schema to the global list of response
       const responseSchemas = <Array<Schema>>codeModel.language.go!.responseSchemas;
       responseSchemas.push(firstResp.schema);
+    } else if (isLROOperation(op)) {
+      // add this response schema with LRO fields to the global list of responses by 
+      // replacing the previously added response with the same name
+      const responseSchemas = <Array<Schema>>codeModel.language.go!.responseSchemas;
+      for (let i = 0; i < responseSchemas.length; i++) {
+        if (responseSchemas[i].language.go!.name === firstResp.schema.language.go!.name) {
+          responseSchemas.splice(i, 1, firstResp.schema);
+        }
+      }
     }
   }
   // create pageable type info
@@ -532,21 +541,25 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
     }
     const name = `${(<SchemaResponse>firstResp).schema.language.go!.name}Pager`;
     // check to see if the pager has already been created
+    let skipAddPager = false; // skipAdd allows not adding the pager to the list of pageable types and continue on to LRO check
     const pagers = <Array<PagerInfo>>codeModel.language.go!.pageableTypes;
     for (const pager of values(pagers)) {
       if (pager.name === name) {
         // found a match, hook it up to the method
         op.language.go!.pageableType = pager;
-        return;
+        skipAddPager = true;
+        break;
       }
     }
-    // create a new one, add to global list and assign to method
-    const pager = {
-      name: name,
-      op: op,
-    };
-    pagers.push(pager);
-    op.language.go!.pageableType = pager;
+    if (!skipAddPager) {
+      // create a new one, add to global list and assign to method
+      const pager = {
+        name: name,
+        op: op,
+      };
+      pagers.push(pager);
+      op.language.go!.pageableType = pager;
+    }
   }
   // create poller type info
   if (isLROOperation(op)) {
@@ -561,6 +574,7 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
     }
     const name = `${type}Poller`;
     const pollers = <Array<PollerInfo>>codeModel.language.go!.pollerTypes;
+    let skipAddLRO = false;
     for (const poller of values(pollers)) {
       if (poller.name === name) {
         // found a match, hook it up to the method
@@ -570,18 +584,21 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
           op: op,
         };
         op.language.go!.pollerType = tempPoller;
-        return;
+        skipAddLRO = true;
+        break;
       }
     }
-    // Adding the operation group name to the poller name for polling operations that need to be unique to that operation group
-    // create a new one, add to global list and assign to method
-    const poller = {
-      name: name,
-      responseType: type,
-      op: op,
-    };
-    pollers.push(poller);
-    op.language.go!.pollerType = poller;
+    if (!skipAddLRO) {
+      // Adding the operation group name to the poller name for polling operations that need to be unique to that operation group
+      // create a new one, add to global list and assign to method
+      const poller = {
+        name: name,
+        responseType: type,
+        op: op,
+      };
+      pollers.push(poller);
+      op.language.go!.pollerType = poller;
+    }
   }
 }
 
