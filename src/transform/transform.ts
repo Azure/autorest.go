@@ -465,18 +465,6 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
         prop.language.go!.fromHeader = item.value.header;
         (<Array<Property>>object.language.go!.properties).push(prop);
       }
-      const firstResp = <SchemaResponse>op.responses![0];
-      if (isLROOperation(op)) {
-        firstResp.schema.language.go!.isLRO = true;
-        let prop = newProperty('PollUntilDone', 'PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received', newObject(`func(ctx context.Context, frequency time.Duration) (*${firstResp.schema.language.go!.responseType.name}, error)`, 'TODO'));
-        prop.schema.language.go!.lroPointerException = true;
-        (<Array<Property>>firstResp.schema.language.go!.properties).push(prop);
-        object.language.go!.properties.push(prop);
-        prop = newProperty('Poller', 'Poller contains an initialized poller', newObject(`${firstResp.schema.language.go!.responseType.value}Poller`, 'TODO'));
-        prop.schema.language.go!.lroPointerException = true;
-        (<Array<Property>>firstResp.schema.language.go!.properties).push(prop);
-        object.language.go!.properties.push(prop);
-      }
       // mark as a response type
       object.language.go!.responseType = {
         name: name,
