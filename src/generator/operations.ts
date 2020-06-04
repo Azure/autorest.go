@@ -322,7 +322,7 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
     if (op.language.go!.pollerType.name === 'HTTPPoller') {
       text += '\tresult.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {\n';
     } else {
-      text += `\tresult.PollUntilDone = func(ctx context.Context, frequency time.Duration)(*${op.language.go!.pollerType.responseType}Response, error) {\n`;
+      text += `\tresult.PollUntilDone = func(ctx context.Context, frequency time.Duration)(*${(<SchemaResponse>op.responses![0]).schema.language.go!.responseType.name}, error) {\n`;
     }
     text += `\t\treturn poller.pollUntilDone(ctx, frequency)\n`;
     text += `\t}\n`;

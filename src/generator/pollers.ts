@@ -23,6 +23,9 @@ function getPutCheck(resp: SchemaResponse): string {
     case SchemaType.Dictionary:
       text += `if res != nil && res.${resp.schema.language.go!.responseType.value} != nil {`;
       break;
+    case SchemaType.String:
+      text += `if res != nil && (*res.${resp.schema.language.go!.responseType.value} != "") {`;
+      break;
     default:
       text += `if res != nil && (*res.${resp.schema.language.go!.responseType.value} != ${resp.schema.language.go!.responseType.value}{}) {`;
   }

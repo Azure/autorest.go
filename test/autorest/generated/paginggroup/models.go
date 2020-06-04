@@ -5,7 +5,11 @@
 
 package paginggroup
 
-import "net/http"
+import (
+	"context"
+	"net/http"
+	"time"
+)
 
 // CustomParameterGroup contains a group of parameters for the Paging.GetMultiplePagesFragmentWithGroupingNextLink method.
 type CustomParameterGroup struct {
@@ -87,6 +91,11 @@ type ProductResult struct {
 
 // ProductResultResponse is the response envelope for operations that return a ProductResult type.
 type ProductResultResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (*ProductResultResponse, error)
+
+	// Poller contains an initialized poller
+	Poller        ProductResultPoller
 	ProductResult *ProductResult
 
 	// RawResponse contains the underlying HTTP response.

@@ -465,6 +465,18 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
         prop.language.go!.fromHeader = item.value.header;
         (<Array<Property>>object.language.go!.properties).push(prop);
       }
+      const firstResp = <SchemaResponse>op.responses![0];
+      if (isLROOperation(op)) {
+        firstResp.schema.language.go!.isLRO = true;
+        let prop = newProperty('PollUntilDone', 'PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received', newObject(`func(ctx context.Context, frequency time.Duration) (*${firstResp.schema.language.go!.responseType.name}, error)`, 'TODO'));
+        prop.schema.language.go!.lroPointerException = true;
+        (<Array<Property>>firstResp.schema.language.go!.properties).push(prop);
+        object.language.go!.properties.push(prop);
+        prop = newProperty('Poller', 'Poller contains an initialized poller', newObject(`${firstResp.schema.language.go!.responseType.value}Poller`, 'TODO'));
+        prop.schema.language.go!.lroPointerException = true;
+        (<Array<Property>>firstResp.schema.language.go!.properties).push(prop);
+        object.language.go!.properties.push(prop);
+      }
       // mark as a response type
       object.language.go!.responseType = {
         name: name,
@@ -479,7 +491,7 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
         (<SchemaResponse>firstResp).schema = object;
       }
     }
-  } else if (!responseTypeCreated(codeModel, firstResp.schema)) {
+  } else if (!responseTypeCreated(codeModel, firstResp.schema) || isLROOperation(op)) {
     firstResp.schema.language.go!.responseType = generateResponseTypeName(firstResp.schema);
     if (isLROOperation(op)) {
       firstResp.schema.language.go!.responseType.name = `${firstResp.schema.language.go!.responseType.name}`;
@@ -523,6 +535,15 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
       // add this response schema to the global list of response
       const responseSchemas = <Array<Schema>>codeModel.language.go!.responseSchemas;
       responseSchemas.push(firstResp.schema);
+    } else if (isLROOperation(op)) {
+      // add this response schema with LRO fields to the global list of responses by 
+      // replacing the previously added response with the same name
+      const responseSchemas = <Array<Schema>>codeModel.language.go!.responseSchemas;
+      for (let i = 0; i < responseSchemas.length; i++) {
+        if (responseSchemas[i].language.go!.name === firstResp.schema.language.go!.name) {
+          responseSchemas.splice(i, 1, firstResp.schema);
+        }
+      }
     }
   }
   // create pageable type info
