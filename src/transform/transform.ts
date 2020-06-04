@@ -539,45 +539,27 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
     if (codeModel.language.go!.pageableTypes === undefined) {
       codeModel.language.go!.pageableTypes = new Array<PagerInfo>();
     }
-    // Add a poller
-    if (isLROOperation(op)) {
-      // Determine the type of poller that needs to be added based on whether a schema is specified in the response
-      // if there is no schema specified for the operation response then a simple HTTP poller will be instantiated
-      let type = 'HTTP';
-      if (isSchemaResponse(firstResp) && firstResp.schema.language.go!.responseType.value) {
-        type = firstResp.schema.language.go!.responseType.value;
-      }
-      if (codeModel.language.go!.pollerTypes === undefined) {
-        codeModel.language.go!.pollerTypes = new Array<PollerInfo>();
-      }
-      const pollerName = `${type}Poller`;
-      const pollers = <Array<PollerInfo>>codeModel.language.go!.pollerTypes;
-      // Adding the operation group name to the poller name for polling operations that need to be unique to that operation group
-      // create a new one, add to global list and assign to method
-      const poller = {
-        name: pollerName,
-        responseType: type,
-        op: op,
-      };
-      pollers.push(poller);
-    }
     const name = `${(<SchemaResponse>firstResp).schema.language.go!.name}Pager`;
     // check to see if the pager has already been created
+    let skipAddPager = false; // skipAdd allows not adding the pager to the list of pageable types and continue on to LRO check
     const pagers = <Array<PagerInfo>>codeModel.language.go!.pageableTypes;
     for (const pager of values(pagers)) {
       if (pager.name === name) {
         // found a match, hook it up to the method
         op.language.go!.pageableType = pager;
-        return;
+        skipAddPager = true;
+        break;
       }
     }
-    // create a new one, add to global list and assign to method
-    const pager = {
-      name: name,
-      op: op,
-    };
-    pagers.push(pager);
-    op.language.go!.pageableType = pager;
+    if (!skipAddPager) {
+      // create a new one, add to global list and assign to method
+      const pager = {
+        name: name,
+        op: op,
+      };
+      pagers.push(pager);
+      op.language.go!.pageableType = pager;
+    }
   }
   // create poller type info
   if (isLROOperation(op)) {
@@ -592,6 +574,7 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
     }
     const name = `${type}Poller`;
     const pollers = <Array<PollerInfo>>codeModel.language.go!.pollerTypes;
+    let skipAddLRO = false;
     for (const poller of values(pollers)) {
       if (poller.name === name) {
         // found a match, hook it up to the method
@@ -601,18 +584,21 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
           op: op,
         };
         op.language.go!.pollerType = tempPoller;
-        return;
+        skipAddLRO = true;
+        break;
       }
     }
-    // Adding the operation group name to the poller name for polling operations that need to be unique to that operation group
-    // create a new one, add to global list and assign to method
-    const poller = {
-      name: name,
-      responseType: type,
-      op: op,
-    };
-    pollers.push(poller);
-    op.language.go!.pollerType = poller;
+    if (!skipAddLRO) {
+      // Adding the operation group name to the poller name for polling operations that need to be unique to that operation group
+      // create a new one, add to global list and assign to method
+      const poller = {
+        name: name,
+        responseType: type,
+        op: op,
+      };
+      pollers.push(poller);
+      op.language.go!.pollerType = poller;
+    }
   }
 }
 
