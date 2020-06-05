@@ -74,8 +74,8 @@ type HeaderCustomNamedRequestIDResponse struct {
 }
 
 type OdataFilter struct {
-	ID   *int32  `undefined:"id"`
-	Name *string `undefined:"name"`
+	ID   *int32  `json:"id,omitempty"`
+	Name *string `json:"name,omitempty"`
 }
 
 // OdataGetWithFilterOptions contains the optional parameters for the Odata.GetWithFilter method.

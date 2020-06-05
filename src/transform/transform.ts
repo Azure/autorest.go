@@ -66,6 +66,13 @@ async function process(session: Session<CodeModel>) {
         obj.language.go!.needsDateTimeMarshalling = true;
       }
     }
+    if (!obj.language.go!.marshallingFormat) {
+      // TODO: workaround due to https://github.com/Azure/autorest.go/issues/412
+      // this type isn't used as a parameter/return value so it has no marshalling format.
+      // AutoRest doesn't make the global configuration available at present so hard-code
+      // the format to JSON as the vast majority of specs use JSON.
+      obj.language.go!.marshallingFormat = 'json';
+    }
   }
   // fix up enum types
   for (const choice of values(session.model.schemas.choices)) {
@@ -481,9 +488,6 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
     }
   } else if (!responseTypeCreated(codeModel, firstResp.schema) || isLROOperation(op)) {
     firstResp.schema.language.go!.responseType = generateResponseTypeName(firstResp.schema);
-    if (isLROOperation(op)) {
-      firstResp.schema.language.go!.responseType.name = `${firstResp.schema.language.go!.responseType.name}`;
-    }
     firstResp.schema.language.go!.properties = [
       newProperty('RawResponse', 'RawResponse contains the underlying HTTP response.', newObject('http.Response', 'TODO'))
     ];
