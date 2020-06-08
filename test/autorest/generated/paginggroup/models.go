@@ -34,7 +34,7 @@ type OdataProductResultResponse struct {
 
 type OperationResult struct {
 	// The status of the request
-	Status *OperationResultStatus `undefined:"status"`
+	Status *OperationResultStatus `json:"status,omitempty"`
 }
 
 // PagingGetMultiplePagesLroOptions contains the optional parameters for the Paging.GetMultiplePagesLro method.

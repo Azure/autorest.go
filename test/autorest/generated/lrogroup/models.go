@@ -359,18 +359,18 @@ type LrosaDsPutNonRetry400Options struct {
 }
 
 type OperationResult struct {
-	Error *OperationResultError `undefined:"error"`
+	Error *OperationResultError `json:"error,omitempty"`
 
 	// The status of the request
-	Status *OperationResultStatus `undefined:"status"`
+	Status *OperationResultStatus `json:"status,omitempty"`
 }
 
 type OperationResultError struct {
 	// The error code for an operation failure
-	Code *int32 `undefined:"code"`
+	Code *int32 `json:"code,omitempty"`
 
 	// The detailed arror message
-	Message *string `undefined:"message"`
+	Message *string `json:"message,omitempty"`
 }
 
 type Product struct {
