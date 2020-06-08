@@ -61,7 +61,7 @@ type BlobOperations interface {
 
 // blobOperations implements the BlobOperations interface.
 type blobOperations struct {
-	*Client
+	*client
 	pathRenameMode *PathRenameMode
 }
 

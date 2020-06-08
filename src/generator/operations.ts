@@ -52,11 +52,16 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     const interfaceText = createInterfaceDefinition(group, imports);
     // stitch it all together
     let text = await contentPreamble(session);
+    const exportClient = await session.getValue('export-client', true);
+    let client = 'Client';
+    if (!exportClient) {
+      client = 'client';
+    }
     text += imports.text();
     text += interfaceText;
     text += `// ${clientName} implements the ${group.language.go!.clientName} interface.\n`;
     text += `type ${clientName} struct {\n`;
-    text += '\t*Client\n';
+    text += `\t*${client}\n`;
     if (group.language.go!.clientParams) {
       const clientParams = <Array<Parameter>>group.language.go!.clientParams;
       for (const clientParam of values(clientParams)) {

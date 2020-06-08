@@ -27,7 +27,7 @@ type AppendBlobOperations interface {
 
 // appendBlobOperations implements the AppendBlobOperations interface.
 type appendBlobOperations struct {
-	*Client
+	*client
 }
 
 // AppendBlock - The Append Block operation commits a new block of data to the end of an existing append blob. The Append Block operation is permitted only if the blob was created with x-ms-blob-type set to AppendBlob. Append Block is supported only on version 2015-02-21 version or later.

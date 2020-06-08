@@ -39,7 +39,7 @@ type PageBlobOperations interface {
 
 // pageBlobOperations implements the PageBlobOperations interface.
 type pageBlobOperations struct {
-	*Client
+	*client
 }
 
 // ClearPages - The Clear Pages operation clears a set of pages from a page blob

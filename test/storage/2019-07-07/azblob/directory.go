@@ -29,7 +29,7 @@ type DirectoryOperations interface {
 
 // directoryOperations implements the DirectoryOperations interface.
 type directoryOperations struct {
-	*Client
+	*client
 	pathRenameMode *PathRenameMode
 }
 

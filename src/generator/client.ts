@@ -24,9 +24,15 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
     const scope = await session.getValue('credential-scope');
     text += `const scope = "${scope}"\n`;
   }
-
+  const exportClient = await session.getValue('export-client', true);
+  let clientOptions = 'ClientOptions';
+  let defaultClientOptions = 'DefaultClientOptions';
+  if (!exportClient) {
+    clientOptions = 'clientOptions';
+    defaultClientOptions = 'defaultClientOptions';
+  }
   text += `// ClientOptions contains configuration settings for the default client's pipeline.\n`;
-  text += 'type ClientOptions struct {\n';
+  text += `type ${clientOptions} struct {\n`;
   text += '\t// HTTPClient sets the transport for making HTTP requests.\n';
   text += '\tHTTPClient azcore.Transport\n';
   text += '\t// LogOptions configures the built-in request logging policy behavior.\n';
@@ -36,19 +42,31 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   text += '\t// Telemetry configures the built-in telemetry policy behavior.\n';
   text += '\tTelemetry azcore.TelemetryOptions\n';
   text += '}\n\n';
-  text += '// DefaultClientOptions creates a ClientOptions type initialized with default values.\n';
-  text += 'func DefaultClientOptions() ClientOptions {\n';
-  text += '\treturn ClientOptions{\n';
+  text += `// ${defaultClientOptions} creates a ${clientOptions} type initialized with default values.\n`;
+  text += `func ${defaultClientOptions}() ${clientOptions} {\n`;
+  text += `\treturn ${clientOptions}{\n`;
   text += '\t\tHTTPClient: azcore.DefaultHTTPClientTransport(),\n';
   text += '\t\tRetry: azcore.DefaultRetryOptions(),\n';
   text += '\t}\n';
   text += '}\n\n';
 
   // Client
-  if (session.model.info.description) {
-    text += `// Client - ${session.model.info.description}\n`;
+  let client = 'Client';
+  let defaultEndpoint = 'DefaultEndpoint';
+  let newDefaultClient = 'NewDefaultClient';
+  let newClient = 'NewClient';
+  let newClientWithPipeline = 'NewClientWithPipeline';
+  if (!exportClient) {
+    client = 'client';
+    defaultEndpoint = 'defaultEndpoint';
+    newDefaultClient = 'newDefaultClient';
+    newClient = 'newClient';
+    newClientWithPipeline = 'newClientWithPipeline';
   }
-  text += 'type Client struct {\n';
+  if (session.model.info.description) {
+    text += `// ${client} - ${session.model.info.description}\n`;
+  }
+  text += `type ${client} struct {\n`;
   text += `\t${urlVar} *url.URL\n`;
   text += `\t${pipelineVar} azcore.Pipeline\n`;
   text += '}\n\n';
@@ -59,22 +77,22 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
     credParam = '';
   }
   if (endpoint) {
-    text += '// DefaultEndpoint is the default service endpoint.\n';
-    text += `const DefaultEndpoint = "${endpoint}"\n\n`;
-    text += '// NewDefaultClient creates an instance of the Client type using the DefaultEndpoint.\n';
-    text += `func NewDefaultClient(${credParam}options *ClientOptions) (*Client, error) {\n`;
+    text += `// ${defaultEndpoint} is the default service endpoint.\n`;
+    text += `const ${defaultEndpoint} = "${endpoint}"\n\n`;
+    text += `// ${newDefaultClient} creates an instance of the ${client} type using the ${defaultEndpoint}.\n`;
+    text += `func ${newDefaultClient}(${credParam}options *${clientOptions}) (*${client}, error) {\n`;
     let cred = 'cred, ';
     if (!session.model.security.authenticationRequired) {
       cred = '';
     }
-    text += `\treturn NewClient(DefaultEndpoint, ${cred}options)\n`;
+    text += `\treturn ${newClient}(${defaultEndpoint}, ${cred}options)\n`;
     text += '}\n\n';
   }
 
-  text += '// NewClient creates an instance of the Client type with the specified endpoint.\n';
-  text += `func NewClient(endpoint string, ${credParam}options *ClientOptions) (*Client, error) {\n`;
+  text += `// ${newClient} creates an instance of the ${client} type with the specified endpoint.\n`;
+  text += `func ${newClient}(endpoint string, ${credParam}options *${clientOptions}) (*${client}, error) {\n`;
   text += '\tif options == nil {\n';
-  text += '\t\to := DefaultClientOptions()\n';
+  text += `\t\to := ${defaultClientOptions}()\n`;
   text += '\t\toptions = &o\n';
   text += '\t}\n';
   text += '\tp := azcore.NewPipeline(options.HTTPClient,\n';
@@ -85,11 +103,11 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
     text += '\t\tcred.AuthenticationPolicy(azcore.AuthenticationPolicyOptions{Options: azcore.TokenRequestOptions{Scopes: []string{scope}}}),\n';
   }
   text += '\t\tazcore.NewRequestLogPolicy(options.LogOptions))\n';
-  text += '\treturn NewClientWithPipeline(endpoint, p)\n';
+  text += `\treturn ${newClientWithPipeline}(endpoint, p)\n`;
   text += '}\n\n';
 
-  text += '// NewClientWithPipeline creates an instance of the Client type with the specified endpoint and pipeline.\n';
-  text += `func NewClientWithPipeline(endpoint string, ${pipelineVar} azcore.Pipeline) (*Client, error) {\n`;
+  text += `// ${newClientWithPipeline} creates an instance of the ${client} type with the specified endpoint and pipeline.\n`;
+  text += `func ${newClientWithPipeline}(endpoint string, ${pipelineVar} azcore.Pipeline) (*${client}, error) {\n`;
   text += `\t${urlVar}, err := url.Parse(endpoint)\n`;
   text += '\tif err != nil {\n';
   text += '\t\treturn nil, err\n';
@@ -97,11 +115,11 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   text += `\tif ${urlVar}.Scheme == "" {\n`;
   text += '\t\treturn nil, fmt.Errorf("no scheme detected in endpoint %s", endpoint)\n';
   text += '\t}\n';
-  text += `\treturn &Client{${urlVar}: ${urlVar}, ${pipelineVar}: ${pipelineVar}}, nil\n`;
+  text += `\treturn &${client}{${urlVar}: ${urlVar}, ${pipelineVar}: ${pipelineVar}}, nil\n`;
   text += '}\n\n';
 
   for (const group of values(session.model.operationGroups)) {
-    const clientLiterals = ['Client: client'];
+    const clientLiterals = [`${client}: client`];
     const methodParams = new Array<string>();
     // add client params to the operation group getter method
     if (group.language.go!.clientParams) {
@@ -113,7 +131,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
       }
     }
     text += `// ${group.language.go!.clientName} returns the ${group.language.go!.clientName} associated with this client.\n`;
-    text += `func (client *Client) ${group.language.go!.clientName}(${methodParams.join(', ')}) ${group.language.go!.clientName} {\n`;
+    text += `func (client *${client}) ${group.language.go!.clientName}(${methodParams.join(', ')}) ${group.language.go!.clientName} {\n`;
     text += `\treturn &${group.operations[0].language.go!.clientName}{${clientLiterals.join(', ')}}\n`;
     text += '}\n\n';
   }

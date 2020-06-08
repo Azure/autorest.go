@@ -16,6 +16,6 @@ export async function generateGoModFile(session: Session<CodeModel>): Promise<st
   text += 'go 1.13\n\n';
   // here we specify the minimum version of azcore as required by the code generator
   // TODO: come up with a way to get the latest minor/patch version.
-  text += 'require github.com/Azure/azure-sdk-for-go/sdk/azcore v0.7.0\n';
+  text += 'require github.com/Azure/azure-sdk-for-go/sdk/azcore v0.8.0\n';
   return text;
 }
