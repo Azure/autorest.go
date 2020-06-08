@@ -51,7 +51,7 @@ type ContainerOperations interface {
 
 // containerOperations implements the ContainerOperations interface.
 type containerOperations struct {
-	*Client
+	*client
 }
 
 // AcquireLease - [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite

@@ -35,7 +35,7 @@ type ServiceOperations interface {
 
 // serviceOperations implements the ServiceOperations interface.
 type serviceOperations struct {
-	*Client
+	*client
 }
 
 // GetAccountInfo - Returns the sku name and account kind
