@@ -30,6 +30,9 @@ export async function generateTimeHelpers(session: Session<CodeModel>): Promise<
   if (session.model.language.go!.hasTimeRFC3339) {
     content.push(new Content('time_rfc3339', generateRFC3339Helper(preamble)));
   }
+  if (session.model.language.go!.hasUnixTime) {
+    content.push(new Content('time_unix', generateUnixTimeHelper(preamble)));
+  }
   return content;
 }
 
@@ -121,6 +124,36 @@ func (t *timeRFC3339) Parse(layout, value string) error {
 	p, err := time.Parse(layout, strings.ToUpper(value))
 	*t = timeRFC3339(p)
 	return err
+}
+`;
+}
+
+function generateUnixTimeHelper(preamble: string): string {
+  return `${preamble}
+
+import (
+	"encoding/json"
+	"fmt"
+	"time"
+)
+
+type timeUnix time.Time
+
+func (t timeUnix) MarshalJSON() ([]byte, error) {
+	return json.Marshal(time.Time(t).Unix())
+}
+
+func (t *timeUnix) UnmarshalJSON(data []byte) error {
+	var seconds int64
+	if err := json.Unmarshal(data, &seconds); err != nil {
+		return err
+	}
+	*t = timeUnix(time.Unix(seconds, 0))
+	return nil
+}
+
+func (t timeUnix) String() string {
+	return fmt.Sprintf("%d", time.Time(t).Unix())
 }
 `;
 }

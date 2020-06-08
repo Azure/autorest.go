@@ -1294,7 +1294,7 @@ func (client *pathsOperations) UnixTimeURL(ctx context.Context, unixTimeUrlPath 
 // unixTimeUrlCreateRequest creates the UnixTimeURL request.
 func (client *pathsOperations) unixTimeUrlCreateRequest(unixTimeUrlPath time.Time) (*azcore.Request, error) {
 	urlPath := "/paths/int/1460505600/{unixTimeUrlPath}"
-	urlPath = strings.ReplaceAll(urlPath, "{unixTimeUrlPath}", url.PathEscape(unixTimeUrlPath.String()))
+	urlPath = strings.ReplaceAll(urlPath, "{unixTimeUrlPath}", url.PathEscape(timeUnix(unixTimeUrlPath).String()))
 	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err

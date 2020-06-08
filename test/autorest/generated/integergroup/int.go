@@ -128,8 +128,9 @@ func (client *intOperations) getInvalidUnixTimeHandleResponse(resp *azcore.Respo
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.getInvalidUnixTimeHandleError(resp)
 	}
-	result := TimeResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Value)
+	var aux *timeUnix
+	err := resp.UnmarshalAsJSON(&aux)
+	return &TimeResponse{RawResponse: resp.Response, Value: (*time.Time)(aux)}, err
 }
 
 // getInvalidUnixTimeHandleError handles the GetInvalidUnixTime error response.
@@ -220,8 +221,9 @@ func (client *intOperations) getNullUnixTimeHandleResponse(resp *azcore.Response
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.getNullUnixTimeHandleError(resp)
 	}
-	result := TimeResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Value)
+	var aux *timeUnix
+	err := resp.UnmarshalAsJSON(&aux)
+	return &TimeResponse{RawResponse: resp.Response, Value: (*time.Time)(aux)}, err
 }
 
 // getNullUnixTimeHandleError handles the GetNullUnixTime error response.
@@ -450,8 +452,9 @@ func (client *intOperations) getUnixTimeHandleResponse(resp *azcore.Response) (*
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.getUnixTimeHandleError(resp)
 	}
-	result := TimeResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Value)
+	var aux *timeUnix
+	err := resp.UnmarshalAsJSON(&aux)
+	return &TimeResponse{RawResponse: resp.Response, Value: (*time.Time)(aux)}, err
 }
 
 // getUnixTimeHandleError handles the GetUnixTime error response.
@@ -668,7 +671,8 @@ func (client *intOperations) putUnixTimeDateCreateRequest(intBody time.Time) (*a
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	return req, req.MarshalAsJSON(intBody)
+	aux := timeUnix(intBody)
+	return req, req.MarshalAsJSON(aux)
 }
 
 // putUnixTimeDateHandleResponse handles the PutUnixTimeDate response.

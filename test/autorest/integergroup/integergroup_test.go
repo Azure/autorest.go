@@ -108,7 +108,6 @@ func TestIntGetUnderflowInt64(t *testing.T) {
 }
 
 func TestIntGetUnixTime(t *testing.T) {
-	t.Skip()
 	client := getIntegerOperations(t)
 	result, err := client.GetUnixTime(context.Background())
 	if err != nil {
@@ -116,7 +115,7 @@ func TestIntGetUnixTime(t *testing.T) {
 	}
 	t1 := time.Unix(1460505600, 0)
 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
-	helpers.DeepEqualOrFatal(t, result.Value, t1)
+	helpers.DeepEqualOrFatal(t, result.Value, &t1)
 }
 
 func TestIntPutMax32(t *testing.T) {
@@ -156,7 +155,6 @@ func TestIntPutMin64(t *testing.T) {
 }
 
 func TestIntPutUnixTimeDate(t *testing.T) {
-	t.Skip()
 	client := getIntegerOperations(t)
 	t1 := time.Unix(1460505600, 0)
 	result, err := client.PutUnixTimeDate(context.Background(), t1)

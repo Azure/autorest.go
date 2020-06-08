@@ -147,12 +147,13 @@ function formatParamValue(param: Parameter, imports: ImportManager): string {
       }
       return `${paramName}.Format(${format})`;
     case SchemaType.Duration:
-    case SchemaType.UnixTime:
       if (param.required !== true && paramName[0] === '*') {
         // remove the dereference
         paramName = paramName.substr(1);
       }
       return `${paramName}.String()`;
+    case SchemaType.UnixTime:
+      return `timeUnix(${paramName}).String()`;
     case SchemaType.Uri:
       imports.add('net/url');
       if (param.required !== true && paramName[0] === '*') {
@@ -564,11 +565,11 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
         addr = '';
       }
       body = `wrapper{${fieldName}: ${addr}${body}}`;
-    } else if (bodyParam!.schema.type === SchemaType.DateTime && (<DateTimeSchema>bodyParam!.schema).format === 'date-time-rfc1123') {
+    } else if ((bodyParam!.schema.type === SchemaType.DateTime && (<DateTimeSchema>bodyParam!.schema).format === 'date-time-rfc1123') || bodyParam!.schema.type === SchemaType.UnixTime) {
       // wrap the body in the custom RFC1123 type
       text += `\taux := ${bodyParam!.schema.language.go!.internalTimeType}(${body})\n`;
       body = 'aux';
-    } else if (isArrayOfRFC1123(bodyParam!.schema)) {
+    } else if (isArrayOfTimesForMarshalling(bodyParam!.schema)) {
       const timeType = (<ArraySchema>bodyParam!.schema).elementType.language.go!.internalTimeType;
       text += `\taux := make([]${timeType}, len(${body}), len(${body}))\n`;
       text += `\tfor i := 0; i < len(${body}); i++ {\n`;
@@ -616,12 +617,15 @@ function getMediaFormat(schema: Schema, mediaType: 'JSON' | 'XML', param: string
   return `${marshaller}(${param}${format})`;
 }
 
-function isArrayOfRFC1123(schema: Schema): boolean {
+function isArrayOfTimesForMarshalling(schema: Schema): boolean {
   if (schema.type !== SchemaType.Array) {
     return false;
   }
   const arraySchema = <ArraySchema>schema;
   const arrayElem = <Schema>arraySchema.elementType;
+  if (arrayElem.type === SchemaType.UnixTime) {
+    return true;
+  }
   if (arrayElem.type !== SchemaType.DateTime) {
     return false;
   }
@@ -676,7 +680,7 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
     text += `\treturn resp.Response, nil\n`;
     text += '}\n\n';
     return text;
-  } else if (firstResp.schema.type === SchemaType.DateTime) {
+  } else if (firstResp.schema.type === SchemaType.DateTime || firstResp.schema.type === SchemaType.UnixTime) {
     // use the designated time type for unmarshalling
     text += `\tvar aux *${firstResp.schema.language.go!.internalTimeType}\n`;
     text += `\terr := resp.UnmarshalAs${getMediaType(firstResp.protocol)}(&aux)\n`;
@@ -806,7 +810,7 @@ function isArrayOfDateTime(schema: Schema): boolean {
   }
   const arraySchema = <ArraySchema>schema;
   const arrayElem = <Schema>arraySchema.elementType;
-  return arrayElem.type === SchemaType.DateTime;
+  return arrayElem.type === SchemaType.DateTime || arrayElem.type === SchemaType.UnixTime;
 }
 
 function isMapOfDateTime(schema: Schema): boolean {
@@ -815,7 +819,7 @@ function isMapOfDateTime(schema: Schema): boolean {
   }
   const dictSchema = <DictionarySchema>schema;
   const dictElem = <Schema>dictSchema.elementType;
-  return dictElem.type === SchemaType.DateTime;
+  return dictElem.type === SchemaType.DateTime || dictElem.type === SchemaType.UnixTime;
 }
 
 function createInterfaceDefinition(group: OperationGroup, imports: ImportManager): string {

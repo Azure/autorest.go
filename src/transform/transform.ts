@@ -121,7 +121,12 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolea
         }
       }
     case SchemaType.Date:
+      return 'time.Time';
     case SchemaType.UnixTime:
+      codeModel.language.go!.hasUnixTime = true;
+      if (inBody) {
+        schema.language.go!.internalTimeType = 'timeUnix';
+      }
       return 'time.Time';
     case SchemaType.Dictionary:
       const dictSchema = <DictionarySchema>schema;

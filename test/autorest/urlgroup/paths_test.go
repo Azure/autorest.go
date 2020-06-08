@@ -259,9 +259,7 @@ func TestPathsStringUnicode(t *testing.T) {
 	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
-// TODO verify why this is not working
 func TestPathsUnixTimeURL(t *testing.T) {
-	t.Skip()
 	client := getPathsOperations(t)
 	d, err := time.Parse("2006-01-02", "2016-04-13")
 	if err != nil {
