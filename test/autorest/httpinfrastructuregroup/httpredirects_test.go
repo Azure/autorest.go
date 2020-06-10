@@ -25,17 +25,24 @@ func TestHTTPRedirectsDelete307(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestHTTPRedirectsGet300(t *testing.T) {
-	t.Skip()
+	t.Skip("does not automatically redirect")
 	client := getHTTPRedirectsOperations(t)
 	result, err := client.Get300(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	switch x := result.(type) {
+	case *httpinfrastructuregroup.HTTPRedirectsGet300Response:
+		helpers.VerifyStatusCode(t, x.RawResponse, http.StatusOK)
+	case *httpinfrastructuregroup.StringArrayResponse:
+		helpers.VerifyStatusCode(t, x.RawResponse, http.StatusMultipleChoices)
+	default:
+		t.Fatalf("unhandled response type %v", x)
+	}
 }
 
 func TestHTTPRedirectsGet301(t *testing.T) {
@@ -44,7 +51,7 @@ func TestHTTPRedirectsGet301(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestHTTPRedirectsGet302(t *testing.T) {
@@ -53,7 +60,7 @@ func TestHTTPRedirectsGet302(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestHTTPRedirectsGet307(t *testing.T) {
@@ -62,11 +69,11 @@ func TestHTTPRedirectsGet307(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestHTTPRedirectsHead300(t *testing.T) {
-	t.Skip()
+	t.Skip("does not automatically redirect")
 	client := getHTTPRedirectsOperations(t)
 	result, err := client.Head300(context.Background())
 	if err != nil {
@@ -81,7 +88,7 @@ func TestHTTPRedirectsHead301(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestHTTPRedirectsHead302(t *testing.T) {
@@ -90,7 +97,7 @@ func TestHTTPRedirectsHead302(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestHTTPRedirectsHead307(t *testing.T) {
@@ -99,21 +106,21 @@ func TestHTTPRedirectsHead307(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestHTTPRedirectsOptions307(t *testing.T) {
-	t.Skip()
+	t.Skip("receive a status code of 204 which is not expected")
 	client := getHTTPRedirectsOperations(t)
 	result, err := client.Options307(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestHTTPRedirectsPatch302(t *testing.T) {
-	t.Skip()
+	t.Skip("HTTP client automatically redirects, test server doesn't expect it")
 	client := getHTTPRedirectsOperations(t)
 	result, err := client.Patch302(context.Background())
 	if err != nil {
@@ -128,7 +135,7 @@ func TestHTTPRedirectsPatch307(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestHTTPRedirectsPost303(t *testing.T) {
@@ -146,11 +153,11 @@ func TestHTTPRedirectsPost307(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestHTTPRedirectsPut301(t *testing.T) {
-	t.Skip()
+	t.Skip("HTTP client automatically redirects, test server doesn't expect it")
 	client := getHTTPRedirectsOperations(t)
 	result, err := client.Put301(context.Background())
 	if err != nil {
@@ -165,5 +172,5 @@ func TestHTTPRedirectsPut307(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }

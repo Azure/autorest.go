@@ -843,7 +843,7 @@ func (client *blobOperations) downloadCreateRequest(blobDownloadOptions *BlobDow
 
 // downloadHandleResponse handles the Download response.
 func (client *blobOperations) downloadHandleResponse(resp *azcore.Response) (*BlobDownloadResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !resp.HasStatusCode(http.StatusOK, http.StatusPartialContent) {
 		return nil, client.downloadHandleError(resp)
 	}
 	result := BlobDownloadResponse{RawResponse: resp.Response}
@@ -2118,7 +2118,7 @@ func (client *blobOperations) setTierCreateRequest(tier AccessTier, blobSetTierO
 
 // setTierHandleResponse handles the SetTier response.
 func (client *blobOperations) setTierHandleResponse(resp *azcore.Response) (*BlobSetTierResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.setTierHandleError(resp)
 	}
 	result := BlobSetTierResponse{RawResponse: resp.Response}

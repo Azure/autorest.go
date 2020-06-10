@@ -1038,7 +1038,7 @@ type BlobRenameOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
 	RequestId *string
-	// A lease ID for the source path. If specified, the source path must have an active lease and the leaase ID must match.
+	// A lease ID for the source path. If specified, the source path must have an active lease and the lease ID must match.
 	SourceLeaseId *string
 	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
 	// Timeouts for Blob Service Operations.</a>
@@ -2420,7 +2420,7 @@ type DirectoryRenameOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
 	RequestId *string
-	// A lease ID for the source path. If specified, the source path must have an active lease and the leaase ID must match.
+	// A lease ID for the source path. If specified, the source path must have an active lease and the lease ID must match.
 	SourceLeaseId *string
 	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
 	// Timeouts for Blob Service Operations.</a>
