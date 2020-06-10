@@ -107,7 +107,7 @@ func (client *headerOperations) customNamedRequestIdHeadCreateRequest(fooClientR
 
 // customNamedRequestIdHeadHandleResponse handles the CustomNamedRequestIDHead response.
 func (client *headerOperations) customNamedRequestIdHeadHandleResponse(resp *azcore.Response) (*HeaderCustomNamedRequestIDHeadResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !resp.HasStatusCode(http.StatusOK, http.StatusNotFound) {
 		return nil, client.customNamedRequestIdHeadHandleError(resp)
 	}
 	result := HeaderCustomNamedRequestIDHeadResponse{RawResponse: resp.Response}

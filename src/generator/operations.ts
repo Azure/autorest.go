@@ -258,6 +258,14 @@ function formatHeaderResponseValue(propName: string, header: string, schema: Sch
   return text;
 }
 
+function generateMultiRespComment(op: Operation): string {
+  const returnTypes = new Array<string>();
+  for (const response of values(op.responses)) {
+    returnTypes.push(`*${(<SchemaResponse>response).schema.language.go!.responseType.name}`);
+  }
+  return `// Possible return types are ${returnTypes.join(', ')}\n`;
+}
+
 function generateOperation(clientName: string, op: Operation, imports: ImportManager): string {
   if (op.language.go!.paging && op.language.go!.paging.isNextOp) {
     // don't generate a public API for the methods used to advance pages
@@ -269,6 +277,9 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
   let text = '';
   if (hasDescription(op.language.go!)) {
     text += `// ${op.language.go!.name} - ${op.language.go!.description} \n`;
+  }
+  if (isMultiRespOperation(op)) {
+    text += generateMultiRespComment(op);
   }
   if (op.language.go!.methodPrefix) {
     text += `func (client *${clientName}) ${op.language.go!.methodPrefix}${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;
@@ -642,103 +653,97 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
     text += '}\n\n';
     return text;
   }
-  const firstResp = op.responses![0];
-  // concat all status codes that return the same schema into one array.
-  // this is to support operations that specify multiple response codes
-  // that return the same schema (or no schema).
-  // TODO: handle response codes with different schemas
-  // TODO: remove pageable LRO exception
-  let statusCodes = new Array<string>();
-  statusCodes = statusCodes.concat(firstResp.protocol.http?.statusCodes);
-  for (let i = 1; i < op.responses.length; ++i) {
-    if (!isSchemaResponse(firstResp) && !isSchemaResponse(op.responses[i])) {
-      // both responses return no schema, append status codes
-      statusCodes = statusCodes.concat(op.responses[i].protocol.http?.statusCodes);
-    } else if (isSchemaResponse(firstResp) && isSchemaResponse(op.responses[i])) {
-      // both responses return a schema, ensure they're the same
-      if ((<SchemaResponse>firstResp).schema === (<SchemaResponse>op.responses[i]).schema) {
-        // same schemas, append status codes
-        statusCodes = statusCodes.concat(op.responses[i].protocol.http?.statusCodes);
+  const generateResponseUnmarshaller = function (response: Response): string {
+    let unmarshallerText = '';
+    if (!isSchemaResponse(response)) {
+      if (isLROOperation(op)) {
+        unmarshallerText += '\treturn &HTTPResponse{RawResponse: resp.Response}, nil\n';
+        return unmarshallerText;
       }
-    } else if (isLROOperation(op)) {
+      // no response body, return the *http.Response
+      unmarshallerText += `\treturn resp.Response, nil\n`;
+      return unmarshallerText;
+    } else if (response.schema.type === SchemaType.DateTime || response.schema.type === SchemaType.UnixTime) {
+      // use the designated time type for unmarshalling
+      unmarshallerText += `\tvar aux *${response.schema.language.go!.internalTimeType}\n`;
+      unmarshallerText += `\terr := resp.UnmarshalAs${getMediaType(response.protocol)}(&aux)\n`;
+      const resp = `${response.schema.language.go!.responseType.name}{RawResponse: resp.Response, ${response.schema.language.go!.responseType.value}: (*time.Time)(aux)}`;
+      unmarshallerText += `\treturn &${resp}, err\n`;
+      return unmarshallerText;
+    } else if (isArrayOfDateTime(response.schema)) {
+      // unmarshalling arrays of date/time is a little more involved
+      unmarshallerText += `\tvar aux *[]${(<ArraySchema>response.schema).elementType.language.go!.internalTimeType}\n`;
+      unmarshallerText += `\tif err := resp.UnmarshalAs${getMediaType(response.protocol)}(&aux); err != nil {\n`;
+      unmarshallerText += '\t\treturn nil, err\n';
+      unmarshallerText += '\t}\n';
+      unmarshallerText += '\tcp := make([]time.Time, len(*aux), len(*aux))\n';
+      unmarshallerText += '\tfor i := 0; i < len(*aux); i++ {\n';
+      unmarshallerText += '\t\tcp[i] = time.Time((*aux)[i])\n';
+      unmarshallerText += '\t}\n';
+      const resp = `${response.schema.language.go!.responseType.name}{RawResponse: resp.Response, ${response.schema.language.go!.responseType.value}: &cp}`;
+      unmarshallerText += `\treturn &${resp}, nil\n`;
+      return unmarshallerText;
+    } else if (isMapOfDateTime(response.schema)) {
+      unmarshallerText += `\taux := map[string]${(<DictionarySchema>response.schema).elementType.language.go!.internalTimeType}{}\n`;
+      unmarshallerText += `\tif err := resp.UnmarshalAs${getMediaType(response.protocol)}(&aux); err != nil {\n`;
+      unmarshallerText += '\t\treturn nil, err\n';
+      unmarshallerText += '\t}\n';
+      unmarshallerText += `\tcp := map[string]time.Time{}\n`;
+      unmarshallerText += `\tfor k, v := range aux {\n`;
+      unmarshallerText += `\t\tcp[k] = time.Time(v)\n`;
+      unmarshallerText += `\t}\n`;
+      const resp = `${response.schema.language.go!.responseType.name}{RawResponse: resp.Response, ${response.schema.language.go!.responseType.value}: &cp}`;
+      unmarshallerText += `\treturn &${resp}, nil\n`;
+      return unmarshallerText;
+    }
+    const schemaResponse = <SchemaResponse>response;
+    let respObj = `${schemaResponse.schema.language.go!.responseType.name}{RawResponse: resp.Response}`;
+    unmarshallerText += `\tresult := ${respObj}\n`;
+    // assign any header values
+    for (const prop of values(<Array<Property>>schemaResponse.schema.language.go!.properties)) {
+      if (prop.language.go!.fromHeader) {
+        unmarshallerText += formatHeaderResponseValue(prop.language.go!.name, prop.language.go!.fromHeader, prop.schema, imports, 'result');
+      }
+    }
+    const mediaType = getMediaType(response.protocol);
+    if (mediaType === 'none' || mediaType === 'binary') {
+      // nothing to unmarshal
+      unmarshallerText += '\treturn &result, nil\n';
+      return unmarshallerText;
+    }
+    let target = `result.${schemaResponse.schema.language.go!.responseType.value}`;
+    // when unmarshalling a wrapped XML array or discriminated type, unmarshal into the response type, not the field
+    if ((mediaType === 'XML' && schemaResponse.schema.type === SchemaType.Array) || schemaResponse.schema.language.go!.discriminatorInterface) {
+      target = 'result';
+    }
+    unmarshallerText += `\treturn &result, resp.UnmarshalAs${getMediaFormat(response.schema, mediaType, `&${target}`)}\n`;
+    return unmarshallerText;
+  };
+  if (!isMultiRespOperation(op)) {
+    // concat all status codes that return the same schema into one array.
+    // this is to support operations that specify multiple response codes
+    // that return the same schema (or no schema).
+    let statusCodes = new Array<string>();
+    for (let i = 0; i < op.responses.length; ++i) {
       statusCodes = statusCodes.concat(op.responses[i].protocol.http?.statusCodes);
     }
-  }
-  if (isLROOperation(op) && statusCodes.find(element => element === '204') === undefined) {
-    statusCodes = statusCodes.concat('204');
-  }
-  text += `\tif !resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
-  text += `\t\treturn nil, client.${info.protocolNaming.errorMethod}(resp)\n`;
-  text += '\t}\n';
-  if (!isSchemaResponse(firstResp)) {
-    if (isLROOperation(op)) {
-      text += '\treturn &HTTPResponse{RawResponse: resp.Response}, nil\n';
-      text += '}\n\n';
-      return text;
+    if (isLROOperation(op) && statusCodes.find(element => element === '204') === undefined) {
+      statusCodes = statusCodes.concat('204');
     }
-    // no response body, return the *http.Response
-    text += `\treturn resp.Response, nil\n`;
-    text += '}\n\n';
-    return text;
-  } else if (firstResp.schema.type === SchemaType.DateTime || firstResp.schema.type === SchemaType.UnixTime) {
-    // use the designated time type for unmarshalling
-    text += `\tvar aux *${firstResp.schema.language.go!.internalTimeType}\n`;
-    text += `\terr := resp.UnmarshalAs${getMediaType(firstResp.protocol)}(&aux)\n`;
-    const resp = `${firstResp.schema.language.go!.responseType.name}{RawResponse: resp.Response, ${firstResp.schema.language.go!.responseType.value}: (*time.Time)(aux)}`;
-    text += `\treturn &${resp}, err\n`;
-    text += '}\n\n';
-    return text;
-  } else if (isArrayOfDateTime(firstResp.schema)) {
-    // unmarshalling arrays of date/time is a little more involved
-    text += `\tvar aux *[]${(<ArraySchema>firstResp.schema).elementType.language.go!.internalTimeType}\n`;
-    text += `\tif err := resp.UnmarshalAs${getMediaType(firstResp.protocol)}(&aux); err != nil {\n`;
-    text += '\t\treturn nil, err\n';
+    text += `\tif !resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
+    text += `\t\treturn nil, client.${info.protocolNaming.errorMethod}(resp)\n`;
     text += '\t}\n';
-    text += '\tcp := make([]time.Time, len(*aux), len(*aux))\n';
-    text += '\tfor i := 0; i < len(*aux); i++ {\n';
-    text += '\t\tcp[i] = time.Time((*aux)[i])\n';
-    text += '\t}\n';
-    const resp = `${firstResp.schema.language.go!.responseType.name}{RawResponse: resp.Response, ${firstResp.schema.language.go!.responseType.value}: &cp}`;
-    text += `\treturn &${resp}, nil\n`;
-    text += '}\n\n';
-    return text;
-  } else if (isMapOfDateTime(firstResp.schema)) {
-    text += `\taux := map[string]${(<DictionarySchema>firstResp.schema).elementType.language.go!.internalTimeType}{}\n`;
-    text += `\tif err := resp.UnmarshalAs${getMediaType(firstResp.protocol)}(&aux); err != nil {\n`;
-    text += '\t\treturn nil, err\n';
-    text += '\t}\n';
-    text += `\tcp := map[string]time.Time{}\n`;
-    text += `\tfor k, v := range aux {\n`;
-    text += `\t\tcp[k] = time.Time(v)\n`;
-    text += `\t}\n`;
-    const resp = `${firstResp.schema.language.go!.responseType.name}{RawResponse: resp.Response, ${firstResp.schema.language.go!.responseType.value}: &cp}`;
-    text += `\treturn &${resp}, nil\n`;
-    text += '}\n\n';
-    return text;
-  }
-
-  const schemaResponse = <SchemaResponse>firstResp;
-  let respObj = `${schemaResponse.schema.language.go!.responseType.name}{RawResponse: resp.Response}`;
-  text += `\tresult := ${respObj}\n`;
-  // assign any header values
-  for (const prop of values(<Array<Property>>schemaResponse.schema.language.go!.properties)) {
-    if (prop.language.go!.fromHeader) {
-      text += formatHeaderResponseValue(prop.language.go!.name, prop.language.go!.fromHeader, prop.schema, imports, 'result');
+    text += generateResponseUnmarshaller(op.responses![0]);
+  } else {
+    text += '\tswitch resp.StatusCode {\n';
+    for (const response of values(op.responses)) {
+      text += `\tcase ${formatStatusCodes(response.protocol.http!.statusCodes)}:\n`
+      text += generateResponseUnmarshaller(response);
     }
+    text += '\tdefault:\n';
+    text += `\t\treturn nil, client.${info.protocolNaming.errorMethod}(resp)\n`;
+    text += '\t}\n';
   }
-  const mediaType = getMediaType(firstResp.protocol);
-  if (mediaType === 'none' || mediaType === 'binary') {
-    // nothing to unmarshal
-    text += '\treturn &result, nil\n';
-    text += '}\n\n';
-    return text;
-  }
-  let target = `result.${schemaResponse.schema.language.go!.responseType.value}`;
-  // when unmarshalling a wrapped XML array or discriminated type, unmarshal into the response type, not the field
-  if ((mediaType === 'XML' && schemaResponse.schema.type === SchemaType.Array) || schemaResponse.schema.language.go!.discriminatorInterface) {
-    target = 'result';
-  }
-  text += `\treturn &result, resp.UnmarshalAs${getMediaFormat(firstResp.schema, mediaType, `&${target}`)}\n`;
   text += '}\n\n';
   return text;
 }
@@ -843,6 +848,9 @@ function createInterfaceDefinition(group: OperationGroup, imports: ImportManager
     if (hasDescription(op.language.go!)) {
       interfaceText += `\t// ${opName} - ${op.language.go!.description} \n`;
     }
+    if (isMultiRespOperation(op)) {
+      interfaceText += generateMultiRespComment(op);
+    }
     const returns = generateReturnsInfo(op, false);
     interfaceText += `\t${opName}(${getAPIParametersSig(op, imports)}) (${returns.join(', ')})\n`;
     // Add resume LRO poller method for each Begin poller method
@@ -884,48 +892,46 @@ function formatConstantValue(schema: ConstantSchema) {
 function formatStatusCodes(statusCodes: Array<string>): string {
   const asHTTPStatus = new Array<string>();
   for (const rawCode of values(statusCodes)) {
-    switch (rawCode) {
-      case '200':
-        asHTTPStatus.push('http.StatusOK');
-        break;
-      case '201':
-        asHTTPStatus.push('http.StatusCreated');
-        break;
-      case '202':
-        asHTTPStatus.push('http.StatusAccepted');
-        break;
-      case '204':
-        asHTTPStatus.push('http.StatusNoContent');
-        break;
-      case '300':
-        asHTTPStatus.push('http.StatusMultipleChoices');
-        break;
-      case '301':
-        asHTTPStatus.push('http.StatusMovedPermanently');
-        break;
-      case '302':
-        asHTTPStatus.push('http.StatusFound');
-        break;
-      case '400':
-        asHTTPStatus.push('http.StatusBadRequest');
-        break;
-      case '404':
-        asHTTPStatus.push('http.StatusNotFound');
-        break;
-      case '409':
-        asHTTPStatus.push('http.StatusConflict');
-        break;
-      case '500':
-        asHTTPStatus.push('http.StatusInternalServerError');
-        break;
-      case '501':
-        asHTTPStatus.push('http.StatusNotImplemented');
-        break;
-      default:
-        throw console.error(`unhandled status code ${rawCode}`);
-    }
+    asHTTPStatus.push(formatStatusCode(rawCode));
   }
   return asHTTPStatus.join(', ');
+}
+
+function formatStatusCode(statusCode: string): string {
+  switch (statusCode) {
+    case '200':
+      return 'http.StatusOK';
+    case '201':
+      return 'http.StatusCreated';
+    case '202':
+      return 'http.StatusAccepted';
+    case '204':
+      return 'http.StatusNoContent';
+    case '206':
+      return 'http.StatusPartialContent';
+    case '300':
+      return 'http.StatusMultipleChoices';
+    case '301':
+      return 'http.StatusMovedPermanently';
+    case '302':
+      return 'http.StatusFound';
+    case '303':
+      return 'http.StatusSeeOther';
+    case '307':
+      return 'http.StatusTemporaryRedirect';
+    case '400':
+      return 'http.StatusBadRequest';
+    case '404':
+      return 'http.StatusNotFound';
+    case '409':
+      return 'http.StatusConflict';
+    case '500':
+      return 'http.StatusInternalServerError';
+    case '501':
+      return 'http.StatusNotImplemented';
+    default:
+      throw console.error(`unhandled status code ${statusCode}`);
+  }
 }
 
 // returns true if any responses are a binary stream
@@ -1012,16 +1018,19 @@ function generateReturnsInfo(op: Operation, forHandler: boolean): string[] {
   if (!op.responses) {
     return ['*http.Response', 'error'];
   }
-  // TODO check this implementation, if any additional return information needs to be included for multiple responses
-  const firstResp = op.responses![0];
   let returnType = '*http.Response';
-  // must check pageable first as all pageable operations are also schema responses
-  if (!forHandler && isPageableOperation(op)) {
-    returnType = op.language.go!.pageableType.name;
-  } else if (isSchemaResponse(firstResp)) {
-    returnType = '*' + firstResp.schema.language.go!.responseType.name;
-  } else if (isLROOperation(op)) {
-    returnType = '*HTTPResponse';
+  if (isMultiRespOperation(op)) {
+    returnType = 'interface{}';
+  } else {
+    const firstResp = op.responses![0];
+    // must check pageable first as all pageable operations are also schema responses
+    if (!forHandler && isPageableOperation(op)) {
+      returnType = op.language.go!.pageableType.name;
+    } else if (isSchemaResponse(firstResp)) {
+      returnType = '*' + firstResp.schema.language.go!.responseType.name;
+    } else if (isLROOperation(op)) {
+      returnType = '*HTTPResponse';
+    }
   }
   return [returnType, 'error'];
 }
@@ -1039,4 +1048,33 @@ function addResumePollerMethod(op: Operation, clientName: string): string {
   text += '\t}, nil\n';
   text += '}\n\n';
   return text;
+}
+
+// returns true if the operation returns multiple response types
+function isMultiRespOperation(op: Operation): boolean {
+  // treat LROs as single-response ops
+  if (!op.responses || op.responses?.length === 1 || isLROOperation(op)) {
+    return false;
+  }
+  // count the number of schemas returned by this operation
+  let schemaCount = 0;
+  let currentResp = op.responses![0];
+  if (isSchemaResponse(currentResp)) {
+    ++schemaCount;
+  }
+  // check that all response types are identical
+  for (let i = 1; i < op.responses!.length; ++i) {
+    const response = op.responses![i];
+    if (isSchemaResponse(response) && isSchemaResponse(currentResp)) {
+      // both are schema responses, ensure they match
+      if ((<SchemaResponse>response).schema !== (<SchemaResponse>currentResp).schema) {
+        ++schemaCount;
+      }
+    } else if (isSchemaResponse(response) && !isSchemaResponse(currentResp)) {
+      ++schemaCount;
+      // update currentResp to this response so we can compare it against the remaining responses
+      currentResp = response;
+    }
+  }
+  return schemaCount > 1;
 }

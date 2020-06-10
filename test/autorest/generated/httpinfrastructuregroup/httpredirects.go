@@ -14,37 +14,38 @@ import (
 // HTTPRedirectsOperations contains the methods for the HTTPRedirects group.
 type HTTPRedirectsOperations interface {
 	// Delete307 - Delete redirected with 307, resulting in a 200 after redirect
-	Delete307(ctx context.Context) (*HTTPRedirectsDelete307Response, error)
+	Delete307(ctx context.Context) (*http.Response, error)
 	// Get300 - Return 300 status code and redirect to /http/success/200
-	Get300(ctx context.Context) (*HTTPRedirectsGet300Response, error)
+	// Possible return types are *HTTPRedirectsGet300Response, *StringArrayResponse
+	Get300(ctx context.Context) (interface{}, error)
 	// Get301 - Return 301 status code and redirect to /http/success/200
-	Get301(ctx context.Context) (*HTTPRedirectsGet301Response, error)
+	Get301(ctx context.Context) (*http.Response, error)
 	// Get302 - Return 302 status code and redirect to /http/success/200
-	Get302(ctx context.Context) (*HTTPRedirectsGet302Response, error)
+	Get302(ctx context.Context) (*http.Response, error)
 	// Get307 - Redirect get with 307, resulting in a 200 success
-	Get307(ctx context.Context) (*HTTPRedirectsGet307Response, error)
+	Get307(ctx context.Context) (*http.Response, error)
 	// Head300 - Return 300 status code and redirect to /http/success/200
 	Head300(ctx context.Context) (*HTTPRedirectsHead300Response, error)
 	// Head301 - Return 301 status code and redirect to /http/success/200
-	Head301(ctx context.Context) (*HTTPRedirectsHead301Response, error)
+	Head301(ctx context.Context) (*http.Response, error)
 	// Head302 - Return 302 status code and redirect to /http/success/200
-	Head302(ctx context.Context) (*HTTPRedirectsHead302Response, error)
+	Head302(ctx context.Context) (*http.Response, error)
 	// Head307 - Redirect with 307, resulting in a 200 success
-	Head307(ctx context.Context) (*HTTPRedirectsHead307Response, error)
+	Head307(ctx context.Context) (*http.Response, error)
 	// Options307 - options redirected with 307, resulting in a 200 after redirect
-	Options307(ctx context.Context) (*HTTPRedirectsOptions307Response, error)
+	Options307(ctx context.Context) (*http.Response, error)
 	// Patch302 - Patch true Boolean value in request returns 302.  This request should not be automatically redirected, but should return the received 302 to the caller for evaluation
 	Patch302(ctx context.Context) (*HTTPRedirectsPatch302Response, error)
 	// Patch307 - Patch redirected with 307, resulting in a 200 after redirect
-	Patch307(ctx context.Context) (*HTTPRedirectsPatch307Response, error)
+	Patch307(ctx context.Context) (*http.Response, error)
 	// Post303 - Post true Boolean value in request returns 303.  This request should be automatically redirected usign a get, ultimately returning a 200 status code
 	Post303(ctx context.Context) (*HTTPRedirectsPost303Response, error)
 	// Post307 - Post redirected with 307, resulting in a 200 after redirect
-	Post307(ctx context.Context) (*HTTPRedirectsPost307Response, error)
+	Post307(ctx context.Context) (*http.Response, error)
 	// Put301 - Put true Boolean value in request returns 301.  This request should not be automatically redirected, but should return the received 301 to the caller for evaluation
 	Put301(ctx context.Context) (*HTTPRedirectsPut301Response, error)
 	// Put307 - Put redirected with 307, resulting in a 200 after redirect
-	Put307(ctx context.Context) (*HTTPRedirectsPut307Response, error)
+	Put307(ctx context.Context) (*http.Response, error)
 }
 
 // httpRedirectsOperations implements the HTTPRedirectsOperations interface.
@@ -53,7 +54,7 @@ type httpRedirectsOperations struct {
 }
 
 // Delete307 - Delete redirected with 307, resulting in a 200 after redirect
-func (client *httpRedirectsOperations) Delete307(ctx context.Context) (*HTTPRedirectsDelete307Response, error) {
+func (client *httpRedirectsOperations) Delete307(ctx context.Context) (*http.Response, error) {
 	req, err := client.delete307CreateRequest()
 	if err != nil {
 		return nil, err
@@ -81,15 +82,11 @@ func (client *httpRedirectsOperations) delete307CreateRequest() (*azcore.Request
 }
 
 // delete307HandleResponse handles the Delete307 response.
-func (client *httpRedirectsOperations) delete307HandleResponse(resp *azcore.Response) (*HTTPRedirectsDelete307Response, error) {
+func (client *httpRedirectsOperations) delete307HandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.delete307HandleError(resp)
 	}
-	result := HTTPRedirectsDelete307Response{RawResponse: resp.Response}
-	if val := resp.Header.Get("Location"); val != "" {
-		result.Location = &val
-	}
-	return &result, nil
+	return resp.Response, nil
 }
 
 // delete307HandleError handles the Delete307 error response.
@@ -102,7 +99,8 @@ func (client *httpRedirectsOperations) delete307HandleError(resp *azcore.Respons
 }
 
 // Get300 - Return 300 status code and redirect to /http/success/200
-func (client *httpRedirectsOperations) Get300(ctx context.Context) (*HTTPRedirectsGet300Response, error) {
+// Possible return types are *HTTPRedirectsGet300Response, *StringArrayResponse
+func (client *httpRedirectsOperations) Get300(ctx context.Context) (interface{}, error) {
 	req, err := client.get300CreateRequest()
 	if err != nil {
 		return nil, err
@@ -130,15 +128,23 @@ func (client *httpRedirectsOperations) get300CreateRequest() (*azcore.Request, e
 }
 
 // get300HandleResponse handles the Get300 response.
-func (client *httpRedirectsOperations) get300HandleResponse(resp *azcore.Response) (*HTTPRedirectsGet300Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
+func (client *httpRedirectsOperations) get300HandleResponse(resp *azcore.Response) (interface{}, error) {
+	switch resp.StatusCode {
+	case http.StatusOK:
+		result := HTTPRedirectsGet300Response{RawResponse: resp.Response}
+		if val := resp.Header.Get("Location"); val != "" {
+			result.Location = &val
+		}
+		return &result, nil
+	case http.StatusMultipleChoices:
+		result := StringArrayResponse{RawResponse: resp.Response}
+		if val := resp.Header.Get("Location"); val != "" {
+			result.Location = &val
+		}
+		return &result, resp.UnmarshalAsJSON(&result.StringArray)
+	default:
 		return nil, client.get300HandleError(resp)
 	}
-	result := HTTPRedirectsGet300Response{RawResponse: resp.Response}
-	if val := resp.Header.Get("Location"); val != "" {
-		result.Location = &val
-	}
-	return &result, nil
 }
 
 // get300HandleError handles the Get300 error response.
@@ -151,7 +157,7 @@ func (client *httpRedirectsOperations) get300HandleError(resp *azcore.Response) 
 }
 
 // Get301 - Return 301 status code and redirect to /http/success/200
-func (client *httpRedirectsOperations) Get301(ctx context.Context) (*HTTPRedirectsGet301Response, error) {
+func (client *httpRedirectsOperations) Get301(ctx context.Context) (*http.Response, error) {
 	req, err := client.get301CreateRequest()
 	if err != nil {
 		return nil, err
@@ -179,15 +185,11 @@ func (client *httpRedirectsOperations) get301CreateRequest() (*azcore.Request, e
 }
 
 // get301HandleResponse handles the Get301 response.
-func (client *httpRedirectsOperations) get301HandleResponse(resp *azcore.Response) (*HTTPRedirectsGet301Response, error) {
+func (client *httpRedirectsOperations) get301HandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.get301HandleError(resp)
 	}
-	result := HTTPRedirectsGet301Response{RawResponse: resp.Response}
-	if val := resp.Header.Get("Location"); val != "" {
-		result.Location = &val
-	}
-	return &result, nil
+	return resp.Response, nil
 }
 
 // get301HandleError handles the Get301 error response.
@@ -200,7 +202,7 @@ func (client *httpRedirectsOperations) get301HandleError(resp *azcore.Response) 
 }
 
 // Get302 - Return 302 status code and redirect to /http/success/200
-func (client *httpRedirectsOperations) Get302(ctx context.Context) (*HTTPRedirectsGet302Response, error) {
+func (client *httpRedirectsOperations) Get302(ctx context.Context) (*http.Response, error) {
 	req, err := client.get302CreateRequest()
 	if err != nil {
 		return nil, err
@@ -228,15 +230,11 @@ func (client *httpRedirectsOperations) get302CreateRequest() (*azcore.Request, e
 }
 
 // get302HandleResponse handles the Get302 response.
-func (client *httpRedirectsOperations) get302HandleResponse(resp *azcore.Response) (*HTTPRedirectsGet302Response, error) {
+func (client *httpRedirectsOperations) get302HandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.get302HandleError(resp)
 	}
-	result := HTTPRedirectsGet302Response{RawResponse: resp.Response}
-	if val := resp.Header.Get("Location"); val != "" {
-		result.Location = &val
-	}
-	return &result, nil
+	return resp.Response, nil
 }
 
 // get302HandleError handles the Get302 error response.
@@ -249,7 +247,7 @@ func (client *httpRedirectsOperations) get302HandleError(resp *azcore.Response) 
 }
 
 // Get307 - Redirect get with 307, resulting in a 200 success
-func (client *httpRedirectsOperations) Get307(ctx context.Context) (*HTTPRedirectsGet307Response, error) {
+func (client *httpRedirectsOperations) Get307(ctx context.Context) (*http.Response, error) {
 	req, err := client.get307CreateRequest()
 	if err != nil {
 		return nil, err
@@ -277,15 +275,11 @@ func (client *httpRedirectsOperations) get307CreateRequest() (*azcore.Request, e
 }
 
 // get307HandleResponse handles the Get307 response.
-func (client *httpRedirectsOperations) get307HandleResponse(resp *azcore.Response) (*HTTPRedirectsGet307Response, error) {
+func (client *httpRedirectsOperations) get307HandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.get307HandleError(resp)
 	}
-	result := HTTPRedirectsGet307Response{RawResponse: resp.Response}
-	if val := resp.Header.Get("Location"); val != "" {
-		result.Location = &val
-	}
-	return &result, nil
+	return resp.Response, nil
 }
 
 // get307HandleError handles the Get307 error response.
@@ -327,7 +321,7 @@ func (client *httpRedirectsOperations) head300CreateRequest() (*azcore.Request, 
 
 // head300HandleResponse handles the Head300 response.
 func (client *httpRedirectsOperations) head300HandleResponse(resp *azcore.Response) (*HTTPRedirectsHead300Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !resp.HasStatusCode(http.StatusOK, http.StatusMultipleChoices) {
 		return nil, client.head300HandleError(resp)
 	}
 	result := HTTPRedirectsHead300Response{RawResponse: resp.Response}
@@ -347,7 +341,7 @@ func (client *httpRedirectsOperations) head300HandleError(resp *azcore.Response)
 }
 
 // Head301 - Return 301 status code and redirect to /http/success/200
-func (client *httpRedirectsOperations) Head301(ctx context.Context) (*HTTPRedirectsHead301Response, error) {
+func (client *httpRedirectsOperations) Head301(ctx context.Context) (*http.Response, error) {
 	req, err := client.head301CreateRequest()
 	if err != nil {
 		return nil, err
@@ -375,15 +369,11 @@ func (client *httpRedirectsOperations) head301CreateRequest() (*azcore.Request, 
 }
 
 // head301HandleResponse handles the Head301 response.
-func (client *httpRedirectsOperations) head301HandleResponse(resp *azcore.Response) (*HTTPRedirectsHead301Response, error) {
+func (client *httpRedirectsOperations) head301HandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.head301HandleError(resp)
 	}
-	result := HTTPRedirectsHead301Response{RawResponse: resp.Response}
-	if val := resp.Header.Get("Location"); val != "" {
-		result.Location = &val
-	}
-	return &result, nil
+	return resp.Response, nil
 }
 
 // head301HandleError handles the Head301 error response.
@@ -396,7 +386,7 @@ func (client *httpRedirectsOperations) head301HandleError(resp *azcore.Response)
 }
 
 // Head302 - Return 302 status code and redirect to /http/success/200
-func (client *httpRedirectsOperations) Head302(ctx context.Context) (*HTTPRedirectsHead302Response, error) {
+func (client *httpRedirectsOperations) Head302(ctx context.Context) (*http.Response, error) {
 	req, err := client.head302CreateRequest()
 	if err != nil {
 		return nil, err
@@ -424,15 +414,11 @@ func (client *httpRedirectsOperations) head302CreateRequest() (*azcore.Request, 
 }
 
 // head302HandleResponse handles the Head302 response.
-func (client *httpRedirectsOperations) head302HandleResponse(resp *azcore.Response) (*HTTPRedirectsHead302Response, error) {
+func (client *httpRedirectsOperations) head302HandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.head302HandleError(resp)
 	}
-	result := HTTPRedirectsHead302Response{RawResponse: resp.Response}
-	if val := resp.Header.Get("Location"); val != "" {
-		result.Location = &val
-	}
-	return &result, nil
+	return resp.Response, nil
 }
 
 // head302HandleError handles the Head302 error response.
@@ -445,7 +431,7 @@ func (client *httpRedirectsOperations) head302HandleError(resp *azcore.Response)
 }
 
 // Head307 - Redirect with 307, resulting in a 200 success
-func (client *httpRedirectsOperations) Head307(ctx context.Context) (*HTTPRedirectsHead307Response, error) {
+func (client *httpRedirectsOperations) Head307(ctx context.Context) (*http.Response, error) {
 	req, err := client.head307CreateRequest()
 	if err != nil {
 		return nil, err
@@ -473,15 +459,11 @@ func (client *httpRedirectsOperations) head307CreateRequest() (*azcore.Request, 
 }
 
 // head307HandleResponse handles the Head307 response.
-func (client *httpRedirectsOperations) head307HandleResponse(resp *azcore.Response) (*HTTPRedirectsHead307Response, error) {
+func (client *httpRedirectsOperations) head307HandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.head307HandleError(resp)
 	}
-	result := HTTPRedirectsHead307Response{RawResponse: resp.Response}
-	if val := resp.Header.Get("Location"); val != "" {
-		result.Location = &val
-	}
-	return &result, nil
+	return resp.Response, nil
 }
 
 // head307HandleError handles the Head307 error response.
@@ -494,7 +476,7 @@ func (client *httpRedirectsOperations) head307HandleError(resp *azcore.Response)
 }
 
 // Options307 - options redirected with 307, resulting in a 200 after redirect
-func (client *httpRedirectsOperations) Options307(ctx context.Context) (*HTTPRedirectsOptions307Response, error) {
+func (client *httpRedirectsOperations) Options307(ctx context.Context) (*http.Response, error) {
 	req, err := client.options307CreateRequest()
 	if err != nil {
 		return nil, err
@@ -522,15 +504,11 @@ func (client *httpRedirectsOperations) options307CreateRequest() (*azcore.Reques
 }
 
 // options307HandleResponse handles the Options307 response.
-func (client *httpRedirectsOperations) options307HandleResponse(resp *azcore.Response) (*HTTPRedirectsOptions307Response, error) {
+func (client *httpRedirectsOperations) options307HandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.options307HandleError(resp)
 	}
-	result := HTTPRedirectsOptions307Response{RawResponse: resp.Response}
-	if val := resp.Header.Get("Location"); val != "" {
-		result.Location = &val
-	}
-	return &result, nil
+	return resp.Response, nil
 }
 
 // options307HandleError handles the Options307 error response.
@@ -592,7 +570,7 @@ func (client *httpRedirectsOperations) patch302HandleError(resp *azcore.Response
 }
 
 // Patch307 - Patch redirected with 307, resulting in a 200 after redirect
-func (client *httpRedirectsOperations) Patch307(ctx context.Context) (*HTTPRedirectsPatch307Response, error) {
+func (client *httpRedirectsOperations) Patch307(ctx context.Context) (*http.Response, error) {
 	req, err := client.patch307CreateRequest()
 	if err != nil {
 		return nil, err
@@ -620,15 +598,11 @@ func (client *httpRedirectsOperations) patch307CreateRequest() (*azcore.Request,
 }
 
 // patch307HandleResponse handles the Patch307 response.
-func (client *httpRedirectsOperations) patch307HandleResponse(resp *azcore.Response) (*HTTPRedirectsPatch307Response, error) {
+func (client *httpRedirectsOperations) patch307HandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.patch307HandleError(resp)
 	}
-	result := HTTPRedirectsPatch307Response{RawResponse: resp.Response}
-	if val := resp.Header.Get("Location"); val != "" {
-		result.Location = &val
-	}
-	return &result, nil
+	return resp.Response, nil
 }
 
 // patch307HandleError handles the Patch307 error response.
@@ -670,7 +644,7 @@ func (client *httpRedirectsOperations) post303CreateRequest() (*azcore.Request, 
 
 // post303HandleResponse handles the Post303 response.
 func (client *httpRedirectsOperations) post303HandleResponse(resp *azcore.Response) (*HTTPRedirectsPost303Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !resp.HasStatusCode(http.StatusOK, http.StatusSeeOther) {
 		return nil, client.post303HandleError(resp)
 	}
 	result := HTTPRedirectsPost303Response{RawResponse: resp.Response}
@@ -690,7 +664,7 @@ func (client *httpRedirectsOperations) post303HandleError(resp *azcore.Response)
 }
 
 // Post307 - Post redirected with 307, resulting in a 200 after redirect
-func (client *httpRedirectsOperations) Post307(ctx context.Context) (*HTTPRedirectsPost307Response, error) {
+func (client *httpRedirectsOperations) Post307(ctx context.Context) (*http.Response, error) {
 	req, err := client.post307CreateRequest()
 	if err != nil {
 		return nil, err
@@ -718,15 +692,11 @@ func (client *httpRedirectsOperations) post307CreateRequest() (*azcore.Request, 
 }
 
 // post307HandleResponse handles the Post307 response.
-func (client *httpRedirectsOperations) post307HandleResponse(resp *azcore.Response) (*HTTPRedirectsPost307Response, error) {
+func (client *httpRedirectsOperations) post307HandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.post307HandleError(resp)
 	}
-	result := HTTPRedirectsPost307Response{RawResponse: resp.Response}
-	if val := resp.Header.Get("Location"); val != "" {
-		result.Location = &val
-	}
-	return &result, nil
+	return resp.Response, nil
 }
 
 // post307HandleError handles the Post307 error response.
@@ -788,7 +758,7 @@ func (client *httpRedirectsOperations) put301HandleError(resp *azcore.Response) 
 }
 
 // Put307 - Put redirected with 307, resulting in a 200 after redirect
-func (client *httpRedirectsOperations) Put307(ctx context.Context) (*HTTPRedirectsPut307Response, error) {
+func (client *httpRedirectsOperations) Put307(ctx context.Context) (*http.Response, error) {
 	req, err := client.put307CreateRequest()
 	if err != nil {
 		return nil, err
@@ -816,15 +786,11 @@ func (client *httpRedirectsOperations) put307CreateRequest() (*azcore.Request, e
 }
 
 // put307HandleResponse handles the Put307 response.
-func (client *httpRedirectsOperations) put307HandleResponse(resp *azcore.Response) (*HTTPRedirectsPut307Response, error) {
+func (client *httpRedirectsOperations) put307HandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.put307HandleError(resp)
 	}
-	result := HTTPRedirectsPut307Response{RawResponse: resp.Response}
-	if val := resp.Header.Get("Location"); val != "" {
-		result.Location = &val
-	}
-	return &result, nil
+	return resp.Response, nil
 }
 
 // put307HandleError handles the Put307 error response.

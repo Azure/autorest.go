@@ -115,7 +115,7 @@ func (client *petOperations) getPetByIdCreateRequest(petId string) (*azcore.Requ
 
 // getPetByIdHandleResponse handles the GetPetByID response.
 func (client *petOperations) getPetByIdHandleResponse(resp *azcore.Response) (*PetResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.getPetByIdHandleError(resp)
 	}
 	result := PetResponse{RawResponse: resp.Response}

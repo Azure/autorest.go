@@ -15,6 +15,14 @@ type B struct {
 	TextStatusCode *string `json:"textStatusCode,omitempty"`
 }
 
+// BResponse is the response envelope for operations that return a B type.
+type BResponse struct {
+	B *B
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
 // BoolResponse is the response envelope for operations that return a bool type.
 type BoolResponse struct {
 	// RawResponse contains the underlying HTTP response.
@@ -28,8 +36,24 @@ type C struct {
 	HTTPCode *string `json:"httpCode,omitempty"`
 }
 
+// CResponse is the response envelope for operations that return a C type.
+type CResponse struct {
+	C *C
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
 type D struct {
 	HTTPStatusCode *string `json:"httpStatusCode,omitempty"`
+}
+
+// DResponse is the response envelope for operations that return a D type.
+type DResponse struct {
+	D *D
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 type Error struct {
@@ -51,44 +75,8 @@ func (e Error) Error() string {
 	return msg
 }
 
-// HTTPRedirectsDelete307Response contains the response from method HTTPRedirects.Delete307.
-type HTTPRedirectsDelete307Response struct {
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // HTTPRedirectsGet300Response contains the response from method HTTPRedirects.Get300.
 type HTTPRedirectsGet300Response struct {
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// HTTPRedirectsGet301Response contains the response from method HTTPRedirects.Get301.
-type HTTPRedirectsGet301Response struct {
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// HTTPRedirectsGet302Response contains the response from method HTTPRedirects.Get302.
-type HTTPRedirectsGet302Response struct {
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// HTTPRedirectsGet307Response contains the response from method HTTPRedirects.Get307.
-type HTTPRedirectsGet307Response struct {
 	// Location contains the information returned from the Location header response.
 	Location *string
 
@@ -105,53 +93,8 @@ type HTTPRedirectsHead300Response struct {
 	RawResponse *http.Response
 }
 
-// HTTPRedirectsHead301Response contains the response from method HTTPRedirects.Head301.
-type HTTPRedirectsHead301Response struct {
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// HTTPRedirectsHead302Response contains the response from method HTTPRedirects.Head302.
-type HTTPRedirectsHead302Response struct {
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// HTTPRedirectsHead307Response contains the response from method HTTPRedirects.Head307.
-type HTTPRedirectsHead307Response struct {
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// HTTPRedirectsOptions307Response contains the response from method HTTPRedirects.Options307.
-type HTTPRedirectsOptions307Response struct {
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // HTTPRedirectsPatch302Response contains the response from method HTTPRedirects.Patch302.
 type HTTPRedirectsPatch302Response struct {
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// HTTPRedirectsPatch307Response contains the response from method HTTPRedirects.Patch307.
-type HTTPRedirectsPatch307Response struct {
 	// Location contains the information returned from the Location header response.
 	Location *string
 
@@ -168,26 +111,8 @@ type HTTPRedirectsPost303Response struct {
 	RawResponse *http.Response
 }
 
-// HTTPRedirectsPost307Response contains the response from method HTTPRedirects.Post307.
-type HTTPRedirectsPost307Response struct {
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // HTTPRedirectsPut301Response contains the response from method HTTPRedirects.Put301.
 type HTTPRedirectsPut301Response struct {
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// HTTPRedirectsPut307Response contains the response from method HTTPRedirects.Put307.
-type HTTPRedirectsPut307Response struct {
 	// Location contains the information returned from the Location header response.
 	Location *string
 
@@ -216,4 +141,16 @@ type MyExceptionResponse struct {
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// StringArrayResponse is the response envelope for operations that return a []string type.
+type StringArrayResponse struct {
+	// Location contains the information returned from the Location header response.
+	Location *string
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// A list of location options for the request ['/http/success/get/200']
+	StringArray *[]string
 }

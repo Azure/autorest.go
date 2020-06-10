@@ -248,9 +248,7 @@ func TestPathsStringURLNonEncoded(t *testing.T) {
 	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
-// TODO verify how to work with this type of string
 func TestPathsStringUnicode(t *testing.T) {
-	t.Skip()
 	client := getPathsOperations(t)
 	result, err := client.StringUnicode(context.Background())
 	if err != nil {

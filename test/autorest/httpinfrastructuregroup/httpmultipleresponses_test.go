@@ -28,42 +28,120 @@ func TestGet200Model201ModelDefaultError200Valid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.MyException.StatusCode, to.StringPtr("200"))
+	switch x := result.(type) {
+	case *httpinfrastructuregroup.MyExceptionResponse:
+		helpers.DeepEqualOrFatal(t, x.MyException.StatusCode, to.StringPtr("200"))
+	case *httpinfrastructuregroup.BResponse:
+		helpers.VerifyStatusCode(t, x.RawResponse, http.StatusCreated)
+	default:
+		t.Fatalf("unhandled response type %v", x)
+	}
 }
 
 // Get200Model201ModelDefaultError201Valid - Send a 201 response with valid payload: {'statusCode': '201', 'textStatusCode': 'Created'}
 func TestGet200Model201ModelDefaultError201Valid(t *testing.T) {
-	t.Skip("different return schemas NYI")
+	client := getMultipleResponseOperations(t)
+	result, err := client.Get200Model201ModelDefaultError201Valid(context.Background())
+	if err != nil {
+		t.Fatal(err)
+	}
+	r, ok := result.(*httpinfrastructuregroup.BResponse)
+	if !ok {
+		t.Fatal("unexpected response type")
+	}
+	helpers.DeepEqualOrFatal(t, r.B, &httpinfrastructuregroup.B{
+		MyException: httpinfrastructuregroup.MyException{
+			StatusCode: to.StringPtr("201"),
+		},
+		TextStatusCode: to.StringPtr("Created"),
+	})
 }
 
 // Get200Model201ModelDefaultError400Valid - Send a 400 response with valid payload: {'code': '400', 'message': 'client error'}
 func TestGet200Model201ModelDefaultError400Valid(t *testing.T) {
-	t.Skip("different return schemas NYI")
+	client := getMultipleResponseOperations(t)
+	result, err := client.Get200Model201ModelDefaultError400Valid(context.Background())
+	r, ok := err.(httpinfrastructuregroup.Error)
+	if !ok {
+		t.Fatal("unexpected error type")
+	}
+	helpers.DeepEqualOrFatal(t, r, httpinfrastructuregroup.Error{
+		Message: to.StringPtr("client error"),
+		Status:  to.Int32Ptr(400),
+	})
+	if result != nil {
+		t.Fatal("expected nil result")
+	}
 }
 
 // Get200Model204NoModelDefaultError200Valid - Send a 200 response with valid payload: {'statusCode': '200'}
 func TestGet200Model204NoModelDefaultError200Valid(t *testing.T) {
-	t.Skip("different return schemas NYI")
+	client := getMultipleResponseOperations(t)
+	result, err := client.Get200Model204NoModelDefaultError200Valid(context.Background())
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.DeepEqualOrFatal(t, result.MyException, &httpinfrastructuregroup.MyException{
+		StatusCode: to.StringPtr("200"),
+	})
 }
 
 // Get200Model204NoModelDefaultError201Invalid - Send a 201 response with valid payload: {'statusCode': '201'}
 func TestGet200Model204NoModelDefaultError201Invalid(t *testing.T) {
-	t.Skip("different return schemas NYI")
+	client := getMultipleResponseOperations(t)
+	result, err := client.Get200Model204NoModelDefaultError201Invalid(context.Background())
+	r, ok := err.(httpinfrastructuregroup.Error)
+	if !ok {
+		t.Fatal("unexpected error type")
+	}
+	helpers.DeepEqualOrFatal(t, r, httpinfrastructuregroup.Error{})
+	if result != nil {
+		t.Fatal("expected nil result")
+	}
 }
 
 // Get200Model204NoModelDefaultError202None - Send a 202 response with no payload:
 func TestGet200Model204NoModelDefaultError202None(t *testing.T) {
-	t.Skip("different return schemas NYI")
+	client := getMultipleResponseOperations(t)
+	result, err := client.Get200Model204NoModelDefaultError202None(context.Background())
+	r, ok := err.(httpinfrastructuregroup.Error)
+	if !ok {
+		t.Fatal("unexpected error type")
+	}
+	helpers.DeepEqualOrFatal(t, r, httpinfrastructuregroup.Error{})
+	if result != nil {
+		t.Fatal("expected nil result")
+	}
 }
 
 // Get200Model204NoModelDefaultError204Valid - Send a 204 response with no payload
 func TestGet200Model204NoModelDefaultError204Valid(t *testing.T) {
-	t.Skip("different return schemas NYI")
+	client := getMultipleResponseOperations(t)
+	result, err := client.Get200Model204NoModelDefaultError204Valid(context.Background())
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusNoContent)
+	if result.MyException != nil {
+		t.Fatal("expected nil payload")
+	}
 }
 
 // Get200Model204NoModelDefaultError400Valid - Send a 400 response with valid error payload: {'status': 400, 'message': 'client error'}
 func TestGet200Model204NoModelDefaultError400Valid(t *testing.T) {
-	t.Skip("different return schemas NYI")
+	client := getMultipleResponseOperations(t)
+	result, err := client.Get200Model204NoModelDefaultError400Valid(context.Background())
+	r, ok := err.(httpinfrastructuregroup.Error)
+	if !ok {
+		t.Fatal("unexpected error type")
+	}
+	helpers.DeepEqualOrFatal(t, r, httpinfrastructuregroup.Error{
+		Message: to.StringPtr("client error"),
+		Status:  to.Int32Ptr(400),
+	})
+	if result != nil {
+		t.Fatal("expected nil result")
+	}
 }
 
 // Get200ModelA200Invalid - Send a 200 response with invalid payload {'statusCodeInvalid': '200'}
@@ -97,22 +175,67 @@ func TestGet200ModelA200Valid(t *testing.T) {
 
 // Get200ModelA201ModelC404ModelDDefaultError200Valid - Send a 200 response with valid payload: {'statusCode': '200'}
 func TestGet200ModelA201ModelC404ModelDDefaultError200Valid(t *testing.T) {
-	t.Skip("different return schemas NYI")
+	client := getMultipleResponseOperations(t)
+	result, err := client.Get200ModelA201ModelC404ModelDDefaultError200Valid(context.Background())
+	if err != nil {
+		t.Fatal(err)
+	}
+	r, ok := result.(*httpinfrastructuregroup.MyExceptionResponse)
+	if !ok {
+		t.Fatal("unexpected result type")
+	}
+	helpers.DeepEqualOrFatal(t, r.MyException, &httpinfrastructuregroup.MyException{
+		StatusCode: to.StringPtr("200"),
+	})
 }
 
 // Get200ModelA201ModelC404ModelDDefaultError201Valid - Send a 200 response with valid payload: {'httpCode': '201'}
 func TestGet200ModelA201ModelC404ModelDDefaultError201Valid(t *testing.T) {
-	t.Skip("different return schemas NYI")
+	client := getMultipleResponseOperations(t)
+	result, err := client.Get200ModelA201ModelC404ModelDDefaultError201Valid(context.Background())
+	if err != nil {
+		t.Fatal(err)
+	}
+	r, ok := result.(*httpinfrastructuregroup.CResponse)
+	if !ok {
+		t.Fatal("unexpected result type")
+	}
+	helpers.DeepEqualOrFatal(t, r.C, &httpinfrastructuregroup.C{
+		HTTPCode: to.StringPtr("201"),
+	})
 }
 
 // Get200ModelA201ModelC404ModelDDefaultError400Valid - Send a 400 response with valid payload: {'code': '400', 'message': 'client error'}
 func TestGet200ModelA201ModelC404ModelDDefaultError400Valid(t *testing.T) {
-	t.Skip("different return schemas NYI")
+	client := getMultipleResponseOperations(t)
+	result, err := client.Get200ModelA201ModelC404ModelDDefaultError400Valid(context.Background())
+	r, ok := err.(httpinfrastructuregroup.Error)
+	if !ok {
+		t.Fatal("unexpected error type")
+	}
+	helpers.DeepEqualOrFatal(t, r, httpinfrastructuregroup.Error{
+		Message: to.StringPtr("client error"),
+		Status:  to.Int32Ptr(400),
+	})
+	if result != nil {
+		t.Fatal("expected nil result")
+	}
 }
 
 // Get200ModelA201ModelC404ModelDDefaultError404Valid - Send a 200 response with valid payload: {'httpStatusCode': '404'}
 func TestGet200ModelA201ModelC404ModelDDefaultError404Valid(t *testing.T) {
-	t.Skip("different return schemas NYI")
+	client := getMultipleResponseOperations(t)
+	result, err := client.Get200ModelA201ModelC404ModelDDefaultError404Valid(context.Background())
+	if err != nil {
+		t.Fatal(err)
+	}
+	r, ok := result.(*httpinfrastructuregroup.DResponse)
+	if !ok {
+		t.Fatal("unexpected result type")
+	}
+	helpers.DeepEqualOrFatal(t, r.D, &httpinfrastructuregroup.D{
+		HTTPStatusCode: to.StringPtr("404"),
+	})
 }
 
 // Get200ModelA202Valid - Send a 202 response with payload {'statusCode': '202'}
