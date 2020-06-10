@@ -26,6 +26,7 @@ const goMappings = {
     'httpinfrastructuregroup': 'httpInfrastructure.json',
     'integergroup': 'body-integer.json',
     'lrogroup': 'lro.json',
+    'migroup': 'multiple-inheritance.json',
     //'modelflatteninggroup': 'model-flattening.json',
     'morecustombaseurigroup': 'custom-baseUrl-more-options.json',
     'numbergroup': 'body-number.json',
