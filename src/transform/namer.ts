@@ -6,9 +6,9 @@
 import { pascalCase, camelCase } from '@azure-tools/codegen';
 import { Session } from '@azure-tools/autorest-extension-base';
 import { CodeModel, Language } from '@azure-tools/codemodel';
-import { length, visitor, clone, values } from '@azure-tools/linq';
+import { visitor, clone, values } from '@azure-tools/linq';
 import { CommonAcronyms, ReservedWords } from './mappings';
-import { aggregateParameters, isLROOperation } from '../common/helpers';
+import { aggregateParameters, hasAdditionalProperties, isLROOperation } from '../common/helpers';
 
 const requestMethodSuffix = 'CreateRequest';
 const responseMethodSuffix = 'HandleResponse';
@@ -62,6 +62,11 @@ export async function namer(session: Session<CodeModel>) {
     for (const prop of values(obj.properties)) {
       const details = <Language>prop.language.go;
       details.name = getEscapedReservedName(removePrefix(capitalizeAcronyms(pascalCase(details.name)), 'XMS'), 'Field');
+      if (hasAdditionalProperties(obj) && details.name === 'AdditionalProperties') {
+        // this is the case where a type contains the generic additional properties
+        // and also has a field named additionalProperties.  we rename the field.
+        details.name = 'AdditionalProperties1';
+      }
     }
   }
 
