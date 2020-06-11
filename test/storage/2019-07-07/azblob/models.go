@@ -897,7 +897,9 @@ type BlobItem struct {
 }
 
 type BlobMetadata struct {
-	Encrypted *string `xml:"Encrypted,attr"`
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties *map[string]string
+	Encrypted            *string `xml:"Encrypted,attr"`
 }
 
 type BlobPrefix struct {

@@ -4,10 +4,10 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@azure-tools/autorest-extension-base';
-import { camelCase, comment, pascalCase } from '@azure-tools/codegen';
-import { CodeModel, ConstantSchema, GroupProperty, ImplementationLocation, ObjectSchema, Language, Schema, SchemaType, Parameter, Property } from '@azure-tools/codemodel';
+import { comment, pascalCase } from '@azure-tools/codegen';
+import { CodeModel, ConstantSchema, GroupProperty, ImplementationLocation, ObjectSchema, Language, Schema, SchemaType, Parameter, Property, DictionarySchema } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { isArraySchema, isObjectSchema } from '../common/helpers';
+import { isArraySchema, isObjectSchema, hasAdditionalProperties } from '../common/helpers';
 import { contentPreamble, hasDescription, sortAscending, substituteDiscriminator } from './helpers';
 import { ImportManager } from './imports';
 
@@ -152,7 +152,8 @@ class StructDef {
       let tag = ` \`${this.Language.marshallingFormat}:"${serialization}"\``;
       // if this is a response type then omit the tag IFF the marshalling format is
       // JSON, it's a header or is the RawResponse field.  XML marshalling needs a tag.
-      if (this.Language.responseType === true && (this.Language.marshallingFormat !== 'xml' || prop.language.go!.name === 'RawResponse')) {
+      // also omit the tag for additionalProperties
+      if ((this.Language.responseType === true && (this.Language.marshallingFormat !== 'xml' || prop.language.go!.name === 'RawResponse')) || prop.language.go!.isAdditionalProperties) {
         tag = '';
       }
       let pointer = '*';
@@ -238,6 +239,7 @@ function generateStructs(objects?: ObjectSchema[]): StructDef[] {
       text += '}\n\n';
       structDef.Methods.push({ name: 'Error', text: text });
     }
+    // TODO: unify marshalling schemes
     if (obj.discriminator) {
       // only need to generate interface method and internal marshaller for discriminators (Fish, Salmon, Shark)
       generateDiscriminatorMethods(obj, structDef, parentType!);
@@ -252,11 +254,19 @@ function generateStructs(objects?: ObjectSchema[]): StructDef[] {
     } else if (hasPolymorphicField) {
       generateDiscriminatedTypeUnmarshaller(obj, structDef, parentType!);
     } else if (obj.language.go!.needsDateTimeMarshalling || obj.language.go!.xmlWrapperName) {
-      // TODO: unify marshalling schemes?
       generateMarshaller(structDef);
       if (obj.language.go!.needsDateTimeMarshalling) {
         generateUnmarshaller(structDef);
       }
+    } else if (obj.language.go!.marshallingFormat === 'json' && (hasAdditionalProperties(obj) || (parentType && hasAdditionalProperties(parentType)))) {
+      // TODO: support for XML
+      generateAdditionalPropertiesMarshaller(structDef, parentType);
+      let schema = hasAdditionalProperties(obj);
+      if (!schema) {
+        // must be the parent
+        schema = hasAdditionalProperties(parentType!);
+      }
+      generateAdditionalPropertiesUnmarshaller(structDef, (<DictionarySchema>schema).elementType, parentType);
     }
     structDef.ComposedOf.sort((a: ObjectSchema, b: ObjectSchema) => { return sortAscending(a.language.go!.name, b.language.go!.name); });
     structTypes.push(structDef);
@@ -382,6 +392,9 @@ function generateDiscriminatedTypeMarshaller(obj: ObjectSchema, structDef: Struc
   let marshaller = `func (${receiver} ${typeName}) MarshalJSON() ([]byte, error) {\n`;
   marshaller += `\tobjectMap := ${receiver}.${parentType!.language.go!.name}.marshalInternal(${obj.discriminatorValue})\n`;
   for (const prop of values(structDef.Properties)) {
+    if (prop.language.go!.isAdditionalProperties) {
+      continue;
+    }
     marshaller += `\tif ${receiver}.${prop.language.go!.name} != nil {\n`;
     if (prop.schema.language.go!.internalTimeType) {
       marshaller += `\t\tobjectMap["${prop.serializedName}"] = (*${prop.schema.language.go!.internalTimeType})(${receiver}.${prop.language.go!.name})\n`;
@@ -415,6 +428,9 @@ function generateDiscriminatedTypeUnmarshaller(obj: ObjectSchema, structDef: Str
   unmarshaller += '\t\tswitch k {\n';
   // unmarshal each field one by one
   for (const prop of values(structDef.Properties)) {
+    if (prop.language.go!.isAdditionalProperties) {
+      continue;
+    }
     unmarshaller += `\t\tcase "${prop.serializedName}":\n`;
     unmarshaller += '\t\t\tif v != nil {\n';
     if (prop.schema.language.go!.discriminatorInterface) {
@@ -531,4 +547,95 @@ function generateAliasType(structDef: StructDef, receiver: string, forMarshal: b
   }
   text += `\t}\n`;
   return text;
+}
+
+function generateAdditionalPropertiesMarshaller(structDef: StructDef, parentType?: ObjectSchema) {
+  imports.add('encoding/json');
+  const typeName = structDef.Language.name;
+  const receiver = typeName[0].toLowerCase();
+  // generate marshaller method
+  let marshaller = `func (${receiver} ${typeName}) MarshalJSON() ([]byte, error) {\n`;
+  marshaller += '\tobjectMap := make(map[string]interface{})\n';
+  const emitMarshaller = function (prop: Property): string {
+    let text = `\tif ${receiver}.${prop.language.go!.name} != nil {\n`;
+    if (prop.schema.language.go!.internalTimeType) {
+      text += `\t\tobjectMap["${prop.serializedName}"] = (*${prop.schema.language.go!.internalTimeType})(${receiver}.${prop.language.go!.name})\n`;
+    } else {
+      text += `\t\tobjectMap["${prop.serializedName}"] = ${receiver}.${prop.language.go!.name}\n`;
+    }
+    text += `\t}\n`;
+    return text;
+  }
+  // TODO: multiple inheritance
+  for (const prop of values(parentType?.properties)) {
+    if (prop.language.go!.isAdditionalProperties) {
+      continue;
+    }
+    marshaller += emitMarshaller(prop);
+  }
+  for (const prop of values(structDef.Properties)) {
+    if (prop.language.go!.isAdditionalProperties) {
+      continue;
+    }
+    marshaller += emitMarshaller(prop);
+  }
+  marshaller += `\tif ${receiver}.AdditionalProperties != nil {\n`;
+  marshaller += `\t\tfor k, v := range *${receiver}.AdditionalProperties {\n`;
+  marshaller += '\t\t\tobjectMap[k] = v\n';
+  marshaller += '\t\t}\n';;
+  marshaller += '\t}\n';
+  marshaller += '\treturn json.Marshal(objectMap)\n';
+  marshaller += '}\n\n';
+  structDef.Methods.push({ name: 'MarshalJSON', text: marshaller });
+}
+
+function generateAdditionalPropertiesUnmarshaller(structDef: StructDef, elementType: Schema, parentType?: ObjectSchema) {
+  imports.add('encoding/json');
+  const typeName = structDef.Language.name;
+  const receiver = typeName[0].toLowerCase();
+  let unmarshaller = `func (${receiver} *${typeName}) UnmarshalJSON(data []byte) error {\n`;
+  unmarshaller += '\tvar rawMsg map[string]*json.RawMessage\n';
+  unmarshaller += '\tif err := json.Unmarshal(data, &rawMsg); err != nil {\n';
+  unmarshaller += '\t\treturn err\n';
+  unmarshaller += '\t}\n';
+  unmarshaller += '\tfor k, v := range rawMsg {\n';
+  unmarshaller += '\t\tvar err error\n';
+  unmarshaller += '\t\tswitch k {\n';
+  const emitUnmarshaller = function (prop: Property): string {
+    let text = `\t\tcase "${prop.serializedName}":\n`;
+    text += '\t\t\tif v != nil {\n';
+    text += `\t\t\t\terr = json.Unmarshal(*v, &${receiver}.${prop.language.go!.name})\n`;
+    text += '\t\t\t}\n';
+    return text;
+  }
+  // TODO: multiple inheritance
+  for (const prop of values(parentType?.properties)) {
+    if (prop.language.go!.isAdditionalProperties) {
+      continue;
+    }
+    unmarshaller += emitUnmarshaller(prop);
+  }
+  for (const prop of values(structDef.Properties)) {
+    if (prop.language.go!.isAdditionalProperties) {
+      continue;
+    }
+    unmarshaller += emitUnmarshaller(prop);
+  }
+  unmarshaller += '\t\tdefault:\n';
+  unmarshaller += `\t\t\tif ${receiver}.AdditionalProperties == nil {\n`;
+  unmarshaller += `\t\t\t\t${receiver}.AdditionalProperties = &map[string]${elementType.language.go!.name}{}\n`;
+  unmarshaller += '\t\t\t}\n';
+  unmarshaller += '\t\t\tif v != nil {\n';
+  unmarshaller += `\t\t\t\tvar aux ${elementType.language.go!.name}\n`;
+  unmarshaller += '\t\t\t\terr = json.Unmarshal(*v, &aux)\n';
+  unmarshaller += `\t\t\t\t(*${receiver}.AdditionalProperties)[k] = aux\n`;
+  unmarshaller += '\t\t\t}\n';
+  unmarshaller += '\t\t}\n';
+  unmarshaller += '\t\tif err != nil {\n';
+  unmarshaller += '\t\t\treturn err\n';
+  unmarshaller += '\t\t}\n';
+  unmarshaller += '\t}\n';
+  unmarshaller += '\treturn nil\n';
+  unmarshaller += '}\n\n';
+  structDef.Methods.push({ name: 'UnmarshalJSON', text: unmarshaller });
 }

@@ -866,7 +866,9 @@ type SiameseResponse struct {
 
 type SmartSalmon struct {
 	Salmon
-	CollegeDegree *string `json:"college_degree,omitempty"`
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties *map[string]interface{}
+	CollegeDegree        *string `json:"college_degree,omitempty"`
 }
 
 func (s SmartSalmon) MarshalJSON() ([]byte, error) {

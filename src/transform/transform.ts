@@ -7,7 +7,7 @@ import { camelCase, KnownMediaType, pascalCase, serialize } from '@azure-tools/c
 import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
 import { ObjectSchema, ArraySchema, ChoiceValue, codeModelSchema, CodeModel, DateTimeSchema, GroupProperty, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema } from '@azure-tools/codemodel';
 import { items, values } from '@azure-tools/linq';
-import { aggregateParameters, isPageableOperation, isObjectSchema, isSchemaResponse, PagerInfo, isLROOperation, PollerInfo } from '../common/helpers';
+import { aggregateParameters, hasAdditionalProperties, isPageableOperation, isObjectSchema, isSchemaResponse, PagerInfo, isLROOperation, PollerInfo } from '../common/helpers';
 import { namer, removePrefix } from './namer';
 
 // The transformer adds Go-specific information to the code model.
@@ -35,6 +35,12 @@ export async function transform(host: Host) {
 async function process(session: Session<CodeModel>) {
   processOperationRequests(session);
   processOperationResponses(session);
+  // fix up dictionary element types (additional properties)
+  // this must happen before processing objects as we depend on the
+  // schema type being an actual Go type.
+  for (const dictionary of values(session.model.schemas.dictionaries)) {
+    dictionary.elementType.language.go!.name = schemaTypeToGoType(session.model, dictionary.elementType, false);
+  }
   // fix up struct field types
   for (const obj of values(session.model.schemas.objects)) {
     if (obj.discriminator) {
@@ -72,6 +78,13 @@ async function process(session: Session<CodeModel>) {
       // AutoRest doesn't make the global configuration available at present so hard-code
       // the format to JSON as the vast majority of specs use JSON.
       obj.language.go!.marshallingFormat = 'json';
+    }
+    const addPropsSchema = hasAdditionalProperties(obj);
+    if (addPropsSchema) {
+      // add an 'AdditionalProperties' field to the type
+      const addProps = newProperty('AdditionalProperties', 'Contains additional key/value pairs not defined in the schema.', addPropsSchema);
+      addProps.language.go!.isAdditionalProperties = true;
+      obj.properties?.push(addProps);
     }
   }
   // fix up enum types
