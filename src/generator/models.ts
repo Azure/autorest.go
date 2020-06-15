@@ -221,6 +221,9 @@ function generateStructs(objects?: ObjectSchema[]): StructDef[] {
       if (isObjectSchema(each.schema)) {
         return each.schema.discriminator !== undefined;
       }
+      if (isArraySchema(each.schema) && isObjectSchema(each.schema.elementType)) {
+        return each.schema.elementType.discriminator !== undefined;
+      }
       return false;
     });
     if (obj.language.go!.errorType) {
