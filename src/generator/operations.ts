@@ -756,7 +756,7 @@ function createProtocolErrHandler(client: string, op: Operation, imports: Import
   // if the response doesn't define any error types return a generic error
   if (!op.exceptions) {
     imports.add('errors');
-    imports.add('os/ioutil');
+    imports.add('io/ioutil');
     text += `msg := resp.Status
     if resp.Body != nil {
       body, err := ioutil.ReadAll(resp.Body)

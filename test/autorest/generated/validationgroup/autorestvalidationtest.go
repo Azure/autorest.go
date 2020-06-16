@@ -9,9 +9,9 @@ import (
 	"context"
 	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"io/ioutil"
 	"net/http"
 	"net/url"
-	"os/ioutil"
 	"strconv"
 	"strings"
 )

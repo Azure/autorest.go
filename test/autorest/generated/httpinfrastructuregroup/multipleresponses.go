@@ -11,7 +11,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"io/ioutil"
 	"net/http"
-	"os/ioutil"
 )
 
 // MultipleResponsesOperations contains the methods for the MultipleResponses group.

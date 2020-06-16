@@ -10,8 +10,8 @@ import (
 	"encoding/xml"
 	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"io/ioutil"
 	"net/http"
-	"os/ioutil"
 )
 
 // XMLOperations contains the methods for the XML group.

@@ -9,8 +9,8 @@ import (
 	"context"
 	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"io/ioutil"
 	"net/http"
-	"os/ioutil"
 )
 
 // HTTPFailureOperations contains the methods for the HTTPFailure group.
