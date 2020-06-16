@@ -9,9 +9,11 @@ import (
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/url"
+	"strings"
 )
 
 const scope = "https://storage.azure.com/.default"
+const telemetryInfo = "azsdk-go-azblob/<version>"
 
 // ClientOptions contains configuration settings for the default client's pipeline.
 type clientOptions struct {
@@ -23,6 +25,9 @@ type clientOptions struct {
 	Retry azcore.RetryOptions
 	// Telemetry configures the built-in telemetry policy behavior.
 	Telemetry azcore.TelemetryOptions
+	// ApplicationID is an application-specific identification string used in telemetry.
+	// It has a maximum length of 24 characters and must not contain any spaces.
+	ApplicationID string
 }
 
 // defaultClientOptions creates a clientOptions type initialized with default values.
@@ -31,6 +36,21 @@ func defaultClientOptions() clientOptions {
 		HTTPClient: azcore.DefaultHTTPClientTransport(),
 		Retry:      azcore.DefaultRetryOptions(),
 	}
+}
+
+func (c *ClientOptions) telemetryOptions() azcore.TelemetryOptions {
+	t := telemetryInfo
+	if c.ApplicationID != "" {
+		a := strings.ReplaceAll(c.ApplicationID, " ", "/")
+		if len(a) > 24 {
+			a = a[:24]
+		}
+		t = fmt.Sprintf("%s %s", a, telemetryInfo)
+	}
+	if c.Telemetry.Value == "" {
+		return azcore.TelemetryOptions{Value: t}
+	}
+	return azcore.TelemetryOptions{Value: fmt.Sprintf("%s %s", c.Telemetry.Value, t)}
 }
 
 type client struct {
@@ -45,7 +65,7 @@ func newClient(endpoint string, cred azcore.Credential, options *clientOptions) 
 		options = &o
 	}
 	p := azcore.NewPipeline(options.HTTPClient,
-		azcore.NewTelemetryPolicy(options.Telemetry),
+		azcore.NewTelemetryPolicy(options.telemetryOptions()),
 		azcore.NewUniqueRequestIDPolicy(),
 		azcore.NewRetryPolicy(&options.Retry),
 		cred.AuthenticationPolicy(azcore.AuthenticationPolicyOptions{Options: azcore.TokenRequestOptions{Scopes: []string{scope}}}),

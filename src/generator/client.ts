@@ -16,6 +16,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   imports.add('fmt');
   imports.add('net/url');
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
+  imports.add('strings');
 
   let text = await contentPreamble(session);
   text += imports.text();
@@ -24,6 +25,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
     const scope = await session.getValue('credential-scope');
     text += `const scope = "${scope}"\n`;
   }
+  text += `const telemetryInfo = "azsdk-go-${session.model.language.go!.packageName}/<version>"\n`;
   const exportClient = await session.getValue('export-client', true);
   let clientOptions = 'ClientOptions';
   let defaultClientOptions = 'DefaultClientOptions';
@@ -41,6 +43,9 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   text += '\tRetry azcore.RetryOptions\n';
   text += '\t// Telemetry configures the built-in telemetry policy behavior.\n';
   text += '\tTelemetry azcore.TelemetryOptions\n';
+  text += '\t// ApplicationID is an application-specific identification string used in telemetry.\n';
+  text += '\t// It has a maximum length of 24 characters and must not contain any spaces.\n';
+  text += '\tApplicationID string\n';
   text += '}\n\n';
   text += `// ${defaultClientOptions} creates a ${clientOptions} type initialized with default values.\n`;
   text += `func ${defaultClientOptions}() ${clientOptions} {\n`;
@@ -48,6 +53,21 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   text += '\t\tHTTPClient: azcore.DefaultHTTPClientTransport(),\n';
   text += '\t\tRetry: azcore.DefaultRetryOptions(),\n';
   text += '\t}\n';
+  text += '}\n\n';
+
+  text += 'func (c *ClientOptions) telemetryOptions() azcore.TelemetryOptions {\n';
+  text += '\tt := telemetryInfo\n';
+  text += '\tif c.ApplicationID != "" {\n';
+  text += '\t\ta := strings.ReplaceAll(c.ApplicationID, " ", "/")\n';
+  text += '\t\tif len(a) > 24 {\n';
+  text += '\t\t\ta = a[:24]\n';
+  text += '\t\t}\n';
+  text += '\t\tt = fmt.Sprintf("%s %s", a, telemetryInfo)\n';
+  text += '\t}\n';
+  text += '\tif c.Telemetry.Value == "" {\n';
+  text += '\t\treturn azcore.TelemetryOptions{Value: t}\n';
+  text += '\t}\n';
+  text += '\treturn azcore.TelemetryOptions{Value: fmt.Sprintf("%s %s", c.Telemetry.Value, t)}\n';
   text += '}\n\n';
 
   // Client
@@ -96,7 +116,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   text += '\t\toptions = &o\n';
   text += '\t}\n';
   text += '\tp := azcore.NewPipeline(options.HTTPClient,\n';
-  text += '\t\tazcore.NewTelemetryPolicy(options.Telemetry),\n';
+  text += '\t\tazcore.NewTelemetryPolicy(options.telemetryOptions()),\n';
   text += '\t\tazcore.NewUniqueRequestIDPolicy(),\n';
   text += '\t\tazcore.NewRetryPolicy(&options.Retry),\n';
   if (session.model.security.authenticationRequired) {
