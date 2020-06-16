@@ -9,7 +9,10 @@ import (
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/url"
+	"strings"
 )
+
+const telemetryInfo = "azsdk-go-optionalgroup/<version>"
 
 // ClientOptions contains configuration settings for the default client's pipeline.
 type ClientOptions struct {
@@ -21,6 +24,9 @@ type ClientOptions struct {
 	Retry azcore.RetryOptions
 	// Telemetry configures the built-in telemetry policy behavior.
 	Telemetry azcore.TelemetryOptions
+	// ApplicationID is an application-specific identification string used in telemetry.
+	// It has a maximum length of 24 characters and must not contain any spaces.
+	ApplicationID string
 }
 
 // DefaultClientOptions creates a ClientOptions type initialized with default values.
@@ -29,6 +35,21 @@ func DefaultClientOptions() ClientOptions {
 		HTTPClient: azcore.DefaultHTTPClientTransport(),
 		Retry:      azcore.DefaultRetryOptions(),
 	}
+}
+
+func (c *ClientOptions) telemetryOptions() azcore.TelemetryOptions {
+	t := telemetryInfo
+	if c.ApplicationID != "" {
+		a := strings.ReplaceAll(c.ApplicationID, " ", "/")
+		if len(a) > 24 {
+			a = a[:24]
+		}
+		t = fmt.Sprintf("%s %s", a, telemetryInfo)
+	}
+	if c.Telemetry.Value == "" {
+		return azcore.TelemetryOptions{Value: t}
+	}
+	return azcore.TelemetryOptions{Value: fmt.Sprintf("%s %s", c.Telemetry.Value, t)}
 }
 
 // Client - Test Infrastructure for AutoRest
@@ -52,7 +73,7 @@ func NewClient(endpoint string, options *ClientOptions) (*Client, error) {
 		options = &o
 	}
 	p := azcore.NewPipeline(options.HTTPClient,
-		azcore.NewTelemetryPolicy(options.Telemetry),
+		azcore.NewTelemetryPolicy(options.telemetryOptions()),
 		azcore.NewUniqueRequestIDPolicy(),
 		azcore.NewRetryPolicy(&options.Retry),
 		azcore.NewRequestLogPolicy(options.LogOptions))

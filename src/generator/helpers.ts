@@ -10,12 +10,8 @@ import { ArraySchema, CodeModel, DictionarySchema, Language, Parameter, Schema, 
 // returns the common source-file preamble (license comment, package name etc)
 export async function contentPreamble(session: Session<CodeModel>): Promise<string> {
   const headerText = comment(await session.getValue('header-text', 'MISSING LICENSE HEADER'), '// ');
-  // default namespce to the output folder
-  const outputFolder = await session.getValue<string>('output-folder');
-  // default namespace to equal the output directory name as they have to match.
-  const namespace = outputFolder.substr(outputFolder.lastIndexOf('/') + 1);
   let text = `${headerText}\n\n`;
-  text += `package ${namespace}\n\n`;
+  text += `package ${session.model.language.go!.packageName}\n\n`;
   return text;
 }
 

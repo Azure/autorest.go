@@ -51,6 +51,10 @@ export async function namer(session: Session<CodeModel>) {
   // copy all the .language.default data into .language.go
   cloneLanguageInfo(model);
 
+  // default namespce to the output folder
+  const outputFolder = await session.getValue<string>('output-folder');
+  model.language.go!.packageName = outputFolder.substr(outputFolder.lastIndexOf('/') + 1);
+
   // pascal-case and capitzalize acronym names of objects and their fields
   for (const obj of values(model.schemas.objects)) {
     const details = <Language>obj.language.go;
