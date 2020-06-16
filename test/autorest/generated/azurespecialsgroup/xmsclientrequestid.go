@@ -9,6 +9,7 @@ import (
 	"context"
 	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"io/ioutil"
 	"net/http"
 )
 
@@ -63,7 +64,15 @@ func (client *xmsClientRequestIdoperations) getHandleResponse(resp *azcore.Respo
 
 // getHandleError handles the Get error response.
 func (client *xmsClientRequestIdoperations) getHandleError(resp *azcore.Response) error {
-	return errors.New(resp.Status)
+	msg := resp.Status
+	if resp.Body != nil {
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
+		msg = msg + ": " + string(body)
+	}
+	return errors.New(msg)
 }
 
 // ParamGet - Get method that overwrites x-ms-client-request header with value 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.

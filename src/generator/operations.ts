@@ -756,15 +756,36 @@ function createProtocolErrHandler(client: string, op: Operation, imports: Import
   // if the response doesn't define any error types return a generic error
   if (!op.exceptions) {
     imports.add('errors');
-    text += `\treturn errors.New(resp.Status)\n`;
-    text += '}\n\n';
+    imports.add('os/ioutil');
+    text += `msg := resp.Status
+    if resp.Body != nil {
+      body, err := ioutil.ReadAll(resp.Body)
+      if err != nil {
+        return err
+      }
+      msg = msg + ": " + string(body)
+    }
+    return errors.New(msg)
+    }
+    
+    `;
     return text;
   }
   const generateUnmarshaller = function (exception: Response, prefix: string) {
     let unmarshaller = '';
     if (exception.language.go!.genericError) {
       imports.add('errors');
-      unmarshaller += `${prefix}return errors.New(resp.Status)\n`;
+      imports.add('io/ioutil');
+      unmarshaller += `${prefix}msg := resp.Status
+      if resp.Body != nil {
+        body, err := ioutil.ReadAll(resp.Body)
+        if err != nil {
+          return err
+        }
+        msg = msg + ": " + string(body)
+      }
+      return errors.New(msg)
+      `;
       return unmarshaller;
     }
     const schemaError = (<SchemaResponse>exception).schema;

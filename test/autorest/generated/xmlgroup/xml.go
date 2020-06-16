@@ -11,6 +11,7 @@ import (
 	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
+	"os/ioutil"
 )
 
 // XMLOperations contains the methods for the XML group.
@@ -123,7 +124,15 @@ func (client *xmlOperations) getAcLsHandleResponse(resp *azcore.Response) (*Sign
 
 // getAcLsHandleError handles the GetACLs error response.
 func (client *xmlOperations) getAcLsHandleError(resp *azcore.Response) error {
-	return errors.New(resp.Status)
+	msg := resp.Status
+	if resp.Body != nil {
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
+		msg = msg + ": " + string(body)
+	}
+	return errors.New(msg)
 }
 
 // GetComplexTypeRefNoMeta - Get a complex type that has a ref to a complex type with no XML node
@@ -165,7 +174,15 @@ func (client *xmlOperations) getComplexTypeRefNoMetaHandleResponse(resp *azcore.
 
 // getComplexTypeRefNoMetaHandleError handles the GetComplexTypeRefNoMeta error response.
 func (client *xmlOperations) getComplexTypeRefNoMetaHandleError(resp *azcore.Response) error {
-	return errors.New(resp.Status)
+	msg := resp.Status
+	if resp.Body != nil {
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
+		msg = msg + ": " + string(body)
+	}
+	return errors.New(msg)
 }
 
 // GetComplexTypeRefWithMeta - Get a complex type that has a ref to a complex type with XML node
@@ -207,7 +224,15 @@ func (client *xmlOperations) getComplexTypeRefWithMetaHandleResponse(resp *azcor
 
 // getComplexTypeRefWithMetaHandleError handles the GetComplexTypeRefWithMeta error response.
 func (client *xmlOperations) getComplexTypeRefWithMetaHandleError(resp *azcore.Response) error {
-	return errors.New(resp.Status)
+	msg := resp.Status
+	if resp.Body != nil {
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
+		msg = msg + ": " + string(body)
+	}
+	return errors.New(msg)
 }
 
 // GetEmptyChildElement - Gets an XML document with an empty child element.
@@ -249,7 +274,15 @@ func (client *xmlOperations) getEmptyChildElementHandleResponse(resp *azcore.Res
 
 // getEmptyChildElementHandleError handles the GetEmptyChildElement error response.
 func (client *xmlOperations) getEmptyChildElementHandleError(resp *azcore.Response) error {
-	return errors.New(resp.Status)
+	msg := resp.Status
+	if resp.Body != nil {
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
+		msg = msg + ": " + string(body)
+	}
+	return errors.New(msg)
 }
 
 // GetEmptyList - Get an empty list.
@@ -291,7 +324,15 @@ func (client *xmlOperations) getEmptyListHandleResponse(resp *azcore.Response) (
 
 // getEmptyListHandleError handles the GetEmptyList error response.
 func (client *xmlOperations) getEmptyListHandleError(resp *azcore.Response) error {
-	return errors.New(resp.Status)
+	msg := resp.Status
+	if resp.Body != nil {
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
+		msg = msg + ": " + string(body)
+	}
+	return errors.New(msg)
 }
 
 // GetEmptyRootList - Gets an empty list as the root element.
@@ -333,7 +374,15 @@ func (client *xmlOperations) getEmptyRootListHandleResponse(resp *azcore.Respons
 
 // getEmptyRootListHandleError handles the GetEmptyRootList error response.
 func (client *xmlOperations) getEmptyRootListHandleError(resp *azcore.Response) error {
-	return errors.New(resp.Status)
+	msg := resp.Status
+	if resp.Body != nil {
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
+		msg = msg + ": " + string(body)
+	}
+	return errors.New(msg)
 }
 
 // GetEmptyWrappedLists - Gets some empty wrapped lists.
@@ -375,7 +424,15 @@ func (client *xmlOperations) getEmptyWrappedListsHandleResponse(resp *azcore.Res
 
 // getEmptyWrappedListsHandleError handles the GetEmptyWrappedLists error response.
 func (client *xmlOperations) getEmptyWrappedListsHandleError(resp *azcore.Response) error {
-	return errors.New(resp.Status)
+	msg := resp.Status
+	if resp.Body != nil {
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
+		msg = msg + ": " + string(body)
+	}
+	return errors.New(msg)
 }
 
 // GetHeaders - Get strongly-typed response headers.
@@ -420,7 +477,15 @@ func (client *xmlOperations) getHeadersHandleResponse(resp *azcore.Response) (*X
 
 // getHeadersHandleError handles the GetHeaders error response.
 func (client *xmlOperations) getHeadersHandleError(resp *azcore.Response) error {
-	return errors.New(resp.Status)
+	msg := resp.Status
+	if resp.Body != nil {
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
+		msg = msg + ": " + string(body)
+	}
+	return errors.New(msg)
 }
 
 // GetRootList - Gets a list as the root element.
@@ -462,7 +527,15 @@ func (client *xmlOperations) getRootListHandleResponse(resp *azcore.Response) (*
 
 // getRootListHandleError handles the GetRootList error response.
 func (client *xmlOperations) getRootListHandleError(resp *azcore.Response) error {
-	return errors.New(resp.Status)
+	msg := resp.Status
+	if resp.Body != nil {
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
+		msg = msg + ": " + string(body)
+	}
+	return errors.New(msg)
 }
 
 // GetRootListSingleItem - Gets a list with a single item.
@@ -504,7 +577,15 @@ func (client *xmlOperations) getRootListSingleItemHandleResponse(resp *azcore.Re
 
 // getRootListSingleItemHandleError handles the GetRootListSingleItem error response.
 func (client *xmlOperations) getRootListSingleItemHandleError(resp *azcore.Response) error {
-	return errors.New(resp.Status)
+	msg := resp.Status
+	if resp.Body != nil {
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
+		msg = msg + ": " + string(body)
+	}
+	return errors.New(msg)
 }
 
 // GetServiceProperties - Gets storage service properties.
@@ -550,7 +631,15 @@ func (client *xmlOperations) getServicePropertiesHandleResponse(resp *azcore.Res
 
 // getServicePropertiesHandleError handles the GetServiceProperties error response.
 func (client *xmlOperations) getServicePropertiesHandleError(resp *azcore.Response) error {
-	return errors.New(resp.Status)
+	msg := resp.Status
+	if resp.Body != nil {
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
+		msg = msg + ": " + string(body)
+	}
+	return errors.New(msg)
 }
 
 // GetSimple - Get a simple XML document
@@ -638,7 +727,15 @@ func (client *xmlOperations) getWrappedListsHandleResponse(resp *azcore.Response
 
 // getWrappedListsHandleError handles the GetWrappedLists error response.
 func (client *xmlOperations) getWrappedListsHandleError(resp *azcore.Response) error {
-	return errors.New(resp.Status)
+	msg := resp.Status
+	if resp.Body != nil {
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
+		msg = msg + ": " + string(body)
+	}
+	return errors.New(msg)
 }
 
 // JSONInput - A Swagger with XML that has one operation that takes JSON as input. You need to send the ID number 42
@@ -679,7 +776,15 @@ func (client *xmlOperations) jsonInputHandleResponse(resp *azcore.Response) (*ht
 
 // jsonInputHandleError handles the JSONInput error response.
 func (client *xmlOperations) jsonInputHandleError(resp *azcore.Response) error {
-	return errors.New(resp.Status)
+	msg := resp.Status
+	if resp.Body != nil {
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
+		msg = msg + ": " + string(body)
+	}
+	return errors.New(msg)
 }
 
 // JSONOutput - A Swagger with XML that has one operation that returns JSON. ID number 42
@@ -721,7 +826,15 @@ func (client *xmlOperations) jsonOutputHandleResponse(resp *azcore.Response) (*J
 
 // jsonOutputHandleError handles the JSONOutput error response.
 func (client *xmlOperations) jsonOutputHandleError(resp *azcore.Response) error {
-	return errors.New(resp.Status)
+	msg := resp.Status
+	if resp.Body != nil {
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
+		msg = msg + ": " + string(body)
+	}
+	return errors.New(msg)
 }
 
 // ListBlobs - Lists blobs in a storage container.
@@ -767,7 +880,15 @@ func (client *xmlOperations) listBlobsHandleResponse(resp *azcore.Response) (*Li
 
 // listBlobsHandleError handles the ListBlobs error response.
 func (client *xmlOperations) listBlobsHandleError(resp *azcore.Response) error {
-	return errors.New(resp.Status)
+	msg := resp.Status
+	if resp.Body != nil {
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
+		msg = msg + ": " + string(body)
+	}
+	return errors.New(msg)
 }
 
 // ListContainers - Lists containers in a storage account.
@@ -812,7 +933,15 @@ func (client *xmlOperations) listContainersHandleResponse(resp *azcore.Response)
 
 // listContainersHandleError handles the ListContainers error response.
 func (client *xmlOperations) listContainersHandleError(resp *azcore.Response) error {
-	return errors.New(resp.Status)
+	msg := resp.Status
+	if resp.Body != nil {
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
+		msg = msg + ": " + string(body)
+	}
+	return errors.New(msg)
 }
 
 // PutACLs - Puts storage ACLs for a container.
@@ -861,7 +990,15 @@ func (client *xmlOperations) putAcLsHandleResponse(resp *azcore.Response) (*http
 
 // putAcLsHandleError handles the PutACLs error response.
 func (client *xmlOperations) putAcLsHandleError(resp *azcore.Response) error {
-	return errors.New(resp.Status)
+	msg := resp.Status
+	if resp.Body != nil {
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
+		msg = msg + ": " + string(body)
+	}
+	return errors.New(msg)
 }
 
 // PutComplexTypeRefNoMeta - Puts a complex type that has a ref to a complex type with no XML node
@@ -902,7 +1039,15 @@ func (client *xmlOperations) putComplexTypeRefNoMetaHandleResponse(resp *azcore.
 
 // putComplexTypeRefNoMetaHandleError handles the PutComplexTypeRefNoMeta error response.
 func (client *xmlOperations) putComplexTypeRefNoMetaHandleError(resp *azcore.Response) error {
-	return errors.New(resp.Status)
+	msg := resp.Status
+	if resp.Body != nil {
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
+		msg = msg + ": " + string(body)
+	}
+	return errors.New(msg)
 }
 
 // PutComplexTypeRefWithMeta - Puts a complex type that has a ref to a complex type with XML node
@@ -943,7 +1088,15 @@ func (client *xmlOperations) putComplexTypeRefWithMetaHandleResponse(resp *azcor
 
 // putComplexTypeRefWithMetaHandleError handles the PutComplexTypeRefWithMeta error response.
 func (client *xmlOperations) putComplexTypeRefWithMetaHandleError(resp *azcore.Response) error {
-	return errors.New(resp.Status)
+	msg := resp.Status
+	if resp.Body != nil {
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
+		msg = msg + ": " + string(body)
+	}
+	return errors.New(msg)
 }
 
 // PutEmptyChildElement - Puts a value with an empty child element.
@@ -984,7 +1137,15 @@ func (client *xmlOperations) putEmptyChildElementHandleResponse(resp *azcore.Res
 
 // putEmptyChildElementHandleError handles the PutEmptyChildElement error response.
 func (client *xmlOperations) putEmptyChildElementHandleError(resp *azcore.Response) error {
-	return errors.New(resp.Status)
+	msg := resp.Status
+	if resp.Body != nil {
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
+		msg = msg + ": " + string(body)
+	}
+	return errors.New(msg)
 }
 
 // PutEmptyList - Puts an empty list.
@@ -1025,7 +1186,15 @@ func (client *xmlOperations) putEmptyListHandleResponse(resp *azcore.Response) (
 
 // putEmptyListHandleError handles the PutEmptyList error response.
 func (client *xmlOperations) putEmptyListHandleError(resp *azcore.Response) error {
-	return errors.New(resp.Status)
+	msg := resp.Status
+	if resp.Body != nil {
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
+		msg = msg + ": " + string(body)
+	}
+	return errors.New(msg)
 }
 
 // PutEmptyRootList - Puts an empty list as the root element.
@@ -1070,7 +1239,15 @@ func (client *xmlOperations) putEmptyRootListHandleResponse(resp *azcore.Respons
 
 // putEmptyRootListHandleError handles the PutEmptyRootList error response.
 func (client *xmlOperations) putEmptyRootListHandleError(resp *azcore.Response) error {
-	return errors.New(resp.Status)
+	msg := resp.Status
+	if resp.Body != nil {
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
+		msg = msg + ": " + string(body)
+	}
+	return errors.New(msg)
 }
 
 // PutEmptyWrappedLists - Puts some empty wrapped lists.
@@ -1111,7 +1288,15 @@ func (client *xmlOperations) putEmptyWrappedListsHandleResponse(resp *azcore.Res
 
 // putEmptyWrappedListsHandleError handles the PutEmptyWrappedLists error response.
 func (client *xmlOperations) putEmptyWrappedListsHandleError(resp *azcore.Response) error {
-	return errors.New(resp.Status)
+	msg := resp.Status
+	if resp.Body != nil {
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
+		msg = msg + ": " + string(body)
+	}
+	return errors.New(msg)
 }
 
 // PutRootList - Puts a list as the root element.
@@ -1156,7 +1341,15 @@ func (client *xmlOperations) putRootListHandleResponse(resp *azcore.Response) (*
 
 // putRootListHandleError handles the PutRootList error response.
 func (client *xmlOperations) putRootListHandleError(resp *azcore.Response) error {
-	return errors.New(resp.Status)
+	msg := resp.Status
+	if resp.Body != nil {
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
+		msg = msg + ": " + string(body)
+	}
+	return errors.New(msg)
 }
 
 // PutRootListSingleItem - Puts a list with a single item.
@@ -1201,7 +1394,15 @@ func (client *xmlOperations) putRootListSingleItemHandleResponse(resp *azcore.Re
 
 // putRootListSingleItemHandleError handles the PutRootListSingleItem error response.
 func (client *xmlOperations) putRootListSingleItemHandleError(resp *azcore.Response) error {
-	return errors.New(resp.Status)
+	msg := resp.Status
+	if resp.Body != nil {
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
+		msg = msg + ": " + string(body)
+	}
+	return errors.New(msg)
 }
 
 // PutServiceProperties - Puts storage service properties.
@@ -1246,7 +1447,15 @@ func (client *xmlOperations) putServicePropertiesHandleResponse(resp *azcore.Res
 
 // putServicePropertiesHandleError handles the PutServiceProperties error response.
 func (client *xmlOperations) putServicePropertiesHandleError(resp *azcore.Response) error {
-	return errors.New(resp.Status)
+	msg := resp.Status
+	if resp.Body != nil {
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
+		msg = msg + ": " + string(body)
+	}
+	return errors.New(msg)
 }
 
 // PutSimple - Put a simple XML document

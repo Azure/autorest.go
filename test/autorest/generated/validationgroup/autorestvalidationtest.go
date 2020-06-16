@@ -11,6 +11,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"os/ioutil"
 	"strconv"
 	"strings"
 )
@@ -69,7 +70,15 @@ func (client *autoRestValidationTestOperations) getWithConstantInPathHandleRespo
 
 // getWithConstantInPathHandleError handles the GetWithConstantInPath error response.
 func (client *autoRestValidationTestOperations) getWithConstantInPathHandleError(resp *azcore.Response) error {
-	return errors.New(resp.Status)
+	msg := resp.Status
+	if resp.Body != nil {
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
+		msg = msg + ": " + string(body)
+	}
+	return errors.New(msg)
 }
 
 func (client *autoRestValidationTestOperations) PostWithConstantInBody(ctx context.Context, autoRestValidationTestPostWithConstantInBodyOptions *AutoRestValidationTestPostWithConstantInBodyOptions) (*ProductResponse, error) {
@@ -114,7 +123,15 @@ func (client *autoRestValidationTestOperations) postWithConstantInBodyHandleResp
 
 // postWithConstantInBodyHandleError handles the PostWithConstantInBody error response.
 func (client *autoRestValidationTestOperations) postWithConstantInBodyHandleError(resp *azcore.Response) error {
-	return errors.New(resp.Status)
+	msg := resp.Status
+	if resp.Body != nil {
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
+		msg = msg + ": " + string(body)
+	}
+	return errors.New(msg)
 }
 
 // ValidationOfBody - Validates body parameters on the method. See swagger for details.

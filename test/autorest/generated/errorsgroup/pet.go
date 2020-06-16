@@ -10,6 +10,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
@@ -144,6 +145,14 @@ func (client *petOperations) getPetByIdHandleError(resp *azcore.Response) error 
 		}
 		return fmt.Errorf("%v", err)
 	default:
-		return errors.New(resp.Status)
+		msg := resp.Status
+		if resp.Body != nil {
+			body, err := ioutil.ReadAll(resp.Body)
+			if err != nil {
+				return err
+			}
+			msg = msg + ": " + string(body)
+		}
+		return errors.New(msg)
 	}
 }

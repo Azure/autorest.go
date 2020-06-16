@@ -10,6 +10,7 @@ import (
 	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
+	"os/ioutil"
 )
 
 // FlattencomplexOperations contains the methods for the Flattencomplex group.
@@ -60,5 +61,13 @@ func (client *flattencomplexOperations) getValidHandleResponse(resp *azcore.Resp
 
 // getValidHandleError handles the GetValid error response.
 func (client *flattencomplexOperations) getValidHandleError(resp *azcore.Response) error {
-	return errors.New(resp.Status)
+	msg := resp.Status
+	if resp.Body != nil {
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
+		msg = msg + ": " + string(body)
+	}
+	return errors.New(msg)
 }

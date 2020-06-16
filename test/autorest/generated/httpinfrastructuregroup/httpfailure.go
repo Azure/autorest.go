@@ -10,6 +10,7 @@ import (
 	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
+	"os/ioutil"
 )
 
 // HTTPFailureOperations contains the methods for the HTTPFailure group.
@@ -112,7 +113,15 @@ func (client *httpFailureOperations) getNoModelEmptyHandleResponse(resp *azcore.
 
 // getNoModelEmptyHandleError handles the GetNoModelEmpty error response.
 func (client *httpFailureOperations) getNoModelEmptyHandleError(resp *azcore.Response) error {
-	return errors.New(resp.Status)
+	msg := resp.Status
+	if resp.Body != nil {
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
+		msg = msg + ": " + string(body)
+	}
+	return errors.New(msg)
 }
 
 // GetNoModelError - Get empty error form server
@@ -154,5 +163,13 @@ func (client *httpFailureOperations) getNoModelErrorHandleResponse(resp *azcore.
 
 // getNoModelErrorHandleError handles the GetNoModelError error response.
 func (client *httpFailureOperations) getNoModelErrorHandleError(resp *azcore.Response) error {
-	return errors.New(resp.Status)
+	msg := resp.Status
+	if resp.Body != nil {
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
+		msg = msg + ": " + string(body)
+	}
+	return errors.New(msg)
 }
