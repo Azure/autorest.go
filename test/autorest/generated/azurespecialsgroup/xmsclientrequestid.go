@@ -8,6 +8,7 @@ package azurespecialsgroup
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"io/ioutil"
 	"net/http"
@@ -64,15 +65,14 @@ func (client *xmsClientRequestIdoperations) getHandleResponse(resp *azcore.Respo
 
 // getHandleError handles the Get error response.
 func (client *xmsClientRequestIdoperations) getHandleError(resp *azcore.Response) error {
-	msg := resp.Status
 	if resp.Body != nil {
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			return err
+			return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 		}
-		msg = msg + ": " + string(body)
+		return string(body)
 	}
-	return errors.New(msg)
+	return errors.New(resp.Status)
 }
 
 // ParamGet - Get method that overwrites x-ms-client-request header with value 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.

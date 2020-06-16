@@ -8,6 +8,7 @@ package validationgroup
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"io/ioutil"
 	"net/http"
@@ -70,15 +71,14 @@ func (client *autoRestValidationTestOperations) getWithConstantInPathHandleRespo
 
 // getWithConstantInPathHandleError handles the GetWithConstantInPath error response.
 func (client *autoRestValidationTestOperations) getWithConstantInPathHandleError(resp *azcore.Response) error {
-	msg := resp.Status
 	if resp.Body != nil {
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			return err
+			return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 		}
-		msg = msg + ": " + string(body)
+		return string(body)
 	}
-	return errors.New(msg)
+	return errors.New(resp.Status)
 }
 
 func (client *autoRestValidationTestOperations) PostWithConstantInBody(ctx context.Context, autoRestValidationTestPostWithConstantInBodyOptions *AutoRestValidationTestPostWithConstantInBodyOptions) (*ProductResponse, error) {
@@ -123,15 +123,14 @@ func (client *autoRestValidationTestOperations) postWithConstantInBodyHandleResp
 
 // postWithConstantInBodyHandleError handles the PostWithConstantInBody error response.
 func (client *autoRestValidationTestOperations) postWithConstantInBodyHandleError(resp *azcore.Response) error {
-	msg := resp.Status
 	if resp.Body != nil {
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			return err
+			return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 		}
-		msg = msg + ": " + string(body)
+		return string(body)
 	}
-	return errors.New(msg)
+	return errors.New(resp.Status)
 }
 
 // ValidationOfBody - Validates body parameters on the method. See swagger for details.

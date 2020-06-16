@@ -8,6 +8,7 @@ package httpinfrastructuregroup
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"io/ioutil"
 	"net/http"
@@ -113,15 +114,14 @@ func (client *httpFailureOperations) getNoModelEmptyHandleResponse(resp *azcore.
 
 // getNoModelEmptyHandleError handles the GetNoModelEmpty error response.
 func (client *httpFailureOperations) getNoModelEmptyHandleError(resp *azcore.Response) error {
-	msg := resp.Status
 	if resp.Body != nil {
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			return err
+			return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 		}
-		msg = msg + ": " + string(body)
+		return string(body)
 	}
-	return errors.New(msg)
+	return errors.New(resp.Status)
 }
 
 // GetNoModelError - Get empty error form server
@@ -163,13 +163,12 @@ func (client *httpFailureOperations) getNoModelErrorHandleResponse(resp *azcore.
 
 // getNoModelErrorHandleError handles the GetNoModelError error response.
 func (client *httpFailureOperations) getNoModelErrorHandleError(resp *azcore.Response) error {
-	msg := resp.Status
 	if resp.Body != nil {
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			return err
+			return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 		}
-		msg = msg + ": " + string(body)
+		return string(body)
 	}
-	return errors.New(msg)
+	return errors.New(resp.Status)
 }

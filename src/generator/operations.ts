@@ -757,15 +757,15 @@ function createProtocolErrHandler(client: string, op: Operation, imports: Import
   if (!op.exceptions) {
     imports.add('errors');
     imports.add('io/ioutil');
-    text += `msg := resp.Status
-    if resp.Body != nil {
+    imports.add('fmt');
+    text += `if resp.Body != nil {
       body, err := ioutil.ReadAll(resp.Body)
       if err != nil {
-        return err
+        return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
       }
-      msg = msg + ": " + string(body)
+      return string(body)
     }
-    return errors.New(msg)
+    return errors.New(resp.Status)
     }
     
     `;
@@ -776,15 +776,15 @@ function createProtocolErrHandler(client: string, op: Operation, imports: Import
     if (exception.language.go!.genericError) {
       imports.add('errors');
       imports.add('io/ioutil');
-      unmarshaller += `${prefix}msg := resp.Status
-      if resp.Body != nil {
+      imports.add('fmt');
+      unmarshaller += `${prefix}if resp.Body != nil {
         body, err := ioutil.ReadAll(resp.Body)
         if err != nil {
-          return err
+          return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
         }
-        msg = msg + ": " + string(body)
+        return string(body)
       }
-      return errors.New(msg)
+      return errors.New(resp.Status)
       `;
       return unmarshaller;
     }

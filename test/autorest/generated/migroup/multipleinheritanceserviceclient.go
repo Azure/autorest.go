@@ -8,6 +8,7 @@ package migroup
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"io/ioutil"
 	"net/http"
@@ -311,15 +312,14 @@ func (client *multipleInheritanceServiceClientOperations) putCatHandleResponse(r
 
 // putCatHandleError handles the PutCat error response.
 func (client *multipleInheritanceServiceClientOperations) putCatHandleError(resp *azcore.Response) error {
-	msg := resp.Status
 	if resp.Body != nil {
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			return err
+			return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 		}
-		msg = msg + ": " + string(body)
+		return string(body)
 	}
-	return errors.New(msg)
+	return errors.New(resp.Status)
 }
 
 // PutFeline - Put a feline who hisses and doesn't meow
@@ -361,15 +361,14 @@ func (client *multipleInheritanceServiceClientOperations) putFelineHandleRespons
 
 // putFelineHandleError handles the PutFeline error response.
 func (client *multipleInheritanceServiceClientOperations) putFelineHandleError(resp *azcore.Response) error {
-	msg := resp.Status
 	if resp.Body != nil {
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			return err
+			return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 		}
-		msg = msg + ": " + string(body)
+		return string(body)
 	}
-	return errors.New(msg)
+	return errors.New(resp.Status)
 }
 
 // PutHorse - Put a horse with name 'General' and isAShowHorse false
@@ -411,15 +410,14 @@ func (client *multipleInheritanceServiceClientOperations) putHorseHandleResponse
 
 // putHorseHandleError handles the PutHorse error response.
 func (client *multipleInheritanceServiceClientOperations) putHorseHandleError(resp *azcore.Response) error {
-	msg := resp.Status
 	if resp.Body != nil {
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			return err
+			return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 		}
-		msg = msg + ": " + string(body)
+		return string(body)
 	}
-	return errors.New(msg)
+	return errors.New(resp.Status)
 }
 
 // PutKitten - Put a kitten with name 'Kitty' where likesMilk and hisses is false, meows and eatsMiceYet is true
@@ -461,15 +459,14 @@ func (client *multipleInheritanceServiceClientOperations) putKittenHandleRespons
 
 // putKittenHandleError handles the PutKitten error response.
 func (client *multipleInheritanceServiceClientOperations) putKittenHandleError(resp *azcore.Response) error {
-	msg := resp.Status
 	if resp.Body != nil {
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			return err
+			return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 		}
-		msg = msg + ": " + string(body)
+		return string(body)
 	}
-	return errors.New(msg)
+	return errors.New(resp.Status)
 }
 
 // PutPet - Put a pet with name 'Butter'
@@ -511,13 +508,12 @@ func (client *multipleInheritanceServiceClientOperations) putPetHandleResponse(r
 
 // putPetHandleError handles the PutPet error response.
 func (client *multipleInheritanceServiceClientOperations) putPetHandleError(resp *azcore.Response) error {
-	msg := resp.Status
 	if resp.Body != nil {
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			return err
+			return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 		}
-		msg = msg + ": " + string(body)
+		return string(body)
 	}
-	return errors.New(msg)
+	return errors.New(resp.Status)
 }

@@ -145,14 +145,13 @@ func (client *petOperations) getPetByIdHandleError(resp *azcore.Response) error 
 		}
 		return fmt.Errorf("%v", err)
 	default:
-		msg := resp.Status
 		if resp.Body != nil {
 			body, err := ioutil.ReadAll(resp.Body)
 			if err != nil {
-				return err
+				return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 			}
-			msg = msg + ": " + string(body)
+			return string(body)
 		}
-		return errors.New(msg)
+		return errors.New(resp.Status)
 	}
 }

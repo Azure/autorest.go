@@ -8,6 +8,7 @@ package httpinfrastructuregroup
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"io/ioutil"
 	"net/http"
@@ -522,15 +523,14 @@ func (client *multipleResponsesOperations) get200ModelA200InvalidHandleResponse(
 
 // get200ModelA200InvalidHandleError handles the Get200ModelA200Invalid error response.
 func (client *multipleResponsesOperations) get200ModelA200InvalidHandleError(resp *azcore.Response) error {
-	msg := resp.Status
 	if resp.Body != nil {
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			return err
+			return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 		}
-		msg = msg + ": " + string(body)
+		return string(body)
 	}
-	return errors.New(msg)
+	return errors.New(resp.Status)
 }
 
 // Get200ModelA200None - Send a 200 response with no payload, when a payload is expected - client should return a null object of thde type for model A
@@ -572,15 +572,14 @@ func (client *multipleResponsesOperations) get200ModelA200NoneHandleResponse(res
 
 // get200ModelA200NoneHandleError handles the Get200ModelA200None error response.
 func (client *multipleResponsesOperations) get200ModelA200NoneHandleError(resp *azcore.Response) error {
-	msg := resp.Status
 	if resp.Body != nil {
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			return err
+			return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 		}
-		msg = msg + ": " + string(body)
+		return string(body)
 	}
-	return errors.New(msg)
+	return errors.New(resp.Status)
 }
 
 // Get200ModelA200Valid - Send a 200 response with payload {'statusCode': '200'}
@@ -622,15 +621,14 @@ func (client *multipleResponsesOperations) get200ModelA200ValidHandleResponse(re
 
 // get200ModelA200ValidHandleError handles the Get200ModelA200Valid error response.
 func (client *multipleResponsesOperations) get200ModelA200ValidHandleError(resp *azcore.Response) error {
-	msg := resp.Status
 	if resp.Body != nil {
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			return err
+			return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 		}
-		msg = msg + ": " + string(body)
+		return string(body)
 	}
-	return errors.New(msg)
+	return errors.New(resp.Status)
 }
 
 // Get200ModelA201ModelC404ModelDDefaultError200Valid - Send a 200 response with valid payload: {'statusCode': '200'}
@@ -892,15 +890,14 @@ func (client *multipleResponsesOperations) get200ModelA202ValidHandleResponse(re
 
 // get200ModelA202ValidHandleError handles the Get200ModelA202Valid error response.
 func (client *multipleResponsesOperations) get200ModelA202ValidHandleError(resp *azcore.Response) error {
-	msg := resp.Status
 	if resp.Body != nil {
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			return err
+			return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 		}
-		msg = msg + ": " + string(body)
+		return string(body)
 	}
-	return errors.New(msg)
+	return errors.New(resp.Status)
 }
 
 // Get200ModelA400Invalid - Send a 200 response with invalid payload {'statusCodeInvalid': '400'}
@@ -942,15 +939,14 @@ func (client *multipleResponsesOperations) get200ModelA400InvalidHandleResponse(
 
 // get200ModelA400InvalidHandleError handles the Get200ModelA400Invalid error response.
 func (client *multipleResponsesOperations) get200ModelA400InvalidHandleError(resp *azcore.Response) error {
-	msg := resp.Status
 	if resp.Body != nil {
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			return err
+			return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 		}
-		msg = msg + ": " + string(body)
+		return string(body)
 	}
-	return errors.New(msg)
+	return errors.New(resp.Status)
 }
 
 // Get200ModelA400None - Send a 400 response with no payload client should treat as an http error with no error model
@@ -992,15 +988,14 @@ func (client *multipleResponsesOperations) get200ModelA400NoneHandleResponse(res
 
 // get200ModelA400NoneHandleError handles the Get200ModelA400None error response.
 func (client *multipleResponsesOperations) get200ModelA400NoneHandleError(resp *azcore.Response) error {
-	msg := resp.Status
 	if resp.Body != nil {
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			return err
+			return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 		}
-		msg = msg + ": " + string(body)
+		return string(body)
 	}
-	return errors.New(msg)
+	return errors.New(resp.Status)
 }
 
 // Get200ModelA400Valid - Send a 200 response with payload {'statusCode': '400'}
@@ -1042,15 +1037,14 @@ func (client *multipleResponsesOperations) get200ModelA400ValidHandleResponse(re
 
 // get200ModelA400ValidHandleError handles the Get200ModelA400Valid error response.
 func (client *multipleResponsesOperations) get200ModelA400ValidHandleError(resp *azcore.Response) error {
-	msg := resp.Status
 	if resp.Body != nil {
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			return err
+			return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 		}
-		msg = msg + ": " + string(body)
+		return string(body)
 	}
-	return errors.New(msg)
+	return errors.New(resp.Status)
 }
 
 // Get202None204NoneDefaultError202None - Send a 202 response with no payload
@@ -1226,15 +1220,14 @@ func (client *multipleResponsesOperations) get202None204NoneDefaultNone202Invali
 
 // get202None204NoneDefaultNone202InvalidHandleError handles the Get202None204NoneDefaultNone202Invalid error response.
 func (client *multipleResponsesOperations) get202None204NoneDefaultNone202InvalidHandleError(resp *azcore.Response) error {
-	msg := resp.Status
 	if resp.Body != nil {
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			return err
+			return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 		}
-		msg = msg + ": " + string(body)
+		return string(body)
 	}
-	return errors.New(msg)
+	return errors.New(resp.Status)
 }
 
 // Get202None204NoneDefaultNone204None - Send a 204 response with no payload
@@ -1275,15 +1268,14 @@ func (client *multipleResponsesOperations) get202None204NoneDefaultNone204NoneHa
 
 // get202None204NoneDefaultNone204NoneHandleError handles the Get202None204NoneDefaultNone204None error response.
 func (client *multipleResponsesOperations) get202None204NoneDefaultNone204NoneHandleError(resp *azcore.Response) error {
-	msg := resp.Status
 	if resp.Body != nil {
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			return err
+			return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 		}
-		msg = msg + ": " + string(body)
+		return string(body)
 	}
-	return errors.New(msg)
+	return errors.New(resp.Status)
 }
 
 // Get202None204NoneDefaultNone400Invalid - Send a 400 response with an unexpected payload {'property': 'value'}
@@ -1324,15 +1316,14 @@ func (client *multipleResponsesOperations) get202None204NoneDefaultNone400Invali
 
 // get202None204NoneDefaultNone400InvalidHandleError handles the Get202None204NoneDefaultNone400Invalid error response.
 func (client *multipleResponsesOperations) get202None204NoneDefaultNone400InvalidHandleError(resp *azcore.Response) error {
-	msg := resp.Status
 	if resp.Body != nil {
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			return err
+			return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 		}
-		msg = msg + ": " + string(body)
+		return string(body)
 	}
-	return errors.New(msg)
+	return errors.New(resp.Status)
 }
 
 // Get202None204NoneDefaultNone400None - Send a 400 response with no payload
@@ -1373,15 +1364,14 @@ func (client *multipleResponsesOperations) get202None204NoneDefaultNone400NoneHa
 
 // get202None204NoneDefaultNone400NoneHandleError handles the Get202None204NoneDefaultNone400None error response.
 func (client *multipleResponsesOperations) get202None204NoneDefaultNone400NoneHandleError(resp *azcore.Response) error {
-	msg := resp.Status
 	if resp.Body != nil {
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			return err
+			return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 		}
-		msg = msg + ": " + string(body)
+		return string(body)
 	}
-	return errors.New(msg)
+	return errors.New(resp.Status)
 }
 
 // GetDefaultModelA200None - Send a 200 response with no payload
@@ -1423,15 +1413,14 @@ func (client *multipleResponsesOperations) getDefaultModelA200NoneHandleResponse
 
 // getDefaultModelA200NoneHandleError handles the GetDefaultModelA200None error response.
 func (client *multipleResponsesOperations) getDefaultModelA200NoneHandleError(resp *azcore.Response) error {
-	msg := resp.Status
 	if resp.Body != nil {
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			return err
+			return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 		}
-		msg = msg + ": " + string(body)
+		return string(body)
 	}
-	return errors.New(msg)
+	return errors.New(resp.Status)
 }
 
 // GetDefaultModelA200Valid - Send a 200 response with valid payload: {'statusCode': '200'}
@@ -1473,15 +1462,14 @@ func (client *multipleResponsesOperations) getDefaultModelA200ValidHandleRespons
 
 // getDefaultModelA200ValidHandleError handles the GetDefaultModelA200Valid error response.
 func (client *multipleResponsesOperations) getDefaultModelA200ValidHandleError(resp *azcore.Response) error {
-	msg := resp.Status
 	if resp.Body != nil {
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			return err
+			return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 		}
-		msg = msg + ": " + string(body)
+		return string(body)
 	}
-	return errors.New(msg)
+	return errors.New(resp.Status)
 }
 
 // GetDefaultModelA400None - Send a 400 response with no payload
@@ -1612,15 +1600,14 @@ func (client *multipleResponsesOperations) getDefaultNone200InvalidHandleRespons
 
 // getDefaultNone200InvalidHandleError handles the GetDefaultNone200Invalid error response.
 func (client *multipleResponsesOperations) getDefaultNone200InvalidHandleError(resp *azcore.Response) error {
-	msg := resp.Status
 	if resp.Body != nil {
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			return err
+			return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 		}
-		msg = msg + ": " + string(body)
+		return string(body)
 	}
-	return errors.New(msg)
+	return errors.New(resp.Status)
 }
 
 // GetDefaultNone200None - Send a 200 response with no payload
@@ -1661,15 +1648,14 @@ func (client *multipleResponsesOperations) getDefaultNone200NoneHandleResponse(r
 
 // getDefaultNone200NoneHandleError handles the GetDefaultNone200None error response.
 func (client *multipleResponsesOperations) getDefaultNone200NoneHandleError(resp *azcore.Response) error {
-	msg := resp.Status
 	if resp.Body != nil {
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			return err
+			return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 		}
-		msg = msg + ": " + string(body)
+		return string(body)
 	}
-	return errors.New(msg)
+	return errors.New(resp.Status)
 }
 
 // GetDefaultNone400Invalid - Send a 400 response with valid payload: {'statusCode': '400'}
@@ -1710,15 +1696,14 @@ func (client *multipleResponsesOperations) getDefaultNone400InvalidHandleRespons
 
 // getDefaultNone400InvalidHandleError handles the GetDefaultNone400Invalid error response.
 func (client *multipleResponsesOperations) getDefaultNone400InvalidHandleError(resp *azcore.Response) error {
-	msg := resp.Status
 	if resp.Body != nil {
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			return err
+			return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 		}
-		msg = msg + ": " + string(body)
+		return string(body)
 	}
-	return errors.New(msg)
+	return errors.New(resp.Status)
 }
 
 // GetDefaultNone400None - Send a 400 response with no payload
@@ -1759,13 +1744,12 @@ func (client *multipleResponsesOperations) getDefaultNone400NoneHandleResponse(r
 
 // getDefaultNone400NoneHandleError handles the GetDefaultNone400None error response.
 func (client *multipleResponsesOperations) getDefaultNone400NoneHandleError(resp *azcore.Response) error {
-	msg := resp.Status
 	if resp.Body != nil {
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			return err
+			return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 		}
-		msg = msg + ": " + string(body)
+		return string(body)
 	}
-	return errors.New(msg)
+	return errors.New(resp.Status)
 }
