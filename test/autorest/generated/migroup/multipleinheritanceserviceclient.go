@@ -312,12 +312,12 @@ func (client *multipleInheritanceServiceClientOperations) putCatHandleResponse(r
 
 // putCatHandleError handles the PutCat error response.
 func (client *multipleInheritanceServiceClientOperations) putCatHandleError(resp *azcore.Response) error {
-	if len(resp.Body) == 0 {
-		return errors.New(resp.Status)
-	}
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+	}
+	if len(body) == 0 {
+		return errors.New(resp.Status)
 	}
 	return errors.New(string(body))
 }
@@ -361,12 +361,12 @@ func (client *multipleInheritanceServiceClientOperations) putFelineHandleRespons
 
 // putFelineHandleError handles the PutFeline error response.
 func (client *multipleInheritanceServiceClientOperations) putFelineHandleError(resp *azcore.Response) error {
-	if len(resp.Body) == 0 {
-		return errors.New(resp.Status)
-	}
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+	}
+	if len(body) == 0 {
+		return errors.New(resp.Status)
 	}
 	return errors.New(string(body))
 }
@@ -410,12 +410,12 @@ func (client *multipleInheritanceServiceClientOperations) putHorseHandleResponse
 
 // putHorseHandleError handles the PutHorse error response.
 func (client *multipleInheritanceServiceClientOperations) putHorseHandleError(resp *azcore.Response) error {
-	if len(resp.Body) == 0 {
-		return errors.New(resp.Status)
-	}
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+	}
+	if len(body) == 0 {
+		return errors.New(resp.Status)
 	}
 	return errors.New(string(body))
 }
@@ -459,12 +459,12 @@ func (client *multipleInheritanceServiceClientOperations) putKittenHandleRespons
 
 // putKittenHandleError handles the PutKitten error response.
 func (client *multipleInheritanceServiceClientOperations) putKittenHandleError(resp *azcore.Response) error {
-	if len(resp.Body) == 0 {
-		return errors.New(resp.Status)
-	}
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+	}
+	if len(body) == 0 {
+		return errors.New(resp.Status)
 	}
 	return errors.New(string(body))
 }
@@ -508,12 +508,12 @@ func (client *multipleInheritanceServiceClientOperations) putPetHandleResponse(r
 
 // putPetHandleError handles the PutPet error response.
 func (client *multipleInheritanceServiceClientOperations) putPetHandleError(resp *azcore.Response) error {
-	if len(resp.Body) == 0 {
-		return errors.New(resp.Status)
-	}
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+	}
+	if len(body) == 0 {
+		return errors.New(resp.Status)
 	}
 	return errors.New(string(body))
 }
