@@ -185,7 +185,7 @@ func TestGetPetByIDError5(t *testing.T) {
 	client := getClient(t)
 	result, err := client.GetPetByID(context.Background(), "unknown")
 	// default generic error (no schema)
-	helpers.DeepEqualOrFatal(t, err.Error(), "402 Payment Required")
+	helpers.DeepEqualOrFatal(t, err.Error(), "That's all folks!!")
 	if result != nil {
 		t.Fatal("expected nil result")
 	}

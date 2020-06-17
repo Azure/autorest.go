@@ -8,7 +8,9 @@ package migroup
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"io/ioutil"
 	"net/http"
 )
 
@@ -310,7 +312,14 @@ func (client *multipleInheritanceServiceClientOperations) putCatHandleResponse(r
 
 // putCatHandleError handles the PutCat error response.
 func (client *multipleInheritanceServiceClientOperations) putCatHandleError(resp *azcore.Response) error {
-	return errors.New(resp.Status)
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+	}
+	if len(body) == 0 {
+		return errors.New(resp.Status)
+	}
+	return errors.New(string(body))
 }
 
 // PutFeline - Put a feline who hisses and doesn't meow
@@ -352,7 +361,14 @@ func (client *multipleInheritanceServiceClientOperations) putFelineHandleRespons
 
 // putFelineHandleError handles the PutFeline error response.
 func (client *multipleInheritanceServiceClientOperations) putFelineHandleError(resp *azcore.Response) error {
-	return errors.New(resp.Status)
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+	}
+	if len(body) == 0 {
+		return errors.New(resp.Status)
+	}
+	return errors.New(string(body))
 }
 
 // PutHorse - Put a horse with name 'General' and isAShowHorse false
@@ -394,7 +410,14 @@ func (client *multipleInheritanceServiceClientOperations) putHorseHandleResponse
 
 // putHorseHandleError handles the PutHorse error response.
 func (client *multipleInheritanceServiceClientOperations) putHorseHandleError(resp *azcore.Response) error {
-	return errors.New(resp.Status)
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+	}
+	if len(body) == 0 {
+		return errors.New(resp.Status)
+	}
+	return errors.New(string(body))
 }
 
 // PutKitten - Put a kitten with name 'Kitty' where likesMilk and hisses is false, meows and eatsMiceYet is true
@@ -436,7 +459,14 @@ func (client *multipleInheritanceServiceClientOperations) putKittenHandleRespons
 
 // putKittenHandleError handles the PutKitten error response.
 func (client *multipleInheritanceServiceClientOperations) putKittenHandleError(resp *azcore.Response) error {
-	return errors.New(resp.Status)
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+	}
+	if len(body) == 0 {
+		return errors.New(resp.Status)
+	}
+	return errors.New(string(body))
 }
 
 // PutPet - Put a pet with name 'Butter'
@@ -478,5 +508,12 @@ func (client *multipleInheritanceServiceClientOperations) putPetHandleResponse(r
 
 // putPetHandleError handles the PutPet error response.
 func (client *multipleInheritanceServiceClientOperations) putPetHandleError(resp *azcore.Response) error {
-	return errors.New(resp.Status)
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+	}
+	if len(body) == 0 {
+		return errors.New(resp.Status)
+	}
+	return errors.New(string(body))
 }

@@ -753,18 +753,35 @@ function createProtocolErrHandler(client: string, op: Operation, imports: Import
   const name = info.protocolNaming.errorMethod;
   let text = `${comment(name, '// ')} handles the ${info.name} error response.\n`;
   text += `func (client *${client}) ${name}(resp *azcore.Response) error {\n`;
+
+  // define a generic error for when there are no exceptions or no error schema
+  const generateGenericError = function () {
+    imports.add('errors');
+    imports.add('io/ioutil');
+    imports.add('fmt');
+    return `body, err := ioutil.ReadAll(resp.Body)
+    if err != nil {
+      return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+    }
+    if len(body) == 0 {
+      return errors.New(resp.Status)
+    }
+    return errors.New(string(body))
+    `;
+    
+  }
+
   // if the response doesn't define any error types return a generic error
   if (!op.exceptions) {
-    imports.add('errors');
-    text += `\treturn errors.New(resp.Status)\n`;
+    text += generateGenericError();
     text += '}\n\n';
     return text;
   }
+
   const generateUnmarshaller = function (exception: Response, prefix: string) {
     let unmarshaller = '';
     if (exception.language.go!.genericError) {
-      imports.add('errors');
-      unmarshaller += `${prefix}return errors.New(resp.Status)\n`;
+      unmarshaller += `${prefix}${generateGenericError()}`;
       return unmarshaller;
     }
     const schemaError = (<SchemaResponse>exception).schema;
