@@ -62,12 +62,12 @@ func (client *flattencomplexOperations) getValidHandleResponse(resp *azcore.Resp
 
 // getValidHandleError handles the GetValid error response.
 func (client *flattencomplexOperations) getValidHandleError(resp *azcore.Response) error {
-	if resp.Body != nil {
-		body, err := ioutil.ReadAll(resp.Body)
-		if err != nil {
-			return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
-		}
-		return string(body)
+	if resp.Body == nil {
+		return errors.New(resp.Status)
 	}
-	return errors.New(resp.Status)
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+	}
+	return errors.New(string(body))
 }

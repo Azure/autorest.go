@@ -114,14 +114,14 @@ func (client *httpFailureOperations) getNoModelEmptyHandleResponse(resp *azcore.
 
 // getNoModelEmptyHandleError handles the GetNoModelEmpty error response.
 func (client *httpFailureOperations) getNoModelEmptyHandleError(resp *azcore.Response) error {
-	if resp.Body != nil {
-		body, err := ioutil.ReadAll(resp.Body)
-		if err != nil {
-			return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
-		}
-		return string(body)
+	if resp.Body == nil {
+		return errors.New(resp.Status)
 	}
-	return errors.New(resp.Status)
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+	}
+	return errors.New(string(body))
 }
 
 // GetNoModelError - Get empty error form server
@@ -163,12 +163,12 @@ func (client *httpFailureOperations) getNoModelErrorHandleResponse(resp *azcore.
 
 // getNoModelErrorHandleError handles the GetNoModelError error response.
 func (client *httpFailureOperations) getNoModelErrorHandleError(resp *azcore.Response) error {
-	if resp.Body != nil {
-		body, err := ioutil.ReadAll(resp.Body)
-		if err != nil {
-			return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
-		}
-		return string(body)
+	if resp.Body == nil {
+		return errors.New(resp.Status)
 	}
-	return errors.New(resp.Status)
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+	}
+	return errors.New(string(body))
 }

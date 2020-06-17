@@ -758,14 +758,14 @@ function createProtocolErrHandler(client: string, op: Operation, imports: Import
     imports.add('errors');
     imports.add('io/ioutil');
     imports.add('fmt');
-    text += `if resp.Body != nil {
+    text += `if resp.Body == nil {
+        return errors.New(resp.Status)
+      }
       body, err := ioutil.ReadAll(resp.Body)
       if err != nil {
         return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
       }
-      return string(body)
-    }
-    return errors.New(resp.Status)
+      return errors.New(string(body))
     }
     
     `;
@@ -777,14 +777,14 @@ function createProtocolErrHandler(client: string, op: Operation, imports: Import
       imports.add('errors');
       imports.add('io/ioutil');
       imports.add('fmt');
-      unmarshaller += `${prefix}if resp.Body != nil {
-        body, err := ioutil.ReadAll(resp.Body)
-        if err != nil {
-          return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
-        }
-        return string(body)
+      unmarshaller += `${prefix}if resp.Body == nil {
+        return errors.New(resp.Status)
       }
-      return errors.New(resp.Status)
+      body, err := ioutil.ReadAll(resp.Body)
+      if err != nil {
+        return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+      }
+      return errors.New(string(body))
       `;
       return unmarshaller;
     }
