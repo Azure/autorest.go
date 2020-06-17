@@ -523,7 +523,7 @@ func (client *multipleResponsesOperations) get200ModelA200InvalidHandleResponse(
 
 // get200ModelA200InvalidHandleError handles the Get200ModelA200Invalid error response.
 func (client *multipleResponsesOperations) get200ModelA200InvalidHandleError(resp *azcore.Response) error {
-	if resp.Body == nil {
+	if len(resp.Body) == 0 {
 		return errors.New(resp.Status)
 	}
 	body, err := ioutil.ReadAll(resp.Body)
@@ -572,7 +572,7 @@ func (client *multipleResponsesOperations) get200ModelA200NoneHandleResponse(res
 
 // get200ModelA200NoneHandleError handles the Get200ModelA200None error response.
 func (client *multipleResponsesOperations) get200ModelA200NoneHandleError(resp *azcore.Response) error {
-	if resp.Body == nil {
+	if len(resp.Body) == 0 {
 		return errors.New(resp.Status)
 	}
 	body, err := ioutil.ReadAll(resp.Body)
@@ -621,7 +621,7 @@ func (client *multipleResponsesOperations) get200ModelA200ValidHandleResponse(re
 
 // get200ModelA200ValidHandleError handles the Get200ModelA200Valid error response.
 func (client *multipleResponsesOperations) get200ModelA200ValidHandleError(resp *azcore.Response) error {
-	if resp.Body == nil {
+	if len(resp.Body) == 0 {
 		return errors.New(resp.Status)
 	}
 	body, err := ioutil.ReadAll(resp.Body)
@@ -890,7 +890,7 @@ func (client *multipleResponsesOperations) get200ModelA202ValidHandleResponse(re
 
 // get200ModelA202ValidHandleError handles the Get200ModelA202Valid error response.
 func (client *multipleResponsesOperations) get200ModelA202ValidHandleError(resp *azcore.Response) error {
-	if resp.Body == nil {
+	if len(resp.Body) == 0 {
 		return errors.New(resp.Status)
 	}
 	body, err := ioutil.ReadAll(resp.Body)
@@ -939,7 +939,7 @@ func (client *multipleResponsesOperations) get200ModelA400InvalidHandleResponse(
 
 // get200ModelA400InvalidHandleError handles the Get200ModelA400Invalid error response.
 func (client *multipleResponsesOperations) get200ModelA400InvalidHandleError(resp *azcore.Response) error {
-	if resp.Body == nil {
+	if len(resp.Body) == 0 {
 		return errors.New(resp.Status)
 	}
 	body, err := ioutil.ReadAll(resp.Body)
@@ -988,7 +988,7 @@ func (client *multipleResponsesOperations) get200ModelA400NoneHandleResponse(res
 
 // get200ModelA400NoneHandleError handles the Get200ModelA400None error response.
 func (client *multipleResponsesOperations) get200ModelA400NoneHandleError(resp *azcore.Response) error {
-	if resp.Body == nil {
+	if len(resp.Body) == 0 {
 		return errors.New(resp.Status)
 	}
 	body, err := ioutil.ReadAll(resp.Body)
@@ -1037,7 +1037,7 @@ func (client *multipleResponsesOperations) get200ModelA400ValidHandleResponse(re
 
 // get200ModelA400ValidHandleError handles the Get200ModelA400Valid error response.
 func (client *multipleResponsesOperations) get200ModelA400ValidHandleError(resp *azcore.Response) error {
-	if resp.Body == nil {
+	if len(resp.Body) == 0 {
 		return errors.New(resp.Status)
 	}
 	body, err := ioutil.ReadAll(resp.Body)
@@ -1220,7 +1220,7 @@ func (client *multipleResponsesOperations) get202None204NoneDefaultNone202Invali
 
 // get202None204NoneDefaultNone202InvalidHandleError handles the Get202None204NoneDefaultNone202Invalid error response.
 func (client *multipleResponsesOperations) get202None204NoneDefaultNone202InvalidHandleError(resp *azcore.Response) error {
-	if resp.Body == nil {
+	if len(resp.Body) == 0 {
 		return errors.New(resp.Status)
 	}
 	body, err := ioutil.ReadAll(resp.Body)
@@ -1268,7 +1268,7 @@ func (client *multipleResponsesOperations) get202None204NoneDefaultNone204NoneHa
 
 // get202None204NoneDefaultNone204NoneHandleError handles the Get202None204NoneDefaultNone204None error response.
 func (client *multipleResponsesOperations) get202None204NoneDefaultNone204NoneHandleError(resp *azcore.Response) error {
-	if resp.Body == nil {
+	if len(resp.Body) == 0 {
 		return errors.New(resp.Status)
 	}
 	body, err := ioutil.ReadAll(resp.Body)
@@ -1316,7 +1316,7 @@ func (client *multipleResponsesOperations) get202None204NoneDefaultNone400Invali
 
 // get202None204NoneDefaultNone400InvalidHandleError handles the Get202None204NoneDefaultNone400Invalid error response.
 func (client *multipleResponsesOperations) get202None204NoneDefaultNone400InvalidHandleError(resp *azcore.Response) error {
-	if resp.Body == nil {
+	if len(resp.Body) == 0 {
 		return errors.New(resp.Status)
 	}
 	body, err := ioutil.ReadAll(resp.Body)
@@ -1364,7 +1364,7 @@ func (client *multipleResponsesOperations) get202None204NoneDefaultNone400NoneHa
 
 // get202None204NoneDefaultNone400NoneHandleError handles the Get202None204NoneDefaultNone400None error response.
 func (client *multipleResponsesOperations) get202None204NoneDefaultNone400NoneHandleError(resp *azcore.Response) error {
-	if resp.Body == nil {
+	if len(resp.Body) == 0 {
 		return errors.New(resp.Status)
 	}
 	body, err := ioutil.ReadAll(resp.Body)
@@ -1413,7 +1413,7 @@ func (client *multipleResponsesOperations) getDefaultModelA200NoneHandleResponse
 
 // getDefaultModelA200NoneHandleError handles the GetDefaultModelA200None error response.
 func (client *multipleResponsesOperations) getDefaultModelA200NoneHandleError(resp *azcore.Response) error {
-	if resp.Body == nil {
+	if len(resp.Body) == 0 {
 		return errors.New(resp.Status)
 	}
 	body, err := ioutil.ReadAll(resp.Body)
@@ -1462,7 +1462,7 @@ func (client *multipleResponsesOperations) getDefaultModelA200ValidHandleRespons
 
 // getDefaultModelA200ValidHandleError handles the GetDefaultModelA200Valid error response.
 func (client *multipleResponsesOperations) getDefaultModelA200ValidHandleError(resp *azcore.Response) error {
-	if resp.Body == nil {
+	if len(resp.Body) == 0 {
 		return errors.New(resp.Status)
 	}
 	body, err := ioutil.ReadAll(resp.Body)
@@ -1600,7 +1600,7 @@ func (client *multipleResponsesOperations) getDefaultNone200InvalidHandleRespons
 
 // getDefaultNone200InvalidHandleError handles the GetDefaultNone200Invalid error response.
 func (client *multipleResponsesOperations) getDefaultNone200InvalidHandleError(resp *azcore.Response) error {
-	if resp.Body == nil {
+	if len(resp.Body) == 0 {
 		return errors.New(resp.Status)
 	}
 	body, err := ioutil.ReadAll(resp.Body)
@@ -1648,7 +1648,7 @@ func (client *multipleResponsesOperations) getDefaultNone200NoneHandleResponse(r
 
 // getDefaultNone200NoneHandleError handles the GetDefaultNone200None error response.
 func (client *multipleResponsesOperations) getDefaultNone200NoneHandleError(resp *azcore.Response) error {
-	if resp.Body == nil {
+	if len(resp.Body) == 0 {
 		return errors.New(resp.Status)
 	}
 	body, err := ioutil.ReadAll(resp.Body)
@@ -1696,7 +1696,7 @@ func (client *multipleResponsesOperations) getDefaultNone400InvalidHandleRespons
 
 // getDefaultNone400InvalidHandleError handles the GetDefaultNone400Invalid error response.
 func (client *multipleResponsesOperations) getDefaultNone400InvalidHandleError(resp *azcore.Response) error {
-	if resp.Body == nil {
+	if len(resp.Body) == 0 {
 		return errors.New(resp.Status)
 	}
 	body, err := ioutil.ReadAll(resp.Body)
@@ -1744,7 +1744,7 @@ func (client *multipleResponsesOperations) getDefaultNone400NoneHandleResponse(r
 
 // getDefaultNone400NoneHandleError handles the GetDefaultNone400None error response.
 func (client *multipleResponsesOperations) getDefaultNone400NoneHandleError(resp *azcore.Response) error {
-	if resp.Body == nil {
+	if len(resp.Body) == 0 {
 		return errors.New(resp.Status)
 	}
 	body, err := ioutil.ReadAll(resp.Body)

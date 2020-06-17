@@ -758,7 +758,7 @@ function createProtocolErrHandler(client: string, op: Operation, imports: Import
     imports.add('errors');
     imports.add('io/ioutil');
     imports.add('fmt');
-    text += `if resp.Body == nil {
+    text += `if len(resp.Body) == 0 {
         return errors.New(resp.Status)
       }
       body, err := ioutil.ReadAll(resp.Body)
@@ -777,7 +777,7 @@ function createProtocolErrHandler(client: string, op: Operation, imports: Import
       imports.add('errors');
       imports.add('io/ioutil');
       imports.add('fmt');
-      unmarshaller += `${prefix}if resp.Body == nil {
+      unmarshaller += `${prefix}if len(resp.Body) == 0 {
         return errors.New(resp.Status)
       }
       body, err := ioutil.ReadAll(resp.Body)

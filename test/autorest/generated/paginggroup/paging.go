@@ -112,7 +112,7 @@ func (client *pagingOperations) getMultiplePagesHandleResponse(resp *azcore.Resp
 
 // getMultiplePagesHandleError handles the GetMultiplePages error response.
 func (client *pagingOperations) getMultiplePagesHandleError(resp *azcore.Response) error {
-	if resp.Body == nil {
+	if len(resp.Body) == 0 {
 		return errors.New(resp.Status)
 	}
 	body, err := ioutil.ReadAll(resp.Body)
@@ -167,7 +167,7 @@ func (client *pagingOperations) getMultiplePagesFailureHandleResponse(resp *azco
 
 // getMultiplePagesFailureHandleError handles the GetMultiplePagesFailure error response.
 func (client *pagingOperations) getMultiplePagesFailureHandleError(resp *azcore.Response) error {
-	if resp.Body == nil {
+	if len(resp.Body) == 0 {
 		return errors.New(resp.Status)
 	}
 	body, err := ioutil.ReadAll(resp.Body)
@@ -222,7 +222,7 @@ func (client *pagingOperations) getMultiplePagesFailureUriHandleResponse(resp *a
 
 // getMultiplePagesFailureUriHandleError handles the GetMultiplePagesFailureURI error response.
 func (client *pagingOperations) getMultiplePagesFailureUriHandleError(resp *azcore.Response) error {
-	if resp.Body == nil {
+	if len(resp.Body) == 0 {
 		return errors.New(resp.Status)
 	}
 	body, err := ioutil.ReadAll(resp.Body)
@@ -274,7 +274,7 @@ func (client *pagingOperations) getMultiplePagesFragmentNextLinkHandleResponse(r
 
 // getMultiplePagesFragmentNextLinkHandleError handles the GetMultiplePagesFragmentNextLink error response.
 func (client *pagingOperations) getMultiplePagesFragmentNextLinkHandleError(resp *azcore.Response) error {
-	if resp.Body == nil {
+	if len(resp.Body) == 0 {
 		return errors.New(resp.Status)
 	}
 	body, err := ioutil.ReadAll(resp.Body)
@@ -326,7 +326,7 @@ func (client *pagingOperations) getMultiplePagesFragmentWithGroupingNextLinkHand
 
 // getMultiplePagesFragmentWithGroupingNextLinkHandleError handles the GetMultiplePagesFragmentWithGroupingNextLink error response.
 func (client *pagingOperations) getMultiplePagesFragmentWithGroupingNextLinkHandleError(resp *azcore.Response) error {
-	if resp.Body == nil {
+	if len(resp.Body) == 0 {
 		return errors.New(resp.Status)
 	}
 	body, err := ioutil.ReadAll(resp.Body)
@@ -372,7 +372,7 @@ func (client *pagingOperations) getMultiplePagesLroHandleResponse(resp *azcore.R
 
 // getMultiplePagesLroHandleError handles the GetMultiplePagesLro error response.
 func (client *pagingOperations) getMultiplePagesLroHandleError(resp *azcore.Response) error {
-	if resp.Body == nil {
+	if len(resp.Body) == 0 {
 		return errors.New(resp.Status)
 	}
 	body, err := ioutil.ReadAll(resp.Body)
@@ -427,7 +427,7 @@ func (client *pagingOperations) getMultiplePagesRetryFirstHandleResponse(resp *a
 
 // getMultiplePagesRetryFirstHandleError handles the GetMultiplePagesRetryFirst error response.
 func (client *pagingOperations) getMultiplePagesRetryFirstHandleError(resp *azcore.Response) error {
-	if resp.Body == nil {
+	if len(resp.Body) == 0 {
 		return errors.New(resp.Status)
 	}
 	body, err := ioutil.ReadAll(resp.Body)
@@ -482,7 +482,7 @@ func (client *pagingOperations) getMultiplePagesRetrySecondHandleResponse(resp *
 
 // getMultiplePagesRetrySecondHandleError handles the GetMultiplePagesRetrySecond error response.
 func (client *pagingOperations) getMultiplePagesRetrySecondHandleError(resp *azcore.Response) error {
-	if resp.Body == nil {
+	if len(resp.Body) == 0 {
 		return errors.New(resp.Status)
 	}
 	body, err := ioutil.ReadAll(resp.Body)
@@ -547,7 +547,7 @@ func (client *pagingOperations) getMultiplePagesWithOffsetHandleResponse(resp *a
 
 // getMultiplePagesWithOffsetHandleError handles the GetMultiplePagesWithOffset error response.
 func (client *pagingOperations) getMultiplePagesWithOffsetHandleError(resp *azcore.Response) error {
-	if resp.Body == nil {
+	if len(resp.Body) == 0 {
 		return errors.New(resp.Status)
 	}
 	body, err := ioutil.ReadAll(resp.Body)
@@ -602,7 +602,7 @@ func (client *pagingOperations) getNoItemNamePagesHandleResponse(resp *azcore.Re
 
 // getNoItemNamePagesHandleError handles the GetNoItemNamePages error response.
 func (client *pagingOperations) getNoItemNamePagesHandleError(resp *azcore.Response) error {
-	if resp.Body == nil {
+	if len(resp.Body) == 0 {
 		return errors.New(resp.Status)
 	}
 	body, err := ioutil.ReadAll(resp.Body)
@@ -651,7 +651,7 @@ func (client *pagingOperations) getNullNextLinkNamePagesHandleResponse(resp *azc
 
 // getNullNextLinkNamePagesHandleError handles the GetNullNextLinkNamePages error response.
 func (client *pagingOperations) getNullNextLinkNamePagesHandleError(resp *azcore.Response) error {
-	if resp.Body == nil {
+	if len(resp.Body) == 0 {
 		return errors.New(resp.Status)
 	}
 	body, err := ioutil.ReadAll(resp.Body)
@@ -715,7 +715,7 @@ func (client *pagingOperations) getOdataMultiplePagesHandleResponse(resp *azcore
 
 // getOdataMultiplePagesHandleError handles the GetOdataMultiplePages error response.
 func (client *pagingOperations) getOdataMultiplePagesHandleError(resp *azcore.Response) error {
-	if resp.Body == nil {
+	if len(resp.Body) == 0 {
 		return errors.New(resp.Status)
 	}
 	body, err := ioutil.ReadAll(resp.Body)
@@ -770,7 +770,7 @@ func (client *pagingOperations) getPagingModelWithItemNameWithXmsClientNameHandl
 
 // getPagingModelWithItemNameWithXmsClientNameHandleError handles the GetPagingModelWithItemNameWithXmsClientName error response.
 func (client *pagingOperations) getPagingModelWithItemNameWithXmsClientNameHandleError(resp *azcore.Response) error {
-	if resp.Body == nil {
+	if len(resp.Body) == 0 {
 		return errors.New(resp.Status)
 	}
 	body, err := ioutil.ReadAll(resp.Body)
@@ -825,7 +825,7 @@ func (client *pagingOperations) getSinglePagesHandleResponse(resp *azcore.Respon
 
 // getSinglePagesHandleError handles the GetSinglePages error response.
 func (client *pagingOperations) getSinglePagesHandleError(resp *azcore.Response) error {
-	if resp.Body == nil {
+	if len(resp.Body) == 0 {
 		return errors.New(resp.Status)
 	}
 	body, err := ioutil.ReadAll(resp.Body)
@@ -880,7 +880,7 @@ func (client *pagingOperations) getSinglePagesFailureHandleResponse(resp *azcore
 
 // getSinglePagesFailureHandleError handles the GetSinglePagesFailure error response.
 func (client *pagingOperations) getSinglePagesFailureHandleError(resp *azcore.Response) error {
-	if resp.Body == nil {
+	if len(resp.Body) == 0 {
 		return errors.New(resp.Status)
 	}
 	body, err := ioutil.ReadAll(resp.Body)
@@ -932,7 +932,7 @@ func (client *pagingOperations) getWithQueryParamsHandleResponse(resp *azcore.Re
 
 // getWithQueryParamsHandleError handles the GetWithQueryParams error response.
 func (client *pagingOperations) getWithQueryParamsHandleError(resp *azcore.Response) error {
-	if resp.Body == nil {
+	if len(resp.Body) == 0 {
 		return errors.New(resp.Status)
 	}
 	body, err := ioutil.ReadAll(resp.Body)
@@ -969,7 +969,7 @@ func (client *pagingOperations) nextFragmentHandleResponse(resp *azcore.Response
 
 // nextFragmentHandleError handles the NextFragment error response.
 func (client *pagingOperations) nextFragmentHandleError(resp *azcore.Response) error {
-	if resp.Body == nil {
+	if len(resp.Body) == 0 {
 		return errors.New(resp.Status)
 	}
 	body, err := ioutil.ReadAll(resp.Body)
@@ -1006,7 +1006,7 @@ func (client *pagingOperations) nextFragmentWithGroupingHandleResponse(resp *azc
 
 // nextFragmentWithGroupingHandleError handles the NextFragmentWithGrouping error response.
 func (client *pagingOperations) nextFragmentWithGroupingHandleError(resp *azcore.Response) error {
-	if resp.Body == nil {
+	if len(resp.Body) == 0 {
 		return errors.New(resp.Status)
 	}
 	body, err := ioutil.ReadAll(resp.Body)
@@ -1041,7 +1041,7 @@ func (client *pagingOperations) nextOperationWithQueryParamsHandleResponse(resp 
 
 // nextOperationWithQueryParamsHandleError handles the NextOperationWithQueryParams error response.
 func (client *pagingOperations) nextOperationWithQueryParamsHandleError(resp *azcore.Response) error {
-	if resp.Body == nil {
+	if len(resp.Body) == 0 {
 		return errors.New(resp.Status)
 	}
 	body, err := ioutil.ReadAll(resp.Body)

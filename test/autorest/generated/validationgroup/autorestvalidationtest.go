@@ -71,7 +71,7 @@ func (client *autoRestValidationTestOperations) getWithConstantInPathHandleRespo
 
 // getWithConstantInPathHandleError handles the GetWithConstantInPath error response.
 func (client *autoRestValidationTestOperations) getWithConstantInPathHandleError(resp *azcore.Response) error {
-	if resp.Body == nil {
+	if len(resp.Body) == 0 {
 		return errors.New(resp.Status)
 	}
 	body, err := ioutil.ReadAll(resp.Body)
@@ -123,7 +123,7 @@ func (client *autoRestValidationTestOperations) postWithConstantInBodyHandleResp
 
 // postWithConstantInBodyHandleError handles the PostWithConstantInBody error response.
 func (client *autoRestValidationTestOperations) postWithConstantInBodyHandleError(resp *azcore.Response) error {
-	if resp.Body == nil {
+	if len(resp.Body) == 0 {
 		return errors.New(resp.Status)
 	}
 	body, err := ioutil.ReadAll(resp.Body)

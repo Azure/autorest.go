@@ -65,7 +65,7 @@ func (client *xmsClientRequestIdoperations) getHandleResponse(resp *azcore.Respo
 
 // getHandleError handles the Get error response.
 func (client *xmsClientRequestIdoperations) getHandleError(resp *azcore.Response) error {
-	if resp.Body == nil {
+	if len(resp.Body) == 0 {
 		return errors.New(resp.Status)
 	}
 	body, err := ioutil.ReadAll(resp.Body)
