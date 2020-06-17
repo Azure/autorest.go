@@ -20,6 +20,7 @@ const goMappings = {
     'dictionarygroup': 'body-dictionary.json',
     //'durationgroup': 'body-duration.json',
     'errorsgroup': 'xms-error-responses.json',
+    'extenumsgroup': 'extensible-enums-swagger.json',
     'filegroup': 'body-file.json',
     //'formdatagroup': 'body-formdata.json',
     'headergroup': 'header.json',
