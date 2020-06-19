@@ -339,7 +339,7 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
     if (op.language.go!.pollerType.name === 'HTTPPoller') {
       text += '\tresult.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {\n';
     } else {
-      text += `\tresult.PollUntilDone = func(ctx context.Context, frequency time.Duration)(*${(<SchemaResponse>op.responses![0]).schema.language.go!.responseType.name}, error) {\n`;
+      text += `\tresult.PollUntilDone = func(ctx context.Context, frequency time.Duration)(*${(<SchemaResponse>op.responses![0]).schema.language.go!.responseType.value}Response, error) {\n`;
     }
     text += `\t\treturn poller.pollUntilDone(ctx, frequency)\n`;
     text += `\t}\n`;
@@ -655,9 +655,10 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
   }
   const generateResponseUnmarshaller = function (response: Response): string {
     let unmarshallerText = '';
+    const isLRO = isLROOperation(op);
     if (!isSchemaResponse(response)) {
-      if (isLROOperation(op)) {
-        unmarshallerText += '\treturn &HTTPResponse{RawResponse: resp.Response}, nil\n';
+      if (isLRO) {
+        unmarshallerText += '\treturn &HTTPPollerResponse{RawResponse: resp.Response}, nil\n';
         return unmarshallerText;
       }
       // no response body, return the *http.Response
@@ -698,6 +699,10 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
     }
     const schemaResponse = <SchemaResponse>response;
     let respObj = `${schemaResponse.schema.language.go!.responseType.name}{RawResponse: resp.Response}`;
+    if (isLRO) {
+      unmarshallerText += `\treturn &${respObj}, nil\n`;
+      return unmarshallerText;
+    }
     unmarshallerText += `\tresult := ${respObj}\n`;
     // assign any header values
     for (const prop of values(<Array<Property>>schemaResponse.schema.language.go!.properties)) {
@@ -768,7 +773,6 @@ function createProtocolErrHandler(client: string, op: Operation, imports: Import
     }
     return errors.New(string(body))
     `;
-    
   }
 
   // if the response doesn't define any error types return a generic error
@@ -1046,7 +1050,7 @@ function generateReturnsInfo(op: Operation, forHandler: boolean): string[] {
     } else if (isSchemaResponse(firstResp)) {
       returnType = '*' + firstResp.schema.language.go!.responseType.name;
     } else if (isLROOperation(op)) {
-      returnType = '*HTTPResponse';
+      returnType = '*HTTPPollerResponse';
     }
   }
   return [returnType, 'error'];

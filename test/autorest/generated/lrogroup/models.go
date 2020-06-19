@@ -31,8 +31,8 @@ func (e CloudError) Error() string {
 	return msg
 }
 
-// HTTPResponse contains the HTTP response from the call to the service endpoint
-type HTTPResponse struct {
+// HTTPPollerResponse contains the HTTP response from the call to the service endpoint
+type HTTPPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*http.Response, error)
 
@@ -378,8 +378,8 @@ type Product struct {
 	Properties *ProductProperties `json:"properties,omitempty"`
 }
 
-// ProductArrayResponse is the response envelope for operations that return a []Product type.
-type ProductArrayResponse struct {
+// ProductArrayPollerResponse is the response envelope for operations that return a []Product type.
+type ProductArrayPollerResponse struct {
 	// AzureAsyncOperation contains the information returned from the Azure-AsyncOperation header response.
 	AzureAsyncOperation *string
 
@@ -392,8 +392,26 @@ type ProductArrayResponse struct {
 	// Poller contains an initialized poller
 	Poller ProductArrayPoller
 
-	// Array of Product
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ProductArrayResponse is the response envelope for operations that return a []Product type.
+type ProductArrayResponse struct {
+	// ProductArray contains the response from the operation.
 	ProductArray *[]Product
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ProductPollerResponse is the response envelope for operations that return a Product type.
+type ProductPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (*ProductResponse, error)
+
+	// Poller contains an initialized poller
+	Poller ProductPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -406,11 +424,7 @@ type ProductProperties struct {
 
 // ProductResponse is the response envelope for operations that return a Product type.
 type ProductResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*ProductResponse, error)
-
-	// Poller contains an initialized poller
-	Poller  ProductPoller
+	// Product contains the response from the operation.
 	Product *Product
 
 	// RawResponse contains the underlying HTTP response.
@@ -439,8 +453,8 @@ type Sku struct {
 	Name *string `json:"name,omitempty"`
 }
 
-// SkuResponse is the response envelope for operations that return a Sku type.
-type SkuResponse struct {
+// SkuPollerResponse is the response envelope for operations that return a Sku type.
+type SkuPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*SkuResponse, error)
 
@@ -449,12 +463,32 @@ type SkuResponse struct {
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-	Sku         *Sku
+}
+
+// SkuResponse is the response envelope for operations that return a Sku type.
+type SkuResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// Sku contains the response from the operation.
+	Sku *Sku
 }
 
 type SubProduct struct {
 	SubResource
 	Properties *SubProductProperties `json:"properties,omitempty"`
+}
+
+// SubProductPollerResponse is the response envelope for operations that return a SubProduct type.
+type SubProductPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (*SubProductResponse, error)
+
+	// Poller contains an initialized poller
+	Poller SubProductPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 type SubProductProperties struct {
@@ -464,15 +498,11 @@ type SubProductProperties struct {
 
 // SubProductResponse is the response envelope for operations that return a SubProduct type.
 type SubProductResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*SubProductResponse, error)
-
-	// Poller contains an initialized poller
-	Poller SubProductPoller
-
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-	SubProduct  *SubProduct
+
+	// SubProduct contains the response from the operation.
+	SubProduct *SubProduct
 }
 
 type SubResource struct {
