@@ -380,12 +380,6 @@ type Product struct {
 
 // ProductArrayPollerResponse is the response envelope for operations that return a []Product type.
 type ProductArrayPollerResponse struct {
-	// AzureAsyncOperation contains the information returned from the Azure-AsyncOperation header response.
-	AzureAsyncOperation *string
-
-	// Location contains the information returned from the Location header response.
-	Location *string
-
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*ProductArrayResponse, error)
 
@@ -398,7 +392,7 @@ type ProductArrayPollerResponse struct {
 
 // ProductArrayResponse is the response envelope for operations that return a []Product type.
 type ProductArrayResponse struct {
-	// ProductArray contains the response from the operation.
+	// Array of Product
 	ProductArray *[]Product
 
 	// RawResponse contains the underlying HTTP response.
@@ -424,7 +418,6 @@ type ProductProperties struct {
 
 // ProductResponse is the response envelope for operations that return a Product type.
 type ProductResponse struct {
-	// Product contains the response from the operation.
 	Product *Product
 
 	// RawResponse contains the underlying HTTP response.
@@ -469,9 +462,7 @@ type SkuPollerResponse struct {
 type SkuResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// Sku contains the response from the operation.
-	Sku *Sku
+	Sku         *Sku
 }
 
 type SubProduct struct {
@@ -500,9 +491,7 @@ type SubProductProperties struct {
 type SubProductResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// SubProduct contains the response from the operation.
-	SubProduct *SubProduct
+	SubProduct  *SubProduct
 }
 
 type SubResource struct {

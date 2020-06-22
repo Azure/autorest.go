@@ -296,7 +296,7 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
   if (isLROOperation(op)) {
     // TODO remove LRO for pageable responses NYI
     if (op.extensions!['x-ms-pageable']) {
-      text += `\treturn nil, nil`;
+      text += `\treturn nil, nil\n`;
       text += '}\n\n';
       return text;
     }
@@ -698,11 +698,11 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
       return unmarshallerText;
     }
     const schemaResponse = <SchemaResponse>response;
-    let respObj = `${schemaResponse.schema.language.go!.responseType.name}{RawResponse: resp.Response}`;
     if (isLRO) {
-      unmarshallerText += `\treturn &${respObj}, nil\n`;
+      unmarshallerText += `\treturn &${schemaResponse.schema.language.go!.lroResponseType.language.go!.name}{RawResponse: resp.Response}, nil\n`;
       return unmarshallerText;
     }
+    let respObj = `${schemaResponse.schema.language.go!.responseType.name}{RawResponse: resp.Response}`;
     unmarshallerText += `\tresult := ${respObj}\n`;
     // assign any header values
     for (const prop of values(<Array<Property>>schemaResponse.schema.language.go!.properties)) {
@@ -1043,12 +1043,17 @@ function generateReturnsInfo(op: Operation, forHandler: boolean): string[] {
   if (isMultiRespOperation(op)) {
     returnType = 'interface{}';
   } else {
-    const firstResp = op.responses![0];
-    // must check pageable first as all pageable operations are also schema responses
-    if (!forHandler && isPageableOperation(op)) {
+    const firstResp = <SchemaResponse>op.responses![0];
+    // must check pageable first as all pageable operations are also schema responses, 
+    // but LRO operations that return a pager are an exception and need to return LRO specific
+    // responses
+    if (!forHandler && isPageableOperation(op) && !isLROOperation(op)) {
       returnType = op.language.go!.pageableType.name;
     } else if (isSchemaResponse(firstResp)) {
       returnType = '*' + firstResp.schema.language.go!.responseType.name;
+      if (isLROOperation(op) || (isLROOperation(op) && forHandler)) {
+        returnType = '*' + firstResp.schema.language.go!.lroResponseType.language.go!.name;
+      }
     } else if (isLROOperation(op)) {
       returnType = '*HTTPPollerResponse';
     }

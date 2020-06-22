@@ -117,7 +117,7 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
       handleResponse = `
       func (p *${pollerName}) handleResponse(resp *azcore.Response) (*${responseType}, error) {
         result := ${responseType}{RawResponse: resp.Response}
-        if (resp.HasStatusCode(http.StatusNoContent)) {
+        if resp.HasStatusCode(http.StatusNoContent) {
           return &result, nil
         }
         if !resp.HasStatusCode(pollingCodes[:]...) {
