@@ -25,10 +25,10 @@ function getPutCheck(op: Operation): string {
       case SchemaType.Array:
       case SchemaType.Dictionary:
         text += `if res != nil && res.${respSchema.schema.language.go!.responseType.value} != nil {`;
-		break;
-	  case SchemaType.String:
-		text += `if res != nil && (*res.${respSchema.schema.language.go!.responseType.value} != "") {`;
-		break;
+        break;
+      case SchemaType.String:
+        text += `if res != nil && (*res.${respSchema.schema.language.go!.responseType.value} != "") {`;
+        break;
       default:
         text += `if res != nil && (*res.${respSchema.schema.language.go!.responseType.value} != ${respSchema.schema.language.go!.responseType.value}{}) {`;
     }
@@ -193,7 +193,7 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
       }
       `;
     } else if (isSchemaResponse(schemaResponse) && schemaResponse.schema.language.go!.responseType.value != undefined) {
-      responseType = schemaResponse.schema.language.go!.responseType.name;
+      responseType = schemaResponse.schema.language.go!.responseType.value + 'Response';
       pollUntilDoneResponse = `(*${responseType}, error)`;
       pollUntilDoneReturn = 'p.FinalResponse(ctx)';
       unmarshalResponse = `resp.UnmarshalAsJSON(&result.${schemaResponse.schema.language.go!.responseType.value})`;
@@ -240,7 +240,7 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
       handleResponse = `
       func (p *${pollerName}) handleResponse(resp *azcore.Response) (*${responseType}, error) {
         result := ${responseType}{RawResponse: resp.Response}
-        if (resp.HasStatusCode(http.StatusNoContent)) {
+        if resp.HasStatusCode(http.StatusNoContent) {
           return &result, nil
         }
         if !resp.HasStatusCode(pollingCodes[:]...) {

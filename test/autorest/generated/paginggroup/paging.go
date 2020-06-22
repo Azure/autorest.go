@@ -31,7 +31,7 @@ type PagingOperations interface {
 	// GetMultiplePagesFragmentWithGroupingNextLink - A paging operation that doesn't return a full URL, just a fragment with parameters grouped
 	GetMultiplePagesFragmentWithGroupingNextLink(customParameterGroup CustomParameterGroup) (OdataProductResultPager, error)
 	// BeginGetMultiplePagesLro - A long-running paging operation that includes a nextLink that has 10 pages
-	BeginGetMultiplePagesLro(ctx context.Context, pagingGetMultiplePagesLroOptions *PagingGetMultiplePagesLroOptions) (*ProductResultResponse, error)
+	BeginGetMultiplePagesLro(ctx context.Context, pagingGetMultiplePagesLroOptions *PagingGetMultiplePagesLroOptions) (*ProductResultPollerResponse, error)
 	// ResumeGetMultiplePagesLro - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeGetMultiplePagesLro(token string) (ProductResultPagerPoller, error)
 	// GetMultiplePagesRetryFirst - A paging operation that fails on the first call with 500 and then retries and then get a response including a nextLink that has 10 pages
@@ -340,7 +340,7 @@ func (client *pagingOperations) getMultiplePagesFragmentWithGroupingNextLinkHand
 }
 
 // GetMultiplePagesLro - A long-running paging operation that includes a nextLink that has 10 pages
-func (client *pagingOperations) BeginGetMultiplePagesLro(ctx context.Context, pagingGetMultiplePagesLroOptions *PagingGetMultiplePagesLroOptions) (*ProductResultResponse, error) {
+func (client *pagingOperations) BeginGetMultiplePagesLro(ctx context.Context, pagingGetMultiplePagesLroOptions *PagingGetMultiplePagesLroOptions) (*ProductResultPollerResponse, error) {
 	req, err := client.getMultiplePagesLroCreateRequest(pagingGetMultiplePagesLroOptions)
 	if err != nil {
 		return nil, err
@@ -402,12 +402,11 @@ func (client *pagingOperations) getMultiplePagesLroCreateRequest(pagingGetMultip
 }
 
 // getMultiplePagesLroHandleResponse handles the GetMultiplePagesLro response.
-func (client *pagingOperations) getMultiplePagesLroHandleResponse(resp *azcore.Response) (*ProductResultResponse, error) {
+func (client *pagingOperations) getMultiplePagesLroHandleResponse(resp *azcore.Response) (*ProductResultPollerResponse, error) {
 	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.getMultiplePagesLroHandleError(resp)
 	}
-	result := ProductResultResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.ProductResult)
+	return &ProductResultPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // getMultiplePagesLroHandleError handles the GetMultiplePagesLro error response.

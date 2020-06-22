@@ -75,11 +75,11 @@ func TestLROBeginDelete202NoRetry204(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	prodResp, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 204)
+	helpers.VerifyStatusCode(t, prodResp.RawResponse, 204)
 }
 
 func TestLROBeginDelete202Retry200(t *testing.T) {
@@ -97,11 +97,11 @@ func TestLROBeginDelete202Retry200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	prodResp, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
+	helpers.VerifyStatusCode(t, prodResp.RawResponse, 200)
 }
 
 func TestLROBeginDelete204Succeeded(t *testing.T) {
@@ -281,11 +281,11 @@ func TestLROBeginDeleteProvisioning202Accepted200Succeeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	prodResp, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
+	helpers.VerifyStatusCode(t, prodResp.RawResponse, 200)
 }
 
 func TestLROBeginDeleteProvisioning202DeletingFailed200(t *testing.T) {
@@ -303,7 +303,7 @@ func TestLROBeginDeleteProvisioning202DeletingFailed200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	_, err = resp.PollUntilDone(context.Background(), 1*time.Millisecond)
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
@@ -324,7 +324,7 @@ func TestLROBeginDeleteProvisioning202Deletingcanceled200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	_, err = resp.PollUntilDone(context.Background(), 1*time.Millisecond)
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
@@ -345,12 +345,12 @@ func TestLROBeginPost200WithPayload(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	skuResp, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, resp.Sku, &lrogroup.Sku{
+	helpers.VerifyStatusCode(t, skuResp.RawResponse, 200)
+	helpers.DeepEqualOrFatal(t, skuResp.Sku, &lrogroup.Sku{
 		ID:   to.StringPtr("1"),
 		Name: to.StringPtr("product"),
 	})
@@ -371,12 +371,12 @@ func TestLROBeginPost202List(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	prodArrayResp, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, resp.ProductArray, &[]lrogroup.Product{
+	helpers.VerifyStatusCode(t, prodArrayResp.RawResponse, 200)
+	helpers.DeepEqualOrFatal(t, prodArrayResp.ProductArray, &[]lrogroup.Product{
 		lrogroup.Product{
 			Resource: lrogroup.Resource{
 				ID:   to.StringPtr("100"),
@@ -401,11 +401,11 @@ func TestLROBeginPost202NoRetry204(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	prodResp, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 204)
+	helpers.VerifyStatusCode(t, prodResp.RawResponse, 204)
 }
 
 func TestLROBeginPost202Retry200(t *testing.T) {

@@ -338,7 +338,7 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
       if (isPageableOperation(op)) {
         text += `\tresult.PollUntilDone = func(ctx context.Context, frequency time.Duration) (${op.language.go!.pageableType.name}, error) {\n`;
       } else {
-        text += `\tresult.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*${(<SchemaResponse>op.responses![0]).schema.language.go!.responseType.name}, error) {\n`;
+        text += `\tresult.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*${(<SchemaResponse>op.responses![0]).schema.language.go!.responseType.value}Response, error) {\n`;
       }
     }
     text += `\t\treturn poller.pollUntilDone(ctx, frequency)\n`;
@@ -655,9 +655,10 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
   }
   const generateResponseUnmarshaller = function (response: Response): string {
     let unmarshallerText = '';
+    const isLRO = isLROOperation(op);
     if (!isSchemaResponse(response)) {
-      if (isLROOperation(op)) {
-        unmarshallerText += '\treturn &HTTPResponse{RawResponse: resp.Response}, nil\n';
+      if (isLRO) {
+        unmarshallerText += '\treturn &HTTPPollerResponse{RawResponse: resp.Response}, nil\n';
         return unmarshallerText;
       }
       // no response body, return the *http.Response
@@ -697,6 +698,10 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
       return unmarshallerText;
     }
     const schemaResponse = <SchemaResponse>response;
+    if (isLRO) {
+      unmarshallerText += `\treturn &${schemaResponse.schema.language.go!.lroResponseType.language.go!.name}{RawResponse: resp.Response}, nil\n`;
+      return unmarshallerText;
+    }
     let respObj = `${schemaResponse.schema.language.go!.responseType.name}{RawResponse: resp.Response}`;
     unmarshallerText += `\tresult := ${respObj}\n`;
     // assign any header values
@@ -768,7 +773,6 @@ function createProtocolErrHandler(client: string, op: Operation, imports: Import
     }
     return errors.New(string(body))
     `;
-    
   }
 
   // if the response doesn't define any error types return a generic error
@@ -986,14 +990,19 @@ function generateReturnsInfo(op: Operation, forHandler: boolean): string[] {
   if (isMultiRespOperation(op)) {
     returnType = 'interface{}';
   } else {
-    const firstResp = op.responses![0];
-    // must check pageable first as all pageable operations are also schema responses
+    const firstResp = <SchemaResponse>op.responses![0];
+    // must check pageable first as all pageable operations are also schema responses,
+    // but LRO operations that return a pager are an exception and need to return LRO specific
+    // responses
     if (!forHandler && isPageableOperation(op) && !isLROOperation(op)) {
       returnType = op.language.go!.pageableType.name;
     } else if (isSchemaResponse(firstResp)) {
       returnType = '*' + firstResp.schema.language.go!.responseType.name;
+      if (isLROOperation(op) || (isLROOperation(op) && forHandler)) {
+        returnType = '*' + firstResp.schema.language.go!.lroResponseType.language.go!.name;
+      }
     } else if (isLROOperation(op)) {
-      returnType = '*HTTPResponse';
+      returnType = '*HTTPPollerResponse';
     }
   }
   return [returnType, 'error'];
