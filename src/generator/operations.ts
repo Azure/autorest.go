@@ -9,7 +9,7 @@ import { ArraySchema, ByteArraySchema, CodeModel, ConstantSchema, DateTimeSchema
 import { values } from '@azure-tools/linq';
 import { aggregateParameters, isArraySchema, isPageableOperation, isSchemaResponse, PagerInfo, isLROOperation } from '../common/helpers';
 import { OperationNaming } from '../transform/namer';
-import { contentPreamble, formatParameterTypeName, hasDescription, skipURLEncoding, sortAscending, sortParametersByRequired } from './helpers';
+import { contentPreamble, formatParameterTypeName, hasDescription, skipURLEncoding, sortAscending, sortParametersByRequired, getCreateRequestParametersSig, getMethodParameters } from './helpers';
 import { ImportManager } from './imports';
 
 const dateFormat = '2006-01-02';
@@ -292,14 +292,7 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
   for (let i = 0; i < reqParams.length; ++i) {
     reqParams[i] = reqParams[i].trim().split(' ')[0];
   }
-  // TODO Exception for Pageable LRO operations NYI
   if (isLROOperation(op)) {
-    // TODO remove LRO for pageable responses NYI
-    if (op.extensions!['x-ms-pageable']) {
-      text += `\treturn nil, nil`;
-      text += '}\n\n';
-      return text;
-    }
     imports.add('time');
     text += `\treq, err := client.${info.protocolNaming.requestMethod}(${reqParams.join(', ')})\n`;
     text += `\tif err != nil {\n`;
@@ -332,6 +325,9 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
     text += '\t}\n';
     text += `\tpoller := &${camelCase(op.language.go!.pollerType.name)}{\n`;
     text += '\t\t\tpt: pt,\n';
+    if (isPageableOperation(op)) {
+      text += `\t\t\trespHandler: client.${info.protocolNaming.responseMethod},\n`;
+    }
     text += '\t\t\tpipeline: client.p,\n';
     text += '\t}\n';
     text += '\tresult.Poller = poller\n';
@@ -339,7 +335,11 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
     if (op.language.go!.pollerType.name === 'HTTPPoller') {
       text += '\tresult.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {\n';
     } else {
-      text += `\tresult.PollUntilDone = func(ctx context.Context, frequency time.Duration)(*${(<SchemaResponse>op.responses![0]).schema.language.go!.responseType.name}, error) {\n`;
+      if (isPageableOperation(op)) {
+        text += `\tresult.PollUntilDone = func(ctx context.Context, frequency time.Duration) (${op.language.go!.pageableType.name}, error) {\n`;
+      } else {
+        text += `\tresult.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*${(<SchemaResponse>op.responses![0]).schema.language.go!.responseType.name}, error) {\n`;
+      }
     }
     text += `\t\treturn poller.pollUntilDone(ctx, frequency)\n`;
     text += `\t}\n`;
@@ -871,7 +871,7 @@ function createInterfaceDefinition(group: OperationGroup, imports: ImportManager
     const returns = generateReturnsInfo(op, false);
     interfaceText += `\t${opName}(${getAPIParametersSig(op, imports)}) (${returns.join(', ')})\n`;
     // Add resume LRO poller method for each Begin poller method
-    if (isLROOperation(op) && !op.extensions!['x-ms-pageable']) {
+    if (isLROOperation(op)) {
       interfaceText += `\t// Resume${op.language.go!.name} - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.\n`;
       interfaceText += `\tResume${op.language.go!.name}(token string) (${op.language.go!.pollerType.name}, error)\n`;
     }
@@ -966,7 +966,7 @@ function hasBinaryResponse(responses: Response[]): boolean {
 function getAPIParametersSig(op: Operation, imports: ImportManager): string {
   const methodParams = getMethodParameters(op);
   const params = new Array<string>();
-  if (!isPageableOperation(op)) {
+  if (!isPageableOperation(op) || isLROOperation(op)) {
     imports.add('context');
     params.push('ctx context.Context');
   }
@@ -974,59 +974,6 @@ function getAPIParametersSig(op: Operation, imports: ImportManager): string {
     params.push(`${camelCase(methodParam.language.go!.name)} ${formatParameterTypeName(methodParam)}`);
   }
   return params.join(', ');
-}
-
-// returns the parameters for the internal request creator method.
-// e.g. "i int, s string"
-function getCreateRequestParametersSig(op: Operation): string {
-  const methodParams = getMethodParameters(op);
-  const params = new Array<string>();
-  for (const methodParam of values(methodParams)) {
-    params.push(`${camelCase(methodParam.language.go!.name)} ${formatParameterTypeName(methodParam)}`);
-  }
-  return params.join(', ');
-}
-
-// returns the complete collection of method parameters
-function getMethodParameters(op: Operation): Parameter[] {
-  const params = new Array<Parameter>();
-  const paramGroups = new Array<GroupProperty>();
-  for (const param of values(aggregateParameters(op))) {
-    if (param.implementation === ImplementationLocation.Client) {
-      // client params are passed via the receiver
-      continue;
-    } else if (param.schema.type === SchemaType.Constant) {
-      // don't generate a parameter for a constant
-      continue;
-    } else if (param.language.go!.paramGroup) {
-      // param groups will be added after individual params
-      if (!paramGroups.includes(param.language.go!.paramGroup)) {
-        paramGroups.push(param.language.go!.paramGroup);
-      }
-      continue;
-    }
-    params.push(param);
-  }
-  // move global optional params to the end of the slice
-  params.sort(sortParametersByRequired);
-  // add any parameter groups.  optional group goes last
-  paramGroups.sort((a: GroupProperty, b: GroupProperty) => {
-    if (a.required === b.required) {
-      return 0;
-    }
-    if (a.required && !b.required) {
-      return -1;
-    }
-    return 1;
-  })
-  for (const paramGroup of values(paramGroups)) {
-    let name = camelCase(paramGroup.language.go!.name);
-    if (!paramGroup.required) {
-      name = 'options';
-    }
-    params.push(paramGroup);
-  }
-  return params;
 }
 
 // returns the return signature where each entry is the type name
@@ -1041,7 +988,7 @@ function generateReturnsInfo(op: Operation, forHandler: boolean): string[] {
   } else {
     const firstResp = op.responses![0];
     // must check pageable first as all pageable operations are also schema responses
-    if (!forHandler && isPageableOperation(op)) {
+    if (!forHandler && isPageableOperation(op) && !isLROOperation(op)) {
       returnType = op.language.go!.pageableType.name;
     } else if (isSchemaResponse(firstResp)) {
       returnType = '*' + firstResp.schema.language.go!.responseType.name;

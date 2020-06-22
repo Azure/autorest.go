@@ -9,40 +9,43 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
 	"time"
 )
 
-// ProductResultPoller provides polling facilities until the operation completes
-type ProductResultPoller interface {
+// ProductResultPagerPoller provides polling facilities until the operation completes
+type ProductResultPagerPoller interface {
 	Done() bool
 	Poll(ctx context.Context) (*http.Response, error)
-	FinalResponse(ctx context.Context) (*ProductResultResponse, error)
+	FinalResponse(ctx context.Context) (ProductResultPager, error)
 	ResumeToken() (string, error)
 }
 
-type productResultPoller struct {
+type productResultPagerPoller struct {
 	// the client for making the request
-	pipeline azcore.Pipeline
-	pt       pollingTracker
+	pipeline    azcore.Pipeline
+	respHandler productResultHandleResponse
+
+	pt pollingTracker
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
-func (p *productResultPoller) Done() bool {
+func (p *productResultPagerPoller) Done() bool {
 	return p.pt.hasTerminated()
 }
 
 // Poll will send poll the service endpoint and return an http.Response or error received from the service
-func (p *productResultPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *productResultPagerPoller) Poll(ctx context.Context) (*http.Response, error) {
 	if lroPollDone(ctx, p.pipeline, p.pt) {
 		return p.pt.latestResponse().Response, p.pt.pollingError()
 	}
 	return nil, p.pt.pollingError()
 }
 
-func (p *productResultPoller) FinalResponse(ctx context.Context) (*ProductResultResponse, error) {
+func (p *productResultPagerPoller) FinalResponse(ctx context.Context) (ProductResultPager, error) {
 	if !p.Done() {
 		return nil, errors.New("cannot return a final response from a poller in a non-terminal state")
 	}
@@ -51,7 +54,7 @@ func (p *productResultPoller) FinalResponse(ctx context.Context) (*ProductResult
 		if err != nil {
 			return nil, err
 		}
-		if res != nil && (*res.ProductResult != ProductResult{}) {
+		if res != nil {
 			return res, nil
 		}
 	}
@@ -89,9 +92,9 @@ func (p *productResultPoller) FinalResponse(ctx context.Context) (*ProductResult
 	return p.handleResponse(resp)
 }
 
-// ResumeToken generates the string token that can be used with the ResumeProductResultPoller method
+// ResumeToken generates the string token that can be used with the ResumeProductResultPagerPoller method
 // on the client to create a new poller from the data held in the current poller type
-func (p *productResultPoller) ResumeToken() (string, error) {
+func (p *productResultPagerPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
@@ -102,7 +105,7 @@ func (p *productResultPoller) ResumeToken() (string, error) {
 	return string(js), nil
 }
 
-func (p *productResultPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*ProductResultResponse, error) {
+func (p *productResultPagerPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (ProductResultPager, error) {
 	for {
 		resp, err := p.Poll(ctx)
 		if err != nil {
@@ -120,13 +123,26 @@ func (p *productResultPoller) pollUntilDone(ctx context.Context, frequency time.
 	return p.FinalResponse(ctx)
 }
 
-func (p *productResultPoller) handleResponse(resp *azcore.Response) (*ProductResultResponse, error) {
-	result := ProductResultResponse{RawResponse: resp.Response}
-	if resp.HasStatusCode(http.StatusNoContent) {
-		return &result, nil
+func (p *productResultPagerPoller) handleResponse(resp *azcore.Response) (ProductResultPager, error) {
+	u, err := url.Parse(p.pt.pollingURL())
+	if err != nil {
+		return nil, err
 	}
-	if !resp.HasStatusCode(pollingCodes[:]...) {
-		return nil, p.pt.handleError(resp)
-	}
-	return &result, resp.UnmarshalAsJSON(&result.ProductResult)
+	req := azcore.NewRequest(http.MethodGet, *u)
+	return &productResultPager{
+		pipeline:  p.pipeline,
+		request:   req,
+		responder: p.respHandler,
+		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
+			u, err := url.Parse(*resp.ProductResult.NextLink)
+			if err != nil {
+				return nil, fmt.Errorf("invalid NextLink: %w", err)
+			}
+			if u.Scheme == "" {
+				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.ProductResult.NextLink)
+			}
+			return azcore.NewRequest(http.MethodGet, *u), nil
+		},
+	}, nil
+
 }

@@ -633,7 +633,10 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
       if (isSchemaResponse(response) && response.schema.language.go!.responseType.value) {
         type = response.schema.language.go!.responseType.value;
       }
-      const name = `${type}Poller`;
+      let name = `${type}Poller`;
+      if (isPageableOperation(op)) {
+        name = `${op.language.go!.pageableType.name}Poller`
+      }
       const pollers = <Array<PollerInfo>>codeModel.language.go!.pollerTypes;
       let skipAddLRO = false;
       for (const poller of values(pollers)) {

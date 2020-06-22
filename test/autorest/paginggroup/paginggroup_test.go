@@ -172,7 +172,41 @@ func TestGetMultiplePagesFragmentWithGroupingNextLink(t *testing.T) {
 
 // GetMultiplePagesLro - A long-running paging operation that includes a nextLink that has 10 pages
 func TestGetMultiplePagesLro(t *testing.T) {
-	t.Skip("LRO NYI")
+	client := getPagingOperations(t)
+	resp, err := client.BeginGetMultiplePagesLro(context.Background(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller := resp.Poller
+	rt, err := poller.ResumeToken()
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller, err = client.ResumeGetMultiplePagesLro(rt)
+	if err != nil {
+		t.Fatal(err)
+	}
+	pager, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	if err != nil {
+		t.Fatal(err)
+	}
+	count := 0
+	for pager.NextPage(context.Background()) {
+		resp := pager.PageResponse()
+		if len(*resp.ProductResult.Values) == 0 {
+			t.Fatal("missing payload")
+		}
+		count++
+	}
+	if err = pager.Err(); err != nil {
+		t.Fatal(err)
+	}
+	if count != 10 {
+		helpers.DeepEqualOrFatal(t, count, 10)
+	}
+	if pager.PageResponse() == nil {
+		t.Fatal("unexpected nil payload")
+	}
 }
 
 // GetMultiplePagesRetryFirst - A paging operation that fails on the first call with 500 and then retries and then get a response including a nextLink that has 10 pages
