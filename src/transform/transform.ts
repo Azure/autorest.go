@@ -565,21 +565,33 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
       response.schema.language.go!.responseType.value = propName;
       // for LROs add a specific poller response envelope to return from Begin operations
       if (isLRO) {
-        const respTypeName = generateLROResponseTypeName(response.schema);
+        let respTypeName = generateLROResponseTypeName(response.schema);
         response.schema.language.go!.isLRO = true;
         const respTypeObject = newObject(respTypeName.name, respTypeName.description);
         respTypeObject.language.go!.responseType = respTypeName;
         respTypeObject.language.go!.properties = [
           newProperty('RawResponse', 'RawResponse contains the underlying HTTP response.', newObject('http.Response', 'TODO')),
         ];
-        let prop = newProperty('PollUntilDone',
-          'PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received',
-          newObject(`func(ctx context.Context, frequency time.Duration) (*${response.schema.language.go!.responseType.name}, error)`, 'TODO'));
-        prop.schema.language.go!.lroPointerException = true;
-        (<Array<Property>>respTypeObject.language.go!.properties).push(prop);
-        prop = newProperty('Poller', 'Poller contains an initialized poller', newObject(`${response.schema.language.go!.responseType.value}Poller`, 'TODO'));
-        prop.schema.language.go!.lroPointerException = true;
-        (<Array<Property>>respTypeObject.language.go!.properties).push(prop);
+        if (isPageableOperation(op)) {
+          respTypeName.name = `${(<SchemaResponse>response).schema.language.go!.name}PagerPollerResponse`;
+          let prop = newProperty('PollUntilDone',
+            'PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received',
+            newObject(`func(ctx context.Context, frequency time.Duration) (*${(<SchemaResponse>response).schema.language.go!.name}Pager, error)`, 'TODO'));
+          prop.schema.language.go!.lroPointerException = true;
+          (<Array<Property>>respTypeObject.language.go!.properties).push(prop);
+          prop = newProperty('Poller', 'Poller contains an initialized poller', newObject(`${(<SchemaResponse>response).schema.language.go!.name}PagerPoller`, 'TODO'));
+          prop.schema.language.go!.lroPointerException = true;
+          (<Array<Property>>respTypeObject.language.go!.properties).push(prop);
+        } else {
+          let prop = newProperty('PollUntilDone',
+            'PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received',
+            newObject(`func(ctx context.Context, frequency time.Duration) (*${response.schema.language.go!.responseType.name}, error)`, 'TODO'));
+          prop.schema.language.go!.lroPointerException = true;
+          (<Array<Property>>respTypeObject.language.go!.properties).push(prop);
+          prop = newProperty('Poller', 'Poller contains an initialized poller', newObject(`${response.schema.language.go!.responseType.value}Poller`, 'TODO'));
+          prop.schema.language.go!.lroPointerException = true;
+          (<Array<Property>>respTypeObject.language.go!.properties).push(prop);
+        }
         // add the LRO response schema to the global list of response
         const responseSchemas = <Array<Schema>>codeModel.language.go!.responseSchemas;
         responseSchemas.push(respTypeObject);
