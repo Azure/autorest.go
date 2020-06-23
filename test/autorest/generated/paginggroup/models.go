@@ -92,7 +92,7 @@ type ProductResult struct {
 // ProductResultPollerResponse is the response envelope for operations that return a ProductResult type.
 type ProductResultPagerPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*ProductResultPager, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ProductResultPager, error)
 
 	// Poller contains an initialized poller
 	Poller ProductResultPagerPoller

@@ -577,7 +577,7 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
           respTypeObject.language.go!.name = `${(<SchemaResponse>response).schema.language.go!.name}PagerPollerResponse`;
           let prop = newProperty('PollUntilDone',
             'PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received',
-            newObject(`func(ctx context.Context, frequency time.Duration) (*${(<SchemaResponse>response).schema.language.go!.name}Pager, error)`, 'TODO'));
+            newObject(`func(ctx context.Context, frequency time.Duration) (${(<SchemaResponse>response).schema.language.go!.name}Pager, error)`, 'TODO'));
           prop.schema.language.go!.lroPointerException = true;
           (<Array<Property>>respTypeObject.language.go!.properties).push(prop);
           prop = newProperty('Poller', 'Poller contains an initialized poller', newObject(`${(<SchemaResponse>response).schema.language.go!.name}PagerPoller`, 'TODO'));
