@@ -565,15 +565,16 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
       response.schema.language.go!.responseType.value = propName;
       // for LROs add a specific poller response envelope to return from Begin operations
       if (isLRO) {
-        let respTypeName = generateLROResponseTypeName(response.schema);
+        const respTypeName = generateLROResponseTypeName(response.schema);
         response.schema.language.go!.isLRO = true;
-        const respTypeObject = newObject(respTypeName.name, respTypeName.description);
+        let respTypeObject = newObject(respTypeName.name, respTypeName.description);
         respTypeObject.language.go!.responseType = respTypeName;
         respTypeObject.language.go!.properties = [
           newProperty('RawResponse', 'RawResponse contains the underlying HTTP response.', newObject('http.Response', 'TODO')),
         ];
         if (isPageableOperation(op)) {
-          respTypeName.name = `${(<SchemaResponse>response).schema.language.go!.name}PagerPollerResponse`;
+          respTypeObject.language.go!.responseType.name = `${(<SchemaResponse>response).schema.language.go!.name}PagerPollerResponse`;
+          respTypeObject.language.go!.name = `${(<SchemaResponse>response).schema.language.go!.name}PagerPollerResponse`;
           let prop = newProperty('PollUntilDone',
             'PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received',
             newObject(`func(ctx context.Context, frequency time.Duration) (*${(<SchemaResponse>response).schema.language.go!.name}Pager, error)`, 'TODO'));
