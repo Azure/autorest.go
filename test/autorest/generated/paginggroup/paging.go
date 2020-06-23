@@ -360,7 +360,7 @@ func (client *pagingOperations) BeginGetMultiplePagesLro(ctx context.Context, pa
 	}
 	poller := &productResultPagerPoller{
 		pt:          pt,
-		respHandler: client.getMultiplePagesLroHandleResponse,
+		respHandler: client.productResultPagerHandleResponse,
 		pipeline:    client.p,
 	}
 	result.Poller = poller
@@ -407,6 +407,15 @@ func (client *pagingOperations) getMultiplePagesLroHandleResponse(resp *azcore.R
 		return nil, client.getMultiplePagesLroHandleError(resp)
 	}
 	return &ProductResultPagerPollerResponse{RawResponse: resp.Response}, nil
+}
+
+// getMultiplePagesLroHandleResponse handles the GetMultiplePagesLro response.
+func (client *pagingOperations) productResultPagerHandleResponse(resp *azcore.Response) (*ProductResultResponse, error) {
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.getMultiplePagesLroHandleError(resp)
+	}
+	result := ProductResultResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.ProductResult)
 }
 
 // getMultiplePagesLroHandleError handles the GetMultiplePagesLro error response.

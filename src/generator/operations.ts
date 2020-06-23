@@ -326,7 +326,7 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
     text += `\tpoller := &${camelCase(op.language.go!.pollerType.name)}{\n`;
     text += '\t\t\tpt: pt,\n';
     if (isPageableOperation(op)) {
-      text += `\t\t\trespHandler: client.${info.protocolNaming.responseMethod},\n`;
+      text += `\t\t\trespHandler: client.${camelCase(op.language.go!.pageableType.name)}HandleResponse,\n`;
     }
     text += '\t\t\tpipeline: client.p,\n';
     text += '\t}\n';
@@ -653,9 +653,8 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
     text += '}\n\n';
     return text;
   }
-  const generateResponseUnmarshaller = function (response: Response): string {
+  const generateResponseUnmarshaller = function (response: Response, isLRO: boolean): string {
     let unmarshallerText = '';
-    const isLRO = isLROOperation(op);
     if (!isSchemaResponse(response)) {
       if (isLRO) {
         unmarshallerText += '\treturn &HTTPPollerResponse{RawResponse: resp.Response}, nil\n';
@@ -738,12 +737,27 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
     text += `\tif !resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
     text += `\t\treturn nil, client.${info.protocolNaming.errorMethod}(resp)\n`;
     text += '\t}\n';
-    text += generateResponseUnmarshaller(op.responses![0]);
+    if (isLROOperation(op) && isPageableOperation(op)) {
+      text += generateResponseUnmarshaller(op.responses![0], true);
+      text += '}\n\n';
+      text += `${comment(name, '// ')} handles the ${info.name} response.\n`;
+      text += `func (client *${client}) ${camelCase(op.language.go!.pageableType.name)}HandleResponse(resp *azcore.Response) (*${(<SchemaResponse>op.responses![0]).schema.language.go!.responseType.value}Response, error) {\n`;
+      const index = statusCodes.indexOf('204');
+      if (index > -1) {
+        statusCodes.splice(index, 1);
+      }
+      text += `\tif !resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
+      text += `\t\treturn nil, client.${info.protocolNaming.errorMethod}(resp)\n`;
+      text += '\t}\n';
+      text += generateResponseUnmarshaller(op.responses![0], false);
+    } else {
+      text += generateResponseUnmarshaller(op.responses![0], isLROOperation(op));
+    }
   } else {
     text += '\tswitch resp.StatusCode {\n';
     for (const response of values(op.responses)) {
       text += `\tcase ${formatStatusCodes(response.protocol.http!.statusCodes)}:\n`
-      text += generateResponseUnmarshaller(response);
+      text += generateResponseUnmarshaller(response, isLROOperation(op));
     }
     text += '\tdefault:\n';
     text += `\t\treturn nil, client.${info.protocolNaming.errorMethod}(resp)\n`;
