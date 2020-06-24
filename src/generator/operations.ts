@@ -1005,7 +1005,7 @@ function generateReturnsInfo(op: Operation, forHandler: boolean): string[] {
     returnType = 'interface{}';
   } else {
     const firstResp = <SchemaResponse>op.responses![0];
-    // must check pageable first as all pageable operations are also schema responses,
+    // must check pageable first as all pageable operations are also schema responses, 
     // but LRO operations that return a pager are an exception and need to return LRO specific
     // responses
     if (!forHandler && isPageableOperation(op) && !isLROOperation(op)) {

@@ -89,12 +89,13 @@ type ProductResult struct {
 	Values   *[]Product `json:"values,omitempty"`
 }
 
-// ProductResultPollerResponse is the response envelope for operations that return a ProductResult type.
+// ProductResultPagerPollerResponse is the response envelope for operations that asynchronously return a ProductResultPager
+// type.
 type ProductResultPagerPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (ProductResultPager, error)
 
-	// Poller contains an initialized poller
+	// Poller contains an initialized poller.
 	Poller ProductResultPagerPoller
 
 	// RawResponse contains the underlying HTTP response.
