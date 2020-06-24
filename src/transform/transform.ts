@@ -746,12 +746,12 @@ function generateResponseTypeName(schema: Schema): Language {
 function generateLROResponseTypeName(response: Response): Language {
   // default to generic response envelope
   let name = 'HTTPPollerResponse'
-  let desc = `${name} contains the HTTP response from the call to the service endpoint.`;
+  let desc = `${name} contains the asynchronous HTTP response from the call to the service endpoint.`;
   if (isSchemaResponse(response)) {
     // create a type-specific response envelope
     const typeName = recursiveTypeName(response.schema) + 'Poller';
     name = `${typeName}Response`;
-    desc = `${name} is the response envelope for operations that return a ${response.schema.language.go!.name} type.`;
+    desc = `${name} is the response envelope for operations that asynchronously return a ${response.schema.language.go!.name} type.`;
   }
   return {
     name: name,
