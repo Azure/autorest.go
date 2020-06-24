@@ -488,33 +488,8 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
   for (const response of values(op.responses)) {
     if (!isSchemaResponse(response)) {
       // the response doesn't return a model.  if it returns
-      // headers then create a model that contains them.
-      if (isLROOperation(op)) {
-        const name = 'HTTPPollerResponse';
-        if (!responseExists(codeModel, name)) {
-          const description = `${name} contains the HTTP response from the call to the service endpoint`;
-          const object = new ObjectSchema(name, description);
-          object.language.go = object.language.default;
-          const pollUntilDone = newProperty('PollUntilDone', 'PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received', newObject('func(ctx context.Context, frequency time.Duration) (*http.Response, error)', 'TODO'));
-          const getPoller = newProperty('Poller', 'Poller contains an initialized poller', newObject('HTTPPoller', 'TODO'));
-          pollUntilDone.schema.language.go!.lroPointerException = true;
-          getPoller.schema.language.go!.lroPointerException = true;
-          object.language.go!.properties = [
-            newProperty('RawResponse', 'RawResponse contains the underlying HTTP response.', newObject('http.Response', 'raw HTTP response')),
-            pollUntilDone,
-            getPoller
-          ];
-          // mark as a response type
-          object.language.go!.responseType = {
-            name: name,
-            description: description,
-            responseType: true,
-          };
-          // add this response schema to the global list of response
-          const responseSchemas = <Array<Schema>>codeModel.language.go!.responseSchemas;
-          responseSchemas.push(object);
-        }
-      } else if (headers.size > 0) {
+      // headers then create a model that contains them, except for LROs.
+      if (headers.size > 0 && !isLROOperation(op)) {
         const name = `${group.language.go!.name}${op.language.go!.name}Response`;
         const description = `${name} contains the response from method ${group.language.go!.name}.${op.language.go!.name}.`;
         const object = new ObjectSchema(name, description);
@@ -541,8 +516,7 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
           (<SchemaResponse>response).schema = object;
         }
       }
-    } else if (!responseTypeCreated(codeModel, response.schema) || isPageableOperation(op)) {
-      const isLRO = isLROOperation(op);
+    } else if (!responseTypeCreated(codeModel, response.schema)) {
       response.schema.language.go!.responseType = generateResponseTypeName(response.schema);
       response.schema.language.go!.properties = [
         newProperty('RawResponse', 'RawResponse contains the underlying HTTP response.', newObject('http.Response', 'TODO'))
@@ -564,27 +538,7 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
       }
       response.schema.language.go!.responseType.value = propName;
       // for LROs add a specific poller response envelope to return from Begin operations
-      if (isLRO) {
-        const respTypeName = generateLROResponseTypeName(response.schema);
-        response.schema.language.go!.isLRO = true;
-        const respTypeObject = newObject(respTypeName.name, respTypeName.description);
-        respTypeObject.language.go!.responseType = respTypeName;
-        respTypeObject.language.go!.properties = [
-          newProperty('RawResponse', 'RawResponse contains the underlying HTTP response.', newObject('http.Response', 'TODO')),
-        ];
-        let prop = newProperty('PollUntilDone',
-          'PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received',
-          newObject(`func(ctx context.Context, frequency time.Duration) (*${response.schema.language.go!.responseType.name}, error)`, 'TODO'));
-        prop.schema.language.go!.lroPointerException = true;
-        (<Array<Property>>respTypeObject.language.go!.properties).push(prop);
-        prop = newProperty('Poller', 'Poller contains an initialized poller', newObject(`${response.schema.language.go!.responseType.value}Poller`, 'TODO'));
-        prop.schema.language.go!.lroPointerException = true;
-        (<Array<Property>>respTypeObject.language.go!.properties).push(prop);
-        // add the LRO response schema to the global list of response
-        const responseSchemas = <Array<Schema>>codeModel.language.go!.responseSchemas;
-        responseSchemas.push(respTypeObject);
-        response.schema.language.go!.lroResponseType = respTypeObject;
-      } else {
+      if (!isLROOperation(op)) {
         // exclude LRO headers from Widget response envelopes
         // add any headers to the response type
         for (const item of items(headers)) {
@@ -599,6 +553,36 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
         // add this response schema to the global list of response
         const responseSchemas = <Array<Schema>>codeModel.language.go!.responseSchemas;
         responseSchemas.push(response.schema);
+      }
+    }
+    if (isLROOperation(op)) {
+      if (!isSchemaResponse(response)) {
+        const name = 'HTTPPollerResponse';
+        if (!responseExists(codeModel, name)) {
+          const description = `${name} contains the HTTP response from the call to the service endpoint`;
+          const object = new ObjectSchema(name, description);
+          object.language.go = object.language.default;
+          const pollUntilDone = newProperty('PollUntilDone', 'PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received', newObject('func(ctx context.Context, frequency time.Duration) (*http.Response, error)', 'TODO'));
+          const getPoller = newProperty('Poller', 'Poller contains an initialized poller', newObject('HTTPPoller', 'TODO'));
+          pollUntilDone.schema.language.go!.lroPointerException = true;
+          getPoller.schema.language.go!.lroPointerException = true;
+          object.language.go!.properties = [
+            newProperty('RawResponse', 'RawResponse contains the underlying HTTP response.', newObject('http.Response', 'raw HTTP response')),
+            pollUntilDone,
+            getPoller
+          ];
+          // mark as a response type
+          object.language.go!.responseType = {
+            name: name,
+            description: description,
+            responseType: true,
+          };
+          // add this response schema to the global list of response
+          const responseSchemas = <Array<Schema>>codeModel.language.go!.responseSchemas;
+          responseSchemas.push(object);
+        }
+      } else {
+        generateLROResponseType(<SchemaResponse>response, op, codeModel);
       }
     }
     // create pageable type info
@@ -780,19 +764,57 @@ function generateResponseTypeName(schema: Schema): Language {
     name: name,
     description: `${name} is the response envelope for operations that return a ${schema.language.go!.name} type.`,
     responseType: true,
-  }
+  };
 }
 
 // generate LRO response type name is separate from the general response type name
 // generation, since it requires returning the poller response envelope
 function generateLROResponseTypeName(schema: Schema): Language {
-  let typeName = recursiveTypeName(schema) + 'Poller';
+  const typeName = recursiveTypeName(schema) + 'Poller';
   const name = `${typeName}Response`;
   return {
     name: name,
     description: `${name} is the response envelope for operations that return a ${schema.language.go!.name} type.`,
     responseType: true,
+  };
+}
+
+function generateLROResponseType(response: SchemaResponse, op: Operation, codeModel: CodeModel) {
+  const respTypeName = generateLROResponseTypeName(response.schema);
+  if (responseExists(codeModel, respTypeName.name)) {
+    return;
   }
+  response.schema.language.go!.isLRO = true;
+  const respTypeObject = newObject(respTypeName.name, respTypeName.description);
+  respTypeObject.language.go!.responseType = respTypeName;
+  respTypeObject.language.go!.properties = [
+    newProperty('RawResponse', 'RawResponse contains the underlying HTTP response.', newObject('http.Response', 'TODO')),
+  ];
+  if (isPageableOperation(op)) {
+    respTypeObject.language.go!.responseType.name = `${(<SchemaResponse>response).schema.language.go!.name}PagerPollerResponse`;
+    respTypeObject.language.go!.name = `${(<SchemaResponse>response).schema.language.go!.name}PagerPollerResponse`;
+    let prop = newProperty('PollUntilDone',
+      'PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received',
+      newObject(`func(ctx context.Context, frequency time.Duration) (${(<SchemaResponse>response).schema.language.go!.name}Pager, error)`, 'TODO'));
+    prop.schema.language.go!.lroPointerException = true;
+    (<Array<Property>>respTypeObject.language.go!.properties).push(prop);
+    prop = newProperty('Poller', 'Poller contains an initialized poller', newObject(`${(<SchemaResponse>response).schema.language.go!.name}PagerPoller`, 'TODO'));
+    prop.schema.language.go!.lroPointerException = true;
+    (<Array<Property>>respTypeObject.language.go!.properties).push(prop);
+  } else {
+    let prop = newProperty('PollUntilDone',
+      'PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received',
+      newObject(`func(ctx context.Context, frequency time.Duration) (*${response.schema.language.go!.responseType.name}, error)`, 'TODO'));
+    prop.schema.language.go!.lroPointerException = true;
+    (<Array<Property>>respTypeObject.language.go!.properties).push(prop);
+    prop = newProperty('Poller', 'Poller contains an initialized poller', newObject(`${response.schema.language.go!.responseType.value}Poller`, 'TODO'));
+    prop.schema.language.go!.lroPointerException = true;
+    (<Array<Property>>respTypeObject.language.go!.properties).push(prop);
+  }
+  // add the LRO response schema to the global list of response
+  const responseSchemas = <Array<Schema>>codeModel.language.go!.responseSchemas;
+  responseSchemas.push(respTypeObject);
+  response.schema.language.go!.lroResponseType = respTypeObject;
 }
 
 function getRootDiscriminator(obj: ObjectSchema): ObjectSchema {
