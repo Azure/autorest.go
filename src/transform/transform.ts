@@ -590,8 +590,7 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
       if (codeModel.language.go!.pageableTypes === undefined) {
         codeModel.language.go!.pageableTypes = new Array<PagerInfo>();
       }
-      let suffix = 'Pager';
-      const name = `${(<SchemaResponse>response).schema.language.go!.name}${suffix}`;
+      const name = `${(<SchemaResponse>response).schema.language.go!.name}Pager`;
       // check to see if the pager has already been created
       let skipAddPager = false; // skipAdd allows not adding the pager to the list of pageable types and continue on to LRO check
       const pagers = <Array<PagerInfo>>codeModel.language.go!.pageableTypes;

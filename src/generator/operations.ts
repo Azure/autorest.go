@@ -1051,7 +1051,7 @@ function generateReturnsInfo(op: Operation, forHandler: boolean): string[] {
       returnType = op.language.go!.pageableType.name;
     } else if (isSchemaResponse(firstResp)) {
       returnType = '*' + firstResp.schema.language.go!.responseType.name;
-      if (isLROOperation(op) || (isLROOperation(op) && forHandler)) {
+      if (isLROOperation(op)) {
         returnType = '*' + firstResp.schema.language.go!.lroResponseType.language.go!.name;
       }
     } else if (isLROOperation(op)) {
