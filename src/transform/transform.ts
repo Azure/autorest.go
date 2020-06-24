@@ -457,6 +457,9 @@ interface HttpHeaderWithDescription extends HttpHeader {
   description: string;
 }
 
+// the name of the struct field for scalar responses (int, string, etc)
+const scalarResponsePropName = 'Value';
+
 // creates the response type to be returned from an operation and updates the operation
 function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Operation) {
   // create the `type <type>Response struct` response
@@ -523,8 +526,8 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
       ];
       const marshallingFormat = getMarshallingFormat(response.protocol);
       response.schema.language.go!.responseType.marshallingFormat = marshallingFormat;
-      // for operations that return scalar types we use a fixed field name 'Value'
-      let propName = 'Value';
+      // for operations that return scalar types we use a fixed field name
+      let propName = scalarResponsePropName;
       if (response.schema.type === SchemaType.Object) {
         // for object types use the type's name as the field name
         propName = response.schema.language.go!.name;
@@ -593,11 +596,10 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
       }
       // Determine the type of poller that needs to be added based on whether a schema is specified in the response
       // if there is no schema specified for the operation response then a simple HTTP poller will be instantiated
-      let type = 'HTTP';
+      let name = 'HTTPPoller';
       if (isSchemaResponse(response) && response.schema.language.go!.responseType.value) {
-        type = response.schema.language.go!.responseType.value;
+        name = generateLROPollerName(response);
       }
-      const name = `${type}Poller`;
       const pollers = <Array<PollerInfo>>codeModel.language.go!.pollerTypes;
       let skipAddLRO = false;
       for (const poller of values(pollers)) {
@@ -613,7 +615,6 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
         // create a new one, add to global list and assign to method
         const poller = {
           name: name,
-          responseType: type,
           op: op,
         };
         pollers.push(poller);
@@ -759,6 +760,14 @@ function generateLROResponseTypeName(response: Response): Language {
   };
 }
 
+function generateLROPollerName(schemaResp: SchemaResponse): string {
+  if (schemaResp.schema.language.go!.responseType.value === scalarResponsePropName) {
+    // for scalar responses, use the underlying type name for the poller
+    return `${pascalCase(schemaResp.schema.language.go!.name)}Poller`;
+  }
+  return `${schemaResp.schema.language.go!.responseType.value}Poller`;
+}
+
 function generateLROResponseType(response: Response, op: Operation, codeModel: CodeModel) {
   const respTypeName = generateLROResponseTypeName(response);
   if (responseExists(codeModel, respTypeName.name)) {
@@ -784,7 +793,7 @@ function generateLROResponseType(response: Response, op: Operation, codeModel: C
     response.schema.language.go!.lroResponseType = respTypeObject;
   } else {
     pollerResponse = `*${response.schema.language.go!.responseType.name}`;
-    pollerTypeName = `${response.schema.language.go!.responseType.value}Poller`;
+    pollerTypeName = generateLROPollerName(response);
     response.schema.language.go!.isLRO = true;
     response.schema.language.go!.lroResponseType = respTypeObject;
   }
