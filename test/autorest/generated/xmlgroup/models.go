@@ -24,6 +24,7 @@ type AccessPolicy struct {
 	Start *time.Time `xml:"Start"`
 }
 
+// MarshalXML implements the xml.Marshaller interface for type AccessPolicy.
 func (a AccessPolicy) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	type alias AccessPolicy
 	aux := &struct {
@@ -38,6 +39,7 @@ func (a AccessPolicy) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	return e.EncodeElement(aux, start)
 }
 
+// UnmarshalXML implements the xml.Unmarshaller interface for type AccessPolicy.
 func (a *AccessPolicy) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type alias AccessPolicy
 	aux := &struct {
@@ -78,6 +80,7 @@ type Banana struct {
 	Name       *string    `xml:"name"`
 }
 
+// MarshalXML implements the xml.Marshaller interface for type Banana.
 func (b Banana) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "banana"
 	type alias Banana
@@ -91,6 +94,7 @@ func (b Banana) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	return e.EncodeElement(aux, start)
 }
 
+// UnmarshalXML implements the xml.Unmarshaller interface for type Banana.
 func (b *Banana) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type alias Banana
 	aux := &struct {
@@ -175,6 +179,7 @@ type BlobProperties struct {
 	ServerEncrypted        *bool              `xml:"ServerEncrypted"`
 }
 
+// MarshalXML implements the xml.Marshaller interface for type BlobProperties.
 func (b BlobProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	type alias BlobProperties
 	aux := &struct {
@@ -191,6 +196,7 @@ func (b BlobProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	return e.EncodeElement(aux, start)
 }
 
+// UnmarshalXML implements the xml.Unmarshaller interface for type BlobProperties.
 func (b *BlobProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type alias BlobProperties
 	aux := &struct {
@@ -247,6 +253,7 @@ type ContainerProperties struct {
 	PublicAccess  *PublicAccessType  `xml:"PublicAccess"`
 }
 
+// MarshalXML implements the xml.Marshaller interface for type ContainerProperties.
 func (c ContainerProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	type alias ContainerProperties
 	aux := &struct {
@@ -259,6 +266,7 @@ func (c ContainerProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	return e.EncodeElement(aux, start)
 }
 
+// UnmarshalXML implements the xml.Unmarshaller interface for type ContainerProperties.
 func (c *ContainerProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type alias ContainerProperties
 	aux := &struct {
@@ -302,6 +310,7 @@ type Error struct {
 	Status  *int32  `xml:"status"`
 }
 
+// Error implements the error interface for type Error.
 func (e Error) Error() string {
 	msg := ""
 	if e.Message != nil {
@@ -483,6 +492,7 @@ type Slideshow struct {
 	Title  *string  `xml:"title,attr"`
 }
 
+// MarshalXML implements the xml.Marshaller interface for type Slideshow.
 func (s Slideshow) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "slideshow"
 	type alias Slideshow

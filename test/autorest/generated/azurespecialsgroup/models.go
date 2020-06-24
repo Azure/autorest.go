@@ -22,6 +22,7 @@ type Error struct {
 	Status     *int32  `json:"status,omitempty"`
 }
 
+// Error implements the error interface for type Error.
 func (e Error) Error() string {
 	msg := ""
 	if e.ConstantID != nil {

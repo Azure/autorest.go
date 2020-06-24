@@ -40,6 +40,9 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
     text += struct.text();
     struct.Methods.sort((a: StructMethod, b: StructMethod) => { return sortAscending(a.name, b.name) });
     for (const method of values(struct.Methods)) {
+      if (method.desc.length > 0) {
+        text += `// ${method.desc}\n`;
+      }
       text += method.text;
     }
   }
@@ -51,6 +54,7 @@ const imports = new ImportManager();
 
 interface StructMethod {
   name: string;
+  desc: string;
   text: string;
 }
 
@@ -240,7 +244,7 @@ function generateStructs(objects?: ObjectSchema[]): StructDef[] {
       text += '\t}\n';
       text += '\treturn msg\n';
       text += '}\n\n';
-      structDef.Methods.push({ name: 'Error', text: text });
+      structDef.Methods.push({ name: 'Error', desc: `Error implements the error interface for type ${obj.language.go!.name}.`, text: text });
     }
     // TODO: unify marshalling schemes
     if (obj.discriminator) {
@@ -341,7 +345,7 @@ function generateUnmarshallerForResponseEnvelope(structDef: StructDef) {
   unmarshaller += `\t${receiver}.${field} = t\n`;
   unmarshaller += '\treturn nil\n';
   unmarshaller += '}\n\n';
-  structDef.Methods.push({ name: 'UnmarshalJSON', text: unmarshaller });
+  structDef.Methods.push({ name: 'UnmarshalJSON', desc: `UnmarshalJSON implements the json.Unmarshaller interface for type ${structDef.Language.name}.`, text: unmarshaller });
 }
 
 function generateDiscriminatorMethods(obj: ObjectSchema, structDef: StructDef, parentType: ObjectSchema) {
@@ -350,7 +354,7 @@ function generateDiscriminatorMethods(obj: ObjectSchema, structDef: StructDef, p
   // generate interface method
   const interfaceMethod = `Get${typeName}`;
   const method = `func (${receiver} *${typeName}) ${interfaceMethod}() *${typeName} { return ${receiver} }\n\n`;
-  structDef.Methods.push({ name: interfaceMethod, text: method });
+  structDef.Methods.push({ name: interfaceMethod, desc: `${interfaceMethod} implements the ${obj.language.go!.discriminatorInterface} interface for type ${typeName}.`, text: method });
   if (obj.language.go!.errorType || obj.language.go!.childErrorType) {
     // errors don't need custom marshallers
     return;
@@ -380,7 +384,7 @@ function generateDiscriminatorMethods(obj: ObjectSchema, structDef: StructDef, p
   }
   marshalInteral += '\treturn objectMap\n';
   marshalInteral += '}\n\n';
-  structDef.Methods.push({ name: 'marshalInternal', text: marshalInteral });
+  structDef.Methods.push({ name: 'marshalInternal', desc: '', text: marshalInteral });
 }
 
 function generateDiscriminatedTypeMarshaller(obj: ObjectSchema, structDef: StructDef, parentType: ObjectSchema) {
@@ -408,7 +412,7 @@ function generateDiscriminatedTypeMarshaller(obj: ObjectSchema, structDef: Struc
   }
   marshaller += '\treturn json.Marshal(objectMap)\n';
   marshaller += '}\n\n';
-  structDef.Methods.push({ name: 'MarshalJSON', text: marshaller });
+  structDef.Methods.push({ name: 'MarshalJSON', desc: `MarshalJSON implements the json.Marshaller interface for type ${typeName}.`, text: marshaller });
 }
 
 function generateDiscriminatedTypeUnmarshaller(obj: ObjectSchema, structDef: StructDef, parentType?: ObjectSchema) {
@@ -460,7 +464,7 @@ function generateDiscriminatedTypeUnmarshaller(obj: ObjectSchema, structDef: Str
     unmarshaller += '\treturn nil\n';
   }
   unmarshaller += '}\n\n';
-  structDef.Methods.push({ name: 'UnmarshalJSON', text: unmarshaller });
+  structDef.Methods.push({ name: 'UnmarshalJSON', desc: `UnmarshalJSON implements the json.Unmarshaller interface for type ${typeName}.`, text: unmarshaller });
 }
 
 function generateMarshaller(structDef: StructDef) {
@@ -472,6 +476,7 @@ function generateMarshaller(structDef: StructDef) {
     formatSig = 'XML(e *xml.Encoder, start xml.StartElement) error';
     methodName = 'MarshalXML';
   }
+  const desc = `Marshal${(<string>structDef.Language.marshallingFormat).toUpperCase()} implements the ${structDef.Language.marshallingFormat}.Marshaller interface for type ${structDef.Language.name}.`;
   let text = `func (${receiver} ${structDef.Language.name}) Marshal${formatSig} {\n`;
   if (structDef.Language.xmlWrapperName) {
     text += `\tstart.Name.Local = "${structDef.Language.xmlWrapperName}"\n`;
@@ -483,7 +488,7 @@ function generateMarshaller(structDef: StructDef) {
     text += '\treturn e.EncodeElement(aux, start)\n';
   }
   text += '}\n\n';
-  structDef.Methods.push({ name: methodName, text: text });
+  structDef.Methods.push({ name: methodName, desc: desc, text: text });
 }
 
 function generateUnmarshaller(structDef: StructDef) {
@@ -495,6 +500,7 @@ function generateUnmarshaller(structDef: StructDef) {
     formatSig = 'XML(d *xml.Decoder, start xml.StartElement)';
     methodName = 'UnmarshalXML';
   }
+  const desc = `Unmarshal${(<string>structDef.Language.marshallingFormat).toUpperCase()} implements the ${structDef.Language.marshallingFormat}.Unmarshaller interface for type ${structDef.Language.name}.`;
   let text = `func (${receiver} *${structDef.Language.name}) Unmarshal${formatSig} error {\n`;
   text += generateAliasType(structDef, receiver, false);
   if (structDef.Language.marshallingFormat === 'json') {
@@ -514,7 +520,7 @@ function generateUnmarshaller(structDef: StructDef) {
   }
   text += '\treturn nil\n';
   text += '}\n\n';
-  structDef.Methods.push({ name: methodName, text: text });
+  structDef.Methods.push({ name: methodName, desc: desc, text: text });
 }
 
 // generates an alias type used by custom marshaller/unmarshaller
@@ -589,7 +595,7 @@ function generateAdditionalPropertiesMarshaller(structDef: StructDef, parentType
   marshaller += '\t}\n';
   marshaller += '\treturn json.Marshal(objectMap)\n';
   marshaller += '}\n\n';
-  structDef.Methods.push({ name: 'MarshalJSON', text: marshaller });
+  structDef.Methods.push({ name: 'MarshalJSON', desc: `MarshalJSON implements the json.Marshaller interface for type ${typeName}.`, text: marshaller });
 }
 
 function generateAdditionalPropertiesUnmarshaller(structDef: StructDef, elementType: Schema, parentType?: ObjectSchema) {
@@ -640,5 +646,5 @@ function generateAdditionalPropertiesUnmarshaller(structDef: StructDef, elementT
   unmarshaller += '\t}\n';
   unmarshaller += '\treturn nil\n';
   unmarshaller += '}\n\n';
-  structDef.Methods.push({ name: 'UnmarshalJSON', text: unmarshaller });
+  structDef.Methods.push({ name: 'UnmarshalJSON', desc: `UnmarshalJSON implements the json.Unmarshaller interface for type ${typeName}.`, text: unmarshaller });
 }

@@ -25,6 +25,7 @@ type AccessPolicy struct {
 	Start *time.Time `xml:"Start"`
 }
 
+// MarshalXML implements the xml.Marshaller interface for type AccessPolicy.
 func (a AccessPolicy) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	type alias AccessPolicy
 	aux := &struct {
@@ -39,6 +40,7 @@ func (a AccessPolicy) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	return e.EncodeElement(aux, start)
 }
 
+// UnmarshalXML implements the xml.Unmarshaller interface for type AccessPolicy.
 func (a *AccessPolicy) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type alias AccessPolicy
 	aux := &struct {
@@ -946,6 +948,7 @@ type BlobProperties struct {
 	ServerEncrypted        *bool              `xml:"ServerEncrypted"`
 }
 
+// MarshalXML implements the xml.Marshaller interface for type BlobProperties.
 func (b BlobProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	type alias BlobProperties
 	aux := &struct {
@@ -966,6 +969,7 @@ func (b BlobProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	return e.EncodeElement(aux, start)
 }
 
+// UnmarshalXML implements the xml.Unmarshaller interface for type BlobProperties.
 func (b *BlobProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type alias BlobProperties
 	aux := &struct {
@@ -1623,6 +1627,7 @@ type BlockLookupList struct {
 	Uncommitted *[]string `xml:"Uncommitted"`
 }
 
+// MarshalXML implements the xml.Marshaller interface for type BlockLookupList.
 func (b BlockLookupList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "BlockList"
 	type alias BlockLookupList
@@ -2009,6 +2014,7 @@ type ContainerProperties struct {
 	PublicAccess                   *PublicAccessType  `xml:"PublicAccess"`
 }
 
+// MarshalXML implements the xml.Marshaller interface for type ContainerProperties.
 func (c ContainerProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	type alias ContainerProperties
 	aux := &struct {
@@ -2021,6 +2027,7 @@ func (c ContainerProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	return e.EncodeElement(aux, start)
 }
 
+// UnmarshalXML implements the xml.Unmarshaller interface for type ContainerProperties.
 func (c *ContainerProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type alias ContainerProperties
 	aux := &struct {
@@ -2233,6 +2240,7 @@ type DataLakeStorageError struct {
 	DataLakeStorageErrorDetails *DataLakeStorageErrorDetails `xml:"error"`
 }
 
+// Error implements the error interface for type DataLakeStorageError.
 func (e DataLakeStorageError) Error() string {
 	msg := ""
 	if e.DataLakeStorageErrorDetails != nil {
@@ -2512,6 +2520,7 @@ type GeoReplication struct {
 	Status *GeoReplicationStatusType `xml:"Status"`
 }
 
+// MarshalXML implements the xml.Marshaller interface for type GeoReplication.
 func (g GeoReplication) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	type alias GeoReplication
 	aux := &struct {
@@ -2524,6 +2533,7 @@ func (g GeoReplication) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	return e.EncodeElement(aux, start)
 }
 
+// UnmarshalXML implements the xml.Unmarshaller interface for type GeoReplication.
 func (g *GeoReplication) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type alias GeoReplication
 	aux := &struct {
@@ -3325,6 +3335,7 @@ type StorageError struct {
 	Message *string `xml:"Message"`
 }
 
+// Error implements the error interface for type StorageError.
 func (e StorageError) Error() string {
 	msg := ""
 	if e.Message != nil {
@@ -3430,6 +3441,7 @@ type UserDelegationKey struct {
 	Value *string `xml:"Value"`
 }
 
+// MarshalXML implements the xml.Marshaller interface for type UserDelegationKey.
 func (u UserDelegationKey) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	type alias UserDelegationKey
 	aux := &struct {
@@ -3444,6 +3456,7 @@ func (u UserDelegationKey) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	return e.EncodeElement(aux, start)
 }
 
+// UnmarshalXML implements the xml.Unmarshaller interface for type UserDelegationKey.
 func (u *UserDelegationKey) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type alias UserDelegationKey
 	aux := &struct {
