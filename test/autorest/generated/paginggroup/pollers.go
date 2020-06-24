@@ -124,7 +124,7 @@ func (p *productResultPagerPoller) pollUntilDone(ctx context.Context, frequency 
 }
 
 func (p *productResultPagerPoller) handleResponse(resp *azcore.Response) (ProductResultPager, error) {
-	u, err := url.Parse(p.pt.pollingURL())
+	u, err := url.Parse(p.pt.finalGetURL())
 	if err != nil {
 		return nil, err
 	}

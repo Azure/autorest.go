@@ -184,7 +184,7 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
       }`;
       handleResponse = `
       func (p *${pollerName}) handleResponse(resp *azcore.Response) (${responseType}, error) {
-        u, err := url.Parse(p.pt.pollingURL())
+        u, err := url.Parse(p.pt.finalGetURL())
         if err != nil {
           return nil, err
         }

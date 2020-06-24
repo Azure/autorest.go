@@ -746,6 +746,7 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
       if (index > -1) {
         statusCodes.splice(index, 1);
       }
+      statusCodes.push('200');
       text += `\tif !resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
       text += `\t\treturn nil, client.${info.protocolNaming.errorMethod}(resp)\n`;
       text += '\t}\n';

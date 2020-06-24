@@ -411,7 +411,7 @@ func (client *pagingOperations) getMultiplePagesLroHandleResponse(resp *azcore.R
 
 // getMultiplePagesLroHandleResponse handles the GetMultiplePagesLro response.
 func (client *pagingOperations) productResultPagerHandleResponse(resp *azcore.Response) (*ProductResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusAccepted) {
+	if !resp.HasStatusCode(http.StatusAccepted, http.StatusOK) {
 		return nil, client.getMultiplePagesLroHandleError(resp)
 	}
 	result := ProductResultResponse{RawResponse: resp.Response}
