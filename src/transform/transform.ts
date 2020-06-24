@@ -555,7 +555,8 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
         responseSchemas.push(response.schema);
       }
     }
-    if (isLROOperation(op)) {
+    // TODO: remove skipping this for pageable operations when adding lro+pager work
+    if (isLROOperation(op) && !isPageableOperation(op)) {
       if (!isSchemaResponse(response)) {
         const name = 'HTTPPollerResponse';
         if (!responseExists(codeModel, name)) {
