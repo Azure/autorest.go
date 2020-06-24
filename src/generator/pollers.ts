@@ -70,7 +70,7 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
     let handleResponse = '';
     const schemaResponse = <SchemaResponse>poller.op.responses![0];
     let unmarshalResponse = 'nil';
-    if (isSchemaResponse(schemaResponse) && schemaResponse.schema.language.go!.responseType.value != undefined) {
+    if (isSchemaResponse(schemaResponse) && schemaResponse.schema.language.go!.responseType.name !== undefined) {
       responseType = schemaResponse.schema.language.go!.responseType.name;
       pollUntilDoneResponse = `(*${responseType}, error)`;
       pollUntilDoneReturn = 'p.FinalResponse(ctx)';
@@ -117,7 +117,7 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
       handleResponse = `
       func (p *${pollerName}) handleResponse(resp *azcore.Response) (*${responseType}, error) {
         result := ${responseType}{RawResponse: resp.Response}
-        if (resp.HasStatusCode(http.StatusNoContent)) {
+        if resp.HasStatusCode(http.StatusNoContent) {
           return &result, nil
         }
         if !resp.HasStatusCode(pollingCodes[:]...) {

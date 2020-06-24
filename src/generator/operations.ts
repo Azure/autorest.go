@@ -296,7 +296,7 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
   if (isLROOperation(op)) {
     // TODO remove LRO for pageable responses NYI
     if (op.extensions!['x-ms-pageable']) {
-      text += `\treturn nil, nil`;
+      text += `\treturn nil, nil\n`;
       text += '}\n\n';
       return text;
     }
@@ -655,9 +655,10 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
   }
   const generateResponseUnmarshaller = function (response: Response): string {
     let unmarshallerText = '';
+    const isLRO = isLROOperation(op);
     if (!isSchemaResponse(response)) {
-      if (isLROOperation(op)) {
-        unmarshallerText += '\treturn &HTTPResponse{RawResponse: resp.Response}, nil\n';
+      if (isLRO) {
+        unmarshallerText += '\treturn &HTTPPollerResponse{RawResponse: resp.Response}, nil\n';
         return unmarshallerText;
       }
       // no response body, return the *http.Response
@@ -697,6 +698,11 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
       return unmarshallerText;
     }
     const schemaResponse = <SchemaResponse>response;
+    // TODO remove paging skip when adding lro + pagers
+    if (isLRO && !isPageableOperation(op)) {
+      unmarshallerText += `\treturn &${schemaResponse.schema.language.go!.lroResponseType.language.go!.name}{RawResponse: resp.Response}, nil\n`;
+      return unmarshallerText;
+    }
     let respObj = `${schemaResponse.schema.language.go!.responseType.name}{RawResponse: resp.Response}`;
     unmarshallerText += `\tresult := ${respObj}\n`;
     // assign any header values
@@ -768,7 +774,6 @@ function createProtocolErrHandler(client: string, op: Operation, imports: Import
     }
     return errors.New(string(body))
     `;
-    
   }
 
   // if the response doesn't define any error types return a generic error
@@ -1039,14 +1044,20 @@ function generateReturnsInfo(op: Operation, forHandler: boolean): string[] {
   if (isMultiRespOperation(op)) {
     returnType = 'interface{}';
   } else {
-    const firstResp = op.responses![0];
-    // must check pageable first as all pageable operations are also schema responses
-    if (!forHandler && isPageableOperation(op)) {
+    const firstResp = <SchemaResponse>op.responses![0];
+    // must check pageable first as all pageable operations are also schema responses, 
+    // but LRO operations that return a pager are an exception and need to return LRO specific
+    // responses
+    if (!forHandler && isPageableOperation(op) && !isLROOperation(op)) {
       returnType = op.language.go!.pageableType.name;
     } else if (isSchemaResponse(firstResp)) {
       returnType = '*' + firstResp.schema.language.go!.responseType.name;
+      // TODO remove paging skip when adding LRO + pagers
+      if (isLROOperation(op) && !isPageableOperation(op)) {
+        returnType = '*' + firstResp.schema.language.go!.lroResponseType.language.go!.name;
+      }
     } else if (isLROOperation(op)) {
-      returnType = '*HTTPResponse';
+      returnType = '*HTTPPollerResponse';
     }
   }
   return [returnType, 'error'];

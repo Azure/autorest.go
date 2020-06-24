@@ -43,13 +43,12 @@ export function isPageableOperation(op: Operation): boolean {
 
 export interface PollerInfo {
   name: string;
-  responseType: string;
   op: Operation;
 }
 
 // returns true if the operation is a long-running operation
 export function isLROOperation(op: Operation): boolean {
-  return op.extensions?.['x-ms-long-running-operation'];
+  return op.extensions?.['x-ms-long-running-operation'] === true;
 }
 
 // returns ObjectSchema type predicate if the schema is an ObjectSchema
