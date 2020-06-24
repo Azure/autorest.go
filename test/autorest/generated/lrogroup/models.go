@@ -17,6 +17,7 @@ type CloudError struct {
 	Message *string `json:"message,omitempty"`
 }
 
+// Error implements the error interface for type CloudError.
 func (e CloudError) Error() string {
 	msg := ""
 	if e.Code != nil {

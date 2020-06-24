@@ -20,6 +20,7 @@ type AnimalNotFound struct {
 	Name *string `json:"name,omitempty"`
 }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type AnimalNotFound.
 func (a *AnimalNotFound) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
@@ -49,6 +50,7 @@ type LinkNotFound struct {
 	WhatSubAddress *string `json:"whatSubAddress,omitempty"`
 }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type LinkNotFound.
 func (l *LinkNotFound) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
@@ -81,6 +83,7 @@ type NotFoundErrorBase struct {
 	WhatNotFound *string `json:"whatNotFound,omitempty"`
 }
 
+// Error implements the error interface for type NotFoundErrorBase.
 func (e NotFoundErrorBase) Error() string {
 	msg := ""
 	if e.Reason != nil {
@@ -95,8 +98,10 @@ func (e NotFoundErrorBase) Error() string {
 	return msg
 }
 
+// GetNotFoundErrorBase implements the NotFoundErrorBaseClassification interface for type NotFoundErrorBase.
 func (n *NotFoundErrorBase) GetNotFoundErrorBase() *NotFoundErrorBase { return n }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type NotFoundErrorBase.
 func (n *NotFoundErrorBase) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
@@ -144,6 +149,7 @@ type PetActionError struct {
 	ErrorType    *string `json:"errorType,omitempty"`
 }
 
+// Error implements the error interface for type PetActionError.
 func (e PetActionError) Error() string {
 	msg := ""
 	if e.ErrorMessage != nil {
@@ -158,8 +164,10 @@ func (e PetActionError) Error() string {
 	return msg
 }
 
+// GetPetActionError implements the PetActionErrorClassification interface for type PetActionError.
 func (p *PetActionError) GetPetActionError() *PetActionError { return p }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type PetActionError.
 func (p *PetActionError) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
@@ -198,6 +206,7 @@ type PetHungryOrThirstyError struct {
 	HungryOrThirsty *string `json:"hungryOrThirsty,omitempty"`
 }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type PetHungryOrThirstyError.
 func (p *PetHungryOrThirstyError) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
@@ -238,8 +247,10 @@ type PetSadError struct {
 	Reason *string `json:"reason,omitempty"`
 }
 
+// GetPetSadError implements the PetSadErrorClassification interface for type PetSadError.
 func (p *PetSadError) GetPetSadError() *PetSadError { return p }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type PetSadError.
 func (p *PetSadError) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {

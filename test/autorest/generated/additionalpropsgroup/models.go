@@ -16,6 +16,7 @@ type CatApTrue struct {
 	Friendly *bool `json:"friendly,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type CatApTrue.
 func (c CatApTrue) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	if c.ID != nil {
@@ -38,6 +39,7 @@ func (c CatApTrue) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type CatApTrue.
 func (c *CatApTrue) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
@@ -92,6 +94,7 @@ type Error struct {
 	Status  *int32  `json:"status,omitempty"`
 }
 
+// Error implements the error interface for type Error.
 func (e Error) Error() string {
 	msg := ""
 	if e.Message != nil {
@@ -134,6 +137,7 @@ type PetApInPropertiesWithApstring struct {
 	Status                *bool               `json:"status,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type PetApInPropertiesWithApstring.
 func (p PetApInPropertiesWithApstring) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	if p.AdditionalProperties1 != nil {
@@ -159,6 +163,7 @@ func (p PetApInPropertiesWithApstring) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type PetApInPropertiesWithApstring.
 func (p *PetApInPropertiesWithApstring) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
@@ -221,6 +226,7 @@ type PetApObject struct {
 	Status               *bool   `json:"status,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type PetApObject.
 func (p PetApObject) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	if p.ID != nil {
@@ -240,6 +246,7 @@ func (p PetApObject) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type PetApObject.
 func (p *PetApObject) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
@@ -293,6 +300,7 @@ type PetApString struct {
 	Status               *bool   `json:"status,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type PetApString.
 func (p PetApString) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	if p.ID != nil {
@@ -312,6 +320,7 @@ func (p PetApString) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type PetApString.
 func (p *PetApString) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
@@ -365,6 +374,7 @@ type PetApTrue struct {
 	Status               *bool   `json:"status,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type PetApTrue.
 func (p PetApTrue) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	if p.ID != nil {
@@ -384,6 +394,7 @@ func (p PetApTrue) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type PetApTrue.
 func (p *PetApTrue) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {

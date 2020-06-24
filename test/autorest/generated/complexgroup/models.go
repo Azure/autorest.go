@@ -77,6 +77,7 @@ type Cookiecuttershark struct {
 	Shark
 }
 
+// MarshalJSON implements the json.Marshaller interface for type Cookiecuttershark.
 func (c Cookiecuttershark) MarshalJSON() ([]byte, error) {
 	objectMap := c.Shark.marshalInternal("cookiecuttershark")
 	return json.Marshal(objectMap)
@@ -100,6 +101,7 @@ type DatetimeWrapper struct {
 	Now   *time.Time `json:"now,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type DatetimeWrapper.
 func (d DatetimeWrapper) MarshalJSON() ([]byte, error) {
 	type alias DatetimeWrapper
 	aux := &struct {
@@ -114,6 +116,7 @@ func (d DatetimeWrapper) MarshalJSON() ([]byte, error) {
 	return json.Marshal(aux)
 }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type DatetimeWrapper.
 func (d *DatetimeWrapper) UnmarshalJSON(data []byte) error {
 	type alias DatetimeWrapper
 	aux := &struct {
@@ -144,6 +147,7 @@ type Datetimerfc1123Wrapper struct {
 	Now   *time.Time `json:"now,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type Datetimerfc1123Wrapper.
 func (d Datetimerfc1123Wrapper) MarshalJSON() ([]byte, error) {
 	type alias Datetimerfc1123Wrapper
 	aux := &struct {
@@ -158,6 +162,7 @@ func (d Datetimerfc1123Wrapper) MarshalJSON() ([]byte, error) {
 	return json.Marshal(aux)
 }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type Datetimerfc1123Wrapper.
 func (d *Datetimerfc1123Wrapper) UnmarshalJSON(data []byte) error {
 	type alias Datetimerfc1123Wrapper
 	aux := &struct {
@@ -211,8 +216,10 @@ type DotFish struct {
 	Species  *string `json:"species,omitempty"`
 }
 
+// GetDotFish implements the DotFishClassification interface for type DotFish.
 func (d *DotFish) GetDotFish() *DotFish { return d }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type DotFish.
 func (d *DotFish) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
@@ -254,6 +261,7 @@ type DotFishMarket struct {
 	SampleSalmon *DotSalmon               `json:"sampleSalmon,omitempty"`
 }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type DotFishMarket.
 func (d *DotFishMarket) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
@@ -302,6 +310,7 @@ type DotFishResponse struct {
 	RawResponse *http.Response
 }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type DotFishResponse.
 func (d *DotFishResponse) UnmarshalJSON(data []byte) error {
 	t, err := unmarshalDotFishClassification(data)
 	if err != nil {
@@ -317,6 +326,7 @@ type DotSalmon struct {
 	Location *string `json:"location,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type DotSalmon.
 func (d DotSalmon) MarshalJSON() ([]byte, error) {
 	objectMap := d.DotFish.marshalInternal("DotSalmon")
 	if d.Iswild != nil {
@@ -328,6 +338,7 @@ func (d DotSalmon) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type DotSalmon.
 func (d *DotSalmon) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
@@ -382,6 +393,7 @@ type Error struct {
 	Status  *int32  `json:"status,omitempty"`
 }
 
+// Error implements the error interface for type Error.
 func (e Error) Error() string {
 	msg := ""
 	if e.Message != nil {
@@ -408,8 +420,10 @@ type Fish struct {
 	Species  *string               `json:"species,omitempty"`
 }
 
+// GetFish implements the FishClassification interface for type Fish.
 func (f *Fish) GetFish() *Fish { return f }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type Fish.
 func (f *Fish) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
@@ -466,6 +480,7 @@ type FishResponse struct {
 	RawResponse *http.Response
 }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type FishResponse.
 func (f *FishResponse) UnmarshalJSON(data []byte) error {
 	t, err := unmarshalFishClassification(data)
 	if err != nil {
@@ -495,6 +510,7 @@ type Goblinshark struct {
 	Jawsize *int32            `json:"jawsize,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type Goblinshark.
 func (g Goblinshark) MarshalJSON() ([]byte, error) {
 	objectMap := g.Shark.marshalInternal("goblin")
 	if g.Color != nil {
@@ -506,6 +522,7 @@ func (g Goblinshark) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type Goblinshark.
 func (g *Goblinshark) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
@@ -571,8 +588,10 @@ type MyBaseType struct {
 	PropB1 *string           `json:"propB1,omitempty"`
 }
 
+// GetMyBaseType implements the MyBaseTypeClassification interface for type MyBaseType.
 func (m *MyBaseType) GetMyBaseType() *MyBaseType { return m }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type MyBaseType.
 func (m *MyBaseType) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
@@ -622,6 +641,7 @@ type MyBaseTypeResponse struct {
 	RawResponse *http.Response
 }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type MyBaseTypeResponse.
 func (m *MyBaseTypeResponse) UnmarshalJSON(data []byte) error {
 	t, err := unmarshalMyBaseTypeClassification(data)
 	if err != nil {
@@ -636,6 +656,7 @@ type MyDerivedType struct {
 	PropD1 *string `json:"propD1,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type MyDerivedType.
 func (m MyDerivedType) MarshalJSON() ([]byte, error) {
 	objectMap := m.MyBaseType.marshalInternal("Kind1")
 	if m.PropD1 != nil {
@@ -644,6 +665,7 @@ func (m MyDerivedType) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type MyDerivedType.
 func (m *MyDerivedType) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
@@ -693,8 +715,10 @@ type Salmon struct {
 	Location *string `json:"location,omitempty"`
 }
 
+// GetSalmon implements the SalmonClassification interface for type Salmon.
 func (s *Salmon) GetSalmon() *Salmon { return s }
 
+// MarshalJSON implements the json.Marshaller interface for type Salmon.
 func (s Salmon) MarshalJSON() ([]byte, error) {
 	objectMap := s.Fish.marshalInternal("salmon")
 	if s.Iswild != nil {
@@ -706,6 +730,7 @@ func (s Salmon) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type Salmon.
 func (s *Salmon) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
@@ -748,6 +773,7 @@ type SalmonResponse struct {
 	Salmon      SalmonClassification
 }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type SalmonResponse.
 func (s *SalmonResponse) UnmarshalJSON(data []byte) error {
 	t, err := unmarshalSalmonClassification(data)
 	if err != nil {
@@ -762,6 +788,7 @@ type Sawshark struct {
 	Picture *[]byte `json:"picture,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type Sawshark.
 func (s Sawshark) MarshalJSON() ([]byte, error) {
 	objectMap := s.Shark.marshalInternal("sawshark")
 	if s.Picture != nil {
@@ -770,6 +797,7 @@ func (s Sawshark) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type Sawshark.
 func (s *Sawshark) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
@@ -802,8 +830,10 @@ type Shark struct {
 	Birthday *time.Time `json:"birthday,omitempty"`
 }
 
+// GetShark implements the SharkClassification interface for type Shark.
 func (s *Shark) GetShark() *Shark { return s }
 
+// MarshalJSON implements the json.Marshaller interface for type Shark.
 func (s Shark) MarshalJSON() ([]byte, error) {
 	objectMap := s.Fish.marshalInternal("shark")
 	if s.Age != nil {
@@ -815,6 +845,7 @@ func (s Shark) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type Shark.
 func (s *Shark) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
@@ -871,6 +902,7 @@ type SmartSalmon struct {
 	CollegeDegree        *string `json:"college_degree,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type SmartSalmon.
 func (s SmartSalmon) MarshalJSON() ([]byte, error) {
 	objectMap := s.Salmon.marshalInternal("smart_salmon")
 	if s.CollegeDegree != nil {
@@ -879,6 +911,7 @@ func (s SmartSalmon) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type SmartSalmon.
 func (s *SmartSalmon) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
