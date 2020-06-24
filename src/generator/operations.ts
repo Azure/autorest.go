@@ -698,7 +698,8 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
       return unmarshallerText;
     }
     const schemaResponse = <SchemaResponse>response;
-    if (isLRO) {
+    // TODO remove paging skip when adding lro + pagers
+    if (isLRO && !isPageableOperation(op)) {
       unmarshallerText += `\treturn &${schemaResponse.schema.language.go!.lroResponseType.language.go!.name}{RawResponse: resp.Response}, nil\n`;
       return unmarshallerText;
     }
@@ -1051,7 +1052,8 @@ function generateReturnsInfo(op: Operation, forHandler: boolean): string[] {
       returnType = op.language.go!.pageableType.name;
     } else if (isSchemaResponse(firstResp)) {
       returnType = '*' + firstResp.schema.language.go!.responseType.name;
-      if (isLROOperation(op)) {
+      // TODO remove paging skip when adding LRO + pagers
+      if (isLROOperation(op) && !isPageableOperation(op)) {
         returnType = '*' + firstResp.schema.language.go!.lroResponseType.language.go!.name;
       }
     } else if (isLROOperation(op)) {

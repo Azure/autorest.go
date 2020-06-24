@@ -556,7 +556,7 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
       }
     }
     // TODO: remove skipping this for pageable operations when adding lro+pager work
-    if (isLROOperation(op) && !isPageableOperation(op)) {
+    if (isLROOperation(op) && !op.extensions!['x-ms-pageable'] && !isPageableOperation(op)) {
       if (!isSchemaResponse(response)) {
         const name = 'HTTPPollerResponse';
         if (!responseExists(codeModel, name)) {
