@@ -569,6 +569,9 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
       const pagers = <Array<PagerInfo>>codeModel.language.go!.pageableTypes;
       for (const pager of values(pagers)) {
         if (pager.name === name) {
+          if (isLROOperation(op)) {
+            pager.respField = true;
+          }
           // found a match, hook it up to the method
           op.language.go!.pageableType = pager;
           skipAddPager = true;
@@ -580,7 +583,11 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
         const pager = {
           name: name,
           op: op,
+          respField: false,
         };
+        if (isLROOperation(op)) {
+          pager.respField = true;
+        }
         pagers.push(pager);
         op.language.go!.pageableType = pager;
       }
