@@ -117,14 +117,9 @@ func (p *productResultPagerPoller) pollUntilDone(ctx context.Context, frequency 
 }
 
 func (p *productResultPagerPoller) handleResponse(resp *azcore.Response) (ProductResultPager, error) {
-	u, err := url.Parse(p.pt.finalGetURL())
-	if err != nil {
-		return nil, err
-	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return &productResultPager{
 		pipeline:  p.pipeline,
-		request:   req,
+		resp:      resp,
 		responder: p.respHandler,
 		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.ProductResult.NextLink)

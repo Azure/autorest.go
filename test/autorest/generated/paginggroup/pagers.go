@@ -115,15 +115,6 @@ func (p *productResultPager) Err() error {
 }
 
 func (p *productResultPager) NextPage(ctx context.Context) bool {
-	if p.resp != nil {
-		result, err := p.responder(p.resp)
-		if err != nil {
-			p.err = err
-			return false
-		}
-		p.current = result
-		return true
-	}
 	if p.current != nil {
 		if p.current.ProductResult.NextLink == nil || len(*p.current.ProductResult.NextLink) == 0 {
 			return false
@@ -135,7 +126,13 @@ func (p *productResultPager) NextPage(ctx context.Context) bool {
 		}
 		p.request = req
 	}
-	resp, err := p.pipeline.Do(ctx, p.request)
+	resp := p.resp
+	var err error
+	if resp == nil {
+		resp, err = p.pipeline.Do(ctx, p.request)
+	} else {
+		p.resp = nil
+	}
 	if err != nil {
 		p.err = err
 		return false

@@ -201,11 +201,9 @@ func TestGetMultiplePagesLro(t *testing.T) {
 	if err = pager.Err(); err != nil {
 		t.Fatal(err)
 	}
-	if count != 10 {
-		helpers.DeepEqualOrFatal(t, count, 10)
-	}
-	if pager.PageResponse() == nil {
-		t.Fatal("unexpected nil payload")
+	const pageCount = 10
+	if count != pageCount {
+		helpers.DeepEqualOrFatal(t, count, pageCount)
 	}
 }
 
