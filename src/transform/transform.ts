@@ -751,11 +751,14 @@ function generateResponseTypeName(schema: Schema): Language {
 
 // generate LRO response type name is separate from the general response type name
 // generation, since it requires returning the poller response envelope
-function generateLROResponseTypeName(response: Response): Language {
+function generateLROResponseTypeName(response: Response, op: Operation): Language {
   // default to generic response envelope
   let name = 'HTTPPollerResponse';
   let desc = `${name} contains the asynchronous HTTP response from the call to the service endpoint.`;
-  if (isSchemaResponse(response)) {
+  if (isPageableOperation(op)) {
+    name = `${op.language.go!.pageableType.name}PollerResponse`;
+    desc = `${name} is the response envelope for operations that asynchronously return a ${op.language.go!.pageableType.name} type.`;
+  } else if (isSchemaResponse(response)) {
     // create a type-specific response envelope
     const typeName = recursiveTypeName(response.schema) + 'Poller';
     name = `${typeName}Response`;
@@ -777,11 +780,7 @@ function generateLROPollerName(schemaResp: SchemaResponse): string {
 }
 
 function generateLROResponseType(response: Response, op: Operation, codeModel: CodeModel) {
-  const respTypeName = generateLROResponseTypeName(response);
-  if (isPageableOperation(op)) {
-    respTypeName.name = `${op.language.go!.pageableType.name}PollerResponse`;
-    respTypeName.description = `${respTypeName.name} is the response envelope for operations that asynchronously return a ${op.language.go!.pageableType.name} type.`;
-  }
+  const respTypeName = generateLROResponseTypeName(response, op);
   if (responseExists(codeModel, respTypeName.name)) {
     return;
   }
