@@ -40,7 +40,7 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
       resp *azcore.Response`;
       respFieldCheck = `
       if p.resp != nil {
-        result, err := p.responder(resp)
+        result, err := p.responder(p.resp)
         if err != nil {
           p.err = err
           return false

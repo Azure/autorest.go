@@ -116,7 +116,7 @@ func (p *productResultPager) Err() error {
 
 func (p *productResultPager) NextPage(ctx context.Context) bool {
 	if p.resp != nil {
-		result, err := p.responder(resp)
+		result, err := p.responder(p.resp)
 		if err != nil {
 			p.err = err
 			return false
