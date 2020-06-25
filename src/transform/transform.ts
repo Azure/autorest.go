@@ -569,6 +569,8 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
       const pagers = <Array<PagerInfo>>codeModel.language.go!.pageableTypes;
       for (const pager of values(pagers)) {
         if (pager.name === name) {
+          // this LRO check is necessary for operations that synchronously and asynchronously return a pager
+          // this will ensure that pagers that are used with pollers will have the response field included
           if (isLROOperation(op)) {
             pager.respField = true;
           }
@@ -583,11 +585,8 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
         const pager = {
           name: name,
           op: op,
-          respField: false,
+          respField: isLROOperation(op),
         };
-        if (isLROOperation(op)) {
-          pager.respField = true;
-        }
         pagers.push(pager);
         op.language.go!.pageableType = pager;
       }
