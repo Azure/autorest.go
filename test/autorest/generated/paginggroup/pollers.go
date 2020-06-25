@@ -28,8 +28,7 @@ type productResultPagerPoller struct {
 	// the client for making the request
 	pipeline    azcore.Pipeline
 	respHandler productResultHandleResponse
-
-	pt pollingTracker
+	pt          pollingTracker
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
@@ -144,5 +143,4 @@ func (p *productResultPagerPoller) handleResponse(resp *azcore.Response) (Produc
 			return azcore.NewRequest(http.MethodGet, *u), nil
 		},
 	}, nil
-
 }

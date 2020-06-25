@@ -97,7 +97,7 @@ function generatePagerReturnInstance(op: Operation, imports: ImportManager): str
     text += `\t\t\treturn azcore.NewRequest(http.MethodGet, *u), nil\n`;
     text += `\t\t},\n`;
   }
-  text += `\t}, nil\n`;
+  text += `\t}, nil`;
   return text;
 }
 
@@ -138,8 +138,7 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
     if (isPageableOperation(poller.op)) {
       responseType = poller.op.language.go!.pageableType.name;
       pagerFields = `
-      respHandler ${camelCase(poller.op.language.go!.pageableType.op.responses![0].schema.language.go!.name)}HandleResponse
-      `;
+      respHandler ${camelCase(poller.op.language.go!.pageableType.op.responses![0].schema.language.go!.name)}HandleResponse`;
       pollUntilDoneResponse = `(${responseType}, error)`;
       pollUntilDoneReturn = 'p.FinalResponse(ctx)';
       // for operations that do return a model add a final response method that handles the final get URL scenario
