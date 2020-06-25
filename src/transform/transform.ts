@@ -600,13 +600,7 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
       }
       // Determine the type of poller that needs to be added based on whether a schema is specified in the response
       // if there is no schema specified for the operation response then a simple HTTP poller will be instantiated
-      let name = 'HTTPPoller';
-      if (isSchemaResponse(response) && response.schema.language.go!.responseType.value) {
-        name = generateLROPollerName(response);
-      }
-      if (isPageableOperation(op)) {
-        name = `${op.language.go!.pageableType.name}Poller`;
-      }
+      const name = generateLROPollerName(response, op);
       const pollers = <Array<PollerInfo>>codeModel.language.go!.pollerTypes;
       let skipAddLRO = false;
       for (const poller of values(pollers)) {
@@ -770,7 +764,14 @@ function generateLROResponseTypeName(response: Response, op: Operation): Languag
   };
 }
 
-function generateLROPollerName(schemaResp: SchemaResponse): string {
+function generateLROPollerName(response: Response, op: Operation): string {
+  if (!isSchemaResponse(response)) {
+    return 'HTTPPoller';
+  }
+  const schemaResp = <SchemaResponse>response;
+  if (isPageableOperation(op)) {
+    return `${op.language.go!.pageableType.name}Poller`;
+  }
   if (schemaResp.schema.language.go!.responseType.value === scalarResponsePropName) {
     // for scalar responses, use the underlying type name for the poller
     return `${pascalCase(schemaResp.schema.language.go!.name)}Poller`;
@@ -803,7 +804,7 @@ function generateLROResponseType(response: Response, op: Operation, codeModel: C
     response.schema.language.go!.lroResponseType = respTypeObject;
   } else {
     pollerResponse = `*${response.schema.language.go!.responseType.name}`;
-    pollerTypeName = generateLROPollerName(response);
+    pollerTypeName = generateLROPollerName(response, op);
     response.schema.language.go!.isLRO = true;
     response.schema.language.go!.lroResponseType = respTypeObject;
   }
