@@ -50,9 +50,11 @@ func (c AccessTier) ToPtr() *AccessTier {
 type AccountKind string
 
 const (
-	AccountKindStorage     AccountKind = "Storage"
-	AccountKindBlobStorage AccountKind = "BlobStorage"
-	AccountKindStorageV2   AccountKind = "StorageV2"
+	AccountKindStorage          AccountKind = "Storage"
+	AccountKindBlobStorage      AccountKind = "BlobStorage"
+	AccountKindStorageV2        AccountKind = "StorageV2"
+	AccountKindFileStorage      AccountKind = "FileStorage"
+	AccountKindBlockBlobStorage AccountKind = "BlockBlobStorage"
 )
 
 func PossibleAccountKindValues() []AccountKind {
@@ -60,6 +62,8 @@ func PossibleAccountKindValues() []AccountKind {
 		AccountKindStorage,
 		AccountKindBlobStorage,
 		AccountKindStorageV2,
+		AccountKindFileStorage,
+		AccountKindBlockBlobStorage,
 	}
 }
 

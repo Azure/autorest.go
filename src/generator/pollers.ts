@@ -14,13 +14,14 @@ import { OperationNaming } from '../transform/namer';
 
 function getPutCheck(op: Operation): string {
   const respSchema = <SchemaResponse>op.responses![0];
-  let text = `if p.pt.pollerMethodVerb() == http.MethodPut || p.pt.pollerMethodVerb() == http.MethodPatch {
+  let text = 'if p.pt.pollerMethodVerb() == http.MethodPut || p.pt.pollerMethodVerb() == http.MethodPatch {';
+  if (!isPageableOperation(op)) {
+    text += `
     res, err := p.handleResponse(p.pt.latestResponse())
     if err != nil {
       return nil, err
     }
     `;
-  if (!isPageableOperation(op)) {
     switch (respSchema.schema.type) {
       case SchemaType.Array:
       case SchemaType.Dictionary:
@@ -36,10 +37,7 @@ function getPutCheck(op: Operation): string {
         return res, nil
       }`;
   } else {
-    text += `if res != nil {
-      return res, nil
-    }
-    `;
+    text += 'return p.handleResponse(p.pt.latestResponse())';
   }
   text += '}';
   return text;

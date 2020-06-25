@@ -49,13 +49,7 @@ func (p *productResultPagerPoller) FinalResponse(ctx context.Context) (ProductRe
 		return nil, errors.New("cannot return a final response from a poller in a non-terminal state")
 	}
 	if p.pt.pollerMethodVerb() == http.MethodPut || p.pt.pollerMethodVerb() == http.MethodPatch {
-		res, err := p.handleResponse(p.pt.latestResponse())
-		if err != nil {
-			return nil, err
-		}
-		if res != nil {
-			return res, nil
-		}
+		return p.handleResponse(p.pt.latestResponse())
 	}
 	// checking if there was a FinalStateVia configuration to re-route the final GET
 	// request to the value specified in the FinalStateVia property on the poller
