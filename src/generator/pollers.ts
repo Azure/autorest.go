@@ -56,7 +56,7 @@ function generatePagerReturnInstance(op: Operation, imports: ImportManager): str
   }
   text += `\treturn &${camelCase(op.language.go!.pageableType.name)}{\n`;
   text += `\t\tpipeline: p.pipeline,\n`;
-  text += `\t\trequest: req,\n`;
+  text += `\t\tresp: resp,\n`;
   text += `\t\tresponder: p.respHandler,\n`;
   const pager = <PagerInfo>op.language.go!.pageableType;
   const pagerSchema = <SchemaResponse>pager.op.responses![0];
@@ -183,11 +183,6 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
       }`;
       handleResponse = `
       func (p *${pollerName}) handleResponse(resp *azcore.Response) (${responseType}, error) {
-        u, err := url.Parse(p.pt.finalGetURL())
-        if err != nil {
-          return nil, err
-        }
-        req := azcore.NewRequest(http.MethodGet, *u)
         ${generatePagerReturnInstance(poller.op, imports)}
       }
       `;

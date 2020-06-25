@@ -33,21 +33,19 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
     const resultType = schemaResponse.schema.language.go!.name;
     let resultTypeName = resultType;
     let pollerRespField = '';
-    let respFieldCheck = '';
+    let respFieldCheck = '\tresp, err := p.pipeline.Do(ctx, p.request)';
     if (pager.respField) {
       pollerRespField = `
       // previous response from the endpoint
       resp *azcore.Response`;
-      respFieldCheck = `
-      if p.resp != nil {
-        result, err := p.responder(p.resp)
-        if err != nil {
-          p.err = err
-          return false
-        }
-        p.current = result
-        return true
-      }`;
+      respFieldCheck =
+        `resp := p.resp
+	var err error
+	if resp == nil {
+		resp, err = p.pipeline.Do(ctx, p.request)
+	} else {
+		p.resp = nil
+	}`;
     }
     if (schemaResponse.schema.serialization?.xml?.name) {
       // xml can specifiy its own name, prefer that if available
@@ -91,7 +89,7 @@ func (p *${pagerType}) Err() error {
 	return p.err
 }
 
-func (p *${pagerType}) NextPage(ctx context.Context) bool {${respFieldCheck}
+func (p *${pagerType}) NextPage(ctx context.Context) bool {
 	if p.current != nil {
 		if p.current.${resultTypeName}.${pager.op.language.go!.paging.nextLinkName} == nil || len(*p.current.${resultTypeName}.${pager.op.language.go!.paging.nextLinkName}) == 0 {
 			return false
@@ -102,8 +100,8 @@ func (p *${pagerType}) NextPage(ctx context.Context) bool {${respFieldCheck}
 			return false
 		}
 		p.request = req
-	}
-	resp, err := p.pipeline.Do(ctx, p.request)
+  }
+  ${respFieldCheck}
 	if err != nil {
 		p.err = err
 		return false
