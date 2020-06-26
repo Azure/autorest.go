@@ -141,7 +141,7 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
       pollUntilDoneReturn = 'p.FinalResponse(ctx)';
       // for operations that do return a model add a final response method that handles the final get URL scenario
       finalResponseDeclaration = `FinalResponse(ctx context.Context) (${responseType}, error)`;
-      finalResponse = `FinalResponse(ctx context.Context) (${responseType}, error) {
+      finalResponse = `${finalResponseDeclaration} {
         if !p.Done() {
           return nil, errors.New("cannot return a final response from a poller in a non-terminal state")
         }

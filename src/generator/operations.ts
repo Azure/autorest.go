@@ -331,16 +331,14 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
     text += '\t\t\tpipeline: client.p,\n';
     text += '\t}\n';
     text += '\tresult.Poller = poller\n';
-    // http pollers will simply return an *http.Response
-    if (op.language.go!.pollerType.name === 'HTTPPoller') {
-      text += '\tresult.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {\n';
-    } else {
-      if (isPageableOperation(op)) {
-        text += `\tresult.PollUntilDone = func(ctx context.Context, frequency time.Duration) (${op.language.go!.pageableType.name}, error) {\n`;
-      } else {
-        text += `\tresult.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*${(<SchemaResponse>op.responses![0]).schema.language.go!.responseType.name}, error) {\n`;
-      }
+    // determine the poller response based on the name and whether is is a pageable operation
+    let pollerResponse = '*http.Response';
+    if (isPageableOperation(op)) {
+      pollerResponse = op.language.go!.pageableType.name;
+    } else if (isSchemaResponse(op.responses![0])) {
+      pollerResponse = '*' + (<SchemaResponse>op.responses![0]).schema.language.go!.responseType.name;
     }
+    text += `\tresult.PollUntilDone = func(ctx context.Context, frequency time.Duration) (${pollerResponse}, error) {\n`;
     text += `\t\treturn poller.pollUntilDone(ctx, frequency)\n`;
     text += `\t}\n`;
     text += `\treturn result, nil\n`;
