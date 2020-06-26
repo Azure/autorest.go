@@ -34,6 +34,7 @@ export function isSchemaResponse(resp?: Response): resp is SchemaResponse {
 export interface PagerInfo {
   name: string;
   op: Operation;
+  respField: boolean;
 }
 
 // returns true if the operation is pageable

@@ -32,6 +32,21 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
     const responseType = schemaResponse.schema.language.go!.responseType.name;
     const resultType = schemaResponse.schema.language.go!.name;
     let resultTypeName = resultType;
+    let pollerRespField = '';
+    let respFieldCheck = '\tresp, err := p.pipeline.Do(ctx, p.request)';
+    if (pager.respField) {
+      pollerRespField = `
+      // previous response from the endpoint
+      resp *azcore.Response`;
+      respFieldCheck =
+        `resp := p.resp
+	var err error
+	if resp == nil {
+		resp, err = p.pipeline.Do(ctx, p.request)
+	} else {
+		p.resp = nil
+	}`;
+    }
     if (schemaResponse.schema.serialization?.xml?.name) {
       // xml can specifiy its own name, prefer that if available
       resultTypeName = schemaResponse.schema.serialization.xml.name;
@@ -67,7 +82,7 @@ type ${pagerType} struct {
 	// contains the current response
 	current *${responseType}
 	// any error encountered
-	err error
+	err error${pollerRespField}
 }
 
 func (p *${pagerType}) Err() error {
@@ -85,8 +100,8 @@ func (p *${pagerType}) NextPage(ctx context.Context) bool {
 			return false
 		}
 		p.request = req
-	}
-	resp, err := p.pipeline.Do(ctx, p.request)
+  }
+  ${respFieldCheck}
 	if err != nil {
 		p.err = err
 		return false

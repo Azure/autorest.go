@@ -558,10 +558,6 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
         responseSchemas.push(response.schema);
       }
     }
-    // TODO: remove skipping this for pageable operations when adding lro+pager work
-    if (isLROOperation(op) && !op.extensions!['x-ms-pageable'] && !isPageableOperation(op)) {
-      generateLROResponseType(response, op, codeModel);
-    }
     // create pageable type info
     if (isPageableOperation(op)) {
       if (codeModel.language.go!.pageableTypes === undefined) {
@@ -573,6 +569,11 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
       const pagers = <Array<PagerInfo>>codeModel.language.go!.pageableTypes;
       for (const pager of values(pagers)) {
         if (pager.name === name) {
+          // this LRO check is necessary for operations that synchronously and asynchronously return a pager
+          // this will ensure that pagers that are used with pollers will have the response field included
+          if (isLROOperation(op)) {
+            pager.respField = true;
+          }
           // found a match, hook it up to the method
           op.language.go!.pageableType = pager;
           skipAddPager = true;
@@ -584,6 +585,7 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
         const pager = {
           name: name,
           op: op,
+          respField: isLROOperation(op),
         };
         pagers.push(pager);
         op.language.go!.pageableType = pager;
@@ -591,15 +593,14 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
     }
     // create poller type info
     if (isLROOperation(op)) {
+      // create the poller response envelope
+      generateLROResponseType(response, op, codeModel);
       if (codeModel.language.go!.pollerTypes === undefined) {
         codeModel.language.go!.pollerTypes = new Array<PollerInfo>();
       }
       // Determine the type of poller that needs to be added based on whether a schema is specified in the response
       // if there is no schema specified for the operation response then a simple HTTP poller will be instantiated
-      let name = 'HTTPPoller';
-      if (isSchemaResponse(response) && response.schema.language.go!.responseType.value) {
-        name = generateLROPollerName(response);
-      }
+      const name = generateLROPollerName(response, op);
       const pollers = <Array<PollerInfo>>codeModel.language.go!.pollerTypes;
       let skipAddLRO = false;
       for (const poller of values(pollers)) {
@@ -743,11 +744,14 @@ function generateResponseTypeName(schema: Schema): Language {
 
 // generate LRO response type name is separate from the general response type name
 // generation, since it requires returning the poller response envelope
-function generateLROResponseTypeName(response: Response): Language {
+function generateLROResponseTypeName(response: Response, op: Operation): Language {
   // default to generic response envelope
-  let name = 'HTTPPollerResponse'
+  let name = 'HTTPPollerResponse';
   let desc = `${name} contains the asynchronous HTTP response from the call to the service endpoint.`;
-  if (isSchemaResponse(response)) {
+  if (isPageableOperation(op)) {
+    name = `${op.language.go!.pageableType.name}PollerResponse`;
+    desc = `${name} is the response envelope for operations that asynchronously return a ${op.language.go!.pageableType.name} type.`;
+  } else if (isSchemaResponse(response)) {
     // create a type-specific response envelope
     const typeName = recursiveTypeName(response.schema) + 'Poller';
     name = `${typeName}Response`;
@@ -760,7 +764,14 @@ function generateLROResponseTypeName(response: Response): Language {
   };
 }
 
-function generateLROPollerName(schemaResp: SchemaResponse): string {
+function generateLROPollerName(response: Response, op: Operation): string {
+  if (!isSchemaResponse(response)) {
+    return 'HTTPPoller';
+  }
+  const schemaResp = <SchemaResponse>response;
+  if (isPageableOperation(op)) {
+    return `${op.language.go!.pageableType.name}Poller`;
+  }
   if (schemaResp.schema.language.go!.responseType.value === scalarResponsePropName) {
     // for scalar responses, use the underlying type name for the poller
     return `${pascalCase(schemaResp.schema.language.go!.name)}Poller`;
@@ -769,7 +780,7 @@ function generateLROPollerName(schemaResp: SchemaResponse): string {
 }
 
 function generateLROResponseType(response: Response, op: Operation, codeModel: CodeModel) {
-  const respTypeName = generateLROResponseTypeName(response);
+  const respTypeName = generateLROResponseTypeName(response, op);
   if (responseExists(codeModel, respTypeName.name)) {
     return;
   }
@@ -793,7 +804,7 @@ function generateLROResponseType(response: Response, op: Operation, codeModel: C
     response.schema.language.go!.lroResponseType = respTypeObject;
   } else {
     pollerResponse = `*${response.schema.language.go!.responseType.name}`;
-    pollerTypeName = generateLROPollerName(response);
+    pollerTypeName = generateLROPollerName(response, op);
     response.schema.language.go!.isLRO = true;
     response.schema.language.go!.lroResponseType = respTypeObject;
   }

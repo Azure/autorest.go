@@ -106,6 +106,8 @@ type productResultPager struct {
 	current *ProductResultResponse
 	// any error encountered
 	err error
+	// previous response from the endpoint
+	resp *azcore.Response
 }
 
 func (p *productResultPager) Err() error {
@@ -124,7 +126,13 @@ func (p *productResultPager) NextPage(ctx context.Context) bool {
 		}
 		p.request = req
 	}
-	resp, err := p.pipeline.Do(ctx, p.request)
+	resp := p.resp
+	var err error
+	if resp == nil {
+		resp, err = p.pipeline.Do(ctx, p.request)
+	} else {
+		p.resp = nil
+	}
 	if err != nil {
 		p.err = err
 		return false
