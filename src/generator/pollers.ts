@@ -133,102 +133,29 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
     const schemaResponse = <SchemaResponse>poller.op.responses![0];
     let unmarshalResponse = 'nil';
     let pagerFields = '';
+    let finalResponseCheckNeeded = false;
     if (isPageableOperation(poller.op)) {
       responseType = poller.op.language.go!.pageableType.name;
-      pagerFields = `
-      respHandler ${camelCase(poller.op.language.go!.pageableType.op.responses![0].schema.language.go!.name)}HandleResponse`;
       pollUntilDoneResponse = `(${responseType}, error)`;
       pollUntilDoneReturn = 'p.FinalResponse(ctx)';
       // for operations that do return a model add a final response method that handles the final get URL scenario
       finalResponseDeclaration = `FinalResponse(ctx context.Context) (${responseType}, error)`;
-      finalResponse = `${finalResponseDeclaration} {
-        if !p.Done() {
-          return nil, errors.New("cannot return a final response from a poller in a non-terminal state")
-        }
-		${getPutCheck(poller.op)}
-		// checking if there was a FinalStateVia configuration to re-route the final GET
-        // request to the value specified in the FinalStateVia property on the poller
-        err := p.pt.setFinalState()
-        if err != nil {
-          return nil, err
-        }
-        if p.pt.finalGetURL() == "" {
-          // we can end up in this situation if the async operation returns a 200
-          // with no polling URLs.  in that case return the response which should
-          // contain the JSON payload (only do this for successful terminal cases).
-          if lr := p.pt.latestResponse(); lr != nil && p.pt.hasSucceeded() {
-            result, err := p.handleResponse(lr)
-            if err != nil {
-              return nil, err
-            }
-            return result, nil
-          }
-          return nil, errors.New("missing URL for retrieving result")
-        }
-        u, err := url.Parse(p.pt.finalGetURL())
-        if err != nil {
-          return nil, err
-        }
-        req := azcore.NewRequest(http.MethodGet, *u)
-        if err != nil {
-          return nil, err
-        }
-        resp, err := p.pipeline.Do(ctx, req)
-        if err != nil {
-          return nil, err
-        }
-        return p.handleResponse(resp)
-      }`;
+      pagerFields = `
+      respHandler ${camelCase(poller.op.language.go!.pageableType.op.responses![0].schema.language.go!.name)}HandleResponse`;
       handleResponse = `
       func (p *${pollerName}) handleResponse(resp *azcore.Response) (${responseType}, error) {
         ${generatePagerReturnInstance(poller.op, imports)}
       }
       `;
-    } else if (isSchemaResponse(schemaResponse) && schemaResponse.schema.language.go!.responseType.name != undefined) {
+      finalResponse = `${finalResponseDeclaration} {`;
+      finalResponseCheckNeeded = true;
+    } else if (isSchemaResponse(schemaResponse) && schemaResponse.schema.language.go!.responseType.name !== undefined) {
       responseType = schemaResponse.schema.language.go!.responseType.name;
       pollUntilDoneResponse = `(*${responseType}, error)`;
       pollUntilDoneReturn = 'p.FinalResponse(ctx)';
       unmarshalResponse = `resp.UnmarshalAsJSON(&result.${schemaResponse.schema.language.go!.responseType.value})`;
       // for operations that do return a model add a final response method that handles the final get URL scenario
       finalResponseDeclaration = `FinalResponse(ctx context.Context) (*${responseType}, error)`;
-      finalResponse = `FinalResponse(ctx context.Context) (*${responseType}, error) {
-        if !p.Done() {
-          return nil, errors.New("cannot return a final response from a poller in a non-terminal state")
-        }
-		${getPutCheck(poller.op)}
-		// checking if there was a FinalStateVia configuration to re-route the final GET
-        // request to the value specified in the FinalStateVia property on the poller
-        err := p.pt.setFinalState()
-        if err != nil {
-          return nil, err
-        }
-        if p.pt.finalGetURL() == "" {
-          // we can end up in this situation if the async operation returns a 200
-          // with no polling URLs.  in that case return the response which should
-          // contain the JSON payload (only do this for successful terminal cases).
-          if lr := p.pt.latestResponse(); lr != nil && p.pt.hasSucceeded() {
-            result, err := p.handleResponse(lr)
-            if err != nil {
-              return nil, err
-            }
-            return result, nil
-          }
-          return nil, errors.New("missing URL for retrieving result")
-        }
-        u, err := url.Parse(p.pt.finalGetURL())
-        if err != nil {
-          return nil, err
-        }
-        req := azcore.NewRequest(http.MethodGet, *u)
-        if err != nil {
-          return nil, err
-        }
-        resp, err := p.pipeline.Do(ctx, req)
-        if err != nil {
-          return nil, err
-        }
-        return p.handleResponse(resp)
-      }`;
       handleResponse = `
       func (p *${pollerName}) handleResponse(resp *azcore.Response) (*${responseType}, error) {
         result := ${responseType}{RawResponse: resp.Response}
@@ -241,6 +168,48 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
         return &result, ${unmarshalResponse}
       }
       `;
+      finalResponse = `FinalResponse(ctx context.Context) (*${responseType}, error) {`;
+      finalResponseCheckNeeded = true;
+    }
+    if (finalResponseCheckNeeded) {
+      finalResponse += `
+        if !p.Done() {
+          return nil, errors.New("cannot return a final response from a poller in a non-terminal state")
+        }
+		${getPutCheck(poller.op)}
+		// checking if there was a FinalStateVia configuration to re-route the final GET
+        // request to the value specified in the FinalStateVia property on the poller
+        err := p.pt.setFinalState()
+        if err != nil {
+          return nil, err
+        }
+        if p.pt.finalGetURL() == "" {
+          // we can end up in this situation if the async operation returns a 200
+          // with no polling URLs.  in that case return the response which should
+          // contain the JSON payload (only do this for successful terminal cases).
+          if lr := p.pt.latestResponse(); lr != nil && p.pt.hasSucceeded() {
+            result, err := p.handleResponse(lr)
+            if err != nil {
+              return nil, err
+            }
+            return result, nil
+          }
+          return nil, errors.New("missing URL for retrieving result")
+        }
+        u, err := url.Parse(p.pt.finalGetURL())
+        if err != nil {
+          return nil, err
+        }
+        req := azcore.NewRequest(http.MethodGet, *u)
+        if err != nil {
+          return nil, err
+        }
+        resp, err := p.pipeline.Do(ctx, req)
+        if err != nil {
+          return nil, err
+        }
+        return p.handleResponse(resp)
+      }`;
     }
     bodyText += `// ${pollerInterface} provides polling facilities until the operation completes
       type ${pollerInterface} interface {
