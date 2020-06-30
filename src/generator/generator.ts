@@ -22,48 +22,52 @@ export async function protocolGen(host: Host) {
   const debug = await host.GetValue('debug') || false;
 
   try {
-
     // get the code model from the core
     const session = await startSession<CodeModel>(host, codeModelSchema);
     const operations = await generateOperations(session);
+    let filePrefix = await session.getValue('file-prefix', '');
+    // if a file prefix was specified, ensure it's properly snaked
+    if (filePrefix.length > 0 && filePrefix[filePrefix.length - 1] !== '_') {
+      filePrefix += '_';
+    }
 
     // output the model to the pipeline.  this must happen after all model
     // updates are complete and before any source files are written.
     host.WriteFile('code-model-v4.yaml', serialize(session.model), undefined, 'code-model-v4');
 
     for (const op of values(operations)) {
-      host.WriteFile(`${op.name.toLowerCase()}.go`, op.content, undefined, 'source-file-go');
+      host.WriteFile(`${filePrefix}${op.name.toLowerCase()}.go`, op.content, undefined, 'source-file-go');
     }
 
     const enums = await generateEnums(session);
     if (enums.length > 0) {
-      host.WriteFile('enums.go', enums, undefined, 'source-file-go');
+      host.WriteFile(`${filePrefix}enums.go`, enums, undefined, 'source-file-go');
     }
 
     const models = await generateModels(session);
-    host.WriteFile('models.go', models, undefined, 'source-file-go');
+    host.WriteFile(`${filePrefix}models.go`, models, undefined, 'source-file-go');
 
     const client = await generateClient(session);
-    host.WriteFile('client.go', client, undefined, 'source-file-go');
+    host.WriteFile(`${filePrefix}client.go`, client, undefined, 'source-file-go');
 
     const timeHelpers = await generateTimeHelpers(session);
     for (const helper of values(timeHelpers)) {
-      host.WriteFile(`${helper.name.toLowerCase()}.go`, helper.content, undefined, 'source-file-go');
+      host.WriteFile(`${filePrefix}${helper.name.toLowerCase()}.go`, helper.content, undefined, 'source-file-go');
     }
 
     const pagers = await generatePagers(session);
     if (pagers.length > 0) {
-      host.WriteFile('pagers.go', pagers, undefined, 'source-file-go');
+      host.WriteFile(`${filePrefix}pagers.go`, pagers, undefined, 'source-file-go');
     }
     const pollers = await generatePollers(session);
     if (pollers.length > 0) {
       const pollingHelper = await generatePollersHelper(session);
-      host.WriteFile('pollers_helper.go', pollingHelper, undefined, 'source-file-go');
-      host.WriteFile('pollers.go', pollers, undefined, 'source-file-go');
+      host.WriteFile(`${filePrefix}pollers_helper.go`, pollingHelper, undefined, 'source-file-go');
+      host.WriteFile(`${filePrefix}pollers.go`, pollers, undefined, 'source-file-go');
     }
     const polymorphics = await generatePolymorphicHelpers(session);
     if (polymorphics.length > 0) {
-      host.WriteFile('polymorphic_helpers.go', polymorphics, undefined, 'source-file-go');
+      host.WriteFile(`${filePrefix}polymorphic_helpers.go`, polymorphics, undefined, 'source-file-go');
     }
     const gomod = await generateGoModFile(session);
     if (gomod.length > 0) {
