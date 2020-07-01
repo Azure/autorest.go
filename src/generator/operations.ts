@@ -430,7 +430,7 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
   const hostURLStr = <string>op.requests![0].protocol.http!.uri;
   // we exclude the plain host and url replacements for the host since our client constructors
   // already include a request endpoint
-  if ((hostURLStr != '{$host}' && hostURLStr != '{url}') && hostURLStr.length > 0) {
+  if ((hostURLStr.match(/{/g) || []).length > 1 && (hostURLStr.match(/}/g) || []).length > 1) {
     text += `\thost := "${hostURLStr}"\n`;
     // replace url parameters
     for (const pp of values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'uri'; })) {
