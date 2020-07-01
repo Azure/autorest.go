@@ -427,7 +427,7 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
   let parseVar = '';
   // hostURLStr will be used to check for the x-ms-parameterized-host functionality
   const hostURLStr = <string>op.requests![0].protocol.http!.uri;
-  // for parameterized hosts that only in the format {x} will be ignored and the client url will be used
+  // for parameterized hosts that are in the format "{x}" will be ignored and the client url will be used
   if (!((hostURLStr.match(/{/g) || []).length === 1 && (hostURLStr.match(/}/g) || []).length === 1 && hostURLStr.indexOf('{') === 0 && hostURLStr.indexOf('}') === hostURLStr.length - 1)) {
     text += `\thost := "${hostURLStr}"\n`;
     // replace url parameters
@@ -435,7 +435,7 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
       imports.add('strings');
       // host references may be found among other variables and therefore call to use the host 
       // specified by the endpoint the client was created with
-      if (pp.language.go!.name == 'host') {
+      if (pp.language.go!.name === 'host') {
         text += `\thost = strings.ReplaceAll(host, "{host}", client.u.Host)\n`;
       } else {
         let paramValue = `url.PathEscape(${formatParamValue(pp, imports)})`;
