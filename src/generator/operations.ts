@@ -425,12 +425,11 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
   text += `func (client *${client}) ${name}(${getCreateRequestParametersSig(op)}) (${returns.join(', ')}) {\n`;
   let includeParse = false;
   let parseVar = '';
-  // TODO check what to do when a host is specified without a scheme and {url} case in host
-  // this might remove the use of the endpoint param used in the client constructor
+  // hostURLStr will be used to check for the x-ms-parameterized-host functionality
   const hostURLStr = <string>op.requests![0].protocol.http!.uri;
   // we exclude the plain host and url replacements for the host since our client constructors
   // already include a request endpoint
-  if ((hostURLStr.match(/{/g) || []).length > 1 && (hostURLStr.match(/}/g) || []).length > 1) {
+  if (!((hostURLStr.match(/{/g) || []).length === 1 && (hostURLStr.match(/}/g) || []).length === 1 && hostURLStr.indexOf('{') === 0 && hostURLStr.indexOf('}') === hostURLStr.length - 1)) {
     text += `\thost := "${hostURLStr}"\n`;
     // replace url parameters
     for (const pp of values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'uri'; })) {
