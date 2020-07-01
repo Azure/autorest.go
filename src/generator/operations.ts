@@ -430,7 +430,7 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
   // parameterized hosts that are in the format "{x}" will be ignored and the client url will be used.
   // any path like "{host}/some/path" will require host path replacement.
   // cases like "{accountName}{host}" prevent simply checking the beginning/ending of the host url.
-  if ((hostURLStr.match(/}/g) || []).length > 1 || hostURLStr[hostURLStr.length - 1] !== '}') {
+  if (!hostURLStr.match(/^\{\$?\w+\}$/)) {
     text += `\thost := "${hostURLStr}"\n`;
     // replace url parameters
     for (const pp of values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'uri'; })) {
