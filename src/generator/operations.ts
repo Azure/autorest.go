@@ -427,8 +427,7 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
   let parseVar = '';
   // hostURLStr will be used to check for the x-ms-parameterized-host functionality
   const hostURLStr = <string>op.requests![0].protocol.http!.uri;
-  // we exclude the plain host and url replacements for the host since our client constructors
-  // already include a request endpoint
+  // for parameterized hosts that only in the format {x} will be ignored and the client url will be used
   if (!((hostURLStr.match(/{/g) || []).length === 1 && (hostURLStr.match(/}/g) || []).length === 1 && hostURLStr.indexOf('{') === 0 && hostURLStr.indexOf('}') === hostURLStr.length - 1)) {
     text += `\thost := "${hostURLStr}"\n`;
     // replace url parameters
