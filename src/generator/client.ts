@@ -4,23 +4,32 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@azure-tools/autorest-extension-base';
-import { camelCase } from '@azure-tools/codegen';
-import { CodeModel, Parameter } from '@azure-tools/codemodel';
+import { CodeModel, ImplementationLocation, Parameter, Operation } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { contentPreamble, formatParameterTypeName, sortParametersByRequired } from './helpers';
+import { aggregateParameters } from '../common/helpers';
 import { ImportManager } from './imports';
 
 // generates content for client.go
 export async function generateClient(session: Session<CodeModel>): Promise<string> {
   // add standard imports
   imports.add('fmt');
-  imports.add('net/url');
   const isARM = session.model.language.go!.openApiType === 'arm';
   if (isARM) {
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/armcore');
   }
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
   imports.add('strings');
+
+  const [addParamHost, urlVar] = addParameterizedHostFunctionality(session.model.operationGroups[0].operations[0]);
+  let addEndpoint = 'endpoint string, ';
+  let passEndpoint = 'endpoint, ';
+  if (addParamHost) {
+    addEndpoint = '';
+    passEndpoint = '';
+  } else {
+    imports.add('net/url');
+  }
 
   let text = await contentPreamble(session);
   text += imports.text();
@@ -97,7 +106,13 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
     text += `// ${client} - ${session.model.info.description}\n`;
   }
   text += `type ${client} struct {\n`;
-  text += `\t${urlVar} *url.URL\n`;
+  if (addParamHost) {
+    if (urlVar.length != 0) {
+      text += `\t${urlVar} string\n`;
+    }
+  } else {
+    text += `\t${urlVar} *url.URL\n`;
+  }
   text += `\t${pipelineVar} azcore.Pipeline\n`;
   text += '}\n\n';
 
@@ -120,7 +135,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   }
 
   text += `// ${newClient} creates an instance of the ${client} type with the specified endpoint.\n`;
-  text += `func ${newClient}(endpoint string, ${credParam}options *${clientOptions}) (*${client}, error) {\n`;
+  text += `func ${newClient}(${addEndpoint}${credParam}options *${clientOptions}) (*${client}, error) {\n`;
   text += '\tif options == nil {\n';
   text += `\t\to := ${defaultClientOptions}()\n`;
   text += '\t\toptions = &o\n';
@@ -160,19 +175,24 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
     }
     text += `\t\t${logPolicy}\n`;
   }
-  text += `\treturn ${newClientWithPipeline}(endpoint, p)\n`;
+  text += `\treturn ${newClientWithPipeline}(${passEndpoint}p)\n`;
   text += '}\n\n';
 
   text += `// ${newClientWithPipeline} creates an instance of the ${client} type with the specified endpoint and pipeline.\n`;
-  text += `func ${newClientWithPipeline}(endpoint string, ${pipelineVar} azcore.Pipeline) (*${client}, error) {\n`;
-  text += `\t${urlVar}, err := url.Parse(endpoint)\n`;
-  text += '\tif err != nil {\n';
-  text += '\t\treturn nil, err\n';
-  text += '\t}\n';
-  text += `\tif ${urlVar}.Scheme == "" {\n`;
-  text += '\t\treturn nil, fmt.Errorf("no scheme detected in endpoint %s", endpoint)\n';
-  text += '\t}\n';
-  text += `\treturn &${client}{${urlVar}: ${urlVar}, ${pipelineVar}: ${pipelineVar}}, nil\n`;
+  text += `func ${newClientWithPipeline}(${addEndpoint}${pipelineVar} azcore.Pipeline) (*${client}, error) {\n`;
+  if (!addParamHost) {
+    text += `\t${urlVar}, err := url.Parse(endpoint)\n`;
+    text += '\tif err != nil {\n';
+    text += '\t\treturn nil, err\n';
+    text += '\t}\n';
+    text += `\tif ${urlVar}.Scheme == "" {\n`;
+    text += '\t\treturn nil, fmt.Errorf("no scheme detected in endpoint %s", endpoint)\n';
+    text += '\t}\n';
+    text += `\treturn &${client}{${urlVar}: ${urlVar}, ${pipelineVar}: ${pipelineVar}}, nil\n`;
+  } else {
+    text += `\treturn &${client}{${pipelineVar}: ${pipelineVar}}, nil\n`;
+  }
+
   text += '}\n\n';
 
   for (const group of values(session.model.operationGroups)) {
@@ -206,5 +226,22 @@ function getDefaultEndpoint(params?: Parameter[]) {
 
 // the list of packages to import
 const imports = new ImportManager();
-const urlVar = 'u';
 const pipelineVar = 'p';
+
+function addParameterizedHostFunctionality(op: Operation): [boolean, string] {
+  if (!(<string>op.requests![0].protocol.http!.uri).match(/^\{\$?\w+\}$/)) {
+    let methodParamsCount = 0;
+    for (const p of values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'uri'; })) {
+      if (!(p.implementation === ImplementationLocation.Client)) {
+        methodParamsCount++;
+      }
+    }
+    if (methodParamsCount > 0) {
+      return [true, ''];
+    } else {
+      // if all params are on the client then it could all be handled in the new client with pipeline
+      return [true, 'host'];
+    }
+  }
+  return [false, 'u'];
+}

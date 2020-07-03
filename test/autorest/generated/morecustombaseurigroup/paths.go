@@ -52,7 +52,7 @@ func (client *pathsOperations) getEmptyCreateRequest(vault string, secret string
 	urlPath := "/customuri/{subscriptionId}/{keyName}"
 	urlPath = strings.ReplaceAll(urlPath, "{keyName}", url.PathEscape(keyName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(host + urlPath)
+	u, err := url.Parse(host + urlPath)
 	if err != nil {
 		return nil, err
 	}

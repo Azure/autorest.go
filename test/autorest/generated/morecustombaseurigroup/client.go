@@ -8,7 +8,6 @@ package morecustombaseurigroup
 import (
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"net/url"
 	"strings"
 )
 
@@ -54,12 +53,11 @@ func (c *ClientOptions) telemetryOptions() azcore.TelemetryOptions {
 
 // Client - Test Infrastructure for AutoRest
 type Client struct {
-	u *url.URL
 	p azcore.Pipeline
 }
 
 // NewClient creates an instance of the Client type with the specified endpoint.
-func NewClient(endpoint string, options *ClientOptions) (*Client, error) {
+func NewClient(options *ClientOptions) (*Client, error) {
 	if options == nil {
 		o := DefaultClientOptions()
 		options = &o
@@ -69,19 +67,12 @@ func NewClient(endpoint string, options *ClientOptions) (*Client, error) {
 		azcore.NewUniqueRequestIDPolicy(),
 		azcore.NewRetryPolicy(&options.Retry),
 		azcore.NewRequestLogPolicy(options.LogOptions))
-	return NewClientWithPipeline(endpoint, p)
+	return NewClientWithPipeline(p)
 }
 
 // NewClientWithPipeline creates an instance of the Client type with the specified endpoint and pipeline.
-func NewClientWithPipeline(endpoint string, p azcore.Pipeline) (*Client, error) {
-	u, err := url.Parse(endpoint)
-	if err != nil {
-		return nil, err
-	}
-	if u.Scheme == "" {
-		return nil, fmt.Errorf("no scheme detected in endpoint %s", endpoint)
-	}
-	return &Client{u: u, p: p}, nil
+func NewClientWithPipeline(p azcore.Pipeline) (*Client, error) {
+	return &Client{p: p}, nil
 }
 
 // PathsOperations returns the PathsOperations associated with this client.

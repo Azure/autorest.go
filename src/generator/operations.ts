@@ -425,12 +425,14 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
   text += `func (client *${client}) ${name}(${getCreateRequestParametersSig(op)}) (${returns.join(', ')}) {\n`;
   let includeParse = false;
   let parseVar = '';
+  let paramHost = false;
   // hostURLStr will be used to check for the x-ms-parameterized-host functionality
   const hostURLStr = <string>op.requests![0].protocol.http!.uri;
   // parameterized hosts that are in the format "{x}" will be ignored and the client url will be used.
   // any path like "{host}/some/path" will require host path replacement.
   // cases like "{accountName}{host}" prevent simply checking the beginning/ending of the host url.
   if (!hostURLStr.match(/^\{\$?\w+\}$/)) {
+    paramHost = true;
     text += `\thost := "${hostURLStr}"\n`;
     // replace url parameters
     for (const pp of values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'uri'; })) {
@@ -490,7 +492,13 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
       parseVar = 'urlPath';
     }
   }
-  if (includeParse) {
+  if (paramHost) {
+    imports.add('net/url');
+    text += `\tu, err := url.Parse(${parseVar})\n`;
+    text += '\tif err != nil {\n';
+    text += '\t\treturn nil, err\n';
+    text += '\t}\n';
+  } else if (includeParse) {
     text += `\tu, err := client.u.Parse(${parseVar})\n`;
     text += '\tif err != nil {\n';
     text += '\t\treturn nil, err\n';

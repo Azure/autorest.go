@@ -14,18 +14,18 @@ import (
 )
 
 func getMoreCustomBaseURIClient(t *testing.T) morecustombaseurigroup.PathsOperations {
-	client, err := morecustombaseurigroup.NewClient("http://localhost:3000", nil)
+	client, err := morecustombaseurigroup.NewClient(nil)
 	if err != nil {
 		t.Fatalf("failed to create more custom base URL client: %v", err)
 	}
 	// dnsSuffix string, subscriptionID string
-	return client.PathsOperations("", "test12")
+	return client.PathsOperations(":3000", "test12")
 }
 
 func TestGetEmpty(t *testing.T) {
 	client := getMoreCustomBaseURIClient(t)
 	// vault string, secret string, keyName string, options *PathsGetEmptyOptions
-	result, err := client.GetEmpty(context.Background(), "", "", "key1", &morecustombaseurigroup.PathsGetEmptyOptions{
+	result, err := client.GetEmpty(context.Background(), "http://localhost", "", "key1", &morecustombaseurigroup.PathsGetEmptyOptions{
 		KeyVersion: to.StringPtr("v1"),
 	})
 	if err != nil {

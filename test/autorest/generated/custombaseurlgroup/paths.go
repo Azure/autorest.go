@@ -9,6 +9,7 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
+	"net/url"
 	"strings"
 )
 
@@ -46,7 +47,7 @@ func (client *pathsOperations) getEmptyCreateRequest(accountName string) (*azcor
 	host = strings.ReplaceAll(host, "{accountName}", accountName)
 	host = strings.ReplaceAll(host, "{host}", client.u.Host)
 	urlPath := "/customuri"
-	u, err := client.u.Parse(host + urlPath)
+	u, err := url.Parse(host + urlPath)
 	if err != nil {
 		return nil, err
 	}
