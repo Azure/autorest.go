@@ -7,7 +7,7 @@ import { camelCase, KnownMediaType, pascalCase, serialize } from '@azure-tools/c
 import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
 import { ObjectSchema, ArraySchema, ChoiceValue, codeModelSchema, CodeModel, DateTimeSchema, GroupProperty, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema } from '@azure-tools/codemodel';
 import { items, values } from '@azure-tools/linq';
-import { aggregateParameters, hasAdditionalProperties, isPageableOperation, isObjectSchema, isSchemaResponse, PagerInfo, isLROOperation, PollerInfo } from '../common/helpers';
+import { aggregateParameters, hasAdditionalProperties, isPageableOperation, isObjectSchema, isSchemaResponse, PagerInfo, isLROOperation, PollerInfo, schemaTypeToGoType } from '../common/helpers';
 import { namer, removePrefix } from './namer';
 
 // The transformer adds Go-specific information to the code model.
@@ -102,74 +102,6 @@ async function process(session: Session<CodeModel>) {
   }
 }
 
-function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolean): string {
-  switch (schema.type) {
-    case SchemaType.Any:
-      return 'interface{}';
-    case SchemaType.Array:
-      const arraySchema = <ArraySchema>schema;
-      const arrayElem = <Schema>arraySchema.elementType;
-      arrayElem.language.go!.name = schemaTypeToGoType(codeModel, arrayElem, inBody);
-      return `[]${arrayElem.language.go!.name}`;
-    case SchemaType.Binary:
-      return 'azcore.ReadSeekCloser';
-    case SchemaType.Boolean:
-      return 'bool';
-    case SchemaType.ByteArray:
-      return '[]byte';
-    case SchemaType.Constant:
-      let constSchema = <ConstantSchema>schema;
-      constSchema.valueType.language.go!.name = schemaTypeToGoType(codeModel, constSchema.valueType, inBody);
-      return constSchema.valueType.language.go!.name;
-    case SchemaType.DateTime:
-      // header/query param values are parsed separately so they don't need custom types
-      if (inBody) {
-        // add a marker to the code model indicating that we need
-        // to include support for marshalling/unmarshalling time.
-        const dateTime = <DateTimeSchema>schema;
-        if (dateTime.format === 'date-time-rfc1123') {
-          codeModel.language.go!.hasTimeRFC1123 = true;
-          schema.language.go!.internalTimeType = 'timeRFC1123';
-        } else {
-          codeModel.language.go!.hasTimeRFC3339 = true;
-          schema.language.go!.internalTimeType = 'timeRFC3339';
-        }
-      }
-    case SchemaType.Date:
-      return 'time.Time';
-    case SchemaType.UnixTime:
-      codeModel.language.go!.hasUnixTime = true;
-      if (inBody) {
-        schema.language.go!.internalTimeType = 'timeUnix';
-      }
-      return 'time.Time';
-    case SchemaType.Dictionary:
-      const dictSchema = <DictionarySchema>schema;
-      const dictElem = <Schema>dictSchema.elementType;
-      dictElem.language.go!.name = schemaTypeToGoType(codeModel, dictElem, inBody);
-      return `map[string]${dictElem.language.go!.name}`;
-    case SchemaType.Duration:
-      return 'time.Duration';
-    case SchemaType.Integer:
-      if ((<NumberSchema>schema).precision === 32) {
-        return 'int32';
-      }
-      return 'int64';
-    case SchemaType.Number:
-      if ((<NumberSchema>schema).precision === 32) {
-        return 'float32';
-      }
-      return 'float64';
-    case SchemaType.String:
-    case SchemaType.Uuid:
-      return 'string';
-    case SchemaType.Uri:
-      return 'url.URL';
-    default:
-      return schema.language.go!.name;
-  }
-}
-
 function recursiveAddMarshallingFormat(schema: Schema, marshallingFormat: 'json' | 'xml') {
   // only recurse if the schema isn't a primitive type
   const shouldRecurse = function (schema: Schema): boolean {
@@ -229,6 +161,7 @@ function processOperationRequests(session: Session<CodeModel>) {
       for (const param of values(aggregateParameters(op))) {
         // skip the host param as it's a field on the client
         if (isHostParameter(param)) {
+          param.schema.language.go!.name = schemaTypeToGoType(session.model, param.schema, false);
           continue;
         }
         // this is to work around M4 bug #202

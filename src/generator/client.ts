@@ -4,10 +4,11 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@azure-tools/autorest-extension-base';
+import { camelCase } from '@azure-tools/codegen';
 import { CodeModel, ImplementationLocation, Parameter, Operation } from '@azure-tools/codemodel';
-import { values } from '@azure-tools/linq';
-import { contentPreamble, formatParameterTypeName, sortParametersByRequired } from './helpers';
-import { aggregateParameters } from '../common/helpers';
+import { values, IterableWithLinq } from '@azure-tools/linq';
+import { contentPreamble, formatParameterTypeName, sortParametersByRequired, getCreateRequestParametersSig } from './helpers';
+import { aggregateParameters, schemaTypeToGoType } from '../common/helpers';
 import { ImportManager } from './imports';
 
 // generates content for client.go
@@ -108,7 +109,12 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   text += `type ${client} struct {\n`;
   if (addParamHost) {
     if (urlVar.length != 0) {
-      text += `\t${urlVar} string\n`;
+      for (const p of values(aggregateParameters(session.model.operationGroups[0].operations[0])).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'uri'; })) {
+        text += `\t${p.language.go!.name} ${schemaTypeToGoType(session.model, p.schema, false)}\n`;
+      }
+      [addEndpoint, passEndpoint] = createParametersSig(values(aggregateParameters(session.model.operationGroups[0].operations[0])).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'uri'; }));
+      addEndpoint += ', ';
+      passEndpoint += ', ';
     }
   } else {
     text += `\t${urlVar} *url.URL\n`;
@@ -190,7 +196,15 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
     text += '\t}\n';
     text += `\treturn &${client}{${urlVar}: ${urlVar}, ${pipelineVar}: ${pipelineVar}}, nil\n`;
   } else {
-    text += `\treturn &${client}{${pipelineVar}: ${pipelineVar}}, nil\n`;
+    if (urlVar.length != 0) {
+      text += `\tclient := &${client}{${pipelineVar}: ${pipelineVar}}\n`;
+      for (const p of values(aggregateParameters(session.model.operationGroups[0].operations[0])).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'uri'; })) {
+        text += `\tclient.${p.language.go!.name} = ${p.language.go!.name}\n`;
+      }
+      text += '\treturn client, nil\n';
+    } else {
+      text += `\treturn &${client}{${pipelineVar}: ${pipelineVar}}, nil\n`;
+    }
   }
 
   text += '}\n\n';
@@ -244,4 +258,16 @@ function addParameterizedHostFunctionality(op: Operation): [boolean, string] {
     }
   }
   return [false, 'u'];
+}
+
+// returns the parameters for the internal request creator method.
+// e.g. "i int, s string"
+export function createParametersSig(clientParams: IterableWithLinq<Parameter>): [string, string] {
+  const funcParams = new Array<string>();
+  const params = new Array<string>();
+  for (const p of values(clientParams)) {
+    funcParams.push(`${camelCase(p.language.go!.name)} ${formatParameterTypeName(p)}`);
+    params.push(camelCase(p.language.go!.name));
+  }
+  return [funcParams.join(', '), params.join(', ')];
 }
