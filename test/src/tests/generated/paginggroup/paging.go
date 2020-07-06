@@ -65,6 +65,9 @@ func (client PagingClient) GetMultiplePages(ctx context.Context, clientRequestID
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePages", resp, "Failure responding to request")
 	}
+	if result.pr.NextLink != nil && (result.pr.Values == nil || len(*result.pr.Values) == 0) {
+		err = result.NextWithContext(ctx)
+	}
 
 	return
 }
@@ -178,6 +181,9 @@ func (client PagingClient) GetMultiplePagesFailure(ctx context.Context) (result 
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePagesFailure", resp, "Failure responding to request")
 	}
+	if result.pr.NextLink != nil && (result.pr.Values == nil || len(*result.pr.Values) == 0) {
+		err = result.NextWithContext(ctx)
+	}
 
 	return
 }
@@ -275,6 +281,9 @@ func (client PagingClient) GetMultiplePagesFailureURI(ctx context.Context) (resu
 	result.pr, err = client.GetMultiplePagesFailureURIResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePagesFailureURI", resp, "Failure responding to request")
+	}
+	if result.pr.NextLink != nil && (result.pr.Values == nil || len(*result.pr.Values) == 0) {
+		err = result.NextWithContext(ctx)
 	}
 
 	return
@@ -382,6 +391,9 @@ func (client PagingClient) GetMultiplePagesFragmentNextLink(ctx context.Context,
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePagesFragmentNextLink", resp, "Failure responding to request")
 	}
+	if result.opr.OdataNextLink != nil && (result.opr.Values == nil || len(*result.opr.Values) == 0) {
+		err = result.NextWithContext(ctx)
+	}
 
 	return
 }
@@ -476,6 +488,9 @@ func (client PagingClient) GetMultiplePagesFragmentWithGroupingNextLink(ctx cont
 	result.opr, err = client.GetMultiplePagesFragmentWithGroupingNextLinkResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePagesFragmentWithGroupingNextLink", resp, "Failure responding to request")
+	}
+	if result.opr.OdataNextLink != nil && (result.opr.Values == nil || len(*result.opr.Values) == 0) {
+		err = result.NextWithContext(ctx)
 	}
 
 	return
@@ -684,6 +699,9 @@ func (client PagingClient) GetMultiplePagesRetryFirst(ctx context.Context) (resu
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePagesRetryFirst", resp, "Failure responding to request")
 	}
+	if result.pr.NextLink != nil && (result.pr.Values == nil || len(*result.pr.Values) == 0) {
+		err = result.NextWithContext(ctx)
+	}
 
 	return
 }
@@ -782,6 +800,9 @@ func (client PagingClient) GetMultiplePagesRetrySecond(ctx context.Context) (res
 	result.pr, err = client.GetMultiplePagesRetrySecondResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePagesRetrySecond", resp, "Failure responding to request")
+	}
+	if result.pr.NextLink != nil && (result.pr.Values == nil || len(*result.pr.Values) == 0) {
+		err = result.NextWithContext(ctx)
 	}
 
 	return
@@ -885,6 +906,9 @@ func (client PagingClient) GetMultiplePagesWithOffset(ctx context.Context, offse
 	result.pr, err = client.GetMultiplePagesWithOffsetResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePagesWithOffset", resp, "Failure responding to request")
+	}
+	if result.pr.NextLink != nil && (result.pr.Values == nil || len(*result.pr.Values) == 0) {
+		err = result.NextWithContext(ctx)
 	}
 
 	return
@@ -1002,6 +1026,9 @@ func (client PagingClient) GetNoItemNamePages(ctx context.Context) (result Produ
 	result.prv, err = client.GetNoItemNamePagesResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetNoItemNamePages", resp, "Failure responding to request")
+	}
+	if result.prv.NextLink != nil && (result.prv.Value == nil || len(*result.prv.Value) == 0) {
+		err = result.NextWithContext(ctx)
 	}
 
 	return
@@ -1165,6 +1192,9 @@ func (client PagingClient) GetOdataMultiplePages(ctx context.Context, clientRequ
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetOdataMultiplePages", resp, "Failure responding to request")
 	}
+	if result.opr.OdataNextLink != nil && (result.opr.Values == nil || len(*result.opr.Values) == 0) {
+		err = result.NextWithContext(ctx)
+	}
 
 	return
 }
@@ -1278,6 +1308,9 @@ func (client PagingClient) GetSinglePages(ctx context.Context) (result ProductRe
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetSinglePages", resp, "Failure responding to request")
 	}
+	if result.pr.NextLink != nil && (result.pr.Values == nil || len(*result.pr.Values) == 0) {
+		err = result.NextWithContext(ctx)
+	}
 
 	return
 }
@@ -1375,6 +1408,9 @@ func (client PagingClient) GetSinglePagesFailure(ctx context.Context) (result Pr
 	result.pr, err = client.GetSinglePagesFailureResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetSinglePagesFailure", resp, "Failure responding to request")
+	}
+	if result.pr.NextLink != nil && (result.pr.Values == nil || len(*result.pr.Values) == 0) {
+		err = result.NextWithContext(ctx)
 	}
 
 	return

@@ -157,11 +157,16 @@ func (page *OdataProductResultPage) NextWithContext(ctx context.Context) (err er
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	next, err := page.fn(ctx, page.opr)
-	if err != nil {
-		return err
+	for {
+		next, err := page.fn(ctx, page.opr)
+		if err != nil {
+			return err
+		}
+		page.opr = next
+		if next.OdataNextLink == nil || (next.Values != nil && len(*next.Values) != 0) {
+			break
+		}
 	}
-	page.opr = next
 	return nil
 }
 
@@ -230,8 +235,8 @@ func (future *PagingGetMultiplePagesLROAllFuture) Result(client PagingClient) (p
 	return
 }
 
-// PagingGetMultiplePagesLROFuture an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// PagingGetMultiplePagesLROFuture an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type PagingGetMultiplePagesLROFuture struct {
 	azure.Future
 }
@@ -376,11 +381,16 @@ func (page *ProductResultPage) NextWithContext(ctx context.Context) (err error) 
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	next, err := page.fn(ctx, page.pr)
-	if err != nil {
-		return err
+	for {
+		next, err := page.fn(ctx, page.pr)
+		if err != nil {
+			return err
+		}
+		page.pr = next
+		if next.NextLink == nil || (next.Values != nil && len(*next.Values) != 0) {
+			break
+		}
 	}
-	page.pr = next
 	return nil
 }
 
@@ -520,11 +530,16 @@ func (page *ProductResultValuePage) NextWithContext(ctx context.Context) (err er
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	next, err := page.fn(ctx, page.prv)
-	if err != nil {
-		return err
+	for {
+		next, err := page.fn(ctx, page.prv)
+		if err != nil {
+			return err
+		}
+		page.prv = next
+		if next.NextLink == nil || (next.Value != nil && len(*next.Value) != 0) {
+			break
+		}
 	}
-	page.prv = next
 	return nil
 }
 
