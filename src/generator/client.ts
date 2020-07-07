@@ -114,6 +114,9 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
     if (session.model.globalParameters) {
       const params = <Array<Parameter>>getClientOnlyParams(group, session.model.globalParameters);
       for (const param of values(params)) {
+        if (clientOnlyParams.includes(param)) {
+          continue;
+        }
         clientOnlyParams.push(param);
         clientOnlyParamsFuncSig += `${param.language.go!.name} ${formatParameterTypeName(param)}, `;
         passClientOnlyParams += `${param.language.go!.name}, `;
