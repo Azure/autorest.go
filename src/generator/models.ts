@@ -430,26 +430,26 @@ function generateDiscriminatedTypeUnmarshaller(obj: ObjectSchema, structDef: Str
   unmarshaller += '\tif err := json.Unmarshal(data, &rawMsg); err != nil {\n';
   unmarshaller += '\t\treturn err\n';
   unmarshaller += '\t}\n';
-  unmarshaller += '\tfor k, v := range rawMsg {\n';
+  unmarshaller += '\tfor key, val := range rawMsg {\n';
   unmarshaller += '\t\tvar err error\n';
-  unmarshaller += '\t\tswitch k {\n';
+  unmarshaller += '\t\tswitch key {\n';
   // unmarshal each field one by one
   for (const prop of values(structDef.Properties)) {
     if (prop.language.go!.isAdditionalProperties) {
       continue;
     }
     unmarshaller += `\t\tcase "${prop.serializedName}":\n`;
-    unmarshaller += '\t\t\tif v != nil {\n';
+    unmarshaller += '\t\t\tif val != nil {\n';
     if (prop.schema.language.go!.discriminatorInterface) {
-      unmarshaller += `\t\t\t\t${receiver}.${prop.language.go!.name}, err = unmarshal${prop.schema.language.go!.discriminatorInterface}(*v)\n`;
+      unmarshaller += `\t\t\t\t${receiver}.${prop.language.go!.name}, err = unmarshal${prop.schema.language.go!.discriminatorInterface}(*val)\n`;
     } else if (isArraySchema(prop.schema) && prop.schema.elementType.language.go!.discriminatorInterface) {
-      unmarshaller += `\t\t\t\t${receiver}.${prop.language.go!.name}, err = unmarshal${prop.schema.elementType.language.go!.discriminatorInterface}Array(*v)\n`;
+      unmarshaller += `\t\t\t\t${receiver}.${prop.language.go!.name}, err = unmarshal${prop.schema.elementType.language.go!.discriminatorInterface}Array(*val)\n`;
     } else if (prop.schema.language.go!.internalTimeType) {
       unmarshaller += `\t\t\t\tvar aux ${prop.schema.language.go!.internalTimeType}\n`;
-      unmarshaller += '\t\t\t\terr = json.Unmarshal(*v, &aux)\n';
+      unmarshaller += '\t\t\t\terr = json.Unmarshal(*val, &aux)\n';
       unmarshaller += `\t\t\t\t${receiver}.${prop.language.go!.name} = (*time.Time)(&aux)\n`;
     } else {
-      unmarshaller += `\t\t\t\terr = json.Unmarshal(*v, &${receiver}.${prop.language.go!.name})\n`;
+      unmarshaller += `\t\t\t\terr = json.Unmarshal(*val, &${receiver}.${prop.language.go!.name})\n`;
     }
     unmarshaller += '\t\t\t}\n';
   }
@@ -589,8 +589,8 @@ function generateAdditionalPropertiesMarshaller(structDef: StructDef, parentType
     marshaller += emitMarshaller(prop);
   }
   marshaller += `\tif ${receiver}.AdditionalProperties != nil {\n`;
-  marshaller += `\t\tfor k, v := range *${receiver}.AdditionalProperties {\n`;
-  marshaller += '\t\t\tobjectMap[k] = v\n';
+  marshaller += `\t\tfor key, val := range *${receiver}.AdditionalProperties {\n`;
+  marshaller += '\t\t\tobjectMap[key] = val\n';
   marshaller += '\t\t}\n';;
   marshaller += '\t}\n';
   marshaller += '\treturn json.Marshal(objectMap)\n';
@@ -607,13 +607,13 @@ function generateAdditionalPropertiesUnmarshaller(structDef: StructDef, elementT
   unmarshaller += '\tif err := json.Unmarshal(data, &rawMsg); err != nil {\n';
   unmarshaller += '\t\treturn err\n';
   unmarshaller += '\t}\n';
-  unmarshaller += '\tfor k, v := range rawMsg {\n';
+  unmarshaller += '\tfor key, val := range rawMsg {\n';
   unmarshaller += '\t\tvar err error\n';
-  unmarshaller += '\t\tswitch k {\n';
+  unmarshaller += '\t\tswitch key {\n';
   const emitUnmarshaller = function (prop: Property): string {
     let text = `\t\tcase "${prop.serializedName}":\n`;
-    text += '\t\t\tif v != nil {\n';
-    text += `\t\t\t\terr = json.Unmarshal(*v, &${receiver}.${prop.language.go!.name})\n`;
+    text += '\t\t\tif val != nil {\n';
+    text += `\t\t\t\terr = json.Unmarshal(*val, &${receiver}.${prop.language.go!.name})\n`;
     text += '\t\t\t}\n';
     return text;
   }
@@ -634,10 +634,10 @@ function generateAdditionalPropertiesUnmarshaller(structDef: StructDef, elementT
   unmarshaller += `\t\t\tif ${receiver}.AdditionalProperties == nil {\n`;
   unmarshaller += `\t\t\t\t${receiver}.AdditionalProperties = &map[string]${elementType.language.go!.name}{}\n`;
   unmarshaller += '\t\t\t}\n';
-  unmarshaller += '\t\t\tif v != nil {\n';
+  unmarshaller += '\t\t\tif val != nil {\n';
   unmarshaller += `\t\t\t\tvar aux ${elementType.language.go!.name}\n`;
-  unmarshaller += '\t\t\t\terr = json.Unmarshal(*v, &aux)\n';
-  unmarshaller += `\t\t\t\t(*${receiver}.AdditionalProperties)[k] = aux\n`;
+  unmarshaller += '\t\t\t\terr = json.Unmarshal(*val, &aux)\n';
+  unmarshaller += `\t\t\t\t(*${receiver}.AdditionalProperties)[key] = aux\n`;
   unmarshaller += '\t\t\t}\n';
   unmarshaller += '\t\t}\n';
   unmarshaller += '\t\tif err != nil {\n';

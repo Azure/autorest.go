@@ -842,6 +842,7 @@ function getRootDiscriminator(obj: ObjectSchema): ObjectSchema {
       if (isObjectSchema(parent) && parent.discriminator) {
         root.language.go!.discriminatorParent = parent.language.go!.discriminatorInterface;
         root = parent;
+        obj = root;
       }
     }
     if (root === obj) {

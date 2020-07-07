@@ -225,16 +225,16 @@ func (d *DotFish) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	for k, v := range rawMsg {
+	for key, val := range rawMsg {
 		var err error
-		switch k {
+		switch key {
 		case "fish.type":
-			if v != nil {
-				err = json.Unmarshal(*v, &d.FishType)
+			if val != nil {
+				err = json.Unmarshal(*val, &d.FishType)
 			}
 		case "species":
-			if v != nil {
-				err = json.Unmarshal(*v, &d.Species)
+			if val != nil {
+				err = json.Unmarshal(*val, &d.Species)
 			}
 		}
 		if err != nil {
@@ -267,24 +267,24 @@ func (d *DotFishMarket) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	for k, v := range rawMsg {
+	for key, val := range rawMsg {
 		var err error
-		switch k {
+		switch key {
 		case "fishes":
-			if v != nil {
-				d.Fishes, err = unmarshalDotFishClassificationArray(*v)
+			if val != nil {
+				d.Fishes, err = unmarshalDotFishClassificationArray(*val)
 			}
 		case "salmons":
-			if v != nil {
-				err = json.Unmarshal(*v, &d.Salmons)
+			if val != nil {
+				err = json.Unmarshal(*val, &d.Salmons)
 			}
 		case "sampleFish":
-			if v != nil {
-				d.SampleFish, err = unmarshalDotFishClassification(*v)
+			if val != nil {
+				d.SampleFish, err = unmarshalDotFishClassification(*val)
 			}
 		case "sampleSalmon":
-			if v != nil {
-				err = json.Unmarshal(*v, &d.SampleSalmon)
+			if val != nil {
+				err = json.Unmarshal(*val, &d.SampleSalmon)
 			}
 		}
 		if err != nil {
@@ -344,16 +344,16 @@ func (d *DotSalmon) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	for k, v := range rawMsg {
+	for key, val := range rawMsg {
 		var err error
-		switch k {
+		switch key {
 		case "iswild":
-			if v != nil {
-				err = json.Unmarshal(*v, &d.Iswild)
+			if val != nil {
+				err = json.Unmarshal(*val, &d.Iswild)
 			}
 		case "location":
-			if v != nil {
-				err = json.Unmarshal(*v, &d.Location)
+			if val != nil {
+				err = json.Unmarshal(*val, &d.Location)
 			}
 		}
 		if err != nil {
@@ -429,24 +429,24 @@ func (f *Fish) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	for k, v := range rawMsg {
+	for key, val := range rawMsg {
 		var err error
-		switch k {
+		switch key {
 		case "fishtype":
-			if v != nil {
-				err = json.Unmarshal(*v, &f.Fishtype)
+			if val != nil {
+				err = json.Unmarshal(*val, &f.Fishtype)
 			}
 		case "length":
-			if v != nil {
-				err = json.Unmarshal(*v, &f.Length)
+			if val != nil {
+				err = json.Unmarshal(*val, &f.Length)
 			}
 		case "siblings":
-			if v != nil {
-				f.Siblings, err = unmarshalFishClassificationArray(*v)
+			if val != nil {
+				f.Siblings, err = unmarshalFishClassificationArray(*val)
 			}
 		case "species":
-			if v != nil {
-				err = json.Unmarshal(*v, &f.Species)
+			if val != nil {
+				err = json.Unmarshal(*val, &f.Species)
 			}
 		}
 		if err != nil {
@@ -528,16 +528,16 @@ func (g *Goblinshark) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	for k, v := range rawMsg {
+	for key, val := range rawMsg {
 		var err error
-		switch k {
+		switch key {
 		case "color":
-			if v != nil {
-				err = json.Unmarshal(*v, &g.Color)
+			if val != nil {
+				err = json.Unmarshal(*val, &g.Color)
 			}
 		case "jawsize":
-			if v != nil {
-				err = json.Unmarshal(*v, &g.Jawsize)
+			if val != nil {
+				err = json.Unmarshal(*val, &g.Jawsize)
 			}
 		}
 		if err != nil {
@@ -597,20 +597,20 @@ func (m *MyBaseType) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	for k, v := range rawMsg {
+	for key, val := range rawMsg {
 		var err error
-		switch k {
+		switch key {
 		case "helper":
-			if v != nil {
-				err = json.Unmarshal(*v, &m.Helper)
+			if val != nil {
+				err = json.Unmarshal(*val, &m.Helper)
 			}
 		case "kind":
-			if v != nil {
-				err = json.Unmarshal(*v, &m.Kind)
+			if val != nil {
+				err = json.Unmarshal(*val, &m.Kind)
 			}
 		case "propB1":
-			if v != nil {
-				err = json.Unmarshal(*v, &m.PropB1)
+			if val != nil {
+				err = json.Unmarshal(*val, &m.PropB1)
 			}
 		}
 		if err != nil {
@@ -671,12 +671,12 @@ func (m *MyDerivedType) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	for k, v := range rawMsg {
+	for key, val := range rawMsg {
 		var err error
-		switch k {
+		switch key {
 		case "propD1":
-			if v != nil {
-				err = json.Unmarshal(*v, &m.PropD1)
+			if val != nil {
+				err = json.Unmarshal(*val, &m.PropD1)
 			}
 		}
 		if err != nil {
@@ -736,16 +736,16 @@ func (s *Salmon) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	for k, v := range rawMsg {
+	for key, val := range rawMsg {
 		var err error
-		switch k {
+		switch key {
 		case "iswild":
-			if v != nil {
-				err = json.Unmarshal(*v, &s.Iswild)
+			if val != nil {
+				err = json.Unmarshal(*val, &s.Iswild)
 			}
 		case "location":
-			if v != nil {
-				err = json.Unmarshal(*v, &s.Location)
+			if val != nil {
+				err = json.Unmarshal(*val, &s.Location)
 			}
 		}
 		if err != nil {
@@ -803,12 +803,12 @@ func (s *Sawshark) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	for k, v := range rawMsg {
+	for key, val := range rawMsg {
 		var err error
-		switch k {
+		switch key {
 		case "picture":
-			if v != nil {
-				err = json.Unmarshal(*v, &s.Picture)
+			if val != nil {
+				err = json.Unmarshal(*val, &s.Picture)
 			}
 		}
 		if err != nil {
@@ -851,17 +851,17 @@ func (s *Shark) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	for k, v := range rawMsg {
+	for key, val := range rawMsg {
 		var err error
-		switch k {
+		switch key {
 		case "age":
-			if v != nil {
-				err = json.Unmarshal(*v, &s.Age)
+			if val != nil {
+				err = json.Unmarshal(*val, &s.Age)
 			}
 		case "birthday":
-			if v != nil {
+			if val != nil {
 				var aux timeRFC3339
-				err = json.Unmarshal(*v, &aux)
+				err = json.Unmarshal(*val, &aux)
 				s.Birthday = (*time.Time)(&aux)
 			}
 		}
@@ -917,12 +917,12 @@ func (s *SmartSalmon) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	for k, v := range rawMsg {
+	for key, val := range rawMsg {
 		var err error
-		switch k {
+		switch key {
 		case "college_degree":
-			if v != nil {
-				err = json.Unmarshal(*v, &s.CollegeDegree)
+			if val != nil {
+				err = json.Unmarshal(*val, &s.CollegeDegree)
 			}
 		}
 		if err != nil {
