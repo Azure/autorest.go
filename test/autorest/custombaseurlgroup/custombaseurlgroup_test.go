@@ -12,7 +12,7 @@ import (
 )
 
 func getCustomBaseURLClient(t *testing.T) custombaseurlgroup.PathsOperations {
-	client, err := custombaseurlgroup.NewClient("http://localhost:3000", nil)
+	client, err := custombaseurlgroup.NewClient(":3000", nil)
 	if err != nil {
 		t.Fatalf("failed to create custom base URL client: %v", err)
 	}
@@ -21,7 +21,7 @@ func getCustomBaseURLClient(t *testing.T) custombaseurlgroup.PathsOperations {
 
 func TestGetEmpty(t *testing.T) {
 	client := getCustomBaseURLClient(t)
-	result, err := client.GetEmpty(context.Background(), "")
+	result, err := client.GetEmpty(context.Background(), "localhost")
 	if err != nil {
 		t.Fatalf("GetEmpty: %v", err)
 	}

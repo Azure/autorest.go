@@ -69,12 +69,12 @@ func NewClient(host string, options *ClientOptions) (*Client, error) {
 		azcore.NewUniqueRequestIDPolicy(),
 		azcore.NewRetryPolicy(&options.Retry),
 		azcore.NewRequestLogPolicy(options.LogOptions))
-	return NewClientWithPipeline(p)
+	return NewClientWithPipeline(host, p)
 }
 
 // NewClientWithPipeline creates an instance of the Client type with the specified endpoint and pipeline.
 func NewClientWithPipeline(host string, p azcore.Pipeline) (*Client, error) {
-	var client *Client
+	client := &Client{}
 	client.p = p
 	client.host = host
 	return client, nil

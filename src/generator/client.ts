@@ -21,7 +21,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   }
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
   imports.add('strings');
-
+  // initialize variables necessary for adding parameterized host related variables and functionality for the client
   const [addParamHost, urlVar] = addParameterizedHostFunctionality(session.model.operationGroups[0].operations[0]);
   let addEndpoint = 'endpoint string, ';
   let passEndpoint = 'endpoint, ';
@@ -106,19 +106,24 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   if (session.model.info.description) {
     text += `// ${client} - ${session.model.info.description}\n`;
   }
+  // initialize clientOnlyParams in order to use them in client parameter declarations and assign values for the defaults later on
   const clientOnlyParams = new Array<Parameter>();
   let clientOnlyParamsFuncSig = '';
+  let passClientOnlyParams = '';
   for (const group of values(session.model.operationGroups)) {
     if (session.model.globalParameters) {
       const params = <Array<Parameter>>getClientOnlyParams(group, session.model.globalParameters);
       for (const param of values(params)) {
         clientOnlyParams.push(param);
         clientOnlyParamsFuncSig += `${param.language.go!.name} ${formatParameterTypeName(param)}, `;
+        passClientOnlyParams += `${param.language.go!.name}, `;
       }
     }
   }
+  // if the parameterized host functionality is not going to be implemented then wipe client only paramter settings
   if (!addParamHost) {
     clientOnlyParamsFuncSig = '';
+    passClientOnlyParams = '';
   }
   text += `type ${client} struct {\n`;
   if (addParamHost) {
@@ -212,7 +217,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
     }
     text += `\t\t${logPolicy}\n`;
   }
-  text += `\treturn ${newClientWithPipeline}(${passEndpoint}p)\n`;
+  text += `\treturn ${newClientWithPipeline}(${passClientOnlyParams}${passEndpoint}p)\n`;
   text += '}\n\n';
 
   text += `// ${newClientWithPipeline} creates an instance of the ${client} type with the specified endpoint and pipeline.\n`;
@@ -226,24 +231,17 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
     text += '\t\treturn nil, fmt.Errorf("no scheme detected in endpoint %s", endpoint)\n';
     text += '\t}\n';
     text += `\treturn &${client}{${urlVar}: ${urlVar}, ${pipelineVar}: ${pipelineVar}}, nil\n`;
-  } else {
-    if (urlVar.length != 0 || clientOnlyParams.length > 0) {
-      text += `\tvar client *${client}\n`;
-      text += `\tclient.${pipelineVar} = ${pipelineVar}\n`;
-      if (urlVar.length != 0) {
-        for (const p of values(aggregateParameters(session.model.operationGroups[0].operations[0])).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'uri'; })) {
-          text += `\tclient.${p.language.go!.name} = ${p.language.go!.name}\n`;
-        }
+  } else if (clientOnlyParams.length > 0) {
+    text += `\tclient := &${client}{}\n`;
+    text += `\tclient.${pipelineVar} = ${pipelineVar}\n`;
+    for (const param of values(clientOnlyParams)) {
+      if (param.clientDefaultValue !== undefined) {
+        text += `\tclient.${param.language.go!.name} = ${param.language.go!.name}\n`;
       }
-      for (const param of values(clientOnlyParams)) {
-        if (param.clientDefaultValue !== undefined) {
-          text += `\tclient.${param.language.go!.name} = ${param.language.go!.name}\n`;
-        }
-      }
-      text += '\treturn client, nil\n';
-    } else {
-      text += `\treturn &${client}{${pipelineVar}: ${pipelineVar}}, nil\n`;
     }
+    text += '\treturn client, nil\n';
+  } else {
+    text += `\treturn &${client}{${pipelineVar}: ${pipelineVar}}, nil\n`;
   }
 
   text += '}\n\n';
