@@ -107,6 +107,10 @@ else
             return @(receiverVar).@itemName == nil || len(*@(receiverVar).@itemName) == 0
             }
             @EmptyLine
+            // hasNextLink returns true if the NextLink is not empty.
+            func (@receiverVar @contentType) hasNextLink() bool {
+            return @(receiverVar).@(pageType.NextLink) != nil && len(*@(receiverVar).@(pageType.NextLink)) != 0
+            }
         </text>
         if (pageType.PreparerNeeded)
         {
@@ -114,7 +118,7 @@ else
                 // @(pageType.PreparerMethodName) prepares a request to retrieve the next set of results.
                 // It returns nil if no more results exist.
                 func (@receiverVar @contentType) @(pageType.PreparerMethodName)(ctx context.Context) (*http.Request, error) {
-                if @(receiverVar).@(pageType.NextLink) == nil || len(to.String(@(receiverVar).@(pageType.NextLink))) < 1 {
+                if !@(receiverVar).hasNextLink() {
                 return nil, nil
                 }
                 return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -377,7 +381,7 @@ if (modelType is DictionaryTypeGo dictionaryType && dictionaryType.SupportsAddit
             return err
             }
             page.@modelPageType.ResultFieldName = next
-            if next.@(modelPageType.NextLink) == nil || (next.@itemName != nil && len(*next.@itemName) != 0) {
+            if !next.hasNextLink() || !next.IsEmpty() {
                 break
             }
         }

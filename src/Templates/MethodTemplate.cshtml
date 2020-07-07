@@ -130,7 +130,7 @@ else
         // skip the empty pages in pagination method
         var pagableType = Model.ReturnType.Body.Cast<CompositeTypeGo>().UnwrapPageType();
         <text>
-            if (@(Model.ResponseAssignTarget).@(pagableType.NextLink) != nil && (@(Model.ResponseAssignTarget).@(pagableType.ItemName) == nil || len(*@(Model.ResponseAssignTarget).@(pagableType.ItemName)) == 0)) {
+            if @(Model.ResponseAssignTarget).hasNextLink() && @(Model.ResponseAssignTarget).IsEmpty() {
             err = result.NextWithContext(ctx)
             }
         </text>

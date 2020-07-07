@@ -126,10 +126,15 @@ func (opr OdataProductResult) IsEmpty() bool {
 	return opr.Values == nil || len(*opr.Values) == 0
 }
 
+// hasNextLink returns true if the NextLink is not empty.
+func (opr OdataProductResult) hasNextLink() bool {
+	return opr.OdataNextLink != nil && len(*opr.OdataNextLink) != 0
+}
+
 // odataProductResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (opr OdataProductResult) odataProductResultPreparer(ctx context.Context) (*http.Request, error) {
-	if opr.OdataNextLink == nil || len(to.String(opr.OdataNextLink)) < 1 {
+	if !opr.hasNextLink() {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -163,7 +168,7 @@ func (page *OdataProductResultPage) NextWithContext(ctx context.Context) (err er
 			return err
 		}
 		page.opr = next
-		if next.OdataNextLink == nil || (next.Values != nil && len(*next.Values) != 0) {
+		if !next.hasNextLink() || !next.IsEmpty() {
 			break
 		}
 	}
@@ -350,10 +355,15 @@ func (pr ProductResult) IsEmpty() bool {
 	return pr.Values == nil || len(*pr.Values) == 0
 }
 
+// hasNextLink returns true if the NextLink is not empty.
+func (pr ProductResult) hasNextLink() bool {
+	return pr.NextLink != nil && len(*pr.NextLink) != 0
+}
+
 // productResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (pr ProductResult) productResultPreparer(ctx context.Context) (*http.Request, error) {
-	if pr.NextLink == nil || len(to.String(pr.NextLink)) < 1 {
+	if !pr.hasNextLink() {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -387,7 +397,7 @@ func (page *ProductResultPage) NextWithContext(ctx context.Context) (err error) 
 			return err
 		}
 		page.pr = next
-		if next.NextLink == nil || (next.Values != nil && len(*next.Values) != 0) {
+		if !next.hasNextLink() || !next.IsEmpty() {
 			break
 		}
 	}
@@ -499,10 +509,15 @@ func (prv ProductResultValue) IsEmpty() bool {
 	return prv.Value == nil || len(*prv.Value) == 0
 }
 
+// hasNextLink returns true if the NextLink is not empty.
+func (prv ProductResultValue) hasNextLink() bool {
+	return prv.NextLink != nil && len(*prv.NextLink) != 0
+}
+
 // productResultValuePreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
 func (prv ProductResultValue) productResultValuePreparer(ctx context.Context) (*http.Request, error) {
-	if prv.NextLink == nil || len(to.String(prv.NextLink)) < 1 {
+	if !prv.hasNextLink() {
 		return nil, nil
 	}
 	return autorest.Prepare((&http.Request{}).WithContext(ctx),
@@ -536,7 +551,7 @@ func (page *ProductResultValuePage) NextWithContext(ctx context.Context) (err er
 			return err
 		}
 		page.prv = next
-		if next.NextLink == nil || (next.Value != nil && len(*next.Value) != 0) {
+		if !next.hasNextLink() || !next.IsEmpty() {
 			break
 		}
 	}

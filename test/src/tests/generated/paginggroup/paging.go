@@ -65,7 +65,7 @@ func (client PagingClient) GetMultiplePages(ctx context.Context, clientRequestID
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePages", resp, "Failure responding to request")
 	}
-	if result.pr.NextLink != nil && (result.pr.Values == nil || len(*result.pr.Values) == 0) {
+	if result.pr.hasNextLink() && result.pr.IsEmpty() {
 		err = result.NextWithContext(ctx)
 	}
 
@@ -181,7 +181,7 @@ func (client PagingClient) GetMultiplePagesFailure(ctx context.Context) (result 
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePagesFailure", resp, "Failure responding to request")
 	}
-	if result.pr.NextLink != nil && (result.pr.Values == nil || len(*result.pr.Values) == 0) {
+	if result.pr.hasNextLink() && result.pr.IsEmpty() {
 		err = result.NextWithContext(ctx)
 	}
 
@@ -282,7 +282,7 @@ func (client PagingClient) GetMultiplePagesFailureURI(ctx context.Context) (resu
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePagesFailureURI", resp, "Failure responding to request")
 	}
-	if result.pr.NextLink != nil && (result.pr.Values == nil || len(*result.pr.Values) == 0) {
+	if result.pr.hasNextLink() && result.pr.IsEmpty() {
 		err = result.NextWithContext(ctx)
 	}
 
@@ -391,7 +391,7 @@ func (client PagingClient) GetMultiplePagesFragmentNextLink(ctx context.Context,
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePagesFragmentNextLink", resp, "Failure responding to request")
 	}
-	if result.opr.OdataNextLink != nil && (result.opr.Values == nil || len(*result.opr.Values) == 0) {
+	if result.opr.hasNextLink() && result.opr.IsEmpty() {
 		err = result.NextWithContext(ctx)
 	}
 
@@ -489,7 +489,7 @@ func (client PagingClient) GetMultiplePagesFragmentWithGroupingNextLink(ctx cont
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePagesFragmentWithGroupingNextLink", resp, "Failure responding to request")
 	}
-	if result.opr.OdataNextLink != nil && (result.opr.Values == nil || len(*result.opr.Values) == 0) {
+	if result.opr.hasNextLink() && result.opr.IsEmpty() {
 		err = result.NextWithContext(ctx)
 	}
 
@@ -699,7 +699,7 @@ func (client PagingClient) GetMultiplePagesRetryFirst(ctx context.Context) (resu
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePagesRetryFirst", resp, "Failure responding to request")
 	}
-	if result.pr.NextLink != nil && (result.pr.Values == nil || len(*result.pr.Values) == 0) {
+	if result.pr.hasNextLink() && result.pr.IsEmpty() {
 		err = result.NextWithContext(ctx)
 	}
 
@@ -801,7 +801,7 @@ func (client PagingClient) GetMultiplePagesRetrySecond(ctx context.Context) (res
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePagesRetrySecond", resp, "Failure responding to request")
 	}
-	if result.pr.NextLink != nil && (result.pr.Values == nil || len(*result.pr.Values) == 0) {
+	if result.pr.hasNextLink() && result.pr.IsEmpty() {
 		err = result.NextWithContext(ctx)
 	}
 
@@ -907,7 +907,7 @@ func (client PagingClient) GetMultiplePagesWithOffset(ctx context.Context, offse
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePagesWithOffset", resp, "Failure responding to request")
 	}
-	if result.pr.NextLink != nil && (result.pr.Values == nil || len(*result.pr.Values) == 0) {
+	if result.pr.hasNextLink() && result.pr.IsEmpty() {
 		err = result.NextWithContext(ctx)
 	}
 
@@ -1027,7 +1027,7 @@ func (client PagingClient) GetNoItemNamePages(ctx context.Context) (result Produ
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetNoItemNamePages", resp, "Failure responding to request")
 	}
-	if result.prv.NextLink != nil && (result.prv.Value == nil || len(*result.prv.Value) == 0) {
+	if result.prv.hasNextLink() && result.prv.IsEmpty() {
 		err = result.NextWithContext(ctx)
 	}
 
@@ -1192,7 +1192,7 @@ func (client PagingClient) GetOdataMultiplePages(ctx context.Context, clientRequ
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetOdataMultiplePages", resp, "Failure responding to request")
 	}
-	if result.opr.OdataNextLink != nil && (result.opr.Values == nil || len(*result.opr.Values) == 0) {
+	if result.opr.hasNextLink() && result.opr.IsEmpty() {
 		err = result.NextWithContext(ctx)
 	}
 
@@ -1308,7 +1308,7 @@ func (client PagingClient) GetSinglePages(ctx context.Context) (result ProductRe
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetSinglePages", resp, "Failure responding to request")
 	}
-	if result.pr.NextLink != nil && (result.pr.Values == nil || len(*result.pr.Values) == 0) {
+	if result.pr.hasNextLink() && result.pr.IsEmpty() {
 		err = result.NextWithContext(ctx)
 	}
 
@@ -1409,7 +1409,7 @@ func (client PagingClient) GetSinglePagesFailure(ctx context.Context) (result Pr
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetSinglePagesFailure", resp, "Failure responding to request")
 	}
-	if result.pr.NextLink != nil && (result.pr.Values == nil || len(*result.pr.Values) == 0) {
+	if result.pr.hasNextLink() && result.pr.IsEmpty() {
 		err = result.NextWithContext(ctx)
 	}
 
