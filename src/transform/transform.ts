@@ -842,6 +842,11 @@ function getRootDiscriminator(obj: ObjectSchema): ObjectSchema {
       if (isObjectSchema(parent) && parent.discriminator) {
         root.language.go!.discriminatorParent = parent.language.go!.discriminatorInterface;
         root = parent;
+        // update obj with the new root.  this enables us to detect the case
+        // where the parent of the new root isn't a discriminator.  consider
+        // the case of child <- parent <- non-discriminator parent.  without
+        // updating obj we can't detect the parent's non-discriminator as
+        // root would always !== obj so the below check is always false.
         obj = root;
       }
     }
