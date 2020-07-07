@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@azure-tools/autorest-extension-base';
-import { comment, KnownMediaType, pascalCase, camelCase } from '@azure-tools/codegen'
+import { comment, KnownMediaType, pascalCase, camelCase } from '@azure-tools/codegen';
 import { ArraySchema, ByteArraySchema, CodeModel, ConstantSchema, DateTimeSchema, DictionarySchema, GroupProperty, ImplementationLocation, NumberSchema, Operation, OperationGroup, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType, SerializationStyle } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { aggregateParameters, isArraySchema, isPageableOperation, isSchemaResponse, PagerInfo, isLROOperation } from '../common/helpers';
@@ -45,7 +45,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       // protocol creation can add imports to the list so
       // it must be done before the imports are written out
       opText += generateOperation(clientName, op, imports);
-      opText += createProtocolRequest(clientName, op, imports);
+      opText += createProtocolRequest(clientName, op, group, imports);
       opText += createProtocolResponse(clientName, op, imports);
       opText += createProtocolErrHandler(clientName, op, imports);
     }
@@ -411,7 +411,7 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
   return text;
 }
 
-function createProtocolRequest(client: string, op: Operation, imports: ImportManager): string {
+function createProtocolRequest(client: string, op: Operation, group: OperationGroup, imports: ImportManager): string {
   const info = <OperationNaming>op.language.go!;
   const name = info.protocolNaming.requestMethod;
   for (const param of values(aggregateParameters(op))) {
@@ -439,8 +439,8 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
       imports.add('strings');
       // host references may be found among other variables and therefore call to use the host 
       // specified by the endpoint the client was created with
-      if (pp.language.go!.name === 'host') {
-        text += `\thost = strings.ReplaceAll(host, "{host}", client.u.Host)\n`;
+      if ((pp.implementation === ImplementationLocation.Client && group.language.go!.clientParams === undefined) || (pp.implementation === ImplementationLocation.Client && !(<Array<Parameter>>group.language.go!.clientParams).includes(pp))) {
+        text += `\thost = strings.ReplaceAll(host, "{${pp.language.go!.serializedName}}", client.Client.${pp.language.go!.serializedName})\n`;
       } else {
         let paramValue = `url.PathEscape(${formatParamValue(pp, imports)})`;
         if (skipURLEncoding(pp)) {

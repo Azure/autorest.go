@@ -7,8 +7,9 @@ package custombaseurlgroup
 
 import (
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"strings"
+
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
 const telemetryInfo = "azsdk-go-custombaseurlgroup/<version>"
@@ -53,11 +54,12 @@ func (c *ClientOptions) telemetryOptions() azcore.TelemetryOptions {
 
 // Client - Test Infrastructure for AutoRest
 type Client struct {
-	p azcore.Pipeline
+	host string
+	p    azcore.Pipeline
 }
 
 // NewClient creates an instance of the Client type with the specified endpoint.
-func NewClient(options *ClientOptions) (*Client, error) {
+func NewClient(host string, options *ClientOptions) (*Client, error) {
 	if options == nil {
 		o := DefaultClientOptions()
 		options = &o
@@ -71,8 +73,11 @@ func NewClient(options *ClientOptions) (*Client, error) {
 }
 
 // NewClientWithPipeline creates an instance of the Client type with the specified endpoint and pipeline.
-func NewClientWithPipeline(p azcore.Pipeline) (*Client, error) {
-	return &Client{p: p}, nil
+func NewClientWithPipeline(host string, p azcore.Pipeline) (*Client, error) {
+	var client *Client
+	client.p = p
+	client.host = host
+	return client, nil
 }
 
 // PathsOperations returns the PathsOperations associated with this client.

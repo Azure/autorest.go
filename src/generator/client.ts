@@ -5,7 +5,7 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { camelCase } from '@azure-tools/codegen';
-import { CodeModel, ImplementationLocation, Parameter, Operation } from '@azure-tools/codemodel';
+import { CodeModel, ImplementationLocation, Parameter, Operation, OperationGroup } from '@azure-tools/codemodel';
 import { values, IterableWithLinq } from '@azure-tools/linq';
 import { contentPreamble, formatParameterTypeName, sortParametersByRequired, getCreateRequestParametersSig } from './helpers';
 import { aggregateParameters, schemaTypeToGoType } from '../common/helpers';
@@ -106,6 +106,20 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   if (session.model.info.description) {
     text += `// ${client} - ${session.model.info.description}\n`;
   }
+  const clientOnlyParams = new Array<Parameter>();
+  let clientOnlyParamsFuncSig = '';
+  for (const group of values(session.model.operationGroups)) {
+    if (session.model.globalParameters) {
+      const params = <Array<Parameter>>getClientOnlyParams(group, session.model.globalParameters);
+      for (const param of values(params)) {
+        clientOnlyParams.push(param);
+        clientOnlyParamsFuncSig += `${param.language.go!.name} ${formatParameterTypeName(param)}, `;
+      }
+    }
+  }
+  if (!addParamHost) {
+    clientOnlyParamsFuncSig = '';
+  }
   text += `type ${client} struct {\n`;
   if (addParamHost) {
     if (urlVar.length != 0) {
@@ -115,6 +129,11 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
       [addEndpoint, passEndpoint] = createParametersSig(values(aggregateParameters(session.model.operationGroups[0].operations[0])).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'uri'; }));
       addEndpoint += ', ';
       passEndpoint += ', ';
+    }
+    if (clientOnlyParams.length > 0) {
+      for (const param of values(clientOnlyParams)) {
+        text += `\t${param.language.go!.name} ${schemaTypeToGoType(session.model, param.schema, false)}\n`;
+      }
     }
   } else {
     text += `\t${urlVar} *url.URL\n`;
@@ -136,12 +155,24 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
     if (!session.model.security.authenticationRequired) {
       cred = '';
     }
-    text += `\treturn ${newClient}(${defaultEndpoint}, ${cred}options)\n`;
+    if (addParamHost) {
+      text += `\treturn ${newClient}(`;
+      for (const param of values(clientOnlyParams)) {
+        if (param.clientDefaultValue !== undefined) {
+          text += `"${param.clientDefaultValue}", `;
+        } else {
+          text += '"", ';
+        }
+      }
+      text += `${cred}options)\n`;
+    } else {
+      text += `\treturn ${newClient}(${defaultEndpoint}, ${cred}options)\n`;
+    }
     text += '}\n\n';
   }
 
   text += `// ${newClient} creates an instance of the ${client} type with the specified endpoint.\n`;
-  text += `func ${newClient}(${addEndpoint}${credParam}options *${clientOptions}) (*${client}, error) {\n`;
+  text += `func ${newClient}(${clientOnlyParamsFuncSig}${addEndpoint}${credParam}options *${clientOptions}) (*${client}, error) {\n`;
   text += '\tif options == nil {\n';
   text += `\t\to := ${defaultClientOptions}()\n`;
   text += '\t\toptions = &o\n';
@@ -185,7 +216,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   text += '}\n\n';
 
   text += `// ${newClientWithPipeline} creates an instance of the ${client} type with the specified endpoint and pipeline.\n`;
-  text += `func ${newClientWithPipeline}(${addEndpoint}${pipelineVar} azcore.Pipeline) (*${client}, error) {\n`;
+  text += `func ${newClientWithPipeline}(${clientOnlyParamsFuncSig}${addEndpoint}${pipelineVar} azcore.Pipeline) (*${client}, error) {\n`;
   if (!addParamHost) {
     text += `\t${urlVar}, err := url.Parse(endpoint)\n`;
     text += '\tif err != nil {\n';
@@ -196,10 +227,18 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
     text += '\t}\n';
     text += `\treturn &${client}{${urlVar}: ${urlVar}, ${pipelineVar}: ${pipelineVar}}, nil\n`;
   } else {
-    if (urlVar.length != 0) {
-      text += `\tclient := &${client}{${pipelineVar}: ${pipelineVar}}\n`;
-      for (const p of values(aggregateParameters(session.model.operationGroups[0].operations[0])).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'uri'; })) {
-        text += `\tclient.${p.language.go!.name} = ${p.language.go!.name}\n`;
+    if (urlVar.length != 0 || clientOnlyParams.length > 0) {
+      text += `\tvar client *${client}\n`;
+      text += `\tclient.${pipelineVar} = ${pipelineVar}\n`;
+      if (urlVar.length != 0) {
+        for (const p of values(aggregateParameters(session.model.operationGroups[0].operations[0])).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'uri'; })) {
+          text += `\tclient.${p.language.go!.name} = ${p.language.go!.name}\n`;
+        }
+      }
+      for (const param of values(clientOnlyParams)) {
+        if (param.clientDefaultValue !== undefined) {
+          text += `\tclient.${param.language.go!.name} = ${param.language.go!.name}\n`;
+        }
       }
       text += '\treturn client, nil\n';
     } else {
@@ -260,8 +299,7 @@ function addParameterizedHostFunctionality(op: Operation): [boolean, string] {
   return [false, 'u'];
 }
 
-// returns the parameters for the internal request creator method.
-// e.g. "i int, s string"
+// return parameters for client function
 export function createParametersSig(clientParams: IterableWithLinq<Parameter>): [string, string] {
   const funcParams = new Array<string>();
   const params = new Array<string>();
@@ -270,4 +308,19 @@ export function createParametersSig(clientParams: IterableWithLinq<Parameter>): 
     params.push(camelCase(p.language.go!.name));
   }
   return [funcParams.join(', '), params.join(', ')];
+}
+
+function getClientOnlyParams(group: OperationGroup, globalParams: Array<Parameter>): Array<Parameter> {
+  let params = new Array<Parameter>();
+  const clientParams = <Array<Parameter>>group.language.go!.clientParams;
+  if (clientParams === undefined) {
+    params = globalParams;
+    return params;
+  }
+  for (const param of values(globalParams)) {
+    if (!clientParams.includes(param)) {
+      params.push(param);
+    }
+  }
+  return params;
 }

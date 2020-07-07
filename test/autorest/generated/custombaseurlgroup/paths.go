@@ -45,7 +45,7 @@ func (client *pathsOperations) GetEmpty(ctx context.Context, accountName string)
 func (client *pathsOperations) getEmptyCreateRequest(accountName string) (*azcore.Request, error) {
 	host := "http://{accountName}{host}"
 	host = strings.ReplaceAll(host, "{accountName}", accountName)
-	host = strings.ReplaceAll(host, "{host}", client.u.Host)
+	host = strings.ReplaceAll(host, "{host}", client.Client.host)
 	urlPath := "/customuri"
 	u, err := url.Parse(host + urlPath)
 	if err != nil {
