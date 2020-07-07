@@ -32,8 +32,8 @@ func (c CatApTrue) MarshalJSON() ([]byte, error) {
 		objectMap["friendly"] = c.Friendly
 	}
 	if c.AdditionalProperties != nil {
-		for k, v := range *c.AdditionalProperties {
-			objectMap[k] = v
+		for key, val := range *c.AdditionalProperties {
+			objectMap[key] = val
 		}
 	}
 	return json.Marshal(objectMap)
@@ -45,33 +45,33 @@ func (c *CatApTrue) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	for k, v := range rawMsg {
+	for key, val := range rawMsg {
 		var err error
-		switch k {
+		switch key {
 		case "id":
-			if v != nil {
-				err = json.Unmarshal(*v, &c.ID)
+			if val != nil {
+				err = json.Unmarshal(*val, &c.ID)
 			}
 		case "name":
-			if v != nil {
-				err = json.Unmarshal(*v, &c.Name)
+			if val != nil {
+				err = json.Unmarshal(*val, &c.Name)
 			}
 		case "status":
-			if v != nil {
-				err = json.Unmarshal(*v, &c.Status)
+			if val != nil {
+				err = json.Unmarshal(*val, &c.Status)
 			}
 		case "friendly":
-			if v != nil {
-				err = json.Unmarshal(*v, &c.Friendly)
+			if val != nil {
+				err = json.Unmarshal(*val, &c.Friendly)
 			}
 		default:
 			if c.AdditionalProperties == nil {
 				c.AdditionalProperties = &map[string]interface{}{}
 			}
-			if v != nil {
+			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*v, &aux)
-				(*c.AdditionalProperties)[k] = aux
+				err = json.Unmarshal(*val, &aux)
+				(*c.AdditionalProperties)[key] = aux
 			}
 		}
 		if err != nil {
@@ -156,8 +156,8 @@ func (p PetApInPropertiesWithApstring) MarshalJSON() ([]byte, error) {
 		objectMap["status"] = p.Status
 	}
 	if p.AdditionalProperties != nil {
-		for k, v := range *p.AdditionalProperties {
-			objectMap[k] = v
+		for key, val := range *p.AdditionalProperties {
+			objectMap[key] = val
 		}
 	}
 	return json.Marshal(objectMap)
@@ -169,37 +169,37 @@ func (p *PetApInPropertiesWithApstring) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	for k, v := range rawMsg {
+	for key, val := range rawMsg {
 		var err error
-		switch k {
+		switch key {
 		case "additionalProperties":
-			if v != nil {
-				err = json.Unmarshal(*v, &p.AdditionalProperties1)
+			if val != nil {
+				err = json.Unmarshal(*val, &p.AdditionalProperties1)
 			}
 		case "id":
-			if v != nil {
-				err = json.Unmarshal(*v, &p.ID)
+			if val != nil {
+				err = json.Unmarshal(*val, &p.ID)
 			}
 		case "name":
-			if v != nil {
-				err = json.Unmarshal(*v, &p.Name)
+			if val != nil {
+				err = json.Unmarshal(*val, &p.Name)
 			}
 		case "@odata.location":
-			if v != nil {
-				err = json.Unmarshal(*v, &p.OdataLocation)
+			if val != nil {
+				err = json.Unmarshal(*val, &p.OdataLocation)
 			}
 		case "status":
-			if v != nil {
-				err = json.Unmarshal(*v, &p.Status)
+			if val != nil {
+				err = json.Unmarshal(*val, &p.Status)
 			}
 		default:
 			if p.AdditionalProperties == nil {
 				p.AdditionalProperties = &map[string]string{}
 			}
-			if v != nil {
+			if val != nil {
 				var aux string
-				err = json.Unmarshal(*v, &aux)
-				(*p.AdditionalProperties)[k] = aux
+				err = json.Unmarshal(*val, &aux)
+				(*p.AdditionalProperties)[key] = aux
 			}
 		}
 		if err != nil {
@@ -239,8 +239,8 @@ func (p PetApObject) MarshalJSON() ([]byte, error) {
 		objectMap["status"] = p.Status
 	}
 	if p.AdditionalProperties != nil {
-		for k, v := range *p.AdditionalProperties {
-			objectMap[k] = v
+		for key, val := range *p.AdditionalProperties {
+			objectMap[key] = val
 		}
 	}
 	return json.Marshal(objectMap)
@@ -252,29 +252,29 @@ func (p *PetApObject) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	for k, v := range rawMsg {
+	for key, val := range rawMsg {
 		var err error
-		switch k {
+		switch key {
 		case "id":
-			if v != nil {
-				err = json.Unmarshal(*v, &p.ID)
+			if val != nil {
+				err = json.Unmarshal(*val, &p.ID)
 			}
 		case "name":
-			if v != nil {
-				err = json.Unmarshal(*v, &p.Name)
+			if val != nil {
+				err = json.Unmarshal(*val, &p.Name)
 			}
 		case "status":
-			if v != nil {
-				err = json.Unmarshal(*v, &p.Status)
+			if val != nil {
+				err = json.Unmarshal(*val, &p.Status)
 			}
 		default:
 			if p.AdditionalProperties == nil {
 				p.AdditionalProperties = &map[string]interface{}{}
 			}
-			if v != nil {
+			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*v, &aux)
-				(*p.AdditionalProperties)[k] = aux
+				err = json.Unmarshal(*val, &aux)
+				(*p.AdditionalProperties)[key] = aux
 			}
 		}
 		if err != nil {
@@ -313,8 +313,8 @@ func (p PetApString) MarshalJSON() ([]byte, error) {
 		objectMap["status"] = p.Status
 	}
 	if p.AdditionalProperties != nil {
-		for k, v := range *p.AdditionalProperties {
-			objectMap[k] = v
+		for key, val := range *p.AdditionalProperties {
+			objectMap[key] = val
 		}
 	}
 	return json.Marshal(objectMap)
@@ -326,29 +326,29 @@ func (p *PetApString) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	for k, v := range rawMsg {
+	for key, val := range rawMsg {
 		var err error
-		switch k {
+		switch key {
 		case "id":
-			if v != nil {
-				err = json.Unmarshal(*v, &p.ID)
+			if val != nil {
+				err = json.Unmarshal(*val, &p.ID)
 			}
 		case "name":
-			if v != nil {
-				err = json.Unmarshal(*v, &p.Name)
+			if val != nil {
+				err = json.Unmarshal(*val, &p.Name)
 			}
 		case "status":
-			if v != nil {
-				err = json.Unmarshal(*v, &p.Status)
+			if val != nil {
+				err = json.Unmarshal(*val, &p.Status)
 			}
 		default:
 			if p.AdditionalProperties == nil {
 				p.AdditionalProperties = &map[string]string{}
 			}
-			if v != nil {
+			if val != nil {
 				var aux string
-				err = json.Unmarshal(*v, &aux)
-				(*p.AdditionalProperties)[k] = aux
+				err = json.Unmarshal(*val, &aux)
+				(*p.AdditionalProperties)[key] = aux
 			}
 		}
 		if err != nil {
@@ -387,8 +387,8 @@ func (p PetApTrue) MarshalJSON() ([]byte, error) {
 		objectMap["status"] = p.Status
 	}
 	if p.AdditionalProperties != nil {
-		for k, v := range *p.AdditionalProperties {
-			objectMap[k] = v
+		for key, val := range *p.AdditionalProperties {
+			objectMap[key] = val
 		}
 	}
 	return json.Marshal(objectMap)
@@ -400,29 +400,29 @@ func (p *PetApTrue) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	for k, v := range rawMsg {
+	for key, val := range rawMsg {
 		var err error
-		switch k {
+		switch key {
 		case "id":
-			if v != nil {
-				err = json.Unmarshal(*v, &p.ID)
+			if val != nil {
+				err = json.Unmarshal(*val, &p.ID)
 			}
 		case "name":
-			if v != nil {
-				err = json.Unmarshal(*v, &p.Name)
+			if val != nil {
+				err = json.Unmarshal(*val, &p.Name)
 			}
 		case "status":
-			if v != nil {
-				err = json.Unmarshal(*v, &p.Status)
+			if val != nil {
+				err = json.Unmarshal(*val, &p.Status)
 			}
 		default:
 			if p.AdditionalProperties == nil {
 				p.AdditionalProperties = &map[string]interface{}{}
 			}
-			if v != nil {
+			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*v, &aux)
-				(*p.AdditionalProperties)[k] = aux
+				err = json.Unmarshal(*val, &aux)
+				(*p.AdditionalProperties)[key] = aux
 			}
 		}
 		if err != nil {

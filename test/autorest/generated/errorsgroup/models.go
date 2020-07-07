@@ -26,12 +26,12 @@ func (a *AnimalNotFound) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	for k, v := range rawMsg {
+	for key, val := range rawMsg {
 		var err error
-		switch k {
+		switch key {
 		case "name":
-			if v != nil {
-				err = json.Unmarshal(*v, &a.Name)
+			if val != nil {
+				err = json.Unmarshal(*val, &a.Name)
 			}
 		}
 		if err != nil {
@@ -56,12 +56,12 @@ func (l *LinkNotFound) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	for k, v := range rawMsg {
+	for key, val := range rawMsg {
 		var err error
-		switch k {
+		switch key {
 		case "whatSubAddress":
-			if v != nil {
-				err = json.Unmarshal(*v, &l.WhatSubAddress)
+			if val != nil {
+				err = json.Unmarshal(*val, &l.WhatSubAddress)
 			}
 		}
 		if err != nil {
@@ -107,16 +107,16 @@ func (n *NotFoundErrorBase) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	for k, v := range rawMsg {
+	for key, val := range rawMsg {
 		var err error
-		switch k {
+		switch key {
 		case "reason":
-			if v != nil {
-				err = json.Unmarshal(*v, &n.Reason)
+			if val != nil {
+				err = json.Unmarshal(*val, &n.Reason)
 			}
 		case "whatNotFound":
-			if v != nil {
-				err = json.Unmarshal(*v, &n.WhatNotFound)
+			if val != nil {
+				err = json.Unmarshal(*val, &n.WhatNotFound)
 			}
 		}
 		if err != nil {
@@ -173,16 +173,16 @@ func (p *PetActionError) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	for k, v := range rawMsg {
+	for key, val := range rawMsg {
 		var err error
-		switch k {
+		switch key {
 		case "errorMessage":
-			if v != nil {
-				err = json.Unmarshal(*v, &p.ErrorMessage)
+			if val != nil {
+				err = json.Unmarshal(*val, &p.ErrorMessage)
 			}
 		case "errorType":
-			if v != nil {
-				err = json.Unmarshal(*v, &p.ErrorType)
+			if val != nil {
+				err = json.Unmarshal(*val, &p.ErrorType)
 			}
 		}
 		if err != nil {
@@ -212,12 +212,12 @@ func (p *PetHungryOrThirstyError) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	for k, v := range rawMsg {
+	for key, val := range rawMsg {
 		var err error
-		switch k {
+		switch key {
 		case "hungryOrThirsty":
-			if v != nil {
-				err = json.Unmarshal(*v, &p.HungryOrThirsty)
+			if val != nil {
+				err = json.Unmarshal(*val, &p.HungryOrThirsty)
 			}
 		}
 		if err != nil {
@@ -256,12 +256,12 @@ func (p *PetSadError) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	for k, v := range rawMsg {
+	for key, val := range rawMsg {
 		var err error
-		switch k {
+		switch key {
 		case "reason":
-			if v != nil {
-				err = json.Unmarshal(*v, &p.Reason)
+			if val != nil {
+				err = json.Unmarshal(*val, &p.Reason)
 			}
 		}
 		if err != nil {

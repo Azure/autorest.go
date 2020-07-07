@@ -951,6 +951,8 @@ function formatStatusCode(statusCode: string): string {
       return 'http.StatusFound';
     case '303':
       return 'http.StatusSeeOther';
+    case '304':
+      return 'http.StatusNotModified';
     case '307':
       return 'http.StatusTemporaryRedirect';
     case '400':
