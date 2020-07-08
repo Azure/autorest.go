@@ -22,7 +22,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
   imports.add('strings');
   // initialize variables necessary for adding parameterized host related variables and functionality for the client
-  const [addParamHost, urlVar] = addParameterizedHostFunctionality(session.model.operationGroups[0].operations[0]);
+  const [addParamHost, clientOnly] = addParameterizedHostFunctionality(session.model.operationGroups[0].operations[0]);
   let addEndpoint = 'endpoint string, ';
   let passEndpoint = 'endpoint, ';
   if (addParamHost) {
@@ -135,15 +135,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
     passClientOnlyParams = '';
   }
   text += `type ${client} struct {\n`;
-  if (addParamHost) {
-    if (urlVar.length != 0) {
-      for (const p of values(aggregateParameters(session.model.operationGroups[0].operations[0])).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'uri'; })) {
-        text += `\t${p.language.go!.name} ${schemaTypeToGoType(session.model, p.schema, false)}\n`;
-      }
-      [addEndpoint, passEndpoint] = createParametersSig(values(aggregateParameters(session.model.operationGroups[0].operations[0])).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'uri'; }));
-      addEndpoint += ', ';
-      passEndpoint += ', ';
-    }
+  if (addParamHost && !clientOnly) {
     if (clientOnlyParams.length > 0) {
       for (const param of values(clientOnlyParams)) {
         if (param.protocol.http!.in === 'uri') {
@@ -301,8 +293,12 @@ function getDefaultEndpoint(params?: Parameter[]) {
 // the list of packages to import
 const imports = new ImportManager();
 const pipelineVar = 'p';
+const urlVar = 'u';
 
-function addParameterizedHostFunctionality(op: Operation): [boolean, string] {
+// this function checks if parameterized host functionality needs to be added for the service
+// and returns two booleans. The first boolean signals if parameterized host should be added or not
+// the second boolean signals if all of the parameterized host parameters are on the client or not.
+function addParameterizedHostFunctionality(op: Operation): [boolean, boolean] {
   if (!(<string>op.requests![0].protocol.http!.uri).match(/^\{\$?\w+\}$/)) {
     let methodParamsCount = 0;
     for (const p of values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'uri'; })) {
@@ -311,13 +307,13 @@ function addParameterizedHostFunctionality(op: Operation): [boolean, string] {
       }
     }
     if (methodParamsCount > 0) {
-      return [true, ''];
+      return [true, false];
     } else {
       // if all params are on the client then it could all be handled in the new client with pipeline
-      return [true, 'host'];
+      return [true, true];
     }
   }
-  return [false, 'u'];
+  return [false, true];
 }
 
 // return parameters for client function
