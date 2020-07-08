@@ -5,7 +5,7 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { camelCase } from '@azure-tools/codegen';
-import { CodeModel, ImplementationLocation, Parameter, Operation, OperationGroup } from '@azure-tools/codemodel';
+import { CodeModel, ImplementationLocation, Parameter, Operation, OperationGroup, Language } from '@azure-tools/codemodel';
 import { values, IterableWithLinq } from '@azure-tools/linq';
 import { contentPreamble, formatParameterTypeName, sortParametersByRequired, getCreateRequestParametersSig } from './helpers';
 import { aggregateParameters, schemaTypeToGoType } from '../common/helpers';
@@ -110,13 +110,19 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   const clientOnlyParams = new Array<Parameter>();
   let clientOnlyParamsFuncSig = '';
   let passClientOnlyParams = '';
+  let groupClientParams = new Array<Parameter>();
+  // groupClientParams will consolidate a unique set of client only params from each operation group
   for (const group of values(session.model.operationGroups)) {
-    if (session.model.globalParameters) {
-      const params = <Array<Parameter>>getClientOnlyParams(group, session.model.globalParameters);
-      for (const param of values(params)) {
-        if (clientOnlyParams.includes(param)) {
-          continue;
-        }
+    if (group.language.go!.clientParams !== undefined) {
+      groupClientParams = [...groupClientParams, ...<Array<Parameter>>group.language.go!.clientParams];
+    }
+  }
+  groupClientParams = [...new Set(groupClientParams)];
+  // if there are global parameters then check for global params that are only meant to exist on the client
+  // and which do not exist on operation groups. The paramters found here will be added onto the client.
+  if (session.model.globalParameters) {
+    for (const param of values(session.model.globalParameters)) {
+      if (!groupClientParams.includes(param)) {
         clientOnlyParams.push(param);
         clientOnlyParamsFuncSig += `${param.language.go!.name} ${formatParameterTypeName(param)}, `;
         passClientOnlyParams += `${param.language.go!.name}, `;
@@ -140,7 +146,9 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
     }
     if (clientOnlyParams.length > 0) {
       for (const param of values(clientOnlyParams)) {
-        text += `\t${param.language.go!.name} ${schemaTypeToGoType(session.model, param.schema, false)}\n`;
+        if (param.protocol.http!.in === 'uri') {
+          text += `\t${param.language.go!.name} ${schemaTypeToGoType(session.model, param.schema, false)}\n`;
+        }
       }
     }
   } else {
@@ -154,7 +162,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   if (!session.model.security.authenticationRequired) {
     credParam = '';
   }
-  if (endpoint) {
+  if (endpoint || defaultsExist(clientOnlyParams)) {
     text += `// ${defaultEndpoint} is the default service endpoint.\n`;
     text += `const ${defaultEndpoint} = "${endpoint}"\n\n`;
     text += `// ${newDefaultClient} creates an instance of the ${client} type using the ${defaultEndpoint}.\n`;
@@ -270,6 +278,15 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   return text;
 }
 
+function defaultsExist(params?: Array<Parameter>): boolean {
+  for (const param of values(params)) {
+    if (param.clientDefaultValue !== undefined) {
+      return true;
+    }
+  }
+  return false;
+}
+
 function getDefaultEndpoint(params?: Parameter[]) {
   for (const param of values(params)) {
     if (param.language.go!.name === '$host') {
@@ -309,19 +326,4 @@ export function createParametersSig(clientParams: IterableWithLinq<Parameter>): 
     params.push(camelCase(p.language.go!.name));
   }
   return [funcParams.join(', '), params.join(', ')];
-}
-
-function getClientOnlyParams(group: OperationGroup, globalParams: Array<Parameter>): Array<Parameter> {
-  let params = new Array<Parameter>();
-  const clientParams = <Array<Parameter>>group.language.go!.clientParams;
-  if (clientParams === undefined) {
-    params = globalParams;
-    return params;
-  }
-  for (const param of values(globalParams)) {
-    if (!clientParams.includes(param)) {
-      params.push(param);
-    }
-  }
-  return params;
 }
