@@ -158,13 +158,15 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   text += '}\n\n';
 
   const endpoint = getDefaultEndpoint(session.model.globalParameters);
+  if (endpoint) {
+    text += `// ${defaultEndpoint} is the default service endpoint.\n`;
+    text += `const ${defaultEndpoint} = "${endpoint}"\n\n`;
+  }
   let credParam = 'cred azcore.Credential, ';
   if (!session.model.security.authenticationRequired) {
     credParam = '';
   }
-  if (endpoint || defaultsExist(clientOnlyParams)) {
-    text += `// ${defaultEndpoint} is the default service endpoint.\n`;
-    text += `const ${defaultEndpoint} = "${endpoint}"\n\n`;
+  if (defaultsExist(clientOnlyParams)) {
     text += `// ${newDefaultClient} creates an instance of the ${client} type using the ${defaultEndpoint}.\n`;
     text += `func ${newDefaultClient}(${credParam}options *${clientOptions}) (*${client}, error) {\n`;
     let cred = 'cred, ';
@@ -182,6 +184,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
       }
       text += `${cred}options)\n`;
     } else {
+      // when a parameterized host is not set, the default endpoint is set for the url on the client
       text += `\treturn ${newClient}(${defaultEndpoint}, ${cred}options)\n`;
     }
     text += '}\n\n';
