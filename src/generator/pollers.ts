@@ -256,11 +256,9 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
       func (p *${pollerName}) pollUntilDone(ctx context.Context, frequency time.Duration) ${pollUntilDoneResponse} {
         // initial check for a retry-after header existing on the initial response
         if retryAfter := azcore.RetryAfter(p.pt.latestResponse().Response); retryAfter > 0 {
-          select {
-          case <-time.After(retryAfter):
-            // do nothing
-          case <-ctx.Done():
-            return nil, ctx.Err()
+          err := delay(ctx, retryAfter)
+          if err != nil {
+            return nil, err
           }
         }
         // begin polling the endpoint until a terminal state is reached
@@ -272,15 +270,13 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
           if p.Done() {
             break
           }
-          delay := frequency
+          d := frequency
           if retryAfter := azcore.RetryAfter(resp); retryAfter > 0 {
-            delay = retryAfter
+            d = retryAfter
           }
-          select {
-          case <-time.After(delay):
-            // do nothing
-          case <-ctx.Done():
-            return nil, ctx.Err()
+          err = delay(ctx, d)
+          if err != nil {
+            return nil, err
           }
       }
       return ${pollUntilDoneReturn}
@@ -290,6 +286,17 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
   }
   text += imports.text();
   text += bodyText;
+  // add delay function at the bottom of the pollers.go file
+  text += `
+  func delay(ctx context.Context, delay time.Duration) error {
+    select {
+    case <-time.After(delay):
+      return nil
+    case <-ctx.Done():
+      return ctx.Err()
+    }
+  }
+  `;
   return text;
 }
 

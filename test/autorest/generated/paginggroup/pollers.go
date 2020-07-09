@@ -101,11 +101,9 @@ func (p *productResultPagerPoller) ResumeToken() (string, error) {
 func (p *productResultPagerPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (ProductResultPager, error) {
 	// initial check for a retry-after header existing on the initial response
 	if retryAfter := azcore.RetryAfter(p.pt.latestResponse().Response); retryAfter > 0 {
-		select {
-		case <-time.After(retryAfter):
-			// do nothing
-		case <-ctx.Done():
-			return nil, ctx.Err()
+		err := delay(ctx, retryAfter)
+		if err != nil {
+			return nil, err
 		}
 	}
 	// begin polling the endpoint until a terminal state is reached
@@ -117,15 +115,13 @@ func (p *productResultPagerPoller) pollUntilDone(ctx context.Context, frequency 
 		if p.Done() {
 			break
 		}
-		delay := frequency
+		d := frequency
 		if retryAfter := azcore.RetryAfter(resp); retryAfter > 0 {
-			delay = retryAfter
+			d = retryAfter
 		}
-		select {
-		case <-time.After(delay):
-			// do nothing
-		case <-ctx.Done():
-			return nil, ctx.Err()
+		err = delay(ctx, d)
+		if err != nil {
+			return nil, err
 		}
 	}
 	return p.FinalResponse(ctx)
@@ -147,4 +143,13 @@ func (p *productResultPagerPoller) handleResponse(resp *azcore.Response) (Produc
 			return azcore.NewRequest(http.MethodGet, *u), nil
 		},
 	}, nil
+}
+
+func delay(ctx context.Context, delay time.Duration) error {
+	select {
+	case <-time.After(delay):
+		return nil
+	case <-ctx.Done():
+		return ctx.Err()
+	}
 }
