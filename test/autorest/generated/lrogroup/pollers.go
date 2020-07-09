@@ -60,6 +60,14 @@ func (p *httpPoller) ResumeToken() (string, error) {
 }
 
 func (p *httpPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	// initial check for a retry-after header existing on the initial response
+	if retryAfter := azcore.RetryAfter(p.pt.latestResponse().Response); retryAfter > 0 {
+		err := delay(ctx, retryAfter)
+		if err != nil {
+			return nil, err
+		}
+	}
+	// begin polling the endpoint until a terminal state is reached
 	for {
 		resp, err := p.Poll(ctx)
 		if err != nil {
@@ -68,10 +76,13 @@ func (p *httpPoller) pollUntilDone(ctx context.Context, frequency time.Duration)
 		if p.Done() {
 			break
 		}
-		if delay := azcore.RetryAfter(resp); delay > 0 {
-			time.Sleep(delay)
-		} else {
-			time.Sleep(frequency)
+		d := frequency
+		if retryAfter := azcore.RetryAfter(resp); retryAfter > 0 {
+			d = retryAfter
+		}
+		err = delay(ctx, d)
+		if err != nil {
+			return nil, err
 		}
 	}
 	return p.FinalResponse(), nil
@@ -165,6 +176,14 @@ func (p *productArrayPoller) ResumeToken() (string, error) {
 }
 
 func (p *productArrayPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*ProductArrayResponse, error) {
+	// initial check for a retry-after header existing on the initial response
+	if retryAfter := azcore.RetryAfter(p.pt.latestResponse().Response); retryAfter > 0 {
+		err := delay(ctx, retryAfter)
+		if err != nil {
+			return nil, err
+		}
+	}
+	// begin polling the endpoint until a terminal state is reached
 	for {
 		resp, err := p.Poll(ctx)
 		if err != nil {
@@ -173,10 +192,13 @@ func (p *productArrayPoller) pollUntilDone(ctx context.Context, frequency time.D
 		if p.Done() {
 			break
 		}
-		if delay := azcore.RetryAfter(resp); delay > 0 {
-			time.Sleep(delay)
-		} else {
-			time.Sleep(frequency)
+		d := frequency
+		if retryAfter := azcore.RetryAfter(resp); retryAfter > 0 {
+			d = retryAfter
+		}
+		err = delay(ctx, d)
+		if err != nil {
+			return nil, err
 		}
 	}
 	return p.FinalResponse(ctx)
@@ -281,6 +303,14 @@ func (p *productPoller) ResumeToken() (string, error) {
 }
 
 func (p *productPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
+	// initial check for a retry-after header existing on the initial response
+	if retryAfter := azcore.RetryAfter(p.pt.latestResponse().Response); retryAfter > 0 {
+		err := delay(ctx, retryAfter)
+		if err != nil {
+			return nil, err
+		}
+	}
+	// begin polling the endpoint until a terminal state is reached
 	for {
 		resp, err := p.Poll(ctx)
 		if err != nil {
@@ -289,10 +319,13 @@ func (p *productPoller) pollUntilDone(ctx context.Context, frequency time.Durati
 		if p.Done() {
 			break
 		}
-		if delay := azcore.RetryAfter(resp); delay > 0 {
-			time.Sleep(delay)
-		} else {
-			time.Sleep(frequency)
+		d := frequency
+		if retryAfter := azcore.RetryAfter(resp); retryAfter > 0 {
+			d = retryAfter
+		}
+		err = delay(ctx, d)
+		if err != nil {
+			return nil, err
 		}
 	}
 	return p.FinalResponse(ctx)
@@ -397,6 +430,14 @@ func (p *skuPoller) ResumeToken() (string, error) {
 }
 
 func (p *skuPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*SkuResponse, error) {
+	// initial check for a retry-after header existing on the initial response
+	if retryAfter := azcore.RetryAfter(p.pt.latestResponse().Response); retryAfter > 0 {
+		err := delay(ctx, retryAfter)
+		if err != nil {
+			return nil, err
+		}
+	}
+	// begin polling the endpoint until a terminal state is reached
 	for {
 		resp, err := p.Poll(ctx)
 		if err != nil {
@@ -405,10 +446,13 @@ func (p *skuPoller) pollUntilDone(ctx context.Context, frequency time.Duration) 
 		if p.Done() {
 			break
 		}
-		if delay := azcore.RetryAfter(resp); delay > 0 {
-			time.Sleep(delay)
-		} else {
-			time.Sleep(frequency)
+		d := frequency
+		if retryAfter := azcore.RetryAfter(resp); retryAfter > 0 {
+			d = retryAfter
+		}
+		err = delay(ctx, d)
+		if err != nil {
+			return nil, err
 		}
 	}
 	return p.FinalResponse(ctx)
@@ -513,6 +557,14 @@ func (p *subProductPoller) ResumeToken() (string, error) {
 }
 
 func (p *subProductPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*SubProductResponse, error) {
+	// initial check for a retry-after header existing on the initial response
+	if retryAfter := azcore.RetryAfter(p.pt.latestResponse().Response); retryAfter > 0 {
+		err := delay(ctx, retryAfter)
+		if err != nil {
+			return nil, err
+		}
+	}
+	// begin polling the endpoint until a terminal state is reached
 	for {
 		resp, err := p.Poll(ctx)
 		if err != nil {
@@ -521,10 +573,13 @@ func (p *subProductPoller) pollUntilDone(ctx context.Context, frequency time.Dur
 		if p.Done() {
 			break
 		}
-		if delay := azcore.RetryAfter(resp); delay > 0 {
-			time.Sleep(delay)
-		} else {
-			time.Sleep(frequency)
+		d := frequency
+		if retryAfter := azcore.RetryAfter(resp); retryAfter > 0 {
+			d = retryAfter
+		}
+		err = delay(ctx, d)
+		if err != nil {
+			return nil, err
 		}
 	}
 	return p.FinalResponse(ctx)
@@ -539,4 +594,13 @@ func (p *subProductPoller) handleResponse(resp *azcore.Response) (*SubProductRes
 		return nil, p.pt.handleError(resp)
 	}
 	return &result, resp.UnmarshalAsJSON(&result.SubProduct)
+}
+
+func delay(ctx context.Context, delay time.Duration) error {
+	select {
+	case <-time.After(delay):
+		return nil
+	case <-ctx.Done():
+		return ctx.Err()
+	}
 }
