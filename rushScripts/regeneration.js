@@ -46,16 +46,24 @@ const goMappings = {
 for (namespace in goMappings) {
     // for each swagger run the autorest command to generate code based on the swagger for the relevant namespace and output to the /generated directory
     let inputFile = swaggerDir + goMappings[namespace];
-    generate(inputFile, 'test/autorest/generated/' + namespace);
+    generate(inputFile, 'test/autorest/generated/' + namespace, '--openapi-type="data-plane"');
 } 
 
 const blobStorage = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/storage-dataplane-preview/specification/storage/data-plane/Microsoft.BlobStorage/preview/2019-07-07/blob.json';
-generate(blobStorage, 'test/storage/2019-07-07/azblob', '--credential-scope="https://storage.azure.com/.default" --module="azstorage" --export-client="false" --file-prefix="zz_generated_"');
+generate(blobStorage, 'test/storage/2019-07-07/azblob', '--credential-scope="https://storage.azure.com/.default" --module="azstorage" --export-client="false" --file-prefix="zz_generated_" --openapi-type="data-plane"');
+
+const network = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/network/resource-manager/readme.md';
+generateFromReadme(network, 'package-2020-03', 'test/network/2020-03-01/armnetwork', '--credential-scope="https://management.azure.com//.default" --module=armnetwork');
 
 // helper to log the package being generated before invocation
 function generate(inputFile, outputDir, additionalArgs) {
     console.log('generating ' + inputFile);
     exec('autorest --use=. --clear-output-folder --license-header=MICROSOFT_MIT_NO_VERSION --input-file=' + inputFile + ' --output-folder=' + outputDir + ' ' + additionalArgs, autorestCallback(outputDir, inputFile));
+}
+
+function generateFromReadme(readme, tag, outputDir, additionalArgs) {
+    console.log('generating ' + readme);
+    exec('autorest --use=. ' + readme + ' --tag=' + tag + ' --clear-output-folder --license-header=MICROSOFT_MIT_NO_VERSION --output-folder=' + outputDir + ' ' + additionalArgs, autorestCallback(outputDir, readme));
 }
 
 // use a function factory to create the closure so that the values of namespace and inputFile are captured on each iteration

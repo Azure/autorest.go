@@ -33,6 +33,8 @@ export async function transform(host: Host) {
 }
 
 async function process(session: Session<CodeModel>) {
+  const specType = await session.getValue('openapi-type', 'not_specified');
+  session.model.language.go!.openApiType = specType;
   processOperationRequests(session);
   processOperationResponses(session);
   // fix up dictionary element types (additional properties)
