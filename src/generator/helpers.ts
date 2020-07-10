@@ -5,9 +5,14 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { values } from '@azure-tools/linq';
-import { comment, camelCase } from '@azure-tools/codegen';
+import { comment, camelCase, pascalCase } from '@azure-tools/codegen';
 import { aggregateParameters } from '../common/helpers';
-import { ArraySchema, CodeModel, DictionarySchema, Language, Parameter, Schema, SchemaType, Operation, GroupProperty, ImplementationLocation } from '@azure-tools/codemodel';
+import { ArraySchema, CodeModel, DictionarySchema, Language, Parameter, Schema, SchemaType, Operation, GroupProperty, ImplementationLocation, OperationGroup, SerializationStyle, ByteArraySchema, ConstantSchema, NumberSchema, DateTimeSchema } from '@azure-tools/codemodel';
+import { ImportManager } from './imports';
+
+export const dateFormat = '2006-01-02';
+export const datetimeRFC3339Format = 'time.RFC3339';
+export const datetimeRFC1123Format = 'time.RFC1123';
 
 // returns the common source-file preamble (license comment, package name etc)
 export async function contentPreamble(session: Session<CodeModel>): Promise<string> {
@@ -127,4 +132,159 @@ export function getMethodParameters(op: Operation): Parameter[] {
     params.push(paramGroup);
   }
   return params;
+}
+
+export function formatParamValue(param: Parameter, imports: ImportManager): string {
+  let separator = ',';
+  switch (param.protocol.http?.style) {
+    case SerializationStyle.PipeDelimited:
+      separator = '|';
+      break;
+    case SerializationStyle.SpaceDelimited:
+      separator = ' ';
+      break;
+    case SerializationStyle.TabDelimited:
+      separator = '\\t';
+      break;
+  }
+  let paramName = param.language.go!.name;
+  if (param.implementation === ImplementationLocation.Client) {
+    paramName = `client.${paramName}`;
+  } else if (param.language.go!.paramGroup) {
+    paramName = `${camelCase(param.language.go!.paramGroup.language.go!.name)}.${pascalCase(paramName)}`;
+  }
+  if (param.required !== true) {
+    paramName = `*${paramName}`;
+  }
+  switch (param.schema.type) {
+    case SchemaType.Array:
+      const arraySchema = <ArraySchema>param.schema;
+      switch (arraySchema.elementType.type) {
+        case SchemaType.String:
+          imports.add('strings');
+          return `strings.Join(${paramName}, "${separator}")`;
+        default:
+          imports.add('fmt');
+          imports.add('strings');
+          return `strings.Join(strings.Fields(strings.Trim(fmt.Sprint(${paramName}), "[]")), "${separator}")`;
+      }
+    case SchemaType.Boolean:
+      imports.add('strconv');
+      return `strconv.FormatBool(${paramName})`;
+    case SchemaType.ByteArray:
+      // ByteArray is a base-64 encoded value in string format
+      imports.add('encoding/base64');
+      let byteFormat = 'Std';
+      if ((<ByteArraySchema>param.schema).format === 'base64url') {
+        byteFormat = 'RawURL';
+      }
+      return `base64.${byteFormat}Encoding.EncodeToString(${paramName})`;
+    case SchemaType.Choice:
+    case SchemaType.SealedChoice:
+      return `string(${paramName})`;
+    case SchemaType.Constant:
+      const constSchema = <ConstantSchema>param.schema;
+      // cannot use formatConstantValue() since all values are treated as strings
+      return `"${constSchema.value.value}"`;
+    case SchemaType.Date:
+      if (param.required !== true && paramName[0] === '*') {
+        // remove the dereference
+        paramName = paramName.substr(1);
+      }
+      return `${paramName}.Format("${dateFormat}")`;
+    case SchemaType.DateTime:
+      imports.add('time');
+      if (param.required !== true && paramName[0] === '*') {
+        // remove the dereference
+        paramName = paramName.substr(1);
+      }
+      let format = datetimeRFC3339Format;
+      const dateTime = <DateTimeSchema>param.schema;
+      if (dateTime.format === 'date-time-rfc1123') {
+        format = datetimeRFC1123Format;
+      }
+      return `${paramName}.Format(${format})`;
+    case SchemaType.Duration:
+      if (param.required !== true && paramName[0] === '*') {
+        // remove the dereference
+        paramName = paramName.substr(1);
+      }
+      return `${paramName}.String()`;
+    case SchemaType.UnixTime:
+      return `timeUnix(${paramName}).String()`;
+    case SchemaType.Uri:
+      imports.add('net/url');
+      if (param.required !== true && paramName[0] === '*') {
+        // remove the dereference
+        paramName = paramName.substr(1);
+      }
+      return `${paramName}.String()`;
+    case SchemaType.Integer:
+      imports.add('strconv');
+      const intSchema = <NumberSchema>param.schema;
+      let intParam = paramName;
+      if (intSchema.precision === 32) {
+        intParam = `int64(${intParam})`;
+      }
+      return `strconv.FormatInt(${intParam}, 10)`;
+    case SchemaType.Number:
+      imports.add('strconv');
+      const numberSchema = <NumberSchema>param.schema;
+      let floatParam = paramName;
+      if (numberSchema.precision === 32) {
+        floatParam = `float64(${floatParam})`;
+      }
+      return `strconv.FormatFloat(${floatParam}, 'f', -1, ${numberSchema.precision})`;
+    default:
+      return paramName;
+  }
+}
+
+export interface ParameterizedHost {
+  addParamHost: boolean;
+  urlOnClient: boolean;
+}
+
+// this function checks if parameterized host functionality needs to be added for the service
+// and returns two booleans. The first boolean signals if parameterized host should be added or not
+// the second boolean signals if all of the parameterized host parameters are on the client or not.
+export function addParameterizedHostFunctionality(operationGroups: Array<OperationGroup>): ParameterizedHost {
+  // before checking for special parameterized host conditions, we need to search through all of the
+  // operaiton groups in order to know if there are different parameterized host implementations in the 
+  // package. 
+  let separateHosts = false; // this indicates if there are multiple parameterized host implementations
+  const paramHost = operationGroups[0].operations[0].requests![0].protocol.http!.uri;
+  for (const group of values(operationGroups)) {
+    const hostURI = group.operations[0].requests![0].protocol.http!.uri;
+    // if we find a different parameterized host definition url parsing is done off the client
+    if (hostURI !== paramHost) {
+      separateHosts = true;
+      break;
+    }
+  }
+  // determine where client params need to be placed, client level or operation group level
+  if (separateHosts || !(<string>paramHost).match(/^\{\$?\w+\}$/)) {
+    let methodParamsCount = 0;
+    for (const p of values(aggregateParameters(operationGroups[0].operations[0])).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'uri'; })) {
+      if (!(p.implementation === ImplementationLocation.Client)) {
+        methodParamsCount++;
+      }
+    }
+    if (methodParamsCount > 0 || separateHosts) {
+      return {
+        addParamHost: true,
+        urlOnClient: false,
+      };
+    } else {
+      // if all params are on the client then it could all be handled in the new client with pipeline
+      return {
+        addParamHost: true,
+        urlOnClient: true,
+      };
+    }
+  }
+  return {
+    addParamHost: false,
+    urlOnClient: false, // leave this as false so it doesn't interact with parameterized host setting that check for this condition
+  };
 }

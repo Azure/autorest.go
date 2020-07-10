@@ -5,10 +5,10 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { camelCase } from '@azure-tools/codegen';
-import { CodeModel, ImplementationLocation, Parameter, Operation, OperationGroup, Language } from '@azure-tools/codemodel';
+import { CodeModel, Parameter, ImplementationLocation } from '@azure-tools/codemodel';
 import { values, IterableWithLinq } from '@azure-tools/linq';
-import { contentPreamble, formatParameterTypeName, sortParametersByRequired, getCreateRequestParametersSig } from './helpers';
-import { aggregateParameters, schemaTypeToGoType } from '../common/helpers';
+import { contentPreamble, formatParameterTypeName, sortParametersByRequired, addParameterizedHostFunctionality, formatParamValue, skipURLEncoding } from './helpers';
+import { schemaTypeToGoType, aggregateParameters } from '../common/helpers';
 import { ImportManager } from './imports';
 
 // generates content for client.go
@@ -22,13 +22,13 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
   imports.add('strings');
   // initialize variables necessary for adding parameterized host related variables and functionality for the client
-  const [addParamHost, clientOnly] = addParameterizedHostFunctionality(session.model.operationGroups[0].operations[0]);
+  const paramHostInfo = addParameterizedHostFunctionality(session.model.operationGroups);
   let addEndpoint = 'endpoint string, ';
   let passEndpoint = 'endpoint, ';
-  if (addParamHost) {
+  if (paramHostInfo.addParamHost) {
     addEndpoint = '';
     passEndpoint = '';
-  } else {
+  } else if (!paramHostInfo.addParamHost || paramHostInfo.urlOnClient) {
     imports.add('net/url');
   }
 
@@ -120,9 +120,9 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   groupClientParams = [...new Set(groupClientParams)];
   // if there are global parameters then check for global params that are only meant to exist on the client
   // and which do not exist on operation groups. The paramters found here will be added onto the client.
-  if (session.model.globalParameters) {
+  if (session.model.globalParameters) { // TODO move all common params to client and away from operation group
     for (const param of values(session.model.globalParameters)) {
-      if (!groupClientParams.includes(param)) {
+      if (!groupClientParams.includes(param) && param.protocol.http!.in === 'uri') {
         clientOnlyParams.push(param);
         clientOnlyParamsFuncSig += `${param.language.go!.name} ${formatParameterTypeName(param)}, `;
         passClientOnlyParams += `${param.language.go!.name}, `;
@@ -130,12 +130,12 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
     }
   }
   // if the parameterized host functionality is not going to be implemented then wipe client only paramter settings
-  if (!addParamHost) {
+  if (!paramHostInfo.addParamHost && !paramHostInfo.urlOnClient) {
     clientOnlyParamsFuncSig = '';
     passClientOnlyParams = '';
   }
   text += `type ${client} struct {\n`;
-  if (addParamHost && !clientOnly) {
+  if (paramHostInfo.addParamHost && !paramHostInfo.urlOnClient) {
     if (clientOnlyParams.length > 0) {
       for (const param of values(clientOnlyParams)) {
         if (param.protocol.http!.in === 'uri') {
@@ -165,7 +165,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
     if (!session.model.security.authenticationRequired) {
       cred = '';
     }
-    if (addParamHost) {
+    if (paramHostInfo.addParamHost) {
       text += `\treturn ${newClient}(`;
       for (const param of values(clientOnlyParams)) {
         if (param.clientDefaultValue !== undefined) {
@@ -228,8 +228,36 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
 
   text += `// ${newClientWithPipeline} creates an instance of the ${client} type with the specified endpoint and pipeline.\n`;
   text += `func ${newClientWithPipeline}(${clientOnlyParamsFuncSig}${addEndpoint}${pipelineVar} azcore.Pipeline) (*${client}, error) {\n`;
-  if (!addParamHost) {
+  if (!paramHostInfo.addParamHost) {
     text += `\t${urlVar}, err := url.Parse(endpoint)\n`;
+    text += '\tif err != nil {\n';
+    text += '\t\treturn nil, err\n';
+    text += '\t}\n';
+    text += `\tif ${urlVar}.Scheme == "" {\n`;
+    text += '\t\treturn nil, fmt.Errorf("no scheme detected in endpoint %s", endpoint)\n';
+    text += '\t}\n';
+    text += `\treturn &${client}{${urlVar}: ${urlVar}, ${pipelineVar}: ${pipelineVar}}, nil\n`;
+  } else if (paramHostInfo.urlOnClient) { // TODO I think there's a flaw here if there are client params on the operation groups
+    const op = session.model.operationGroups[0].operations[0];
+    const group = session.model.operationGroups[0];
+    text += `\thostURL := "${op.requests![0].protocol.http!.uri}"\n`;
+    for (const pp of values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'uri'; })) {
+      imports.add('strings');
+      // host references may be found among other variables and therefore call to use the host 
+      // specified by the endpoint the client was created with
+      if ((pp.implementation === ImplementationLocation.Client && group.language.go!.clientParams === undefined) || (pp.implementation === ImplementationLocation.Client && !(<Array<Parameter>>group.language.go!.clientParams).includes(pp))) {
+        text += `\thostURL = strings.ReplaceAll(hostURL, "{${pp.language.go!.serializedName}}", client.Client.${pp.language.go!.serializedName})\n`;
+      } else {
+        let paramValue = `url.PathEscape(${formatParamValue(pp, imports)})`;
+        if (skipURLEncoding(pp)) {
+          paramValue = formatParamValue(pp, imports);
+        } else {
+          imports.add('net/url');
+        }
+        text += `\thostURL = strings.ReplaceAll(hostURL, "{${pp.language.go!.serializedName}}", ${paramValue})\n`;
+      }
+    }
+    text += `\t${urlVar}, err := url.Parse(hostURL)\n`;
     text += '\tif err != nil {\n';
     text += '\t\treturn nil, err\n';
     text += '\t}\n';
@@ -241,9 +269,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
     text += `\tclient := &${client}{}\n`;
     text += `\tclient.${pipelineVar} = ${pipelineVar}\n`;
     for (const param of values(clientOnlyParams)) {
-      if (param.clientDefaultValue !== undefined) {
-        text += `\tclient.${param.language.go!.name} = ${param.language.go!.name}\n`;
-      }
+      text += `\tclient.${param.language.go!.name} = ${param.language.go!.name}\n`;
     }
     text += '\treturn client, nil\n';
   } else {
@@ -294,27 +320,6 @@ function getDefaultEndpoint(params?: Parameter[]) {
 const imports = new ImportManager();
 const pipelineVar = 'p';
 const urlVar = 'u';
-
-// this function checks if parameterized host functionality needs to be added for the service
-// and returns two booleans. The first boolean signals if parameterized host should be added or not
-// the second boolean signals if all of the parameterized host parameters are on the client or not.
-function addParameterizedHostFunctionality(op: Operation): [boolean, boolean] {
-  if (!(<string>op.requests![0].protocol.http!.uri).match(/^\{\$?\w+\}$/)) {
-    let methodParamsCount = 0;
-    for (const p of values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'uri'; })) {
-      if (!(p.implementation === ImplementationLocation.Client)) {
-        methodParamsCount++;
-      }
-    }
-    if (methodParamsCount > 0) {
-      return [true, false];
-    } else {
-      // if all params are on the client then it could all be handled in the new client with pipeline
-      return [true, true];
-    }
-  }
-  return [false, true];
-}
 
 // return parameters for client function
 export function createParametersSig(clientParams: IterableWithLinq<Parameter>): [string, string] {

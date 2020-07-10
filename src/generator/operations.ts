@@ -9,12 +9,8 @@ import { ArraySchema, ByteArraySchema, CodeModel, ConstantSchema, DateTimeSchema
 import { values } from '@azure-tools/linq';
 import { aggregateParameters, isArraySchema, isPageableOperation, isSchemaResponse, PagerInfo, isLROOperation } from '../common/helpers';
 import { OperationNaming } from '../transform/namer';
-import { contentPreamble, formatParameterTypeName, hasDescription, skipURLEncoding, sortAscending, sortParametersByRequired, getCreateRequestParametersSig, getMethodParameters } from './helpers';
+import { contentPreamble, formatParameterTypeName, hasDescription, skipURLEncoding, sortAscending, getCreateRequestParametersSig, getMethodParameters, addParameterizedHostFunctionality, ParameterizedHost, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format } from './helpers';
 import { ImportManager } from './imports';
-
-const dateFormat = '2006-01-02';
-const datetimeRFC3339Format = 'time.RFC3339';
-const datetimeRFC1123Format = 'time.RFC1123';
 
 // represents the generated content for an operation group
 export class OperationGroupContent {
@@ -29,6 +25,8 @@ export class OperationGroupContent {
 
 // Creates the content for all <operation>.go files
 export async function generateOperations(session: Session<CodeModel>): Promise<OperationGroupContent[]> {
+  // check for parameterized host functionality
+  const paramHostInfo = addParameterizedHostFunctionality(session.model.operationGroups);
   // generate protocol operations
   const operations = new Array<OperationGroupContent>();
   for (const group of values(session.model.operationGroups)) {
@@ -45,7 +43,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       // protocol creation can add imports to the list so
       // it must be done before the imports are written out
       opText += generateOperation(clientName, op, imports);
-      opText += createProtocolRequest(clientName, op, group, imports);
+      opText += createProtocolRequest(clientName, op, group, imports, paramHostInfo);
       opText += createProtocolResponse(clientName, op, imports);
       opText += createProtocolErrHandler(clientName, op, imports);
     }
@@ -74,112 +72,6 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     operations.push(new OperationGroupContent(group.language.go!.name, text));
   }
   return operations;
-}
-
-function formatParamValue(param: Parameter, imports: ImportManager): string {
-  let separator = ',';
-  switch (param.protocol.http?.style) {
-    case SerializationStyle.PipeDelimited:
-      separator = '|';
-      break;
-    case SerializationStyle.SpaceDelimited:
-      separator = ' ';
-      break;
-    case SerializationStyle.TabDelimited:
-      separator = '\\t';
-      break;
-  }
-  let paramName = param.language.go!.name;
-  if (param.implementation === ImplementationLocation.Client) {
-    paramName = `client.${paramName}`;
-  } else if (param.language.go!.paramGroup) {
-    paramName = `${camelCase(param.language.go!.paramGroup.language.go!.name)}.${pascalCase(paramName)}`;
-  }
-  if (param.required !== true) {
-    paramName = `*${paramName}`;
-  }
-  switch (param.schema.type) {
-    case SchemaType.Array:
-      const arraySchema = <ArraySchema>param.schema;
-      switch (arraySchema.elementType.type) {
-        case SchemaType.String:
-          imports.add('strings');
-          return `strings.Join(${paramName}, "${separator}")`;
-        default:
-          imports.add('fmt');
-          imports.add('strings');
-          return `strings.Join(strings.Fields(strings.Trim(fmt.Sprint(${paramName}), "[]")), "${separator}")`;
-      }
-    case SchemaType.Boolean:
-      imports.add('strconv');
-      return `strconv.FormatBool(${paramName})`;
-    case SchemaType.ByteArray:
-      // ByteArray is a base-64 encoded value in string format
-      imports.add('encoding/base64');
-      let byteFormat = 'Std';
-      if ((<ByteArraySchema>param.schema).format === 'base64url') {
-        byteFormat = 'RawURL';
-      }
-      return `base64.${byteFormat}Encoding.EncodeToString(${paramName})`;
-    case SchemaType.Choice:
-    case SchemaType.SealedChoice:
-      return `string(${paramName})`;
-    case SchemaType.Constant:
-      const constSchema = <ConstantSchema>param.schema;
-      // cannot use formatConstantValue() since all values are treated as strings
-      return `"${constSchema.value.value}"`;
-    case SchemaType.Date:
-      if (param.required !== true && paramName[0] === '*') {
-        // remove the dereference
-        paramName = paramName.substr(1);
-      }
-      return `${paramName}.Format("${dateFormat}")`;
-    case SchemaType.DateTime:
-      imports.add('time');
-      if (param.required !== true && paramName[0] === '*') {
-        // remove the dereference
-        paramName = paramName.substr(1);
-      }
-      let format = datetimeRFC3339Format;
-      const dateTime = <DateTimeSchema>param.schema;
-      if (dateTime.format === 'date-time-rfc1123') {
-        format = datetimeRFC1123Format;
-      }
-      return `${paramName}.Format(${format})`;
-    case SchemaType.Duration:
-      if (param.required !== true && paramName[0] === '*') {
-        // remove the dereference
-        paramName = paramName.substr(1);
-      }
-      return `${paramName}.String()`;
-    case SchemaType.UnixTime:
-      return `timeUnix(${paramName}).String()`;
-    case SchemaType.Uri:
-      imports.add('net/url');
-      if (param.required !== true && paramName[0] === '*') {
-        // remove the dereference
-        paramName = paramName.substr(1);
-      }
-      return `${paramName}.String()`;
-    case SchemaType.Integer:
-      imports.add('strconv');
-      const intSchema = <NumberSchema>param.schema;
-      let intParam = paramName;
-      if (intSchema.precision === 32) {
-        intParam = `int64(${intParam})`;
-      }
-      return `strconv.FormatInt(${intParam}, 10)`;
-    case SchemaType.Number:
-      imports.add('strconv');
-      const numberSchema = <NumberSchema>param.schema;
-      let floatParam = paramName;
-      if (numberSchema.precision === 32) {
-        floatParam = `float64(${floatParam})`;
-      }
-      return `strconv.FormatFloat(${floatParam}, 'f', -1, ${numberSchema.precision})`;
-    default:
-      return paramName;
-  }
 }
 
 // use this to generate the code that will help process values returned in response headers
@@ -411,7 +303,7 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
   return text;
 }
 
-function createProtocolRequest(client: string, op: Operation, group: OperationGroup, imports: ImportManager): string {
+function createProtocolRequest(client: string, op: Operation, group: OperationGroup, imports: ImportManager, paramHostInfo: ParameterizedHost): string {
   const info = <OperationNaming>op.language.go!;
   const name = info.protocolNaming.requestMethod;
   for (const param of values(aggregateParameters(op))) {
@@ -431,7 +323,7 @@ function createProtocolRequest(client: string, op: Operation, group: OperationGr
   // parameterized hosts that are in the format "{x}" will be ignored and the client url will be used.
   // any path like "{host}/some/path" will require host path replacement.
   // cases like "{accountName}{host}" prevent simply checking the beginning/ending of the host url.
-  if (!hostURLStr.match(/^\{\$?\w+\}$/)) {
+  if (paramHostInfo.addParamHost) {
     paramHost = true;
     text += `\thost := "${hostURLStr}"\n`;
     // replace url parameters
