@@ -7,7 +7,7 @@ import { Session } from '@azure-tools/autorest-extension-base';
 import { camelCase } from '@azure-tools/codegen';
 import { CodeModel, Parameter, ImplementationLocation } from '@azure-tools/codemodel';
 import { values, IterableWithLinq } from '@azure-tools/linq';
-import { contentPreamble, formatParameterTypeName, sortParametersByRequired, addParameterizedHostFunctionality, formatParamValue, skipURLEncoding } from './helpers';
+import { contentPreamble, formatParameterTypeName, sortParametersByRequired, addParameterizedHostFunctionality, formatParamValue, skipURLEncoding, substituteDiscriminator } from './helpers';
 import { schemaTypeToGoType, aggregateParameters } from '../common/helpers';
 import { ImportManager } from './imports';
 
@@ -281,17 +281,39 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   for (const group of values(session.model.operationGroups)) {
     const clientLiterals = [`${client}: client`];
     const methodParams = new Array<string>();
+    let defaultValParamComments = '';
     // add client params to the operation group getter method
     if (group.language.go!.clientParams) {
       const clientParams = <Array<Parameter>>group.language.go!.clientParams;
       clientParams.sort(sortParametersByRequired);
       for (const clientParam of values(clientParams)) {
         clientLiterals.push(`${clientParam.language.go!.name}: ${clientParam.language.go!.name}`);
-        methodParams.push(`${clientParam.language.go!.name} ${formatParameterTypeName(clientParam)}`);
+        const param = substituteDiscriminator(clientParam.schema);
+        let pointer = '';
+        if (!clientParam.required) {
+          pointer = '*';
+        }
+        if (clientParam.clientDefaultValue !== undefined) {
+          pointer = '*';
+          defaultValParamComments += `// For ${clientParam.language.go!.name} pass nil to use the default value of ${clientParam.clientDefaultValue}\n`;
+        }
+        methodParams.push(`${clientParam.language.go!.name} ${pointer}${param}`);
       }
     }
     text += `// ${group.language.go!.clientName} returns the ${group.language.go!.clientName} associated with this client.\n`;
+    if (defaultValParamComments.length > 0) {
+      text += defaultValParamComments;
+    }
     text += `func (client *${client}) ${group.language.go!.clientName}(${methodParams.join(', ')}) ${group.language.go!.clientName} {\n`;
+    for (const mp of values(<Array<Parameter>>group.language.go!.clientParams)) {
+      if (mp.clientDefaultValue !== undefined) {
+        text += `if ${mp.language.go!.name} == nil {
+          ${mp.language.go!.name} = "${mp.clientDefaultValue}"
+        }
+        `;
+      }
+    }
+
     text += `\treturn &${group.operations[0].language.go!.clientName}{${clientLiterals.join(', ')}}\n`;
     text += '}\n\n';
   }

@@ -7,9 +7,10 @@ package azurereportgroup
 
 import (
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/url"
 	"strings"
+
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
 const telemetryInfo = "azsdk-go-azurereportgroup/<version>"
