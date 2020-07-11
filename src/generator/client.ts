@@ -143,6 +143,15 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
         }
       }
     }
+    for (const param of values(paramHostInfo.clientParams)) {
+      let pointer = '';
+      if (param.clientDefaultValue) {
+        pointer = '*';
+      }
+      text += `\t${param.language.go!.name} ${param.schema.language.go!.name}\n`;
+      clientOnlyParamsFuncSig += `${param.language.go!.name} ${pointer}${param.schema.language.go!.name}, `;
+      passClientOnlyParams += `${param.language.go!.name}, `;
+    }
   } else {
     text += `\t${urlVar} *url.URL\n`;
   }
@@ -158,27 +167,15 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   if (!session.model.security.authenticationRequired) {
     credParam = '';
   }
-  if (defaultsExist(clientOnlyParams)) {
+  if (defaultsExist(clientOnlyParams) && !paramHostInfo.addParamHost) {
     text += `// ${newDefaultClient} creates an instance of the ${client} type using the ${defaultEndpoint}.\n`;
     text += `func ${newDefaultClient}(${credParam}options *${clientOptions}) (*${client}, error) {\n`;
     let cred = 'cred, ';
     if (!session.model.security.authenticationRequired) {
       cred = '';
     }
-    if (paramHostInfo.addParamHost) {
-      text += `\treturn ${newClient}(`;
-      for (const param of values(clientOnlyParams)) {
-        if (param.clientDefaultValue !== undefined) {
-          text += `"${param.clientDefaultValue}", `;
-        } else {
-          text += '"", ';
-        }
-      }
-      text += `${cred}options)\n`;
-    } else {
-      // when a parameterized host is not set, the default endpoint is set for the url on the client
-      text += `\treturn ${newClient}(${defaultEndpoint}, ${cred}options)\n`;
-    }
+    // when a parameterized host is not set, the default endpoint is set for the url on the client
+    text += `\treturn ${newClient}(${defaultEndpoint}, ${cred}options)\n`;
     text += '}\n\n';
   }
 
@@ -248,9 +245,9 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
       if ((pp.implementation === ImplementationLocation.Client && group.language.go!.clientParams === undefined) || (pp.implementation === ImplementationLocation.Client && !(<Array<Parameter>>group.language.go!.clientParams).includes(pp))) {
         text += `\thostURL = strings.ReplaceAll(hostURL, "{${pp.language.go!.serializedName}}", client.Client.${pp.language.go!.serializedName})\n`;
       } else {
-        let paramValue = `url.PathEscape(${formatParamValue(pp, imports)})`;
+        let paramValue = `url.PathEscape(${formatParamValue(pp, imports, false)})`;
         if (skipURLEncoding(pp)) {
-          paramValue = formatParamValue(pp, imports);
+          paramValue = formatParamValue(pp, imports, false);
         } else {
           imports.add('net/url');
         }
@@ -265,11 +262,22 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
     text += '\t\treturn nil, fmt.Errorf("no scheme detected in endpoint %s", endpoint)\n';
     text += '\t}\n';
     text += `\treturn &${client}{${urlVar}: ${urlVar}, ${pipelineVar}: ${pipelineVar}}, nil\n`;
-  } else if (clientOnlyParams.length > 0) {
+  } else if (clientOnlyParams.length > 0 || paramHostInfo.clientParams.length > 0) {
     text += `\tclient := &${client}{}\n`;
     text += `\tclient.${pipelineVar} = ${pipelineVar}\n`;
     for (const param of values(clientOnlyParams)) {
       text += `\tclient.${param.language.go!.name} = ${param.language.go!.name}\n`;
+    }
+    for (const param of values(paramHostInfo.clientParams)) {
+      let pointer = '';
+      if (param.clientDefaultValue) { // TODO support more than just string params
+        text += `if ${param.language.go!.name} == nil {
+          *${param.language.go!.name} = "${param.clientDefaultValue}"
+        }
+        `;
+        pointer = '*';
+      }
+      text += `\tclient.${param.language.go!.name} = ${pointer}${param.language.go!.name}\n`;
     }
     text += '\treturn client, nil\n';
   } else {
@@ -298,16 +306,22 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
           literalPointer = '*';
           defaultValParamComments += `// For ${clientParam.language.go!.name} pass nil to use the default value of "${clientParam.clientDefaultValue}"\n`;
         }
-        clientLiterals.push(`${clientParam.language.go!.name}: ${literalPointer}${clientParam.language.go!.name}`);
-        methodParams.push(`${clientParam.language.go!.name} ${methodPointer}${param}`);
+        if (!paramHostInfo.addParamHost || !paramHostInfo.clientParams.includes(clientParam)) {
+          clientLiterals.push(`${clientParam.language.go!.name}: ${literalPointer}${clientParam.language.go!.name}`);
+          methodParams.push(`${clientParam.language.go!.name} ${methodPointer}${param}`);
+        }
       }
     }
     text += `// ${group.language.go!.clientName} returns the ${group.language.go!.clientName} associated with this client.\n`;
     if (defaultValParamComments.length > 0) {
       text += defaultValParamComments;
     }
-    text += `func (client *${client}) ${group.language.go!.clientName}(${methodParams.join(', ')}) ${group.language.go!.clientName} {\n`;
-    for (const mp of values(<Array<Parameter>>group.language.go!.clientParams)) {
+    let difference = new Array<Parameter>();
+    if (paramHostInfo.addParamHost && group.language.go!.clientParams !== undefined) {
+      difference = (<Array<Parameter>>group.language.go!.clientParams).filter(x => !paramHostInfo.clientParams.includes(x));
+    }
+    text += `func (client *${client}) ${group.language.go!.clientName}(${methodParams}) ${group.language.go!.clientName} {\n`;
+    for (const mp of values(difference)) {
       if (mp.clientDefaultValue !== undefined) {
         text += `if ${mp.language.go!.name} == nil {
           *${mp.language.go!.name} = "${mp.clientDefaultValue}"

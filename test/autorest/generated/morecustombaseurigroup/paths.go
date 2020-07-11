@@ -48,10 +48,10 @@ func (client *pathsOperations) getEmptyCreateRequest(vault string, secret string
 	host := "{vault}{secret}{dnsSuffix}"
 	host = strings.ReplaceAll(host, "{vault}", vault)
 	host = strings.ReplaceAll(host, "{secret}", secret)
-	host = strings.ReplaceAll(host, "{dnsSuffix}", client.dnsSuffix)
+	host = strings.ReplaceAll(host, "{dnsSuffix}", client.Client.dnsSuffix)
 	urlPath := "/customuri/{subscriptionId}/{keyName}"
 	urlPath = strings.ReplaceAll(urlPath, "{keyName}", url.PathEscape(keyName))
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.Client.subscriptionID))
 	u, err := url.Parse(host + urlPath)
 	if err != nil {
 		return nil, err

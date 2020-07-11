@@ -14,12 +14,12 @@ import (
 )
 
 func getMoreCustomBaseURIClient(t *testing.T) morecustombaseurigroup.PathsOperations {
-	client, err := morecustombaseurigroup.NewClient(nil)
+	client, err := morecustombaseurigroup.NewClient(to.StringPtr(":3000"), "test12", nil)
 	if err != nil {
 		t.Fatalf("failed to create more custom base URL client: %v", err)
 	}
 	// dnsSuffix string, subscriptionID string
-	return client.PathsOperations(to.StringPtr(":3000"), "test12")
+	return client.PathsOperations()
 }
 
 func TestGetEmpty(t *testing.T) {

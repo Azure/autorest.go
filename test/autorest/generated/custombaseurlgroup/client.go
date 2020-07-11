@@ -57,11 +57,6 @@ type Client struct {
 	p    azcore.Pipeline
 }
 
-// NewDefaultClient creates an instance of the Client type using the DefaultEndpoint.
-func NewDefaultClient(options *ClientOptions) (*Client, error) {
-	return NewClient("host", options)
-}
-
 // NewClient creates an instance of the Client type with the specified endpoint.
 func NewClient(host string, options *ClientOptions) (*Client, error) {
 	if options == nil {

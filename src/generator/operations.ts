@@ -331,12 +331,12 @@ function createProtocolRequest(client: string, op: Operation, group: OperationGr
       imports.add('strings');
       // host references may be found among other variables and therefore call to use the host 
       // specified by the endpoint the client was created with
-      if ((pp.implementation === ImplementationLocation.Client && group.language.go!.clientParams === undefined) || (pp.implementation === ImplementationLocation.Client && !(<Array<Parameter>>group.language.go!.clientParams).includes(pp))) {
+      if ((pp.implementation === ImplementationLocation.Client && group.language.go!.clientParams === undefined) || (pp.implementation === ImplementationLocation.Client && !(<Array<Parameter>>group.language.go!.clientParams).includes(pp)) || paramHostInfo.clientParams.includes(pp)) {
         text += `\thost = strings.ReplaceAll(host, "{${pp.language.go!.serializedName}}", client.Client.${pp.language.go!.serializedName})\n`;
       } else {
-        let paramValue = `url.PathEscape(${formatParamValue(pp, imports)})`;
+        let paramValue = `url.PathEscape(${formatParamValue(pp, imports, false)})`;
         if (skipURLEncoding(pp)) {
-          paramValue = formatParamValue(pp, imports);
+          paramValue = formatParamValue(pp, imports, false);
         } else {
           imports.add('net/url');
         }
@@ -369,9 +369,13 @@ function createProtocolRequest(client: string, op: Operation, group: OperationGr
     text += `\turlPath := "${op.requests![0].protocol.http!.path}"\n`;
     // replace path parameters
     for (const pp of values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'path'; })) {
-      let paramValue = `url.PathEscape(${formatParamValue(pp, imports)})`;
+      let onClient = false;
+      if (paramHostInfo.addParamHost && paramHostInfo.clientParams.includes(pp)) {
+        onClient = true;
+      }
+      let paramValue = `url.PathEscape(${formatParamValue(pp, imports, onClient)})`;
       if (skipURLEncoding(pp)) {
-        paramValue = formatParamValue(pp, imports);
+        paramValue = formatParamValue(pp, imports, onClient);
       } else {
         imports.add('net/url');
       }
@@ -441,7 +445,7 @@ function createProtocolRequest(client: string, op: Operation, group: OperationGr
     if (encodedParams.length > 0) {
       text += '\tquery := u.Query()\n';
       for (const qp of values(encodedParams)) {
-        text += emitQueryParam(qp, `query.Set("${qp.language.go!.serializedName}", ${formatParamValue(qp, imports)})`);
+        text += emitQueryParam(qp, `query.Set("${qp.language.go!.serializedName}", ${formatParamValue(qp, imports, false)})`);
       }
       text += '\tu.RawQuery = query.Encode()\n';
     }
@@ -453,7 +457,7 @@ function createProtocolRequest(client: string, op: Operation, group: OperationGr
         text += '\tunencodedParams := []string{}\n';
       }
       for (const qp of values(unencodedParams)) {
-        text += emitQueryParam(qp, `unencodedParams = append(unencodedParams, "${qp.language.go!.serializedName}="+${formatParamValue(qp, imports)})`);
+        text += emitQueryParam(qp, `unencodedParams = append(unencodedParams, "${qp.language.go!.serializedName}="+${formatParamValue(qp, imports, false)})`);
       }
       text += '\tu.RawQuery = strings.Join(unencodedParams, "&")\n';
     }
@@ -467,12 +471,12 @@ function createProtocolRequest(client: string, op: Operation, group: OperationGr
   const headerParam = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined; }).where((each: Parameter) => { return each.protocol.http!.in === 'header'; });
   headerParam.forEach(header => {
     if (header.required) {
-      text += `\treq.Header.Set("${header.language.go!.serializedName}", ${formatParamValue(header, imports)})\n`;
+      text += `\treq.Header.Set("${header.language.go!.serializedName}", ${formatParamValue(header, imports, false)})\n`;
     } else if (header.schema.type === SchemaType.Constant) {
       // omit this header. TODO once non-required constants are fixed
     } else {
       text += emitParamGroupCheck(<GroupProperty>header.language.go!.paramGroup, header);
-      text += `\t\treq.Header.Set("${header.language.go!.serializedName}", ${formatParamValue(header, imports)})\n`;
+      text += `\t\treq.Header.Set("${header.language.go!.serializedName}", ${formatParamValue(header, imports, false)})\n`;
       text += `\t}\n`;
     }
   });
