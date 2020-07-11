@@ -7,9 +7,8 @@ package custombaseurlgroup
 
 import (
 	"fmt"
-	"strings"
-
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"strings"
 )
 
 const telemetryInfo = "azsdk-go-custombaseurlgroup/<version>"
@@ -56,6 +55,11 @@ func (c *ClientOptions) telemetryOptions() azcore.TelemetryOptions {
 type Client struct {
 	host string
 	p    azcore.Pipeline
+}
+
+// NewDefaultClient creates an instance of the Client type using the DefaultEndpoint.
+func NewDefaultClient(options *ClientOptions) (*Client, error) {
+	return NewClient("host", options)
 }
 
 // NewClient creates an instance of the Client type with the specified endpoint.
