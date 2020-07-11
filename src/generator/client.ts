@@ -295,7 +295,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
         }
         if (clientParam.clientDefaultValue !== undefined) {
           pointer = '*';
-          defaultValParamComments += `// For ${clientParam.language.go!.name} pass nil to use the default value of ${clientParam.clientDefaultValue}\n`;
+          defaultValParamComments += `// For ${clientParam.language.go!.name} pass nil to use the default value of "${clientParam.clientDefaultValue}"\n`;
         }
         methodParams.push(`${clientParam.language.go!.name} ${pointer}${param}`);
       }
