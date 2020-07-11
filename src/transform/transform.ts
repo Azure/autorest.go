@@ -339,7 +339,7 @@ function processOperationRequests(session: Session<CodeModel>) {
 }
 
 function isHostParameter(param: Parameter): boolean {
-  if (param.language.go!.name === 'host' || param.language.go!.name === '$host') {
+  if (param.language.go!.name === '$host') {
     return true;
   }
   return param.extensions?.['x-ms-priority'] === 0 && param.extensions?.['x-in'] === 'path';

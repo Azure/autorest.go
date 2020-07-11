@@ -20,7 +20,6 @@ type AutoRestReportServiceForAzureOperations interface {
 // autoRestReportServiceForAzureOperations implements the AutoRestReportServiceForAzureOperations interface.
 type autoRestReportServiceForAzureOperations struct {
 	*Client
-	Host string
 }
 
 // GetReport - Get test coverage report

@@ -21,11 +21,11 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	azureClient, err := azurereportgroup.NewClient("http://localhost:3000", nil)
+	azureClient, err := azurereportgroup.NewDefaultClient(nil)
 	if err != nil {
 		panic(err)
 	}
-	azureReport, err := azureClient.AutoRestReportServiceForAzureOperations("").GetReport(context.Background(), nil)
+	azureReport, err := azureClient.AutoRestReportServiceForAzureOperations().GetReport(context.Background(), nil)
 	if err != nil {
 		panic(err)
 	}

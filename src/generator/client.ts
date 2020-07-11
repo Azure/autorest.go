@@ -198,7 +198,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
 
 function getDefaultEndpoint(params?: Parameter[]) {
   for (const param of values(params)) {
-    if (param.language.go!.name === '$host' || param.language.go!.name === 'host') {
+    if (param.language.go!.name === '$host') {
       return param.clientDefaultValue;
     }
   }
