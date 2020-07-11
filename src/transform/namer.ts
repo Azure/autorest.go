@@ -96,6 +96,10 @@ export async function namer(session: Session<CodeModel>) {
         op.language.go!.methodPrefix = 'Begin';
       }
       for (const param of values(aggregateParameters(op))) {
+        // don't rename the swagger $host parameter, it's a well-known identifier
+        if (param.language.go!.name === '$host') {
+          continue;
+        }
         const paramDetails = <Language>param.language.go;
         paramDetails.name = getEscapedReservedName(removePrefix(camelCase(paramDetails.name), 'XMS'), 'Parameter');
       }

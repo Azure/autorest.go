@@ -15,6 +15,10 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   // add standard imports
   imports.add('fmt');
   imports.add('net/url');
+  const isARM = session.model.language.go!.openApiType === 'arm';
+  if (isARM) {
+    imports.add('github.com/Azure/azure-sdk-for-go/sdk/armcore');
+  }
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
   imports.add('strings');
 
@@ -46,6 +50,12 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   text += '\t// ApplicationID is an application-specific identification string used in telemetry.\n';
   text += '\t// It has a maximum length of 24 characters and must not contain any spaces.\n';
   text += '\tApplicationID string\n';
+  if (isARM) {
+    text += '\t// DisableRPRegistration controls if an unregistered resource provider should\n';
+    text += '\t// automatically be registered. See https://aka.ms/rps-not-found for more information.\n';
+    text += '\t// The default value is false, meaning registration will be attempted.\n';
+    text += '\tDisableRPRegistration bool\n';
+  }
   text += '}\n\n';
   text += `// ${defaultClientOptions} creates a ${clientOptions} type initialized with default values.\n`;
   text += `func ${defaultClientOptions}() ${clientOptions} {\n`;
@@ -115,14 +125,41 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   text += `\t\to := ${defaultClientOptions}()\n`;
   text += '\t\toptions = &o\n';
   text += '\t}\n';
-  text += '\tp := azcore.NewPipeline(options.HTTPClient,\n';
-  text += '\t\tazcore.NewTelemetryPolicy(options.telemetryOptions()),\n';
-  text += '\t\tazcore.NewUniqueRequestIDPolicy(),\n';
-  text += '\t\tazcore.NewRetryPolicy(&options.Retry),\n';
-  if (session.model.security.authenticationRequired) {
-    text += '\t\tcred.AuthenticationPolicy(azcore.AuthenticationPolicyOptions{Options: azcore.TokenRequestOptions{Scopes: []string{scope}}}),\n';
+  const telemetryPolicy = 'azcore.NewTelemetryPolicy(options.telemetryOptions())';
+  const reqIDPolicy = 'azcore.NewUniqueRequestIDPolicy()';
+  const retryPolicy = 'azcore.NewRetryPolicy(&options.Retry)';
+  const credPolicy = 'cred.AuthenticationPolicy(azcore.AuthenticationPolicyOptions{Options: azcore.TokenRequestOptions{Scopes: []string{scope}}})';
+  const logPolicy = 'azcore.NewRequestLogPolicy(options.LogOptions))';
+  // ARM will optionally inject the RP registration policy into the pipeline
+  if (isARM) {
+    text += '\tpolicies := []azcore.Policy{\n';
+    text += `\t\t${telemetryPolicy},\n`;
+    text += `\t\t${reqIDPolicy},\n`;
+    text += '\t}\n';
+    // RP registration policy must appear before the retry policy
+    text += '\tif !options.DisableRPRegistration {\n';
+    text += '\t\trpOpts := armcore.DefaultRegistrationOptions()\n';
+    text += '\t\trpOpts.HTTPClient = options.HTTPClient\n';
+    text += '\t\trpOpts.LogOptions = options.LogOptions\n';
+    text += '\t\trpOpts.Retry = options.Retry\n';
+    text += '\t\tpolicies = append(policies, armcore.NewRPRegistrationPolicy(cred, &rpOpts))\n';
+    text += '\t}\n';
+    text += '\tpolicies = append(policies,\n';
+    text += `\t\t${retryPolicy},\n`;
+    // ARM implies authentication is required
+    text += `\t\t${credPolicy},\n`;
+    text += `\t\t${logPolicy}\n`;
+    text += '\tp := azcore.NewPipeline(options.HTTPClient, policies...)\n';
+  } else {
+    text += '\tp := azcore.NewPipeline(options.HTTPClient,\n';
+    text += `\t\t${telemetryPolicy},\n`;
+    text += `\t\t${reqIDPolicy},\n`;
+    text += `\t\t${retryPolicy},\n`;
+    if (session.model.security.authenticationRequired) {
+      text += `\t\t${credPolicy},\n`;
+    }
+    text += `\t\t${logPolicy}\n`;
   }
-  text += '\t\tazcore.NewRequestLogPolicy(options.LogOptions))\n';
   text += `\treturn ${newClientWithPipeline}(endpoint, p)\n`;
   text += '}\n\n';
 
@@ -161,7 +198,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
 
 function getDefaultEndpoint(params?: Parameter[]) {
   for (const param of values(params)) {
-    if (param.language.go!.name === '$host' || param.language.go!.name === 'host') {
+    if (param.language.go!.name === '$host') {
       return param.clientDefaultValue;
     }
   }

@@ -33,6 +33,8 @@ export async function transform(host: Host) {
 }
 
 async function process(session: Session<CodeModel>) {
+  const specType = await session.getValue('openapi-type', 'not_specified');
+  session.model.language.go!.openApiType = specType;
   processOperationRequests(session);
   processOperationResponses(session);
   // fix up dictionary element types (additional properties)
@@ -337,7 +339,7 @@ function processOperationRequests(session: Session<CodeModel>) {
 }
 
 function isHostParameter(param: Parameter): boolean {
-  if (param.language.go!.name === 'host' || param.language.go!.name === '$host') {
+  if (param.language.go!.name === '$host') {
     return true;
   }
   return param.extensions?.['x-ms-priority'] === 0 && param.extensions?.['x-in'] === 'path';

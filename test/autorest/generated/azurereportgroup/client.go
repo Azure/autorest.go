@@ -58,6 +58,14 @@ type Client struct {
 	p azcore.Pipeline
 }
 
+// DefaultEndpoint is the default service endpoint.
+const DefaultEndpoint = "http://localhost:3000"
+
+// NewDefaultClient creates an instance of the Client type using the DefaultEndpoint.
+func NewDefaultClient(options *ClientOptions) (*Client, error) {
+	return NewClient(DefaultEndpoint, options)
+}
+
 // NewClient creates an instance of the Client type with the specified endpoint.
 func NewClient(endpoint string, options *ClientOptions) (*Client, error) {
 	if options == nil {
@@ -85,6 +93,6 @@ func NewClientWithPipeline(endpoint string, p azcore.Pipeline) (*Client, error) 
 }
 
 // AutoRestReportServiceForAzureOperations returns the AutoRestReportServiceForAzureOperations associated with this client.
-func (client *Client) AutoRestReportServiceForAzureOperations(Host string) AutoRestReportServiceForAzureOperations {
-	return &autoRestReportServiceForAzureOperations{Client: client, Host: Host}
+func (client *Client) AutoRestReportServiceForAzureOperations() AutoRestReportServiceForAzureOperations {
+	return &autoRestReportServiceForAzureOperations{Client: client}
 }
