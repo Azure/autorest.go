@@ -79,7 +79,7 @@ func NewClientWithPipeline(p azcore.Pipeline) (*Client, error) {
 // For dnsSuffix pass nil to use the default value of "host"
 func (client *Client) PathsOperations(dnsSuffix *string, subscriptionID string) PathsOperations {
 	if dnsSuffix == nil {
-		dnsSuffix = "host"
+		*dnsSuffix = "host"
 	}
-	return &pathsOperations{Client: client, dnsSuffix: dnsSuffix, subscriptionID: subscriptionID}
+	return &pathsOperations{Client: client, dnsSuffix: *dnsSuffix, subscriptionID: subscriptionID}
 }

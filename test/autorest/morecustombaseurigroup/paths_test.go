@@ -19,7 +19,7 @@ func getMoreCustomBaseURIClient(t *testing.T) morecustombaseurigroup.PathsOperat
 		t.Fatalf("failed to create more custom base URL client: %v", err)
 	}
 	// dnsSuffix string, subscriptionID string
-	return client.PathsOperations(":3000", "test12")
+	return client.PathsOperations(to.StringPtr(":3000"), "test12")
 }
 
 func TestGetEmpty(t *testing.T) {

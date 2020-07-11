@@ -287,17 +287,19 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
       const clientParams = <Array<Parameter>>group.language.go!.clientParams;
       clientParams.sort(sortParametersByRequired);
       for (const clientParam of values(clientParams)) {
-        clientLiterals.push(`${clientParam.language.go!.name}: ${clientParam.language.go!.name}`);
         const param = substituteDiscriminator(clientParam.schema);
-        let pointer = '';
+        let methodPointer = '';
+        let literalPointer = '';
         if (!clientParam.required) {
-          pointer = '*';
+          methodPointer = '*';
         }
         if (clientParam.clientDefaultValue !== undefined) {
-          pointer = '*';
+          methodPointer = '*';
+          literalPointer = '*';
           defaultValParamComments += `// For ${clientParam.language.go!.name} pass nil to use the default value of "${clientParam.clientDefaultValue}"\n`;
         }
-        methodParams.push(`${clientParam.language.go!.name} ${pointer}${param}`);
+        clientLiterals.push(`${clientParam.language.go!.name}: ${literalPointer}${clientParam.language.go!.name}`);
+        methodParams.push(`${clientParam.language.go!.name} ${methodPointer}${param}`);
       }
     }
     text += `// ${group.language.go!.clientName} returns the ${group.language.go!.clientName} associated with this client.\n`;
@@ -308,7 +310,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
     for (const mp of values(<Array<Parameter>>group.language.go!.clientParams)) {
       if (mp.clientDefaultValue !== undefined) {
         text += `if ${mp.language.go!.name} == nil {
-          ${mp.language.go!.name} = "${mp.clientDefaultValue}"
+          *${mp.language.go!.name} = "${mp.clientDefaultValue}"
         }
         `;
       }
