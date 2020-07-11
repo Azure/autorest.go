@@ -8,7 +8,7 @@ import { camelCase } from '@azure-tools/codegen';
 import { CodeModel, Parameter, ImplementationLocation } from '@azure-tools/codemodel';
 import { values, IterableWithLinq } from '@azure-tools/linq';
 import { contentPreamble, formatParameterTypeName, sortParametersByRequired, addParameterizedHostFunctionality, formatParamValue, skipURLEncoding, substituteDiscriminator } from './helpers';
-import { schemaTypeToGoType, aggregateParameters } from '../common/helpers';
+import { aggregateParameters } from '../common/helpers';
 import { ImportManager } from './imports';
 
 // generates content for client.go
@@ -139,7 +139,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
     if (clientOnlyParams.length > 0) {
       for (const param of values(clientOnlyParams)) {
         if (param.protocol.http!.in === 'uri') {
-          text += `\t${param.language.go!.name} ${schemaTypeToGoType(session.model, param.schema, false)}\n`;
+          text += `\t${param.language.go!.name} ${param.schema.language.go!.name}\n`;
         }
       }
     }
