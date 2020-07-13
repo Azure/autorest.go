@@ -245,7 +245,7 @@ export function formatParamValue(param: Parameter, imports: ImportManager, onCli
 export interface ParameterizedHost {
   addParamHost: boolean;
   urlOnClient: boolean;
-  clientParams: Array<Parameter>;
+  clientParams: Array<Parameter>; // contains the list of client params shared across all operation groups
 }
 
 // this function checks if parameterized host functionality needs to be added for the service
