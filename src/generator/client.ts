@@ -120,7 +120,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   groupClientParams = [...new Set(groupClientParams)];
   // if there are global parameters then check for global params that are only meant to exist on the client
   // and which do not exist on operation groups. The paramters found here will be added onto the client.
-  if (session.model.globalParameters) { // TODO move all common params to client and away from operation group
+  if (session.model.globalParameters) {
     for (const param of values(session.model.globalParameters)) {
       if (!groupClientParams.includes(param) && param.protocol.http!.in === 'uri') {
         clientOnlyParams.push(param);
@@ -234,7 +234,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
     text += '\t\treturn nil, fmt.Errorf("no scheme detected in endpoint %s", endpoint)\n';
     text += '\t}\n';
     text += `\treturn &${client}{${urlVar}: ${urlVar}, ${pipelineVar}: ${pipelineVar}}, nil\n`;
-  } else if (paramHostInfo.urlOnClient) { // TODO I think there's a flaw here if there are client params on the operation groups
+  } else if (paramHostInfo.urlOnClient) {
     const op = session.model.operationGroups[0].operations[0];
     const group = session.model.operationGroups[0];
     text += `\thostURL := "${op.requests![0].protocol.http!.uri}"\n`;
