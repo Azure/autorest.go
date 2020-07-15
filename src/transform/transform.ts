@@ -9,6 +9,7 @@ import { ObjectSchema, ArraySchema, ChoiceValue, codeModelSchema, CodeModel, Dat
 import { items, values } from '@azure-tools/linq';
 import { aggregateParameters, hasAdditionalProperties, isPageableOperation, isObjectSchema, isSchemaResponse, PagerInfo, isLROOperation, PollerInfo } from '../common/helpers';
 import { namer, removePrefix } from './namer';
+import { addParameterizedHostFunctionality } from '../generator/helpers';
 
 // The transformer adds Go-specific information to the code model.
 export async function transform(host: Host) {
@@ -213,6 +214,7 @@ function recursiveAddMarshallingFormat(schema: Schema, marshallingFormat: 'json'
 
 // we will transform operation request parameter schema types to Go types
 function processOperationRequests(session: Session<CodeModel>) {
+  const paramHostInfo = addParameterizedHostFunctionality(session.model.operationGroups);
   // track any parameter groups and/or optional parameters
   const paramGroups = new Map<string, GroupProperty>();
   for (const group of values(session.model.operationGroups)) {
@@ -227,7 +229,7 @@ function processOperationRequests(session: Session<CodeModel>) {
         }
       }
       for (const param of values(aggregateParameters(op))) {
-        // skip the host param as it's a field on the client
+        // skip the host param as it has special handling
         if (isHostParameter(param)) {
           continue;
         }
@@ -261,6 +263,12 @@ function processOperationRequests(session: Session<CodeModel>) {
           // check if this global param has already been added
           if (clientParams.includes(param)) {
             continue;
+          }
+          // TODO improve this condition
+          if (paramHostInfo.addParamHost) {
+            if (param.protocol.http!.in === 'uri') {
+              continue;
+            }
           }
           clientParams.push(param);
         }

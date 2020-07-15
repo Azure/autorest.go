@@ -22,7 +22,6 @@ type PathsOperations interface {
 // pathsOperations implements the PathsOperations interface.
 type pathsOperations struct {
 	*Client
-	dnsSuffix      string
 	subscriptionID string
 }
 
@@ -45,10 +44,14 @@ func (client *pathsOperations) GetEmpty(ctx context.Context, vault string, secre
 
 // getEmptyCreateRequest creates the GetEmpty request.
 func (client *pathsOperations) getEmptyCreateRequest(vault string, secret string, keyName string, pathsGetEmptyOptions *PathsGetEmptyOptions) (*azcore.Request, error) {
+	host := "{vault}{secret}{dnsSuffix}"
+	host = strings.ReplaceAll(host, "{vault}", vault)
+	host = strings.ReplaceAll(host, "{secret}", secret)
+	host = strings.ReplaceAll(host, "{dnsSuffix}", client.Client.dnsSuffix)
 	urlPath := "/customuri/{subscriptionId}/{keyName}"
 	urlPath = strings.ReplaceAll(urlPath, "{keyName}", url.PathEscape(keyName))
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(urlPath)
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.Client.subscriptionID))
+	u, err := url.Parse(host + urlPath)
 	if err != nil {
 		return nil, err
 	}

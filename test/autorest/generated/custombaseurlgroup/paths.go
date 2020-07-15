@@ -9,6 +9,8 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
+	"net/url"
+	"strings"
 )
 
 // PathsOperations contains the methods for the Paths group.
@@ -41,8 +43,11 @@ func (client *pathsOperations) GetEmpty(ctx context.Context, accountName string)
 
 // getEmptyCreateRequest creates the GetEmpty request.
 func (client *pathsOperations) getEmptyCreateRequest(accountName string) (*azcore.Request, error) {
+	host := "http://{accountName}{host}"
+	host = strings.ReplaceAll(host, "{accountName}", accountName)
+	host = strings.ReplaceAll(host, "{host}", client.Client.host)
 	urlPath := "/customuri"
-	u, err := client.u.Parse(urlPath)
+	u, err := url.Parse(host + urlPath)
 	if err != nil {
 		return nil, err
 	}
