@@ -28,7 +28,8 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   if (paramHostInfo.addParamHost) {
     addEndpoint = '';
     passEndpoint = '';
-  } else if (!paramHostInfo.addParamHost || paramHostInfo.urlOnClient) {
+  }
+  if (!paramHostInfo.addParamHost || paramHostInfo.urlOnClient) {
     imports.add('net/url');
   }
 
@@ -107,11 +108,39 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
     text += `// ${client} - ${session.model.info.description}\n`;
   }
   // initialize clientOnlyParams in order to use them in client parameter declarations and assign values for the defaults later on
-  const clientOnlyParams = getGlobalClientOnlyParams(paramHostInfo.clientParams, session.model);
+  const clientOnlyParams = new Array<Parameter>();
   // initialize vars to add params specific to the client on the function signature and to pass
   // params between functions
   let clientOnlyParamsFuncSig = '';
   let passClientOnlyParams = '';
+  // if there are global parameters then check for global params that are only meant to exist on the client
+  // and which do not exist on operation groups. The paramters found here will be added onto the client.
+  if (session.model.globalParameters) {
+    for (const param of values(session.model.globalParameters)) {
+      if ((!paramHostInfo.clientParams.includes(param) && param.protocol.http!.in === 'uri')) {
+        clientOnlyParams.push(param);
+        let pointer = '';
+        if (param.clientDefaultValue !== undefined) {
+          pointer = '*';
+        }
+        clientOnlyParamsFuncSig += `${param.language.go!.name} ${pointer}${param.schema.language.go!.name}, `;
+        passClientOnlyParams += `${param.language.go!.name}, `;
+      }
+    }
+  }
+  // if the url is on the client then consolidate all of the client params into the method signatures since they
+  // wont be placed on the client
+  // add fields that are client only params shared by all operation groups
+  if (paramHostInfo.addParamHost && paramHostInfo.urlOnClient) {
+    for (const param of values(paramHostInfo.clientParams)) {
+      let pointer = '';
+      if (param.clientDefaultValue) {
+        pointer = '*';
+      }
+      clientOnlyParamsFuncSig += `${param.language.go!.name} ${pointer}${param.schema.language.go!.name}, `;
+      passClientOnlyParams += `${param.language.go!.name}, `;
+    }
+  }
   // if the parameterized host functionality is not going to be implemented then wipe client only parameter settings
   if (!paramHostInfo.addParamHost && !paramHostInfo.urlOnClient) {
     clientOnlyParamsFuncSig = '';
@@ -123,8 +152,6 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
     for (const param of values(clientOnlyParams)) {
       if (param.protocol.http!.in === 'uri') {
         text += `\t${param.language.go!.name} ${param.schema.language.go!.name}\n`;
-        clientOnlyParamsFuncSig += `${param.language.go!.name} ${param.schema.language.go!.name}, `;
-        passClientOnlyParams += `${param.language.go!.name}, `;
       }
     }
     // add fields that are client only params shared by all operation groups
@@ -225,19 +252,17 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
     text += `\thostURL := "${op.requests![0].protocol.http!.uri}"\n`;
     for (const pp of values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'uri'; })) {
       imports.add('strings');
-      // host references may be found among other variables and therefore call to use the host 
-      // specified by the endpoint the client was created with
-      if ((pp.implementation === ImplementationLocation.Client && group.language.go!.clientParams === undefined) || (pp.implementation === ImplementationLocation.Client && !(<Array<Parameter>>group.language.go!.clientParams).includes(pp))) {
-        text += `\thostURL = strings.ReplaceAll(hostURL, "{${pp.language.go!.serializedName}}", client.Client.${pp.language.go!.serializedName})\n`;
-      } else {
-        let paramValue = `url.PathEscape(${formatParamValue(pp, imports, false)})`;
-        if (skipURLEncoding(pp)) {
-          paramValue = formatParamValue(pp, imports, false);
-        } else {
-          imports.add('net/url');
+      // check for default values and replace if they are not passed in the function
+      let pointer = '';
+      if (pp.clientDefaultValue) { // TODO support more than just string params
+        text += `if ${pp.language.go!.name} == nil {
+          *${pp.language.go!.name} = "${pp.clientDefaultValue}"
         }
-        text += `\thostURL = strings.ReplaceAll(hostURL, "{${pp.language.go!.serializedName}}", ${paramValue})\n`;
+        `;
+        pointer = '*';
       }
+      // TODO if this needs a call to formatParamValue
+      text += `\thostURL = strings.ReplaceAll(hostURL, "{${pp.language.go!.serializedName}}", ${pointer}${pp.language.go!.name})\n`;
     }
     text += `\t${urlVar}, err := url.Parse(hostURL)\n`;
     text += '\tif err != nil {\n';
@@ -251,7 +276,15 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
     text += `\tclient := &${client}{}\n`;
     text += `\tclient.${pipelineVar} = ${pipelineVar}\n`;
     for (const param of values(clientOnlyParams)) {
-      text += `\tclient.${param.language.go!.name} = ${param.language.go!.name}\n`;
+      let pointer = '';
+      if (param.clientDefaultValue) { // TODO support more than just string params
+        text += `if ${param.language.go!.name} == nil {
+          *${param.language.go!.name} = "${param.clientDefaultValue}"
+        }
+        `;
+        pointer = '*';
+      }
+      text += `\tclient.${param.language.go!.name} = ${pointer}${param.language.go!.name}\n`;
     }
     for (const param of values(paramHostInfo.clientParams)) {
       let pointer = '';
@@ -280,6 +313,9 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
       const clientParams = <Array<Parameter>>group.language.go!.clientParams;
       clientParams.sort(sortParametersByRequired);
       for (const clientParam of values(clientParams)) {
+        if (clientOnlyParams.includes(clientParam)) {
+          continue;
+        }
         const param = substituteDiscriminator(clientParam.schema);
         let methodPointer = '';
         let literalPointer = '';
@@ -291,7 +327,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
           literalPointer = '*';
           defaultValParamComments += `// For ${clientParam.language.go!.name} pass nil to use the default value of "${clientParam.clientDefaultValue}"\n`;
         }
-        if (!paramHostInfo.addParamHost || !paramHostInfo.clientParams.includes(clientParam)) {
+        if (!paramHostInfo.addParamHost || (!paramHostInfo.urlOnClient && !paramHostInfo.clientParams.includes(clientParam))) {
           clientLiterals.push(`${clientParam.language.go!.name}: ${literalPointer}${clientParam.language.go!.name}`);
           methodParams.push(`${clientParam.language.go!.name} ${methodPointer}${param}`);
         }
@@ -307,6 +343,9 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
     }
     text += `func (client *${client}) ${group.language.go!.clientName}(${methodParams}) ${group.language.go!.clientName} {\n`;
     for (const mp of values(difference)) {
+      if (clientOnlyParams.includes(mp)) {
+        continue;
+      }
       if (mp.clientDefaultValue !== undefined) {
         text += `if ${mp.language.go!.name} == nil {
           *${mp.language.go!.name} = "${mp.clientDefaultValue}"
@@ -353,18 +392,4 @@ export function createParametersSig(clientParams: IterableWithLinq<Parameter>): 
     params.push(camelCase(p.language.go!.name));
   }
   return [funcParams.join(', '), params.join(', ')];
-}
-
-function getGlobalClientOnlyParams(groupClientParams: Array<Parameter>, codeModel: CodeModel): Array<Parameter> {
-  const clientOnlyParams = new Array<Parameter>();
-  // if there are global parameters then check for global params that are only meant to exist on the client
-  // and which do not exist on operation groups. The paramters found here will be added onto the client.
-  if (codeModel.globalParameters) {
-    for (const param of values(codeModel.globalParameters)) {
-      if (!groupClientParams.includes(param) && param.protocol.http!.in === 'uri') {
-        clientOnlyParams.push(param);
-      }
-    }
-  }
-  return clientOnlyParams;
 }

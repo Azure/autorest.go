@@ -60,10 +60,12 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     text += `// ${clientName} implements the ${group.language.go!.clientName} interface.\n`;
     text += `type ${clientName} struct {\n`;
     text += `\t*${client}\n`;
-    if (group.language.go!.clientParams) {
-      const clientParams = <Array<Parameter>>group.language.go!.clientParams;
-      for (const clientParam of values(clientParams)) {
-        text += `\t${clientParam.language.go!.name} ${formatParameterTypeName(clientParam)}\n`;
+    if ((paramHostInfo.addParamHost && !paramHostInfo.urlOnClient) || !paramHostInfo.addParamHost) {
+      if (group.language.go!.clientParams) {
+        const clientParams = <Array<Parameter>>group.language.go!.clientParams;
+        for (const clientParam of values(clientParams)) {
+          text += `\t${clientParam.language.go!.name} ${formatParameterTypeName(clientParam)}\n`;
+        }
       }
     }
     text += '}\n\n';
@@ -323,7 +325,7 @@ function createProtocolRequest(client: string, op: Operation, group: OperationGr
   // parameterized hosts that are in the format "{x}" will be ignored and the client url will be used.
   // any path like "{host}/some/path" will require host path replacement.
   // cases like "{accountName}{host}" prevent simply checking the beginning/ending of the host url.
-  if (paramHostInfo.addParamHost) {
+  if (paramHostInfo.addParamHost && !paramHostInfo.urlOnClient) {
     paramHost = true;
     text += `\thost := "${hostURLStr}"\n`;
     // replace url parameters
@@ -332,7 +334,7 @@ function createProtocolRequest(client: string, op: Operation, group: OperationGr
       // host references may be found among other variables and therefore call to use the host 
       // specified by the endpoint the client was created with
       if ((pp.implementation === ImplementationLocation.Client && group.language.go!.clientParams === undefined) || (pp.implementation === ImplementationLocation.Client && !(<Array<Parameter>>group.language.go!.clientParams).includes(pp)) || paramHostInfo.clientParams.includes(pp)) {
-        text += `\thost = strings.ReplaceAll(host, "{${pp.language.go!.serializedName}}", client.Client.${pp.language.go!.serializedName})\n`;
+        text += `\thost = strings.ReplaceAll(host, "{${pp.language.go!.serializedName}}", client.Client.${pp.language.go!.name})\n`;
       } else {
         let paramValue = `url.PathEscape(${formatParamValue(pp, imports, false)})`;
         if (skipURLEncoding(pp)) {

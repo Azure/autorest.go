@@ -22,7 +22,6 @@ type PathsOperations interface {
 // pathsOperations implements the PathsOperations interface.
 type pathsOperations struct {
 	*Client
-	dnsSuffix      string
 	subscriptionID string
 }
 

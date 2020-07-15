@@ -257,17 +257,24 @@ export function addParameterizedHostFunctionality(operationGroups: Array<Operati
   // package. 
   let separateHosts = false; // this indicates if there are multiple parameterized host implementations
   const paramHost = operationGroups[0].operations[0].requests![0].protocol.http!.uri;
-  const allClientParams = new Array<Array<Parameter>>();
+  let allClientParams = new Array<Array<Parameter>>();
+  let checkSharedParams = true; // variable to control if we should keep checking for shared client params
   for (const group of values(operationGroups)) {
     const hostURI = group.operations[0].requests![0].protocol.http!.uri;
     // if we find a different parameterized host definition url parsing is done off the client
     if (hostURI !== paramHost) {
       separateHosts = true;
-      break;
     }
     // store client params in one array to later filter down to all shared client params
-    if (group.language.go!.clientParams !== undefined) {
+    if (group.language.go!.clientParams !== undefined && checkSharedParams) {
       allClientParams.push(group.language.go!.clientParams);
+    } else {
+      if (allClientParams.length > 0) {
+        // wipe all client params since one group does not have any, therefore indicating
+        // that there is no client param shared among all operation groups
+        allClientParams = new Array<Array<Parameter>>();
+        checkSharedParams = false;
+      }
     }
   }
   let sharedParams = new Array<Parameter>();
