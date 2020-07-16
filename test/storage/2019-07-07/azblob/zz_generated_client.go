@@ -54,7 +54,7 @@ func (c *ClientOptions) telemetryOptions() azcore.TelemetryOptions {
 }
 
 type client struct {
-	u *url.URL
+	u url.URL
 	p azcore.Pipeline
 }
 
@@ -82,7 +82,7 @@ func newClientWithPipeline(endpoint string, p azcore.Pipeline) (*client, error) 
 	if u.Scheme == "" {
 		return nil, fmt.Errorf("no scheme detected in endpoint %s", endpoint)
 	}
-	return &client{u: u, p: p}, nil
+	return &client{u: *u, p: p}, nil
 }
 
 // ServiceOperations returns the ServiceOperations associated with this client.

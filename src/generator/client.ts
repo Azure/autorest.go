@@ -165,7 +165,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
       passClientOnlyParams += `${param.language.go!.name}, `;
     }
   } else {
-    text += `\t${urlVar} *url.URL\n`;
+    text += `\t${urlVar} url.URL\n`;
   }
   text += `\t${pipelineVar} azcore.Pipeline\n`;
   text += '}\n\n';
@@ -245,7 +245,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
     text += `\tif ${urlVar}.Scheme == "" {\n`;
     text += '\t\treturn nil, fmt.Errorf("no scheme detected in endpoint %s", endpoint)\n';
     text += '\t}\n';
-    text += `\treturn &${client}{${urlVar}: ${urlVar}, ${pipelineVar}: ${pipelineVar}}, nil\n`;
+    text += `\treturn &${client}{${urlVar}: *${urlVar}, ${pipelineVar}: ${pipelineVar}}, nil\n`;
   } else if (paramHostInfo.urlOnClient) {
     const op = session.model.operationGroups[0].operations[0];
     const group = session.model.operationGroups[0];
