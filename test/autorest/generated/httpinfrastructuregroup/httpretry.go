@@ -9,6 +9,7 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
+	"path"
 )
 
 // HTTPRetryOperations contains the methods for the HTTPRetry group.
@@ -58,7 +59,7 @@ func (client *httpRetryOperations) Delete503(ctx context.Context) (*http.Respons
 // delete503CreateRequest creates the Delete503 request.
 func (client *httpRetryOperations) delete503CreateRequest() (*azcore.Request, error) {
 	urlPath := "/http/retry/503"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +104,7 @@ func (client *httpRetryOperations) Get502(ctx context.Context) (*http.Response, 
 // get502CreateRequest creates the Get502 request.
 func (client *httpRetryOperations) get502CreateRequest() (*azcore.Request, error) {
 	urlPath := "/http/retry/502"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -148,7 +149,7 @@ func (client *httpRetryOperations) Head408(ctx context.Context) (*http.Response,
 // head408CreateRequest creates the Head408 request.
 func (client *httpRetryOperations) head408CreateRequest() (*azcore.Request, error) {
 	urlPath := "/http/retry/408"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -193,7 +194,7 @@ func (client *httpRetryOperations) Options502(ctx context.Context) (*BoolRespons
 // options502CreateRequest creates the Options502 request.
 func (client *httpRetryOperations) options502CreateRequest() (*azcore.Request, error) {
 	urlPath := "/http/retry/502"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -239,7 +240,7 @@ func (client *httpRetryOperations) Patch500(ctx context.Context) (*http.Response
 // patch500CreateRequest creates the Patch500 request.
 func (client *httpRetryOperations) patch500CreateRequest() (*azcore.Request, error) {
 	urlPath := "/http/retry/500"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -284,7 +285,7 @@ func (client *httpRetryOperations) Patch504(ctx context.Context) (*http.Response
 // patch504CreateRequest creates the Patch504 request.
 func (client *httpRetryOperations) patch504CreateRequest() (*azcore.Request, error) {
 	urlPath := "/http/retry/504"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -329,7 +330,7 @@ func (client *httpRetryOperations) Post503(ctx context.Context) (*http.Response,
 // post503CreateRequest creates the Post503 request.
 func (client *httpRetryOperations) post503CreateRequest() (*azcore.Request, error) {
 	urlPath := "/http/retry/503"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -374,7 +375,7 @@ func (client *httpRetryOperations) Put500(ctx context.Context) (*http.Response, 
 // put500CreateRequest creates the Put500 request.
 func (client *httpRetryOperations) put500CreateRequest() (*azcore.Request, error) {
 	urlPath := "/http/retry/500"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -419,7 +420,7 @@ func (client *httpRetryOperations) Put504(ctx context.Context) (*http.Response, 
 // put504CreateRequest creates the Put504 request.
 func (client *httpRetryOperations) put504CreateRequest() (*azcore.Request, error) {
 	urlPath := "/http/retry/504"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

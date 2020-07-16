@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"path"
 	"strings"
 )
 
@@ -51,7 +52,7 @@ func (client *subscriptionInMethodOperations) PostMethodLocalNull(ctx context.Co
 func (client *subscriptionInMethodOperations) postMethodLocalNullCreateRequest(subscriptionId string) (*azcore.Request, error) {
 	urlPath := "/azurespecials/subscriptionId/method/string/none/path/local/null/{subscriptionId}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionId))
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -97,7 +98,7 @@ func (client *subscriptionInMethodOperations) PostMethodLocalValid(ctx context.C
 func (client *subscriptionInMethodOperations) postMethodLocalValidCreateRequest(subscriptionId string) (*azcore.Request, error) {
 	urlPath := "/azurespecials/subscriptionId/method/string/none/path/local/1234-5678-9012-3456/{subscriptionId}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionId))
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -143,7 +144,7 @@ func (client *subscriptionInMethodOperations) PostPathLocalValid(ctx context.Con
 func (client *subscriptionInMethodOperations) postPathLocalValidCreateRequest(subscriptionId string) (*azcore.Request, error) {
 	urlPath := "/azurespecials/subscriptionId/path/string/none/path/local/1234-5678-9012-3456/{subscriptionId}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionId))
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -189,7 +190,7 @@ func (client *subscriptionInMethodOperations) PostSwaggerLocalValid(ctx context.
 func (client *subscriptionInMethodOperations) postSwaggerLocalValidCreateRequest(subscriptionId string) (*azcore.Request, error) {
 	urlPath := "/azurespecials/subscriptionId/swagger/string/none/path/local/1234-5678-9012-3456/{subscriptionId}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionId))
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

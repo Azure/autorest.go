@@ -9,6 +9,7 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
+	"path"
 )
 
 // BasicOperations contains the methods for the Basic group.
@@ -52,7 +53,7 @@ func (client *basicOperations) GetEmpty(ctx context.Context) (*BasicResponse, er
 // getEmptyCreateRequest creates the GetEmpty request.
 func (client *basicOperations) getEmptyCreateRequest() (*azcore.Request, error) {
 	urlPath := "/complex/basic/empty"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -98,7 +99,7 @@ func (client *basicOperations) GetInvalid(ctx context.Context) (*BasicResponse, 
 // getInvalidCreateRequest creates the GetInvalid request.
 func (client *basicOperations) getInvalidCreateRequest() (*azcore.Request, error) {
 	urlPath := "/complex/basic/invalid"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -144,7 +145,7 @@ func (client *basicOperations) GetNotProvided(ctx context.Context) (*BasicRespon
 // getNotProvidedCreateRequest creates the GetNotProvided request.
 func (client *basicOperations) getNotProvidedCreateRequest() (*azcore.Request, error) {
 	urlPath := "/complex/basic/notprovided"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -190,7 +191,7 @@ func (client *basicOperations) GetNull(ctx context.Context) (*BasicResponse, err
 // getNullCreateRequest creates the GetNull request.
 func (client *basicOperations) getNullCreateRequest() (*azcore.Request, error) {
 	urlPath := "/complex/basic/null"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -236,7 +237,7 @@ func (client *basicOperations) GetValid(ctx context.Context) (*BasicResponse, er
 // getValidCreateRequest creates the GetValid request.
 func (client *basicOperations) getValidCreateRequest() (*azcore.Request, error) {
 	urlPath := "/complex/basic/valid"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -282,7 +283,7 @@ func (client *basicOperations) PutValid(ctx context.Context, complexBody Basic) 
 // putValidCreateRequest creates the PutValid request.
 func (client *basicOperations) putValidCreateRequest(complexBody Basic) (*azcore.Request, error) {
 	urlPath := "/complex/basic/valid"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

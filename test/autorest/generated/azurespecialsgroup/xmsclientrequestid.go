@@ -12,6 +12,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"io/ioutil"
 	"net/http"
+	"path"
 )
 
 // XMSClientRequestIDOperations contains the methods for the XMSClientRequestID group.
@@ -47,7 +48,7 @@ func (client *xmsClientRequestIdoperations) Get(ctx context.Context) (*http.Resp
 // getCreateRequest creates the Get request.
 func (client *xmsClientRequestIdoperations) getCreateRequest() (*azcore.Request, error) {
 	urlPath := "/azurespecials/overwrite/x-ms-client-request-id/method/"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -95,7 +96,7 @@ func (client *xmsClientRequestIdoperations) ParamGet(ctx context.Context, xMSCli
 // paramGetCreateRequest creates the ParamGet request.
 func (client *xmsClientRequestIdoperations) paramGetCreateRequest(xMSClientRequestId string) (*azcore.Request, error) {
 	urlPath := "/azurespecials/overwrite/x-ms-client-request-id/via-param/method/"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

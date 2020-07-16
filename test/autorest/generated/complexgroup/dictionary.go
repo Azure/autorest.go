@@ -9,6 +9,7 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
+	"path"
 )
 
 // DictionaryOperations contains the methods for the Dictionary group.
@@ -52,7 +53,7 @@ func (client *dictionaryOperations) GetEmpty(ctx context.Context) (*DictionaryWr
 // getEmptyCreateRequest creates the GetEmpty request.
 func (client *dictionaryOperations) getEmptyCreateRequest() (*azcore.Request, error) {
 	urlPath := "/complex/dictionary/typed/empty"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -98,7 +99,7 @@ func (client *dictionaryOperations) GetNotProvided(ctx context.Context) (*Dictio
 // getNotProvidedCreateRequest creates the GetNotProvided request.
 func (client *dictionaryOperations) getNotProvidedCreateRequest() (*azcore.Request, error) {
 	urlPath := "/complex/dictionary/typed/notprovided"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -144,7 +145,7 @@ func (client *dictionaryOperations) GetNull(ctx context.Context) (*DictionaryWra
 // getNullCreateRequest creates the GetNull request.
 func (client *dictionaryOperations) getNullCreateRequest() (*azcore.Request, error) {
 	urlPath := "/complex/dictionary/typed/null"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -190,7 +191,7 @@ func (client *dictionaryOperations) GetValid(ctx context.Context) (*DictionaryWr
 // getValidCreateRequest creates the GetValid request.
 func (client *dictionaryOperations) getValidCreateRequest() (*azcore.Request, error) {
 	urlPath := "/complex/dictionary/typed/valid"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -236,7 +237,7 @@ func (client *dictionaryOperations) PutEmpty(ctx context.Context, complexBody Di
 // putEmptyCreateRequest creates the PutEmpty request.
 func (client *dictionaryOperations) putEmptyCreateRequest(complexBody DictionaryWrapper) (*azcore.Request, error) {
 	urlPath := "/complex/dictionary/typed/empty"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -281,7 +282,7 @@ func (client *dictionaryOperations) PutValid(ctx context.Context, complexBody Di
 // putValidCreateRequest creates the PutValid request.
 func (client *dictionaryOperations) putValidCreateRequest(complexBody DictionaryWrapper) (*azcore.Request, error) {
 	urlPath := "/complex/dictionary/typed/valid"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

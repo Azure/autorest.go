@@ -9,6 +9,7 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
+	"path"
 )
 
 // PolymorphismOperations contains the methods for the Polymorphism group.
@@ -58,7 +59,7 @@ func (client *polymorphismOperations) GetComplicated(ctx context.Context) (*Salm
 // getComplicatedCreateRequest creates the GetComplicated request.
 func (client *polymorphismOperations) getComplicatedCreateRequest() (*azcore.Request, error) {
 	urlPath := "/complex/polymorphism/complicated"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -104,7 +105,7 @@ func (client *polymorphismOperations) GetComposedWithDiscriminator(ctx context.C
 // getComposedWithDiscriminatorCreateRequest creates the GetComposedWithDiscriminator request.
 func (client *polymorphismOperations) getComposedWithDiscriminatorCreateRequest() (*azcore.Request, error) {
 	urlPath := "/complex/polymorphism/composedWithDiscriminator"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -150,7 +151,7 @@ func (client *polymorphismOperations) GetComposedWithoutDiscriminator(ctx contex
 // getComposedWithoutDiscriminatorCreateRequest creates the GetComposedWithoutDiscriminator request.
 func (client *polymorphismOperations) getComposedWithoutDiscriminatorCreateRequest() (*azcore.Request, error) {
 	urlPath := "/complex/polymorphism/composedWithoutDiscriminator"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -196,7 +197,7 @@ func (client *polymorphismOperations) GetDotSyntax(ctx context.Context) (*DotFis
 // getDotSyntaxCreateRequest creates the GetDotSyntax request.
 func (client *polymorphismOperations) getDotSyntaxCreateRequest() (*azcore.Request, error) {
 	urlPath := "/complex/polymorphism/dotsyntax"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -242,7 +243,7 @@ func (client *polymorphismOperations) GetValid(ctx context.Context) (*FishRespon
 // getValidCreateRequest creates the GetValid request.
 func (client *polymorphismOperations) getValidCreateRequest() (*azcore.Request, error) {
 	urlPath := "/complex/polymorphism/valid"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -288,7 +289,7 @@ func (client *polymorphismOperations) PutComplicated(ctx context.Context, comple
 // putComplicatedCreateRequest creates the PutComplicated request.
 func (client *polymorphismOperations) putComplicatedCreateRequest(complexBody SalmonClassification) (*azcore.Request, error) {
 	urlPath := "/complex/polymorphism/complicated"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -333,7 +334,7 @@ func (client *polymorphismOperations) PutMissingDiscriminator(ctx context.Contex
 // putMissingDiscriminatorCreateRequest creates the PutMissingDiscriminator request.
 func (client *polymorphismOperations) putMissingDiscriminatorCreateRequest(complexBody SalmonClassification) (*azcore.Request, error) {
 	urlPath := "/complex/polymorphism/missingdiscriminator"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -379,7 +380,7 @@ func (client *polymorphismOperations) PutValid(ctx context.Context, complexBody 
 // putValidCreateRequest creates the PutValid request.
 func (client *polymorphismOperations) putValidCreateRequest(complexBody FishClassification) (*azcore.Request, error) {
 	urlPath := "/complex/polymorphism/valid"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -424,7 +425,7 @@ func (client *polymorphismOperations) PutValidMissingRequired(ctx context.Contex
 // putValidMissingRequiredCreateRequest creates the PutValidMissingRequired request.
 func (client *polymorphismOperations) putValidMissingRequiredCreateRequest(complexBody FishClassification) (*azcore.Request, error) {
 	urlPath := "/complex/polymorphism/missingrequired/invalid"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

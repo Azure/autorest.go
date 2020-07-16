@@ -9,6 +9,7 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
+	"path"
 )
 
 // ByteOperations contains the methods for the Byte group.
@@ -50,7 +51,7 @@ func (client *byteOperations) GetEmpty(ctx context.Context) (*ByteArrayResponse,
 // getEmptyCreateRequest creates the GetEmpty request.
 func (client *byteOperations) getEmptyCreateRequest() (*azcore.Request, error) {
 	urlPath := "/byte/empty"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -96,7 +97,7 @@ func (client *byteOperations) GetInvalid(ctx context.Context) (*ByteArrayRespons
 // getInvalidCreateRequest creates the GetInvalid request.
 func (client *byteOperations) getInvalidCreateRequest() (*azcore.Request, error) {
 	urlPath := "/byte/invalid"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -142,7 +143,7 @@ func (client *byteOperations) GetNonASCII(ctx context.Context) (*ByteArrayRespon
 // getNonAsciiCreateRequest creates the GetNonASCII request.
 func (client *byteOperations) getNonAsciiCreateRequest() (*azcore.Request, error) {
 	urlPath := "/byte/nonAscii"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -188,7 +189,7 @@ func (client *byteOperations) GetNull(ctx context.Context) (*ByteArrayResponse, 
 // getNullCreateRequest creates the GetNull request.
 func (client *byteOperations) getNullCreateRequest() (*azcore.Request, error) {
 	urlPath := "/byte/null"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -234,7 +235,7 @@ func (client *byteOperations) PutNonASCII(ctx context.Context, byteBody []byte) 
 // putNonAsciiCreateRequest creates the PutNonASCII request.
 func (client *byteOperations) putNonAsciiCreateRequest(byteBody []byte) (*azcore.Request, error) {
 	urlPath := "/byte/nonAscii"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

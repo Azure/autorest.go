@@ -13,6 +13,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"path"
 	"strconv"
 	"strings"
 )
@@ -53,7 +54,7 @@ func (client *autoRestValidationTestOperations) GetWithConstantInPath(ctx contex
 func (client *autoRestValidationTestOperations) getWithConstantInPathCreateRequest() (*azcore.Request, error) {
 	urlPath := "/validation/constantsInPath/{constantParam}/value"
 	urlPath = strings.ReplaceAll(urlPath, "{constantParam}", url.PathEscape("constant"))
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -101,7 +102,7 @@ func (client *autoRestValidationTestOperations) PostWithConstantInBody(ctx conte
 func (client *autoRestValidationTestOperations) postWithConstantInBodyCreateRequest(autoRestValidationTestPostWithConstantInBodyOptions *AutoRestValidationTestPostWithConstantInBodyOptions) (*azcore.Request, error) {
 	urlPath := "/validation/constantsInPath/{constantParam}/value"
 	urlPath = strings.ReplaceAll(urlPath, "{constantParam}", url.PathEscape("constant"))
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -156,7 +157,7 @@ func (client *autoRestValidationTestOperations) validationOfBodyCreateRequest(re
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{id}", url.PathEscape(strconv.FormatInt(int64(id), 10)))
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -211,7 +212,7 @@ func (client *autoRestValidationTestOperations) validationOfMethodParametersCrea
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{id}", url.PathEscape(strconv.FormatInt(int64(id), 10)))
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

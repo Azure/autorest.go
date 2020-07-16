@@ -9,6 +9,7 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
+	"path"
 	"time"
 )
 
@@ -93,7 +94,7 @@ func (client *lroRetrysOperations) ResumeDelete202Retry200(token string) (HTTPPo
 // delete202Retry200CreateRequest creates the Delete202Retry200 request.
 func (client *lroRetrysOperations) delete202Retry200CreateRequest() (*azcore.Request, error) {
 	urlPath := "/lro/retryerror/delete/202/retry/200"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -162,7 +163,7 @@ func (client *lroRetrysOperations) ResumeDeleteAsyncRelativeRetrySucceeded(token
 // deleteAsyncRelativeRetrySucceededCreateRequest creates the DeleteAsyncRelativeRetrySucceeded request.
 func (client *lroRetrysOperations) deleteAsyncRelativeRetrySucceededCreateRequest() (*azcore.Request, error) {
 	urlPath := "/lro/retryerror/deleteasync/retry/succeeded"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -231,7 +232,7 @@ func (client *lroRetrysOperations) ResumeDeleteProvisioning202Accepted200Succeed
 // deleteProvisioning202Accepted200SucceededCreateRequest creates the DeleteProvisioning202Accepted200Succeeded request.
 func (client *lroRetrysOperations) deleteProvisioning202Accepted200SucceededCreateRequest() (*azcore.Request, error) {
 	urlPath := "/lro/retryerror/delete/provisioning/202/accepted/200/succeeded"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -300,7 +301,7 @@ func (client *lroRetrysOperations) ResumePost202Retry200(token string) (HTTPPoll
 // post202Retry200CreateRequest creates the Post202Retry200 request.
 func (client *lroRetrysOperations) post202Retry200CreateRequest(lroRetrysPost202Retry200Options *LroRetrysPost202Retry200Options) (*azcore.Request, error) {
 	urlPath := "/lro/retryerror/post/202/retry/200"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -372,7 +373,7 @@ func (client *lroRetrysOperations) ResumePostAsyncRelativeRetrySucceeded(token s
 // postAsyncRelativeRetrySucceededCreateRequest creates the PostAsyncRelativeRetrySucceeded request.
 func (client *lroRetrysOperations) postAsyncRelativeRetrySucceededCreateRequest(lroRetrysPostAsyncRelativeRetrySucceededOptions *LroRetrysPostAsyncRelativeRetrySucceededOptions) (*azcore.Request, error) {
 	urlPath := "/lro/retryerror/postasync/retry/succeeded"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -444,7 +445,7 @@ func (client *lroRetrysOperations) ResumePut201CreatingSucceeded200(token string
 // put201CreatingSucceeded200CreateRequest creates the Put201CreatingSucceeded200 request.
 func (client *lroRetrysOperations) put201CreatingSucceeded200CreateRequest(lroRetrysPut201CreatingSucceeded200Options *LroRetrysPut201CreatingSucceeded200Options) (*azcore.Request, error) {
 	urlPath := "/lro/retryerror/put/201/creating/succeeded/200"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -516,7 +517,7 @@ func (client *lroRetrysOperations) ResumePutAsyncRelativeRetrySucceeded(token st
 // putAsyncRelativeRetrySucceededCreateRequest creates the PutAsyncRelativeRetrySucceeded request.
 func (client *lroRetrysOperations) putAsyncRelativeRetrySucceededCreateRequest(lroRetrysPutAsyncRelativeRetrySucceededOptions *LroRetrysPutAsyncRelativeRetrySucceededOptions) (*azcore.Request, error) {
 	urlPath := "/lro/retryerror/putasync/retry/succeeded"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
