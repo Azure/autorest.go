@@ -350,7 +350,7 @@ function isHostParameter(param: Parameter): boolean {
   if (param.language.go!.name === '$host') {
     return true;
   }
-  return param.extensions?.['x-ms-priority'] === 0 && param.extensions?.['x-in'] === 'path';
+  return param.extensions?.['x-ms-priority'] < 2 && param.extensions?.['x-in'] === 'path';
 }
 
 function createGroupProperty(name: string, description: string): GroupProperty {

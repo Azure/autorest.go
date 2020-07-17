@@ -271,7 +271,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
     text += `\tif ${urlVar}.Scheme == "" {\n`;
     text += '\t\treturn nil, fmt.Errorf("no scheme detected in endpoint %s", endpoint)\n';
     text += '\t}\n';
-    text += `\treturn &${client}{${urlVar}: ${urlVar}, ${pipelineVar}: ${pipelineVar}}, nil\n`;
+    text += `\treturn &${client}{${urlVar}: *${urlVar}, ${pipelineVar}: ${pipelineVar}}, nil\n`;
   } else if (clientOnlyParams.length > 0 || paramHostInfo.clientParams.length > 0) {
     text += `\tclient := &${client}{}\n`;
     text += `\tclient.${pipelineVar} = ${pipelineVar}\n`;
