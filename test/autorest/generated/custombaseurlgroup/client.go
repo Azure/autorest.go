@@ -73,12 +73,13 @@ func NewClient(host *string, options *ClientOptions) (*Client, error) {
 
 // NewClientWithPipeline creates an instance of the Client type with the specified endpoint and pipeline.
 func NewClientWithPipeline(host *string, p azcore.Pipeline) (*Client, error) {
-	client := &Client{}
-	client.p = p
-	if host == nil {
-		*host = "host"
+	client := &Client{
+		p:    p,
+		host: "host",
 	}
-	client.host = *host
+	if host != nil {
+		client.host = *host
+	}
 	return client, nil
 }
 
