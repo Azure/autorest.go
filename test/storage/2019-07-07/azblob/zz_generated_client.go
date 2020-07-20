@@ -15,7 +15,7 @@ import (
 const scope = "https://storage.azure.com/.default"
 const telemetryInfo = "azsdk-go-azblob/<version>"
 
-// ClientOptions contains configuration settings for the default client's pipeline.
+// clientOptions contains configuration settings for the default client's pipeline.
 type clientOptions struct {
 	// HTTPClient sets the transport for making HTTP requests.
 	HTTPClient azcore.Transport
@@ -38,7 +38,7 @@ func defaultClientOptions() clientOptions {
 	}
 }
 
-func (c *ClientOptions) telemetryOptions() azcore.TelemetryOptions {
+func (c *clientOptions) telemetryOptions() azcore.TelemetryOptions {
 	t := telemetryInfo
 	if c.ApplicationID != "" {
 		a := strings.ReplaceAll(c.ApplicationID, " ", "/")
@@ -54,7 +54,7 @@ func (c *ClientOptions) telemetryOptions() azcore.TelemetryOptions {
 }
 
 type client struct {
-	u url.URL
+	u *url.URL
 	p azcore.Pipeline
 }
 
@@ -82,7 +82,7 @@ func newClientWithPipeline(endpoint string, p azcore.Pipeline) (*client, error) 
 	if u.Scheme == "" {
 		return nil, fmt.Errorf("no scheme detected in endpoint %s", endpoint)
 	}
-	return &client{u: *u, p: p}, nil
+	return &client{u: u, p: p}, nil
 }
 
 // ServiceOperations returns the ServiceOperations associated with this client.
