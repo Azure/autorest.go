@@ -390,6 +390,7 @@ function createProtocolRequest(client: string, op: Operation, group: OperationGr
       parseVar = 'urlPath';
     }
   }
+  const inQueryParams = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'query'; }).any();
   if (paramHost) {
     imports.add('net/url');
     text += `\tu, err := url.Parse(${parseVar})\n`;
@@ -401,6 +402,9 @@ function createProtocolRequest(client: string, op: Operation, group: OperationGr
     text += '\tif err != nil {\n';
     text += '\t\treturn nil, err\n';
     text += '\t}\n';
+  } else if (inQueryParams) {
+    text += '\tcopy := *client.u\n';
+    text += '\tu := &copy\n';
   } else {
     text += `\tu := client.u\n`;
   }
@@ -413,8 +417,7 @@ function createProtocolRequest(client: string, op: Operation, group: OperationGr
     }
     return `\tif ${optionalParamGroupCheck}${paramGroupName}.${pascalCase(param.language.go!.name)} != nil {\n`;
   }
-  const inQueryParams = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'query'; });
-  if (inQueryParams.any()) {
+  if (inQueryParams) {
     // add query parameters
     const encodedParams = new Array<Parameter>();
     const unencodedParams = new Array<Parameter>();

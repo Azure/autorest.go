@@ -49,7 +49,8 @@ func (client *appendBlobOperations) AppendBlock(ctx context.Context, contentLeng
 
 // appendBlockCreateRequest creates the AppendBlock request.
 func (client *appendBlobOperations) appendBlockCreateRequest(contentLength int64, body azcore.ReadSeekCloser, appendBlobAppendBlockOptions *AppendBlobAppendBlockOptions, leaseAccessConditions *LeaseAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
-	u := client.u
+	copy := *client.u
+	u := &copy
 	query := u.Query()
 	query.Set("comp", "appendblock")
 	if appendBlobAppendBlockOptions != nil && appendBlobAppendBlockOptions.Timeout != nil {
@@ -202,7 +203,8 @@ func (client *appendBlobOperations) AppendBlockFromURL(ctx context.Context, sour
 
 // appendBlockFromUrlCreateRequest creates the AppendBlockFromURL request.
 func (client *appendBlobOperations) appendBlockFromUrlCreateRequest(sourceUrl url.URL, contentLength int64, appendBlobAppendBlockFromUrlOptions *AppendBlobAppendBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*azcore.Request, error) {
-	u := client.u
+	copy := *client.u
+	u := &copy
 	query := u.Query()
 	query.Set("comp", "appendblock")
 	if appendBlobAppendBlockFromUrlOptions != nil && appendBlobAppendBlockFromUrlOptions.Timeout != nil {
@@ -371,7 +373,8 @@ func (client *appendBlobOperations) Create(ctx context.Context, contentLength in
 
 // createCreateRequest creates the Create request.
 func (client *appendBlobOperations) createCreateRequest(contentLength int64, appendBlobCreateOptions *AppendBlobCreateOptions, blobHttpHeaders *BlobHttpHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
-	u := client.u
+	copy := *client.u
+	u := &copy
 	query := u.Query()
 	if appendBlobCreateOptions != nil && appendBlobCreateOptions.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*appendBlobCreateOptions.Timeout), 10))

@@ -48,7 +48,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
     clientOptions = 'clientOptions';
     defaultClientOptions = 'defaultClientOptions';
   }
-  text += `// ClientOptions contains configuration settings for the default client's pipeline.\n`;
+  text += `// ${clientOptions} contains configuration settings for the default client's pipeline.\n`;
   text += `type ${clientOptions} struct {\n`;
   text += '\t// HTTPClient sets the transport for making HTTP requests.\n';
   text += '\tHTTPClient azcore.Transport\n';
@@ -76,7 +76,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   text += '\t}\n';
   text += '}\n\n';
 
-  text += 'func (c *ClientOptions) telemetryOptions() azcore.TelemetryOptions {\n';
+  text += `func (c *${clientOptions}) telemetryOptions() azcore.TelemetryOptions {\n`;
   text += '\tt := telemetryInfo\n';
   text += '\tif c.ApplicationID != "" {\n';
   text += '\t\ta := strings.ReplaceAll(c.ApplicationID, " ", "/")\n';
@@ -165,7 +165,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
       passClientOnlyParams += `${param.language.go!.name}, `;
     }
   } else {
-    text += `\t${urlVar} url.URL\n`;
+    text += `\t${urlVar} *url.URL\n`;
   }
   text += `\t${pipelineVar} azcore.Pipeline\n`;
   text += '}\n\n';
@@ -245,7 +245,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
     text += `\tif ${urlVar}.Scheme == "" {\n`;
     text += '\t\treturn nil, fmt.Errorf("no scheme detected in endpoint %s", endpoint)\n';
     text += '\t}\n';
-    text += `\treturn &${client}{${urlVar}: *${urlVar}, ${pipelineVar}: ${pipelineVar}}, nil\n`;
+    text += `\treturn &${client}{${urlVar}: ${urlVar}, ${pipelineVar}: ${pipelineVar}}, nil\n`;
   } else if (paramHostInfo.urlOnClient) {
     const op = session.model.operationGroups[0].operations[0];
     const group = session.model.operationGroups[0];
