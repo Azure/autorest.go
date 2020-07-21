@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"path"
 	"strings"
 )
 
@@ -50,7 +51,7 @@ func (client *vpnSiteLinkConnectionsOperations) getCreateRequest(resourceGroupNa
 	urlPath = strings.ReplaceAll(urlPath, "{gatewayName}", url.PathEscape(gatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{connectionName}", url.PathEscape(connectionName))
 	urlPath = strings.ReplaceAll(urlPath, "{linkConnectionName}", url.PathEscape(linkConnectionName))
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

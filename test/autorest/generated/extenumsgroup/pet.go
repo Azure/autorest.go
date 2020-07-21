@@ -13,6 +13,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"path"
 	"strings"
 )
 
@@ -46,7 +47,7 @@ func (client *petOperations) AddPet(ctx context.Context, petAddPetOptions *PetAd
 // addPetCreateRequest creates the AddPet request.
 func (client *petOperations) addPetCreateRequest(petAddPetOptions *PetAddPetOptions) (*azcore.Request, error) {
 	urlPath := "/extensibleenums/pet/addPet"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -98,7 +99,7 @@ func (client *petOperations) GetByPetID(ctx context.Context, petId string) (*Pet
 func (client *petOperations) getByPetIdCreateRequest(petId string) (*azcore.Request, error) {
 	urlPath := "/extensibleenums/pet/{petId}"
 	urlPath = strings.ReplaceAll(urlPath, "{petId}", url.PathEscape(petId))
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

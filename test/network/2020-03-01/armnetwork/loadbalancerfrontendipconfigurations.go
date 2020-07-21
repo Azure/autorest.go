@@ -11,6 +11,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"path"
 	"strings"
 )
 
@@ -52,7 +53,7 @@ func (client *loadBalancerFrontendIPConfigurationsOperations) getCreateRequest(r
 	urlPath = strings.ReplaceAll(urlPath, "{loadBalancerName}", url.PathEscape(loadBalancerName))
 	urlPath = strings.ReplaceAll(urlPath, "{frontendIPConfigurationName}", url.PathEscape(frontendIPConfigurationName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -110,7 +111,7 @@ func (client *loadBalancerFrontendIPConfigurationsOperations) listCreateRequest(
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{loadBalancerName}", url.PathEscape(loadBalancerName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

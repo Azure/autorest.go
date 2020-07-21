@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"path"
 	"strings"
 	"time"
 )
@@ -98,7 +99,7 @@ func (client *connectionMonitorsOperations) createOrUpdateCreateRequest(resource
 	urlPath = strings.ReplaceAll(urlPath, "{networkWatcherName}", url.PathEscape(networkWatcherName))
 	urlPath = strings.ReplaceAll(urlPath, "{connectionMonitorName}", url.PathEscape(connectionMonitorName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -174,7 +175,7 @@ func (client *connectionMonitorsOperations) deleteCreateRequest(resourceGroupNam
 	urlPath = strings.ReplaceAll(urlPath, "{networkWatcherName}", url.PathEscape(networkWatcherName))
 	urlPath = strings.ReplaceAll(urlPath, "{connectionMonitorName}", url.PathEscape(connectionMonitorName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -226,7 +227,7 @@ func (client *connectionMonitorsOperations) getCreateRequest(resourceGroupName s
 	urlPath = strings.ReplaceAll(urlPath, "{networkWatcherName}", url.PathEscape(networkWatcherName))
 	urlPath = strings.ReplaceAll(urlPath, "{connectionMonitorName}", url.PathEscape(connectionMonitorName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -278,7 +279,7 @@ func (client *connectionMonitorsOperations) listCreateRequest(resourceGroupName 
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkWatcherName}", url.PathEscape(networkWatcherName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -355,7 +356,7 @@ func (client *connectionMonitorsOperations) queryCreateRequest(resourceGroupName
 	urlPath = strings.ReplaceAll(urlPath, "{networkWatcherName}", url.PathEscape(networkWatcherName))
 	urlPath = strings.ReplaceAll(urlPath, "{connectionMonitorName}", url.PathEscape(connectionMonitorName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -431,7 +432,7 @@ func (client *connectionMonitorsOperations) startCreateRequest(resourceGroupName
 	urlPath = strings.ReplaceAll(urlPath, "{networkWatcherName}", url.PathEscape(networkWatcherName))
 	urlPath = strings.ReplaceAll(urlPath, "{connectionMonitorName}", url.PathEscape(connectionMonitorName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -507,7 +508,7 @@ func (client *connectionMonitorsOperations) stopCreateRequest(resourceGroupName 
 	urlPath = strings.ReplaceAll(urlPath, "{networkWatcherName}", url.PathEscape(networkWatcherName))
 	urlPath = strings.ReplaceAll(urlPath, "{connectionMonitorName}", url.PathEscape(connectionMonitorName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -559,7 +560,7 @@ func (client *connectionMonitorsOperations) updateTagsCreateRequest(resourceGrou
 	urlPath = strings.ReplaceAll(urlPath, "{networkWatcherName}", url.PathEscape(networkWatcherName))
 	urlPath = strings.ReplaceAll(urlPath, "{connectionMonitorName}", url.PathEscape(connectionMonitorName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

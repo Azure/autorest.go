@@ -9,6 +9,7 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
+	"path"
 	"strings"
 )
 
@@ -47,7 +48,7 @@ func (client *queriesOperations) ArrayStringMultiEmpty(ctx context.Context, quer
 // arrayStringMultiEmptyCreateRequest creates the ArrayStringMultiEmpty request.
 func (client *queriesOperations) arrayStringMultiEmptyCreateRequest(queriesArrayStringMultiEmptyOptions *QueriesArrayStringMultiEmptyOptions) (*azcore.Request, error) {
 	urlPath := "/queries/array/multi/string/empty"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -97,7 +98,7 @@ func (client *queriesOperations) ArrayStringMultiNull(ctx context.Context, queri
 // arrayStringMultiNullCreateRequest creates the ArrayStringMultiNull request.
 func (client *queriesOperations) arrayStringMultiNullCreateRequest(queriesArrayStringMultiNullOptions *QueriesArrayStringMultiNullOptions) (*azcore.Request, error) {
 	urlPath := "/queries/array/multi/string/null"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -147,7 +148,7 @@ func (client *queriesOperations) ArrayStringMultiValid(ctx context.Context, quer
 // arrayStringMultiValidCreateRequest creates the ArrayStringMultiValid request.
 func (client *queriesOperations) arrayStringMultiValidCreateRequest(queriesArrayStringMultiValidOptions *QueriesArrayStringMultiValidOptions) (*azcore.Request, error) {
 	urlPath := "/queries/array/multi/string/valid"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

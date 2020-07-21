@@ -12,6 +12,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"io/ioutil"
 	"net/http"
+	"path"
 )
 
 // HTTPFailureOperations contains the methods for the HTTPFailure group.
@@ -49,7 +50,7 @@ func (client *httpFailureOperations) GetEmptyError(ctx context.Context) (*BoolRe
 // getEmptyErrorCreateRequest creates the GetEmptyError request.
 func (client *httpFailureOperations) getEmptyErrorCreateRequest() (*azcore.Request, error) {
 	urlPath := "/http/failure/emptybody/error"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -95,7 +96,7 @@ func (client *httpFailureOperations) GetNoModelEmpty(ctx context.Context) (*Bool
 // getNoModelEmptyCreateRequest creates the GetNoModelEmpty request.
 func (client *httpFailureOperations) getNoModelEmptyCreateRequest() (*azcore.Request, error) {
 	urlPath := "/http/failure/nomodel/empty"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -144,7 +145,7 @@ func (client *httpFailureOperations) GetNoModelError(ctx context.Context) (*Bool
 // getNoModelErrorCreateRequest creates the GetNoModelError request.
 func (client *httpFailureOperations) getNoModelErrorCreateRequest() (*azcore.Request, error) {
 	urlPath := "/http/failure/nomodel/error"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

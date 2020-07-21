@@ -398,7 +398,8 @@ function createProtocolRequest(client: string, op: Operation, group: OperationGr
     text += '\t\treturn nil, err\n';
     text += '\t}\n';
   } else if (includeParse) {
-    text += `\tu, err := client.u.Parse(${parseVar})\n`;
+    imports.add('path');
+    text += `\tu, err := client.u.Parse(path.Join(client.u.Path, ${parseVar}))\n`;
     text += '\tif err != nil {\n';
     text += '\t\treturn nil, err\n';
     text += '\t}\n';

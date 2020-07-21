@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"path"
 )
 
 // Operations contains the methods for the Operations group.
@@ -49,7 +50,7 @@ func (client *operations) List() (OperationListResultPager, error) {
 // listCreateRequest creates the List request.
 func (client *operations) listCreateRequest() (*azcore.Request, error) {
 	urlPath := "/providers/Microsoft.Network/operations"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

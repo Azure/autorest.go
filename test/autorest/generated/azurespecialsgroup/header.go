@@ -9,6 +9,7 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
+	"path"
 )
 
 // HeaderOperations contains the methods for the Header group.
@@ -46,7 +47,7 @@ func (client *headerOperations) CustomNamedRequestID(ctx context.Context, fooCli
 // customNamedRequestIdCreateRequest creates the CustomNamedRequestID request.
 func (client *headerOperations) customNamedRequestIdCreateRequest(fooClientRequestId string) (*azcore.Request, error) {
 	urlPath := "/azurespecials/customNamedRequestId"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -96,7 +97,7 @@ func (client *headerOperations) CustomNamedRequestIDHead(ctx context.Context, fo
 // customNamedRequestIdHeadCreateRequest creates the CustomNamedRequestIDHead request.
 func (client *headerOperations) customNamedRequestIdHeadCreateRequest(fooClientRequestId string) (*azcore.Request, error) {
 	urlPath := "/azurespecials/customNamedRequestIdHead"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -146,7 +147,7 @@ func (client *headerOperations) CustomNamedRequestIDParamGrouping(ctx context.Co
 // customNamedRequestIdParamGroupingCreateRequest creates the CustomNamedRequestIDParamGrouping request.
 func (client *headerOperations) customNamedRequestIdParamGroupingCreateRequest(headerCustomNamedRequestIdParamGroupingParameters HeaderCustomNamedRequestIDParamGroupingParameters) (*azcore.Request, error) {
 	urlPath := "/azurespecials/customNamedRequestIdParamGrouping"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

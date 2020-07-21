@@ -11,6 +11,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"path"
 	"strings"
 	"time"
 )
@@ -104,7 +105,7 @@ func (client *expressRouteCircuitsOperations) createOrUpdateCreateRequest(resour
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{circuitName}", url.PathEscape(circuitName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -179,7 +180,7 @@ func (client *expressRouteCircuitsOperations) deleteCreateRequest(resourceGroupN
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{circuitName}", url.PathEscape(circuitName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -230,7 +231,7 @@ func (client *expressRouteCircuitsOperations) getCreateRequest(resourceGroupName
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{circuitName}", url.PathEscape(circuitName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -283,7 +284,7 @@ func (client *expressRouteCircuitsOperations) getPeeringStatsCreateRequest(resou
 	urlPath = strings.ReplaceAll(urlPath, "{circuitName}", url.PathEscape(circuitName))
 	urlPath = strings.ReplaceAll(urlPath, "{peeringName}", url.PathEscape(peeringName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -335,7 +336,7 @@ func (client *expressRouteCircuitsOperations) getStatsCreateRequest(resourceGrou
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{circuitName}", url.PathEscape(circuitName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -392,7 +393,7 @@ func (client *expressRouteCircuitsOperations) listCreateRequest(resourceGroupNam
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -448,7 +449,7 @@ func (client *expressRouteCircuitsOperations) ListAll() (ExpressRouteCircuitList
 func (client *expressRouteCircuitsOperations) listAllCreateRequest() (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteCircuits"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -526,7 +527,7 @@ func (client *expressRouteCircuitsOperations) listArpTableCreateRequest(resource
 	urlPath = strings.ReplaceAll(urlPath, "{peeringName}", url.PathEscape(peeringName))
 	urlPath = strings.ReplaceAll(urlPath, "{devicePath}", url.PathEscape(devicePath))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -603,7 +604,7 @@ func (client *expressRouteCircuitsOperations) listRoutesTableCreateRequest(resou
 	urlPath = strings.ReplaceAll(urlPath, "{peeringName}", url.PathEscape(peeringName))
 	urlPath = strings.ReplaceAll(urlPath, "{devicePath}", url.PathEscape(devicePath))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -680,7 +681,7 @@ func (client *expressRouteCircuitsOperations) listRoutesTableSummaryCreateReques
 	urlPath = strings.ReplaceAll(urlPath, "{peeringName}", url.PathEscape(peeringName))
 	urlPath = strings.ReplaceAll(urlPath, "{devicePath}", url.PathEscape(devicePath))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -731,7 +732,7 @@ func (client *expressRouteCircuitsOperations) updateTagsCreateRequest(resourceGr
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{circuitName}", url.PathEscape(circuitName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

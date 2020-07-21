@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"path"
 	"strconv"
 	"strings"
 )
@@ -60,7 +61,7 @@ func (client *implicitOperations) GetOptionalGlobalQuery(ctx context.Context) (*
 // getOptionalGlobalQueryCreateRequest creates the GetOptionalGlobalQuery request.
 func (client *implicitOperations) getOptionalGlobalQueryCreateRequest() (*azcore.Request, error) {
 	urlPath := "/reqopt/global/optional/query"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -111,7 +112,7 @@ func (client *implicitOperations) GetRequiredGlobalPath(ctx context.Context) (*h
 func (client *implicitOperations) getRequiredGlobalPathCreateRequest() (*azcore.Request, error) {
 	urlPath := "/reqopt/global/required/path/{required-global-path}"
 	urlPath = strings.ReplaceAll(urlPath, "{required-global-path}", url.PathEscape(client.requiredGlobalPath))
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -156,7 +157,7 @@ func (client *implicitOperations) GetRequiredGlobalQuery(ctx context.Context) (*
 // getRequiredGlobalQueryCreateRequest creates the GetRequiredGlobalQuery request.
 func (client *implicitOperations) getRequiredGlobalQueryCreateRequest() (*azcore.Request, error) {
 	urlPath := "/reqopt/global/required/query"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -205,7 +206,7 @@ func (client *implicitOperations) GetRequiredPath(ctx context.Context, pathParam
 func (client *implicitOperations) getRequiredPathCreateRequest(pathParameter string) (*azcore.Request, error) {
 	urlPath := "/reqopt/implicit/required/path/{pathParameter}"
 	urlPath = strings.ReplaceAll(urlPath, "{pathParameter}", url.PathEscape(pathParameter))
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -250,7 +251,7 @@ func (client *implicitOperations) PutOptionalBody(ctx context.Context, implicitP
 // putOptionalBodyCreateRequest creates the PutOptionalBody request.
 func (client *implicitOperations) putOptionalBodyCreateRequest(implicitPutOptionalBodyOptions *ImplicitPutOptionalBodyOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/implicit/optional/body"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -298,7 +299,7 @@ func (client *implicitOperations) PutOptionalHeader(ctx context.Context, implici
 // putOptionalHeaderCreateRequest creates the PutOptionalHeader request.
 func (client *implicitOperations) putOptionalHeaderCreateRequest(implicitPutOptionalHeaderOptions *ImplicitPutOptionalHeaderOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/implicit/optional/header"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -346,7 +347,7 @@ func (client *implicitOperations) PutOptionalQuery(ctx context.Context, implicit
 // putOptionalQueryCreateRequest creates the PutOptionalQuery request.
 func (client *implicitOperations) putOptionalQueryCreateRequest(implicitPutOptionalQueryOptions *ImplicitPutOptionalQueryOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/implicit/optional/query"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

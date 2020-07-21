@@ -11,6 +11,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"path"
 	"strings"
 	"time"
 )
@@ -85,7 +86,7 @@ func (client *serviceEndpointPolicyDefinitionsOperations) createOrUpdateCreateRe
 	urlPath = strings.ReplaceAll(urlPath, "{serviceEndpointPolicyName}", url.PathEscape(serviceEndpointPolicyName))
 	urlPath = strings.ReplaceAll(urlPath, "{serviceEndpointPolicyDefinitionName}", url.PathEscape(serviceEndpointPolicyDefinitionName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -161,7 +162,7 @@ func (client *serviceEndpointPolicyDefinitionsOperations) deleteCreateRequest(re
 	urlPath = strings.ReplaceAll(urlPath, "{serviceEndpointPolicyName}", url.PathEscape(serviceEndpointPolicyName))
 	urlPath = strings.ReplaceAll(urlPath, "{serviceEndpointPolicyDefinitionName}", url.PathEscape(serviceEndpointPolicyDefinitionName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -213,7 +214,7 @@ func (client *serviceEndpointPolicyDefinitionsOperations) getCreateRequest(resou
 	urlPath = strings.ReplaceAll(urlPath, "{serviceEndpointPolicyName}", url.PathEscape(serviceEndpointPolicyName))
 	urlPath = strings.ReplaceAll(urlPath, "{serviceEndpointPolicyDefinitionName}", url.PathEscape(serviceEndpointPolicyDefinitionName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -271,7 +272,7 @@ func (client *serviceEndpointPolicyDefinitionsOperations) listByResourceGroupCre
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{serviceEndpointPolicyName}", url.PathEscape(serviceEndpointPolicyName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

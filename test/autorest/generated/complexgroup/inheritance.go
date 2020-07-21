@@ -9,6 +9,7 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
+	"path"
 )
 
 // InheritanceOperations contains the methods for the Inheritance group.
@@ -44,7 +45,7 @@ func (client *inheritanceOperations) GetValid(ctx context.Context) (*SiameseResp
 // getValidCreateRequest creates the GetValid request.
 func (client *inheritanceOperations) getValidCreateRequest() (*azcore.Request, error) {
 	urlPath := "/complex/inheritance/valid"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -90,7 +91,7 @@ func (client *inheritanceOperations) PutValid(ctx context.Context, complexBody S
 // putValidCreateRequest creates the PutValid request.
 func (client *inheritanceOperations) putValidCreateRequest(complexBody Siamese) (*azcore.Request, error) {
 	urlPath := "/complex/inheritance/valid"
-	u, err := client.u.Parse(urlPath)
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
