@@ -300,7 +300,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
     for (const param of values(paramHostInfo.clientParams)) {
       if (param.clientDefaultValue) { // TODO support more than just string params
         text += `if ${param.language.go!.name} != nil {
-          client.${param.language.go!.name} = *${param.clientDefaultValue}
+          client.${param.language.go!.name} = *${param.language.go!.name}
         }
         `;
       } else {
