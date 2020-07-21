@@ -923,7 +923,7 @@ func (client PathsClient) FloatScientificNegative(ctx context.Context) (result a
 // FloatScientificNegativePreparer prepares the FloatScientificNegative request.
 func (client PathsClient) FloatScientificNegativePreparer(ctx context.Context) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
-		"floatPath": autorest.Encode("path", -1.034E-20),
+		"floatPath": autorest.Encode("path", -1.034e-20),
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -986,7 +986,7 @@ func (client PathsClient) FloatScientificPositive(ctx context.Context) (result a
 // FloatScientificPositivePreparer prepares the FloatScientificPositive request.
 func (client PathsClient) FloatScientificPositivePreparer(ctx context.Context) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
-		"floatPath": autorest.Encode("path", 1.034E+20),
+		"floatPath": autorest.Encode("path", 1.034e+20),
 	}
 
 	preparer := autorest.CreatePreparer(

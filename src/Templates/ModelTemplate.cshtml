@@ -139,7 +139,7 @@
         </text>
     }
 
-@if (Model.BaseIsPolymorphic || Model.IsPolymorphic || Model.HasFlattenedFields || Model.AllProperties.Any(p => p.ModelType is DictionaryTypeGo))
+@if (Model.BaseIsPolymorphic || Model.IsPolymorphic || Model.HasFlattenedFields || Model.AllProperties.Any(p => p.ModelType is DictionaryTypeGo) || Model.AllProperties.Any(p => p.IsReadOnly))
 {
     <text>
         @EmptyLine
