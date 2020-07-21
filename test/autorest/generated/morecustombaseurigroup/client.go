@@ -74,12 +74,13 @@ func NewClient(dnsSuffix *string, subscriptionID string, options *ClientOptions)
 
 // NewClientWithPipeline creates an instance of the Client type with the specified endpoint and pipeline.
 func NewClientWithPipeline(dnsSuffix *string, subscriptionID string, p azcore.Pipeline) (*Client, error) {
-	client := &Client{}
-	client.p = p
-	if dnsSuffix == nil {
-		*dnsSuffix = "host"
+	client := &Client{
+		p:         p,
+		dnsSuffix: "host",
 	}
-	client.dnsSuffix = *dnsSuffix
+	if dnsSuffix != nil {
+		client.dnsSuffix = *dnsSuffix
+	}
 	client.subscriptionID = subscriptionID
 	return client, nil
 }

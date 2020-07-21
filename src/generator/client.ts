@@ -256,7 +256,8 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
       let pointer = '';
       if (pp.clientDefaultValue) { // TODO support more than just string params
         text += `if ${pp.language.go!.name} == nil {
-          *${pp.language.go!.name} = "${pp.clientDefaultValue}"
+          temp := "${pp.clientDefaultValue}"
+          ${pp.language.go!.name} = &temp
         }
         `;
         pointer = '*';
@@ -273,29 +274,38 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
     text += '\t}\n';
     text += `\treturn &${client}{${urlVar}: ${urlVar}, ${pipelineVar}: ${pipelineVar}}, nil\n`;
   } else if (clientOnlyParams.length > 0 || paramHostInfo.clientParams.length > 0) {
-    text += `\tclient := &${client}{}\n`;
-    text += `\tclient.${pipelineVar} = ${pipelineVar}\n`;
+    text += `\tclient := &${client}{\n`;
+    text += `\t\t${pipelineVar}: ${pipelineVar},\n`;
     for (const param of values(clientOnlyParams)) {
-      let pointer = '';
       if (param.clientDefaultValue) { // TODO support more than just string params
-        text += `if ${param.language.go!.name} == nil {
-          *${param.language.go!.name} = "${param.clientDefaultValue}"
-        }
-        `;
-        pointer = '*';
+        text += `\t\t${param.language.go!.name}: "${param.clientDefaultValue}",\n`;
       }
-      text += `\tclient.${param.language.go!.name} = ${pointer}${param.language.go!.name}\n`;
     }
     for (const param of values(paramHostInfo.clientParams)) {
-      let pointer = '';
       if (param.clientDefaultValue) { // TODO support more than just string params
-        text += `if ${param.language.go!.name} == nil {
-          *${param.language.go!.name} = "${param.clientDefaultValue}"
+        text += `\t\t${param.language.go!.name}: "${param.clientDefaultValue}",\n`;
+      }
+    }
+    text += `\t}\n`;
+    for (const param of values(clientOnlyParams)) {
+      if (param.clientDefaultValue) { // TODO support more than just string params
+        text += `if ${param.language.go!.name} != nil {
+          client.${param.language.go!.name} = *${param.language.go!.name}
         }
         `;
-        pointer = '*';
+      } else {
+        text += `\tclient.${param.language.go!.name} = ${param.language.go!.name}\n`;
       }
-      text += `\tclient.${param.language.go!.name} = ${pointer}${param.language.go!.name}\n`;
+    }
+    for (const param of values(paramHostInfo.clientParams)) {
+      if (param.clientDefaultValue) { // TODO support more than just string params
+        text += `if ${param.language.go!.name} != nil {
+          client.${param.language.go!.name} = *${param.language.go!.name}
+        }
+        `;
+      } else {
+        text += `\tclient.${param.language.go!.name} = ${param.language.go!.name}\n`;
+      }
     }
     text += '\treturn client, nil\n';
   } else {
