@@ -254,6 +254,14 @@ function processOperationRequests(session: Session<CodeModel>) {
         }
         const inBody = param.protocol.http !== undefined && param.protocol.http!.in === 'body';
         param.schema.language.go!.name = schemaTypeToGoType(session.model, param.schema, inBody);
+        // check if this is a header collection
+        if (param.extensions?.['x-ms-header-collection-prefix']) {
+          // key is always string, use the specified type for the value
+          const ds = new DictionarySchema(`map[string]${param.schema.language.go!.name}`, '', param.schema);
+          ds.language.go = ds.language.default;
+          ds.language.go!.headerCollectionPrefix = param.extensions['x-ms-header-collection-prefix'];
+          param.schema = ds;
+        }
         if (param.implementation === ImplementationLocation.Client && param.schema.type !== SchemaType.Constant) {
           // add global param info to the operation group
           if (group.language.go!.clientParams === undefined) {

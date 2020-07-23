@@ -369,7 +369,9 @@ func (client *containerOperations) createCreateRequest(containerCreateOptions *C
 	u.RawQuery = query.Encode()
 	req := azcore.NewRequest(http.MethodPut, *u)
 	if containerCreateOptions != nil && containerCreateOptions.Metadata != nil {
-		req.Header.Set("x-ms-meta", *containerCreateOptions.Metadata)
+		for k, v := range *containerCreateOptions.Metadata {
+			req.Header.Set("x-ms-meta-"+k, v)
+		}
 	}
 	if containerCreateOptions != nil && containerCreateOptions.Access != nil {
 		req.Header.Set("x-ms-blob-public-access", string(*containerCreateOptions.Access))
@@ -1280,7 +1282,9 @@ func (client *containerOperations) setMetadataCreateRequest(containerSetMetadata
 		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseId)
 	}
 	if containerSetMetadataOptions != nil && containerSetMetadataOptions.Metadata != nil {
-		req.Header.Set("x-ms-meta", *containerSetMetadataOptions.Metadata)
+		for k, v := range *containerSetMetadataOptions.Metadata {
+			req.Header.Set("x-ms-meta-"+k, v)
+		}
 	}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfModifiedSince != nil {
 		req.Header.Set("If-Modified-Since", modifiedAccessConditions.IfModifiedSince.Format(time.RFC1123))
