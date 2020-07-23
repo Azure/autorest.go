@@ -10,9 +10,6 @@
 @{
     var enums = Model.EnumTypes.Cast<EnumTypeGo>().ToList();
     enums.Sort((lhs, rhs) => lhs.Name.FixedValue.CompareTo(rhs.Name));
-
-    var modelTypes = Model.ModelTypes.Cast<CompositeTypeGo>().ToList();
-    modelTypes.Sort((x, y) => x.Name.Value.CompareTo(y.Name.Value));
 }
 package @Model.Namespace
 @EmptyLine
@@ -20,24 +17,9 @@ package @Model.Namespace
 
 @EmptyLine
 
-@if (!Model.ModelImports.IsNullOrEmpty())
+@foreach (var e in enums)
 {
-@:import (
-foreach (var import in Model.ModelImports)
-{
-    @:@(import)
-}
-@:)    
-@EmptyLine
-}
-
-// The package's fully qualified name.
-const fqdn = "@(Model.PackageFqdn)"
-@EmptyLine
-
-@foreach (var mt in modelTypes)
-{
-@:@(Include(new ModelTemplate(), mt))
+@:@(Include(new EnumTemplate(), e))
 @EmptyLine
 @:
 }
