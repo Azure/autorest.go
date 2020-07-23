@@ -250,7 +250,6 @@ export function formatParamValue(param: Parameter, imports: ImportManager, onCli
 export interface ParameterizedHost {
   addParamHost: boolean;
   urlOnClient: boolean;
-  clientParams: Array<Parameter>; // contains the list of client params shared across all operation groups
 }
 
 // this function checks if parameterized host functionality needs to be added for the service
@@ -262,34 +261,12 @@ export function addParameterizedHostFunctionality(operationGroups: Array<Operati
   // package. 
   let separateHosts = false; // this indicates if there are multiple parameterized host implementations
   const paramHost = operationGroups[0].operations[0].requests![0].protocol.http!.uri;
-  let allClientParams = new Array<Array<Parameter>>();
-  let checkSharedParams = true; // variable to control if we should keep checking for shared client params
   for (const group of values(operationGroups)) {
     const hostURI = group.operations[0].requests![0].protocol.http!.uri;
     // if we find a different parameterized host definition url parsing is done off the client
     if (hostURI !== paramHost) {
       separateHosts = true;
     }
-    // store client params in one array to later filter down to all shared client params
-    if (group.language.go!.clientParams !== undefined && checkSharedParams) {
-      allClientParams.push(group.language.go!.clientParams);
-    } else {
-      if (allClientParams.length > 0) {
-        // wipe all client params since one group does not have any, therefore indicating
-        // that there is no client param shared among all operation groups
-        allClientParams = new Array<Array<Parameter>>();
-        checkSharedParams = false;
-      }
-    }
-  }
-  let sharedParams = new Array<Parameter>();
-  // if the length of the array is not equal to the number of operation groups, the all operation groups
-  // do not share client params. 
-  if (allClientParams.length === operationGroups.length && allClientParams.length > 1) {
-    // filter down to shared params, reduce repeated instances (unlikely)
-    sharedParams = allClientParams.reduce((p, c) => p.filter(e => c.includes(e)));
-  } else if (operationGroups.length === 1 && allClientParams.length === 1) {
-    sharedParams = allClientParams[0];
   }
   // determine where client params need to be placed, client level or operation group level
   if (separateHosts || !(<string>paramHost).match(/^\{\$?\w+\}$/)) {
@@ -303,20 +280,17 @@ export function addParameterizedHostFunctionality(operationGroups: Array<Operati
       return {
         addParamHost: true,
         urlOnClient: false,
-        clientParams: sharedParams,
       };
     } else {
       // if all params are on the client then it could all be handled in the new client with pipeline
       return {
         addParamHost: true,
         urlOnClient: true,
-        clientParams: sharedParams,
       };
     }
   }
   return {
     addParamHost: false,
     urlOnClient: false, // leave this as false so it doesn't interact with parameterized host setting that check for this condition
-    clientParams: sharedParams,
   };
 }

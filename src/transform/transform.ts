@@ -214,9 +214,10 @@ function recursiveAddMarshallingFormat(schema: Schema, marshallingFormat: 'json'
 
 // we will transform operation request parameter schema types to Go types
 function processOperationRequests(session: Session<CodeModel>) {
-  const paramHostInfo = addParameterizedHostFunctionality(session.model.operationGroups);
   // track any parameter groups and/or optional parameters
   const paramGroups = new Map<string, GroupProperty>();
+  // accumulate all client params grouped onto the operation groups
+  const allClientParams = new Array<Array<Parameter>>();
   for (const group of values(session.model.operationGroups)) {
     for (const op of values(group.operations)) {
       if (op.requests!.length > 1) {
@@ -229,9 +230,10 @@ function processOperationRequests(session: Session<CodeModel>) {
         }
       }
       for (const param of values(aggregateParameters(op))) {
-        // skip the host param as it has special handling
+        // annotate the host parameter to make it identifiable after renaming
         if (isHostParameter(param)) {
-          continue;
+          param.language.go!.name = 'endpoint';
+          param.language.go!.defaultEndpoint = true;
         }
         // this is to work around M4 bug #202
         // replace the duplicate operation entry in nextLinkOperation with
@@ -262,7 +264,7 @@ function processOperationRequests(session: Session<CodeModel>) {
           ds.language.go!.headerCollectionPrefix = param.extensions['x-ms-header-collection-prefix'];
           param.schema = ds;
         }
-        if (param.implementation === ImplementationLocation.Client && param.schema.type !== SchemaType.Constant) {
+        if (param.implementation === ImplementationLocation.Client && param.schema.type !== SchemaType.Constant && param.protocol.http!.in !== 'uri') {
           // add global param info to the operation group
           if (group.language.go!.clientParams === undefined) {
             group.language.go!.clientParams = new Array<Parameter>();
@@ -271,12 +273,6 @@ function processOperationRequests(session: Session<CodeModel>) {
           // check if this global param has already been added
           if (clientParams.includes(param)) {
             continue;
-          }
-          // TODO improve this condition
-          if (paramHostInfo.addParamHost) {
-            if (param.protocol.http!.in === 'uri') {
-              continue;
-            }
           }
           clientParams.push(param);
         }
@@ -341,6 +337,9 @@ function processOperationRequests(session: Session<CodeModel>) {
         }
       }
     }
+    if (group.language.go!.clientParams !== undefined) {
+      allClientParams.push(group.language.go!.clientParams);
+    }
   }
   // emit any param groups
   if (paramGroups.size > 0) {
@@ -352,13 +351,57 @@ function processOperationRequests(session: Session<CodeModel>) {
       pg.push(items[1]);
     }
   }
+  const paramHostInfo = addParameterizedHostFunctionality(session.model.operationGroups);
+  // clean clientParams on each operation group from client only params
+  session.model.language.go!.clientOnlyParams = new Array<Parameter>();
+  if (paramHostInfo.addParamHost && allClientParams.length === session.model.operationGroups.length) {
+    session.model.language.go!.clientOnlyParams = [...allClientParams.reduce((p, c) => p.filter(e => c.includes(e)))];
+    for (const param of values(session.model.globalParameters)) {
+      let exists = false;
+      if (param.implementation === ImplementationLocation.Client) {
+        for (const pp of values(allClientParams)) {
+          if (pp.includes(param)) {
+            exists = true;
+          }
+        }
+      }
+      if (!exists && !session.model.language.go!.clientOnlyParams.includes(param)) {
+        session.model.language.go!.clientOnlyParams.push(param);
+      }
+    }
+    // loop through all group client params and remove operation group params that only belong on the client
+    for (const group of values(session.model.operationGroups)) {
+      for (const param of values(group.language.go!.clientParams)) {
+        if (session.model.language.go!.clientOnlyParams.includes(param)) {
+          const index = group.language.go!.clientParams.indexOf(param);
+          if (index > -1) {
+            group.language.go!.clientParams.splice(index, 1);
+          }
+        }
+      }
+    }
+  } else if (paramHostInfo.addParamHost && allClientParams.length === 0) {
+    for (const param of values(session.model.globalParameters)) {
+      let exists = false;
+      if (param.implementation === ImplementationLocation.Client) {
+        for (const pp of values(allClientParams)) {
+          if (pp.includes(param)) {
+            exists = true;
+          }
+        }
+      }
+      if (!exists && !session.model.language.go!.clientOnlyParams.includes(param)) {
+        session.model.language.go!.clientOnlyParams.push(param);
+      }
+    }
+  }
 }
 
 function isHostParameter(param: Parameter): boolean {
   if (param.language.go!.name === '$host') {
     return true;
   }
-  return param.extensions?.['x-ms-priority'] === 0 && param.extensions?.['x-in'] === 'path';
+  return false;
 }
 
 function createGroupProperty(name: string, description: string): GroupProperty {

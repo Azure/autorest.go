@@ -43,7 +43,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       // protocol creation can add imports to the list so
       // it must be done before the imports are written out
       opText += generateOperation(clientName, op, imports);
-      opText += createProtocolRequest(clientName, op, group, imports, paramHostInfo);
+      opText += createProtocolRequest(clientName, op, imports, paramHostInfo, session.model.language.go!.clientOnlyParams);
       opText += createProtocolResponse(clientName, op, imports);
       opText += createProtocolErrHandler(clientName, op, imports);
     }
@@ -305,7 +305,7 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
   return text;
 }
 
-function createProtocolRequest(client: string, op: Operation, group: OperationGroup, imports: ImportManager, paramHostInfo: ParameterizedHost): string {
+function createProtocolRequest(client: string, op: Operation, imports: ImportManager, paramHostInfo: ParameterizedHost, clientOnlyParams: Array<Parameter>): string {
   const info = <OperationNaming>op.language.go!;
   const name = info.protocolNaming.requestMethod;
   for (const param of values(aggregateParameters(op))) {
@@ -333,7 +333,7 @@ function createProtocolRequest(client: string, op: Operation, group: OperationGr
       imports.add('strings');
       // host references may be found among other variables and therefore call to use the host 
       // specified by the endpoint the client was created with
-      if ((pp.implementation === ImplementationLocation.Client && group.language.go!.clientParams === undefined) || (pp.implementation === ImplementationLocation.Client && !(<Array<Parameter>>group.language.go!.clientParams).includes(pp)) || paramHostInfo.clientParams.includes(pp)) {
+      if (clientOnlyParams.includes(pp)) {
         text += `\thost = strings.ReplaceAll(host, "{${pp.language.go!.serializedName}}", client.Client.${pp.language.go!.name})\n`;
       } else {
         let paramValue = `url.PathEscape(${formatParamValue(pp, imports, false)})`;
@@ -372,7 +372,7 @@ function createProtocolRequest(client: string, op: Operation, group: OperationGr
     // replace path parameters
     for (const pp of values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'path'; })) {
       let onClient = false;
-      if (paramHostInfo.addParamHost && paramHostInfo.clientParams.includes(pp)) {
+      if (paramHostInfo.addParamHost && clientOnlyParams.includes(pp)) {
         onClient = true;
       }
       let paramValue = `url.PathEscape(${formatParamValue(pp, imports, onClient)})`;

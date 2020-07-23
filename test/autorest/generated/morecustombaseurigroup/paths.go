@@ -22,7 +22,6 @@ type PathsOperations interface {
 // pathsOperations implements the PathsOperations interface.
 type pathsOperations struct {
 	*Client
-	subscriptionID string
 }
 
 // GetEmpty - Get a 200 to test a valid base uri
