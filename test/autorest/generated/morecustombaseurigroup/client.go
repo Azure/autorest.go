@@ -53,13 +53,12 @@ func (c *ClientOptions) telemetryOptions() azcore.TelemetryOptions {
 
 // Client - Test Infrastructure for AutoRest
 type Client struct {
-	subscriptionID string
-	dnsSuffix      string
-	p              azcore.Pipeline
+	dnsSuffix string
+	p         azcore.Pipeline
 }
 
 // NewClient creates an instance of the Client type with the specified endpoint.
-func NewClient(subscriptionID string, dnsSuffix *string, options *ClientOptions) (*Client, error) {
+func NewClient(dnsSuffix *string, options *ClientOptions) (*Client, error) {
 	if options == nil {
 		o := DefaultClientOptions()
 		options = &o
@@ -69,16 +68,15 @@ func NewClient(subscriptionID string, dnsSuffix *string, options *ClientOptions)
 		azcore.NewUniqueRequestIDPolicy(),
 		azcore.NewRetryPolicy(&options.Retry),
 		azcore.NewRequestLogPolicy(options.LogOptions))
-	return NewClientWithPipeline(subscriptionID, dnsSuffix, p)
+	return NewClientWithPipeline(dnsSuffix, p)
 }
 
 // NewClientWithPipeline creates an instance of the Client type with the specified endpoint and pipeline.
-func NewClientWithPipeline(subscriptionID string, dnsSuffix *string, p azcore.Pipeline) (*Client, error) {
+func NewClientWithPipeline(dnsSuffix *string, p azcore.Pipeline) (*Client, error) {
 	client := &Client{
 		p:         p,
 		dnsSuffix: "host",
 	}
-	client.subscriptionID = subscriptionID
 	if dnsSuffix != nil {
 		client.dnsSuffix = *dnsSuffix
 	}
@@ -86,6 +84,6 @@ func NewClientWithPipeline(subscriptionID string, dnsSuffix *string, p azcore.Pi
 }
 
 // PathsOperations returns the PathsOperations associated with this client.
-func (client *Client) PathsOperations() PathsOperations {
-	return &pathsOperations{Client: client}
+func (client *Client) PathsOperations(subscriptionID string) PathsOperations {
+	return &pathsOperations{Client: client, subscriptionID: subscriptionID}
 }

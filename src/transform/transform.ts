@@ -369,6 +369,15 @@ function processOperationRequests(session: Session<CodeModel>) {
         session.model.language.go!.clientOnlyParams.push(param);
       }
     }
+    // filter client only params to only those that exist on the 'uri' part of the http protocol
+    for (const param of values(<Array<Parameter>>session.model.language.go!.clientOnlyParams)) {
+      if (param.protocol.http!.in !== 'uri') {
+        const index = session.model.language.go!.clientOnlyParams.indexOf(param);
+        if (index > -1) {
+          session.model.language.go!.clientOnlyParams.splice(index, 1);
+        }
+      }
+    }
     // loop through all group client params and remove operation group params that only belong on the client
     for (const group of values(session.model.operationGroups)) {
       for (const param of values(group.language.go!.clientParams)) {

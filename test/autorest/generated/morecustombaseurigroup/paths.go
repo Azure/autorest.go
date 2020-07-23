@@ -22,6 +22,7 @@ type PathsOperations interface {
 // pathsOperations implements the PathsOperations interface.
 type pathsOperations struct {
 	*Client
+	subscriptionID string
 }
 
 // GetEmpty - Get a 200 to test a valid base uri
@@ -49,7 +50,7 @@ func (client *pathsOperations) getEmptyCreateRequest(vault string, secret string
 	host = strings.ReplaceAll(host, "{dnsSuffix}", client.Client.dnsSuffix)
 	urlPath := "/customuri/{subscriptionId}/{keyName}"
 	urlPath = strings.ReplaceAll(urlPath, "{keyName}", url.PathEscape(keyName))
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.Client.subscriptionID))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	u, err := url.Parse(host + urlPath)
 	if err != nil {
 		return nil, err
