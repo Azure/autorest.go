@@ -326,7 +326,9 @@ func (client *pageBlobOperations) createCreateRequest(contentLength int64, blobC
 		req.Header.Set("x-ms-blob-cache-control", *blobHttpHeaders.BlobCacheControl)
 	}
 	if pageBlobCreateOptions != nil && pageBlobCreateOptions.Metadata != nil {
-		req.Header.Set("x-ms-meta", *pageBlobCreateOptions.Metadata)
+		for k, v := range *pageBlobCreateOptions.Metadata {
+			req.Header.Set("x-ms-meta-"+k, v)
+		}
 	}
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseId != nil {
 		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseId)

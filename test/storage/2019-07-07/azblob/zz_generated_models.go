@@ -184,7 +184,7 @@ type AppendBlobCreateOptions struct {
 	// are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source
 	// blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers.
 	// See Naming and Referencing Containers, Blobs, and Metadata for more information.
-	Metadata *string
+	Metadata *map[string]string
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
 	RequestId *string
@@ -399,7 +399,7 @@ type BlobCopyFromURLOptions struct {
 	// are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source
 	// blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers.
 	// See Naming and Referencing Containers, Blobs, and Metadata for more information.
-	Metadata *string
+	Metadata *map[string]string
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
 	RequestId *string
@@ -455,7 +455,7 @@ type BlobCreateSnapshotOptions struct {
 	// are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source
 	// blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers.
 	// See Naming and Referencing Containers, Blobs, and Metadata for more information.
-	Metadata *string
+	Metadata *map[string]string
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
 	RequestId *string
@@ -1202,7 +1202,7 @@ type BlobSetMetadataOptions struct {
 	// are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source
 	// blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers.
 	// See Naming and Referencing Containers, Blobs, and Metadata for more information.
-	Metadata *string
+	Metadata *map[string]string
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
 	RequestId *string
@@ -1278,7 +1278,7 @@ type BlobStartCopyFromURLOptions struct {
 	// are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source
 	// blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers.
 	// See Naming and Referencing Containers, Blobs, and Metadata for more information.
-	Metadata *string
+	Metadata *map[string]string
 	// Optional: Indicates the priority with which to rehydrate an archived blob.
 	RehydratePriority *RehydratePriority
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
@@ -1365,7 +1365,7 @@ type BlockBlobCommitBlockListOptions struct {
 	// are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source
 	// blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers.
 	// See Naming and Referencing Containers, Blobs, and Metadata for more information.
-	Metadata *string
+	Metadata *map[string]string
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
 	RequestId *string
@@ -1536,7 +1536,7 @@ type BlockBlobUploadOptions struct {
 	// are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source
 	// blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers.
 	// See Naming and Referencing Containers, Blobs, and Metadata for more information.
-	Metadata *string
+	Metadata *map[string]string
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
 	RequestId *string
@@ -1786,7 +1786,7 @@ type ContainerCreateOptions struct {
 	// are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source
 	// blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers.
 	// See Naming and Referencing Containers, Blobs, and Metadata for more information.
-	Metadata *string
+	Metadata *map[string]string
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
 	RequestId *string
@@ -2159,7 +2159,7 @@ type ContainerSetMetadataOptions struct {
 	// are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source
 	// blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers.
 	// See Naming and Referencing Containers, Blobs, and Metadata for more information.
-	Metadata *string
+	Metadata *map[string]string
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
 	RequestId *string
@@ -2806,7 +2806,7 @@ type PageBlobCreateOptions struct {
 	// are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source
 	// blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers.
 	// See Naming and Referencing Containers, Blobs, and Metadata for more information.
-	Metadata *string
+	Metadata *map[string]string
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
 	RequestId *string

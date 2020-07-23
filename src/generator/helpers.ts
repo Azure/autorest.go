@@ -134,6 +134,21 @@ export function getMethodParameters(op: Operation): Parameter[] {
   return params;
 }
 
+export function getParamName(param: Parameter, onClient: boolean): string {
+  let paramName = param.language.go!.name;
+  if (onClient) {
+    paramName = `client.Client.${paramName}`;
+  } else if (param.implementation === ImplementationLocation.Client) {
+    paramName = `client.${paramName}`;
+  } else if (param.language.go!.paramGroup) {
+    paramName = `${camelCase(param.language.go!.paramGroup.language.go!.name)}.${pascalCase(paramName)}`;
+  }
+  if (param.required !== true) {
+    paramName = `*${paramName}`;
+  }
+  return paramName;
+}
+
 export function formatParamValue(param: Parameter, imports: ImportManager, onClient: boolean): string {
   let separator = ',';
   switch (param.protocol.http?.style) {
@@ -147,17 +162,7 @@ export function formatParamValue(param: Parameter, imports: ImportManager, onCli
       separator = '\\t';
       break;
   }
-  let paramName = param.language.go!.name;
-  if (onClient) {
-    paramName = `client.Client.${paramName}`;
-  } else if (param.implementation === ImplementationLocation.Client) {
-    paramName = `client.${paramName}`;
-  } else if (param.language.go!.paramGroup) {
-    paramName = `${camelCase(param.language.go!.paramGroup.language.go!.name)}.${pascalCase(paramName)}`;
-  }
-  if (param.required !== true) {
-    paramName = `*${paramName}`;
-  }
+  let paramName = getParamName(param, onClient);
   switch (param.schema.type) {
     case SchemaType.Array:
       const arraySchema = <ArraySchema>param.schema;

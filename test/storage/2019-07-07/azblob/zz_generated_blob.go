@@ -469,7 +469,9 @@ func (client *blobOperations) copyFromUrlCreateRequest(copySource url.URL, blobC
 	req := azcore.NewRequest(http.MethodPut, *u)
 	req.Header.Set("x-ms-requires-sync", "true")
 	if blobCopyFromUrlOptions != nil && blobCopyFromUrlOptions.Metadata != nil {
-		req.Header.Set("x-ms-meta", *blobCopyFromUrlOptions.Metadata)
+		for k, v := range *blobCopyFromUrlOptions.Metadata {
+			req.Header.Set("x-ms-meta-"+k, v)
+		}
 	}
 	if blobCopyFromUrlOptions != nil && blobCopyFromUrlOptions.Tier != nil {
 		req.Header.Set("x-ms-access-tier", string(*blobCopyFromUrlOptions.Tier))
@@ -605,7 +607,9 @@ func (client *blobOperations) createSnapshotCreateRequest(blobCreateSnapshotOpti
 	u.RawQuery = query.Encode()
 	req := azcore.NewRequest(http.MethodPut, *u)
 	if blobCreateSnapshotOptions != nil && blobCreateSnapshotOptions.Metadata != nil {
-		req.Header.Set("x-ms-meta", *blobCreateSnapshotOptions.Metadata)
+		for k, v := range *blobCreateSnapshotOptions.Metadata {
+			req.Header.Set("x-ms-meta-"+k, v)
+		}
 	}
 	if cpkInfo != nil && cpkInfo.EncryptionKey != nil {
 		req.Header.Set("x-ms-encryption-key", *cpkInfo.EncryptionKey)
@@ -2002,7 +2006,9 @@ func (client *blobOperations) setMetadataCreateRequest(blobSetMetadataOptions *B
 	u.RawQuery = query.Encode()
 	req := azcore.NewRequest(http.MethodPut, *u)
 	if blobSetMetadataOptions != nil && blobSetMetadataOptions.Metadata != nil {
-		req.Header.Set("x-ms-meta", *blobSetMetadataOptions.Metadata)
+		for k, v := range *blobSetMetadataOptions.Metadata {
+			req.Header.Set("x-ms-meta-"+k, v)
+		}
 	}
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseId != nil {
 		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseId)
@@ -2189,7 +2195,9 @@ func (client *blobOperations) startCopyFromUrlCreateRequest(copySource url.URL, 
 	u.RawQuery = query.Encode()
 	req := azcore.NewRequest(http.MethodPut, *u)
 	if blobStartCopyFromUrlOptions != nil && blobStartCopyFromUrlOptions.Metadata != nil {
-		req.Header.Set("x-ms-meta", *blobStartCopyFromUrlOptions.Metadata)
+		for k, v := range *blobStartCopyFromUrlOptions.Metadata {
+			req.Header.Set("x-ms-meta-"+k, v)
+		}
 	}
 	if blobStartCopyFromUrlOptions != nil && blobStartCopyFromUrlOptions.Tier != nil {
 		req.Header.Set("x-ms-access-tier", string(*blobStartCopyFromUrlOptions.Tier))

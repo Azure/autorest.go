@@ -84,7 +84,9 @@ func (client *blockBlobOperations) commitBlockListCreateRequest(blocks BlockLook
 		req.Header.Set("x-ms-content-crc64", base64.StdEncoding.EncodeToString(*blockBlobCommitBlockListOptions.TransactionalContentCrc64))
 	}
 	if blockBlobCommitBlockListOptions != nil && blockBlobCommitBlockListOptions.Metadata != nil {
-		req.Header.Set("x-ms-meta", *blockBlobCommitBlockListOptions.Metadata)
+		for k, v := range *blockBlobCommitBlockListOptions.Metadata {
+			req.Header.Set("x-ms-meta-"+k, v)
+		}
 	}
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseId != nil {
 		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseId)
@@ -586,7 +588,9 @@ func (client *blockBlobOperations) uploadCreateRequest(contentLength int64, body
 		req.Header.Set("x-ms-blob-cache-control", *blobHttpHeaders.BlobCacheControl)
 	}
 	if blockBlobUploadOptions != nil && blockBlobUploadOptions.Metadata != nil {
-		req.Header.Set("x-ms-meta", *blockBlobUploadOptions.Metadata)
+		for k, v := range *blockBlobUploadOptions.Metadata {
+			req.Header.Set("x-ms-meta-"+k, v)
+		}
 	}
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseId != nil {
 		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseId)

@@ -9,7 +9,7 @@ import { ArraySchema, ByteArraySchema, CodeModel, ConstantSchema, DateTimeSchema
 import { values } from '@azure-tools/linq';
 import { aggregateParameters, isArraySchema, isPageableOperation, isSchemaResponse, PagerInfo, isLROOperation } from '../common/helpers';
 import { OperationNaming } from '../transform/namer';
-import { contentPreamble, formatParameterTypeName, hasDescription, skipURLEncoding, sortAscending, getCreateRequestParametersSig, getMethodParameters, addParameterizedHostFunctionality, ParameterizedHost, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format } from './helpers';
+import { contentPreamble, formatParameterTypeName, hasDescription, skipURLEncoding, sortAscending, getCreateRequestParametersSig, getMethodParameters, getParamName, addParameterizedHostFunctionality, ParameterizedHost, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format } from './helpers';
 import { ImportManager } from './imports';
 
 // represents the generated content for an operation group
@@ -476,13 +476,23 @@ function createProtocolRequest(client: string, op: Operation, group: OperationGr
   // add specific request headers
   const headerParam = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined; }).where((each: Parameter) => { return each.protocol.http!.in === 'header'; });
   headerParam.forEach(header => {
+    const emitHeaderSet = function (headerParam: Parameter, prefix: string): string {
+      if (header.schema.language.go!.headerCollectionPrefix) {
+        let headerText = `${prefix}for k, v := range ${getParamName(headerParam, false)} {\n`;
+        headerText += `${prefix}\treq.Header.Set("${header.schema.language.go!.headerCollectionPrefix}"+k, v)\n`;
+        headerText += `${prefix}}\n`;
+        return headerText;
+      } else {
+        return `${prefix}req.Header.Set("${headerParam.language.go!.serializedName}", ${formatParamValue(headerParam, imports, false)})\n`;
+      }
+    }
     if (header.required) {
-      text += `\treq.Header.Set("${header.language.go!.serializedName}", ${formatParamValue(header, imports, false)})\n`;
+      text += emitHeaderSet(header, '\t');
     } else if (header.schema.type === SchemaType.Constant) {
       // omit this header. TODO once non-required constants are fixed
     } else {
       text += emitParamGroupCheck(<GroupProperty>header.language.go!.paramGroup, header);
-      text += `\t\treq.Header.Set("${header.language.go!.serializedName}", ${formatParamValue(header, imports, false)})\n`;
+      text += emitHeaderSet(header, '\t\t');
       text += `\t}\n`;
     }
   });
