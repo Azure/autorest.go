@@ -101,6 +101,7 @@ namespace AutoRest.Go
                 "client",
                 "version",
                 "interfaces",
+                "enums",
             };
 
             foreach (var methodGroup in codeModel.MethodGroups.Where(mg => !string.IsNullOrEmpty(mg.Name)))
