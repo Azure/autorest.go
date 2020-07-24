@@ -7,7 +7,7 @@ import { Session } from '@azure-tools/autorest-extension-base';
 import { values } from '@azure-tools/linq';
 import { comment, camelCase, pascalCase } from '@azure-tools/codegen';
 import { aggregateParameters } from '../common/helpers';
-import { ArraySchema, CodeModel, DictionarySchema, Language, Parameter, Schema, SchemaType, Operation, GroupProperty, ImplementationLocation, OperationGroup, SerializationStyle, ByteArraySchema, ConstantSchema, NumberSchema, DateTimeSchema } from '@azure-tools/codemodel';
+import { ArraySchema, CodeModel, DictionarySchema, Language, Parameter, Schema, SchemaType, Operation, GroupProperty, ImplementationLocation, SerializationStyle, ByteArraySchema, ConstantSchema, NumberSchema, DateTimeSchema } from '@azure-tools/codemodel';
 import { ImportManager } from './imports';
 
 export const dateFormat = '2006-01-02';
@@ -245,52 +245,4 @@ export function formatParamValue(param: Parameter, imports: ImportManager, onCli
     default:
       return paramName;
   }
-}
-
-export interface ParameterizedHost {
-  addParamHost: boolean;
-  urlOnClient: boolean;
-}
-
-// this function checks if parameterized host functionality needs to be added for the service
-// and returns two booleans. The first boolean signals if parameterized host should be added or not
-// the second boolean signals if all of the parameterized host parameters are on the client or not.
-export function addParameterizedHostFunctionality(operationGroups: Array<OperationGroup>): ParameterizedHost {
-  // before checking for special parameterized host conditions, we need to search through all of the
-  // operaiton groups in order to know if there are different parameterized host implementations in the 
-  // package. 
-  let separateHosts = false; // this indicates if there are multiple parameterized host implementations
-  const paramHost = operationGroups[0].operations[0].requests![0].protocol.http!.uri;
-  for (const group of values(operationGroups)) {
-    const hostURI = group.operations[0].requests![0].protocol.http!.uri;
-    // if we find a different parameterized host definition url parsing is done off the client
-    if (hostURI !== paramHost) {
-      separateHosts = true;
-    }
-  }
-  // determine where client params need to be placed, client level or operation group level
-  if (separateHosts || !(<string>paramHost).match(/^\{\$?\w+\}$/)) {
-    let methodParamsCount = 0;
-    for (const p of values(aggregateParameters(operationGroups[0].operations[0])).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'uri'; })) {
-      if (!(p.implementation === ImplementationLocation.Client)) {
-        methodParamsCount++;
-      }
-    }
-    if (methodParamsCount > 0 || separateHosts) {
-      return {
-        addParamHost: true,
-        urlOnClient: false,
-      };
-    } else {
-      // if all params are on the client then it could all be handled in the new client with pipeline
-      return {
-        addParamHost: true,
-        urlOnClient: true,
-      };
-    }
-  }
-  return {
-    addParamHost: false,
-    urlOnClient: false, // leave this as false so it doesn't interact with parameterized host setting that check for this condition
-  };
 }
