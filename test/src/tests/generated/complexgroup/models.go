@@ -1088,6 +1088,15 @@ type ReadonlyObj struct {
 	Size *int32  `json:"size,omitempty"`
 }
 
+// MarshalJSON is the custom marshaler for ReadonlyObj.
+func (r ReadonlyObj) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if r.Size != nil {
+		objectMap["size"] = r.Size
+	}
+	return json.Marshal(objectMap)
+}
+
 // BasicSalmon ...
 type BasicSalmon interface {
 	AsSmartSalmon() (*SmartSalmon, bool)

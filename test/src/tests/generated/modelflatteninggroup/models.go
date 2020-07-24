@@ -136,6 +136,21 @@ type FlattenedProductProperties struct {
 	ProvisioningState       *string                 `json:"provisioningState,omitempty"`
 }
 
+// MarshalJSON is the custom marshaler for FlattenedProductProperties.
+func (fp FlattenedProductProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if fp.PName != nil {
+		objectMap["p.name"] = fp.PName
+	}
+	if fp.Type != nil {
+		objectMap["type"] = fp.Type
+	}
+	if fp.ProvisioningState != nil {
+		objectMap["provisioningState"] = fp.ProvisioningState
+	}
+	return json.Marshal(objectMap)
+}
+
 // GenericURL the Generic URL.
 type GenericURL struct {
 	// GenericValue - Generic URL value.
