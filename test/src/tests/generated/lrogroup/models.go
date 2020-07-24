@@ -2156,6 +2156,15 @@ type ProductProperties struct {
 	ProvisioningStateValues ProvisioningStateValues `json:"provisioningStateValues,omitempty"`
 }
 
+// MarshalJSON is the custom marshaler for ProductProperties.
+func (p ProductProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if p.ProvisioningState != nil {
+		objectMap["provisioningState"] = p.ProvisioningState
+	}
+	return json.Marshal(objectMap)
+}
+
 // Resource ...
 type Resource struct {
 	// ID - READ-ONLY; Resource Id
@@ -2245,8 +2254,23 @@ type SubProductProperties struct {
 	ProvisioningStateValues ProvisioningStateValues1 `json:"provisioningStateValues,omitempty"`
 }
 
+// MarshalJSON is the custom marshaler for SubProductProperties.
+func (sp SubProductProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if sp.ProvisioningState != nil {
+		objectMap["provisioningState"] = sp.ProvisioningState
+	}
+	return json.Marshal(objectMap)
+}
+
 // SubResource ...
 type SubResource struct {
 	// ID - READ-ONLY; Sub Resource Id
 	ID *string `json:"id,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for SubResource.
+func (sr SubResource) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	return json.Marshal(objectMap)
 }
