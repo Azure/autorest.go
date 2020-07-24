@@ -14,39 +14,6 @@ import (
 // The package's fully qualified name.
 const fqdn = "tests/generated/modelflatteninggroup"
 
-// ProvisioningStateValues enumerates the values for provisioning state values.
-type ProvisioningStateValues string
-
-const (
-	// Accepted ...
-	Accepted ProvisioningStateValues = "Accepted"
-	// Canceled ...
-	Canceled ProvisioningStateValues = "canceled"
-	// Created ...
-	Created ProvisioningStateValues = "Created"
-	// Creating ...
-	Creating ProvisioningStateValues = "Creating"
-	// Deleted ...
-	Deleted ProvisioningStateValues = "Deleted"
-	// Deleting ...
-	Deleting ProvisioningStateValues = "Deleting"
-	// Failed ...
-	Failed ProvisioningStateValues = "Failed"
-	// OK ...
-	OK ProvisioningStateValues = "OK"
-	// Succeeded ...
-	Succeeded ProvisioningStateValues = "Succeeded"
-	// Updated ...
-	Updated ProvisioningStateValues = "Updated"
-	// Updating ...
-	Updating ProvisioningStateValues = "Updating"
-)
-
-// PossibleProvisioningStateValuesValues returns an array of possible values for the ProvisioningStateValues const type.
-func PossibleProvisioningStateValuesValues() []ProvisioningStateValues {
-	return []ProvisioningStateValues{Accepted, Canceled, Created, Creating, Deleted, Deleting, Failed, OK, Succeeded, Updated, Updating}
-}
-
 // BaseProduct the product documentation.
 type BaseProduct struct {
 	// ProductID - Unique identifier representing a specific product for a given latitude & longitude. For example, uberX in San Francisco will have a different product_id than uberX in Los Angeles.
