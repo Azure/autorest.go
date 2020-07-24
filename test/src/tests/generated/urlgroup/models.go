@@ -9,23 +9,6 @@ package urlgroup
 // The package's fully qualified name.
 const fqdn = "tests/generated/urlgroup"
 
-// URIColor enumerates the values for uri color.
-type URIColor string
-
-const (
-	// Bluecolor ...
-	Bluecolor URIColor = "blue color"
-	// Greencolor ...
-	Greencolor URIColor = "green color"
-	// Redcolor ...
-	Redcolor URIColor = "red color"
-)
-
-// PossibleURIColorValues returns an array of possible values for the URIColor const type.
-func PossibleURIColorValues() []URIColor {
-	return []URIColor{Bluecolor, Greencolor, Redcolor}
-}
-
 // Error ...
 type Error struct {
 	Status  *int32  `json:"status,omitempty"`
