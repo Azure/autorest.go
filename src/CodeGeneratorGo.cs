@@ -75,7 +75,8 @@ namespace AutoRest.Go
             await Write(modelsTemplate, FormatFileName("models"));
             // Enums - while initially enums should be part of the models, to decrease the size of the models.go file,
             // we separate the enums definitions out of the models.go file
-            if (!codeModel.EnumTypes.Any())
+            var enums = codeModel.EnumTypes.Cast<EnumTypeGo>().ToList();
+            if (enums.Any())
             {
                 var enumsTemplate = new EnumsTemplate
                 {
@@ -100,7 +101,6 @@ namespace AutoRest.Go
                 "client",
                 "version",
                 "interfaces",
-                "enums",
             };
 
             foreach (var methodGroup in codeModel.MethodGroups.Where(mg => !string.IsNullOrEmpty(mg.Name)))
