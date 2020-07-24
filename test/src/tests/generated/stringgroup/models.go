@@ -13,23 +13,6 @@ import (
 // The package's fully qualified name.
 const fqdn = "tests/generated/stringgroup"
 
-// Colors enumerates the values for colors.
-type Colors string
-
-const (
-	// BlueColor ...
-	BlueColor Colors = "blue_color"
-	// GreenColor ...
-	GreenColor Colors = "green-color"
-	// Redcolor ...
-	Redcolor Colors = "red color"
-)
-
-// PossibleColorsValues returns an array of possible values for the Colors const type.
-func PossibleColorsValues() []Colors {
-	return []Colors{BlueColor, GreenColor, Redcolor}
-}
-
 // Base64URL ...
 type Base64URL struct {
 	autorest.Response `json:"-"`

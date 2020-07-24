@@ -15,23 +15,6 @@ import (
 // The package's fully qualified name.
 const fqdn = "tests/generated/arraygroup"
 
-// FooEnum enumerates the values for foo enum.
-type FooEnum string
-
-const (
-	// Foo1 ...
-	Foo1 FooEnum = "foo1"
-	// Foo2 ...
-	Foo2 FooEnum = "foo2"
-	// Foo3 ...
-	Foo3 FooEnum = "foo3"
-)
-
-// PossibleFooEnumValues returns an array of possible values for the FooEnum const type.
-func PossibleFooEnumValues() []FooEnum {
-	return []FooEnum{Foo1, Foo2, Foo3}
-}
-
 // Error ...
 type Error struct {
 	Status  *int32  `json:"status,omitempty"`

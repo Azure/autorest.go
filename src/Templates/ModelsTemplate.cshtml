@@ -35,13 +35,6 @@ foreach (var import in Model.ModelImports)
 const fqdn = "@(Model.PackageFqdn)"
 @EmptyLine
 
-@foreach (var e in enums)
-{
-@:@(Include(new EnumTemplate(), e))
-@EmptyLine
-@:
-}
-
 @foreach (var mt in modelTypes)
 {
 @:@(Include(new ModelTemplate(), mt))
