@@ -20,7 +20,9 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   }
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
   imports.add('strings');
-  imports.add('net/url');
+  if (!session.model.language.go!.complexHostParams) {
+    imports.add('net/url');
+  }
 
   let text = await contentPreamble(session);
   text += imports.text();
@@ -98,7 +100,17 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   }
 
   text += `type ${client} struct {\n`;
-  text += `\tu *url.URL\n`;
+  if (session.model.language.go!.hostParams && session.model.language.go!.complexHostParams) {
+    // complex host params means we have to construct and parse the
+    // URL in the operation.  place all host params in the client.
+    const hostParams = <Array<Parameter>>session.model.language.go!.hostParams;
+    for (const param of values(hostParams)) {
+      text += `\t${param.language.go!.name} ${param.schema.language.go!.name}\n`;
+    }
+  } else {
+    // simple case, will parse URL in ctor
+    text += `\tu *url.URL\n`;
+  }
   text += `\tp azcore.Pipeline\n`;
   text += '}\n\n';
 
@@ -116,15 +128,35 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
     if (!session.model.security.authenticationRequired) {
       cred = '';
     }
-    // when a parameterized host is not set, the default endpoint is set for the url on the client
     text += `\treturn ${newClient}(${defaultEndpoint}, ${cred}options)\n`;
     text += '}\n\n';
   }
 
-  const hostParam = getHostParam(session.model.globalParameters);
-  const hostParamName = camelCase(hostParam!.language.go!.name).toLowerCase();
+  // build the set of ctor params based on swagger host or parameterized host
+  var ctorParamsSig: string;
+  var ctorParams: string;
+  if (session.model.language.go!.hostParams) {
+    // parameterized host
+    const hostParams = <Array<Parameter>>session.model.language.go!.hostParams;
+    const fullParams = new Array<string>();
+    const params = new Array<string>();
+    for (const param of values(hostParams)) {
+      const paramName = param.language.go!.name;
+      fullParams.push(`${paramName} ${formatParameterTypeName(param)}`);
+      params.push(paramName);
+    }
+    ctorParamsSig = fullParams.join(', ');
+    ctorParams = params.join(', ');
+  } else {
+    // swagger host
+    const hostParam = getHostParam(session.model.globalParameters);
+    const hostParamName = hostParam!.language.go!.name;
+    ctorParamsSig = `${hostParamName} ${hostParam!.schema.language.go!.name}`;
+    ctorParams = hostParamName;
+  }
+
   text += `// ${newClient} creates an instance of the ${client} type with the specified endpoint.\n`;
-  text += `func ${newClient}(${hostParamName} ${hostParam!.schema.language.go!.name}, ${credParam}options *${clientOptions}) (*${client}, error) {\n`;
+  text += `func ${newClient}(${ctorParamsSig}, ${credParam}options *${clientOptions}) (*${client}, error) {\n`;
   text += '\tif options == nil {\n';
   text += `\t\to := ${defaultClientOptions}()\n`;
   text += '\t\toptions = &o\n';
@@ -164,19 +196,68 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
     }
     text += `\t\t${logPolicy}\n`;
   }
-  text += `\treturn ${newClientWithPipeline}(${hostParamName}, p)\n`;
+  text += `\treturn ${newClientWithPipeline}(${ctorParams}, p)\n`;
   text += '}\n\n';
 
   text += `// ${newClientWithPipeline} creates an instance of the ${client} type with the specified endpoint and pipeline.\n`;
-  text += `func ${newClientWithPipeline}(${hostParamName} ${hostParam!.schema.language.go!.name}, p azcore.Pipeline) (*${client}, error) {\n`;
-  text += `\tu, err := url.Parse(${hostParamName})\n`;
-  text += '\tif err != nil {\n';
-  text += '\t\treturn nil, err\n';
-  text += '\t}\n';
-  text += '\tif u.Scheme == "" {\n';
-  text += `\t\treturn nil, fmt.Errorf("no scheme detected in endpoint %s", ${hostParamName})\n`;
-  text += '\t}\n';
-  text += `\treturn &${client}{u: u, p: p}, nil\n`;
+  text += `func ${newClientWithPipeline}(${ctorParamsSig}, p azcore.Pipeline) (*${client}, error) {\n`;
+  if (!session.model.language.go!.complexHostParams) {
+    // simple case, construct and parse the URL here
+    var hostURL: string;
+    const uriTemplate = <string>session.model.operationGroups[0].operations[0].requests![0].protocol.http!.uri;
+    // if the uriTemplate is simply {whatever} then we can skip doing the strings.ReplaceAll thing.
+    if (session.model.language.go!.hostParams && !uriTemplate.match(/^\{\w+\}$/)) {
+      // parameterized host
+      text += `\thostURL := "${uriTemplate}"\n`;
+      const hostParams = <Array<Parameter>>session.model.language.go!.hostParams;
+      for (const hostParam of values(hostParams)) {
+        // dereference optional params
+        let pointer = '';
+        if (hostParam.clientDefaultValue) {
+          pointer = '*';
+          text += `\tif ${hostParam.language.go!.name} == nil {\n`;
+          text += `\t\tdefaultValue := "${hostParam.clientDefaultValue}"\n`;
+          text += `\t\t${hostParam.language.go!.name} = &defaultValue\n`;
+          text += '\t}\n';
+        }
+        text += `\thostURL = strings.ReplaceAll(hostURL, "{${hostParam.language.go!.serializedName}}", ${pointer}${hostParam.language.go!.name})\n`;
+      }
+      hostURL = 'hostURL';
+    } else {
+      // swagger host, the host URL is the only ctor param
+      hostURL = ctorParams;
+    }
+    text += `\tu, err := url.Parse(${hostURL})\n`;
+    text += '\tif err != nil {\n';
+    text += '\t\treturn nil, err\n';
+    text += '\t}\n';
+    text += '\tif u.Scheme == "" {\n';
+    text += `\t\treturn nil, fmt.Errorf("no scheme detected in endpoint %s", ${hostURL})\n`;
+    text += '\t}\n';
+    text += `\treturn &${client}{u: u, p: p}, nil\n`;
+  } else {
+    // complex case, URL will be constructed and parsed in operations
+    text += `\tclient := &${client}{\n`;
+    text += '\t\tp: p,\n';
+    const hostParams = <Array<Parameter>>session.model.language.go!.hostParams;
+    for (const hostParam of values(hostParams)) {
+      let val = hostParam.language.go!.name;
+      if (hostParam.clientDefaultValue) {
+        val = `"${hostParam.clientDefaultValue}"`;
+      }
+      text += `\t\t${hostParam.language.go!.name}: ${val},\n`;
+    }
+    text += '\t}\n';
+    // handle optional host params
+    for (const hostParam of values(hostParams)) {
+      if (hostParam.clientDefaultValue) {
+        text += `\tif ${hostParam.language.go!.name} != nil {\n`;
+        text += `\t\tclient.${hostParam.language.go!.name} = *${hostParam.language.go!.name}\n`;
+        text += '\t}\n';
+      }
+    }
+    text += '\treturn client, nil\n';
+  }
 
   text += '}\n\n';
 
@@ -194,7 +275,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
     }
     text += `// ${group.language.go!.clientName} returns the ${group.language.go!.clientName} associated with this client.\n`;
     text += `func (client *${client}) ${group.language.go!.clientName}(${methodParams}) ${group.language.go!.clientName} {\n`;
-    text += `\treturn &${group.operations[0].language.go!.clientName}{${clientLiterals.join(', ')}}\n`;
+    text += `\treturn &${camelCase(group.language.go!.clientName)}{${clientLiterals.join(', ')}}\n`;
     text += '}\n\n';
   }
 

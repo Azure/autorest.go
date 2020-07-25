@@ -41,7 +41,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       // protocol creation can add imports to the list so
       // it must be done before the imports are written out
       opText += generateOperation(clientName, op, imports);
-      opText += createProtocolRequest(clientName, op, imports);
+      opText += createProtocolRequest(session.model, clientName, op, imports);
       opText += createProtocolResponse(clientName, op, imports);
       opText += createProtocolErrHandler(clientName, op, imports);
     }
@@ -301,7 +301,7 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
   return text;
 }
 
-function createProtocolRequest(client: string, op: Operation, imports: ImportManager): string {
+function createProtocolRequest(codeModel: CodeModel, client: string, op: Operation, imports: ImportManager): string {
   const info = <OperationNaming>op.language.go!;
   const name = info.protocolNaming.requestMethod;
   for (const param of values(aggregateParameters(op))) {
@@ -313,9 +313,39 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
   const returns = ['*azcore.Request', 'error'];
   let text = `${comment(name, '// ')} creates the ${info.name} request.\n`;
   text += `func (client *${client}) ${name}(${getCreateRequestParametersSig(op)}) (${returns.join(', ')}) {\n`;
-  const inPathParams = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'path'; });
-  text += `\turlPath := "${op.requests![0].protocol.http!.path}"\n`;
-  if (inPathParams.any()) {
+  let hasHost = false;
+  if (codeModel.language.go!.complexHostParams) {
+    imports.add('strings');
+    // we have a complex parameterized host
+    text += `\thost := "${op.requests![0].protocol.http!.uri}"\n`;
+    // get all the host params on the client
+    const hostParams = <Array<Parameter>>codeModel.language.go!.hostParams;
+    for (const hostParam of values(hostParams)) {
+      text += `\thost = strings.ReplaceAll(host, "{${hostParam.language.go!.serializedName}}", client.${hostParam.language.go!.name})\n`;
+    }
+    // check for any method local host params
+    for (const param of values(op.parameters)) {
+      if (param.implementation === ImplementationLocation.Method && param.protocol.http!.in === 'uri') {
+        text += `\thost = strings.ReplaceAll(host, "{${param.language.go!.serializedName}}", ${param.language.go!.name})\n`;
+      }
+    }
+    hasHost = true;
+  }
+  const hasPathParams = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'path'; }).any();
+  // storage needs the client.u to be the source-of-truth for the full path.
+  // however, swagger requires that all operations specify a path, which is at odds with storage.
+  // to work around this, storage specifies x-ms-path paths with path params but doesn't
+  // actually reference the path params (i.e. no params with which to replace the tokens).
+  // so, if a path contains tokens but there are no path params, skip emitting the path.
+  const pathStr = <string>op.requests![0].protocol.http!.path;
+  const pathContainsParms = pathStr.includes('{');
+  let hasURLPath = false;
+  if (hasPathParams || (!pathContainsParms && pathStr.length > 1)) {
+    // there are path params, or the path doesn't contain tokens and is not "/" so emit it
+    text += `\turlPath := "${op.requests![0].protocol.http!.path}"\n`;
+    hasURLPath = true;
+  }
+  if (hasPathParams) {
     // swagger defines path params, emit path and replace tokens
     imports.add('strings');
     // replace path parameters
@@ -328,12 +358,22 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
       text += `\turlPath = strings.ReplaceAll(urlPath, "{${pp.language.go!.serializedName}}", ${paramValue})\n`;
     }
   }
-  const inQueryParams = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'query'; }).any();
-  imports.add('path');
-  text += `\tu, err := client.u.Parse(path.Join(client.u.Path, urlPath))\n`;
-  text += '\tif err != nil {\n';
-  text += '\t\treturn nil, err\n';
-  text += '\t}\n';
+  const hasQueryParams = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'query'; }).any();
+  if (hasURLPath) {
+    if (hasHost) {
+      imports.add('net/url');
+      text += `\tu, err := url.Parse(host + urlPath)\n`;
+    } else {
+      imports.add('path');
+      text += `\tu, err := client.u.Parse(path.Join(client.u.Path, urlPath))\n`;
+    }
+    text += '\tif err != nil {\n';
+    text += '\t\treturn nil, err\n';
+    text += '\t}\n';
+  } else {
+    text += '\tcopy := *client.u\n';
+    text += '\tu := &copy\n';
+  }
   // helper to build nil checks for param groups
   const emitParamGroupCheck = function (gp: GroupProperty, param: Parameter): string {
     const paramGroupName = camelCase(gp.language.go!.name);
@@ -343,7 +383,7 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
     }
     return `\tif ${optionalParamGroupCheck}${paramGroupName}.${pascalCase(param.language.go!.name)} != nil {\n`;
   }
-  if (inQueryParams) {
+  if (hasQueryParams) {
     // add query parameters
     const encodedParams = new Array<Parameter>();
     const unencodedParams = new Array<Parameter>();

@@ -96,7 +96,7 @@ export async function namer(session: Session<CodeModel>) {
         op.language.go!.methodPrefix = 'Begin';
       }
       for (const param of values(aggregateParameters(op))) {
-        if (param.language.go!.name === '$host') {
+        if (param.language.go!.name === '$host' || param.language.go!.name.toUpperCase() === 'URL') {
           param.language.go!.name = 'endpoint';
           continue;
         }

@@ -35,7 +35,8 @@ export function sortAscending(a: string, b: string): number {
 // returns the type name with possible * prefix
 export function formatParameterTypeName(param: Parameter): string {
   const typeName = substituteDiscriminator(param.schema);
-  if (param.required) {
+  // client params with default values are treated as optional
+  if (param.required && !(param.implementation === ImplementationLocation.Client && param.clientDefaultValue)) {
     return typeName;
   }
   return `*${typeName}`;
