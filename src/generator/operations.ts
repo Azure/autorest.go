@@ -350,10 +350,10 @@ function createProtocolRequest(codeModel: CodeModel, client: string, op: Operati
     imports.add('strings');
     // replace path parameters
     for (const pp of values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'path'; })) {
-      let paramValue = formatParamValue(pp, imports, false);
+      let paramValue = formatParamValue(pp, imports);
       if (!skipURLEncoding(pp)) {
         imports.add('net/url');
-        paramValue = `url.PathEscape(${formatParamValue(pp, imports, false)})`;
+        paramValue = `url.PathEscape(${formatParamValue(pp, imports)})`;
       }
       text += `\turlPath = strings.ReplaceAll(urlPath, "{${pp.language.go!.serializedName}}", ${paramValue})\n`;
     }
@@ -416,7 +416,7 @@ function createProtocolRequest(codeModel: CodeModel, client: string, op: Operati
     if (encodedParams.length > 0) {
       text += '\tquery := u.Query()\n';
       for (const qp of values(encodedParams)) {
-        text += emitQueryParam(qp, `query.Set("${qp.language.go!.serializedName}", ${formatParamValue(qp, imports, false)})`);
+        text += emitQueryParam(qp, `query.Set("${qp.language.go!.serializedName}", ${formatParamValue(qp, imports)})`);
       }
       text += '\tu.RawQuery = query.Encode()\n';
     }
@@ -428,7 +428,7 @@ function createProtocolRequest(codeModel: CodeModel, client: string, op: Operati
         text += '\tunencodedParams := []string{}\n';
       }
       for (const qp of values(unencodedParams)) {
-        text += emitQueryParam(qp, `unencodedParams = append(unencodedParams, "${qp.language.go!.serializedName}="+${formatParamValue(qp, imports, false)})`);
+        text += emitQueryParam(qp, `unencodedParams = append(unencodedParams, "${qp.language.go!.serializedName}="+${formatParamValue(qp, imports)})`);
       }
       text += '\tu.RawQuery = strings.Join(unencodedParams, "&")\n';
     }
@@ -443,12 +443,12 @@ function createProtocolRequest(codeModel: CodeModel, client: string, op: Operati
   headerParam.forEach(header => {
     const emitHeaderSet = function (headerParam: Parameter, prefix: string): string {
       if (header.schema.language.go!.headerCollectionPrefix) {
-        let headerText = `${prefix}for k, v := range ${getParamName(headerParam, false)} {\n`;
+        let headerText = `${prefix}for k, v := range ${getParamName(headerParam)} {\n`;
         headerText += `${prefix}\treq.Header.Set("${header.schema.language.go!.headerCollectionPrefix}"+k, v)\n`;
         headerText += `${prefix}}\n`;
         return headerText;
       } else {
-        return `${prefix}req.Header.Set("${headerParam.language.go!.serializedName}", ${formatParamValue(headerParam, imports, false)})\n`;
+        return `${prefix}req.Header.Set("${headerParam.language.go!.serializedName}", ${formatParamValue(headerParam, imports)})\n`;
       }
     }
     if (header.required) {

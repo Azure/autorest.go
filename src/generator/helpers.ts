@@ -135,11 +135,9 @@ export function getMethodParameters(op: Operation): Parameter[] {
   return params;
 }
 
-export function getParamName(param: Parameter, onClient: boolean): string {
+export function getParamName(param: Parameter): string {
   let paramName = param.language.go!.name;
-  if (onClient) {
-    paramName = `client.Client.${paramName}`;
-  } else if (param.implementation === ImplementationLocation.Client) {
+  if (param.implementation === ImplementationLocation.Client) {
     paramName = `client.${paramName}`;
   } else if (param.language.go!.paramGroup) {
     paramName = `${camelCase(param.language.go!.paramGroup.language.go!.name)}.${pascalCase(paramName)}`;
@@ -150,7 +148,7 @@ export function getParamName(param: Parameter, onClient: boolean): string {
   return paramName;
 }
 
-export function formatParamValue(param: Parameter, imports: ImportManager, onClient: boolean): string {
+export function formatParamValue(param: Parameter, imports: ImportManager): string {
   let separator = ',';
   switch (param.protocol.http?.style) {
     case SerializationStyle.PipeDelimited:
@@ -163,7 +161,7 @@ export function formatParamValue(param: Parameter, imports: ImportManager, onCli
       separator = '\\t';
       break;
   }
-  let paramName = getParamName(param, onClient);
+  let paramName = getParamName(param);
   switch (param.schema.type) {
     case SchemaType.Array:
       const arraySchema = <ArraySchema>param.schema;
