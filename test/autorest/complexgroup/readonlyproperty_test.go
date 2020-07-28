@@ -31,7 +31,6 @@ func TestReadonlypropertyGetValid(t *testing.T) {
 }
 
 func TestReadonlypropertyPutValid(t *testing.T) {
-	t.Skip("R/O NYI, test fails")
 	client := getReadonlypropertyOperations(t)
 	id, size := "1234", int32(2)
 	result, err := client.PutValid(context.Background(), complexgroup.ReadonlyObj{ID: &id, Size: &size})

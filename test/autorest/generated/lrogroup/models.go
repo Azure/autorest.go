@@ -414,7 +414,7 @@ type ProductPollerResponse struct {
 
 type ProductProperties struct {
 	ProvisioningState       *string                                   `json:"provisioningState,omitempty"`
-	ProvisioningStateValues *ProductPropertiesProvisioningStateValues `json:"provisioningStateValues,omitempty"`
+	ProvisioningStateValues *ProductPropertiesProvisioningStateValues `json:"provisioningStateValues,omitempty" azure:"ro"`
 }
 
 // ProductResponse is the response envelope for operations that return a Product type.
@@ -427,19 +427,19 @@ type ProductResponse struct {
 
 type Resource struct {
 	// Resource Id
-	ID *string `json:"id,omitempty"`
+	ID *string `json:"id,omitempty" azure:"ro"`
 
 	// Resource Location
 	Location *string `json:"location,omitempty"`
 
 	// Resource Name
-	Name *string `json:"name,omitempty"`
+	Name *string `json:"name,omitempty" azure:"ro"`
 
 	// Dictionary of <string>
 	Tags *map[string]string `json:"tags,omitempty"`
 
 	// Resource Type
-	Type *string `json:"type,omitempty"`
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 type Sku struct {
@@ -485,7 +485,7 @@ type SubProductPollerResponse struct {
 
 type SubProductProperties struct {
 	ProvisioningState       *string                                      `json:"provisioningState,omitempty"`
-	ProvisioningStateValues *SubProductPropertiesProvisioningStateValues `json:"provisioningStateValues,omitempty"`
+	ProvisioningStateValues *SubProductPropertiesProvisioningStateValues `json:"provisioningStateValues,omitempty" azure:"ro"`
 }
 
 // SubProductResponse is the response envelope for operations that return a SubProduct type.
@@ -497,5 +497,5 @@ type SubProductResponse struct {
 
 type SubResource struct {
 	// Sub Resource Id
-	ID *string `json:"id,omitempty"`
+	ID *string `json:"id,omitempty" azure:"ro"`
 }
