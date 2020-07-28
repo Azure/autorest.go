@@ -9,7 +9,6 @@ import { ObjectSchema, ArraySchema, ChoiceValue, codeModelSchema, CodeModel, Dat
 import { items, values } from '@azure-tools/linq';
 import { aggregateParameters, hasAdditionalProperties, isPageableOperation, isObjectSchema, isSchemaResponse, PagerInfo, isLROOperation, PollerInfo } from '../common/helpers';
 import { namer, removePrefix } from './namer';
-import { addParameterizedHostFunctionality } from '../generator/helpers';
 
 // The transformer adds Go-specific information to the code model.
 export async function transform(host: Host) {
@@ -214,7 +213,8 @@ function recursiveAddMarshallingFormat(schema: Schema, marshallingFormat: 'json'
 
 // we will transform operation request parameter schema types to Go types
 function processOperationRequests(session: Session<CodeModel>) {
-  const paramHostInfo = addParameterizedHostFunctionality(session.model.operationGroups);
+  // track any client-level parameterized host params
+  const hostParams = new Map<Parameter, Array<OperationGroup>>();
   // track any parameter groups and/or optional parameters
   const paramGroups = new Map<string, GroupProperty>();
   for (const group of values(session.model.operationGroups)) {
@@ -229,10 +229,6 @@ function processOperationRequests(session: Session<CodeModel>) {
         }
       }
       for (const param of values(aggregateParameters(op))) {
-        // skip the host param as it has special handling
-        if (isHostParameter(param)) {
-          continue;
-        }
         // this is to work around M4 bug #202
         // replace the duplicate operation entry in nextLinkOperation with
         // the one from our operation group so that things like parameter
@@ -262,7 +258,18 @@ function processOperationRequests(session: Session<CodeModel>) {
           ds.language.go!.headerCollectionPrefix = param.extensions['x-ms-header-collection-prefix'];
           param.schema = ds;
         }
-        if (param.implementation === ImplementationLocation.Client && param.schema.type !== SchemaType.Constant) {
+        if (param.implementation === ImplementationLocation.Client && param.schema.type !== SchemaType.Constant && param.language.default.name !== '$host') {
+          if (param.protocol.http!.in === 'uri') {
+            // this is a parameterized host param
+            if (!hostParams.has(param)) {
+              hostParams.set(param, new Array<OperationGroup>());
+            }
+            const groups = hostParams.get(param);
+            if (!groups!.includes(group)) {
+              groups!.push(group);
+            }
+            continue;
+          }
           // add global param info to the operation group
           if (group.language.go!.clientParams === undefined) {
             group.language.go!.clientParams = new Array<Parameter>();
@@ -272,13 +279,10 @@ function processOperationRequests(session: Session<CodeModel>) {
           if (clientParams.includes(param)) {
             continue;
           }
-          // TODO improve this condition
-          if (paramHostInfo.addParamHost) {
-            if (param.protocol.http!.in === 'uri') {
-              continue;
-            }
-          }
           clientParams.push(param);
+        } else if (param.implementation === ImplementationLocation.Method && param.protocol.http!.in === 'uri') {
+          // at least one method contains a parameterized host param, bye-bye simple case
+          session.model.language.go!.complexHostParams = true;
         }
         // check for grouping
         if (param.extensions?.['x-ms-parameter-grouping']) {
@@ -352,13 +356,31 @@ function processOperationRequests(session: Session<CodeModel>) {
       pg.push(items[1]);
     }
   }
-}
-
-function isHostParameter(param: Parameter): boolean {
-  if (param.language.go!.name === '$host') {
-    return true;
+  // parameterized host gets split into two buckets.
+  //  simple case  - all host params are client and shared across all operation groups
+  //  complex case - client host params unique to op groups and/or method host params
+  for (const param of hostParams.keys()) {
+    const groups = hostParams.get(param);
+    if (groups!.length !== session.model.operationGroups.length) {
+      // this host param doesn't appear in all operation groups so it goes in the operation group method
+      for (const group of values(groups)) {
+        if (group.language.go!.clientParams === undefined) {
+          group.language.go!.clientParams = new Array<Parameter>();
+        }
+        const clientParams = <Array<Parameter>>group.language.go!.clientParams;
+        clientParams.push(param);
+      }
+      // this also indicates the complex case
+      session.model.language.go!.complexHostParams = true;
+    } else {
+      // this host param appears in all operation groups so it goes in the client ctor
+      if (session.model.language.go!.hostParams === undefined) {
+        session.model.language.go!.hostParams = new Array<Parameter>();
+      }
+      const hostParams = <Array<Parameter>>session.model.language.go!.hostParams;
+      hostParams.push(param);
+    }
   }
-  return param.extensions?.['x-ms-priority'] === 0 && param.extensions?.['x-in'] === 'path';
 }
 
 function createGroupProperty(name: string, description: string): GroupProperty {

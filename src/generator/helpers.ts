@@ -7,7 +7,7 @@ import { Session } from '@azure-tools/autorest-extension-base';
 import { values } from '@azure-tools/linq';
 import { comment, camelCase, pascalCase } from '@azure-tools/codegen';
 import { aggregateParameters } from '../common/helpers';
-import { ArraySchema, CodeModel, DictionarySchema, Language, Parameter, Schema, SchemaType, Operation, GroupProperty, ImplementationLocation, OperationGroup, SerializationStyle, ByteArraySchema, ConstantSchema, NumberSchema, DateTimeSchema } from '@azure-tools/codemodel';
+import { ArraySchema, CodeModel, DictionarySchema, Language, Parameter, Schema, SchemaType, Operation, GroupProperty, ImplementationLocation, SerializationStyle, ByteArraySchema, ConstantSchema, NumberSchema, DateTimeSchema } from '@azure-tools/codemodel';
 import { ImportManager } from './imports';
 
 export const dateFormat = '2006-01-02';
@@ -35,7 +35,8 @@ export function sortAscending(a: string, b: string): number {
 // returns the type name with possible * prefix
 export function formatParameterTypeName(param: Parameter): string {
   const typeName = substituteDiscriminator(param.schema);
-  if (param.required) {
+  // client params with default values are treated as optional
+  if (param.required && !(param.implementation === ImplementationLocation.Client && param.clientDefaultValue)) {
     return typeName;
   }
   return `*${typeName}`;
@@ -134,11 +135,9 @@ export function getMethodParameters(op: Operation): Parameter[] {
   return params;
 }
 
-export function getParamName(param: Parameter, onClient: boolean): string {
+export function getParamName(param: Parameter): string {
   let paramName = param.language.go!.name;
-  if (onClient) {
-    paramName = `client.Client.${paramName}`;
-  } else if (param.implementation === ImplementationLocation.Client) {
+  if (param.implementation === ImplementationLocation.Client) {
     paramName = `client.${paramName}`;
   } else if (param.language.go!.paramGroup) {
     paramName = `${camelCase(param.language.go!.paramGroup.language.go!.name)}.${pascalCase(paramName)}`;
@@ -149,7 +148,7 @@ export function getParamName(param: Parameter, onClient: boolean): string {
   return paramName;
 }
 
-export function formatParamValue(param: Parameter, imports: ImportManager, onClient: boolean): string {
+export function formatParamValue(param: Parameter, imports: ImportManager): string {
   let separator = ',';
   switch (param.protocol.http?.style) {
     case SerializationStyle.PipeDelimited:
@@ -162,7 +161,7 @@ export function formatParamValue(param: Parameter, imports: ImportManager, onCli
       separator = '\\t';
       break;
   }
-  let paramName = getParamName(param, onClient);
+  let paramName = getParamName(param);
   switch (param.schema.type) {
     case SchemaType.Array:
       const arraySchema = <ArraySchema>param.schema;
@@ -245,78 +244,4 @@ export function formatParamValue(param: Parameter, imports: ImportManager, onCli
     default:
       return paramName;
   }
-}
-
-export interface ParameterizedHost {
-  addParamHost: boolean;
-  urlOnClient: boolean;
-  clientParams: Array<Parameter>; // contains the list of client params shared across all operation groups
-}
-
-// this function checks if parameterized host functionality needs to be added for the service
-// and returns two booleans. The first boolean signals if parameterized host should be added or not
-// the second boolean signals if all of the parameterized host parameters are on the client or not.
-export function addParameterizedHostFunctionality(operationGroups: Array<OperationGroup>): ParameterizedHost {
-  // before checking for special parameterized host conditions, we need to search through all of the
-  // operaiton groups in order to know if there are different parameterized host implementations in the 
-  // package. 
-  let separateHosts = false; // this indicates if there are multiple parameterized host implementations
-  const paramHost = operationGroups[0].operations[0].requests![0].protocol.http!.uri;
-  let allClientParams = new Array<Array<Parameter>>();
-  let checkSharedParams = true; // variable to control if we should keep checking for shared client params
-  for (const group of values(operationGroups)) {
-    const hostURI = group.operations[0].requests![0].protocol.http!.uri;
-    // if we find a different parameterized host definition url parsing is done off the client
-    if (hostURI !== paramHost) {
-      separateHosts = true;
-    }
-    // store client params in one array to later filter down to all shared client params
-    if (group.language.go!.clientParams !== undefined && checkSharedParams) {
-      allClientParams.push(group.language.go!.clientParams);
-    } else {
-      if (allClientParams.length > 0) {
-        // wipe all client params since one group does not have any, therefore indicating
-        // that there is no client param shared among all operation groups
-        allClientParams = new Array<Array<Parameter>>();
-        checkSharedParams = false;
-      }
-    }
-  }
-  let sharedParams = new Array<Parameter>();
-  // if the length of the array is not equal to the number of operation groups, the all operation groups
-  // do not share client params. 
-  if (allClientParams.length === operationGroups.length && allClientParams.length > 1) {
-    // filter down to shared params, reduce repeated instances (unlikely)
-    sharedParams = allClientParams.reduce((p, c) => p.filter(e => c.includes(e)));
-  } else if (operationGroups.length === 1 && allClientParams.length === 1) {
-    sharedParams = allClientParams[0];
-  }
-  // determine where client params need to be placed, client level or operation group level
-  if (separateHosts || !(<string>paramHost).match(/^\{\$?\w+\}$/)) {
-    let methodParamsCount = 0;
-    for (const p of values(aggregateParameters(operationGroups[0].operations[0])).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'uri'; })) {
-      if (!(p.implementation === ImplementationLocation.Client)) {
-        methodParamsCount++;
-      }
-    }
-    if (methodParamsCount > 0 || separateHosts) {
-      return {
-        addParamHost: true,
-        urlOnClient: false,
-        clientParams: sharedParams,
-      };
-    } else {
-      // if all params are on the client then it could all be handled in the new client with pipeline
-      return {
-        addParamHost: true,
-        urlOnClient: true,
-        clientParams: sharedParams,
-      };
-    }
-  }
-  return {
-    addParamHost: false,
-    urlOnClient: false, // leave this as false so it doesn't interact with parameterized host setting that check for this condition
-    clientParams: sharedParams,
-  };
 }
