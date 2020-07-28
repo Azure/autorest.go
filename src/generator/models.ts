@@ -153,7 +153,11 @@ class StructDef {
           }
         }
       }
-      let tag = ` \`${this.Language.marshallingFormat}:"${serialization}"\``;
+      let readOnly = '';
+      if (prop.readOnly) {
+        readOnly = ` azure:"ro"`;
+      }
+      let tag = ` \`${this.Language.marshallingFormat}:"${serialization}"${readOnly}\``;
       // if this is a response type then omit the tag IFF the marshalling format is
       // JSON, it's a header or is the RawResponse field.  XML marshalling needs a tag.
       // also omit the tag for additionalProperties

@@ -692,7 +692,7 @@ type Pet struct {
 }
 
 type ReadonlyObj struct {
-	ID   *string `json:"id,omitempty"`
+	ID   *string `json:"id,omitempty" azure:"ro"`
 	Size *int32  `json:"size,omitempty"`
 }
 

@@ -129,7 +129,7 @@ func (n *NotFoundErrorBase) UnmarshalJSON(data []byte) error {
 type Pet struct {
 	Animal
 	// Gets the Pet by id.
-	Name *string `json:"name,omitempty"`
+	Name *string `json:"name,omitempty" azure:"ro"`
 }
 
 type PetAction struct {
