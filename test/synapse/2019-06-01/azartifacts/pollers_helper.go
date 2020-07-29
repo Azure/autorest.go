@@ -5,6 +5,7 @@
 
 package azartifacts
 
+// TODO replace this code with data-plane specific definitions
 import (
 	"context"
 	"encoding/json"

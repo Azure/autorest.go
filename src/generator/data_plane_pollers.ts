@@ -211,8 +211,7 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
         return p.handleResponse(resp)
       }`;
     }
-	bodyText += `// This is the data-plane poller
-	// ${pollerInterface} provides polling facilities until the operation completes
+	bodyText += `// ${pollerInterface} provides polling facilities until the operation completes
       type ${pollerInterface} interface {
         Done() bool
         Poll(ctx context.Context) (*http.Response, error)
@@ -285,6 +284,7 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
   ${handleResponse}
   `;
   }
+  text += '// TODO replace this code with data-plane specific definitions\n';
   text += imports.text();
   text += bodyText;
   // add delay function at the bottom of the pollers.go file
@@ -323,6 +323,7 @@ export async function generatePollersHelper(session: Session<CodeModel>): Promis
   imports.add('strings');
   imports.add('fmt');
   imports.add('errors');
+  text += '// TODO replace this code with data-plane specific definitions\n';
   text += imports.text();
   // TODO separate this into manageable chunks of text by section of functionality
   text += `const (

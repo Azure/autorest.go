@@ -5,6 +5,7 @@
 
 package azartifacts
 
+// TODO replace this code with data-plane specific definitions
 import (
 	"context"
 	"encoding/json"
@@ -15,7 +16,6 @@ import (
 	"time"
 )
 
-// This is the data-plane poller
 // CreateDataFlowDebugSessionResponsePoller provides polling facilities until the operation completes
 type CreateDataFlowDebugSessionResponsePoller interface {
 	Done() bool
@@ -143,7 +143,6 @@ func (p *createDataFlowDebugSessionResponsePoller) handleResponse(resp *azcore.R
 	return &result, resp.UnmarshalAsJSON(&result.CreateDataFlowDebugSessionResponse)
 }
 
-// This is the data-plane poller
 // DataFlowDebugCommandResponsePoller provides polling facilities until the operation completes
 type DataFlowDebugCommandResponsePoller interface {
 	Done() bool
@@ -271,7 +270,6 @@ func (p *dataFlowDebugCommandResponsePoller) handleResponse(resp *azcore.Respons
 	return &result, resp.UnmarshalAsJSON(&result.DataFlowDebugCommandResponse)
 }
 
-// This is the data-plane poller
 // HTTPPoller provides polling facilities until the operation completes
 type HTTPPoller interface {
 	Done() bool
@@ -345,7 +343,6 @@ func (p *httpPoller) pollUntilDone(ctx context.Context, frequency time.Duration)
 	return p.FinalResponse(), nil
 }
 
-// This is the data-plane poller
 // SparkBatchJobPoller provides polling facilities until the operation completes
 type SparkBatchJobPoller interface {
 	Done() bool
@@ -473,7 +470,6 @@ func (p *sparkBatchJobPoller) handleResponse(resp *azcore.Response) (*SparkBatch
 	return &result, resp.UnmarshalAsJSON(&result.SparkBatchJob)
 }
 
-// This is the data-plane poller
 // TriggerSubscriptionOperationStatusPoller provides polling facilities until the operation completes
 type TriggerSubscriptionOperationStatusPoller interface {
 	Done() bool
