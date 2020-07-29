@@ -211,7 +211,8 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
         return p.handleResponse(resp)
       }`;
     }
-    bodyText += `// ${pollerInterface} provides polling facilities until the operation completes
+	bodyText += `// This is the data-plane poller
+	// ${pollerInterface} provides polling facilities until the operation completes
       type ${pollerInterface} interface {
         Done() bool
         Poll(ctx context.Context) (*http.Response, error)
