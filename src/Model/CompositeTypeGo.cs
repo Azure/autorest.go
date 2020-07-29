@@ -165,9 +165,18 @@ namespace AutoRest.Go.Model
             Properties.Cast<PropertyGo>().Concat(((CompositeTypeGo)BaseModelType).AllProperties) :
             Properties.Cast<PropertyGo>();
 
-        /// Returns true if this type requires custom marshalling methods to be generated.
-        public bool NeedsCustomMarshalling =>
+        /// <summary>
+        /// Returns true if this type requires custom unmarshalling methods to be generated.
+        /// </summary>
+        public bool NeedsCustomUnmarshalling =>
             HasPolymorphicFields || HasFlattenedFields || AdditionalPropertiesField != null;
+
+        /// <summary>
+        /// Returns true if this type requires custom marshalling methods to be generated.
+        /// </summary>
+        public bool NeedsCustomMarshalling => 
+            BaseIsPolymorphic || IsPolymorphic || HasFlattenedFields || AllProperties.Any(p => p.ModelType is DictionaryTypeGo) ||
+            (AllProperties.Any(p => p.IsReadOnly) && !AllProperties.All(p => p.IsReadOnly));
 
         /// <summary>
         /// Gets the root type of the inheritance chain.
