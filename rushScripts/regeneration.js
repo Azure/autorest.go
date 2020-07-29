@@ -46,7 +46,7 @@ const goMappings = {
 for (namespace in goMappings) {
     // for each swagger run the autorest command to generate code based on the swagger for the relevant namespace and output to the /generated directory
     let inputFile = swaggerDir + goMappings[namespace];
-    generate(inputFile, 'test/autorest/generated/' + namespace, '--openapi-type="data-plane"');
+    generate(inputFile, 'test/autorest/generated/' + namespace);
 } 
 
 const blobStorage = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/storage-dataplane-preview/specification/storage/data-plane/Microsoft.BlobStorage/preview/2019-07-07/blob.json';
