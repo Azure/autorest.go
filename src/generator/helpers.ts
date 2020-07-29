@@ -210,12 +210,6 @@ export function formatParamValue(param: Parameter, imports: ImportManager): stri
         format = datetimeRFC1123Format;
       }
       return `${paramName}.Format(${format})`;
-    case SchemaType.Duration:
-      if (param.required !== true && paramName[0] === '*') {
-        // remove the dereference
-        paramName = paramName.substr(1);
-      }
-      return `${paramName}.String()`;
     case SchemaType.UnixTime:
       return `timeUnix(${paramName}).String()`;
     case SchemaType.Uri:

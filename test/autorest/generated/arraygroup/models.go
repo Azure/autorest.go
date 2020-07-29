@@ -29,15 +29,6 @@ type ByteArrayArrayResponse struct {
 	RawResponse *http.Response
 }
 
-// DurationArrayResponse is the response envelope for operations that return a []time.Duration type.
-type DurationArrayResponse struct {
-	// The array value ['P123DT22H14M12.011S', 'P5DT1H0M0S']
-	DurationArray *[]time.Duration
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // Enum0ArrayResponse is the response envelope for operations that return a []Enum0 type.
 type Enum0ArrayResponse struct {
 	// The array value ['foo1', 'foo2', 'foo3']

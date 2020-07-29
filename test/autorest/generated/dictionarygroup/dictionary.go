@@ -78,7 +78,7 @@ type DictionaryOperations interface {
 	// GetDoubleValid - Get float dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
 	GetDoubleValid(ctx context.Context) (*MapOfFloat64Response, error)
 	// GetDurationValid - Get duration dictionary value {"0": "P123DT22H14M12.011S", "1": "P5DT1H0M0S"}
-	GetDurationValid(ctx context.Context) (*MapOfDurationResponse, error)
+	GetDurationValid(ctx context.Context) (*MapOfStringResponse, error)
 	// GetEmpty - Get empty dictionary value {}
 	GetEmpty(ctx context.Context) (*MapOfInt32Response, error)
 	// GetEmptyStringKey - Get Dictionary with key as empty string
@@ -134,7 +134,7 @@ type DictionaryOperations interface {
 	// PutDoubleValid - Set dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
 	PutDoubleValid(ctx context.Context, arrayBody map[string]float64) (*http.Response, error)
 	// PutDurationValid - Set dictionary value  {"0": "P123DT22H14M12.011S", "1": "P5DT1H0M0S"}
-	PutDurationValid(ctx context.Context, arrayBody map[string]time.Duration) (*http.Response, error)
+	PutDurationValid(ctx context.Context, arrayBody map[string]string) (*http.Response, error)
 	// PutEmpty - Set dictionary value empty {}
 	PutEmpty(ctx context.Context, arrayBody map[string]string) (*http.Response, error)
 	// PutFloatValid - Set dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
@@ -1607,7 +1607,7 @@ func (client *dictionaryOperations) getDoubleValidHandleError(resp *azcore.Respo
 }
 
 // GetDurationValid - Get duration dictionary value {"0": "P123DT22H14M12.011S", "1": "P5DT1H0M0S"}
-func (client *dictionaryOperations) GetDurationValid(ctx context.Context) (*MapOfDurationResponse, error) {
+func (client *dictionaryOperations) GetDurationValid(ctx context.Context) (*MapOfStringResponse, error) {
 	req, err := client.getDurationValidCreateRequest()
 	if err != nil {
 		return nil, err
@@ -1635,11 +1635,11 @@ func (client *dictionaryOperations) getDurationValidCreateRequest() (*azcore.Req
 }
 
 // getDurationValidHandleResponse handles the GetDurationValid response.
-func (client *dictionaryOperations) getDurationValidHandleResponse(resp *azcore.Response) (*MapOfDurationResponse, error) {
+func (client *dictionaryOperations) getDurationValidHandleResponse(resp *azcore.Response) (*MapOfStringResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.getDurationValidHandleError(resp)
 	}
-	result := MapOfDurationResponse{RawResponse: resp.Response}
+	result := MapOfStringResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
@@ -2894,7 +2894,7 @@ func (client *dictionaryOperations) putDoubleValidHandleError(resp *azcore.Respo
 }
 
 // PutDurationValid - Set dictionary value  {"0": "P123DT22H14M12.011S", "1": "P5DT1H0M0S"}
-func (client *dictionaryOperations) PutDurationValid(ctx context.Context, arrayBody map[string]time.Duration) (*http.Response, error) {
+func (client *dictionaryOperations) PutDurationValid(ctx context.Context, arrayBody map[string]string) (*http.Response, error) {
 	req, err := client.putDurationValidCreateRequest(arrayBody)
 	if err != nil {
 		return nil, err
@@ -2911,7 +2911,7 @@ func (client *dictionaryOperations) PutDurationValid(ctx context.Context, arrayB
 }
 
 // putDurationValidCreateRequest creates the PutDurationValid request.
-func (client *dictionaryOperations) putDurationValidCreateRequest(arrayBody map[string]time.Duration) (*azcore.Request, error) {
+func (client *dictionaryOperations) putDurationValidCreateRequest(arrayBody map[string]string) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/duration/valid"
 	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {

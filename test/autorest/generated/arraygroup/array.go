@@ -78,7 +78,7 @@ type ArrayOperations interface {
 	// GetDoubleValid - Get float array value [0, -0.01, 1.2e20]
 	GetDoubleValid(ctx context.Context) (*Float64ArrayResponse, error)
 	// GetDurationValid - Get duration array value ['P123DT22H14M12.011S', 'P5DT1H0M0S']
-	GetDurationValid(ctx context.Context) (*DurationArrayResponse, error)
+	GetDurationValid(ctx context.Context) (*StringArrayResponse, error)
 	// GetEmpty - Get empty array value []
 	GetEmpty(ctx context.Context) (*Int32ArrayResponse, error)
 	// GetEnumValid - Get enum array value ['foo1', 'foo2', 'foo3']
@@ -136,7 +136,7 @@ type ArrayOperations interface {
 	// PutDoubleValid - Set array value [0, -0.01, 1.2e20]
 	PutDoubleValid(ctx context.Context, arrayBody []float64) (*http.Response, error)
 	// PutDurationValid - Set array value  ['P123DT22H14M12.011S', 'P5DT1H0M0S']
-	PutDurationValid(ctx context.Context, arrayBody []time.Duration) (*http.Response, error)
+	PutDurationValid(ctx context.Context, arrayBody []string) (*http.Response, error)
 	// PutEmpty - Set array value empty []
 	PutEmpty(ctx context.Context, arrayBody []string) (*http.Response, error)
 	// PutEnumValid - Set array value ['foo1', 'foo2', 'foo3']
@@ -1615,7 +1615,7 @@ func (client *arrayOperations) getDoubleValidHandleError(resp *azcore.Response) 
 }
 
 // GetDurationValid - Get duration array value ['P123DT22H14M12.011S', 'P5DT1H0M0S']
-func (client *arrayOperations) GetDurationValid(ctx context.Context) (*DurationArrayResponse, error) {
+func (client *arrayOperations) GetDurationValid(ctx context.Context) (*StringArrayResponse, error) {
 	req, err := client.getDurationValidCreateRequest()
 	if err != nil {
 		return nil, err
@@ -1643,12 +1643,12 @@ func (client *arrayOperations) getDurationValidCreateRequest() (*azcore.Request,
 }
 
 // getDurationValidHandleResponse handles the GetDurationValid response.
-func (client *arrayOperations) getDurationValidHandleResponse(resp *azcore.Response) (*DurationArrayResponse, error) {
+func (client *arrayOperations) getDurationValidHandleResponse(resp *azcore.Response) (*StringArrayResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.getDurationValidHandleError(resp)
 	}
-	result := DurationArrayResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.DurationArray)
+	result := StringArrayResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.StringArray)
 }
 
 // getDurationValidHandleError handles the GetDurationValid error response.
@@ -2944,7 +2944,7 @@ func (client *arrayOperations) putDoubleValidHandleError(resp *azcore.Response) 
 }
 
 // PutDurationValid - Set array value  ['P123DT22H14M12.011S', 'P5DT1H0M0S']
-func (client *arrayOperations) PutDurationValid(ctx context.Context, arrayBody []time.Duration) (*http.Response, error) {
+func (client *arrayOperations) PutDurationValid(ctx context.Context, arrayBody []string) (*http.Response, error) {
 	req, err := client.putDurationValidCreateRequest(arrayBody)
 	if err != nil {
 		return nil, err
@@ -2961,7 +2961,7 @@ func (client *arrayOperations) PutDurationValid(ctx context.Context, arrayBody [
 }
 
 // putDurationValidCreateRequest creates the PutDurationValid request.
-func (client *arrayOperations) putDurationValidCreateRequest(arrayBody []time.Duration) (*azcore.Request, error) {
+func (client *arrayOperations) putDurationValidCreateRequest(arrayBody []string) (*azcore.Request, error) {
 	urlPath := "/array/prim/duration/valid"
 	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {

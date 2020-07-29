@@ -32,7 +32,7 @@ type HeaderOperations interface {
 	// ParamDouble - Send a post request with header values "scenario": "positive", "value": 7e120 or "scenario": "negative", "value": -3.0
 	ParamDouble(ctx context.Context, scenario string, value float64) (*http.Response, error)
 	// ParamDuration - Send a post request with header values "scenario": "valid", "value": "P123DT22H14M12.011S"
-	ParamDuration(ctx context.Context, scenario string, value time.Duration) (*http.Response, error)
+	ParamDuration(ctx context.Context, scenario string, value string) (*http.Response, error)
 	// ParamEnum - Send a post request with header values "scenario": "valid", "value": "GREY" or "scenario": "null", "value": null
 	ParamEnum(ctx context.Context, scenario string, headerParamEnumOptions *HeaderParamEnumOptions) (*http.Response, error)
 	// ParamExistingKey - Send a post request with header value "User-Agent": "overwrite"
@@ -412,7 +412,7 @@ func (client *headerOperations) paramDoubleHandleError(resp *azcore.Response) er
 }
 
 // ParamDuration - Send a post request with header values "scenario": "valid", "value": "P123DT22H14M12.011S"
-func (client *headerOperations) ParamDuration(ctx context.Context, scenario string, value time.Duration) (*http.Response, error) {
+func (client *headerOperations) ParamDuration(ctx context.Context, scenario string, value string) (*http.Response, error) {
 	req, err := client.paramDurationCreateRequest(scenario, value)
 	if err != nil {
 		return nil, err
@@ -429,7 +429,7 @@ func (client *headerOperations) ParamDuration(ctx context.Context, scenario stri
 }
 
 // paramDurationCreateRequest creates the ParamDuration request.
-func (client *headerOperations) paramDurationCreateRequest(scenario string, value time.Duration) (*azcore.Request, error) {
+func (client *headerOperations) paramDurationCreateRequest(scenario string, value string) (*azcore.Request, error) {
 	urlPath := "/header/param/prim/duration"
 	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
@@ -437,7 +437,7 @@ func (client *headerOperations) paramDurationCreateRequest(scenario string, valu
 	}
 	req := azcore.NewRequest(http.MethodPost, *u)
 	req.Header.Set("scenario", scenario)
-	req.Header.Set("value", value.String())
+	req.Header.Set("value", value)
 	return req, nil
 }
 
@@ -1149,11 +1149,7 @@ func (client *headerOperations) responseDurationHandleResponse(resp *azcore.Resp
 	}
 	result := HeaderResponseDurationResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("value"); val != "" {
-		value, err := time.ParseDuration(val)
-		if err != nil {
-			return nil, err
-		}
-		result.Value = &value
+		result.Value = &val
 	}
 	return &result, nil
 }

@@ -212,7 +212,25 @@ func TestPrimitivePutString(t *testing.T) {
 // 	deepEqualOrFatal(t, result, expected)
 // }
 
-// TODO: GetDuration, PutDuration
+func TestPrimitiveGetDuration(t *testing.T) {
+	client := getPrimitiveOperations(t)
+	result, err := client.GetDuration(context.Background())
+	if err != nil {
+		t.Fatalf("GetDuration: %v", err)
+	}
+	helpers.DeepEqualOrFatal(t, result.DurationWrapper, &complexgroup.DurationWrapper{
+		Field: to.StringPtr("P123DT22H14M12.011S"),
+	})
+}
+
+func TestPrimitivePutDuration(t *testing.T) {
+	client := getPrimitiveOperations(t)
+	result, err := client.PutDuration(context.Background(), complexgroup.DurationWrapper{Field: to.StringPtr("P123DT22H14M12.011S")})
+	if err != nil {
+		t.Fatalf("PutDuration: %v", err)
+	}
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
+}
 
 func TestPrimitiveGetDateTime(t *testing.T) {
 	client := getPrimitiveOperations(t)

@@ -377,7 +377,7 @@ type DoubleWrapperResponse struct {
 }
 
 type DurationWrapper struct {
-	Field *time.Duration `json:"field,omitempty"`
+	Field *string `json:"field,omitempty"`
 }
 
 // DurationWrapperResponse is the response envelope for operations that return a DurationWrapper type.

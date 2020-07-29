@@ -11,6 +11,8 @@ import (
 	"reflect"
 	"testing"
 	"time"
+
+	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
 func getHeaderClient(t *testing.T) headergroup.HeaderOperations {
@@ -118,18 +120,14 @@ func TestHeaderParamDouble(t *testing.T) {
 	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
-// func TestHeaderParamDuration(t *testing.T) {
-// 	client := getHeaderClient(t)
-// 	val, err := time.ParseDuration("P123DT22H14M12.011S")
-// 	if err != nil {
-// 		t.Fatalf("Unable to parse duration: %v", err)
-// 	}
-// 	result, err := client.ParamDuration(context.Background(), "valid", val)
-// 	if err != nil {
-// 		t.Fatalf("ParamDuration: %v", err)
-// 	}
-// 	helpers.VerifyStatusCode(t, result, http.StatusOK)
-// }
+func TestHeaderParamDuration(t *testing.T) {
+	client := getHeaderClient(t)
+	result, err := client.ParamDuration(context.Background(), "valid", "P123DT22H14M12.011S")
+	if err != nil {
+		t.Fatalf("ParamDuration: %v", err)
+	}
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
+}
 
 func TestHeaderParamEnum(t *testing.T) {
 	client := getHeaderClient(t)
@@ -377,14 +375,14 @@ func TestHeaderResponseDouble(t *testing.T) {
 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }
 
-// func TestHeaderResponseDuration(t *testing.T) {
-// 	client := getHeaderClient(t)
-// 	result, err := client.ResponseDuration(context.Background(), "valid")
-// 	if err != nil {
-// 		t.Fatalf("ResponseDuration: %v", err)
-// 	}
-// 	helpers.VerifyStatusCode(t, result, http.StatusOK)
-// }
+func TestHeaderResponseDuration(t *testing.T) {
+	client := getHeaderClient(t)
+	result, err := client.ResponseDuration(context.Background(), "valid")
+	if err != nil {
+		t.Fatalf("ResponseDuration: %v", err)
+	}
+	helpers.DeepEqualOrFatal(t, result.Value, to.StringPtr("P123DT22H14M12.011S"))
+}
 
 func TestHeaderResponseEnum(t *testing.T) {
 	client := getHeaderClient(t)
