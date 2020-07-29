@@ -294,7 +294,7 @@ func (client *headerOperations) paramDatetimeCreateRequest(scenario string, valu
 	}
 	req := azcore.NewRequest(http.MethodPost, *u)
 	req.Header.Set("scenario", scenario)
-	req.Header.Set("value", value.Format(time.RFC3339))
+	req.Header.Set("value", value.Format(time.RFC3339Nano))
 	return req, nil
 }
 
@@ -987,7 +987,7 @@ func (client *headerOperations) responseDatetimeHandleResponse(resp *azcore.Resp
 	}
 	result := HeaderResponseDatetimeResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("value"); val != "" {
-		value, err := time.Parse(time.RFC3339, val)
+		value, err := time.Parse(time.RFC3339Nano, val)
 		if err != nil {
 			return nil, err
 		}

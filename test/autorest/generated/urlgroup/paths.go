@@ -375,7 +375,7 @@ func (client *pathsOperations) DateTimeNull(ctx context.Context, dateTimePath ti
 // dateTimeNullCreateRequest creates the DateTimeNull request.
 func (client *pathsOperations) dateTimeNullCreateRequest(dateTimePath time.Time) (*azcore.Request, error) {
 	urlPath := "/paths/datetime/null/{dateTimePath}"
-	urlPath = strings.ReplaceAll(urlPath, "{dateTimePath}", url.PathEscape(dateTimePath.Format(time.RFC3339)))
+	urlPath = strings.ReplaceAll(urlPath, "{dateTimePath}", url.PathEscape(dateTimePath.Format(time.RFC3339Nano)))
 	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
 	if err != nil {
 		return nil, err

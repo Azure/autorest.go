@@ -617,7 +617,7 @@ func (client *queriesOperations) dateTimeNullCreateRequest(queriesDateTimeNullOp
 	}
 	query := u.Query()
 	if queriesDateTimeNullOptions != nil && queriesDateTimeNullOptions.DateTimeQuery != nil {
-		query.Set("dateTimeQuery", queriesDateTimeNullOptions.DateTimeQuery.Format(time.RFC3339))
+		query.Set("dateTimeQuery", queriesDateTimeNullOptions.DateTimeQuery.Format(time.RFC3339Nano))
 	}
 	u.RawQuery = query.Encode()
 	req := azcore.NewRequest(http.MethodGet, *u)

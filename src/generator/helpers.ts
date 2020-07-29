@@ -11,7 +11,7 @@ import { ArraySchema, CodeModel, DictionarySchema, Language, Parameter, Schema, 
 import { ImportManager } from './imports';
 
 export const dateFormat = '2006-01-02';
-export const datetimeRFC3339Format = 'time.RFC3339';
+export const datetimeRFC3339Format = 'time.RFC3339Nano';
 export const datetimeRFC1123Format = 'time.RFC1123';
 
 // returns the common source-file preamble (license comment, package name etc)
