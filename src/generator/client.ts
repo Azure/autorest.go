@@ -15,7 +15,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   // add standard imports
   imports.add('fmt');
   const isARM = session.model.language.go!.openApiType === 'arm';
-  if (isARM) {
+  if (isARM && session.model.security.authenticationRequired) {
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/armcore');
   }
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
@@ -52,7 +52,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   text += '\t// ApplicationID is an application-specific identification string used in telemetry.\n';
   text += '\t// It has a maximum length of 24 characters and must not contain any spaces.\n';
   text += '\tApplicationID string\n';
-  if (isARM) {
+  if (isARM && session.model.security.authenticationRequired) {
     text += '\t// DisableRPRegistration controls if an unregistered resource provider should\n';
     text += '\t// automatically be registered. See https://aka.ms/rps-not-found for more information.\n';
     text += '\t// The default value is false, meaning registration will be attempted.\n';
@@ -167,7 +167,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   const credPolicy = 'cred.AuthenticationPolicy(azcore.AuthenticationPolicyOptions{Options: azcore.TokenRequestOptions{Scopes: []string{scope}}})';
   const logPolicy = 'azcore.NewRequestLogPolicy(options.LogOptions))';
   // ARM will optionally inject the RP registration policy into the pipeline
-  if (isARM) {
+  if (isARM && session.model.security.authenticationRequired) {
     text += '\tpolicies := []azcore.Policy{\n';
     text += `\t\t${telemetryPolicy},\n`;
     text += `\t\t${reqIDPolicy},\n`;
