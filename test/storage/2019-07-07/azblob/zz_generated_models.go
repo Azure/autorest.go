@@ -1945,11 +1945,27 @@ type ContainerGetPropertiesResponse struct {
 // An Azure Storage container
 type ContainerItem struct {
 	// Dictionary of <string>
-	Metadata *map[string]string `xml:"string"`
+	Metadata *map[string]string `xml:"Metadata"`
 	Name     *string            `xml:"Name"`
 
 	// Properties of a container
 	Properties *ContainerProperties `xml:"Properties"`
+}
+
+// UnmarshalXML implements the xml.Unmarshaller interface for type ContainerItem.
+func (c *ContainerItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type alias ContainerItem
+	aux := &struct {
+		*alias
+		Metadata *additionalProperties `xml:"Metadata"`
+	}{
+		alias: (*alias)(c),
+	}
+	if err := d.DecodeElement(aux, &start); err != nil {
+		return err
+	}
+	c.Metadata = (*map[string]string)(aux.Metadata)
+	return nil
 }
 
 // ContainerListBlobFlatSegmentOptions contains the optional parameters for the Container.ListBlobFlatSegment method.

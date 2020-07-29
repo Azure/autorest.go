@@ -133,12 +133,28 @@ type Blob struct {
 	Deleted *bool `xml:"Deleted"`
 
 	// Dictionary of <string>
-	Metadata *map[string]string `xml:"string"`
+	Metadata *map[string]string `xml:"Metadata"`
 	Name     *string            `xml:"Name"`
 
 	// Properties of a blob
 	Properties *BlobProperties `xml:"Properties"`
 	Snapshot   *string         `xml:"Snapshot"`
+}
+
+// UnmarshalXML implements the xml.Unmarshaller interface for type Blob.
+func (b *Blob) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type alias Blob
+	aux := &struct {
+		*alias
+		Metadata *additionalProperties `xml:"Metadata"`
+	}{
+		alias: (*alias)(b),
+	}
+	if err := d.DecodeElement(aux, &start); err != nil {
+		return err
+	}
+	b.Metadata = (*map[string]string)(aux.Metadata)
+	return nil
 }
 
 type BlobPrefix struct {
@@ -236,11 +252,27 @@ type ComplexTypeWithMeta struct {
 // An Azure Storage container
 type Container struct {
 	// Dictionary of <string>
-	Metadata *map[string]string `xml:"string"`
+	Metadata *map[string]string `xml:"Metadata"`
 	Name     *string            `xml:"Name"`
 
 	// Properties of a container
 	Properties *ContainerProperties `xml:"Properties"`
+}
+
+// UnmarshalXML implements the xml.Unmarshaller interface for type Container.
+func (c *Container) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type alias Container
+	aux := &struct {
+		*alias
+		Metadata *additionalProperties `xml:"Metadata"`
+	}{
+		alias: (*alias)(c),
+	}
+	if err := d.DecodeElement(aux, &start); err != nil {
+		return err
+	}
+	c.Metadata = (*map[string]string)(aux.Metadata)
+	return nil
 }
 
 // Properties of a container
