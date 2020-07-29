@@ -61,7 +61,7 @@ namespace AutoRest.Go
                 // only evaluate composite builds if all swaggers are preview as we don't have a well-defined model for mixed preview/stable swaggers
                 if (files.All(file => file.IndexOf(previewSubdir) > -1) && folder.IndexOf(previewSubdir) == -1)
                 {
-                    throw new InvalidOperationException($"codegen for preview swagger {files[0]} must be under a preview subdirectory");
+                    throw new InvalidOperationException($"output-folder must be under a preview subdirectory for preview swagger {files[0]}");
                 }
             }
 
