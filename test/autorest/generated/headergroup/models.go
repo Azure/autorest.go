@@ -109,7 +109,7 @@ type HeaderResponseDurationResponse struct {
 	RawResponse *http.Response
 
 	// Value contains the information returned from the value header response.
-	Value *time.Duration
+	Value *string
 }
 
 // HeaderResponseEnumResponse contains the response from method Header.ResponseEnum.

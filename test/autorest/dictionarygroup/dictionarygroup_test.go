@@ -377,7 +377,15 @@ func TestGetDoubleValid(t *testing.T) {
 
 // GetDurationValid - Get duration dictionary value {"0": "P123DT22H14M12.011S", "1": "P5DT1H0M0S"}
 func TestGetDurationValid(t *testing.T) {
-	t.Skip("NYI")
+	client := getClient(t)
+	resp, err := client.GetDurationValid(context.Background())
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.DeepEqualOrFatal(t, resp.Value, &map[string]string{
+		"0": "P123DT22H14M12.011S",
+		"1": "P5DT1H",
+	})
 }
 
 // GetEmpty - Get empty dictionary value {}
@@ -726,7 +734,15 @@ func TestPutDoubleValid(t *testing.T) {
 
 // PutDurationValid - Set dictionary value  {"0": "P123DT22H14M12.011S", "1": "P5DT1H0M0S"}
 func TestPutDurationValid(t *testing.T) {
-	t.Skip("NYI")
+	client := getClient(t)
+	resp, err := client.PutDurationValid(context.Background(), map[string]string{
+		"0": "P123DT22H14M12.011S",
+		"1": "P5DT1H",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, resp, http.StatusOK)
 }
 
 // PutEmpty - Set dictionary value empty {}

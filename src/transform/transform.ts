@@ -148,8 +148,6 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolea
       const dictElem = <Schema>dictSchema.elementType;
       dictElem.language.go!.name = schemaTypeToGoType(codeModel, dictElem, inBody);
       return `map[string]${dictElem.language.go!.name}`;
-    case SchemaType.Duration:
-      return 'time.Duration';
     case SchemaType.Integer:
       if ((<NumberSchema>schema).precision === 32) {
         return 'int32';
@@ -160,6 +158,7 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolea
         return 'float32';
       }
       return 'float64';
+    case SchemaType.Duration:
     case SchemaType.String:
     case SchemaType.Uuid:
       return 'string';
@@ -751,8 +750,6 @@ function recursiveTypeName(schema: Schema): string {
       const dictSchema = <DictionarySchema>schema;
       const dictElem = <Schema>dictSchema.elementType;
       return `MapOf${recursiveTypeName(dictElem)}`;
-    case SchemaType.Duration:
-      return 'Duration';
     case SchemaType.Integer:
       if ((<NumberSchema>schema).precision === 32) {
         return 'Int32';
@@ -765,6 +762,7 @@ function recursiveTypeName(schema: Schema): string {
       return 'Float64';
     case SchemaType.Object:
       return schema.language.go!.name;
+    case SchemaType.Duration:
     case SchemaType.String:
     case SchemaType.Uuid:
       return 'String';

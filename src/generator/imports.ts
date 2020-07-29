@@ -58,7 +58,6 @@ export class ImportManager {
         break;
       case SchemaType.Date:
       case SchemaType.DateTime:
-      case SchemaType.Duration:
       case SchemaType.UnixTime:
         this.add('time');
         break;

@@ -440,7 +440,12 @@ func TestGetDoubleValid(t *testing.T) {
 
 // GetDurationValid - Get duration array value ['P123DT22H14M12.011S', 'P5DT1H0M0S']
 func TestGetDurationValid(t *testing.T) {
-	t.Skip("duration NYI")
+	client := getArrayClient(t)
+	resp, err := client.GetDurationValid(context.Background())
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.DeepEqualOrFatal(t, resp.StringArray, &[]string{"P123DT22H14M12.011S", "P5DT1H0M0S"})
 }
 
 // GetEmpty - Get empty array value []
@@ -778,7 +783,12 @@ func TestPutDoubleValid(t *testing.T) {
 
 // PutDurationValid - Set array value  ['P123DT22H14M12.011S', 'P5DT1H0M0S']
 func TestPutDurationValid(t *testing.T) {
-	t.Skip("duration NYI")
+	client := getArrayClient(t)
+	resp, err := client.PutDurationValid(context.Background(), []string{"P123DT22H14M12.011S", "P5DT1H"})
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, resp, http.StatusOK)
 }
 
 // PutEmpty - Set array value empty []

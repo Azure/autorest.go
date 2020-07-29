@@ -50,15 +50,6 @@ type MapOfByteArrayResponse struct {
 	Value *map[string][]byte
 }
 
-// MapOfDurationResponse is the response envelope for operations that return a map[string]time.Duration type.
-type MapOfDurationResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// The dictionary value {"0": "P123DT22H14M12.011S", "1": "P5DT1H0M0S"}
-	Value *map[string]time.Duration
-}
-
 // MapOfFloat32Response is the response envelope for operations that return a map[string]float32 type.
 type MapOfFloat32Response struct {
 	// RawResponse contains the underlying HTTP response.

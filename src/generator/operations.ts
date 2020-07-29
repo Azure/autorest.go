@@ -96,6 +96,7 @@ function formatHeaderResponseValue(propName: string, header: string, schema: Sch
       text += '\t}\n';
       return text;
     case SchemaType.Constant:
+    case SchemaType.Duration:
     case SchemaType.String:
       text += `\t\t${respObj}.${propName} = &val\n`;
       text += '\t}\n';
@@ -112,10 +113,6 @@ function formatHeaderResponseValue(propName: string, header: string, schema: Sch
         format = datetimeRFC1123Format;
       }
       text += `\t\t${name}, err := time.Parse(${format}, val)\n`;
-      break;
-    case SchemaType.Duration:
-      imports.add('time');
-      text += `\t\t${name}, err := time.ParseDuration(val)\n`;
       break;
     case SchemaType.Integer:
       imports.add('strconv');
