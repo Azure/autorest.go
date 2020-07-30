@@ -21,7 +21,6 @@ steps:
       rush update --debug
       npm install -g autorest
     displayName: 'Prepare Generator Environment'
-    failOnStderr: true
 
   - script: |
       rush rebuild -v
