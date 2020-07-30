@@ -47,7 +47,8 @@ namespace AutoRest.Go
             // check if the namespace contains illegal characters
             var ns = Settings.Instance.Host.GetValue<string>("namespace").Result;
             var r = new Regex(@"^[a-z][a-z0-9_]*[a-z0-9]?$");
-            if (!r.IsMatch(ns))
+            // skip this check if namespace is not specified
+            if (!string.IsNullOrEmpty(ns) && !r.IsMatch(ns))
             {
                 throw new InvalidOperationException($"namespace can only contains lower case letters, numbers and underscore");
             }
