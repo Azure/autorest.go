@@ -90,8 +90,8 @@ jobs:
           $testDirs = (./eng/scripts/get_test_dirs.ps1 -serviceDir $(goTestPath))
           foreach ($td in $testDirs) {
             pushd $td
-            Write-Host "##[command]Executing go test -run "^Test" $td | $(GOBIN)/go-junit-report -set-exit-code > report.xml"
-            go test -run "^Test" | $(GOBIN)/go-junit-report -set-exit-code > report.xml
+            Write-Host "##[command]Executing go test -run "^Test" -v $td | $(GOBIN)/go-junit-report -set-exit-code > report.xml"
+            go test -run "^Test" -v | $(GOBIN)/go-junit-report -set-exit-code > report.xml
             popd
           }
           pushd test
