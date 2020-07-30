@@ -225,9 +225,9 @@ namespace AutoRest.Go.Model
         public void AddImports(HashSet<string> imports)
         {
             Properties.ForEach(p => p.ModelType.AddImports(imports));
-            if (IsPolymorphic || HasFlattenedFields || AllProperties.Any(p => p.ModelType is DictionaryTypeGo))
+            if (NeedsCustomMarshalling)
             {
-                imports.Add("\"encoding/json\"");
+                imports.Add(PrimaryTypeGo.GetImportLine("encoding/json"));
             }
         }
 

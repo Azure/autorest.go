@@ -195,10 +195,6 @@ namespace AutoRest.Go.Model
                 {
                     imports.UnionWith(CodeNamerGo.Instance.PageableImports);
                 }
-                if (ModelTypes.Any(mt => mt is CompositeTypeGo && mt.Cast<CompositeTypeGo>().NeedsCustomMarshalling))
-                {
-                    imports.Add(PrimaryTypeGo.GetImportLine("encoding/json"));
-                }
                 return imports.OrderBy(i => i);
             }
         }
