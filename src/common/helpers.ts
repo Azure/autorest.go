@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { ArraySchema, ObjectSchema, Operation, Parameter, Response, Schema, SchemaResponse, SchemaType } from '@azure-tools/codemodel';
+import { ArraySchema, DictionarySchema, ObjectSchema, Operation, Parameter, Response, Schema, SchemaResponse, SchemaType } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 
 // aggregates the Parameter in op.parameters and the first request
@@ -23,7 +23,7 @@ export function aggregateParameters(op: Operation): Array<Parameter> {
 
 // returns ArraySchema type predicate if the schema is an ArraySchema
 export function isArraySchema(resp: Schema): resp is ArraySchema {
-  return (resp as ArraySchema).elementType !== undefined;
+  return resp.type === SchemaType.Array;
 }
 
 // returns SchemaResponse type predicate if the response has a schema
@@ -54,14 +54,14 @@ export function isLROOperation(op: Operation): boolean {
 
 // returns ObjectSchema type predicate if the schema is an ObjectSchema
 export function isObjectSchema(obj: Schema): obj is ObjectSchema {
-  return (obj as ObjectSchema).properties !== undefined;
+  return obj.type === SchemaType.Object;
 }
 
 // returns the additional properties schema if the ObjectSchema defines 'additionalProperties'
-export function hasAdditionalProperties(obj: ObjectSchema): Schema | undefined {
+export function hasAdditionalProperties(obj: ObjectSchema): DictionarySchema | undefined {
   for (const parent of values(obj.parents?.immediate)) {
     if (parent.type === SchemaType.Dictionary) {
-      return parent;
+      return <DictionarySchema>parent;
     }
   }
   return undefined;

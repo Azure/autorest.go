@@ -5,7 +5,7 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, pascalCase } from '@azure-tools/codegen';
-import { CodeModel, ConstantSchema, GroupProperty, ImplementationLocation, ObjectSchema, Language, Schema, SchemaType, Parameter, Property, DictionarySchema } from '@azure-tools/codemodel';
+import { CodeModel, ConstantSchema, GroupProperty, ImplementationLocation, ObjectSchema, Language, Schema, SchemaType, Parameter, Property } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { isArraySchema, isObjectSchema, hasAdditionalProperties } from '../common/helpers';
 import { contentPreamble, hasDescription, sortAscending, substituteDiscriminator } from './helpers';
@@ -271,18 +271,29 @@ function generateStructs(objects?: ObjectSchema[]): StructDef[] {
       }
     } else if (obj.language.go!.marshallingFormat === 'json' && (hasAdditionalProperties(obj) || (parentType && hasAdditionalProperties(parentType)))) {
       // TODO: support for XML
-      generateAdditionalPropertiesMarshaller(structDef, parentType);
+      generateAdditionalPropertiesJSONMarshaller(structDef, parentType);
       let schema = hasAdditionalProperties(obj);
       if (!schema) {
         // must be the parent
         schema = hasAdditionalProperties(parentType!);
       }
-      generateAdditionalPropertiesUnmarshaller(structDef, (<DictionarySchema>schema).elementType, parentType);
+      generateAdditionalPropertiesJSONUnmarshaller(structDef, schema!.elementType, parentType);
+    } else if (needsXMLDictionaryUnmarshalling(obj)) {
+      generateUnmarshaller(structDef);
     }
     structDef.ComposedOf.sort((a: ObjectSchema, b: ObjectSchema) => { return sortAscending(a.language.go!.name, b.language.go!.name); });
     structTypes.push(structDef);
   }
   return structTypes;
+}
+
+function needsXMLDictionaryUnmarshalling(obj: ObjectSchema): boolean {
+  for (const prop of values(obj.properties)) {
+    if (prop.language.go!.needsXMLDictionaryUnmarshalling) {
+      return true;
+    }
+  }
+  return false;
 }
 
 function generateStruct(lang: Language, props?: Property[]): StructDef {
@@ -517,10 +528,11 @@ function generateUnmarshaller(structDef: StructDef) {
     text += '\t}\n';
   }
   for (const prop of values(structDef.Properties)) {
-    if (prop.schema.type !== SchemaType.DateTime) {
-      continue;
+    if (prop.schema.type === SchemaType.DateTime) {
+      text += `\t${receiver}.${prop.language.go!.name} = (*time.Time)(aux.${prop.language.go!.name})\n`;
+    } else if (prop.language.go!.isAdditionalProperties || prop.language.go!.needsXMLDictionaryUnmarshalling) {
+      text += `\t${receiver}.${prop.language.go!.name} = (*map[string]string)(aux.${prop.language.go!.name})\n`;
     }
-    text += `\t${receiver}.${prop.language.go!.name} = (*time.Time)(aux.${prop.language.go!.name})\n`;
   }
   text += '\treturn nil\n';
   text += '}\n\n';
@@ -533,15 +545,16 @@ function generateAliasType(structDef: StructDef, receiver: string, forMarshal: b
   text += `\taux := &struct {\n`;
   text += `\t\t*alias\n`;
   for (const prop of values(structDef.Properties)) {
-    if (prop.schema.type !== SchemaType.DateTime) {
-      continue;
-    }
     let sn = prop.serializedName;
     if (prop.schema.serialization?.xml?.name) {
       // xml can specifiy its own name, prefer that if available
       sn = prop.schema.serialization.xml.name;
     }
-    text += `\t\t${prop.language.go!.name} *${prop.schema.language.go!.internalTimeType} \`${structDef.Language.marshallingFormat}:"${sn}"\`\n`;
+    if (prop.schema.type === SchemaType.DateTime) {
+      text += `\t\t${prop.language.go!.name} *${prop.schema.language.go!.internalTimeType} \`${structDef.Language.marshallingFormat}:"${sn}"\`\n`;
+    } else if (prop.language.go!.isAdditionalProperties || prop.language.go!.needsXMLDictionaryUnmarshalling) {
+      text += `\t\t${prop.language.go!.name} *additionalProperties \`${structDef.Language.marshallingFormat}:"${sn}"\`\n`;
+    }
   }
   text += `\t}{\n`;
   let rec = receiver;
@@ -562,7 +575,7 @@ function generateAliasType(structDef: StructDef, receiver: string, forMarshal: b
   return text;
 }
 
-function generateAdditionalPropertiesMarshaller(structDef: StructDef, parentType?: ObjectSchema) {
+function generateAdditionalPropertiesJSONMarshaller(structDef: StructDef, parentType?: ObjectSchema) {
   imports.add('encoding/json');
   const typeName = structDef.Language.name;
   const receiver = typeName[0].toLowerCase();
@@ -602,7 +615,7 @@ function generateAdditionalPropertiesMarshaller(structDef: StructDef, parentType
   structDef.Methods.push({ name: 'MarshalJSON', desc: `MarshalJSON implements the json.Marshaller interface for type ${typeName}.`, text: marshaller });
 }
 
-function generateAdditionalPropertiesUnmarshaller(structDef: StructDef, elementType: Schema, parentType?: ObjectSchema) {
+function generateAdditionalPropertiesJSONUnmarshaller(structDef: StructDef, elementType: Schema, parentType?: ObjectSchema) {
   imports.add('encoding/json');
   const typeName = structDef.Language.name;
   const receiver = typeName[0].toLowerCase();

@@ -72,6 +72,10 @@ async function process(session: Session<CodeModel>) {
       details.name = `${schemaTypeToGoType(session.model, prop.schema, true)}`;
       if (prop.schema.type === SchemaType.DateTime) {
         obj.language.go!.needsDateTimeMarshalling = true;
+      } else if (prop.schema.type === SchemaType.Dictionary && obj.language.go!.marshallingFormat === 'xml') {
+        // mark that we need custom XML unmarshalling for a dictionary
+        prop.language.go!.needsXMLDictionaryUnmarshalling = true;
+        session.model.language.go!.needsXMLDictionaryUnmarshalling = true;
       }
     }
     if (!obj.language.go!.marshallingFormat) {
