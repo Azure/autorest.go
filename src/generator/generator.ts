@@ -13,7 +13,6 @@ import { generateEnums } from './enums';
 import { generateClient } from './client';
 import { generateTimeHelpers } from './time';
 import { generatePagers } from './pagers';
-import { generateARMPollers, generateARMPollersHelper } from './arm_pollers';
 import { generatePollers, generatePollersHelper } from './data_plane_pollers';
 import { generatePolymorphicHelpers } from './polymorphics';
 import { generateGoModFile } from './gomod';
@@ -31,7 +30,7 @@ export async function protocolGen(host: Host) {
     if (filePrefix.length > 0 && filePrefix[filePrefix.length - 1] !== '_') {
       filePrefix += '_';
     }
-    
+
     // output the model to the pipeline.  this must happen after all model
     // updates are complete and before any source files are written.
     host.WriteFile('code-model-v4.yaml', serialize(session.model), undefined, 'code-model-v4');
@@ -60,14 +59,12 @@ export async function protocolGen(host: Host) {
     if (pagers.length > 0) {
       host.WriteFile(`${filePrefix}pagers.go`, pagers, undefined, 'source-file-go');
     }
-
     const pollers = await generatePollers(session);
     if (pollers.length > 0) {
       const pollingHelper = await generatePollersHelper(session);
       host.WriteFile(`${filePrefix}pollers_helper.go`, pollingHelper, undefined, 'source-file-go');
       host.WriteFile(`${filePrefix}pollers.go`, pollers, undefined, 'source-file-go');
     }
-    
     const polymorphics = await generatePolymorphicHelpers(session);
     if (polymorphics.length > 0) {
       host.WriteFile(`${filePrefix}polymorphic_helpers.go`, polymorphics, undefined, 'source-file-go');
