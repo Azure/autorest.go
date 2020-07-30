@@ -5,102 +5,21 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { camelCase } from '@azure-tools/codegen';
-import { CodeModel, SchemaResponse, SchemaType, Operation } from '@azure-tools/codemodel';
+import { CodeModel, SchemaResponse } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { PagerInfo, PollerInfo, isSchemaResponse, isPageableOperation } from '../common/helpers';
-import { contentPreamble, sortAscending, getCreateRequestParametersSig, getMethodParameters } from './helpers';
+import { PollerInfo, isSchemaResponse, isPageableOperation } from '../common/helpers';
+import { contentPreamble, sortAscending } from './helpers';
 import { ImportManager } from './imports';
-import { OperationNaming } from '../transform/namer';
-
-function getPutCheck(op: Operation): string {
-  const respSchema = <SchemaResponse>op.responses![0];
-  let text = 'if p.pt.pollerMethodVerb() == http.MethodPut || p.pt.pollerMethodVerb() == http.MethodPatch {';
-  if (!isPageableOperation(op)) {
-    text += `
-    res, err := p.handleResponse(p.pt.latestResponse())
-    if err != nil {
-      return nil, err
-    }
-    `;
-    switch (respSchema.schema.type) {
-      case SchemaType.Array:
-      case SchemaType.Dictionary:
-        text += `if res != nil && res.${respSchema.schema.language.go!.responseType.value} != nil {`;
-        break;
-      case SchemaType.String:
-        text += `if res != nil && (*res.${respSchema.schema.language.go!.responseType.value} != "") {`;
-        break;
-      default:
-        text += `if res != nil && (*res.${respSchema.schema.language.go!.responseType.value} != ${respSchema.schema.language.go!.responseType.value}{}) {`;
-    }
-    text += `
-        return res, nil
-      }`;
-  } else {
-    text += 'return p.handleResponse(p.pt.latestResponse())';
-  }
-  text += '}';
-  return text;
-}
-
-function generatePagerReturnInstance(op: Operation, imports: ImportManager): string {
-  let text = '';
-  const info = <OperationNaming>op.language.go!;
-  // split param list into individual params
-  const reqParams = getCreateRequestParametersSig(op).split(',');
-  // keep the parameter names from the name/type tuples
-  for (let i = 0; i < reqParams.length; ++i) {
-    reqParams[i] = reqParams[i].trim().split(' ')[0];
-  }
-  text += `\treturn &${camelCase(op.language.go!.pageableType.name)}{\n`;
-  text += `\t\tpipeline: p.pipeline,\n`;
-  text += `\t\tresp: resp,\n`;
-  text += `\t\tresponder: p.respHandler,\n`;
-  const pager = <PagerInfo>op.language.go!.pageableType;
-  const pagerSchema = <SchemaResponse>pager.op.responses![0];
-  if (op.language.go!.paging.member) {
-    // find the location of the nextLink param
-    const nextLinkOpParams = getMethodParameters(op.language.go!.paging.nextLinkOperation);
-    let found = false;
-    for (let i = 0; i < nextLinkOpParams.length; ++i) {
-      if (nextLinkOpParams[i].schema.type === SchemaType.String && nextLinkOpParams[i].language.go!.name.startsWith('next')) {
-        // found it
-        reqParams.splice(i, 0, `*resp.${pagerSchema.schema.language.go!.name}.${pager.op.language.go!.paging.nextLinkName}`);
-        found = true;
-        break;
-      }
-    }
-    if (!found) {
-      throw console.error(`failed to find nextLink parameter for operation ${op.language.go!.paging.nextLinkOperation.language.go!.name}`);
-    }
-    text += `\t\tadvancer: func(resp *${pagerSchema.schema.language.go!.responseType.name}) (*azcore.Request, error) {\n`;
-    text += `\t\t\treturn client.${camelCase(op.language.go!.paging.member)}CreateRequest(${reqParams.join(', ')})\n`;
-    text += '\t\t},\n';
-  } else {
-    imports.add('fmt');
-    imports.add('net/url');
-    let resultTypeName = pagerSchema.schema.language.go!.name;
-    if (pagerSchema.schema.serialization?.xml?.name) {
-      // xml can specifiy its own name, prefer that if available
-      resultTypeName = pagerSchema.schema.serialization.xml.name;
-    }
-    text += `\t\tadvancer: func(resp *${pagerSchema.schema.language.go!.responseType.name}) (*azcore.Request, error) {\n`;
-    text += `\t\t\tu, err := url.Parse(*resp.${resultTypeName}.${pager.op.language.go!.paging.nextLinkName})\n`;
-    text += `\t\t\tif err != nil {\n`;
-    text += `\t\t\t\treturn nil, fmt.Errorf("invalid ${pager.op.language.go!.paging.nextLinkName}: %w", err)\n`;
-    text += `\t\t\t}\n`;
-    text += `\t\t\tif u.Scheme == "" {\n`;
-    text += `\t\t\t\treturn nil, fmt.Errorf("no scheme detected in ${pager.op.language.go!.paging.nextLinkName} %s", *resp.${resultTypeName}.${pager.op.language.go!.paging.nextLinkName})\n`;
-    text += `\t\t\t}\n`;
-    text += `\t\t\treturn azcore.NewRequest(http.MethodGet, *u), nil\n`;
-    text += `\t\t},\n`;
-  }
-  text += `\t}, nil`;
-  return text;
-}
+import { generateARMPollers, generateARMPollersHelper } from './arm_pollers';
 
 // Creates the content in pollers.go
 export async function generatePollers(session: Session<CodeModel>): Promise<string> {
+  // get the openapi-type value specified. Default to ARM behavior, unless "data-plane" is specified
+  let openapiType = await session.getValue('openapi-type', '');
+  if (openapiType !== 'data-plane') {
+    return generateARMPollers(session);
+  }
+
   if (session.model.language.go!.pollerTypes === undefined) {
     return '';
   }
@@ -131,7 +50,6 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
     let pollUntilDoneReturn = 'p.FinalResponse(), nil';
     let handleResponse = '';
     const schemaResponse = <SchemaResponse>poller.op.responses![0];
-    let unmarshalResponse = 'nil';
     let pagerFields = '';
     let finalResponseCheckNeeded = false;
     if (isPageableOperation(poller.op)) {
@@ -144,7 +62,7 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
       respHandler ${camelCase(poller.op.language.go!.pageableType.op.responses![0].schema.language.go!.name)}HandleResponse`;
       handleResponse = `
       func (p *${pollerName}) handleResponse(resp *azcore.Response) (${responseType}, error) {
-        ${generatePagerReturnInstance(poller.op, imports)}
+        return nil, nil
       }
       `;
       finalResponse = `${finalResponseDeclaration} {`;
@@ -153,7 +71,6 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
       responseType = schemaResponse.schema.language.go!.responseType.name;
       pollUntilDoneResponse = `(*${responseType}, error)`;
       pollUntilDoneReturn = 'p.FinalResponse(ctx)';
-      unmarshalResponse = `resp.UnmarshalAsJSON(&result.${schemaResponse.schema.language.go!.responseType.value})`;
       // for operations that do return a model add a final response method that handles the final get URL scenario
       finalResponseDeclaration = `FinalResponse(ctx context.Context) (*${responseType}, error)`;
       handleResponse = `
@@ -211,6 +128,11 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
 
 // Creates the content in pollers_helper.go
 export async function generatePollersHelper(session: Session<CodeModel>): Promise<string> {
+  // get the openapi-type value specified. Default to ARM behavior, unless "data-plane" is specified
+  let openapiType = await session.getValue('openapi-type', '');
+  if (openapiType !== 'data-plane') {
+    return generateARMPollersHelper(session);
+  }
   if (session.model.language.go!.pollerTypes === undefined) {
     return '';
   }
