@@ -65,25 +65,47 @@ jobs:
         displayName: 'Install Dependencies'
         workingDirectory: '$(goTestPath)'
 
-      - script: go vet $(go list ./...)
-        displayName: 'Vet'
-        workingDirectory: '$(goTestPath)'
+      - pwsh: |
+          $modDirs = (./eng/scripts/get_module_dirs.ps1 -serviceDir $(goTestPath))
+          foreach ($md in $modDirs) {
+            pushd $md
+            Write-Host "##[command]Executing go build -v ./... in $md"
+            go build -v ./...
+          }
+        displayName: 'Build'
 
-      - script: |
-          pushd ../src/node_modules/@microsoft.azure/autorest.testserver
+      - pwsh: |
+          $modDirs = (./eng/scripts/get_module_dirs.ps1 -serviceDir $(goTestPath))
+          foreach ($md in $modDirs) {
+            pushd $md
+            Write-Host "##[command]Executing go vet ./... in $md"
+            go vet ./...
+          }
+        displayName: 'Vet'
+
+      - pwsh: |
+          pushd ./src/node_modules/@microsoft.azure/autorest.testserver
           npm start&
           popd
-          go test -v ./... 2>&1 | $(GOBIN)/go-junit-report > report.xml
+          $testDirs = (./eng/scripts/get_test_dirs.ps1 -serviceDir $(goTestPath))
+          foreach ($td in $testDirs) {
+            pushd $td
+            Write-Host "##[command]Executing go test -run "^Test" -v $td | $(GOBIN)/go-junit-report -set-exit-code > report.xml"
+            go test -run "^Test" -v | $(GOBIN)/go-junit-report -set-exit-code > report.xml
+            popd
+          }
+          pushd test
           go run ./autorest/covreport/main.go
-          pushd ../src/node_modules/@microsoft.azure/autorest.testserver
+          popd
+          pushd ./src/node_modules/@microsoft.azure/autorest.testserver
           npm stop
+          popd
         displayName: 'Run Acceptance Tests'
-        workingDirectory: '$(goTestPath)'
 
       - task: PublishTestResults@2
         inputs:
           testRunner: JUnit
-          testResultsFiles: $(goTestPath)/report.xml
+          testResultsFiles: $(goTestPath)/**/report.xml
           failTaskOnFailedTests: true
 
       - ${{if ne(variables['Build.Reason'], 'PullRequest')}}:
