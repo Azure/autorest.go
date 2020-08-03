@@ -5,7 +5,7 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, pascalCase } from '@azure-tools/codegen';
-import { CodeModel, ConstantSchema, GroupProperty, ImplementationLocation, ObjectSchema, Language, Schema, SchemaType, Parameter, Property } from '@azure-tools/codemodel';
+import { CodeModel, ConstantSchema, DictionarySchema, GroupProperty, ImplementationLocation, ObjectSchema, Language, Schema, SchemaType, Parameter, Property } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { isArraySchema, isObjectSchema, hasAdditionalProperties } from '../common/helpers';
 import { contentPreamble, hasDescription, sortAscending, substituteDiscriminator } from './helpers';
@@ -206,6 +206,11 @@ class StructDef {
     text += '}\n\n';
     return text;
   }
+
+  receiverName(): string {
+    const typeName = this.Language.name;
+    return typeName[0].toLowerCase();
+  }
 }
 
 function generateStructs(objects?: ObjectSchema[]): StructDef[] {
@@ -280,6 +285,10 @@ function generateStructs(objects?: ObjectSchema[]): StructDef[] {
       generateAdditionalPropertiesJSONUnmarshaller(structDef, schema!.elementType, parentType);
     } else if (needsXMLDictionaryUnmarshalling(obj)) {
       generateUnmarshaller(structDef);
+    } else if (obj.children?.immediate && (<ObjectSchema>obj.children.immediate[0]).discriminator) {
+      // this is a corner-case where a non-discriminated type is a parent of a discriminated type.
+      // we need to generate the internal unmarshaller as the child discriminated type depends on it.
+      generateDiscriminatedTypeInternalUnmarshaller(obj, structDef, parentType);
     }
     structDef.ComposedOf.sort((a: ObjectSchema, b: ObjectSchema) => { return sortAscending(a.language.go!.name, b.language.go!.name); });
     structTypes.push(structDef);
@@ -337,7 +346,7 @@ function generateUnmarshallerForResponseEnvelope(structDef: StructDef) {
   if (!found) {
     return;
   }
-  const receiver = structDef.Language.name[0].toLowerCase();
+  const receiver = structDef.receiverName();
   let unmarshaller = `func (${receiver} *${structDef.Language.name}) UnmarshalJSON(data []byte) error {\n`;
   // add a custom unmarshaller to the response envelope
   // find the discriminated type field
@@ -365,11 +374,13 @@ function generateUnmarshallerForResponseEnvelope(structDef: StructDef) {
 
 function generateDiscriminatorMethods(obj: ObjectSchema, structDef: StructDef, parentType: ObjectSchema) {
   const typeName = obj.language.go!.name;
-  const receiver = typeName[0].toLowerCase();
+  const receiver = structDef.receiverName();
   // generate interface method
   const interfaceMethod = `Get${typeName}`;
   const method = `func (${receiver} *${typeName}) ${interfaceMethod}() *${typeName} { return ${receiver} }\n\n`;
   structDef.Methods.push({ name: interfaceMethod, desc: `${interfaceMethod} implements the ${obj.language.go!.discriminatorInterface} interface for type ${typeName}.`, text: method });
+  // generate internal unmarshaller method
+  generateDiscriminatedTypeInternalUnmarshaller(obj, structDef, parentType);
   if (obj.language.go!.errorType || obj.language.go!.childErrorType) {
     // errors don't need custom marshallers
     return;
@@ -397,9 +408,25 @@ function generateDiscriminatorMethods(obj: ObjectSchema, structDef: StructDef, p
       marshalInteral += `\t}\n`;
     }
   }
+  if (hasAdditionalProperties(obj)) {
+    marshalInteral += `\tif ${receiver}.AdditionalProperties != nil {\n`;
+    marshalInteral += `\t\tfor key, val := range *${receiver}.AdditionalProperties {\n`;
+    marshalInteral += '\t\t\tobjectMap[key] = val\n';
+    marshalInteral += '\t\t}\n';;
+    marshalInteral += '\t}\n';
+  }
   marshalInteral += '\treturn objectMap\n';
   marshalInteral += '}\n\n';
   structDef.Methods.push({ name: 'marshalInternal', desc: '', text: marshalInteral });
+}
+
+function generateDiscriminatedTypeInternalUnmarshaller(obj: ObjectSchema, structDef: StructDef, parentType?: ObjectSchema) {
+  const typeName = obj.language.go!.name;
+  const receiver = structDef.receiverName();
+  let unmarshalInternall = `func (${receiver} *${typeName}) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {\n`;
+  unmarshalInternall += generateDiscriminatedTypeUnmarshallerBody(obj, structDef, parentType);
+  unmarshalInternall += '}\n\n';
+  structDef.Methods.push({ name: 'unmarshalInternal', desc: '', text: unmarshalInternall });
 }
 
 function generateDiscriminatedTypeMarshaller(obj: ObjectSchema, structDef: StructDef, parentType: ObjectSchema) {
@@ -409,21 +436,32 @@ function generateDiscriminatedTypeMarshaller(obj: ObjectSchema, structDef: Struc
   }
   imports.add('encoding/json');
   const typeName = structDef.Language.name;
-  const receiver = typeName[0].toLowerCase();
+  const receiver = structDef.receiverName();
   // generate marshaller method
   let marshaller = `func (${receiver} ${typeName}) MarshalJSON() ([]byte, error) {\n`;
-  marshaller += `\tobjectMap := ${receiver}.${parentType!.language.go!.name}.marshalInternal(${obj.discriminatorValue})\n`;
-  for (const prop of values(structDef.Properties)) {
-    if (prop.language.go!.isAdditionalProperties) {
-      continue;
+  if (obj.discriminator) {
+    marshaller += `\tobjectMap := ${receiver}.marshalInternal(${obj.discriminatorValue})\n`;
+  } else {
+    marshaller += `\tobjectMap := ${receiver}.${parentType!.language.go!.name}.marshalInternal(${obj.discriminatorValue})\n`;
+    for (const prop of values(structDef.Properties)) {
+      if (prop.language.go!.isAdditionalProperties) {
+        continue;
+      }
+      marshaller += `\tif ${receiver}.${prop.language.go!.name} != nil {\n`;
+      if (prop.schema.language.go!.internalTimeType) {
+        marshaller += `\t\tobjectMap["${prop.serializedName}"] = (*${prop.schema.language.go!.internalTimeType})(${receiver}.${prop.language.go!.name})\n`;
+      } else {
+        marshaller += `\t\tobjectMap["${prop.serializedName}"] = ${receiver}.${prop.language.go!.name}\n`;
+      }
+      marshaller += `\t}\n`;
     }
-    marshaller += `\tif ${receiver}.${prop.language.go!.name} != nil {\n`;
-    if (prop.schema.language.go!.internalTimeType) {
-      marshaller += `\t\tobjectMap["${prop.serializedName}"] = (*${prop.schema.language.go!.internalTimeType})(${receiver}.${prop.language.go!.name})\n`;
-    } else {
-      marshaller += `\t\tobjectMap["${prop.serializedName}"] = ${receiver}.${prop.language.go!.name}\n`;
+    if (hasAdditionalProperties(obj)) {
+      marshaller += `\tif ${receiver}.AdditionalProperties != nil {\n`;
+      marshaller += `\t\tfor key, val := range *${receiver}.AdditionalProperties {\n`;
+      marshaller += '\t\t\tobjectMap[key] = val\n';
+      marshaller += '\t\t}\n';;
+      marshaller += '\t}\n';
     }
-    marshaller += `\t}\n`;
   }
   marshaller += '\treturn json.Marshal(objectMap)\n';
   marshaller += '}\n\n';
@@ -438,53 +476,96 @@ function generateDiscriminatedTypeUnmarshaller(obj: ObjectSchema, structDef: Str
   }
   imports.add('encoding/json');
   const typeName = structDef.Language.name;
-  const receiver = typeName[0].toLowerCase();
+  const receiver = structDef.receiverName();
   let unmarshaller = `func (${receiver} *${typeName}) UnmarshalJSON(data []byte) error {\n`;
   // polymorphic type, or type containing a polymorphic type
   unmarshaller += '\tvar rawMsg map[string]*json.RawMessage\n';
   unmarshaller += '\tif err := json.Unmarshal(data, &rawMsg); err != nil {\n';
   unmarshaller += '\t\treturn err\n';
   unmarshaller += '\t}\n';
-  unmarshaller += '\tfor key, val := range rawMsg {\n';
-  unmarshaller += '\t\tvar err error\n';
-  unmarshaller += '\t\tswitch key {\n';
-  // unmarshal each field one by one
-  for (const prop of values(structDef.Properties)) {
-    if (prop.language.go!.isAdditionalProperties) {
-      continue;
-    }
-    unmarshaller += `\t\tcase "${prop.serializedName}":\n`;
-    unmarshaller += '\t\t\tif val != nil {\n';
-    if (prop.schema.language.go!.discriminatorInterface) {
-      unmarshaller += `\t\t\t\t${receiver}.${prop.language.go!.name}, err = unmarshal${prop.schema.language.go!.discriminatorInterface}(*val)\n`;
-    } else if (isArraySchema(prop.schema) && prop.schema.elementType.language.go!.discriminatorInterface) {
-      unmarshaller += `\t\t\t\t${receiver}.${prop.language.go!.name}, err = unmarshal${prop.schema.elementType.language.go!.discriminatorInterface}Array(*val)\n`;
-    } else if (prop.schema.language.go!.internalTimeType) {
-      unmarshaller += `\t\t\t\tvar aux ${prop.schema.language.go!.internalTimeType}\n`;
-      unmarshaller += '\t\t\t\terr = json.Unmarshal(*val, &aux)\n';
-      unmarshaller += `\t\t\t\t${receiver}.${prop.language.go!.name} = (*time.Time)(&aux)\n`;
-    } else {
-      unmarshaller += `\t\t\t\terr = json.Unmarshal(*val, &${receiver}.${prop.language.go!.name})\n`;
-    }
-    unmarshaller += '\t\t\t}\n';
-  }
-  unmarshaller += '\t\t}\n';
-  unmarshaller += '\t\tif err != nil {\n';
-  unmarshaller += '\t\t\treturn err\n';
-  unmarshaller += '\t\t}\n';
-  unmarshaller += '\t}\n';
-  if (parentType) {
-    unmarshaller += `\treturn json.Unmarshal(data, &${receiver}.${parentType.language.go!.name})\n`;
+  if (obj.discriminator) {
+    unmarshaller += `\treturn ${receiver}.unmarshalInternal(rawMsg)\n`;
   } else {
-    unmarshaller += '\treturn nil\n';
+    unmarshaller += generateDiscriminatedTypeUnmarshallerBody(obj, structDef, parentType);
   }
   unmarshaller += '}\n\n';
   structDef.Methods.push({ name: 'UnmarshalJSON', desc: `UnmarshalJSON implements the json.Unmarshaller interface for type ${typeName}.`, text: unmarshaller });
 }
 
+function generateDiscriminatedTypeUnmarshallerBody(obj: ObjectSchema, structDef: StructDef, parentType?: ObjectSchema): string {
+  const receiver = structDef.receiverName();
+  const addlProps = hasAdditionalProperties(obj);
+  const emitAddlProps = function (tab: string, addlProps: DictionarySchema): string {
+    let addlPropsText = `${tab}\t\tif ${receiver}.AdditionalProperties == nil {\n`;
+    addlPropsText += `${tab}\t\t\t${receiver}.AdditionalProperties = &map[string]${addlProps.elementType.language.go!.name}{}\n`;
+    addlPropsText += `${tab}\t\t}\n`;
+    addlPropsText += `${tab}\t\tif val != nil {\n`;
+    addlPropsText += `${tab}\t\t\tvar aux ${addlProps.elementType.language.go!.name}\n`;
+    addlPropsText += `${tab}\t\t\terr = json.Unmarshal(*val, &aux)\n`;
+    addlPropsText += `${tab}\t\t\t(*${receiver}.AdditionalProperties)[key] = aux\n`;
+    addlPropsText += `${tab}\t\t}\n`;
+    addlPropsText += `${tab}\t\tdelete(rawMsg, key)\n`;
+    return addlPropsText;
+  }
+  let unmarshalBody = '\tfor key, val := range rawMsg {\n';
+  unmarshalBody += '\t\tvar err error\n';
+  unmarshalBody += '\t\tswitch key {\n';
+  // unmarshal content for the current type
+  for (const prop of values(structDef.Properties)) {
+    unmarshalBody += `\t\tcase "${prop.serializedName}":\n`;
+    unmarshalBody += '\t\t\tif val != nil {\n';
+    if (prop.schema.language.go!.discriminatorInterface) {
+      unmarshalBody += `\t\t\t\t${receiver}.${prop.language.go!.name}, err = unmarshal${prop.schema.language.go!.discriminatorInterface}(*val)\n`;
+    } else if (isArraySchema(prop.schema) && prop.schema.elementType.language.go!.discriminatorInterface) {
+      unmarshalBody += `\t\t\t\t${receiver}.${prop.language.go!.name}, err = unmarshal${prop.schema.elementType.language.go!.discriminatorInterface}Array(*val)\n`;
+    } else if (prop.schema.language.go!.internalTimeType) {
+      unmarshalBody += `\t\t\t\tvar aux ${prop.schema.language.go!.internalTimeType}\n`;
+      unmarshalBody += '\t\t\t\terr = json.Unmarshal(*val, &aux)\n';
+      unmarshalBody += `\t\t\t\t${receiver}.${prop.language.go!.name} = (*time.Time)(&aux)\n`;
+    } else {
+      unmarshalBody += `\t\t\t\terr = json.Unmarshal(*val, &${receiver}.${prop.language.go!.name})\n`;
+    }
+    unmarshalBody += '\t\t\t}\n';
+    unmarshalBody += '\t\t\tdelete(rawMsg, key)\n';
+  }
+  // if there's no parent type it's safe to unmarshal additional properties right here
+  if (addlProps && !parentType) {
+    unmarshalBody += '\t\tdefault:\n';
+    unmarshalBody += emitAddlProps('\t', addlProps);
+  }
+  unmarshalBody += '\t\t}\n';
+  unmarshalBody += '\t\tif err != nil {\n';
+  unmarshalBody += '\t\t\treturn err\n';
+  unmarshalBody += '\t\t}\n';
+  unmarshalBody += '\t}\n'; // end for key, val := range rawMsg
+  if (parentType) {
+    if (!addlProps) {
+      unmarshalBody += `\treturn ${receiver}.${parentType.language.go!.name}.unmarshalInternal(rawMsg)\n`;
+    } else {
+      // unmarshal parent content first
+      unmarshalBody += `\tif err := ${receiver}.${parentType.language.go!.name}.unmarshalInternal(rawMsg); err != nil {\n`;
+      unmarshalBody += '\t\treturn err\n';
+      unmarshalBody += '\t}\n';
+      // now unmarshal additional properties
+      unmarshalBody += '\tfor key, val := range rawMsg {\n';
+      unmarshalBody += '\tvar err error\n';
+      unmarshalBody += emitAddlProps('', addlProps);
+      unmarshalBody += '\t\tif err != nil {\n';
+      unmarshalBody += '\t\t\treturn err\n';
+      unmarshalBody += '\t\t}\n';
+      unmarshalBody += '\t}\n'; // end for key, val := range rawMsg
+      unmarshalBody += '\treturn nil\n';
+    }
+  } else {
+    // nothing left to unmarshal
+    unmarshalBody += '\treturn nil\n';
+  }
+  return unmarshalBody;
+}
+
 function generateMarshaller(structDef: StructDef) {
   // only needed for types with time.Time or where the XML name doesn't match the type name
-  const receiver = structDef.Language.name[0].toLowerCase();
+  const receiver = structDef.receiverName();
   let formatSig = 'JSON() ([]byte, error)';
   let methodName = 'MarshalJSON';
   if (structDef.Language.marshallingFormat === 'xml') {
@@ -508,7 +589,7 @@ function generateMarshaller(structDef: StructDef) {
 
 function generateUnmarshaller(structDef: StructDef) {
   // non-polymorphic case, must be something with time.Time
-  const receiver = structDef.Language.name[0].toLowerCase();
+  const receiver = structDef.receiverName();
   let formatSig = 'JSON(data []byte)';
   let methodName = 'UnmarshalJSON';
   if (structDef.Language.marshallingFormat === 'xml') {
@@ -578,7 +659,7 @@ function generateAliasType(structDef: StructDef, receiver: string, forMarshal: b
 function generateAdditionalPropertiesJSONMarshaller(structDef: StructDef, parentType?: ObjectSchema) {
   imports.add('encoding/json');
   const typeName = structDef.Language.name;
-  const receiver = typeName[0].toLowerCase();
+  const receiver = structDef.receiverName();
   // generate marshaller method
   let marshaller = `func (${receiver} ${typeName}) MarshalJSON() ([]byte, error) {\n`;
   marshaller += '\tobjectMap := make(map[string]interface{})\n';
@@ -618,7 +699,7 @@ function generateAdditionalPropertiesJSONMarshaller(structDef: StructDef, parent
 function generateAdditionalPropertiesJSONUnmarshaller(structDef: StructDef, elementType: Schema, parentType?: ObjectSchema) {
   imports.add('encoding/json');
   const typeName = structDef.Language.name;
-  const receiver = typeName[0].toLowerCase();
+  const receiver = structDef.receiverName();
   let unmarshaller = `func (${receiver} *${typeName}) UnmarshalJSON(data []byte) error {\n`;
   unmarshaller += '\tvar rawMsg map[string]*json.RawMessage\n';
   unmarshaller += '\tif err := json.Unmarshal(data, &rawMsg); err != nil {\n';

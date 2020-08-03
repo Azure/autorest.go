@@ -1251,32 +1251,38 @@ func (a *ApplicationRuleCondition) UnmarshalJSON(data []byte) error {
 			if val != nil {
 				err = json.Unmarshal(*val, &a.DestinationAddresses)
 			}
+			delete(rawMsg, key)
 		case "fqdnTags":
 			if val != nil {
 				err = json.Unmarshal(*val, &a.FqdnTags)
 			}
+			delete(rawMsg, key)
 		case "protocols":
 			if val != nil {
 				err = json.Unmarshal(*val, &a.Protocols)
 			}
+			delete(rawMsg, key)
 		case "sourceAddresses":
 			if val != nil {
 				err = json.Unmarshal(*val, &a.SourceAddresses)
 			}
+			delete(rawMsg, key)
 		case "sourceIpGroups":
 			if val != nil {
 				err = json.Unmarshal(*val, &a.SourceIPGroups)
 			}
+			delete(rawMsg, key)
 		case "targetFqdns":
 			if val != nil {
 				err = json.Unmarshal(*val, &a.TargetFqdns)
 			}
+			delete(rawMsg, key)
 		}
 		if err != nil {
 			return err
 		}
 	}
-	return json.Unmarshal(data, &a.FirewallPolicyRuleCondition)
+	return a.FirewallPolicyRuleCondition.unmarshalInternal(rawMsg)
 }
 
 // An application security group in a resource group.
@@ -5016,16 +5022,18 @@ func (f *FirewallPolicyFilterRule) UnmarshalJSON(data []byte) error {
 			if val != nil {
 				err = json.Unmarshal(*val, &f.Action)
 			}
+			delete(rawMsg, key)
 		case "ruleConditions":
 			if val != nil {
 				f.RuleConditions, err = unmarshalFirewallPolicyRuleConditionClassificationArray(*val)
 			}
+			delete(rawMsg, key)
 		}
 		if err != nil {
 			return err
 		}
 	}
-	return json.Unmarshal(data, &f.FirewallPolicyRule)
+	return f.FirewallPolicyRule.unmarshalInternal(rawMsg)
 }
 
 // Properties of the FirewallPolicyFilterRuleAction.
@@ -5099,24 +5107,28 @@ func (f *FirewallPolicyNatRule) UnmarshalJSON(data []byte) error {
 			if val != nil {
 				err = json.Unmarshal(*val, &f.Action)
 			}
+			delete(rawMsg, key)
 		case "ruleCondition":
 			if val != nil {
 				f.RuleCondition, err = unmarshalFirewallPolicyRuleConditionClassification(*val)
 			}
+			delete(rawMsg, key)
 		case "translatedAddress":
 			if val != nil {
 				err = json.Unmarshal(*val, &f.TranslatedAddress)
 			}
+			delete(rawMsg, key)
 		case "translatedPort":
 			if val != nil {
 				err = json.Unmarshal(*val, &f.TranslatedPort)
 			}
+			delete(rawMsg, key)
 		}
 		if err != nil {
 			return err
 		}
 	}
-	return json.Unmarshal(data, &f.FirewallPolicyRule)
+	return f.FirewallPolicyRule.unmarshalInternal(rawMsg)
 }
 
 // Properties of the FirewallPolicyNatRuleAction.
@@ -5193,27 +5205,7 @@ func (f *FirewallPolicyRule) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "name":
-			if val != nil {
-				err = json.Unmarshal(*val, &f.Name)
-			}
-		case "priority":
-			if val != nil {
-				err = json.Unmarshal(*val, &f.Priority)
-			}
-		case "ruleType":
-			if val != nil {
-				err = json.Unmarshal(*val, &f.RuleType)
-			}
-		}
-		if err != nil {
-			return err
-		}
-	}
-	return nil
+	return f.unmarshalInternal(rawMsg)
 }
 
 func (f FirewallPolicyRule) marshalInternal(discValue FirewallPolicyRuleType) map[string]interface{} {
@@ -5227,6 +5219,33 @@ func (f FirewallPolicyRule) marshalInternal(discValue FirewallPolicyRuleType) ma
 	f.RuleType = &discValue
 	objectMap["ruleType"] = f.RuleType
 	return objectMap
+}
+
+func (f *FirewallPolicyRule) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "name":
+			if val != nil {
+				err = json.Unmarshal(*val, &f.Name)
+			}
+			delete(rawMsg, key)
+		case "priority":
+			if val != nil {
+				err = json.Unmarshal(*val, &f.Priority)
+			}
+			delete(rawMsg, key)
+		case "ruleType":
+			if val != nil {
+				err = json.Unmarshal(*val, &f.RuleType)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // FirewallPolicyRuleConditionClassification provides polymorphic access to related types.
@@ -5257,27 +5276,7 @@ func (f *FirewallPolicyRuleCondition) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "description":
-			if val != nil {
-				err = json.Unmarshal(*val, &f.Description)
-			}
-		case "name":
-			if val != nil {
-				err = json.Unmarshal(*val, &f.Name)
-			}
-		case "ruleConditionType":
-			if val != nil {
-				err = json.Unmarshal(*val, &f.RuleConditionType)
-			}
-		}
-		if err != nil {
-			return err
-		}
-	}
-	return nil
+	return f.unmarshalInternal(rawMsg)
 }
 
 func (f FirewallPolicyRuleCondition) marshalInternal(discValue FirewallPolicyRuleConditionType) map[string]interface{} {
@@ -5291,6 +5290,33 @@ func (f FirewallPolicyRuleCondition) marshalInternal(discValue FirewallPolicyRul
 	f.RuleConditionType = &discValue
 	objectMap["ruleConditionType"] = f.RuleConditionType
 	return objectMap
+}
+
+func (f *FirewallPolicyRuleCondition) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "description":
+			if val != nil {
+				err = json.Unmarshal(*val, &f.Description)
+			}
+			delete(rawMsg, key)
+		case "name":
+			if val != nil {
+				err = json.Unmarshal(*val, &f.Name)
+			}
+			delete(rawMsg, key)
+		case "ruleConditionType":
+			if val != nil {
+				err = json.Unmarshal(*val, &f.RuleConditionType)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // Properties of the application rule protocol.
@@ -5375,14 +5401,17 @@ func (f *FirewallPolicyRuleGroupProperties) UnmarshalJSON(data []byte) error {
 			if val != nil {
 				err = json.Unmarshal(*val, &f.Priority)
 			}
+			delete(rawMsg, key)
 		case "provisioningState":
 			if val != nil {
 				err = json.Unmarshal(*val, &f.ProvisioningState)
 			}
+			delete(rawMsg, key)
 		case "rules":
 			if val != nil {
 				f.Rules, err = unmarshalFirewallPolicyRuleClassificationArray(*val)
 			}
+			delete(rawMsg, key)
 		}
 		if err != nil {
 			return err
@@ -7046,28 +7075,33 @@ func (n *NatRuleCondition) UnmarshalJSON(data []byte) error {
 			if val != nil {
 				err = json.Unmarshal(*val, &n.DestinationAddresses)
 			}
+			delete(rawMsg, key)
 		case "destinationPorts":
 			if val != nil {
 				err = json.Unmarshal(*val, &n.DestinationPorts)
 			}
+			delete(rawMsg, key)
 		case "ipProtocols":
 			if val != nil {
 				err = json.Unmarshal(*val, &n.IPProtocols)
 			}
+			delete(rawMsg, key)
 		case "sourceAddresses":
 			if val != nil {
 				err = json.Unmarshal(*val, &n.SourceAddresses)
 			}
+			delete(rawMsg, key)
 		case "sourceIpGroups":
 			if val != nil {
 				err = json.Unmarshal(*val, &n.SourceIPGroups)
 			}
+			delete(rawMsg, key)
 		}
 		if err != nil {
 			return err
 		}
 	}
-	return json.Unmarshal(data, &n.FirewallPolicyRuleCondition)
+	return n.FirewallPolicyRuleCondition.unmarshalInternal(rawMsg)
 }
 
 // Parameters to get network configuration diagnostic.
@@ -7602,32 +7636,38 @@ func (n *NetworkRuleCondition) UnmarshalJSON(data []byte) error {
 			if val != nil {
 				err = json.Unmarshal(*val, &n.DestinationAddresses)
 			}
+			delete(rawMsg, key)
 		case "destinationIpGroups":
 			if val != nil {
 				err = json.Unmarshal(*val, &n.DestinationIPGroups)
 			}
+			delete(rawMsg, key)
 		case "destinationPorts":
 			if val != nil {
 				err = json.Unmarshal(*val, &n.DestinationPorts)
 			}
+			delete(rawMsg, key)
 		case "ipProtocols":
 			if val != nil {
 				err = json.Unmarshal(*val, &n.IPProtocols)
 			}
+			delete(rawMsg, key)
 		case "sourceAddresses":
 			if val != nil {
 				err = json.Unmarshal(*val, &n.SourceAddresses)
 			}
+			delete(rawMsg, key)
 		case "sourceIpGroups":
 			if val != nil {
 				err = json.Unmarshal(*val, &n.SourceIPGroups)
 			}
+			delete(rawMsg, key)
 		}
 		if err != nil {
 			return err
 		}
 	}
-	return json.Unmarshal(data, &n.FirewallPolicyRuleCondition)
+	return n.FirewallPolicyRuleCondition.unmarshalInternal(rawMsg)
 }
 
 // NetworkSecurityGroup resource.
