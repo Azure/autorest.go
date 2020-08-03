@@ -102,12 +102,7 @@ func (client *dataFlowDebugSessionOperations) BeginCreateDataFlowDebugSession(ct
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("dataFlowDebugSessionOperations.CreateDataFlowDebugSession", "", resp, client.createDataFlowDebugSessionHandleError)
-	if err != nil {
-		return nil, err
-	}
 	poller := &createDataFlowDebugSessionResponsePoller{
-		pt:       pt,
 		pipeline: client.p,
 	}
 	result.Poller = poller
@@ -118,14 +113,7 @@ func (client *dataFlowDebugSessionOperations) BeginCreateDataFlowDebugSession(ct
 }
 
 func (client *dataFlowDebugSessionOperations) ResumeCreateDataFlowDebugSession(token string) (CreateDataFlowDebugSessionResponsePoller, error) {
-	pt, err := resumePollingTracker("dataFlowDebugSessionOperations.CreateDataFlowDebugSession", token, client.createDataFlowDebugSessionHandleError)
-	if err != nil {
-		return nil, err
-	}
-	return &createDataFlowDebugSessionResponsePoller{
-		pipeline: client.p,
-		pt:       pt,
-	}, nil
+	return nil, nil
 }
 
 // createDataFlowDebugSessionCreateRequest creates the CreateDataFlowDebugSession request.
@@ -222,12 +210,7 @@ func (client *dataFlowDebugSessionOperations) BeginExecuteCommand(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("dataFlowDebugSessionOperations.ExecuteCommand", "", resp, client.executeCommandHandleError)
-	if err != nil {
-		return nil, err
-	}
 	poller := &dataFlowDebugCommandResponsePoller{
-		pt:       pt,
 		pipeline: client.p,
 	}
 	result.Poller = poller
@@ -238,14 +221,7 @@ func (client *dataFlowDebugSessionOperations) BeginExecuteCommand(ctx context.Co
 }
 
 func (client *dataFlowDebugSessionOperations) ResumeExecuteCommand(token string) (DataFlowDebugCommandResponsePoller, error) {
-	pt, err := resumePollingTracker("dataFlowDebugSessionOperations.ExecuteCommand", token, client.executeCommandHandleError)
-	if err != nil {
-		return nil, err
-	}
-	return &dataFlowDebugCommandResponsePoller{
-		pipeline: client.p,
-		pt:       pt,
-	}, nil
+	return nil, nil
 }
 
 // executeCommandCreateRequest creates the ExecuteCommand request.

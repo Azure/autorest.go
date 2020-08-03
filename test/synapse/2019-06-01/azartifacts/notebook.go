@@ -13,14 +13,19 @@ import (
 	"net/url"
 	"path"
 	"strings"
+	"time"
 )
 
 // NotebookOperations contains the methods for the Notebook group.
 type NotebookOperations interface {
-	// CreateOrUpdateNotebook - Creates or updates a Note Book.
-	CreateOrUpdateNotebook(ctx context.Context, notebookName string, notebook NotebookResource, notebookCreateOrUpdateNotebookOptions *NotebookCreateOrUpdateNotebookOptions) (*NotebookResourceResponse, error)
-	// DeleteNotebook - Deletes a Note book.
-	DeleteNotebook(ctx context.Context, notebookName string) (*http.Response, error)
+	// BeginCreateOrUpdateNotebook - Creates or updates a Note Book.
+	BeginCreateOrUpdateNotebook(ctx context.Context, notebookName string, notebook NotebookResource, notebookCreateOrUpdateNotebookOptions *NotebookCreateOrUpdateNotebookOptions) (*NotebookResourcePollerResponse, error)
+	// ResumeCreateOrUpdateNotebook - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
+	ResumeCreateOrUpdateNotebook(token string) (NotebookResourcePoller, error)
+	// BeginDeleteNotebook - Deletes a Note book.
+	BeginDeleteNotebook(ctx context.Context, notebookName string) (*HTTPPollerResponse, error)
+	// ResumeDeleteNotebook - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
+	ResumeDeleteNotebook(token string) (HTTPPoller, error)
 	// GetNotebook - Gets a Note Book.
 	GetNotebook(ctx context.Context, notebookName string, notebookGetNotebookOptions *NotebookGetNotebookOptions) (*NotebookResourceResponse, error)
 	// GetNotebookSummaryByWorkSpace - Lists a summary of Notebooks.
@@ -35,11 +40,12 @@ type notebookOperations struct {
 }
 
 // CreateOrUpdateNotebook - Creates or updates a Note Book.
-func (client *notebookOperations) CreateOrUpdateNotebook(ctx context.Context, notebookName string, notebook NotebookResource, notebookCreateOrUpdateNotebookOptions *NotebookCreateOrUpdateNotebookOptions) (*NotebookResourceResponse, error) {
+func (client *notebookOperations) BeginCreateOrUpdateNotebook(ctx context.Context, notebookName string, notebook NotebookResource, notebookCreateOrUpdateNotebookOptions *NotebookCreateOrUpdateNotebookOptions) (*NotebookResourcePollerResponse, error) {
 	req, err := client.createOrUpdateNotebookCreateRequest(notebookName, notebook, notebookCreateOrUpdateNotebookOptions)
 	if err != nil {
 		return nil, err
 	}
+	// send the first request to initialize the poller
 	resp, err := client.p.Do(ctx, req)
 	if err != nil {
 		return nil, err
@@ -48,7 +54,18 @@ func (client *notebookOperations) CreateOrUpdateNotebook(ctx context.Context, no
 	if err != nil {
 		return nil, err
 	}
+	poller := &notebookResourcePoller{
+		pipeline: client.p,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*NotebookResourceResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
 	return result, nil
+}
+
+func (client *notebookOperations) ResumeCreateOrUpdateNotebook(token string) (NotebookResourcePoller, error) {
+	return nil, nil
 }
 
 // createOrUpdateNotebookCreateRequest creates the CreateOrUpdateNotebook request.
@@ -70,12 +87,11 @@ func (client *notebookOperations) createOrUpdateNotebookCreateRequest(notebookNa
 }
 
 // createOrUpdateNotebookHandleResponse handles the CreateOrUpdateNotebook response.
-func (client *notebookOperations) createOrUpdateNotebookHandleResponse(resp *azcore.Response) (*NotebookResourceResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
+func (client *notebookOperations) createOrUpdateNotebookHandleResponse(resp *azcore.Response) (*NotebookResourcePollerResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.createOrUpdateNotebookHandleError(resp)
 	}
-	result := NotebookResourceResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.NotebookResource)
+	return &NotebookResourcePollerResponse{RawResponse: resp.Response}, nil
 }
 
 // createOrUpdateNotebookHandleError handles the CreateOrUpdateNotebook error response.
@@ -88,11 +104,12 @@ func (client *notebookOperations) createOrUpdateNotebookHandleError(resp *azcore
 }
 
 // DeleteNotebook - Deletes a Note book.
-func (client *notebookOperations) DeleteNotebook(ctx context.Context, notebookName string) (*http.Response, error) {
+func (client *notebookOperations) BeginDeleteNotebook(ctx context.Context, notebookName string) (*HTTPPollerResponse, error) {
 	req, err := client.deleteNotebookCreateRequest(notebookName)
 	if err != nil {
 		return nil, err
 	}
+	// send the first request to initialize the poller
 	resp, err := client.p.Do(ctx, req)
 	if err != nil {
 		return nil, err
@@ -101,7 +118,18 @@ func (client *notebookOperations) DeleteNotebook(ctx context.Context, notebookNa
 	if err != nil {
 		return nil, err
 	}
+	poller := &httpPoller{
+		pipeline: client.p,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
 	return result, nil
+}
+
+func (client *notebookOperations) ResumeDeleteNotebook(token string) (HTTPPoller, error) {
+	return nil, nil
 }
 
 // deleteNotebookCreateRequest creates the DeleteNotebook request.
@@ -120,11 +148,11 @@ func (client *notebookOperations) deleteNotebookCreateRequest(notebookName strin
 }
 
 // deleteNotebookHandleResponse handles the DeleteNotebook response.
-func (client *notebookOperations) deleteNotebookHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusNoContent) {
+func (client *notebookOperations) deleteNotebookHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.deleteNotebookHandleError(resp)
 	}
-	return resp.Response, nil
+	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // deleteNotebookHandleError handles the DeleteNotebook error response.

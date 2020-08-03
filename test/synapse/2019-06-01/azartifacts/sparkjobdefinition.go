@@ -109,12 +109,7 @@ func (client *sparkJobDefinitionOperations) BeginDebugSparkJobDefinition(ctx con
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("sparkJobDefinitionOperations.DebugSparkJobDefinition", "location", resp, client.debugSparkJobDefinitionHandleError)
-	if err != nil {
-		return nil, err
-	}
 	poller := &sparkBatchJobPoller{
-		pt:       pt,
 		pipeline: client.p,
 	}
 	result.Poller = poller
@@ -125,14 +120,7 @@ func (client *sparkJobDefinitionOperations) BeginDebugSparkJobDefinition(ctx con
 }
 
 func (client *sparkJobDefinitionOperations) ResumeDebugSparkJobDefinition(token string) (SparkBatchJobPoller, error) {
-	pt, err := resumePollingTracker("sparkJobDefinitionOperations.DebugSparkJobDefinition", token, client.debugSparkJobDefinitionHandleError)
-	if err != nil {
-		return nil, err
-	}
-	return &sparkBatchJobPoller{
-		pipeline: client.p,
-		pt:       pt,
-	}, nil
+	return nil, nil
 }
 
 // debugSparkJobDefinitionCreateRequest creates the DebugSparkJobDefinition request.
@@ -230,12 +218,7 @@ func (client *sparkJobDefinitionOperations) BeginExecuteSparkJobDefinition(ctx c
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("sparkJobDefinitionOperations.ExecuteSparkJobDefinition", "location", resp, client.executeSparkJobDefinitionHandleError)
-	if err != nil {
-		return nil, err
-	}
 	poller := &sparkBatchJobPoller{
-		pt:       pt,
 		pipeline: client.p,
 	}
 	result.Poller = poller
@@ -246,14 +229,7 @@ func (client *sparkJobDefinitionOperations) BeginExecuteSparkJobDefinition(ctx c
 }
 
 func (client *sparkJobDefinitionOperations) ResumeExecuteSparkJobDefinition(token string) (SparkBatchJobPoller, error) {
-	pt, err := resumePollingTracker("sparkJobDefinitionOperations.ExecuteSparkJobDefinition", token, client.executeSparkJobDefinitionHandleError)
-	if err != nil {
-		return nil, err
-	}
-	return &sparkBatchJobPoller{
-		pipeline: client.p,
-		pt:       pt,
-	}, nil
+	return nil, nil
 }
 
 // executeSparkJobDefinitionCreateRequest creates the ExecuteSparkJobDefinition request.

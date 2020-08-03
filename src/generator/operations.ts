@@ -25,6 +25,11 @@ export class OperationGroupContent {
 
 // Creates the content for all <operation>.go files
 export async function generateOperations(session: Session<CodeModel>): Promise<OperationGroupContent[]> {
+  let openapiType = await session.getValue('openapi-type', '');
+  let isDataPlane = false;
+  if (openapiType === 'data-plane') {
+    isDataPlane = true;
+  }
   // generate protocol operations
   const operations = new Array<OperationGroupContent>();
   for (const group of values(session.model.operationGroups)) {
@@ -40,7 +45,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     for (const op of values(group.operations)) {
       // protocol creation can add imports to the list so
       // it must be done before the imports are written out
-      opText += generateOperation(clientName, op, imports);
+      opText += generateOperation(clientName, op, imports, isDataPlane);
       opText += createProtocolRequest(session.model, clientName, op, imports);
       opText += createProtocolResponse(clientName, op, imports);
       opText += createProtocolErrHandler(clientName, op, imports);
@@ -153,7 +158,7 @@ function generateMultiRespComment(op: Operation): string {
   return `// Possible return types are ${returnTypes.join(', ')}\n`;
 }
 
-function generateOperation(clientName: string, op: Operation, imports: ImportManager): string {
+function generateOperation(clientName: string, op: Operation, imports: ImportManager, isDataPlane: boolean): string {
   if (op.language.go!.paging && op.language.go!.paging.isNextOp) {
     // don't generate a public API for the methods used to advance pages
     return '';
@@ -206,12 +211,16 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
     if (op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via']) {
       finalState = op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via'];
     }
-    text += `\tpt, err := createPollingTracker("${clientName}.${op.language.go!.name}", "${finalState}", resp, client.${info.protocolNaming.errorMethod})\n`;
-    text += '\tif err != nil {\n';
-    text += '\t\treturn nil, err\n';
-    text += '\t}\n';
-    text += `\tpoller := &${camelCase(op.language.go!.pollerType.name)}{\n`;
-    text += '\t\t\tpt: pt,\n';
+    if (isDataPlane) {
+      text += `\tpoller := &${camelCase(op.language.go!.pollerType.name)}{\n`;
+    } else {
+      text += `\tpt, err := createPollingTracker("${clientName}.${op.language.go!.name}", "${finalState}", resp, client.${info.protocolNaming.errorMethod})\n`;
+      text += '\tif err != nil {\n';
+      text += '\t\treturn nil, err\n';
+      text += '\t}\n';
+      text += `\tpoller := &${camelCase(op.language.go!.pollerType.name)}{\n`;
+      text += '\t\t\tpt: pt,\n';
+    }
     if (isPageableOperation(op)) {
       text += `\t\t\trespHandler: client.${camelCase(op.language.go!.pageableType.name)}HandleResponse,\n`;
     }
@@ -231,7 +240,7 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
     text += `\treturn result, nil\n`;
     // closing braces
     text += '}\n\n';
-    text += addResumePollerMethod(op, clientName);
+    text += addResumePollerMethod(op, clientName, isDataPlane);
     return text;
   }
   text += `\treq, err := client.${info.protocolNaming.requestMethod}(${reqParams.join(', ')})\n`;
@@ -943,9 +952,14 @@ function generateReturnsInfo(op: Operation, forHandler: boolean): string[] {
   return [returnType, 'error'];
 }
 
-function addResumePollerMethod(op: Operation, clientName: string): string {
+function addResumePollerMethod(op: Operation, clientName: string, isDataPlane: boolean): string {
   const info = <OperationNaming>op.language.go!;
   let text = `func (client *${clientName}) Resume${op.language.go!.name}(token string) (${op.language.go!.pollerType.name}, error) {\n`;
+  if (isDataPlane) {
+    text += '\treturn nil, nil\n';
+    text += '}\n\n';
+    return text;
+  }
   text += `\tpt, err := resumePollingTracker("${clientName}.${op.language.go!.name}", token, client.${info.protocolNaming.errorMethod})\n`;
   text += '\tif err != nil {\n';
   text += '\t\treturn nil, err\n';

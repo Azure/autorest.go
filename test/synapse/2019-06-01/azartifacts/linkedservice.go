@@ -13,14 +13,19 @@ import (
 	"net/url"
 	"path"
 	"strings"
+	"time"
 )
 
 // LinkedServiceOperations contains the methods for the LinkedService group.
 type LinkedServiceOperations interface {
-	// CreateOrUpdateLinkedService - Creates or updates a linked service.
-	CreateOrUpdateLinkedService(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, linkedServiceCreateOrUpdateLinkedServiceOptions *LinkedServiceCreateOrUpdateLinkedServiceOptions) (*LinkedServiceResourceResponse, error)
-	// DeleteLinkedService - Deletes a linked service.
-	DeleteLinkedService(ctx context.Context, linkedServiceName string) (*http.Response, error)
+	// BeginCreateOrUpdateLinkedService - Creates or updates a linked service.
+	BeginCreateOrUpdateLinkedService(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, linkedServiceCreateOrUpdateLinkedServiceOptions *LinkedServiceCreateOrUpdateLinkedServiceOptions) (*LinkedServiceResourcePollerResponse, error)
+	// ResumeCreateOrUpdateLinkedService - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
+	ResumeCreateOrUpdateLinkedService(token string) (LinkedServiceResourcePoller, error)
+	// BeginDeleteLinkedService - Deletes a linked service.
+	BeginDeleteLinkedService(ctx context.Context, linkedServiceName string) (*HTTPPollerResponse, error)
+	// ResumeDeleteLinkedService - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
+	ResumeDeleteLinkedService(token string) (HTTPPoller, error)
 	// GetLinkedService - Gets a linked service.
 	GetLinkedService(ctx context.Context, linkedServiceName string, linkedServiceGetLinkedServiceOptions *LinkedServiceGetLinkedServiceOptions) (*LinkedServiceResourceResponse, error)
 	// GetLinkedServicesByWorkspace - Lists linked services.
@@ -33,11 +38,12 @@ type linkedServiceOperations struct {
 }
 
 // CreateOrUpdateLinkedService - Creates or updates a linked service.
-func (client *linkedServiceOperations) CreateOrUpdateLinkedService(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, linkedServiceCreateOrUpdateLinkedServiceOptions *LinkedServiceCreateOrUpdateLinkedServiceOptions) (*LinkedServiceResourceResponse, error) {
+func (client *linkedServiceOperations) BeginCreateOrUpdateLinkedService(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, linkedServiceCreateOrUpdateLinkedServiceOptions *LinkedServiceCreateOrUpdateLinkedServiceOptions) (*LinkedServiceResourcePollerResponse, error) {
 	req, err := client.createOrUpdateLinkedServiceCreateRequest(linkedServiceName, linkedService, linkedServiceCreateOrUpdateLinkedServiceOptions)
 	if err != nil {
 		return nil, err
 	}
+	// send the first request to initialize the poller
 	resp, err := client.p.Do(ctx, req)
 	if err != nil {
 		return nil, err
@@ -46,7 +52,18 @@ func (client *linkedServiceOperations) CreateOrUpdateLinkedService(ctx context.C
 	if err != nil {
 		return nil, err
 	}
+	poller := &linkedServiceResourcePoller{
+		pipeline: client.p,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*LinkedServiceResourceResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
 	return result, nil
+}
+
+func (client *linkedServiceOperations) ResumeCreateOrUpdateLinkedService(token string) (LinkedServiceResourcePoller, error) {
+	return nil, nil
 }
 
 // createOrUpdateLinkedServiceCreateRequest creates the CreateOrUpdateLinkedService request.
@@ -68,12 +85,11 @@ func (client *linkedServiceOperations) createOrUpdateLinkedServiceCreateRequest(
 }
 
 // createOrUpdateLinkedServiceHandleResponse handles the CreateOrUpdateLinkedService response.
-func (client *linkedServiceOperations) createOrUpdateLinkedServiceHandleResponse(resp *azcore.Response) (*LinkedServiceResourceResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
+func (client *linkedServiceOperations) createOrUpdateLinkedServiceHandleResponse(resp *azcore.Response) (*LinkedServiceResourcePollerResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.createOrUpdateLinkedServiceHandleError(resp)
 	}
-	result := LinkedServiceResourceResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.LinkedServiceResource)
+	return &LinkedServiceResourcePollerResponse{RawResponse: resp.Response}, nil
 }
 
 // createOrUpdateLinkedServiceHandleError handles the CreateOrUpdateLinkedService error response.
@@ -86,11 +102,12 @@ func (client *linkedServiceOperations) createOrUpdateLinkedServiceHandleError(re
 }
 
 // DeleteLinkedService - Deletes a linked service.
-func (client *linkedServiceOperations) DeleteLinkedService(ctx context.Context, linkedServiceName string) (*http.Response, error) {
+func (client *linkedServiceOperations) BeginDeleteLinkedService(ctx context.Context, linkedServiceName string) (*HTTPPollerResponse, error) {
 	req, err := client.deleteLinkedServiceCreateRequest(linkedServiceName)
 	if err != nil {
 		return nil, err
 	}
+	// send the first request to initialize the poller
 	resp, err := client.p.Do(ctx, req)
 	if err != nil {
 		return nil, err
@@ -99,7 +116,18 @@ func (client *linkedServiceOperations) DeleteLinkedService(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
+	poller := &httpPoller{
+		pipeline: client.p,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
 	return result, nil
+}
+
+func (client *linkedServiceOperations) ResumeDeleteLinkedService(token string) (HTTPPoller, error) {
+	return nil, nil
 }
 
 // deleteLinkedServiceCreateRequest creates the DeleteLinkedService request.
@@ -118,11 +146,11 @@ func (client *linkedServiceOperations) deleteLinkedServiceCreateRequest(linkedSe
 }
 
 // deleteLinkedServiceHandleResponse handles the DeleteLinkedService response.
-func (client *linkedServiceOperations) deleteLinkedServiceHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusNoContent) {
+func (client *linkedServiceOperations) deleteLinkedServiceHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.deleteLinkedServiceHandleError(resp)
 	}
-	return resp.Response, nil
+	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // deleteLinkedServiceHandleError handles the DeleteLinkedService error response.

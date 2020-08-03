@@ -4828,6 +4828,19 @@ type CreateRunResponse struct {
 	RunID *string `json:"runId,omitempty"`
 }
 
+// CreateRunResponsePollerResponse is the response envelope for operations that asynchronously return a CreateRunResponse
+// type.
+type CreateRunResponsePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (*CreateRunResponseResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller CreateRunResponsePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
 // CreateRunResponseResponse is the response envelope for operations that return a CreateRunResponse type.
 type CreateRunResponseResponse struct {
 	// Response body with a run identifier.
@@ -11105,6 +11118,19 @@ func (l *LinkedServiceResource) UnmarshalJSON(data []byte) error {
 	return json.Unmarshal(data, &l.SubResource)
 }
 
+// LinkedServiceResourcePollerResponse is the response envelope for operations that asynchronously return a LinkedServiceResource
+// type.
+type LinkedServiceResourcePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (*LinkedServiceResourceResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LinkedServiceResourcePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
 // LinkedServiceResourceResponse is the response envelope for operations that return a LinkedServiceResource type.
 type LinkedServiceResourceResponse struct {
 	// Linked service resource type.
@@ -12770,6 +12796,18 @@ type NotebookResource struct {
 	Properties *Notebook `json:"properties,omitempty"`
 }
 
+// NotebookResourcePollerResponse is the response envelope for operations that asynchronously return a NotebookResource type.
+type NotebookResourcePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (*NotebookResourceResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller NotebookResourcePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
 // NotebookResourceResponse is the response envelope for operations that return a NotebookResource type.
 type NotebookResourceResponse struct {
 	// Notebook resource type.
@@ -14229,6 +14267,18 @@ func (p *PipelineResource) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// PipelineResourcePollerResponse is the response envelope for operations that asynchronously return a PipelineResource type.
+type PipelineResourcePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (*PipelineResourceResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller PipelineResourcePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
 // PipelineResourceResponse is the response envelope for operations that return a PipelineResource type.
 type PipelineResourceResponse struct {
 	// Pipeline resource type.
@@ -15585,6 +15635,71 @@ func (s *SQLConnection) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
+}
+
+// SQL pool reference type.
+type SQLPoolReference struct {
+	// Reference SQL pool name.
+	ReferenceName *string `json:"referenceName,omitempty"`
+
+	// SQL pool reference type.
+	Type *string `json:"type,omitempty"`
+}
+
+// Execute SQL pool stored procedure activity.
+type SQLPoolStoredProcedureActivity struct {
+	Activity
+	// SQL pool stored procedure reference.
+	SQLPool *SQLPoolReference `json:"sqlPool,omitempty"`
+
+	// Execute SQL pool stored procedure activity properties.
+	TypeProperties *SQLPoolStoredProcedureActivityTypeProperties `json:"typeProperties,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SQLPoolStoredProcedureActivity.
+func (s SQLPoolStoredProcedureActivity) MarshalJSON() ([]byte, error) {
+	objectMap := s.Activity.marshalInternal("SqlPoolStoredProcedure")
+	if s.SQLPool != nil {
+		objectMap["sqlPool"] = s.SQLPool
+	}
+	if s.TypeProperties != nil {
+		objectMap["typeProperties"] = s.TypeProperties
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type SQLPoolStoredProcedureActivity.
+func (s *SQLPoolStoredProcedureActivity) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "sqlPool":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.SQLPool)
+			}
+		case "typeProperties":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.TypeProperties)
+			}
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return json.Unmarshal(data, &s.Activity)
+}
+
+// SQL stored procedure activity properties.
+type SQLPoolStoredProcedureActivityTypeProperties struct {
+	// Stored procedure name. Type: string (or Expression with resultType string).
+	StoredProcedureName *interface{} `json:"storedProcedureName,omitempty"`
+
+	// Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}".
+	StoredProcedureParameters *map[string]StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
 }
 
 // SQL script.
@@ -19485,6 +19600,113 @@ type SybaseTableDatasetTypeProperties struct {
 	TableName *interface{} `json:"tableName,omitempty"`
 }
 
+// Execute Synapse notebook activity.
+type SynapseNotebookActivity struct {
+	Activity
+	// Execute Synapse notebook activity properties.
+	TypeProperties *SynapseNotebookActivityTypeProperties `json:"typeProperties,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SynapseNotebookActivity.
+func (s SynapseNotebookActivity) MarshalJSON() ([]byte, error) {
+	objectMap := s.Activity.marshalInternal("SynapseNotebook")
+	if s.TypeProperties != nil {
+		objectMap["typeProperties"] = s.TypeProperties
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type SynapseNotebookActivity.
+func (s *SynapseNotebookActivity) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "typeProperties":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.TypeProperties)
+			}
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return json.Unmarshal(data, &s.Activity)
+}
+
+// Execute Synapse notebook activity properties.
+type SynapseNotebookActivityTypeProperties struct {
+	// Synapse notebook reference.
+	Notebook *SynapseNotebookReference `json:"notebook,omitempty"`
+
+	// Notebook parameters.
+	Parameters *map[string]interface{} `json:"parameters,omitempty"`
+}
+
+// Synapse notebook reference type.
+type SynapseNotebookReference struct {
+	// Reference notebook name.
+	ReferenceName *string `json:"referenceName,omitempty"`
+
+	// Synapse notebook reference type.
+	Type *string `json:"type,omitempty"`
+}
+
+// Execute spark job activity properties.
+type SynapseSparkJobActivityTypeProperties struct {
+	// Synapse spark job reference.
+	SparkJob *SynapseSparkJobReference `json:"sparkJob,omitempty"`
+}
+
+// Execute spark job activity.
+type SynapseSparkJobDefinitionActivity struct {
+	Activity
+	// Execute spark job activity properties.
+	TypeProperties *SynapseSparkJobActivityTypeProperties `json:"typeProperties,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SynapseSparkJobDefinitionActivity.
+func (s SynapseSparkJobDefinitionActivity) MarshalJSON() ([]byte, error) {
+	objectMap := s.Activity.marshalInternal("SparkJob")
+	if s.TypeProperties != nil {
+		objectMap["typeProperties"] = s.TypeProperties
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type SynapseSparkJobDefinitionActivity.
+func (s *SynapseSparkJobDefinitionActivity) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "typeProperties":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.TypeProperties)
+			}
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return json.Unmarshal(data, &s.Activity)
+}
+
+// Synapse spark job reference type.
+type SynapseSparkJobReference struct {
+	// Reference spark job name.
+	ReferenceName *string `json:"referenceName,omitempty"`
+
+	// Synapse spark job reference type.
+	Type *string `json:"type,omitempty"`
+}
+
 // Linked service for Teradata data source.
 type TeradataLinkedService struct {
 	LinkedService
@@ -19794,6 +20016,18 @@ func (t *TriggerResource) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return json.Unmarshal(data, &t.SubResource)
+}
+
+// TriggerResourcePollerResponse is the response envelope for operations that asynchronously return a TriggerResource type.
+type TriggerResourcePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (*TriggerResourceResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller TriggerResourcePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // TriggerResourceResponse is the response envelope for operations that return a TriggerResource type.

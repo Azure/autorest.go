@@ -27,7 +27,6 @@ type CreateDataFlowDebugSessionResponsePoller interface {
 type createDataFlowDebugSessionResponsePoller struct {
 	// the client for making the request
 	pipeline azcore.Pipeline
-	pt       pollingTracker
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
@@ -50,6 +49,39 @@ func (p *createDataFlowDebugSessionResponsePoller) ResumeToken() (string, error)
 	return "", nil
 }
 
+// CreateRunResponsePoller provides polling facilities until the operation completes
+type CreateRunResponsePoller interface {
+	Done() bool
+	Poll(ctx context.Context) (*http.Response, error)
+	FinalResponse(ctx context.Context) (*CreateRunResponseResponse, error)
+	ResumeToken() (string, error)
+}
+
+type createRunResponsePoller struct {
+	// the client for making the request
+	pipeline azcore.Pipeline
+}
+
+// Done returns true if there was an error or polling has reached a terminal state
+func (p *createRunResponsePoller) Done() bool {
+	return false
+}
+
+// Poll will send poll the service endpoint and return an http.Response or error received from the service
+func (p *createRunResponsePoller) Poll(ctx context.Context) (*http.Response, error) {
+	return nil, nil
+}
+
+func (p *createRunResponsePoller) FinalResponse(ctx context.Context) (*CreateRunResponseResponse, error) {
+	return nil, nil
+}
+
+// ResumeToken generates the string token that can be used with the ResumeCreateRunResponsePoller method
+// on the client to create a new poller from the data held in the current poller type
+func (p *createRunResponsePoller) ResumeToken() (string, error) {
+	return "", nil
+}
+
 // DataFlowDebugCommandResponsePoller provides polling facilities until the operation completes
 type DataFlowDebugCommandResponsePoller interface {
 	Done() bool
@@ -61,7 +93,6 @@ type DataFlowDebugCommandResponsePoller interface {
 type dataFlowDebugCommandResponsePoller struct {
 	// the client for making the request
 	pipeline azcore.Pipeline
-	pt       pollingTracker
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
@@ -95,7 +126,6 @@ type HTTPPoller interface {
 type httpPoller struct {
 	// the client for making the request
 	pipeline azcore.Pipeline
-	pt       pollingTracker
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
@@ -118,6 +148,105 @@ func (p *httpPoller) ResumeToken() (string, error) {
 	return "", nil
 }
 
+// LinkedServiceResourcePoller provides polling facilities until the operation completes
+type LinkedServiceResourcePoller interface {
+	Done() bool
+	Poll(ctx context.Context) (*http.Response, error)
+	FinalResponse(ctx context.Context) (*LinkedServiceResourceResponse, error)
+	ResumeToken() (string, error)
+}
+
+type linkedServiceResourcePoller struct {
+	// the client for making the request
+	pipeline azcore.Pipeline
+}
+
+// Done returns true if there was an error or polling has reached a terminal state
+func (p *linkedServiceResourcePoller) Done() bool {
+	return false
+}
+
+// Poll will send poll the service endpoint and return an http.Response or error received from the service
+func (p *linkedServiceResourcePoller) Poll(ctx context.Context) (*http.Response, error) {
+	return nil, nil
+}
+
+func (p *linkedServiceResourcePoller) FinalResponse(ctx context.Context) (*LinkedServiceResourceResponse, error) {
+	return nil, nil
+}
+
+// ResumeToken generates the string token that can be used with the ResumeLinkedServiceResourcePoller method
+// on the client to create a new poller from the data held in the current poller type
+func (p *linkedServiceResourcePoller) ResumeToken() (string, error) {
+	return "", nil
+}
+
+// NotebookResourcePoller provides polling facilities until the operation completes
+type NotebookResourcePoller interface {
+	Done() bool
+	Poll(ctx context.Context) (*http.Response, error)
+	FinalResponse(ctx context.Context) (*NotebookResourceResponse, error)
+	ResumeToken() (string, error)
+}
+
+type notebookResourcePoller struct {
+	// the client for making the request
+	pipeline azcore.Pipeline
+}
+
+// Done returns true if there was an error or polling has reached a terminal state
+func (p *notebookResourcePoller) Done() bool {
+	return false
+}
+
+// Poll will send poll the service endpoint and return an http.Response or error received from the service
+func (p *notebookResourcePoller) Poll(ctx context.Context) (*http.Response, error) {
+	return nil, nil
+}
+
+func (p *notebookResourcePoller) FinalResponse(ctx context.Context) (*NotebookResourceResponse, error) {
+	return nil, nil
+}
+
+// ResumeToken generates the string token that can be used with the ResumeNotebookResourcePoller method
+// on the client to create a new poller from the data held in the current poller type
+func (p *notebookResourcePoller) ResumeToken() (string, error) {
+	return "", nil
+}
+
+// PipelineResourcePoller provides polling facilities until the operation completes
+type PipelineResourcePoller interface {
+	Done() bool
+	Poll(ctx context.Context) (*http.Response, error)
+	FinalResponse(ctx context.Context) (*PipelineResourceResponse, error)
+	ResumeToken() (string, error)
+}
+
+type pipelineResourcePoller struct {
+	// the client for making the request
+	pipeline azcore.Pipeline
+}
+
+// Done returns true if there was an error or polling has reached a terminal state
+func (p *pipelineResourcePoller) Done() bool {
+	return false
+}
+
+// Poll will send poll the service endpoint and return an http.Response or error received from the service
+func (p *pipelineResourcePoller) Poll(ctx context.Context) (*http.Response, error) {
+	return nil, nil
+}
+
+func (p *pipelineResourcePoller) FinalResponse(ctx context.Context) (*PipelineResourceResponse, error) {
+	return nil, nil
+}
+
+// ResumeToken generates the string token that can be used with the ResumePipelineResourcePoller method
+// on the client to create a new poller from the data held in the current poller type
+func (p *pipelineResourcePoller) ResumeToken() (string, error) {
+	return "", nil
+}
+
 // SparkBatchJobPoller provides polling facilities until the operation completes
 type SparkBatchJobPoller interface {
 	Done() bool
@@ -129,7 +258,6 @@ type SparkBatchJobPoller interface {
 type sparkBatchJobPoller struct {
 	// the client for making the request
 	pipeline azcore.Pipeline
-	pt       pollingTracker
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
@@ -152,6 +280,39 @@ func (p *sparkBatchJobPoller) ResumeToken() (string, error) {
 	return "", nil
 }
 
+// TriggerResourcePoller provides polling facilities until the operation completes
+type TriggerResourcePoller interface {
+	Done() bool
+	Poll(ctx context.Context) (*http.Response, error)
+	FinalResponse(ctx context.Context) (*TriggerResourceResponse, error)
+	ResumeToken() (string, error)
+}
+
+type triggerResourcePoller struct {
+	// the client for making the request
+	pipeline azcore.Pipeline
+}
+
+// Done returns true if there was an error or polling has reached a terminal state
+func (p *triggerResourcePoller) Done() bool {
+	return false
+}
+
+// Poll will send poll the service endpoint and return an http.Response or error received from the service
+func (p *triggerResourcePoller) Poll(ctx context.Context) (*http.Response, error) {
+	return nil, nil
+}
+
+func (p *triggerResourcePoller) FinalResponse(ctx context.Context) (*TriggerResourceResponse, error) {
+	return nil, nil
+}
+
+// ResumeToken generates the string token that can be used with the ResumeTriggerResourcePoller method
+// on the client to create a new poller from the data held in the current poller type
+func (p *triggerResourcePoller) ResumeToken() (string, error) {
+	return "", nil
+}
+
 // TriggerSubscriptionOperationStatusPoller provides polling facilities until the operation completes
 type TriggerSubscriptionOperationStatusPoller interface {
 	Done() bool
@@ -163,7 +324,6 @@ type TriggerSubscriptionOperationStatusPoller interface {
 type triggerSubscriptionOperationStatusPoller struct {
 	// the client for making the request
 	pipeline azcore.Pipeline
-	pt       pollingTracker
 }
 
 // Done returns true if there was an error or polling has reached a terminal state

@@ -72,10 +72,16 @@ func unmarshalActivityClassification(body []byte) (ActivityClassification, error
 		b = &LookupActivity{}
 	case "SetVariable":
 		b = &SetVariableActivity{}
+	case "SparkJob":
+		b = &SynapseSparkJobDefinitionActivity{}
+	case "SqlPoolStoredProcedure":
+		b = &SQLPoolStoredProcedureActivity{}
 	case "SqlServerStoredProcedure":
 		b = &SQLServerStoredProcedureActivity{}
 	case "Switch":
 		b = &SwitchActivity{}
+	case "SynapseNotebook":
+		b = &SynapseNotebookActivity{}
 	case "Until":
 		b = &UntilActivity{}
 	case "Validation":

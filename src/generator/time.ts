@@ -4,7 +4,6 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@azure-tools/autorest-extension-base';
-import { comment } from '@azure-tools/codegen'
 import { CodeModel } from '@azure-tools/codemodel';
 import { contentPreamble } from './helpers'
 

@@ -97,7 +97,6 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
       type ${pollerName} struct {
         // the client for making the request
         pipeline azcore.Pipeline${pagerFields}
-        pt pollingTracker
       }
 
       // Done returns true if there was an error or polling has reached a terminal state
