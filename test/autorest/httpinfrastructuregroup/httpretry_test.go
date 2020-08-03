@@ -65,7 +65,7 @@ func TestHTTPRetryHead408(t *testing.T) {
 }
 
 func TestHTTPRetryOptions502(t *testing.T) {
-	t.Skip()
+	t.Skip("options method not enabled by test server")
 	client := getHTTPRetryOperations(t)
 	result, err := client.Options502(context.Background())
 	if err != nil {

@@ -83,7 +83,7 @@ func TestHTTPSuccessHead404(t *testing.T) {
 }
 
 func TestHTTPSuccessOptions200(t *testing.T) {
-	t.Skip()
+	t.Skip("options method not enabled by test server")
 	client := getHTTPSuccessOperations(t)
 	result, err := client.Options200(context.Background())
 	if err != nil {
