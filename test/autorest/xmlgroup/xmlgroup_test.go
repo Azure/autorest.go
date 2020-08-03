@@ -38,7 +38,7 @@ func TestGetACLs(t *testing.T) {
 	}
 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 	expected := &[]xmlgroup.SignedIDentifier{
-		xmlgroup.SignedIDentifier{
+		{
 			ID: to.StringPtr("MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI="),
 			AccessPolicy: &xmlgroup.AccessPolicy{
 				Start:      toTimePtr(time.RFC3339Nano, "2009-09-28T08:49:37.123Z"),
@@ -67,7 +67,18 @@ func TestGetComplexTypeRefNoMeta(t *testing.T) {
 }
 
 func TestGetComplexTypeRefWithMeta(t *testing.T) {
-	t.Skip("nyi")
+	client := getXMLClient(t)
+	result, err := client.GetComplexTypeRefWithMeta(context.Background())
+	if err != nil {
+		t.Fatal(err)
+	}
+	expected := &xmlgroup.RootWithRefAndMeta{
+		RefToModel: &xmlgroup.ComplexTypeWithMeta{
+			ID: to.StringPtr("myid"),
+		},
+		Something: to.StringPtr("else"),
+	}
+	helpers.DeepEqualOrFatal(t, result.RootWithRefAndMeta, expected)
 }
 
 func TestGetEmptyChildElement(t *testing.T) {
@@ -120,7 +131,12 @@ func TestGetEmptyWrappedLists(t *testing.T) {
 }
 
 func TestGetHeaders(t *testing.T) {
-	t.Skip("nyi")
+	client := getXMLClient(t)
+	result, err := client.GetHeaders(context.Background())
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.DeepEqualOrFatal(t, result.CustomHeader, to.StringPtr("custom-value"))
 }
 
 func TestGetRootList(t *testing.T) {
@@ -131,12 +147,12 @@ func TestGetRootList(t *testing.T) {
 	}
 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 	expected := &[]xmlgroup.Banana{
-		xmlgroup.Banana{
+		{
 			Name:       to.StringPtr("Cavendish"),
 			Flavor:     to.StringPtr("Sweet"),
 			Expiration: toTimePtr(time.RFC3339Nano, "2018-02-28T00:40:00.123Z"),
 		},
-		xmlgroup.Banana{
+		{
 			Name:       to.StringPtr("Plantain"),
 			Flavor:     to.StringPtr("Savory"),
 			Expiration: toTimePtr(time.RFC3339Nano, "2018-02-28T00:40:00.123Z"),
@@ -153,7 +169,7 @@ func TestGetRootListSingleItem(t *testing.T) {
 	}
 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 	expected := &[]xmlgroup.Banana{
-		xmlgroup.Banana{
+		{
 			Name:       to.StringPtr("Cavendish"),
 			Flavor:     to.StringPtr("Sweet"),
 			Expiration: toTimePtr(time.RFC3339Nano, "2018-02-28T00:40:00.123Z"),
@@ -214,11 +230,11 @@ func TestGetSimple(t *testing.T) {
 		Date:   to.StringPtr("Date of publication"),
 		Title:  to.StringPtr("Sample Slide Show"),
 		Slides: &[]xmlgroup.Slide{
-			xmlgroup.Slide{
+			{
 				Title: to.StringPtr("Wake up to WonderWidgets!"),
 				Type:  to.StringPtr("all"),
 			},
-			xmlgroup.Slide{
+			{
 				Items: &[]string{"Why WonderWidgets are great", "", "Who buys WonderWidgets"},
 				Title: to.StringPtr("Overview"),
 				Type:  to.StringPtr("all"),
@@ -243,15 +259,153 @@ func TestGetWrappedLists(t *testing.T) {
 }
 
 func TestJSONInput(t *testing.T) {
-	t.Skip("nyi")
+	client := getXMLClient(t)
+	result, err := client.JSONInput(context.Background(), xmlgroup.JSONInput{
+		ID: to.Int32Ptr(42),
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestJSONOutput(t *testing.T) {
-	t.Skip("nyi")
+	client := getXMLClient(t)
+	result, err := client.JSONOutput(context.Background())
+	if err != nil {
+		t.Fatal(err)
+	}
+	expected := xmlgroup.JSONOutput{
+		ID: to.Int32Ptr(42),
+	}
+	helpers.DeepEqualOrFatal(t, result.JSONOutput, &expected)
 }
 
 func TestListBlobs(t *testing.T) {
-	t.Skip("nyi")
+	client := getXMLClient(t)
+	result, err := client.ListBlobs(context.Background())
+	if err != nil {
+		t.Fatal(err)
+	}
+	blob1LM, err := time.Parse(time.RFC1123, "Wed, 09 Sep 2009 09:20:02 GMT")
+	if err != nil {
+		t.Fatal(err)
+	}
+	blob2LM, err := time.Parse(time.RFC1123, "Wed, 09 Sep 2009 09:20:03 GMT")
+	if err != nil {
+		t.Fatal(err)
+	}
+	expected := xmlgroup.ListBlobsResponse{
+		Blobs: &xmlgroup.Blobs{
+			Blob: &[]xmlgroup.Blob{
+				{
+					Metadata: &map[string]string{
+						"color":            "blue",
+						"blobnumber":       "01",
+						"somemetadataname": "SomeMetadataValue",
+					},
+					Name: to.StringPtr("blob1.txt"),
+					Properties: &xmlgroup.BlobProperties{
+						LastModified:    &blob1LM,
+						Etag:            to.StringPtr("0x8CBFF45D8A29A19"),
+						ContentLength:   to.Int64Ptr(100),
+						ContentType:     to.StringPtr("text/html"),
+						ContentEncoding: to.StringPtr(""),
+						ContentLanguage: to.StringPtr("en-US"),
+						ContentMd5:      to.StringPtr(""),
+						CacheControl:    to.StringPtr("no-cache"),
+						BlobType:        xmlgroup.BlobTypeBlockBlob.ToPtr(),
+						LeaseStatus:     xmlgroup.LeaseStatusTypeUnlocked.ToPtr(),
+					},
+				},
+				{
+					Metadata: &map[string]string{
+						"color":             "green",
+						"blobnumber":        "02",
+						"somemetadataname":  "SomeMetadataValue",
+						"x-ms-invalid-name": "nasdf$@#$$",
+					},
+					Name: to.StringPtr("blob2.txt"),
+					Properties: &xmlgroup.BlobProperties{
+						LastModified:    &blob1LM,
+						Etag:            to.StringPtr("0x8CBFF45D8B4C212"),
+						ContentLength:   to.Int64Ptr(5000),
+						ContentType:     to.StringPtr("application/octet-stream"),
+						ContentEncoding: to.StringPtr("gzip"),
+						ContentLanguage: to.StringPtr(""),
+						ContentMd5:      to.StringPtr(""),
+						CacheControl:    to.StringPtr(""),
+						BlobType:        xmlgroup.BlobTypeBlockBlob.ToPtr(),
+					},
+					Snapshot: to.StringPtr("2009-09-09T09:20:03.0427659Z"),
+				},
+				{
+					Metadata: &map[string]string{
+						"color":            "green",
+						"blobnumber":       "02",
+						"somemetadataname": "SomeMetadataValue",
+					},
+					Name: to.StringPtr("blob2.txt"),
+					Properties: &xmlgroup.BlobProperties{
+						LastModified:    &blob1LM,
+						Etag:            to.StringPtr("0x8CBFF45D8B4C212"),
+						ContentLength:   to.Int64Ptr(5000),
+						ContentType:     to.StringPtr("application/octet-stream"),
+						ContentEncoding: to.StringPtr("gzip"),
+						ContentLanguage: to.StringPtr(""),
+						ContentMd5:      to.StringPtr(""),
+						CacheControl:    to.StringPtr(""),
+						BlobType:        xmlgroup.BlobTypeBlockBlob.ToPtr(),
+					},
+					Snapshot: to.StringPtr("2009-09-09T09:20:03.1587543Z"),
+				},
+				{
+					Metadata: &map[string]string{
+						"color":            "green",
+						"blobnumber":       "02",
+						"somemetadataname": "SomeMetadataValue",
+					},
+					Name: to.StringPtr("blob2.txt"),
+					Properties: &xmlgroup.BlobProperties{
+						LastModified:    &blob1LM,
+						Etag:            to.StringPtr("0x8CBFF45D8B4C212"),
+						ContentLength:   to.Int64Ptr(5000),
+						ContentType:     to.StringPtr("application/octet-stream"),
+						ContentEncoding: to.StringPtr("gzip"),
+						ContentLanguage: to.StringPtr(""),
+						ContentMd5:      to.StringPtr(""),
+						CacheControl:    to.StringPtr(""),
+						BlobType:        xmlgroup.BlobTypeBlockBlob.ToPtr(),
+						LeaseStatus:     xmlgroup.LeaseStatusTypeUnlocked.ToPtr(),
+					},
+				},
+				{
+					Metadata: &map[string]string{
+						"color":            "yellow",
+						"blobnumber":       "03",
+						"somemetadataname": "SomeMetadataValue",
+					},
+					Name: to.StringPtr("blob3.txt"),
+					Properties: &xmlgroup.BlobProperties{
+						LastModified:       &blob2LM,
+						Etag:               to.StringPtr("0x8CBFF45D911FADF"),
+						ContentLength:      to.Int64Ptr(16384),
+						ContentType:        to.StringPtr("image/jpeg"),
+						ContentEncoding:    to.StringPtr(""),
+						ContentLanguage:    to.StringPtr(""),
+						ContentMd5:         to.StringPtr(""),
+						CacheControl:       to.StringPtr(""),
+						BlobSequenceNumber: to.Int32Ptr(3),
+						BlobType:           xmlgroup.BlobTypePageBlob.ToPtr(),
+						LeaseStatus:        xmlgroup.LeaseStatusTypeLocked.ToPtr(),
+					},
+				},
+			},
+		},
+		ContainerName: to.StringPtr("https://myaccount.blob.core.windows.net/mycontainer"),
+		NextMarker:    to.StringPtr(""),
+	}
+	helpers.DeepEqualOrFatal(t, result.EnumerationResults, &expected)
 }
 
 func TestListContainers(t *testing.T) {
@@ -266,7 +420,7 @@ func TestListContainers(t *testing.T) {
 		MaxResults:      to.Int32Ptr(3),
 		NextMarker:      to.StringPtr("video"),
 		Containers: &[]xmlgroup.Container{
-			xmlgroup.Container{
+			{
 				Name: to.StringPtr("audio"),
 				Properties: &xmlgroup.ContainerProperties{
 					LastModified: toTimePtr(time.RFC1123, "Wed, 26 Oct 2016 20:39:39 GMT"),
@@ -274,14 +428,14 @@ func TestListContainers(t *testing.T) {
 					PublicAccess: xmlgroup.PublicAccessTypeContainer.ToPtr(),
 				},
 			},
-			xmlgroup.Container{
+			{
 				Name: to.StringPtr("images"),
 				Properties: &xmlgroup.ContainerProperties{
 					LastModified: toTimePtr(time.RFC1123, "Wed, 26 Oct 2016 20:39:39 GMT"),
 					Etag:         to.StringPtr("0x8CACB9BD7C1EEEC"),
 				},
 			},
-			xmlgroup.Container{
+			{
 				Name: to.StringPtr("textfiles"),
 				Properties: &xmlgroup.ContainerProperties{
 					LastModified: toTimePtr(time.RFC1123, "Wed, 26 Oct 2016 20:39:39 GMT"),
@@ -296,7 +450,7 @@ func TestListContainers(t *testing.T) {
 func TestPutACLs(t *testing.T) {
 	client := getXMLClient(t)
 	result, err := client.PutACLs(context.Background(), []xmlgroup.SignedIDentifier{
-		xmlgroup.SignedIDentifier{
+		{
 			ID: to.StringPtr("MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI="),
 			AccessPolicy: &xmlgroup.AccessPolicy{
 				Start:      toTimePtr(time.RFC3339Nano, "2009-09-28T08:49:37.123Z"),
@@ -326,7 +480,17 @@ func TestPutComplexTypeRefNoMeta(t *testing.T) {
 }
 
 func TestPutComplexTypeRefWithMeta(t *testing.T) {
-	t.Skip("nyi")
+	client := getXMLClient(t)
+	result, err := client.PutComplexTypeRefWithMeta(context.Background(), xmlgroup.RootWithRefAndMeta{
+		RefToModel: &xmlgroup.ComplexTypeWithMeta{
+			ID: to.StringPtr("myid"),
+		},
+		Something: to.StringPtr("else"),
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, result, http.StatusCreated)
 }
 
 func TestPutEmptyChildElement(t *testing.T) {
@@ -377,12 +541,12 @@ func TestPutEmptyWrappedLists(t *testing.T) {
 func TestPutRootList(t *testing.T) {
 	client := getXMLClient(t)
 	result, err := client.PutRootList(context.Background(), []xmlgroup.Banana{
-		xmlgroup.Banana{
+		{
 			Name:       to.StringPtr("Cavendish"),
 			Flavor:     to.StringPtr("Sweet"),
 			Expiration: toTimePtr(time.RFC3339Nano, "2018-02-28T00:40:00.123Z"),
 		},
-		xmlgroup.Banana{
+		{
 			Name:       to.StringPtr("Plantain"),
 			Flavor:     to.StringPtr("Savory"),
 			Expiration: toTimePtr(time.RFC3339Nano, "2018-02-28T00:40:00.123Z"),
@@ -397,7 +561,7 @@ func TestPutRootList(t *testing.T) {
 func TestPutRootListSingleItem(t *testing.T) {
 	client := getXMLClient(t)
 	result, err := client.PutRootListSingleItem(context.Background(), []xmlgroup.Banana{
-		xmlgroup.Banana{
+		{
 			Name:       to.StringPtr("Cavendish"),
 			Flavor:     to.StringPtr("Sweet"),
 			Expiration: toTimePtr(time.RFC3339Nano, "2018-02-28T00:40:00.123Z"),
@@ -454,11 +618,11 @@ func TestPutSimple(t *testing.T) {
 		Date:   to.StringPtr("Date of publication"),
 		Title:  to.StringPtr("Sample Slide Show"),
 		Slides: &[]xmlgroup.Slide{
-			xmlgroup.Slide{
+			{
 				Title: to.StringPtr("Wake up to WonderWidgets!"),
 				Type:  to.StringPtr("all"),
 			},
-			xmlgroup.Slide{
+			{
 				Items: &[]string{"Why WonderWidgets are great", "", "Who buys WonderWidgets"},
 				Title: to.StringPtr("Overview"),
 				Type:  to.StringPtr("all"),
