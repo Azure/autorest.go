@@ -16,6 +16,7 @@ import { generatePagers } from './pagers';
 import { generatePollers, generatePollersHelper } from './data_plane_pollers';
 import { generatePolymorphicHelpers } from './polymorphics';
 import { generateGoModFile } from './gomod';
+import { generateXMLAdditionalPropsHelpers } from './xmlAdditionalProps';
 
 // The generator emits Go source code files to disk.
 export async function protocolGen(host: Host) {
@@ -72,6 +73,10 @@ export async function protocolGen(host: Host) {
     const gomod = await generateGoModFile(session);
     if (gomod.length > 0) {
       host.WriteFile('go.mod', gomod, undefined, 'source-file-go');
+    }
+    const xmlAddlProps = await generateXMLAdditionalPropsHelpers(session);
+    if (xmlAddlProps.length > 0) {
+      host.WriteFile(`${filePrefix}xml_helper.go`, xmlAddlProps, undefined, 'source-file-go');
     }
   } catch (E) {
     if (debug) {

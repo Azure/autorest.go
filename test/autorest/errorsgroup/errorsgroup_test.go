@@ -7,6 +7,7 @@ import (
 	"context"
 	"generatortests/autorest/generated/errorsgroup"
 	"generatortests/helpers"
+	"net/http"
 	"testing"
 	"time"
 
@@ -39,7 +40,7 @@ func TestDoSomethingError1(t *testing.T) {
 	result, err := client.DoSomething(context.Background(), "jump")
 	sadErr, ok := err.(*errorsgroup.PetSadError)
 	if !ok {
-		t.Fatal("expected PetSadError")
+		t.Fatalf("expected PetSadError: %v", err)
 	}
 	helpers.DeepEqualOrFatal(t, sadErr, &errorsgroup.PetSadError{
 		PetActionError: errorsgroup.PetActionError{
@@ -104,7 +105,12 @@ func TestGetPetByIDSuccess1(t *testing.T) {
 }
 
 func TestGetPetByIDSuccess2(t *testing.T) {
-	t.Skip("multiple responses with different schemas NYI")
+	client := getClient(t)
+	result, err := client.GetPetByID(context.Background(), "django")
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusAccepted)
 }
 
 func TestGetPetByIDError1(t *testing.T) {
