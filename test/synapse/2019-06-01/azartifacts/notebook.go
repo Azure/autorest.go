@@ -13,7 +13,6 @@ import (
 	"net/url"
 	"path"
 	"strings"
-	"time"
 )
 
 // NotebookOperations contains the methods for the Notebook group.
@@ -41,27 +40,7 @@ type notebookOperations struct {
 
 // CreateOrUpdateNotebook - Creates or updates a Note Book.
 func (client *notebookOperations) BeginCreateOrUpdateNotebook(ctx context.Context, notebookName string, notebook NotebookResource, notebookCreateOrUpdateNotebookOptions *NotebookCreateOrUpdateNotebookOptions) (*NotebookResourcePollerResponse, error) {
-	req, err := client.createOrUpdateNotebookCreateRequest(notebookName, notebook, notebookCreateOrUpdateNotebookOptions)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.p.Do(ctx, req)
-	if err != nil {
-		return nil, err
-	}
-	result, err := client.createOrUpdateNotebookHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	poller := &notebookResourcePoller{
-		pipeline: client.p,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*NotebookResourceResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
+	return nil, nil
 }
 
 func (client *notebookOperations) ResumeCreateOrUpdateNotebook(token string) (NotebookResourcePoller, error) {
@@ -105,27 +84,7 @@ func (client *notebookOperations) createOrUpdateNotebookHandleError(resp *azcore
 
 // DeleteNotebook - Deletes a Note book.
 func (client *notebookOperations) BeginDeleteNotebook(ctx context.Context, notebookName string) (*HTTPPollerResponse, error) {
-	req, err := client.deleteNotebookCreateRequest(notebookName)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.p.Do(ctx, req)
-	if err != nil {
-		return nil, err
-	}
-	result, err := client.deleteNotebookHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	poller := &httpPoller{
-		pipeline: client.p,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
+	return nil, nil
 }
 
 func (client *notebookOperations) ResumeDeleteNotebook(token string) (HTTPPoller, error) {

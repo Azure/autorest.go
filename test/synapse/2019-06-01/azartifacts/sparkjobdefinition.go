@@ -13,7 +13,6 @@ import (
 	"net/url"
 	"path"
 	"strings"
-	"time"
 )
 
 // SparkJobDefinitionOperations contains the methods for the SparkJobDefinition group.
@@ -96,27 +95,7 @@ func (client *sparkJobDefinitionOperations) createOrUpdateSparkJobDefinitionHand
 
 // DebugSparkJobDefinition - Debug the spark job definition.
 func (client *sparkJobDefinitionOperations) BeginDebugSparkJobDefinition(ctx context.Context, sparkJobDefinitionAzureResource SparkJobDefinitionResource) (*SparkBatchJobPollerResponse, error) {
-	req, err := client.debugSparkJobDefinitionCreateRequest(sparkJobDefinitionAzureResource)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.p.Do(ctx, req)
-	if err != nil {
-		return nil, err
-	}
-	result, err := client.debugSparkJobDefinitionHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	poller := &sparkBatchJobPoller{
-		pipeline: client.p,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*SparkBatchJobResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
+	return nil, nil
 }
 
 func (client *sparkJobDefinitionOperations) ResumeDebugSparkJobDefinition(token string) (SparkBatchJobPoller, error) {
@@ -205,27 +184,7 @@ func (client *sparkJobDefinitionOperations) deleteSparkJobDefinitionHandleError(
 
 // ExecuteSparkJobDefinition - Executes the spark job definition.
 func (client *sparkJobDefinitionOperations) BeginExecuteSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string) (*SparkBatchJobPollerResponse, error) {
-	req, err := client.executeSparkJobDefinitionCreateRequest(sparkJobDefinitionName)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.p.Do(ctx, req)
-	if err != nil {
-		return nil, err
-	}
-	result, err := client.executeSparkJobDefinitionHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	poller := &sparkBatchJobPoller{
-		pipeline: client.p,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*SparkBatchJobResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
+	return nil, nil
 }
 
 func (client *sparkJobDefinitionOperations) ResumeExecuteSparkJobDefinition(token string) (SparkBatchJobPoller, error) {

@@ -13,7 +13,6 @@ import (
 	"net/url"
 	"path"
 	"strings"
-	"time"
 )
 
 // LinkedServiceOperations contains the methods for the LinkedService group.
@@ -39,27 +38,7 @@ type linkedServiceOperations struct {
 
 // CreateOrUpdateLinkedService - Creates or updates a linked service.
 func (client *linkedServiceOperations) BeginCreateOrUpdateLinkedService(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, linkedServiceCreateOrUpdateLinkedServiceOptions *LinkedServiceCreateOrUpdateLinkedServiceOptions) (*LinkedServiceResourcePollerResponse, error) {
-	req, err := client.createOrUpdateLinkedServiceCreateRequest(linkedServiceName, linkedService, linkedServiceCreateOrUpdateLinkedServiceOptions)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.p.Do(ctx, req)
-	if err != nil {
-		return nil, err
-	}
-	result, err := client.createOrUpdateLinkedServiceHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	poller := &linkedServiceResourcePoller{
-		pipeline: client.p,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*LinkedServiceResourceResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
+	return nil, nil
 }
 
 func (client *linkedServiceOperations) ResumeCreateOrUpdateLinkedService(token string) (LinkedServiceResourcePoller, error) {
@@ -103,27 +82,7 @@ func (client *linkedServiceOperations) createOrUpdateLinkedServiceHandleError(re
 
 // DeleteLinkedService - Deletes a linked service.
 func (client *linkedServiceOperations) BeginDeleteLinkedService(ctx context.Context, linkedServiceName string) (*HTTPPollerResponse, error) {
-	req, err := client.deleteLinkedServiceCreateRequest(linkedServiceName)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.p.Do(ctx, req)
-	if err != nil {
-		return nil, err
-	}
-	result, err := client.deleteLinkedServiceHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	poller := &httpPoller{
-		pipeline: client.p,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
+	return nil, nil
 }
 
 func (client *linkedServiceOperations) ResumeDeleteLinkedService(token string) (HTTPPoller, error) {

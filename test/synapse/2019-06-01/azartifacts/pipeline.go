@@ -14,7 +14,6 @@ import (
 	"path"
 	"strconv"
 	"strings"
-	"time"
 )
 
 // PipelineOperations contains the methods for the Pipeline group.
@@ -44,27 +43,7 @@ type pipelineOperations struct {
 
 // CreateOrUpdatePipeline - Creates or updates a pipeline.
 func (client *pipelineOperations) BeginCreateOrUpdatePipeline(ctx context.Context, pipelineName string, pipeline PipelineResource, pipelineCreateOrUpdatePipelineOptions *PipelineCreateOrUpdatePipelineOptions) (*PipelineResourcePollerResponse, error) {
-	req, err := client.createOrUpdatePipelineCreateRequest(pipelineName, pipeline, pipelineCreateOrUpdatePipelineOptions)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.p.Do(ctx, req)
-	if err != nil {
-		return nil, err
-	}
-	result, err := client.createOrUpdatePipelineHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	poller := &pipelineResourcePoller{
-		pipeline: client.p,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*PipelineResourceResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
+	return nil, nil
 }
 
 func (client *pipelineOperations) ResumeCreateOrUpdatePipeline(token string) (PipelineResourcePoller, error) {
@@ -108,27 +87,7 @@ func (client *pipelineOperations) createOrUpdatePipelineHandleError(resp *azcore
 
 // CreatePipelineRun - Creates a run of a pipeline.
 func (client *pipelineOperations) BeginCreatePipelineRun(ctx context.Context, pipelineName string, pipelineCreatePipelineRunOptions *PipelineCreatePipelineRunOptions) (*CreateRunResponsePollerResponse, error) {
-	req, err := client.createPipelineRunCreateRequest(pipelineName, pipelineCreatePipelineRunOptions)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.p.Do(ctx, req)
-	if err != nil {
-		return nil, err
-	}
-	result, err := client.createPipelineRunHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	poller := &createRunResponsePoller{
-		pipeline: client.p,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*CreateRunResponseResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
+	return nil, nil
 }
 
 func (client *pipelineOperations) ResumeCreatePipelineRun(token string) (CreateRunResponsePoller, error) {
@@ -181,27 +140,7 @@ func (client *pipelineOperations) createPipelineRunHandleError(resp *azcore.Resp
 
 // DeletePipeline - Deletes a pipeline.
 func (client *pipelineOperations) BeginDeletePipeline(ctx context.Context, pipelineName string) (*HTTPPollerResponse, error) {
-	req, err := client.deletePipelineCreateRequest(pipelineName)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.p.Do(ctx, req)
-	if err != nil {
-		return nil, err
-	}
-	result, err := client.deletePipelineHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	poller := &httpPoller{
-		pipeline: client.p,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
+	return nil, nil
 }
 
 func (client *pipelineOperations) ResumeDeletePipeline(token string) (HTTPPoller, error) {

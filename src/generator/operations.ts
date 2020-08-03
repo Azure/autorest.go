@@ -185,6 +185,13 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
     reqParams[i] = reqParams[i].trim().split(' ')[0];
   }
   if (isLROOperation(op)) {
+    if (isDataPlane) {
+      text += `\treturn nil, nil\n`;
+      // closing braces
+      text += '}\n\n';
+      text += addResumePollerMethod(op, clientName, isDataPlane);
+      return text;
+    }
     imports.add('time');
     text += `\treq, err := client.${info.protocolNaming.requestMethod}(${reqParams.join(', ')})\n`;
     text += `\tif err != nil {\n`;
@@ -211,16 +218,12 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
     if (op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via']) {
       finalState = op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via'];
     }
-    if (isDataPlane) {
-      text += `\tpoller := &${camelCase(op.language.go!.pollerType.name)}{\n`;
-    } else {
-      text += `\tpt, err := createPollingTracker("${clientName}.${op.language.go!.name}", "${finalState}", resp, client.${info.protocolNaming.errorMethod})\n`;
-      text += '\tif err != nil {\n';
-      text += '\t\treturn nil, err\n';
-      text += '\t}\n';
-      text += `\tpoller := &${camelCase(op.language.go!.pollerType.name)}{\n`;
-      text += '\t\t\tpt: pt,\n';
-    }
+    text += `\tpt, err := createPollingTracker("${clientName}.${op.language.go!.name}", "${finalState}", resp, client.${info.protocolNaming.errorMethod})\n`;
+    text += '\tif err != nil {\n';
+    text += '\t\treturn nil, err\n';
+    text += '\t}\n';
+    text += `\tpoller := &${camelCase(op.language.go!.pollerType.name)}{\n`;
+    text += '\t\t\tpt: pt,\n';
     if (isPageableOperation(op)) {
       text += `\t\t\trespHandler: client.${camelCase(op.language.go!.pageableType.name)}HandleResponse,\n`;
     }

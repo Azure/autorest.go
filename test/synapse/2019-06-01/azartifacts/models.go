@@ -308,8 +308,9 @@ func (a ActivityRun) MarshalJSON() ([]byte, error) {
 	type alias ActivityRun
 	aux := &struct {
 		*alias
-		ActivityRunEnd   *timeRFC3339 `json:"activityRunEnd"`
-		ActivityRunStart *timeRFC3339 `json:"activityRunStart"`
+		ActivityRunEnd       *timeRFC3339          `json:"activityRunEnd"`
+		ActivityRunStart     *timeRFC3339          `json:"activityRunStart"`
+		AdditionalProperties *additionalProperties `json:"AdditionalProperties"`
 	}{
 		alias:            (*alias)(&a),
 		ActivityRunEnd:   (*timeRFC3339)(a.ActivityRunEnd),
@@ -323,8 +324,9 @@ func (a *ActivityRun) UnmarshalJSON(data []byte) error {
 	type alias ActivityRun
 	aux := &struct {
 		*alias
-		ActivityRunEnd   *timeRFC3339 `json:"activityRunEnd"`
-		ActivityRunStart *timeRFC3339 `json:"activityRunStart"`
+		ActivityRunEnd       *timeRFC3339          `json:"activityRunEnd"`
+		ActivityRunStart     *timeRFC3339          `json:"activityRunStart"`
+		AdditionalProperties *additionalProperties `json:"AdditionalProperties"`
 	}{
 		alias: (*alias)(a),
 	}
@@ -333,6 +335,7 @@ func (a *ActivityRun) UnmarshalJSON(data []byte) error {
 	}
 	a.ActivityRunEnd = (*time.Time)(aux.ActivityRunEnd)
 	a.ActivityRunStart = (*time.Time)(aux.ActivityRunStart)
+	a.AdditionalProperties = (*map[string]string)(aux.AdditionalProperties)
 	return nil
 }
 
@@ -14335,9 +14338,10 @@ func (p PipelineRun) MarshalJSON() ([]byte, error) {
 	type alias PipelineRun
 	aux := &struct {
 		*alias
-		LastUpdated *timeRFC3339 `json:"lastUpdated"`
-		RunEnd      *timeRFC3339 `json:"runEnd"`
-		RunStart    *timeRFC3339 `json:"runStart"`
+		AdditionalProperties *additionalProperties `json:"AdditionalProperties"`
+		LastUpdated          *timeRFC3339          `json:"lastUpdated"`
+		RunEnd               *timeRFC3339          `json:"runEnd"`
+		RunStart             *timeRFC3339          `json:"runStart"`
 	}{
 		alias:       (*alias)(&p),
 		LastUpdated: (*timeRFC3339)(p.LastUpdated),
@@ -14352,15 +14356,17 @@ func (p *PipelineRun) UnmarshalJSON(data []byte) error {
 	type alias PipelineRun
 	aux := &struct {
 		*alias
-		LastUpdated *timeRFC3339 `json:"lastUpdated"`
-		RunEnd      *timeRFC3339 `json:"runEnd"`
-		RunStart    *timeRFC3339 `json:"runStart"`
+		AdditionalProperties *additionalProperties `json:"AdditionalProperties"`
+		LastUpdated          *timeRFC3339          `json:"lastUpdated"`
+		RunEnd               *timeRFC3339          `json:"runEnd"`
+		RunStart             *timeRFC3339          `json:"runStart"`
 	}{
 		alias: (*alias)(p),
 	}
 	if err := json.Unmarshal(data, aux); err != nil {
 		return err
 	}
+	p.AdditionalProperties = (*map[string]string)(aux.AdditionalProperties)
 	p.LastUpdated = (*time.Time)(aux.LastUpdated)
 	p.RunEnd = (*time.Time)(aux.RunEnd)
 	p.RunStart = (*time.Time)(aux.RunStart)
@@ -20074,7 +20080,8 @@ func (t TriggerRun) MarshalJSON() ([]byte, error) {
 	type alias TriggerRun
 	aux := &struct {
 		*alias
-		TriggerRunTimestamp *timeRFC3339 `json:"triggerRunTimestamp"`
+		AdditionalProperties *additionalProperties `json:"AdditionalProperties"`
+		TriggerRunTimestamp  *timeRFC3339          `json:"triggerRunTimestamp"`
 	}{
 		alias:               (*alias)(&t),
 		TriggerRunTimestamp: (*timeRFC3339)(t.TriggerRunTimestamp),
@@ -20087,13 +20094,15 @@ func (t *TriggerRun) UnmarshalJSON(data []byte) error {
 	type alias TriggerRun
 	aux := &struct {
 		*alias
-		TriggerRunTimestamp *timeRFC3339 `json:"triggerRunTimestamp"`
+		AdditionalProperties *additionalProperties `json:"AdditionalProperties"`
+		TriggerRunTimestamp  *timeRFC3339          `json:"triggerRunTimestamp"`
 	}{
 		alias: (*alias)(t),
 	}
 	if err := json.Unmarshal(data, aux); err != nil {
 		return err
 	}
+	t.AdditionalProperties = (*map[string]string)(aux.AdditionalProperties)
 	t.TriggerRunTimestamp = (*time.Time)(aux.TriggerRunTimestamp)
 	return nil
 }

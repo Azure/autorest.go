@@ -12,7 +12,6 @@ import (
 	"net/http"
 	"net/url"
 	"path"
-	"time"
 )
 
 // DataFlowDebugSessionOperations contains the methods for the DataFlowDebugSession group.
@@ -89,27 +88,7 @@ func (client *dataFlowDebugSessionOperations) addDataFlowHandleError(resp *azcor
 
 // CreateDataFlowDebugSession - Creates a data flow debug session.
 func (client *dataFlowDebugSessionOperations) BeginCreateDataFlowDebugSession(ctx context.Context, request CreateDataFlowDebugSessionRequest) (*CreateDataFlowDebugSessionResponsePollerResponse, error) {
-	req, err := client.createDataFlowDebugSessionCreateRequest(request)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.p.Do(ctx, req)
-	if err != nil {
-		return nil, err
-	}
-	result, err := client.createDataFlowDebugSessionHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	poller := &createDataFlowDebugSessionResponsePoller{
-		pipeline: client.p,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*CreateDataFlowDebugSessionResponseResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
+	return nil, nil
 }
 
 func (client *dataFlowDebugSessionOperations) ResumeCreateDataFlowDebugSession(token string) (CreateDataFlowDebugSessionResponsePoller, error) {
@@ -197,27 +176,7 @@ func (client *dataFlowDebugSessionOperations) deleteDataFlowDebugSessionHandleEr
 
 // ExecuteCommand - Execute a data flow debug command.
 func (client *dataFlowDebugSessionOperations) BeginExecuteCommand(ctx context.Context, request DataFlowDebugCommandRequest) (*DataFlowDebugCommandResponsePollerResponse, error) {
-	req, err := client.executeCommandCreateRequest(request)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.p.Do(ctx, req)
-	if err != nil {
-		return nil, err
-	}
-	result, err := client.executeCommandHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	poller := &dataFlowDebugCommandResponsePoller{
-		pipeline: client.p,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*DataFlowDebugCommandResponseResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
+	return nil, nil
 }
 
 func (client *dataFlowDebugSessionOperations) ResumeExecuteCommand(token string) (DataFlowDebugCommandResponsePoller, error) {
