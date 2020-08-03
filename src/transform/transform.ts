@@ -95,14 +95,14 @@ async function process(session: Session<CodeModel>) {
   }
   // fix up enum types
   for (const choice of values(session.model.schemas.choices)) {
-    choice.choiceType.language.go!.name = 'string';
+    choice.choiceType.language.go!.name = schemaTypeToGoType(session.model, choice.choiceType, false);
   }
   for (const choice of values(session.model.schemas.sealedChoices)) {
     // TODO need to see how to add sealed-choices that have a different schema
     if (choice.choices.length === 1) {
       continue;
     }
-    choice.choiceType.language.go!.name = 'string';
+    choice.choiceType.language.go!.name = schemaTypeToGoType(session.model, choice.choiceType, false);
   }
 }
 
