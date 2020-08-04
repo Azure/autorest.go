@@ -100,7 +100,7 @@ function generatePagerReturnInstance(op: Operation, imports: ImportManager): str
 }
 
 // Creates the content in pollers.go
-export async function generatePollers(session: Session<CodeModel>): Promise<string> {
+export async function generateARMPollers(session: Session<CodeModel>): Promise<string> {
   if (session.model.language.go!.pollerTypes === undefined) {
     return '';
   }
@@ -302,7 +302,7 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
 
 
 // Creates the content in pollers_helper.go
-export async function generatePollersHelper(session: Session<CodeModel>): Promise<string> {
+export async function generateARMPollersHelper(session: Session<CodeModel>): Promise<string> {
   if (session.model.language.go!.pollerTypes === undefined) {
     return '';
   }
