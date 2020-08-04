@@ -8,6 +8,7 @@ package armnetwork
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -53,7 +54,7 @@ func (client *inboundNatRulesOperations) BeginCreateOrUpdate(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("inboundNatRulesOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("inboundNatRulesOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -69,7 +70,7 @@ func (client *inboundNatRulesOperations) BeginCreateOrUpdate(ctx context.Context
 }
 
 func (client *inboundNatRulesOperations) ResumeCreateOrUpdate(token string) (InboundNatRulePoller, error) {
-	pt, err := resumePollingTracker("inboundNatRulesOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("inboundNatRulesOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -129,7 +130,7 @@ func (client *inboundNatRulesOperations) BeginDelete(ctx context.Context, resour
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("inboundNatRulesOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("inboundNatRulesOperations.Delete", "location", resp, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -145,7 +146,7 @@ func (client *inboundNatRulesOperations) BeginDelete(ctx context.Context, resour
 }
 
 func (client *inboundNatRulesOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("inboundNatRulesOperations.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("inboundNatRulesOperations.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}

@@ -8,6 +8,7 @@ package armnetwork
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -53,7 +54,7 @@ func (client *securityRulesOperations) BeginCreateOrUpdate(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("securityRulesOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("securityRulesOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -69,7 +70,7 @@ func (client *securityRulesOperations) BeginCreateOrUpdate(ctx context.Context, 
 }
 
 func (client *securityRulesOperations) ResumeCreateOrUpdate(token string) (SecurityRulePoller, error) {
-	pt, err := resumePollingTracker("securityRulesOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("securityRulesOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -129,7 +130,7 @@ func (client *securityRulesOperations) BeginDelete(ctx context.Context, resource
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("securityRulesOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("securityRulesOperations.Delete", "location", resp, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -145,7 +146,7 @@ func (client *securityRulesOperations) BeginDelete(ctx context.Context, resource
 }
 
 func (client *securityRulesOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("securityRulesOperations.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("securityRulesOperations.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}

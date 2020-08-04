@@ -8,6 +8,7 @@ package armnetwork
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -57,7 +58,7 @@ func (client *ipGroupsOperations) BeginCreateOrUpdate(ctx context.Context, resou
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("ipGroupsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("ipGroupsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -73,7 +74,7 @@ func (client *ipGroupsOperations) BeginCreateOrUpdate(ctx context.Context, resou
 }
 
 func (client *ipGroupsOperations) ResumeCreateOrUpdate(token string) (IPGroupPoller, error) {
-	pt, err := resumePollingTracker("ipGroupsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("ipGroupsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -132,7 +133,7 @@ func (client *ipGroupsOperations) BeginDelete(ctx context.Context, resourceGroup
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("ipGroupsOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("ipGroupsOperations.Delete", "location", resp, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -148,7 +149,7 @@ func (client *ipGroupsOperations) BeginDelete(ctx context.Context, resourceGroup
 }
 
 func (client *ipGroupsOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("ipGroupsOperations.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("ipGroupsOperations.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}

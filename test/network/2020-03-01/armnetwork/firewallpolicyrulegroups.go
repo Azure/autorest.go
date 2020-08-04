@@ -8,6 +8,7 @@ package armnetwork
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -53,7 +54,7 @@ func (client *firewallPolicyRuleGroupsOperations) BeginCreateOrUpdate(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("firewallPolicyRuleGroupsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("firewallPolicyRuleGroupsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -69,7 +70,7 @@ func (client *firewallPolicyRuleGroupsOperations) BeginCreateOrUpdate(ctx contex
 }
 
 func (client *firewallPolicyRuleGroupsOperations) ResumeCreateOrUpdate(token string) (FirewallPolicyRuleGroupPoller, error) {
-	pt, err := resumePollingTracker("firewallPolicyRuleGroupsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("firewallPolicyRuleGroupsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -129,7 +130,7 @@ func (client *firewallPolicyRuleGroupsOperations) BeginDelete(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("firewallPolicyRuleGroupsOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("firewallPolicyRuleGroupsOperations.Delete", "location", resp, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -145,7 +146,7 @@ func (client *firewallPolicyRuleGroupsOperations) BeginDelete(ctx context.Contex
 }
 
 func (client *firewallPolicyRuleGroupsOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("firewallPolicyRuleGroupsOperations.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("firewallPolicyRuleGroupsOperations.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}

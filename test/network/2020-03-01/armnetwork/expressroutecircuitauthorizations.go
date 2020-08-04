@@ -8,6 +8,7 @@ package armnetwork
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -53,7 +54,7 @@ func (client *expressRouteCircuitAuthorizationsOperations) BeginCreateOrUpdate(c
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("expressRouteCircuitAuthorizationsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("expressRouteCircuitAuthorizationsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -69,7 +70,7 @@ func (client *expressRouteCircuitAuthorizationsOperations) BeginCreateOrUpdate(c
 }
 
 func (client *expressRouteCircuitAuthorizationsOperations) ResumeCreateOrUpdate(token string) (ExpressRouteCircuitAuthorizationPoller, error) {
-	pt, err := resumePollingTracker("expressRouteCircuitAuthorizationsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("expressRouteCircuitAuthorizationsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -129,7 +130,7 @@ func (client *expressRouteCircuitAuthorizationsOperations) BeginDelete(ctx conte
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("expressRouteCircuitAuthorizationsOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("expressRouteCircuitAuthorizationsOperations.Delete", "location", resp, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -145,7 +146,7 @@ func (client *expressRouteCircuitAuthorizationsOperations) BeginDelete(ctx conte
 }
 
 func (client *expressRouteCircuitAuthorizationsOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("expressRouteCircuitAuthorizationsOperations.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("expressRouteCircuitAuthorizationsOperations.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}

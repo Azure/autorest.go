@@ -7,9 +7,8 @@ package paginggroup
 
 import (
 	"context"
-	"encoding/json"
-	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -28,103 +27,41 @@ type productResultPagerPoller struct {
 	// the client for making the request
 	pipeline    azcore.Pipeline
 	respHandler productResultHandleResponse
-	pt          pollingTracker
+	pt          armcore.Poller
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
 func (p *productResultPagerPoller) Done() bool {
-	return p.pt.hasTerminated()
+	return p.pt.Done()
 }
 
 // Poll will send poll the service endpoint and return an http.Response or error received from the service
 func (p *productResultPagerPoller) Poll(ctx context.Context) (*http.Response, error) {
-	if lroPollDone(ctx, p.pipeline, p.pt) {
-		return p.pt.latestResponse().Response, p.pt.pollingError()
-	}
-	return nil, p.pt.pollingError()
+	return p.pt.Poll(ctx, p.pipeline)
 }
 
 func (p *productResultPagerPoller) FinalResponse(ctx context.Context) (ProductResultPager, error) {
-	if !p.Done() {
-		return nil, errors.New("cannot return a final response from a poller in a non-terminal state")
-	}
-	if p.pt.pollerMethodVerb() == http.MethodPut || p.pt.pollerMethodVerb() == http.MethodPatch {
-		return p.handleResponse(p.pt.latestResponse())
-	}
-	// checking if there was a FinalStateVia configuration to re-route the final GET
-	// request to the value specified in the FinalStateVia property on the poller
-	err := p.pt.setFinalState()
+	s := &productResultPager{}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s)
 	if err != nil {
 		return nil, err
 	}
-	if p.pt.finalGetURL() == "" {
-		// we can end up in this situation if the async operation returns a 200
-		// with no polling URLs.  in that case return the response which should
-		// contain the JSON payload (only do this for successful terminal cases).
-		if lr := p.pt.latestResponse(); lr != nil && p.pt.hasSucceeded() {
-			result, err := p.handleResponse(lr)
-			if err != nil {
-				return nil, err
-			}
-			return result, nil
-		}
-		return nil, errors.New("missing URL for retrieving result")
-	}
-	u, err := url.Parse(p.pt.finalGetURL())
-	if err != nil {
-		return nil, err
-	}
-	req := azcore.NewRequest(http.MethodGet, *u)
-	if err != nil {
-		return nil, err
-	}
-	resp, err := p.pipeline.Do(ctx, req)
-	if err != nil {
-		return nil, err
-	}
-	return p.handleResponse(resp)
+	return p.handleResponse(&azcore.Response{resp})
 }
 
 // ResumeToken generates the string token that can be used with the ResumeProductResultPagerPoller method
 // on the client to create a new poller from the data held in the current poller type
 func (p *productResultPagerPoller) ResumeToken() (string, error) {
-	if p.pt.hasTerminated() {
-		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
-	}
-	js, err := json.Marshal(p.pt)
-	if err != nil {
-		return "", err
-	}
-	return string(js), nil
+	return p.pt.ResumeToken()
 }
 
 func (p *productResultPagerPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (ProductResultPager, error) {
-	// initial check for a retry-after header existing on the initial response
-	if retryAfter := azcore.RetryAfter(p.pt.latestResponse().Response); retryAfter > 0 {
-		err := delay(ctx, retryAfter)
-		if err != nil {
-			return nil, err
-		}
+	s := &productResultPager{}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s)
+	if err != nil {
+		return nil, err
 	}
-	// begin polling the endpoint until a terminal state is reached
-	for {
-		resp, err := p.Poll(ctx)
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			break
-		}
-		d := frequency
-		if retryAfter := azcore.RetryAfter(resp); retryAfter > 0 {
-			d = retryAfter
-		}
-		err = delay(ctx, d)
-		if err != nil {
-			return nil, err
-		}
-	}
-	return p.FinalResponse(ctx)
+	return p.handleResponse(&azcore.Response{resp})
 }
 
 func (p *productResultPagerPoller) handleResponse(resp *azcore.Response) (ProductResultPager, error) {

@@ -8,6 +8,7 @@ package armnetwork
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -73,7 +74,7 @@ func (client *p2SVpnGatewaysOperations) BeginCreateOrUpdate(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("p2SVpnGatewaysOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("p2SVpnGatewaysOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -89,7 +90,7 @@ func (client *p2SVpnGatewaysOperations) BeginCreateOrUpdate(ctx context.Context,
 }
 
 func (client *p2SVpnGatewaysOperations) ResumeCreateOrUpdate(token string) (P2SVpnGatewayPoller, error) {
-	pt, err := resumePollingTracker("p2SVpnGatewaysOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("p2SVpnGatewaysOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -148,7 +149,7 @@ func (client *p2SVpnGatewaysOperations) BeginDelete(ctx context.Context, resourc
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("p2SVpnGatewaysOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("p2SVpnGatewaysOperations.Delete", "location", resp, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -164,7 +165,7 @@ func (client *p2SVpnGatewaysOperations) BeginDelete(ctx context.Context, resourc
 }
 
 func (client *p2SVpnGatewaysOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("p2SVpnGatewaysOperations.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("p2SVpnGatewaysOperations.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -223,7 +224,7 @@ func (client *p2SVpnGatewaysOperations) BeginDisconnectP2SVpnConnections(ctx con
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("p2SVpnGatewaysOperations.DisconnectP2SVpnConnections", "location", resp, client.disconnectP2SVpnConnectionsHandleError)
+	pt, err := armcore.NewPoller("p2SVpnGatewaysOperations.DisconnectP2SVpnConnections", "location", resp, client.disconnectP2SVpnConnectionsHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -239,7 +240,7 @@ func (client *p2SVpnGatewaysOperations) BeginDisconnectP2SVpnConnections(ctx con
 }
 
 func (client *p2SVpnGatewaysOperations) ResumeDisconnectP2SVpnConnections(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("p2SVpnGatewaysOperations.DisconnectP2SVpnConnections", token, client.disconnectP2SVpnConnectionsHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("p2SVpnGatewaysOperations.DisconnectP2SVpnConnections", token, client.disconnectP2SVpnConnectionsHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -298,7 +299,7 @@ func (client *p2SVpnGatewaysOperations) BeginGenerateVpnProfile(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("p2SVpnGatewaysOperations.GenerateVpnProfile", "location", resp, client.generateVpnProfileHandleError)
+	pt, err := armcore.NewPoller("p2SVpnGatewaysOperations.GenerateVpnProfile", "location", resp, client.generateVpnProfileHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -314,7 +315,7 @@ func (client *p2SVpnGatewaysOperations) BeginGenerateVpnProfile(ctx context.Cont
 }
 
 func (client *p2SVpnGatewaysOperations) ResumeGenerateVpnProfile(token string) (VpnProfileResponsePoller, error) {
-	pt, err := resumePollingTracker("p2SVpnGatewaysOperations.GenerateVpnProfile", token, client.generateVpnProfileHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("p2SVpnGatewaysOperations.GenerateVpnProfile", token, client.generateVpnProfileHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -425,7 +426,7 @@ func (client *p2SVpnGatewaysOperations) BeginGetP2SVpnConnectionHealth(ctx conte
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("p2SVpnGatewaysOperations.GetP2SVpnConnectionHealth", "location", resp, client.getP2SVpnConnectionHealthHandleError)
+	pt, err := armcore.NewPoller("p2SVpnGatewaysOperations.GetP2SVpnConnectionHealth", "location", resp, client.getP2SVpnConnectionHealthHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -441,7 +442,7 @@ func (client *p2SVpnGatewaysOperations) BeginGetP2SVpnConnectionHealth(ctx conte
 }
 
 func (client *p2SVpnGatewaysOperations) ResumeGetP2SVpnConnectionHealth(token string) (P2SVpnGatewayPoller, error) {
-	pt, err := resumePollingTracker("p2SVpnGatewaysOperations.GetP2SVpnConnectionHealth", token, client.getP2SVpnConnectionHealthHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("p2SVpnGatewaysOperations.GetP2SVpnConnectionHealth", token, client.getP2SVpnConnectionHealthHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -500,7 +501,7 @@ func (client *p2SVpnGatewaysOperations) BeginGetP2SVpnConnectionHealthDetailed(c
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("p2SVpnGatewaysOperations.GetP2SVpnConnectionHealthDetailed", "location", resp, client.getP2SVpnConnectionHealthDetailedHandleError)
+	pt, err := armcore.NewPoller("p2SVpnGatewaysOperations.GetP2SVpnConnectionHealthDetailed", "location", resp, client.getP2SVpnConnectionHealthDetailedHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -516,7 +517,7 @@ func (client *p2SVpnGatewaysOperations) BeginGetP2SVpnConnectionHealthDetailed(c
 }
 
 func (client *p2SVpnGatewaysOperations) ResumeGetP2SVpnConnectionHealthDetailed(token string) (P2SVpnConnectionHealthPoller, error) {
-	pt, err := resumePollingTracker("p2SVpnGatewaysOperations.GetP2SVpnConnectionHealthDetailed", token, client.getP2SVpnConnectionHealthDetailedHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("p2SVpnGatewaysOperations.GetP2SVpnConnectionHealthDetailed", token, client.getP2SVpnConnectionHealthDetailedHandleError)
 	if err != nil {
 		return nil, err
 	}

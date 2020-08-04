@@ -7,6 +7,7 @@ package armnetwork
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -66,7 +67,7 @@ func (client *connectionMonitorsOperations) BeginCreateOrUpdate(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("connectionMonitorsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("connectionMonitorsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -82,7 +83,7 @@ func (client *connectionMonitorsOperations) BeginCreateOrUpdate(ctx context.Cont
 }
 
 func (client *connectionMonitorsOperations) ResumeCreateOrUpdate(token string) (ConnectionMonitorResultPoller, error) {
-	pt, err := resumePollingTracker("connectionMonitorsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("connectionMonitorsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -142,7 +143,7 @@ func (client *connectionMonitorsOperations) BeginDelete(ctx context.Context, res
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("connectionMonitorsOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("connectionMonitorsOperations.Delete", "location", resp, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -158,7 +159,7 @@ func (client *connectionMonitorsOperations) BeginDelete(ctx context.Context, res
 }
 
 func (client *connectionMonitorsOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("connectionMonitorsOperations.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("connectionMonitorsOperations.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -323,7 +324,7 @@ func (client *connectionMonitorsOperations) BeginQuery(ctx context.Context, reso
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("connectionMonitorsOperations.Query", "location", resp, client.queryHandleError)
+	pt, err := armcore.NewPoller("connectionMonitorsOperations.Query", "location", resp, client.queryHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -339,7 +340,7 @@ func (client *connectionMonitorsOperations) BeginQuery(ctx context.Context, reso
 }
 
 func (client *connectionMonitorsOperations) ResumeQuery(token string) (ConnectionMonitorQueryResultPoller, error) {
-	pt, err := resumePollingTracker("connectionMonitorsOperations.Query", token, client.queryHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("connectionMonitorsOperations.Query", token, client.queryHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -399,7 +400,7 @@ func (client *connectionMonitorsOperations) BeginStart(ctx context.Context, reso
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("connectionMonitorsOperations.Start", "location", resp, client.startHandleError)
+	pt, err := armcore.NewPoller("connectionMonitorsOperations.Start", "location", resp, client.startHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -415,7 +416,7 @@ func (client *connectionMonitorsOperations) BeginStart(ctx context.Context, reso
 }
 
 func (client *connectionMonitorsOperations) ResumeStart(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("connectionMonitorsOperations.Start", token, client.startHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("connectionMonitorsOperations.Start", token, client.startHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -475,7 +476,7 @@ func (client *connectionMonitorsOperations) BeginStop(ctx context.Context, resou
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("connectionMonitorsOperations.Stop", "location", resp, client.stopHandleError)
+	pt, err := armcore.NewPoller("connectionMonitorsOperations.Stop", "location", resp, client.stopHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -491,7 +492,7 @@ func (client *connectionMonitorsOperations) BeginStop(ctx context.Context, resou
 }
 
 func (client *connectionMonitorsOperations) ResumeStop(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("connectionMonitorsOperations.Stop", token, client.stopHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("connectionMonitorsOperations.Stop", token, client.stopHandleError)
 	if err != nil {
 		return nil, err
 	}

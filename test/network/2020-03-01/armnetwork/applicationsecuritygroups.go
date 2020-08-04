@@ -8,6 +8,7 @@ package armnetwork
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -57,7 +58,7 @@ func (client *applicationSecurityGroupsOperations) BeginCreateOrUpdate(ctx conte
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("applicationSecurityGroupsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("applicationSecurityGroupsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -73,7 +74,7 @@ func (client *applicationSecurityGroupsOperations) BeginCreateOrUpdate(ctx conte
 }
 
 func (client *applicationSecurityGroupsOperations) ResumeCreateOrUpdate(token string) (ApplicationSecurityGroupPoller, error) {
-	pt, err := resumePollingTracker("applicationSecurityGroupsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("applicationSecurityGroupsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -132,7 +133,7 @@ func (client *applicationSecurityGroupsOperations) BeginDelete(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("applicationSecurityGroupsOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("applicationSecurityGroupsOperations.Delete", "location", resp, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -148,7 +149,7 @@ func (client *applicationSecurityGroupsOperations) BeginDelete(ctx context.Conte
 }
 
 func (client *applicationSecurityGroupsOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("applicationSecurityGroupsOperations.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("applicationSecurityGroupsOperations.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}

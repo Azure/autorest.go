@@ -7,11 +7,9 @@ package lrogroup
 
 import (
 	"context"
-	"encoding/json"
-	"errors"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
-	"net/url"
 	"time"
 )
 
@@ -19,73 +17,38 @@ import (
 type HTTPPoller interface {
 	Done() bool
 	Poll(ctx context.Context) (*http.Response, error)
-	FinalResponse() *http.Response
+	FinalResponse(ctx context.Context) (*http.Response, error)
 	ResumeToken() (string, error)
 }
 
 type httpPoller struct {
 	// the client for making the request
 	pipeline azcore.Pipeline
-	pt       pollingTracker
+	pt       armcore.Poller
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
 func (p *httpPoller) Done() bool {
-	return p.pt.hasTerminated()
+	return p.pt.Done()
 }
 
 // Poll will send poll the service endpoint and return an http.Response or error received from the service
 func (p *httpPoller) Poll(ctx context.Context) (*http.Response, error) {
-	if lroPollDone(ctx, p.pipeline, p.pt) {
-		return p.pt.latestResponse().Response, p.pt.pollingError()
-	}
-	return nil, p.pt.pollingError()
+	return p.pt.Poll(ctx, p.pipeline)
 }
 
-func (p *httpPoller) FinalResponse() *http.Response {
-	return p.pt.latestResponse().Response
+func (p *httpPoller) FinalResponse(ctx context.Context) (*http.Response, error) {
+	return p.pt.FinalResponse(ctx, p.pipeline, nil)
 }
 
 // ResumeToken generates the string token that can be used with the ResumeHTTPPoller method
 // on the client to create a new poller from the data held in the current poller type
 func (p *httpPoller) ResumeToken() (string, error) {
-	if p.pt.hasTerminated() {
-		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
-	}
-	js, err := json.Marshal(p.pt)
-	if err != nil {
-		return "", err
-	}
-	return string(js), nil
+	return p.pt.ResumeToken()
 }
 
 func (p *httpPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*http.Response, error) {
-	// initial check for a retry-after header existing on the initial response
-	if retryAfter := azcore.RetryAfter(p.pt.latestResponse().Response); retryAfter > 0 {
-		err := delay(ctx, retryAfter)
-		if err != nil {
-			return nil, err
-		}
-	}
-	// begin polling the endpoint until a terminal state is reached
-	for {
-		resp, err := p.Poll(ctx)
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			break
-		}
-		d := frequency
-		if retryAfter := azcore.RetryAfter(resp); retryAfter > 0 {
-			d = retryAfter
-		}
-		err = delay(ctx, d)
-		if err != nil {
-			return nil, err
-		}
-	}
-	return p.FinalResponse(), nil
+	return p.pt.PollUntilDone(ctx, frequency, p.pipeline, nil)
 }
 
 // ProductArrayPoller provides polling facilities until the operation completes
@@ -99,120 +62,43 @@ type ProductArrayPoller interface {
 type productArrayPoller struct {
 	// the client for making the request
 	pipeline azcore.Pipeline
-	pt       pollingTracker
+	pt       armcore.Poller
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
 func (p *productArrayPoller) Done() bool {
-	return p.pt.hasTerminated()
+	return p.pt.Done()
 }
 
 // Poll will send poll the service endpoint and return an http.Response or error received from the service
 func (p *productArrayPoller) Poll(ctx context.Context) (*http.Response, error) {
-	if lroPollDone(ctx, p.pipeline, p.pt) {
-		return p.pt.latestResponse().Response, p.pt.pollingError()
-	}
-	return nil, p.pt.pollingError()
+	return p.pt.Poll(ctx, p.pipeline)
 }
 
 func (p *productArrayPoller) FinalResponse(ctx context.Context) (*ProductArrayResponse, error) {
-	if !p.Done() {
-		return nil, errors.New("cannot return a final response from a poller in a non-terminal state")
-	}
-	if p.pt.pollerMethodVerb() == http.MethodPut || p.pt.pollerMethodVerb() == http.MethodPatch {
-		res, err := p.handleResponse(p.pt.latestResponse())
-		if err != nil {
-			return nil, err
-		}
-		if res != nil && res.ProductArray != nil {
-			return res, nil
-		}
-	}
-	// checking if there was a FinalStateVia configuration to re-route the final GET
-	// request to the value specified in the FinalStateVia property on the poller
-	err := p.pt.setFinalState()
+	s := &ProductArrayResponse{ProductArray: &[]Product{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.ProductArray)
 	if err != nil {
 		return nil, err
 	}
-	if p.pt.finalGetURL() == "" {
-		// we can end up in this situation if the async operation returns a 200
-		// with no polling URLs.  in that case return the response which should
-		// contain the JSON payload (only do this for successful terminal cases).
-		if lr := p.pt.latestResponse(); lr != nil && p.pt.hasSucceeded() {
-			result, err := p.handleResponse(lr)
-			if err != nil {
-				return nil, err
-			}
-			return result, nil
-		}
-		return nil, errors.New("missing URL for retrieving result")
-	}
-	u, err := url.Parse(p.pt.finalGetURL())
-	if err != nil {
-		return nil, err
-	}
-	req := azcore.NewRequest(http.MethodGet, *u)
-	if err != nil {
-		return nil, err
-	}
-	resp, err := p.pipeline.Do(ctx, req)
-	if err != nil {
-		return nil, err
-	}
-	return p.handleResponse(resp)
+	s.RawResponse = resp
+	return s, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeProductArrayPoller method
 // on the client to create a new poller from the data held in the current poller type
 func (p *productArrayPoller) ResumeToken() (string, error) {
-	if p.pt.hasTerminated() {
-		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
-	}
-	js, err := json.Marshal(p.pt)
-	if err != nil {
-		return "", err
-	}
-	return string(js), nil
+	return p.pt.ResumeToken()
 }
 
 func (p *productArrayPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*ProductArrayResponse, error) {
-	// initial check for a retry-after header existing on the initial response
-	if retryAfter := azcore.RetryAfter(p.pt.latestResponse().Response); retryAfter > 0 {
-		err := delay(ctx, retryAfter)
-		if err != nil {
-			return nil, err
-		}
+	s := &ProductArrayResponse{ProductArray: &[]Product{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.ProductArray)
+	if err != nil {
+		return nil, err
 	}
-	// begin polling the endpoint until a terminal state is reached
-	for {
-		resp, err := p.Poll(ctx)
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			break
-		}
-		d := frequency
-		if retryAfter := azcore.RetryAfter(resp); retryAfter > 0 {
-			d = retryAfter
-		}
-		err = delay(ctx, d)
-		if err != nil {
-			return nil, err
-		}
-	}
-	return p.FinalResponse(ctx)
-}
-
-func (p *productArrayPoller) handleResponse(resp *azcore.Response) (*ProductArrayResponse, error) {
-	result := ProductArrayResponse{RawResponse: resp.Response}
-	if resp.HasStatusCode(http.StatusNoContent) {
-		return &result, nil
-	}
-	if !resp.HasStatusCode(pollingCodes[:]...) {
-		return nil, p.pt.handleError(resp)
-	}
-	return &result, resp.UnmarshalAsJSON(&result.ProductArray)
+	s.RawResponse = resp
+	return s, nil
 }
 
 // ProductPoller provides polling facilities until the operation completes
@@ -226,120 +112,43 @@ type ProductPoller interface {
 type productPoller struct {
 	// the client for making the request
 	pipeline azcore.Pipeline
-	pt       pollingTracker
+	pt       armcore.Poller
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
 func (p *productPoller) Done() bool {
-	return p.pt.hasTerminated()
+	return p.pt.Done()
 }
 
 // Poll will send poll the service endpoint and return an http.Response or error received from the service
 func (p *productPoller) Poll(ctx context.Context) (*http.Response, error) {
-	if lroPollDone(ctx, p.pipeline, p.pt) {
-		return p.pt.latestResponse().Response, p.pt.pollingError()
-	}
-	return nil, p.pt.pollingError()
+	return p.pt.Poll(ctx, p.pipeline)
 }
 
 func (p *productPoller) FinalResponse(ctx context.Context) (*ProductResponse, error) {
-	if !p.Done() {
-		return nil, errors.New("cannot return a final response from a poller in a non-terminal state")
-	}
-	if p.pt.pollerMethodVerb() == http.MethodPut || p.pt.pollerMethodVerb() == http.MethodPatch {
-		res, err := p.handleResponse(p.pt.latestResponse())
-		if err != nil {
-			return nil, err
-		}
-		if res != nil && (*res.Product != Product{}) {
-			return res, nil
-		}
-	}
-	// checking if there was a FinalStateVia configuration to re-route the final GET
-	// request to the value specified in the FinalStateVia property on the poller
-	err := p.pt.setFinalState()
+	s := &ProductResponse{Product: &Product{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.Product)
 	if err != nil {
 		return nil, err
 	}
-	if p.pt.finalGetURL() == "" {
-		// we can end up in this situation if the async operation returns a 200
-		// with no polling URLs.  in that case return the response which should
-		// contain the JSON payload (only do this for successful terminal cases).
-		if lr := p.pt.latestResponse(); lr != nil && p.pt.hasSucceeded() {
-			result, err := p.handleResponse(lr)
-			if err != nil {
-				return nil, err
-			}
-			return result, nil
-		}
-		return nil, errors.New("missing URL for retrieving result")
-	}
-	u, err := url.Parse(p.pt.finalGetURL())
-	if err != nil {
-		return nil, err
-	}
-	req := azcore.NewRequest(http.MethodGet, *u)
-	if err != nil {
-		return nil, err
-	}
-	resp, err := p.pipeline.Do(ctx, req)
-	if err != nil {
-		return nil, err
-	}
-	return p.handleResponse(resp)
+	s.RawResponse = resp
+	return s, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeProductPoller method
 // on the client to create a new poller from the data held in the current poller type
 func (p *productPoller) ResumeToken() (string, error) {
-	if p.pt.hasTerminated() {
-		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
-	}
-	js, err := json.Marshal(p.pt)
-	if err != nil {
-		return "", err
-	}
-	return string(js), nil
+	return p.pt.ResumeToken()
 }
 
 func (p *productPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
-	// initial check for a retry-after header existing on the initial response
-	if retryAfter := azcore.RetryAfter(p.pt.latestResponse().Response); retryAfter > 0 {
-		err := delay(ctx, retryAfter)
-		if err != nil {
-			return nil, err
-		}
+	s := &ProductResponse{Product: &Product{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.Product)
+	if err != nil {
+		return nil, err
 	}
-	// begin polling the endpoint until a terminal state is reached
-	for {
-		resp, err := p.Poll(ctx)
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			break
-		}
-		d := frequency
-		if retryAfter := azcore.RetryAfter(resp); retryAfter > 0 {
-			d = retryAfter
-		}
-		err = delay(ctx, d)
-		if err != nil {
-			return nil, err
-		}
-	}
-	return p.FinalResponse(ctx)
-}
-
-func (p *productPoller) handleResponse(resp *azcore.Response) (*ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	if resp.HasStatusCode(http.StatusNoContent) {
-		return &result, nil
-	}
-	if !resp.HasStatusCode(pollingCodes[:]...) {
-		return nil, p.pt.handleError(resp)
-	}
-	return &result, resp.UnmarshalAsJSON(&result.Product)
+	s.RawResponse = resp
+	return s, nil
 }
 
 // SkuPoller provides polling facilities until the operation completes
@@ -353,120 +162,43 @@ type SkuPoller interface {
 type skuPoller struct {
 	// the client for making the request
 	pipeline azcore.Pipeline
-	pt       pollingTracker
+	pt       armcore.Poller
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
 func (p *skuPoller) Done() bool {
-	return p.pt.hasTerminated()
+	return p.pt.Done()
 }
 
 // Poll will send poll the service endpoint and return an http.Response or error received from the service
 func (p *skuPoller) Poll(ctx context.Context) (*http.Response, error) {
-	if lroPollDone(ctx, p.pipeline, p.pt) {
-		return p.pt.latestResponse().Response, p.pt.pollingError()
-	}
-	return nil, p.pt.pollingError()
+	return p.pt.Poll(ctx, p.pipeline)
 }
 
 func (p *skuPoller) FinalResponse(ctx context.Context) (*SkuResponse, error) {
-	if !p.Done() {
-		return nil, errors.New("cannot return a final response from a poller in a non-terminal state")
-	}
-	if p.pt.pollerMethodVerb() == http.MethodPut || p.pt.pollerMethodVerb() == http.MethodPatch {
-		res, err := p.handleResponse(p.pt.latestResponse())
-		if err != nil {
-			return nil, err
-		}
-		if res != nil && (*res.Sku != Sku{}) {
-			return res, nil
-		}
-	}
-	// checking if there was a FinalStateVia configuration to re-route the final GET
-	// request to the value specified in the FinalStateVia property on the poller
-	err := p.pt.setFinalState()
+	s := &SkuResponse{Sku: &Sku{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.Sku)
 	if err != nil {
 		return nil, err
 	}
-	if p.pt.finalGetURL() == "" {
-		// we can end up in this situation if the async operation returns a 200
-		// with no polling URLs.  in that case return the response which should
-		// contain the JSON payload (only do this for successful terminal cases).
-		if lr := p.pt.latestResponse(); lr != nil && p.pt.hasSucceeded() {
-			result, err := p.handleResponse(lr)
-			if err != nil {
-				return nil, err
-			}
-			return result, nil
-		}
-		return nil, errors.New("missing URL for retrieving result")
-	}
-	u, err := url.Parse(p.pt.finalGetURL())
-	if err != nil {
-		return nil, err
-	}
-	req := azcore.NewRequest(http.MethodGet, *u)
-	if err != nil {
-		return nil, err
-	}
-	resp, err := p.pipeline.Do(ctx, req)
-	if err != nil {
-		return nil, err
-	}
-	return p.handleResponse(resp)
+	s.RawResponse = resp
+	return s, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeSkuPoller method
 // on the client to create a new poller from the data held in the current poller type
 func (p *skuPoller) ResumeToken() (string, error) {
-	if p.pt.hasTerminated() {
-		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
-	}
-	js, err := json.Marshal(p.pt)
-	if err != nil {
-		return "", err
-	}
-	return string(js), nil
+	return p.pt.ResumeToken()
 }
 
 func (p *skuPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*SkuResponse, error) {
-	// initial check for a retry-after header existing on the initial response
-	if retryAfter := azcore.RetryAfter(p.pt.latestResponse().Response); retryAfter > 0 {
-		err := delay(ctx, retryAfter)
-		if err != nil {
-			return nil, err
-		}
+	s := &SkuResponse{Sku: &Sku{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.Sku)
+	if err != nil {
+		return nil, err
 	}
-	// begin polling the endpoint until a terminal state is reached
-	for {
-		resp, err := p.Poll(ctx)
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			break
-		}
-		d := frequency
-		if retryAfter := azcore.RetryAfter(resp); retryAfter > 0 {
-			d = retryAfter
-		}
-		err = delay(ctx, d)
-		if err != nil {
-			return nil, err
-		}
-	}
-	return p.FinalResponse(ctx)
-}
-
-func (p *skuPoller) handleResponse(resp *azcore.Response) (*SkuResponse, error) {
-	result := SkuResponse{RawResponse: resp.Response}
-	if resp.HasStatusCode(http.StatusNoContent) {
-		return &result, nil
-	}
-	if !resp.HasStatusCode(pollingCodes[:]...) {
-		return nil, p.pt.handleError(resp)
-	}
-	return &result, resp.UnmarshalAsJSON(&result.Sku)
+	s.RawResponse = resp
+	return s, nil
 }
 
 // SubProductPoller provides polling facilities until the operation completes
@@ -480,120 +212,43 @@ type SubProductPoller interface {
 type subProductPoller struct {
 	// the client for making the request
 	pipeline azcore.Pipeline
-	pt       pollingTracker
+	pt       armcore.Poller
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
 func (p *subProductPoller) Done() bool {
-	return p.pt.hasTerminated()
+	return p.pt.Done()
 }
 
 // Poll will send poll the service endpoint and return an http.Response or error received from the service
 func (p *subProductPoller) Poll(ctx context.Context) (*http.Response, error) {
-	if lroPollDone(ctx, p.pipeline, p.pt) {
-		return p.pt.latestResponse().Response, p.pt.pollingError()
-	}
-	return nil, p.pt.pollingError()
+	return p.pt.Poll(ctx, p.pipeline)
 }
 
 func (p *subProductPoller) FinalResponse(ctx context.Context) (*SubProductResponse, error) {
-	if !p.Done() {
-		return nil, errors.New("cannot return a final response from a poller in a non-terminal state")
-	}
-	if p.pt.pollerMethodVerb() == http.MethodPut || p.pt.pollerMethodVerb() == http.MethodPatch {
-		res, err := p.handleResponse(p.pt.latestResponse())
-		if err != nil {
-			return nil, err
-		}
-		if res != nil && (*res.SubProduct != SubProduct{}) {
-			return res, nil
-		}
-	}
-	// checking if there was a FinalStateVia configuration to re-route the final GET
-	// request to the value specified in the FinalStateVia property on the poller
-	err := p.pt.setFinalState()
+	s := &SubProductResponse{SubProduct: &SubProduct{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.SubProduct)
 	if err != nil {
 		return nil, err
 	}
-	if p.pt.finalGetURL() == "" {
-		// we can end up in this situation if the async operation returns a 200
-		// with no polling URLs.  in that case return the response which should
-		// contain the JSON payload (only do this for successful terminal cases).
-		if lr := p.pt.latestResponse(); lr != nil && p.pt.hasSucceeded() {
-			result, err := p.handleResponse(lr)
-			if err != nil {
-				return nil, err
-			}
-			return result, nil
-		}
-		return nil, errors.New("missing URL for retrieving result")
-	}
-	u, err := url.Parse(p.pt.finalGetURL())
-	if err != nil {
-		return nil, err
-	}
-	req := azcore.NewRequest(http.MethodGet, *u)
-	if err != nil {
-		return nil, err
-	}
-	resp, err := p.pipeline.Do(ctx, req)
-	if err != nil {
-		return nil, err
-	}
-	return p.handleResponse(resp)
+	s.RawResponse = resp
+	return s, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeSubProductPoller method
 // on the client to create a new poller from the data held in the current poller type
 func (p *subProductPoller) ResumeToken() (string, error) {
-	if p.pt.hasTerminated() {
-		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
-	}
-	js, err := json.Marshal(p.pt)
-	if err != nil {
-		return "", err
-	}
-	return string(js), nil
+	return p.pt.ResumeToken()
 }
 
 func (p *subProductPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*SubProductResponse, error) {
-	// initial check for a retry-after header existing on the initial response
-	if retryAfter := azcore.RetryAfter(p.pt.latestResponse().Response); retryAfter > 0 {
-		err := delay(ctx, retryAfter)
-		if err != nil {
-			return nil, err
-		}
+	s := &SubProductResponse{SubProduct: &SubProduct{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.SubProduct)
+	if err != nil {
+		return nil, err
 	}
-	// begin polling the endpoint until a terminal state is reached
-	for {
-		resp, err := p.Poll(ctx)
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			break
-		}
-		d := frequency
-		if retryAfter := azcore.RetryAfter(resp); retryAfter > 0 {
-			d = retryAfter
-		}
-		err = delay(ctx, d)
-		if err != nil {
-			return nil, err
-		}
-	}
-	return p.FinalResponse(ctx)
-}
-
-func (p *subProductPoller) handleResponse(resp *azcore.Response) (*SubProductResponse, error) {
-	result := SubProductResponse{RawResponse: resp.Response}
-	if resp.HasStatusCode(http.StatusNoContent) {
-		return &result, nil
-	}
-	if !resp.HasStatusCode(pollingCodes[:]...) {
-		return nil, p.pt.handleError(resp)
-	}
-	return &result, resp.UnmarshalAsJSON(&result.SubProduct)
+	s.RawResponse = resp
+	return s, nil
 }
 
 func delay(ctx context.Context, delay time.Duration) error {

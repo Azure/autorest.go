@@ -57,7 +57,10 @@ func TestBeginPost202Retry200(t *testing.T) {
 			break
 		}
 	}
-	resp = poller.FinalResponse()
+	resp, err = poller.FinalResponse(context.Background())
+	if err != nil {
+		t.Fatalf("Unexpected error: %v", err)
+	}
 	helpers.VerifyStatusCode(t, resp, http.StatusOK)
 }
 
@@ -86,7 +89,10 @@ func TestBeginPostAsyncRetrySucceeded(t *testing.T) {
 			break
 		}
 	}
-	resp = poller.FinalResponse()
+	resp, err = poller.FinalResponse(context.Background())
+	if err != nil {
+		t.Fatalf("Unexpected error: %v", err)
+	}
 	helpers.VerifyStatusCode(t, resp, http.StatusOK)
 }
 

@@ -180,6 +180,7 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
     reqParams[i] = reqParams[i].trim().split(' ')[0];
   }
   if (isLROOperation(op)) {
+    imports.add('github.com/Azure/azure-sdk-for-go/sdk/armcore');
     imports.add('time');
     text += `\treq, err := client.${info.protocolNaming.requestMethod}(${reqParams.join(', ')})\n`;
     text += `\tif err != nil {\n`;
@@ -206,7 +207,7 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
     if (op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via']) {
       finalState = op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via'];
     }
-    text += `\tpt, err := createPollingTracker("${clientName}.${op.language.go!.name}", "${finalState}", resp, client.${info.protocolNaming.errorMethod})\n`;
+    text += `\tpt, err := armcore.NewPoller("${clientName}.${op.language.go!.name}", "${finalState}", resp, client.${info.protocolNaming.errorMethod})\n`;
     text += '\tif err != nil {\n';
     text += '\t\treturn nil, err\n';
     text += '\t}\n';
@@ -946,7 +947,7 @@ function generateReturnsInfo(op: Operation, forHandler: boolean): string[] {
 function addResumePollerMethod(op: Operation, clientName: string): string {
   const info = <OperationNaming>op.language.go!;
   let text = `func (client *${clientName}) Resume${op.language.go!.name}(token string) (${op.language.go!.pollerType.name}, error) {\n`;
-  text += `\tpt, err := resumePollingTracker("${clientName}.${op.language.go!.name}", token, client.${info.protocolNaming.errorMethod})\n`;
+  text += `\tpt, err := armcore.NewPollerFromResumeToken("${clientName}.${op.language.go!.name}", token, client.${info.protocolNaming.errorMethod})\n`;
   text += '\tif err != nil {\n';
   text += '\t\treturn nil, err\n';
   text += '\t}\n';

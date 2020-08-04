@@ -8,6 +8,7 @@ package armnetwork
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -59,7 +60,7 @@ func (client *azureFirewallsOperations) BeginCreateOrUpdate(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("azureFirewallsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("azureFirewallsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -75,7 +76,7 @@ func (client *azureFirewallsOperations) BeginCreateOrUpdate(ctx context.Context,
 }
 
 func (client *azureFirewallsOperations) ResumeCreateOrUpdate(token string) (AzureFirewallPoller, error) {
-	pt, err := resumePollingTracker("azureFirewallsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("azureFirewallsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -134,7 +135,7 @@ func (client *azureFirewallsOperations) BeginDelete(ctx context.Context, resourc
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("azureFirewallsOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("azureFirewallsOperations.Delete", "location", resp, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -150,7 +151,7 @@ func (client *azureFirewallsOperations) BeginDelete(ctx context.Context, resourc
 }
 
 func (client *azureFirewallsOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("azureFirewallsOperations.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("azureFirewallsOperations.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -374,7 +375,7 @@ func (client *azureFirewallsOperations) BeginUpdateTags(ctx context.Context, res
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("azureFirewallsOperations.UpdateTags", "azure-async-operation", resp, client.updateTagsHandleError)
+	pt, err := armcore.NewPoller("azureFirewallsOperations.UpdateTags", "azure-async-operation", resp, client.updateTagsHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -390,7 +391,7 @@ func (client *azureFirewallsOperations) BeginUpdateTags(ctx context.Context, res
 }
 
 func (client *azureFirewallsOperations) ResumeUpdateTags(token string) (AzureFirewallPoller, error) {
-	pt, err := resumePollingTracker("azureFirewallsOperations.UpdateTags", token, client.updateTagsHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("azureFirewallsOperations.UpdateTags", token, client.updateTagsHandleError)
 	if err != nil {
 		return nil, err
 	}

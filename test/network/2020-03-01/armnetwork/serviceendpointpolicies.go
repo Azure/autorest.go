@@ -8,6 +8,7 @@ package armnetwork
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -57,7 +58,7 @@ func (client *serviceEndpointPoliciesOperations) BeginCreateOrUpdate(ctx context
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("serviceEndpointPoliciesOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("serviceEndpointPoliciesOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -73,7 +74,7 @@ func (client *serviceEndpointPoliciesOperations) BeginCreateOrUpdate(ctx context
 }
 
 func (client *serviceEndpointPoliciesOperations) ResumeCreateOrUpdate(token string) (ServiceEndpointPolicyPoller, error) {
-	pt, err := resumePollingTracker("serviceEndpointPoliciesOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("serviceEndpointPoliciesOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -132,7 +133,7 @@ func (client *serviceEndpointPoliciesOperations) BeginDelete(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("serviceEndpointPoliciesOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("serviceEndpointPoliciesOperations.Delete", "location", resp, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -148,7 +149,7 @@ func (client *serviceEndpointPoliciesOperations) BeginDelete(ctx context.Context
 }
 
 func (client *serviceEndpointPoliciesOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("serviceEndpointPoliciesOperations.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("serviceEndpointPoliciesOperations.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}

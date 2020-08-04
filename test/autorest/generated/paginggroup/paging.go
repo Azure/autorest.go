@@ -9,6 +9,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"io/ioutil"
 	"net/http"
@@ -355,7 +356,7 @@ func (client *pagingOperations) BeginGetMultiplePagesLro(ctx context.Context, pa
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("pagingOperations.GetMultiplePagesLro", "", resp, client.getMultiplePagesLroHandleError)
+	pt, err := armcore.NewPoller("pagingOperations.GetMultiplePagesLro", "", resp, client.getMultiplePagesLroHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -372,7 +373,7 @@ func (client *pagingOperations) BeginGetMultiplePagesLro(ctx context.Context, pa
 }
 
 func (client *pagingOperations) ResumeGetMultiplePagesLro(token string) (ProductResultPagerPoller, error) {
-	pt, err := resumePollingTracker("pagingOperations.GetMultiplePagesLro", token, client.getMultiplePagesLroHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("pagingOperations.GetMultiplePagesLro", token, client.getMultiplePagesLroHandleError)
 	if err != nil {
 		return nil, err
 	}

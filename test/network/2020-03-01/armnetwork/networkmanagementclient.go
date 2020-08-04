@@ -8,6 +8,7 @@ package armnetwork
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -117,7 +118,7 @@ func (client *networkManagementClientOperations) BeginDeleteBastionShareableLink
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("networkManagementClientOperations.DeleteBastionShareableLink", "location", resp, client.deleteBastionShareableLinkHandleError)
+	pt, err := armcore.NewPoller("networkManagementClientOperations.DeleteBastionShareableLink", "location", resp, client.deleteBastionShareableLinkHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -133,7 +134,7 @@ func (client *networkManagementClientOperations) BeginDeleteBastionShareableLink
 }
 
 func (client *networkManagementClientOperations) ResumeDeleteBastionShareableLink(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("networkManagementClientOperations.DeleteBastionShareableLink", token, client.deleteBastionShareableLinkHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("networkManagementClientOperations.DeleteBastionShareableLink", token, client.deleteBastionShareableLinkHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -250,7 +251,7 @@ func (client *networkManagementClientOperations) BeginGeneratevirtualwanvpnserve
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("networkManagementClientOperations.Generatevirtualwanvpnserverconfigurationvpnprofile", "location", resp, client.generatevirtualwanvpnserverconfigurationvpnprofileHandleError)
+	pt, err := armcore.NewPoller("networkManagementClientOperations.Generatevirtualwanvpnserverconfigurationvpnprofile", "location", resp, client.generatevirtualwanvpnserverconfigurationvpnprofileHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -266,7 +267,7 @@ func (client *networkManagementClientOperations) BeginGeneratevirtualwanvpnserve
 }
 
 func (client *networkManagementClientOperations) ResumeGeneratevirtualwanvpnserverconfigurationvpnprofile(token string) (VpnProfileResponsePoller, error) {
-	pt, err := resumePollingTracker("networkManagementClientOperations.Generatevirtualwanvpnserverconfigurationvpnprofile", token, client.generatevirtualwanvpnserverconfigurationvpnprofileHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("networkManagementClientOperations.Generatevirtualwanvpnserverconfigurationvpnprofile", token, client.generatevirtualwanvpnserverconfigurationvpnprofileHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -325,7 +326,7 @@ func (client *networkManagementClientOperations) BeginGetActiveSessions(ctx cont
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("networkManagementClientOperations.GetActiveSessions", "location", resp, client.getActiveSessionsHandleError)
+	pt, err := armcore.NewPoller("networkManagementClientOperations.GetActiveSessions", "location", resp, client.getActiveSessionsHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -342,7 +343,7 @@ func (client *networkManagementClientOperations) BeginGetActiveSessions(ctx cont
 }
 
 func (client *networkManagementClientOperations) ResumeGetActiveSessions(token string) (BastionActiveSessionListResultPagerPoller, error) {
-	pt, err := resumePollingTracker("networkManagementClientOperations.GetActiveSessions", token, client.getActiveSessionsHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("networkManagementClientOperations.GetActiveSessions", token, client.getActiveSessionsHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -468,7 +469,7 @@ func (client *networkManagementClientOperations) BeginPutBastionShareableLink(ct
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("networkManagementClientOperations.PutBastionShareableLink", "location", resp, client.putBastionShareableLinkHandleError)
+	pt, err := armcore.NewPoller("networkManagementClientOperations.PutBastionShareableLink", "location", resp, client.putBastionShareableLinkHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -485,7 +486,7 @@ func (client *networkManagementClientOperations) BeginPutBastionShareableLink(ct
 }
 
 func (client *networkManagementClientOperations) ResumePutBastionShareableLink(token string) (BastionShareableLinkListResultPagerPoller, error) {
-	pt, err := resumePollingTracker("networkManagementClientOperations.PutBastionShareableLink", token, client.putBastionShareableLinkHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("networkManagementClientOperations.PutBastionShareableLink", token, client.putBastionShareableLinkHandleError)
 	if err != nil {
 		return nil, err
 	}

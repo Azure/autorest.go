@@ -377,7 +377,7 @@ func TestLROBeginPost202List(t *testing.T) {
 	}
 	helpers.VerifyStatusCode(t, prodArrayResp.RawResponse, 200)
 	helpers.DeepEqualOrFatal(t, prodArrayResp.ProductArray, &[]lrogroup.Product{
-		lrogroup.Product{
+		{
 			Resource: lrogroup.Resource{
 				ID:   to.StringPtr("100"),
 				Name: to.StringPtr("foo"),

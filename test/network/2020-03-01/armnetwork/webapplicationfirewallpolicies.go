@@ -8,6 +8,7 @@ package armnetwork
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -105,7 +106,7 @@ func (client *webApplicationFirewallPoliciesOperations) BeginDelete(ctx context.
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("webApplicationFirewallPoliciesOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("webApplicationFirewallPoliciesOperations.Delete", "location", resp, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -121,7 +122,7 @@ func (client *webApplicationFirewallPoliciesOperations) BeginDelete(ctx context.
 }
 
 func (client *webApplicationFirewallPoliciesOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("webApplicationFirewallPoliciesOperations.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("webApplicationFirewallPoliciesOperations.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}

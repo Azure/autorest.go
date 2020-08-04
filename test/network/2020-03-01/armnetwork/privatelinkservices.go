@@ -8,6 +8,7 @@ package armnetwork
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -77,7 +78,7 @@ func (client *privateLinkServicesOperations) BeginCheckPrivateLinkServiceVisibil
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("privateLinkServicesOperations.CheckPrivateLinkServiceVisibility", "location", resp, client.checkPrivateLinkServiceVisibilityHandleError)
+	pt, err := armcore.NewPoller("privateLinkServicesOperations.CheckPrivateLinkServiceVisibility", "location", resp, client.checkPrivateLinkServiceVisibilityHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -93,7 +94,7 @@ func (client *privateLinkServicesOperations) BeginCheckPrivateLinkServiceVisibil
 }
 
 func (client *privateLinkServicesOperations) ResumeCheckPrivateLinkServiceVisibility(token string) (PrivateLinkServiceVisibilityPoller, error) {
-	pt, err := resumePollingTracker("privateLinkServicesOperations.CheckPrivateLinkServiceVisibility", token, client.checkPrivateLinkServiceVisibilityHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("privateLinkServicesOperations.CheckPrivateLinkServiceVisibility", token, client.checkPrivateLinkServiceVisibilityHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -151,7 +152,7 @@ func (client *privateLinkServicesOperations) BeginCheckPrivateLinkServiceVisibil
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("privateLinkServicesOperations.CheckPrivateLinkServiceVisibilityByResourceGroup", "location", resp, client.checkPrivateLinkServiceVisibilityByResourceGroupHandleError)
+	pt, err := armcore.NewPoller("privateLinkServicesOperations.CheckPrivateLinkServiceVisibilityByResourceGroup", "location", resp, client.checkPrivateLinkServiceVisibilityByResourceGroupHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -167,7 +168,7 @@ func (client *privateLinkServicesOperations) BeginCheckPrivateLinkServiceVisibil
 }
 
 func (client *privateLinkServicesOperations) ResumeCheckPrivateLinkServiceVisibilityByResourceGroup(token string) (PrivateLinkServiceVisibilityPoller, error) {
-	pt, err := resumePollingTracker("privateLinkServicesOperations.CheckPrivateLinkServiceVisibilityByResourceGroup", token, client.checkPrivateLinkServiceVisibilityByResourceGroupHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("privateLinkServicesOperations.CheckPrivateLinkServiceVisibilityByResourceGroup", token, client.checkPrivateLinkServiceVisibilityByResourceGroupHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -226,7 +227,7 @@ func (client *privateLinkServicesOperations) BeginCreateOrUpdate(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("privateLinkServicesOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("privateLinkServicesOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -242,7 +243,7 @@ func (client *privateLinkServicesOperations) BeginCreateOrUpdate(ctx context.Con
 }
 
 func (client *privateLinkServicesOperations) ResumeCreateOrUpdate(token string) (PrivateLinkServicePoller, error) {
-	pt, err := resumePollingTracker("privateLinkServicesOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("privateLinkServicesOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -301,7 +302,7 @@ func (client *privateLinkServicesOperations) BeginDelete(ctx context.Context, re
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("privateLinkServicesOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("privateLinkServicesOperations.Delete", "location", resp, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -317,7 +318,7 @@ func (client *privateLinkServicesOperations) BeginDelete(ctx context.Context, re
 }
 
 func (client *privateLinkServicesOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("privateLinkServicesOperations.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("privateLinkServicesOperations.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -376,7 +377,7 @@ func (client *privateLinkServicesOperations) BeginDeletePrivateEndpointConnectio
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("privateLinkServicesOperations.DeletePrivateEndpointConnection", "location", resp, client.deletePrivateEndpointConnectionHandleError)
+	pt, err := armcore.NewPoller("privateLinkServicesOperations.DeletePrivateEndpointConnection", "location", resp, client.deletePrivateEndpointConnectionHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -392,7 +393,7 @@ func (client *privateLinkServicesOperations) BeginDeletePrivateEndpointConnectio
 }
 
 func (client *privateLinkServicesOperations) ResumeDeletePrivateEndpointConnection(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("privateLinkServicesOperations.DeletePrivateEndpointConnection", token, client.deletePrivateEndpointConnectionHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("privateLinkServicesOperations.DeletePrivateEndpointConnection", token, client.deletePrivateEndpointConnectionHandleError)
 	if err != nil {
 		return nil, err
 	}

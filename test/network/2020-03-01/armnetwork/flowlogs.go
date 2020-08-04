@@ -8,6 +8,7 @@ package armnetwork
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -53,7 +54,7 @@ func (client *flowLogsOperations) BeginCreateOrUpdate(ctx context.Context, resou
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("flowLogsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("flowLogsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -69,7 +70,7 @@ func (client *flowLogsOperations) BeginCreateOrUpdate(ctx context.Context, resou
 }
 
 func (client *flowLogsOperations) ResumeCreateOrUpdate(token string) (FlowLogPoller, error) {
-	pt, err := resumePollingTracker("flowLogsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("flowLogsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -129,7 +130,7 @@ func (client *flowLogsOperations) BeginDelete(ctx context.Context, resourceGroup
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("flowLogsOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("flowLogsOperations.Delete", "location", resp, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -145,7 +146,7 @@ func (client *flowLogsOperations) BeginDelete(ctx context.Context, resourceGroup
 }
 
 func (client *flowLogsOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("flowLogsOperations.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("flowLogsOperations.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}

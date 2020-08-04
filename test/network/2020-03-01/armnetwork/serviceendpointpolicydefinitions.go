@@ -8,6 +8,7 @@ package armnetwork
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -53,7 +54,7 @@ func (client *serviceEndpointPolicyDefinitionsOperations) BeginCreateOrUpdate(ct
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("serviceEndpointPolicyDefinitionsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("serviceEndpointPolicyDefinitionsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -69,7 +70,7 @@ func (client *serviceEndpointPolicyDefinitionsOperations) BeginCreateOrUpdate(ct
 }
 
 func (client *serviceEndpointPolicyDefinitionsOperations) ResumeCreateOrUpdate(token string) (ServiceEndpointPolicyDefinitionPoller, error) {
-	pt, err := resumePollingTracker("serviceEndpointPolicyDefinitionsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("serviceEndpointPolicyDefinitionsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -129,7 +130,7 @@ func (client *serviceEndpointPolicyDefinitionsOperations) BeginDelete(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("serviceEndpointPolicyDefinitionsOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("serviceEndpointPolicyDefinitionsOperations.Delete", "location", resp, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -145,7 +146,7 @@ func (client *serviceEndpointPolicyDefinitionsOperations) BeginDelete(ctx contex
 }
 
 func (client *serviceEndpointPolicyDefinitionsOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("serviceEndpointPolicyDefinitionsOperations.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("serviceEndpointPolicyDefinitionsOperations.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}

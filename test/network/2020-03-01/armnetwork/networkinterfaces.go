@@ -8,6 +8,7 @@ package armnetwork
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -75,7 +76,7 @@ func (client *networkInterfacesOperations) BeginCreateOrUpdate(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("networkInterfacesOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("networkInterfacesOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -91,7 +92,7 @@ func (client *networkInterfacesOperations) BeginCreateOrUpdate(ctx context.Conte
 }
 
 func (client *networkInterfacesOperations) ResumeCreateOrUpdate(token string) (NetworkInterfacePoller, error) {
-	pt, err := resumePollingTracker("networkInterfacesOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("networkInterfacesOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -150,7 +151,7 @@ func (client *networkInterfacesOperations) BeginDelete(ctx context.Context, reso
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("networkInterfacesOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("networkInterfacesOperations.Delete", "location", resp, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -166,7 +167,7 @@ func (client *networkInterfacesOperations) BeginDelete(ctx context.Context, reso
 }
 
 func (client *networkInterfacesOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("networkInterfacesOperations.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("networkInterfacesOperations.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -280,7 +281,7 @@ func (client *networkInterfacesOperations) BeginGetEffectiveRouteTable(ctx conte
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("networkInterfacesOperations.GetEffectiveRouteTable", "location", resp, client.getEffectiveRouteTableHandleError)
+	pt, err := armcore.NewPoller("networkInterfacesOperations.GetEffectiveRouteTable", "location", resp, client.getEffectiveRouteTableHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -296,7 +297,7 @@ func (client *networkInterfacesOperations) BeginGetEffectiveRouteTable(ctx conte
 }
 
 func (client *networkInterfacesOperations) ResumeGetEffectiveRouteTable(token string) (EffectiveRouteListResultPoller, error) {
-	pt, err := resumePollingTracker("networkInterfacesOperations.GetEffectiveRouteTable", token, client.getEffectiveRouteTableHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("networkInterfacesOperations.GetEffectiveRouteTable", token, client.getEffectiveRouteTableHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -583,7 +584,7 @@ func (client *networkInterfacesOperations) BeginListEffectiveNetworkSecurityGrou
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("networkInterfacesOperations.ListEffectiveNetworkSecurityGroups", "location", resp, client.listEffectiveNetworkSecurityGroupsHandleError)
+	pt, err := armcore.NewPoller("networkInterfacesOperations.ListEffectiveNetworkSecurityGroups", "location", resp, client.listEffectiveNetworkSecurityGroupsHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -599,7 +600,7 @@ func (client *networkInterfacesOperations) BeginListEffectiveNetworkSecurityGrou
 }
 
 func (client *networkInterfacesOperations) ResumeListEffectiveNetworkSecurityGroups(token string) (EffectiveNetworkSecurityGroupListResultPoller, error) {
-	pt, err := resumePollingTracker("networkInterfacesOperations.ListEffectiveNetworkSecurityGroups", token, client.listEffectiveNetworkSecurityGroupsHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("networkInterfacesOperations.ListEffectiveNetworkSecurityGroups", token, client.listEffectiveNetworkSecurityGroupsHandleError)
 	if err != nil {
 		return nil, err
 	}

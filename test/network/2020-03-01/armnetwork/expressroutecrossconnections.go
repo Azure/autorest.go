@@ -8,6 +8,7 @@ package armnetwork
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -65,7 +66,7 @@ func (client *expressRouteCrossConnectionsOperations) BeginCreateOrUpdate(ctx co
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("expressRouteCrossConnectionsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("expressRouteCrossConnectionsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -81,7 +82,7 @@ func (client *expressRouteCrossConnectionsOperations) BeginCreateOrUpdate(ctx co
 }
 
 func (client *expressRouteCrossConnectionsOperations) ResumeCreateOrUpdate(token string) (ExpressRouteCrossConnectionPoller, error) {
-	pt, err := resumePollingTracker("expressRouteCrossConnectionsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("expressRouteCrossConnectionsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -248,7 +249,7 @@ func (client *expressRouteCrossConnectionsOperations) BeginListArpTable(ctx cont
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("expressRouteCrossConnectionsOperations.ListArpTable", "location", resp, client.listArpTableHandleError)
+	pt, err := armcore.NewPoller("expressRouteCrossConnectionsOperations.ListArpTable", "location", resp, client.listArpTableHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -264,7 +265,7 @@ func (client *expressRouteCrossConnectionsOperations) BeginListArpTable(ctx cont
 }
 
 func (client *expressRouteCrossConnectionsOperations) ResumeListArpTable(token string) (ExpressRouteCircuitsArpTableListResultPoller, error) {
-	pt, err := resumePollingTracker("expressRouteCrossConnectionsOperations.ListArpTable", token, client.listArpTableHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("expressRouteCrossConnectionsOperations.ListArpTable", token, client.listArpTableHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -382,7 +383,7 @@ func (client *expressRouteCrossConnectionsOperations) BeginListRoutesTable(ctx c
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("expressRouteCrossConnectionsOperations.ListRoutesTable", "location", resp, client.listRoutesTableHandleError)
+	pt, err := armcore.NewPoller("expressRouteCrossConnectionsOperations.ListRoutesTable", "location", resp, client.listRoutesTableHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -398,7 +399,7 @@ func (client *expressRouteCrossConnectionsOperations) BeginListRoutesTable(ctx c
 }
 
 func (client *expressRouteCrossConnectionsOperations) ResumeListRoutesTable(token string) (ExpressRouteCircuitsRoutesTableListResultPoller, error) {
-	pt, err := resumePollingTracker("expressRouteCrossConnectionsOperations.ListRoutesTable", token, client.listRoutesTableHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("expressRouteCrossConnectionsOperations.ListRoutesTable", token, client.listRoutesTableHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -459,7 +460,7 @@ func (client *expressRouteCrossConnectionsOperations) BeginListRoutesTableSummar
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("expressRouteCrossConnectionsOperations.ListRoutesTableSummary", "location", resp, client.listRoutesTableSummaryHandleError)
+	pt, err := armcore.NewPoller("expressRouteCrossConnectionsOperations.ListRoutesTableSummary", "location", resp, client.listRoutesTableSummaryHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -475,7 +476,7 @@ func (client *expressRouteCrossConnectionsOperations) BeginListRoutesTableSummar
 }
 
 func (client *expressRouteCrossConnectionsOperations) ResumeListRoutesTableSummary(token string) (ExpressRouteCrossConnectionsRoutesTableSummaryListResultPoller, error) {
-	pt, err := resumePollingTracker("expressRouteCrossConnectionsOperations.ListRoutesTableSummary", token, client.listRoutesTableSummaryHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("expressRouteCrossConnectionsOperations.ListRoutesTableSummary", token, client.listRoutesTableSummaryHandleError)
 	if err != nil {
 		return nil, err
 	}

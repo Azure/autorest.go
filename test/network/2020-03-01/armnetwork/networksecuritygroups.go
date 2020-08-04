@@ -8,6 +8,7 @@ package armnetwork
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -57,7 +58,7 @@ func (client *networkSecurityGroupsOperations) BeginCreateOrUpdate(ctx context.C
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("networkSecurityGroupsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("networkSecurityGroupsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -73,7 +74,7 @@ func (client *networkSecurityGroupsOperations) BeginCreateOrUpdate(ctx context.C
 }
 
 func (client *networkSecurityGroupsOperations) ResumeCreateOrUpdate(token string) (NetworkSecurityGroupPoller, error) {
-	pt, err := resumePollingTracker("networkSecurityGroupsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("networkSecurityGroupsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -132,7 +133,7 @@ func (client *networkSecurityGroupsOperations) BeginDelete(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("networkSecurityGroupsOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("networkSecurityGroupsOperations.Delete", "location", resp, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -148,7 +149,7 @@ func (client *networkSecurityGroupsOperations) BeginDelete(ctx context.Context, 
 }
 
 func (client *networkSecurityGroupsOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("networkSecurityGroupsOperations.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("networkSecurityGroupsOperations.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}

@@ -7,6 +7,7 @@ package armnetwork
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -52,7 +53,7 @@ func (client *expressRouteConnectionsOperations) BeginCreateOrUpdate(ctx context
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("expressRouteConnectionsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("expressRouteConnectionsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -68,7 +69,7 @@ func (client *expressRouteConnectionsOperations) BeginCreateOrUpdate(ctx context
 }
 
 func (client *expressRouteConnectionsOperations) ResumeCreateOrUpdate(token string) (ExpressRouteConnectionPoller, error) {
-	pt, err := resumePollingTracker("expressRouteConnectionsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("expressRouteConnectionsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -128,7 +129,7 @@ func (client *expressRouteConnectionsOperations) BeginDelete(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("expressRouteConnectionsOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("expressRouteConnectionsOperations.Delete", "location", resp, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -144,7 +145,7 @@ func (client *expressRouteConnectionsOperations) BeginDelete(ctx context.Context
 }
 
 func (client *expressRouteConnectionsOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("expressRouteConnectionsOperations.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("expressRouteConnectionsOperations.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}

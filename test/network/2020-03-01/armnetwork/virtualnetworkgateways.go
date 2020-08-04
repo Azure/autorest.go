@@ -8,6 +8,7 @@ package armnetwork
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -119,7 +120,7 @@ func (client *virtualNetworkGatewaysOperations) BeginCreateOrUpdate(ctx context.
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("virtualNetworkGatewaysOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("virtualNetworkGatewaysOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -135,7 +136,7 @@ func (client *virtualNetworkGatewaysOperations) BeginCreateOrUpdate(ctx context.
 }
 
 func (client *virtualNetworkGatewaysOperations) ResumeCreateOrUpdate(token string) (VirtualNetworkGatewayPoller, error) {
-	pt, err := resumePollingTracker("virtualNetworkGatewaysOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("virtualNetworkGatewaysOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -194,7 +195,7 @@ func (client *virtualNetworkGatewaysOperations) BeginDelete(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("virtualNetworkGatewaysOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("virtualNetworkGatewaysOperations.Delete", "location", resp, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -210,7 +211,7 @@ func (client *virtualNetworkGatewaysOperations) BeginDelete(ctx context.Context,
 }
 
 func (client *virtualNetworkGatewaysOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("virtualNetworkGatewaysOperations.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("virtualNetworkGatewaysOperations.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -269,7 +270,7 @@ func (client *virtualNetworkGatewaysOperations) BeginDisconnectVirtualNetworkGat
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("virtualNetworkGatewaysOperations.DisconnectVirtualNetworkGatewayVpnConnections", "location", resp, client.disconnectVirtualNetworkGatewayVpnConnectionsHandleError)
+	pt, err := armcore.NewPoller("virtualNetworkGatewaysOperations.DisconnectVirtualNetworkGatewayVpnConnections", "location", resp, client.disconnectVirtualNetworkGatewayVpnConnectionsHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -285,7 +286,7 @@ func (client *virtualNetworkGatewaysOperations) BeginDisconnectVirtualNetworkGat
 }
 
 func (client *virtualNetworkGatewaysOperations) ResumeDisconnectVirtualNetworkGatewayVpnConnections(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("virtualNetworkGatewaysOperations.DisconnectVirtualNetworkGatewayVpnConnections", token, client.disconnectVirtualNetworkGatewayVpnConnectionsHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("virtualNetworkGatewaysOperations.DisconnectVirtualNetworkGatewayVpnConnections", token, client.disconnectVirtualNetworkGatewayVpnConnectionsHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -344,7 +345,7 @@ func (client *virtualNetworkGatewaysOperations) BeginGenerateVpnProfile(ctx cont
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("virtualNetworkGatewaysOperations.GenerateVpnProfile", "location", resp, client.generateVpnProfileHandleError)
+	pt, err := armcore.NewPoller("virtualNetworkGatewaysOperations.GenerateVpnProfile", "location", resp, client.generateVpnProfileHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -360,7 +361,7 @@ func (client *virtualNetworkGatewaysOperations) BeginGenerateVpnProfile(ctx cont
 }
 
 func (client *virtualNetworkGatewaysOperations) ResumeGenerateVpnProfile(token string) (StringPoller, error) {
-	pt, err := resumePollingTracker("virtualNetworkGatewaysOperations.GenerateVpnProfile", token, client.generateVpnProfileHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("virtualNetworkGatewaysOperations.GenerateVpnProfile", token, client.generateVpnProfileHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -419,7 +420,7 @@ func (client *virtualNetworkGatewaysOperations) BeginGeneratevpnclientpackage(ct
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("virtualNetworkGatewaysOperations.Generatevpnclientpackage", "location", resp, client.generatevpnclientpackageHandleError)
+	pt, err := armcore.NewPoller("virtualNetworkGatewaysOperations.Generatevpnclientpackage", "location", resp, client.generatevpnclientpackageHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -435,7 +436,7 @@ func (client *virtualNetworkGatewaysOperations) BeginGeneratevpnclientpackage(ct
 }
 
 func (client *virtualNetworkGatewaysOperations) ResumeGeneratevpnclientpackage(token string) (StringPoller, error) {
-	pt, err := resumePollingTracker("virtualNetworkGatewaysOperations.Generatevpnclientpackage", token, client.generatevpnclientpackageHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("virtualNetworkGatewaysOperations.Generatevpnclientpackage", token, client.generatevpnclientpackageHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -546,7 +547,7 @@ func (client *virtualNetworkGatewaysOperations) BeginGetAdvertisedRoutes(ctx con
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("virtualNetworkGatewaysOperations.GetAdvertisedRoutes", "location", resp, client.getAdvertisedRoutesHandleError)
+	pt, err := armcore.NewPoller("virtualNetworkGatewaysOperations.GetAdvertisedRoutes", "location", resp, client.getAdvertisedRoutesHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -562,7 +563,7 @@ func (client *virtualNetworkGatewaysOperations) BeginGetAdvertisedRoutes(ctx con
 }
 
 func (client *virtualNetworkGatewaysOperations) ResumeGetAdvertisedRoutes(token string) (GatewayRouteListResultPoller, error) {
-	pt, err := resumePollingTracker("virtualNetworkGatewaysOperations.GetAdvertisedRoutes", token, client.getAdvertisedRoutesHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("virtualNetworkGatewaysOperations.GetAdvertisedRoutes", token, client.getAdvertisedRoutesHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -622,7 +623,7 @@ func (client *virtualNetworkGatewaysOperations) BeginGetBgpPeerStatus(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("virtualNetworkGatewaysOperations.GetBgpPeerStatus", "location", resp, client.getBgpPeerStatusHandleError)
+	pt, err := armcore.NewPoller("virtualNetworkGatewaysOperations.GetBgpPeerStatus", "location", resp, client.getBgpPeerStatusHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -638,7 +639,7 @@ func (client *virtualNetworkGatewaysOperations) BeginGetBgpPeerStatus(ctx contex
 }
 
 func (client *virtualNetworkGatewaysOperations) ResumeGetBgpPeerStatus(token string) (BgpPeerStatusListResultPoller, error) {
-	pt, err := resumePollingTracker("virtualNetworkGatewaysOperations.GetBgpPeerStatus", token, client.getBgpPeerStatusHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("virtualNetworkGatewaysOperations.GetBgpPeerStatus", token, client.getBgpPeerStatusHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -700,7 +701,7 @@ func (client *virtualNetworkGatewaysOperations) BeginGetLearnedRoutes(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("virtualNetworkGatewaysOperations.GetLearnedRoutes", "location", resp, client.getLearnedRoutesHandleError)
+	pt, err := armcore.NewPoller("virtualNetworkGatewaysOperations.GetLearnedRoutes", "location", resp, client.getLearnedRoutesHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -716,7 +717,7 @@ func (client *virtualNetworkGatewaysOperations) BeginGetLearnedRoutes(ctx contex
 }
 
 func (client *virtualNetworkGatewaysOperations) ResumeGetLearnedRoutes(token string) (GatewayRouteListResultPoller, error) {
-	pt, err := resumePollingTracker("virtualNetworkGatewaysOperations.GetLearnedRoutes", token, client.getLearnedRoutesHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("virtualNetworkGatewaysOperations.GetLearnedRoutes", token, client.getLearnedRoutesHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -775,7 +776,7 @@ func (client *virtualNetworkGatewaysOperations) BeginGetVpnProfilePackageURL(ctx
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("virtualNetworkGatewaysOperations.GetVpnProfilePackageURL", "location", resp, client.getVpnProfilePackageUrlHandleError)
+	pt, err := armcore.NewPoller("virtualNetworkGatewaysOperations.GetVpnProfilePackageURL", "location", resp, client.getVpnProfilePackageUrlHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -791,7 +792,7 @@ func (client *virtualNetworkGatewaysOperations) BeginGetVpnProfilePackageURL(ctx
 }
 
 func (client *virtualNetworkGatewaysOperations) ResumeGetVpnProfilePackageURL(token string) (StringPoller, error) {
-	pt, err := resumePollingTracker("virtualNetworkGatewaysOperations.GetVpnProfilePackageURL", token, client.getVpnProfilePackageUrlHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("virtualNetworkGatewaysOperations.GetVpnProfilePackageURL", token, client.getVpnProfilePackageUrlHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -850,7 +851,7 @@ func (client *virtualNetworkGatewaysOperations) BeginGetVpnclientConnectionHealt
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("virtualNetworkGatewaysOperations.GetVpnclientConnectionHealth", "location", resp, client.getVpnclientConnectionHealthHandleError)
+	pt, err := armcore.NewPoller("virtualNetworkGatewaysOperations.GetVpnclientConnectionHealth", "location", resp, client.getVpnclientConnectionHealthHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -866,7 +867,7 @@ func (client *virtualNetworkGatewaysOperations) BeginGetVpnclientConnectionHealt
 }
 
 func (client *virtualNetworkGatewaysOperations) ResumeGetVpnclientConnectionHealth(token string) (VpnClientConnectionHealthDetailListResultPoller, error) {
-	pt, err := resumePollingTracker("virtualNetworkGatewaysOperations.GetVpnclientConnectionHealth", token, client.getVpnclientConnectionHealthHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("virtualNetworkGatewaysOperations.GetVpnclientConnectionHealth", token, client.getVpnclientConnectionHealthHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -925,7 +926,7 @@ func (client *virtualNetworkGatewaysOperations) BeginGetVpnclientIPsecParameters
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("virtualNetworkGatewaysOperations.GetVpnclientIPsecParameters", "location", resp, client.getVpnclientIPsecParametersHandleError)
+	pt, err := armcore.NewPoller("virtualNetworkGatewaysOperations.GetVpnclientIPsecParameters", "location", resp, client.getVpnclientIPsecParametersHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -941,7 +942,7 @@ func (client *virtualNetworkGatewaysOperations) BeginGetVpnclientIPsecParameters
 }
 
 func (client *virtualNetworkGatewaysOperations) ResumeGetVpnclientIPsecParameters(token string) (VpnClientIPsecParametersPoller, error) {
-	pt, err := resumePollingTracker("virtualNetworkGatewaysOperations.GetVpnclientIPsecParameters", token, client.getVpnclientIPsecParametersHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("virtualNetworkGatewaysOperations.GetVpnclientIPsecParameters", token, client.getVpnclientIPsecParametersHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1115,7 +1116,7 @@ func (client *virtualNetworkGatewaysOperations) BeginReset(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("virtualNetworkGatewaysOperations.Reset", "location", resp, client.resetHandleError)
+	pt, err := armcore.NewPoller("virtualNetworkGatewaysOperations.Reset", "location", resp, client.resetHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1131,7 +1132,7 @@ func (client *virtualNetworkGatewaysOperations) BeginReset(ctx context.Context, 
 }
 
 func (client *virtualNetworkGatewaysOperations) ResumeReset(token string) (VirtualNetworkGatewayPoller, error) {
-	pt, err := resumePollingTracker("virtualNetworkGatewaysOperations.Reset", token, client.resetHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("virtualNetworkGatewaysOperations.Reset", token, client.resetHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1193,7 +1194,7 @@ func (client *virtualNetworkGatewaysOperations) BeginResetVpnClientSharedKey(ctx
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("virtualNetworkGatewaysOperations.ResetVpnClientSharedKey", "location", resp, client.resetVpnClientSharedKeyHandleError)
+	pt, err := armcore.NewPoller("virtualNetworkGatewaysOperations.ResetVpnClientSharedKey", "location", resp, client.resetVpnClientSharedKeyHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1209,7 +1210,7 @@ func (client *virtualNetworkGatewaysOperations) BeginResetVpnClientSharedKey(ctx
 }
 
 func (client *virtualNetworkGatewaysOperations) ResumeResetVpnClientSharedKey(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("virtualNetworkGatewaysOperations.ResetVpnClientSharedKey", token, client.resetVpnClientSharedKeyHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("virtualNetworkGatewaysOperations.ResetVpnClientSharedKey", token, client.resetVpnClientSharedKeyHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1268,7 +1269,7 @@ func (client *virtualNetworkGatewaysOperations) BeginSetVpnclientIPsecParameters
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("virtualNetworkGatewaysOperations.SetVpnclientIPsecParameters", "location", resp, client.setVpnclientIPsecParametersHandleError)
+	pt, err := armcore.NewPoller("virtualNetworkGatewaysOperations.SetVpnclientIPsecParameters", "location", resp, client.setVpnclientIPsecParametersHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1284,7 +1285,7 @@ func (client *virtualNetworkGatewaysOperations) BeginSetVpnclientIPsecParameters
 }
 
 func (client *virtualNetworkGatewaysOperations) ResumeSetVpnclientIPsecParameters(token string) (VpnClientIPsecParametersPoller, error) {
-	pt, err := resumePollingTracker("virtualNetworkGatewaysOperations.SetVpnclientIPsecParameters", token, client.setVpnclientIPsecParametersHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("virtualNetworkGatewaysOperations.SetVpnclientIPsecParameters", token, client.setVpnclientIPsecParametersHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1343,7 +1344,7 @@ func (client *virtualNetworkGatewaysOperations) BeginStartPacketCapture(ctx cont
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("virtualNetworkGatewaysOperations.StartPacketCapture", "location", resp, client.startPacketCaptureHandleError)
+	pt, err := armcore.NewPoller("virtualNetworkGatewaysOperations.StartPacketCapture", "location", resp, client.startPacketCaptureHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1359,7 +1360,7 @@ func (client *virtualNetworkGatewaysOperations) BeginStartPacketCapture(ctx cont
 }
 
 func (client *virtualNetworkGatewaysOperations) ResumeStartPacketCapture(token string) (StringPoller, error) {
-	pt, err := resumePollingTracker("virtualNetworkGatewaysOperations.StartPacketCapture", token, client.startPacketCaptureHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("virtualNetworkGatewaysOperations.StartPacketCapture", token, client.startPacketCaptureHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1421,7 +1422,7 @@ func (client *virtualNetworkGatewaysOperations) BeginStopPacketCapture(ctx conte
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("virtualNetworkGatewaysOperations.StopPacketCapture", "location", resp, client.stopPacketCaptureHandleError)
+	pt, err := armcore.NewPoller("virtualNetworkGatewaysOperations.StopPacketCapture", "location", resp, client.stopPacketCaptureHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1437,7 +1438,7 @@ func (client *virtualNetworkGatewaysOperations) BeginStopPacketCapture(ctx conte
 }
 
 func (client *virtualNetworkGatewaysOperations) ResumeStopPacketCapture(token string) (StringPoller, error) {
-	pt, err := resumePollingTracker("virtualNetworkGatewaysOperations.StopPacketCapture", token, client.stopPacketCaptureHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("virtualNetworkGatewaysOperations.StopPacketCapture", token, client.stopPacketCaptureHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1548,7 +1549,7 @@ func (client *virtualNetworkGatewaysOperations) BeginUpdateTags(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("virtualNetworkGatewaysOperations.UpdateTags", "azure-async-operation", resp, client.updateTagsHandleError)
+	pt, err := armcore.NewPoller("virtualNetworkGatewaysOperations.UpdateTags", "azure-async-operation", resp, client.updateTagsHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1564,7 +1565,7 @@ func (client *virtualNetworkGatewaysOperations) BeginUpdateTags(ctx context.Cont
 }
 
 func (client *virtualNetworkGatewaysOperations) ResumeUpdateTags(token string) (VirtualNetworkGatewayPoller, error) {
-	pt, err := resumePollingTracker("virtualNetworkGatewaysOperations.UpdateTags", token, client.updateTagsHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("virtualNetworkGatewaysOperations.UpdateTags", token, client.updateTagsHandleError)
 	if err != nil {
 		return nil, err
 	}

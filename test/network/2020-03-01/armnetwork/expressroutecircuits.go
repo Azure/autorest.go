@@ -8,6 +8,7 @@ package armnetwork
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -73,7 +74,7 @@ func (client *expressRouteCircuitsOperations) BeginCreateOrUpdate(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("expressRouteCircuitsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("expressRouteCircuitsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -89,7 +90,7 @@ func (client *expressRouteCircuitsOperations) BeginCreateOrUpdate(ctx context.Co
 }
 
 func (client *expressRouteCircuitsOperations) ResumeCreateOrUpdate(token string) (ExpressRouteCircuitPoller, error) {
-	pt, err := resumePollingTracker("expressRouteCircuitsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("expressRouteCircuitsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -148,7 +149,7 @@ func (client *expressRouteCircuitsOperations) BeginDelete(ctx context.Context, r
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("expressRouteCircuitsOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("expressRouteCircuitsOperations.Delete", "location", resp, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -164,7 +165,7 @@ func (client *expressRouteCircuitsOperations) BeginDelete(ctx context.Context, r
 }
 
 func (client *expressRouteCircuitsOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("expressRouteCircuitsOperations.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("expressRouteCircuitsOperations.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -493,7 +494,7 @@ func (client *expressRouteCircuitsOperations) BeginListArpTable(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("expressRouteCircuitsOperations.ListArpTable", "location", resp, client.listArpTableHandleError)
+	pt, err := armcore.NewPoller("expressRouteCircuitsOperations.ListArpTable", "location", resp, client.listArpTableHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -509,7 +510,7 @@ func (client *expressRouteCircuitsOperations) BeginListArpTable(ctx context.Cont
 }
 
 func (client *expressRouteCircuitsOperations) ResumeListArpTable(token string) (ExpressRouteCircuitsArpTableListResultPoller, error) {
-	pt, err := resumePollingTracker("expressRouteCircuitsOperations.ListArpTable", token, client.listArpTableHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("expressRouteCircuitsOperations.ListArpTable", token, client.listArpTableHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -570,7 +571,7 @@ func (client *expressRouteCircuitsOperations) BeginListRoutesTable(ctx context.C
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("expressRouteCircuitsOperations.ListRoutesTable", "location", resp, client.listRoutesTableHandleError)
+	pt, err := armcore.NewPoller("expressRouteCircuitsOperations.ListRoutesTable", "location", resp, client.listRoutesTableHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -586,7 +587,7 @@ func (client *expressRouteCircuitsOperations) BeginListRoutesTable(ctx context.C
 }
 
 func (client *expressRouteCircuitsOperations) ResumeListRoutesTable(token string) (ExpressRouteCircuitsRoutesTableListResultPoller, error) {
-	pt, err := resumePollingTracker("expressRouteCircuitsOperations.ListRoutesTable", token, client.listRoutesTableHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("expressRouteCircuitsOperations.ListRoutesTable", token, client.listRoutesTableHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -647,7 +648,7 @@ func (client *expressRouteCircuitsOperations) BeginListRoutesTableSummary(ctx co
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("expressRouteCircuitsOperations.ListRoutesTableSummary", "location", resp, client.listRoutesTableSummaryHandleError)
+	pt, err := armcore.NewPoller("expressRouteCircuitsOperations.ListRoutesTableSummary", "location", resp, client.listRoutesTableSummaryHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -663,7 +664,7 @@ func (client *expressRouteCircuitsOperations) BeginListRoutesTableSummary(ctx co
 }
 
 func (client *expressRouteCircuitsOperations) ResumeListRoutesTableSummary(token string) (ExpressRouteCircuitsRoutesTableSummaryListResultPoller, error) {
-	pt, err := resumePollingTracker("expressRouteCircuitsOperations.ListRoutesTableSummary", token, client.listRoutesTableSummaryHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("expressRouteCircuitsOperations.ListRoutesTableSummary", token, client.listRoutesTableSummaryHandleError)
 	if err != nil {
 		return nil, err
 	}

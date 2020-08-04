@@ -8,6 +8,7 @@ package armnetwork
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -53,7 +54,7 @@ func (client *expressRouteCircuitConnectionsOperations) BeginCreateOrUpdate(ctx 
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("expressRouteCircuitConnectionsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("expressRouteCircuitConnectionsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -69,7 +70,7 @@ func (client *expressRouteCircuitConnectionsOperations) BeginCreateOrUpdate(ctx 
 }
 
 func (client *expressRouteCircuitConnectionsOperations) ResumeCreateOrUpdate(token string) (ExpressRouteCircuitConnectionPoller, error) {
-	pt, err := resumePollingTracker("expressRouteCircuitConnectionsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("expressRouteCircuitConnectionsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -130,7 +131,7 @@ func (client *expressRouteCircuitConnectionsOperations) BeginDelete(ctx context.
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("expressRouteCircuitConnectionsOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("expressRouteCircuitConnectionsOperations.Delete", "location", resp, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -146,7 +147,7 @@ func (client *expressRouteCircuitConnectionsOperations) BeginDelete(ctx context.
 }
 
 func (client *expressRouteCircuitConnectionsOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("expressRouteCircuitConnectionsOperations.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("expressRouteCircuitConnectionsOperations.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
