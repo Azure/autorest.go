@@ -186,7 +186,8 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
   }
   if (isLROOperation(op)) {
     if (isDataPlane) {
-      text += `\treturn nil, nil\n`;
+      imports.add('errors');
+      text += `\treturn nil, errors.New("NYI")\n`;
       // closing braces
       text += '}\n\n';
       text += addResumePollerMethod(op, clientName, isDataPlane);
