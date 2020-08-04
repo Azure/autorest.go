@@ -53,7 +53,7 @@
       "commandKind": "global",
       "name": "regenerate",
       "summary": "run node ./rushScripts/regeneration.js to regenerate all swaggers specified in the autorest.testserver",
-      "shellCommand": "node ./rushScripts/regeneration.js"
+      "shellCommand": "node .scripts/regeneration.js"
     }
   ],
   "parameters": []
