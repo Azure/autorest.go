@@ -146,14 +146,14 @@ func (b *Blob) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type alias Blob
 	aux := &struct {
 		*alias
-		Metadata *map[string]interface{} `xml:"Metadata"`
+		Metadata *additionalProperties `xml:"Metadata"`
 	}{
 		alias: (*alias)(b),
 	}
 	if err := d.DecodeElement(aux, &start); err != nil {
 		return err
 	}
-	b.Metadata = (*map[string]interface{})(aux.Metadata)
+	b.Metadata = (*map[string]string)(aux.Metadata)
 	return nil
 }
 
@@ -264,14 +264,14 @@ func (c *Container) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type alias Container
 	aux := &struct {
 		*alias
-		Metadata *map[string]interface{} `xml:"Metadata"`
+		Metadata *additionalProperties `xml:"Metadata"`
 	}{
 		alias: (*alias)(c),
 	}
 	if err := d.DecodeElement(aux, &start); err != nil {
 		return err
 	}
-	c.Metadata = (*map[string]interface{})(aux.Metadata)
+	c.Metadata = (*map[string]string)(aux.Metadata)
 	return nil
 }
 

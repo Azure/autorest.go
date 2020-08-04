@@ -55,8 +55,8 @@ generate(blobStorage, 'test/storage/2019-07-07/azblob', '--credential-scope="htt
 const network = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/network/resource-manager/readme.md';
 generateFromReadme(network, 'package-2020-03', 'test/network/2020-03-01/armnetwork', '--credential-scope="https://management.azure.com//.default" --module=armnetwork');
 
-const synapseArtifacts = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/synapse/data-plane/Microsoft.Synapse/preview/2019-06-01-preview/artifacts.json';
-generate(synapseArtifacts, 'test/synapse/2019-06-01/azartifacts', '--module="azartifacts" --openapi-type="data-plane"');
+// const synapseArtifacts = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/synapse/data-plane/Microsoft.Synapse/preview/2019-06-01-preview/artifacts.json';
+// generate(synapseArtifacts, 'test/synapse/2019-06-01/azartifacts', '--module="azartifacts" --openapi-type="data-plane"');
 
 // helper to log the package being generated before invocation
 function generate(inputFile, outputDir, additionalArgs) {
