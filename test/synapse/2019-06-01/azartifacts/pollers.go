@@ -8,12 +8,8 @@ package azartifacts
 // TODO replace this code with data-plane specific definitions
 import (
 	"context"
-	"encoding/json"
-	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
-	"net/url"
-	"time"
 )
 
 // CreateDataFlowDebugSessionResponsePoller provides polling facilities until the operation completes
@@ -139,7 +135,7 @@ func (p *httpPoller) Poll(ctx context.Context) (*http.Response, error) {
 }
 
 func (p *httpPoller) FinalResponse() *http.Response {
-	return p.pt.latestResponse().Response
+	return nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeHTTPPoller method

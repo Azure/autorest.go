@@ -1957,7 +1957,7 @@ func (c *ContainerItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 	type alias ContainerItem
 	aux := &struct {
 		*alias
-		Metadata *additionalProperties `xml:"Metadata"`
+		Metadata *map[string]string `xml:"Metadata"`
 	}{
 		alias: (*alias)(c),
 	}

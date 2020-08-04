@@ -30,10 +30,6 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
   imports.add('context');
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
   imports.add('net/http');
-  imports.add('errors');
-  imports.add('encoding/json');
-  imports.add('net/url');
-  imports.add('time');
   let bodyText = '';
   const pollers = <Array<PollerInfo>>session.model.language.go!.pollerTypes;
   pollers.sort((a: PollerInfo, b: PollerInfo) => { return sortAscending(a.name, b.name) });
@@ -44,7 +40,7 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
     // HTTP Pollers do not need to perform the final get request since they do not return a model
     let finalResponseDeclaration = 'FinalResponse() *http.Response';
     let finalResponse = `${finalResponseDeclaration} {
-        return p.pt.latestResponse().Response;
+        return nil
       }`;
     let pollUntilDoneResponse = '(*http.Response, error)';
     let pollUntilDoneReturn = 'p.FinalResponse(), nil';

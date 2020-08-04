@@ -553,7 +553,7 @@ function generateAliasType(structDef: StructDef, receiver: string, forMarshal: b
     if (prop.schema.type === SchemaType.DateTime) {
       text += `\t\t${prop.language.go!.name} *${prop.schema.language.go!.internalTimeType} \`${structDef.Language.marshallingFormat}:"${sn}"\`\n`;
     } else if (prop.language.go!.isAdditionalProperties || prop.language.go!.needsXMLDictionaryUnmarshalling) {
-      text += `\t\t${prop.language.go!.name} *additionalProperties \`${structDef.Language.marshallingFormat}:"${sn}"\`\n`;
+      text += `\t\t${prop.language.go!.name} *map[string]string \`${structDef.Language.marshallingFormat}:"${sn}"\`\n`;
     }
   }
   text += `\t}{\n`;
