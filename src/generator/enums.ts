@@ -28,7 +28,11 @@ export async function generateEnums(session: Session<CodeModel>): Promise<string
       if (hasDescription(val.language.go!)) {
         text += `\t${comment(val.language.go!.name, '// ')} - ${val.language.go!.description}\n`;
       }
-      text += `\t${val.language.go!.name} ${enm.name} = "${val.value}"\n`;
+      let formatValue = `"${val.value}"`;
+      if (enm.type !== 'string') {
+        formatValue = `${val.value}`;
+      }
+      text += `\t${val.language.go!.name} ${enm.name} = ${formatValue}\n`;
       vals.push(val.language.go!.name);
     }
     text += ')\n\n';
