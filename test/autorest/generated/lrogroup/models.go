@@ -394,10 +394,10 @@ type ProductArrayPollerResponse struct {
 // ProductArrayResponse is the response envelope for operations that return a []Product type.
 type ProductArrayResponse struct {
 	// Array of Product
-	ProductArray *[]Product `json:"ProductArray,omitempty"`
+	ProductArray *[]Product
 
 	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response `json:"-"`
+	RawResponse *http.Response
 }
 
 // ProductPollerResponse is the response envelope for operations that asynchronously return a Product type.

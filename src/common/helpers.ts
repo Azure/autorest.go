@@ -70,6 +70,7 @@ export function hasAdditionalProperties(obj: ObjectSchema): DictionarySchema | u
 export function isScalar(schema: Schema): boolean {
   switch (schema.type) {
     case SchemaType.Array:
+      return isScalar((<ArraySchema>schema).elementType);
     case SchemaType.Boolean:
     case SchemaType.ByteArray:
     case SchemaType.Integer:
