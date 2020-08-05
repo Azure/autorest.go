@@ -20,8 +20,8 @@ type ByteArrayResponse struct {
 // ColorsResponse is the response envelope for operations that return a Colors type.
 type ColorsResponse struct {
 	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *Colors
+	RawResponse *http.Response `json:"-"`
+	Value       *Colors        `json:"Value,omitempty"`
 }
 
 type Error struct {

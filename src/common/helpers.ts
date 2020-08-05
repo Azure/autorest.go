@@ -73,8 +73,10 @@ export function isScalar(schema: Schema): boolean {
       return isScalar((<ArraySchema>schema).elementType);
     case SchemaType.Boolean:
     case SchemaType.ByteArray:
+    case SchemaType.Choice:
     case SchemaType.Integer:
     case SchemaType.Number:
+    case SchemaType.SealedChoice:
     case SchemaType.String:
       return true;
     default:

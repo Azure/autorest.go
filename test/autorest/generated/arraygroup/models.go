@@ -32,10 +32,10 @@ type ByteArrayArrayResponse struct {
 // Enum0ArrayResponse is the response envelope for operations that return a []Enum0 type.
 type Enum0ArrayResponse struct {
 	// The array value ['foo1', 'foo2', 'foo3']
-	Enum0Array *[]Enum0
+	Enum0Array *[]Enum0 `json:"Enum0Array,omitempty"`
 
 	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	RawResponse *http.Response `json:"-"`
 }
 
 type Error struct {
@@ -79,10 +79,10 @@ type Float64ArrayResponse struct {
 // FooEnumArrayResponse is the response envelope for operations that return a []FooEnum type.
 type FooEnumArrayResponse struct {
 	// The array value ['foo1', 'foo2', 'foo3']
-	FooEnumArray *[]FooEnum
+	FooEnumArray *[]FooEnum `json:"FooEnumArray,omitempty"`
 
 	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	RawResponse *http.Response `json:"-"`
 }
 
 // Int32ArrayResponse is the response envelope for operations that return a []int32 type.

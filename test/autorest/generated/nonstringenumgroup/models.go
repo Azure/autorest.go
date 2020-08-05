@@ -10,10 +10,10 @@ import "net/http"
 // FloatEnumResponse is the response envelope for operations that return a FloatEnum type.
 type FloatEnumResponse struct {
 	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	RawResponse *http.Response `json:"-"`
 
 	// List of float enums
-	Value *FloatEnum
+	Value *FloatEnum `json:"Value,omitempty"`
 }
 
 // FloatPutOptions contains the optional parameters for the Float.Put method.
@@ -25,10 +25,10 @@ type FloatPutOptions struct {
 // IntEnumResponse is the response envelope for operations that return a IntEnum type.
 type IntEnumResponse struct {
 	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	RawResponse *http.Response `json:"-"`
 
 	// List of integer enums
-	Value *IntEnum
+	Value *IntEnum `json:"Value,omitempty"`
 }
 
 // IntPutOptions contains the optional parameters for the Int.Put method.
