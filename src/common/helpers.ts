@@ -71,13 +71,19 @@ export function isScalar(schema: Schema): boolean {
   switch (schema.type) {
     case SchemaType.Array:
       return isScalar((<ArraySchema>schema).elementType);
+    case SchemaType.Binary:
     case SchemaType.Boolean:
     case SchemaType.ByteArray:
     case SchemaType.Choice:
+    case SchemaType.Duration:
     case SchemaType.Integer:
     case SchemaType.Number:
     case SchemaType.SealedChoice:
     case SchemaType.String:
+    case SchemaType.Time:
+    case SchemaType.UnixTime:
+    case SchemaType.Uri:
+    case SchemaType.Uuid:
       return true;
     default:
       return false;

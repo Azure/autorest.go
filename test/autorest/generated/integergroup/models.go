@@ -48,8 +48,8 @@ type Int64Response struct {
 // TimeResponse is the response envelope for operations that return a time.Time type.
 type TimeResponse struct {
 	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	RawResponse *http.Response `json:"-"`
 
 	// date in seconds since 1970-01-01T00:00:00Z.
-	Value *time.Time
+	Value *time.Time `json:"Value,omitempty"`
 }
