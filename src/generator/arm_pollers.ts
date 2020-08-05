@@ -101,7 +101,6 @@ export async function generateARMPollers(session: Session<CodeModel>): Promise<s
     const schemaResponse = <SchemaResponse>poller.op.responses![0];
     let unmarshalResponse = 'nil';
     let pagerFields = '';
-    let finalResponseCheckNeeded = false;
     if (isPageableOperation(poller.op)) {
       function finalPagerProcessing(name: string, params: string): string {
         return `s := &${camelCase(responseType)}{}
@@ -136,7 +135,6 @@ export async function generateARMPollers(session: Session<CodeModel>): Promise<s
       // for operations that do return a model add a final response method that handles the final get URL scenario
       finalResponseDeclaration = `FinalResponse(ctx context.Context) (*${responseType}, error)`;
       finalResponse = `FinalResponse(ctx context.Context) (*${responseType}, error) {`;
-      finalResponseCheckNeeded = true;
       let respType = `s := &${responseType}{${schemaResponse.schema.language.go!.responseType.value}: &${schemaResponse.schema.language.go!.name}{}}`;
       const [isIntegral, integralVal] = isIntegralType(schemaResponse);
       if (isIntegral) {
