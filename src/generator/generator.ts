@@ -13,7 +13,7 @@ import { generateEnums } from './enums';
 import { generateClient } from './client';
 import { generateTimeHelpers } from './time';
 import { generatePagers } from './pagers';
-import { generatePollers } from './pollers';
+import { generatePollers } from './data_plane_pollers';
 import { generatePolymorphicHelpers } from './polymorphics';
 import { generateGoModFile } from './gomod';
 import { generateXMLAdditionalPropsHelpers } from './xmlAdditionalProps';
