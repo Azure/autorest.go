@@ -34,15 +34,15 @@ func (e Error) Error() string {
 // Int32Response is the response envelope for operations that return a int32 type.
 type Int32Response struct {
 	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *int32
+	RawResponse *http.Response `json:"-"`
+	Value       *int32         `json:"Value,omitempty"`
 }
 
 // Int64Response is the response envelope for operations that return a int64 type.
 type Int64Response struct {
 	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *int64
+	RawResponse *http.Response `json:"-"`
+	Value       *int64         `json:"Value,omitempty"`
 }
 
 // TimeResponse is the response envelope for operations that return a time.Time type.

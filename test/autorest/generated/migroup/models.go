@@ -98,6 +98,6 @@ type PetResponse struct {
 // StringResponse is the response envelope for operations that return a string type.
 type StringResponse struct {
 	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *string
+	RawResponse *http.Response `json:"-"`
+	Value       *string        `json:"Value,omitempty"`
 }

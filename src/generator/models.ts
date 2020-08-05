@@ -158,10 +158,12 @@ class StructDef {
         readOnly = ` azure:"ro"`;
       }
       let tag = ` \`${this.Language.marshallingFormat}:"${serialization}"${readOnly}\``;
-      // if this is a response type then omit the tag IFF the marshalling format is
-      // JSON, it's a header or is the RawResponse field.  XML marshalling needs a tag.
+      // if this is a response type then omit the tag IFF the marshalling formatvalue is non-scalar
+      // for JSON marshalling types or it's a header.  XML marshalling needs a tag.
       // also omit the tag for additionalProperties
-      if ((this.Language.responseType === true && (this.Language.marshallingFormat !== 'xml' || prop.language.go!.name === 'RawResponse')) || prop.language.go!.isAdditionalProperties) {
+      if (prop.language.go!.name === 'RawResponse' && prop.language.go!.addTag === true && this.Language.marshallingFormat !== 'xml') {
+        tag = '`json:"-"`';
+      } else if (prop.language.go!.name === 'RawResponse' || prop.language.go!.isAdditionalProperties || (this.Language.responseType === true && prop.language.go!.addTag !== true && this.Language.marshallingFormat !== 'xml')) {
         tag = '';
       }
       let pointer = '*';

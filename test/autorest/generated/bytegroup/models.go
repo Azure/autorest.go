@@ -13,10 +13,10 @@ import (
 // ByteArrayResponse is the response envelope for operations that return a []byte type.
 type ByteArrayResponse struct {
 	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	RawResponse *http.Response `json:"-"`
 
 	// The null byte value
-	Value *[]byte
+	Value *[]byte `json:"Value,omitempty"`
 }
 
 type Error struct {

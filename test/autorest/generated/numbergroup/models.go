@@ -33,13 +33,13 @@ func (e Error) Error() string {
 // Float32Response is the response envelope for operations that return a float32 type.
 type Float32Response struct {
 	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *float32
+	RawResponse *http.Response `json:"-"`
+	Value       *float32       `json:"Value,omitempty"`
 }
 
 // Float64Response is the response envelope for operations that return a float64 type.
 type Float64Response struct {
 	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *float64
+	RawResponse *http.Response `json:"-"`
+	Value       *float64       `json:"Value,omitempty"`
 }

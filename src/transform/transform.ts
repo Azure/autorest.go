@@ -564,8 +564,9 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
       }
     } else if (!responseTypeCreated(codeModel, response.schema)) {
       response.schema.language.go!.responseType = generateResponseTypeName(response.schema);
+      const rawResp = newProperty('RawResponse', 'RawResponse contains the underlying HTTP response.', newObject('http.Response', 'TODO'))
       response.schema.language.go!.properties = [
-        newProperty('RawResponse', 'RawResponse contains the underlying HTTP response.', newObject('http.Response', 'TODO'))
+        rawResp
       ];
       const marshallingFormat = getMarshallingFormat(response.protocol);
       response.schema.language.go!.responseType.marshallingFormat = marshallingFormat;
@@ -582,6 +583,20 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
         // always prefer the XML name
         propName = pascalCase(response.schema.serialization.xml.name);
       }
+      function isScalar(schema: Schema): boolean {
+        switch (schema.type) {
+          case SchemaType.Array:
+          case SchemaType.Boolean:
+          case SchemaType.ByteArray:
+          case SchemaType.Integer:
+          case SchemaType.Number:
+          case SchemaType.String:
+            return true;
+          default:
+            return false;
+        }
+      }
+
       response.schema.language.go!.responseType.value = propName;
       // for LROs add a specific poller response envelope to return from Begin operations
       if (!isLROOperation(op)) {
@@ -593,12 +608,18 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
           (<Array<Property>>response.schema.language.go!.properties).push(prop);
         }
       }
+      const finalProp = newProperty(propName, response.schema.language.go!.description, response.schema);
       // the Widget response doesn't belong in the poller response envelope
-      (<Array<Property>>response.schema.language.go!.properties).push(newProperty(propName, response.schema.language.go!.description, response.schema));
+      (<Array<Property>>response.schema.language.go!.properties).push(finalProp);
       if (!responseExists(codeModel, response.schema.language.go!.name)) {
         // add this response schema to the global list of response
         const responseSchemas = <Array<Schema>>codeModel.language.go!.responseSchemas;
         responseSchemas.push(response.schema);
+      }
+      // for scalar response envelopes annotated properties to output json tag
+      if (propName === scalarResponsePropName && isScalar(response.schema)) {
+        rawResp.language.go!.addTag = true;
+        finalProp.language.go!.addTag = true;
       }
     }
     // create pageable type info

@@ -13,10 +13,10 @@ import (
 // BoolResponse is the response envelope for operations that return a bool type.
 type BoolResponse struct {
 	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	RawResponse *http.Response `json:"-"`
 
 	// simple boolean
-	Value *bool
+	Value *bool `json:"Value,omitempty"`
 }
 
 type Error struct {

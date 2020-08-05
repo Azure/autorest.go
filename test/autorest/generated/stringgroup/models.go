@@ -13,8 +13,8 @@ import (
 // ByteArrayResponse is the response envelope for operations that return a []byte type.
 type ByteArrayResponse struct {
 	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *[]byte
+	RawResponse *http.Response `json:"-"`
+	Value       *[]byte        `json:"Value,omitempty"`
 }
 
 // ColorsResponse is the response envelope for operations that return a Colors type.
@@ -67,6 +67,6 @@ type StringPutNullOptions struct {
 // StringResponse is the response envelope for operations that return a string type.
 type StringResponse struct {
 	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *string
+	RawResponse *http.Response `json:"-"`
+	Value       *string        `json:"Value,omitempty"`
 }
