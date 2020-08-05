@@ -14,28 +14,28 @@ import (
 // BoolArrayResponse is the response envelope for operations that return a []bool type.
 type BoolArrayResponse struct {
 	// The array value [true, false, false, true]
-	BoolArray *[]bool
+	BoolArray *[]bool `json:"BoolArray,omitempty"`
 
 	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	RawResponse *http.Response `json:"-"`
 }
 
 // ByteArrayArrayResponse is the response envelope for operations that return a [][]byte type.
 type ByteArrayArrayResponse struct {
 	// The array value [hex(FF FF FF FA), hex(01 02 03), hex (25, 29, 43)] with each elementencoded in base 64
-	ByteArrayArray *[][]byte
+	ByteArrayArray *[][]byte `json:"ByteArrayArray,omitempty"`
 
 	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	RawResponse *http.Response `json:"-"`
 }
 
 // Enum0ArrayResponse is the response envelope for operations that return a []Enum0 type.
 type Enum0ArrayResponse struct {
 	// The array value ['foo1', 'foo2', 'foo3']
-	Enum0Array *[]Enum0
+	Enum0Array *[]Enum0 `json:"Enum0Array,omitempty"`
 
 	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	RawResponse *http.Response `json:"-"`
 }
 
 type Error struct {
@@ -61,55 +61,55 @@ func (e Error) Error() string {
 // Float32ArrayResponse is the response envelope for operations that return a []float32 type.
 type Float32ArrayResponse struct {
 	// The array value [0, -0.01, 1.2e20]
-	Float32Array *[]float32
+	Float32Array *[]float32 `json:"Float32Array,omitempty"`
 
 	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	RawResponse *http.Response `json:"-"`
 }
 
 // Float64ArrayResponse is the response envelope for operations that return a []float64 type.
 type Float64ArrayResponse struct {
 	// The array value [0, -0.01, 1.2e20]
-	Float64Array *[]float64
+	Float64Array *[]float64 `json:"Float64Array,omitempty"`
 
 	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	RawResponse *http.Response `json:"-"`
 }
 
 // FooEnumArrayResponse is the response envelope for operations that return a []FooEnum type.
 type FooEnumArrayResponse struct {
 	// The array value ['foo1', 'foo2', 'foo3']
-	FooEnumArray *[]FooEnum
+	FooEnumArray *[]FooEnum `json:"FooEnumArray,omitempty"`
 
 	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	RawResponse *http.Response `json:"-"`
 }
 
 // Int32ArrayResponse is the response envelope for operations that return a []int32 type.
 type Int32ArrayResponse struct {
 	// The null Array value
-	Int32Array *[]int32
+	Int32Array *[]int32 `json:"Int32Array,omitempty"`
 
 	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	RawResponse *http.Response `json:"-"`
 }
 
 // Int64ArrayResponse is the response envelope for operations that return a []int64 type.
 type Int64ArrayResponse struct {
 	// The array value [1, -1, 3, 300]
-	Int64Array *[]int64
+	Int64Array *[]int64 `json:"Int64Array,omitempty"`
 
 	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	RawResponse *http.Response `json:"-"`
 }
 
 // MapOfStringArrayResponse is the response envelope for operations that return a []map[string]string type.
 type MapOfStringArrayResponse struct {
 	// An array of Dictionaries with value null
-	MapOfStringArray *[]map[string]string
+	MapOfStringArray *[]map[string]string `json:"MapOfStringArray,omitempty"`
 
 	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	RawResponse *http.Response `json:"-"`
 }
 
 type Product struct {
@@ -120,35 +120,35 @@ type Product struct {
 // ProductArrayResponse is the response envelope for operations that return a []Product type.
 type ProductArrayResponse struct {
 	// array of complex type with null value
-	ProductArray *[]Product
+	ProductArray *[]Product `json:"ProductArray,omitempty"`
 
 	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	RawResponse *http.Response `json:"-"`
 }
 
 // StringArrayArrayResponse is the response envelope for operations that return a [][]string type.
 type StringArrayArrayResponse struct {
 	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	RawResponse *http.Response `json:"-"`
 
 	// a null array
-	StringArrayArray *[][]string
+	StringArrayArray *[][]string `json:"StringArrayArray,omitempty"`
 }
 
 // StringArrayResponse is the response envelope for operations that return a []string type.
 type StringArrayResponse struct {
 	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	RawResponse *http.Response `json:"-"`
 
 	// The array value ['foo1', 'foo2', 'foo3']
-	StringArray *[]string
+	StringArray *[]string `json:"StringArray,omitempty"`
 }
 
 // TimeArrayResponse is the response envelope for operations that return a []time.Time type.
 type TimeArrayResponse struct {
 	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	RawResponse *http.Response `json:"-"`
 
 	// The array value ['2000-12-01', '1980-01-02', '1492-10-12']
-	TimeArray *[]time.Time
+	TimeArray *[]time.Time `json:"TimeArray,omitempty"`
 }

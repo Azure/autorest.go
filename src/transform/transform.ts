@@ -466,7 +466,7 @@ function processOperationResponses(session: Session<CodeModel>) {
       } else if (op.responses.length !== filtered.length) {
         op.responses = filtered;
       }
-      createResponseType(session.model, group, op);
+      createResponseType(session.model, group, op, session.model.language.go!.openApiType);
     }
   }
 }
@@ -504,7 +504,7 @@ interface HttpHeaderWithDescription extends HttpHeader {
 const scalarResponsePropName = 'Value';
 
 // creates the response type to be returned from an operation and updates the operation
-function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Operation) {
+function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Operation, openApiType: string) {
   // create the `type <type>Response struct` response
   // type with a `RawResponse *http.Response` field
 
@@ -604,7 +604,7 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
         responseSchemas.push(response.schema);
       }
       // for scalar response envelopes annotated properties to output json tag
-      if (propName === scalarResponsePropName && isScalar(response.schema)) {
+      if (openApiType === 'arm' && isScalar(response.schema)) {
         rawResp.language.go!.addTag = true;
         finalProp.language.go!.addTag = true;
       }

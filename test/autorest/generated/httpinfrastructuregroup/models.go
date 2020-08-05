@@ -151,8 +151,8 @@ type StringArrayResponse struct {
 	Location *string
 
 	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	RawResponse *http.Response `json:"-"`
 
 	// A list of location options for the request ['/http/success/get/200']
-	StringArray *[]string
+	StringArray *[]string `json:"StringArray,omitempty"`
 }

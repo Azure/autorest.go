@@ -10148,10 +10148,10 @@ type SessionIDs struct {
 // StringArrayResponse is the response envelope for operations that return a []string type.
 type StringArrayResponse struct {
 	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	RawResponse *http.Response `json:"-"`
 
 	// Response for ApplicationGatewayAvailableServerVariables API service call.
-	StringArray *[]string
+	StringArray *[]string `json:"StringArray,omitempty"`
 }
 
 // StringPollerResponse is the response envelope for operations that asynchronously return a string type.
