@@ -66,3 +66,17 @@ export function hasAdditionalProperties(obj: ObjectSchema): DictionarySchema | u
   }
   return undefined;
 }
+
+export function isScalar(schema: Schema): boolean {
+  switch (schema.type) {
+    case SchemaType.Array:
+    case SchemaType.Boolean:
+    case SchemaType.ByteArray:
+    case SchemaType.Integer:
+    case SchemaType.Number:
+    case SchemaType.String:
+      return true;
+    default:
+      return false;
+  }
+}

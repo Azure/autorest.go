@@ -7,7 +7,7 @@ import { camelCase, KnownMediaType, pascalCase, serialize } from '@azure-tools/c
 import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
 import { ObjectSchema, ArraySchema, ChoiceValue, codeModelSchema, CodeModel, DateTimeSchema, GroupProperty, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema } from '@azure-tools/codemodel';
 import { items, values } from '@azure-tools/linq';
-import { aggregateParameters, hasAdditionalProperties, isPageableOperation, isObjectSchema, isSchemaResponse, PagerInfo, isLROOperation, PollerInfo } from '../common/helpers';
+import { aggregateParameters, hasAdditionalProperties, isPageableOperation, isObjectSchema, isSchemaResponse, PagerInfo, isLROOperation, PollerInfo, isScalar } from '../common/helpers';
 import { namer, removePrefix } from './namer';
 
 // The transformer adds Go-specific information to the code model.
@@ -582,19 +582,6 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
       if (response.schema.serialization?.xml && response.schema.serialization.xml.name) {
         // always prefer the XML name
         propName = pascalCase(response.schema.serialization.xml.name);
-      }
-      function isScalar(schema: Schema): boolean {
-        switch (schema.type) {
-          case SchemaType.Array:
-          case SchemaType.Boolean:
-          case SchemaType.ByteArray:
-          case SchemaType.Integer:
-          case SchemaType.Number:
-          case SchemaType.String:
-            return true;
-          default:
-            return false;
-        }
       }
 
       response.schema.language.go!.responseType.value = propName;
