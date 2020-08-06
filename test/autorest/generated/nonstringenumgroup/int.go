@@ -62,7 +62,7 @@ func (client *intOperations) getHandleResponse(resp *azcore.Response) (*IntEnumR
 		return nil, client.getHandleError(resp)
 	}
 	result := IntEnumResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Value)
+	return &result, resp.UnmarshalAsJSON(&result)
 }
 
 // getHandleError handles the Get error response.
@@ -114,7 +114,7 @@ func (client *intOperations) putHandleResponse(resp *azcore.Response) (*StringRe
 		return nil, client.putHandleError(resp)
 	}
 	result := StringResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Value)
+	return &result, resp.UnmarshalAsJSON(&result)
 }
 
 // putHandleError handles the Put error response.

@@ -64,7 +64,7 @@ func (client *httpFailureOperations) getEmptyErrorHandleResponse(resp *azcore.Re
 		return nil, client.getEmptyErrorHandleError(resp)
 	}
 	result := BoolResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Value)
+	return &result, resp.UnmarshalAsJSON(&result)
 }
 
 // getEmptyErrorHandleError handles the GetEmptyError error response.

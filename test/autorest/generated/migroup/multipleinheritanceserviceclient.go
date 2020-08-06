@@ -406,7 +406,7 @@ func (client *multipleInheritanceServiceClientOperations) putHorseHandleResponse
 		return nil, client.putHorseHandleError(resp)
 	}
 	result := StringResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Value)
+	return &result, resp.UnmarshalAsJSON(&result)
 }
 
 // putHorseHandleError handles the PutHorse error response.

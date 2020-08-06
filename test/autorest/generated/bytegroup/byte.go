@@ -203,7 +203,7 @@ func (client *byteOperations) getNullHandleResponse(resp *azcore.Response) (*Byt
 		return nil, client.getNullHandleError(resp)
 	}
 	result := ByteArrayResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsByteArray(&result.Value, azcore.Base64StdFormat)
+	return &result, resp.UnmarshalAsByteArray(&result, azcore.Base64StdFormat)
 }
 
 // getNullHandleError handles the GetNull error response.

@@ -177,7 +177,7 @@ func (client *intOperations) getNullHandleResponse(resp *azcore.Response) (*Int3
 		return nil, client.getNullHandleError(resp)
 	}
 	result := Int32Response{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Value)
+	return &result, resp.UnmarshalAsJSON(&result)
 }
 
 // getNullHandleError handles the GetNull error response.
@@ -316,7 +316,7 @@ func (client *intOperations) getOverflowInt64HandleResponse(resp *azcore.Respons
 		return nil, client.getOverflowInt64HandleError(resp)
 	}
 	result := Int64Response{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Value)
+	return &result, resp.UnmarshalAsJSON(&result)
 }
 
 // getOverflowInt64HandleError handles the GetOverflowInt64 error response.

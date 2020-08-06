@@ -605,6 +605,7 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
       }
       // for scalar response envelopes annotated properties to output json tag
       if (openApiType === 'arm' && isScalar(response.schema)) {
+        response.language.go!.isScalarEnvelope = true;
         rawResp.language.go!.addTag = true;
         finalProp.language.go!.addTag = true;
       }

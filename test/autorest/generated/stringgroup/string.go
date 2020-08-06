@@ -81,7 +81,7 @@ func (client *stringOperations) getBase64EncodedHandleResponse(resp *azcore.Resp
 		return nil, client.getBase64EncodedHandleError(resp)
 	}
 	result := ByteArrayResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsByteArray(&result.Value, azcore.Base64StdFormat)
+	return &result, resp.UnmarshalAsByteArray(&result, azcore.Base64StdFormat)
 }
 
 // getBase64EncodedHandleError handles the GetBase64Encoded error response.
@@ -311,7 +311,7 @@ func (client *stringOperations) getNullHandleResponse(resp *azcore.Response) (*S
 		return nil, client.getNullHandleError(resp)
 	}
 	result := StringResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Value)
+	return &result, resp.UnmarshalAsJSON(&result)
 }
 
 // getNullHandleError handles the GetNull error response.

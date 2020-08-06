@@ -67,7 +67,7 @@ func (client *enumOperations) getNotExpandableHandleResponse(resp *azcore.Respon
 		return nil, client.getNotExpandableHandleError(resp)
 	}
 	result := ColorsResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Value)
+	return &result, resp.UnmarshalAsJSON(&result)
 }
 
 // getNotExpandableHandleError handles the GetNotExpandable error response.

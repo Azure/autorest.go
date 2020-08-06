@@ -142,7 +142,7 @@ func (client *httpRedirectsOperations) get300HandleResponse(resp *azcore.Respons
 		if val := resp.Header.Get("Location"); val != "" {
 			result.Location = &val
 		}
-		return &result, resp.UnmarshalAsJSON(&result.StringArray)
+		return &result, resp.UnmarshalAsJSON(&result)
 	default:
 		return nil, client.get300HandleError(resp)
 	}

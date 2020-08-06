@@ -332,7 +332,7 @@ func (client *arrayOperations) getArrayNullHandleResponse(resp *azcore.Response)
 		return nil, client.getArrayNullHandleError(resp)
 	}
 	result := StringArrayArrayResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.StringArrayArray)
+	return &result, resp.UnmarshalAsJSON(&result)
 }
 
 // getArrayNullHandleError handles the GetArrayNull error response.
@@ -562,7 +562,7 @@ func (client *arrayOperations) getBooleanTfftHandleResponse(resp *azcore.Respons
 		return nil, client.getBooleanTfftHandleError(resp)
 	}
 	result := BoolArrayResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.BoolArray)
+	return &result, resp.UnmarshalAsJSON(&result)
 }
 
 // getBooleanTfftHandleError handles the GetBooleanTfft error response.
@@ -654,7 +654,7 @@ func (client *arrayOperations) getByteValidHandleResponse(resp *azcore.Response)
 		return nil, client.getByteValidHandleError(resp)
 	}
 	result := ByteArrayArrayResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.ByteArrayArray)
+	return &result, resp.UnmarshalAsJSON(&result)
 }
 
 // getByteValidHandleError handles the GetByteValid error response.
@@ -1602,7 +1602,7 @@ func (client *arrayOperations) getDoubleValidHandleResponse(resp *azcore.Respons
 		return nil, client.getDoubleValidHandleError(resp)
 	}
 	result := Float64ArrayResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Float64Array)
+	return &result, resp.UnmarshalAsJSON(&result)
 }
 
 // getDoubleValidHandleError handles the GetDoubleValid error response.
@@ -1740,7 +1740,7 @@ func (client *arrayOperations) getEnumValidHandleResponse(resp *azcore.Response)
 		return nil, client.getEnumValidHandleError(resp)
 	}
 	result := FooEnumArrayResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.FooEnumArray)
+	return &result, resp.UnmarshalAsJSON(&result)
 }
 
 // getEnumValidHandleError handles the GetEnumValid error response.
@@ -1878,7 +1878,7 @@ func (client *arrayOperations) getFloatValidHandleResponse(resp *azcore.Response
 		return nil, client.getFloatValidHandleError(resp)
 	}
 	result := Float32ArrayResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Float32Array)
+	return &result, resp.UnmarshalAsJSON(&result)
 }
 
 // getFloatValidHandleError handles the GetFloatValid error response.
@@ -2200,7 +2200,7 @@ func (client *arrayOperations) getLongValidHandleResponse(resp *azcore.Response)
 		return nil, client.getLongValidHandleError(resp)
 	}
 	result := Int64ArrayResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Int64Array)
+	return &result, resp.UnmarshalAsJSON(&result)
 }
 
 // getLongValidHandleError handles the GetLongValid error response.
@@ -2246,7 +2246,7 @@ func (client *arrayOperations) getNullHandleResponse(resp *azcore.Response) (*In
 		return nil, client.getNullHandleError(resp)
 	}
 	result := Int32ArrayResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Int32Array)
+	return &result, resp.UnmarshalAsJSON(&result)
 }
 
 // getNullHandleError handles the GetNull error response.
@@ -2292,7 +2292,7 @@ func (client *arrayOperations) getStringEnumValidHandleResponse(resp *azcore.Res
 		return nil, client.getStringEnumValidHandleError(resp)
 	}
 	result := Enum0ArrayResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Enum0Array)
+	return &result, resp.UnmarshalAsJSON(&result)
 }
 
 // getStringEnumValidHandleError handles the GetStringEnumValid error response.
@@ -2338,7 +2338,7 @@ func (client *arrayOperations) getStringValidHandleResponse(resp *azcore.Respons
 		return nil, client.getStringValidHandleError(resp)
 	}
 	result := StringArrayResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.StringArray)
+	return &result, resp.UnmarshalAsJSON(&result)
 }
 
 // getStringValidHandleError handles the GetStringValid error response.

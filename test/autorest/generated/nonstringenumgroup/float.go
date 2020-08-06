@@ -62,7 +62,7 @@ func (client *floatOperations) getHandleResponse(resp *azcore.Response) (*FloatE
 		return nil, client.getHandleError(resp)
 	}
 	result := FloatEnumResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Value)
+	return &result, resp.UnmarshalAsJSON(&result)
 }
 
 // getHandleError handles the Get error response.

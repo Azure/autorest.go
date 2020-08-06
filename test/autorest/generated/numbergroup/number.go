@@ -471,7 +471,7 @@ func (client *numberOperations) getInvalidDoubleHandleResponse(resp *azcore.Resp
 		return nil, client.getInvalidDoubleHandleError(resp)
 	}
 	result := Float64Response{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Value)
+	return &result, resp.UnmarshalAsJSON(&result)
 }
 
 // getInvalidDoubleHandleError handles the GetInvalidDouble error response.
@@ -563,7 +563,7 @@ func (client *numberOperations) getNullHandleResponse(resp *azcore.Response) (*F
 		return nil, client.getNullHandleError(resp)
 	}
 	result := Float32Response{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Value)
+	return &result, resp.UnmarshalAsJSON(&result)
 }
 
 // getNullHandleError handles the GetNull error response.

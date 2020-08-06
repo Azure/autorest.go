@@ -732,7 +732,7 @@ func (client *applicationGatewaysOperations) listAvailableServerVariablesHandleR
 		return nil, client.listAvailableServerVariablesHandleError(resp)
 	}
 	result := StringArrayResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.StringArray)
+	return &result, resp.UnmarshalAsJSON(&result)
 }
 
 // listAvailableServerVariablesHandleError handles the ListAvailableServerVariables error response.

@@ -205,7 +205,7 @@ func (client *boolOperations) getTrueHandleResponse(resp *azcore.Response) (*Boo
 		return nil, client.getTrueHandleError(resp)
 	}
 	result := BoolResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Value)
+	return &result, resp.UnmarshalAsJSON(&result)
 }
 
 // getTrueHandleError handles the GetTrue error response.
