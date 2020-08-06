@@ -71,7 +71,6 @@ export function isScalar(schema: Schema): boolean {
   switch (schema.type) {
     case SchemaType.Array:
       return isScalar((<ArraySchema>schema).elementType);
-    case SchemaType.Binary:
     case SchemaType.Boolean:
     case SchemaType.ByteArray:
     case SchemaType.Choice:
