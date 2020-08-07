@@ -3562,10 +3562,9 @@ func (p *stringPoller) Poll(ctx context.Context) (*http.Response, error) {
 }
 
 func (p *stringPoller) FinalResponse(ctx context.Context) (*StringResponse, error) {
-	temp := ""
-	s := &StringResponse{Value: &temp}
+	s := &StringResponse{}
 
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.Value)
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, &s.Value)
 	if err != nil {
 		return nil, err
 	}
@@ -3580,10 +3579,9 @@ func (p *stringPoller) ResumeToken() (string, error) {
 }
 
 func (p *stringPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*StringResponse, error) {
-	temp := ""
-	s := &StringResponse{Value: &temp}
+	s := &StringResponse{}
 
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.Value)
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, &s.Value)
 	if err != nil {
 		return nil, err
 	}

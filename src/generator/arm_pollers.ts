@@ -5,7 +5,7 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { camelCase } from '@azure-tools/codegen';
-import { CodeModel, SchemaResponse, SchemaType, Operation } from '@azure-tools/codemodel';
+import { CodeModel, SchemaResponse, SchemaType, Operation, Schema, ArraySchema } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { PagerInfo, PollerInfo, isSchemaResponse, isPageableOperation } from '../common/helpers';
 import { contentPreamble, sortAscending, getCreateRequestParametersSig, getMethodParameters } from './helpers';
@@ -136,14 +136,14 @@ export async function generateARMPollers(session: Session<CodeModel>): Promise<s
       finalResponseDeclaration = `FinalResponse(ctx context.Context) (*${responseType}, error)`;
       finalResponse = `FinalResponse(ctx context.Context) (*${responseType}, error) {`;
       let respType = `s := &${responseType}{${schemaResponse.schema.language.go!.responseType.value}: &${schemaResponse.schema.language.go!.name}{}}`;
-      const [isIntegral, integralVal] = isIntegralType(schemaResponse);
-      if (isIntegral) {
-        respType = `temp := ${integralVal}
-        s := &${responseType}{${schemaResponse.schema.language.go!.responseType.value}: &temp}
-        `;
+      let reference = '';
+      const isScalar = isScalarType(schemaResponse.schema);
+      if (isScalar) {
+        respType = `s := &${responseType}{}\n`;
+        reference = '&';
       }
       pollUntilDone = `${respType}
-		resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.${schemaResponse.schema.language.go!.responseType.value})
+		resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, ${reference}s.${schemaResponse.schema.language.go!.responseType.value})
 		if err != nil {
 			return nil, err
     }
@@ -151,7 +151,7 @@ export async function generateARMPollers(session: Session<CodeModel>): Promise<s
     return s, nil`;
       finalResponse += `
       ${respType}
-		resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.${schemaResponse.schema.language.go!.responseType.value})
+		resp, err := p.pt.FinalResponse(ctx, p.pipeline, ${reference}s.${schemaResponse.schema.language.go!.responseType.value})
 		if err != nil {
 			return nil, err
     }
@@ -214,14 +214,24 @@ export async function generateARMPollers(session: Session<CodeModel>): Promise<s
   return text;
 }
 
-function isIntegralType(resp: SchemaResponse): [boolean, string] {
-  switch (resp.schema.type) {
-    case SchemaType.String:
-      return [true, '""'];
+function isScalarType(schema: Schema): boolean {
+  switch (schema.type) {
+    case SchemaType.Array:
+      return isScalarType((<ArraySchema>schema).elementType);
+    case SchemaType.Boolean:
+    case SchemaType.ByteArray:
+    case SchemaType.Choice:
+    case SchemaType.Duration:
     case SchemaType.Integer:
     case SchemaType.Number:
-      return [true, '0'];
+    case SchemaType.SealedChoice:
+    case SchemaType.String:
+    case SchemaType.Time:
+    case SchemaType.UnixTime:
+    case SchemaType.Uri:
+    case SchemaType.Uuid:
+      return true;
     default:
-      return [false, ''];
+      return false;
   }
 }
