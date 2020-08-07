@@ -532,6 +532,23 @@ func (c AzureFirewallSkuName) ToPtr() *AzureFirewallSkuName {
 	return &c
 }
 
+// AzureFirewallSkuTier - Tier of an Azure Firewall.
+type AzureFirewallSkuTier string
+
+const (
+	AzureFirewallSkuTierStandard AzureFirewallSkuTier = "Standard"
+)
+
+func PossibleAzureFirewallSkuTierValues() []AzureFirewallSkuTier {
+	return []AzureFirewallSkuTier{
+		AzureFirewallSkuTierStandard,
+	}
+}
+
+func (c AzureFirewallSkuTier) ToPtr() *AzureFirewallSkuTier {
+	return &c
+}
+
 // AzureFirewallThreatIntelMode - The operation mode for Threat Intel.
 type AzureFirewallThreatIntelMode string
 
@@ -615,6 +632,40 @@ func PossibleCircuitConnectionStatusValues() []CircuitConnectionStatus {
 }
 
 func (c CircuitConnectionStatus) ToPtr() *CircuitConnectionStatus {
+	return &c
+}
+
+// ConnectionMonitorEndpointFilterItemType - The type of item included in the filter. Currently only 'AgentAddress' is supported.
+type ConnectionMonitorEndpointFilterItemType string
+
+const (
+	ConnectionMonitorEndpointFilterItemTypeAgentAddress ConnectionMonitorEndpointFilterItemType = "AgentAddress"
+)
+
+func PossibleConnectionMonitorEndpointFilterItemTypeValues() []ConnectionMonitorEndpointFilterItemType {
+	return []ConnectionMonitorEndpointFilterItemType{
+		ConnectionMonitorEndpointFilterItemTypeAgentAddress,
+	}
+}
+
+func (c ConnectionMonitorEndpointFilterItemType) ToPtr() *ConnectionMonitorEndpointFilterItemType {
+	return &c
+}
+
+// ConnectionMonitorEndpointFilterType - The behavior of the endpoint filter. Currently only 'Include' is supported.
+type ConnectionMonitorEndpointFilterType string
+
+const (
+	ConnectionMonitorEndpointFilterTypeInclude ConnectionMonitorEndpointFilterType = "Include"
+)
+
+func PossibleConnectionMonitorEndpointFilterTypeValues() []ConnectionMonitorEndpointFilterType {
+	return []ConnectionMonitorEndpointFilterType{
+		ConnectionMonitorEndpointFilterTypeInclude,
+	}
+}
+
+func (c ConnectionMonitorEndpointFilterType) ToPtr() *ConnectionMonitorEndpointFilterType {
 	return &c
 }
 
@@ -1139,6 +1190,23 @@ func (c FirewallPolicyFilterRuleActionType) ToPtr() *FirewallPolicyFilterRuleAct
 	return &c
 }
 
+// FirewallPolicyNatRuleActionType - The action type of a rule.
+type FirewallPolicyNatRuleActionType string
+
+const (
+	FirewallPolicyNatRuleActionTypeDnat FirewallPolicyNatRuleActionType = "DNAT"
+)
+
+func PossibleFirewallPolicyNatRuleActionTypeValues() []FirewallPolicyNatRuleActionType {
+	return []FirewallPolicyNatRuleActionType{
+		FirewallPolicyNatRuleActionTypeDnat,
+	}
+}
+
+func (c FirewallPolicyNatRuleActionType) ToPtr() *FirewallPolicyNatRuleActionType {
+	return &c
+}
+
 // FirewallPolicyRuleConditionApplicationProtocolType - The application protocol type of a Rule condition.
 type FirewallPolicyRuleConditionApplicationProtocolType string
 
@@ -1221,6 +1289,23 @@ func (c FirewallPolicyRuleType) ToPtr() *FirewallPolicyRuleType {
 	return &c
 }
 
+// FlowLogFormatType - The file type of flow log.
+type FlowLogFormatType string
+
+const (
+	FlowLogFormatTypeJSON FlowLogFormatType = "JSON"
+)
+
+func PossibleFlowLogFormatTypeValues() []FlowLogFormatType {
+	return []FlowLogFormatType{
+		FlowLogFormatTypeJSON,
+	}
+}
+
+func (c FlowLogFormatType) ToPtr() *FlowLogFormatType {
+	return &c
+}
+
 // HttpConfigurationMethod - The HTTP method to use.
 type HttpConfigurationMethod string
 
@@ -1237,6 +1322,23 @@ func PossibleHttpConfigurationMethodValues() []HttpConfigurationMethod {
 }
 
 func (c HttpConfigurationMethod) ToPtr() *HttpConfigurationMethod {
+	return &c
+}
+
+// HttpMethod - HTTP method.
+type HttpMethod string
+
+const (
+	HttpMethodGet HttpMethod = "Get"
+)
+
+func PossibleHttpMethodValues() []HttpMethod {
+	return []HttpMethod{
+		HttpMethodGet,
+	}
+}
+
+func (c HttpMethod) ToPtr() *HttpMethod {
 	return &c
 }
 
@@ -1549,6 +1651,40 @@ func (c LoadDistribution) ToPtr() *LoadDistribution {
 	return &c
 }
 
+// ManagedRuleEnabledState - The state of the managed rule. Defaults to Disabled if not specified.
+type ManagedRuleEnabledState string
+
+const (
+	ManagedRuleEnabledStateDisabled ManagedRuleEnabledState = "Disabled"
+)
+
+func PossibleManagedRuleEnabledStateValues() []ManagedRuleEnabledState {
+	return []ManagedRuleEnabledState{
+		ManagedRuleEnabledStateDisabled,
+	}
+}
+
+func (c ManagedRuleEnabledState) ToPtr() *ManagedRuleEnabledState {
+	return &c
+}
+
+// NatGatewaySkuName - Name of Nat Gateway SKU.
+type NatGatewaySkuName string
+
+const (
+	NatGatewaySkuNameStandard NatGatewaySkuName = "Standard"
+)
+
+func PossibleNatGatewaySkuNameValues() []NatGatewaySkuName {
+	return []NatGatewaySkuName{
+		NatGatewaySkuNameStandard,
+	}
+}
+
+func (c NatGatewaySkuName) ToPtr() *NatGatewaySkuName {
+	return &c
+}
+
 // NetworkOperationStatus - Status of the Azure async operation.
 type NetworkOperationStatus string
 
@@ -1638,6 +1774,23 @@ func PossibleOriginValues() []Origin {
 }
 
 func (c Origin) ToPtr() *Origin {
+	return &c
+}
+
+// OutputType - Connection monitor output destination type. Currently, only "Workspace" is supported.
+type OutputType string
+
+const (
+	OutputTypeWorkspace OutputType = "Workspace"
+)
+
+func PossibleOutputTypeValues() []OutputType {
+	return []OutputType{
+		OutputTypeWorkspace,
+	}
+}
+
+func (c OutputType) ToPtr() *OutputType {
 	return &c
 }
 
@@ -1914,6 +2067,23 @@ func (c PublicIPAddressSkuName) ToPtr() *PublicIPAddressSkuName {
 	return &c
 }
 
+// PublicIPPrefixSkuName - Name of a public IP prefix SKU.
+type PublicIPPrefixSkuName string
+
+const (
+	PublicIPPrefixSkuNameStandard PublicIPPrefixSkuName = "Standard"
+)
+
+func PossiblePublicIPPrefixSkuNameValues() []PublicIPPrefixSkuName {
+	return []PublicIPPrefixSkuName{
+		PublicIPPrefixSkuNameStandard,
+	}
+}
+
+func (c PublicIPPrefixSkuName) ToPtr() *PublicIPPrefixSkuName {
+	return &c
+}
+
 // ResourceIdentityType - The type of identity used for the resource. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user assigned identities. The type 'None' will remove any identities from the virtual machine.
 type ResourceIdentityType string
 
@@ -1934,6 +2104,23 @@ func PossibleResourceIdentityTypeValues() []ResourceIdentityType {
 }
 
 func (c ResourceIdentityType) ToPtr() *ResourceIdentityType {
+	return &c
+}
+
+// RouteFilterRuleType - The rule type of the rule.
+type RouteFilterRuleType string
+
+const (
+	RouteFilterRuleTypeCommunity RouteFilterRuleType = "Community"
+)
+
+func PossibleRouteFilterRuleTypeValues() []RouteFilterRuleType {
+	return []RouteFilterRuleType{
+		RouteFilterRuleTypeCommunity,
+	}
+}
+
+func (c RouteFilterRuleType) ToPtr() *RouteFilterRuleType {
 	return &c
 }
 
@@ -2154,6 +2341,23 @@ func PossibleTunnelConnectionStatusValues() []TunnelConnectionStatus {
 }
 
 func (c TunnelConnectionStatus) ToPtr() *TunnelConnectionStatus {
+	return &c
+}
+
+// UsageUnit - An enum describing the unit of measurement.
+type UsageUnit string
+
+const (
+	UsageUnitCount UsageUnit = "Count"
+)
+
+func PossibleUsageUnitValues() []UsageUnit {
+	return []UsageUnit{
+		UsageUnitCount,
+	}
+}
+
+func (c UsageUnit) ToPtr() *UsageUnit {
 	return &c
 }
 

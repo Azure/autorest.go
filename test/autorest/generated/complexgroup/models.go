@@ -584,7 +584,7 @@ type MyBaseTypeClassification interface {
 
 type MyBaseType struct {
 	Helper *MyBaseHelperType `json:"helper,omitempty"`
-	Kind   *string           `json:"kind,omitempty"`
+	Kind   *MyKind           `json:"kind,omitempty"`
 	PropB1 *string           `json:"propB1,omitempty"`
 }
 
@@ -620,7 +620,7 @@ func (m *MyBaseType) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (m MyBaseType) marshalInternal(discValue string) map[string]interface{} {
+func (m MyBaseType) marshalInternal(discValue MyKind) map[string]interface{} {
 	objectMap := make(map[string]interface{})
 	if m.Helper != nil {
 		objectMap["helper"] = m.Helper
@@ -658,7 +658,7 @@ type MyDerivedType struct {
 
 // MarshalJSON implements the json.Marshaller interface for type MyDerivedType.
 func (m MyDerivedType) MarshalJSON() ([]byte, error) {
-	objectMap := m.MyBaseType.marshalInternal("Kind1")
+	objectMap := m.MyBaseType.marshalInternal(MyKindKind1)
 	if m.PropD1 != nil {
 		objectMap["propD1"] = m.PropD1
 	}

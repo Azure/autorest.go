@@ -1976,7 +1976,7 @@ type AzureFirewallSku struct {
 	Name *AzureFirewallSkuName `json:"name,omitempty"`
 
 	// Tier of an Azure Firewall.
-	Tier *string `json:"tier,omitempty"`
+	Tier *AzureFirewallSkuTier `json:"tier,omitempty"`
 }
 
 // Azure reachability report details.
@@ -2631,7 +2631,7 @@ type ConnectionMonitorEndpointFilter struct {
 	Items *[]ConnectionMonitorEndpointFilterItem `json:"items,omitempty"`
 
 	// The behavior of the endpoint filter. Currently only 'Include' is supported.
-	Type *string `json:"type,omitempty"`
+	Type *ConnectionMonitorEndpointFilterType `json:"type,omitempty"`
 }
 
 // Describes the connection monitor endpoint filter item.
@@ -2640,7 +2640,7 @@ type ConnectionMonitorEndpointFilterItem struct {
 	Address *string `json:"address,omitempty"`
 
 	// The type of item included in the filter. Currently only 'AgentAddress' is supported.
-	Type *string `json:"type,omitempty"`
+	Type *ConnectionMonitorEndpointFilterItemType `json:"type,omitempty"`
 }
 
 // Describes the HTTP configuration.
@@ -2688,7 +2688,7 @@ type ConnectionMonitorListResultResponse struct {
 // Describes a connection monitor output destination.
 type ConnectionMonitorOutput struct {
 	// Connection monitor output destination type. Currently, only "Workspace" is supported.
-	Type *string `json:"type,omitempty"`
+	Type *OutputType `json:"type,omitempty"`
 
 	// Describes the settings for producing output into a log analytics workspace.
 	WorkspaceSettings *ConnectionMonitorWorkspaceSettings `json:"workspaceSettings,omitempty"`
@@ -5122,7 +5122,7 @@ func (f *FirewallPolicyNatRule) UnmarshalJSON(data []byte) error {
 // Properties of the FirewallPolicyNatRuleAction.
 type FirewallPolicyNatRuleAction struct {
 	// The type of action.
-	Type *string `json:"type,omitempty"`
+	Type *FirewallPolicyNatRuleActionType `json:"type,omitempty"`
 }
 
 // FirewallPolicyPollerResponse is the response envelope for operations that asynchronously return a FirewallPolicy type.
@@ -5413,7 +5413,7 @@ type FlowLog struct {
 // Parameters that define the flow log format.
 type FlowLogFormatParameters struct {
 	// The file type of flow log.
-	Type *string `json:"type,omitempty"`
+	Type *FlowLogFormatType `json:"type,omitempty"`
 
 	// The version (revision) of the flow log.
 	Version *int32 `json:"version,omitempty"`
@@ -5672,7 +5672,7 @@ type HTTPConfiguration struct {
 	Headers *[]HTTPHeader `json:"headers,omitempty"`
 
 	// HTTP method.
-	Method *string `json:"method,omitempty"`
+	Method *HttpMethod `json:"method,omitempty"`
 
 	// Valid status codes.
 	ValidStatusCodes *[]int32 `json:"validStatusCodes,omitempty"`
@@ -6783,7 +6783,7 @@ type ManagedRuleOverride struct {
 	RuleID *string `json:"ruleId,omitempty"`
 
 	// The state of the managed rule. Defaults to Disabled if not specified.
-	State *string `json:"state,omitempty"`
+	State *ManagedRuleEnabledState `json:"state,omitempty"`
 }
 
 // Defines a managed rule set.
@@ -6984,7 +6984,7 @@ type NatGatewayResponse struct {
 // SKU of nat gateway.
 type NatGatewaySku struct {
 	// Name of Nat Gateway SKU.
-	Name *string `json:"name,omitempty"`
+	Name *NatGatewaySkuName `json:"name,omitempty"`
 }
 
 // NatGatewaysGetOptions contains the optional parameters for the NatGateways.Get method.
@@ -9219,7 +9219,7 @@ type PublicIPPrefixResponse struct {
 // SKU of a public IP prefix.
 type PublicIPPrefixSku struct {
 	// Name of a public IP prefix SKU.
-	Name *string `json:"name,omitempty"`
+	Name *PublicIPPrefixSkuName `json:"name,omitempty"`
 }
 
 // PublicIPPrefixesGetOptions contains the optional parameters for the PublicIPPrefixes.Get method.
@@ -9488,7 +9488,7 @@ type RouteFilterRulePropertiesFormat struct {
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// The rule type of the rule.
-	RouteFilterRuleType *string `json:"routeFilterRuleType,omitempty"`
+	RouteFilterRuleType *RouteFilterRuleType `json:"routeFilterRuleType,omitempty"`
 }
 
 // RouteFilterRuleResponse is the response envelope for operations that return a RouteFilterRule type.
@@ -10598,7 +10598,7 @@ type Usage struct {
 	Name *UsageName `json:"name,omitempty"`
 
 	// An enum describing the unit of measurement.
-	Unit *string `json:"unit,omitempty"`
+	Unit *UsageUnit `json:"unit,omitempty"`
 }
 
 // The usage names.

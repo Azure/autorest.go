@@ -152,7 +152,7 @@ func unmarshalMyBaseTypeClassification(body []byte) (MyBaseTypeClassification, e
 	}
 	var b MyBaseTypeClassification
 	switch m["kind"] {
-	case "Kind1":
+	case MyKindKind1:
 		b = &MyDerivedType{}
 	default:
 		b = &MyBaseType{}
