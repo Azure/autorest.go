@@ -426,7 +426,16 @@ function createProtocolRequest(codeModel: CodeModel, client: string, op: Operati
     if (encodedParams.length > 0) {
       text += '\tquery := u.Query()\n';
       for (const qp of values(encodedParams)) {
-        text += emitQueryParam(qp, `query.Set("${qp.language.go!.serializedName}", ${formatParamValue(qp, imports)})`);
+        let setter: string;
+        if (qp.protocol.http?.explode === true) {
+          setter = `\tfor _, qv := range ${getParamName(qp)} {\n`;
+          setter += `\t\tquery.Add("${qp.language.go!.serializedName}", qv)\n`;
+          setter += '\t}';
+        } else {
+          // cannot initialize setter to this value as formatParamValue() can change imports
+          setter = `query.Set("${qp.language.go!.serializedName}", ${formatParamValue(qp, imports)})`;
+        }
+        text += emitQueryParam(qp, setter);
       }
       text += '\tu.RawQuery = query.Encode()\n';
     }
@@ -438,6 +447,14 @@ function createProtocolRequest(codeModel: CodeModel, client: string, op: Operati
         text += '\tunencodedParams := []string{}\n';
       }
       for (const qp of values(unencodedParams)) {
+        let setter: string;
+        if (qp.protocol.http?.explode === true) {
+          setter = `\tfor _, qv := range ${getParamName(qp)} {\n`;
+          setter += `\t\tunencodedParams = append(unencodedParams, "${qp.language.go!.serializedName}="+qv)\n`;
+          setter += '\t}';
+        } else {
+          setter = `unencodedParams = append(unencodedParams, "${qp.language.go!.serializedName}="+${formatParamValue(qp, imports)})`;
+        }
         text += emitQueryParam(qp, `unencodedParams = append(unencodedParams, "${qp.language.go!.serializedName}="+${formatParamValue(qp, imports)})`);
       }
       text += '\tu.RawQuery = strings.Join(unencodedParams, "&")\n';
