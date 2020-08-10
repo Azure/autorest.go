@@ -6,7 +6,7 @@ dependencies:
   '@azure-tools/codemodel': 4.13.347
   '@azure-tools/linq': 3.1.257
   '@azure-tools/tasks': 3.0.248
-  '@microsoft.azure/autorest.testserver': 2.10.42
+  '@microsoft.azure/autorest.testserver': 2.10.58
   '@rush-temp/go': 'file:projects/go.tgz'
   '@types/js-yaml': 3.12.1
   '@types/mocha': 5.2.5
@@ -131,7 +131,7 @@ packages:
     dev: false
     resolution:
       integrity: sha512-i6rgnR/YgPEQzZZnbTHHuZdlE8qyoBNalD6F+q4vAFlcMEcqmkoG+mPqJYJCo63qPf74+Y1UZsl3l6f7/RIkmA==
-  /@microsoft.azure/autorest.testserver/2.10.42:
+  /@microsoft.azure/autorest.testserver/2.10.58:
     dependencies:
       azure-storage: 2.10.3
       body-parser: 1.19.0
@@ -154,7 +154,7 @@ packages:
     dev: false
     hasBin: true
     resolution:
-      integrity: sha512-4OWs1SeL8YCcp/Op3UGS36jI7TxRP+rea3VfkeOn4ClqZkDZ4Yaw4GIv/w9goBwAsY2PfvOQDqBizWoeOkeU8g==
+      integrity: sha512-y/7LX+a6TEtTV3LnYAXzAyQgryKfq2B9Yn0X7vtPOeoQVGOfQVt7ql02RgdNHeI9sXlGqbKE93BYJHWXFRJDaw==
   /@types/babel-types/7.0.8:
     dev: false
     resolution:
@@ -3130,7 +3130,7 @@ packages:
       '@azure-tools/codemodel': 4.13.347
       '@azure-tools/linq': 3.1.257
       '@azure-tools/tasks': 3.0.248
-      '@microsoft.azure/autorest.testserver': 2.10.42
+      '@microsoft.azure/autorest.testserver': 2.10.58
       '@types/js-yaml': 3.12.1
       '@types/mocha': 5.2.5
       '@types/node': 12.7.2
@@ -3145,7 +3145,7 @@ packages:
     dev: false
     name: '@rush-temp/go'
     resolution:
-      integrity: sha512-mXDHm3nfst8JEqAtTm/1WMCiDs2Za6Ml+oOmdsAtZg0Yg8Gwj8Zm2e/rkPeXJqvEJsOEtkpEKN1a3v/yDh+AEA==
+      integrity: sha512-EZULX2L4xkegrlMKv36rjTQQGdsYWMVcJl1axA9BRgAig2QrrUGIi2551F0p02HL20N7kvTE63IABzngJMCCkA==
       tarball: 'file:projects/go.tgz'
     version: 0.0.0
 registry: ''
@@ -3157,7 +3157,7 @@ specifiers:
   '@azure-tools/codemodel': ~4.13.347
   '@azure-tools/linq': ~3.1.0
   '@azure-tools/tasks': ~3.0.0
-  '@microsoft.azure/autorest.testserver': 2.10.42
+  '@microsoft.azure/autorest.testserver': 2.10.58
   '@rush-temp/go': 'file:./projects/go.tgz'
   '@types/js-yaml': 3.12.1
   '@types/mocha': 5.2.5

@@ -24,6 +24,8 @@ type QueriesOperations interface {
 	ArrayStringCSVNull(ctx context.Context, queriesArrayStringCsvNullOptions *QueriesArrayStringCSVNullOptions) (*http.Response, error)
 	// ArrayStringCSVValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
 	ArrayStringCSVValid(ctx context.Context, queriesArrayStringCsvValidOptions *QueriesArrayStringCSVValidOptions) (*http.Response, error)
+	// ArrayStringNoCollectionFormatEmpty - Array query has no defined collection format, should default to csv. Pass in ['hello', 'nihao', 'bonjour'] for the 'arrayQuery' parameter to the service
+	ArrayStringNoCollectionFormatEmpty(ctx context.Context, queriesArrayStringNoCollectionFormatEmptyOptions *QueriesArrayStringNoCollectionFormatEmptyOptions) (*http.Response, error)
 	// ArrayStringPipesValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the pipes-array format
 	ArrayStringPipesValid(ctx context.Context, queriesArrayStringPipesValidOptions *QueriesArrayStringPipesValidOptions) (*http.Response, error)
 	// ArrayStringSsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the ssv-array format
@@ -236,6 +238,56 @@ func (client *queriesOperations) arrayStringCsvValidHandleResponse(resp *azcore.
 
 // arrayStringCsvValidHandleError handles the ArrayStringCSVValid error response.
 func (client *queriesOperations) arrayStringCsvValidHandleError(resp *azcore.Response) error {
+	var err Error
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
+}
+
+// ArrayStringNoCollectionFormatEmpty - Array query has no defined collection format, should default to csv. Pass in ['hello', 'nihao', 'bonjour'] for the 'arrayQuery' parameter to the service
+func (client *queriesOperations) ArrayStringNoCollectionFormatEmpty(ctx context.Context, queriesArrayStringNoCollectionFormatEmptyOptions *QueriesArrayStringNoCollectionFormatEmptyOptions) (*http.Response, error) {
+	req, err := client.arrayStringNoCollectionFormatEmptyCreateRequest(queriesArrayStringNoCollectionFormatEmptyOptions)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.p.Do(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	result, err := client.arrayStringNoCollectionFormatEmptyHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+// arrayStringNoCollectionFormatEmptyCreateRequest creates the ArrayStringNoCollectionFormatEmpty request.
+func (client *queriesOperations) arrayStringNoCollectionFormatEmptyCreateRequest(queriesArrayStringNoCollectionFormatEmptyOptions *QueriesArrayStringNoCollectionFormatEmptyOptions) (*azcore.Request, error) {
+	urlPath := "/queries/array/none/string/empty"
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	query := u.Query()
+	if queriesArrayStringNoCollectionFormatEmptyOptions != nil && queriesArrayStringNoCollectionFormatEmptyOptions.ArrayQuery != nil {
+		query.Set("arrayQuery", strings.Join(*queriesArrayStringNoCollectionFormatEmptyOptions.ArrayQuery, ","))
+	}
+	u.RawQuery = query.Encode()
+	req := azcore.NewRequest(http.MethodGet, *u)
+	return req, nil
+}
+
+// arrayStringNoCollectionFormatEmptyHandleResponse handles the ArrayStringNoCollectionFormatEmpty response.
+func (client *queriesOperations) arrayStringNoCollectionFormatEmptyHandleResponse(resp *azcore.Response) (*http.Response, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.arrayStringNoCollectionFormatEmptyHandleError(resp)
+	}
+	return resp.Response, nil
+}
+
+// arrayStringNoCollectionFormatEmptyHandleError handles the ArrayStringNoCollectionFormatEmpty error response.
+func (client *queriesOperations) arrayStringNoCollectionFormatEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

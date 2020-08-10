@@ -61,6 +61,7 @@ type RefColorConstantResponse struct {
 
 // StringPutNullOptions contains the optional parameters for the String.PutNull method.
 type StringPutNullOptions struct {
+	// string body
 	StringBody *string
 }
 

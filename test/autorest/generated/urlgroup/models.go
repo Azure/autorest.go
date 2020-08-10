@@ -82,6 +82,13 @@ type QueriesArrayStringCSVValidOptions struct {
 	ArrayQuery *[]string
 }
 
+// QueriesArrayStringNoCollectionFormatEmptyOptions contains the optional parameters for the Queries.ArrayStringNoCollectionFormatEmpty
+// method.
+type QueriesArrayStringNoCollectionFormatEmptyOptions struct {
+	// Array-typed query parameter. Pass in ['hello', 'nihao', 'bonjour'].
+	ArrayQuery *[]string
+}
+
 // QueriesArrayStringPipesValidOptions contains the optional parameters for the Queries.ArrayStringPipesValid method.
 type QueriesArrayStringPipesValidOptions struct {
 	// an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the pipes-array format

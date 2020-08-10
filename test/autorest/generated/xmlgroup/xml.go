@@ -44,6 +44,8 @@ type XMLOperations interface {
 	GetSimple(ctx context.Context) (*SlideshowResponse, error)
 	// GetWrappedLists - Get an XML document with multiple wrapped lists
 	GetWrappedLists(ctx context.Context) (*AppleBarrelResponse, error)
+	// GetXMSText - Get back an XML object with an x-ms-text property, which should translate to the returned object's 'language' property being 'english' and its 'content' property being 'I am text'
+	GetXMSText(ctx context.Context) (*ObjectWithXMSTextPropertyResponse, error)
 	// JSONInput - A Swagger with XML that has one operation that takes JSON as input. You need to send the ID number 42
 	JSONInput(ctx context.Context, properties JSONInput) (*http.Response, error)
 	// JSONOutput - A Swagger with XML that has one operation that returns JSON. ID number 42
@@ -718,6 +720,55 @@ func (client *xmlOperations) getWrappedListsHandleResponse(resp *azcore.Response
 
 // getWrappedListsHandleError handles the GetWrappedLists error response.
 func (client *xmlOperations) getWrappedListsHandleError(resp *azcore.Response) error {
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+	}
+	if len(body) == 0 {
+		return errors.New(resp.Status)
+	}
+	return errors.New(string(body))
+}
+
+// GetXMSText - Get back an XML object with an x-ms-text property, which should translate to the returned object's 'language' property being 'english' and its 'content' property being 'I am text'
+func (client *xmlOperations) GetXMSText(ctx context.Context) (*ObjectWithXMSTextPropertyResponse, error) {
+	req, err := client.getXmsTextCreateRequest()
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.p.Do(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	result, err := client.getXmsTextHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+// getXmsTextCreateRequest creates the GetXMSText request.
+func (client *xmlOperations) getXmsTextCreateRequest() (*azcore.Request, error) {
+	urlPath := "/xml/x-ms-text"
+	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req := azcore.NewRequest(http.MethodGet, *u)
+	return req, nil
+}
+
+// getXmsTextHandleResponse handles the GetXMSText response.
+func (client *xmlOperations) getXmsTextHandleResponse(resp *azcore.Response) (*ObjectWithXMSTextPropertyResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.getXmsTextHandleError(resp)
+	}
+	result := ObjectWithXMSTextPropertyResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsXML(&result.Data)
+}
+
+// getXmsTextHandleError handles the GetXMSText error response.
+func (client *xmlOperations) getXmsTextHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
