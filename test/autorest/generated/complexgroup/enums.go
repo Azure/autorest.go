@@ -53,3 +53,19 @@ func PossibleGoblinSharkColorValues() []GoblinSharkColor {
 func (c GoblinSharkColor) ToPtr() *GoblinSharkColor {
 	return &c
 }
+
+type MyKind string
+
+const (
+	MyKindKind1 MyKind = "Kind1"
+)
+
+func PossibleMyKindValues() []MyKind {
+	return []MyKind{
+		MyKindKind1,
+	}
+}
+
+func (c MyKind) ToPtr() *MyKind {
+	return &c
+}
