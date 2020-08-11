@@ -41,8 +41,8 @@ func (p *productResultPagerPoller) Poll(ctx context.Context) (*http.Response, er
 }
 
 func (p *productResultPagerPoller) FinalResponse(ctx context.Context) (ProductResultPager, error) {
-	s := &productResultPager{}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s)
+	respType := &productResultPager{}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType)
 	if err != nil {
 		return nil, err
 	}
@@ -56,8 +56,8 @@ func (p *productResultPagerPoller) ResumeToken() (string, error) {
 }
 
 func (p *productResultPagerPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (ProductResultPager, error) {
-	s := &productResultPager{}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s)
+	respType := &productResultPager{}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType)
 	if err != nil {
 		return nil, err
 	}

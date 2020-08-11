@@ -40,13 +40,13 @@ func (p *applicationGatewayBackendHealthOnDemandPoller) Poll(ctx context.Context
 }
 
 func (p *applicationGatewayBackendHealthOnDemandPoller) FinalResponse(ctx context.Context) (*ApplicationGatewayBackendHealthOnDemandResponse, error) {
-	s := &ApplicationGatewayBackendHealthOnDemandResponse{ApplicationGatewayBackendHealthOnDemand: &ApplicationGatewayBackendHealthOnDemand{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.ApplicationGatewayBackendHealthOnDemand)
+	respType := &ApplicationGatewayBackendHealthOnDemandResponse{ApplicationGatewayBackendHealthOnDemand: &ApplicationGatewayBackendHealthOnDemand{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.ApplicationGatewayBackendHealthOnDemand)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeApplicationGatewayBackendHealthOnDemandPoller method
@@ -56,13 +56,13 @@ func (p *applicationGatewayBackendHealthOnDemandPoller) ResumeToken() (string, e
 }
 
 func (p *applicationGatewayBackendHealthOnDemandPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*ApplicationGatewayBackendHealthOnDemandResponse, error) {
-	s := &ApplicationGatewayBackendHealthOnDemandResponse{ApplicationGatewayBackendHealthOnDemand: &ApplicationGatewayBackendHealthOnDemand{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.ApplicationGatewayBackendHealthOnDemand)
+	respType := &ApplicationGatewayBackendHealthOnDemandResponse{ApplicationGatewayBackendHealthOnDemand: &ApplicationGatewayBackendHealthOnDemand{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.ApplicationGatewayBackendHealthOnDemand)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ApplicationGatewayBackendHealthPoller provides polling facilities until the operation completes
@@ -90,13 +90,13 @@ func (p *applicationGatewayBackendHealthPoller) Poll(ctx context.Context) (*http
 }
 
 func (p *applicationGatewayBackendHealthPoller) FinalResponse(ctx context.Context) (*ApplicationGatewayBackendHealthResponse, error) {
-	s := &ApplicationGatewayBackendHealthResponse{ApplicationGatewayBackendHealth: &ApplicationGatewayBackendHealth{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.ApplicationGatewayBackendHealth)
+	respType := &ApplicationGatewayBackendHealthResponse{ApplicationGatewayBackendHealth: &ApplicationGatewayBackendHealth{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.ApplicationGatewayBackendHealth)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeApplicationGatewayBackendHealthPoller method
@@ -106,13 +106,13 @@ func (p *applicationGatewayBackendHealthPoller) ResumeToken() (string, error) {
 }
 
 func (p *applicationGatewayBackendHealthPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*ApplicationGatewayBackendHealthResponse, error) {
-	s := &ApplicationGatewayBackendHealthResponse{ApplicationGatewayBackendHealth: &ApplicationGatewayBackendHealth{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.ApplicationGatewayBackendHealth)
+	respType := &ApplicationGatewayBackendHealthResponse{ApplicationGatewayBackendHealth: &ApplicationGatewayBackendHealth{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.ApplicationGatewayBackendHealth)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ApplicationGatewayPoller provides polling facilities until the operation completes
@@ -140,13 +140,13 @@ func (p *applicationGatewayPoller) Poll(ctx context.Context) (*http.Response, er
 }
 
 func (p *applicationGatewayPoller) FinalResponse(ctx context.Context) (*ApplicationGatewayResponse, error) {
-	s := &ApplicationGatewayResponse{ApplicationGateway: &ApplicationGateway{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.ApplicationGateway)
+	respType := &ApplicationGatewayResponse{ApplicationGateway: &ApplicationGateway{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.ApplicationGateway)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeApplicationGatewayPoller method
@@ -156,13 +156,13 @@ func (p *applicationGatewayPoller) ResumeToken() (string, error) {
 }
 
 func (p *applicationGatewayPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*ApplicationGatewayResponse, error) {
-	s := &ApplicationGatewayResponse{ApplicationGateway: &ApplicationGateway{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.ApplicationGateway)
+	respType := &ApplicationGatewayResponse{ApplicationGateway: &ApplicationGateway{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.ApplicationGateway)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ApplicationSecurityGroupPoller provides polling facilities until the operation completes
@@ -190,13 +190,13 @@ func (p *applicationSecurityGroupPoller) Poll(ctx context.Context) (*http.Respon
 }
 
 func (p *applicationSecurityGroupPoller) FinalResponse(ctx context.Context) (*ApplicationSecurityGroupResponse, error) {
-	s := &ApplicationSecurityGroupResponse{ApplicationSecurityGroup: &ApplicationSecurityGroup{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.ApplicationSecurityGroup)
+	respType := &ApplicationSecurityGroupResponse{ApplicationSecurityGroup: &ApplicationSecurityGroup{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.ApplicationSecurityGroup)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeApplicationSecurityGroupPoller method
@@ -206,13 +206,13 @@ func (p *applicationSecurityGroupPoller) ResumeToken() (string, error) {
 }
 
 func (p *applicationSecurityGroupPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*ApplicationSecurityGroupResponse, error) {
-	s := &ApplicationSecurityGroupResponse{ApplicationSecurityGroup: &ApplicationSecurityGroup{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.ApplicationSecurityGroup)
+	respType := &ApplicationSecurityGroupResponse{ApplicationSecurityGroup: &ApplicationSecurityGroup{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.ApplicationSecurityGroup)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // AvailableProvidersListPoller provides polling facilities until the operation completes
@@ -240,13 +240,13 @@ func (p *availableProvidersListPoller) Poll(ctx context.Context) (*http.Response
 }
 
 func (p *availableProvidersListPoller) FinalResponse(ctx context.Context) (*AvailableProvidersListResponse, error) {
-	s := &AvailableProvidersListResponse{AvailableProvidersList: &AvailableProvidersList{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.AvailableProvidersList)
+	respType := &AvailableProvidersListResponse{AvailableProvidersList: &AvailableProvidersList{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.AvailableProvidersList)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeAvailableProvidersListPoller method
@@ -256,13 +256,13 @@ func (p *availableProvidersListPoller) ResumeToken() (string, error) {
 }
 
 func (p *availableProvidersListPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*AvailableProvidersListResponse, error) {
-	s := &AvailableProvidersListResponse{AvailableProvidersList: &AvailableProvidersList{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.AvailableProvidersList)
+	respType := &AvailableProvidersListResponse{AvailableProvidersList: &AvailableProvidersList{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.AvailableProvidersList)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // AzureFirewallPoller provides polling facilities until the operation completes
@@ -290,13 +290,13 @@ func (p *azureFirewallPoller) Poll(ctx context.Context) (*http.Response, error) 
 }
 
 func (p *azureFirewallPoller) FinalResponse(ctx context.Context) (*AzureFirewallResponse, error) {
-	s := &AzureFirewallResponse{AzureFirewall: &AzureFirewall{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.AzureFirewall)
+	respType := &AzureFirewallResponse{AzureFirewall: &AzureFirewall{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.AzureFirewall)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeAzureFirewallPoller method
@@ -306,13 +306,13 @@ func (p *azureFirewallPoller) ResumeToken() (string, error) {
 }
 
 func (p *azureFirewallPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*AzureFirewallResponse, error) {
-	s := &AzureFirewallResponse{AzureFirewall: &AzureFirewall{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.AzureFirewall)
+	respType := &AzureFirewallResponse{AzureFirewall: &AzureFirewall{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.AzureFirewall)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // AzureReachabilityReportPoller provides polling facilities until the operation completes
@@ -340,13 +340,13 @@ func (p *azureReachabilityReportPoller) Poll(ctx context.Context) (*http.Respons
 }
 
 func (p *azureReachabilityReportPoller) FinalResponse(ctx context.Context) (*AzureReachabilityReportResponse, error) {
-	s := &AzureReachabilityReportResponse{AzureReachabilityReport: &AzureReachabilityReport{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.AzureReachabilityReport)
+	respType := &AzureReachabilityReportResponse{AzureReachabilityReport: &AzureReachabilityReport{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.AzureReachabilityReport)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeAzureReachabilityReportPoller method
@@ -356,13 +356,13 @@ func (p *azureReachabilityReportPoller) ResumeToken() (string, error) {
 }
 
 func (p *azureReachabilityReportPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*AzureReachabilityReportResponse, error) {
-	s := &AzureReachabilityReportResponse{AzureReachabilityReport: &AzureReachabilityReport{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.AzureReachabilityReport)
+	respType := &AzureReachabilityReportResponse{AzureReachabilityReport: &AzureReachabilityReport{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.AzureReachabilityReport)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // BastionActiveSessionListResultPagerPoller provides polling facilities until the operation completes
@@ -391,8 +391,8 @@ func (p *bastionActiveSessionListResultPagerPoller) Poll(ctx context.Context) (*
 }
 
 func (p *bastionActiveSessionListResultPagerPoller) FinalResponse(ctx context.Context) (BastionActiveSessionListResultPager, error) {
-	s := &bastionActiveSessionListResultPager{}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s)
+	respType := &bastionActiveSessionListResultPager{}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType)
 	if err != nil {
 		return nil, err
 	}
@@ -406,8 +406,8 @@ func (p *bastionActiveSessionListResultPagerPoller) ResumeToken() (string, error
 }
 
 func (p *bastionActiveSessionListResultPagerPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (BastionActiveSessionListResultPager, error) {
-	s := &bastionActiveSessionListResultPager{}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s)
+	respType := &bastionActiveSessionListResultPager{}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType)
 	if err != nil {
 		return nil, err
 	}
@@ -457,13 +457,13 @@ func (p *bastionHostPoller) Poll(ctx context.Context) (*http.Response, error) {
 }
 
 func (p *bastionHostPoller) FinalResponse(ctx context.Context) (*BastionHostResponse, error) {
-	s := &BastionHostResponse{BastionHost: &BastionHost{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.BastionHost)
+	respType := &BastionHostResponse{BastionHost: &BastionHost{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.BastionHost)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeBastionHostPoller method
@@ -473,13 +473,13 @@ func (p *bastionHostPoller) ResumeToken() (string, error) {
 }
 
 func (p *bastionHostPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*BastionHostResponse, error) {
-	s := &BastionHostResponse{BastionHost: &BastionHost{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.BastionHost)
+	respType := &BastionHostResponse{BastionHost: &BastionHost{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.BastionHost)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // BastionShareableLinkListResultPagerPoller provides polling facilities until the operation completes
@@ -508,8 +508,8 @@ func (p *bastionShareableLinkListResultPagerPoller) Poll(ctx context.Context) (*
 }
 
 func (p *bastionShareableLinkListResultPagerPoller) FinalResponse(ctx context.Context) (BastionShareableLinkListResultPager, error) {
-	s := &bastionShareableLinkListResultPager{}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s)
+	respType := &bastionShareableLinkListResultPager{}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType)
 	if err != nil {
 		return nil, err
 	}
@@ -523,8 +523,8 @@ func (p *bastionShareableLinkListResultPagerPoller) ResumeToken() (string, error
 }
 
 func (p *bastionShareableLinkListResultPagerPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (BastionShareableLinkListResultPager, error) {
-	s := &bastionShareableLinkListResultPager{}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s)
+	respType := &bastionShareableLinkListResultPager{}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType)
 	if err != nil {
 		return nil, err
 	}
@@ -574,13 +574,13 @@ func (p *bgpPeerStatusListResultPoller) Poll(ctx context.Context) (*http.Respons
 }
 
 func (p *bgpPeerStatusListResultPoller) FinalResponse(ctx context.Context) (*BgpPeerStatusListResultResponse, error) {
-	s := &BgpPeerStatusListResultResponse{BgpPeerStatusListResult: &BgpPeerStatusListResult{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.BgpPeerStatusListResult)
+	respType := &BgpPeerStatusListResultResponse{BgpPeerStatusListResult: &BgpPeerStatusListResult{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.BgpPeerStatusListResult)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeBgpPeerStatusListResultPoller method
@@ -590,13 +590,13 @@ func (p *bgpPeerStatusListResultPoller) ResumeToken() (string, error) {
 }
 
 func (p *bgpPeerStatusListResultPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*BgpPeerStatusListResultResponse, error) {
-	s := &BgpPeerStatusListResultResponse{BgpPeerStatusListResult: &BgpPeerStatusListResult{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.BgpPeerStatusListResult)
+	respType := &BgpPeerStatusListResultResponse{BgpPeerStatusListResult: &BgpPeerStatusListResult{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.BgpPeerStatusListResult)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ConnectionMonitorQueryResultPoller provides polling facilities until the operation completes
@@ -624,13 +624,13 @@ func (p *connectionMonitorQueryResultPoller) Poll(ctx context.Context) (*http.Re
 }
 
 func (p *connectionMonitorQueryResultPoller) FinalResponse(ctx context.Context) (*ConnectionMonitorQueryResultResponse, error) {
-	s := &ConnectionMonitorQueryResultResponse{ConnectionMonitorQueryResult: &ConnectionMonitorQueryResult{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.ConnectionMonitorQueryResult)
+	respType := &ConnectionMonitorQueryResultResponse{ConnectionMonitorQueryResult: &ConnectionMonitorQueryResult{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.ConnectionMonitorQueryResult)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeConnectionMonitorQueryResultPoller method
@@ -640,13 +640,13 @@ func (p *connectionMonitorQueryResultPoller) ResumeToken() (string, error) {
 }
 
 func (p *connectionMonitorQueryResultPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*ConnectionMonitorQueryResultResponse, error) {
-	s := &ConnectionMonitorQueryResultResponse{ConnectionMonitorQueryResult: &ConnectionMonitorQueryResult{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.ConnectionMonitorQueryResult)
+	respType := &ConnectionMonitorQueryResultResponse{ConnectionMonitorQueryResult: &ConnectionMonitorQueryResult{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.ConnectionMonitorQueryResult)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ConnectionMonitorResultPoller provides polling facilities until the operation completes
@@ -674,13 +674,13 @@ func (p *connectionMonitorResultPoller) Poll(ctx context.Context) (*http.Respons
 }
 
 func (p *connectionMonitorResultPoller) FinalResponse(ctx context.Context) (*ConnectionMonitorResultResponse, error) {
-	s := &ConnectionMonitorResultResponse{ConnectionMonitorResult: &ConnectionMonitorResult{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.ConnectionMonitorResult)
+	respType := &ConnectionMonitorResultResponse{ConnectionMonitorResult: &ConnectionMonitorResult{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.ConnectionMonitorResult)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeConnectionMonitorResultPoller method
@@ -690,13 +690,13 @@ func (p *connectionMonitorResultPoller) ResumeToken() (string, error) {
 }
 
 func (p *connectionMonitorResultPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*ConnectionMonitorResultResponse, error) {
-	s := &ConnectionMonitorResultResponse{ConnectionMonitorResult: &ConnectionMonitorResult{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.ConnectionMonitorResult)
+	respType := &ConnectionMonitorResultResponse{ConnectionMonitorResult: &ConnectionMonitorResult{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.ConnectionMonitorResult)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ConnectionResetSharedKeyPoller provides polling facilities until the operation completes
@@ -724,13 +724,13 @@ func (p *connectionResetSharedKeyPoller) Poll(ctx context.Context) (*http.Respon
 }
 
 func (p *connectionResetSharedKeyPoller) FinalResponse(ctx context.Context) (*ConnectionResetSharedKeyResponse, error) {
-	s := &ConnectionResetSharedKeyResponse{ConnectionResetSharedKey: &ConnectionResetSharedKey{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.ConnectionResetSharedKey)
+	respType := &ConnectionResetSharedKeyResponse{ConnectionResetSharedKey: &ConnectionResetSharedKey{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.ConnectionResetSharedKey)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeConnectionResetSharedKeyPoller method
@@ -740,13 +740,13 @@ func (p *connectionResetSharedKeyPoller) ResumeToken() (string, error) {
 }
 
 func (p *connectionResetSharedKeyPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*ConnectionResetSharedKeyResponse, error) {
-	s := &ConnectionResetSharedKeyResponse{ConnectionResetSharedKey: &ConnectionResetSharedKey{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.ConnectionResetSharedKey)
+	respType := &ConnectionResetSharedKeyResponse{ConnectionResetSharedKey: &ConnectionResetSharedKey{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.ConnectionResetSharedKey)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ConnectionSharedKeyPoller provides polling facilities until the operation completes
@@ -774,13 +774,13 @@ func (p *connectionSharedKeyPoller) Poll(ctx context.Context) (*http.Response, e
 }
 
 func (p *connectionSharedKeyPoller) FinalResponse(ctx context.Context) (*ConnectionSharedKeyResponse, error) {
-	s := &ConnectionSharedKeyResponse{ConnectionSharedKey: &ConnectionSharedKey{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.ConnectionSharedKey)
+	respType := &ConnectionSharedKeyResponse{ConnectionSharedKey: &ConnectionSharedKey{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.ConnectionSharedKey)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeConnectionSharedKeyPoller method
@@ -790,13 +790,13 @@ func (p *connectionSharedKeyPoller) ResumeToken() (string, error) {
 }
 
 func (p *connectionSharedKeyPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*ConnectionSharedKeyResponse, error) {
-	s := &ConnectionSharedKeyResponse{ConnectionSharedKey: &ConnectionSharedKey{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.ConnectionSharedKey)
+	respType := &ConnectionSharedKeyResponse{ConnectionSharedKey: &ConnectionSharedKey{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.ConnectionSharedKey)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ConnectivityInformationPoller provides polling facilities until the operation completes
@@ -824,13 +824,13 @@ func (p *connectivityInformationPoller) Poll(ctx context.Context) (*http.Respons
 }
 
 func (p *connectivityInformationPoller) FinalResponse(ctx context.Context) (*ConnectivityInformationResponse, error) {
-	s := &ConnectivityInformationResponse{ConnectivityInformation: &ConnectivityInformation{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.ConnectivityInformation)
+	respType := &ConnectivityInformationResponse{ConnectivityInformation: &ConnectivityInformation{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.ConnectivityInformation)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeConnectivityInformationPoller method
@@ -840,13 +840,13 @@ func (p *connectivityInformationPoller) ResumeToken() (string, error) {
 }
 
 func (p *connectivityInformationPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*ConnectivityInformationResponse, error) {
-	s := &ConnectivityInformationResponse{ConnectivityInformation: &ConnectivityInformation{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.ConnectivityInformation)
+	respType := &ConnectivityInformationResponse{ConnectivityInformation: &ConnectivityInformation{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.ConnectivityInformation)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // DdosCustomPolicyPoller provides polling facilities until the operation completes
@@ -874,13 +874,13 @@ func (p *ddosCustomPolicyPoller) Poll(ctx context.Context) (*http.Response, erro
 }
 
 func (p *ddosCustomPolicyPoller) FinalResponse(ctx context.Context) (*DdosCustomPolicyResponse, error) {
-	s := &DdosCustomPolicyResponse{DdosCustomPolicy: &DdosCustomPolicy{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.DdosCustomPolicy)
+	respType := &DdosCustomPolicyResponse{DdosCustomPolicy: &DdosCustomPolicy{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.DdosCustomPolicy)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeDdosCustomPolicyPoller method
@@ -890,13 +890,13 @@ func (p *ddosCustomPolicyPoller) ResumeToken() (string, error) {
 }
 
 func (p *ddosCustomPolicyPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*DdosCustomPolicyResponse, error) {
-	s := &DdosCustomPolicyResponse{DdosCustomPolicy: &DdosCustomPolicy{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.DdosCustomPolicy)
+	respType := &DdosCustomPolicyResponse{DdosCustomPolicy: &DdosCustomPolicy{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.DdosCustomPolicy)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // DdosProtectionPlanPoller provides polling facilities until the operation completes
@@ -924,13 +924,13 @@ func (p *ddosProtectionPlanPoller) Poll(ctx context.Context) (*http.Response, er
 }
 
 func (p *ddosProtectionPlanPoller) FinalResponse(ctx context.Context) (*DdosProtectionPlanResponse, error) {
-	s := &DdosProtectionPlanResponse{DdosProtectionPlan: &DdosProtectionPlan{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.DdosProtectionPlan)
+	respType := &DdosProtectionPlanResponse{DdosProtectionPlan: &DdosProtectionPlan{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.DdosProtectionPlan)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeDdosProtectionPlanPoller method
@@ -940,13 +940,13 @@ func (p *ddosProtectionPlanPoller) ResumeToken() (string, error) {
 }
 
 func (p *ddosProtectionPlanPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*DdosProtectionPlanResponse, error) {
-	s := &DdosProtectionPlanResponse{DdosProtectionPlan: &DdosProtectionPlan{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.DdosProtectionPlan)
+	respType := &DdosProtectionPlanResponse{DdosProtectionPlan: &DdosProtectionPlan{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.DdosProtectionPlan)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // EffectiveNetworkSecurityGroupListResultPoller provides polling facilities until the operation completes
@@ -974,13 +974,13 @@ func (p *effectiveNetworkSecurityGroupListResultPoller) Poll(ctx context.Context
 }
 
 func (p *effectiveNetworkSecurityGroupListResultPoller) FinalResponse(ctx context.Context) (*EffectiveNetworkSecurityGroupListResultResponse, error) {
-	s := &EffectiveNetworkSecurityGroupListResultResponse{EffectiveNetworkSecurityGroupListResult: &EffectiveNetworkSecurityGroupListResult{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.EffectiveNetworkSecurityGroupListResult)
+	respType := &EffectiveNetworkSecurityGroupListResultResponse{EffectiveNetworkSecurityGroupListResult: &EffectiveNetworkSecurityGroupListResult{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.EffectiveNetworkSecurityGroupListResult)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeEffectiveNetworkSecurityGroupListResultPoller method
@@ -990,13 +990,13 @@ func (p *effectiveNetworkSecurityGroupListResultPoller) ResumeToken() (string, e
 }
 
 func (p *effectiveNetworkSecurityGroupListResultPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*EffectiveNetworkSecurityGroupListResultResponse, error) {
-	s := &EffectiveNetworkSecurityGroupListResultResponse{EffectiveNetworkSecurityGroupListResult: &EffectiveNetworkSecurityGroupListResult{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.EffectiveNetworkSecurityGroupListResult)
+	respType := &EffectiveNetworkSecurityGroupListResultResponse{EffectiveNetworkSecurityGroupListResult: &EffectiveNetworkSecurityGroupListResult{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.EffectiveNetworkSecurityGroupListResult)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // EffectiveRouteListResultPoller provides polling facilities until the operation completes
@@ -1024,13 +1024,13 @@ func (p *effectiveRouteListResultPoller) Poll(ctx context.Context) (*http.Respon
 }
 
 func (p *effectiveRouteListResultPoller) FinalResponse(ctx context.Context) (*EffectiveRouteListResultResponse, error) {
-	s := &EffectiveRouteListResultResponse{EffectiveRouteListResult: &EffectiveRouteListResult{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.EffectiveRouteListResult)
+	respType := &EffectiveRouteListResultResponse{EffectiveRouteListResult: &EffectiveRouteListResult{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.EffectiveRouteListResult)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeEffectiveRouteListResultPoller method
@@ -1040,13 +1040,13 @@ func (p *effectiveRouteListResultPoller) ResumeToken() (string, error) {
 }
 
 func (p *effectiveRouteListResultPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*EffectiveRouteListResultResponse, error) {
-	s := &EffectiveRouteListResultResponse{EffectiveRouteListResult: &EffectiveRouteListResult{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.EffectiveRouteListResult)
+	respType := &EffectiveRouteListResultResponse{EffectiveRouteListResult: &EffectiveRouteListResult{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.EffectiveRouteListResult)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ExpressRouteCircuitAuthorizationPoller provides polling facilities until the operation completes
@@ -1074,13 +1074,13 @@ func (p *expressRouteCircuitAuthorizationPoller) Poll(ctx context.Context) (*htt
 }
 
 func (p *expressRouteCircuitAuthorizationPoller) FinalResponse(ctx context.Context) (*ExpressRouteCircuitAuthorizationResponse, error) {
-	s := &ExpressRouteCircuitAuthorizationResponse{ExpressRouteCircuitAuthorization: &ExpressRouteCircuitAuthorization{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.ExpressRouteCircuitAuthorization)
+	respType := &ExpressRouteCircuitAuthorizationResponse{ExpressRouteCircuitAuthorization: &ExpressRouteCircuitAuthorization{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.ExpressRouteCircuitAuthorization)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeExpressRouteCircuitAuthorizationPoller method
@@ -1090,13 +1090,13 @@ func (p *expressRouteCircuitAuthorizationPoller) ResumeToken() (string, error) {
 }
 
 func (p *expressRouteCircuitAuthorizationPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*ExpressRouteCircuitAuthorizationResponse, error) {
-	s := &ExpressRouteCircuitAuthorizationResponse{ExpressRouteCircuitAuthorization: &ExpressRouteCircuitAuthorization{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.ExpressRouteCircuitAuthorization)
+	respType := &ExpressRouteCircuitAuthorizationResponse{ExpressRouteCircuitAuthorization: &ExpressRouteCircuitAuthorization{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.ExpressRouteCircuitAuthorization)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ExpressRouteCircuitConnectionPoller provides polling facilities until the operation completes
@@ -1124,13 +1124,13 @@ func (p *expressRouteCircuitConnectionPoller) Poll(ctx context.Context) (*http.R
 }
 
 func (p *expressRouteCircuitConnectionPoller) FinalResponse(ctx context.Context) (*ExpressRouteCircuitConnectionResponse, error) {
-	s := &ExpressRouteCircuitConnectionResponse{ExpressRouteCircuitConnection: &ExpressRouteCircuitConnection{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.ExpressRouteCircuitConnection)
+	respType := &ExpressRouteCircuitConnectionResponse{ExpressRouteCircuitConnection: &ExpressRouteCircuitConnection{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.ExpressRouteCircuitConnection)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeExpressRouteCircuitConnectionPoller method
@@ -1140,13 +1140,13 @@ func (p *expressRouteCircuitConnectionPoller) ResumeToken() (string, error) {
 }
 
 func (p *expressRouteCircuitConnectionPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*ExpressRouteCircuitConnectionResponse, error) {
-	s := &ExpressRouteCircuitConnectionResponse{ExpressRouteCircuitConnection: &ExpressRouteCircuitConnection{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.ExpressRouteCircuitConnection)
+	respType := &ExpressRouteCircuitConnectionResponse{ExpressRouteCircuitConnection: &ExpressRouteCircuitConnection{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.ExpressRouteCircuitConnection)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ExpressRouteCircuitPeeringPoller provides polling facilities until the operation completes
@@ -1174,13 +1174,13 @@ func (p *expressRouteCircuitPeeringPoller) Poll(ctx context.Context) (*http.Resp
 }
 
 func (p *expressRouteCircuitPeeringPoller) FinalResponse(ctx context.Context) (*ExpressRouteCircuitPeeringResponse, error) {
-	s := &ExpressRouteCircuitPeeringResponse{ExpressRouteCircuitPeering: &ExpressRouteCircuitPeering{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.ExpressRouteCircuitPeering)
+	respType := &ExpressRouteCircuitPeeringResponse{ExpressRouteCircuitPeering: &ExpressRouteCircuitPeering{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.ExpressRouteCircuitPeering)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeExpressRouteCircuitPeeringPoller method
@@ -1190,13 +1190,13 @@ func (p *expressRouteCircuitPeeringPoller) ResumeToken() (string, error) {
 }
 
 func (p *expressRouteCircuitPeeringPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*ExpressRouteCircuitPeeringResponse, error) {
-	s := &ExpressRouteCircuitPeeringResponse{ExpressRouteCircuitPeering: &ExpressRouteCircuitPeering{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.ExpressRouteCircuitPeering)
+	respType := &ExpressRouteCircuitPeeringResponse{ExpressRouteCircuitPeering: &ExpressRouteCircuitPeering{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.ExpressRouteCircuitPeering)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ExpressRouteCircuitPoller provides polling facilities until the operation completes
@@ -1224,13 +1224,13 @@ func (p *expressRouteCircuitPoller) Poll(ctx context.Context) (*http.Response, e
 }
 
 func (p *expressRouteCircuitPoller) FinalResponse(ctx context.Context) (*ExpressRouteCircuitResponse, error) {
-	s := &ExpressRouteCircuitResponse{ExpressRouteCircuit: &ExpressRouteCircuit{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.ExpressRouteCircuit)
+	respType := &ExpressRouteCircuitResponse{ExpressRouteCircuit: &ExpressRouteCircuit{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.ExpressRouteCircuit)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeExpressRouteCircuitPoller method
@@ -1240,13 +1240,13 @@ func (p *expressRouteCircuitPoller) ResumeToken() (string, error) {
 }
 
 func (p *expressRouteCircuitPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*ExpressRouteCircuitResponse, error) {
-	s := &ExpressRouteCircuitResponse{ExpressRouteCircuit: &ExpressRouteCircuit{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.ExpressRouteCircuit)
+	respType := &ExpressRouteCircuitResponse{ExpressRouteCircuit: &ExpressRouteCircuit{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.ExpressRouteCircuit)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ExpressRouteCircuitsArpTableListResultPoller provides polling facilities until the operation completes
@@ -1274,13 +1274,13 @@ func (p *expressRouteCircuitsArpTableListResultPoller) Poll(ctx context.Context)
 }
 
 func (p *expressRouteCircuitsArpTableListResultPoller) FinalResponse(ctx context.Context) (*ExpressRouteCircuitsArpTableListResultResponse, error) {
-	s := &ExpressRouteCircuitsArpTableListResultResponse{ExpressRouteCircuitsArpTableListResult: &ExpressRouteCircuitsArpTableListResult{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.ExpressRouteCircuitsArpTableListResult)
+	respType := &ExpressRouteCircuitsArpTableListResultResponse{ExpressRouteCircuitsArpTableListResult: &ExpressRouteCircuitsArpTableListResult{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.ExpressRouteCircuitsArpTableListResult)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeExpressRouteCircuitsArpTableListResultPoller method
@@ -1290,13 +1290,13 @@ func (p *expressRouteCircuitsArpTableListResultPoller) ResumeToken() (string, er
 }
 
 func (p *expressRouteCircuitsArpTableListResultPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*ExpressRouteCircuitsArpTableListResultResponse, error) {
-	s := &ExpressRouteCircuitsArpTableListResultResponse{ExpressRouteCircuitsArpTableListResult: &ExpressRouteCircuitsArpTableListResult{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.ExpressRouteCircuitsArpTableListResult)
+	respType := &ExpressRouteCircuitsArpTableListResultResponse{ExpressRouteCircuitsArpTableListResult: &ExpressRouteCircuitsArpTableListResult{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.ExpressRouteCircuitsArpTableListResult)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ExpressRouteCircuitsRoutesTableListResultPoller provides polling facilities until the operation completes
@@ -1324,13 +1324,13 @@ func (p *expressRouteCircuitsRoutesTableListResultPoller) Poll(ctx context.Conte
 }
 
 func (p *expressRouteCircuitsRoutesTableListResultPoller) FinalResponse(ctx context.Context) (*ExpressRouteCircuitsRoutesTableListResultResponse, error) {
-	s := &ExpressRouteCircuitsRoutesTableListResultResponse{ExpressRouteCircuitsRoutesTableListResult: &ExpressRouteCircuitsRoutesTableListResult{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.ExpressRouteCircuitsRoutesTableListResult)
+	respType := &ExpressRouteCircuitsRoutesTableListResultResponse{ExpressRouteCircuitsRoutesTableListResult: &ExpressRouteCircuitsRoutesTableListResult{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.ExpressRouteCircuitsRoutesTableListResult)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeExpressRouteCircuitsRoutesTableListResultPoller method
@@ -1340,13 +1340,13 @@ func (p *expressRouteCircuitsRoutesTableListResultPoller) ResumeToken() (string,
 }
 
 func (p *expressRouteCircuitsRoutesTableListResultPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*ExpressRouteCircuitsRoutesTableListResultResponse, error) {
-	s := &ExpressRouteCircuitsRoutesTableListResultResponse{ExpressRouteCircuitsRoutesTableListResult: &ExpressRouteCircuitsRoutesTableListResult{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.ExpressRouteCircuitsRoutesTableListResult)
+	respType := &ExpressRouteCircuitsRoutesTableListResultResponse{ExpressRouteCircuitsRoutesTableListResult: &ExpressRouteCircuitsRoutesTableListResult{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.ExpressRouteCircuitsRoutesTableListResult)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ExpressRouteCircuitsRoutesTableSummaryListResultPoller provides polling facilities until the operation completes
@@ -1374,13 +1374,13 @@ func (p *expressRouteCircuitsRoutesTableSummaryListResultPoller) Poll(ctx contex
 }
 
 func (p *expressRouteCircuitsRoutesTableSummaryListResultPoller) FinalResponse(ctx context.Context) (*ExpressRouteCircuitsRoutesTableSummaryListResultResponse, error) {
-	s := &ExpressRouteCircuitsRoutesTableSummaryListResultResponse{ExpressRouteCircuitsRoutesTableSummaryListResult: &ExpressRouteCircuitsRoutesTableSummaryListResult{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.ExpressRouteCircuitsRoutesTableSummaryListResult)
+	respType := &ExpressRouteCircuitsRoutesTableSummaryListResultResponse{ExpressRouteCircuitsRoutesTableSummaryListResult: &ExpressRouteCircuitsRoutesTableSummaryListResult{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.ExpressRouteCircuitsRoutesTableSummaryListResult)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeExpressRouteCircuitsRoutesTableSummaryListResultPoller method
@@ -1390,13 +1390,13 @@ func (p *expressRouteCircuitsRoutesTableSummaryListResultPoller) ResumeToken() (
 }
 
 func (p *expressRouteCircuitsRoutesTableSummaryListResultPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*ExpressRouteCircuitsRoutesTableSummaryListResultResponse, error) {
-	s := &ExpressRouteCircuitsRoutesTableSummaryListResultResponse{ExpressRouteCircuitsRoutesTableSummaryListResult: &ExpressRouteCircuitsRoutesTableSummaryListResult{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.ExpressRouteCircuitsRoutesTableSummaryListResult)
+	respType := &ExpressRouteCircuitsRoutesTableSummaryListResultResponse{ExpressRouteCircuitsRoutesTableSummaryListResult: &ExpressRouteCircuitsRoutesTableSummaryListResult{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.ExpressRouteCircuitsRoutesTableSummaryListResult)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ExpressRouteConnectionPoller provides polling facilities until the operation completes
@@ -1424,13 +1424,13 @@ func (p *expressRouteConnectionPoller) Poll(ctx context.Context) (*http.Response
 }
 
 func (p *expressRouteConnectionPoller) FinalResponse(ctx context.Context) (*ExpressRouteConnectionResponse, error) {
-	s := &ExpressRouteConnectionResponse{ExpressRouteConnection: &ExpressRouteConnection{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.ExpressRouteConnection)
+	respType := &ExpressRouteConnectionResponse{ExpressRouteConnection: &ExpressRouteConnection{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.ExpressRouteConnection)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeExpressRouteConnectionPoller method
@@ -1440,13 +1440,13 @@ func (p *expressRouteConnectionPoller) ResumeToken() (string, error) {
 }
 
 func (p *expressRouteConnectionPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*ExpressRouteConnectionResponse, error) {
-	s := &ExpressRouteConnectionResponse{ExpressRouteConnection: &ExpressRouteConnection{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.ExpressRouteConnection)
+	respType := &ExpressRouteConnectionResponse{ExpressRouteConnection: &ExpressRouteConnection{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.ExpressRouteConnection)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ExpressRouteCrossConnectionPeeringPoller provides polling facilities until the operation completes
@@ -1474,13 +1474,13 @@ func (p *expressRouteCrossConnectionPeeringPoller) Poll(ctx context.Context) (*h
 }
 
 func (p *expressRouteCrossConnectionPeeringPoller) FinalResponse(ctx context.Context) (*ExpressRouteCrossConnectionPeeringResponse, error) {
-	s := &ExpressRouteCrossConnectionPeeringResponse{ExpressRouteCrossConnectionPeering: &ExpressRouteCrossConnectionPeering{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.ExpressRouteCrossConnectionPeering)
+	respType := &ExpressRouteCrossConnectionPeeringResponse{ExpressRouteCrossConnectionPeering: &ExpressRouteCrossConnectionPeering{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.ExpressRouteCrossConnectionPeering)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeExpressRouteCrossConnectionPeeringPoller method
@@ -1490,13 +1490,13 @@ func (p *expressRouteCrossConnectionPeeringPoller) ResumeToken() (string, error)
 }
 
 func (p *expressRouteCrossConnectionPeeringPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*ExpressRouteCrossConnectionPeeringResponse, error) {
-	s := &ExpressRouteCrossConnectionPeeringResponse{ExpressRouteCrossConnectionPeering: &ExpressRouteCrossConnectionPeering{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.ExpressRouteCrossConnectionPeering)
+	respType := &ExpressRouteCrossConnectionPeeringResponse{ExpressRouteCrossConnectionPeering: &ExpressRouteCrossConnectionPeering{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.ExpressRouteCrossConnectionPeering)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ExpressRouteCrossConnectionPoller provides polling facilities until the operation completes
@@ -1524,13 +1524,13 @@ func (p *expressRouteCrossConnectionPoller) Poll(ctx context.Context) (*http.Res
 }
 
 func (p *expressRouteCrossConnectionPoller) FinalResponse(ctx context.Context) (*ExpressRouteCrossConnectionResponse, error) {
-	s := &ExpressRouteCrossConnectionResponse{ExpressRouteCrossConnection: &ExpressRouteCrossConnection{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.ExpressRouteCrossConnection)
+	respType := &ExpressRouteCrossConnectionResponse{ExpressRouteCrossConnection: &ExpressRouteCrossConnection{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.ExpressRouteCrossConnection)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeExpressRouteCrossConnectionPoller method
@@ -1540,13 +1540,13 @@ func (p *expressRouteCrossConnectionPoller) ResumeToken() (string, error) {
 }
 
 func (p *expressRouteCrossConnectionPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*ExpressRouteCrossConnectionResponse, error) {
-	s := &ExpressRouteCrossConnectionResponse{ExpressRouteCrossConnection: &ExpressRouteCrossConnection{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.ExpressRouteCrossConnection)
+	respType := &ExpressRouteCrossConnectionResponse{ExpressRouteCrossConnection: &ExpressRouteCrossConnection{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.ExpressRouteCrossConnection)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ExpressRouteCrossConnectionsRoutesTableSummaryListResultPoller provides polling facilities until the operation completes
@@ -1574,13 +1574,13 @@ func (p *expressRouteCrossConnectionsRoutesTableSummaryListResultPoller) Poll(ct
 }
 
 func (p *expressRouteCrossConnectionsRoutesTableSummaryListResultPoller) FinalResponse(ctx context.Context) (*ExpressRouteCrossConnectionsRoutesTableSummaryListResultResponse, error) {
-	s := &ExpressRouteCrossConnectionsRoutesTableSummaryListResultResponse{ExpressRouteCrossConnectionsRoutesTableSummaryListResult: &ExpressRouteCrossConnectionsRoutesTableSummaryListResult{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.ExpressRouteCrossConnectionsRoutesTableSummaryListResult)
+	respType := &ExpressRouteCrossConnectionsRoutesTableSummaryListResultResponse{ExpressRouteCrossConnectionsRoutesTableSummaryListResult: &ExpressRouteCrossConnectionsRoutesTableSummaryListResult{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.ExpressRouteCrossConnectionsRoutesTableSummaryListResult)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeExpressRouteCrossConnectionsRoutesTableSummaryListResultPoller method
@@ -1590,13 +1590,13 @@ func (p *expressRouteCrossConnectionsRoutesTableSummaryListResultPoller) ResumeT
 }
 
 func (p *expressRouteCrossConnectionsRoutesTableSummaryListResultPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*ExpressRouteCrossConnectionsRoutesTableSummaryListResultResponse, error) {
-	s := &ExpressRouteCrossConnectionsRoutesTableSummaryListResultResponse{ExpressRouteCrossConnectionsRoutesTableSummaryListResult: &ExpressRouteCrossConnectionsRoutesTableSummaryListResult{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.ExpressRouteCrossConnectionsRoutesTableSummaryListResult)
+	respType := &ExpressRouteCrossConnectionsRoutesTableSummaryListResultResponse{ExpressRouteCrossConnectionsRoutesTableSummaryListResult: &ExpressRouteCrossConnectionsRoutesTableSummaryListResult{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.ExpressRouteCrossConnectionsRoutesTableSummaryListResult)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ExpressRouteGatewayPoller provides polling facilities until the operation completes
@@ -1624,13 +1624,13 @@ func (p *expressRouteGatewayPoller) Poll(ctx context.Context) (*http.Response, e
 }
 
 func (p *expressRouteGatewayPoller) FinalResponse(ctx context.Context) (*ExpressRouteGatewayResponse, error) {
-	s := &ExpressRouteGatewayResponse{ExpressRouteGateway: &ExpressRouteGateway{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.ExpressRouteGateway)
+	respType := &ExpressRouteGatewayResponse{ExpressRouteGateway: &ExpressRouteGateway{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.ExpressRouteGateway)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeExpressRouteGatewayPoller method
@@ -1640,13 +1640,13 @@ func (p *expressRouteGatewayPoller) ResumeToken() (string, error) {
 }
 
 func (p *expressRouteGatewayPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*ExpressRouteGatewayResponse, error) {
-	s := &ExpressRouteGatewayResponse{ExpressRouteGateway: &ExpressRouteGateway{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.ExpressRouteGateway)
+	respType := &ExpressRouteGatewayResponse{ExpressRouteGateway: &ExpressRouteGateway{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.ExpressRouteGateway)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ExpressRoutePortPoller provides polling facilities until the operation completes
@@ -1674,13 +1674,13 @@ func (p *expressRoutePortPoller) Poll(ctx context.Context) (*http.Response, erro
 }
 
 func (p *expressRoutePortPoller) FinalResponse(ctx context.Context) (*ExpressRoutePortResponse, error) {
-	s := &ExpressRoutePortResponse{ExpressRoutePort: &ExpressRoutePort{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.ExpressRoutePort)
+	respType := &ExpressRoutePortResponse{ExpressRoutePort: &ExpressRoutePort{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.ExpressRoutePort)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeExpressRoutePortPoller method
@@ -1690,13 +1690,13 @@ func (p *expressRoutePortPoller) ResumeToken() (string, error) {
 }
 
 func (p *expressRoutePortPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*ExpressRoutePortResponse, error) {
-	s := &ExpressRoutePortResponse{ExpressRoutePort: &ExpressRoutePort{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.ExpressRoutePort)
+	respType := &ExpressRoutePortResponse{ExpressRoutePort: &ExpressRoutePort{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.ExpressRoutePort)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // FirewallPolicyPoller provides polling facilities until the operation completes
@@ -1724,13 +1724,13 @@ func (p *firewallPolicyPoller) Poll(ctx context.Context) (*http.Response, error)
 }
 
 func (p *firewallPolicyPoller) FinalResponse(ctx context.Context) (*FirewallPolicyResponse, error) {
-	s := &FirewallPolicyResponse{FirewallPolicy: &FirewallPolicy{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.FirewallPolicy)
+	respType := &FirewallPolicyResponse{FirewallPolicy: &FirewallPolicy{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.FirewallPolicy)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeFirewallPolicyPoller method
@@ -1740,13 +1740,13 @@ func (p *firewallPolicyPoller) ResumeToken() (string, error) {
 }
 
 func (p *firewallPolicyPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*FirewallPolicyResponse, error) {
-	s := &FirewallPolicyResponse{FirewallPolicy: &FirewallPolicy{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.FirewallPolicy)
+	respType := &FirewallPolicyResponse{FirewallPolicy: &FirewallPolicy{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.FirewallPolicy)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // FirewallPolicyRuleGroupPoller provides polling facilities until the operation completes
@@ -1774,13 +1774,13 @@ func (p *firewallPolicyRuleGroupPoller) Poll(ctx context.Context) (*http.Respons
 }
 
 func (p *firewallPolicyRuleGroupPoller) FinalResponse(ctx context.Context) (*FirewallPolicyRuleGroupResponse, error) {
-	s := &FirewallPolicyRuleGroupResponse{FirewallPolicyRuleGroup: &FirewallPolicyRuleGroup{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.FirewallPolicyRuleGroup)
+	respType := &FirewallPolicyRuleGroupResponse{FirewallPolicyRuleGroup: &FirewallPolicyRuleGroup{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.FirewallPolicyRuleGroup)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeFirewallPolicyRuleGroupPoller method
@@ -1790,13 +1790,13 @@ func (p *firewallPolicyRuleGroupPoller) ResumeToken() (string, error) {
 }
 
 func (p *firewallPolicyRuleGroupPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*FirewallPolicyRuleGroupResponse, error) {
-	s := &FirewallPolicyRuleGroupResponse{FirewallPolicyRuleGroup: &FirewallPolicyRuleGroup{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.FirewallPolicyRuleGroup)
+	respType := &FirewallPolicyRuleGroupResponse{FirewallPolicyRuleGroup: &FirewallPolicyRuleGroup{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.FirewallPolicyRuleGroup)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // FlowLogInformationPoller provides polling facilities until the operation completes
@@ -1824,13 +1824,13 @@ func (p *flowLogInformationPoller) Poll(ctx context.Context) (*http.Response, er
 }
 
 func (p *flowLogInformationPoller) FinalResponse(ctx context.Context) (*FlowLogInformationResponse, error) {
-	s := &FlowLogInformationResponse{FlowLogInformation: &FlowLogInformation{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.FlowLogInformation)
+	respType := &FlowLogInformationResponse{FlowLogInformation: &FlowLogInformation{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.FlowLogInformation)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeFlowLogInformationPoller method
@@ -1840,13 +1840,13 @@ func (p *flowLogInformationPoller) ResumeToken() (string, error) {
 }
 
 func (p *flowLogInformationPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*FlowLogInformationResponse, error) {
-	s := &FlowLogInformationResponse{FlowLogInformation: &FlowLogInformation{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.FlowLogInformation)
+	respType := &FlowLogInformationResponse{FlowLogInformation: &FlowLogInformation{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.FlowLogInformation)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // FlowLogPoller provides polling facilities until the operation completes
@@ -1874,13 +1874,13 @@ func (p *flowLogPoller) Poll(ctx context.Context) (*http.Response, error) {
 }
 
 func (p *flowLogPoller) FinalResponse(ctx context.Context) (*FlowLogResponse, error) {
-	s := &FlowLogResponse{FlowLog: &FlowLog{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.FlowLog)
+	respType := &FlowLogResponse{FlowLog: &FlowLog{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.FlowLog)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeFlowLogPoller method
@@ -1890,13 +1890,13 @@ func (p *flowLogPoller) ResumeToken() (string, error) {
 }
 
 func (p *flowLogPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*FlowLogResponse, error) {
-	s := &FlowLogResponse{FlowLog: &FlowLog{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.FlowLog)
+	respType := &FlowLogResponse{FlowLog: &FlowLog{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.FlowLog)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // GatewayRouteListResultPoller provides polling facilities until the operation completes
@@ -1924,13 +1924,13 @@ func (p *gatewayRouteListResultPoller) Poll(ctx context.Context) (*http.Response
 }
 
 func (p *gatewayRouteListResultPoller) FinalResponse(ctx context.Context) (*GatewayRouteListResultResponse, error) {
-	s := &GatewayRouteListResultResponse{GatewayRouteListResult: &GatewayRouteListResult{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.GatewayRouteListResult)
+	respType := &GatewayRouteListResultResponse{GatewayRouteListResult: &GatewayRouteListResult{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.GatewayRouteListResult)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeGatewayRouteListResultPoller method
@@ -1940,13 +1940,13 @@ func (p *gatewayRouteListResultPoller) ResumeToken() (string, error) {
 }
 
 func (p *gatewayRouteListResultPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*GatewayRouteListResultResponse, error) {
-	s := &GatewayRouteListResultResponse{GatewayRouteListResult: &GatewayRouteListResult{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.GatewayRouteListResult)
+	respType := &GatewayRouteListResultResponse{GatewayRouteListResult: &GatewayRouteListResult{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.GatewayRouteListResult)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // HTTPPoller provides polling facilities until the operation completes
@@ -2012,13 +2012,13 @@ func (p *ipAllocationPoller) Poll(ctx context.Context) (*http.Response, error) {
 }
 
 func (p *ipAllocationPoller) FinalResponse(ctx context.Context) (*IPAllocationResponse, error) {
-	s := &IPAllocationResponse{IPAllocation: &IPAllocation{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.IPAllocation)
+	respType := &IPAllocationResponse{IPAllocation: &IPAllocation{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.IPAllocation)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeIPAllocationPoller method
@@ -2028,13 +2028,13 @@ func (p *ipAllocationPoller) ResumeToken() (string, error) {
 }
 
 func (p *ipAllocationPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*IPAllocationResponse, error) {
-	s := &IPAllocationResponse{IPAllocation: &IPAllocation{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.IPAllocation)
+	respType := &IPAllocationResponse{IPAllocation: &IPAllocation{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.IPAllocation)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // IPGroupPoller provides polling facilities until the operation completes
@@ -2062,13 +2062,13 @@ func (p *ipGroupPoller) Poll(ctx context.Context) (*http.Response, error) {
 }
 
 func (p *ipGroupPoller) FinalResponse(ctx context.Context) (*IPGroupResponse, error) {
-	s := &IPGroupResponse{IPGroup: &IPGroup{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.IPGroup)
+	respType := &IPGroupResponse{IPGroup: &IPGroup{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.IPGroup)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeIPGroupPoller method
@@ -2078,13 +2078,13 @@ func (p *ipGroupPoller) ResumeToken() (string, error) {
 }
 
 func (p *ipGroupPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*IPGroupResponse, error) {
-	s := &IPGroupResponse{IPGroup: &IPGroup{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.IPGroup)
+	respType := &IPGroupResponse{IPGroup: &IPGroup{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.IPGroup)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // InboundNatRulePoller provides polling facilities until the operation completes
@@ -2112,13 +2112,13 @@ func (p *inboundNatRulePoller) Poll(ctx context.Context) (*http.Response, error)
 }
 
 func (p *inboundNatRulePoller) FinalResponse(ctx context.Context) (*InboundNatRuleResponse, error) {
-	s := &InboundNatRuleResponse{InboundNatRule: &InboundNatRule{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.InboundNatRule)
+	respType := &InboundNatRuleResponse{InboundNatRule: &InboundNatRule{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.InboundNatRule)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeInboundNatRulePoller method
@@ -2128,13 +2128,13 @@ func (p *inboundNatRulePoller) ResumeToken() (string, error) {
 }
 
 func (p *inboundNatRulePoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*InboundNatRuleResponse, error) {
-	s := &InboundNatRuleResponse{InboundNatRule: &InboundNatRule{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.InboundNatRule)
+	respType := &InboundNatRuleResponse{InboundNatRule: &InboundNatRule{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.InboundNatRule)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // LoadBalancerPoller provides polling facilities until the operation completes
@@ -2162,13 +2162,13 @@ func (p *loadBalancerPoller) Poll(ctx context.Context) (*http.Response, error) {
 }
 
 func (p *loadBalancerPoller) FinalResponse(ctx context.Context) (*LoadBalancerResponse, error) {
-	s := &LoadBalancerResponse{LoadBalancer: &LoadBalancer{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.LoadBalancer)
+	respType := &LoadBalancerResponse{LoadBalancer: &LoadBalancer{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.LoadBalancer)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeLoadBalancerPoller method
@@ -2178,13 +2178,13 @@ func (p *loadBalancerPoller) ResumeToken() (string, error) {
 }
 
 func (p *loadBalancerPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*LoadBalancerResponse, error) {
-	s := &LoadBalancerResponse{LoadBalancer: &LoadBalancer{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.LoadBalancer)
+	respType := &LoadBalancerResponse{LoadBalancer: &LoadBalancer{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.LoadBalancer)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // LocalNetworkGatewayPoller provides polling facilities until the operation completes
@@ -2212,13 +2212,13 @@ func (p *localNetworkGatewayPoller) Poll(ctx context.Context) (*http.Response, e
 }
 
 func (p *localNetworkGatewayPoller) FinalResponse(ctx context.Context) (*LocalNetworkGatewayResponse, error) {
-	s := &LocalNetworkGatewayResponse{LocalNetworkGateway: &LocalNetworkGateway{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.LocalNetworkGateway)
+	respType := &LocalNetworkGatewayResponse{LocalNetworkGateway: &LocalNetworkGateway{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.LocalNetworkGateway)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeLocalNetworkGatewayPoller method
@@ -2228,13 +2228,13 @@ func (p *localNetworkGatewayPoller) ResumeToken() (string, error) {
 }
 
 func (p *localNetworkGatewayPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*LocalNetworkGatewayResponse, error) {
-	s := &LocalNetworkGatewayResponse{LocalNetworkGateway: &LocalNetworkGateway{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.LocalNetworkGateway)
+	respType := &LocalNetworkGatewayResponse{LocalNetworkGateway: &LocalNetworkGateway{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.LocalNetworkGateway)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // NatGatewayPoller provides polling facilities until the operation completes
@@ -2262,13 +2262,13 @@ func (p *natGatewayPoller) Poll(ctx context.Context) (*http.Response, error) {
 }
 
 func (p *natGatewayPoller) FinalResponse(ctx context.Context) (*NatGatewayResponse, error) {
-	s := &NatGatewayResponse{NatGateway: &NatGateway{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.NatGateway)
+	respType := &NatGatewayResponse{NatGateway: &NatGateway{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.NatGateway)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeNatGatewayPoller method
@@ -2278,13 +2278,13 @@ func (p *natGatewayPoller) ResumeToken() (string, error) {
 }
 
 func (p *natGatewayPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*NatGatewayResponse, error) {
-	s := &NatGatewayResponse{NatGateway: &NatGateway{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.NatGateway)
+	respType := &NatGatewayResponse{NatGateway: &NatGateway{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.NatGateway)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // NetworkConfigurationDiagnosticResponsePoller provides polling facilities until the operation completes
@@ -2312,13 +2312,13 @@ func (p *networkConfigurationDiagnosticResponsePoller) Poll(ctx context.Context)
 }
 
 func (p *networkConfigurationDiagnosticResponsePoller) FinalResponse(ctx context.Context) (*NetworkConfigurationDiagnosticResponseResponse, error) {
-	s := &NetworkConfigurationDiagnosticResponseResponse{NetworkConfigurationDiagnosticResponse: &NetworkConfigurationDiagnosticResponse{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.NetworkConfigurationDiagnosticResponse)
+	respType := &NetworkConfigurationDiagnosticResponseResponse{NetworkConfigurationDiagnosticResponse: &NetworkConfigurationDiagnosticResponse{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.NetworkConfigurationDiagnosticResponse)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeNetworkConfigurationDiagnosticResponsePoller method
@@ -2328,13 +2328,13 @@ func (p *networkConfigurationDiagnosticResponsePoller) ResumeToken() (string, er
 }
 
 func (p *networkConfigurationDiagnosticResponsePoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*NetworkConfigurationDiagnosticResponseResponse, error) {
-	s := &NetworkConfigurationDiagnosticResponseResponse{NetworkConfigurationDiagnosticResponse: &NetworkConfigurationDiagnosticResponse{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.NetworkConfigurationDiagnosticResponse)
+	respType := &NetworkConfigurationDiagnosticResponseResponse{NetworkConfigurationDiagnosticResponse: &NetworkConfigurationDiagnosticResponse{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.NetworkConfigurationDiagnosticResponse)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // NetworkInterfacePoller provides polling facilities until the operation completes
@@ -2362,13 +2362,13 @@ func (p *networkInterfacePoller) Poll(ctx context.Context) (*http.Response, erro
 }
 
 func (p *networkInterfacePoller) FinalResponse(ctx context.Context) (*NetworkInterfaceResponse, error) {
-	s := &NetworkInterfaceResponse{NetworkInterface: &NetworkInterface{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.NetworkInterface)
+	respType := &NetworkInterfaceResponse{NetworkInterface: &NetworkInterface{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.NetworkInterface)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeNetworkInterfacePoller method
@@ -2378,13 +2378,13 @@ func (p *networkInterfacePoller) ResumeToken() (string, error) {
 }
 
 func (p *networkInterfacePoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*NetworkInterfaceResponse, error) {
-	s := &NetworkInterfaceResponse{NetworkInterface: &NetworkInterface{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.NetworkInterface)
+	respType := &NetworkInterfaceResponse{NetworkInterface: &NetworkInterface{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.NetworkInterface)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // NetworkInterfaceTapConfigurationPoller provides polling facilities until the operation completes
@@ -2412,13 +2412,13 @@ func (p *networkInterfaceTapConfigurationPoller) Poll(ctx context.Context) (*htt
 }
 
 func (p *networkInterfaceTapConfigurationPoller) FinalResponse(ctx context.Context) (*NetworkInterfaceTapConfigurationResponse, error) {
-	s := &NetworkInterfaceTapConfigurationResponse{NetworkInterfaceTapConfiguration: &NetworkInterfaceTapConfiguration{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.NetworkInterfaceTapConfiguration)
+	respType := &NetworkInterfaceTapConfigurationResponse{NetworkInterfaceTapConfiguration: &NetworkInterfaceTapConfiguration{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.NetworkInterfaceTapConfiguration)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeNetworkInterfaceTapConfigurationPoller method
@@ -2428,13 +2428,13 @@ func (p *networkInterfaceTapConfigurationPoller) ResumeToken() (string, error) {
 }
 
 func (p *networkInterfaceTapConfigurationPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*NetworkInterfaceTapConfigurationResponse, error) {
-	s := &NetworkInterfaceTapConfigurationResponse{NetworkInterfaceTapConfiguration: &NetworkInterfaceTapConfiguration{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.NetworkInterfaceTapConfiguration)
+	respType := &NetworkInterfaceTapConfigurationResponse{NetworkInterfaceTapConfiguration: &NetworkInterfaceTapConfiguration{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.NetworkInterfaceTapConfiguration)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // NetworkSecurityGroupPoller provides polling facilities until the operation completes
@@ -2462,13 +2462,13 @@ func (p *networkSecurityGroupPoller) Poll(ctx context.Context) (*http.Response, 
 }
 
 func (p *networkSecurityGroupPoller) FinalResponse(ctx context.Context) (*NetworkSecurityGroupResponse, error) {
-	s := &NetworkSecurityGroupResponse{NetworkSecurityGroup: &NetworkSecurityGroup{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.NetworkSecurityGroup)
+	respType := &NetworkSecurityGroupResponse{NetworkSecurityGroup: &NetworkSecurityGroup{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.NetworkSecurityGroup)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeNetworkSecurityGroupPoller method
@@ -2478,13 +2478,13 @@ func (p *networkSecurityGroupPoller) ResumeToken() (string, error) {
 }
 
 func (p *networkSecurityGroupPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*NetworkSecurityGroupResponse, error) {
-	s := &NetworkSecurityGroupResponse{NetworkSecurityGroup: &NetworkSecurityGroup{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.NetworkSecurityGroup)
+	respType := &NetworkSecurityGroupResponse{NetworkSecurityGroup: &NetworkSecurityGroup{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.NetworkSecurityGroup)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // NetworkVirtualAppliancePoller provides polling facilities until the operation completes
@@ -2512,13 +2512,13 @@ func (p *networkVirtualAppliancePoller) Poll(ctx context.Context) (*http.Respons
 }
 
 func (p *networkVirtualAppliancePoller) FinalResponse(ctx context.Context) (*NetworkVirtualApplianceResponse, error) {
-	s := &NetworkVirtualApplianceResponse{NetworkVirtualAppliance: &NetworkVirtualAppliance{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.NetworkVirtualAppliance)
+	respType := &NetworkVirtualApplianceResponse{NetworkVirtualAppliance: &NetworkVirtualAppliance{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.NetworkVirtualAppliance)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeNetworkVirtualAppliancePoller method
@@ -2528,13 +2528,13 @@ func (p *networkVirtualAppliancePoller) ResumeToken() (string, error) {
 }
 
 func (p *networkVirtualAppliancePoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*NetworkVirtualApplianceResponse, error) {
-	s := &NetworkVirtualApplianceResponse{NetworkVirtualAppliance: &NetworkVirtualAppliance{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.NetworkVirtualAppliance)
+	respType := &NetworkVirtualApplianceResponse{NetworkVirtualAppliance: &NetworkVirtualAppliance{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.NetworkVirtualAppliance)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // NextHopResultPoller provides polling facilities until the operation completes
@@ -2562,13 +2562,13 @@ func (p *nextHopResultPoller) Poll(ctx context.Context) (*http.Response, error) 
 }
 
 func (p *nextHopResultPoller) FinalResponse(ctx context.Context) (*NextHopResultResponse, error) {
-	s := &NextHopResultResponse{NextHopResult: &NextHopResult{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.NextHopResult)
+	respType := &NextHopResultResponse{NextHopResult: &NextHopResult{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.NextHopResult)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeNextHopResultPoller method
@@ -2578,13 +2578,13 @@ func (p *nextHopResultPoller) ResumeToken() (string, error) {
 }
 
 func (p *nextHopResultPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*NextHopResultResponse, error) {
-	s := &NextHopResultResponse{NextHopResult: &NextHopResult{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.NextHopResult)
+	respType := &NextHopResultResponse{NextHopResult: &NextHopResult{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.NextHopResult)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // P2SVpnConnectionHealthPoller provides polling facilities until the operation completes
@@ -2612,13 +2612,13 @@ func (p *p2SVpnConnectionHealthPoller) Poll(ctx context.Context) (*http.Response
 }
 
 func (p *p2SVpnConnectionHealthPoller) FinalResponse(ctx context.Context) (*P2SVpnConnectionHealthResponse, error) {
-	s := &P2SVpnConnectionHealthResponse{P2SVpnConnectionHealth: &P2SVpnConnectionHealth{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.P2SVpnConnectionHealth)
+	respType := &P2SVpnConnectionHealthResponse{P2SVpnConnectionHealth: &P2SVpnConnectionHealth{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.P2SVpnConnectionHealth)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeP2SVpnConnectionHealthPoller method
@@ -2628,13 +2628,13 @@ func (p *p2SVpnConnectionHealthPoller) ResumeToken() (string, error) {
 }
 
 func (p *p2SVpnConnectionHealthPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*P2SVpnConnectionHealthResponse, error) {
-	s := &P2SVpnConnectionHealthResponse{P2SVpnConnectionHealth: &P2SVpnConnectionHealth{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.P2SVpnConnectionHealth)
+	respType := &P2SVpnConnectionHealthResponse{P2SVpnConnectionHealth: &P2SVpnConnectionHealth{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.P2SVpnConnectionHealth)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // P2SVpnGatewayPoller provides polling facilities until the operation completes
@@ -2662,13 +2662,13 @@ func (p *p2SVpnGatewayPoller) Poll(ctx context.Context) (*http.Response, error) 
 }
 
 func (p *p2SVpnGatewayPoller) FinalResponse(ctx context.Context) (*P2SVpnGatewayResponse, error) {
-	s := &P2SVpnGatewayResponse{P2SVpnGateway: &P2SVpnGateway{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.P2SVpnGateway)
+	respType := &P2SVpnGatewayResponse{P2SVpnGateway: &P2SVpnGateway{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.P2SVpnGateway)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeP2SVpnGatewayPoller method
@@ -2678,13 +2678,13 @@ func (p *p2SVpnGatewayPoller) ResumeToken() (string, error) {
 }
 
 func (p *p2SVpnGatewayPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*P2SVpnGatewayResponse, error) {
-	s := &P2SVpnGatewayResponse{P2SVpnGateway: &P2SVpnGateway{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.P2SVpnGateway)
+	respType := &P2SVpnGatewayResponse{P2SVpnGateway: &P2SVpnGateway{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.P2SVpnGateway)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // PacketCaptureQueryStatusResultPoller provides polling facilities until the operation completes
@@ -2712,13 +2712,13 @@ func (p *packetCaptureQueryStatusResultPoller) Poll(ctx context.Context) (*http.
 }
 
 func (p *packetCaptureQueryStatusResultPoller) FinalResponse(ctx context.Context) (*PacketCaptureQueryStatusResultResponse, error) {
-	s := &PacketCaptureQueryStatusResultResponse{PacketCaptureQueryStatusResult: &PacketCaptureQueryStatusResult{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.PacketCaptureQueryStatusResult)
+	respType := &PacketCaptureQueryStatusResultResponse{PacketCaptureQueryStatusResult: &PacketCaptureQueryStatusResult{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.PacketCaptureQueryStatusResult)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumePacketCaptureQueryStatusResultPoller method
@@ -2728,13 +2728,13 @@ func (p *packetCaptureQueryStatusResultPoller) ResumeToken() (string, error) {
 }
 
 func (p *packetCaptureQueryStatusResultPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*PacketCaptureQueryStatusResultResponse, error) {
-	s := &PacketCaptureQueryStatusResultResponse{PacketCaptureQueryStatusResult: &PacketCaptureQueryStatusResult{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.PacketCaptureQueryStatusResult)
+	respType := &PacketCaptureQueryStatusResultResponse{PacketCaptureQueryStatusResult: &PacketCaptureQueryStatusResult{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.PacketCaptureQueryStatusResult)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // PacketCaptureResultPoller provides polling facilities until the operation completes
@@ -2762,13 +2762,13 @@ func (p *packetCaptureResultPoller) Poll(ctx context.Context) (*http.Response, e
 }
 
 func (p *packetCaptureResultPoller) FinalResponse(ctx context.Context) (*PacketCaptureResultResponse, error) {
-	s := &PacketCaptureResultResponse{PacketCaptureResult: &PacketCaptureResult{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.PacketCaptureResult)
+	respType := &PacketCaptureResultResponse{PacketCaptureResult: &PacketCaptureResult{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.PacketCaptureResult)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumePacketCaptureResultPoller method
@@ -2778,13 +2778,13 @@ func (p *packetCaptureResultPoller) ResumeToken() (string, error) {
 }
 
 func (p *packetCaptureResultPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*PacketCaptureResultResponse, error) {
-	s := &PacketCaptureResultResponse{PacketCaptureResult: &PacketCaptureResult{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.PacketCaptureResult)
+	respType := &PacketCaptureResultResponse{PacketCaptureResult: &PacketCaptureResult{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.PacketCaptureResult)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // PrivateDNSZoneGroupPoller provides polling facilities until the operation completes
@@ -2812,13 +2812,13 @@ func (p *privateDnsZoneGroupPoller) Poll(ctx context.Context) (*http.Response, e
 }
 
 func (p *privateDnsZoneGroupPoller) FinalResponse(ctx context.Context) (*PrivateDNSZoneGroupResponse, error) {
-	s := &PrivateDNSZoneGroupResponse{PrivateDNSZoneGroup: &PrivateDNSZoneGroup{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.PrivateDNSZoneGroup)
+	respType := &PrivateDNSZoneGroupResponse{PrivateDNSZoneGroup: &PrivateDNSZoneGroup{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.PrivateDNSZoneGroup)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumePrivateDNSZoneGroupPoller method
@@ -2828,13 +2828,13 @@ func (p *privateDnsZoneGroupPoller) ResumeToken() (string, error) {
 }
 
 func (p *privateDnsZoneGroupPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*PrivateDNSZoneGroupResponse, error) {
-	s := &PrivateDNSZoneGroupResponse{PrivateDNSZoneGroup: &PrivateDNSZoneGroup{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.PrivateDNSZoneGroup)
+	respType := &PrivateDNSZoneGroupResponse{PrivateDNSZoneGroup: &PrivateDNSZoneGroup{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.PrivateDNSZoneGroup)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // PrivateEndpointPoller provides polling facilities until the operation completes
@@ -2862,13 +2862,13 @@ func (p *privateEndpointPoller) Poll(ctx context.Context) (*http.Response, error
 }
 
 func (p *privateEndpointPoller) FinalResponse(ctx context.Context) (*PrivateEndpointResponse, error) {
-	s := &PrivateEndpointResponse{PrivateEndpoint: &PrivateEndpoint{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.PrivateEndpoint)
+	respType := &PrivateEndpointResponse{PrivateEndpoint: &PrivateEndpoint{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.PrivateEndpoint)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumePrivateEndpointPoller method
@@ -2878,13 +2878,13 @@ func (p *privateEndpointPoller) ResumeToken() (string, error) {
 }
 
 func (p *privateEndpointPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*PrivateEndpointResponse, error) {
-	s := &PrivateEndpointResponse{PrivateEndpoint: &PrivateEndpoint{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.PrivateEndpoint)
+	respType := &PrivateEndpointResponse{PrivateEndpoint: &PrivateEndpoint{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.PrivateEndpoint)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // PrivateLinkServicePoller provides polling facilities until the operation completes
@@ -2912,13 +2912,13 @@ func (p *privateLinkServicePoller) Poll(ctx context.Context) (*http.Response, er
 }
 
 func (p *privateLinkServicePoller) FinalResponse(ctx context.Context) (*PrivateLinkServiceResponse, error) {
-	s := &PrivateLinkServiceResponse{PrivateLinkService: &PrivateLinkService{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.PrivateLinkService)
+	respType := &PrivateLinkServiceResponse{PrivateLinkService: &PrivateLinkService{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.PrivateLinkService)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumePrivateLinkServicePoller method
@@ -2928,13 +2928,13 @@ func (p *privateLinkServicePoller) ResumeToken() (string, error) {
 }
 
 func (p *privateLinkServicePoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*PrivateLinkServiceResponse, error) {
-	s := &PrivateLinkServiceResponse{PrivateLinkService: &PrivateLinkService{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.PrivateLinkService)
+	respType := &PrivateLinkServiceResponse{PrivateLinkService: &PrivateLinkService{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.PrivateLinkService)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // PrivateLinkServiceVisibilityPoller provides polling facilities until the operation completes
@@ -2962,13 +2962,13 @@ func (p *privateLinkServiceVisibilityPoller) Poll(ctx context.Context) (*http.Re
 }
 
 func (p *privateLinkServiceVisibilityPoller) FinalResponse(ctx context.Context) (*PrivateLinkServiceVisibilityResponse, error) {
-	s := &PrivateLinkServiceVisibilityResponse{PrivateLinkServiceVisibility: &PrivateLinkServiceVisibility{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.PrivateLinkServiceVisibility)
+	respType := &PrivateLinkServiceVisibilityResponse{PrivateLinkServiceVisibility: &PrivateLinkServiceVisibility{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.PrivateLinkServiceVisibility)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumePrivateLinkServiceVisibilityPoller method
@@ -2978,13 +2978,13 @@ func (p *privateLinkServiceVisibilityPoller) ResumeToken() (string, error) {
 }
 
 func (p *privateLinkServiceVisibilityPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*PrivateLinkServiceVisibilityResponse, error) {
-	s := &PrivateLinkServiceVisibilityResponse{PrivateLinkServiceVisibility: &PrivateLinkServiceVisibility{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.PrivateLinkServiceVisibility)
+	respType := &PrivateLinkServiceVisibilityResponse{PrivateLinkServiceVisibility: &PrivateLinkServiceVisibility{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.PrivateLinkServiceVisibility)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // PublicIPAddressPoller provides polling facilities until the operation completes
@@ -3012,13 +3012,13 @@ func (p *publicIPAddressPoller) Poll(ctx context.Context) (*http.Response, error
 }
 
 func (p *publicIPAddressPoller) FinalResponse(ctx context.Context) (*PublicIPAddressResponse, error) {
-	s := &PublicIPAddressResponse{PublicIPAddress: &PublicIPAddress{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.PublicIPAddress)
+	respType := &PublicIPAddressResponse{PublicIPAddress: &PublicIPAddress{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.PublicIPAddress)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumePublicIPAddressPoller method
@@ -3028,13 +3028,13 @@ func (p *publicIPAddressPoller) ResumeToken() (string, error) {
 }
 
 func (p *publicIPAddressPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*PublicIPAddressResponse, error) {
-	s := &PublicIPAddressResponse{PublicIPAddress: &PublicIPAddress{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.PublicIPAddress)
+	respType := &PublicIPAddressResponse{PublicIPAddress: &PublicIPAddress{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.PublicIPAddress)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // PublicIPPrefixPoller provides polling facilities until the operation completes
@@ -3062,13 +3062,13 @@ func (p *publicIPPrefixPoller) Poll(ctx context.Context) (*http.Response, error)
 }
 
 func (p *publicIPPrefixPoller) FinalResponse(ctx context.Context) (*PublicIPPrefixResponse, error) {
-	s := &PublicIPPrefixResponse{PublicIPPrefix: &PublicIPPrefix{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.PublicIPPrefix)
+	respType := &PublicIPPrefixResponse{PublicIPPrefix: &PublicIPPrefix{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.PublicIPPrefix)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumePublicIPPrefixPoller method
@@ -3078,13 +3078,13 @@ func (p *publicIPPrefixPoller) ResumeToken() (string, error) {
 }
 
 func (p *publicIPPrefixPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*PublicIPPrefixResponse, error) {
-	s := &PublicIPPrefixResponse{PublicIPPrefix: &PublicIPPrefix{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.PublicIPPrefix)
+	respType := &PublicIPPrefixResponse{PublicIPPrefix: &PublicIPPrefix{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.PublicIPPrefix)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // RouteFilterPoller provides polling facilities until the operation completes
@@ -3112,13 +3112,13 @@ func (p *routeFilterPoller) Poll(ctx context.Context) (*http.Response, error) {
 }
 
 func (p *routeFilterPoller) FinalResponse(ctx context.Context) (*RouteFilterResponse, error) {
-	s := &RouteFilterResponse{RouteFilter: &RouteFilter{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.RouteFilter)
+	respType := &RouteFilterResponse{RouteFilter: &RouteFilter{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.RouteFilter)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeRouteFilterPoller method
@@ -3128,13 +3128,13 @@ func (p *routeFilterPoller) ResumeToken() (string, error) {
 }
 
 func (p *routeFilterPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*RouteFilterResponse, error) {
-	s := &RouteFilterResponse{RouteFilter: &RouteFilter{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.RouteFilter)
+	respType := &RouteFilterResponse{RouteFilter: &RouteFilter{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.RouteFilter)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // RouteFilterRulePoller provides polling facilities until the operation completes
@@ -3162,13 +3162,13 @@ func (p *routeFilterRulePoller) Poll(ctx context.Context) (*http.Response, error
 }
 
 func (p *routeFilterRulePoller) FinalResponse(ctx context.Context) (*RouteFilterRuleResponse, error) {
-	s := &RouteFilterRuleResponse{RouteFilterRule: &RouteFilterRule{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.RouteFilterRule)
+	respType := &RouteFilterRuleResponse{RouteFilterRule: &RouteFilterRule{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.RouteFilterRule)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeRouteFilterRulePoller method
@@ -3178,13 +3178,13 @@ func (p *routeFilterRulePoller) ResumeToken() (string, error) {
 }
 
 func (p *routeFilterRulePoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*RouteFilterRuleResponse, error) {
-	s := &RouteFilterRuleResponse{RouteFilterRule: &RouteFilterRule{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.RouteFilterRule)
+	respType := &RouteFilterRuleResponse{RouteFilterRule: &RouteFilterRule{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.RouteFilterRule)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // RoutePoller provides polling facilities until the operation completes
@@ -3212,13 +3212,13 @@ func (p *routePoller) Poll(ctx context.Context) (*http.Response, error) {
 }
 
 func (p *routePoller) FinalResponse(ctx context.Context) (*RouteResponse, error) {
-	s := &RouteResponse{Route: &Route{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.Route)
+	respType := &RouteResponse{Route: &Route{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.Route)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeRoutePoller method
@@ -3228,13 +3228,13 @@ func (p *routePoller) ResumeToken() (string, error) {
 }
 
 func (p *routePoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*RouteResponse, error) {
-	s := &RouteResponse{Route: &Route{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.Route)
+	respType := &RouteResponse{Route: &Route{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.Route)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // RouteTablePoller provides polling facilities until the operation completes
@@ -3262,13 +3262,13 @@ func (p *routeTablePoller) Poll(ctx context.Context) (*http.Response, error) {
 }
 
 func (p *routeTablePoller) FinalResponse(ctx context.Context) (*RouteTableResponse, error) {
-	s := &RouteTableResponse{RouteTable: &RouteTable{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.RouteTable)
+	respType := &RouteTableResponse{RouteTable: &RouteTable{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.RouteTable)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeRouteTablePoller method
@@ -3278,13 +3278,13 @@ func (p *routeTablePoller) ResumeToken() (string, error) {
 }
 
 func (p *routeTablePoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*RouteTableResponse, error) {
-	s := &RouteTableResponse{RouteTable: &RouteTable{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.RouteTable)
+	respType := &RouteTableResponse{RouteTable: &RouteTable{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.RouteTable)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // SecurityGroupViewResultPoller provides polling facilities until the operation completes
@@ -3312,13 +3312,13 @@ func (p *securityGroupViewResultPoller) Poll(ctx context.Context) (*http.Respons
 }
 
 func (p *securityGroupViewResultPoller) FinalResponse(ctx context.Context) (*SecurityGroupViewResultResponse, error) {
-	s := &SecurityGroupViewResultResponse{SecurityGroupViewResult: &SecurityGroupViewResult{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.SecurityGroupViewResult)
+	respType := &SecurityGroupViewResultResponse{SecurityGroupViewResult: &SecurityGroupViewResult{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.SecurityGroupViewResult)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeSecurityGroupViewResultPoller method
@@ -3328,13 +3328,13 @@ func (p *securityGroupViewResultPoller) ResumeToken() (string, error) {
 }
 
 func (p *securityGroupViewResultPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*SecurityGroupViewResultResponse, error) {
-	s := &SecurityGroupViewResultResponse{SecurityGroupViewResult: &SecurityGroupViewResult{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.SecurityGroupViewResult)
+	respType := &SecurityGroupViewResultResponse{SecurityGroupViewResult: &SecurityGroupViewResult{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.SecurityGroupViewResult)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // SecurityPartnerProviderPoller provides polling facilities until the operation completes
@@ -3362,13 +3362,13 @@ func (p *securityPartnerProviderPoller) Poll(ctx context.Context) (*http.Respons
 }
 
 func (p *securityPartnerProviderPoller) FinalResponse(ctx context.Context) (*SecurityPartnerProviderResponse, error) {
-	s := &SecurityPartnerProviderResponse{SecurityPartnerProvider: &SecurityPartnerProvider{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.SecurityPartnerProvider)
+	respType := &SecurityPartnerProviderResponse{SecurityPartnerProvider: &SecurityPartnerProvider{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.SecurityPartnerProvider)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeSecurityPartnerProviderPoller method
@@ -3378,13 +3378,13 @@ func (p *securityPartnerProviderPoller) ResumeToken() (string, error) {
 }
 
 func (p *securityPartnerProviderPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*SecurityPartnerProviderResponse, error) {
-	s := &SecurityPartnerProviderResponse{SecurityPartnerProvider: &SecurityPartnerProvider{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.SecurityPartnerProvider)
+	respType := &SecurityPartnerProviderResponse{SecurityPartnerProvider: &SecurityPartnerProvider{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.SecurityPartnerProvider)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // SecurityRulePoller provides polling facilities until the operation completes
@@ -3412,13 +3412,13 @@ func (p *securityRulePoller) Poll(ctx context.Context) (*http.Response, error) {
 }
 
 func (p *securityRulePoller) FinalResponse(ctx context.Context) (*SecurityRuleResponse, error) {
-	s := &SecurityRuleResponse{SecurityRule: &SecurityRule{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.SecurityRule)
+	respType := &SecurityRuleResponse{SecurityRule: &SecurityRule{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.SecurityRule)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeSecurityRulePoller method
@@ -3428,13 +3428,13 @@ func (p *securityRulePoller) ResumeToken() (string, error) {
 }
 
 func (p *securityRulePoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*SecurityRuleResponse, error) {
-	s := &SecurityRuleResponse{SecurityRule: &SecurityRule{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.SecurityRule)
+	respType := &SecurityRuleResponse{SecurityRule: &SecurityRule{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.SecurityRule)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ServiceEndpointPolicyDefinitionPoller provides polling facilities until the operation completes
@@ -3462,13 +3462,13 @@ func (p *serviceEndpointPolicyDefinitionPoller) Poll(ctx context.Context) (*http
 }
 
 func (p *serviceEndpointPolicyDefinitionPoller) FinalResponse(ctx context.Context) (*ServiceEndpointPolicyDefinitionResponse, error) {
-	s := &ServiceEndpointPolicyDefinitionResponse{ServiceEndpointPolicyDefinition: &ServiceEndpointPolicyDefinition{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.ServiceEndpointPolicyDefinition)
+	respType := &ServiceEndpointPolicyDefinitionResponse{ServiceEndpointPolicyDefinition: &ServiceEndpointPolicyDefinition{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.ServiceEndpointPolicyDefinition)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeServiceEndpointPolicyDefinitionPoller method
@@ -3478,13 +3478,13 @@ func (p *serviceEndpointPolicyDefinitionPoller) ResumeToken() (string, error) {
 }
 
 func (p *serviceEndpointPolicyDefinitionPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*ServiceEndpointPolicyDefinitionResponse, error) {
-	s := &ServiceEndpointPolicyDefinitionResponse{ServiceEndpointPolicyDefinition: &ServiceEndpointPolicyDefinition{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.ServiceEndpointPolicyDefinition)
+	respType := &ServiceEndpointPolicyDefinitionResponse{ServiceEndpointPolicyDefinition: &ServiceEndpointPolicyDefinition{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.ServiceEndpointPolicyDefinition)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ServiceEndpointPolicyPoller provides polling facilities until the operation completes
@@ -3512,13 +3512,13 @@ func (p *serviceEndpointPolicyPoller) Poll(ctx context.Context) (*http.Response,
 }
 
 func (p *serviceEndpointPolicyPoller) FinalResponse(ctx context.Context) (*ServiceEndpointPolicyResponse, error) {
-	s := &ServiceEndpointPolicyResponse{ServiceEndpointPolicy: &ServiceEndpointPolicy{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.ServiceEndpointPolicy)
+	respType := &ServiceEndpointPolicyResponse{ServiceEndpointPolicy: &ServiceEndpointPolicy{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.ServiceEndpointPolicy)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeServiceEndpointPolicyPoller method
@@ -3528,13 +3528,13 @@ func (p *serviceEndpointPolicyPoller) ResumeToken() (string, error) {
 }
 
 func (p *serviceEndpointPolicyPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*ServiceEndpointPolicyResponse, error) {
-	s := &ServiceEndpointPolicyResponse{ServiceEndpointPolicy: &ServiceEndpointPolicy{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.ServiceEndpointPolicy)
+	respType := &ServiceEndpointPolicyResponse{ServiceEndpointPolicy: &ServiceEndpointPolicy{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.ServiceEndpointPolicy)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // StringPoller provides polling facilities until the operation completes
@@ -3562,14 +3562,14 @@ func (p *stringPoller) Poll(ctx context.Context) (*http.Response, error) {
 }
 
 func (p *stringPoller) FinalResponse(ctx context.Context) (*StringResponse, error) {
-	s := &StringResponse{}
+	respType := &StringResponse{}
 
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, &s.Value)
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, &respType.Value)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeStringPoller method
@@ -3579,14 +3579,14 @@ func (p *stringPoller) ResumeToken() (string, error) {
 }
 
 func (p *stringPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*StringResponse, error) {
-	s := &StringResponse{}
+	respType := &StringResponse{}
 
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, &s.Value)
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, &respType.Value)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // SubnetPoller provides polling facilities until the operation completes
@@ -3614,13 +3614,13 @@ func (p *subnetPoller) Poll(ctx context.Context) (*http.Response, error) {
 }
 
 func (p *subnetPoller) FinalResponse(ctx context.Context) (*SubnetResponse, error) {
-	s := &SubnetResponse{Subnet: &Subnet{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.Subnet)
+	respType := &SubnetResponse{Subnet: &Subnet{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.Subnet)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeSubnetPoller method
@@ -3630,13 +3630,13 @@ func (p *subnetPoller) ResumeToken() (string, error) {
 }
 
 func (p *subnetPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*SubnetResponse, error) {
-	s := &SubnetResponse{Subnet: &Subnet{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.Subnet)
+	respType := &SubnetResponse{Subnet: &Subnet{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.Subnet)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // TroubleshootingResultPoller provides polling facilities until the operation completes
@@ -3664,13 +3664,13 @@ func (p *troubleshootingResultPoller) Poll(ctx context.Context) (*http.Response,
 }
 
 func (p *troubleshootingResultPoller) FinalResponse(ctx context.Context) (*TroubleshootingResultResponse, error) {
-	s := &TroubleshootingResultResponse{TroubleshootingResult: &TroubleshootingResult{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.TroubleshootingResult)
+	respType := &TroubleshootingResultResponse{TroubleshootingResult: &TroubleshootingResult{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.TroubleshootingResult)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeTroubleshootingResultPoller method
@@ -3680,13 +3680,13 @@ func (p *troubleshootingResultPoller) ResumeToken() (string, error) {
 }
 
 func (p *troubleshootingResultPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*TroubleshootingResultResponse, error) {
-	s := &TroubleshootingResultResponse{TroubleshootingResult: &TroubleshootingResult{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.TroubleshootingResult)
+	respType := &TroubleshootingResultResponse{TroubleshootingResult: &TroubleshootingResult{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.TroubleshootingResult)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VerificationIPFlowResultPoller provides polling facilities until the operation completes
@@ -3714,13 +3714,13 @@ func (p *verificationIPFlowResultPoller) Poll(ctx context.Context) (*http.Respon
 }
 
 func (p *verificationIPFlowResultPoller) FinalResponse(ctx context.Context) (*VerificationIPFlowResultResponse, error) {
-	s := &VerificationIPFlowResultResponse{VerificationIPFlowResult: &VerificationIPFlowResult{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.VerificationIPFlowResult)
+	respType := &VerificationIPFlowResultResponse{VerificationIPFlowResult: &VerificationIPFlowResult{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.VerificationIPFlowResult)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeVerificationIPFlowResultPoller method
@@ -3730,13 +3730,13 @@ func (p *verificationIPFlowResultPoller) ResumeToken() (string, error) {
 }
 
 func (p *verificationIPFlowResultPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*VerificationIPFlowResultResponse, error) {
-	s := &VerificationIPFlowResultResponse{VerificationIPFlowResult: &VerificationIPFlowResult{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.VerificationIPFlowResult)
+	respType := &VerificationIPFlowResultResponse{VerificationIPFlowResult: &VerificationIPFlowResult{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.VerificationIPFlowResult)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualHubPoller provides polling facilities until the operation completes
@@ -3764,13 +3764,13 @@ func (p *virtualHubPoller) Poll(ctx context.Context) (*http.Response, error) {
 }
 
 func (p *virtualHubPoller) FinalResponse(ctx context.Context) (*VirtualHubResponse, error) {
-	s := &VirtualHubResponse{VirtualHub: &VirtualHub{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.VirtualHub)
+	respType := &VirtualHubResponse{VirtualHub: &VirtualHub{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.VirtualHub)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeVirtualHubPoller method
@@ -3780,13 +3780,13 @@ func (p *virtualHubPoller) ResumeToken() (string, error) {
 }
 
 func (p *virtualHubPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*VirtualHubResponse, error) {
-	s := &VirtualHubResponse{VirtualHub: &VirtualHub{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.VirtualHub)
+	respType := &VirtualHubResponse{VirtualHub: &VirtualHub{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.VirtualHub)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualHubRouteTableV2Poller provides polling facilities until the operation completes
@@ -3814,13 +3814,13 @@ func (p *virtualHubRouteTableV2Poller) Poll(ctx context.Context) (*http.Response
 }
 
 func (p *virtualHubRouteTableV2Poller) FinalResponse(ctx context.Context) (*VirtualHubRouteTableV2Response, error) {
-	s := &VirtualHubRouteTableV2Response{VirtualHubRouteTableV2: &VirtualHubRouteTableV2{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.VirtualHubRouteTableV2)
+	respType := &VirtualHubRouteTableV2Response{VirtualHubRouteTableV2: &VirtualHubRouteTableV2{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.VirtualHubRouteTableV2)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeVirtualHubRouteTableV2Poller method
@@ -3830,13 +3830,13 @@ func (p *virtualHubRouteTableV2Poller) ResumeToken() (string, error) {
 }
 
 func (p *virtualHubRouteTableV2Poller) pollUntilDone(ctx context.Context, frequency time.Duration) (*VirtualHubRouteTableV2Response, error) {
-	s := &VirtualHubRouteTableV2Response{VirtualHubRouteTableV2: &VirtualHubRouteTableV2{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.VirtualHubRouteTableV2)
+	respType := &VirtualHubRouteTableV2Response{VirtualHubRouteTableV2: &VirtualHubRouteTableV2{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.VirtualHubRouteTableV2)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualNetworkGatewayConnectionPoller provides polling facilities until the operation completes
@@ -3864,13 +3864,13 @@ func (p *virtualNetworkGatewayConnectionPoller) Poll(ctx context.Context) (*http
 }
 
 func (p *virtualNetworkGatewayConnectionPoller) FinalResponse(ctx context.Context) (*VirtualNetworkGatewayConnectionResponse, error) {
-	s := &VirtualNetworkGatewayConnectionResponse{VirtualNetworkGatewayConnection: &VirtualNetworkGatewayConnection{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.VirtualNetworkGatewayConnection)
+	respType := &VirtualNetworkGatewayConnectionResponse{VirtualNetworkGatewayConnection: &VirtualNetworkGatewayConnection{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.VirtualNetworkGatewayConnection)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeVirtualNetworkGatewayConnectionPoller method
@@ -3880,13 +3880,13 @@ func (p *virtualNetworkGatewayConnectionPoller) ResumeToken() (string, error) {
 }
 
 func (p *virtualNetworkGatewayConnectionPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*VirtualNetworkGatewayConnectionResponse, error) {
-	s := &VirtualNetworkGatewayConnectionResponse{VirtualNetworkGatewayConnection: &VirtualNetworkGatewayConnection{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.VirtualNetworkGatewayConnection)
+	respType := &VirtualNetworkGatewayConnectionResponse{VirtualNetworkGatewayConnection: &VirtualNetworkGatewayConnection{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.VirtualNetworkGatewayConnection)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualNetworkGatewayPoller provides polling facilities until the operation completes
@@ -3914,13 +3914,13 @@ func (p *virtualNetworkGatewayPoller) Poll(ctx context.Context) (*http.Response,
 }
 
 func (p *virtualNetworkGatewayPoller) FinalResponse(ctx context.Context) (*VirtualNetworkGatewayResponse, error) {
-	s := &VirtualNetworkGatewayResponse{VirtualNetworkGateway: &VirtualNetworkGateway{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.VirtualNetworkGateway)
+	respType := &VirtualNetworkGatewayResponse{VirtualNetworkGateway: &VirtualNetworkGateway{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.VirtualNetworkGateway)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeVirtualNetworkGatewayPoller method
@@ -3930,13 +3930,13 @@ func (p *virtualNetworkGatewayPoller) ResumeToken() (string, error) {
 }
 
 func (p *virtualNetworkGatewayPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*VirtualNetworkGatewayResponse, error) {
-	s := &VirtualNetworkGatewayResponse{VirtualNetworkGateway: &VirtualNetworkGateway{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.VirtualNetworkGateway)
+	respType := &VirtualNetworkGatewayResponse{VirtualNetworkGateway: &VirtualNetworkGateway{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.VirtualNetworkGateway)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualNetworkPeeringPoller provides polling facilities until the operation completes
@@ -3964,13 +3964,13 @@ func (p *virtualNetworkPeeringPoller) Poll(ctx context.Context) (*http.Response,
 }
 
 func (p *virtualNetworkPeeringPoller) FinalResponse(ctx context.Context) (*VirtualNetworkPeeringResponse, error) {
-	s := &VirtualNetworkPeeringResponse{VirtualNetworkPeering: &VirtualNetworkPeering{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.VirtualNetworkPeering)
+	respType := &VirtualNetworkPeeringResponse{VirtualNetworkPeering: &VirtualNetworkPeering{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.VirtualNetworkPeering)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeVirtualNetworkPeeringPoller method
@@ -3980,13 +3980,13 @@ func (p *virtualNetworkPeeringPoller) ResumeToken() (string, error) {
 }
 
 func (p *virtualNetworkPeeringPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*VirtualNetworkPeeringResponse, error) {
-	s := &VirtualNetworkPeeringResponse{VirtualNetworkPeering: &VirtualNetworkPeering{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.VirtualNetworkPeering)
+	respType := &VirtualNetworkPeeringResponse{VirtualNetworkPeering: &VirtualNetworkPeering{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.VirtualNetworkPeering)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualNetworkPoller provides polling facilities until the operation completes
@@ -4014,13 +4014,13 @@ func (p *virtualNetworkPoller) Poll(ctx context.Context) (*http.Response, error)
 }
 
 func (p *virtualNetworkPoller) FinalResponse(ctx context.Context) (*VirtualNetworkResponse, error) {
-	s := &VirtualNetworkResponse{VirtualNetwork: &VirtualNetwork{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.VirtualNetwork)
+	respType := &VirtualNetworkResponse{VirtualNetwork: &VirtualNetwork{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.VirtualNetwork)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeVirtualNetworkPoller method
@@ -4030,13 +4030,13 @@ func (p *virtualNetworkPoller) ResumeToken() (string, error) {
 }
 
 func (p *virtualNetworkPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*VirtualNetworkResponse, error) {
-	s := &VirtualNetworkResponse{VirtualNetwork: &VirtualNetwork{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.VirtualNetwork)
+	respType := &VirtualNetworkResponse{VirtualNetwork: &VirtualNetwork{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.VirtualNetwork)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualNetworkTapPoller provides polling facilities until the operation completes
@@ -4064,13 +4064,13 @@ func (p *virtualNetworkTapPoller) Poll(ctx context.Context) (*http.Response, err
 }
 
 func (p *virtualNetworkTapPoller) FinalResponse(ctx context.Context) (*VirtualNetworkTapResponse, error) {
-	s := &VirtualNetworkTapResponse{VirtualNetworkTap: &VirtualNetworkTap{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.VirtualNetworkTap)
+	respType := &VirtualNetworkTapResponse{VirtualNetworkTap: &VirtualNetworkTap{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.VirtualNetworkTap)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeVirtualNetworkTapPoller method
@@ -4080,13 +4080,13 @@ func (p *virtualNetworkTapPoller) ResumeToken() (string, error) {
 }
 
 func (p *virtualNetworkTapPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*VirtualNetworkTapResponse, error) {
-	s := &VirtualNetworkTapResponse{VirtualNetworkTap: &VirtualNetworkTap{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.VirtualNetworkTap)
+	respType := &VirtualNetworkTapResponse{VirtualNetworkTap: &VirtualNetworkTap{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.VirtualNetworkTap)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualRouterPeeringPoller provides polling facilities until the operation completes
@@ -4114,13 +4114,13 @@ func (p *virtualRouterPeeringPoller) Poll(ctx context.Context) (*http.Response, 
 }
 
 func (p *virtualRouterPeeringPoller) FinalResponse(ctx context.Context) (*VirtualRouterPeeringResponse, error) {
-	s := &VirtualRouterPeeringResponse{VirtualRouterPeering: &VirtualRouterPeering{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.VirtualRouterPeering)
+	respType := &VirtualRouterPeeringResponse{VirtualRouterPeering: &VirtualRouterPeering{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.VirtualRouterPeering)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeVirtualRouterPeeringPoller method
@@ -4130,13 +4130,13 @@ func (p *virtualRouterPeeringPoller) ResumeToken() (string, error) {
 }
 
 func (p *virtualRouterPeeringPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*VirtualRouterPeeringResponse, error) {
-	s := &VirtualRouterPeeringResponse{VirtualRouterPeering: &VirtualRouterPeering{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.VirtualRouterPeering)
+	respType := &VirtualRouterPeeringResponse{VirtualRouterPeering: &VirtualRouterPeering{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.VirtualRouterPeering)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualRouterPoller provides polling facilities until the operation completes
@@ -4164,13 +4164,13 @@ func (p *virtualRouterPoller) Poll(ctx context.Context) (*http.Response, error) 
 }
 
 func (p *virtualRouterPoller) FinalResponse(ctx context.Context) (*VirtualRouterResponse, error) {
-	s := &VirtualRouterResponse{VirtualRouter: &VirtualRouter{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.VirtualRouter)
+	respType := &VirtualRouterResponse{VirtualRouter: &VirtualRouter{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.VirtualRouter)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeVirtualRouterPoller method
@@ -4180,13 +4180,13 @@ func (p *virtualRouterPoller) ResumeToken() (string, error) {
 }
 
 func (p *virtualRouterPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*VirtualRouterResponse, error) {
-	s := &VirtualRouterResponse{VirtualRouter: &VirtualRouter{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.VirtualRouter)
+	respType := &VirtualRouterResponse{VirtualRouter: &VirtualRouter{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.VirtualRouter)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualWanPoller provides polling facilities until the operation completes
@@ -4214,13 +4214,13 @@ func (p *virtualWanPoller) Poll(ctx context.Context) (*http.Response, error) {
 }
 
 func (p *virtualWanPoller) FinalResponse(ctx context.Context) (*VirtualWanResponse, error) {
-	s := &VirtualWanResponse{VirtualWan: &VirtualWan{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.VirtualWan)
+	respType := &VirtualWanResponse{VirtualWan: &VirtualWan{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.VirtualWan)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeVirtualWanPoller method
@@ -4230,13 +4230,13 @@ func (p *virtualWanPoller) ResumeToken() (string, error) {
 }
 
 func (p *virtualWanPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*VirtualWanResponse, error) {
-	s := &VirtualWanResponse{VirtualWan: &VirtualWan{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.VirtualWan)
+	respType := &VirtualWanResponse{VirtualWan: &VirtualWan{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.VirtualWan)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VpnClientConnectionHealthDetailListResultPoller provides polling facilities until the operation completes
@@ -4264,13 +4264,13 @@ func (p *vpnClientConnectionHealthDetailListResultPoller) Poll(ctx context.Conte
 }
 
 func (p *vpnClientConnectionHealthDetailListResultPoller) FinalResponse(ctx context.Context) (*VpnClientConnectionHealthDetailListResultResponse, error) {
-	s := &VpnClientConnectionHealthDetailListResultResponse{VpnClientConnectionHealthDetailListResult: &VpnClientConnectionHealthDetailListResult{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.VpnClientConnectionHealthDetailListResult)
+	respType := &VpnClientConnectionHealthDetailListResultResponse{VpnClientConnectionHealthDetailListResult: &VpnClientConnectionHealthDetailListResult{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.VpnClientConnectionHealthDetailListResult)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeVpnClientConnectionHealthDetailListResultPoller method
@@ -4280,13 +4280,13 @@ func (p *vpnClientConnectionHealthDetailListResultPoller) ResumeToken() (string,
 }
 
 func (p *vpnClientConnectionHealthDetailListResultPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*VpnClientConnectionHealthDetailListResultResponse, error) {
-	s := &VpnClientConnectionHealthDetailListResultResponse{VpnClientConnectionHealthDetailListResult: &VpnClientConnectionHealthDetailListResult{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.VpnClientConnectionHealthDetailListResult)
+	respType := &VpnClientConnectionHealthDetailListResultResponse{VpnClientConnectionHealthDetailListResult: &VpnClientConnectionHealthDetailListResult{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.VpnClientConnectionHealthDetailListResult)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VpnClientIPsecParametersPoller provides polling facilities until the operation completes
@@ -4314,13 +4314,13 @@ func (p *vpnClientIPsecParametersPoller) Poll(ctx context.Context) (*http.Respon
 }
 
 func (p *vpnClientIPsecParametersPoller) FinalResponse(ctx context.Context) (*VpnClientIPsecParametersResponse, error) {
-	s := &VpnClientIPsecParametersResponse{VpnClientIPsecParameters: &VpnClientIPsecParameters{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.VpnClientIPsecParameters)
+	respType := &VpnClientIPsecParametersResponse{VpnClientIPsecParameters: &VpnClientIPsecParameters{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.VpnClientIPsecParameters)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeVpnClientIPsecParametersPoller method
@@ -4330,13 +4330,13 @@ func (p *vpnClientIPsecParametersPoller) ResumeToken() (string, error) {
 }
 
 func (p *vpnClientIPsecParametersPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*VpnClientIPsecParametersResponse, error) {
-	s := &VpnClientIPsecParametersResponse{VpnClientIPsecParameters: &VpnClientIPsecParameters{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.VpnClientIPsecParameters)
+	respType := &VpnClientIPsecParametersResponse{VpnClientIPsecParameters: &VpnClientIPsecParameters{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.VpnClientIPsecParameters)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VpnConnectionPoller provides polling facilities until the operation completes
@@ -4364,13 +4364,13 @@ func (p *vpnConnectionPoller) Poll(ctx context.Context) (*http.Response, error) 
 }
 
 func (p *vpnConnectionPoller) FinalResponse(ctx context.Context) (*VpnConnectionResponse, error) {
-	s := &VpnConnectionResponse{VpnConnection: &VpnConnection{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.VpnConnection)
+	respType := &VpnConnectionResponse{VpnConnection: &VpnConnection{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.VpnConnection)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeVpnConnectionPoller method
@@ -4380,13 +4380,13 @@ func (p *vpnConnectionPoller) ResumeToken() (string, error) {
 }
 
 func (p *vpnConnectionPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*VpnConnectionResponse, error) {
-	s := &VpnConnectionResponse{VpnConnection: &VpnConnection{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.VpnConnection)
+	respType := &VpnConnectionResponse{VpnConnection: &VpnConnection{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.VpnConnection)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VpnGatewayPoller provides polling facilities until the operation completes
@@ -4414,13 +4414,13 @@ func (p *vpnGatewayPoller) Poll(ctx context.Context) (*http.Response, error) {
 }
 
 func (p *vpnGatewayPoller) FinalResponse(ctx context.Context) (*VpnGatewayResponse, error) {
-	s := &VpnGatewayResponse{VpnGateway: &VpnGateway{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.VpnGateway)
+	respType := &VpnGatewayResponse{VpnGateway: &VpnGateway{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.VpnGateway)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeVpnGatewayPoller method
@@ -4430,13 +4430,13 @@ func (p *vpnGatewayPoller) ResumeToken() (string, error) {
 }
 
 func (p *vpnGatewayPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*VpnGatewayResponse, error) {
-	s := &VpnGatewayResponse{VpnGateway: &VpnGateway{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.VpnGateway)
+	respType := &VpnGatewayResponse{VpnGateway: &VpnGateway{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.VpnGateway)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VpnProfileResponsePoller provides polling facilities until the operation completes
@@ -4464,13 +4464,13 @@ func (p *vpnProfileResponsePoller) Poll(ctx context.Context) (*http.Response, er
 }
 
 func (p *vpnProfileResponsePoller) FinalResponse(ctx context.Context) (*VpnProfileResponseResponse, error) {
-	s := &VpnProfileResponseResponse{VpnProfileResponse: &VpnProfileResponse{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.VpnProfileResponse)
+	respType := &VpnProfileResponseResponse{VpnProfileResponse: &VpnProfileResponse{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.VpnProfileResponse)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeVpnProfileResponsePoller method
@@ -4480,13 +4480,13 @@ func (p *vpnProfileResponsePoller) ResumeToken() (string, error) {
 }
 
 func (p *vpnProfileResponsePoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*VpnProfileResponseResponse, error) {
-	s := &VpnProfileResponseResponse{VpnProfileResponse: &VpnProfileResponse{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.VpnProfileResponse)
+	respType := &VpnProfileResponseResponse{VpnProfileResponse: &VpnProfileResponse{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.VpnProfileResponse)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VpnServerConfigurationPoller provides polling facilities until the operation completes
@@ -4514,13 +4514,13 @@ func (p *vpnServerConfigurationPoller) Poll(ctx context.Context) (*http.Response
 }
 
 func (p *vpnServerConfigurationPoller) FinalResponse(ctx context.Context) (*VpnServerConfigurationResponse, error) {
-	s := &VpnServerConfigurationResponse{VpnServerConfiguration: &VpnServerConfiguration{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.VpnServerConfiguration)
+	respType := &VpnServerConfigurationResponse{VpnServerConfiguration: &VpnServerConfiguration{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.VpnServerConfiguration)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeVpnServerConfigurationPoller method
@@ -4530,13 +4530,13 @@ func (p *vpnServerConfigurationPoller) ResumeToken() (string, error) {
 }
 
 func (p *vpnServerConfigurationPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*VpnServerConfigurationResponse, error) {
-	s := &VpnServerConfigurationResponse{VpnServerConfiguration: &VpnServerConfiguration{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.VpnServerConfiguration)
+	respType := &VpnServerConfigurationResponse{VpnServerConfiguration: &VpnServerConfiguration{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.VpnServerConfiguration)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VpnServerConfigurationsResponsePoller provides polling facilities until the operation completes
@@ -4564,13 +4564,13 @@ func (p *vpnServerConfigurationsResponsePoller) Poll(ctx context.Context) (*http
 }
 
 func (p *vpnServerConfigurationsResponsePoller) FinalResponse(ctx context.Context) (*VpnServerConfigurationsResponseResponse, error) {
-	s := &VpnServerConfigurationsResponseResponse{VpnServerConfigurationsResponse: &VpnServerConfigurationsResponse{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.VpnServerConfigurationsResponse)
+	respType := &VpnServerConfigurationsResponseResponse{VpnServerConfigurationsResponse: &VpnServerConfigurationsResponse{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.VpnServerConfigurationsResponse)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeVpnServerConfigurationsResponsePoller method
@@ -4580,13 +4580,13 @@ func (p *vpnServerConfigurationsResponsePoller) ResumeToken() (string, error) {
 }
 
 func (p *vpnServerConfigurationsResponsePoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*VpnServerConfigurationsResponseResponse, error) {
-	s := &VpnServerConfigurationsResponseResponse{VpnServerConfigurationsResponse: &VpnServerConfigurationsResponse{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.VpnServerConfigurationsResponse)
+	respType := &VpnServerConfigurationsResponseResponse{VpnServerConfigurationsResponse: &VpnServerConfigurationsResponse{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.VpnServerConfigurationsResponse)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VpnSitePoller provides polling facilities until the operation completes
@@ -4614,13 +4614,13 @@ func (p *vpnSitePoller) Poll(ctx context.Context) (*http.Response, error) {
 }
 
 func (p *vpnSitePoller) FinalResponse(ctx context.Context) (*VpnSiteResponse, error) {
-	s := &VpnSiteResponse{VpnSite: &VpnSite{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.VpnSite)
+	respType := &VpnSiteResponse{VpnSite: &VpnSite{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.VpnSite)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeVpnSitePoller method
@@ -4630,13 +4630,13 @@ func (p *vpnSitePoller) ResumeToken() (string, error) {
 }
 
 func (p *vpnSitePoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*VpnSiteResponse, error) {
-	s := &VpnSiteResponse{VpnSite: &VpnSite{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.VpnSite)
+	respType := &VpnSiteResponse{VpnSite: &VpnSite{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.VpnSite)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 func delay(ctx context.Context, delay time.Duration) error {

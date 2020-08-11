@@ -103,7 +103,7 @@ export async function generateARMPollers(session: Session<CodeModel>): Promise<s
     let pagerFields = '';
     if (isPageableOperation(poller.op)) {
       function finalPagerProcessing(name: string, params: string): string {
-        return `s := &${camelCase(responseType)}{}
+        return `respType := &${camelCase(responseType)}{}
                 resp, err := p.pt.${name}(${params})
                 if err != nil {
                   return nil, err
@@ -123,10 +123,10 @@ export async function generateARMPollers(session: Session<CodeModel>): Promise<s
       }
       `;
       finalResponse = `${finalResponseDeclaration} {
-      ${finalPagerProcessing('FinalResponse', 'ctx, p.pipeline, s')}
+      ${finalPagerProcessing('FinalResponse', 'ctx, p.pipeline, respType')}
 	  }
       `;
-      pollUntilDone = finalPagerProcessing('PollUntilDone', 'ctx, frequency, p.pipeline, s');
+      pollUntilDone = finalPagerProcessing('PollUntilDone', 'ctx, frequency, p.pipeline, respType');
     } else if (isSchemaResponse(schemaResponse) && schemaResponse.schema.language.go!.responseType.name !== undefined) {
       responseType = schemaResponse.schema.language.go!.responseType.name;
       pollUntilDoneResponse = `(*${responseType}, error)`;
@@ -135,28 +135,28 @@ export async function generateARMPollers(session: Session<CodeModel>): Promise<s
       // for operations that do return a model add a final response method that handles the final get URL scenario
       finalResponseDeclaration = `FinalResponse(ctx context.Context) (*${responseType}, error)`;
       finalResponse = `FinalResponse(ctx context.Context) (*${responseType}, error) {`;
-      let respType = `s := &${responseType}{${schemaResponse.schema.language.go!.responseType.value}: &${schemaResponse.schema.language.go!.name}{}}`;
+      let respType = `respType := &${responseType}{${schemaResponse.schema.language.go!.responseType.value}: &${schemaResponse.schema.language.go!.name}{}}`;
       let reference = '';
       const isScalar = isScalarType(schemaResponse.schema);
       if (isScalar) {
-        respType = `s := &${responseType}{}\n`;
+        respType = `respType := &${responseType}{}\n`;
         reference = '&';
       }
       pollUntilDone = `${respType}
-		resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, ${reference}s.${schemaResponse.schema.language.go!.responseType.value})
+		resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, ${reference}respType.${schemaResponse.schema.language.go!.responseType.value})
 		if err != nil {
 			return nil, err
     }
-    s.RawResponse = resp
-    return s, nil`;
+    respType.RawResponse = resp
+    return respType, nil`;
       finalResponse += `
       ${respType}
-		resp, err := p.pt.FinalResponse(ctx, p.pipeline, ${reference}s.${schemaResponse.schema.language.go!.responseType.value})
+		resp, err := p.pt.FinalResponse(ctx, p.pipeline, ${reference}respType.${schemaResponse.schema.language.go!.responseType.value})
 		if err != nil {
 			return nil, err
     }
-    s.RawResponse = resp
-		return s, nil
+    respType.RawResponse = resp
+		return respType, nil
 	  }
       `;
     }

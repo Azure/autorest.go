@@ -76,13 +76,13 @@ func (p *productArrayPoller) Poll(ctx context.Context) (*http.Response, error) {
 }
 
 func (p *productArrayPoller) FinalResponse(ctx context.Context) (*ProductArrayResponse, error) {
-	s := &ProductArrayResponse{ProductArray: &[]Product{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.ProductArray)
+	respType := &ProductArrayResponse{ProductArray: &[]Product{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.ProductArray)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeProductArrayPoller method
@@ -92,13 +92,13 @@ func (p *productArrayPoller) ResumeToken() (string, error) {
 }
 
 func (p *productArrayPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*ProductArrayResponse, error) {
-	s := &ProductArrayResponse{ProductArray: &[]Product{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.ProductArray)
+	respType := &ProductArrayResponse{ProductArray: &[]Product{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.ProductArray)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ProductPoller provides polling facilities until the operation completes
@@ -126,13 +126,13 @@ func (p *productPoller) Poll(ctx context.Context) (*http.Response, error) {
 }
 
 func (p *productPoller) FinalResponse(ctx context.Context) (*ProductResponse, error) {
-	s := &ProductResponse{Product: &Product{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.Product)
+	respType := &ProductResponse{Product: &Product{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.Product)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeProductPoller method
@@ -142,13 +142,13 @@ func (p *productPoller) ResumeToken() (string, error) {
 }
 
 func (p *productPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
-	s := &ProductResponse{Product: &Product{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.Product)
+	respType := &ProductResponse{Product: &Product{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.Product)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // SkuPoller provides polling facilities until the operation completes
@@ -176,13 +176,13 @@ func (p *skuPoller) Poll(ctx context.Context) (*http.Response, error) {
 }
 
 func (p *skuPoller) FinalResponse(ctx context.Context) (*SkuResponse, error) {
-	s := &SkuResponse{Sku: &Sku{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.Sku)
+	respType := &SkuResponse{Sku: &Sku{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.Sku)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeSkuPoller method
@@ -192,13 +192,13 @@ func (p *skuPoller) ResumeToken() (string, error) {
 }
 
 func (p *skuPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*SkuResponse, error) {
-	s := &SkuResponse{Sku: &Sku{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.Sku)
+	respType := &SkuResponse{Sku: &Sku{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.Sku)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // SubProductPoller provides polling facilities until the operation completes
@@ -226,13 +226,13 @@ func (p *subProductPoller) Poll(ctx context.Context) (*http.Response, error) {
 }
 
 func (p *subProductPoller) FinalResponse(ctx context.Context) (*SubProductResponse, error) {
-	s := &SubProductResponse{SubProduct: &SubProduct{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, s.SubProduct)
+	respType := &SubProductResponse{SubProduct: &SubProduct{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.SubProduct)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ResumeToken generates the string token that can be used with the ResumeSubProductPoller method
@@ -242,13 +242,13 @@ func (p *subProductPoller) ResumeToken() (string, error) {
 }
 
 func (p *subProductPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*SubProductResponse, error) {
-	s := &SubProductResponse{SubProduct: &SubProduct{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, s.SubProduct)
+	respType := &SubProductResponse{SubProduct: &SubProduct{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.SubProduct)
 	if err != nil {
 		return nil, err
 	}
-	s.RawResponse = resp
-	return s, nil
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 func delay(ctx context.Context, delay time.Duration) error {
