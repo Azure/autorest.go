@@ -10,7 +10,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"path"
-	"strings"
 )
 
 // QueriesOperations contains the methods for the Queries group.
@@ -54,7 +53,9 @@ func (client *queriesOperations) arrayStringMultiEmptyCreateRequest(queriesArray
 	}
 	query := u.Query()
 	if queriesArrayStringMultiEmptyOptions != nil && queriesArrayStringMultiEmptyOptions.ArrayQuery != nil {
-		query.Set("arrayQuery", strings.Join(*queriesArrayStringMultiEmptyOptions.ArrayQuery, ","))
+		for _, qv := range *queriesArrayStringMultiEmptyOptions.ArrayQuery {
+			query.Add("arrayQuery", qv)
+		}
 	}
 	u.RawQuery = query.Encode()
 	req := azcore.NewRequest(http.MethodGet, *u)
@@ -104,7 +105,9 @@ func (client *queriesOperations) arrayStringMultiNullCreateRequest(queriesArrayS
 	}
 	query := u.Query()
 	if queriesArrayStringMultiNullOptions != nil && queriesArrayStringMultiNullOptions.ArrayQuery != nil {
-		query.Set("arrayQuery", strings.Join(*queriesArrayStringMultiNullOptions.ArrayQuery, ","))
+		for _, qv := range *queriesArrayStringMultiNullOptions.ArrayQuery {
+			query.Add("arrayQuery", qv)
+		}
 	}
 	u.RawQuery = query.Encode()
 	req := azcore.NewRequest(http.MethodGet, *u)
@@ -154,7 +157,9 @@ func (client *queriesOperations) arrayStringMultiValidCreateRequest(queriesArray
 	}
 	query := u.Query()
 	if queriesArrayStringMultiValidOptions != nil && queriesArrayStringMultiValidOptions.ArrayQuery != nil {
-		query.Set("arrayQuery", strings.Join(*queriesArrayStringMultiValidOptions.ArrayQuery, ","))
+		for _, qv := range *queriesArrayStringMultiValidOptions.ArrayQuery {
+			query.Add("arrayQuery", qv)
+		}
 	}
 	u.RawQuery = query.Encode()
 	req := azcore.NewRequest(http.MethodGet, *u)

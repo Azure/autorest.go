@@ -445,6 +445,24 @@ type Metrics struct {
 	Version *string `xml:"Version"`
 }
 
+// Contans property
+type ObjectWithXMSTextProperty struct {
+	// Returned value should be 'I am text'
+	Content *string `xml:"content"`
+
+	// Returned value should be 'english'
+	Language *string `xml:"language,attr"`
+}
+
+// ObjectWithXMSTextPropertyResponse is the response envelope for operations that return a ObjectWithXMSTextProperty type.
+type ObjectWithXMSTextPropertyResponse struct {
+	// Contans property
+	Data *ObjectWithXMSTextProperty `xml:"Data"`
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
 // the retention policy
 type RetentionPolicy struct {
 	// Indicates the number of days that metrics or logging or soft-deleted data should be retained. All data older than this

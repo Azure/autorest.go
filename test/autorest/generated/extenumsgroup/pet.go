@@ -19,7 +19,9 @@ import (
 
 // PetOperations contains the methods for the Pet group.
 type PetOperations interface {
+	// AddPet - add pet
 	AddPet(ctx context.Context, petAddPetOptions *PetAddPetOptions) (*PetResponse, error)
+	// GetByPetID - get pet by id
 	GetByPetID(ctx context.Context, petId string) (*PetResponse, error)
 }
 
@@ -28,6 +30,7 @@ type petOperations struct {
 	*Client
 }
 
+// AddPet - add pet
 func (client *petOperations) AddPet(ctx context.Context, petAddPetOptions *PetAddPetOptions) (*PetResponse, error) {
 	req, err := client.addPetCreateRequest(petAddPetOptions)
 	if err != nil {
@@ -79,6 +82,7 @@ func (client *petOperations) addPetHandleError(resp *azcore.Response) error {
 	return errors.New(string(body))
 }
 
+// GetByPetID - get pet by id
 func (client *petOperations) GetByPetID(ctx context.Context, petId string) (*PetResponse, error) {
 	req, err := client.getByPetIdCreateRequest(petId)
 	if err != nil {
