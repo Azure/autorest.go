@@ -193,6 +193,7 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
       text += addResumePollerMethod(op, clientName, isDataPlane);
       return text;
     }
+    imports.add('github.com/Azure/azure-sdk-for-go/sdk/armcore');
     imports.add('time');
     text += `\treq, err := client.${info.protocolNaming.requestMethod}(${reqParams.join(', ')})\n`;
     text += `\tif err != nil {\n`;
@@ -219,7 +220,7 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
     if (op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via']) {
       finalState = op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via'];
     }
-    text += `\tpt, err := createPollingTracker("${clientName}.${op.language.go!.name}", "${finalState}", resp, client.${info.protocolNaming.errorMethod})\n`;
+    text += `\tpt, err := armcore.NewPoller("${clientName}.${op.language.go!.name}", "${finalState}", resp, client.${info.protocolNaming.errorMethod})\n`;
     text += '\tif err != nil {\n';
     text += '\t\treturn nil, err\n';
     text += '\t}\n';
@@ -981,7 +982,7 @@ function addResumePollerMethod(op: Operation, clientName: string, isDataPlane: b
     text += '}\n\n';
     return text;
   }
-  text += `\tpt, err := resumePollingTracker("${clientName}.${op.language.go!.name}", token, client.${info.protocolNaming.errorMethod})\n`;
+  text += `\tpt, err := armcore.NewPollerFromResumeToken("${clientName}.${op.language.go!.name}", token, client.${info.protocolNaming.errorMethod})\n`;
   text += '\tif err != nil {\n';
   text += '\t\treturn nil, err\n';
   text += '\t}\n';

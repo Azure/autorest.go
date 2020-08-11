@@ -8,6 +8,7 @@ package armnetwork
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -57,7 +58,7 @@ func (client *expressRoutePortsOperations) BeginCreateOrUpdate(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("expressRoutePortsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("expressRoutePortsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -73,7 +74,7 @@ func (client *expressRoutePortsOperations) BeginCreateOrUpdate(ctx context.Conte
 }
 
 func (client *expressRoutePortsOperations) ResumeCreateOrUpdate(token string) (ExpressRoutePortPoller, error) {
-	pt, err := resumePollingTracker("expressRoutePortsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("expressRoutePortsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -132,7 +133,7 @@ func (client *expressRoutePortsOperations) BeginDelete(ctx context.Context, reso
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("expressRoutePortsOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("expressRoutePortsOperations.Delete", "location", resp, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -148,7 +149,7 @@ func (client *expressRoutePortsOperations) BeginDelete(ctx context.Context, reso
 }
 
 func (client *expressRoutePortsOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("expressRoutePortsOperations.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("expressRoutePortsOperations.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}

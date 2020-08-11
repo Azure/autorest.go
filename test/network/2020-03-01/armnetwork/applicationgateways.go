@@ -8,6 +8,7 @@ package armnetwork
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -87,7 +88,7 @@ func (client *applicationGatewaysOperations) BeginBackendHealth(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("applicationGatewaysOperations.BackendHealth", "location", resp, client.backendHealthHandleError)
+	pt, err := armcore.NewPoller("applicationGatewaysOperations.BackendHealth", "location", resp, client.backendHealthHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +104,7 @@ func (client *applicationGatewaysOperations) BeginBackendHealth(ctx context.Cont
 }
 
 func (client *applicationGatewaysOperations) ResumeBackendHealth(token string) (ApplicationGatewayBackendHealthPoller, error) {
-	pt, err := resumePollingTracker("applicationGatewaysOperations.BackendHealth", token, client.backendHealthHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("applicationGatewaysOperations.BackendHealth", token, client.backendHealthHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -165,7 +166,7 @@ func (client *applicationGatewaysOperations) BeginBackendHealthOnDemand(ctx cont
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("applicationGatewaysOperations.BackendHealthOnDemand", "location", resp, client.backendHealthOnDemandHandleError)
+	pt, err := armcore.NewPoller("applicationGatewaysOperations.BackendHealthOnDemand", "location", resp, client.backendHealthOnDemandHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -181,7 +182,7 @@ func (client *applicationGatewaysOperations) BeginBackendHealthOnDemand(ctx cont
 }
 
 func (client *applicationGatewaysOperations) ResumeBackendHealthOnDemand(token string) (ApplicationGatewayBackendHealthOnDemandPoller, error) {
-	pt, err := resumePollingTracker("applicationGatewaysOperations.BackendHealthOnDemand", token, client.backendHealthOnDemandHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("applicationGatewaysOperations.BackendHealthOnDemand", token, client.backendHealthOnDemandHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -243,7 +244,7 @@ func (client *applicationGatewaysOperations) BeginCreateOrUpdate(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("applicationGatewaysOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("applicationGatewaysOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -259,7 +260,7 @@ func (client *applicationGatewaysOperations) BeginCreateOrUpdate(ctx context.Con
 }
 
 func (client *applicationGatewaysOperations) ResumeCreateOrUpdate(token string) (ApplicationGatewayPoller, error) {
-	pt, err := resumePollingTracker("applicationGatewaysOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("applicationGatewaysOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -318,7 +319,7 @@ func (client *applicationGatewaysOperations) BeginDelete(ctx context.Context, re
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("applicationGatewaysOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("applicationGatewaysOperations.Delete", "location", resp, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -334,7 +335,7 @@ func (client *applicationGatewaysOperations) BeginDelete(ctx context.Context, re
 }
 
 func (client *applicationGatewaysOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("applicationGatewaysOperations.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("applicationGatewaysOperations.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -915,7 +916,7 @@ func (client *applicationGatewaysOperations) BeginStart(ctx context.Context, res
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("applicationGatewaysOperations.Start", "location", resp, client.startHandleError)
+	pt, err := armcore.NewPoller("applicationGatewaysOperations.Start", "location", resp, client.startHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -931,7 +932,7 @@ func (client *applicationGatewaysOperations) BeginStart(ctx context.Context, res
 }
 
 func (client *applicationGatewaysOperations) ResumeStart(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("applicationGatewaysOperations.Start", token, client.startHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("applicationGatewaysOperations.Start", token, client.startHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -990,7 +991,7 @@ func (client *applicationGatewaysOperations) BeginStop(ctx context.Context, reso
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("applicationGatewaysOperations.Stop", "location", resp, client.stopHandleError)
+	pt, err := armcore.NewPoller("applicationGatewaysOperations.Stop", "location", resp, client.stopHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1006,7 +1007,7 @@ func (client *applicationGatewaysOperations) BeginStop(ctx context.Context, reso
 }
 
 func (client *applicationGatewaysOperations) ResumeStop(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("applicationGatewaysOperations.Stop", token, client.stopHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("applicationGatewaysOperations.Stop", token, client.stopHandleError)
 	if err != nil {
 		return nil, err
 	}

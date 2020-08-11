@@ -8,6 +8,7 @@ package armnetwork
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -55,7 +56,7 @@ func (client *virtualRoutersOperations) BeginCreateOrUpdate(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("virtualRoutersOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("virtualRoutersOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -71,7 +72,7 @@ func (client *virtualRoutersOperations) BeginCreateOrUpdate(ctx context.Context,
 }
 
 func (client *virtualRoutersOperations) ResumeCreateOrUpdate(token string) (VirtualRouterPoller, error) {
-	pt, err := resumePollingTracker("virtualRoutersOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("virtualRoutersOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -130,7 +131,7 @@ func (client *virtualRoutersOperations) BeginDelete(ctx context.Context, resourc
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("virtualRoutersOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("virtualRoutersOperations.Delete", "location", resp, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -146,7 +147,7 @@ func (client *virtualRoutersOperations) BeginDelete(ctx context.Context, resourc
 }
 
 func (client *virtualRoutersOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("virtualRoutersOperations.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("virtualRoutersOperations.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}

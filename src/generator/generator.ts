@@ -13,7 +13,7 @@ import { generateEnums } from './enums';
 import { generateClient } from './client';
 import { generateTimeHelpers } from './time';
 import { generatePagers } from './pagers';
-import { generatePollers, generatePollersHelper } from './data_plane_pollers';
+import { generatePollers } from './data_plane_pollers';
 import { generatePolymorphicHelpers } from './polymorphics';
 import { generateGoModFile } from './gomod';
 import { generateXMLAdditionalPropsHelpers } from './xmlAdditionalProps';
@@ -62,8 +62,6 @@ export async function protocolGen(host: Host) {
     }
     const pollers = await generatePollers(session);
     if (pollers.length > 0) {
-      const pollingHelper = await generatePollersHelper(session);
-      host.WriteFile(`${filePrefix}pollers_helper.go`, pollingHelper, undefined, 'source-file-go');
       host.WriteFile(`${filePrefix}pollers.go`, pollers, undefined, 'source-file-go');
     }
     const polymorphics = await generatePolymorphicHelpers(session);

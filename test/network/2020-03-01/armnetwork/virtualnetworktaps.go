@@ -8,6 +8,7 @@ package armnetwork
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -57,7 +58,7 @@ func (client *virtualNetworkTapsOperations) BeginCreateOrUpdate(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("virtualNetworkTapsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("virtualNetworkTapsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -73,7 +74,7 @@ func (client *virtualNetworkTapsOperations) BeginCreateOrUpdate(ctx context.Cont
 }
 
 func (client *virtualNetworkTapsOperations) ResumeCreateOrUpdate(token string) (VirtualNetworkTapPoller, error) {
-	pt, err := resumePollingTracker("virtualNetworkTapsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("virtualNetworkTapsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -132,7 +133,7 @@ func (client *virtualNetworkTapsOperations) BeginDelete(ctx context.Context, res
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("virtualNetworkTapsOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("virtualNetworkTapsOperations.Delete", "location", resp, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -148,7 +149,7 @@ func (client *virtualNetworkTapsOperations) BeginDelete(ctx context.Context, res
 }
 
 func (client *virtualNetworkTapsOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("virtualNetworkTapsOperations.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("virtualNetworkTapsOperations.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}

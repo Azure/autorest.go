@@ -10,7 +10,7 @@ import { values } from '@azure-tools/linq';
 import { PollerInfo, isSchemaResponse, isPageableOperation } from '../common/helpers';
 import { contentPreamble, sortAscending } from './helpers';
 import { ImportManager } from './imports';
-import { generateARMPollers, generateARMPollersHelper } from './arm_pollers';
+import { generateARMPollers } from './arm_pollers';
 
 // Creates the content in pollers.go
 export async function generatePollers(session: Session<CodeModel>): Promise<string> {
@@ -119,22 +119,3 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
   text += bodyText;
   return text;
 }
-
-
-// Creates the content in pollers_helper.go
-export async function generatePollersHelper(session: Session<CodeModel>): Promise<string> {
-  // get the openapi-type value specified. Default to ARM behavior, unless "data-plane" is specified
-  let openapiType = await session.getValue('openapi-type', '');
-  if (openapiType !== 'data-plane') {
-    return generateARMPollersHelper(session);
-  }
-  if (session.model.language.go!.pollerTypes === undefined) {
-    return '';
-  }
-  let text = await contentPreamble(session);
-  const pollers = <Array<PollerInfo>>session.model.language.go!.pollerTypes;
-  pollers.sort((a: PollerInfo, b: PollerInfo) => { return sortAscending(a.name, b.name) });
-  text += '// TODO replace this code with data-plane specific definitions\n';
-  return text;
-}
-

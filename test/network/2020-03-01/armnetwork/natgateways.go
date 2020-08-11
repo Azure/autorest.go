@@ -8,6 +8,7 @@ package armnetwork
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -57,7 +58,7 @@ func (client *natGatewaysOperations) BeginCreateOrUpdate(ctx context.Context, re
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("natGatewaysOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("natGatewaysOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -73,7 +74,7 @@ func (client *natGatewaysOperations) BeginCreateOrUpdate(ctx context.Context, re
 }
 
 func (client *natGatewaysOperations) ResumeCreateOrUpdate(token string) (NatGatewayPoller, error) {
-	pt, err := resumePollingTracker("natGatewaysOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("natGatewaysOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -132,7 +133,7 @@ func (client *natGatewaysOperations) BeginDelete(ctx context.Context, resourceGr
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("natGatewaysOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("natGatewaysOperations.Delete", "location", resp, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -148,7 +149,7 @@ func (client *natGatewaysOperations) BeginDelete(ctx context.Context, resourceGr
 }
 
 func (client *natGatewaysOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("natGatewaysOperations.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("natGatewaysOperations.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}

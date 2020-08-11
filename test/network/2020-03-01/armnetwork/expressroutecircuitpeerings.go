@@ -8,6 +8,7 @@ package armnetwork
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -53,7 +54,7 @@ func (client *expressRouteCircuitPeeringsOperations) BeginCreateOrUpdate(ctx con
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("expressRouteCircuitPeeringsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("expressRouteCircuitPeeringsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -69,7 +70,7 @@ func (client *expressRouteCircuitPeeringsOperations) BeginCreateOrUpdate(ctx con
 }
 
 func (client *expressRouteCircuitPeeringsOperations) ResumeCreateOrUpdate(token string) (ExpressRouteCircuitPeeringPoller, error) {
-	pt, err := resumePollingTracker("expressRouteCircuitPeeringsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("expressRouteCircuitPeeringsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -129,7 +130,7 @@ func (client *expressRouteCircuitPeeringsOperations) BeginDelete(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("expressRouteCircuitPeeringsOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("expressRouteCircuitPeeringsOperations.Delete", "location", resp, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -145,7 +146,7 @@ func (client *expressRouteCircuitPeeringsOperations) BeginDelete(ctx context.Con
 }
 
 func (client *expressRouteCircuitPeeringsOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("expressRouteCircuitPeeringsOperations.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("expressRouteCircuitPeeringsOperations.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}

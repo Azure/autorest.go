@@ -7,6 +7,7 @@ package armnetwork
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -52,7 +53,7 @@ func (client *ddosCustomPoliciesOperations) BeginCreateOrUpdate(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("ddosCustomPoliciesOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("ddosCustomPoliciesOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -68,7 +69,7 @@ func (client *ddosCustomPoliciesOperations) BeginCreateOrUpdate(ctx context.Cont
 }
 
 func (client *ddosCustomPoliciesOperations) ResumeCreateOrUpdate(token string) (DdosCustomPolicyPoller, error) {
-	pt, err := resumePollingTracker("ddosCustomPoliciesOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("ddosCustomPoliciesOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -127,7 +128,7 @@ func (client *ddosCustomPoliciesOperations) BeginDelete(ctx context.Context, res
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("ddosCustomPoliciesOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("ddosCustomPoliciesOperations.Delete", "location", resp, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -143,7 +144,7 @@ func (client *ddosCustomPoliciesOperations) BeginDelete(ctx context.Context, res
 }
 
 func (client *ddosCustomPoliciesOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("ddosCustomPoliciesOperations.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("ddosCustomPoliciesOperations.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}

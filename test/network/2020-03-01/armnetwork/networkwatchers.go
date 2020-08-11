@@ -7,6 +7,7 @@ package armnetwork
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -100,7 +101,7 @@ func (client *networkWatchersOperations) BeginCheckConnectivity(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("networkWatchersOperations.CheckConnectivity", "location", resp, client.checkConnectivityHandleError)
+	pt, err := armcore.NewPoller("networkWatchersOperations.CheckConnectivity", "location", resp, client.checkConnectivityHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -116,7 +117,7 @@ func (client *networkWatchersOperations) BeginCheckConnectivity(ctx context.Cont
 }
 
 func (client *networkWatchersOperations) ResumeCheckConnectivity(token string) (ConnectivityInformationPoller, error) {
-	pt, err := resumePollingTracker("networkWatchersOperations.CheckConnectivity", token, client.checkConnectivityHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("networkWatchersOperations.CheckConnectivity", token, client.checkConnectivityHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -227,7 +228,7 @@ func (client *networkWatchersOperations) BeginDelete(ctx context.Context, resour
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("networkWatchersOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("networkWatchersOperations.Delete", "location", resp, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -243,7 +244,7 @@ func (client *networkWatchersOperations) BeginDelete(ctx context.Context, resour
 }
 
 func (client *networkWatchersOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("networkWatchersOperations.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("networkWatchersOperations.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -354,7 +355,7 @@ func (client *networkWatchersOperations) BeginGetAzureReachabilityReport(ctx con
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("networkWatchersOperations.GetAzureReachabilityReport", "location", resp, client.getAzureReachabilityReportHandleError)
+	pt, err := armcore.NewPoller("networkWatchersOperations.GetAzureReachabilityReport", "location", resp, client.getAzureReachabilityReportHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -370,7 +371,7 @@ func (client *networkWatchersOperations) BeginGetAzureReachabilityReport(ctx con
 }
 
 func (client *networkWatchersOperations) ResumeGetAzureReachabilityReport(token string) (AzureReachabilityReportPoller, error) {
-	pt, err := resumePollingTracker("networkWatchersOperations.GetAzureReachabilityReport", token, client.getAzureReachabilityReportHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("networkWatchersOperations.GetAzureReachabilityReport", token, client.getAzureReachabilityReportHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -429,7 +430,7 @@ func (client *networkWatchersOperations) BeginGetFlowLogStatus(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("networkWatchersOperations.GetFlowLogStatus", "location", resp, client.getFlowLogStatusHandleError)
+	pt, err := armcore.NewPoller("networkWatchersOperations.GetFlowLogStatus", "location", resp, client.getFlowLogStatusHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -445,7 +446,7 @@ func (client *networkWatchersOperations) BeginGetFlowLogStatus(ctx context.Conte
 }
 
 func (client *networkWatchersOperations) ResumeGetFlowLogStatus(token string) (FlowLogInformationPoller, error) {
-	pt, err := resumePollingTracker("networkWatchersOperations.GetFlowLogStatus", token, client.getFlowLogStatusHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("networkWatchersOperations.GetFlowLogStatus", token, client.getFlowLogStatusHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -504,7 +505,7 @@ func (client *networkWatchersOperations) BeginGetNetworkConfigurationDiagnostic(
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("networkWatchersOperations.GetNetworkConfigurationDiagnostic", "location", resp, client.getNetworkConfigurationDiagnosticHandleError)
+	pt, err := armcore.NewPoller("networkWatchersOperations.GetNetworkConfigurationDiagnostic", "location", resp, client.getNetworkConfigurationDiagnosticHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -520,7 +521,7 @@ func (client *networkWatchersOperations) BeginGetNetworkConfigurationDiagnostic(
 }
 
 func (client *networkWatchersOperations) ResumeGetNetworkConfigurationDiagnostic(token string) (NetworkConfigurationDiagnosticResponsePoller, error) {
-	pt, err := resumePollingTracker("networkWatchersOperations.GetNetworkConfigurationDiagnostic", token, client.getNetworkConfigurationDiagnosticHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("networkWatchersOperations.GetNetworkConfigurationDiagnostic", token, client.getNetworkConfigurationDiagnosticHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -579,7 +580,7 @@ func (client *networkWatchersOperations) BeginGetNextHop(ctx context.Context, re
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("networkWatchersOperations.GetNextHop", "location", resp, client.getNextHopHandleError)
+	pt, err := armcore.NewPoller("networkWatchersOperations.GetNextHop", "location", resp, client.getNextHopHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -595,7 +596,7 @@ func (client *networkWatchersOperations) BeginGetNextHop(ctx context.Context, re
 }
 
 func (client *networkWatchersOperations) ResumeGetNextHop(token string) (NextHopResultPoller, error) {
-	pt, err := resumePollingTracker("networkWatchersOperations.GetNextHop", token, client.getNextHopHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("networkWatchersOperations.GetNextHop", token, client.getNextHopHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -706,7 +707,7 @@ func (client *networkWatchersOperations) BeginGetTroubleshooting(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("networkWatchersOperations.GetTroubleshooting", "location", resp, client.getTroubleshootingHandleError)
+	pt, err := armcore.NewPoller("networkWatchersOperations.GetTroubleshooting", "location", resp, client.getTroubleshootingHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -722,7 +723,7 @@ func (client *networkWatchersOperations) BeginGetTroubleshooting(ctx context.Con
 }
 
 func (client *networkWatchersOperations) ResumeGetTroubleshooting(token string) (TroubleshootingResultPoller, error) {
-	pt, err := resumePollingTracker("networkWatchersOperations.GetTroubleshooting", token, client.getTroubleshootingHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("networkWatchersOperations.GetTroubleshooting", token, client.getTroubleshootingHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -781,7 +782,7 @@ func (client *networkWatchersOperations) BeginGetTroubleshootingResult(ctx conte
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("networkWatchersOperations.GetTroubleshootingResult", "location", resp, client.getTroubleshootingResultHandleError)
+	pt, err := armcore.NewPoller("networkWatchersOperations.GetTroubleshootingResult", "location", resp, client.getTroubleshootingResultHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -797,7 +798,7 @@ func (client *networkWatchersOperations) BeginGetTroubleshootingResult(ctx conte
 }
 
 func (client *networkWatchersOperations) ResumeGetTroubleshootingResult(token string) (TroubleshootingResultPoller, error) {
-	pt, err := resumePollingTracker("networkWatchersOperations.GetTroubleshootingResult", token, client.getTroubleshootingResultHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("networkWatchersOperations.GetTroubleshootingResult", token, client.getTroubleshootingResultHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -856,7 +857,7 @@ func (client *networkWatchersOperations) BeginGetVMSecurityRules(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("networkWatchersOperations.GetVMSecurityRules", "location", resp, client.getVMSecurityRulesHandleError)
+	pt, err := armcore.NewPoller("networkWatchersOperations.GetVMSecurityRules", "location", resp, client.getVMSecurityRulesHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -872,7 +873,7 @@ func (client *networkWatchersOperations) BeginGetVMSecurityRules(ctx context.Con
 }
 
 func (client *networkWatchersOperations) ResumeGetVMSecurityRules(token string) (SecurityGroupViewResultPoller, error) {
-	pt, err := resumePollingTracker("networkWatchersOperations.GetVMSecurityRules", token, client.getVMSecurityRulesHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("networkWatchersOperations.GetVMSecurityRules", token, client.getVMSecurityRulesHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1032,7 +1033,7 @@ func (client *networkWatchersOperations) BeginListAvailableProviders(ctx context
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("networkWatchersOperations.ListAvailableProviders", "location", resp, client.listAvailableProvidersHandleError)
+	pt, err := armcore.NewPoller("networkWatchersOperations.ListAvailableProviders", "location", resp, client.listAvailableProvidersHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1048,7 +1049,7 @@ func (client *networkWatchersOperations) BeginListAvailableProviders(ctx context
 }
 
 func (client *networkWatchersOperations) ResumeListAvailableProviders(token string) (AvailableProvidersListPoller, error) {
-	pt, err := resumePollingTracker("networkWatchersOperations.ListAvailableProviders", token, client.listAvailableProvidersHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("networkWatchersOperations.ListAvailableProviders", token, client.listAvailableProvidersHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1107,7 +1108,7 @@ func (client *networkWatchersOperations) BeginSetFlowLogConfiguration(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("networkWatchersOperations.SetFlowLogConfiguration", "location", resp, client.setFlowLogConfigurationHandleError)
+	pt, err := armcore.NewPoller("networkWatchersOperations.SetFlowLogConfiguration", "location", resp, client.setFlowLogConfigurationHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1123,7 +1124,7 @@ func (client *networkWatchersOperations) BeginSetFlowLogConfiguration(ctx contex
 }
 
 func (client *networkWatchersOperations) ResumeSetFlowLogConfiguration(token string) (FlowLogInformationPoller, error) {
-	pt, err := resumePollingTracker("networkWatchersOperations.SetFlowLogConfiguration", token, client.setFlowLogConfigurationHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("networkWatchersOperations.SetFlowLogConfiguration", token, client.setFlowLogConfigurationHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1234,7 +1235,7 @@ func (client *networkWatchersOperations) BeginVerifyIPFlow(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("networkWatchersOperations.VerifyIPFlow", "location", resp, client.verifyIPFlowHandleError)
+	pt, err := armcore.NewPoller("networkWatchersOperations.VerifyIPFlow", "location", resp, client.verifyIPFlowHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1250,7 +1251,7 @@ func (client *networkWatchersOperations) BeginVerifyIPFlow(ctx context.Context, 
 }
 
 func (client *networkWatchersOperations) ResumeVerifyIPFlow(token string) (VerificationIPFlowResultPoller, error) {
-	pt, err := resumePollingTracker("networkWatchersOperations.VerifyIPFlow", token, client.verifyIPFlowHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("networkWatchersOperations.VerifyIPFlow", token, client.verifyIPFlowHandleError)
 	if err != nil {
 		return nil, err
 	}

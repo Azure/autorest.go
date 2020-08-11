@@ -7,6 +7,7 @@ package armnetwork
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -54,7 +55,7 @@ func (client *expressRouteGatewaysOperations) BeginCreateOrUpdate(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("expressRouteGatewaysOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("expressRouteGatewaysOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -70,7 +71,7 @@ func (client *expressRouteGatewaysOperations) BeginCreateOrUpdate(ctx context.Co
 }
 
 func (client *expressRouteGatewaysOperations) ResumeCreateOrUpdate(token string) (ExpressRouteGatewayPoller, error) {
-	pt, err := resumePollingTracker("expressRouteGatewaysOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("expressRouteGatewaysOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -129,7 +130,7 @@ func (client *expressRouteGatewaysOperations) BeginDelete(ctx context.Context, r
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("expressRouteGatewaysOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("expressRouteGatewaysOperations.Delete", "location", resp, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -145,7 +146,7 @@ func (client *expressRouteGatewaysOperations) BeginDelete(ctx context.Context, r
 }
 
 func (client *expressRouteGatewaysOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("expressRouteGatewaysOperations.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("expressRouteGatewaysOperations.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}

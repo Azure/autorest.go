@@ -7,6 +7,7 @@ package lrogroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"path"
@@ -53,7 +54,7 @@ func (client *lrOSCustomHeaderOperations) BeginPost202Retry200(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("lrOSCustomHeaderOperations.Post202Retry200", "", resp, client.post202Retry200HandleError)
+	pt, err := armcore.NewPoller("lrOSCustomHeaderOperations.Post202Retry200", "", resp, client.post202Retry200HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -69,7 +70,7 @@ func (client *lrOSCustomHeaderOperations) BeginPost202Retry200(ctx context.Conte
 }
 
 func (client *lrOSCustomHeaderOperations) ResumePost202Retry200(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("lrOSCustomHeaderOperations.Post202Retry200", token, client.post202Retry200HandleError)
+	pt, err := armcore.NewPollerFromResumeToken("lrOSCustomHeaderOperations.Post202Retry200", token, client.post202Retry200HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -125,7 +126,7 @@ func (client *lrOSCustomHeaderOperations) BeginPostAsyncRetrySucceeded(ctx conte
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("lrOSCustomHeaderOperations.PostAsyncRetrySucceeded", "", resp, client.postAsyncRetrySucceededHandleError)
+	pt, err := armcore.NewPoller("lrOSCustomHeaderOperations.PostAsyncRetrySucceeded", "", resp, client.postAsyncRetrySucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -141,7 +142,7 @@ func (client *lrOSCustomHeaderOperations) BeginPostAsyncRetrySucceeded(ctx conte
 }
 
 func (client *lrOSCustomHeaderOperations) ResumePostAsyncRetrySucceeded(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("lrOSCustomHeaderOperations.PostAsyncRetrySucceeded", token, client.postAsyncRetrySucceededHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("lrOSCustomHeaderOperations.PostAsyncRetrySucceeded", token, client.postAsyncRetrySucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -197,7 +198,7 @@ func (client *lrOSCustomHeaderOperations) BeginPut201CreatingSucceeded200(ctx co
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("lrOSCustomHeaderOperations.Put201CreatingSucceeded200", "", resp, client.put201CreatingSucceeded200HandleError)
+	pt, err := armcore.NewPoller("lrOSCustomHeaderOperations.Put201CreatingSucceeded200", "", resp, client.put201CreatingSucceeded200HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -213,7 +214,7 @@ func (client *lrOSCustomHeaderOperations) BeginPut201CreatingSucceeded200(ctx co
 }
 
 func (client *lrOSCustomHeaderOperations) ResumePut201CreatingSucceeded200(token string) (ProductPoller, error) {
-	pt, err := resumePollingTracker("lrOSCustomHeaderOperations.Put201CreatingSucceeded200", token, client.put201CreatingSucceeded200HandleError)
+	pt, err := armcore.NewPollerFromResumeToken("lrOSCustomHeaderOperations.Put201CreatingSucceeded200", token, client.put201CreatingSucceeded200HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -269,7 +270,7 @@ func (client *lrOSCustomHeaderOperations) BeginPutAsyncRetrySucceeded(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("lrOSCustomHeaderOperations.PutAsyncRetrySucceeded", "", resp, client.putAsyncRetrySucceededHandleError)
+	pt, err := armcore.NewPoller("lrOSCustomHeaderOperations.PutAsyncRetrySucceeded", "", resp, client.putAsyncRetrySucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -285,7 +286,7 @@ func (client *lrOSCustomHeaderOperations) BeginPutAsyncRetrySucceeded(ctx contex
 }
 
 func (client *lrOSCustomHeaderOperations) ResumePutAsyncRetrySucceeded(token string) (ProductPoller, error) {
-	pt, err := resumePollingTracker("lrOSCustomHeaderOperations.PutAsyncRetrySucceeded", token, client.putAsyncRetrySucceededHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("lrOSCustomHeaderOperations.PutAsyncRetrySucceeded", token, client.putAsyncRetrySucceededHandleError)
 	if err != nil {
 		return nil, err
 	}

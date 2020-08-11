@@ -8,6 +8,7 @@ package armnetwork
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -53,7 +54,7 @@ func (client *privateDnsZoneGroupsOperations) BeginCreateOrUpdate(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("privateDnsZoneGroupsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("privateDnsZoneGroupsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -69,7 +70,7 @@ func (client *privateDnsZoneGroupsOperations) BeginCreateOrUpdate(ctx context.Co
 }
 
 func (client *privateDnsZoneGroupsOperations) ResumeCreateOrUpdate(token string) (PrivateDNSZoneGroupPoller, error) {
-	pt, err := resumePollingTracker("privateDnsZoneGroupsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("privateDnsZoneGroupsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -129,7 +130,7 @@ func (client *privateDnsZoneGroupsOperations) BeginDelete(ctx context.Context, r
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("privateDnsZoneGroupsOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("privateDnsZoneGroupsOperations.Delete", "location", resp, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -145,7 +146,7 @@ func (client *privateDnsZoneGroupsOperations) BeginDelete(ctx context.Context, r
 }
 
 func (client *privateDnsZoneGroupsOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("privateDnsZoneGroupsOperations.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("privateDnsZoneGroupsOperations.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}

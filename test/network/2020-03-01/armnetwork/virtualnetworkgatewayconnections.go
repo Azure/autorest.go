@@ -8,6 +8,7 @@ package armnetwork
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -75,7 +76,7 @@ func (client *virtualNetworkGatewayConnectionsOperations) BeginCreateOrUpdate(ct
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("virtualNetworkGatewayConnectionsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("virtualNetworkGatewayConnectionsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -91,7 +92,7 @@ func (client *virtualNetworkGatewayConnectionsOperations) BeginCreateOrUpdate(ct
 }
 
 func (client *virtualNetworkGatewayConnectionsOperations) ResumeCreateOrUpdate(token string) (VirtualNetworkGatewayConnectionPoller, error) {
-	pt, err := resumePollingTracker("virtualNetworkGatewayConnectionsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("virtualNetworkGatewayConnectionsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -150,7 +151,7 @@ func (client *virtualNetworkGatewayConnectionsOperations) BeginDelete(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("virtualNetworkGatewayConnectionsOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("virtualNetworkGatewayConnectionsOperations.Delete", "location", resp, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -166,7 +167,7 @@ func (client *virtualNetworkGatewayConnectionsOperations) BeginDelete(ctx contex
 }
 
 func (client *virtualNetworkGatewayConnectionsOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("virtualNetworkGatewayConnectionsOperations.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("virtualNetworkGatewayConnectionsOperations.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -386,7 +387,7 @@ func (client *virtualNetworkGatewayConnectionsOperations) BeginResetSharedKey(ct
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("virtualNetworkGatewayConnectionsOperations.ResetSharedKey", "location", resp, client.resetSharedKeyHandleError)
+	pt, err := armcore.NewPoller("virtualNetworkGatewayConnectionsOperations.ResetSharedKey", "location", resp, client.resetSharedKeyHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -402,7 +403,7 @@ func (client *virtualNetworkGatewayConnectionsOperations) BeginResetSharedKey(ct
 }
 
 func (client *virtualNetworkGatewayConnectionsOperations) ResumeResetSharedKey(token string) (ConnectionResetSharedKeyPoller, error) {
-	pt, err := resumePollingTracker("virtualNetworkGatewayConnectionsOperations.ResetSharedKey", token, client.resetSharedKeyHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("virtualNetworkGatewayConnectionsOperations.ResetSharedKey", token, client.resetSharedKeyHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -461,7 +462,7 @@ func (client *virtualNetworkGatewayConnectionsOperations) BeginSetSharedKey(ctx 
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("virtualNetworkGatewayConnectionsOperations.SetSharedKey", "azure-async-operation", resp, client.setSharedKeyHandleError)
+	pt, err := armcore.NewPoller("virtualNetworkGatewayConnectionsOperations.SetSharedKey", "azure-async-operation", resp, client.setSharedKeyHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -477,7 +478,7 @@ func (client *virtualNetworkGatewayConnectionsOperations) BeginSetSharedKey(ctx 
 }
 
 func (client *virtualNetworkGatewayConnectionsOperations) ResumeSetSharedKey(token string) (ConnectionSharedKeyPoller, error) {
-	pt, err := resumePollingTracker("virtualNetworkGatewayConnectionsOperations.SetSharedKey", token, client.setSharedKeyHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("virtualNetworkGatewayConnectionsOperations.SetSharedKey", token, client.setSharedKeyHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -536,7 +537,7 @@ func (client *virtualNetworkGatewayConnectionsOperations) BeginStartPacketCaptur
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("virtualNetworkGatewayConnectionsOperations.StartPacketCapture", "location", resp, client.startPacketCaptureHandleError)
+	pt, err := armcore.NewPoller("virtualNetworkGatewayConnectionsOperations.StartPacketCapture", "location", resp, client.startPacketCaptureHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -552,7 +553,7 @@ func (client *virtualNetworkGatewayConnectionsOperations) BeginStartPacketCaptur
 }
 
 func (client *virtualNetworkGatewayConnectionsOperations) ResumeStartPacketCapture(token string) (StringPoller, error) {
-	pt, err := resumePollingTracker("virtualNetworkGatewayConnectionsOperations.StartPacketCapture", token, client.startPacketCaptureHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("virtualNetworkGatewayConnectionsOperations.StartPacketCapture", token, client.startPacketCaptureHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -614,7 +615,7 @@ func (client *virtualNetworkGatewayConnectionsOperations) BeginStopPacketCapture
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("virtualNetworkGatewayConnectionsOperations.StopPacketCapture", "location", resp, client.stopPacketCaptureHandleError)
+	pt, err := armcore.NewPoller("virtualNetworkGatewayConnectionsOperations.StopPacketCapture", "location", resp, client.stopPacketCaptureHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -630,7 +631,7 @@ func (client *virtualNetworkGatewayConnectionsOperations) BeginStopPacketCapture
 }
 
 func (client *virtualNetworkGatewayConnectionsOperations) ResumeStopPacketCapture(token string) (StringPoller, error) {
-	pt, err := resumePollingTracker("virtualNetworkGatewayConnectionsOperations.StopPacketCapture", token, client.stopPacketCaptureHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("virtualNetworkGatewayConnectionsOperations.StopPacketCapture", token, client.stopPacketCaptureHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -689,7 +690,7 @@ func (client *virtualNetworkGatewayConnectionsOperations) BeginUpdateTags(ctx co
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("virtualNetworkGatewayConnectionsOperations.UpdateTags", "azure-async-operation", resp, client.updateTagsHandleError)
+	pt, err := armcore.NewPoller("virtualNetworkGatewayConnectionsOperations.UpdateTags", "azure-async-operation", resp, client.updateTagsHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -705,7 +706,7 @@ func (client *virtualNetworkGatewayConnectionsOperations) BeginUpdateTags(ctx co
 }
 
 func (client *virtualNetworkGatewayConnectionsOperations) ResumeUpdateTags(token string) (VirtualNetworkGatewayConnectionPoller, error) {
-	pt, err := resumePollingTracker("virtualNetworkGatewayConnectionsOperations.UpdateTags", token, client.updateTagsHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("virtualNetworkGatewayConnectionsOperations.UpdateTags", token, client.updateTagsHandleError)
 	if err != nil {
 		return nil, err
 	}

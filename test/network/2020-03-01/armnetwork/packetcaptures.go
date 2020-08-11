@@ -7,6 +7,7 @@ package armnetwork
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -60,7 +61,7 @@ func (client *packetCapturesOperations) BeginCreate(ctx context.Context, resourc
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("packetCapturesOperations.Create", "azure-async-operation", resp, client.createHandleError)
+	pt, err := armcore.NewPoller("packetCapturesOperations.Create", "azure-async-operation", resp, client.createHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -76,7 +77,7 @@ func (client *packetCapturesOperations) BeginCreate(ctx context.Context, resourc
 }
 
 func (client *packetCapturesOperations) ResumeCreate(token string) (PacketCaptureResultPoller, error) {
-	pt, err := resumePollingTracker("packetCapturesOperations.Create", token, client.createHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("packetCapturesOperations.Create", token, client.createHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -136,7 +137,7 @@ func (client *packetCapturesOperations) BeginDelete(ctx context.Context, resourc
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("packetCapturesOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("packetCapturesOperations.Delete", "location", resp, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -152,7 +153,7 @@ func (client *packetCapturesOperations) BeginDelete(ctx context.Context, resourc
 }
 
 func (client *packetCapturesOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("packetCapturesOperations.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("packetCapturesOperations.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -265,7 +266,7 @@ func (client *packetCapturesOperations) BeginGetStatus(ctx context.Context, reso
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("packetCapturesOperations.GetStatus", "location", resp, client.getStatusHandleError)
+	pt, err := armcore.NewPoller("packetCapturesOperations.GetStatus", "location", resp, client.getStatusHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -281,7 +282,7 @@ func (client *packetCapturesOperations) BeginGetStatus(ctx context.Context, reso
 }
 
 func (client *packetCapturesOperations) ResumeGetStatus(token string) (PacketCaptureQueryStatusResultPoller, error) {
-	pt, err := resumePollingTracker("packetCapturesOperations.GetStatus", token, client.getStatusHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("packetCapturesOperations.GetStatus", token, client.getStatusHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -393,7 +394,7 @@ func (client *packetCapturesOperations) BeginStop(ctx context.Context, resourceG
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("packetCapturesOperations.Stop", "location", resp, client.stopHandleError)
+	pt, err := armcore.NewPoller("packetCapturesOperations.Stop", "location", resp, client.stopHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -409,7 +410,7 @@ func (client *packetCapturesOperations) BeginStop(ctx context.Context, resourceG
 }
 
 func (client *packetCapturesOperations) ResumeStop(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("packetCapturesOperations.Stop", token, client.stopHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("packetCapturesOperations.Stop", token, client.stopHandleError)
 	if err != nil {
 		return nil, err
 	}

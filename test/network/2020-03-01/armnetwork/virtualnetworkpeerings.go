@@ -8,6 +8,7 @@ package armnetwork
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -53,7 +54,7 @@ func (client *virtualNetworkPeeringsOperations) BeginCreateOrUpdate(ctx context.
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("virtualNetworkPeeringsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("virtualNetworkPeeringsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -69,7 +70,7 @@ func (client *virtualNetworkPeeringsOperations) BeginCreateOrUpdate(ctx context.
 }
 
 func (client *virtualNetworkPeeringsOperations) ResumeCreateOrUpdate(token string) (VirtualNetworkPeeringPoller, error) {
-	pt, err := resumePollingTracker("virtualNetworkPeeringsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("virtualNetworkPeeringsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -129,7 +130,7 @@ func (client *virtualNetworkPeeringsOperations) BeginDelete(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("virtualNetworkPeeringsOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("virtualNetworkPeeringsOperations.Delete", "location", resp, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -145,7 +146,7 @@ func (client *virtualNetworkPeeringsOperations) BeginDelete(ctx context.Context,
 }
 
 func (client *virtualNetworkPeeringsOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("virtualNetworkPeeringsOperations.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("virtualNetworkPeeringsOperations.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}

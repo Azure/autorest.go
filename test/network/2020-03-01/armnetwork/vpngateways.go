@@ -8,6 +8,7 @@ package armnetwork
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -61,7 +62,7 @@ func (client *vpnGatewaysOperations) BeginCreateOrUpdate(ctx context.Context, re
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("vpnGatewaysOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("vpnGatewaysOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -77,7 +78,7 @@ func (client *vpnGatewaysOperations) BeginCreateOrUpdate(ctx context.Context, re
 }
 
 func (client *vpnGatewaysOperations) ResumeCreateOrUpdate(token string) (VpnGatewayPoller, error) {
-	pt, err := resumePollingTracker("vpnGatewaysOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("vpnGatewaysOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -136,7 +137,7 @@ func (client *vpnGatewaysOperations) BeginDelete(ctx context.Context, resourceGr
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("vpnGatewaysOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("vpnGatewaysOperations.Delete", "location", resp, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -152,7 +153,7 @@ func (client *vpnGatewaysOperations) BeginDelete(ctx context.Context, resourceGr
 }
 
 func (client *vpnGatewaysOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("vpnGatewaysOperations.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("vpnGatewaysOperations.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -376,7 +377,7 @@ func (client *vpnGatewaysOperations) BeginReset(ctx context.Context, resourceGro
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("vpnGatewaysOperations.Reset", "location", resp, client.resetHandleError)
+	pt, err := armcore.NewPoller("vpnGatewaysOperations.Reset", "location", resp, client.resetHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -392,7 +393,7 @@ func (client *vpnGatewaysOperations) BeginReset(ctx context.Context, resourceGro
 }
 
 func (client *vpnGatewaysOperations) ResumeReset(token string) (VpnGatewayPoller, error) {
-	pt, err := resumePollingTracker("vpnGatewaysOperations.Reset", token, client.resetHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("vpnGatewaysOperations.Reset", token, client.resetHandleError)
 	if err != nil {
 		return nil, err
 	}

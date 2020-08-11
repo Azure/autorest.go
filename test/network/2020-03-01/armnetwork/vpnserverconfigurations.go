@@ -8,6 +8,7 @@ package armnetwork
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -57,7 +58,7 @@ func (client *vpnServerConfigurationsOperations) BeginCreateOrUpdate(ctx context
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("vpnServerConfigurationsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("vpnServerConfigurationsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -73,7 +74,7 @@ func (client *vpnServerConfigurationsOperations) BeginCreateOrUpdate(ctx context
 }
 
 func (client *vpnServerConfigurationsOperations) ResumeCreateOrUpdate(token string) (VpnServerConfigurationPoller, error) {
-	pt, err := resumePollingTracker("vpnServerConfigurationsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("vpnServerConfigurationsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -132,7 +133,7 @@ func (client *vpnServerConfigurationsOperations) BeginDelete(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("vpnServerConfigurationsOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("vpnServerConfigurationsOperations.Delete", "location", resp, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -148,7 +149,7 @@ func (client *vpnServerConfigurationsOperations) BeginDelete(ctx context.Context
 }
 
 func (client *vpnServerConfigurationsOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("vpnServerConfigurationsOperations.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("vpnServerConfigurationsOperations.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}

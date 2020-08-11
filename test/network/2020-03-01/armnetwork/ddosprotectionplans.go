@@ -8,6 +8,7 @@ package armnetwork
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -57,7 +58,7 @@ func (client *ddosProtectionPlansOperations) BeginCreateOrUpdate(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("ddosProtectionPlansOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("ddosProtectionPlansOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -73,7 +74,7 @@ func (client *ddosProtectionPlansOperations) BeginCreateOrUpdate(ctx context.Con
 }
 
 func (client *ddosProtectionPlansOperations) ResumeCreateOrUpdate(token string) (DdosProtectionPlanPoller, error) {
-	pt, err := resumePollingTracker("ddosProtectionPlansOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("ddosProtectionPlansOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -132,7 +133,7 @@ func (client *ddosProtectionPlansOperations) BeginDelete(ctx context.Context, re
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("ddosProtectionPlansOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("ddosProtectionPlansOperations.Delete", "location", resp, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -148,7 +149,7 @@ func (client *ddosProtectionPlansOperations) BeginDelete(ctx context.Context, re
 }
 
 func (client *ddosProtectionPlansOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("ddosProtectionPlansOperations.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("ddosProtectionPlansOperations.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}

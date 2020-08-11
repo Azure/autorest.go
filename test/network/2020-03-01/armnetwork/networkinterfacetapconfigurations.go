@@ -8,6 +8,7 @@ package armnetwork
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -53,7 +54,7 @@ func (client *networkInterfaceTapConfigurationsOperations) BeginCreateOrUpdate(c
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("networkInterfaceTapConfigurationsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("networkInterfaceTapConfigurationsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -69,7 +70,7 @@ func (client *networkInterfaceTapConfigurationsOperations) BeginCreateOrUpdate(c
 }
 
 func (client *networkInterfaceTapConfigurationsOperations) ResumeCreateOrUpdate(token string) (NetworkInterfaceTapConfigurationPoller, error) {
-	pt, err := resumePollingTracker("networkInterfaceTapConfigurationsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("networkInterfaceTapConfigurationsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -129,7 +130,7 @@ func (client *networkInterfaceTapConfigurationsOperations) BeginDelete(ctx conte
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("networkInterfaceTapConfigurationsOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("networkInterfaceTapConfigurationsOperations.Delete", "location", resp, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -145,7 +146,7 @@ func (client *networkInterfaceTapConfigurationsOperations) BeginDelete(ctx conte
 }
 
 func (client *networkInterfaceTapConfigurationsOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("networkInterfaceTapConfigurationsOperations.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("networkInterfaceTapConfigurationsOperations.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}

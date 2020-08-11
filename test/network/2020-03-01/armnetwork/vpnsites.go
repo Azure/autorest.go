@@ -8,6 +8,7 @@ package armnetwork
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -57,7 +58,7 @@ func (client *vpnSitesOperations) BeginCreateOrUpdate(ctx context.Context, resou
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("vpnSitesOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("vpnSitesOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -73,7 +74,7 @@ func (client *vpnSitesOperations) BeginCreateOrUpdate(ctx context.Context, resou
 }
 
 func (client *vpnSitesOperations) ResumeCreateOrUpdate(token string) (VpnSitePoller, error) {
-	pt, err := resumePollingTracker("vpnSitesOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("vpnSitesOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -132,7 +133,7 @@ func (client *vpnSitesOperations) BeginDelete(ctx context.Context, resourceGroup
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("vpnSitesOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("vpnSitesOperations.Delete", "location", resp, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -148,7 +149,7 @@ func (client *vpnSitesOperations) BeginDelete(ctx context.Context, resourceGroup
 }
 
 func (client *vpnSitesOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("vpnSitesOperations.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("vpnSitesOperations.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}

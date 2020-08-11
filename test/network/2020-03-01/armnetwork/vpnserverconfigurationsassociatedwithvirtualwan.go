@@ -7,6 +7,7 @@ package armnetwork
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -44,7 +45,7 @@ func (client *vpnServerConfigurationsAssociatedWithVirtualWanOperations) BeginLi
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("vpnServerConfigurationsAssociatedWithVirtualWanOperations.List", "location", resp, client.listHandleError)
+	pt, err := armcore.NewPoller("vpnServerConfigurationsAssociatedWithVirtualWanOperations.List", "location", resp, client.listHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -60,7 +61,7 @@ func (client *vpnServerConfigurationsAssociatedWithVirtualWanOperations) BeginLi
 }
 
 func (client *vpnServerConfigurationsAssociatedWithVirtualWanOperations) ResumeList(token string) (VpnServerConfigurationsResponsePoller, error) {
-	pt, err := resumePollingTracker("vpnServerConfigurationsAssociatedWithVirtualWanOperations.List", token, client.listHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("vpnServerConfigurationsAssociatedWithVirtualWanOperations.List", token, client.listHandleError)
 	if err != nil {
 		return nil, err
 	}

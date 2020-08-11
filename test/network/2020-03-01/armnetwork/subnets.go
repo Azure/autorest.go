@@ -8,6 +8,7 @@ package armnetwork
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -61,7 +62,7 @@ func (client *subnetsOperations) BeginCreateOrUpdate(ctx context.Context, resour
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("subnetsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("subnetsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -77,7 +78,7 @@ func (client *subnetsOperations) BeginCreateOrUpdate(ctx context.Context, resour
 }
 
 func (client *subnetsOperations) ResumeCreateOrUpdate(token string) (SubnetPoller, error) {
-	pt, err := resumePollingTracker("subnetsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("subnetsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -137,7 +138,7 @@ func (client *subnetsOperations) BeginDelete(ctx context.Context, resourceGroupN
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("subnetsOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("subnetsOperations.Delete", "location", resp, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -153,7 +154,7 @@ func (client *subnetsOperations) BeginDelete(ctx context.Context, resourceGroupN
 }
 
 func (client *subnetsOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("subnetsOperations.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("subnetsOperations.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -327,7 +328,7 @@ func (client *subnetsOperations) BeginPrepareNetworkPolicies(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("subnetsOperations.PrepareNetworkPolicies", "location", resp, client.prepareNetworkPoliciesHandleError)
+	pt, err := armcore.NewPoller("subnetsOperations.PrepareNetworkPolicies", "location", resp, client.prepareNetworkPoliciesHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -343,7 +344,7 @@ func (client *subnetsOperations) BeginPrepareNetworkPolicies(ctx context.Context
 }
 
 func (client *subnetsOperations) ResumePrepareNetworkPolicies(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("subnetsOperations.PrepareNetworkPolicies", token, client.prepareNetworkPoliciesHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("subnetsOperations.PrepareNetworkPolicies", token, client.prepareNetworkPoliciesHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -403,7 +404,7 @@ func (client *subnetsOperations) BeginUnprepareNetworkPolicies(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("subnetsOperations.UnprepareNetworkPolicies", "location", resp, client.unprepareNetworkPoliciesHandleError)
+	pt, err := armcore.NewPoller("subnetsOperations.UnprepareNetworkPolicies", "location", resp, client.unprepareNetworkPoliciesHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -419,7 +420,7 @@ func (client *subnetsOperations) BeginUnprepareNetworkPolicies(ctx context.Conte
 }
 
 func (client *subnetsOperations) ResumeUnprepareNetworkPolicies(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("subnetsOperations.UnprepareNetworkPolicies", token, client.unprepareNetworkPoliciesHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("subnetsOperations.UnprepareNetworkPolicies", token, client.unprepareNetworkPoliciesHandleError)
 	if err != nil {
 		return nil, err
 	}

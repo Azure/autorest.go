@@ -7,6 +7,7 @@ package armnetwork
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -44,7 +45,7 @@ func (client *vpnSitesConfigurationOperations) BeginDownload(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("vpnSitesConfigurationOperations.Download", "location", resp, client.downloadHandleError)
+	pt, err := armcore.NewPoller("vpnSitesConfigurationOperations.Download", "location", resp, client.downloadHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -60,7 +61,7 @@ func (client *vpnSitesConfigurationOperations) BeginDownload(ctx context.Context
 }
 
 func (client *vpnSitesConfigurationOperations) ResumeDownload(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("vpnSitesConfigurationOperations.Download", token, client.downloadHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("vpnSitesConfigurationOperations.Download", token, client.downloadHandleError)
 	if err != nil {
 		return nil, err
 	}

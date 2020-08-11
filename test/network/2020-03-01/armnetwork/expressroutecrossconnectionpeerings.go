@@ -8,6 +8,7 @@ package armnetwork
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -53,7 +54,7 @@ func (client *expressRouteCrossConnectionPeeringsOperations) BeginCreateOrUpdate
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("expressRouteCrossConnectionPeeringsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("expressRouteCrossConnectionPeeringsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -69,7 +70,7 @@ func (client *expressRouteCrossConnectionPeeringsOperations) BeginCreateOrUpdate
 }
 
 func (client *expressRouteCrossConnectionPeeringsOperations) ResumeCreateOrUpdate(token string) (ExpressRouteCrossConnectionPeeringPoller, error) {
-	pt, err := resumePollingTracker("expressRouteCrossConnectionPeeringsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("expressRouteCrossConnectionPeeringsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -129,7 +130,7 @@ func (client *expressRouteCrossConnectionPeeringsOperations) BeginDelete(ctx con
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("expressRouteCrossConnectionPeeringsOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("expressRouteCrossConnectionPeeringsOperations.Delete", "location", resp, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -145,7 +146,7 @@ func (client *expressRouteCrossConnectionPeeringsOperations) BeginDelete(ctx con
 }
 
 func (client *expressRouteCrossConnectionPeeringsOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := resumePollingTracker("expressRouteCrossConnectionPeeringsOperations.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("expressRouteCrossConnectionPeeringsOperations.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
