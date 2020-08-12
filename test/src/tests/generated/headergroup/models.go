@@ -9,23 +9,6 @@ package headergroup
 // The package's fully qualified name.
 const fqdn = "tests/generated/headergroup"
 
-// GreyscaleColors enumerates the values for greyscale colors.
-type GreyscaleColors string
-
-const (
-	// Black ...
-	Black GreyscaleColors = "black"
-	// GREY ...
-	GREY GreyscaleColors = "GREY"
-	// White ...
-	White GreyscaleColors = "White"
-)
-
-// PossibleGreyscaleColorsValues returns an array of possible values for the GreyscaleColors const type.
-func PossibleGreyscaleColorsValues() []GreyscaleColors {
-	return []GreyscaleColors{Black, GREY, White}
-}
-
 // Error ...
 type Error struct {
 	Status  *int32  `json:"status,omitempty"`

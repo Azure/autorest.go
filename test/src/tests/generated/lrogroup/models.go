@@ -17,113 +17,14 @@ import (
 // The package's fully qualified name.
 const fqdn = "tests/generated/lrogroup"
 
-// ProvisioningStateValues enumerates the values for provisioning state values.
-type ProvisioningStateValues string
-
-const (
-	// Accepted ...
-	Accepted ProvisioningStateValues = "Accepted"
-	// Canceled ...
-	Canceled ProvisioningStateValues = "canceled"
-	// Created ...
-	Created ProvisioningStateValues = "Created"
-	// Creating ...
-	Creating ProvisioningStateValues = "Creating"
-	// Deleted ...
-	Deleted ProvisioningStateValues = "Deleted"
-	// Deleting ...
-	Deleting ProvisioningStateValues = "Deleting"
-	// Failed ...
-	Failed ProvisioningStateValues = "Failed"
-	// OK ...
-	OK ProvisioningStateValues = "OK"
-	// Succeeded ...
-	Succeeded ProvisioningStateValues = "Succeeded"
-	// Updated ...
-	Updated ProvisioningStateValues = "Updated"
-	// Updating ...
-	Updating ProvisioningStateValues = "Updating"
-)
-
-// PossibleProvisioningStateValuesValues returns an array of possible values for the ProvisioningStateValues const type.
-func PossibleProvisioningStateValuesValues() []ProvisioningStateValues {
-	return []ProvisioningStateValues{Accepted, Canceled, Created, Creating, Deleted, Deleting, Failed, OK, Succeeded, Updated, Updating}
-}
-
-// ProvisioningStateValues1 enumerates the values for provisioning state values 1.
-type ProvisioningStateValues1 string
-
-const (
-	// ProvisioningStateValues1Accepted ...
-	ProvisioningStateValues1Accepted ProvisioningStateValues1 = "Accepted"
-	// ProvisioningStateValues1Canceled ...
-	ProvisioningStateValues1Canceled ProvisioningStateValues1 = "canceled"
-	// ProvisioningStateValues1Created ...
-	ProvisioningStateValues1Created ProvisioningStateValues1 = "Created"
-	// ProvisioningStateValues1Creating ...
-	ProvisioningStateValues1Creating ProvisioningStateValues1 = "Creating"
-	// ProvisioningStateValues1Deleted ...
-	ProvisioningStateValues1Deleted ProvisioningStateValues1 = "Deleted"
-	// ProvisioningStateValues1Deleting ...
-	ProvisioningStateValues1Deleting ProvisioningStateValues1 = "Deleting"
-	// ProvisioningStateValues1Failed ...
-	ProvisioningStateValues1Failed ProvisioningStateValues1 = "Failed"
-	// ProvisioningStateValues1OK ...
-	ProvisioningStateValues1OK ProvisioningStateValues1 = "OK"
-	// ProvisioningStateValues1Succeeded ...
-	ProvisioningStateValues1Succeeded ProvisioningStateValues1 = "Succeeded"
-	// ProvisioningStateValues1Updated ...
-	ProvisioningStateValues1Updated ProvisioningStateValues1 = "Updated"
-	// ProvisioningStateValues1Updating ...
-	ProvisioningStateValues1Updating ProvisioningStateValues1 = "Updating"
-)
-
-// PossibleProvisioningStateValues1Values returns an array of possible values for the ProvisioningStateValues1 const type.
-func PossibleProvisioningStateValues1Values() []ProvisioningStateValues1 {
-	return []ProvisioningStateValues1{ProvisioningStateValues1Accepted, ProvisioningStateValues1Canceled, ProvisioningStateValues1Created, ProvisioningStateValues1Creating, ProvisioningStateValues1Deleted, ProvisioningStateValues1Deleting, ProvisioningStateValues1Failed, ProvisioningStateValues1OK, ProvisioningStateValues1Succeeded, ProvisioningStateValues1Updated, ProvisioningStateValues1Updating}
-}
-
-// Status enumerates the values for status.
-type Status string
-
-const (
-	// StatusAccepted ...
-	StatusAccepted Status = "Accepted"
-	// StatusCanceled ...
-	StatusCanceled Status = "canceled"
-	// StatusCreated ...
-	StatusCreated Status = "Created"
-	// StatusCreating ...
-	StatusCreating Status = "Creating"
-	// StatusDeleted ...
-	StatusDeleted Status = "Deleted"
-	// StatusDeleting ...
-	StatusDeleting Status = "Deleting"
-	// StatusFailed ...
-	StatusFailed Status = "Failed"
-	// StatusOK ...
-	StatusOK Status = "OK"
-	// StatusSucceeded ...
-	StatusSucceeded Status = "Succeeded"
-	// StatusUpdated ...
-	StatusUpdated Status = "Updated"
-	// StatusUpdating ...
-	StatusUpdating Status = "Updating"
-)
-
-// PossibleStatusValues returns an array of possible values for the Status const type.
-func PossibleStatusValues() []Status {
-	return []Status{StatusAccepted, StatusCanceled, StatusCreated, StatusCreating, StatusDeleted, StatusDeleting, StatusFailed, StatusOK, StatusSucceeded, StatusUpdated, StatusUpdating}
-}
-
 // CloudError ...
 type CloudError struct {
 	Status  *int32  `json:"status,omitempty"`
 	Message *string `json:"message,omitempty"`
 }
 
-// LRORetrysDelete202Retry200Future an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// LRORetrysDelete202Retry200Future an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type LRORetrysDelete202Retry200Future struct {
 	azure.Future
 }
@@ -145,8 +46,8 @@ func (future *LRORetrysDelete202Retry200Future) Result(client LRORetrysClient) (
 	return
 }
 
-// LRORetrysDeleteAsyncRelativeRetrySucceededFuture an abstraction for monitoring and retrieving the
-// results of a long-running operation.
+// LRORetrysDeleteAsyncRelativeRetrySucceededFuture an abstraction for monitoring and retrieving the results of
+// a long-running operation.
 type LRORetrysDeleteAsyncRelativeRetrySucceededFuture struct {
 	azure.Future
 }
@@ -168,8 +69,8 @@ func (future *LRORetrysDeleteAsyncRelativeRetrySucceededFuture) Result(client LR
 	return
 }
 
-// LRORetrysDeleteProvisioning202Accepted200SucceededFuture an abstraction for monitoring and retrieving
-// the results of a long-running operation.
+// LRORetrysDeleteProvisioning202Accepted200SucceededFuture an abstraction for monitoring and retrieving the
+// results of a long-running operation.
 type LRORetrysDeleteProvisioning202Accepted200SucceededFuture struct {
 	azure.Future
 }
@@ -197,8 +98,8 @@ func (future *LRORetrysDeleteProvisioning202Accepted200SucceededFuture) Result(c
 	return
 }
 
-// LRORetrysPost202Retry200Future an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// LRORetrysPost202Retry200Future an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type LRORetrysPost202Retry200Future struct {
 	azure.Future
 }
@@ -220,8 +121,8 @@ func (future *LRORetrysPost202Retry200Future) Result(client LRORetrysClient) (ar
 	return
 }
 
-// LRORetrysPostAsyncRelativeRetrySucceededFuture an abstraction for monitoring and retrieving the results
-// of a long-running operation.
+// LRORetrysPostAsyncRelativeRetrySucceededFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LRORetrysPostAsyncRelativeRetrySucceededFuture struct {
 	azure.Future
 }
@@ -272,8 +173,8 @@ func (future *LRORetrysPut201CreatingSucceeded200Future) Result(client LRORetrys
 	return
 }
 
-// LRORetrysPutAsyncRelativeRetrySucceededFuture an abstraction for monitoring and retrieving the results
-// of a long-running operation.
+// LRORetrysPutAsyncRelativeRetrySucceededFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LRORetrysPutAsyncRelativeRetrySucceededFuture struct {
 	azure.Future
 }
@@ -301,8 +202,8 @@ func (future *LRORetrysPutAsyncRelativeRetrySucceededFuture) Result(client LRORe
 	return
 }
 
-// LROSADsDelete202NonRetry400Future an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// LROSADsDelete202NonRetry400Future an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type LROSADsDelete202NonRetry400Future struct {
 	azure.Future
 }
@@ -347,8 +248,8 @@ func (future *LROSADsDelete202RetryInvalidHeaderFuture) Result(client LROSADsCli
 	return
 }
 
-// LROSADsDelete204SucceededFuture an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// LROSADsDelete204SucceededFuture an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type LROSADsDelete204SucceededFuture struct {
 	azure.Future
 }
@@ -393,8 +294,8 @@ func (future *LROSADsDeleteAsyncRelativeRetry400Future) Result(client LROSADsCli
 	return
 }
 
-// LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture an abstraction for monitoring and retrieving the
-// results of a long-running operation.
+// LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture an abstraction for monitoring and retrieving the results
+// of a long-running operation.
 type LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture struct {
 	azure.Future
 }
@@ -439,8 +340,8 @@ func (future *LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture) Result(cl
 	return
 }
 
-// LROSADsDeleteAsyncRelativeRetryNoStatusFuture an abstraction for monitoring and retrieving the results
-// of a long-running operation.
+// LROSADsDeleteAsyncRelativeRetryNoStatusFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LROSADsDeleteAsyncRelativeRetryNoStatusFuture struct {
 	azure.Future
 }
@@ -462,8 +363,8 @@ func (future *LROSADsDeleteAsyncRelativeRetryNoStatusFuture) Result(client LROSA
 	return
 }
 
-// LROSADsDeleteNonRetry400Future an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// LROSADsDeleteNonRetry400Future an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type LROSADsDeleteNonRetry400Future struct {
 	azure.Future
 }
@@ -485,8 +386,8 @@ func (future *LROSADsDeleteNonRetry400Future) Result(client LROSADsClient) (ar a
 	return
 }
 
-// LROSADsPost202NoLocationFuture an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// LROSADsPost202NoLocationFuture an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type LROSADsPost202NoLocationFuture struct {
 	azure.Future
 }
@@ -508,8 +409,8 @@ func (future *LROSADsPost202NoLocationFuture) Result(client LROSADsClient) (ar a
 	return
 }
 
-// LROSADsPost202NonRetry400Future an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// LROSADsPost202NonRetry400Future an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type LROSADsPost202NonRetry400Future struct {
 	azure.Future
 }
@@ -577,8 +478,8 @@ func (future *LROSADsPostAsyncRelativeRetry400Future) Result(client LROSADsClien
 	return
 }
 
-// LROSADsPostAsyncRelativeRetryInvalidHeaderFuture an abstraction for monitoring and retrieving the
-// results of a long-running operation.
+// LROSADsPostAsyncRelativeRetryInvalidHeaderFuture an abstraction for monitoring and retrieving the results of
+// a long-running operation.
 type LROSADsPostAsyncRelativeRetryInvalidHeaderFuture struct {
 	azure.Future
 }
@@ -623,8 +524,8 @@ func (future *LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture) Result(clie
 	return
 }
 
-// LROSADsPostAsyncRelativeRetryNoPayloadFuture an abstraction for monitoring and retrieving the results of
-// a long-running operation.
+// LROSADsPostAsyncRelativeRetryNoPayloadFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LROSADsPostAsyncRelativeRetryNoPayloadFuture struct {
 	azure.Future
 }
@@ -669,8 +570,8 @@ func (future *LROSADsPostNonRetry400Future) Result(client LROSADsClient) (ar aut
 	return
 }
 
-// LROSADsPut200InvalidJSONFuture an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// LROSADsPut200InvalidJSONFuture an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type LROSADsPut200InvalidJSONFuture struct {
 	azure.Future
 }
@@ -727,8 +628,8 @@ func (future *LROSADsPutAsyncRelativeRetry400Future) Result(client LROSADsClient
 	return
 }
 
-// LROSADsPutAsyncRelativeRetryInvalidHeaderFuture an abstraction for monitoring and retrieving the results
-// of a long-running operation.
+// LROSADsPutAsyncRelativeRetryInvalidHeaderFuture an abstraction for monitoring and retrieving the results of
+// a long-running operation.
 type LROSADsPutAsyncRelativeRetryInvalidHeaderFuture struct {
 	azure.Future
 }
@@ -814,8 +715,8 @@ func (future *LROSADsPutAsyncRelativeRetryNoStatusFuture) Result(client LROSADsC
 	return
 }
 
-// LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture an abstraction for monitoring and retrieving the
-// results of a long-running operation.
+// LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture an abstraction for monitoring and retrieving the results
+// of a long-running operation.
 type LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture struct {
 	azure.Future
 }
@@ -843,8 +744,8 @@ func (future *LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture) Result(client L
 	return
 }
 
-// LROSADsPutError201NoProvisioningStatePayloadFuture an abstraction for monitoring and retrieving the
-// results of a long-running operation.
+// LROSADsPutError201NoProvisioningStatePayloadFuture an abstraction for monitoring and retrieving the results
+// of a long-running operation.
 type LROSADsPutError201NoProvisioningStatePayloadFuture struct {
 	azure.Future
 }
@@ -901,8 +802,8 @@ func (future *LROSADsPutNonRetry201Creating400Future) Result(client LROSADsClien
 	return
 }
 
-// LROSADsPutNonRetry201Creating400InvalidJSONFuture an abstraction for monitoring and retrieving the
-// results of a long-running operation.
+// LROSADsPutNonRetry201Creating400InvalidJSONFuture an abstraction for monitoring and retrieving the results
+// of a long-running operation.
 type LROSADsPutNonRetry201Creating400InvalidJSONFuture struct {
 	azure.Future
 }
@@ -982,8 +883,8 @@ func (future *LROsCustomHeaderPost202Retry200Future) Result(client LROsCustomHea
 	return
 }
 
-// LROsCustomHeaderPostAsyncRetrySucceededFuture an abstraction for monitoring and retrieving the results
-// of a long-running operation.
+// LROsCustomHeaderPostAsyncRetrySucceededFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LROsCustomHeaderPostAsyncRetrySucceededFuture struct {
 	azure.Future
 }
@@ -1005,8 +906,8 @@ func (future *LROsCustomHeaderPostAsyncRetrySucceededFuture) Result(client LROsC
 	return
 }
 
-// LROsCustomHeaderPut201CreatingSucceeded200Future an abstraction for monitoring and retrieving the
-// results of a long-running operation.
+// LROsCustomHeaderPut201CreatingSucceeded200Future an abstraction for monitoring and retrieving the results of
+// a long-running operation.
 type LROsCustomHeaderPut201CreatingSucceeded200Future struct {
 	azure.Future
 }
@@ -1034,8 +935,8 @@ func (future *LROsCustomHeaderPut201CreatingSucceeded200Future) Result(client LR
 	return
 }
 
-// LROsCustomHeaderPutAsyncRetrySucceededFuture an abstraction for monitoring and retrieving the results of
-// a long-running operation.
+// LROsCustomHeaderPutAsyncRetrySucceededFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LROsCustomHeaderPutAsyncRetrySucceededFuture struct {
 	azure.Future
 }
@@ -1213,8 +1114,8 @@ func (future *LROsDeleteAsyncRetrycanceledFuture) Result(client LROsClient) (ar 
 	return
 }
 
-// LROsDeleteAsyncRetryFailedFuture an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// LROsDeleteAsyncRetryFailedFuture an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type LROsDeleteAsyncRetryFailedFuture struct {
 	azure.Future
 }
@@ -1259,8 +1160,8 @@ func (future *LROsDeleteAsyncRetrySucceededFuture) Result(client LROsClient) (ar
 	return
 }
 
-// LROsDeleteNoHeaderInRetryFuture an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// LROsDeleteNoHeaderInRetryFuture an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type LROsDeleteNoHeaderInRetryFuture struct {
 	azure.Future
 }
@@ -1282,8 +1183,8 @@ func (future *LROsDeleteNoHeaderInRetryFuture) Result(client LROsClient) (ar aut
 	return
 }
 
-// LROsDeleteProvisioning202Accepted200SucceededFuture an abstraction for monitoring and retrieving the
-// results of a long-running operation.
+// LROsDeleteProvisioning202Accepted200SucceededFuture an abstraction for monitoring and retrieving the results
+// of a long-running operation.
 type LROsDeleteProvisioning202Accepted200SucceededFuture struct {
 	azure.Future
 }
@@ -1311,8 +1212,8 @@ func (future *LROsDeleteProvisioning202Accepted200SucceededFuture) Result(client
 	return
 }
 
-// LROsDeleteProvisioning202Deletingcanceled200Future an abstraction for monitoring and retrieving the
-// results of a long-running operation.
+// LROsDeleteProvisioning202Deletingcanceled200Future an abstraction for monitoring and retrieving the results
+// of a long-running operation.
 type LROsDeleteProvisioning202Deletingcanceled200Future struct {
 	azure.Future
 }
@@ -1340,8 +1241,8 @@ func (future *LROsDeleteProvisioning202Deletingcanceled200Future) Result(client 
 	return
 }
 
-// LROsDeleteProvisioning202DeletingFailed200Future an abstraction for monitoring and retrieving the
-// results of a long-running operation.
+// LROsDeleteProvisioning202DeletingFailed200Future an abstraction for monitoring and retrieving the results of
+// a long-running operation.
 type LROsDeleteProvisioning202DeletingFailed200Future struct {
 	azure.Future
 }
@@ -1479,8 +1380,8 @@ func (future *LROsPostAsyncNoRetrySucceededFuture) Result(client LROsClient) (p 
 	return
 }
 
-// LROsPostAsyncRetrycanceledFuture an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// LROsPostAsyncRetrycanceledFuture an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type LROsPostAsyncRetrycanceledFuture struct {
 	azure.Future
 }
@@ -1502,8 +1403,8 @@ func (future *LROsPostAsyncRetrycanceledFuture) Result(client LROsClient) (ar au
 	return
 }
 
-// LROsPostAsyncRetryFailedFuture an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// LROsPostAsyncRetryFailedFuture an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type LROsPostAsyncRetryFailedFuture struct {
 	azure.Future
 }
@@ -1525,8 +1426,8 @@ func (future *LROsPostAsyncRetryFailedFuture) Result(client LROsClient) (ar auto
 	return
 }
 
-// LROsPostAsyncRetrySucceededFuture an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// LROsPostAsyncRetrySucceededFuture an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type LROsPostAsyncRetrySucceededFuture struct {
 	azure.Future
 }
@@ -1583,8 +1484,8 @@ func (future *LROsPostDoubleHeadersFinalAzureHeaderGetDefaultFuture) Result(clie
 	return
 }
 
-// LROsPostDoubleHeadersFinalAzureHeaderGetFuture an abstraction for monitoring and retrieving the results
-// of a long-running operation.
+// LROsPostDoubleHeadersFinalAzureHeaderGetFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LROsPostDoubleHeadersFinalAzureHeaderGetFuture struct {
 	azure.Future
 }
@@ -1612,8 +1513,8 @@ func (future *LROsPostDoubleHeadersFinalAzureHeaderGetFuture) Result(client LROs
 	return
 }
 
-// LROsPostDoubleHeadersFinalLocationGetFuture an abstraction for monitoring and retrieving the results of
-// a long-running operation.
+// LROsPostDoubleHeadersFinalLocationGetFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LROsPostDoubleHeadersFinalLocationGetFuture struct {
 	azure.Future
 }
@@ -1699,8 +1600,8 @@ func (future *LROsPut200SucceededFuture) Result(client LROsClient) (p Product, e
 	return
 }
 
-// LROsPut200SucceededNoStateFuture an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// LROsPut200SucceededNoStateFuture an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type LROsPut200SucceededNoStateFuture struct {
 	azure.Future
 }
@@ -1757,8 +1658,8 @@ func (future *LROsPut200UpdatingSucceeded204Future) Result(client LROsClient) (p
 	return
 }
 
-// LROsPut201CreatingFailed200Future an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// LROsPut201CreatingFailed200Future an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type LROsPut201CreatingFailed200Future struct {
 	azure.Future
 }
@@ -1844,8 +1745,8 @@ func (future *LROsPut202Retry200Future) Result(client LROsClient) (p Product, er
 	return
 }
 
-// LROsPutAsyncNoHeaderInRetryFuture an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// LROsPutAsyncNoHeaderInRetryFuture an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type LROsPutAsyncNoHeaderInRetryFuture struct {
 	azure.Future
 }
@@ -1902,8 +1803,8 @@ func (future *LROsPutAsyncNonResourceFuture) Result(client LROsClient) (s Sku, e
 	return
 }
 
-// LROsPutAsyncNoRetrycanceledFuture an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// LROsPutAsyncNoRetrycanceledFuture an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type LROsPutAsyncNoRetrycanceledFuture struct {
 	azure.Future
 }
@@ -1989,8 +1890,8 @@ func (future *LROsPutAsyncRetryFailedFuture) Result(client LROsClient) (p Produc
 	return
 }
 
-// LROsPutAsyncRetrySucceededFuture an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// LROsPutAsyncRetrySucceededFuture an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type LROsPutAsyncRetrySucceededFuture struct {
 	azure.Future
 }
@@ -2255,6 +2156,15 @@ type ProductProperties struct {
 	ProvisioningStateValues ProvisioningStateValues `json:"provisioningStateValues,omitempty"`
 }
 
+// MarshalJSON is the custom marshaler for ProductProperties.
+func (p ProductProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if p.ProvisioningState != nil {
+		objectMap["provisioningState"] = p.ProvisioningState
+	}
+	return json.Marshal(objectMap)
+}
+
 // Resource ...
 type Resource struct {
 	// ID - READ-ONLY; Resource Id
@@ -2342,6 +2252,15 @@ type SubProductProperties struct {
 	ProvisioningState *string `json:"provisioningState,omitempty"`
 	// ProvisioningStateValues - READ-ONLY; Possible values include: 'ProvisioningStateValues1Succeeded', 'ProvisioningStateValues1Failed', 'ProvisioningStateValues1Canceled', 'ProvisioningStateValues1Accepted', 'ProvisioningStateValues1Creating', 'ProvisioningStateValues1Created', 'ProvisioningStateValues1Updating', 'ProvisioningStateValues1Updated', 'ProvisioningStateValues1Deleting', 'ProvisioningStateValues1Deleted', 'ProvisioningStateValues1OK'
 	ProvisioningStateValues ProvisioningStateValues1 `json:"provisioningStateValues,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for SubProductProperties.
+func (sp SubProductProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if sp.ProvisioningState != nil {
+		objectMap["provisioningState"] = sp.ProvisioningState
+	}
+	return json.Marshal(objectMap)
 }
 
 // SubResource ...

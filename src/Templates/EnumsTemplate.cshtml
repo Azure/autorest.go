@@ -1,0 +1,22 @@
+﻿@using AutoRest.Go
+@using AutoRest.Go.Model
+@using AutoRest.Go.Templates
+@using System.Linq;
+
+@inherits AutoRest.Core.Template<AutoRest.Go.Model.CodeModelGo>
+@{
+    var enums = Model.EnumTypes.Cast<EnumTypeGo>().ToList();
+    enums.Sort((lhs, rhs) => lhs.Name.FixedValue.CompareTo(rhs.Name));
+}
+package @Model.Namespace
+@EmptyLine
+@Header("// ")
+
+@EmptyLine
+
+@foreach (var e in enums)
+{
+@:@(Include(new EnumTemplate(), e))
+@EmptyLine
+@:
+}

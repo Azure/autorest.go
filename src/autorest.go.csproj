@@ -66,5 +66,8 @@
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <DotnetRazor Remove="Templates\EnumsTemplate.cshtml" />
+  </ItemGroup>
 
 </Project>

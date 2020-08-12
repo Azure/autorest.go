@@ -71,9 +71,12 @@ namespace AutoRest.Go.Model
             //
             // we want the "2017-05-01-preview" portion
 
-            var i = _outDir.LastIndexOf('/');
-            var j = _outDir.LastIndexOf('/', i - 1);
-            return _outDir.Substring(j + 1, i - j - 1);
+            var segments = _outDir.Split('/');
+            if (segments.Length < 2)
+            {
+                throw new InvalidOperationException($"cannot get package version from output-folder {_outDir}");
+            }
+            return segments[segments.Length - 2];
         }
 
         private string DefaultUserAgent
