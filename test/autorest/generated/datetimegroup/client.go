@@ -9,7 +9,6 @@ import (
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/url"
-	"strings"
 )
 
 const telemetryInfo = "azsdk-go-datetimegroup/<version>"
@@ -24,9 +23,6 @@ type ClientOptions struct {
 	Retry azcore.RetryOptions
 	// Telemetry configures the built-in telemetry policy behavior.
 	Telemetry azcore.TelemetryOptions
-	// ApplicationID is an application-specific identification string used in telemetry.
-	// It has a maximum length of 24 characters and must not contain any spaces.
-	ApplicationID string
 }
 
 // DefaultClientOptions creates a ClientOptions type initialized with default values.
@@ -38,18 +34,13 @@ func DefaultClientOptions() ClientOptions {
 }
 
 func (c *ClientOptions) telemetryOptions() azcore.TelemetryOptions {
-	t := telemetryInfo
-	if c.ApplicationID != "" {
-		a := strings.ReplaceAll(c.ApplicationID, " ", "/")
-		if len(a) > 24 {
-			a = a[:24]
-		}
-		t = fmt.Sprintf("%s %s", a, telemetryInfo)
+	to := c.Telemetry
+	if to.Value == "" {
+		to.Value = telemetryInfo
+	} else {
+		to.Value = fmt.Sprintf("%s %s", telemetryInfo, to.Value)
 	}
-	if c.Telemetry.Value == "" {
-		return azcore.TelemetryOptions{Value: t}
-	}
-	return azcore.TelemetryOptions{Value: fmt.Sprintf("%s %s", c.Telemetry.Value, t)}
+	return to
 }
 
 // Client - Test Infrastructure for AutoRest

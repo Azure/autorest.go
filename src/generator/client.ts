@@ -19,7 +19,6 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/armcore');
   }
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
-  imports.add('strings');
   if (!session.model.language.go!.complexHostParams) {
     imports.add('net/url');
   }
@@ -49,14 +48,9 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   text += '\tRetry azcore.RetryOptions\n';
   text += '\t// Telemetry configures the built-in telemetry policy behavior.\n';
   text += '\tTelemetry azcore.TelemetryOptions\n';
-  text += '\t// ApplicationID is an application-specific identification string used in telemetry.\n';
-  text += '\t// It has a maximum length of 24 characters and must not contain any spaces.\n';
-  text += '\tApplicationID string\n';
   if (isARM && session.model.security.authenticationRequired) {
-    text += '\t// DisableRPRegistration controls if an unregistered resource provider should\n';
-    text += '\t// automatically be registered. See https://aka.ms/rps-not-found for more information.\n';
-    text += '\t// The default value is false, meaning registration will be attempted.\n';
-    text += '\tDisableRPRegistration bool\n';
+    text += '\t// RegisterRPOptions configures the built-in RP registration policy behavior.\n';
+    text += '\tRegisterRPOptions armcore.RegistrationOptions\n';
   }
   text += '}\n\n';
   text += `// ${defaultClientOptions} creates a ${clientOptions} type initialized with default values.\n`;
@@ -64,22 +58,20 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   text += `\treturn ${clientOptions}{\n`;
   text += '\t\tHTTPClient: azcore.DefaultHTTPClientTransport(),\n';
   text += '\t\tRetry: azcore.DefaultRetryOptions(),\n';
+  if (isARM && session.model.security.authenticationRequired) {
+    text += '\t\tRegisterRPOptions: armcore.DefaultRegistrationOptions(),\n';
+  }
   text += '\t}\n';
   text += '}\n\n';
 
   text += `func (c *${clientOptions}) telemetryOptions() azcore.TelemetryOptions {\n`;
-  text += '\tt := telemetryInfo\n';
-  text += '\tif c.ApplicationID != "" {\n';
-  text += '\t\ta := strings.ReplaceAll(c.ApplicationID, " ", "/")\n';
-  text += '\t\tif len(a) > 24 {\n';
-  text += '\t\t\ta = a[:24]\n';
-  text += '\t\t}\n';
-  text += '\t\tt = fmt.Sprintf("%s %s", a, telemetryInfo)\n';
+  text += '\tto := c.Telemetry\n';
+  text += '\tif to.Value == "" {\n';
+  text += '\t\tto.Value = telemetryInfo\n';
+  text += '\t} else {\n';
+  text += '\t\tto.Value = fmt.Sprintf("%s %s", telemetryInfo, to.Value)\n';
   text += '\t}\n';
-  text += '\tif c.Telemetry.Value == "" {\n';
-  text += '\t\treturn azcore.TelemetryOptions{Value: t}\n';
-  text += '\t}\n';
-  text += '\treturn azcore.TelemetryOptions{Value: fmt.Sprintf("%s %s", c.Telemetry.Value, t)}\n';
+  text += '\treturn to\n';
   text += '}\n\n';
 
   // Client
@@ -173,13 +165,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
     text += `\t\t${reqIDPolicy},\n`;
     text += '\t}\n';
     // RP registration policy must appear before the retry policy
-    text += '\tif !options.DisableRPRegistration {\n';
-    text += '\t\trpOpts := armcore.DefaultRegistrationOptions()\n';
-    text += '\t\trpOpts.HTTPClient = options.HTTPClient\n';
-    text += '\t\trpOpts.LogOptions = options.LogOptions\n';
-    text += '\t\trpOpts.Retry = options.Retry\n';
-    text += '\t\tpolicies = append(policies, armcore.NewRPRegistrationPolicy(cred, &rpOpts))\n';
-    text += '\t}\n';
+    text += '\tpolicies = append(policies, armcore.NewRPRegistrationPolicy(cred, &options.RegisterRPOptions))\n';
     text += '\tpolicies = append(policies,\n';
     text += `\t\t${retryPolicy},\n`;
     // ARM implies authentication is required
@@ -208,6 +194,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
     // if the uriTemplate is simply {whatever} then we can skip doing the strings.ReplaceAll thing.
     if (session.model.language.go!.hostParams && !uriTemplate.match(/^\{\w+\}$/)) {
       // parameterized host
+      imports.add('strings');
       text += `\thostURL := "${uriTemplate}"\n`;
       const hostParams = <Array<Parameter>>session.model.language.go!.hostParams;
       for (const hostParam of values(hostParams)) {
