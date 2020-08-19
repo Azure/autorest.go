@@ -11,16 +11,8 @@ import (
 	"testing"
 )
 
-func getDictionaryOperations(t *testing.T) complexgroup.DictionaryOperations {
-	client, err := complexgroup.NewDefaultClient(nil)
-	if err != nil {
-		t.Fatalf("failed to create complex client: %v", err)
-	}
-	return client.DictionaryOperations()
-}
-
 func TestDictionaryGetEmpty(t *testing.T) {
-	client := getDictionaryOperations(t)
+	client := complexgroup.NewDefaultClient(nil).DictionaryOperations()
 	result, err := client.GetEmpty(context.Background())
 	if err != nil {
 		t.Fatalf("GetEmpty: %v", err)
@@ -29,7 +21,7 @@ func TestDictionaryGetEmpty(t *testing.T) {
 }
 
 func TestDictionaryGetNotProvided(t *testing.T) {
-	client := getDictionaryOperations(t)
+	client := complexgroup.NewDefaultClient(nil).DictionaryOperations()
 	result, err := client.GetNotProvided(context.Background())
 	if err != nil {
 		t.Fatalf("GetNotProvided: %v", err)
@@ -38,7 +30,7 @@ func TestDictionaryGetNotProvided(t *testing.T) {
 }
 
 func TestDictionaryGetNull(t *testing.T) {
-	client := getDictionaryOperations(t)
+	client := complexgroup.NewDefaultClient(nil).DictionaryOperations()
 	result, err := client.GetNull(context.Background())
 	if err != nil {
 		t.Fatalf("GetNull: %v", err)
@@ -49,7 +41,7 @@ func TestDictionaryGetNull(t *testing.T) {
 /*
 test is invalid, expects null values but missing x-nullable
 func TestDictionaryGetValid(t *testing.T) {
-	client := getDictionaryOperations(t)
+	client := complexgroup.NewDefaultClient(nil).DictionaryOperations()
 	result, err := client.GetValid(context.Background())
 	if err != nil {
 		t.Fatalf("GetValid: %v", err)
@@ -60,7 +52,7 @@ func TestDictionaryGetValid(t *testing.T) {
 }*/
 
 func TestDictionaryPutEmpty(t *testing.T) {
-	client := getDictionaryOperations(t)
+	client := complexgroup.NewDefaultClient(nil).DictionaryOperations()
 	result, err := client.PutEmpty(context.Background(), complexgroup.DictionaryWrapper{DefaultProgram: &map[string]string{}})
 	if err != nil {
 		t.Fatalf("PutEmpty: %v", err)
@@ -71,7 +63,7 @@ func TestDictionaryPutEmpty(t *testing.T) {
 /*
 test is invalid, expects null values but missing x-nullable
 func TestDictionaryPutValid(t *testing.T) {
-	client := getDictionaryOperations(t)
+	client := complexgroup.NewDefaultClient(nil).DictionaryOperations()
 	s1, s2, s3, s4 := "notepad", "mspaint", "excel", ""
 	result, err := client.PutValid(context.Background(), complexgroup.DictionaryWrapper{DefaultProgram: &map[string]string{"txt": s1, "bmp": s2, "xls": s3, "exe": s4, "": nil}})
 	if err != nil {

@@ -12,7 +12,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 	"time"
 )
@@ -70,10 +69,14 @@ func (client *networkManagementClientOperations) CheckDNSNameAvailability(ctx co
 
 // checkDnsNameAvailabilityCreateRequest creates the CheckDNSNameAvailability request.
 func (client *networkManagementClientOperations) checkDnsNameAvailabilityCreateRequest(location string, domainNameLabel string) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/CheckDnsNameAvailability"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -146,11 +149,15 @@ func (client *networkManagementClientOperations) ResumeDeleteBastionShareableLin
 
 // deleteBastionShareableLinkCreateRequest creates the DeleteBastionShareableLink request.
 func (client *networkManagementClientOperations) deleteBastionShareableLinkCreateRequest(resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}/deleteShareableLinks"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{bastionHostName}", url.PathEscape(bastionHostName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -203,11 +210,15 @@ func (client *networkManagementClientOperations) DisconnectActiveSessions(resour
 
 // disconnectActiveSessionsCreateRequest creates the DisconnectActiveSessions request.
 func (client *networkManagementClientOperations) disconnectActiveSessionsCreateRequest(resourceGroupName string, bastionHostName string, sessionIds SessionIDs) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}/disconnectActiveSessions"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{bastionHostName}", url.PathEscape(bastionHostName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -279,11 +290,15 @@ func (client *networkManagementClientOperations) ResumeGeneratevirtualwanvpnserv
 
 // generatevirtualwanvpnserverconfigurationvpnprofileCreateRequest creates the Generatevirtualwanvpnserverconfigurationvpnprofile request.
 func (client *networkManagementClientOperations) generatevirtualwanvpnserverconfigurationvpnprofileCreateRequest(resourceGroupName string, virtualWanName string, vpnClientParams VirtualWanVpnProfileParameters) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/GenerateVpnProfile"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualWANName}", url.PathEscape(virtualWanName))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -355,11 +370,15 @@ func (client *networkManagementClientOperations) ResumeGetActiveSessions(token s
 
 // getActiveSessionsCreateRequest creates the GetActiveSessions request.
 func (client *networkManagementClientOperations) getActiveSessionsCreateRequest(resourceGroupName string, bastionHostName string) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}/getActiveSessions"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{bastionHostName}", url.PathEscape(bastionHostName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -421,11 +440,15 @@ func (client *networkManagementClientOperations) GetBastionShareableLink(resourc
 
 // getBastionShareableLinkCreateRequest creates the GetBastionShareableLink request.
 func (client *networkManagementClientOperations) getBastionShareableLinkCreateRequest(resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}/getShareableLinks"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{bastionHostName}", url.PathEscape(bastionHostName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -498,11 +521,15 @@ func (client *networkManagementClientOperations) ResumePutBastionShareableLink(t
 
 // putBastionShareableLinkCreateRequest creates the PutBastionShareableLink request.
 func (client *networkManagementClientOperations) putBastionShareableLinkCreateRequest(resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}/createShareableLinks"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{bastionHostName}", url.PathEscape(bastionHostName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -558,11 +585,15 @@ func (client *networkManagementClientOperations) SupportedSecurityProviders(ctx 
 
 // supportedSecurityProvidersCreateRequest creates the SupportedSecurityProviders request.
 func (client *networkManagementClientOperations) supportedSecurityProvidersCreateRequest(resourceGroupName string, virtualWanName string) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/supportedSecurityProviders"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualWANName}", url.PathEscape(virtualWanName))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}

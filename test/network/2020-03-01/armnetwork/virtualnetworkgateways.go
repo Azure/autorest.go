@@ -12,7 +12,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 	"time"
 )
@@ -148,11 +147,15 @@ func (client *virtualNetworkGatewaysOperations) ResumeCreateOrUpdate(token strin
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
 func (client *virtualNetworkGatewaysOperations) createOrUpdateCreateRequest(resourceGroupName string, virtualNetworkGatewayName string, parameters VirtualNetworkGateway) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -223,11 +226,15 @@ func (client *virtualNetworkGatewaysOperations) ResumeDelete(token string) (HTTP
 
 // deleteCreateRequest creates the Delete request.
 func (client *virtualNetworkGatewaysOperations) deleteCreateRequest(resourceGroupName string, virtualNetworkGatewayName string) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -298,11 +305,15 @@ func (client *virtualNetworkGatewaysOperations) ResumeDisconnectVirtualNetworkGa
 
 // disconnectVirtualNetworkGatewayVpnConnectionsCreateRequest creates the DisconnectVirtualNetworkGatewayVpnConnections request.
 func (client *virtualNetworkGatewaysOperations) disconnectVirtualNetworkGatewayVpnConnectionsCreateRequest(resourceGroupName string, virtualNetworkGatewayName string, request P2SVpnConnectionRequest) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/disconnectVirtualNetworkGatewayVpnConnections"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -373,11 +384,15 @@ func (client *virtualNetworkGatewaysOperations) ResumeGenerateVpnProfile(token s
 
 // generateVpnProfileCreateRequest creates the GenerateVpnProfile request.
 func (client *virtualNetworkGatewaysOperations) generateVpnProfileCreateRequest(resourceGroupName string, virtualNetworkGatewayName string, parameters VpnClientParameters) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/generatevpnprofile"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -448,11 +463,15 @@ func (client *virtualNetworkGatewaysOperations) ResumeGeneratevpnclientpackage(t
 
 // generatevpnclientpackageCreateRequest creates the Generatevpnclientpackage request.
 func (client *virtualNetworkGatewaysOperations) generatevpnclientpackageCreateRequest(resourceGroupName string, virtualNetworkGatewayName string, parameters VpnClientParameters) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/generatevpnclientpackage"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -499,11 +518,15 @@ func (client *virtualNetworkGatewaysOperations) Get(ctx context.Context, resourc
 
 // getCreateRequest creates the Get request.
 func (client *virtualNetworkGatewaysOperations) getCreateRequest(resourceGroupName string, virtualNetworkGatewayName string) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -575,11 +598,15 @@ func (client *virtualNetworkGatewaysOperations) ResumeGetAdvertisedRoutes(token 
 
 // getAdvertisedRoutesCreateRequest creates the GetAdvertisedRoutes request.
 func (client *virtualNetworkGatewaysOperations) getAdvertisedRoutesCreateRequest(resourceGroupName string, virtualNetworkGatewayName string, peer string) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getAdvertisedRoutes"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -651,11 +678,15 @@ func (client *virtualNetworkGatewaysOperations) ResumeGetBgpPeerStatus(token str
 
 // getBgpPeerStatusCreateRequest creates the GetBgpPeerStatus request.
 func (client *virtualNetworkGatewaysOperations) getBgpPeerStatusCreateRequest(resourceGroupName string, virtualNetworkGatewayName string, virtualNetworkGatewaysGetBgpPeerStatusOptions *VirtualNetworkGatewaysGetBgpPeerStatusOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getBgpPeerStatus"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -729,11 +760,15 @@ func (client *virtualNetworkGatewaysOperations) ResumeGetLearnedRoutes(token str
 
 // getLearnedRoutesCreateRequest creates the GetLearnedRoutes request.
 func (client *virtualNetworkGatewaysOperations) getLearnedRoutesCreateRequest(resourceGroupName string, virtualNetworkGatewayName string) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getLearnedRoutes"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -804,11 +839,15 @@ func (client *virtualNetworkGatewaysOperations) ResumeGetVpnProfilePackageURL(to
 
 // getVpnProfilePackageUrlCreateRequest creates the GetVpnProfilePackageURL request.
 func (client *virtualNetworkGatewaysOperations) getVpnProfilePackageUrlCreateRequest(resourceGroupName string, virtualNetworkGatewayName string) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getvpnprofilepackageurl"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -879,11 +918,15 @@ func (client *virtualNetworkGatewaysOperations) ResumeGetVpnclientConnectionHeal
 
 // getVpnclientConnectionHealthCreateRequest creates the GetVpnclientConnectionHealth request.
 func (client *virtualNetworkGatewaysOperations) getVpnclientConnectionHealthCreateRequest(resourceGroupName string, virtualNetworkGatewayName string) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getVpnClientConnectionHealth"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -954,11 +997,15 @@ func (client *virtualNetworkGatewaysOperations) ResumeGetVpnclientIPsecParameter
 
 // getVpnclientIPsecParametersCreateRequest creates the GetVpnclientIPsecParameters request.
 func (client *virtualNetworkGatewaysOperations) getVpnclientIPsecParametersCreateRequest(resourceGroupName string, virtualNetworkGatewayName string) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getvpnclientipsecparameters"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -1011,10 +1058,14 @@ func (client *virtualNetworkGatewaysOperations) List(resourceGroupName string) (
 
 // listCreateRequest creates the List request.
 func (client *virtualNetworkGatewaysOperations) listCreateRequest(resourceGroupName string) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -1068,11 +1119,15 @@ func (client *virtualNetworkGatewaysOperations) ListConnections(resourceGroupNam
 
 // listConnectionsCreateRequest creates the ListConnections request.
 func (client *virtualNetworkGatewaysOperations) listConnectionsCreateRequest(resourceGroupName string, virtualNetworkGatewayName string) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/connections"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -1144,11 +1199,15 @@ func (client *virtualNetworkGatewaysOperations) ResumeReset(token string) (Virtu
 
 // resetCreateRequest creates the Reset request.
 func (client *virtualNetworkGatewaysOperations) resetCreateRequest(resourceGroupName string, virtualNetworkGatewayName string, virtualNetworkGatewaysResetOptions *VirtualNetworkGatewaysResetOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/reset"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -1222,11 +1281,15 @@ func (client *virtualNetworkGatewaysOperations) ResumeResetVpnClientSharedKey(to
 
 // resetVpnClientSharedKeyCreateRequest creates the ResetVpnClientSharedKey request.
 func (client *virtualNetworkGatewaysOperations) resetVpnClientSharedKeyCreateRequest(resourceGroupName string, virtualNetworkGatewayName string) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/resetvpnclientsharedkey"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -1297,11 +1360,15 @@ func (client *virtualNetworkGatewaysOperations) ResumeSetVpnclientIPsecParameter
 
 // setVpnclientIPsecParametersCreateRequest creates the SetVpnclientIPsecParameters request.
 func (client *virtualNetworkGatewaysOperations) setVpnclientIPsecParametersCreateRequest(resourceGroupName string, virtualNetworkGatewayName string, vpnclientIpsecParams VpnClientIPsecParameters) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/setvpnclientipsecparameters"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -1372,11 +1439,15 @@ func (client *virtualNetworkGatewaysOperations) ResumeStartPacketCapture(token s
 
 // startPacketCaptureCreateRequest creates the StartPacketCapture request.
 func (client *virtualNetworkGatewaysOperations) startPacketCaptureCreateRequest(resourceGroupName string, virtualNetworkGatewayName string, virtualNetworkGatewaysStartPacketCaptureOptions *VirtualNetworkGatewaysStartPacketCaptureOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/startPacketCapture"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -1450,11 +1521,15 @@ func (client *virtualNetworkGatewaysOperations) ResumeStopPacketCapture(token st
 
 // stopPacketCaptureCreateRequest creates the StopPacketCapture request.
 func (client *virtualNetworkGatewaysOperations) stopPacketCaptureCreateRequest(resourceGroupName string, virtualNetworkGatewayName string, parameters VpnPacketCaptureStopParameters) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/stopPacketCapture"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -1501,11 +1576,15 @@ func (client *virtualNetworkGatewaysOperations) SupportedVpnDevices(ctx context.
 
 // supportedVpnDevicesCreateRequest creates the SupportedVpnDevices request.
 func (client *virtualNetworkGatewaysOperations) supportedVpnDevicesCreateRequest(resourceGroupName string, virtualNetworkGatewayName string) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/supportedvpndevices"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -1577,11 +1656,15 @@ func (client *virtualNetworkGatewaysOperations) ResumeUpdateTags(token string) (
 
 // updateTagsCreateRequest creates the UpdateTags request.
 func (client *virtualNetworkGatewaysOperations) updateTagsCreateRequest(resourceGroupName string, virtualNetworkGatewayName string, parameters TagsObject) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -1628,11 +1711,15 @@ func (client *virtualNetworkGatewaysOperations) VpnDeviceConfigurationScript(ctx
 
 // vpnDeviceConfigurationScriptCreateRequest creates the VpnDeviceConfigurationScript request.
 func (client *virtualNetworkGatewaysOperations) vpnDeviceConfigurationScriptCreateRequest(resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters VpnDeviceScriptParameters) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}/vpndeviceconfigurationscript"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayConnectionName}", url.PathEscape(virtualNetworkGatewayConnectionName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}

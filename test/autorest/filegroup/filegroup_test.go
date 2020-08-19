@@ -12,16 +12,8 @@ import (
 	"testing"
 )
 
-func getFileGroupClient(t *testing.T) filegroup.FilesOperations {
-	client, err := filegroup.NewClient("http://localhost:3000", nil)
-	if err != nil {
-		t.Fatalf("failed to create more custom base URL client: %v", err)
-	}
-	return client.FilesOperations()
-}
-
 func TestGetEmptyFile(t *testing.T) {
-	client := getFileGroupClient(t)
+	client := filegroup.NewDefaultClient(nil).FilesOperations()
 	result, err := client.GetEmptyFile(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -37,7 +29,7 @@ func TestGetEmptyFile(t *testing.T) {
 }
 
 func TestGetFile(t *testing.T) {
-	client := getFileGroupClient(t)
+	client := filegroup.NewDefaultClient(nil).FilesOperations()
 	result, err := client.GetFile(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -58,7 +50,7 @@ func TestGetFile(t *testing.T) {
 
 func TestGetFileLarge(t *testing.T) {
 	t.Skip("test is unreliable, can fail when running on a machine with low memory")
-	client := getFileGroupClient(t)
+	client := filegroup.NewDefaultClient(nil).FilesOperations()
 	result, err := client.GetFileLarge(context.Background())
 	if err != nil {
 		t.Fatal(err)

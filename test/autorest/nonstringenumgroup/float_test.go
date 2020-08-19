@@ -11,17 +11,9 @@ import (
 	"testing"
 )
 
-func getFloatOperations(t *testing.T) nonstringenumgroup.FloatOperations {
-	client, err := nonstringenumgroup.NewDefaultClient(nil)
-	if err != nil {
-		t.Fatal(err)
-	}
-	return client.FloatOperations()
-}
-
 // Get - Get a float enum
 func TestFloatGet(t *testing.T) {
-	client := getFloatOperations(t)
+	client := nonstringenumgroup.NewDefaultClient(nil).FloatOperations()
 	result, err := client.Get(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -31,7 +23,7 @@ func TestFloatGet(t *testing.T) {
 
 // Put - Put a float enum
 func TestFloatPut(t *testing.T) {
-	client := getFloatOperations(t)
+	client := nonstringenumgroup.NewDefaultClient(nil).FloatOperations()
 	result, err := client.Put(context.Background(), &nonstringenumgroup.FloatPutOptions{
 		Input: nonstringenumgroup.FloatEnumTwoHundred4.ToPtr(),
 	})

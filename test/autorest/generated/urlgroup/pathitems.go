@@ -10,7 +10,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 )
 
@@ -52,11 +51,15 @@ func (client *pathItemsOperations) GetAllWithValues(ctx context.Context, pathIte
 
 // getAllWithValuesCreateRequest creates the GetAllWithValues request.
 func (client *pathItemsOperations) getAllWithValuesCreateRequest(pathItemStringPath string, localStringPath string, pathItemsGetAllWithValuesOptions *PathItemsGetAllWithValuesOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/pathitem/nullable/globalStringPath/{globalStringPath}/pathItemStringPath/{pathItemStringPath}/localStringPath/{localStringPath}/globalStringQuery/pathItemStringQuery/localStringQuery"
 	urlPath = strings.ReplaceAll(urlPath, "{pathItemStringPath}", url.PathEscape(pathItemStringPath))
 	urlPath = strings.ReplaceAll(urlPath, "{globalStringPath}", url.PathEscape(client.globalStringPath))
 	urlPath = strings.ReplaceAll(urlPath, "{localStringPath}", url.PathEscape(localStringPath))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -111,11 +114,15 @@ func (client *pathItemsOperations) GetGlobalAndLocalQueryNull(ctx context.Contex
 
 // getGlobalAndLocalQueryNullCreateRequest creates the GetGlobalAndLocalQueryNull request.
 func (client *pathItemsOperations) getGlobalAndLocalQueryNullCreateRequest(pathItemStringPath string, localStringPath string, pathItemsGetGlobalAndLocalQueryNullOptions *PathItemsGetGlobalAndLocalQueryNullOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/pathitem/nullable/globalStringPath/{globalStringPath}/pathItemStringPath/{pathItemStringPath}/localStringPath/{localStringPath}/null/pathItemStringQuery/null"
 	urlPath = strings.ReplaceAll(urlPath, "{pathItemStringPath}", url.PathEscape(pathItemStringPath))
 	urlPath = strings.ReplaceAll(urlPath, "{globalStringPath}", url.PathEscape(client.globalStringPath))
 	urlPath = strings.ReplaceAll(urlPath, "{localStringPath}", url.PathEscape(localStringPath))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -170,11 +177,15 @@ func (client *pathItemsOperations) GetGlobalQueryNull(ctx context.Context, pathI
 
 // getGlobalQueryNullCreateRequest creates the GetGlobalQueryNull request.
 func (client *pathItemsOperations) getGlobalQueryNullCreateRequest(pathItemStringPath string, localStringPath string, pathItemsGetGlobalQueryNullOptions *PathItemsGetGlobalQueryNullOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/pathitem/nullable/globalStringPath/{globalStringPath}/pathItemStringPath/{pathItemStringPath}/localStringPath/{localStringPath}/null/pathItemStringQuery/localStringQuery"
 	urlPath = strings.ReplaceAll(urlPath, "{pathItemStringPath}", url.PathEscape(pathItemStringPath))
 	urlPath = strings.ReplaceAll(urlPath, "{globalStringPath}", url.PathEscape(client.globalStringPath))
 	urlPath = strings.ReplaceAll(urlPath, "{localStringPath}", url.PathEscape(localStringPath))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -229,11 +240,15 @@ func (client *pathItemsOperations) GetLocalPathItemQueryNull(ctx context.Context
 
 // getLocalPathItemQueryNullCreateRequest creates the GetLocalPathItemQueryNull request.
 func (client *pathItemsOperations) getLocalPathItemQueryNullCreateRequest(pathItemStringPath string, localStringPath string, pathItemsGetLocalPathItemQueryNullOptions *PathItemsGetLocalPathItemQueryNullOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/pathitem/nullable/globalStringPath/{globalStringPath}/pathItemStringPath/{pathItemStringPath}/localStringPath/{localStringPath}/globalStringQuery/null/null"
 	urlPath = strings.ReplaceAll(urlPath, "{pathItemStringPath}", url.PathEscape(pathItemStringPath))
 	urlPath = strings.ReplaceAll(urlPath, "{globalStringPath}", url.PathEscape(client.globalStringPath))
 	urlPath = strings.ReplaceAll(urlPath, "{localStringPath}", url.PathEscape(localStringPath))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}

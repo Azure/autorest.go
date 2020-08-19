@@ -8,7 +8,6 @@ package azblob
 import (
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"net/url"
 )
 
 const scope = "https://storage.azure.com/.default"
@@ -45,12 +44,12 @@ func (c *clientOptions) telemetryOptions() azcore.TelemetryOptions {
 }
 
 type client struct {
-	u *url.URL
+	u string
 	p azcore.Pipeline
 }
 
 // newClient creates an instance of the client type with the specified endpoint.
-func newClient(endpoint string, cred azcore.Credential, options *clientOptions) (*client, error) {
+func newClient(endpoint string, cred azcore.Credential, options *clientOptions) *client {
 	if options == nil {
 		o := defaultClientOptions()
 		options = &o
@@ -65,15 +64,8 @@ func newClient(endpoint string, cred azcore.Credential, options *clientOptions) 
 }
 
 // newClientWithPipeline creates an instance of the client type with the specified endpoint and pipeline.
-func newClientWithPipeline(endpoint string, p azcore.Pipeline) (*client, error) {
-	u, err := url.Parse(endpoint)
-	if err != nil {
-		return nil, err
-	}
-	if u.Scheme == "" {
-		return nil, fmt.Errorf("no scheme detected in endpoint %s", endpoint)
-	}
-	return &client{u: u, p: p}, nil
+func newClientWithPipeline(endpoint string, p azcore.Pipeline) *client {
+	return &client{u: endpoint, p: p}
 }
 
 // ServiceOperations returns the ServiceOperations associated with this client.

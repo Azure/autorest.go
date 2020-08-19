@@ -13,16 +13,8 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func getStringClient(t *testing.T) stringgroup.StringOperations {
-	client, err := stringgroup.NewDefaultClient(nil)
-	if err != nil {
-		t.Fatalf("failed to create string client: %v", err)
-	}
-	return client.StringOperations()
-}
-
 func TestStringGetMBCS(t *testing.T) {
-	client := getStringClient(t)
+	client := stringgroup.NewDefaultClient(nil).StringOperations()
 	result, err := client.GetMBCS(context.Background())
 	if err != nil {
 		t.Fatalf("GetMBCS: %v", err)
@@ -32,7 +24,7 @@ func TestStringGetMBCS(t *testing.T) {
 }
 
 func TestStringPutMBCS(t *testing.T) {
-	client := getStringClient(t)
+	client := stringgroup.NewDefaultClient(nil).StringOperations()
 	result, err := client.PutMBCS(context.Background())
 	if err != nil {
 		t.Fatalf("PutMBCS: %v", err)
@@ -41,7 +33,7 @@ func TestStringPutMBCS(t *testing.T) {
 }
 
 func TestStringGetBase64Encoded(t *testing.T) {
-	client := getStringClient(t)
+	client := stringgroup.NewDefaultClient(nil).StringOperations()
 	result, err := client.GetBase64Encoded(context.Background())
 	if err != nil {
 		t.Fatalf("GetBase64Encoded: %v", err)
@@ -52,7 +44,7 @@ func TestStringGetBase64Encoded(t *testing.T) {
 }
 
 func TestStringGetBase64URLEncoded(t *testing.T) {
-	client := getStringClient(t)
+	client := stringgroup.NewDefaultClient(nil).StringOperations()
 	result, err := client.GetBase64URLEncoded(context.Background())
 	if err != nil {
 		t.Fatalf("GetBase64URLEncoded: %v", err)
@@ -62,7 +54,7 @@ func TestStringGetBase64URLEncoded(t *testing.T) {
 }
 
 func TestStringGetEmpty(t *testing.T) {
-	client := getStringClient(t)
+	client := stringgroup.NewDefaultClient(nil).StringOperations()
 	result, err := client.GetEmpty(context.Background())
 	if err != nil {
 		t.Fatalf("GetEmpty: %v", err)
@@ -72,7 +64,7 @@ func TestStringGetEmpty(t *testing.T) {
 }
 
 func TestStringGetNotProvided(t *testing.T) {
-	client := getStringClient(t)
+	client := stringgroup.NewDefaultClient(nil).StringOperations()
 	result, err := client.GetNotProvided(context.Background())
 	if err != nil {
 		t.Fatalf("GetNotProvided: %v", err)
@@ -81,7 +73,7 @@ func TestStringGetNotProvided(t *testing.T) {
 }
 
 func TestStringGetNull(t *testing.T) {
-	client := getStringClient(t)
+	client := stringgroup.NewDefaultClient(nil).StringOperations()
 	result, err := client.GetNull(context.Background())
 	if err != nil {
 		t.Fatalf("GetNull: %v", err)
@@ -90,7 +82,7 @@ func TestStringGetNull(t *testing.T) {
 }
 
 func TestStringGetNullBase64URLEncoded(t *testing.T) {
-	client := getStringClient(t)
+	client := stringgroup.NewDefaultClient(nil).StringOperations()
 	result, err := client.GetNullBase64URLEncoded(context.Background())
 	if err != nil {
 		t.Fatalf("GetNullBase64URLEncoded: %v", err)
@@ -100,7 +92,7 @@ func TestStringGetNullBase64URLEncoded(t *testing.T) {
 }
 
 func TestStringGetWhitespace(t *testing.T) {
-	client := getStringClient(t)
+	client := stringgroup.NewDefaultClient(nil).StringOperations()
 	result, err := client.GetWhitespace(context.Background())
 	if err != nil {
 		t.Fatalf("GetWhitespace: %v", err)
@@ -110,7 +102,7 @@ func TestStringGetWhitespace(t *testing.T) {
 }
 
 func TestStringPutBase64URLEncoded(t *testing.T) {
-	client := getStringClient(t)
+	client := stringgroup.NewDefaultClient(nil).StringOperations()
 	result, err := client.PutBase64URLEncoded(context.Background(), []byte("a string that gets encoded with base64url"))
 	if err != nil {
 		t.Fatalf("PutBase64URLEncoded: %v", err)
@@ -119,7 +111,7 @@ func TestStringPutBase64URLEncoded(t *testing.T) {
 }
 
 func TestStringPutEmpty(t *testing.T) {
-	client := getStringClient(t)
+	client := stringgroup.NewDefaultClient(nil).StringOperations()
 	result, err := client.PutEmpty(context.Background())
 	if err != nil {
 		t.Fatalf("PutEmpty: %v", err)
@@ -128,7 +120,7 @@ func TestStringPutEmpty(t *testing.T) {
 }
 
 func TestStringPutNull(t *testing.T) {
-	client := getStringClient(t)
+	client := stringgroup.NewDefaultClient(nil).StringOperations()
 	result, err := client.PutNull(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("PutNull: %v", err)
@@ -137,7 +129,7 @@ func TestStringPutNull(t *testing.T) {
 }
 
 func TestStringPutWhitespace(t *testing.T) {
-	client := getStringClient(t)
+	client := stringgroup.NewDefaultClient(nil).StringOperations()
 	result, err := client.PutWhitespace(context.Background())
 	if err != nil {
 		t.Fatalf("PutWhitespace: %v", err)

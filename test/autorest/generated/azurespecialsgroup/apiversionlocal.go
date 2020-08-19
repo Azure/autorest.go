@@ -9,7 +9,7 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
-	"path"
+	"net/url"
 )
 
 // APIVersionLocalOperations contains the methods for the APIVersionLocal group.
@@ -48,8 +48,12 @@ func (client *apiVersionLocalOperations) GetMethodLocalNull(ctx context.Context,
 
 // getMethodLocalNullCreateRequest creates the GetMethodLocalNull request.
 func (client *apiVersionLocalOperations) getMethodLocalNullCreateRequest(apiVersionLocalGetMethodLocalNullOptions *APIVersionLocalGetMethodLocalNullOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/azurespecials/apiVersion/method/string/none/query/local/null"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -98,8 +102,12 @@ func (client *apiVersionLocalOperations) GetMethodLocalValid(ctx context.Context
 
 // getMethodLocalValidCreateRequest creates the GetMethodLocalValid request.
 func (client *apiVersionLocalOperations) getMethodLocalValidCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/azurespecials/apiVersion/method/string/none/query/local/2.0"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -146,8 +154,12 @@ func (client *apiVersionLocalOperations) GetPathLocalValid(ctx context.Context) 
 
 // getPathLocalValidCreateRequest creates the GetPathLocalValid request.
 func (client *apiVersionLocalOperations) getPathLocalValidCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/azurespecials/apiVersion/path/string/none/query/local/2.0"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -194,8 +206,12 @@ func (client *apiVersionLocalOperations) GetSwaggerLocalValid(ctx context.Contex
 
 // getSwaggerLocalValidCreateRequest creates the GetSwaggerLocalValid request.
 func (client *apiVersionLocalOperations) getSwaggerLocalValidCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/azurespecials/apiVersion/swagger/string/none/query/local/2.0"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}

@@ -11,16 +11,8 @@ import (
 	"testing"
 )
 
-func getHTTPRedirectsOperations(t *testing.T) httpinfrastructuregroup.HTTPRedirectsOperations {
-	client, err := httpinfrastructuregroup.NewDefaultClient(nil)
-	if err != nil {
-		t.Fatalf("failed to create HTTPRedirects client: %v", err)
-	}
-	return client.HTTPRedirectsOperations()
-}
-
 func TestHTTPRedirectsDelete307(t *testing.T) {
-	client := getHTTPRedirectsOperations(t)
+	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPRedirectsOperations()
 	result, err := client.Delete307(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
@@ -30,7 +22,7 @@ func TestHTTPRedirectsDelete307(t *testing.T) {
 
 func TestHTTPRedirectsGet300(t *testing.T) {
 	t.Skip("does not automatically redirect")
-	client := getHTTPRedirectsOperations(t)
+	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPRedirectsOperations()
 	result, err := client.Get300(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
@@ -46,7 +38,7 @@ func TestHTTPRedirectsGet300(t *testing.T) {
 }
 
 func TestHTTPRedirectsGet301(t *testing.T) {
-	client := getHTTPRedirectsOperations(t)
+	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPRedirectsOperations()
 	result, err := client.Get301(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
@@ -55,7 +47,7 @@ func TestHTTPRedirectsGet301(t *testing.T) {
 }
 
 func TestHTTPRedirectsGet302(t *testing.T) {
-	client := getHTTPRedirectsOperations(t)
+	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPRedirectsOperations()
 	result, err := client.Get302(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
@@ -64,7 +56,7 @@ func TestHTTPRedirectsGet302(t *testing.T) {
 }
 
 func TestHTTPRedirectsGet307(t *testing.T) {
-	client := getHTTPRedirectsOperations(t)
+	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPRedirectsOperations()
 	result, err := client.Get307(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
@@ -74,7 +66,7 @@ func TestHTTPRedirectsGet307(t *testing.T) {
 
 func TestHTTPRedirectsHead300(t *testing.T) {
 	t.Skip("does not automatically redirect")
-	client := getHTTPRedirectsOperations(t)
+	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPRedirectsOperations()
 	result, err := client.Head300(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
@@ -83,7 +75,7 @@ func TestHTTPRedirectsHead300(t *testing.T) {
 }
 
 func TestHTTPRedirectsHead301(t *testing.T) {
-	client := getHTTPRedirectsOperations(t)
+	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPRedirectsOperations()
 	result, err := client.Head301(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
@@ -92,7 +84,7 @@ func TestHTTPRedirectsHead301(t *testing.T) {
 }
 
 func TestHTTPRedirectsHead302(t *testing.T) {
-	client := getHTTPRedirectsOperations(t)
+	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPRedirectsOperations()
 	result, err := client.Head302(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
@@ -101,7 +93,7 @@ func TestHTTPRedirectsHead302(t *testing.T) {
 }
 
 func TestHTTPRedirectsHead307(t *testing.T) {
-	client := getHTTPRedirectsOperations(t)
+	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPRedirectsOperations()
 	result, err := client.Head307(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
@@ -111,7 +103,7 @@ func TestHTTPRedirectsHead307(t *testing.T) {
 
 func TestHTTPRedirectsOptions307(t *testing.T) {
 	t.Skip("receive a status code of 204 which is not expected")
-	client := getHTTPRedirectsOperations(t)
+	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPRedirectsOperations()
 	result, err := client.Options307(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
@@ -121,7 +113,7 @@ func TestHTTPRedirectsOptions307(t *testing.T) {
 
 func TestHTTPRedirectsPatch302(t *testing.T) {
 	t.Skip("HTTP client automatically redirects, test server doesn't expect it")
-	client := getHTTPRedirectsOperations(t)
+	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPRedirectsOperations()
 	result, err := client.Patch302(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
@@ -130,7 +122,7 @@ func TestHTTPRedirectsPatch302(t *testing.T) {
 }
 
 func TestHTTPRedirectsPatch307(t *testing.T) {
-	client := getHTTPRedirectsOperations(t)
+	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPRedirectsOperations()
 	result, err := client.Patch307(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
@@ -139,7 +131,7 @@ func TestHTTPRedirectsPatch307(t *testing.T) {
 }
 
 func TestHTTPRedirectsPost303(t *testing.T) {
-	client := getHTTPRedirectsOperations(t)
+	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPRedirectsOperations()
 	result, err := client.Post303(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
@@ -148,7 +140,7 @@ func TestHTTPRedirectsPost303(t *testing.T) {
 }
 
 func TestHTTPRedirectsPost307(t *testing.T) {
-	client := getHTTPRedirectsOperations(t)
+	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPRedirectsOperations()
 	result, err := client.Post307(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
@@ -158,7 +150,7 @@ func TestHTTPRedirectsPost307(t *testing.T) {
 
 func TestHTTPRedirectsPut301(t *testing.T) {
 	t.Skip("HTTP client automatically redirects, test server doesn't expect it")
-	client := getHTTPRedirectsOperations(t)
+	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPRedirectsOperations()
 	result, err := client.Put301(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
@@ -167,7 +159,7 @@ func TestHTTPRedirectsPut301(t *testing.T) {
 }
 
 func TestHTTPRedirectsPut307(t *testing.T) {
-	client := getHTTPRedirectsOperations(t)
+	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPRedirectsOperations()
 	result, err := client.Put307(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)

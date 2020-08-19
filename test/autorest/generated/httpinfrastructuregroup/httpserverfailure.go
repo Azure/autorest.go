@@ -9,7 +9,7 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
-	"path"
+	"net/url"
 )
 
 // HTTPServerFailureOperations contains the methods for the HTTPServerFailure group.
@@ -48,8 +48,12 @@ func (client *httpServerFailureOperations) Delete505(ctx context.Context) (*http
 
 // delete505CreateRequest creates the Delete505 request.
 func (client *httpServerFailureOperations) delete505CreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/http/failure/server/505"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -90,8 +94,12 @@ func (client *httpServerFailureOperations) Get501(ctx context.Context) (*http.Re
 
 // get501CreateRequest creates the Get501 request.
 func (client *httpServerFailureOperations) get501CreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/http/failure/server/501"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -132,8 +140,12 @@ func (client *httpServerFailureOperations) Head501(ctx context.Context) (*http.R
 
 // head501CreateRequest creates the Head501 request.
 func (client *httpServerFailureOperations) head501CreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/http/failure/server/501"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -174,8 +186,12 @@ func (client *httpServerFailureOperations) Post505(ctx context.Context) (*http.R
 
 // post505CreateRequest creates the Post505 request.
 func (client *httpServerFailureOperations) post505CreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/http/failure/server/505"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}

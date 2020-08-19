@@ -13,16 +13,8 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func getPathItemsClient(t *testing.T) *urlgroup.Client {
-	client, err := urlgroup.NewDefaultClient(nil)
-	if err != nil {
-		t.Fatalf("failed to create enum client: %v", err)
-	}
-	return client
-}
-
 func TestGetAllWithValues(t *testing.T) {
-	client := getPathItemsClient(t)
+	client := urlgroup.NewDefaultClient(nil)
 	grp := client.PathItemsOperations("globalStringPath", to.StringPtr("globalStringQuery"))
 	result, err := grp.GetAllWithValues(context.Background(), "pathItemStringPath", "localStringPath", &urlgroup.PathItemsGetAllWithValuesOptions{
 		LocalStringQuery:    to.StringPtr("localStringQuery"),
@@ -35,7 +27,7 @@ func TestGetAllWithValues(t *testing.T) {
 }
 
 func TestGetGlobalAndLocalQueryNull(t *testing.T) {
-	client := getPathItemsClient(t)
+	client := urlgroup.NewDefaultClient(nil)
 	grp := client.PathItemsOperations("globalStringPath", nil)
 	result, err := grp.GetGlobalAndLocalQueryNull(context.Background(), "pathItemStringPath", "localStringPath", &urlgroup.PathItemsGetGlobalAndLocalQueryNullOptions{
 		PathItemStringQuery: to.StringPtr("pathItemStringQuery"),
@@ -47,7 +39,7 @@ func TestGetGlobalAndLocalQueryNull(t *testing.T) {
 }
 
 func TestGetGlobalQueryNull(t *testing.T) {
-	client := getPathItemsClient(t)
+	client := urlgroup.NewDefaultClient(nil)
 	grp := client.PathItemsOperations("globalStringPath", nil)
 	result, err := grp.GetGlobalQueryNull(context.Background(), "pathItemStringPath", "localStringPath", &urlgroup.PathItemsGetGlobalQueryNullOptions{
 		LocalStringQuery:    to.StringPtr("localStringQuery"),
@@ -60,7 +52,7 @@ func TestGetGlobalQueryNull(t *testing.T) {
 }
 
 func TestGetLocalPathItemQueryNull(t *testing.T) {
-	client := getPathItemsClient(t)
+	client := urlgroup.NewDefaultClient(nil)
 	grp := client.PathItemsOperations("globalStringPath", to.StringPtr("globalStringQuery"))
 	result, err := grp.GetLocalPathItemQueryNull(context.Background(), "pathItemStringPath", "localStringPath", nil)
 	if err != nil {

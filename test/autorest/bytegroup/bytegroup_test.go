@@ -11,16 +11,8 @@ import (
 	"testing"
 )
 
-func getByteClient(t *testing.T) bytegroup.ByteOperations {
-	client, err := bytegroup.NewDefaultClient(nil)
-	if err != nil {
-		t.Fatalf("failed to create byte client: %v", err)
-	}
-	return client.ByteOperations()
-}
-
 func TestGetEmpty(t *testing.T) {
-	client := getByteClient(t)
+	client := bytegroup.NewDefaultClient(nil).ByteOperations()
 	result, err := client.GetEmpty(context.Background())
 	if err != nil {
 		t.Fatalf("GetEmpty: %v", err)
@@ -30,7 +22,7 @@ func TestGetEmpty(t *testing.T) {
 }
 
 func TestGetInvalid(t *testing.T) {
-	client := getByteClient(t)
+	client := bytegroup.NewDefaultClient(nil).ByteOperations()
 	result, err := client.GetInvalid(context.Background())
 	// TODO: verify error response is clear and actionable
 	if err == nil {
@@ -42,7 +34,7 @@ func TestGetInvalid(t *testing.T) {
 }
 
 func TestGetNonASCII(t *testing.T) {
-	client := getByteClient(t)
+	client := bytegroup.NewDefaultClient(nil).ByteOperations()
 	result, err := client.GetNonASCII(context.Background())
 	if err != nil {
 		t.Fatalf("GetNonASCII: %v", err)
@@ -52,7 +44,7 @@ func TestGetNonASCII(t *testing.T) {
 }
 
 func TestGetNull(t *testing.T) {
-	client := getByteClient(t)
+	client := bytegroup.NewDefaultClient(nil).ByteOperations()
 	result, err := client.GetNull(context.Background())
 	if err != nil {
 		t.Fatalf("GetNull: %v", err)
@@ -62,7 +54,7 @@ func TestGetNull(t *testing.T) {
 }
 
 func TestPutNonASCII(t *testing.T) {
-	client := getByteClient(t)
+	client := bytegroup.NewDefaultClient(nil).ByteOperations()
 	result, err := client.PutNonASCII(context.Background(), []byte{0xFF, 0xFE, 0xFD, 0xFC, 0xFB, 0xFA, 0xF9, 0xF8, 0xF7, 0xF6})
 	if err != nil {
 		t.Fatalf("PutNonASCII: %v", err)

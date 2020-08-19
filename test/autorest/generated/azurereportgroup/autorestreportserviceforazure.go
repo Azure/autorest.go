@@ -9,7 +9,7 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
-	"path"
+	"net/url"
 )
 
 // AutoRestReportServiceForAzureOperations contains the methods for the AutoRestReportServiceForAzure group.
@@ -42,8 +42,12 @@ func (client *autoRestReportServiceForAzureOperations) GetReport(ctx context.Con
 
 // getReportCreateRequest creates the GetReport request.
 func (client *autoRestReportServiceForAzureOperations) getReportCreateRequest(autoRestReportServiceForAzureGetReportOptions *AutoRestReportServiceForAzureGetReportOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/report/azure"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}

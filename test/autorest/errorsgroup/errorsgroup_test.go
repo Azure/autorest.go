@@ -14,19 +14,16 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func getClient(t *testing.T) errorsgroup.PetOperations {
+func getClient() errorsgroup.PetOperations {
 	options := errorsgroup.DefaultClientOptions()
 	options.Retry.MaxRetryDelay = 20 * time.Millisecond
-	client, err := errorsgroup.NewClient("http://localhost:3000", &options)
-	if err != nil {
-		t.Fatalf("failed to create client: %v", err)
-	}
+	client := errorsgroup.NewClient("http://localhost:3000", &options)
 	return client.PetOperations()
 }
 
 // DoSomething - Asks pet to do something
 func TestDoSomethingSuccess(t *testing.T) {
-	client := getClient(t)
+	client := getClient()
 	result, err := client.DoSomething(context.Background(), "stay")
 	if err != nil {
 		t.Fatal(err)
@@ -36,7 +33,7 @@ func TestDoSomethingSuccess(t *testing.T) {
 }
 
 func TestDoSomethingError1(t *testing.T) {
-	client := getClient(t)
+	client := getClient()
 	result, err := client.DoSomething(context.Background(), "jump")
 	sadErr, ok := err.(*errorsgroup.PetSadError)
 	if !ok {
@@ -55,7 +52,7 @@ func TestDoSomethingError1(t *testing.T) {
 }
 
 func TestDoSomethingError2(t *testing.T) {
-	client := getClient(t)
+	client := getClient()
 	result, err := client.DoSomething(context.Background(), "fetch")
 	hungrErr, ok := err.(*errorsgroup.PetHungryOrThirstyError)
 	if !ok {
@@ -77,7 +74,7 @@ func TestDoSomethingError2(t *testing.T) {
 }
 
 func TestDoSomethingError3(t *testing.T) {
-	client := getClient(t)
+	client := getClient()
 	result, err := client.DoSomething(context.Background(), "unknown")
 	actErr, ok := err.(*errorsgroup.PetActionError)
 	if !ok {
@@ -91,7 +88,7 @@ func TestDoSomethingError3(t *testing.T) {
 
 // GetPetByID - Gets pets by id.
 func TestGetPetByIDSuccess1(t *testing.T) {
-	client := getClient(t)
+	client := getClient()
 	result, err := client.GetPetByID(context.Background(), "tommy")
 	if err != nil {
 		t.Fatal(err)
@@ -105,7 +102,7 @@ func TestGetPetByIDSuccess1(t *testing.T) {
 }
 
 func TestGetPetByIDSuccess2(t *testing.T) {
-	client := getClient(t)
+	client := getClient()
 	result, err := client.GetPetByID(context.Background(), "django")
 	if err != nil {
 		t.Fatal(err)
@@ -114,7 +111,7 @@ func TestGetPetByIDSuccess2(t *testing.T) {
 }
 
 func TestGetPetByIDError1(t *testing.T) {
-	client := getClient(t)
+	client := getClient()
 	result, err := client.GetPetByID(context.Background(), "coyoteUgly")
 	anfe, ok := err.(*errorsgroup.AnimalNotFound)
 	if !ok {
@@ -136,7 +133,7 @@ func TestGetPetByIDError1(t *testing.T) {
 }
 
 func TestGetPetByIDError2(t *testing.T) {
-	client := getClient(t)
+	client := getClient()
 	result, err := client.GetPetByID(context.Background(), "weirdAlYankovic")
 	lnfe, ok := err.(*errorsgroup.LinkNotFound)
 	if !ok {
@@ -158,7 +155,7 @@ func TestGetPetByIDError2(t *testing.T) {
 }
 
 func TestGetPetByIDError3(t *testing.T) {
-	client := getClient(t)
+	client := getClient()
 	result, err := client.GetPetByID(context.Background(), "ringo")
 	if err == nil {
 		t.Fatal("unexpected nil error")
@@ -173,7 +170,7 @@ func TestGetPetByIDError3(t *testing.T) {
 }
 
 func TestGetPetByIDError4(t *testing.T) {
-	client := getClient(t)
+	client := getClient()
 	result, err := client.GetPetByID(context.Background(), "alien123")
 	if err == nil {
 		t.Fatal("unexpected nil error")
@@ -188,7 +185,7 @@ func TestGetPetByIDError4(t *testing.T) {
 }
 
 func TestGetPetByIDError5(t *testing.T) {
-	client := getClient(t)
+	client := getClient()
 	result, err := client.GetPetByID(context.Background(), "unknown")
 	// default generic error (no schema)
 	helpers.DeepEqualOrFatal(t, err.Error(), "That's all folks!!")

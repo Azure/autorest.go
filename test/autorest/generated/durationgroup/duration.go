@@ -9,7 +9,7 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
-	"path"
+	"net/url"
 )
 
 // DurationOperations contains the methods for the Duration group.
@@ -48,8 +48,12 @@ func (client *durationOperations) GetInvalid(ctx context.Context) (*StringRespon
 
 // getInvalidCreateRequest creates the GetInvalid request.
 func (client *durationOperations) getInvalidCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/duration/invalid"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -94,8 +98,12 @@ func (client *durationOperations) GetNull(ctx context.Context) (*StringResponse,
 
 // getNullCreateRequest creates the GetNull request.
 func (client *durationOperations) getNullCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/duration/null"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -140,8 +148,12 @@ func (client *durationOperations) GetPositiveDuration(ctx context.Context) (*Str
 
 // getPositiveDurationCreateRequest creates the GetPositiveDuration request.
 func (client *durationOperations) getPositiveDurationCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/duration/positiveduration"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -186,8 +198,12 @@ func (client *durationOperations) PutPositiveDuration(ctx context.Context, durat
 
 // putPositiveDurationCreateRequest creates the PutPositiveDuration request.
 func (client *durationOperations) putPositiveDurationCreateRequest(durationBody string) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/duration/positiveduration"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}

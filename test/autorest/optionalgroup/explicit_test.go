@@ -11,16 +11,8 @@ import (
 	"testing"
 )
 
-func getExplicitClient(t *testing.T) optionalgroup.ExplicitOperations {
-	client, err := optionalgroup.NewDefaultClient(nil)
-	if err != nil {
-		t.Fatalf("failed to create explicit client: %v", err)
-	}
-	return client.ExplicitOperations()
-}
-
 func TestExplicitPostOptionalArrayHeader(t *testing.T) {
-	client := getExplicitClient(t)
+	client := optionalgroup.NewDefaultClient(nil).ExplicitOperations()
 	result, err := client.PostOptionalArrayHeader(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("PostOptionalArrayHeader: %v", err)
@@ -29,7 +21,7 @@ func TestExplicitPostOptionalArrayHeader(t *testing.T) {
 }
 
 func TestExplicitPostOptionalArrayParameter(t *testing.T) {
-	client := getExplicitClient(t)
+	client := optionalgroup.NewDefaultClient(nil).ExplicitOperations()
 	result, err := client.PostOptionalArrayParameter(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("PostOptionalArrayParameter: %v", err)
@@ -38,7 +30,7 @@ func TestExplicitPostOptionalArrayParameter(t *testing.T) {
 }
 
 func TestExplicitPostOptionalArrayProperty(t *testing.T) {
-	client := getExplicitClient(t)
+	client := optionalgroup.NewDefaultClient(nil).ExplicitOperations()
 	result, err := client.PostOptionalArrayProperty(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("PostOptionalArrayProperty: %v", err)
@@ -47,7 +39,7 @@ func TestExplicitPostOptionalArrayProperty(t *testing.T) {
 }
 
 func TestExplicitPostOptionalClassParameter(t *testing.T) {
-	client := getExplicitClient(t)
+	client := optionalgroup.NewDefaultClient(nil).ExplicitOperations()
 	result, err := client.PostOptionalClassParameter(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("PostOptionalClassParameter: %v", err)
@@ -56,7 +48,7 @@ func TestExplicitPostOptionalClassParameter(t *testing.T) {
 }
 
 func TestExplicitPostOptionalClassProperty(t *testing.T) {
-	client := getExplicitClient(t)
+	client := optionalgroup.NewDefaultClient(nil).ExplicitOperations()
 	result, err := client.PostOptionalClassProperty(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("PostOptionalClassProperty: %v", err)
@@ -65,7 +57,7 @@ func TestExplicitPostOptionalClassProperty(t *testing.T) {
 }
 
 func TestExplicitPostOptionalIntegerHeader(t *testing.T) {
-	client := getExplicitClient(t)
+	client := optionalgroup.NewDefaultClient(nil).ExplicitOperations()
 	result, err := client.PostOptionalIntegerHeader(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("PostOptionalIntegerHeader: %v", err)
@@ -74,7 +66,7 @@ func TestExplicitPostOptionalIntegerHeader(t *testing.T) {
 }
 
 func TestExplicitPostOptionalIntegerParameter(t *testing.T) {
-	client := getExplicitClient(t)
+	client := optionalgroup.NewDefaultClient(nil).ExplicitOperations()
 	result, err := client.PostOptionalIntegerParameter(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("PostOptionalIntegerParameter: %v", err)
@@ -83,7 +75,7 @@ func TestExplicitPostOptionalIntegerParameter(t *testing.T) {
 }
 
 func TestExplicitPostOptionalIntegerProperty(t *testing.T) {
-	client := getExplicitClient(t)
+	client := optionalgroup.NewDefaultClient(nil).ExplicitOperations()
 	result, err := client.PostOptionalIntegerProperty(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("PostOptionalIntegerProperty: %v", err)
@@ -92,7 +84,7 @@ func TestExplicitPostOptionalIntegerProperty(t *testing.T) {
 }
 
 func TestExplicitPostOptionalStringHeader(t *testing.T) {
-	client := getExplicitClient(t)
+	client := optionalgroup.NewDefaultClient(nil).ExplicitOperations()
 	result, err := client.PostOptionalStringHeader(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("PostOptionalStringHeader: %v", err)
@@ -101,7 +93,7 @@ func TestExplicitPostOptionalStringHeader(t *testing.T) {
 }
 
 func TestExplicitPostOptionalStringParameter(t *testing.T) {
-	client := getExplicitClient(t)
+	client := optionalgroup.NewDefaultClient(nil).ExplicitOperations()
 	result, err := client.PostOptionalStringParameter(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("PostOptionalStringParameter: %v", err)
@@ -110,7 +102,7 @@ func TestExplicitPostOptionalStringParameter(t *testing.T) {
 }
 
 func TestExplicitPostOptionalStringProperty(t *testing.T) {
-	client := getExplicitClient(t)
+	client := optionalgroup.NewDefaultClient(nil).ExplicitOperations()
 	result, err := client.PostOptionalStringProperty(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("PostOptionalStringProperty: %v", err)
@@ -121,7 +113,7 @@ func TestExplicitPostOptionalStringProperty(t *testing.T) {
 // TODO the goal of this test is to throw an exception but nils are acceptable for  []strings in go
 func TestExplicitPostRequiredArrayHeader(t *testing.T) {
 	t.Skip("are not validating parameters in track2")
-	client := getExplicitClient(t)
+	client := optionalgroup.NewDefaultClient(nil).ExplicitOperations()
 	result, err := client.PostRequiredArrayHeader(context.Background(), nil)
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
@@ -134,7 +126,7 @@ func TestExplicitPostRequiredArrayHeader(t *testing.T) {
 // TODO the goal of this test is to throw an exception but nils are acceptable for  []strings in go
 func TestExplicitPostRequiredArrayParameter(t *testing.T) {
 	t.Skip("are not validating parameters in track2")
-	client := getExplicitClient(t)
+	client := optionalgroup.NewDefaultClient(nil).ExplicitOperations()
 	result, err := client.PostRequiredArrayParameter(context.Background(), nil)
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
@@ -146,7 +138,7 @@ func TestExplicitPostRequiredArrayParameter(t *testing.T) {
 
 func TestExplicitPostRequiredArrayProperty(t *testing.T) {
 	t.Skip("are not validating parameters in track2")
-	client := getExplicitClient(t)
+	client := optionalgroup.NewDefaultClient(nil).ExplicitOperations()
 	result, err := client.PostRequiredArrayProperty(context.Background(), optionalgroup.ArrayWrapper{Value: nil})
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
@@ -159,7 +151,7 @@ func TestExplicitPostRequiredArrayProperty(t *testing.T) {
 // TODO check this test
 func TestExplicitPostRequiredClassParameter(t *testing.T) {
 	t.Skip("are not validating parameters in track2")
-	client := getExplicitClient(t)
+	client := optionalgroup.NewDefaultClient(nil).ExplicitOperations()
 	result, err := client.PostRequiredClassParameter(context.Background(), optionalgroup.Product{})
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
@@ -171,7 +163,7 @@ func TestExplicitPostRequiredClassParameter(t *testing.T) {
 
 func TestExplicitPostRequiredClassProperty(t *testing.T) {
 	t.Skip("are not validating parameters in track2")
-	client := getExplicitClient(t)
+	client := optionalgroup.NewDefaultClient(nil).ExplicitOperations()
 	result, err := client.PostRequiredClassProperty(context.Background(), optionalgroup.ClassWrapper{})
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
@@ -184,7 +176,7 @@ func TestExplicitPostRequiredClassProperty(t *testing.T) {
 // TODO check this test is does pass if we query the endpoint but that is not the expected behavior
 func TestExplicitPostRequiredIntegerHeader(t *testing.T) {
 	t.Skip("cannot set nil for int32 in Go")
-	client := getExplicitClient(t)
+	client := optionalgroup.NewDefaultClient(nil).ExplicitOperations()
 	result, err := client.PostRequiredIntegerHeader(context.Background(), 0)
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
@@ -197,7 +189,7 @@ func TestExplicitPostRequiredIntegerHeader(t *testing.T) {
 // TODO check this test is does pass if we query the endpoint but that is not the expected behavior
 func TestExplicitPostRequiredIntegerParameter(t *testing.T) {
 	t.Skip("cannot set nil for int32 in Go")
-	client := getExplicitClient(t)
+	client := optionalgroup.NewDefaultClient(nil).ExplicitOperations()
 	result, err := client.PostRequiredIntegerParameter(context.Background(), 0)
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
@@ -210,7 +202,7 @@ func TestExplicitPostRequiredIntegerParameter(t *testing.T) {
 // TODO check this test is does pass if we query the endpoint but that is not the expected behavior
 func TestExplicitPostRequiredIntegerProperty(t *testing.T) {
 	t.Skip("are not validating parameters in track2")
-	client := getExplicitClient(t)
+	client := optionalgroup.NewDefaultClient(nil).ExplicitOperations()
 	result, err := client.PostRequiredIntegerProperty(context.Background(), optionalgroup.IntWrapper{})
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
@@ -223,7 +215,7 @@ func TestExplicitPostRequiredIntegerProperty(t *testing.T) {
 // TODO check this test is does pass if we query the endpoint but that is not the expected behavior
 func TestExplicitPostRequiredStringHeader(t *testing.T) {
 	t.Skip("cannot set nil for string in Go")
-	client := getExplicitClient(t)
+	client := optionalgroup.NewDefaultClient(nil).ExplicitOperations()
 	result, err := client.PostRequiredStringHeader(context.Background(), "")
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
@@ -236,7 +228,7 @@ func TestExplicitPostRequiredStringHeader(t *testing.T) {
 // TODO check this test is does pass if we query the endpoint but that is not the expected behavior
 func TestExplicitPostRequiredStringParameter(t *testing.T) {
 	t.Skip("cannot set nil for string in Go")
-	client := getExplicitClient(t)
+	client := optionalgroup.NewDefaultClient(nil).ExplicitOperations()
 	result, err := client.PostRequiredStringParameter(context.Background(), "")
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
@@ -249,7 +241,7 @@ func TestExplicitPostRequiredStringParameter(t *testing.T) {
 // TODO check this test is does pass if we query the endpoint but that is not the expected behavior
 func TestExplicitPostRequiredStringProperty(t *testing.T) {
 	t.Skip("are not validating parameters in track2")
-	client := getExplicitClient(t)
+	client := optionalgroup.NewDefaultClient(nil).ExplicitOperations()
 	result, err := client.PostRequiredStringProperty(context.Background(), optionalgroup.StringWrapper{})
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")

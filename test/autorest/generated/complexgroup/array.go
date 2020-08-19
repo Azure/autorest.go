@@ -9,7 +9,7 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
-	"path"
+	"net/url"
 )
 
 // ArrayOperations contains the methods for the Array group.
@@ -50,8 +50,12 @@ func (client *arrayOperations) GetEmpty(ctx context.Context) (*ArrayWrapperRespo
 
 // getEmptyCreateRequest creates the GetEmpty request.
 func (client *arrayOperations) getEmptyCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/complex/array/empty"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -96,8 +100,12 @@ func (client *arrayOperations) GetNotProvided(ctx context.Context) (*ArrayWrappe
 
 // getNotProvidedCreateRequest creates the GetNotProvided request.
 func (client *arrayOperations) getNotProvidedCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/complex/array/notprovided"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -142,8 +150,12 @@ func (client *arrayOperations) GetValid(ctx context.Context) (*ArrayWrapperRespo
 
 // getValidCreateRequest creates the GetValid request.
 func (client *arrayOperations) getValidCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/complex/array/valid"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -188,8 +200,12 @@ func (client *arrayOperations) PutEmpty(ctx context.Context, complexBody ArrayWr
 
 // putEmptyCreateRequest creates the PutEmpty request.
 func (client *arrayOperations) putEmptyCreateRequest(complexBody ArrayWrapper) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/complex/array/empty"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -233,8 +249,12 @@ func (client *arrayOperations) PutValid(ctx context.Context, complexBody ArrayWr
 
 // putValidCreateRequest creates the PutValid request.
 func (client *arrayOperations) putValidCreateRequest(complexBody ArrayWrapper) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/complex/array/valid"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}

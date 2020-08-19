@@ -9,16 +9,8 @@ import (
 	"testing"
 )
 
-func getOperations(t *testing.T) complexmodelgroup.ComplexModelClientOperations {
-	client, err := complexmodelgroup.NewDefaultClient(nil)
-	if err != nil {
-		t.Fatalf("failed to create complex client: %v", err)
-	}
-	return client.ComplexModelClientOperations()
-}
-
 func TestCreate(t *testing.T) {
-	client := getOperations(t)
+	client := complexmodelgroup.NewDefaultClient(nil).ComplexModelClientOperations()
 	_, err := client.Create(context.Background(), "sub", "rg", complexmodelgroup.CatalogDictionaryOfArray{})
 	if err == nil {
 		t.Fatal("unexpected nil error")
@@ -26,7 +18,7 @@ func TestCreate(t *testing.T) {
 }
 
 func TestList(t *testing.T) {
-	client := getOperations(t)
+	client := complexmodelgroup.NewDefaultClient(nil).ComplexModelClientOperations()
 	_, err := client.List(context.Background(), "")
 	if err == nil {
 		t.Fatal("unexpected nil error")
@@ -34,7 +26,7 @@ func TestList(t *testing.T) {
 }
 
 func TestUpdate(t *testing.T) {
-	client := getOperations(t)
+	client := complexmodelgroup.NewDefaultClient(nil).ComplexModelClientOperations()
 	_, err := client.Update(context.Background(), "", "", complexmodelgroup.CatalogArrayOfDictionary{})
 	if err == nil {
 		t.Fatal("unexpected nil error")

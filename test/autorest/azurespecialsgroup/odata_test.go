@@ -13,17 +13,9 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func getOdataOperations(t *testing.T) azurespecialsgroup.OdataOperations {
-	client, err := azurespecialsgroup.NewDefaultClient(nil)
-	if err != nil {
-		t.Fatalf("failed to create client: %v", err)
-	}
-	return client.OdataOperations()
-}
-
 // GetWithFilter - Specify filter parameter with value '$filter=id gt 5 and name eq 'foo'&$orderby=id&$top=10'
 func TestGetWithFilter(t *testing.T) {
-	client := getOdataOperations(t)
+	client := azurespecialsgroup.NewDefaultClient(nil).OdataOperations()
 	result, err := client.GetWithFilter(context.Background(), &azurespecialsgroup.OdataGetWithFilterOptions{
 		Filter:  to.StringPtr("id gt 5 and name eq 'foo'"),
 		Orderby: to.StringPtr("id"),

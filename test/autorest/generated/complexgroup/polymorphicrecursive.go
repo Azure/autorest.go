@@ -9,7 +9,7 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
-	"path"
+	"net/url"
 )
 
 // PolymorphicrecursiveOperations contains the methods for the Polymorphicrecursive group.
@@ -44,8 +44,12 @@ func (client *polymorphicrecursiveOperations) GetValid(ctx context.Context) (*Fi
 
 // getValidCreateRequest creates the GetValid request.
 func (client *polymorphicrecursiveOperations) getValidCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/complex/polymorphicrecursive/valid"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -90,8 +94,12 @@ func (client *polymorphicrecursiveOperations) PutValid(ctx context.Context, comp
 
 // putValidCreateRequest creates the PutValid request.
 func (client *polymorphicrecursiveOperations) putValidCreateRequest(complexBody FishClassification) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/complex/polymorphicrecursive/valid"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}

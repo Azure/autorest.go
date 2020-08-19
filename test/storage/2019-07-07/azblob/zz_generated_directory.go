@@ -9,6 +9,7 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
+	"net/url"
 	"strconv"
 	"time"
 )
@@ -52,8 +53,10 @@ func (client *directoryOperations) Create(ctx context.Context, directoryCreateOp
 
 // createCreateRequest creates the Create request.
 func (client *directoryOperations) createCreateRequest(directoryCreateOptions *DirectoryCreateOptions, directoryHttpHeaders *DirectoryHttpHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
-	copy := *client.u
-	u := &copy
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	query := u.Query()
 	query.Set("resource", "directory")
 	if directoryCreateOptions != nil && directoryCreateOptions.Timeout != nil {
@@ -177,8 +180,10 @@ func (client *directoryOperations) Delete(ctx context.Context, recursiveDirector
 
 // deleteCreateRequest creates the Delete request.
 func (client *directoryOperations) deleteCreateRequest(recursiveDirectoryDelete bool, directoryDeleteOptions *DirectoryDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
-	copy := *client.u
-	u := &copy
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	query := u.Query()
 	if directoryDeleteOptions != nil && directoryDeleteOptions.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*directoryDeleteOptions.Timeout), 10))
@@ -267,8 +272,10 @@ func (client *directoryOperations) GetAccessControl(ctx context.Context, directo
 
 // getAccessControlCreateRequest creates the GetAccessControl request.
 func (client *directoryOperations) getAccessControlCreateRequest(directoryGetAccessControlOptions *DirectoryGetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
-	copy := *client.u
-	u := &copy
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	query := u.Query()
 	query.Set("action", "getAccessControl")
 	if directoryGetAccessControlOptions != nil && directoryGetAccessControlOptions.Timeout != nil {
@@ -373,8 +380,10 @@ func (client *directoryOperations) Rename(ctx context.Context, renameSource stri
 
 // renameCreateRequest creates the Rename request.
 func (client *directoryOperations) renameCreateRequest(renameSource string, directoryRenameOptions *DirectoryRenameOptions, directoryHttpHeaders *DirectoryHttpHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*azcore.Request, error) {
-	copy := *client.u
-	u := &copy
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	query := u.Query()
 	if directoryRenameOptions != nil && directoryRenameOptions.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*directoryRenameOptions.Timeout), 10))
@@ -522,8 +531,10 @@ func (client *directoryOperations) SetAccessControl(ctx context.Context, directo
 
 // setAccessControlCreateRequest creates the SetAccessControl request.
 func (client *directoryOperations) setAccessControlCreateRequest(directorySetAccessControlOptions *DirectorySetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
-	copy := *client.u
-	u := &copy
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	query := u.Query()
 	query.Set("action", "setAccessControl")
 	if directorySetAccessControlOptions != nil && directorySetAccessControlOptions.Timeout != nil {

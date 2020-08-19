@@ -14,14 +14,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func getXMLClient(t *testing.T) xmlgroup.XMLOperations {
-	client, err := xmlgroup.NewDefaultClient(nil)
-	if err != nil {
-		t.Fatalf("failed to create byte client: %v", err)
-	}
-	return client.XMLOperations()
-}
-
 func toTimePtr(layout string, value string) *time.Time {
 	t, err := time.Parse(layout, value)
 	if err != nil {
@@ -31,7 +23,7 @@ func toTimePtr(layout string, value string) *time.Time {
 }
 
 func TestGetACLs(t *testing.T) {
-	client := getXMLClient(t)
+	client := xmlgroup.NewDefaultClient(nil).XMLOperations()
 	result, err := client.GetACLs(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -51,7 +43,7 @@ func TestGetACLs(t *testing.T) {
 }
 
 func TestGetComplexTypeRefNoMeta(t *testing.T) {
-	client := getXMLClient(t)
+	client := xmlgroup.NewDefaultClient(nil).XMLOperations()
 	result, err := client.GetComplexTypeRefNoMeta(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -67,7 +59,7 @@ func TestGetComplexTypeRefNoMeta(t *testing.T) {
 }
 
 func TestGetComplexTypeRefWithMeta(t *testing.T) {
-	client := getXMLClient(t)
+	client := xmlgroup.NewDefaultClient(nil).XMLOperations()
 	result, err := client.GetComplexTypeRefWithMeta(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -82,7 +74,7 @@ func TestGetComplexTypeRefWithMeta(t *testing.T) {
 }
 
 func TestGetEmptyChildElement(t *testing.T) {
-	client := getXMLClient(t)
+	client := xmlgroup.NewDefaultClient(nil).XMLOperations()
 	result, err := client.GetEmptyChildElement(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -97,7 +89,7 @@ func TestGetEmptyChildElement(t *testing.T) {
 }
 
 func TestGetEmptyList(t *testing.T) {
-	client := getXMLClient(t)
+	client := xmlgroup.NewDefaultClient(nil).XMLOperations()
 	result, err := client.GetEmptyList(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -108,7 +100,7 @@ func TestGetEmptyList(t *testing.T) {
 }
 
 func TestGetEmptyRootList(t *testing.T) {
-	client := getXMLClient(t)
+	client := xmlgroup.NewDefaultClient(nil).XMLOperations()
 	result, err := client.GetEmptyRootList(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -120,7 +112,7 @@ func TestGetEmptyRootList(t *testing.T) {
 }
 
 func TestGetEmptyWrappedLists(t *testing.T) {
-	client := getXMLClient(t)
+	client := xmlgroup.NewDefaultClient(nil).XMLOperations()
 	result, err := client.GetEmptyWrappedLists(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -131,7 +123,7 @@ func TestGetEmptyWrappedLists(t *testing.T) {
 }
 
 func TestGetHeaders(t *testing.T) {
-	client := getXMLClient(t)
+	client := xmlgroup.NewDefaultClient(nil).XMLOperations()
 	result, err := client.GetHeaders(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -140,7 +132,7 @@ func TestGetHeaders(t *testing.T) {
 }
 
 func TestGetRootList(t *testing.T) {
-	client := getXMLClient(t)
+	client := xmlgroup.NewDefaultClient(nil).XMLOperations()
 	result, err := client.GetRootList(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -162,7 +154,7 @@ func TestGetRootList(t *testing.T) {
 }
 
 func TestGetRootListSingleItem(t *testing.T) {
-	client := getXMLClient(t)
+	client := xmlgroup.NewDefaultClient(nil).XMLOperations()
 	result, err := client.GetRootListSingleItem(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -179,7 +171,7 @@ func TestGetRootListSingleItem(t *testing.T) {
 }
 
 func TestGetServiceProperties(t *testing.T) {
-	client := getXMLClient(t)
+	client := xmlgroup.NewDefaultClient(nil).XMLOperations()
 	result, err := client.GetServiceProperties(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -219,7 +211,7 @@ func TestGetServiceProperties(t *testing.T) {
 }
 
 func TestGetSimple(t *testing.T) {
-	client := getXMLClient(t)
+	client := xmlgroup.NewDefaultClient(nil).XMLOperations()
 	result, err := client.GetSimple(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -245,7 +237,7 @@ func TestGetSimple(t *testing.T) {
 }
 
 func TestGetWrappedLists(t *testing.T) {
-	client := getXMLClient(t)
+	client := xmlgroup.NewDefaultClient(nil).XMLOperations()
 	result, err := client.GetWrappedLists(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -259,7 +251,7 @@ func TestGetWrappedLists(t *testing.T) {
 }
 
 func TestJSONInput(t *testing.T) {
-	client := getXMLClient(t)
+	client := xmlgroup.NewDefaultClient(nil).XMLOperations()
 	result, err := client.JSONInput(context.Background(), xmlgroup.JSONInput{
 		ID: to.Int32Ptr(42),
 	})
@@ -270,7 +262,7 @@ func TestJSONInput(t *testing.T) {
 }
 
 func TestJSONOutput(t *testing.T) {
-	client := getXMLClient(t)
+	client := xmlgroup.NewDefaultClient(nil).XMLOperations()
 	result, err := client.JSONOutput(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -282,7 +274,7 @@ func TestJSONOutput(t *testing.T) {
 }
 
 func TestListBlobs(t *testing.T) {
-	client := getXMLClient(t)
+	client := xmlgroup.NewDefaultClient(nil).XMLOperations()
 	result, err := client.ListBlobs(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -409,7 +401,7 @@ func TestListBlobs(t *testing.T) {
 }
 
 func TestListContainers(t *testing.T) {
-	client := getXMLClient(t)
+	client := xmlgroup.NewDefaultClient(nil).XMLOperations()
 	result, err := client.ListContainers(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -448,7 +440,7 @@ func TestListContainers(t *testing.T) {
 }
 
 func TestPutACLs(t *testing.T) {
-	client := getXMLClient(t)
+	client := xmlgroup.NewDefaultClient(nil).XMLOperations()
 	result, err := client.PutACLs(context.Background(), []xmlgroup.SignedIDentifier{
 		{
 			ID: to.StringPtr("MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI="),
@@ -466,7 +458,7 @@ func TestPutACLs(t *testing.T) {
 }
 
 func TestPutComplexTypeRefNoMeta(t *testing.T) {
-	client := getXMLClient(t)
+	client := xmlgroup.NewDefaultClient(nil).XMLOperations()
 	result, err := client.PutComplexTypeRefNoMeta(context.Background(), xmlgroup.RootWithRefAndNoMeta{
 		RefToModel: &xmlgroup.ComplexTypeNoMeta{
 			ID: to.StringPtr("myid"),
@@ -480,7 +472,7 @@ func TestPutComplexTypeRefNoMeta(t *testing.T) {
 }
 
 func TestPutComplexTypeRefWithMeta(t *testing.T) {
-	client := getXMLClient(t)
+	client := xmlgroup.NewDefaultClient(nil).XMLOperations()
 	result, err := client.PutComplexTypeRefWithMeta(context.Background(), xmlgroup.RootWithRefAndMeta{
 		RefToModel: &xmlgroup.ComplexTypeWithMeta{
 			ID: to.StringPtr("myid"),
@@ -494,7 +486,7 @@ func TestPutComplexTypeRefWithMeta(t *testing.T) {
 }
 
 func TestPutEmptyChildElement(t *testing.T) {
-	client := getXMLClient(t)
+	client := xmlgroup.NewDefaultClient(nil).XMLOperations()
 	result, err := client.PutEmptyChildElement(context.Background(), xmlgroup.Banana{
 		Name:       to.StringPtr("Unknown Banana"),
 		Expiration: toTimePtr(time.RFC3339Nano, "2012-02-24T00:53:52.789Z"),
@@ -507,7 +499,7 @@ func TestPutEmptyChildElement(t *testing.T) {
 }
 
 func TestPutEmptyList(t *testing.T) {
-	client := getXMLClient(t)
+	client := xmlgroup.NewDefaultClient(nil).XMLOperations()
 	result, err := client.PutEmptyList(context.Background(), xmlgroup.Slideshow{
 		Slides: &[]xmlgroup.Slide{},
 	})
@@ -518,7 +510,7 @@ func TestPutEmptyList(t *testing.T) {
 }
 
 func TestPutEmptyRootList(t *testing.T) {
-	client := getXMLClient(t)
+	client := xmlgroup.NewDefaultClient(nil).XMLOperations()
 	result, err := client.PutEmptyRootList(context.Background(), []xmlgroup.Banana{})
 	if err != nil {
 		t.Fatal(err)
@@ -527,7 +519,7 @@ func TestPutEmptyRootList(t *testing.T) {
 }
 
 func TestPutEmptyWrappedLists(t *testing.T) {
-	client := getXMLClient(t)
+	client := xmlgroup.NewDefaultClient(nil).XMLOperations()
 	result, err := client.PutEmptyWrappedLists(context.Background(), xmlgroup.AppleBarrel{
 		BadApples:  &[]string{},
 		GoodApples: &[]string{},
@@ -539,7 +531,7 @@ func TestPutEmptyWrappedLists(t *testing.T) {
 }
 
 func TestPutRootList(t *testing.T) {
-	client := getXMLClient(t)
+	client := xmlgroup.NewDefaultClient(nil).XMLOperations()
 	result, err := client.PutRootList(context.Background(), []xmlgroup.Banana{
 		{
 			Name:       to.StringPtr("Cavendish"),
@@ -559,7 +551,7 @@ func TestPutRootList(t *testing.T) {
 }
 
 func TestPutRootListSingleItem(t *testing.T) {
-	client := getXMLClient(t)
+	client := xmlgroup.NewDefaultClient(nil).XMLOperations()
 	result, err := client.PutRootListSingleItem(context.Background(), []xmlgroup.Banana{
 		{
 			Name:       to.StringPtr("Cavendish"),
@@ -574,7 +566,7 @@ func TestPutRootListSingleItem(t *testing.T) {
 }
 
 func TestPutServiceProperties(t *testing.T) {
-	client := getXMLClient(t)
+	client := xmlgroup.NewDefaultClient(nil).XMLOperations()
 	result, err := client.PutServiceProperties(context.Background(), xmlgroup.StorageServiceProperties{
 		HourMetrics: &xmlgroup.Metrics{
 			Version:     to.StringPtr("1.0"),
@@ -612,7 +604,7 @@ func TestPutServiceProperties(t *testing.T) {
 }
 
 func TestPutSimple(t *testing.T) {
-	client := getXMLClient(t)
+	client := xmlgroup.NewDefaultClient(nil).XMLOperations()
 	result, err := client.PutSimple(context.Background(), xmlgroup.Slideshow{
 		Author: to.StringPtr("Yours Truly"),
 		Date:   to.StringPtr("Date of publication"),
@@ -636,7 +628,7 @@ func TestPutSimple(t *testing.T) {
 }
 
 func TestPutWrappedLists(t *testing.T) {
-	client := getXMLClient(t)
+	client := xmlgroup.NewDefaultClient(nil).XMLOperations()
 	result, err := client.PutWrappedLists(context.Background(), xmlgroup.AppleBarrel{
 		BadApples:  &[]string{"Red Delicious"},
 		GoodApples: &[]string{"Fuji", "Gala"},

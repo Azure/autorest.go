@@ -13,7 +13,6 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
-	"path"
 	"strconv"
 	"strings"
 )
@@ -52,9 +51,13 @@ func (client *autoRestValidationTestOperations) GetWithConstantInPath(ctx contex
 
 // getWithConstantInPathCreateRequest creates the GetWithConstantInPath request.
 func (client *autoRestValidationTestOperations) getWithConstantInPathCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/validation/constantsInPath/{constantParam}/value"
 	urlPath = strings.ReplaceAll(urlPath, "{constantParam}", url.PathEscape("constant"))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -100,9 +103,13 @@ func (client *autoRestValidationTestOperations) PostWithConstantInBody(ctx conte
 
 // postWithConstantInBodyCreateRequest creates the PostWithConstantInBody request.
 func (client *autoRestValidationTestOperations) postWithConstantInBodyCreateRequest(autoRestValidationTestPostWithConstantInBodyOptions *AutoRestValidationTestPostWithConstantInBodyOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/validation/constantsInPath/{constantParam}/value"
 	urlPath = strings.ReplaceAll(urlPath, "{constantParam}", url.PathEscape("constant"))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -153,11 +160,15 @@ func (client *autoRestValidationTestOperations) ValidationOfBody(ctx context.Con
 
 // validationOfBodyCreateRequest creates the ValidationOfBody request.
 func (client *autoRestValidationTestOperations) validationOfBodyCreateRequest(resourceGroupName string, id int32, autoRestValidationTestValidationOfBodyOptions *AutoRestValidationTestValidationOfBodyOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/fakepath/{subscriptionId}/{resourceGroupName}/{id}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{id}", url.PathEscape(strconv.FormatInt(int64(id), 10)))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -208,11 +219,15 @@ func (client *autoRestValidationTestOperations) ValidationOfMethodParameters(ctx
 
 // validationOfMethodParametersCreateRequest creates the ValidationOfMethodParameters request.
 func (client *autoRestValidationTestOperations) validationOfMethodParametersCreateRequest(resourceGroupName string, id int32) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/fakepath/{subscriptionId}/{resourceGroupName}/{id}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{id}", url.PathEscape(strconv.FormatInt(int64(id), 10)))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}

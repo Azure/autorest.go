@@ -11,17 +11,9 @@ import (
 	"testing"
 )
 
-func getAPIVersionLocalOperations(t *testing.T) azurespecialsgroup.APIVersionLocalOperations {
-	client, err := azurespecialsgroup.NewDefaultClient(nil)
-	if err != nil {
-		t.Fatalf("failed to create client: %v", err)
-	}
-	return client.APIVersionLocalOperations()
-}
-
 // GetMethodLocalNull - Get method with api-version modeled in the method.  pass in api-version = null to succeed
 func TestGetMethodLocalNull(t *testing.T) {
-	client := getAPIVersionLocalOperations(t)
+	client := azurespecialsgroup.NewDefaultClient(nil).APIVersionLocalOperations()
 	result, err := client.GetMethodLocalNull(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
@@ -31,7 +23,7 @@ func TestGetMethodLocalNull(t *testing.T) {
 
 // GetMethodLocalValid - Get method with api-version modeled in the method.  pass in api-version = '2.0' to succeed
 func TestGetMethodLocalValid(t *testing.T) {
-	client := getAPIVersionLocalOperations(t)
+	client := azurespecialsgroup.NewDefaultClient(nil).APIVersionLocalOperations()
 	result, err := client.GetMethodLocalValid(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -41,7 +33,7 @@ func TestGetMethodLocalValid(t *testing.T) {
 
 // GetPathLocalValid - Get method with api-version modeled in the method.  pass in api-version = '2.0' to succeed
 func TestGetPathLocalValid(t *testing.T) {
-	client := getAPIVersionLocalOperations(t)
+	client := azurespecialsgroup.NewDefaultClient(nil).APIVersionLocalOperations()
 	result, err := client.GetPathLocalValid(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -51,7 +43,7 @@ func TestGetPathLocalValid(t *testing.T) {
 
 // GetSwaggerLocalValid - Get method with api-version modeled in the method.  pass in api-version = '2.0' to succeed
 func TestGetSwaggerLocalValid(t *testing.T) {
-	client := getAPIVersionLocalOperations(t)
+	client := azurespecialsgroup.NewDefaultClient(nil).APIVersionLocalOperations()
 	result, err := client.GetSwaggerLocalValid(context.Background())
 	if err != nil {
 		t.Fatal(err)

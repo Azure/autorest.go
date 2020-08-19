@@ -11,17 +11,9 @@ import (
 	"testing"
 )
 
-func getSkipURLEncodingOperations(t *testing.T) azurespecialsgroup.SkipURLEncodingOperations {
-	client, err := azurespecialsgroup.NewDefaultClient(nil)
-	if err != nil {
-		t.Fatalf("failed to create client: %v", err)
-	}
-	return client.SkipURLEncodingOperations()
-}
-
 // GetMethodPathValid - Get method with unencoded path parameter with value 'path1/path2/path3'
 func TestGetMethodPathValid(t *testing.T) {
-	client := getSkipURLEncodingOperations(t)
+	client := azurespecialsgroup.NewDefaultClient(nil).SkipURLEncodingOperations()
 	result, err := client.GetMethodPathValid(context.Background(), "path1/path2/path3")
 	if err != nil {
 		t.Fatal(err)
@@ -31,7 +23,7 @@ func TestGetMethodPathValid(t *testing.T) {
 
 // GetMethodQueryNull - Get method with unencoded query parameter with value null
 func TestGetMethodQueryNull(t *testing.T) {
-	client := getSkipURLEncodingOperations(t)
+	client := azurespecialsgroup.NewDefaultClient(nil).SkipURLEncodingOperations()
 	result, err := client.GetMethodQueryNull(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
@@ -41,7 +33,7 @@ func TestGetMethodQueryNull(t *testing.T) {
 
 // GetMethodQueryValid - Get method with unencoded query parameter with value 'value1&q2=value2&q3=value3'
 func TestGetMethodQueryValid(t *testing.T) {
-	client := getSkipURLEncodingOperations(t)
+	client := azurespecialsgroup.NewDefaultClient(nil).SkipURLEncodingOperations()
 	result, err := client.GetMethodQueryValid(context.Background(), "value1&q2=value2&q3=value3")
 	if err != nil {
 		t.Fatal(err)
@@ -51,7 +43,7 @@ func TestGetMethodQueryValid(t *testing.T) {
 
 // GetPathQueryValid - Get method with unencoded query parameter with value 'value1&q2=value2&q3=value3'
 func TestGetPathQueryValid(t *testing.T) {
-	client := getSkipURLEncodingOperations(t)
+	client := azurespecialsgroup.NewDefaultClient(nil).SkipURLEncodingOperations()
 	result, err := client.GetPathQueryValid(context.Background(), "value1&q2=value2&q3=value3")
 	if err != nil {
 		t.Fatal(err)
@@ -61,7 +53,7 @@ func TestGetPathQueryValid(t *testing.T) {
 
 // GetPathValid - Get method with unencoded path parameter with value 'path1/path2/path3'
 func TestGetPathValid(t *testing.T) {
-	client := getSkipURLEncodingOperations(t)
+	client := azurespecialsgroup.NewDefaultClient(nil).SkipURLEncodingOperations()
 	result, err := client.GetPathValid(context.Background(), "path1/path2/path3")
 	if err != nil {
 		t.Fatal(err)
@@ -71,7 +63,7 @@ func TestGetPathValid(t *testing.T) {
 
 // GetSwaggerPathValid - Get method with unencoded path parameter with value 'path1/path2/path3'
 func TestGetSwaggerPathValid(t *testing.T) {
-	client := getSkipURLEncodingOperations(t)
+	client := azurespecialsgroup.NewDefaultClient(nil).SkipURLEncodingOperations()
 	result, err := client.GetSwaggerPathValid(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -81,7 +73,7 @@ func TestGetSwaggerPathValid(t *testing.T) {
 
 // GetSwaggerQueryValid - Get method with unencoded query parameter with value 'value1&q2=value2&q3=value3'
 func TestGetSwaggerQueryValid(t *testing.T) {
-	client := getSkipURLEncodingOperations(t)
+	client := azurespecialsgroup.NewDefaultClient(nil).SkipURLEncodingOperations()
 	result, err := client.GetSwaggerQueryValid(context.Background())
 	if err != nil {
 		t.Fatal(err)

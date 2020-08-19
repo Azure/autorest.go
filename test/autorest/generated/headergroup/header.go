@@ -10,7 +10,7 @@ import (
 	"encoding/base64"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
-	"path"
+	"net/url"
 	"strconv"
 	"time"
 )
@@ -101,8 +101,12 @@ func (client *headerOperations) CustomRequestID(ctx context.Context) (*http.Resp
 
 // customRequestIdCreateRequest creates the CustomRequestID request.
 func (client *headerOperations) customRequestIdCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/header/custom/x-ms-client-request-id/9C4D50EE-2D56-4CD3-8152-34347DC9F2B0"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -146,8 +150,12 @@ func (client *headerOperations) ParamBool(ctx context.Context, scenario string, 
 
 // paramBoolCreateRequest creates the ParamBool request.
 func (client *headerOperations) paramBoolCreateRequest(scenario string, value bool) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/header/param/prim/bool"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -193,8 +201,12 @@ func (client *headerOperations) ParamByte(ctx context.Context, scenario string, 
 
 // paramByteCreateRequest creates the ParamByte request.
 func (client *headerOperations) paramByteCreateRequest(scenario string, value []byte) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/header/param/prim/byte"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -240,8 +252,12 @@ func (client *headerOperations) ParamDate(ctx context.Context, scenario string, 
 
 // paramDateCreateRequest creates the ParamDate request.
 func (client *headerOperations) paramDateCreateRequest(scenario string, value time.Time) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/header/param/prim/date"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -287,8 +303,12 @@ func (client *headerOperations) ParamDatetime(ctx context.Context, scenario stri
 
 // paramDatetimeCreateRequest creates the ParamDatetime request.
 func (client *headerOperations) paramDatetimeCreateRequest(scenario string, value time.Time) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/header/param/prim/datetime"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -334,8 +354,12 @@ func (client *headerOperations) ParamDatetimeRFC1123(ctx context.Context, scenar
 
 // paramDatetimeRfc1123CreateRequest creates the ParamDatetimeRFC1123 request.
 func (client *headerOperations) paramDatetimeRfc1123CreateRequest(scenario string, headerParamDatetimeRfc1123Options *HeaderParamDatetimeRFC1123Options) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/header/param/prim/datetimerfc1123"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -383,8 +407,12 @@ func (client *headerOperations) ParamDouble(ctx context.Context, scenario string
 
 // paramDoubleCreateRequest creates the ParamDouble request.
 func (client *headerOperations) paramDoubleCreateRequest(scenario string, value float64) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/header/param/prim/double"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -430,8 +458,12 @@ func (client *headerOperations) ParamDuration(ctx context.Context, scenario stri
 
 // paramDurationCreateRequest creates the ParamDuration request.
 func (client *headerOperations) paramDurationCreateRequest(scenario string, value string) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/header/param/prim/duration"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -477,8 +509,12 @@ func (client *headerOperations) ParamEnum(ctx context.Context, scenario string, 
 
 // paramEnumCreateRequest creates the ParamEnum request.
 func (client *headerOperations) paramEnumCreateRequest(scenario string, headerParamEnumOptions *HeaderParamEnumOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/header/param/prim/enum"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -526,8 +562,12 @@ func (client *headerOperations) ParamExistingKey(ctx context.Context, userAgent 
 
 // paramExistingKeyCreateRequest creates the ParamExistingKey request.
 func (client *headerOperations) paramExistingKeyCreateRequest(userAgent string) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/header/param/existingkey"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -572,8 +612,12 @@ func (client *headerOperations) ParamFloat(ctx context.Context, scenario string,
 
 // paramFloatCreateRequest creates the ParamFloat request.
 func (client *headerOperations) paramFloatCreateRequest(scenario string, value float32) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/header/param/prim/float"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -619,8 +663,12 @@ func (client *headerOperations) ParamInteger(ctx context.Context, scenario strin
 
 // paramIntegerCreateRequest creates the ParamInteger request.
 func (client *headerOperations) paramIntegerCreateRequest(scenario string, value int32) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/header/param/prim/integer"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -666,8 +714,12 @@ func (client *headerOperations) ParamLong(ctx context.Context, scenario string, 
 
 // paramLongCreateRequest creates the ParamLong request.
 func (client *headerOperations) paramLongCreateRequest(scenario string, value int64) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/header/param/prim/long"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -713,8 +765,12 @@ func (client *headerOperations) ParamProtectedKey(ctx context.Context, contentTy
 
 // paramProtectedKeyCreateRequest creates the ParamProtectedKey request.
 func (client *headerOperations) paramProtectedKeyCreateRequest(contentType string) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/header/param/protectedkey"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -759,8 +815,12 @@ func (client *headerOperations) ParamString(ctx context.Context, scenario string
 
 // paramStringCreateRequest creates the ParamString request.
 func (client *headerOperations) paramStringCreateRequest(scenario string, headerParamStringOptions *HeaderParamStringOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/header/param/prim/string"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -808,8 +868,12 @@ func (client *headerOperations) ResponseBool(ctx context.Context, scenario strin
 
 // responseBoolCreateRequest creates the ResponseBool request.
 func (client *headerOperations) responseBoolCreateRequest(scenario string) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/header/response/prim/bool"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -862,8 +926,12 @@ func (client *headerOperations) ResponseByte(ctx context.Context, scenario strin
 
 // responseByteCreateRequest creates the ResponseByte request.
 func (client *headerOperations) responseByteCreateRequest(scenario string) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/header/response/prim/byte"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -916,8 +984,12 @@ func (client *headerOperations) ResponseDate(ctx context.Context, scenario strin
 
 // responseDateCreateRequest creates the ResponseDate request.
 func (client *headerOperations) responseDateCreateRequest(scenario string) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/header/response/prim/date"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -970,8 +1042,12 @@ func (client *headerOperations) ResponseDatetime(ctx context.Context, scenario s
 
 // responseDatetimeCreateRequest creates the ResponseDatetime request.
 func (client *headerOperations) responseDatetimeCreateRequest(scenario string) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/header/response/prim/datetime"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -1024,8 +1100,12 @@ func (client *headerOperations) ResponseDatetimeRFC1123(ctx context.Context, sce
 
 // responseDatetimeRfc1123CreateRequest creates the ResponseDatetimeRFC1123 request.
 func (client *headerOperations) responseDatetimeRfc1123CreateRequest(scenario string) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/header/response/prim/datetimerfc1123"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -1078,8 +1158,12 @@ func (client *headerOperations) ResponseDouble(ctx context.Context, scenario str
 
 // responseDoubleCreateRequest creates the ResponseDouble request.
 func (client *headerOperations) responseDoubleCreateRequest(scenario string) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/header/response/prim/double"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -1132,8 +1216,12 @@ func (client *headerOperations) ResponseDuration(ctx context.Context, scenario s
 
 // responseDurationCreateRequest creates the ResponseDuration request.
 func (client *headerOperations) responseDurationCreateRequest(scenario string) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/header/response/prim/duration"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -1182,8 +1270,12 @@ func (client *headerOperations) ResponseEnum(ctx context.Context, scenario strin
 
 // responseEnumCreateRequest creates the ResponseEnum request.
 func (client *headerOperations) responseEnumCreateRequest(scenario string) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/header/response/prim/enum"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -1232,8 +1324,12 @@ func (client *headerOperations) ResponseExistingKey(ctx context.Context) (*Heade
 
 // responseExistingKeyCreateRequest creates the ResponseExistingKey request.
 func (client *headerOperations) responseExistingKeyCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/header/response/existingkey"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -1281,8 +1377,12 @@ func (client *headerOperations) ResponseFloat(ctx context.Context, scenario stri
 
 // responseFloatCreateRequest creates the ResponseFloat request.
 func (client *headerOperations) responseFloatCreateRequest(scenario string) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/header/response/prim/float"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -1336,8 +1436,12 @@ func (client *headerOperations) ResponseInteger(ctx context.Context, scenario st
 
 // responseIntegerCreateRequest creates the ResponseInteger request.
 func (client *headerOperations) responseIntegerCreateRequest(scenario string) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/header/response/prim/integer"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -1391,8 +1495,12 @@ func (client *headerOperations) ResponseLong(ctx context.Context, scenario strin
 
 // responseLongCreateRequest creates the ResponseLong request.
 func (client *headerOperations) responseLongCreateRequest(scenario string) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/header/response/prim/long"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -1445,8 +1553,12 @@ func (client *headerOperations) ResponseProtectedKey(ctx context.Context) (*Head
 
 // responseProtectedKeyCreateRequest creates the ResponseProtectedKey request.
 func (client *headerOperations) responseProtectedKeyCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/header/response/protectedkey"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -1494,8 +1606,12 @@ func (client *headerOperations) ResponseString(ctx context.Context, scenario str
 
 // responseStringCreateRequest creates the ResponseString request.
 func (client *headerOperations) responseStringCreateRequest(scenario string) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/header/response/prim/string"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}

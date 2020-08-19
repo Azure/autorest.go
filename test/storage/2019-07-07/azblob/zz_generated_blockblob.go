@@ -53,8 +53,10 @@ func (client *blockBlobOperations) CommitBlockList(ctx context.Context, blocks B
 
 // commitBlockListCreateRequest creates the CommitBlockList request.
 func (client *blockBlobOperations) commitBlockListCreateRequest(blocks BlockLookupList, blockBlobCommitBlockListOptions *BlockBlobCommitBlockListOptions, blobHttpHeaders *BlobHttpHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
-	copy := *client.u
-	u := &copy
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	query := u.Query()
 	query.Set("comp", "blocklist")
 	if blockBlobCommitBlockListOptions != nil && blockBlobCommitBlockListOptions.Timeout != nil {
@@ -215,8 +217,10 @@ func (client *blockBlobOperations) GetBlockList(ctx context.Context, listType Bl
 
 // getBlockListCreateRequest creates the GetBlockList request.
 func (client *blockBlobOperations) getBlockListCreateRequest(listType BlockListType, blockBlobGetBlockListOptions *BlockBlobGetBlockListOptions, leaseAccessConditions *LeaseAccessConditions) (*azcore.Request, error) {
-	copy := *client.u
-	u := &copy
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	query := u.Query()
 	query.Set("comp", "blocklist")
 	if blockBlobGetBlockListOptions != nil && blockBlobGetBlockListOptions.Snapshot != nil {
@@ -311,8 +315,10 @@ func (client *blockBlobOperations) StageBlock(ctx context.Context, blockId strin
 
 // stageBlockCreateRequest creates the StageBlock request.
 func (client *blockBlobOperations) stageBlockCreateRequest(blockId string, contentLength int64, body azcore.ReadSeekCloser, blockBlobStageBlockOptions *BlockBlobStageBlockOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo) (*azcore.Request, error) {
-	copy := *client.u
-	u := &copy
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	query := u.Query()
 	query.Set("comp", "block")
 	query.Set("blockid", blockId)
@@ -427,8 +433,10 @@ func (client *blockBlobOperations) StageBlockFromURL(ctx context.Context, blockI
 
 // stageBlockFromUrlCreateRequest creates the StageBlockFromURL request.
 func (client *blockBlobOperations) stageBlockFromUrlCreateRequest(blockId string, contentLength int64, sourceUrl url.URL, blockBlobStageBlockFromUrlOptions *BlockBlobStageBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*azcore.Request, error) {
-	copy := *client.u
-	u := &copy
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	query := u.Query()
 	query.Set("comp", "block")
 	query.Set("blockid", blockId)
@@ -559,8 +567,10 @@ func (client *blockBlobOperations) Upload(ctx context.Context, contentLength int
 
 // uploadCreateRequest creates the Upload request.
 func (client *blockBlobOperations) uploadCreateRequest(contentLength int64, body azcore.ReadSeekCloser, blockBlobUploadOptions *BlockBlobUploadOptions, blobHttpHeaders *BlobHttpHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
-	copy := *client.u
-	u := &copy
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	query := u.Query()
 	if blockBlobUploadOptions != nil && blockBlobUploadOptions.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*blockBlobUploadOptions.Timeout), 10))
