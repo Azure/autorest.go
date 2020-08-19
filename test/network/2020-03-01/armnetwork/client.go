@@ -10,7 +10,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/url"
-	"strings"
 )
 
 const scope = "https://management.azure.com//.default"
@@ -26,36 +25,27 @@ type ClientOptions struct {
 	Retry azcore.RetryOptions
 	// Telemetry configures the built-in telemetry policy behavior.
 	Telemetry azcore.TelemetryOptions
-	// ApplicationID is an application-specific identification string used in telemetry.
-	// It has a maximum length of 24 characters and must not contain any spaces.
-	ApplicationID string
-	// DisableRPRegistration controls if an unregistered resource provider should
-	// automatically be registered. See https://aka.ms/rps-not-found for more information.
-	// The default value is false, meaning registration will be attempted.
-	DisableRPRegistration bool
+	// RegisterRPOptions configures the built-in RP registration policy behavior.
+	RegisterRPOptions armcore.RegistrationOptions
 }
 
 // DefaultClientOptions creates a ClientOptions type initialized with default values.
 func DefaultClientOptions() ClientOptions {
 	return ClientOptions{
-		HTTPClient: azcore.DefaultHTTPClientTransport(),
-		Retry:      azcore.DefaultRetryOptions(),
+		HTTPClient:        azcore.DefaultHTTPClientTransport(),
+		Retry:             azcore.DefaultRetryOptions(),
+		RegisterRPOptions: armcore.DefaultRegistrationOptions(),
 	}
 }
 
 func (c *ClientOptions) telemetryOptions() azcore.TelemetryOptions {
-	t := telemetryInfo
-	if c.ApplicationID != "" {
-		a := strings.ReplaceAll(c.ApplicationID, " ", "/")
-		if len(a) > 24 {
-			a = a[:24]
-		}
-		t = fmt.Sprintf("%s %s", a, telemetryInfo)
+	to := c.Telemetry
+	if to.Value == "" {
+		to.Value = telemetryInfo
+	} else {
+		to.Value = fmt.Sprintf("%s %s", telemetryInfo, to.Value)
 	}
-	if c.Telemetry.Value == "" {
-		return azcore.TelemetryOptions{Value: t}
-	}
-	return azcore.TelemetryOptions{Value: fmt.Sprintf("%s %s", c.Telemetry.Value, t)}
+	return to
 }
 
 // Client - Network Client
@@ -82,13 +72,7 @@ func NewClient(endpoint string, cred azcore.Credential, options *ClientOptions) 
 		azcore.NewTelemetryPolicy(options.telemetryOptions()),
 		azcore.NewUniqueRequestIDPolicy(),
 	}
-	if !options.DisableRPRegistration {
-		rpOpts := armcore.DefaultRegistrationOptions()
-		rpOpts.HTTPClient = options.HTTPClient
-		rpOpts.LogOptions = options.LogOptions
-		rpOpts.Retry = options.Retry
-		policies = append(policies, armcore.NewRPRegistrationPolicy(cred, &rpOpts))
-	}
+	policies = append(policies, armcore.NewRPRegistrationPolicy(cred, &options.RegisterRPOptions))
 	policies = append(policies,
 		azcore.NewRetryPolicy(&options.Retry),
 		cred.AuthenticationPolicy(azcore.AuthenticationPolicyOptions{Options: azcore.TokenRequestOptions{Scopes: []string{scope}}}),
