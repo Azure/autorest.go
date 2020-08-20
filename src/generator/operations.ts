@@ -37,6 +37,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     const imports = new ImportManager();
     // add standard imorts
     imports.add('net/http');
+    imports.add('net/url');
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
 
     const clientName = camelCase(group.language.go!.clientName);
@@ -277,7 +278,6 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
       text += '\t\t},\n';
     } else {
       imports.add('fmt');
-      imports.add('net/url');
       let resultTypeName = schemaResponse.schema.language.go!.name;
       if (schemaResponse.schema.serialization?.xml?.name) {
         // xml can specifiy its own name, prefer that if available
@@ -324,7 +324,8 @@ function createProtocolRequest(codeModel: CodeModel, client: string, op: Operati
   const returns = ['*azcore.Request', 'error'];
   let text = `${comment(name, '// ')} creates the ${info.name} request.\n`;
   text += `func (client *${client}) ${name}(${getCreateRequestParametersSig(op)}) (${returns.join(', ')}) {\n`;
-  let hasHost = false;
+  // default to host on the client
+  let hostParam = 'client.u';
   if (codeModel.language.go!.complexHostParams) {
     imports.add('strings');
     // we have a complex parameterized host
@@ -340,8 +341,12 @@ function createProtocolRequest(codeModel: CodeModel, client: string, op: Operati
         text += `\thost = strings.ReplaceAll(host, "{${param.language.go!.serializedName}}", ${param.language.go!.name})\n`;
       }
     }
-    hasHost = true;
+    hostParam = 'host';
   }
+  text += `\tu, err := url.Parse(${hostParam})\n`;
+  text += '\tif err != nil {\n';
+  text += '\t\treturn nil, err\n';
+  text += '\t}\n';
   const hasPathParams = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'path'; }).any();
   // storage needs the client.u to be the source-of-truth for the full path.
   // however, swagger requires that all operations specify a path, which is at odds with storage.
@@ -363,28 +368,19 @@ function createProtocolRequest(codeModel: CodeModel, client: string, op: Operati
     for (const pp of values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'path'; })) {
       let paramValue = formatParamValue(pp, imports);
       if (!skipURLEncoding(pp)) {
-        imports.add('net/url');
         paramValue = `url.PathEscape(${formatParamValue(pp, imports)})`;
       }
       text += `\turlPath = strings.ReplaceAll(urlPath, "{${pp.language.go!.serializedName}}", ${paramValue})\n`;
     }
   }
-  const hasQueryParams = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'query'; }).any();
   if (hasURLPath) {
-    if (hasHost) {
-      imports.add('net/url');
-      text += `\tu, err := url.Parse(host + urlPath)\n`;
-    } else {
-      imports.add('path');
-      text += `\tu, err := client.u.Parse(path.Join(client.u.Path, urlPath))\n`;
-    }
+    imports.add('path');
+    text += '\tu, err = u.Parse(path.Join(u.Path, urlPath))\n';
     text += '\tif err != nil {\n';
     text += '\t\treturn nil, err\n';
     text += '\t}\n';
-  } else {
-    text += '\tcopy := *client.u\n';
-    text += '\tu := &copy\n';
   }
+  const hasQueryParams = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'query'; }).any();
   // helper to build nil checks for param groups
   const emitParamGroupCheck = function (gp: GroupProperty, param: Parameter): string {
     const paramGroupName = camelCase(gp.language.go!.name);

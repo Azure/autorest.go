@@ -48,10 +48,14 @@ func (client *expressRoutePortsLocationsOperations) Get(ctx context.Context, loc
 
 // getCreateRequest creates the Get request.
 func (client *expressRoutePortsLocationsOperations) getCreateRequest(locationName string) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePortsLocations/{locationName}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{locationName}", url.PathEscape(locationName))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -105,9 +109,13 @@ func (client *expressRoutePortsLocationsOperations) List() (ExpressRoutePortsLoc
 
 // listCreateRequest creates the List request.
 func (client *expressRoutePortsLocationsOperations) listCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePortsLocations"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

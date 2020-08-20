@@ -12,6 +12,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 	"path"
 )
 
@@ -47,8 +48,12 @@ func (client *intOperations) Get(ctx context.Context) (*IntEnumResponse, error) 
 
 // getCreateRequest creates the Get request.
 func (client *intOperations) getCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/nonStringEnums/int/get"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -96,8 +101,12 @@ func (client *intOperations) Put(ctx context.Context, intPutOptions *IntPutOptio
 
 // putCreateRequest creates the Put request.
 func (client *intOperations) putCreateRequest(intPutOptions *IntPutOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/nonStringEnums/int/put"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

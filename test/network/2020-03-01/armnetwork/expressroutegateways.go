@@ -83,11 +83,15 @@ func (client *expressRouteGatewaysOperations) ResumeCreateOrUpdate(token string)
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
 func (client *expressRouteGatewaysOperations) createOrUpdateCreateRequest(resourceGroupName string, expressRouteGatewayName string, putExpressRouteGatewayParameters ExpressRouteGateway) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{expressRouteGatewayName}", url.PathEscape(expressRouteGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -158,11 +162,15 @@ func (client *expressRouteGatewaysOperations) ResumeDelete(token string) (HTTPPo
 
 // deleteCreateRequest creates the Delete request.
 func (client *expressRouteGatewaysOperations) deleteCreateRequest(resourceGroupName string, expressRouteGatewayName string) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{expressRouteGatewayName}", url.PathEscape(expressRouteGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -209,11 +217,15 @@ func (client *expressRouteGatewaysOperations) Get(ctx context.Context, resourceG
 
 // getCreateRequest creates the Get request.
 func (client *expressRouteGatewaysOperations) getCreateRequest(resourceGroupName string, expressRouteGatewayName string) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{expressRouteGatewayName}", url.PathEscape(expressRouteGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -261,10 +273,14 @@ func (client *expressRouteGatewaysOperations) ListByResourceGroup(ctx context.Co
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
 func (client *expressRouteGatewaysOperations) listByResourceGroupCreateRequest(resourceGroupName string) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -312,9 +328,13 @@ func (client *expressRouteGatewaysOperations) ListBySubscription(ctx context.Con
 
 // listBySubscriptionCreateRequest creates the ListBySubscription request.
 func (client *expressRouteGatewaysOperations) listBySubscriptionCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteGateways"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

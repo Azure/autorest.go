@@ -82,12 +82,16 @@ func (client *virtualHubRouteTableV2SOperations) ResumeCreateOrUpdate(token stri
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
 func (client *virtualHubRouteTableV2SOperations) createOrUpdateCreateRequest(resourceGroupName string, virtualHubName string, routeTableName string, virtualHubRouteTableV2Parameters VirtualHubRouteTableV2) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routeTables/{routeTableName}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualHubName}", url.PathEscape(virtualHubName))
 	urlPath = strings.ReplaceAll(urlPath, "{routeTableName}", url.PathEscape(routeTableName))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -158,12 +162,16 @@ func (client *virtualHubRouteTableV2SOperations) ResumeDelete(token string) (HTT
 
 // deleteCreateRequest creates the Delete request.
 func (client *virtualHubRouteTableV2SOperations) deleteCreateRequest(resourceGroupName string, virtualHubName string, routeTableName string) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routeTables/{routeTableName}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualHubName}", url.PathEscape(virtualHubName))
 	urlPath = strings.ReplaceAll(urlPath, "{routeTableName}", url.PathEscape(routeTableName))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -210,12 +218,16 @@ func (client *virtualHubRouteTableV2SOperations) Get(ctx context.Context, resour
 
 // getCreateRequest creates the Get request.
 func (client *virtualHubRouteTableV2SOperations) getCreateRequest(resourceGroupName string, virtualHubName string, routeTableName string) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routeTables/{routeTableName}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualHubName}", url.PathEscape(virtualHubName))
 	urlPath = strings.ReplaceAll(urlPath, "{routeTableName}", url.PathEscape(routeTableName))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -269,11 +281,15 @@ func (client *virtualHubRouteTableV2SOperations) List(resourceGroupName string, 
 
 // listCreateRequest creates the List request.
 func (client *virtualHubRouteTableV2SOperations) listCreateRequest(resourceGroupName string, virtualHubName string) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routeTables"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualHubName}", url.PathEscape(virtualHubName))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

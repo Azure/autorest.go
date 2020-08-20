@@ -51,9 +51,13 @@ func (client *azureFirewallFqdnTagsOperations) ListAll() (AzureFirewallFqdnTagLi
 
 // listAllCreateRequest creates the ListAll request.
 func (client *azureFirewallFqdnTagsOperations) listAllCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/azureFirewallFqdnTags"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

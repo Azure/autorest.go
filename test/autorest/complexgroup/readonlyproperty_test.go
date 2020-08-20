@@ -13,16 +13,8 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func getReadonlypropertyOperations(t *testing.T) complexgroup.ReadonlypropertyOperations {
-	client, err := complexgroup.NewDefaultClient(nil)
-	if err != nil {
-		t.Fatalf("failed to create complex client: %v", err)
-	}
-	return client.ReadonlypropertyOperations()
-}
-
 func TestReadonlypropertyGetValid(t *testing.T) {
-	client := getReadonlypropertyOperations(t)
+	client := complexgroup.NewDefaultClient(nil).ReadonlypropertyOperations()
 	result, err := client.GetValid(context.Background())
 	if err != nil {
 		t.Fatalf("GetValid: %v", err)
@@ -31,7 +23,7 @@ func TestReadonlypropertyGetValid(t *testing.T) {
 }
 
 func TestReadonlypropertyPutValid(t *testing.T) {
-	client := getReadonlypropertyOperations(t)
+	client := complexgroup.NewDefaultClient(nil).ReadonlypropertyOperations()
 	id, size := "1234", int32(2)
 	result, err := client.PutValid(context.Background(), complexgroup.ReadonlyObj{ID: &id, Size: &size})
 	if err != nil {

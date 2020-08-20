@@ -11,17 +11,9 @@ import (
 	"testing"
 )
 
-func getAPIVersionDefaultOperations(t *testing.T) azurespecialsgroup.APIVersionDefaultOperations {
-	client, err := azurespecialsgroup.NewDefaultClient(nil)
-	if err != nil {
-		t.Fatalf("failed to create client: %v", err)
-	}
-	return client.APIVersionDefaultOperations()
-}
-
 // GetMethodGlobalNotProvidedValid - GET method with api-version modeled in global settings.
 func TestGetMethodGlobalNotProvidedValid(t *testing.T) {
-	client := getAPIVersionDefaultOperations(t)
+	client := azurespecialsgroup.NewDefaultClient(nil).APIVersionDefaultOperations()
 	result, err := client.GetMethodGlobalNotProvidedValid(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -31,7 +23,7 @@ func TestGetMethodGlobalNotProvidedValid(t *testing.T) {
 
 // GetMethodGlobalValid - GET method with api-version modeled in global settings.
 func TestGetMethodGlobalValid(t *testing.T) {
-	client := getAPIVersionDefaultOperations(t)
+	client := azurespecialsgroup.NewDefaultClient(nil).APIVersionDefaultOperations()
 	result, err := client.GetMethodGlobalValid(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -41,7 +33,7 @@ func TestGetMethodGlobalValid(t *testing.T) {
 
 // GetPathGlobalValid - GET method with api-version modeled in global settings.
 func TestGetPathGlobalValid(t *testing.T) {
-	client := getAPIVersionDefaultOperations(t)
+	client := azurespecialsgroup.NewDefaultClient(nil).APIVersionDefaultOperations()
 	result, err := client.GetPathGlobalValid(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -51,7 +43,7 @@ func TestGetPathGlobalValid(t *testing.T) {
 
 // GetSwaggerGlobalValid - GET method with api-version modeled in global settings.
 func TestGetSwaggerGlobalValid(t *testing.T) {
-	client := getAPIVersionDefaultOperations(t)
+	client := azurespecialsgroup.NewDefaultClient(nil).APIVersionDefaultOperations()
 	result, err := client.GetSwaggerGlobalValid(context.Background())
 	if err != nil {
 		t.Fatal(err)

@@ -49,7 +49,7 @@ type Client struct {
 }
 
 // NewClient creates an instance of the Client type with the specified endpoint.
-func NewClient(dnsSuffix *string, options *ClientOptions) (*Client, error) {
+func NewClient(dnsSuffix *string, options *ClientOptions) *Client {
 	if options == nil {
 		o := DefaultClientOptions()
 		options = &o
@@ -63,7 +63,7 @@ func NewClient(dnsSuffix *string, options *ClientOptions) (*Client, error) {
 }
 
 // NewClientWithPipeline creates an instance of the Client type with the specified endpoint and pipeline.
-func NewClientWithPipeline(dnsSuffix *string, p azcore.Pipeline) (*Client, error) {
+func NewClientWithPipeline(dnsSuffix *string, p azcore.Pipeline) *Client {
 	client := &Client{
 		p:         p,
 		dnsSuffix: "host",
@@ -71,7 +71,7 @@ func NewClientWithPipeline(dnsSuffix *string, p azcore.Pipeline) (*Client, error
 	if dnsSuffix != nil {
 		client.dnsSuffix = *dnsSuffix
 	}
-	return client, nil
+	return client
 }
 
 // PathsOperations returns the PathsOperations associated with this client.

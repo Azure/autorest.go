@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
+	"net/url"
 	"path"
 	"time"
 )
@@ -170,8 +171,12 @@ func (client *lrosaDsOperations) ResumeDelete202NonRetry400(token string) (HTTPP
 
 // delete202NonRetry400CreateRequest creates the Delete202NonRetry400 request.
 func (client *lrosaDsOperations) delete202NonRetry400CreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/nonretryerror/delete/202/retry/400"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -239,8 +244,12 @@ func (client *lrosaDsOperations) ResumeDelete202RetryInvalidHeader(token string)
 
 // delete202RetryInvalidHeaderCreateRequest creates the Delete202RetryInvalidHeader request.
 func (client *lrosaDsOperations) delete202RetryInvalidHeaderCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/error/delete/202/retry/invalidheader"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -308,8 +317,12 @@ func (client *lrosaDsOperations) ResumeDelete204Succeeded(token string) (HTTPPol
 
 // delete204SucceededCreateRequest creates the Delete204Succeeded request.
 func (client *lrosaDsOperations) delete204SucceededCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/error/delete/204/nolocation"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -377,8 +390,12 @@ func (client *lrosaDsOperations) ResumeDeleteAsyncRelativeRetry400(token string)
 
 // deleteAsyncRelativeRetry400CreateRequest creates the DeleteAsyncRelativeRetry400 request.
 func (client *lrosaDsOperations) deleteAsyncRelativeRetry400CreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/nonretryerror/deleteasync/retry/400"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -446,8 +463,12 @@ func (client *lrosaDsOperations) ResumeDeleteAsyncRelativeRetryInvalidHeader(tok
 
 // deleteAsyncRelativeRetryInvalidHeaderCreateRequest creates the DeleteAsyncRelativeRetryInvalidHeader request.
 func (client *lrosaDsOperations) deleteAsyncRelativeRetryInvalidHeaderCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/error/deleteasync/retry/invalidheader"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -515,8 +536,12 @@ func (client *lrosaDsOperations) ResumeDeleteAsyncRelativeRetryInvalidJSONPollin
 
 // deleteAsyncRelativeRetryInvalidJsonPollingCreateRequest creates the DeleteAsyncRelativeRetryInvalidJSONPolling request.
 func (client *lrosaDsOperations) deleteAsyncRelativeRetryInvalidJsonPollingCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/error/deleteasync/retry/invalidjsonpolling"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -584,8 +609,12 @@ func (client *lrosaDsOperations) ResumeDeleteAsyncRelativeRetryNoStatus(token st
 
 // deleteAsyncRelativeRetryNoStatusCreateRequest creates the DeleteAsyncRelativeRetryNoStatus request.
 func (client *lrosaDsOperations) deleteAsyncRelativeRetryNoStatusCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/error/deleteasync/retry/nostatus"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -653,8 +682,12 @@ func (client *lrosaDsOperations) ResumeDeleteNonRetry400(token string) (HTTPPoll
 
 // deleteNonRetry400CreateRequest creates the DeleteNonRetry400 request.
 func (client *lrosaDsOperations) deleteNonRetry400CreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/nonretryerror/delete/400"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -722,8 +755,12 @@ func (client *lrosaDsOperations) ResumePost202NoLocation(token string) (HTTPPoll
 
 // post202NoLocationCreateRequest creates the Post202NoLocation request.
 func (client *lrosaDsOperations) post202NoLocationCreateRequest(lrosaDsPost202NoLocationOptions *LrosaDsPost202NoLocationOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/error/post/202/nolocation"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -794,8 +831,12 @@ func (client *lrosaDsOperations) ResumePost202NonRetry400(token string) (HTTPPol
 
 // post202NonRetry400CreateRequest creates the Post202NonRetry400 request.
 func (client *lrosaDsOperations) post202NonRetry400CreateRequest(lrosaDsPost202NonRetry400Options *LrosaDsPost202NonRetry400Options) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/nonretryerror/post/202/retry/400"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -866,8 +907,12 @@ func (client *lrosaDsOperations) ResumePost202RetryInvalidHeader(token string) (
 
 // post202RetryInvalidHeaderCreateRequest creates the Post202RetryInvalidHeader request.
 func (client *lrosaDsOperations) post202RetryInvalidHeaderCreateRequest(lrosaDsPost202RetryInvalidHeaderOptions *LrosaDsPost202RetryInvalidHeaderOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/error/post/202/retry/invalidheader"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -938,8 +983,12 @@ func (client *lrosaDsOperations) ResumePostAsyncRelativeRetry400(token string) (
 
 // postAsyncRelativeRetry400CreateRequest creates the PostAsyncRelativeRetry400 request.
 func (client *lrosaDsOperations) postAsyncRelativeRetry400CreateRequest(lrosaDsPostAsyncRelativeRetry400Options *LrosaDsPostAsyncRelativeRetry400Options) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/nonretryerror/postasync/retry/400"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1010,8 +1059,12 @@ func (client *lrosaDsOperations) ResumePostAsyncRelativeRetryInvalidHeader(token
 
 // postAsyncRelativeRetryInvalidHeaderCreateRequest creates the PostAsyncRelativeRetryInvalidHeader request.
 func (client *lrosaDsOperations) postAsyncRelativeRetryInvalidHeaderCreateRequest(lrosaDsPostAsyncRelativeRetryInvalidHeaderOptions *LrosaDsPostAsyncRelativeRetryInvalidHeaderOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/error/postasync/retry/invalidheader"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1082,8 +1135,12 @@ func (client *lrosaDsOperations) ResumePostAsyncRelativeRetryInvalidJSONPolling(
 
 // postAsyncRelativeRetryInvalidJsonPollingCreateRequest creates the PostAsyncRelativeRetryInvalidJSONPolling request.
 func (client *lrosaDsOperations) postAsyncRelativeRetryInvalidJsonPollingCreateRequest(lrosaDsPostAsyncRelativeRetryInvalidJsonPollingOptions *LrosaDsPostAsyncRelativeRetryInvalidJSONPollingOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/error/postasync/retry/invalidjsonpolling"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1154,8 +1211,12 @@ func (client *lrosaDsOperations) ResumePostAsyncRelativeRetryNoPayload(token str
 
 // postAsyncRelativeRetryNoPayloadCreateRequest creates the PostAsyncRelativeRetryNoPayload request.
 func (client *lrosaDsOperations) postAsyncRelativeRetryNoPayloadCreateRequest(lrosaDsPostAsyncRelativeRetryNoPayloadOptions *LrosaDsPostAsyncRelativeRetryNoPayloadOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/error/postasync/retry/nopayload"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1226,8 +1287,12 @@ func (client *lrosaDsOperations) ResumePostNonRetry400(token string) (HTTPPoller
 
 // postNonRetry400CreateRequest creates the PostNonRetry400 request.
 func (client *lrosaDsOperations) postNonRetry400CreateRequest(lrosaDsPostNonRetry400Options *LrosaDsPostNonRetry400Options) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/nonretryerror/post/400"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1298,8 +1363,12 @@ func (client *lrosaDsOperations) ResumePut200InvalidJSON(token string) (ProductP
 
 // put200InvalidJsonCreateRequest creates the Put200InvalidJSON request.
 func (client *lrosaDsOperations) put200InvalidJsonCreateRequest(lrosaDsPut200InvalidJsonOptions *LrosaDsPut200InvalidJSONOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/error/put/200/invalidjson"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1370,8 +1439,12 @@ func (client *lrosaDsOperations) ResumePutAsyncRelativeRetry400(token string) (P
 
 // putAsyncRelativeRetry400CreateRequest creates the PutAsyncRelativeRetry400 request.
 func (client *lrosaDsOperations) putAsyncRelativeRetry400CreateRequest(lrosaDsPutAsyncRelativeRetry400Options *LrosaDsPutAsyncRelativeRetry400Options) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/nonretryerror/putasync/retry/400"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1442,8 +1515,12 @@ func (client *lrosaDsOperations) ResumePutAsyncRelativeRetryInvalidHeader(token 
 
 // putAsyncRelativeRetryInvalidHeaderCreateRequest creates the PutAsyncRelativeRetryInvalidHeader request.
 func (client *lrosaDsOperations) putAsyncRelativeRetryInvalidHeaderCreateRequest(lrosaDsPutAsyncRelativeRetryInvalidHeaderOptions *LrosaDsPutAsyncRelativeRetryInvalidHeaderOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/error/putasync/retry/invalidheader"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1514,8 +1591,12 @@ func (client *lrosaDsOperations) ResumePutAsyncRelativeRetryInvalidJSONPolling(t
 
 // putAsyncRelativeRetryInvalidJsonPollingCreateRequest creates the PutAsyncRelativeRetryInvalidJSONPolling request.
 func (client *lrosaDsOperations) putAsyncRelativeRetryInvalidJsonPollingCreateRequest(lrosaDsPutAsyncRelativeRetryInvalidJsonPollingOptions *LrosaDsPutAsyncRelativeRetryInvalidJSONPollingOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/error/putasync/retry/invalidjsonpolling"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1586,8 +1667,12 @@ func (client *lrosaDsOperations) ResumePutAsyncRelativeRetryNoStatus(token strin
 
 // putAsyncRelativeRetryNoStatusCreateRequest creates the PutAsyncRelativeRetryNoStatus request.
 func (client *lrosaDsOperations) putAsyncRelativeRetryNoStatusCreateRequest(lrosaDsPutAsyncRelativeRetryNoStatusOptions *LrosaDsPutAsyncRelativeRetryNoStatusOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/error/putasync/retry/nostatus"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1658,8 +1743,12 @@ func (client *lrosaDsOperations) ResumePutAsyncRelativeRetryNoStatusPayload(toke
 
 // putAsyncRelativeRetryNoStatusPayloadCreateRequest creates the PutAsyncRelativeRetryNoStatusPayload request.
 func (client *lrosaDsOperations) putAsyncRelativeRetryNoStatusPayloadCreateRequest(lrosaDsPutAsyncRelativeRetryNoStatusPayloadOptions *LrosaDsPutAsyncRelativeRetryNoStatusPayloadOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/error/putasync/retry/nostatuspayload"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1730,8 +1819,12 @@ func (client *lrosaDsOperations) ResumePutError201NoProvisioningStatePayload(tok
 
 // putError201NoProvisioningStatePayloadCreateRequest creates the PutError201NoProvisioningStatePayload request.
 func (client *lrosaDsOperations) putError201NoProvisioningStatePayloadCreateRequest(lrosaDsPutError201NoProvisioningStatePayloadOptions *LrosaDsPutError201NoProvisioningStatePayloadOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/error/put/201/noprovisioningstatepayload"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1802,8 +1895,12 @@ func (client *lrosaDsOperations) ResumePutNonRetry201Creating400(token string) (
 
 // putNonRetry201Creating400CreateRequest creates the PutNonRetry201Creating400 request.
 func (client *lrosaDsOperations) putNonRetry201Creating400CreateRequest(lrosaDsPutNonRetry201Creating400Options *LrosaDsPutNonRetry201Creating400Options) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/nonretryerror/put/201/creating/400"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1874,8 +1971,12 @@ func (client *lrosaDsOperations) ResumePutNonRetry201Creating400InvalidJSON(toke
 
 // putNonRetry201Creating400InvalidJsonCreateRequest creates the PutNonRetry201Creating400InvalidJSON request.
 func (client *lrosaDsOperations) putNonRetry201Creating400InvalidJsonCreateRequest(lrosaDsPutNonRetry201Creating400InvalidJsonOptions *LrosaDsPutNonRetry201Creating400InvalidJSONOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/nonretryerror/put/201/creating/400/invalidjson"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1946,8 +2047,12 @@ func (client *lrosaDsOperations) ResumePutNonRetry400(token string) (ProductPoll
 
 // putNonRetry400CreateRequest creates the PutNonRetry400 request.
 func (client *lrosaDsOperations) putNonRetry400CreateRequest(lrosaDsPutNonRetry400Options *LrosaDsPutNonRetry400Options) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/nonretryerror/put/400"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

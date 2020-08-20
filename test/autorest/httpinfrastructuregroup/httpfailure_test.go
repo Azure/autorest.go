@@ -9,16 +9,8 @@ import (
 	"testing"
 )
 
-func getHTTPFailureOperations(t *testing.T) httpinfrastructuregroup.HTTPFailureOperations {
-	client, err := httpinfrastructuregroup.NewDefaultClient(nil)
-	if err != nil {
-		t.Fatalf("failed to create HTTPFailure client: %v", err)
-	}
-	return client.HTTPFailureOperations()
-}
-
 func TestHTTPFailureGetEmptyError(t *testing.T) {
-	client := getHTTPFailureOperations(t)
+	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPFailureOperations()
 	result, err := client.GetEmptyError(context.Background())
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
@@ -29,7 +21,7 @@ func TestHTTPFailureGetEmptyError(t *testing.T) {
 }
 
 func TestHTTPFailureGetNoModelEmpty(t *testing.T) {
-	client := getHTTPFailureOperations(t)
+	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPFailureOperations()
 	result, err := client.GetNoModelEmpty(context.Background())
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
@@ -40,7 +32,7 @@ func TestHTTPFailureGetNoModelEmpty(t *testing.T) {
 }
 
 func TestHTTPFailureGetNoModelError(t *testing.T) {
-	client := getHTTPFailureOperations(t)
+	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPFailureOperations()
 	result, err := client.GetNoModelError(context.Background())
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")

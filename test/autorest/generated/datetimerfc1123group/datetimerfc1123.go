@@ -9,6 +9,7 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
+	"net/url"
 	"path"
 	"time"
 )
@@ -59,8 +60,12 @@ func (client *datetimerfc1123Operations) GetInvalid(ctx context.Context) (*TimeR
 
 // getInvalidCreateRequest creates the GetInvalid request.
 func (client *datetimerfc1123Operations) getInvalidCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/datetimerfc1123/invalid"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -106,8 +111,12 @@ func (client *datetimerfc1123Operations) GetNull(ctx context.Context) (*TimeResp
 
 // getNullCreateRequest creates the GetNull request.
 func (client *datetimerfc1123Operations) getNullCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/datetimerfc1123/null"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -153,8 +162,12 @@ func (client *datetimerfc1123Operations) GetOverflow(ctx context.Context) (*Time
 
 // getOverflowCreateRequest creates the GetOverflow request.
 func (client *datetimerfc1123Operations) getOverflowCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/datetimerfc1123/overflow"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -200,8 +213,12 @@ func (client *datetimerfc1123Operations) GetUTCLowercaseMaxDateTime(ctx context.
 
 // getUtcLowercaseMaxDateTimeCreateRequest creates the GetUTCLowercaseMaxDateTime request.
 func (client *datetimerfc1123Operations) getUtcLowercaseMaxDateTimeCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/datetimerfc1123/max/lowercase"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -247,8 +264,12 @@ func (client *datetimerfc1123Operations) GetUTCMinDateTime(ctx context.Context) 
 
 // getUtcMinDateTimeCreateRequest creates the GetUTCMinDateTime request.
 func (client *datetimerfc1123Operations) getUtcMinDateTimeCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/datetimerfc1123/min"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -294,8 +315,12 @@ func (client *datetimerfc1123Operations) GetUTCUppercaseMaxDateTime(ctx context.
 
 // getUtcUppercaseMaxDateTimeCreateRequest creates the GetUTCUppercaseMaxDateTime request.
 func (client *datetimerfc1123Operations) getUtcUppercaseMaxDateTimeCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/datetimerfc1123/max/uppercase"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -341,8 +366,12 @@ func (client *datetimerfc1123Operations) GetUnderflow(ctx context.Context) (*Tim
 
 // getUnderflowCreateRequest creates the GetUnderflow request.
 func (client *datetimerfc1123Operations) getUnderflowCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/datetimerfc1123/underflow"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -388,8 +417,12 @@ func (client *datetimerfc1123Operations) PutUTCMaxDateTime(ctx context.Context, 
 
 // putUtcMaxDateTimeCreateRequest creates the PutUTCMaxDateTime request.
 func (client *datetimerfc1123Operations) putUtcMaxDateTimeCreateRequest(datetimeBody time.Time) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/datetimerfc1123/max"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -434,8 +467,12 @@ func (client *datetimerfc1123Operations) PutUTCMinDateTime(ctx context.Context, 
 
 // putUtcMinDateTimeCreateRequest creates the PutUTCMinDateTime request.
 func (client *datetimerfc1123Operations) putUtcMinDateTimeCreateRequest(datetimeBody time.Time) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/datetimerfc1123/min"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

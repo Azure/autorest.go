@@ -14,16 +14,8 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func getPrimitiveOperations(t *testing.T) complexgroup.PrimitiveOperations {
-	client, err := complexgroup.NewDefaultClient(nil)
-	if err != nil {
-		t.Fatalf("failed to create complex client: %v", err)
-	}
-	return client.PrimitiveOperations()
-}
-
 func TestPrimitiveGetInt(t *testing.T) {
-	client := getPrimitiveOperations(t)
+	client := complexgroup.NewDefaultClient(nil).PrimitiveOperations()
 	result, err := client.GetInt(context.Background())
 	if err != nil {
 		t.Fatalf("GetInt: %v", err)
@@ -32,7 +24,7 @@ func TestPrimitiveGetInt(t *testing.T) {
 }
 
 func TestPrimitivePutInt(t *testing.T) {
-	client := getPrimitiveOperations(t)
+	client := complexgroup.NewDefaultClient(nil).PrimitiveOperations()
 	a, b := int32(-1), int32(2)
 	result, err := client.PutInt(context.Background(), complexgroup.IntWrapper{Field1: &a, Field2: &b})
 	if err != nil {
@@ -42,7 +34,7 @@ func TestPrimitivePutInt(t *testing.T) {
 }
 
 func TestPrimitiveGetLong(t *testing.T) {
-	client := getPrimitiveOperations(t)
+	client := complexgroup.NewDefaultClient(nil).PrimitiveOperations()
 	result, err := client.GetLong(context.Background())
 	if err != nil {
 		t.Fatalf("GetLong: %v", err)
@@ -54,7 +46,7 @@ func TestPrimitiveGetLong(t *testing.T) {
 }
 
 func TestPrimitivePutLong(t *testing.T) {
-	client := getPrimitiveOperations(t)
+	client := complexgroup.NewDefaultClient(nil).PrimitiveOperations()
 	a, b := int64(1099511627775), int64(-999511627788)
 	result, err := client.PutLong(context.Background(), complexgroup.LongWrapper{Field1: &a, Field2: &b})
 	if err != nil {
@@ -64,7 +56,7 @@ func TestPrimitivePutLong(t *testing.T) {
 }
 
 func TestPrimitiveGetFloat(t *testing.T) {
-	client := getPrimitiveOperations(t)
+	client := complexgroup.NewDefaultClient(nil).PrimitiveOperations()
 	result, err := client.GetFloat(context.Background())
 	if err != nil {
 		t.Fatalf("GetFloat: %v", err)
@@ -76,7 +68,7 @@ func TestPrimitiveGetFloat(t *testing.T) {
 }
 
 func TestPrimitivePutFloat(t *testing.T) {
-	client := getPrimitiveOperations(t)
+	client := complexgroup.NewDefaultClient(nil).PrimitiveOperations()
 	a, b := float32(1.05), float32(-0.003)
 	result, err := client.PutFloat(context.Background(), complexgroup.FloatWrapper{Field1: &a, Field2: &b})
 	if err != nil {
@@ -86,7 +78,7 @@ func TestPrimitivePutFloat(t *testing.T) {
 }
 
 func TestPrimitiveGetDouble(t *testing.T) {
-	client := getPrimitiveOperations(t)
+	client := complexgroup.NewDefaultClient(nil).PrimitiveOperations()
 	result, err := client.GetDouble(context.Background())
 	if err != nil {
 		t.Fatalf("GetDouble: %v", err)
@@ -98,7 +90,7 @@ func TestPrimitiveGetDouble(t *testing.T) {
 }
 
 func TestPrimitivePutDouble(t *testing.T) {
-	client := getPrimitiveOperations(t)
+	client := complexgroup.NewDefaultClient(nil).PrimitiveOperations()
 	a, b := float64(3e-100), float64(-0.000000000000000000000000000000000000000000000000000000005)
 	result, err := client.PutDouble(context.Background(), complexgroup.DoubleWrapper{Field1: &a, Field56ZerosAfterTheDotAndNegativeZeroBeforeDotAndThisIsALongFieldNameOnPurpose: &b})
 	if err != nil {
@@ -108,7 +100,7 @@ func TestPrimitivePutDouble(t *testing.T) {
 }
 
 func TestPrimitiveGetBool(t *testing.T) {
-	client := getPrimitiveOperations(t)
+	client := complexgroup.NewDefaultClient(nil).PrimitiveOperations()
 	result, err := client.GetBool(context.Background())
 	if err != nil {
 		t.Fatalf("GetBool: %v", err)
@@ -120,7 +112,7 @@ func TestPrimitiveGetBool(t *testing.T) {
 }
 
 func TestPrimitiveGetByte(t *testing.T) {
-	client := getPrimitiveOperations(t)
+	client := complexgroup.NewDefaultClient(nil).PrimitiveOperations()
 	result, err := client.GetByte(context.Background())
 	if err != nil {
 		t.Fatalf("GetByte: %v", err)
@@ -129,7 +121,7 @@ func TestPrimitiveGetByte(t *testing.T) {
 }
 
 func TestPrimitivePutBool(t *testing.T) {
-	client := getPrimitiveOperations(t)
+	client := complexgroup.NewDefaultClient(nil).PrimitiveOperations()
 	a, b := true, false
 	result, err := client.PutBool(context.Background(), complexgroup.BooleanWrapper{FieldTrue: &a, FieldFalse: &b})
 	if err != nil {
@@ -139,7 +131,7 @@ func TestPrimitivePutBool(t *testing.T) {
 }
 
 func TestPrimitivePutByte(t *testing.T) {
-	client := getPrimitiveOperations(t)
+	client := complexgroup.NewDefaultClient(nil).PrimitiveOperations()
 	val := []byte{255, 254, 253, 252, 0, 250, 249, 248, 247, 246}
 	result, err := client.PutByte(context.Background(), complexgroup.ByteWrapper{Field: &val})
 	if err != nil {
@@ -149,7 +141,7 @@ func TestPrimitivePutByte(t *testing.T) {
 }
 
 func TestPrimitiveGetString(t *testing.T) {
-	client := getPrimitiveOperations(t)
+	client := complexgroup.NewDefaultClient(nil).PrimitiveOperations()
 	result, err := client.GetString(context.Background())
 	if err != nil {
 		t.Fatalf("GetString: %v", err)
@@ -161,7 +153,7 @@ func TestPrimitiveGetString(t *testing.T) {
 }
 
 func TestPrimitivePutString(t *testing.T) {
-	client := getPrimitiveOperations(t)
+	client := complexgroup.NewDefaultClient(nil).PrimitiveOperations()
 	var c *string
 	a, b, c := "goodrequest", "", nil
 	result, err := client.PutString(context.Background(), complexgroup.StringWrapper{Field: &a, Empty: &b, Null: c})
@@ -172,7 +164,7 @@ func TestPrimitivePutString(t *testing.T) {
 }
 
 // func TestPrimitiveGetDate(t *testing.T) {
-// 	client := getPrimitiveOperations(t)
+// 	client := complexgroup.NewDefaultClient(nil).PrimitiveOperations()
 // 	result, err := client.GetDate(context.Background())
 // 	if err != nil {
 // 		t.Fatalf("GetDate: %v", err)
@@ -193,7 +185,7 @@ func TestPrimitivePutString(t *testing.T) {
 // }
 
 // func TestPrimitivePutDate(t *testing.T) {
-// 	client := getPrimitiveOperations(t)
+// 	client := complexgroup.NewDefaultClient(nil).PrimitiveOperations()
 // 	a, err := time.Parse("2006-01-02", "0001-01-01")
 // 	if err != nil {
 // 		t.Fatalf("Unable to parse date string: %v", err)
@@ -213,7 +205,7 @@ func TestPrimitivePutString(t *testing.T) {
 // }
 
 func TestPrimitiveGetDuration(t *testing.T) {
-	client := getPrimitiveOperations(t)
+	client := complexgroup.NewDefaultClient(nil).PrimitiveOperations()
 	result, err := client.GetDuration(context.Background())
 	if err != nil {
 		t.Fatalf("GetDuration: %v", err)
@@ -224,7 +216,7 @@ func TestPrimitiveGetDuration(t *testing.T) {
 }
 
 func TestPrimitivePutDuration(t *testing.T) {
-	client := getPrimitiveOperations(t)
+	client := complexgroup.NewDefaultClient(nil).PrimitiveOperations()
 	result, err := client.PutDuration(context.Background(), complexgroup.DurationWrapper{Field: to.StringPtr("P123DT22H14M12.011S")})
 	if err != nil {
 		t.Fatalf("PutDuration: %v", err)
@@ -233,7 +225,7 @@ func TestPrimitivePutDuration(t *testing.T) {
 }
 
 func TestPrimitiveGetDateTime(t *testing.T) {
-	client := getPrimitiveOperations(t)
+	client := complexgroup.NewDefaultClient(nil).PrimitiveOperations()
 	result, err := client.GetDateTime(context.Background())
 	if err != nil {
 		t.Fatalf("GetDateTime: %v", err)
@@ -247,7 +239,7 @@ func TestPrimitiveGetDateTime(t *testing.T) {
 }
 
 func TestPrimitiveGetDateTimeRFC1123(t *testing.T) {
-	client := getPrimitiveOperations(t)
+	client := complexgroup.NewDefaultClient(nil).PrimitiveOperations()
 	result, err := client.GetDateTimeRFC1123(context.Background())
 	if err != nil {
 		t.Fatalf("GetDateTimeRFC1123: %v", err)
@@ -261,7 +253,7 @@ func TestPrimitiveGetDateTimeRFC1123(t *testing.T) {
 }
 
 func TestPrimitivePutDateTime(t *testing.T) {
-	client := getPrimitiveOperations(t)
+	client := complexgroup.NewDefaultClient(nil).PrimitiveOperations()
 	f, _ := time.Parse(time.RFC3339, "0001-01-01T00:00:00Z")
 	n, _ := time.Parse(time.RFC3339, "2015-05-18T18:38:00Z")
 	result, err := client.PutDateTime(context.Background(), complexgroup.DatetimeWrapper{
@@ -275,7 +267,7 @@ func TestPrimitivePutDateTime(t *testing.T) {
 }
 
 func TestPrimitivePutDateTimeRFC1123(t *testing.T) {
-	client := getPrimitiveOperations(t)
+	client := complexgroup.NewDefaultClient(nil).PrimitiveOperations()
 	f, _ := time.Parse(time.RFC1123, "Mon, 01 Jan 0001 00:00:00 GMT")
 	n, _ := time.Parse(time.RFC1123, "Mon, 18 May 2015 11:38:00 GMT")
 	result, err := client.PutDateTimeRFC1123(context.Background(), complexgroup.Datetimerfc1123Wrapper{

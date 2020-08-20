@@ -11,16 +11,8 @@ import (
 	"testing"
 )
 
-func getArrayOperations(t *testing.T) complexgroup.ArrayOperations {
-	client, err := complexgroup.NewDefaultClient(nil)
-	if err != nil {
-		t.Fatalf("failed to create complex client: %v", err)
-	}
-	return client.ArrayOperations()
-}
-
 func TestArrayGetEmpty(t *testing.T) {
-	client := getArrayOperations(t)
+	client := complexgroup.NewDefaultClient(nil).ArrayOperations()
 	result, err := client.GetEmpty(context.Background())
 	if err != nil {
 		t.Fatalf("GetEmpty: %v", err)
@@ -31,7 +23,7 @@ func TestArrayGetEmpty(t *testing.T) {
 }
 
 func TestArrayGetNotProvided(t *testing.T) {
-	client := getArrayOperations(t)
+	client := complexgroup.NewDefaultClient(nil).ArrayOperations()
 	result, err := client.GetNotProvided(context.Background())
 	if err != nil {
 		t.Fatalf("GetNotProvided: %v", err)
@@ -40,7 +32,7 @@ func TestArrayGetNotProvided(t *testing.T) {
 }
 
 func TestArrayGetValid(t *testing.T) {
-	client := getArrayOperations(t)
+	client := complexgroup.NewDefaultClient(nil).ArrayOperations()
 	result, err := client.GetValid(context.Background())
 	if err != nil {
 		t.Fatalf("GetValid: %v", err)
@@ -51,7 +43,7 @@ func TestArrayGetValid(t *testing.T) {
 }
 
 func TestArrayPutEmpty(t *testing.T) {
-	client := getArrayOperations(t)
+	client := complexgroup.NewDefaultClient(nil).ArrayOperations()
 	result, err := client.PutEmpty(context.Background(), complexgroup.ArrayWrapper{Array: &[]string{}})
 	if err != nil {
 		t.Fatalf("PutEmpty: %v", err)
@@ -62,7 +54,7 @@ func TestArrayPutEmpty(t *testing.T) {
 /*
 test is currently invalid, missing x-nullable but expects null
 func TestArrayPutValid(t *testing.T) {
-	client := getArrayOperations(t)
+	client := complexgroup.NewDefaultClient(nil).ArrayOperations()
 	result, err := client.PutValid(context.Background(), complexgroup.ArrayWrapper{Array: &[]string{"1, 2, 3, 4", "", nil, "&S#$(*Y", "The quick brown fox jumps over the lazy dog"}})
 	if err != nil {
 		t.Fatalf("PutValid: %v", err)

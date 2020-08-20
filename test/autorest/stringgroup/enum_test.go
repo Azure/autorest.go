@@ -11,16 +11,8 @@ import (
 	"testing"
 )
 
-func getEnumClient(t *testing.T) stringgroup.EnumOperations {
-	client, err := stringgroup.NewDefaultClient(nil)
-	if err != nil {
-		t.Fatalf("failed to create enum client: %v", err)
-	}
-	return client.EnumOperations()
-}
-
 func TestEnumGetNotExpandable(t *testing.T) {
-	client := getEnumClient(t)
+	client := stringgroup.NewDefaultClient(nil).EnumOperations()
 	result, err := client.GetNotExpandable(context.Background())
 	if err != nil {
 		t.Fatalf("GetNotExpandable: %v", err)
@@ -30,7 +22,7 @@ func TestEnumGetNotExpandable(t *testing.T) {
 }
 
 func TestEnumGetReferenced(t *testing.T) {
-	client := getEnumClient(t)
+	client := stringgroup.NewDefaultClient(nil).EnumOperations()
 	result, err := client.GetReferenced(context.Background())
 	if err != nil {
 		t.Fatalf("GetReferenced: %v", err)
@@ -40,7 +32,7 @@ func TestEnumGetReferenced(t *testing.T) {
 }
 
 func TestEnumGetReferencedConstant(t *testing.T) {
-	client := getEnumClient(t)
+	client := stringgroup.NewDefaultClient(nil).EnumOperations()
 	result, err := client.GetReferencedConstant(context.Background())
 	if err != nil {
 		t.Fatalf("GetReferencedConstant: %v", err)
@@ -51,7 +43,7 @@ func TestEnumGetReferencedConstant(t *testing.T) {
 }
 
 func TestEnumPutNotExpandable(t *testing.T) {
-	client := getEnumClient(t)
+	client := stringgroup.NewDefaultClient(nil).EnumOperations()
 	result, err := client.PutNotExpandable(context.Background(), stringgroup.ColorsRedColor)
 	if err != nil {
 		t.Fatalf("PutNotExpandable: %v", err)
@@ -60,7 +52,7 @@ func TestEnumPutNotExpandable(t *testing.T) {
 }
 
 func TestEnumPutReferenced(t *testing.T) {
-	client := getEnumClient(t)
+	client := stringgroup.NewDefaultClient(nil).EnumOperations()
 	result, err := client.PutReferenced(context.Background(), stringgroup.ColorsRedColor)
 	if err != nil {
 		t.Fatalf("PutReferenced: %v", err)
@@ -69,7 +61,7 @@ func TestEnumPutReferenced(t *testing.T) {
 }
 
 func TestEnumPutReferencedConstant(t *testing.T) {
-	client := getEnumClient(t)
+	client := stringgroup.NewDefaultClient(nil).EnumOperations()
 	val := string(stringgroup.ColorsGreenColor)
 	result, err := client.PutReferencedConstant(context.Background(), stringgroup.RefColorConstant{ColorConstant: &val})
 	if err != nil {

@@ -14,24 +14,24 @@ import { ImportManager } from './imports';
 export async function generateClient(session: Session<CodeModel>): Promise<string> {
   // add standard imports
   imports.add('fmt');
-  const isARM = session.model.language.go!.openApiType === 'arm';
-  if (isARM && session.model.security.authenticationRequired) {
-    imports.add('github.com/Azure/azure-sdk-for-go/sdk/armcore');
-  }
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
-  if (!session.model.language.go!.complexHostParams) {
-    imports.add('net/url');
-  }
 
   let text = await contentPreamble(session);
+  const exportClient = await session.getValue('export-client', true);
+  // content generation can add to the imports list, so execute it before emitting any text
+  const content = generateContent(session, exportClient);
   text += imports.text();
-
   if (session.model.security.authenticationRequired) {
     const scope = await session.getValue('credential-scope');
     text += `const scope = "${scope}"\n`;
   }
-  text += `const telemetryInfo = "azsdk-go-${session.model.language.go!.packageName}/<version>"\n`;
-  const exportClient = await session.getValue('export-client', true);
+  text += content;
+  return text;
+}
+
+function generateContent(session: Session<CodeModel>, exportClient: boolean): string {
+  const isARM = session.model.language.go!.openApiType === 'arm';
+  let text = `const telemetryInfo = "azsdk-go-${session.model.language.go!.packageName}/<version>"\n`;
   let clientOptions = 'ClientOptions';
   let defaultClientOptions = 'DefaultClientOptions';
   if (!exportClient) {
@@ -49,6 +49,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   text += '\t// Telemetry configures the built-in telemetry policy behavior.\n';
   text += '\tTelemetry azcore.TelemetryOptions\n';
   if (isARM && session.model.security.authenticationRequired) {
+    imports.add('github.com/Azure/azure-sdk-for-go/sdk/armcore');
     text += '\t// RegisterRPOptions configures the built-in RP registration policy behavior.\n';
     text += '\tRegisterRPOptions armcore.RegistrationOptions\n';
   }
@@ -100,8 +101,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
       text += `\t${param.language.go!.name} ${param.schema.language.go!.name}\n`;
     }
   } else {
-    // simple case, will parse URL in ctor
-    text += `\tu *url.URL\n`;
+    text += `\tu string\n`;
   }
   text += `\tp azcore.Pipeline\n`;
   text += '}\n\n';
@@ -115,7 +115,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
     text += `// ${defaultEndpoint} is the default service endpoint.\n`;
     text += `const ${defaultEndpoint} = "${endpoint}"\n\n`;
     text += `// ${newDefaultClient} creates an instance of the ${client} type using the ${defaultEndpoint}.\n`;
-    text += `func ${newDefaultClient}(${credParam}options *${clientOptions}) (*${client}, error) {\n`;
+    text += `func ${newDefaultClient}(${credParam}options *${clientOptions}) *${client} {\n`;
     let cred = 'cred, ';
     if (!session.model.security.authenticationRequired) {
       cred = '';
@@ -148,7 +148,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   }
 
   text += `// ${newClient} creates an instance of the ${client} type with the specified endpoint.\n`;
-  text += `func ${newClient}(${ctorParamsSig}, ${credParam}options *${clientOptions}) (*${client}, error) {\n`;
+  text += `func ${newClient}(${ctorParamsSig}, ${credParam}options *${clientOptions}) *${client} {\n`;
   text += '\tif options == nil {\n';
   text += `\t\to := ${defaultClientOptions}()\n`;
   text += '\t\toptions = &o\n';
@@ -186,9 +186,9 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   text += '}\n\n';
 
   text += `// ${newClientWithPipeline} creates an instance of the ${client} type with the specified endpoint and pipeline.\n`;
-  text += `func ${newClientWithPipeline}(${ctorParamsSig}, p azcore.Pipeline) (*${client}, error) {\n`;
+  text += `func ${newClientWithPipeline}(${ctorParamsSig}, p azcore.Pipeline) *${client} {\n`;
   if (!session.model.language.go!.complexHostParams) {
-    // simple case, construct and parse the URL here
+    // simple case, construct the full host here
     var hostURL: string;
     const uriTemplate = <string>session.model.operationGroups[0].operations[0].requests![0].protocol.http!.uri;
     // if the uriTemplate is simply {whatever} then we can skip doing the strings.ReplaceAll thing.
@@ -214,16 +214,9 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
       // swagger host, the host URL is the only ctor param
       hostURL = ctorParams;
     }
-    text += `\tu, err := url.Parse(${hostURL})\n`;
-    text += '\tif err != nil {\n';
-    text += '\t\treturn nil, err\n';
-    text += '\t}\n';
-    text += '\tif u.Scheme == "" {\n';
-    text += `\t\treturn nil, fmt.Errorf("no scheme detected in endpoint %s", ${hostURL})\n`;
-    text += '\t}\n';
-    text += `\treturn &${client}{u: u, p: p}, nil\n`;
+    text += `\treturn &${client}{u: ${hostURL}, p: p}\n`;
   } else {
-    // complex case, URL will be constructed and parsed in operations
+    // complex case, full URL will be constructed and parsed in operations
     text += `\tclient := &${client}{\n`;
     text += '\t\tp: p,\n';
     const hostParams = <Array<Parameter>>session.model.language.go!.hostParams;
@@ -243,7 +236,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
         text += '\t}\n';
       }
     }
-    text += '\treturn client, nil\n';
+    text += '\treturn client\n';
   }
 
   text += '}\n\n';

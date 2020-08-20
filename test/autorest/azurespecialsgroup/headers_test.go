@@ -12,17 +12,9 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func getHeaderOperations(t *testing.T) azurespecialsgroup.HeaderOperations {
-	client, err := azurespecialsgroup.NewDefaultClient(nil)
-	if err != nil {
-		t.Fatalf("failed to create client: %v", err)
-	}
-	return client.HeaderOperations()
-}
-
 // CustomNamedRequestID - Send foo-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request
 func TestCustomNamedRequestID(t *testing.T) {
-	client := getHeaderOperations(t)
+	client := azurespecialsgroup.NewDefaultClient(nil).HeaderOperations()
 	result, err := client.CustomNamedRequestID(context.Background(), "9C4D50EE-2D56-4CD3-8152-34347DC9F2B0")
 	if err != nil {
 		t.Fatal(err)
@@ -32,7 +24,7 @@ func TestCustomNamedRequestID(t *testing.T) {
 
 // CustomNamedRequestIDHead - Send foo-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request
 func TestCustomNamedRequestIDHead(t *testing.T) {
-	client := getHeaderOperations(t)
+	client := azurespecialsgroup.NewDefaultClient(nil).HeaderOperations()
 	result, err := client.CustomNamedRequestIDHead(context.Background(), "9C4D50EE-2D56-4CD3-8152-34347DC9F2B0")
 	if err != nil {
 		t.Fatal(err)
@@ -42,7 +34,7 @@ func TestCustomNamedRequestIDHead(t *testing.T) {
 
 // CustomNamedRequestIDParamGrouping - Send foo-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request, via a parameter group
 func TestCustomNamedRequestIDParamGrouping(t *testing.T) {
-	client := getHeaderOperations(t)
+	client := azurespecialsgroup.NewDefaultClient(nil).HeaderOperations()
 	result, err := client.CustomNamedRequestIDParamGrouping(context.Background(), azurespecialsgroup.HeaderCustomNamedRequestIDParamGroupingParameters{
 		FooClientRequestId: "9C4D50EE-2D56-4CD3-8152-34347DC9F2B0",
 	})

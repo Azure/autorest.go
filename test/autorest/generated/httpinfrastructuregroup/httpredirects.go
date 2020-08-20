@@ -9,6 +9,7 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
+	"net/url"
 	"path"
 )
 
@@ -73,8 +74,12 @@ func (client *httpRedirectsOperations) Delete307(ctx context.Context) (*http.Res
 
 // delete307CreateRequest creates the Delete307 request.
 func (client *httpRedirectsOperations) delete307CreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/http/redirect/307"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -119,8 +124,12 @@ func (client *httpRedirectsOperations) Get300(ctx context.Context) (interface{},
 
 // get300CreateRequest creates the Get300 request.
 func (client *httpRedirectsOperations) get300CreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/http/redirect/300"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -176,8 +185,12 @@ func (client *httpRedirectsOperations) Get301(ctx context.Context) (*http.Respon
 
 // get301CreateRequest creates the Get301 request.
 func (client *httpRedirectsOperations) get301CreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/http/redirect/301"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -221,8 +234,12 @@ func (client *httpRedirectsOperations) Get302(ctx context.Context) (*http.Respon
 
 // get302CreateRequest creates the Get302 request.
 func (client *httpRedirectsOperations) get302CreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/http/redirect/302"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -266,8 +283,12 @@ func (client *httpRedirectsOperations) Get307(ctx context.Context) (*http.Respon
 
 // get307CreateRequest creates the Get307 request.
 func (client *httpRedirectsOperations) get307CreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/http/redirect/307"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -311,8 +332,12 @@ func (client *httpRedirectsOperations) Head300(ctx context.Context) (*HTTPRedire
 
 // head300CreateRequest creates the Head300 request.
 func (client *httpRedirectsOperations) head300CreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/http/redirect/300"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -360,8 +385,12 @@ func (client *httpRedirectsOperations) Head301(ctx context.Context) (*http.Respo
 
 // head301CreateRequest creates the Head301 request.
 func (client *httpRedirectsOperations) head301CreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/http/redirect/301"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -405,8 +434,12 @@ func (client *httpRedirectsOperations) Head302(ctx context.Context) (*http.Respo
 
 // head302CreateRequest creates the Head302 request.
 func (client *httpRedirectsOperations) head302CreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/http/redirect/302"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -450,8 +483,12 @@ func (client *httpRedirectsOperations) Head307(ctx context.Context) (*http.Respo
 
 // head307CreateRequest creates the Head307 request.
 func (client *httpRedirectsOperations) head307CreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/http/redirect/307"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -495,8 +532,12 @@ func (client *httpRedirectsOperations) Options307(ctx context.Context) (*http.Re
 
 // options307CreateRequest creates the Options307 request.
 func (client *httpRedirectsOperations) options307CreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/http/redirect/307"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -540,8 +581,12 @@ func (client *httpRedirectsOperations) Patch302(ctx context.Context) (*HTTPRedir
 
 // patch302CreateRequest creates the Patch302 request.
 func (client *httpRedirectsOperations) patch302CreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/http/redirect/302"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -589,8 +634,12 @@ func (client *httpRedirectsOperations) Patch307(ctx context.Context) (*http.Resp
 
 // patch307CreateRequest creates the Patch307 request.
 func (client *httpRedirectsOperations) patch307CreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/http/redirect/307"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -634,8 +683,12 @@ func (client *httpRedirectsOperations) Post303(ctx context.Context) (*HTTPRedire
 
 // post303CreateRequest creates the Post303 request.
 func (client *httpRedirectsOperations) post303CreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/http/redirect/303"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -683,8 +736,12 @@ func (client *httpRedirectsOperations) Post307(ctx context.Context) (*http.Respo
 
 // post307CreateRequest creates the Post307 request.
 func (client *httpRedirectsOperations) post307CreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/http/redirect/307"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -728,8 +785,12 @@ func (client *httpRedirectsOperations) Put301(ctx context.Context) (*HTTPRedirec
 
 // put301CreateRequest creates the Put301 request.
 func (client *httpRedirectsOperations) put301CreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/http/redirect/301"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -777,8 +838,12 @@ func (client *httpRedirectsOperations) Put307(ctx context.Context) (*http.Respon
 
 // put307CreateRequest creates the Put307 request.
 func (client *httpRedirectsOperations) put307CreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/http/redirect/307"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

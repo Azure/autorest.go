@@ -13,17 +13,9 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
-func getXMSClientRequestIDOperations(t *testing.T) azurespecialsgroup.XMSClientRequestIDOperations {
-	client, err := azurespecialsgroup.NewDefaultClient(nil)
-	if err != nil {
-		t.Fatalf("failed to create client: %v", err)
-	}
-	return client.XMSClientRequestIDOperations()
-}
-
 // Get - Get method that overwrites x-ms-client-request header with value 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.
 func TestGet(t *testing.T) {
-	client := getXMSClientRequestIDOperations(t)
+	client := azurespecialsgroup.NewDefaultClient(nil).XMSClientRequestIDOperations()
 	result, err := client.Get(context.Background())
 	if err == nil {
 		t.Fatal("unexpected nil error")
@@ -39,7 +31,7 @@ func TestGet(t *testing.T) {
 
 // ParamGet - Get method that overwrites x-ms-client-request header with value 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.
 func TestParamGet(t *testing.T) {
-	client := getXMSClientRequestIDOperations(t)
+	client := azurespecialsgroup.NewDefaultClient(nil).XMSClientRequestIDOperations()
 	result, err := client.ParamGet(context.Background(), "9C4D50EE-2D56-4CD3-8152-34347DC9F2B0")
 	if err != nil {
 		t.Fatal(err)

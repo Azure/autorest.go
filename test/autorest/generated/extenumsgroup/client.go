@@ -8,7 +8,6 @@ package extenumsgroup
 import (
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"net/url"
 )
 
 const telemetryInfo = "azsdk-go-extenumsgroup/<version>"
@@ -45,7 +44,7 @@ func (c *ClientOptions) telemetryOptions() azcore.TelemetryOptions {
 
 // Client - PetStore
 type Client struct {
-	u *url.URL
+	u string
 	p azcore.Pipeline
 }
 
@@ -53,12 +52,12 @@ type Client struct {
 const DefaultEndpoint = "http://localhost:3000"
 
 // NewDefaultClient creates an instance of the Client type using the DefaultEndpoint.
-func NewDefaultClient(options *ClientOptions) (*Client, error) {
+func NewDefaultClient(options *ClientOptions) *Client {
 	return NewClient(DefaultEndpoint, options)
 }
 
 // NewClient creates an instance of the Client type with the specified endpoint.
-func NewClient(endpoint string, options *ClientOptions) (*Client, error) {
+func NewClient(endpoint string, options *ClientOptions) *Client {
 	if options == nil {
 		o := DefaultClientOptions()
 		options = &o
@@ -72,15 +71,8 @@ func NewClient(endpoint string, options *ClientOptions) (*Client, error) {
 }
 
 // NewClientWithPipeline creates an instance of the Client type with the specified endpoint and pipeline.
-func NewClientWithPipeline(endpoint string, p azcore.Pipeline) (*Client, error) {
-	u, err := url.Parse(endpoint)
-	if err != nil {
-		return nil, err
-	}
-	if u.Scheme == "" {
-		return nil, fmt.Errorf("no scheme detected in endpoint %s", endpoint)
-	}
-	return &Client{u: u, p: p}, nil
+func NewClientWithPipeline(endpoint string, p azcore.Pipeline) *Client {
+	return &Client{u: endpoint, p: p}
 }
 
 // PetOperations returns the PetOperations associated with this client.

@@ -13,17 +13,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func getMoreCustomBaseURIClient(t *testing.T) morecustombaseurigroup.PathsOperations {
-	client, err := morecustombaseurigroup.NewClient(to.StringPtr(":3000"), nil)
-	if err != nil {
-		t.Fatalf("failed to create more custom base URL client: %v", err)
-	}
+func getMoreCustomBaseURIClient() morecustombaseurigroup.PathsOperations {
+	client := morecustombaseurigroup.NewClient(to.StringPtr(":3000"), nil)
 	// dnsSuffix string, subscriptionID string
 	return client.PathsOperations("test12")
 }
 
 func TestGetEmpty(t *testing.T) {
-	client := getMoreCustomBaseURIClient(t)
+	client := getMoreCustomBaseURIClient()
 	// vault string, secret string, keyName string, options *PathsGetEmptyOptions
 	result, err := client.GetEmpty(context.Background(), "http://localhost", "", "key1", &morecustombaseurigroup.PathsGetEmptyOptions{
 		KeyVersion: to.StringPtr("v1"),

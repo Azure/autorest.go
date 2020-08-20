@@ -51,8 +51,12 @@ func (client *parameterGroupingOperations) PostMultiParamGroups(ctx context.Cont
 
 // postMultiParamGroupsCreateRequest creates the PostMultiParamGroups request.
 func (client *parameterGroupingOperations) postMultiParamGroupsCreateRequest(firstParameterGroup *FirstParameterGroup, parameterGroupingPostMultiParamGroupsSecondParamGroup *ParameterGroupingPostMultiParamGroupsSecondParamGroup) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/parameterGrouping/postMultipleParameterGroups"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -110,8 +114,12 @@ func (client *parameterGroupingOperations) PostOptional(ctx context.Context, par
 
 // postOptionalCreateRequest creates the PostOptional request.
 func (client *parameterGroupingOperations) postOptionalCreateRequest(parameterGroupingPostOptionalParameters *ParameterGroupingPostOptionalParameters) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/parameterGrouping/postOptional"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -163,9 +171,13 @@ func (client *parameterGroupingOperations) PostRequired(ctx context.Context, par
 
 // postRequiredCreateRequest creates the PostRequired request.
 func (client *parameterGroupingOperations) postRequiredCreateRequest(parameterGroupingPostRequiredParameters ParameterGroupingPostRequiredParameters) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/parameterGrouping/postRequired/{path}"
 	urlPath = strings.ReplaceAll(urlPath, "{path}", url.PathEscape(parameterGroupingPostRequiredParameters.PathParameter))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -217,8 +229,12 @@ func (client *parameterGroupingOperations) PostSharedParameterGroupObject(ctx co
 
 // postSharedParameterGroupObjectCreateRequest creates the PostSharedParameterGroupObject request.
 func (client *parameterGroupingOperations) postSharedParameterGroupObjectCreateRequest(firstParameterGroup *FirstParameterGroup) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/parameterGrouping/sharedParameterGroupObject"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

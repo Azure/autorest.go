@@ -13,16 +13,8 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func getInheritanceOperations(t *testing.T) complexgroup.InheritanceOperations {
-	client, err := complexgroup.NewDefaultClient(nil)
-	if err != nil {
-		t.Fatalf("failed to create complex client: %v", err)
-	}
-	return client.InheritanceOperations()
-}
-
 func TestInheritanceGetValid(t *testing.T) {
-	client := getInheritanceOperations(t)
+	client := complexgroup.NewDefaultClient(nil).InheritanceOperations()
 	result, err := client.GetValid(context.Background())
 	if err != nil {
 		t.Fatalf("GetValid: %v", err)
@@ -56,7 +48,7 @@ func TestInheritanceGetValid(t *testing.T) {
 }
 
 func TestInheritancePutValid(t *testing.T) {
-	client := getInheritanceOperations(t)
+	client := complexgroup.NewDefaultClient(nil).InheritanceOperations()
 	result, err := client.PutValid(context.Background(), complexgroup.Siamese{
 		Cat: complexgroup.Cat{
 			Pet: complexgroup.Pet{

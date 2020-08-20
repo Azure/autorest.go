@@ -49,8 +49,12 @@ func (client *operations) List() (OperationListResultPager, error) {
 
 // listCreateRequest creates the List request.
 func (client *operations) listCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/providers/Microsoft.Network/operations"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

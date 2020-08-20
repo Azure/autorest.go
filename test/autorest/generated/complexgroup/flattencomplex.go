@@ -12,6 +12,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 	"path"
 )
 
@@ -43,8 +44,12 @@ func (client *flattencomplexOperations) GetValid(ctx context.Context) (*MyBaseTy
 
 // getValidCreateRequest creates the GetValid request.
 func (client *flattencomplexOperations) getValidCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/complex/flatten/valid"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

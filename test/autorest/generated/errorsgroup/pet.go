@@ -49,9 +49,13 @@ func (client *petOperations) DoSomething(ctx context.Context, whatAction string)
 
 // doSomethingCreateRequest creates the DoSomething request.
 func (client *petOperations) doSomethingCreateRequest(whatAction string) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/errorStatusCodes/Pets/doSomething/{whatAction}"
 	urlPath = strings.ReplaceAll(urlPath, "{whatAction}", url.PathEscape(whatAction))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -105,9 +109,13 @@ func (client *petOperations) GetPetByID(ctx context.Context, petId string) (*Pet
 
 // getPetByIdCreateRequest creates the GetPetByID request.
 func (client *petOperations) getPetByIdCreateRequest(petId string) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/errorStatusCodes/Pets/{petId}/GetPet"
 	urlPath = strings.ReplaceAll(urlPath, "{petId}", url.PathEscape(petId))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

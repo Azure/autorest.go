@@ -11,16 +11,13 @@ import (
 	"testing"
 )
 
-func getImplicitClient(t *testing.T) optionalgroup.ImplicitOperations {
-	client, err := optionalgroup.NewDefaultClient(nil)
-	if err != nil {
-		t.Fatalf("failed to create implicit client: %v", err)
-	}
+func getImplicitClient() optionalgroup.ImplicitOperations {
+	client := optionalgroup.NewDefaultClient(nil)
 	return client.ImplicitOperations("", "", nil)
 }
 
 func TestImplicitGetOptionalGlobalQuery(t *testing.T) {
-	client := getImplicitClient(t)
+	client := getImplicitClient()
 	result, err := client.GetOptionalGlobalQuery(context.Background())
 	if err != nil {
 		t.Fatalf("GetOptionalGlobalQuery: %v", err)
@@ -30,7 +27,7 @@ func TestImplicitGetOptionalGlobalQuery(t *testing.T) {
 
 func TestImplicitGetRequiredGlobalPath(t *testing.T) {
 	t.Skip("Cannot set nil for string parameter so test invalid for Go")
-	client := getImplicitClient(t)
+	client := getImplicitClient()
 	result, err := client.GetRequiredGlobalPath(context.Background())
 	if err != nil {
 		t.Fatalf("GetRequiredGlobalPath: %v", err)
@@ -40,7 +37,7 @@ func TestImplicitGetRequiredGlobalPath(t *testing.T) {
 
 func TestImplicitGetRequiredGlobalQuery(t *testing.T) {
 	t.Skip("Cannot set nil for string parameter so test invalid for Go")
-	client := getImplicitClient(t)
+	client := getImplicitClient()
 	result, err := client.GetRequiredGlobalQuery(context.Background())
 	if err != nil {
 		t.Fatalf("GetRequiredGlobalQuery: %v", err)
@@ -50,7 +47,7 @@ func TestImplicitGetRequiredGlobalQuery(t *testing.T) {
 
 func TestImplicitGetRequiredPath(t *testing.T) {
 	t.Skip("Cannot set nil for string parameter so test invalid for Go")
-	client := getImplicitClient(t)
+	client := getImplicitClient()
 	result, err := client.GetRequiredPath(context.Background(), "")
 	if err != nil {
 		t.Fatalf("GetRequiredPath: %v", err)
@@ -59,7 +56,7 @@ func TestImplicitGetRequiredPath(t *testing.T) {
 }
 
 func TestImplicitPutOptionalBody(t *testing.T) {
-	client := getImplicitClient(t)
+	client := getImplicitClient()
 	result, err := client.PutOptionalBody(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("PutOptionalBody: %v", err)
@@ -68,7 +65,7 @@ func TestImplicitPutOptionalBody(t *testing.T) {
 }
 
 func TestImplicitPutOptionalHeader(t *testing.T) {
-	client := getImplicitClient(t)
+	client := getImplicitClient()
 	result, err := client.PutOptionalHeader(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("PutOptionalHeader: %v", err)
@@ -77,7 +74,7 @@ func TestImplicitPutOptionalHeader(t *testing.T) {
 }
 
 func TestImplicitPutOptionalQuery(t *testing.T) {
-	client := getImplicitClient(t)
+	client := getImplicitClient()
 	result, err := client.PutOptionalQuery(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("PutOptionalQuery: %v", err)

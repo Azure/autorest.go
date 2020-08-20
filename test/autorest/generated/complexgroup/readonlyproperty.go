@@ -9,6 +9,7 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
+	"net/url"
 	"path"
 )
 
@@ -44,8 +45,12 @@ func (client *readonlypropertyOperations) GetValid(ctx context.Context) (*Readon
 
 // getValidCreateRequest creates the GetValid request.
 func (client *readonlypropertyOperations) getValidCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/complex/readonlyproperty/valid"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -90,8 +95,12 @@ func (client *readonlypropertyOperations) PutValid(ctx context.Context, complexB
 
 // putValidCreateRequest creates the PutValid request.
 func (client *readonlypropertyOperations) putValidCreateRequest(complexBody ReadonlyObj) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/complex/readonlyproperty/valid"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

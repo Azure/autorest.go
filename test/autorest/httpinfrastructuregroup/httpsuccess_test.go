@@ -11,16 +11,8 @@ import (
 	"testing"
 )
 
-func getHTTPSuccessOperations(t *testing.T) httpinfrastructuregroup.HTTPSuccessOperations {
-	client, err := httpinfrastructuregroup.NewDefaultClient(nil)
-	if err != nil {
-		t.Fatalf("failed to create HTTPSuccess client: %v", err)
-	}
-	return client.HTTPSuccessOperations()
-}
-
 func TestHTTPSuccessDelete200(t *testing.T) {
-	client := getHTTPSuccessOperations(t)
+	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPSuccessOperations()
 	result, err := client.Delete200(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
@@ -29,7 +21,7 @@ func TestHTTPSuccessDelete200(t *testing.T) {
 }
 
 func TestHTTPSuccessDelete202(t *testing.T) {
-	client := getHTTPSuccessOperations(t)
+	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPSuccessOperations()
 	result, err := client.Delete202(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
@@ -38,7 +30,7 @@ func TestHTTPSuccessDelete202(t *testing.T) {
 }
 
 func TestHTTPSuccessDelete204(t *testing.T) {
-	client := getHTTPSuccessOperations(t)
+	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPSuccessOperations()
 	result, err := client.Delete204(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
@@ -47,7 +39,7 @@ func TestHTTPSuccessDelete204(t *testing.T) {
 }
 
 func TestHTTPSuccessGet200(t *testing.T) {
-	client := getHTTPSuccessOperations(t)
+	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPSuccessOperations()
 	result, err := client.Get200(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
@@ -56,7 +48,7 @@ func TestHTTPSuccessGet200(t *testing.T) {
 }
 
 func TestHTTPSuccessHead200(t *testing.T) {
-	client := getHTTPSuccessOperations(t)
+	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPSuccessOperations()
 	result, err := client.Head200(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
@@ -65,7 +57,7 @@ func TestHTTPSuccessHead200(t *testing.T) {
 }
 
 func TestHTTPSuccessHead204(t *testing.T) {
-	client := getHTTPSuccessOperations(t)
+	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPSuccessOperations()
 	result, err := client.Head204(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
@@ -74,7 +66,7 @@ func TestHTTPSuccessHead204(t *testing.T) {
 }
 
 func TestHTTPSuccessHead404(t *testing.T) {
-	client := getHTTPSuccessOperations(t)
+	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPSuccessOperations()
 	result, err := client.Head404(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -84,7 +76,7 @@ func TestHTTPSuccessHead404(t *testing.T) {
 
 func TestHTTPSuccessOptions200(t *testing.T) {
 	t.Skip("options method not enabled by test server")
-	client := getHTTPSuccessOperations(t)
+	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPSuccessOperations()
 	result, err := client.Options200(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
@@ -93,7 +85,7 @@ func TestHTTPSuccessOptions200(t *testing.T) {
 }
 
 func TestHTTPSuccessPatch200(t *testing.T) {
-	client := getHTTPSuccessOperations(t)
+	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPSuccessOperations()
 	result, err := client.Patch200(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
@@ -102,7 +94,7 @@ func TestHTTPSuccessPatch200(t *testing.T) {
 }
 
 func TestHTTPSuccessPatch202(t *testing.T) {
-	client := getHTTPSuccessOperations(t)
+	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPSuccessOperations()
 	result, err := client.Patch202(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
@@ -111,7 +103,7 @@ func TestHTTPSuccessPatch202(t *testing.T) {
 }
 
 func TestHTTPSuccessPatch204(t *testing.T) {
-	client := getHTTPSuccessOperations(t)
+	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPSuccessOperations()
 	result, err := client.Patch204(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
@@ -120,7 +112,7 @@ func TestHTTPSuccessPatch204(t *testing.T) {
 }
 
 func TestHTTPSuccessPost200(t *testing.T) {
-	client := getHTTPSuccessOperations(t)
+	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPSuccessOperations()
 	result, err := client.Post200(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
@@ -129,7 +121,7 @@ func TestHTTPSuccessPost200(t *testing.T) {
 }
 
 func TestHTTPSuccessPost201(t *testing.T) {
-	client := getHTTPSuccessOperations(t)
+	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPSuccessOperations()
 	result, err := client.Post201(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
@@ -138,7 +130,7 @@ func TestHTTPSuccessPost201(t *testing.T) {
 }
 
 func TestHTTPSuccessPost202(t *testing.T) {
-	client := getHTTPSuccessOperations(t)
+	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPSuccessOperations()
 	result, err := client.Post202(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
@@ -147,7 +139,7 @@ func TestHTTPSuccessPost202(t *testing.T) {
 }
 
 func TestHTTPSuccessPost204(t *testing.T) {
-	client := getHTTPSuccessOperations(t)
+	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPSuccessOperations()
 	result, err := client.Post204(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
@@ -156,7 +148,7 @@ func TestHTTPSuccessPost204(t *testing.T) {
 }
 
 func TestHTTPSuccessPut200(t *testing.T) {
-	client := getHTTPSuccessOperations(t)
+	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPSuccessOperations()
 	result, err := client.Put200(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
@@ -165,7 +157,7 @@ func TestHTTPSuccessPut200(t *testing.T) {
 }
 
 func TestHTTPSuccessPut201(t *testing.T) {
-	client := getHTTPSuccessOperations(t)
+	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPSuccessOperations()
 	result, err := client.Put201(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
@@ -174,7 +166,7 @@ func TestHTTPSuccessPut201(t *testing.T) {
 }
 
 func TestHTTPSuccessPut202(t *testing.T) {
-	client := getHTTPSuccessOperations(t)
+	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPSuccessOperations()
 	result, err := client.Put202(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
@@ -183,7 +175,7 @@ func TestHTTPSuccessPut202(t *testing.T) {
 }
 
 func TestHTTPSuccessPut204(t *testing.T) {
-	client := getHTTPSuccessOperations(t)
+	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPSuccessOperations()
 	result, err := client.Put204(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)

@@ -88,8 +88,12 @@ func (client *pagingOperations) GetMultiplePages(pagingGetMultiplePagesOptions *
 
 // getMultiplePagesCreateRequest creates the GetMultiplePages request.
 func (client *pagingOperations) getMultiplePagesCreateRequest(pagingGetMultiplePagesOptions *PagingGetMultiplePagesOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/paging/multiple"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -152,8 +156,12 @@ func (client *pagingOperations) GetMultiplePagesFailure() (ProductResultPager, e
 
 // getMultiplePagesFailureCreateRequest creates the GetMultiplePagesFailure request.
 func (client *pagingOperations) getMultiplePagesFailureCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/paging/multiple/failure"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -207,8 +215,12 @@ func (client *pagingOperations) GetMultiplePagesFailureURI() (ProductResultPager
 
 // getMultiplePagesFailureUriCreateRequest creates the GetMultiplePagesFailureURI request.
 func (client *pagingOperations) getMultiplePagesFailureUriCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/paging/multiple/failureuri"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -255,9 +267,13 @@ func (client *pagingOperations) GetMultiplePagesFragmentNextLink(apiVersion stri
 
 // getMultiplePagesFragmentNextLinkCreateRequest creates the GetMultiplePagesFragmentNextLink request.
 func (client *pagingOperations) getMultiplePagesFragmentNextLinkCreateRequest(apiVersion string, tenant string) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/paging/multiple/fragment/{tenant}"
 	urlPath = strings.ReplaceAll(urlPath, "{tenant}", url.PathEscape(tenant))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -307,9 +323,13 @@ func (client *pagingOperations) GetMultiplePagesFragmentWithGroupingNextLink(cus
 
 // getMultiplePagesFragmentWithGroupingNextLinkCreateRequest creates the GetMultiplePagesFragmentWithGroupingNextLink request.
 func (client *pagingOperations) getMultiplePagesFragmentWithGroupingNextLinkCreateRequest(customParameterGroup CustomParameterGroup) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/paging/multiple/fragmentwithgrouping/{tenant}"
 	urlPath = strings.ReplaceAll(urlPath, "{tenant}", url.PathEscape(customParameterGroup.Tenant))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -385,8 +405,12 @@ func (client *pagingOperations) ResumeGetMultiplePagesLro(token string) (Product
 
 // getMultiplePagesLroCreateRequest creates the GetMultiplePagesLro request.
 func (client *pagingOperations) getMultiplePagesLroCreateRequest(pagingGetMultiplePagesLroOptions *PagingGetMultiplePagesLroOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/paging/multiple/lro"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -457,8 +481,12 @@ func (client *pagingOperations) GetMultiplePagesRetryFirst() (ProductResultPager
 
 // getMultiplePagesRetryFirstCreateRequest creates the GetMultiplePagesRetryFirst request.
 func (client *pagingOperations) getMultiplePagesRetryFirstCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/paging/multiple/retryfirst"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -512,8 +540,12 @@ func (client *pagingOperations) GetMultiplePagesRetrySecond() (ProductResultPage
 
 // getMultiplePagesRetrySecondCreateRequest creates the GetMultiplePagesRetrySecond request.
 func (client *pagingOperations) getMultiplePagesRetrySecondCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/paging/multiple/retrysecond"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -567,9 +599,13 @@ func (client *pagingOperations) GetMultiplePagesWithOffset(pagingGetMultiplePage
 
 // getMultiplePagesWithOffsetCreateRequest creates the GetMultiplePagesWithOffset request.
 func (client *pagingOperations) getMultiplePagesWithOffsetCreateRequest(pagingGetMultiplePagesWithOffsetOptions PagingGetMultiplePagesWithOffsetOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/paging/multiple/withpath/{offset}"
 	urlPath = strings.ReplaceAll(urlPath, "{offset}", url.PathEscape(strconv.FormatInt(int64(pagingGetMultiplePagesWithOffsetOptions.Offset), 10)))
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -632,8 +668,12 @@ func (client *pagingOperations) GetNoItemNamePages() (ProductResultValuePager, e
 
 // getNoItemNamePagesCreateRequest creates the GetNoItemNamePages request.
 func (client *pagingOperations) getNoItemNamePagesCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/paging/noitemname"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -681,8 +721,12 @@ func (client *pagingOperations) GetNullNextLinkNamePages(ctx context.Context) (*
 
 // getNullNextLinkNamePagesCreateRequest creates the GetNullNextLinkNamePages request.
 func (client *pagingOperations) getNullNextLinkNamePagesCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/paging/nullnextlink"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -736,8 +780,12 @@ func (client *pagingOperations) GetOdataMultiplePages(pagingGetOdataMultiplePage
 
 // getOdataMultiplePagesCreateRequest creates the GetOdataMultiplePages request.
 func (client *pagingOperations) getOdataMultiplePagesCreateRequest(pagingGetOdataMultiplePagesOptions *PagingGetOdataMultiplePagesOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/paging/multiple/odata"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -800,8 +848,12 @@ func (client *pagingOperations) GetPagingModelWithItemNameWithXmsClientName() (P
 
 // getPagingModelWithItemNameWithXmsClientNameCreateRequest creates the GetPagingModelWithItemNameWithXmsClientName request.
 func (client *pagingOperations) getPagingModelWithItemNameWithXmsClientNameCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/paging/itemNameWithXMSClientName"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -855,8 +907,12 @@ func (client *pagingOperations) GetSinglePages() (ProductResultPager, error) {
 
 // getSinglePagesCreateRequest creates the GetSinglePages request.
 func (client *pagingOperations) getSinglePagesCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/paging/single"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -910,8 +966,12 @@ func (client *pagingOperations) GetSinglePagesFailure() (ProductResultPager, err
 
 // getSinglePagesFailureCreateRequest creates the GetSinglePagesFailure request.
 func (client *pagingOperations) getSinglePagesFailureCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/paging/single/failure"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -958,8 +1018,12 @@ func (client *pagingOperations) GetWithQueryParams(requiredQueryParameter int32)
 
 // getWithQueryParamsCreateRequest creates the GetWithQueryParams request.
 func (client *pagingOperations) getWithQueryParamsCreateRequest(requiredQueryParameter int32) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/paging/multiple/getWithQueryParams"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -994,10 +1058,14 @@ func (client *pagingOperations) getWithQueryParamsHandleError(resp *azcore.Respo
 
 // nextFragmentCreateRequest creates the NextFragment request.
 func (client *pagingOperations) nextFragmentCreateRequest(apiVersion string, tenant string, nextLink string) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/paging/multiple/fragment/{tenant}/{nextLink}"
 	urlPath = strings.ReplaceAll(urlPath, "{tenant}", url.PathEscape(tenant))
 	urlPath = strings.ReplaceAll(urlPath, "{nextLink}", nextLink)
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1031,10 +1099,14 @@ func (client *pagingOperations) nextFragmentHandleError(resp *azcore.Response) e
 
 // nextFragmentWithGroupingCreateRequest creates the NextFragmentWithGrouping request.
 func (client *pagingOperations) nextFragmentWithGroupingCreateRequest(nextLink string, customParameterGroup CustomParameterGroup) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/paging/multiple/fragmentwithgrouping/{tenant}/{nextLink}"
 	urlPath = strings.ReplaceAll(urlPath, "{tenant}", url.PathEscape(customParameterGroup.Tenant))
 	urlPath = strings.ReplaceAll(urlPath, "{nextLink}", nextLink)
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1068,8 +1140,12 @@ func (client *pagingOperations) nextFragmentWithGroupingHandleError(resp *azcore
 
 // nextOperationWithQueryParamsCreateRequest creates the NextOperationWithQueryParams request.
 func (client *pagingOperations) nextOperationWithQueryParamsCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/paging/multiple/nextOperationWithQueryParams"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

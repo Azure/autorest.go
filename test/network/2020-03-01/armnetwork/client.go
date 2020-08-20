@@ -9,7 +9,6 @@ import (
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"net/url"
 )
 
 const scope = "https://management.azure.com//.default"
@@ -50,7 +49,7 @@ func (c *ClientOptions) telemetryOptions() azcore.TelemetryOptions {
 
 // Client - Network Client
 type Client struct {
-	u *url.URL
+	u string
 	p azcore.Pipeline
 }
 
@@ -58,12 +57,12 @@ type Client struct {
 const DefaultEndpoint = "https://management.azure.com"
 
 // NewDefaultClient creates an instance of the Client type using the DefaultEndpoint.
-func NewDefaultClient(cred azcore.Credential, options *ClientOptions) (*Client, error) {
+func NewDefaultClient(cred azcore.Credential, options *ClientOptions) *Client {
 	return NewClient(DefaultEndpoint, cred, options)
 }
 
 // NewClient creates an instance of the Client type with the specified endpoint.
-func NewClient(endpoint string, cred azcore.Credential, options *ClientOptions) (*Client, error) {
+func NewClient(endpoint string, cred azcore.Credential, options *ClientOptions) *Client {
 	if options == nil {
 		o := DefaultClientOptions()
 		options = &o
@@ -82,15 +81,8 @@ func NewClient(endpoint string, cred azcore.Credential, options *ClientOptions) 
 }
 
 // NewClientWithPipeline creates an instance of the Client type with the specified endpoint and pipeline.
-func NewClientWithPipeline(endpoint string, p azcore.Pipeline) (*Client, error) {
-	u, err := url.Parse(endpoint)
-	if err != nil {
-		return nil, err
-	}
-	if u.Scheme == "" {
-		return nil, fmt.Errorf("no scheme detected in endpoint %s", endpoint)
-	}
-	return &Client{u: u, p: p}, nil
+func NewClientWithPipeline(endpoint string, p azcore.Pipeline) *Client {
+	return &Client{u: endpoint, p: p}
 }
 
 // ApplicationGatewaysOperations returns the ApplicationGatewaysOperations associated with this client.

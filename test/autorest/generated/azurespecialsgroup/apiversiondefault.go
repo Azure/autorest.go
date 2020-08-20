@@ -9,6 +9,7 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
+	"net/url"
 	"path"
 )
 
@@ -48,8 +49,12 @@ func (client *apiVersionDefaultOperations) GetMethodGlobalNotProvidedValid(ctx c
 
 // getMethodGlobalNotProvidedValidCreateRequest creates the GetMethodGlobalNotProvidedValid request.
 func (client *apiVersionDefaultOperations) getMethodGlobalNotProvidedValidCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/azurespecials/apiVersion/method/string/none/query/globalNotProvided/2015-07-01-preview"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -96,8 +101,12 @@ func (client *apiVersionDefaultOperations) GetMethodGlobalValid(ctx context.Cont
 
 // getMethodGlobalValidCreateRequest creates the GetMethodGlobalValid request.
 func (client *apiVersionDefaultOperations) getMethodGlobalValidCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/azurespecials/apiVersion/method/string/none/query/global/2015-07-01-preview"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -144,8 +153,12 @@ func (client *apiVersionDefaultOperations) GetPathGlobalValid(ctx context.Contex
 
 // getPathGlobalValidCreateRequest creates the GetPathGlobalValid request.
 func (client *apiVersionDefaultOperations) getPathGlobalValidCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/azurespecials/apiVersion/path/string/none/query/global/2015-07-01-preview"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -192,8 +205,12 @@ func (client *apiVersionDefaultOperations) GetSwaggerGlobalValid(ctx context.Con
 
 // getSwaggerGlobalValidCreateRequest creates the GetSwaggerGlobalValid request.
 func (client *apiVersionDefaultOperations) getSwaggerGlobalValidCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/azurespecials/apiVersion/swagger/string/none/query/global/2015-07-01-preview"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

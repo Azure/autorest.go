@@ -9,6 +9,7 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
+	"net/url"
 	"path"
 )
 
@@ -44,8 +45,12 @@ func (client *inheritanceOperations) GetValid(ctx context.Context) (*SiameseResp
 
 // getValidCreateRequest creates the GetValid request.
 func (client *inheritanceOperations) getValidCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/complex/inheritance/valid"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -90,8 +95,12 @@ func (client *inheritanceOperations) PutValid(ctx context.Context, complexBody S
 
 // putValidCreateRequest creates the PutValid request.
 func (client *inheritanceOperations) putValidCreateRequest(complexBody Siamese) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/complex/inheritance/valid"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

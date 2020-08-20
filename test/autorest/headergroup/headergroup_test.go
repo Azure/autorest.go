@@ -8,29 +8,14 @@ import (
 	"generatortests/autorest/generated/headergroup"
 	"generatortests/helpers"
 	"net/http"
-	"reflect"
 	"testing"
 	"time"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func getHeaderClient(t *testing.T) headergroup.HeaderOperations {
-	client, err := headergroup.NewDefaultClient(nil)
-	if err != nil {
-		t.Fatalf("failed to create header client: %v", err)
-	}
-	return client.HeaderOperations()
-}
-
-func deepEqualOrFatal(t *testing.T, result interface{}, expected interface{}) {
-	if !reflect.DeepEqual(result, expected) {
-		t.Fatalf("got %+v, want %+v", result, expected)
-	}
-}
-
 // func TestHeaderCustomRequestID(t *testing.T) {
-// 	client := getHeaderClient(t)
+// 	client := headergroup.NewDefaultClient(nil).HeaderOperations()
 // 	result, err := client.CustomRequestID(context.Background())
 // 	if err != nil {
 // 		t.Fatalf("CustomRequestID: %v", err)
@@ -38,11 +23,11 @@ func deepEqualOrFatal(t *testing.T, result interface{}, expected interface{}) {
 // 	expected := &headergroup.HeaderCustomRequestIDResponse{
 // 		StatusCode: http.StatusOK,
 // 	}
-// 	deepEqualOrFatal(t, result, expected)
+// 	helpers.DeepEqualOrFatal(t, result, expected)
 // }
 
 func TestHeaderParamBool(t *testing.T) {
-	client := getHeaderClient(t)
+	client := headergroup.NewDefaultClient(nil).HeaderOperations()
 	result, err := client.ParamBool(context.Background(), "true", true)
 	if err != nil {
 		t.Fatalf("ParamBool: %v", err)
@@ -58,7 +43,7 @@ func TestHeaderParamBool(t *testing.T) {
 
 // TODO this required a change in the generated code so that it outputs base64.STDEncoding.EncodeToString()
 func TestHeaderParamByte(t *testing.T) {
-	client := getHeaderClient(t)
+	client := headergroup.NewDefaultClient(nil).HeaderOperations()
 	result, err := client.ParamByte(context.Background(), "valid", []byte("啊齄丂狛狜隣郎隣兀﨩"))
 	if err != nil {
 		t.Fatalf("ParamByte: %v", err)
@@ -67,7 +52,7 @@ func TestHeaderParamByte(t *testing.T) {
 }
 
 func TestHeaderParamDate(t *testing.T) {
-	client := getHeaderClient(t)
+	client := headergroup.NewDefaultClient(nil).HeaderOperations()
 	val, err := time.Parse("2006-01-02", "2010-01-01")
 	if err != nil {
 		t.Fatalf("Unable to parse time: %v", err)
@@ -80,7 +65,7 @@ func TestHeaderParamDate(t *testing.T) {
 }
 
 func TestHeaderParamDatetime(t *testing.T) {
-	client := getHeaderClient(t)
+	client := headergroup.NewDefaultClient(nil).HeaderOperations()
 	val, err := time.Parse("2006-01-02T15:04:05Z", "2010-01-01T12:34:56Z")
 	if err != nil {
 		t.Fatalf("Unable to parse time: %v", err)
@@ -93,7 +78,7 @@ func TestHeaderParamDatetime(t *testing.T) {
 }
 
 func TestHeaderParamDatetimeRFC1123(t *testing.T) {
-	client := getHeaderClient(t)
+	client := headergroup.NewDefaultClient(nil).HeaderOperations()
 	val, err := time.Parse(time.RFC1123, "Wed, 01 Jan 2010 12:34:56 GMT")
 	if err != nil {
 		t.Fatalf("Unable to parse time: %v", err)
@@ -106,7 +91,7 @@ func TestHeaderParamDatetimeRFC1123(t *testing.T) {
 }
 
 func TestHeaderParamDouble(t *testing.T) {
-	client := getHeaderClient(t)
+	client := headergroup.NewDefaultClient(nil).HeaderOperations()
 	result, err := client.ParamDouble(context.Background(), "positive", 7e120)
 	if err != nil {
 		t.Fatalf("ParamDouble: %v", err)
@@ -121,7 +106,7 @@ func TestHeaderParamDouble(t *testing.T) {
 }
 
 func TestHeaderParamDuration(t *testing.T) {
-	client := getHeaderClient(t)
+	client := headergroup.NewDefaultClient(nil).HeaderOperations()
 	result, err := client.ParamDuration(context.Background(), "valid", "P123DT22H14M12.011S")
 	if err != nil {
 		t.Fatalf("ParamDuration: %v", err)
@@ -130,7 +115,7 @@ func TestHeaderParamDuration(t *testing.T) {
 }
 
 func TestHeaderParamEnum(t *testing.T) {
-	client := getHeaderClient(t)
+	client := headergroup.NewDefaultClient(nil).HeaderOperations()
 	val := headergroup.GreyscaleColorsGrey
 	result, err := client.ParamEnum(context.Background(), "valid", &headergroup.HeaderParamEnumOptions{Value: &val})
 	if err != nil {
@@ -146,7 +131,7 @@ func TestHeaderParamEnum(t *testing.T) {
 }
 
 // func TestHeaderParamExistingKey(t *testing.T) {
-// 	client := getHeaderClient(t)
+// 	client := headergroup.NewDefaultClient(nil).HeaderOperations()
 // 	result, err := client.ParamExistingKey(context.Background(), "overwrite")
 // 	if err != nil {
 // 		t.Fatalf("ParamExistingKey: %v", err)
@@ -155,7 +140,7 @@ func TestHeaderParamEnum(t *testing.T) {
 // }
 
 func TestHeaderParamFloat(t *testing.T) {
-	client := getHeaderClient(t)
+	client := headergroup.NewDefaultClient(nil).HeaderOperations()
 	result, err := client.ParamFloat(context.Background(), "positive", 0.07)
 	if err != nil {
 		t.Fatalf("ParamFloat: %v", err)
@@ -170,7 +155,7 @@ func TestHeaderParamFloat(t *testing.T) {
 }
 
 func TestHeaderParamInteger(t *testing.T) {
-	client := getHeaderClient(t)
+	client := headergroup.NewDefaultClient(nil).HeaderOperations()
 	result, err := client.ParamInteger(context.Background(), "positive", 1)
 	if err != nil {
 		t.Fatalf("ParamInteger: %v", err)
@@ -185,7 +170,7 @@ func TestHeaderParamInteger(t *testing.T) {
 }
 
 func TestHeaderParamLong(t *testing.T) {
-	client := getHeaderClient(t)
+	client := headergroup.NewDefaultClient(nil).HeaderOperations()
 	result, err := client.ParamLong(context.Background(), "positive", 105)
 	if err != nil {
 		t.Fatalf("ParamLong: %v", err)
@@ -200,7 +185,7 @@ func TestHeaderParamLong(t *testing.T) {
 }
 
 func TestHeaderParamProtectedKey(t *testing.T) {
-	client := getHeaderClient(t)
+	client := headergroup.NewDefaultClient(nil).HeaderOperations()
 	result, err := client.ParamProtectedKey(context.Background(), "text/html")
 	if err != nil {
 		t.Fatalf("ParamProtectedKey: %v", err)
@@ -209,7 +194,7 @@ func TestHeaderParamProtectedKey(t *testing.T) {
 }
 
 func TestHeaderParamString(t *testing.T) {
-	client := getHeaderClient(t)
+	client := headergroup.NewDefaultClient(nil).HeaderOperations()
 	val := "The quick brown fox jumps over the lazy dog"
 	result, err := client.ParamString(context.Background(), "valid", &headergroup.HeaderParamStringOptions{Value: &val})
 	if err != nil {
@@ -233,7 +218,7 @@ func TestHeaderParamString(t *testing.T) {
 
 // TODO check why we dont check for the value returned in all of the tests below this comment
 func TestHeaderResponseBool(t *testing.T) {
-	client := getHeaderClient(t)
+	client := headergroup.NewDefaultClient(nil).HeaderOperations()
 	result, err := client.ResponseBool(context.Background(), "true")
 	if err != nil {
 		t.Fatalf("ResponseBool: %v", err)
@@ -254,7 +239,7 @@ func TestHeaderResponseBool(t *testing.T) {
 }
 
 func TestHeaderResponseByte(t *testing.T) {
-	client := getHeaderClient(t)
+	client := headergroup.NewDefaultClient(nil).HeaderOperations()
 	result, err := client.ResponseByte(context.Background(), "valid")
 	if err != nil {
 		t.Fatalf("ResponseByte: %v", err)
@@ -265,7 +250,7 @@ func TestHeaderResponseByte(t *testing.T) {
 }
 
 func TestHeaderResponseDate(t *testing.T) {
-	client := getHeaderClient(t)
+	client := headergroup.NewDefaultClient(nil).HeaderOperations()
 	result, err := client.ResponseDate(context.Background(), "valid")
 	if err != nil {
 		t.Fatalf("ResponseDate: %v", err)
@@ -297,7 +282,7 @@ func TestHeaderResponseDate(t *testing.T) {
 }
 
 func TestHeaderResponseDatetime(t *testing.T) {
-	client := getHeaderClient(t)
+	client := headergroup.NewDefaultClient(nil).HeaderOperations()
 	result, err := client.ResponseDatetime(context.Background(), "valid")
 	if err != nil {
 		t.Fatalf("ResponseDatetime: %v", err)
@@ -329,7 +314,7 @@ func TestHeaderResponseDatetime(t *testing.T) {
 }
 
 func TestHeaderResponseDatetimeRFC1123(t *testing.T) {
-	client := getHeaderClient(t)
+	client := headergroup.NewDefaultClient(nil).HeaderOperations()
 	result, err := client.ResponseDatetimeRFC1123(context.Background(), "valid")
 	if err != nil {
 		t.Fatalf("ResponseDatetimeRFC1123: %v", err)
@@ -361,7 +346,7 @@ func TestHeaderResponseDatetimeRFC1123(t *testing.T) {
 }
 
 func TestHeaderResponseDouble(t *testing.T) {
-	client := getHeaderClient(t)
+	client := headergroup.NewDefaultClient(nil).HeaderOperations()
 	result, err := client.ResponseDouble(context.Background(), "positive")
 	if err != nil {
 		t.Fatalf("ResponseDouble: %v", err)
@@ -376,7 +361,7 @@ func TestHeaderResponseDouble(t *testing.T) {
 }
 
 func TestHeaderResponseDuration(t *testing.T) {
-	client := getHeaderClient(t)
+	client := headergroup.NewDefaultClient(nil).HeaderOperations()
 	result, err := client.ResponseDuration(context.Background(), "valid")
 	if err != nil {
 		t.Fatalf("ResponseDuration: %v", err)
@@ -385,7 +370,7 @@ func TestHeaderResponseDuration(t *testing.T) {
 }
 
 func TestHeaderResponseEnum(t *testing.T) {
-	client := getHeaderClient(t)
+	client := headergroup.NewDefaultClient(nil).HeaderOperations()
 	result, err := client.ResponseEnum(context.Background(), "valid")
 	if err != nil {
 		t.Fatalf("ResponseEnum: %v", err)
@@ -401,7 +386,7 @@ func TestHeaderResponseEnum(t *testing.T) {
 }
 
 func TestHeaderResponseExistingKey(t *testing.T) {
-	client := getHeaderClient(t)
+	client := headergroup.NewDefaultClient(nil).HeaderOperations()
 	result, err := client.ResponseExistingKey(context.Background())
 	if err != nil {
 		t.Fatalf("ResponseExistingKey: %v", err)
@@ -410,7 +395,7 @@ func TestHeaderResponseExistingKey(t *testing.T) {
 }
 
 func TestHeaderResponseFloat(t *testing.T) {
-	client := getHeaderClient(t)
+	client := headergroup.NewDefaultClient(nil).HeaderOperations()
 	result, err := client.ResponseFloat(context.Background(), "positive")
 	if err != nil {
 		t.Fatalf("ResponseFloat: %v", err)
@@ -425,7 +410,7 @@ func TestHeaderResponseFloat(t *testing.T) {
 }
 
 func TestHeaderResponseInteger(t *testing.T) {
-	client := getHeaderClient(t)
+	client := headergroup.NewDefaultClient(nil).HeaderOperations()
 	result, err := client.ResponseInteger(context.Background(), "positive")
 	if err != nil {
 		t.Fatalf("ResponseInteger: %v", err)
@@ -440,7 +425,7 @@ func TestHeaderResponseInteger(t *testing.T) {
 }
 
 func TestHeaderResponseLong(t *testing.T) {
-	client := getHeaderClient(t)
+	client := headergroup.NewDefaultClient(nil).HeaderOperations()
 	result, err := client.ResponseLong(context.Background(), "positive")
 	if err != nil {
 		t.Fatalf("ResponseLong: %v", err)
@@ -455,7 +440,7 @@ func TestHeaderResponseLong(t *testing.T) {
 }
 
 func TestHeaderResponseProtectedKey(t *testing.T) {
-	client := getHeaderClient(t)
+	client := headergroup.NewDefaultClient(nil).HeaderOperations()
 	result, err := client.ResponseProtectedKey(context.Background())
 	if err != nil {
 		t.Fatalf("ResponseProtectedKey: %v", err)
@@ -464,7 +449,7 @@ func TestHeaderResponseProtectedKey(t *testing.T) {
 }
 
 func TestHeaderResponseString(t *testing.T) {
-	client := getHeaderClient(t)
+	client := headergroup.NewDefaultClient(nil).HeaderOperations()
 	result, err := client.ResponseString(context.Background(), "valid")
 	if err != nil {
 		t.Fatalf("ResponseString: %v", err)

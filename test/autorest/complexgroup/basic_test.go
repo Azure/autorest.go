@@ -13,16 +13,8 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func getBasicOperations(t *testing.T) complexgroup.BasicOperations {
-	client, err := complexgroup.NewDefaultClient(nil)
-	if err != nil {
-		t.Fatalf("failed to create complex client: %v", err)
-	}
-	return client.BasicOperations()
-}
-
 func TestBasicGetValid(t *testing.T) {
-	client := getBasicOperations(t)
+	client := complexgroup.NewDefaultClient(nil).BasicOperations()
 	result, err := client.GetValid(context.Background())
 	if err != nil {
 		t.Fatalf("GetValid: %v", err)
@@ -31,7 +23,7 @@ func TestBasicGetValid(t *testing.T) {
 }
 
 func TestBasicPutValid(t *testing.T) {
-	client := getBasicOperations(t)
+	client := complexgroup.NewDefaultClient(nil).BasicOperations()
 	result, err := client.PutValid(context.Background(), complexgroup.Basic{
 		ID:    to.Int32Ptr(2),
 		Name:  to.StringPtr("abc"),
@@ -44,7 +36,7 @@ func TestBasicPutValid(t *testing.T) {
 }
 
 func TestBasicGetInvalid(t *testing.T) {
-	client := getBasicOperations(t)
+	client := complexgroup.NewDefaultClient(nil).BasicOperations()
 	result, err := client.GetInvalid(context.Background())
 	if err == nil {
 		t.Fatal("GetInvalid expected an error")
@@ -55,7 +47,7 @@ func TestBasicGetInvalid(t *testing.T) {
 }
 
 func TestBasicGetEmpty(t *testing.T) {
-	client := getBasicOperations(t)
+	client := complexgroup.NewDefaultClient(nil).BasicOperations()
 	result, err := client.GetEmpty(context.Background())
 	if err != nil {
 		t.Fatalf("GetEmpty: %v", err)
@@ -64,7 +56,7 @@ func TestBasicGetEmpty(t *testing.T) {
 }
 
 func TestBasicGetNull(t *testing.T) {
-	client := getBasicOperations(t)
+	client := complexgroup.NewDefaultClient(nil).BasicOperations()
 	result, err := client.GetNull(context.Background())
 	if err != nil {
 		t.Fatalf("GetNull: %v", err)
@@ -73,7 +65,7 @@ func TestBasicGetNull(t *testing.T) {
 }
 
 func TestBasicGetNotProvided(t *testing.T) {
-	client := getBasicOperations(t)
+	client := complexgroup.NewDefaultClient(nil).BasicOperations()
 	result, err := client.GetNotProvided(context.Background())
 	if err != nil {
 		t.Fatalf("GetNotProvided: %v", err)

@@ -49,7 +49,7 @@ type Client struct {
 }
 
 // NewClient creates an instance of the Client type with the specified endpoint.
-func NewClient(host *string, options *ClientOptions) (*Client, error) {
+func NewClient(host *string, options *ClientOptions) *Client {
 	if options == nil {
 		o := DefaultClientOptions()
 		options = &o
@@ -63,7 +63,7 @@ func NewClient(host *string, options *ClientOptions) (*Client, error) {
 }
 
 // NewClientWithPipeline creates an instance of the Client type with the specified endpoint and pipeline.
-func NewClientWithPipeline(host *string, p azcore.Pipeline) (*Client, error) {
+func NewClientWithPipeline(host *string, p azcore.Pipeline) *Client {
 	client := &Client{
 		p:    p,
 		host: "host",
@@ -71,7 +71,7 @@ func NewClientWithPipeline(host *string, p azcore.Pipeline) (*Client, error) {
 	if host != nil {
 		client.host = *host
 	}
-	return client, nil
+	return client
 }
 
 // PathsOperations returns the PathsOperations associated with this client.

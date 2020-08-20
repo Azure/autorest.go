@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
+	"net/url"
 	"path"
 	"time"
 )
@@ -230,8 +231,12 @@ func (client *lrOSOperations) ResumeDelete202NoRetry204(token string) (ProductPo
 
 // delete202NoRetry204CreateRequest creates the Delete202NoRetry204 request.
 func (client *lrOSOperations) delete202NoRetry204CreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/delete/202/noretry/204"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -299,8 +304,12 @@ func (client *lrOSOperations) ResumeDelete202Retry200(token string) (ProductPoll
 
 // delete202Retry200CreateRequest creates the Delete202Retry200 request.
 func (client *lrOSOperations) delete202Retry200CreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/delete/202/retry/200"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -368,8 +377,12 @@ func (client *lrOSOperations) ResumeDelete204Succeeded(token string) (HTTPPoller
 
 // delete204SucceededCreateRequest creates the Delete204Succeeded request.
 func (client *lrOSOperations) delete204SucceededCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/delete/204/succeeded"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -437,8 +450,12 @@ func (client *lrOSOperations) ResumeDeleteAsyncNoHeaderInRetry(token string) (HT
 
 // deleteAsyncNoHeaderInRetryCreateRequest creates the DeleteAsyncNoHeaderInRetry request.
 func (client *lrOSOperations) deleteAsyncNoHeaderInRetryCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/deleteasync/noheader/202/204"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -506,8 +523,12 @@ func (client *lrOSOperations) ResumeDeleteAsyncNoRetrySucceeded(token string) (H
 
 // deleteAsyncNoRetrySucceededCreateRequest creates the DeleteAsyncNoRetrySucceeded request.
 func (client *lrOSOperations) deleteAsyncNoRetrySucceededCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/deleteasync/noretry/succeeded"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -575,8 +596,12 @@ func (client *lrOSOperations) ResumeDeleteAsyncRetryFailed(token string) (HTTPPo
 
 // deleteAsyncRetryFailedCreateRequest creates the DeleteAsyncRetryFailed request.
 func (client *lrOSOperations) deleteAsyncRetryFailedCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/deleteasync/retry/failed"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -644,8 +669,12 @@ func (client *lrOSOperations) ResumeDeleteAsyncRetrySucceeded(token string) (HTT
 
 // deleteAsyncRetrySucceededCreateRequest creates the DeleteAsyncRetrySucceeded request.
 func (client *lrOSOperations) deleteAsyncRetrySucceededCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/deleteasync/retry/succeeded"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -713,8 +742,12 @@ func (client *lrOSOperations) ResumeDeleteAsyncRetrycanceled(token string) (HTTP
 
 // deleteAsyncRetrycanceledCreateRequest creates the DeleteAsyncRetrycanceled request.
 func (client *lrOSOperations) deleteAsyncRetrycanceledCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/deleteasync/retry/canceled"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -782,8 +815,12 @@ func (client *lrOSOperations) ResumeDeleteNoHeaderInRetry(token string) (HTTPPol
 
 // deleteNoHeaderInRetryCreateRequest creates the DeleteNoHeaderInRetry request.
 func (client *lrOSOperations) deleteNoHeaderInRetryCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/delete/noheader"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -851,8 +888,12 @@ func (client *lrOSOperations) ResumeDeleteProvisioning202Accepted200Succeeded(to
 
 // deleteProvisioning202Accepted200SucceededCreateRequest creates the DeleteProvisioning202Accepted200Succeeded request.
 func (client *lrOSOperations) deleteProvisioning202Accepted200SucceededCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/delete/provisioning/202/accepted/200/succeeded"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -920,8 +961,12 @@ func (client *lrOSOperations) ResumeDeleteProvisioning202DeletingFailed200(token
 
 // deleteProvisioning202DeletingFailed200CreateRequest creates the DeleteProvisioning202DeletingFailed200 request.
 func (client *lrOSOperations) deleteProvisioning202DeletingFailed200CreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/delete/provisioning/202/deleting/200/failed"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -989,8 +1034,12 @@ func (client *lrOSOperations) ResumeDeleteProvisioning202Deletingcanceled200(tok
 
 // deleteProvisioning202Deletingcanceled200CreateRequest creates the DeleteProvisioning202Deletingcanceled200 request.
 func (client *lrOSOperations) deleteProvisioning202Deletingcanceled200CreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/delete/provisioning/202/deleting/200/canceled"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1058,8 +1107,12 @@ func (client *lrOSOperations) ResumePost200WithPayload(token string) (SkuPoller,
 
 // post200WithPayloadCreateRequest creates the Post200WithPayload request.
 func (client *lrOSOperations) post200WithPayloadCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/post/payload/200"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1127,8 +1180,12 @@ func (client *lrOSOperations) ResumePost202List(token string) (ProductArrayPolle
 
 // post202ListCreateRequest creates the Post202List request.
 func (client *lrOSOperations) post202ListCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/list"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1196,8 +1253,12 @@ func (client *lrOSOperations) ResumePost202NoRetry204(token string) (ProductPoll
 
 // post202NoRetry204CreateRequest creates the Post202NoRetry204 request.
 func (client *lrOSOperations) post202NoRetry204CreateRequest(lrOSPost202NoRetry204Options *LrOSPost202NoRetry204Options) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/post/202/noretry/204"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1268,8 +1329,12 @@ func (client *lrOSOperations) ResumePost202Retry200(token string) (HTTPPoller, e
 
 // post202Retry200CreateRequest creates the Post202Retry200 request.
 func (client *lrOSOperations) post202Retry200CreateRequest(lrOSPost202Retry200Options *LrOSPost202Retry200Options) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/post/202/retry/200"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1340,8 +1405,12 @@ func (client *lrOSOperations) ResumePostAsyncNoRetrySucceeded(token string) (Pro
 
 // postAsyncNoRetrySucceededCreateRequest creates the PostAsyncNoRetrySucceeded request.
 func (client *lrOSOperations) postAsyncNoRetrySucceededCreateRequest(lrOSPostAsyncNoRetrySucceededOptions *LrOSPostAsyncNoRetrySucceededOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/postasync/noretry/succeeded"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1412,8 +1481,12 @@ func (client *lrOSOperations) ResumePostAsyncRetryFailed(token string) (HTTPPoll
 
 // postAsyncRetryFailedCreateRequest creates the PostAsyncRetryFailed request.
 func (client *lrOSOperations) postAsyncRetryFailedCreateRequest(lrOSPostAsyncRetryFailedOptions *LrOSPostAsyncRetryFailedOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/postasync/retry/failed"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1484,8 +1557,12 @@ func (client *lrOSOperations) ResumePostAsyncRetrySucceeded(token string) (Produ
 
 // postAsyncRetrySucceededCreateRequest creates the PostAsyncRetrySucceeded request.
 func (client *lrOSOperations) postAsyncRetrySucceededCreateRequest(lrOSPostAsyncRetrySucceededOptions *LrOSPostAsyncRetrySucceededOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/postasync/retry/succeeded"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1556,8 +1633,12 @@ func (client *lrOSOperations) ResumePostAsyncRetrycanceled(token string) (HTTPPo
 
 // postAsyncRetrycanceledCreateRequest creates the PostAsyncRetrycanceled request.
 func (client *lrOSOperations) postAsyncRetrycanceledCreateRequest(lrOSPostAsyncRetrycanceledOptions *LrOSPostAsyncRetrycanceledOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/postasync/retry/canceled"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1628,8 +1709,12 @@ func (client *lrOSOperations) ResumePostDoubleHeadersFinalAzureHeaderGet(token s
 
 // postDoubleHeadersFinalAzureHeaderGetCreateRequest creates the PostDoubleHeadersFinalAzureHeaderGet request.
 func (client *lrOSOperations) postDoubleHeadersFinalAzureHeaderGetCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/LROPostDoubleHeadersFinalAzureHeaderGet"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1697,8 +1782,12 @@ func (client *lrOSOperations) ResumePostDoubleHeadersFinalAzureHeaderGetDefault(
 
 // postDoubleHeadersFinalAzureHeaderGetDefaultCreateRequest creates the PostDoubleHeadersFinalAzureHeaderGetDefault request.
 func (client *lrOSOperations) postDoubleHeadersFinalAzureHeaderGetDefaultCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/LROPostDoubleHeadersFinalAzureHeaderGetDefault"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1766,8 +1855,12 @@ func (client *lrOSOperations) ResumePostDoubleHeadersFinalLocationGet(token stri
 
 // postDoubleHeadersFinalLocationGetCreateRequest creates the PostDoubleHeadersFinalLocationGet request.
 func (client *lrOSOperations) postDoubleHeadersFinalLocationGetCreateRequest() (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/LROPostDoubleHeadersFinalLocationGet"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1835,8 +1928,12 @@ func (client *lrOSOperations) ResumePut200Acceptedcanceled200(token string) (Pro
 
 // put200Acceptedcanceled200CreateRequest creates the Put200Acceptedcanceled200 request.
 func (client *lrOSOperations) put200Acceptedcanceled200CreateRequest(lrOSPut200Acceptedcanceled200Options *LrOSPut200Acceptedcanceled200Options) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/put/200/accepted/canceled/200"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1907,8 +2004,12 @@ func (client *lrOSOperations) ResumePut200Succeeded(token string) (ProductPoller
 
 // put200SucceededCreateRequest creates the Put200Succeeded request.
 func (client *lrOSOperations) put200SucceededCreateRequest(lrOSPut200SucceededOptions *LrOSPut200SucceededOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/put/200/succeeded"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1979,8 +2080,12 @@ func (client *lrOSOperations) ResumePut200SucceededNoState(token string) (Produc
 
 // put200SucceededNoStateCreateRequest creates the Put200SucceededNoState request.
 func (client *lrOSOperations) put200SucceededNoStateCreateRequest(lrOSPut200SucceededNoStateOptions *LrOSPut200SucceededNoStateOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/put/200/succeeded/nostate"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2051,8 +2156,12 @@ func (client *lrOSOperations) ResumePut200UpdatingSucceeded204(token string) (Pr
 
 // put200UpdatingSucceeded204CreateRequest creates the Put200UpdatingSucceeded204 request.
 func (client *lrOSOperations) put200UpdatingSucceeded204CreateRequest(lrOSPut200UpdatingSucceeded204Options *LrOSPut200UpdatingSucceeded204Options) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/put/200/updating/succeeded/200"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2123,8 +2232,12 @@ func (client *lrOSOperations) ResumePut201CreatingFailed200(token string) (Produ
 
 // put201CreatingFailed200CreateRequest creates the Put201CreatingFailed200 request.
 func (client *lrOSOperations) put201CreatingFailed200CreateRequest(lrOSPut201CreatingFailed200Options *LrOSPut201CreatingFailed200Options) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/put/201/created/failed/200"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2195,8 +2308,12 @@ func (client *lrOSOperations) ResumePut201CreatingSucceeded200(token string) (Pr
 
 // put201CreatingSucceeded200CreateRequest creates the Put201CreatingSucceeded200 request.
 func (client *lrOSOperations) put201CreatingSucceeded200CreateRequest(lrOSPut201CreatingSucceeded200Options *LrOSPut201CreatingSucceeded200Options) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/put/201/creating/succeeded/200"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2267,8 +2384,12 @@ func (client *lrOSOperations) ResumePut201Succeeded(token string) (ProductPoller
 
 // put201SucceededCreateRequest creates the Put201Succeeded request.
 func (client *lrOSOperations) put201SucceededCreateRequest(lrOSPut201SucceededOptions *LrOSPut201SucceededOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/put/201/succeeded"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2339,8 +2460,12 @@ func (client *lrOSOperations) ResumePut202Retry200(token string) (ProductPoller,
 
 // put202Retry200CreateRequest creates the Put202Retry200 request.
 func (client *lrOSOperations) put202Retry200CreateRequest(lrOSPut202Retry200Options *LrOSPut202Retry200Options) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/put/202/retry/200"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2411,8 +2536,12 @@ func (client *lrOSOperations) ResumePutAsyncNoHeaderInRetry(token string) (Produ
 
 // putAsyncNoHeaderInRetryCreateRequest creates the PutAsyncNoHeaderInRetry request.
 func (client *lrOSOperations) putAsyncNoHeaderInRetryCreateRequest(lrOSPutAsyncNoHeaderInRetryOptions *LrOSPutAsyncNoHeaderInRetryOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/putasync/noheader/201/200"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2483,8 +2612,12 @@ func (client *lrOSOperations) ResumePutAsyncNoRetrySucceeded(token string) (Prod
 
 // putAsyncNoRetrySucceededCreateRequest creates the PutAsyncNoRetrySucceeded request.
 func (client *lrOSOperations) putAsyncNoRetrySucceededCreateRequest(lrOSPutAsyncNoRetrySucceededOptions *LrOSPutAsyncNoRetrySucceededOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/putasync/noretry/succeeded"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2555,8 +2688,12 @@ func (client *lrOSOperations) ResumePutAsyncNoRetrycanceled(token string) (Produ
 
 // putAsyncNoRetrycanceledCreateRequest creates the PutAsyncNoRetrycanceled request.
 func (client *lrOSOperations) putAsyncNoRetrycanceledCreateRequest(lrOSPutAsyncNoRetrycanceledOptions *LrOSPutAsyncNoRetrycanceledOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/putasync/noretry/canceled"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2627,8 +2764,12 @@ func (client *lrOSOperations) ResumePutAsyncNonResource(token string) (SkuPoller
 
 // putAsyncNonResourceCreateRequest creates the PutAsyncNonResource request.
 func (client *lrOSOperations) putAsyncNonResourceCreateRequest(lrOSPutAsyncNonResourceOptions *LrOSPutAsyncNonResourceOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/putnonresourceasync/202/200"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2699,8 +2840,12 @@ func (client *lrOSOperations) ResumePutAsyncRetryFailed(token string) (ProductPo
 
 // putAsyncRetryFailedCreateRequest creates the PutAsyncRetryFailed request.
 func (client *lrOSOperations) putAsyncRetryFailedCreateRequest(lrOSPutAsyncRetryFailedOptions *LrOSPutAsyncRetryFailedOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/putasync/retry/failed"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2771,8 +2916,12 @@ func (client *lrOSOperations) ResumePutAsyncRetrySucceeded(token string) (Produc
 
 // putAsyncRetrySucceededCreateRequest creates the PutAsyncRetrySucceeded request.
 func (client *lrOSOperations) putAsyncRetrySucceededCreateRequest(lrOSPutAsyncRetrySucceededOptions *LrOSPutAsyncRetrySucceededOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/putasync/retry/succeeded"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2843,8 +2992,12 @@ func (client *lrOSOperations) ResumePutAsyncSubResource(token string) (SubProduc
 
 // putAsyncSubResourceCreateRequest creates the PutAsyncSubResource request.
 func (client *lrOSOperations) putAsyncSubResourceCreateRequest(lrOSPutAsyncSubResourceOptions *LrOSPutAsyncSubResourceOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/putsubresourceasync/202/200"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2915,8 +3068,12 @@ func (client *lrOSOperations) ResumePutNoHeaderInRetry(token string) (ProductPol
 
 // putNoHeaderInRetryCreateRequest creates the PutNoHeaderInRetry request.
 func (client *lrOSOperations) putNoHeaderInRetryCreateRequest(lrOSPutNoHeaderInRetryOptions *LrOSPutNoHeaderInRetryOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/put/noheader/202/200"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2987,8 +3144,12 @@ func (client *lrOSOperations) ResumePutNonResource(token string) (SkuPoller, err
 
 // putNonResourceCreateRequest creates the PutNonResource request.
 func (client *lrOSOperations) putNonResourceCreateRequest(lrOSPutNonResourceOptions *LrOSPutNonResourceOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/putnonresource/202/200"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -3059,8 +3220,12 @@ func (client *lrOSOperations) ResumePutSubResource(token string) (SubProductPoll
 
 // putSubResourceCreateRequest creates the PutSubResource request.
 func (client *lrOSOperations) putSubResourceCreateRequest(lrOSPutSubResourceOptions *LrOSPutSubResourceOptions) (*azcore.Request, error) {
+	u, err := url.Parse(client.u)
+	if err != nil {
+		return nil, err
+	}
 	urlPath := "/lro/putsubresource/202/200"
-	u, err := client.u.Parse(path.Join(client.u.Path, urlPath))
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
