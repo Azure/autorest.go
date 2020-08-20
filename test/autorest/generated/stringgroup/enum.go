@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"path"
 )
 
 // EnumOperations contains the methods for the Enum group.
@@ -57,7 +58,7 @@ func (client *enumOperations) getNotExpandableCreateRequest() (*azcore.Request, 
 		return nil, err
 	}
 	urlPath := "/string/enum/notExpandable"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -107,7 +108,7 @@ func (client *enumOperations) getReferencedCreateRequest() (*azcore.Request, err
 		return nil, err
 	}
 	urlPath := "/string/enum/Referenced"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -157,7 +158,7 @@ func (client *enumOperations) getReferencedConstantCreateRequest() (*azcore.Requ
 		return nil, err
 	}
 	urlPath := "/string/enum/ReferencedConstant"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -207,7 +208,7 @@ func (client *enumOperations) putNotExpandableCreateRequest(stringBody Colors) (
 		return nil, err
 	}
 	urlPath := "/string/enum/notExpandable"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -256,7 +257,7 @@ func (client *enumOperations) putReferencedCreateRequest(enumStringBody Colors) 
 		return nil, err
 	}
 	urlPath := "/string/enum/Referenced"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -305,7 +306,7 @@ func (client *enumOperations) putReferencedConstantCreateRequest(enumStringBody 
 		return nil, err
 	}
 	urlPath := "/string/enum/ReferencedConstant"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

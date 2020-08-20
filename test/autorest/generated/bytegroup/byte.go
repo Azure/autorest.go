@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"path"
 )
 
 // ByteOperations contains the methods for the Byte group.
@@ -55,7 +56,7 @@ func (client *byteOperations) getEmptyCreateRequest() (*azcore.Request, error) {
 		return nil, err
 	}
 	urlPath := "/byte/empty"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -105,7 +106,7 @@ func (client *byteOperations) getInvalidCreateRequest() (*azcore.Request, error)
 		return nil, err
 	}
 	urlPath := "/byte/invalid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -155,7 +156,7 @@ func (client *byteOperations) getNonAsciiCreateRequest() (*azcore.Request, error
 		return nil, err
 	}
 	urlPath := "/byte/nonAscii"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -205,7 +206,7 @@ func (client *byteOperations) getNullCreateRequest() (*azcore.Request, error) {
 		return nil, err
 	}
 	urlPath := "/byte/null"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -255,7 +256,7 @@ func (client *byteOperations) putNonAsciiCreateRequest(byteBody []byte) (*azcore
 		return nil, err
 	}
 	urlPath := "/byte/nonAscii"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -11,6 +11,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"path"
 	"strconv"
 	"strings"
 	"time"
@@ -119,7 +120,7 @@ func (client *queriesOperations) arrayStringCsvEmptyCreateRequest(queriesArraySt
 		return nil, err
 	}
 	urlPath := "/queries/array/csv/string/empty"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -173,7 +174,7 @@ func (client *queriesOperations) arrayStringCsvNullCreateRequest(queriesArrayStr
 		return nil, err
 	}
 	urlPath := "/queries/array/csv/string/null"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -227,7 +228,7 @@ func (client *queriesOperations) arrayStringCsvValidCreateRequest(queriesArraySt
 		return nil, err
 	}
 	urlPath := "/queries/array/csv/string/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -281,7 +282,7 @@ func (client *queriesOperations) arrayStringNoCollectionFormatEmptyCreateRequest
 		return nil, err
 	}
 	urlPath := "/queries/array/none/string/empty"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -335,7 +336,7 @@ func (client *queriesOperations) arrayStringPipesValidCreateRequest(queriesArray
 		return nil, err
 	}
 	urlPath := "/queries/array/pipes/string/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -389,7 +390,7 @@ func (client *queriesOperations) arrayStringSsvValidCreateRequest(queriesArraySt
 		return nil, err
 	}
 	urlPath := "/queries/array/ssv/string/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -443,7 +444,7 @@ func (client *queriesOperations) arrayStringTsvValidCreateRequest(queriesArraySt
 		return nil, err
 	}
 	urlPath := "/queries/array/tsv/string/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -497,7 +498,7 @@ func (client *queriesOperations) byteEmptyCreateRequest() (*azcore.Request, erro
 		return nil, err
 	}
 	urlPath := "/queries/byte/empty"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -549,7 +550,7 @@ func (client *queriesOperations) byteMultiByteCreateRequest(queriesByteMultiByte
 		return nil, err
 	}
 	urlPath := "/queries/byte/multibyte"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -603,7 +604,7 @@ func (client *queriesOperations) byteNullCreateRequest(queriesByteNullOptions *Q
 		return nil, err
 	}
 	urlPath := "/queries/byte/null"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -657,7 +658,7 @@ func (client *queriesOperations) dateNullCreateRequest(queriesDateNullOptions *Q
 		return nil, err
 	}
 	urlPath := "/queries/date/null"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -711,7 +712,7 @@ func (client *queriesOperations) dateTimeNullCreateRequest(queriesDateTimeNullOp
 		return nil, err
 	}
 	urlPath := "/queries/datetime/null"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -765,7 +766,7 @@ func (client *queriesOperations) dateTimeValidCreateRequest() (*azcore.Request, 
 		return nil, err
 	}
 	urlPath := "/queries/datetime/2012-01-01T01%3A01%3A01Z"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -817,7 +818,7 @@ func (client *queriesOperations) dateValidCreateRequest() (*azcore.Request, erro
 		return nil, err
 	}
 	urlPath := "/queries/date/2012-01-01"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -869,7 +870,7 @@ func (client *queriesOperations) doubleDecimalNegativeCreateRequest() (*azcore.R
 		return nil, err
 	}
 	urlPath := "/queries/double/-9999999.999"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -921,7 +922,7 @@ func (client *queriesOperations) doubleDecimalPositiveCreateRequest() (*azcore.R
 		return nil, err
 	}
 	urlPath := "/queries/double/9999999.999"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -973,7 +974,7 @@ func (client *queriesOperations) doubleNullCreateRequest(queriesDoubleNullOption
 		return nil, err
 	}
 	urlPath := "/queries/double/null"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1027,7 +1028,7 @@ func (client *queriesOperations) enumNullCreateRequest(queriesEnumNullOptions *Q
 		return nil, err
 	}
 	urlPath := "/queries/enum/null"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1081,7 +1082,7 @@ func (client *queriesOperations) enumValidCreateRequest(queriesEnumValidOptions 
 		return nil, err
 	}
 	urlPath := "/queries/enum/green%20color"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1135,7 +1136,7 @@ func (client *queriesOperations) floatNullCreateRequest(queriesFloatNullOptions 
 		return nil, err
 	}
 	urlPath := "/queries/float/null"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1189,7 +1190,7 @@ func (client *queriesOperations) floatScientificNegativeCreateRequest() (*azcore
 		return nil, err
 	}
 	urlPath := "/queries/float/-1.034E-20"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1241,7 +1242,7 @@ func (client *queriesOperations) floatScientificPositiveCreateRequest() (*azcore
 		return nil, err
 	}
 	urlPath := "/queries/float/1.034E+20"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1293,7 +1294,7 @@ func (client *queriesOperations) getBooleanFalseCreateRequest() (*azcore.Request
 		return nil, err
 	}
 	urlPath := "/queries/bool/false"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1345,7 +1346,7 @@ func (client *queriesOperations) getBooleanNullCreateRequest(queriesGetBooleanNu
 		return nil, err
 	}
 	urlPath := "/queries/bool/null"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1399,7 +1400,7 @@ func (client *queriesOperations) getBooleanTrueCreateRequest() (*azcore.Request,
 		return nil, err
 	}
 	urlPath := "/queries/bool/true"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1451,7 +1452,7 @@ func (client *queriesOperations) getIntNegativeOneMillionCreateRequest() (*azcor
 		return nil, err
 	}
 	urlPath := "/queries/int/-1000000"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1503,7 +1504,7 @@ func (client *queriesOperations) getIntNullCreateRequest(queriesGetIntNullOption
 		return nil, err
 	}
 	urlPath := "/queries/int/null"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1557,7 +1558,7 @@ func (client *queriesOperations) getIntOneMillionCreateRequest() (*azcore.Reques
 		return nil, err
 	}
 	urlPath := "/queries/int/1000000"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1609,7 +1610,7 @@ func (client *queriesOperations) getLongNullCreateRequest(queriesGetLongNullOpti
 		return nil, err
 	}
 	urlPath := "/queries/long/null"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1663,7 +1664,7 @@ func (client *queriesOperations) getNegativeTenBillionCreateRequest() (*azcore.R
 		return nil, err
 	}
 	urlPath := "/queries/long/-10000000000"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1715,7 +1716,7 @@ func (client *queriesOperations) getTenBillionCreateRequest() (*azcore.Request, 
 		return nil, err
 	}
 	urlPath := "/queries/long/10000000000"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1767,7 +1768,7 @@ func (client *queriesOperations) stringEmptyCreateRequest() (*azcore.Request, er
 		return nil, err
 	}
 	urlPath := "/queries/string/empty"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1819,7 +1820,7 @@ func (client *queriesOperations) stringNullCreateRequest(queriesStringNullOption
 		return nil, err
 	}
 	urlPath := "/queries/string/null"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1873,7 +1874,7 @@ func (client *queriesOperations) stringUrlEncodedCreateRequest() (*azcore.Reques
 		return nil, err
 	}
 	urlPath := "/queries/string/begin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1925,7 +1926,7 @@ func (client *queriesOperations) stringUnicodeCreateRequest() (*azcore.Request, 
 		return nil, err
 	}
 	urlPath := "/queries/string/unicode/"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

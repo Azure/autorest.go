@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"path"
 	"strconv"
 	"strings"
 )
@@ -55,7 +56,7 @@ func (client *parameterGroupingOperations) postMultiParamGroupsCreateRequest(fir
 		return nil, err
 	}
 	urlPath := "/parameterGrouping/postMultipleParameterGroups"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -118,7 +119,7 @@ func (client *parameterGroupingOperations) postOptionalCreateRequest(parameterGr
 		return nil, err
 	}
 	urlPath := "/parameterGrouping/postOptional"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -176,7 +177,7 @@ func (client *parameterGroupingOperations) postRequiredCreateRequest(parameterGr
 	}
 	urlPath := "/parameterGrouping/postRequired/{path}"
 	urlPath = strings.ReplaceAll(urlPath, "{path}", url.PathEscape(parameterGroupingPostRequiredParameters.PathParameter))
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -233,7 +234,7 @@ func (client *parameterGroupingOperations) postSharedParameterGroupObjectCreateR
 		return nil, err
 	}
 	urlPath := "/parameterGrouping/sharedParameterGroupObject"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

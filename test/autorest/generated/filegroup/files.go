@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"path"
 )
 
 // FilesOperations contains the methods for the Files group.
@@ -51,7 +52,7 @@ func (client *filesOperations) getEmptyFileCreateRequest() (*azcore.Request, err
 		return nil, err
 	}
 	urlPath := "/files/stream/empty"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -101,7 +102,7 @@ func (client *filesOperations) getFileCreateRequest() (*azcore.Request, error) {
 		return nil, err
 	}
 	urlPath := "/files/stream/nonempty"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -151,7 +152,7 @@ func (client *filesOperations) getFileLargeCreateRequest() (*azcore.Request, err
 		return nil, err
 	}
 	urlPath := "/files/stream/verylarge"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

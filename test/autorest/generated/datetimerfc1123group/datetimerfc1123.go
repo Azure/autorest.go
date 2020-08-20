@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"path"
 	"time"
 )
 
@@ -64,7 +65,7 @@ func (client *datetimerfc1123Operations) getInvalidCreateRequest() (*azcore.Requ
 		return nil, err
 	}
 	urlPath := "/datetimerfc1123/invalid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -115,7 +116,7 @@ func (client *datetimerfc1123Operations) getNullCreateRequest() (*azcore.Request
 		return nil, err
 	}
 	urlPath := "/datetimerfc1123/null"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -166,7 +167,7 @@ func (client *datetimerfc1123Operations) getOverflowCreateRequest() (*azcore.Req
 		return nil, err
 	}
 	urlPath := "/datetimerfc1123/overflow"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -217,7 +218,7 @@ func (client *datetimerfc1123Operations) getUtcLowercaseMaxDateTimeCreateRequest
 		return nil, err
 	}
 	urlPath := "/datetimerfc1123/max/lowercase"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -268,7 +269,7 @@ func (client *datetimerfc1123Operations) getUtcMinDateTimeCreateRequest() (*azco
 		return nil, err
 	}
 	urlPath := "/datetimerfc1123/min"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -319,7 +320,7 @@ func (client *datetimerfc1123Operations) getUtcUppercaseMaxDateTimeCreateRequest
 		return nil, err
 	}
 	urlPath := "/datetimerfc1123/max/uppercase"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -370,7 +371,7 @@ func (client *datetimerfc1123Operations) getUnderflowCreateRequest() (*azcore.Re
 		return nil, err
 	}
 	urlPath := "/datetimerfc1123/underflow"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -421,7 +422,7 @@ func (client *datetimerfc1123Operations) putUtcMaxDateTimeCreateRequest(datetime
 		return nil, err
 	}
 	urlPath := "/datetimerfc1123/max"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -471,7 +472,7 @@ func (client *datetimerfc1123Operations) putUtcMinDateTimeCreateRequest(datetime
 		return nil, err
 	}
 	urlPath := "/datetimerfc1123/min"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

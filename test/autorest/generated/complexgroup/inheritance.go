@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"path"
 )
 
 // InheritanceOperations contains the methods for the Inheritance group.
@@ -49,7 +50,7 @@ func (client *inheritanceOperations) getValidCreateRequest() (*azcore.Request, e
 		return nil, err
 	}
 	urlPath := "/complex/inheritance/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -99,7 +100,7 @@ func (client *inheritanceOperations) putValidCreateRequest(complexBody Siamese) 
 		return nil, err
 	}
 	urlPath := "/complex/inheritance/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

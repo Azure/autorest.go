@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"path"
 )
 
 // HeaderOperations contains the methods for the Header group.
@@ -51,7 +52,7 @@ func (client *headerOperations) customNamedRequestIdCreateRequest(fooClientReque
 		return nil, err
 	}
 	urlPath := "/azurespecials/customNamedRequestId"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -105,7 +106,7 @@ func (client *headerOperations) customNamedRequestIdHeadCreateRequest(fooClientR
 		return nil, err
 	}
 	urlPath := "/azurespecials/customNamedRequestIdHead"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -159,7 +160,7 @@ func (client *headerOperations) customNamedRequestIdParamGroupingCreateRequest(h
 		return nil, err
 	}
 	urlPath := "/azurespecials/customNamedRequestIdParamGrouping"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

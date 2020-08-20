@@ -13,6 +13,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"path"
 )
 
 // MultipleInheritanceServiceClientOperations contains the methods for the MultipleInheritanceServiceClient group.
@@ -68,7 +69,7 @@ func (client *multipleInheritanceServiceClientOperations) getCatCreateRequest() 
 		return nil, err
 	}
 	urlPath := "/multipleInheritance/cat"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -118,7 +119,7 @@ func (client *multipleInheritanceServiceClientOperations) getFelineCreateRequest
 		return nil, err
 	}
 	urlPath := "/multipleInheritance/feline"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -168,7 +169,7 @@ func (client *multipleInheritanceServiceClientOperations) getHorseCreateRequest(
 		return nil, err
 	}
 	urlPath := "/multipleInheritance/horse"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -218,7 +219,7 @@ func (client *multipleInheritanceServiceClientOperations) getKittenCreateRequest
 		return nil, err
 	}
 	urlPath := "/multipleInheritance/kitten"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -268,7 +269,7 @@ func (client *multipleInheritanceServiceClientOperations) getPetCreateRequest() 
 		return nil, err
 	}
 	urlPath := "/multipleInheritance/pet"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -318,7 +319,7 @@ func (client *multipleInheritanceServiceClientOperations) putCatCreateRequest(ca
 		return nil, err
 	}
 	urlPath := "/multipleInheritance/cat"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -371,7 +372,7 @@ func (client *multipleInheritanceServiceClientOperations) putFelineCreateRequest
 		return nil, err
 	}
 	urlPath := "/multipleInheritance/feline"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -424,7 +425,7 @@ func (client *multipleInheritanceServiceClientOperations) putHorseCreateRequest(
 		return nil, err
 	}
 	urlPath := "/multipleInheritance/horse"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -477,7 +478,7 @@ func (client *multipleInheritanceServiceClientOperations) putKittenCreateRequest
 		return nil, err
 	}
 	urlPath := "/multipleInheritance/kitten"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -530,7 +531,7 @@ func (client *multipleInheritanceServiceClientOperations) putPetCreateRequest(pe
 		return nil, err
 	}
 	urlPath := "/multipleInheritance/pet"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

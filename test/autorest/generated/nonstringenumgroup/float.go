@@ -13,6 +13,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"path"
 )
 
 // FloatOperations contains the methods for the Float group.
@@ -52,7 +53,7 @@ func (client *floatOperations) getCreateRequest() (*azcore.Request, error) {
 		return nil, err
 	}
 	urlPath := "/nonStringEnums/float/get"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -105,7 +106,7 @@ func (client *floatOperations) putCreateRequest(floatPutOptions *FloatPutOptions
 		return nil, err
 	}
 	urlPath := "/nonStringEnums/float/put"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

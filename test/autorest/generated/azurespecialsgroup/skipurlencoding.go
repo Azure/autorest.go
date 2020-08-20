@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"path"
 	"strings"
 )
 
@@ -61,7 +62,7 @@ func (client *skipUrlEncodingOperations) getMethodPathValidCreateRequest(unencod
 	}
 	urlPath := "/azurespecials/skipUrlEncoding/method/path/valid/{unencodedPathParam}"
 	urlPath = strings.ReplaceAll(urlPath, "{unencodedPathParam}", unencodedPathParam)
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -110,7 +111,7 @@ func (client *skipUrlEncodingOperations) getMethodQueryNullCreateRequest(skipUrl
 		return nil, err
 	}
 	urlPath := "/azurespecials/skipUrlEncoding/method/query/null"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -164,7 +165,7 @@ func (client *skipUrlEncodingOperations) getMethodQueryValidCreateRequest(q1 str
 		return nil, err
 	}
 	urlPath := "/azurespecials/skipUrlEncoding/method/query/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -216,7 +217,7 @@ func (client *skipUrlEncodingOperations) getPathQueryValidCreateRequest(q1 strin
 		return nil, err
 	}
 	urlPath := "/azurespecials/skipUrlEncoding/path/query/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -269,7 +270,7 @@ func (client *skipUrlEncodingOperations) getPathValidCreateRequest(unencodedPath
 	}
 	urlPath := "/azurespecials/skipUrlEncoding/path/path/valid/{unencodedPathParam}"
 	urlPath = strings.ReplaceAll(urlPath, "{unencodedPathParam}", unencodedPathParam)
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -319,7 +320,7 @@ func (client *skipUrlEncodingOperations) getSwaggerPathValidCreateRequest() (*az
 	}
 	urlPath := "/azurespecials/skipUrlEncoding/swagger/path/valid/{unencodedPathParam}"
 	urlPath = strings.ReplaceAll(urlPath, "{unencodedPathParam}", "path1/path2/path3")
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -368,7 +369,7 @@ func (client *skipUrlEncodingOperations) getSwaggerQueryValidCreateRequest() (*a
 		return nil, err
 	}
 	urlPath := "/azurespecials/skipUrlEncoding/swagger/query/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

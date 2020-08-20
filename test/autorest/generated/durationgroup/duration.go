@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"path"
 )
 
 // DurationOperations contains the methods for the Duration group.
@@ -53,7 +54,7 @@ func (client *durationOperations) getInvalidCreateRequest() (*azcore.Request, er
 		return nil, err
 	}
 	urlPath := "/duration/invalid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +104,7 @@ func (client *durationOperations) getNullCreateRequest() (*azcore.Request, error
 		return nil, err
 	}
 	urlPath := "/duration/null"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -153,7 +154,7 @@ func (client *durationOperations) getPositiveDurationCreateRequest() (*azcore.Re
 		return nil, err
 	}
 	urlPath := "/duration/positiveduration"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -203,7 +204,7 @@ func (client *durationOperations) putPositiveDurationCreateRequest(durationBody 
 		return nil, err
 	}
 	urlPath := "/duration/positiveduration"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

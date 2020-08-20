@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"path"
 	"strconv"
 	"strings"
 )
@@ -91,7 +92,7 @@ func (client *explicitOperations) postOptionalArrayHeaderCreateRequest(explicitP
 		return nil, err
 	}
 	urlPath := "/reqopt/optional/array/header"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -143,7 +144,7 @@ func (client *explicitOperations) postOptionalArrayParameterCreateRequest(explic
 		return nil, err
 	}
 	urlPath := "/reqopt/optional/array/parameter"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -195,7 +196,7 @@ func (client *explicitOperations) postOptionalArrayPropertyCreateRequest(explici
 		return nil, err
 	}
 	urlPath := "/reqopt/optional/array/property"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -247,7 +248,7 @@ func (client *explicitOperations) postOptionalClassParameterCreateRequest(explic
 		return nil, err
 	}
 	urlPath := "/reqopt/optional/class/parameter"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -299,7 +300,7 @@ func (client *explicitOperations) postOptionalClassPropertyCreateRequest(explici
 		return nil, err
 	}
 	urlPath := "/reqopt/optional/class/property"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -351,7 +352,7 @@ func (client *explicitOperations) postOptionalIntegerHeaderCreateRequest(explici
 		return nil, err
 	}
 	urlPath := "/reqopt/optional/integer/header"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -403,7 +404,7 @@ func (client *explicitOperations) postOptionalIntegerParameterCreateRequest(expl
 		return nil, err
 	}
 	urlPath := "/reqopt/optional/integer/parameter"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -455,7 +456,7 @@ func (client *explicitOperations) postOptionalIntegerPropertyCreateRequest(expli
 		return nil, err
 	}
 	urlPath := "/reqopt/optional/integer/property"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -507,7 +508,7 @@ func (client *explicitOperations) postOptionalStringHeaderCreateRequest(explicit
 		return nil, err
 	}
 	urlPath := "/reqopt/optional/string/header"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -559,7 +560,7 @@ func (client *explicitOperations) postOptionalStringParameterCreateRequest(expli
 		return nil, err
 	}
 	urlPath := "/reqopt/optional/string/parameter"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -611,7 +612,7 @@ func (client *explicitOperations) postOptionalStringPropertyCreateRequest(explic
 		return nil, err
 	}
 	urlPath := "/reqopt/optional/string/property"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -663,7 +664,7 @@ func (client *explicitOperations) postRequiredArrayHeaderCreateRequest(headerPar
 		return nil, err
 	}
 	urlPath := "/reqopt/requied/array/header"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -713,7 +714,7 @@ func (client *explicitOperations) postRequiredArrayParameterCreateRequest(bodyPa
 		return nil, err
 	}
 	urlPath := "/reqopt/requied/array/parameter"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -762,7 +763,7 @@ func (client *explicitOperations) postRequiredArrayPropertyCreateRequest(bodyPar
 		return nil, err
 	}
 	urlPath := "/reqopt/requied/array/property"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -811,7 +812,7 @@ func (client *explicitOperations) postRequiredClassParameterCreateRequest(bodyPa
 		return nil, err
 	}
 	urlPath := "/reqopt/requied/class/parameter"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -860,7 +861,7 @@ func (client *explicitOperations) postRequiredClassPropertyCreateRequest(bodyPar
 		return nil, err
 	}
 	urlPath := "/reqopt/requied/class/property"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -909,7 +910,7 @@ func (client *explicitOperations) postRequiredIntegerHeaderCreateRequest(headerP
 		return nil, err
 	}
 	urlPath := "/reqopt/requied/integer/header"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -959,7 +960,7 @@ func (client *explicitOperations) postRequiredIntegerParameterCreateRequest(body
 		return nil, err
 	}
 	urlPath := "/reqopt/requied/integer/parameter"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1008,7 +1009,7 @@ func (client *explicitOperations) postRequiredIntegerPropertyCreateRequest(bodyP
 		return nil, err
 	}
 	urlPath := "/reqopt/requied/integer/property"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1057,7 +1058,7 @@ func (client *explicitOperations) postRequiredStringHeaderCreateRequest(headerPa
 		return nil, err
 	}
 	urlPath := "/reqopt/requied/string/header"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1107,7 +1108,7 @@ func (client *explicitOperations) postRequiredStringParameterCreateRequest(bodyP
 		return nil, err
 	}
 	urlPath := "/reqopt/requied/string/parameter"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1156,7 +1157,7 @@ func (client *explicitOperations) postRequiredStringPropertyCreateRequest(bodyPa
 		return nil, err
 	}
 	urlPath := "/reqopt/requied/string/property"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

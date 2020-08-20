@@ -11,6 +11,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"path"
 	"strconv"
 	"time"
 )
@@ -106,7 +107,7 @@ func (client *headerOperations) customRequestIdCreateRequest() (*azcore.Request,
 		return nil, err
 	}
 	urlPath := "/header/custom/x-ms-client-request-id/9C4D50EE-2D56-4CD3-8152-34347DC9F2B0"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -155,7 +156,7 @@ func (client *headerOperations) paramBoolCreateRequest(scenario string, value bo
 		return nil, err
 	}
 	urlPath := "/header/param/prim/bool"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -206,7 +207,7 @@ func (client *headerOperations) paramByteCreateRequest(scenario string, value []
 		return nil, err
 	}
 	urlPath := "/header/param/prim/byte"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -257,7 +258,7 @@ func (client *headerOperations) paramDateCreateRequest(scenario string, value ti
 		return nil, err
 	}
 	urlPath := "/header/param/prim/date"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -308,7 +309,7 @@ func (client *headerOperations) paramDatetimeCreateRequest(scenario string, valu
 		return nil, err
 	}
 	urlPath := "/header/param/prim/datetime"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -359,7 +360,7 @@ func (client *headerOperations) paramDatetimeRfc1123CreateRequest(scenario strin
 		return nil, err
 	}
 	urlPath := "/header/param/prim/datetimerfc1123"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -412,7 +413,7 @@ func (client *headerOperations) paramDoubleCreateRequest(scenario string, value 
 		return nil, err
 	}
 	urlPath := "/header/param/prim/double"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -463,7 +464,7 @@ func (client *headerOperations) paramDurationCreateRequest(scenario string, valu
 		return nil, err
 	}
 	urlPath := "/header/param/prim/duration"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -514,7 +515,7 @@ func (client *headerOperations) paramEnumCreateRequest(scenario string, headerPa
 		return nil, err
 	}
 	urlPath := "/header/param/prim/enum"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -567,7 +568,7 @@ func (client *headerOperations) paramExistingKeyCreateRequest(userAgent string) 
 		return nil, err
 	}
 	urlPath := "/header/param/existingkey"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -617,7 +618,7 @@ func (client *headerOperations) paramFloatCreateRequest(scenario string, value f
 		return nil, err
 	}
 	urlPath := "/header/param/prim/float"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -668,7 +669,7 @@ func (client *headerOperations) paramIntegerCreateRequest(scenario string, value
 		return nil, err
 	}
 	urlPath := "/header/param/prim/integer"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -719,7 +720,7 @@ func (client *headerOperations) paramLongCreateRequest(scenario string, value in
 		return nil, err
 	}
 	urlPath := "/header/param/prim/long"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -770,7 +771,7 @@ func (client *headerOperations) paramProtectedKeyCreateRequest(contentType strin
 		return nil, err
 	}
 	urlPath := "/header/param/protectedkey"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -820,7 +821,7 @@ func (client *headerOperations) paramStringCreateRequest(scenario string, header
 		return nil, err
 	}
 	urlPath := "/header/param/prim/string"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -873,7 +874,7 @@ func (client *headerOperations) responseBoolCreateRequest(scenario string) (*azc
 		return nil, err
 	}
 	urlPath := "/header/response/prim/bool"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -931,7 +932,7 @@ func (client *headerOperations) responseByteCreateRequest(scenario string) (*azc
 		return nil, err
 	}
 	urlPath := "/header/response/prim/byte"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -989,7 +990,7 @@ func (client *headerOperations) responseDateCreateRequest(scenario string) (*azc
 		return nil, err
 	}
 	urlPath := "/header/response/prim/date"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1047,7 +1048,7 @@ func (client *headerOperations) responseDatetimeCreateRequest(scenario string) (
 		return nil, err
 	}
 	urlPath := "/header/response/prim/datetime"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1105,7 +1106,7 @@ func (client *headerOperations) responseDatetimeRfc1123CreateRequest(scenario st
 		return nil, err
 	}
 	urlPath := "/header/response/prim/datetimerfc1123"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1163,7 +1164,7 @@ func (client *headerOperations) responseDoubleCreateRequest(scenario string) (*a
 		return nil, err
 	}
 	urlPath := "/header/response/prim/double"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1221,7 +1222,7 @@ func (client *headerOperations) responseDurationCreateRequest(scenario string) (
 		return nil, err
 	}
 	urlPath := "/header/response/prim/duration"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1275,7 +1276,7 @@ func (client *headerOperations) responseEnumCreateRequest(scenario string) (*azc
 		return nil, err
 	}
 	urlPath := "/header/response/prim/enum"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1329,7 +1330,7 @@ func (client *headerOperations) responseExistingKeyCreateRequest() (*azcore.Requ
 		return nil, err
 	}
 	urlPath := "/header/response/existingkey"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1382,7 +1383,7 @@ func (client *headerOperations) responseFloatCreateRequest(scenario string) (*az
 		return nil, err
 	}
 	urlPath := "/header/response/prim/float"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1441,7 +1442,7 @@ func (client *headerOperations) responseIntegerCreateRequest(scenario string) (*
 		return nil, err
 	}
 	urlPath := "/header/response/prim/integer"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1500,7 +1501,7 @@ func (client *headerOperations) responseLongCreateRequest(scenario string) (*azc
 		return nil, err
 	}
 	urlPath := "/header/response/prim/long"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1558,7 +1559,7 @@ func (client *headerOperations) responseProtectedKeyCreateRequest() (*azcore.Req
 		return nil, err
 	}
 	urlPath := "/header/response/protectedkey"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1611,7 +1612,7 @@ func (client *headerOperations) responseStringCreateRequest(scenario string) (*a
 		return nil, err
 	}
 	urlPath := "/header/response/prim/string"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

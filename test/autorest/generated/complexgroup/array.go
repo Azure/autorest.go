@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"path"
 )
 
 // ArrayOperations contains the methods for the Array group.
@@ -55,7 +56,7 @@ func (client *arrayOperations) getEmptyCreateRequest() (*azcore.Request, error) 
 		return nil, err
 	}
 	urlPath := "/complex/array/empty"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -105,7 +106,7 @@ func (client *arrayOperations) getNotProvidedCreateRequest() (*azcore.Request, e
 		return nil, err
 	}
 	urlPath := "/complex/array/notprovided"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -155,7 +156,7 @@ func (client *arrayOperations) getValidCreateRequest() (*azcore.Request, error) 
 		return nil, err
 	}
 	urlPath := "/complex/array/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -205,7 +206,7 @@ func (client *arrayOperations) putEmptyCreateRequest(complexBody ArrayWrapper) (
 		return nil, err
 	}
 	urlPath := "/complex/array/empty"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -254,7 +255,7 @@ func (client *arrayOperations) putValidCreateRequest(complexBody ArrayWrapper) (
 		return nil, err
 	}
 	urlPath := "/complex/array/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

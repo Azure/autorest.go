@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"path"
 	"time"
 )
 
@@ -90,7 +91,7 @@ func (client *datetimeOperations) getInvalidCreateRequest() (*azcore.Request, er
 		return nil, err
 	}
 	urlPath := "/datetime/invalid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -141,7 +142,7 @@ func (client *datetimeOperations) getLocalNegativeOffsetLowercaseMaxDateTimeCrea
 		return nil, err
 	}
 	urlPath := "/datetime/max/localnegativeoffset/lowercase"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -192,7 +193,7 @@ func (client *datetimeOperations) getLocalNegativeOffsetMinDateTimeCreateRequest
 		return nil, err
 	}
 	urlPath := "/datetime/min/localnegativeoffset"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -243,7 +244,7 @@ func (client *datetimeOperations) getLocalNegativeOffsetUppercaseMaxDateTimeCrea
 		return nil, err
 	}
 	urlPath := "/datetime/max/localnegativeoffset/uppercase"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -294,7 +295,7 @@ func (client *datetimeOperations) getLocalNoOffsetMinDateTimeCreateRequest() (*a
 		return nil, err
 	}
 	urlPath := "/datetime/min/localnooffset"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -345,7 +346,7 @@ func (client *datetimeOperations) getLocalPositiveOffsetLowercaseMaxDateTimeCrea
 		return nil, err
 	}
 	urlPath := "/datetime/max/localpositiveoffset/lowercase"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -396,7 +397,7 @@ func (client *datetimeOperations) getLocalPositiveOffsetMinDateTimeCreateRequest
 		return nil, err
 	}
 	urlPath := "/datetime/min/localpositiveoffset"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -447,7 +448,7 @@ func (client *datetimeOperations) getLocalPositiveOffsetUppercaseMaxDateTimeCrea
 		return nil, err
 	}
 	urlPath := "/datetime/max/localpositiveoffset/uppercase"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -498,7 +499,7 @@ func (client *datetimeOperations) getNullCreateRequest() (*azcore.Request, error
 		return nil, err
 	}
 	urlPath := "/datetime/null"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -549,7 +550,7 @@ func (client *datetimeOperations) getOverflowCreateRequest() (*azcore.Request, e
 		return nil, err
 	}
 	urlPath := "/datetime/overflow"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -600,7 +601,7 @@ func (client *datetimeOperations) getUtcLowercaseMaxDateTimeCreateRequest() (*az
 		return nil, err
 	}
 	urlPath := "/datetime/max/utc/lowercase"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -651,7 +652,7 @@ func (client *datetimeOperations) getUtcMinDateTimeCreateRequest() (*azcore.Requ
 		return nil, err
 	}
 	urlPath := "/datetime/min/utc"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -702,7 +703,7 @@ func (client *datetimeOperations) getUtcUppercaseMaxDateTimeCreateRequest() (*az
 		return nil, err
 	}
 	urlPath := "/datetime/max/utc/uppercase"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -753,7 +754,7 @@ func (client *datetimeOperations) getUtcUppercaseMaxDateTime7DigitsCreateRequest
 		return nil, err
 	}
 	urlPath := "/datetime/max/utc7ms/uppercase"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -804,7 +805,7 @@ func (client *datetimeOperations) getUnderflowCreateRequest() (*azcore.Request, 
 		return nil, err
 	}
 	urlPath := "/datetime/underflow"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -855,7 +856,7 @@ func (client *datetimeOperations) putLocalNegativeOffsetMaxDateTimeCreateRequest
 		return nil, err
 	}
 	urlPath := "/datetime/max/localnegativeoffset"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -904,7 +905,7 @@ func (client *datetimeOperations) putLocalNegativeOffsetMinDateTimeCreateRequest
 		return nil, err
 	}
 	urlPath := "/datetime/min/localnegativeoffset"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -953,7 +954,7 @@ func (client *datetimeOperations) putLocalPositiveOffsetMaxDateTimeCreateRequest
 		return nil, err
 	}
 	urlPath := "/datetime/max/localpositiveoffset"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1002,7 +1003,7 @@ func (client *datetimeOperations) putLocalPositiveOffsetMinDateTimeCreateRequest
 		return nil, err
 	}
 	urlPath := "/datetime/min/localpositiveoffset"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1051,7 +1052,7 @@ func (client *datetimeOperations) putUtcMaxDateTimeCreateRequest(datetimeBody ti
 		return nil, err
 	}
 	urlPath := "/datetime/max/utc"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1100,7 +1101,7 @@ func (client *datetimeOperations) putUtcMaxDateTime7DigitsCreateRequest(datetime
 		return nil, err
 	}
 	urlPath := "/datetime/max/utc7ms"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1149,7 +1150,7 @@ func (client *datetimeOperations) putUtcMinDateTimeCreateRequest(datetimeBody ti
 		return nil, err
 	}
 	urlPath := "/datetime/min/utc"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

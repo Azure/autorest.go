@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"path"
 )
 
 // HTTPRedirectsOperations contains the methods for the HTTPRedirects group.
@@ -78,7 +79,7 @@ func (client *httpRedirectsOperations) delete307CreateRequest() (*azcore.Request
 		return nil, err
 	}
 	urlPath := "/http/redirect/307"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -128,7 +129,7 @@ func (client *httpRedirectsOperations) get300CreateRequest() (*azcore.Request, e
 		return nil, err
 	}
 	urlPath := "/http/redirect/300"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -189,7 +190,7 @@ func (client *httpRedirectsOperations) get301CreateRequest() (*azcore.Request, e
 		return nil, err
 	}
 	urlPath := "/http/redirect/301"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -238,7 +239,7 @@ func (client *httpRedirectsOperations) get302CreateRequest() (*azcore.Request, e
 		return nil, err
 	}
 	urlPath := "/http/redirect/302"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -287,7 +288,7 @@ func (client *httpRedirectsOperations) get307CreateRequest() (*azcore.Request, e
 		return nil, err
 	}
 	urlPath := "/http/redirect/307"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -336,7 +337,7 @@ func (client *httpRedirectsOperations) head300CreateRequest() (*azcore.Request, 
 		return nil, err
 	}
 	urlPath := "/http/redirect/300"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -389,7 +390,7 @@ func (client *httpRedirectsOperations) head301CreateRequest() (*azcore.Request, 
 		return nil, err
 	}
 	urlPath := "/http/redirect/301"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -438,7 +439,7 @@ func (client *httpRedirectsOperations) head302CreateRequest() (*azcore.Request, 
 		return nil, err
 	}
 	urlPath := "/http/redirect/302"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -487,7 +488,7 @@ func (client *httpRedirectsOperations) head307CreateRequest() (*azcore.Request, 
 		return nil, err
 	}
 	urlPath := "/http/redirect/307"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -536,7 +537,7 @@ func (client *httpRedirectsOperations) options307CreateRequest() (*azcore.Reques
 		return nil, err
 	}
 	urlPath := "/http/redirect/307"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -585,7 +586,7 @@ func (client *httpRedirectsOperations) patch302CreateRequest() (*azcore.Request,
 		return nil, err
 	}
 	urlPath := "/http/redirect/302"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -638,7 +639,7 @@ func (client *httpRedirectsOperations) patch307CreateRequest() (*azcore.Request,
 		return nil, err
 	}
 	urlPath := "/http/redirect/307"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -687,7 +688,7 @@ func (client *httpRedirectsOperations) post303CreateRequest() (*azcore.Request, 
 		return nil, err
 	}
 	urlPath := "/http/redirect/303"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -740,7 +741,7 @@ func (client *httpRedirectsOperations) post307CreateRequest() (*azcore.Request, 
 		return nil, err
 	}
 	urlPath := "/http/redirect/307"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -789,7 +790,7 @@ func (client *httpRedirectsOperations) put301CreateRequest() (*azcore.Request, e
 		return nil, err
 	}
 	urlPath := "/http/redirect/301"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -842,7 +843,7 @@ func (client *httpRedirectsOperations) put307CreateRequest() (*azcore.Request, e
 		return nil, err
 	}
 	urlPath := "/http/redirect/307"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

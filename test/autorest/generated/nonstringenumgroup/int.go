@@ -13,6 +13,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"path"
 )
 
 // IntOperations contains the methods for the Int group.
@@ -52,7 +53,7 @@ func (client *intOperations) getCreateRequest() (*azcore.Request, error) {
 		return nil, err
 	}
 	urlPath := "/nonStringEnums/int/get"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -105,7 +106,7 @@ func (client *intOperations) putCreateRequest(intPutOptions *IntPutOptions) (*az
 		return nil, err
 	}
 	urlPath := "/nonStringEnums/int/put"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

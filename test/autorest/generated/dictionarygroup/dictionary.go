@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"path"
 	"time"
 )
 
@@ -176,7 +177,7 @@ func (client *dictionaryOperations) getArrayEmptyCreateRequest() (*azcore.Reques
 		return nil, err
 	}
 	urlPath := "/dictionary/array/empty"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -226,7 +227,7 @@ func (client *dictionaryOperations) getArrayItemEmptyCreateRequest() (*azcore.Re
 		return nil, err
 	}
 	urlPath := "/dictionary/array/itemempty"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -276,7 +277,7 @@ func (client *dictionaryOperations) getArrayItemNullCreateRequest() (*azcore.Req
 		return nil, err
 	}
 	urlPath := "/dictionary/array/itemnull"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -326,7 +327,7 @@ func (client *dictionaryOperations) getArrayNullCreateRequest() (*azcore.Request
 		return nil, err
 	}
 	urlPath := "/dictionary/array/null"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -376,7 +377,7 @@ func (client *dictionaryOperations) getArrayValidCreateRequest() (*azcore.Reques
 		return nil, err
 	}
 	urlPath := "/dictionary/array/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -426,7 +427,7 @@ func (client *dictionaryOperations) getBase64UrlCreateRequest() (*azcore.Request
 		return nil, err
 	}
 	urlPath := "/dictionary/prim/base64url/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -476,7 +477,7 @@ func (client *dictionaryOperations) getBooleanInvalidNullCreateRequest() (*azcor
 		return nil, err
 	}
 	urlPath := "/dictionary/prim/boolean/true.null.false"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -526,7 +527,7 @@ func (client *dictionaryOperations) getBooleanInvalidStringCreateRequest() (*azc
 		return nil, err
 	}
 	urlPath := "/dictionary/prim/boolean/true.boolean.false"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -576,7 +577,7 @@ func (client *dictionaryOperations) getBooleanTfftCreateRequest() (*azcore.Reque
 		return nil, err
 	}
 	urlPath := "/dictionary/prim/boolean/tfft"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -626,7 +627,7 @@ func (client *dictionaryOperations) getByteInvalidNullCreateRequest() (*azcore.R
 		return nil, err
 	}
 	urlPath := "/dictionary/prim/byte/invalidnull"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -676,7 +677,7 @@ func (client *dictionaryOperations) getByteValidCreateRequest() (*azcore.Request
 		return nil, err
 	}
 	urlPath := "/dictionary/prim/byte/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -726,7 +727,7 @@ func (client *dictionaryOperations) getComplexEmptyCreateRequest() (*azcore.Requ
 		return nil, err
 	}
 	urlPath := "/dictionary/complex/empty"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -776,7 +777,7 @@ func (client *dictionaryOperations) getComplexItemEmptyCreateRequest() (*azcore.
 		return nil, err
 	}
 	urlPath := "/dictionary/complex/itemempty"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -826,7 +827,7 @@ func (client *dictionaryOperations) getComplexItemNullCreateRequest() (*azcore.R
 		return nil, err
 	}
 	urlPath := "/dictionary/complex/itemnull"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -876,7 +877,7 @@ func (client *dictionaryOperations) getComplexNullCreateRequest() (*azcore.Reque
 		return nil, err
 	}
 	urlPath := "/dictionary/complex/null"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -926,7 +927,7 @@ func (client *dictionaryOperations) getComplexValidCreateRequest() (*azcore.Requ
 		return nil, err
 	}
 	urlPath := "/dictionary/complex/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -976,7 +977,7 @@ func (client *dictionaryOperations) getDateInvalidCharsCreateRequest() (*azcore.
 		return nil, err
 	}
 	urlPath := "/dictionary/prim/date/invalidchars"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1026,7 +1027,7 @@ func (client *dictionaryOperations) getDateInvalidNullCreateRequest() (*azcore.R
 		return nil, err
 	}
 	urlPath := "/dictionary/prim/date/invalidnull"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1076,7 +1077,7 @@ func (client *dictionaryOperations) getDateTimeInvalidCharsCreateRequest() (*azc
 		return nil, err
 	}
 	urlPath := "/dictionary/prim/date-time/invalidchars"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1133,7 +1134,7 @@ func (client *dictionaryOperations) getDateTimeInvalidNullCreateRequest() (*azco
 		return nil, err
 	}
 	urlPath := "/dictionary/prim/date-time/invalidnull"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1190,7 +1191,7 @@ func (client *dictionaryOperations) getDateTimeRfc1123ValidCreateRequest() (*azc
 		return nil, err
 	}
 	urlPath := "/dictionary/prim/date-time-rfc1123/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1247,7 +1248,7 @@ func (client *dictionaryOperations) getDateTimeValidCreateRequest() (*azcore.Req
 		return nil, err
 	}
 	urlPath := "/dictionary/prim/date-time/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1304,7 +1305,7 @@ func (client *dictionaryOperations) getDateValidCreateRequest() (*azcore.Request
 		return nil, err
 	}
 	urlPath := "/dictionary/prim/date/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1354,7 +1355,7 @@ func (client *dictionaryOperations) getDictionaryEmptyCreateRequest() (*azcore.R
 		return nil, err
 	}
 	urlPath := "/dictionary/dictionary/empty"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1404,7 +1405,7 @@ func (client *dictionaryOperations) getDictionaryItemEmptyCreateRequest() (*azco
 		return nil, err
 	}
 	urlPath := "/dictionary/dictionary/itemempty"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1454,7 +1455,7 @@ func (client *dictionaryOperations) getDictionaryItemNullCreateRequest() (*azcor
 		return nil, err
 	}
 	urlPath := "/dictionary/dictionary/itemnull"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1504,7 +1505,7 @@ func (client *dictionaryOperations) getDictionaryNullCreateRequest() (*azcore.Re
 		return nil, err
 	}
 	urlPath := "/dictionary/dictionary/null"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1554,7 +1555,7 @@ func (client *dictionaryOperations) getDictionaryValidCreateRequest() (*azcore.R
 		return nil, err
 	}
 	urlPath := "/dictionary/dictionary/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1604,7 +1605,7 @@ func (client *dictionaryOperations) getDoubleInvalidNullCreateRequest() (*azcore
 		return nil, err
 	}
 	urlPath := "/dictionary/prim/double/0.0-null-1.2e20"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1654,7 +1655,7 @@ func (client *dictionaryOperations) getDoubleInvalidStringCreateRequest() (*azco
 		return nil, err
 	}
 	urlPath := "/dictionary/prim/double/1.number.0"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1704,7 +1705,7 @@ func (client *dictionaryOperations) getDoubleValidCreateRequest() (*azcore.Reque
 		return nil, err
 	}
 	urlPath := "/dictionary/prim/double/0--0.01-1.2e20"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1754,7 +1755,7 @@ func (client *dictionaryOperations) getDurationValidCreateRequest() (*azcore.Req
 		return nil, err
 	}
 	urlPath := "/dictionary/prim/duration/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1804,7 +1805,7 @@ func (client *dictionaryOperations) getEmptyCreateRequest() (*azcore.Request, er
 		return nil, err
 	}
 	urlPath := "/dictionary/empty"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1854,7 +1855,7 @@ func (client *dictionaryOperations) getEmptyStringKeyCreateRequest() (*azcore.Re
 		return nil, err
 	}
 	urlPath := "/dictionary/keyemptystring"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1904,7 +1905,7 @@ func (client *dictionaryOperations) getFloatInvalidNullCreateRequest() (*azcore.
 		return nil, err
 	}
 	urlPath := "/dictionary/prim/float/0.0-null-1.2e20"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1954,7 +1955,7 @@ func (client *dictionaryOperations) getFloatInvalidStringCreateRequest() (*azcor
 		return nil, err
 	}
 	urlPath := "/dictionary/prim/float/1.number.0"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2004,7 +2005,7 @@ func (client *dictionaryOperations) getFloatValidCreateRequest() (*azcore.Reques
 		return nil, err
 	}
 	urlPath := "/dictionary/prim/float/0--0.01-1.2e20"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2054,7 +2055,7 @@ func (client *dictionaryOperations) getIntInvalidNullCreateRequest() (*azcore.Re
 		return nil, err
 	}
 	urlPath := "/dictionary/prim/integer/1.null.zero"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2104,7 +2105,7 @@ func (client *dictionaryOperations) getIntInvalidStringCreateRequest() (*azcore.
 		return nil, err
 	}
 	urlPath := "/dictionary/prim/integer/1.integer.0"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2154,7 +2155,7 @@ func (client *dictionaryOperations) getIntegerValidCreateRequest() (*azcore.Requ
 		return nil, err
 	}
 	urlPath := "/dictionary/prim/integer/1.-1.3.300"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2204,7 +2205,7 @@ func (client *dictionaryOperations) getInvalidCreateRequest() (*azcore.Request, 
 		return nil, err
 	}
 	urlPath := "/dictionary/invalid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2254,7 +2255,7 @@ func (client *dictionaryOperations) getLongInvalidNullCreateRequest() (*azcore.R
 		return nil, err
 	}
 	urlPath := "/dictionary/prim/long/1.null.zero"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2304,7 +2305,7 @@ func (client *dictionaryOperations) getLongInvalidStringCreateRequest() (*azcore
 		return nil, err
 	}
 	urlPath := "/dictionary/prim/long/1.integer.0"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2354,7 +2355,7 @@ func (client *dictionaryOperations) getLongValidCreateRequest() (*azcore.Request
 		return nil, err
 	}
 	urlPath := "/dictionary/prim/long/1.-1.3.300"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2404,7 +2405,7 @@ func (client *dictionaryOperations) getNullCreateRequest() (*azcore.Request, err
 		return nil, err
 	}
 	urlPath := "/dictionary/null"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2454,7 +2455,7 @@ func (client *dictionaryOperations) getNullKeyCreateRequest() (*azcore.Request, 
 		return nil, err
 	}
 	urlPath := "/dictionary/nullkey"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2504,7 +2505,7 @@ func (client *dictionaryOperations) getNullValueCreateRequest() (*azcore.Request
 		return nil, err
 	}
 	urlPath := "/dictionary/nullvalue"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2554,7 +2555,7 @@ func (client *dictionaryOperations) getStringValidCreateRequest() (*azcore.Reque
 		return nil, err
 	}
 	urlPath := "/dictionary/prim/string/foo1.foo2.foo3"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2604,7 +2605,7 @@ func (client *dictionaryOperations) getStringWithInvalidCreateRequest() (*azcore
 		return nil, err
 	}
 	urlPath := "/dictionary/prim/string/foo.123.foo2"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2654,7 +2655,7 @@ func (client *dictionaryOperations) getStringWithNullCreateRequest() (*azcore.Re
 		return nil, err
 	}
 	urlPath := "/dictionary/prim/string/foo.null.foo2"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2704,7 +2705,7 @@ func (client *dictionaryOperations) putArrayValidCreateRequest(arrayBody map[str
 		return nil, err
 	}
 	urlPath := "/dictionary/array/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2753,7 +2754,7 @@ func (client *dictionaryOperations) putBooleanTfftCreateRequest(arrayBody map[st
 		return nil, err
 	}
 	urlPath := "/dictionary/prim/boolean/tfft"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2802,7 +2803,7 @@ func (client *dictionaryOperations) putByteValidCreateRequest(arrayBody map[stri
 		return nil, err
 	}
 	urlPath := "/dictionary/prim/byte/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2851,7 +2852,7 @@ func (client *dictionaryOperations) putComplexValidCreateRequest(arrayBody map[s
 		return nil, err
 	}
 	urlPath := "/dictionary/complex/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2900,7 +2901,7 @@ func (client *dictionaryOperations) putDateTimeRfc1123ValidCreateRequest(arrayBo
 		return nil, err
 	}
 	urlPath := "/dictionary/prim/date-time-rfc1123/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2953,7 +2954,7 @@ func (client *dictionaryOperations) putDateTimeValidCreateRequest(arrayBody map[
 		return nil, err
 	}
 	urlPath := "/dictionary/prim/date-time/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -3006,7 +3007,7 @@ func (client *dictionaryOperations) putDateValidCreateRequest(arrayBody map[stri
 		return nil, err
 	}
 	urlPath := "/dictionary/prim/date/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -3055,7 +3056,7 @@ func (client *dictionaryOperations) putDictionaryValidCreateRequest(arrayBody ma
 		return nil, err
 	}
 	urlPath := "/dictionary/dictionary/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -3104,7 +3105,7 @@ func (client *dictionaryOperations) putDoubleValidCreateRequest(arrayBody map[st
 		return nil, err
 	}
 	urlPath := "/dictionary/prim/double/0--0.01-1.2e20"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -3153,7 +3154,7 @@ func (client *dictionaryOperations) putDurationValidCreateRequest(arrayBody map[
 		return nil, err
 	}
 	urlPath := "/dictionary/prim/duration/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -3202,7 +3203,7 @@ func (client *dictionaryOperations) putEmptyCreateRequest(arrayBody map[string]s
 		return nil, err
 	}
 	urlPath := "/dictionary/empty"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -3251,7 +3252,7 @@ func (client *dictionaryOperations) putFloatValidCreateRequest(arrayBody map[str
 		return nil, err
 	}
 	urlPath := "/dictionary/prim/float/0--0.01-1.2e20"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -3300,7 +3301,7 @@ func (client *dictionaryOperations) putIntegerValidCreateRequest(arrayBody map[s
 		return nil, err
 	}
 	urlPath := "/dictionary/prim/integer/1.-1.3.300"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -3349,7 +3350,7 @@ func (client *dictionaryOperations) putLongValidCreateRequest(arrayBody map[stri
 		return nil, err
 	}
 	urlPath := "/dictionary/prim/long/1.-1.3.300"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -3398,7 +3399,7 @@ func (client *dictionaryOperations) putStringValidCreateRequest(arrayBody map[st
 		return nil, err
 	}
 	urlPath := "/dictionary/prim/string/foo1.foo2.foo3"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

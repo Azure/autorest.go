@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"path"
 )
 
 // ReadonlypropertyOperations contains the methods for the Readonlyproperty group.
@@ -49,7 +50,7 @@ func (client *readonlypropertyOperations) getValidCreateRequest() (*azcore.Reque
 		return nil, err
 	}
 	urlPath := "/complex/readonlyproperty/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -99,7 +100,7 @@ func (client *readonlypropertyOperations) putValidCreateRequest(complexBody Read
 		return nil, err
 	}
 	urlPath := "/complex/readonlyproperty/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

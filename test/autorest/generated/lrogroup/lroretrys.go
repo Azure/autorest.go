@@ -11,6 +11,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"path"
 	"time"
 )
 
@@ -99,7 +100,7 @@ func (client *lroRetrysOperations) delete202Retry200CreateRequest() (*azcore.Req
 		return nil, err
 	}
 	urlPath := "/lro/retryerror/delete/202/retry/200"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -172,7 +173,7 @@ func (client *lroRetrysOperations) deleteAsyncRelativeRetrySucceededCreateReques
 		return nil, err
 	}
 	urlPath := "/lro/retryerror/deleteasync/retry/succeeded"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -245,7 +246,7 @@ func (client *lroRetrysOperations) deleteProvisioning202Accepted200SucceededCrea
 		return nil, err
 	}
 	urlPath := "/lro/retryerror/delete/provisioning/202/accepted/200/succeeded"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -318,7 +319,7 @@ func (client *lroRetrysOperations) post202Retry200CreateRequest(lroRetrysPost202
 		return nil, err
 	}
 	urlPath := "/lro/retryerror/post/202/retry/200"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -394,7 +395,7 @@ func (client *lroRetrysOperations) postAsyncRelativeRetrySucceededCreateRequest(
 		return nil, err
 	}
 	urlPath := "/lro/retryerror/postasync/retry/succeeded"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -470,7 +471,7 @@ func (client *lroRetrysOperations) put201CreatingSucceeded200CreateRequest(lroRe
 		return nil, err
 	}
 	urlPath := "/lro/retryerror/put/201/creating/succeeded/200"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -546,7 +547,7 @@ func (client *lroRetrysOperations) putAsyncRelativeRetrySucceededCreateRequest(l
 		return nil, err
 	}
 	urlPath := "/lro/retryerror/putasync/retry/succeeded"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"path"
 )
 
 // DictionaryOperations contains the methods for the Dictionary group.
@@ -57,7 +58,7 @@ func (client *dictionaryOperations) getEmptyCreateRequest() (*azcore.Request, er
 		return nil, err
 	}
 	urlPath := "/complex/dictionary/typed/empty"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -107,7 +108,7 @@ func (client *dictionaryOperations) getNotProvidedCreateRequest() (*azcore.Reque
 		return nil, err
 	}
 	urlPath := "/complex/dictionary/typed/notprovided"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -157,7 +158,7 @@ func (client *dictionaryOperations) getNullCreateRequest() (*azcore.Request, err
 		return nil, err
 	}
 	urlPath := "/complex/dictionary/typed/null"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -207,7 +208,7 @@ func (client *dictionaryOperations) getValidCreateRequest() (*azcore.Request, er
 		return nil, err
 	}
 	urlPath := "/complex/dictionary/typed/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -257,7 +258,7 @@ func (client *dictionaryOperations) putEmptyCreateRequest(complexBody Dictionary
 		return nil, err
 	}
 	urlPath := "/complex/dictionary/typed/empty"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -306,7 +307,7 @@ func (client *dictionaryOperations) putValidCreateRequest(complexBody Dictionary
 		return nil, err
 	}
 	urlPath := "/complex/dictionary/typed/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

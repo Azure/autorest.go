@@ -11,6 +11,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"path"
 	"time"
 )
 
@@ -235,7 +236,7 @@ func (client *lrOSOperations) delete202NoRetry204CreateRequest() (*azcore.Reques
 		return nil, err
 	}
 	urlPath := "/lro/delete/202/noretry/204"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -308,7 +309,7 @@ func (client *lrOSOperations) delete202Retry200CreateRequest() (*azcore.Request,
 		return nil, err
 	}
 	urlPath := "/lro/delete/202/retry/200"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -381,7 +382,7 @@ func (client *lrOSOperations) delete204SucceededCreateRequest() (*azcore.Request
 		return nil, err
 	}
 	urlPath := "/lro/delete/204/succeeded"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -454,7 +455,7 @@ func (client *lrOSOperations) deleteAsyncNoHeaderInRetryCreateRequest() (*azcore
 		return nil, err
 	}
 	urlPath := "/lro/deleteasync/noheader/202/204"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -527,7 +528,7 @@ func (client *lrOSOperations) deleteAsyncNoRetrySucceededCreateRequest() (*azcor
 		return nil, err
 	}
 	urlPath := "/lro/deleteasync/noretry/succeeded"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -600,7 +601,7 @@ func (client *lrOSOperations) deleteAsyncRetryFailedCreateRequest() (*azcore.Req
 		return nil, err
 	}
 	urlPath := "/lro/deleteasync/retry/failed"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -673,7 +674,7 @@ func (client *lrOSOperations) deleteAsyncRetrySucceededCreateRequest() (*azcore.
 		return nil, err
 	}
 	urlPath := "/lro/deleteasync/retry/succeeded"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -746,7 +747,7 @@ func (client *lrOSOperations) deleteAsyncRetrycanceledCreateRequest() (*azcore.R
 		return nil, err
 	}
 	urlPath := "/lro/deleteasync/retry/canceled"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -819,7 +820,7 @@ func (client *lrOSOperations) deleteNoHeaderInRetryCreateRequest() (*azcore.Requ
 		return nil, err
 	}
 	urlPath := "/lro/delete/noheader"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -892,7 +893,7 @@ func (client *lrOSOperations) deleteProvisioning202Accepted200SucceededCreateReq
 		return nil, err
 	}
 	urlPath := "/lro/delete/provisioning/202/accepted/200/succeeded"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -965,7 +966,7 @@ func (client *lrOSOperations) deleteProvisioning202DeletingFailed200CreateReques
 		return nil, err
 	}
 	urlPath := "/lro/delete/provisioning/202/deleting/200/failed"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1038,7 +1039,7 @@ func (client *lrOSOperations) deleteProvisioning202Deletingcanceled200CreateRequ
 		return nil, err
 	}
 	urlPath := "/lro/delete/provisioning/202/deleting/200/canceled"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1111,7 +1112,7 @@ func (client *lrOSOperations) post200WithPayloadCreateRequest() (*azcore.Request
 		return nil, err
 	}
 	urlPath := "/lro/post/payload/200"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1184,7 +1185,7 @@ func (client *lrOSOperations) post202ListCreateRequest() (*azcore.Request, error
 		return nil, err
 	}
 	urlPath := "/lro/list"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1257,7 +1258,7 @@ func (client *lrOSOperations) post202NoRetry204CreateRequest(lrOSPost202NoRetry2
 		return nil, err
 	}
 	urlPath := "/lro/post/202/noretry/204"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1333,7 +1334,7 @@ func (client *lrOSOperations) post202Retry200CreateRequest(lrOSPost202Retry200Op
 		return nil, err
 	}
 	urlPath := "/lro/post/202/retry/200"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1409,7 +1410,7 @@ func (client *lrOSOperations) postAsyncNoRetrySucceededCreateRequest(lrOSPostAsy
 		return nil, err
 	}
 	urlPath := "/lro/postasync/noretry/succeeded"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1485,7 +1486,7 @@ func (client *lrOSOperations) postAsyncRetryFailedCreateRequest(lrOSPostAsyncRet
 		return nil, err
 	}
 	urlPath := "/lro/postasync/retry/failed"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1561,7 +1562,7 @@ func (client *lrOSOperations) postAsyncRetrySucceededCreateRequest(lrOSPostAsync
 		return nil, err
 	}
 	urlPath := "/lro/postasync/retry/succeeded"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1637,7 +1638,7 @@ func (client *lrOSOperations) postAsyncRetrycanceledCreateRequest(lrOSPostAsyncR
 		return nil, err
 	}
 	urlPath := "/lro/postasync/retry/canceled"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1713,7 +1714,7 @@ func (client *lrOSOperations) postDoubleHeadersFinalAzureHeaderGetCreateRequest(
 		return nil, err
 	}
 	urlPath := "/lro/LROPostDoubleHeadersFinalAzureHeaderGet"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1786,7 +1787,7 @@ func (client *lrOSOperations) postDoubleHeadersFinalAzureHeaderGetDefaultCreateR
 		return nil, err
 	}
 	urlPath := "/lro/LROPostDoubleHeadersFinalAzureHeaderGetDefault"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1859,7 +1860,7 @@ func (client *lrOSOperations) postDoubleHeadersFinalLocationGetCreateRequest() (
 		return nil, err
 	}
 	urlPath := "/lro/LROPostDoubleHeadersFinalLocationGet"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1932,7 +1933,7 @@ func (client *lrOSOperations) put200Acceptedcanceled200CreateRequest(lrOSPut200A
 		return nil, err
 	}
 	urlPath := "/lro/put/200/accepted/canceled/200"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2008,7 +2009,7 @@ func (client *lrOSOperations) put200SucceededCreateRequest(lrOSPut200SucceededOp
 		return nil, err
 	}
 	urlPath := "/lro/put/200/succeeded"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2084,7 +2085,7 @@ func (client *lrOSOperations) put200SucceededNoStateCreateRequest(lrOSPut200Succ
 		return nil, err
 	}
 	urlPath := "/lro/put/200/succeeded/nostate"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2160,7 +2161,7 @@ func (client *lrOSOperations) put200UpdatingSucceeded204CreateRequest(lrOSPut200
 		return nil, err
 	}
 	urlPath := "/lro/put/200/updating/succeeded/200"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2236,7 +2237,7 @@ func (client *lrOSOperations) put201CreatingFailed200CreateRequest(lrOSPut201Cre
 		return nil, err
 	}
 	urlPath := "/lro/put/201/created/failed/200"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2312,7 +2313,7 @@ func (client *lrOSOperations) put201CreatingSucceeded200CreateRequest(lrOSPut201
 		return nil, err
 	}
 	urlPath := "/lro/put/201/creating/succeeded/200"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2388,7 +2389,7 @@ func (client *lrOSOperations) put201SucceededCreateRequest(lrOSPut201SucceededOp
 		return nil, err
 	}
 	urlPath := "/lro/put/201/succeeded"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2464,7 +2465,7 @@ func (client *lrOSOperations) put202Retry200CreateRequest(lrOSPut202Retry200Opti
 		return nil, err
 	}
 	urlPath := "/lro/put/202/retry/200"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2540,7 +2541,7 @@ func (client *lrOSOperations) putAsyncNoHeaderInRetryCreateRequest(lrOSPutAsyncN
 		return nil, err
 	}
 	urlPath := "/lro/putasync/noheader/201/200"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2616,7 +2617,7 @@ func (client *lrOSOperations) putAsyncNoRetrySucceededCreateRequest(lrOSPutAsync
 		return nil, err
 	}
 	urlPath := "/lro/putasync/noretry/succeeded"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2692,7 +2693,7 @@ func (client *lrOSOperations) putAsyncNoRetrycanceledCreateRequest(lrOSPutAsyncN
 		return nil, err
 	}
 	urlPath := "/lro/putasync/noretry/canceled"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2768,7 +2769,7 @@ func (client *lrOSOperations) putAsyncNonResourceCreateRequest(lrOSPutAsyncNonRe
 		return nil, err
 	}
 	urlPath := "/lro/putnonresourceasync/202/200"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2844,7 +2845,7 @@ func (client *lrOSOperations) putAsyncRetryFailedCreateRequest(lrOSPutAsyncRetry
 		return nil, err
 	}
 	urlPath := "/lro/putasync/retry/failed"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2920,7 +2921,7 @@ func (client *lrOSOperations) putAsyncRetrySucceededCreateRequest(lrOSPutAsyncRe
 		return nil, err
 	}
 	urlPath := "/lro/putasync/retry/succeeded"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2996,7 +2997,7 @@ func (client *lrOSOperations) putAsyncSubResourceCreateRequest(lrOSPutAsyncSubRe
 		return nil, err
 	}
 	urlPath := "/lro/putsubresourceasync/202/200"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -3072,7 +3073,7 @@ func (client *lrOSOperations) putNoHeaderInRetryCreateRequest(lrOSPutNoHeaderInR
 		return nil, err
 	}
 	urlPath := "/lro/put/noheader/202/200"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -3148,7 +3149,7 @@ func (client *lrOSOperations) putNonResourceCreateRequest(lrOSPutNonResourceOpti
 		return nil, err
 	}
 	urlPath := "/lro/putnonresource/202/200"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -3224,7 +3225,7 @@ func (client *lrOSOperations) putSubResourceCreateRequest(lrOSPutSubResourceOpti
 		return nil, err
 	}
 	urlPath := "/lro/putsubresource/202/200"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

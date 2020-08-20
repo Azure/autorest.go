@@ -13,6 +13,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"path"
 )
 
 // MultipleResponsesOperations contains the methods for the MultipleResponses group.
@@ -124,7 +125,7 @@ func (client *multipleResponsesOperations) get200Model201ModelDefaultError200Val
 		return nil, err
 	}
 	urlPath := "/http/payloads/200/A/201/B/default/Error/response/200/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -180,7 +181,7 @@ func (client *multipleResponsesOperations) get200Model201ModelDefaultError201Val
 		return nil, err
 	}
 	urlPath := "/http/payloads/200/A/201/B/default/Error/response/201/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -236,7 +237,7 @@ func (client *multipleResponsesOperations) get200Model201ModelDefaultError400Val
 		return nil, err
 	}
 	urlPath := "/http/payloads/200/A/201/B/default/Error/response/400/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -291,7 +292,7 @@ func (client *multipleResponsesOperations) get200Model204NoModelDefaultError200V
 		return nil, err
 	}
 	urlPath := "/http/payloads/200/A/204/none/default/Error/response/200/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -341,7 +342,7 @@ func (client *multipleResponsesOperations) get200Model204NoModelDefaultError201I
 		return nil, err
 	}
 	urlPath := "/http/payloads/200/A/204/none/default/Error/response/201/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -391,7 +392,7 @@ func (client *multipleResponsesOperations) get200Model204NoModelDefaultError202N
 		return nil, err
 	}
 	urlPath := "/http/payloads/200/A/204/none/default/Error/response/202/none"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -441,7 +442,7 @@ func (client *multipleResponsesOperations) get200Model204NoModelDefaultError204V
 		return nil, err
 	}
 	urlPath := "/http/payloads/200/A/204/none/default/Error/response/204/none"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -491,7 +492,7 @@ func (client *multipleResponsesOperations) get200Model204NoModelDefaultError400V
 		return nil, err
 	}
 	urlPath := "/http/payloads/200/A/204/none/default/Error/response/400/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -541,7 +542,7 @@ func (client *multipleResponsesOperations) get200ModelA200InvalidCreateRequest()
 		return nil, err
 	}
 	urlPath := "/http/payloads/200/A/response/200/invalid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -594,7 +595,7 @@ func (client *multipleResponsesOperations) get200ModelA200NoneCreateRequest() (*
 		return nil, err
 	}
 	urlPath := "/http/payloads/200/A/response/200/none"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -647,7 +648,7 @@ func (client *multipleResponsesOperations) get200ModelA200ValidCreateRequest() (
 		return nil, err
 	}
 	urlPath := "/http/payloads/200/A/response/200/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -701,7 +702,7 @@ func (client *multipleResponsesOperations) get200ModelA201ModelC404ModelDDefault
 		return nil, err
 	}
 	urlPath := "/http/payloads/200/A/201/C/404/D/default/Error/response/200/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -760,7 +761,7 @@ func (client *multipleResponsesOperations) get200ModelA201ModelC404ModelDDefault
 		return nil, err
 	}
 	urlPath := "/http/payloads/200/A/201/C/404/D/default/Error/response/201/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -819,7 +820,7 @@ func (client *multipleResponsesOperations) get200ModelA201ModelC404ModelDDefault
 		return nil, err
 	}
 	urlPath := "/http/payloads/200/A/201/C/404/D/default/Error/response/400/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -878,7 +879,7 @@ func (client *multipleResponsesOperations) get200ModelA201ModelC404ModelDDefault
 		return nil, err
 	}
 	urlPath := "/http/payloads/200/A/201/C/404/D/default/Error/response/404/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -936,7 +937,7 @@ func (client *multipleResponsesOperations) get200ModelA202ValidCreateRequest() (
 		return nil, err
 	}
 	urlPath := "/http/payloads/200/A/response/202/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -989,7 +990,7 @@ func (client *multipleResponsesOperations) get200ModelA400InvalidCreateRequest()
 		return nil, err
 	}
 	urlPath := "/http/payloads/200/A/response/400/invalid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1042,7 +1043,7 @@ func (client *multipleResponsesOperations) get200ModelA400NoneCreateRequest() (*
 		return nil, err
 	}
 	urlPath := "/http/payloads/200/A/response/400/none"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1095,7 +1096,7 @@ func (client *multipleResponsesOperations) get200ModelA400ValidCreateRequest() (
 		return nil, err
 	}
 	urlPath := "/http/payloads/200/A/response/400/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1148,7 +1149,7 @@ func (client *multipleResponsesOperations) get202None204NoneDefaultError202NoneC
 		return nil, err
 	}
 	urlPath := "/http/payloads/202/none/204/none/default/Error/response/202/none"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1197,7 +1198,7 @@ func (client *multipleResponsesOperations) get202None204NoneDefaultError204NoneC
 		return nil, err
 	}
 	urlPath := "/http/payloads/202/none/204/none/default/Error/response/204/none"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1246,7 +1247,7 @@ func (client *multipleResponsesOperations) get202None204NoneDefaultError400Valid
 		return nil, err
 	}
 	urlPath := "/http/payloads/202/none/204/none/default/Error/response/400/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1295,7 +1296,7 @@ func (client *multipleResponsesOperations) get202None204NoneDefaultNone202Invali
 		return nil, err
 	}
 	urlPath := "/http/payloads/202/none/204/none/default/none/response/202/invalid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1347,7 +1348,7 @@ func (client *multipleResponsesOperations) get202None204NoneDefaultNone204NoneCr
 		return nil, err
 	}
 	urlPath := "/http/payloads/202/none/204/none/default/none/response/204/none"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1399,7 +1400,7 @@ func (client *multipleResponsesOperations) get202None204NoneDefaultNone400Invali
 		return nil, err
 	}
 	urlPath := "/http/payloads/202/none/204/none/default/none/response/400/invalid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1451,7 +1452,7 @@ func (client *multipleResponsesOperations) get202None204NoneDefaultNone400NoneCr
 		return nil, err
 	}
 	urlPath := "/http/payloads/202/none/204/none/default/none/response/400/none"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1503,7 +1504,7 @@ func (client *multipleResponsesOperations) getDefaultModelA200NoneCreateRequest(
 		return nil, err
 	}
 	urlPath := "/http/payloads/default/A/response/200/none"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1556,7 +1557,7 @@ func (client *multipleResponsesOperations) getDefaultModelA200ValidCreateRequest
 		return nil, err
 	}
 	urlPath := "/http/payloads/default/A/response/200/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1609,7 +1610,7 @@ func (client *multipleResponsesOperations) getDefaultModelA400NoneCreateRequest(
 		return nil, err
 	}
 	urlPath := "/http/payloads/default/A/response/400/none"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1658,7 +1659,7 @@ func (client *multipleResponsesOperations) getDefaultModelA400ValidCreateRequest
 		return nil, err
 	}
 	urlPath := "/http/payloads/default/A/response/400/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1707,7 +1708,7 @@ func (client *multipleResponsesOperations) getDefaultNone200InvalidCreateRequest
 		return nil, err
 	}
 	urlPath := "/http/payloads/default/none/response/200/invalid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1759,7 +1760,7 @@ func (client *multipleResponsesOperations) getDefaultNone200NoneCreateRequest() 
 		return nil, err
 	}
 	urlPath := "/http/payloads/default/none/response/200/none"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1811,7 +1812,7 @@ func (client *multipleResponsesOperations) getDefaultNone400InvalidCreateRequest
 		return nil, err
 	}
 	urlPath := "/http/payloads/default/none/response/400/invalid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1863,7 +1864,7 @@ func (client *multipleResponsesOperations) getDefaultNone400NoneCreateRequest() 
 		return nil, err
 	}
 	urlPath := "/http/payloads/default/none/response/400/none"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

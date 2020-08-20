@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"path"
 )
 
 // HTTPClientFailureOperations contains the methods for the HTTPClientFailure group.
@@ -97,7 +98,7 @@ func (client *httpClientFailureOperations) delete400CreateRequest() (*azcore.Req
 		return nil, err
 	}
 	urlPath := "/http/failure/client/400"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -143,7 +144,7 @@ func (client *httpClientFailureOperations) delete407CreateRequest() (*azcore.Req
 		return nil, err
 	}
 	urlPath := "/http/failure/client/407"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -189,7 +190,7 @@ func (client *httpClientFailureOperations) delete417CreateRequest() (*azcore.Req
 		return nil, err
 	}
 	urlPath := "/http/failure/client/417"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -235,7 +236,7 @@ func (client *httpClientFailureOperations) get400CreateRequest() (*azcore.Reques
 		return nil, err
 	}
 	urlPath := "/http/failure/client/400"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -281,7 +282,7 @@ func (client *httpClientFailureOperations) get402CreateRequest() (*azcore.Reques
 		return nil, err
 	}
 	urlPath := "/http/failure/client/402"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -327,7 +328,7 @@ func (client *httpClientFailureOperations) get403CreateRequest() (*azcore.Reques
 		return nil, err
 	}
 	urlPath := "/http/failure/client/403"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -373,7 +374,7 @@ func (client *httpClientFailureOperations) get411CreateRequest() (*azcore.Reques
 		return nil, err
 	}
 	urlPath := "/http/failure/client/411"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -419,7 +420,7 @@ func (client *httpClientFailureOperations) get412CreateRequest() (*azcore.Reques
 		return nil, err
 	}
 	urlPath := "/http/failure/client/412"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -465,7 +466,7 @@ func (client *httpClientFailureOperations) get416CreateRequest() (*azcore.Reques
 		return nil, err
 	}
 	urlPath := "/http/failure/client/416"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -511,7 +512,7 @@ func (client *httpClientFailureOperations) head400CreateRequest() (*azcore.Reque
 		return nil, err
 	}
 	urlPath := "/http/failure/client/400"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -557,7 +558,7 @@ func (client *httpClientFailureOperations) head401CreateRequest() (*azcore.Reque
 		return nil, err
 	}
 	urlPath := "/http/failure/client/401"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -603,7 +604,7 @@ func (client *httpClientFailureOperations) head410CreateRequest() (*azcore.Reque
 		return nil, err
 	}
 	urlPath := "/http/failure/client/410"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -649,7 +650,7 @@ func (client *httpClientFailureOperations) head429CreateRequest() (*azcore.Reque
 		return nil, err
 	}
 	urlPath := "/http/failure/client/429"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -695,7 +696,7 @@ func (client *httpClientFailureOperations) options400CreateRequest() (*azcore.Re
 		return nil, err
 	}
 	urlPath := "/http/failure/client/400"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -741,7 +742,7 @@ func (client *httpClientFailureOperations) options403CreateRequest() (*azcore.Re
 		return nil, err
 	}
 	urlPath := "/http/failure/client/403"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -787,7 +788,7 @@ func (client *httpClientFailureOperations) options412CreateRequest() (*azcore.Re
 		return nil, err
 	}
 	urlPath := "/http/failure/client/412"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -833,7 +834,7 @@ func (client *httpClientFailureOperations) patch400CreateRequest() (*azcore.Requ
 		return nil, err
 	}
 	urlPath := "/http/failure/client/400"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -879,7 +880,7 @@ func (client *httpClientFailureOperations) patch405CreateRequest() (*azcore.Requ
 		return nil, err
 	}
 	urlPath := "/http/failure/client/405"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -925,7 +926,7 @@ func (client *httpClientFailureOperations) patch414CreateRequest() (*azcore.Requ
 		return nil, err
 	}
 	urlPath := "/http/failure/client/414"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -971,7 +972,7 @@ func (client *httpClientFailureOperations) post400CreateRequest() (*azcore.Reque
 		return nil, err
 	}
 	urlPath := "/http/failure/client/400"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1017,7 +1018,7 @@ func (client *httpClientFailureOperations) post406CreateRequest() (*azcore.Reque
 		return nil, err
 	}
 	urlPath := "/http/failure/client/406"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1063,7 +1064,7 @@ func (client *httpClientFailureOperations) post415CreateRequest() (*azcore.Reque
 		return nil, err
 	}
 	urlPath := "/http/failure/client/415"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1109,7 +1110,7 @@ func (client *httpClientFailureOperations) put400CreateRequest() (*azcore.Reques
 		return nil, err
 	}
 	urlPath := "/http/failure/client/400"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1155,7 +1156,7 @@ func (client *httpClientFailureOperations) put404CreateRequest() (*azcore.Reques
 		return nil, err
 	}
 	urlPath := "/http/failure/client/404"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1201,7 +1202,7 @@ func (client *httpClientFailureOperations) put409CreateRequest() (*azcore.Reques
 		return nil, err
 	}
 	urlPath := "/http/failure/client/409"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1247,7 +1248,7 @@ func (client *httpClientFailureOperations) put413CreateRequest() (*azcore.Reques
 		return nil, err
 	}
 	urlPath := "/http/failure/client/413"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -13,6 +13,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"path"
 )
 
 // FlattencomplexOperations contains the methods for the Flattencomplex group.
@@ -48,7 +49,7 @@ func (client *flattencomplexOperations) getValidCreateRequest() (*azcore.Request
 		return nil, err
 	}
 	urlPath := "/complex/flatten/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

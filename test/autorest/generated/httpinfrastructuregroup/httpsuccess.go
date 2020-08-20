@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"path"
 )
 
 // HTTPSuccessOperations contains the methods for the HTTPSuccess group.
@@ -83,7 +84,7 @@ func (client *httpSuccessOperations) delete200CreateRequest() (*azcore.Request, 
 		return nil, err
 	}
 	urlPath := "/http/success/200"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -132,7 +133,7 @@ func (client *httpSuccessOperations) delete202CreateRequest() (*azcore.Request, 
 		return nil, err
 	}
 	urlPath := "/http/success/202"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -181,7 +182,7 @@ func (client *httpSuccessOperations) delete204CreateRequest() (*azcore.Request, 
 		return nil, err
 	}
 	urlPath := "/http/success/204"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -230,7 +231,7 @@ func (client *httpSuccessOperations) get200CreateRequest() (*azcore.Request, err
 		return nil, err
 	}
 	urlPath := "/http/success/200"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -280,7 +281,7 @@ func (client *httpSuccessOperations) head200CreateRequest() (*azcore.Request, er
 		return nil, err
 	}
 	urlPath := "/http/success/200"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -329,7 +330,7 @@ func (client *httpSuccessOperations) head204CreateRequest() (*azcore.Request, er
 		return nil, err
 	}
 	urlPath := "/http/success/204"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -378,7 +379,7 @@ func (client *httpSuccessOperations) head404CreateRequest() (*azcore.Request, er
 		return nil, err
 	}
 	urlPath := "/http/success/404"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -427,7 +428,7 @@ func (client *httpSuccessOperations) options200CreateRequest() (*azcore.Request,
 		return nil, err
 	}
 	urlPath := "/http/success/200"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -477,7 +478,7 @@ func (client *httpSuccessOperations) patch200CreateRequest() (*azcore.Request, e
 		return nil, err
 	}
 	urlPath := "/http/success/200"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -526,7 +527,7 @@ func (client *httpSuccessOperations) patch202CreateRequest() (*azcore.Request, e
 		return nil, err
 	}
 	urlPath := "/http/success/202"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -575,7 +576,7 @@ func (client *httpSuccessOperations) patch204CreateRequest() (*azcore.Request, e
 		return nil, err
 	}
 	urlPath := "/http/success/204"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -624,7 +625,7 @@ func (client *httpSuccessOperations) post200CreateRequest() (*azcore.Request, er
 		return nil, err
 	}
 	urlPath := "/http/success/200"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -673,7 +674,7 @@ func (client *httpSuccessOperations) post201CreateRequest() (*azcore.Request, er
 		return nil, err
 	}
 	urlPath := "/http/success/201"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -722,7 +723,7 @@ func (client *httpSuccessOperations) post202CreateRequest() (*azcore.Request, er
 		return nil, err
 	}
 	urlPath := "/http/success/202"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -771,7 +772,7 @@ func (client *httpSuccessOperations) post204CreateRequest() (*azcore.Request, er
 		return nil, err
 	}
 	urlPath := "/http/success/204"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -820,7 +821,7 @@ func (client *httpSuccessOperations) put200CreateRequest() (*azcore.Request, err
 		return nil, err
 	}
 	urlPath := "/http/success/200"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -869,7 +870,7 @@ func (client *httpSuccessOperations) put201CreateRequest() (*azcore.Request, err
 		return nil, err
 	}
 	urlPath := "/http/success/201"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -918,7 +919,7 @@ func (client *httpSuccessOperations) put202CreateRequest() (*azcore.Request, err
 		return nil, err
 	}
 	urlPath := "/http/success/202"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -967,7 +968,7 @@ func (client *httpSuccessOperations) put204CreateRequest() (*azcore.Request, err
 		return nil, err
 	}
 	urlPath := "/http/success/204"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

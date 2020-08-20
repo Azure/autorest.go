@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"path"
 )
 
 // QueriesOperations contains the methods for the Queries group.
@@ -51,7 +52,7 @@ func (client *queriesOperations) arrayStringMultiEmptyCreateRequest(queriesArray
 		return nil, err
 	}
 	urlPath := "/queries/array/multi/string/empty"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -107,7 +108,7 @@ func (client *queriesOperations) arrayStringMultiNullCreateRequest(queriesArrayS
 		return nil, err
 	}
 	urlPath := "/queries/array/multi/string/null"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -163,7 +164,7 @@ func (client *queriesOperations) arrayStringMultiValidCreateRequest(queriesArray
 		return nil, err
 	}
 	urlPath := "/queries/array/multi/string/valid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

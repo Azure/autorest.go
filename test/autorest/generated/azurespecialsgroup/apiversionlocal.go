@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"path"
 )
 
 // APIVersionLocalOperations contains the methods for the APIVersionLocal group.
@@ -53,7 +54,7 @@ func (client *apiVersionLocalOperations) getMethodLocalNullCreateRequest(apiVers
 		return nil, err
 	}
 	urlPath := "/azurespecials/apiVersion/method/string/none/query/local/null"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -107,7 +108,7 @@ func (client *apiVersionLocalOperations) getMethodLocalValidCreateRequest() (*az
 		return nil, err
 	}
 	urlPath := "/azurespecials/apiVersion/method/string/none/query/local/2.0"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -159,7 +160,7 @@ func (client *apiVersionLocalOperations) getPathLocalValidCreateRequest() (*azco
 		return nil, err
 	}
 	urlPath := "/azurespecials/apiVersion/path/string/none/query/local/2.0"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -211,7 +212,7 @@ func (client *apiVersionLocalOperations) getSwaggerLocalValidCreateRequest() (*a
 		return nil, err
 	}
 	urlPath := "/azurespecials/apiVersion/swagger/string/none/query/local/2.0"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

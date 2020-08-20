@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"path"
 )
 
 // HTTPServerFailureOperations contains the methods for the HTTPServerFailure group.
@@ -53,7 +54,7 @@ func (client *httpServerFailureOperations) delete505CreateRequest() (*azcore.Req
 		return nil, err
 	}
 	urlPath := "/http/failure/server/505"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -99,7 +100,7 @@ func (client *httpServerFailureOperations) get501CreateRequest() (*azcore.Reques
 		return nil, err
 	}
 	urlPath := "/http/failure/server/501"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -145,7 +146,7 @@ func (client *httpServerFailureOperations) head501CreateRequest() (*azcore.Reque
 		return nil, err
 	}
 	urlPath := "/http/failure/server/501"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -191,7 +192,7 @@ func (client *httpServerFailureOperations) post505CreateRequest() (*azcore.Reque
 		return nil, err
 	}
 	urlPath := "/http/failure/server/505"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

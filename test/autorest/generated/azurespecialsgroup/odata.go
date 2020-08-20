@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"path"
 	"strconv"
 )
 
@@ -48,7 +49,7 @@ func (client *odataOperations) getWithFilterCreateRequest(odataGetWithFilterOpti
 		return nil, err
 	}
 	urlPath := "/azurespecials/odata/filter"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

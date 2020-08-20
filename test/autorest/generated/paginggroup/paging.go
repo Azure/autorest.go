@@ -14,6 +14,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"path"
 	"strconv"
 	"strings"
 	"time"
@@ -92,7 +93,7 @@ func (client *pagingOperations) getMultiplePagesCreateRequest(pagingGetMultipleP
 		return nil, err
 	}
 	urlPath := "/paging/multiple"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -160,7 +161,7 @@ func (client *pagingOperations) getMultiplePagesFailureCreateRequest() (*azcore.
 		return nil, err
 	}
 	urlPath := "/paging/multiple/failure"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -219,7 +220,7 @@ func (client *pagingOperations) getMultiplePagesFailureUriCreateRequest() (*azco
 		return nil, err
 	}
 	urlPath := "/paging/multiple/failureuri"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -272,7 +273,7 @@ func (client *pagingOperations) getMultiplePagesFragmentNextLinkCreateRequest(ap
 	}
 	urlPath := "/paging/multiple/fragment/{tenant}"
 	urlPath = strings.ReplaceAll(urlPath, "{tenant}", url.PathEscape(tenant))
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -328,7 +329,7 @@ func (client *pagingOperations) getMultiplePagesFragmentWithGroupingNextLinkCrea
 	}
 	urlPath := "/paging/multiple/fragmentwithgrouping/{tenant}"
 	urlPath = strings.ReplaceAll(urlPath, "{tenant}", url.PathEscape(customParameterGroup.Tenant))
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -409,7 +410,7 @@ func (client *pagingOperations) getMultiplePagesLroCreateRequest(pagingGetMultip
 		return nil, err
 	}
 	urlPath := "/paging/multiple/lro"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -485,7 +486,7 @@ func (client *pagingOperations) getMultiplePagesRetryFirstCreateRequest() (*azco
 		return nil, err
 	}
 	urlPath := "/paging/multiple/retryfirst"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -544,7 +545,7 @@ func (client *pagingOperations) getMultiplePagesRetrySecondCreateRequest() (*azc
 		return nil, err
 	}
 	urlPath := "/paging/multiple/retrysecond"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -604,7 +605,7 @@ func (client *pagingOperations) getMultiplePagesWithOffsetCreateRequest(pagingGe
 	}
 	urlPath := "/paging/multiple/withpath/{offset}"
 	urlPath = strings.ReplaceAll(urlPath, "{offset}", url.PathEscape(strconv.FormatInt(int64(pagingGetMultiplePagesWithOffsetOptions.Offset), 10)))
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -672,7 +673,7 @@ func (client *pagingOperations) getNoItemNamePagesCreateRequest() (*azcore.Reque
 		return nil, err
 	}
 	urlPath := "/paging/noitemname"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -725,7 +726,7 @@ func (client *pagingOperations) getNullNextLinkNamePagesCreateRequest() (*azcore
 		return nil, err
 	}
 	urlPath := "/paging/nullnextlink"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -784,7 +785,7 @@ func (client *pagingOperations) getOdataMultiplePagesCreateRequest(pagingGetOdat
 		return nil, err
 	}
 	urlPath := "/paging/multiple/odata"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -852,7 +853,7 @@ func (client *pagingOperations) getPagingModelWithItemNameWithXmsClientNameCreat
 		return nil, err
 	}
 	urlPath := "/paging/itemNameWithXMSClientName"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -911,7 +912,7 @@ func (client *pagingOperations) getSinglePagesCreateRequest() (*azcore.Request, 
 		return nil, err
 	}
 	urlPath := "/paging/single"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -970,7 +971,7 @@ func (client *pagingOperations) getSinglePagesFailureCreateRequest() (*azcore.Re
 		return nil, err
 	}
 	urlPath := "/paging/single/failure"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1022,7 +1023,7 @@ func (client *pagingOperations) getWithQueryParamsCreateRequest(requiredQueryPar
 		return nil, err
 	}
 	urlPath := "/paging/multiple/getWithQueryParams"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1064,7 +1065,7 @@ func (client *pagingOperations) nextFragmentCreateRequest(apiVersion string, ten
 	urlPath := "/paging/multiple/fragment/{tenant}/{nextLink}"
 	urlPath = strings.ReplaceAll(urlPath, "{tenant}", url.PathEscape(tenant))
 	urlPath = strings.ReplaceAll(urlPath, "{nextLink}", nextLink)
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1105,7 +1106,7 @@ func (client *pagingOperations) nextFragmentWithGroupingCreateRequest(nextLink s
 	urlPath := "/paging/multiple/fragmentwithgrouping/{tenant}/{nextLink}"
 	urlPath = strings.ReplaceAll(urlPath, "{tenant}", url.PathEscape(customParameterGroup.Tenant))
 	urlPath = strings.ReplaceAll(urlPath, "{nextLink}", nextLink)
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1144,7 +1145,7 @@ func (client *pagingOperations) nextOperationWithQueryParamsCreateRequest() (*az
 		return nil, err
 	}
 	urlPath := "/paging/multiple/nextOperationWithQueryParams"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

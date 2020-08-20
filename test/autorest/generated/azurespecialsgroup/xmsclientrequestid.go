@@ -13,6 +13,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"path"
 )
 
 // XMSClientRequestIDOperations contains the methods for the XMSClientRequestID group.
@@ -52,7 +53,7 @@ func (client *xmsClientRequestIdoperations) getCreateRequest() (*azcore.Request,
 		return nil, err
 	}
 	urlPath := "/azurespecials/overwrite/x-ms-client-request-id/method/"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -104,7 +105,7 @@ func (client *xmsClientRequestIdoperations) paramGetCreateRequest(xMSClientReque
 		return nil, err
 	}
 	urlPath := "/azurespecials/overwrite/x-ms-client-request-id/via-param/method/"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

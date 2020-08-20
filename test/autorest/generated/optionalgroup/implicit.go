@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"path"
 	"strconv"
 	"strings"
 )
@@ -64,7 +65,7 @@ func (client *implicitOperations) getOptionalGlobalQueryCreateRequest() (*azcore
 		return nil, err
 	}
 	urlPath := "/reqopt/global/optional/query"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -119,7 +120,7 @@ func (client *implicitOperations) getRequiredGlobalPathCreateRequest() (*azcore.
 	}
 	urlPath := "/reqopt/global/required/path/{required-global-path}"
 	urlPath = strings.ReplaceAll(urlPath, "{required-global-path}", url.PathEscape(client.requiredGlobalPath))
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -168,7 +169,7 @@ func (client *implicitOperations) getRequiredGlobalQueryCreateRequest() (*azcore
 		return nil, err
 	}
 	urlPath := "/reqopt/global/required/query"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -221,7 +222,7 @@ func (client *implicitOperations) getRequiredPathCreateRequest(pathParameter str
 	}
 	urlPath := "/reqopt/implicit/required/path/{pathParameter}"
 	urlPath = strings.ReplaceAll(urlPath, "{pathParameter}", url.PathEscape(pathParameter))
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -270,7 +271,7 @@ func (client *implicitOperations) putOptionalBodyCreateRequest(implicitPutOption
 		return nil, err
 	}
 	urlPath := "/reqopt/implicit/optional/body"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -322,7 +323,7 @@ func (client *implicitOperations) putOptionalHeaderCreateRequest(implicitPutOpti
 		return nil, err
 	}
 	urlPath := "/reqopt/implicit/optional/header"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -374,7 +375,7 @@ func (client *implicitOperations) putOptionalQueryCreateRequest(implicitPutOptio
 		return nil, err
 	}
 	urlPath := "/reqopt/implicit/optional/query"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

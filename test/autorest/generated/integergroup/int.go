@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"path"
 	"time"
 )
 
@@ -74,7 +75,7 @@ func (client *intOperations) getInvalidCreateRequest() (*azcore.Request, error) 
 		return nil, err
 	}
 	urlPath := "/int/invalid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -124,7 +125,7 @@ func (client *intOperations) getInvalidUnixTimeCreateRequest() (*azcore.Request,
 		return nil, err
 	}
 	urlPath := "/int/invalidunixtime"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -175,7 +176,7 @@ func (client *intOperations) getNullCreateRequest() (*azcore.Request, error) {
 		return nil, err
 	}
 	urlPath := "/int/null"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -225,7 +226,7 @@ func (client *intOperations) getNullUnixTimeCreateRequest() (*azcore.Request, er
 		return nil, err
 	}
 	urlPath := "/int/nullunixtime"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -276,7 +277,7 @@ func (client *intOperations) getOverflowInt32CreateRequest() (*azcore.Request, e
 		return nil, err
 	}
 	urlPath := "/int/overflowint32"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -326,7 +327,7 @@ func (client *intOperations) getOverflowInt64CreateRequest() (*azcore.Request, e
 		return nil, err
 	}
 	urlPath := "/int/overflowint64"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -376,7 +377,7 @@ func (client *intOperations) getUnderflowInt32CreateRequest() (*azcore.Request, 
 		return nil, err
 	}
 	urlPath := "/int/underflowint32"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -426,7 +427,7 @@ func (client *intOperations) getUnderflowInt64CreateRequest() (*azcore.Request, 
 		return nil, err
 	}
 	urlPath := "/int/underflowint64"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -476,7 +477,7 @@ func (client *intOperations) getUnixTimeCreateRequest() (*azcore.Request, error)
 		return nil, err
 	}
 	urlPath := "/int/unixtime"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -527,7 +528,7 @@ func (client *intOperations) putMax32CreateRequest(intBody int32) (*azcore.Reque
 		return nil, err
 	}
 	urlPath := "/int/max/32"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -576,7 +577,7 @@ func (client *intOperations) putMax64CreateRequest(intBody int64) (*azcore.Reque
 		return nil, err
 	}
 	urlPath := "/int/max/64"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -625,7 +626,7 @@ func (client *intOperations) putMin32CreateRequest(intBody int32) (*azcore.Reque
 		return nil, err
 	}
 	urlPath := "/int/min/32"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -674,7 +675,7 @@ func (client *intOperations) putMin64CreateRequest(intBody int64) (*azcore.Reque
 		return nil, err
 	}
 	urlPath := "/int/min/64"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -723,7 +724,7 @@ func (client *intOperations) putUnixTimeDateCreateRequest(intBody time.Time) (*a
 		return nil, err
 	}
 	urlPath := "/int/unixtime"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

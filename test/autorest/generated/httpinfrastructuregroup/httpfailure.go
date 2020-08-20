@@ -13,6 +13,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"path"
 )
 
 // HTTPFailureOperations contains the methods for the HTTPFailure group.
@@ -54,7 +55,7 @@ func (client *httpFailureOperations) getEmptyErrorCreateRequest() (*azcore.Reque
 		return nil, err
 	}
 	urlPath := "/http/failure/emptybody/error"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -104,7 +105,7 @@ func (client *httpFailureOperations) getNoModelEmptyCreateRequest() (*azcore.Req
 		return nil, err
 	}
 	urlPath := "/http/failure/nomodel/empty"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -157,7 +158,7 @@ func (client *httpFailureOperations) getNoModelErrorCreateRequest() (*azcore.Req
 		return nil, err
 	}
 	urlPath := "/http/failure/nomodel/error"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"path"
 )
 
 // PrimitiveOperations contains the methods for the Primitive group.
@@ -89,7 +90,7 @@ func (client *primitiveOperations) getBoolCreateRequest() (*azcore.Request, erro
 		return nil, err
 	}
 	urlPath := "/complex/primitive/bool"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -139,7 +140,7 @@ func (client *primitiveOperations) getByteCreateRequest() (*azcore.Request, erro
 		return nil, err
 	}
 	urlPath := "/complex/primitive/byte"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -189,7 +190,7 @@ func (client *primitiveOperations) getDateCreateRequest() (*azcore.Request, erro
 		return nil, err
 	}
 	urlPath := "/complex/primitive/date"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -239,7 +240,7 @@ func (client *primitiveOperations) getDateTimeCreateRequest() (*azcore.Request, 
 		return nil, err
 	}
 	urlPath := "/complex/primitive/datetime"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -289,7 +290,7 @@ func (client *primitiveOperations) getDateTimeRfc1123CreateRequest() (*azcore.Re
 		return nil, err
 	}
 	urlPath := "/complex/primitive/datetimerfc1123"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -339,7 +340,7 @@ func (client *primitiveOperations) getDoubleCreateRequest() (*azcore.Request, er
 		return nil, err
 	}
 	urlPath := "/complex/primitive/double"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -389,7 +390,7 @@ func (client *primitiveOperations) getDurationCreateRequest() (*azcore.Request, 
 		return nil, err
 	}
 	urlPath := "/complex/primitive/duration"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -439,7 +440,7 @@ func (client *primitiveOperations) getFloatCreateRequest() (*azcore.Request, err
 		return nil, err
 	}
 	urlPath := "/complex/primitive/float"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -489,7 +490,7 @@ func (client *primitiveOperations) getIntCreateRequest() (*azcore.Request, error
 		return nil, err
 	}
 	urlPath := "/complex/primitive/integer"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -539,7 +540,7 @@ func (client *primitiveOperations) getLongCreateRequest() (*azcore.Request, erro
 		return nil, err
 	}
 	urlPath := "/complex/primitive/long"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -589,7 +590,7 @@ func (client *primitiveOperations) getStringCreateRequest() (*azcore.Request, er
 		return nil, err
 	}
 	urlPath := "/complex/primitive/string"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -639,7 +640,7 @@ func (client *primitiveOperations) putBoolCreateRequest(complexBody BooleanWrapp
 		return nil, err
 	}
 	urlPath := "/complex/primitive/bool"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -688,7 +689,7 @@ func (client *primitiveOperations) putByteCreateRequest(complexBody ByteWrapper)
 		return nil, err
 	}
 	urlPath := "/complex/primitive/byte"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -737,7 +738,7 @@ func (client *primitiveOperations) putDateCreateRequest(complexBody DateWrapper)
 		return nil, err
 	}
 	urlPath := "/complex/primitive/date"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -786,7 +787,7 @@ func (client *primitiveOperations) putDateTimeCreateRequest(complexBody Datetime
 		return nil, err
 	}
 	urlPath := "/complex/primitive/datetime"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -835,7 +836,7 @@ func (client *primitiveOperations) putDateTimeRfc1123CreateRequest(complexBody D
 		return nil, err
 	}
 	urlPath := "/complex/primitive/datetimerfc1123"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -884,7 +885,7 @@ func (client *primitiveOperations) putDoubleCreateRequest(complexBody DoubleWrap
 		return nil, err
 	}
 	urlPath := "/complex/primitive/double"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -933,7 +934,7 @@ func (client *primitiveOperations) putDurationCreateRequest(complexBody Duration
 		return nil, err
 	}
 	urlPath := "/complex/primitive/duration"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -982,7 +983,7 @@ func (client *primitiveOperations) putFloatCreateRequest(complexBody FloatWrappe
 		return nil, err
 	}
 	urlPath := "/complex/primitive/float"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1031,7 +1032,7 @@ func (client *primitiveOperations) putIntCreateRequest(complexBody IntWrapper) (
 		return nil, err
 	}
 	urlPath := "/complex/primitive/integer"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1080,7 +1081,7 @@ func (client *primitiveOperations) putLongCreateRequest(complexBody LongWrapper)
 		return nil, err
 	}
 	urlPath := "/complex/primitive/long"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1129,7 +1130,7 @@ func (client *primitiveOperations) putStringCreateRequest(complexBody StringWrap
 		return nil, err
 	}
 	urlPath := "/complex/primitive/string"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"path"
 )
 
 // APIVersionDefaultOperations contains the methods for the APIVersionDefault group.
@@ -53,7 +54,7 @@ func (client *apiVersionDefaultOperations) getMethodGlobalNotProvidedValidCreate
 		return nil, err
 	}
 	urlPath := "/azurespecials/apiVersion/method/string/none/query/globalNotProvided/2015-07-01-preview"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -105,7 +106,7 @@ func (client *apiVersionDefaultOperations) getMethodGlobalValidCreateRequest() (
 		return nil, err
 	}
 	urlPath := "/azurespecials/apiVersion/method/string/none/query/global/2015-07-01-preview"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -157,7 +158,7 @@ func (client *apiVersionDefaultOperations) getPathGlobalValidCreateRequest() (*a
 		return nil, err
 	}
 	urlPath := "/azurespecials/apiVersion/path/string/none/query/global/2015-07-01-preview"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -209,7 +210,7 @@ func (client *apiVersionDefaultOperations) getSwaggerGlobalValidCreateRequest() 
 		return nil, err
 	}
 	urlPath := "/azurespecials/apiVersion/swagger/string/none/query/global/2015-07-01-preview"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"path"
 )
 
 // NumberOperations contains the methods for the Number group.
@@ -93,7 +94,7 @@ func (client *numberOperations) getBigDecimalCreateRequest() (*azcore.Request, e
 		return nil, err
 	}
 	urlPath := "/number/big/decimal/2.5976931e+101"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -143,7 +144,7 @@ func (client *numberOperations) getBigDecimalNegativeDecimalCreateRequest() (*az
 		return nil, err
 	}
 	urlPath := "/number/big/decimal/-99999999.99"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -193,7 +194,7 @@ func (client *numberOperations) getBigDecimalPositiveDecimalCreateRequest() (*az
 		return nil, err
 	}
 	urlPath := "/number/big/decimal/99999999.99"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -243,7 +244,7 @@ func (client *numberOperations) getBigDoubleCreateRequest() (*azcore.Request, er
 		return nil, err
 	}
 	urlPath := "/number/big/double/2.5976931e+101"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -293,7 +294,7 @@ func (client *numberOperations) getBigDoubleNegativeDecimalCreateRequest() (*azc
 		return nil, err
 	}
 	urlPath := "/number/big/double/-99999999.99"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -343,7 +344,7 @@ func (client *numberOperations) getBigDoublePositiveDecimalCreateRequest() (*azc
 		return nil, err
 	}
 	urlPath := "/number/big/double/99999999.99"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -393,7 +394,7 @@ func (client *numberOperations) getBigFloatCreateRequest() (*azcore.Request, err
 		return nil, err
 	}
 	urlPath := "/number/big/float/3.402823e+20"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -443,7 +444,7 @@ func (client *numberOperations) getInvalidDecimalCreateRequest() (*azcore.Reques
 		return nil, err
 	}
 	urlPath := "/number/invaliddecimal"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -493,7 +494,7 @@ func (client *numberOperations) getInvalidDoubleCreateRequest() (*azcore.Request
 		return nil, err
 	}
 	urlPath := "/number/invaliddouble"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -543,7 +544,7 @@ func (client *numberOperations) getInvalidFloatCreateRequest() (*azcore.Request,
 		return nil, err
 	}
 	urlPath := "/number/invalidfloat"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -593,7 +594,7 @@ func (client *numberOperations) getNullCreateRequest() (*azcore.Request, error) 
 		return nil, err
 	}
 	urlPath := "/number/null"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -643,7 +644,7 @@ func (client *numberOperations) getSmallDecimalCreateRequest() (*azcore.Request,
 		return nil, err
 	}
 	urlPath := "/number/small/decimal/2.5976931e-101"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -693,7 +694,7 @@ func (client *numberOperations) getSmallDoubleCreateRequest() (*azcore.Request, 
 		return nil, err
 	}
 	urlPath := "/number/small/double/2.5976931e-101"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -743,7 +744,7 @@ func (client *numberOperations) getSmallFloatCreateRequest() (*azcore.Request, e
 		return nil, err
 	}
 	urlPath := "/number/small/float/3.402823e-20"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -793,7 +794,7 @@ func (client *numberOperations) putBigDecimalCreateRequest(numberBody float64) (
 		return nil, err
 	}
 	urlPath := "/number/big/decimal/2.5976931e+101"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -842,7 +843,7 @@ func (client *numberOperations) putBigDecimalNegativeDecimalCreateRequest() (*az
 		return nil, err
 	}
 	urlPath := "/number/big/decimal/-99999999.99"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -891,7 +892,7 @@ func (client *numberOperations) putBigDecimalPositiveDecimalCreateRequest() (*az
 		return nil, err
 	}
 	urlPath := "/number/big/decimal/99999999.99"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -940,7 +941,7 @@ func (client *numberOperations) putBigDoubleCreateRequest(numberBody float64) (*
 		return nil, err
 	}
 	urlPath := "/number/big/double/2.5976931e+101"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -989,7 +990,7 @@ func (client *numberOperations) putBigDoubleNegativeDecimalCreateRequest() (*azc
 		return nil, err
 	}
 	urlPath := "/number/big/double/-99999999.99"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1038,7 +1039,7 @@ func (client *numberOperations) putBigDoublePositiveDecimalCreateRequest() (*azc
 		return nil, err
 	}
 	urlPath := "/number/big/double/99999999.99"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1087,7 +1088,7 @@ func (client *numberOperations) putBigFloatCreateRequest(numberBody float32) (*a
 		return nil, err
 	}
 	urlPath := "/number/big/float/3.402823e+20"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1136,7 +1137,7 @@ func (client *numberOperations) putSmallDecimalCreateRequest(numberBody float64)
 		return nil, err
 	}
 	urlPath := "/number/small/decimal/2.5976931e-101"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1185,7 +1186,7 @@ func (client *numberOperations) putSmallDoubleCreateRequest(numberBody float64) 
 		return nil, err
 	}
 	urlPath := "/number/small/double/2.5976931e-101"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1234,7 +1235,7 @@ func (client *numberOperations) putSmallFloatCreateRequest(numberBody float32) (
 		return nil, err
 	}
 	urlPath := "/number/small/float/3.402823e-20"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

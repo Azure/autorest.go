@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"path"
 )
 
 // PetsOperations contains the methods for the Pets group.
@@ -57,7 +58,7 @@ func (client *petsOperations) createApInPropertiesCreateRequest(createParameters
 		return nil, err
 	}
 	urlPath := "/additionalProperties/in/properties"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -107,7 +108,7 @@ func (client *petsOperations) createApInPropertiesWithApstringCreateRequest(crea
 		return nil, err
 	}
 	urlPath := "/additionalProperties/in/properties/with/additionalProperties/string"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -157,7 +158,7 @@ func (client *petsOperations) createApObjectCreateRequest(createParameters PetAp
 		return nil, err
 	}
 	urlPath := "/additionalProperties/type/object"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -207,7 +208,7 @@ func (client *petsOperations) createApStringCreateRequest(createParameters PetAp
 		return nil, err
 	}
 	urlPath := "/additionalProperties/type/string"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -257,7 +258,7 @@ func (client *petsOperations) createApTrueCreateRequest(createParameters PetApTr
 		return nil, err
 	}
 	urlPath := "/additionalProperties/true"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -307,7 +308,7 @@ func (client *petsOperations) createCatApTrueCreateRequest(createParameters CatA
 		return nil, err
 	}
 	urlPath := "/additionalProperties/true-subclass"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}

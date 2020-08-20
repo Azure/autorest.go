@@ -374,7 +374,8 @@ function createProtocolRequest(codeModel: CodeModel, client: string, op: Operati
     }
   }
   if (hasURLPath) {
-    text += '\tu, err = u.Parse(urlPath)\n';
+    imports.add('path');
+    text += '\tu, err = u.Parse(path.Join(u.Path, urlPath))\n';
     text += '\tif err != nil {\n';
     text += '\t\treturn nil, err\n';
     text += '\t}\n';

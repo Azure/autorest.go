@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"path"
 )
 
 // BoolOperations contains the methods for the Bool group.
@@ -57,7 +58,7 @@ func (client *boolOperations) getFalseCreateRequest() (*azcore.Request, error) {
 		return nil, err
 	}
 	urlPath := "/bool/false"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -107,7 +108,7 @@ func (client *boolOperations) getInvalidCreateRequest() (*azcore.Request, error)
 		return nil, err
 	}
 	urlPath := "/bool/invalid"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -157,7 +158,7 @@ func (client *boolOperations) getNullCreateRequest() (*azcore.Request, error) {
 		return nil, err
 	}
 	urlPath := "/bool/null"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -207,7 +208,7 @@ func (client *boolOperations) getTrueCreateRequest() (*azcore.Request, error) {
 		return nil, err
 	}
 	urlPath := "/bool/true"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -257,7 +258,7 @@ func (client *boolOperations) putFalseCreateRequest() (*azcore.Request, error) {
 		return nil, err
 	}
 	urlPath := "/bool/false"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -306,7 +307,7 @@ func (client *boolOperations) putTrueCreateRequest() (*azcore.Request, error) {
 		return nil, err
 	}
 	urlPath := "/bool/true"
-	u, err = u.Parse(urlPath)
+	u, err = u.Parse(path.Join(u.Path, urlPath))
 	if err != nil {
 		return nil, err
 	}
