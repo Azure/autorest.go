@@ -140,13 +140,13 @@ type QueriesDoubleNullOptions struct {
 // QueriesEnumNullOptions contains the optional parameters for the Queries.EnumNull method.
 type QueriesEnumNullOptions struct {
 	// null string value
-	EnumQuery *UriColor
+	EnumQuery *URIColor
 }
 
 // QueriesEnumValidOptions contains the optional parameters for the Queries.EnumValid method.
 type QueriesEnumValidOptions struct {
 	// 'green color' enum value
-	EnumQuery *UriColor
+	EnumQuery *URIColor
 }
 
 // QueriesFloatNullOptions contains the optional parameters for the Queries.FloatNull method.

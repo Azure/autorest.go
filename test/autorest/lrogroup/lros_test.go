@@ -347,7 +347,7 @@ func TestLROBeginPost200WithPayload(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.VerifyStatusCode(t, skuResp.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, skuResp.Sku, &lrogroup.Sku{
+	helpers.DeepEqualOrFatal(t, skuResp.SKU, &lrogroup.SKU{
 		ID:   to.StringPtr("1"),
 		Name: to.StringPtr("product"),
 	})
@@ -931,7 +931,7 @@ func TestLROBeginPutAsyncNonResource(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.Sku, &lrogroup.Sku{
+	helpers.DeepEqualOrFatal(t, res.SKU, &lrogroup.SKU{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("sku"),
 	})
@@ -1078,7 +1078,7 @@ func TestLROBeginPutNonResource(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.Sku, &lrogroup.Sku{
+	helpers.DeepEqualOrFatal(t, res.SKU, &lrogroup.SKU{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("sku"),
 	})

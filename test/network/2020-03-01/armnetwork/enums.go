@@ -190,32 +190,32 @@ func (c ApplicationGatewayRequestRoutingRuleType) ToPtr() *ApplicationGatewayReq
 	return &c
 }
 
-// ApplicationGatewaySkuName - Name of an application gateway SKU.
-type ApplicationGatewaySkuName string
+// ApplicationGatewaySKUName - Name of an application gateway SKU.
+type ApplicationGatewaySKUName string
 
 const (
-	ApplicationGatewaySkuNameStandardLarge  ApplicationGatewaySkuName = "Standard_Large"
-	ApplicationGatewaySkuNameStandardMedium ApplicationGatewaySkuName = "Standard_Medium"
-	ApplicationGatewaySkuNameStandardSmall  ApplicationGatewaySkuName = "Standard_Small"
-	ApplicationGatewaySkuNameStandardV2     ApplicationGatewaySkuName = "Standard_v2"
-	ApplicationGatewaySkuNameWafLarge       ApplicationGatewaySkuName = "WAF_Large"
-	ApplicationGatewaySkuNameWafMedium      ApplicationGatewaySkuName = "WAF_Medium"
-	ApplicationGatewaySkuNameWafv2          ApplicationGatewaySkuName = "WAF_v2"
+	ApplicationGatewaySKUNameStandardLarge  ApplicationGatewaySKUName = "Standard_Large"
+	ApplicationGatewaySKUNameStandardMedium ApplicationGatewaySKUName = "Standard_Medium"
+	ApplicationGatewaySKUNameStandardSmall  ApplicationGatewaySKUName = "Standard_Small"
+	ApplicationGatewaySKUNameStandardV2     ApplicationGatewaySKUName = "Standard_v2"
+	ApplicationGatewaySKUNameWafLarge       ApplicationGatewaySKUName = "WAF_Large"
+	ApplicationGatewaySKUNameWafMedium      ApplicationGatewaySKUName = "WAF_Medium"
+	ApplicationGatewaySKUNameWafv2          ApplicationGatewaySKUName = "WAF_v2"
 )
 
-func PossibleApplicationGatewaySkuNameValues() []ApplicationGatewaySkuName {
-	return []ApplicationGatewaySkuName{
-		ApplicationGatewaySkuNameStandardLarge,
-		ApplicationGatewaySkuNameStandardMedium,
-		ApplicationGatewaySkuNameStandardSmall,
-		ApplicationGatewaySkuNameStandardV2,
-		ApplicationGatewaySkuNameWafLarge,
-		ApplicationGatewaySkuNameWafMedium,
-		ApplicationGatewaySkuNameWafv2,
+func PossibleApplicationGatewaySKUNameValues() []ApplicationGatewaySKUName {
+	return []ApplicationGatewaySKUName{
+		ApplicationGatewaySKUNameStandardLarge,
+		ApplicationGatewaySKUNameStandardMedium,
+		ApplicationGatewaySKUNameStandardSmall,
+		ApplicationGatewaySKUNameStandardV2,
+		ApplicationGatewaySKUNameWafLarge,
+		ApplicationGatewaySKUNameWafMedium,
+		ApplicationGatewaySKUNameWafv2,
 	}
 }
 
-func (c ApplicationGatewaySkuName) ToPtr() *ApplicationGatewaySkuName {
+func (c ApplicationGatewaySKUName) ToPtr() *ApplicationGatewaySKUName {
 	return &c
 }
 
@@ -513,39 +513,39 @@ func (c AzureFirewallRCActionType) ToPtr() *AzureFirewallRCActionType {
 	return &c
 }
 
-// AzureFirewallSkuName - Name of an Azure Firewall SKU.
-type AzureFirewallSkuName string
+// AzureFirewallSKUName - Name of an Azure Firewall SKU.
+type AzureFirewallSKUName string
 
 const (
-	AzureFirewallSkuNameAzfwHub  AzureFirewallSkuName = "AZFW_Hub"
-	AzureFirewallSkuNameAzfwVnet AzureFirewallSkuName = "AZFW_VNet"
+	AzureFirewallSKUNameAzfwHub  AzureFirewallSKUName = "AZFW_Hub"
+	AzureFirewallSKUNameAzfwVnet AzureFirewallSKUName = "AZFW_VNet"
 )
 
-func PossibleAzureFirewallSkuNameValues() []AzureFirewallSkuName {
-	return []AzureFirewallSkuName{
-		AzureFirewallSkuNameAzfwHub,
-		AzureFirewallSkuNameAzfwVnet,
+func PossibleAzureFirewallSKUNameValues() []AzureFirewallSKUName {
+	return []AzureFirewallSKUName{
+		AzureFirewallSKUNameAzfwHub,
+		AzureFirewallSKUNameAzfwVnet,
 	}
 }
 
-func (c AzureFirewallSkuName) ToPtr() *AzureFirewallSkuName {
+func (c AzureFirewallSKUName) ToPtr() *AzureFirewallSKUName {
 	return &c
 }
 
-// AzureFirewallSkuTier - Tier of an Azure Firewall.
-type AzureFirewallSkuTier string
+// AzureFirewallSKUTier - Tier of an Azure Firewall.
+type AzureFirewallSKUTier string
 
 const (
-	AzureFirewallSkuTierStandard AzureFirewallSkuTier = "Standard"
+	AzureFirewallSKUTierStandard AzureFirewallSKUTier = "Standard"
 )
 
-func PossibleAzureFirewallSkuTierValues() []AzureFirewallSkuTier {
-	return []AzureFirewallSkuTier{
-		AzureFirewallSkuTierStandard,
+func PossibleAzureFirewallSKUTierValues() []AzureFirewallSKUTier {
+	return []AzureFirewallSKUTier{
+		AzureFirewallSKUTierStandard,
 	}
 }
 
-func (c AzureFirewallSkuTier) ToPtr() *AzureFirewallSkuTier {
+func (c AzureFirewallSKUTier) ToPtr() *AzureFirewallSKUTier {
 	return &c
 }
 
@@ -1013,45 +1013,45 @@ func (c ExpressRouteCircuitPeeringState) ToPtr() *ExpressRouteCircuitPeeringStat
 	return &c
 }
 
-// ExpressRouteCircuitSkuFamily - The family of the SKU.
-type ExpressRouteCircuitSkuFamily string
+// ExpressRouteCircuitSKUFamily - The family of the SKU.
+type ExpressRouteCircuitSKUFamily string
 
 const (
-	ExpressRouteCircuitSkuFamilyMeteredData   ExpressRouteCircuitSkuFamily = "MeteredData"
-	ExpressRouteCircuitSkuFamilyUnlimitedData ExpressRouteCircuitSkuFamily = "UnlimitedData"
+	ExpressRouteCircuitSKUFamilyMeteredData   ExpressRouteCircuitSKUFamily = "MeteredData"
+	ExpressRouteCircuitSKUFamilyUnlimitedData ExpressRouteCircuitSKUFamily = "UnlimitedData"
 )
 
-func PossibleExpressRouteCircuitSkuFamilyValues() []ExpressRouteCircuitSkuFamily {
-	return []ExpressRouteCircuitSkuFamily{
-		ExpressRouteCircuitSkuFamilyMeteredData,
-		ExpressRouteCircuitSkuFamilyUnlimitedData,
+func PossibleExpressRouteCircuitSKUFamilyValues() []ExpressRouteCircuitSKUFamily {
+	return []ExpressRouteCircuitSKUFamily{
+		ExpressRouteCircuitSKUFamilyMeteredData,
+		ExpressRouteCircuitSKUFamilyUnlimitedData,
 	}
 }
 
-func (c ExpressRouteCircuitSkuFamily) ToPtr() *ExpressRouteCircuitSkuFamily {
+func (c ExpressRouteCircuitSKUFamily) ToPtr() *ExpressRouteCircuitSKUFamily {
 	return &c
 }
 
-// ExpressRouteCircuitSkuTier - The tier of the SKU.
-type ExpressRouteCircuitSkuTier string
+// ExpressRouteCircuitSKUTier - The tier of the SKU.
+type ExpressRouteCircuitSKUTier string
 
 const (
-	ExpressRouteCircuitSkuTierBasic    ExpressRouteCircuitSkuTier = "Basic"
-	ExpressRouteCircuitSkuTierLocal    ExpressRouteCircuitSkuTier = "Local"
-	ExpressRouteCircuitSkuTierPremium  ExpressRouteCircuitSkuTier = "Premium"
-	ExpressRouteCircuitSkuTierStandard ExpressRouteCircuitSkuTier = "Standard"
+	ExpressRouteCircuitSKUTierBasic    ExpressRouteCircuitSKUTier = "Basic"
+	ExpressRouteCircuitSKUTierLocal    ExpressRouteCircuitSKUTier = "Local"
+	ExpressRouteCircuitSKUTierPremium  ExpressRouteCircuitSKUTier = "Premium"
+	ExpressRouteCircuitSKUTierStandard ExpressRouteCircuitSKUTier = "Standard"
 )
 
-func PossibleExpressRouteCircuitSkuTierValues() []ExpressRouteCircuitSkuTier {
-	return []ExpressRouteCircuitSkuTier{
-		ExpressRouteCircuitSkuTierBasic,
-		ExpressRouteCircuitSkuTierLocal,
-		ExpressRouteCircuitSkuTierPremium,
-		ExpressRouteCircuitSkuTierStandard,
+func PossibleExpressRouteCircuitSKUTierValues() []ExpressRouteCircuitSKUTier {
+	return []ExpressRouteCircuitSKUTier{
+		ExpressRouteCircuitSKUTierBasic,
+		ExpressRouteCircuitSKUTierLocal,
+		ExpressRouteCircuitSKUTierPremium,
+		ExpressRouteCircuitSKUTierStandard,
 	}
 }
 
-func (c ExpressRouteCircuitSkuTier) ToPtr() *ExpressRouteCircuitSkuTier {
+func (c ExpressRouteCircuitSKUTier) ToPtr() *ExpressRouteCircuitSKUTier {
 	return &c
 }
 
@@ -1306,39 +1306,39 @@ func (c FlowLogFormatType) ToPtr() *FlowLogFormatType {
 	return &c
 }
 
-// HttpConfigurationMethod - The HTTP method to use.
-type HttpConfigurationMethod string
+// HTTPConfigurationMethod - The HTTP method to use.
+type HTTPConfigurationMethod string
 
 const (
-	HttpConfigurationMethodGet  HttpConfigurationMethod = "Get"
-	HttpConfigurationMethodPost HttpConfigurationMethod = "Post"
+	HTTPConfigurationMethodGet  HTTPConfigurationMethod = "Get"
+	HTTPConfigurationMethodPost HTTPConfigurationMethod = "Post"
 )
 
-func PossibleHttpConfigurationMethodValues() []HttpConfigurationMethod {
-	return []HttpConfigurationMethod{
-		HttpConfigurationMethodGet,
-		HttpConfigurationMethodPost,
+func PossibleHTTPConfigurationMethodValues() []HTTPConfigurationMethod {
+	return []HTTPConfigurationMethod{
+		HTTPConfigurationMethodGet,
+		HTTPConfigurationMethodPost,
 	}
 }
 
-func (c HttpConfigurationMethod) ToPtr() *HttpConfigurationMethod {
+func (c HTTPConfigurationMethod) ToPtr() *HTTPConfigurationMethod {
 	return &c
 }
 
-// HttpMethod - HTTP method.
-type HttpMethod string
+// HTTPMethod - HTTP method.
+type HTTPMethod string
 
 const (
-	HttpMethodGet HttpMethod = "Get"
+	HTTPMethodGet HTTPMethod = "Get"
 )
 
-func PossibleHttpMethodValues() []HttpMethod {
-	return []HttpMethod{
-		HttpMethodGet,
+func PossibleHTTPMethodValues() []HTTPMethod {
+	return []HTTPMethod{
+		HTTPMethodGet,
 	}
 }
 
-func (c HttpMethod) ToPtr() *HttpMethod {
+func (c HTTPMethod) ToPtr() *HTTPMethod {
 	return &c
 }
 
@@ -1384,6 +1384,44 @@ func (c IPAllocationMethod) ToPtr() *IPAllocationMethod {
 	return &c
 }
 
+// IPAllocationType - IpAllocation type.
+type IPAllocationType string
+
+const (
+	IPAllocationTypeHypernet  IPAllocationType = "Hypernet"
+	IPAllocationTypeUndefined IPAllocationType = "Undefined"
+)
+
+func PossibleIPAllocationTypeValues() []IPAllocationType {
+	return []IPAllocationType{
+		IPAllocationTypeHypernet,
+		IPAllocationTypeUndefined,
+	}
+}
+
+func (c IPAllocationType) ToPtr() *IPAllocationType {
+	return &c
+}
+
+// IPFlowProtocol - Protocol to be verified on.
+type IPFlowProtocol string
+
+const (
+	IPFlowProtocolTCP IPFlowProtocol = "TCP"
+	IPFlowProtocolUDP IPFlowProtocol = "UDP"
+)
+
+func PossibleIPFlowProtocolValues() []IPFlowProtocol {
+	return []IPFlowProtocol{
+		IPFlowProtocolTCP,
+		IPFlowProtocolUDP,
+	}
+}
+
+func (c IPFlowProtocol) ToPtr() *IPFlowProtocol {
+	return &c
+}
+
 // IPVersion - IP address version.
 type IPVersion string
 
@@ -1400,6 +1438,66 @@ func PossibleIPVersionValues() []IPVersion {
 }
 
 func (c IPVersion) ToPtr() *IPVersion {
+	return &c
+}
+
+// IPsecEncryption - The IPSec encryption algorithm (IKE phase 1).
+type IPsecEncryption string
+
+const (
+	IPsecEncryptionAes128    IPsecEncryption = "AES128"
+	IPsecEncryptionAes192    IPsecEncryption = "AES192"
+	IPsecEncryptionAes256    IPsecEncryption = "AES256"
+	IPsecEncryptionDes       IPsecEncryption = "DES"
+	IPsecEncryptionDes3      IPsecEncryption = "DES3"
+	IPsecEncryptionGcmaes128 IPsecEncryption = "GCMAES128"
+	IPsecEncryptionGcmaes192 IPsecEncryption = "GCMAES192"
+	IPsecEncryptionGcmaes256 IPsecEncryption = "GCMAES256"
+	IPsecEncryptionNone      IPsecEncryption = "None"
+)
+
+func PossibleIPsecEncryptionValues() []IPsecEncryption {
+	return []IPsecEncryption{
+		IPsecEncryptionAes128,
+		IPsecEncryptionAes192,
+		IPsecEncryptionAes256,
+		IPsecEncryptionDes,
+		IPsecEncryptionDes3,
+		IPsecEncryptionGcmaes128,
+		IPsecEncryptionGcmaes192,
+		IPsecEncryptionGcmaes256,
+		IPsecEncryptionNone,
+	}
+}
+
+func (c IPsecEncryption) ToPtr() *IPsecEncryption {
+	return &c
+}
+
+// IPsecIntegrity - The IPSec integrity algorithm (IKE phase 1).
+type IPsecIntegrity string
+
+const (
+	IPsecIntegrityGcmaes128 IPsecIntegrity = "GCMAES128"
+	IPsecIntegrityGcmaes192 IPsecIntegrity = "GCMAES192"
+	IPsecIntegrityGcmaes256 IPsecIntegrity = "GCMAES256"
+	IPsecIntegrityMd5       IPsecIntegrity = "MD5"
+	IPsecIntegritySha1      IPsecIntegrity = "SHA1"
+	IPsecIntegritySha256    IPsecIntegrity = "SHA256"
+)
+
+func PossibleIPsecIntegrityValues() []IPsecIntegrity {
+	return []IPsecIntegrity{
+		IPsecIntegrityGcmaes128,
+		IPsecIntegrityGcmaes192,
+		IPsecIntegrityGcmaes256,
+		IPsecIntegrityMd5,
+		IPsecIntegritySha1,
+		IPsecIntegritySha256,
+	}
+}
+
+func (c IPsecIntegrity) ToPtr() *IPsecIntegrity {
 	return &c
 }
 
@@ -1459,104 +1557,6 @@ func (c IkeIntegrity) ToPtr() *IkeIntegrity {
 	return &c
 }
 
-// IpAllocationType - IpAllocation type.
-type IpAllocationType string
-
-const (
-	IpAllocationTypeHypernet  IpAllocationType = "Hypernet"
-	IpAllocationTypeUndefined IpAllocationType = "Undefined"
-)
-
-func PossibleIpAllocationTypeValues() []IpAllocationType {
-	return []IpAllocationType{
-		IpAllocationTypeHypernet,
-		IpAllocationTypeUndefined,
-	}
-}
-
-func (c IpAllocationType) ToPtr() *IpAllocationType {
-	return &c
-}
-
-// IpFlowProtocol - Protocol to be verified on.
-type IpFlowProtocol string
-
-const (
-	IpFlowProtocolTCP IpFlowProtocol = "TCP"
-	IpFlowProtocolUDP IpFlowProtocol = "UDP"
-)
-
-func PossibleIpFlowProtocolValues() []IpFlowProtocol {
-	return []IpFlowProtocol{
-		IpFlowProtocolTCP,
-		IpFlowProtocolUDP,
-	}
-}
-
-func (c IpFlowProtocol) ToPtr() *IpFlowProtocol {
-	return &c
-}
-
-// IpsecEncryption - The IPSec encryption algorithm (IKE phase 1).
-type IpsecEncryption string
-
-const (
-	IpsecEncryptionAes128    IpsecEncryption = "AES128"
-	IpsecEncryptionAes192    IpsecEncryption = "AES192"
-	IpsecEncryptionAes256    IpsecEncryption = "AES256"
-	IpsecEncryptionDes       IpsecEncryption = "DES"
-	IpsecEncryptionDes3      IpsecEncryption = "DES3"
-	IpsecEncryptionGcmaes128 IpsecEncryption = "GCMAES128"
-	IpsecEncryptionGcmaes192 IpsecEncryption = "GCMAES192"
-	IpsecEncryptionGcmaes256 IpsecEncryption = "GCMAES256"
-	IpsecEncryptionNone      IpsecEncryption = "None"
-)
-
-func PossibleIpsecEncryptionValues() []IpsecEncryption {
-	return []IpsecEncryption{
-		IpsecEncryptionAes128,
-		IpsecEncryptionAes192,
-		IpsecEncryptionAes256,
-		IpsecEncryptionDes,
-		IpsecEncryptionDes3,
-		IpsecEncryptionGcmaes128,
-		IpsecEncryptionGcmaes192,
-		IpsecEncryptionGcmaes256,
-		IpsecEncryptionNone,
-	}
-}
-
-func (c IpsecEncryption) ToPtr() *IpsecEncryption {
-	return &c
-}
-
-// IpsecIntegrity - The IPSec integrity algorithm (IKE phase 1).
-type IpsecIntegrity string
-
-const (
-	IpsecIntegrityGcmaes128 IpsecIntegrity = "GCMAES128"
-	IpsecIntegrityGcmaes192 IpsecIntegrity = "GCMAES192"
-	IpsecIntegrityGcmaes256 IpsecIntegrity = "GCMAES256"
-	IpsecIntegrityMd5       IpsecIntegrity = "MD5"
-	IpsecIntegritySha1      IpsecIntegrity = "SHA1"
-	IpsecIntegritySha256    IpsecIntegrity = "SHA256"
-)
-
-func PossibleIpsecIntegrityValues() []IpsecIntegrity {
-	return []IpsecIntegrity{
-		IpsecIntegrityGcmaes128,
-		IpsecIntegrityGcmaes192,
-		IpsecIntegrityGcmaes256,
-		IpsecIntegrityMd5,
-		IpsecIntegritySha1,
-		IpsecIntegritySha256,
-	}
-}
-
-func (c IpsecIntegrity) ToPtr() *IpsecIntegrity {
-	return &c
-}
-
 // IssueType - The type of issue.
 type IssueType string
 
@@ -1611,22 +1611,22 @@ func (c LoadBalancerOutboundRuleProtocol) ToPtr() *LoadBalancerOutboundRuleProto
 	return &c
 }
 
-// LoadBalancerSkuName - Name of a load balancer SKU.
-type LoadBalancerSkuName string
+// LoadBalancerSKUName - Name of a load balancer SKU.
+type LoadBalancerSKUName string
 
 const (
-	LoadBalancerSkuNameBasic    LoadBalancerSkuName = "Basic"
-	LoadBalancerSkuNameStandard LoadBalancerSkuName = "Standard"
+	LoadBalancerSKUNameBasic    LoadBalancerSKUName = "Basic"
+	LoadBalancerSKUNameStandard LoadBalancerSKUName = "Standard"
 )
 
-func PossibleLoadBalancerSkuNameValues() []LoadBalancerSkuName {
-	return []LoadBalancerSkuName{
-		LoadBalancerSkuNameBasic,
-		LoadBalancerSkuNameStandard,
+func PossibleLoadBalancerSKUNameValues() []LoadBalancerSKUName {
+	return []LoadBalancerSKUName{
+		LoadBalancerSKUNameBasic,
+		LoadBalancerSKUNameStandard,
 	}
 }
 
-func (c LoadBalancerSkuName) ToPtr() *LoadBalancerSkuName {
+func (c LoadBalancerSKUName) ToPtr() *LoadBalancerSKUName {
 	return &c
 }
 
@@ -1668,20 +1668,20 @@ func (c ManagedRuleEnabledState) ToPtr() *ManagedRuleEnabledState {
 	return &c
 }
 
-// NatGatewaySkuName - Name of Nat Gateway SKU.
-type NatGatewaySkuName string
+// NatGatewaySKUName - Name of Nat Gateway SKU.
+type NatGatewaySKUName string
 
 const (
-	NatGatewaySkuNameStandard NatGatewaySkuName = "Standard"
+	NatGatewaySKUNameStandard NatGatewaySKUName = "Standard"
 )
 
-func PossibleNatGatewaySkuNameValues() []NatGatewaySkuName {
-	return []NatGatewaySkuName{
-		NatGatewaySkuNameStandard,
+func PossibleNatGatewaySKUNameValues() []NatGatewaySKUName {
+	return []NatGatewaySKUName{
+		NatGatewaySKUNameStandard,
 	}
 }
 
-func (c NatGatewaySkuName) ToPtr() *NatGatewaySkuName {
+func (c NatGatewaySKUName) ToPtr() *NatGatewaySKUName {
 	return &c
 }
 
@@ -2048,62 +2048,62 @@ func (c ProvisioningState) ToPtr() *ProvisioningState {
 	return &c
 }
 
-// PublicIPAddressSkuName - Name of a public IP address SKU.
-type PublicIPAddressSkuName string
+// PublicIPAddressSKUName - Name of a public IP address SKU.
+type PublicIPAddressSKUName string
 
 const (
-	PublicIPAddressSkuNameBasic    PublicIPAddressSkuName = "Basic"
-	PublicIPAddressSkuNameStandard PublicIPAddressSkuName = "Standard"
+	PublicIPAddressSKUNameBasic    PublicIPAddressSKUName = "Basic"
+	PublicIPAddressSKUNameStandard PublicIPAddressSKUName = "Standard"
 )
 
-func PossiblePublicIPAddressSkuNameValues() []PublicIPAddressSkuName {
-	return []PublicIPAddressSkuName{
-		PublicIPAddressSkuNameBasic,
-		PublicIPAddressSkuNameStandard,
+func PossiblePublicIPAddressSKUNameValues() []PublicIPAddressSKUName {
+	return []PublicIPAddressSKUName{
+		PublicIPAddressSKUNameBasic,
+		PublicIPAddressSKUNameStandard,
 	}
 }
 
-func (c PublicIPAddressSkuName) ToPtr() *PublicIPAddressSkuName {
+func (c PublicIPAddressSKUName) ToPtr() *PublicIPAddressSKUName {
 	return &c
 }
 
-// PublicIPPrefixSkuName - Name of a public IP prefix SKU.
-type PublicIPPrefixSkuName string
+// PublicIPPrefixSKUName - Name of a public IP prefix SKU.
+type PublicIPPrefixSKUName string
 
 const (
-	PublicIPPrefixSkuNameStandard PublicIPPrefixSkuName = "Standard"
+	PublicIPPrefixSKUNameStandard PublicIPPrefixSKUName = "Standard"
 )
 
-func PossiblePublicIPPrefixSkuNameValues() []PublicIPPrefixSkuName {
-	return []PublicIPPrefixSkuName{
-		PublicIPPrefixSkuNameStandard,
+func PossiblePublicIPPrefixSKUNameValues() []PublicIPPrefixSKUName {
+	return []PublicIPPrefixSKUName{
+		PublicIPPrefixSKUNameStandard,
 	}
 }
 
-func (c PublicIPPrefixSkuName) ToPtr() *PublicIPPrefixSkuName {
+func (c PublicIPPrefixSKUName) ToPtr() *PublicIPPrefixSKUName {
 	return &c
 }
 
-// ResourceIdentityType - The type of identity used for the resource. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user assigned identities. The type 'None' will remove any identities from the virtual machine.
-type ResourceIdentityType string
+// ResourceIDentityType - The type of identity used for the resource. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user assigned identities. The type 'None' will remove any identities from the virtual machine.
+type ResourceIDentityType string
 
 const (
-	ResourceIdentityTypeSystemAssigned             ResourceIdentityType = "SystemAssigned"
-	ResourceIdentityTypeUserAssigned               ResourceIdentityType = "UserAssigned"
-	ResourceIdentityTypeSystemAssignedUserAssigned ResourceIdentityType = "SystemAssigned, UserAssigned"
-	ResourceIdentityTypeNone                       ResourceIdentityType = "None"
+	ResourceIDentityTypeSystemAssigned             ResourceIDentityType = "SystemAssigned"
+	ResourceIDentityTypeUserAssigned               ResourceIDentityType = "UserAssigned"
+	ResourceIDentityTypeSystemAssignedUserAssigned ResourceIDentityType = "SystemAssigned, UserAssigned"
+	ResourceIDentityTypeNone                       ResourceIDentityType = "None"
 )
 
-func PossibleResourceIdentityTypeValues() []ResourceIdentityType {
-	return []ResourceIdentityType{
-		ResourceIdentityTypeSystemAssigned,
-		ResourceIdentityTypeUserAssigned,
-		ResourceIdentityTypeSystemAssignedUserAssigned,
-		ResourceIdentityTypeNone,
+func PossibleResourceIDentityTypeValues() []ResourceIDentityType {
+	return []ResourceIDentityType{
+		ResourceIDentityTypeSystemAssigned,
+		ResourceIDentityTypeUserAssigned,
+		ResourceIDentityTypeSystemAssignedUserAssigned,
+		ResourceIDentityTypeNone,
 	}
 }
 
-func (c ResourceIdentityType) ToPtr() *ResourceIdentityType {
+func (c ResourceIDentityType) ToPtr() *ResourceIDentityType {
 	return &c
 }
 
@@ -2447,101 +2447,101 @@ func (c VirtualNetworkGatewayConnectionType) ToPtr() *VirtualNetworkGatewayConne
 	return &c
 }
 
-// VirtualNetworkGatewaySkuName - Gateway SKU name.
-type VirtualNetworkGatewaySkuName string
+// VirtualNetworkGatewaySKUName - Gateway SKU name.
+type VirtualNetworkGatewaySKUName string
 
 const (
-	VirtualNetworkGatewaySkuNameBasic            VirtualNetworkGatewaySkuName = "Basic"
-	VirtualNetworkGatewaySkuNameErGw1Az          VirtualNetworkGatewaySkuName = "ErGw1AZ"
-	VirtualNetworkGatewaySkuNameErGw2Az          VirtualNetworkGatewaySkuName = "ErGw2AZ"
-	VirtualNetworkGatewaySkuNameErGw3Az          VirtualNetworkGatewaySkuName = "ErGw3AZ"
-	VirtualNetworkGatewaySkuNameHighPerformance  VirtualNetworkGatewaySkuName = "HighPerformance"
-	VirtualNetworkGatewaySkuNameStandard         VirtualNetworkGatewaySkuName = "Standard"
-	VirtualNetworkGatewaySkuNameUltraPerformance VirtualNetworkGatewaySkuName = "UltraPerformance"
-	VirtualNetworkGatewaySkuNameVpnGw1           VirtualNetworkGatewaySkuName = "VpnGw1"
-	VirtualNetworkGatewaySkuNameVpnGw1Az         VirtualNetworkGatewaySkuName = "VpnGw1AZ"
-	VirtualNetworkGatewaySkuNameVpnGw2           VirtualNetworkGatewaySkuName = "VpnGw2"
-	VirtualNetworkGatewaySkuNameVpnGw2Az         VirtualNetworkGatewaySkuName = "VpnGw2AZ"
-	VirtualNetworkGatewaySkuNameVpnGw3           VirtualNetworkGatewaySkuName = "VpnGw3"
-	VirtualNetworkGatewaySkuNameVpnGw3Az         VirtualNetworkGatewaySkuName = "VpnGw3AZ"
-	VirtualNetworkGatewaySkuNameVpnGw4           VirtualNetworkGatewaySkuName = "VpnGw4"
-	VirtualNetworkGatewaySkuNameVpnGw4Az         VirtualNetworkGatewaySkuName = "VpnGw4AZ"
-	VirtualNetworkGatewaySkuNameVpnGw5           VirtualNetworkGatewaySkuName = "VpnGw5"
-	VirtualNetworkGatewaySkuNameVpnGw5Az         VirtualNetworkGatewaySkuName = "VpnGw5AZ"
+	VirtualNetworkGatewaySKUNameBasic            VirtualNetworkGatewaySKUName = "Basic"
+	VirtualNetworkGatewaySKUNameErGw1Az          VirtualNetworkGatewaySKUName = "ErGw1AZ"
+	VirtualNetworkGatewaySKUNameErGw2Az          VirtualNetworkGatewaySKUName = "ErGw2AZ"
+	VirtualNetworkGatewaySKUNameErGw3Az          VirtualNetworkGatewaySKUName = "ErGw3AZ"
+	VirtualNetworkGatewaySKUNameHighPerformance  VirtualNetworkGatewaySKUName = "HighPerformance"
+	VirtualNetworkGatewaySKUNameStandard         VirtualNetworkGatewaySKUName = "Standard"
+	VirtualNetworkGatewaySKUNameUltraPerformance VirtualNetworkGatewaySKUName = "UltraPerformance"
+	VirtualNetworkGatewaySKUNameVpnGw1           VirtualNetworkGatewaySKUName = "VpnGw1"
+	VirtualNetworkGatewaySKUNameVpnGw1Az         VirtualNetworkGatewaySKUName = "VpnGw1AZ"
+	VirtualNetworkGatewaySKUNameVpnGw2           VirtualNetworkGatewaySKUName = "VpnGw2"
+	VirtualNetworkGatewaySKUNameVpnGw2Az         VirtualNetworkGatewaySKUName = "VpnGw2AZ"
+	VirtualNetworkGatewaySKUNameVpnGw3           VirtualNetworkGatewaySKUName = "VpnGw3"
+	VirtualNetworkGatewaySKUNameVpnGw3Az         VirtualNetworkGatewaySKUName = "VpnGw3AZ"
+	VirtualNetworkGatewaySKUNameVpnGw4           VirtualNetworkGatewaySKUName = "VpnGw4"
+	VirtualNetworkGatewaySKUNameVpnGw4Az         VirtualNetworkGatewaySKUName = "VpnGw4AZ"
+	VirtualNetworkGatewaySKUNameVpnGw5           VirtualNetworkGatewaySKUName = "VpnGw5"
+	VirtualNetworkGatewaySKUNameVpnGw5Az         VirtualNetworkGatewaySKUName = "VpnGw5AZ"
 )
 
-func PossibleVirtualNetworkGatewaySkuNameValues() []VirtualNetworkGatewaySkuName {
-	return []VirtualNetworkGatewaySkuName{
-		VirtualNetworkGatewaySkuNameBasic,
-		VirtualNetworkGatewaySkuNameErGw1Az,
-		VirtualNetworkGatewaySkuNameErGw2Az,
-		VirtualNetworkGatewaySkuNameErGw3Az,
-		VirtualNetworkGatewaySkuNameHighPerformance,
-		VirtualNetworkGatewaySkuNameStandard,
-		VirtualNetworkGatewaySkuNameUltraPerformance,
-		VirtualNetworkGatewaySkuNameVpnGw1,
-		VirtualNetworkGatewaySkuNameVpnGw1Az,
-		VirtualNetworkGatewaySkuNameVpnGw2,
-		VirtualNetworkGatewaySkuNameVpnGw2Az,
-		VirtualNetworkGatewaySkuNameVpnGw3,
-		VirtualNetworkGatewaySkuNameVpnGw3Az,
-		VirtualNetworkGatewaySkuNameVpnGw4,
-		VirtualNetworkGatewaySkuNameVpnGw4Az,
-		VirtualNetworkGatewaySkuNameVpnGw5,
-		VirtualNetworkGatewaySkuNameVpnGw5Az,
+func PossibleVirtualNetworkGatewaySKUNameValues() []VirtualNetworkGatewaySKUName {
+	return []VirtualNetworkGatewaySKUName{
+		VirtualNetworkGatewaySKUNameBasic,
+		VirtualNetworkGatewaySKUNameErGw1Az,
+		VirtualNetworkGatewaySKUNameErGw2Az,
+		VirtualNetworkGatewaySKUNameErGw3Az,
+		VirtualNetworkGatewaySKUNameHighPerformance,
+		VirtualNetworkGatewaySKUNameStandard,
+		VirtualNetworkGatewaySKUNameUltraPerformance,
+		VirtualNetworkGatewaySKUNameVpnGw1,
+		VirtualNetworkGatewaySKUNameVpnGw1Az,
+		VirtualNetworkGatewaySKUNameVpnGw2,
+		VirtualNetworkGatewaySKUNameVpnGw2Az,
+		VirtualNetworkGatewaySKUNameVpnGw3,
+		VirtualNetworkGatewaySKUNameVpnGw3Az,
+		VirtualNetworkGatewaySKUNameVpnGw4,
+		VirtualNetworkGatewaySKUNameVpnGw4Az,
+		VirtualNetworkGatewaySKUNameVpnGw5,
+		VirtualNetworkGatewaySKUNameVpnGw5Az,
 	}
 }
 
-func (c VirtualNetworkGatewaySkuName) ToPtr() *VirtualNetworkGatewaySkuName {
+func (c VirtualNetworkGatewaySKUName) ToPtr() *VirtualNetworkGatewaySKUName {
 	return &c
 }
 
-// VirtualNetworkGatewaySkuTier - Gateway SKU tier.
-type VirtualNetworkGatewaySkuTier string
+// VirtualNetworkGatewaySKUTier - Gateway SKU tier.
+type VirtualNetworkGatewaySKUTier string
 
 const (
-	VirtualNetworkGatewaySkuTierBasic            VirtualNetworkGatewaySkuTier = "Basic"
-	VirtualNetworkGatewaySkuTierErGw1Az          VirtualNetworkGatewaySkuTier = "ErGw1AZ"
-	VirtualNetworkGatewaySkuTierErGw2Az          VirtualNetworkGatewaySkuTier = "ErGw2AZ"
-	VirtualNetworkGatewaySkuTierErGw3Az          VirtualNetworkGatewaySkuTier = "ErGw3AZ"
-	VirtualNetworkGatewaySkuTierHighPerformance  VirtualNetworkGatewaySkuTier = "HighPerformance"
-	VirtualNetworkGatewaySkuTierStandard         VirtualNetworkGatewaySkuTier = "Standard"
-	VirtualNetworkGatewaySkuTierUltraPerformance VirtualNetworkGatewaySkuTier = "UltraPerformance"
-	VirtualNetworkGatewaySkuTierVpnGw1           VirtualNetworkGatewaySkuTier = "VpnGw1"
-	VirtualNetworkGatewaySkuTierVpnGw1Az         VirtualNetworkGatewaySkuTier = "VpnGw1AZ"
-	VirtualNetworkGatewaySkuTierVpnGw2           VirtualNetworkGatewaySkuTier = "VpnGw2"
-	VirtualNetworkGatewaySkuTierVpnGw2Az         VirtualNetworkGatewaySkuTier = "VpnGw2AZ"
-	VirtualNetworkGatewaySkuTierVpnGw3           VirtualNetworkGatewaySkuTier = "VpnGw3"
-	VirtualNetworkGatewaySkuTierVpnGw3Az         VirtualNetworkGatewaySkuTier = "VpnGw3AZ"
-	VirtualNetworkGatewaySkuTierVpnGw4           VirtualNetworkGatewaySkuTier = "VpnGw4"
-	VirtualNetworkGatewaySkuTierVpnGw4Az         VirtualNetworkGatewaySkuTier = "VpnGw4AZ"
-	VirtualNetworkGatewaySkuTierVpnGw5           VirtualNetworkGatewaySkuTier = "VpnGw5"
-	VirtualNetworkGatewaySkuTierVpnGw5Az         VirtualNetworkGatewaySkuTier = "VpnGw5AZ"
+	VirtualNetworkGatewaySKUTierBasic            VirtualNetworkGatewaySKUTier = "Basic"
+	VirtualNetworkGatewaySKUTierErGw1Az          VirtualNetworkGatewaySKUTier = "ErGw1AZ"
+	VirtualNetworkGatewaySKUTierErGw2Az          VirtualNetworkGatewaySKUTier = "ErGw2AZ"
+	VirtualNetworkGatewaySKUTierErGw3Az          VirtualNetworkGatewaySKUTier = "ErGw3AZ"
+	VirtualNetworkGatewaySKUTierHighPerformance  VirtualNetworkGatewaySKUTier = "HighPerformance"
+	VirtualNetworkGatewaySKUTierStandard         VirtualNetworkGatewaySKUTier = "Standard"
+	VirtualNetworkGatewaySKUTierUltraPerformance VirtualNetworkGatewaySKUTier = "UltraPerformance"
+	VirtualNetworkGatewaySKUTierVpnGw1           VirtualNetworkGatewaySKUTier = "VpnGw1"
+	VirtualNetworkGatewaySKUTierVpnGw1Az         VirtualNetworkGatewaySKUTier = "VpnGw1AZ"
+	VirtualNetworkGatewaySKUTierVpnGw2           VirtualNetworkGatewaySKUTier = "VpnGw2"
+	VirtualNetworkGatewaySKUTierVpnGw2Az         VirtualNetworkGatewaySKUTier = "VpnGw2AZ"
+	VirtualNetworkGatewaySKUTierVpnGw3           VirtualNetworkGatewaySKUTier = "VpnGw3"
+	VirtualNetworkGatewaySKUTierVpnGw3Az         VirtualNetworkGatewaySKUTier = "VpnGw3AZ"
+	VirtualNetworkGatewaySKUTierVpnGw4           VirtualNetworkGatewaySKUTier = "VpnGw4"
+	VirtualNetworkGatewaySKUTierVpnGw4Az         VirtualNetworkGatewaySKUTier = "VpnGw4AZ"
+	VirtualNetworkGatewaySKUTierVpnGw5           VirtualNetworkGatewaySKUTier = "VpnGw5"
+	VirtualNetworkGatewaySKUTierVpnGw5Az         VirtualNetworkGatewaySKUTier = "VpnGw5AZ"
 )
 
-func PossibleVirtualNetworkGatewaySkuTierValues() []VirtualNetworkGatewaySkuTier {
-	return []VirtualNetworkGatewaySkuTier{
-		VirtualNetworkGatewaySkuTierBasic,
-		VirtualNetworkGatewaySkuTierErGw1Az,
-		VirtualNetworkGatewaySkuTierErGw2Az,
-		VirtualNetworkGatewaySkuTierErGw3Az,
-		VirtualNetworkGatewaySkuTierHighPerformance,
-		VirtualNetworkGatewaySkuTierStandard,
-		VirtualNetworkGatewaySkuTierUltraPerformance,
-		VirtualNetworkGatewaySkuTierVpnGw1,
-		VirtualNetworkGatewaySkuTierVpnGw1Az,
-		VirtualNetworkGatewaySkuTierVpnGw2,
-		VirtualNetworkGatewaySkuTierVpnGw2Az,
-		VirtualNetworkGatewaySkuTierVpnGw3,
-		VirtualNetworkGatewaySkuTierVpnGw3Az,
-		VirtualNetworkGatewaySkuTierVpnGw4,
-		VirtualNetworkGatewaySkuTierVpnGw4Az,
-		VirtualNetworkGatewaySkuTierVpnGw5,
-		VirtualNetworkGatewaySkuTierVpnGw5Az,
+func PossibleVirtualNetworkGatewaySKUTierValues() []VirtualNetworkGatewaySKUTier {
+	return []VirtualNetworkGatewaySKUTier{
+		VirtualNetworkGatewaySKUTierBasic,
+		VirtualNetworkGatewaySKUTierErGw1Az,
+		VirtualNetworkGatewaySKUTierErGw2Az,
+		VirtualNetworkGatewaySKUTierErGw3Az,
+		VirtualNetworkGatewaySKUTierHighPerformance,
+		VirtualNetworkGatewaySKUTierStandard,
+		VirtualNetworkGatewaySKUTierUltraPerformance,
+		VirtualNetworkGatewaySKUTierVpnGw1,
+		VirtualNetworkGatewaySKUTierVpnGw1Az,
+		VirtualNetworkGatewaySKUTierVpnGw2,
+		VirtualNetworkGatewaySKUTierVpnGw2Az,
+		VirtualNetworkGatewaySKUTierVpnGw3,
+		VirtualNetworkGatewaySKUTierVpnGw3Az,
+		VirtualNetworkGatewaySKUTierVpnGw4,
+		VirtualNetworkGatewaySKUTierVpnGw4Az,
+		VirtualNetworkGatewaySKUTierVpnGw5,
+		VirtualNetworkGatewaySKUTierVpnGw5Az,
 	}
 }
 
-func (c VirtualNetworkGatewaySkuTier) ToPtr() *VirtualNetworkGatewaySkuTier {
+func (c VirtualNetworkGatewaySKUTier) ToPtr() *VirtualNetworkGatewaySKUTier {
 	return &c
 }
 

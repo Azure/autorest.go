@@ -151,11 +151,11 @@ func (p *productPoller) pollUntilDone(ctx context.Context, frequency time.Durati
 	return respType, nil
 }
 
-// SkuPoller provides polling facilities until the operation completes
-type SkuPoller interface {
+// SKUPoller provides polling facilities until the operation completes
+type SKUPoller interface {
 	Done() bool
 	Poll(ctx context.Context) (*http.Response, error)
-	FinalResponse(ctx context.Context) (*SkuResponse, error)
+	FinalResponse(ctx context.Context) (*SKUResponse, error)
 	ResumeToken() (string, error)
 }
 
@@ -175,9 +175,9 @@ func (p *skuPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx, p.pipeline)
 }
 
-func (p *skuPoller) FinalResponse(ctx context.Context) (*SkuResponse, error) {
-	respType := &SkuResponse{Sku: &Sku{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.Sku)
+func (p *skuPoller) FinalResponse(ctx context.Context) (*SKUResponse, error) {
+	respType := &SKUResponse{SKU: &SKU{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.SKU)
 	if err != nil {
 		return nil, err
 	}
@@ -185,15 +185,15 @@ func (p *skuPoller) FinalResponse(ctx context.Context) (*SkuResponse, error) {
 	return respType, nil
 }
 
-// ResumeToken generates the string token that can be used with the ResumeSkuPoller method
+// ResumeToken generates the string token that can be used with the ResumeSKUPoller method
 // on the client to create a new poller from the data held in the current poller type
 func (p *skuPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-func (p *skuPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*SkuResponse, error) {
-	respType := &SkuResponse{Sku: &Sku{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.Sku)
+func (p *skuPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*SKUResponse, error) {
+	respType := &SKUResponse{SKU: &SKU{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.SKU)
 	if err != nil {
 		return nil, err
 	}

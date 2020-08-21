@@ -726,7 +726,7 @@ type BlobGetAccountInfoResponse struct {
 	RequestId *string
 
 	// SkuName contains the information returned from the x-ms-sku-name header response.
-	SkuName *SkuName
+	SkuName *SKUName
 
 	// Version contains the information returned from the x-ms-version header response.
 	Version *string
@@ -1875,7 +1875,7 @@ type ContainerGetAccountInfoResponse struct {
 	RequestId *string
 
 	// SkuName contains the information returned from the x-ms-sku-name header response.
-	SkuName *SkuName
+	SkuName *SKUName
 
 	// Version contains the information returned from the x-ms-version header response.
 	Version *string
@@ -3176,7 +3176,7 @@ type ServiceGetAccountInfoResponse struct {
 	RequestId *string
 
 	// SkuName contains the information returned from the x-ms-sku-name header response.
-	SkuName *SkuName
+	SkuName *SKUName
 
 	// Version contains the information returned from the x-ms-version header response.
 	Version *string

@@ -41,9 +41,9 @@ type PathsOperations interface {
 	// DoubleDecimalPositive - Get '9999999.999' numeric value
 	DoubleDecimalPositive(ctx context.Context) (*http.Response, error)
 	// EnumNull - Get null (should throw on the client before the request is sent on wire)
-	EnumNull(ctx context.Context, enumPath UriColor) (*http.Response, error)
+	EnumNull(ctx context.Context, enumPath URIColor) (*http.Response, error)
 	// EnumValid - Get using uri with 'green color' in path parameter
-	EnumValid(ctx context.Context, enumPath UriColor) (*http.Response, error)
+	EnumValid(ctx context.Context, enumPath URIColor) (*http.Response, error)
 	// FloatScientificNegative - Get '-1.034E-20' numeric value
 	FloatScientificNegative(ctx context.Context) (*http.Response, error)
 	// FloatScientificPositive - Get '1.034E+20' numeric value
@@ -630,7 +630,7 @@ func (client *pathsOperations) doubleDecimalPositiveHandleError(resp *azcore.Res
 }
 
 // EnumNull - Get null (should throw on the client before the request is sent on wire)
-func (client *pathsOperations) EnumNull(ctx context.Context, enumPath UriColor) (*http.Response, error) {
+func (client *pathsOperations) EnumNull(ctx context.Context, enumPath URIColor) (*http.Response, error) {
 	req, err := client.enumNullCreateRequest(enumPath)
 	if err != nil {
 		return nil, err
@@ -647,7 +647,7 @@ func (client *pathsOperations) EnumNull(ctx context.Context, enumPath UriColor) 
 }
 
 // enumNullCreateRequest creates the EnumNull request.
-func (client *pathsOperations) enumNullCreateRequest(enumPath UriColor) (*azcore.Request, error) {
+func (client *pathsOperations) enumNullCreateRequest(enumPath URIColor) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -680,7 +680,7 @@ func (client *pathsOperations) enumNullHandleError(resp *azcore.Response) error 
 }
 
 // EnumValid - Get using uri with 'green color' in path parameter
-func (client *pathsOperations) EnumValid(ctx context.Context, enumPath UriColor) (*http.Response, error) {
+func (client *pathsOperations) EnumValid(ctx context.Context, enumPath URIColor) (*http.Response, error) {
 	req, err := client.enumValidCreateRequest(enumPath)
 	if err != nil {
 		return nil, err
@@ -697,7 +697,7 @@ func (client *pathsOperations) EnumValid(ctx context.Context, enumPath UriColor)
 }
 
 // enumValidCreateRequest creates the EnumValid request.
-func (client *pathsOperations) enumValidCreateRequest(enumPath UriColor) (*azcore.Request, error) {
+func (client *pathsOperations) enumValidCreateRequest(enumPath URIColor) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err

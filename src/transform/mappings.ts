@@ -27,6 +27,7 @@ export const CommonAcronyms = [
   'Rfc',
   'Rhs',
   'Rpc',
+  'Sku',
   'Sla',
   'Smtp',
   'Sql',

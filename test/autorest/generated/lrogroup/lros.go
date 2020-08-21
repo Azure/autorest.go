@@ -66,9 +66,9 @@ type LrOSOperations interface {
 	// ResumeDeleteProvisioning202Deletingcanceled200 - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeDeleteProvisioning202Deletingcanceled200(token string) (ProductPoller, error)
 	// BeginPost200WithPayload - Long running post request, service returns a 202 to the initial request, with 'Location' header. Poll returns a 200 with a response body after success.
-	BeginPost200WithPayload(ctx context.Context) (*SkuPollerResponse, error)
+	BeginPost200WithPayload(ctx context.Context) (*SKUPollerResponse, error)
 	// ResumePost200WithPayload - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumePost200WithPayload(token string) (SkuPoller, error)
+	ResumePost200WithPayload(token string) (SKUPoller, error)
 	// BeginPost202List - Long running put request, service returns a 202 with empty body to first request, returns a 200 with body [{ 'id': '100', 'name': 'foo' }].
 	BeginPost202List(ctx context.Context) (*ProductArrayPollerResponse, error)
 	// ResumePost202List - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
@@ -154,9 +154,9 @@ type LrOSOperations interface {
 	// ResumePutAsyncNoRetrycanceled - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumePutAsyncNoRetrycanceled(token string) (ProductPoller, error)
 	// BeginPutAsyncNonResource - Long running put request with non resource.
-	BeginPutAsyncNonResource(ctx context.Context, lrOSPutAsyncNonResourceOptions *LrOSPutAsyncNonResourceOptions) (*SkuPollerResponse, error)
+	BeginPutAsyncNonResource(ctx context.Context, lrOSPutAsyncNonResourceOptions *LrOSPutAsyncNonResourceOptions) (*SKUPollerResponse, error)
 	// ResumePutAsyncNonResource - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumePutAsyncNonResource(token string) (SkuPoller, error)
+	ResumePutAsyncNonResource(token string) (SKUPoller, error)
 	// BeginPutAsyncRetryFailed - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 	BeginPutAsyncRetryFailed(ctx context.Context, lrOSPutAsyncRetryFailedOptions *LrOSPutAsyncRetryFailedOptions) (*ProductPollerResponse, error)
 	// ResumePutAsyncRetryFailed - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
@@ -174,9 +174,9 @@ type LrOSOperations interface {
 	// ResumePutNoHeaderInRetry - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumePutNoHeaderInRetry(token string) (ProductPoller, error)
 	// BeginPutNonResource - Long running put request with non resource.
-	BeginPutNonResource(ctx context.Context, lrOSPutNonResourceOptions *LrOSPutNonResourceOptions) (*SkuPollerResponse, error)
+	BeginPutNonResource(ctx context.Context, lrOSPutNonResourceOptions *LrOSPutNonResourceOptions) (*SKUPollerResponse, error)
 	// ResumePutNonResource - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumePutNonResource(token string) (SkuPoller, error)
+	ResumePutNonResource(token string) (SKUPoller, error)
 	// BeginPutSubResource - Long running put request with sub resource.
 	BeginPutSubResource(ctx context.Context, lrOSPutSubResourceOptions *LrOSPutSubResourceOptions) (*SubProductPollerResponse, error)
 	// ResumePutSubResource - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
@@ -1065,7 +1065,7 @@ func (client *lrOSOperations) deleteProvisioning202Deletingcanceled200HandleErro
 }
 
 // Post200WithPayload - Long running post request, service returns a 202 to the initial request, with 'Location' header. Poll returns a 200 with a response body after success.
-func (client *lrOSOperations) BeginPost200WithPayload(ctx context.Context) (*SkuPollerResponse, error) {
+func (client *lrOSOperations) BeginPost200WithPayload(ctx context.Context) (*SKUPollerResponse, error) {
 	req, err := client.post200WithPayloadCreateRequest()
 	if err != nil {
 		return nil, err
@@ -1088,13 +1088,13 @@ func (client *lrOSOperations) BeginPost200WithPayload(ctx context.Context) (*Sku
 		pipeline: client.p,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*SkuResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*SKUResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-func (client *lrOSOperations) ResumePost200WithPayload(token string) (SkuPoller, error) {
+func (client *lrOSOperations) ResumePost200WithPayload(token string) (SKUPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("lrOSOperations.Post200WithPayload", token, client.post200WithPayloadHandleError)
 	if err != nil {
 		return nil, err
@@ -1121,11 +1121,11 @@ func (client *lrOSOperations) post200WithPayloadCreateRequest() (*azcore.Request
 }
 
 // post200WithPayloadHandleResponse handles the Post200WithPayload response.
-func (client *lrOSOperations) post200WithPayloadHandleResponse(resp *azcore.Response) (*SkuPollerResponse, error) {
+func (client *lrOSOperations) post200WithPayloadHandleResponse(resp *azcore.Response) (*SKUPollerResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.post200WithPayloadHandleError(resp)
 	}
-	return &SkuPollerResponse{RawResponse: resp.Response}, nil
+	return &SKUPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // post200WithPayloadHandleError handles the Post200WithPayload error response.
@@ -2722,7 +2722,7 @@ func (client *lrOSOperations) putAsyncNoRetrycanceledHandleError(resp *azcore.Re
 }
 
 // PutAsyncNonResource - Long running put request with non resource.
-func (client *lrOSOperations) BeginPutAsyncNonResource(ctx context.Context, lrOSPutAsyncNonResourceOptions *LrOSPutAsyncNonResourceOptions) (*SkuPollerResponse, error) {
+func (client *lrOSOperations) BeginPutAsyncNonResource(ctx context.Context, lrOSPutAsyncNonResourceOptions *LrOSPutAsyncNonResourceOptions) (*SKUPollerResponse, error) {
 	req, err := client.putAsyncNonResourceCreateRequest(lrOSPutAsyncNonResourceOptions)
 	if err != nil {
 		return nil, err
@@ -2745,13 +2745,13 @@ func (client *lrOSOperations) BeginPutAsyncNonResource(ctx context.Context, lrOS
 		pipeline: client.p,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*SkuResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*SKUResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-func (client *lrOSOperations) ResumePutAsyncNonResource(token string) (SkuPoller, error) {
+func (client *lrOSOperations) ResumePutAsyncNonResource(token string) (SKUPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("lrOSOperations.PutAsyncNonResource", token, client.putAsyncNonResourceHandleError)
 	if err != nil {
 		return nil, err
@@ -2781,11 +2781,11 @@ func (client *lrOSOperations) putAsyncNonResourceCreateRequest(lrOSPutAsyncNonRe
 }
 
 // putAsyncNonResourceHandleResponse handles the PutAsyncNonResource response.
-func (client *lrOSOperations) putAsyncNonResourceHandleResponse(resp *azcore.Response) (*SkuPollerResponse, error) {
+func (client *lrOSOperations) putAsyncNonResourceHandleResponse(resp *azcore.Response) (*SKUPollerResponse, error) {
 	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.putAsyncNonResourceHandleError(resp)
 	}
-	return &SkuPollerResponse{RawResponse: resp.Response}, nil
+	return &SKUPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // putAsyncNonResourceHandleError handles the PutAsyncNonResource error response.
@@ -3102,7 +3102,7 @@ func (client *lrOSOperations) putNoHeaderInRetryHandleError(resp *azcore.Respons
 }
 
 // PutNonResource - Long running put request with non resource.
-func (client *lrOSOperations) BeginPutNonResource(ctx context.Context, lrOSPutNonResourceOptions *LrOSPutNonResourceOptions) (*SkuPollerResponse, error) {
+func (client *lrOSOperations) BeginPutNonResource(ctx context.Context, lrOSPutNonResourceOptions *LrOSPutNonResourceOptions) (*SKUPollerResponse, error) {
 	req, err := client.putNonResourceCreateRequest(lrOSPutNonResourceOptions)
 	if err != nil {
 		return nil, err
@@ -3125,13 +3125,13 @@ func (client *lrOSOperations) BeginPutNonResource(ctx context.Context, lrOSPutNo
 		pipeline: client.p,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*SkuResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*SKUResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-func (client *lrOSOperations) ResumePutNonResource(token string) (SkuPoller, error) {
+func (client *lrOSOperations) ResumePutNonResource(token string) (SKUPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("lrOSOperations.PutNonResource", token, client.putNonResourceHandleError)
 	if err != nil {
 		return nil, err
@@ -3161,11 +3161,11 @@ func (client *lrOSOperations) putNonResourceCreateRequest(lrOSPutNonResourceOpti
 }
 
 // putNonResourceHandleResponse handles the PutNonResource response.
-func (client *lrOSOperations) putNonResourceHandleResponse(resp *azcore.Response) (*SkuPollerResponse, error) {
+func (client *lrOSOperations) putNonResourceHandleResponse(resp *azcore.Response) (*SKUPollerResponse, error) {
 	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.putNonResourceHandleError(resp)
 	}
-	return &SkuPollerResponse{RawResponse: resp.Response}, nil
+	return &SKUPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // putNonResourceHandleError handles the PutNonResource error response.

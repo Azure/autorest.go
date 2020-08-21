@@ -112,6 +112,7 @@ export async function namer(session: Session<CodeModel>) {
 
   // fix up enum type and value names and capitzalize acronyms
   for (const enm of values(session.model.schemas.choices)) {
+    enm.language.go!.name = capitalizeAcronyms(enm.language.go!.name);
     // add PossibleValues func name
     enm.language.go!.possibleValuesFunc = `Possible${enm.language.go!.name}Values`;
     for (const choice of values(enm.choices)) {
@@ -120,6 +121,7 @@ export async function namer(session: Session<CodeModel>) {
     }
   }
   for (const enm of values(session.model.schemas.sealedChoices)) {
+    enm.language.go!.name = capitalizeAcronyms(enm.language.go!.name);
     // add PossibleValues func name
     enm.language.go!.possibleValuesFunc = `Possible${enm.language.go!.name}Values`;
     for (const choice of values(enm.choices)) {

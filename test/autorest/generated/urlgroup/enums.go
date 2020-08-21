@@ -5,22 +5,22 @@
 
 package urlgroup
 
-type UriColor string
+type URIColor string
 
 const (
-	UriColorRedColor   UriColor = "red color"
-	UriColorGreenColor UriColor = "green color"
-	UriColorBlueColor  UriColor = "blue color"
+	URIColorRedColor   URIColor = "red color"
+	URIColorGreenColor URIColor = "green color"
+	URIColorBlueColor  URIColor = "blue color"
 )
 
-func PossibleUriColorValues() []UriColor {
-	return []UriColor{
-		UriColorRedColor,
-		UriColorGreenColor,
-		UriColorBlueColor,
+func PossibleURIColorValues() []URIColor {
+	return []URIColor{
+		URIColorRedColor,
+		URIColorGreenColor,
+		URIColorBlueColor,
 	}
 }
 
-func (c UriColor) ToPtr() *UriColor {
+func (c URIColor) ToPtr() *URIColor {
 	return &c
 }
