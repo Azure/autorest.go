@@ -1190,7 +1190,7 @@ func (client *blobOperations) getAccountInfoHandleResponse(resp *azcore.Response
 		result.Date = &date
 	}
 	if val := resp.Header.Get("x-ms-sku-name"); val != "" {
-		result.SkuName = (*SkuName)(&val)
+		result.SkuName = (*SKUName)(&val)
 	}
 	if val := resp.Header.Get("x-ms-account-kind"); val != "" {
 		result.AccountKind = (*AccountKind)(&val)

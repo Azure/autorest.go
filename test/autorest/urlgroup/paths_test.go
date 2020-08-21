@@ -115,7 +115,7 @@ func TestPathsDoubleDecimalPositive(t *testing.T) {
 
 func TestPathsEnumNull(t *testing.T) {
 	client := urlgroup.NewDefaultClient(nil).PathsOperations()
-	var color urlgroup.UriColor
+	var color urlgroup.URIColor
 	_, err := client.EnumNull(context.Background(), color)
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
@@ -124,7 +124,7 @@ func TestPathsEnumNull(t *testing.T) {
 
 func TestPathsEnumValid(t *testing.T) {
 	client := urlgroup.NewDefaultClient(nil).PathsOperations()
-	color := urlgroup.UriColorGreenColor
+	color := urlgroup.URIColorGreenColor
 	result, err := client.EnumValid(context.Background(), color)
 	if err != nil {
 		t.Fatal(err)

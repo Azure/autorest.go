@@ -364,6 +364,30 @@ func (c RehydratePriority) ToPtr() *RehydratePriority {
 	return &c
 }
 
+type SKUName string
+
+const (
+	SKUNameStandardLrs   SKUName = "Standard_LRS"
+	SKUNameStandardGrs   SKUName = "Standard_GRS"
+	SKUNameStandardRagrs SKUName = "Standard_RAGRS"
+	SKUNameStandardZrs   SKUName = "Standard_ZRS"
+	SKUNamePremiumLrs    SKUName = "Premium_LRS"
+)
+
+func PossibleSKUNameValues() []SKUName {
+	return []SKUName{
+		SKUNameStandardLrs,
+		SKUNameStandardGrs,
+		SKUNameStandardRagrs,
+		SKUNameStandardZrs,
+		SKUNamePremiumLrs,
+	}
+}
+
+func (c SKUName) ToPtr() *SKUName {
+	return &c
+}
+
 type SequenceNumberActionType string
 
 const (
@@ -381,30 +405,6 @@ func PossibleSequenceNumberActionTypeValues() []SequenceNumberActionType {
 }
 
 func (c SequenceNumberActionType) ToPtr() *SequenceNumberActionType {
-	return &c
-}
-
-type SkuName string
-
-const (
-	SkuNameStandardLrs   SkuName = "Standard_LRS"
-	SkuNameStandardGrs   SkuName = "Standard_GRS"
-	SkuNameStandardRagrs SkuName = "Standard_RAGRS"
-	SkuNameStandardZrs   SkuName = "Standard_ZRS"
-	SkuNamePremiumLrs    SkuName = "Premium_LRS"
-)
-
-func PossibleSkuNameValues() []SkuName {
-	return []SkuName{
-		SkuNameStandardLrs,
-		SkuNameStandardGrs,
-		SkuNameStandardRagrs,
-		SkuNameStandardZrs,
-		SkuNamePremiumLrs,
-	}
-}
-
-func (c SkuName) ToPtr() *SkuName {
 	return &c
 }
 

@@ -795,7 +795,7 @@ type ApplicationGatewayPropertiesFormat struct {
 	RewriteRuleSets *[]ApplicationGatewayRewriteRuleSet `json:"rewriteRuleSets,omitempty"`
 
 	// SKU of the application gateway resource.
-	Sku *ApplicationGatewaySku `json:"sku,omitempty"`
+	SKU *ApplicationGatewaySKU `json:"sku,omitempty"`
 
 	// SSL certificates of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits).
 	SslCertificates *[]ApplicationGatewaySslCertificate `json:"sslCertificates,omitempty"`
@@ -976,12 +976,12 @@ type ApplicationGatewayRewriteRuleSetPropertiesFormat struct {
 }
 
 // SKU of an application gateway.
-type ApplicationGatewaySku struct {
+type ApplicationGatewaySKU struct {
 	// Capacity (instance count) of an application gateway.
 	Capacity *int32 `json:"capacity,omitempty"`
 
 	// Name of an application gateway SKU.
-	Name *ApplicationGatewaySkuName `json:"name,omitempty"`
+	Name *ApplicationGatewaySKUName `json:"name,omitempty"`
 
 	// Tier of an application gateway.
 	Tier *ApplicationGatewayTier `json:"tier,omitempty"`
@@ -1940,7 +1940,7 @@ type AzureFirewallPropertiesFormat struct {
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// The Azure Firewall Resource SKU.
-	Sku *AzureFirewallSku `json:"sku,omitempty"`
+	SKU *AzureFirewallSKU `json:"sku,omitempty"`
 
 	// The operation mode for Threat Intelligence.
 	ThreatIntelMode *AzureFirewallThreatIntelMode `json:"threatIntelMode,omitempty"`
@@ -1971,12 +1971,12 @@ type AzureFirewallResponse struct {
 }
 
 // SKU of an Azure Firewall.
-type AzureFirewallSku struct {
+type AzureFirewallSKU struct {
 	// Name of an Azure Firewall SKU.
-	Name *AzureFirewallSkuName `json:"name,omitempty"`
+	Name *AzureFirewallSKUName `json:"name,omitempty"`
 
 	// Tier of an Azure Firewall.
-	Tier *AzureFirewallSkuTier `json:"tier,omitempty"`
+	Tier *AzureFirewallSKUTier `json:"tier,omitempty"`
 }
 
 // Azure reachability report details.
@@ -2646,7 +2646,7 @@ type ConnectionMonitorEndpointFilterItem struct {
 // Describes the HTTP configuration.
 type ConnectionMonitorHTTPConfiguration struct {
 	// The HTTP method to use.
-	Method *HttpConfigurationMethod `json:"method,omitempty"`
+	Method *HTTPConfigurationMethod `json:"method,omitempty"`
 
 	// The path component of the URI. For instance, "/dir1/dir2".
 	Path *string `json:"path,omitempty"`
@@ -3748,7 +3748,7 @@ type ExpressRouteCircuit struct {
 	Properties *ExpressRouteCircuitPropertiesFormat `json:"properties,omitempty"`
 
 	// The SKU.
-	Sku *ExpressRouteCircuitSku `json:"sku,omitempty"`
+	SKU *ExpressRouteCircuitSKU `json:"sku,omitempty"`
 }
 
 // The ARP table associated with the ExpressRouteCircuit.
@@ -4165,6 +4165,18 @@ type ExpressRouteCircuitRoutesTableSummary struct {
 	V *int32 `json:"v,omitempty"`
 }
 
+// Contains SKU in an ExpressRouteCircuit.
+type ExpressRouteCircuitSKU struct {
+	// The family of the SKU.
+	Family *ExpressRouteCircuitSKUFamily `json:"family,omitempty"`
+
+	// The name of the SKU.
+	Name *string `json:"name,omitempty"`
+
+	// The tier of the SKU.
+	Tier *ExpressRouteCircuitSKUTier `json:"tier,omitempty"`
+}
+
 // Contains ServiceProviderProperties in an ExpressRouteCircuit.
 type ExpressRouteCircuitServiceProviderProperties struct {
 	// The BandwidthInMbps.
@@ -4175,18 +4187,6 @@ type ExpressRouteCircuitServiceProviderProperties struct {
 
 	// The serviceProviderName.
 	ServiceProviderName *string `json:"serviceProviderName,omitempty"`
-}
-
-// Contains SKU in an ExpressRouteCircuit.
-type ExpressRouteCircuitSku struct {
-	// The family of the SKU.
-	Family *ExpressRouteCircuitSkuFamily `json:"family,omitempty"`
-
-	// The name of the SKU.
-	Name *string `json:"name,omitempty"`
-
-	// The tier of the SKU.
-	Tier *ExpressRouteCircuitSkuTier `json:"tier,omitempty"`
 }
 
 // Contains stats associated with the peering.
@@ -5672,7 +5672,7 @@ type HTTPConfiguration struct {
 	Headers *[]HTTPHeader `json:"headers,omitempty"`
 
 	// HTTP method.
-	Method *HttpMethod `json:"method,omitempty"`
+	Method *HTTPMethod `json:"method,omitempty"`
 
 	// Valid status codes.
 	ValidStatusCodes *[]int32 `json:"validStatusCodes,omitempty"`
@@ -5827,7 +5827,7 @@ type IPAllocationPropertiesFormat struct {
 	Subnet *SubResource `json:"subnet,omitempty" azure:"ro"`
 
 	// The type for the IpAllocation.
-	Type *IpAllocationType `json:"type,omitempty"`
+	Type *IPAllocationType `json:"type,omitempty"`
 
 	// The VirtualNetwork that using the prefix of this IpAllocation resource.
 	VirtualNetwork *SubResource `json:"virtualNetwork,omitempty" azure:"ro"`
@@ -6001,10 +6001,10 @@ type IPsecPolicy struct {
 	DhGroup *DhGroup `json:"dhGroup,omitempty"`
 
 	// The IPSec encryption algorithm (IKE phase 1).
-	IPsecEncryption *IpsecEncryption `json:"ipsecEncryption,omitempty"`
+	IPsecEncryption *IPsecEncryption `json:"ipsecEncryption,omitempty"`
 
 	// The IPSec integrity algorithm (IKE phase 1).
-	IPsecIntegrity *IpsecIntegrity `json:"ipsecIntegrity,omitempty"`
+	IPsecIntegrity *IPsecIntegrity `json:"ipsecIntegrity,omitempty"`
 
 	// The IKE encryption algorithm (IKE phase 2).
 	IkeEncryption *IkeEncryption `json:"ikeEncryption,omitempty"`
@@ -6428,7 +6428,7 @@ type LoadBalancer struct {
 	Properties *LoadBalancerPropertiesFormat `json:"properties,omitempty"`
 
 	// The load balancer SKU.
-	Sku *LoadBalancerSku `json:"sku,omitempty"`
+	SKU *LoadBalancerSKU `json:"sku,omitempty"`
 }
 
 // Response for ListBackendAddressPool API service call.
@@ -6601,9 +6601,9 @@ type LoadBalancerResponse struct {
 }
 
 // SKU of a load balancer.
-type LoadBalancerSku struct {
+type LoadBalancerSKU struct {
 	// Name of a load balancer SKU.
-	Name *LoadBalancerSkuName `json:"name,omitempty"`
+	Name *LoadBalancerSKUName `json:"name,omitempty"`
 }
 
 // LoadBalancersGetOptions contains the optional parameters for the LoadBalancers.Get method.
@@ -6817,7 +6817,7 @@ type ManagedServiceIDentity struct {
 
 	// The type of identity used for the resource. The type 'SystemAssigned, UserAssigned' includes both an implicitly created
 	// identity and a set of user assigned identities. The type 'None' will remove any identities from the virtual machine.
-	Type *ResourceIdentityType `json:"type,omitempty"`
+	Type *ResourceIDentityType `json:"type,omitempty"`
 
 	// The list of user identities associated with resource. The user identity dictionary key references will be ARM resource
 	// ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
@@ -6915,7 +6915,7 @@ type NatGateway struct {
 	Properties *NatGatewayPropertiesFormat `json:"properties,omitempty"`
 
 	// The nat gateway SKU.
-	Sku *NatGatewaySku `json:"sku,omitempty"`
+	SKU *NatGatewaySKU `json:"sku,omitempty"`
 
 	// A list of availability zones denoting the zone in which Nat Gateway should be deployed.
 	Zones *[]string `json:"zones,omitempty"`
@@ -6982,9 +6982,9 @@ type NatGatewayResponse struct {
 }
 
 // SKU of nat gateway.
-type NatGatewaySku struct {
+type NatGatewaySKU struct {
 	// Name of Nat Gateway SKU.
-	Name *NatGatewaySkuName `json:"name,omitempty"`
+	Name *NatGatewaySKUName `json:"name,omitempty"`
 }
 
 // NatGatewaysGetOptions contains the optional parameters for the NatGateways.Get method.
@@ -7754,7 +7754,7 @@ type NetworkVirtualAppliance struct {
 	Properties *NetworkVirtualAppliancePropertiesFormat `json:"properties,omitempty"`
 
 	// Network Virtual Appliance SKU.
-	Sku *VirtualApplianceSkuProperties `json:"sku,omitempty"`
+	SKU *VirtualApplianceSKUProperties `json:"sku,omitempty"`
 }
 
 // Response for ListNetworkVirtualAppliances API service call.
@@ -9018,7 +9018,7 @@ type PublicIPAddress struct {
 	Properties *PublicIPAddressPropertiesFormat `json:"properties,omitempty"`
 
 	// The public IP address SKU.
-	Sku *PublicIPAddressSku `json:"sku,omitempty"`
+	SKU *PublicIPAddressSKU `json:"sku,omitempty"`
 
 	// A list of availability zones denoting the IP allocated for the resource needs to come from.
 	Zones *[]string `json:"zones,omitempty"`
@@ -9116,9 +9116,9 @@ type PublicIPAddressResponse struct {
 }
 
 // SKU of a public IP address.
-type PublicIPAddressSku struct {
+type PublicIPAddressSKU struct {
 	// Name of a public IP address SKU.
-	Name *PublicIPAddressSkuName `json:"name,omitempty"`
+	Name *PublicIPAddressSKUName `json:"name,omitempty"`
 }
 
 // PublicIPAddressesGetOptions contains the optional parameters for the PublicIPAddresses.Get method.
@@ -9144,7 +9144,7 @@ type PublicIPPrefix struct {
 	Properties *PublicIPPrefixPropertiesFormat `json:"properties,omitempty"`
 
 	// The public IP prefix SKU.
-	Sku *PublicIPPrefixSku `json:"sku,omitempty"`
+	SKU *PublicIPPrefixSKU `json:"sku,omitempty"`
 
 	// A list of availability zones denoting the IP allocated for the resource needs to come from.
 	Zones *[]string `json:"zones,omitempty"`
@@ -9217,9 +9217,9 @@ type PublicIPPrefixResponse struct {
 }
 
 // SKU of a public IP prefix.
-type PublicIPPrefixSku struct {
+type PublicIPPrefixSKU struct {
 	// Name of a public IP prefix SKU.
-	Name *PublicIPPrefixSkuName `json:"name,omitempty"`
+	Name *PublicIPPrefixSKUName `json:"name,omitempty"`
 }
 
 // PublicIPPrefixesGetOptions contains the optional parameters for the PublicIPPrefixes.Get method.
@@ -10646,7 +10646,7 @@ type VerificationIPFlowParameters struct {
 	LocalPort *string `json:"localPort,omitempty"`
 
 	// Protocol to be verified on.
-	Protocol *IpFlowProtocol `json:"protocol,omitempty"`
+	Protocol *IPFlowProtocol `json:"protocol,omitempty"`
 
 	// The remote IP address. Acceptable values are valid IPv4 addresses.
 	RemoteIPAddress *string `json:"remoteIPAddress,omitempty"`
@@ -10707,7 +10707,7 @@ type VirtualApplianceNicProperties struct {
 }
 
 // Network Virtual Appliance Sku Properties.
-type VirtualApplianceSkuProperties struct {
+type VirtualApplianceSKUProperties struct {
 	// Virtual Appliance Scale Unit.
 	BundledScaleUnit *string `json:"bundledScaleUnit,omitempty"`
 
@@ -10767,14 +10767,14 @@ type VirtualHubProperties struct {
 	// The routeTable associated with this virtual hub.
 	RouteTable *VirtualHubRouteTable `json:"routeTable,omitempty"`
 
+	// The sku of this VirtualHub.
+	SKU *string `json:"sku,omitempty"`
+
 	// The securityPartnerProvider associated with this VirtualHub.
 	SecurityPartnerProvider *SubResource `json:"securityPartnerProvider,omitempty"`
 
 	// The Security Provider name.
 	SecurityProviderName *string `json:"securityProviderName,omitempty"`
-
-	// The sku of this VirtualHub.
-	Sku *string `json:"sku,omitempty"`
 
 	// List of all virtual hub route table v2s associated with this VirtualHub.
 	VirtualHubRouteTableV2S *[]VirtualHubRouteTableV2 `json:"virtualHubRouteTableV2s,omitempty"`
@@ -11234,7 +11234,7 @@ type VirtualNetworkGatewayPropertiesFormat struct {
 	ResourceGUID *string `json:"resourceGuid,omitempty" azure:"ro"`
 
 	// The reference to the VirtualNetworkGatewaySku resource which represents the SKU selected for Virtual network gateway.
-	Sku *VirtualNetworkGatewaySku `json:"sku,omitempty"`
+	SKU *VirtualNetworkGatewaySKU `json:"sku,omitempty"`
 
 	// The reference to the VpnClientConfiguration resource which represents the P2S VpnClient configurations.
 	VpnClientConfiguration *VpnClientConfiguration `json:"vpnClientConfiguration,omitempty"`
@@ -11256,15 +11256,15 @@ type VirtualNetworkGatewayResponse struct {
 }
 
 // VirtualNetworkGatewaySku details.
-type VirtualNetworkGatewaySku struct {
+type VirtualNetworkGatewaySKU struct {
 	// The capacity.
 	Capacity *int32 `json:"capacity,omitempty" azure:"ro"`
 
 	// Gateway SKU name.
-	Name *VirtualNetworkGatewaySkuName `json:"name,omitempty"`
+	Name *VirtualNetworkGatewaySKUName `json:"name,omitempty"`
 
 	// Gateway SKU tier.
-	Tier *VirtualNetworkGatewaySkuTier `json:"tier,omitempty"`
+	Tier *VirtualNetworkGatewaySKUTier `json:"tier,omitempty"`
 }
 
 // VirtualNetworkGatewaysGetBgpPeerStatusOptions contains the optional parameters for the VirtualNetworkGateways.GetBgpPeerStatus
@@ -11934,10 +11934,10 @@ type VpnClientIPsecParameters struct {
 	DhGroup *DhGroup `json:"dhGroup,omitempty"`
 
 	// The IPSec encryption algorithm (IKE phase 1).
-	IPsecEncryption *IpsecEncryption `json:"ipsecEncryption,omitempty"`
+	IPsecEncryption *IPsecEncryption `json:"ipsecEncryption,omitempty"`
 
 	// The IPSec integrity algorithm (IKE phase 1).
-	IPsecIntegrity *IpsecIntegrity `json:"ipsecIntegrity,omitempty"`
+	IPsecIntegrity *IPsecIntegrity `json:"ipsecIntegrity,omitempty"`
 
 	// The IKE encryption algorithm (IKE phase 2).
 	IkeEncryption *IkeEncryption `json:"ikeEncryption,omitempty"`

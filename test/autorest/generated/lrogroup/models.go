@@ -176,7 +176,7 @@ type LrOSPutAsyncNoRetrycanceledOptions struct {
 // LrOSPutAsyncNonResourceOptions contains the optional parameters for the LrOS.PutAsyncNonResource method.
 type LrOSPutAsyncNonResourceOptions struct {
 	// Sku to put
-	Sku *Sku
+	Sku *SKU
 }
 
 // LrOSPutAsyncRetryFailedOptions contains the optional parameters for the LrOS.PutAsyncRetryFailed method.
@@ -206,7 +206,7 @@ type LrOSPutNoHeaderInRetryOptions struct {
 // LrOSPutNonResourceOptions contains the optional parameters for the LrOS.PutNonResource method.
 type LrOSPutNonResourceOptions struct {
 	// sku to put
-	Sku *Sku
+	Sku *SKU
 }
 
 // LrOSPutSubResourceOptions contains the optional parameters for the LrOS.PutSubResource method.
@@ -442,28 +442,28 @@ type Resource struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
-type Sku struct {
+type SKU struct {
 	ID   *string `json:"id,omitempty"`
 	Name *string `json:"name,omitempty"`
 }
 
-// SkuPollerResponse is the response envelope for operations that asynchronously return a Sku type.
-type SkuPollerResponse struct {
+// SKUPollerResponse is the response envelope for operations that asynchronously return a SKU type.
+type SKUPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*SkuResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (*SKUResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller SkuPoller
+	Poller SKUPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// SkuResponse is the response envelope for operations that return a Sku type.
-type SkuResponse struct {
+// SKUResponse is the response envelope for operations that return a SKU type.
+type SKUResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-	Sku         *Sku
+	SKU         *SKU
 }
 
 type SubProduct struct {

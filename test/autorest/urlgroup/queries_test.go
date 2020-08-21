@@ -197,7 +197,7 @@ func TestEnumNull(t *testing.T) {
 func TestEnumValid(t *testing.T) {
 	client := urlgroup.NewDefaultClient(nil).QueriesOperations()
 	result, err := client.EnumValid(context.Background(), &urlgroup.QueriesEnumValidOptions{
-		EnumQuery: urlgroup.UriColorGreenColor.ToPtr(),
+		EnumQuery: urlgroup.URIColorGreenColor.ToPtr(),
 	})
 	if err != nil {
 		t.Fatal(err)
