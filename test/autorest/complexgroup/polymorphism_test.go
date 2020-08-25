@@ -75,6 +75,18 @@ func TestPolymorphismGetComplicated(t *testing.T) {
 	}
 	helpers.DeepEqualOrFatal(t, salmon, &complexgroup.SmartSalmon{
 		Salmon: expectedSalmon,
+		AdditionalProperties: &map[string]interface{}{
+			"additionalProperty1": float64(1),
+			"additionalProperty2": false,
+			"additionalProperty3": "hello",
+			"additionalProperty4": map[string]interface{}{
+				"a": float64(1),
+				"b": float64(2),
+			},
+			"additionalProperty5": []interface{}{
+				float64(1), float64(3),
+			},
+		},
 	})
 	helpers.DeepEqualOrFatal(t, result.Salmon.GetSalmon(), &expectedSalmon)
 	helpers.DeepEqualOrFatal(t, result.Salmon.GetFish(), &expectedFish)
@@ -268,7 +280,72 @@ func TestPolymorphismGetValid(t *testing.T) {
 
 // PutComplicated - Put complex types that are polymorphic, but not at the root of the hierarchy; also have additional properties
 func TestPolymorphismPutComplicated(t *testing.T) {
-	t.Skip("additional properties NYI")
+	goblinBday := time.Date(2015, time.August, 8, 0, 0, 0, 0, time.UTC)
+	sawBday := time.Date(1900, time.January, 5, 1, 0, 0, 0, time.UTC)
+	sharkBday := time.Date(2012, time.January, 5, 1, 0, 0, 0, time.UTC)
+	client := complexgroup.NewDefaultClient(nil).PolymorphismOperations()
+	result, err := client.PutComplicated(context.Background(), &complexgroup.SmartSalmon{
+		Salmon: complexgroup.Salmon{
+			Fish: complexgroup.Fish{
+				Fishtype: to.StringPtr("smart_salmon"),
+				Length:   to.Float32Ptr(1),
+				Siblings: &[]complexgroup.FishClassification{
+					&complexgroup.Shark{
+						Fish: complexgroup.Fish{
+							Fishtype: to.StringPtr("shark"),
+							Length:   to.Float32Ptr(20),
+							Species:  to.StringPtr("predator")},
+						Age:      to.Int32Ptr(6),
+						Birthday: &sharkBday,
+					},
+					&complexgroup.Sawshark{
+						Shark: complexgroup.Shark{
+							Fish: complexgroup.Fish{
+								Fishtype: to.StringPtr("sawshark"),
+								Length:   to.Float32Ptr(10),
+								Species:  to.StringPtr("dangerous"),
+							},
+							Age:      to.Int32Ptr(105),
+							Birthday: &sawBday,
+						},
+						Picture: &[]byte{255, 255, 255, 255, 254},
+					},
+					&complexgroup.Goblinshark{
+						Shark: complexgroup.Shark{
+							Fish: complexgroup.Fish{
+								Fishtype: to.StringPtr("goblin"),
+								Length:   to.Float32Ptr(30),
+								Species:  to.StringPtr("scary"),
+							},
+							Age:      to.Int32Ptr(1),
+							Birthday: &goblinBday,
+						},
+						Color:   complexgroup.GoblinSharkColor("pinkish-gray").ToPtr(),
+						Jawsize: to.Int32Ptr(5),
+					},
+				},
+				Species: to.StringPtr("king"),
+			},
+			Iswild:   to.BoolPtr(true),
+			Location: to.StringPtr("alaska"),
+		},
+		AdditionalProperties: &map[string]interface{}{
+			"additionalProperty1": float64(1),
+			"additionalProperty2": false,
+			"additionalProperty3": "hello",
+			"additionalProperty4": map[string]interface{}{
+				"a": float64(1),
+				"b": float64(2),
+			},
+			"additionalProperty5": []interface{}{
+				float64(1), float64(3),
+			},
+		},
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 // PutMissingDiscriminator - Put complex types that are polymorphic, omitting the discriminator

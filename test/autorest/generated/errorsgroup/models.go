@@ -33,16 +33,34 @@ func (a *AnimalNotFound) UnmarshalJSON(data []byte) error {
 			if val != nil {
 				err = json.Unmarshal(*val, &a.Name)
 			}
+			delete(rawMsg, key)
 		}
 		if err != nil {
 			return err
 		}
 	}
-	return json.Unmarshal(data, &a.NotFoundErrorBase)
+	return a.NotFoundErrorBase.unmarshalInternal(rawMsg)
 }
 
 type BaseError struct {
 	SomeBaseProp *string `json:"someBaseProp,omitempty"`
+}
+
+func (b *BaseError) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "someBaseProp":
+			if val != nil {
+				err = json.Unmarshal(*val, &b.SomeBaseProp)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 type LinkNotFound struct {
@@ -63,12 +81,13 @@ func (l *LinkNotFound) UnmarshalJSON(data []byte) error {
 			if val != nil {
 				err = json.Unmarshal(*val, &l.WhatSubAddress)
 			}
+			delete(rawMsg, key)
 		}
 		if err != nil {
 			return err
 		}
 	}
-	return json.Unmarshal(data, &l.NotFoundErrorBase)
+	return l.NotFoundErrorBase.unmarshalInternal(rawMsg)
 }
 
 // NotFoundErrorBaseClassification provides polymorphic access to related types.
@@ -107,6 +126,10 @@ func (n *NotFoundErrorBase) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
+	return n.unmarshalInternal(rawMsg)
+}
+
+func (n *NotFoundErrorBase) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -114,16 +137,18 @@ func (n *NotFoundErrorBase) UnmarshalJSON(data []byte) error {
 			if val != nil {
 				err = json.Unmarshal(*val, &n.Reason)
 			}
+			delete(rawMsg, key)
 		case "whatNotFound":
 			if val != nil {
 				err = json.Unmarshal(*val, &n.WhatNotFound)
 			}
+			delete(rawMsg, key)
 		}
 		if err != nil {
 			return err
 		}
 	}
-	return json.Unmarshal(data, &n.BaseError)
+	return n.BaseError.unmarshalInternal(rawMsg)
 }
 
 type Pet struct {
@@ -173,6 +198,10 @@ func (p *PetActionError) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
+	return p.unmarshalInternal(rawMsg)
+}
+
+func (p *PetActionError) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -180,10 +209,12 @@ func (p *PetActionError) UnmarshalJSON(data []byte) error {
 			if val != nil {
 				err = json.Unmarshal(*val, &p.ErrorMessage)
 			}
+			delete(rawMsg, key)
 		case "errorType":
 			if val != nil {
 				err = json.Unmarshal(*val, &p.ErrorType)
 			}
+			delete(rawMsg, key)
 		}
 		if err != nil {
 			return err
@@ -219,12 +250,13 @@ func (p *PetHungryOrThirstyError) UnmarshalJSON(data []byte) error {
 			if val != nil {
 				err = json.Unmarshal(*val, &p.HungryOrThirsty)
 			}
+			delete(rawMsg, key)
 		}
 		if err != nil {
 			return err
 		}
 	}
-	return json.Unmarshal(data, &p.PetSadError)
+	return p.PetSadError.unmarshalInternal(rawMsg)
 }
 
 // PetResponse is the response envelope for operations that return a Pet type.
@@ -256,6 +288,10 @@ func (p *PetSadError) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
+	return p.unmarshalInternal(rawMsg)
+}
+
+func (p *PetSadError) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -263,10 +299,11 @@ func (p *PetSadError) UnmarshalJSON(data []byte) error {
 			if val != nil {
 				err = json.Unmarshal(*val, &p.Reason)
 			}
+			delete(rawMsg, key)
 		}
 		if err != nil {
 			return err
 		}
 	}
-	return json.Unmarshal(data, &p.PetActionError)
+	return p.PetActionError.unmarshalInternal(rawMsg)
 }
