@@ -66,3 +66,43 @@ export function hasAdditionalProperties(obj: ObjectSchema): DictionarySchema | u
   }
   return undefined;
 }
+
+// returns true if the object contains a property that's a discriminated type
+export function hasPolymorphicField(obj: ObjectSchema): boolean {
+  let found = false;
+  for (const prop of values(obj.properties)) {
+    if (isObjectSchema(prop.schema)) {
+      found = prop.schema.discriminator !== undefined;
+    } else if (isArraySchema(prop.schema) && isObjectSchema(prop.schema.elementType)) {
+      found = prop.schema.elementType.discriminator !== undefined;
+    }
+  }
+  return found;
+}
+
+// returns the object's position in an inheritence hierarchy
+export function getRelationship(obj: ObjectSchema): 'none' | 'root' | 'parent' | 'leaf' {
+  let hasParent = false;
+  for (const parent of values(obj.parents?.immediate)) {
+    if (isObjectSchema(parent)) {
+      hasParent = true;
+      break;
+    }
+  }
+  let hasChild = false;
+  for (const child of values(obj.children?.immediate)) {
+    if (isObjectSchema(child)) {
+      hasChild = true;
+      break;
+    }
+  }
+  if (!hasParent && !hasChild) {
+    return 'none';
+  } else if (!hasChild) {
+    return 'leaf';
+  } else if (!hasParent) {
+    return 'root';
+  } else {
+    return 'parent';
+  }
+}

@@ -2020,30 +2020,42 @@ type AzureReachabilityReportLatencyInfo struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureReachabilityReportLatencyInfo.
 func (a AzureReachabilityReportLatencyInfo) MarshalJSON() ([]byte, error) {
-	type alias AzureReachabilityReportLatencyInfo
-	aux := &struct {
-		*alias
-		TimeStamp *timeRFC3339 `json:"timeStamp"`
-	}{
-		alias:     (*alias)(&a),
-		TimeStamp: (*timeRFC3339)(a.TimeStamp),
+	objectMap := make(map[string]interface{})
+	if a.Score != nil {
+		objectMap["score"] = a.Score
 	}
-	return json.Marshal(aux)
+	if a.TimeStamp != nil {
+		objectMap["timeStamp"] = (*timeRFC3339)(a.TimeStamp)
+	}
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureReachabilityReportLatencyInfo.
 func (a *AzureReachabilityReportLatencyInfo) UnmarshalJSON(data []byte) error {
-	type alias AzureReachabilityReportLatencyInfo
-	aux := &struct {
-		*alias
-		TimeStamp *timeRFC3339 `json:"timeStamp"`
-	}{
-		alias: (*alias)(a),
-	}
-	if err := json.Unmarshal(data, aux); err != nil {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	a.TimeStamp = (*time.Time)(aux.TimeStamp)
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "score":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.Score)
+			}
+			delete(rawMsg, key)
+		case "timeStamp":
+			if val != nil {
+				var aux timeRFC3339
+				err = json.Unmarshal(*val, &aux)
+				a.TimeStamp = (*time.Time)(&aux)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
 	return nil
 }
 
@@ -2079,34 +2091,68 @@ type AzureReachabilityReportParameters struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureReachabilityReportParameters.
 func (a AzureReachabilityReportParameters) MarshalJSON() ([]byte, error) {
-	type alias AzureReachabilityReportParameters
-	aux := &struct {
-		*alias
-		EndTime   *timeRFC3339 `json:"endTime"`
-		StartTime *timeRFC3339 `json:"startTime"`
-	}{
-		alias:     (*alias)(&a),
-		EndTime:   (*timeRFC3339)(a.EndTime),
-		StartTime: (*timeRFC3339)(a.StartTime),
+	objectMap := make(map[string]interface{})
+	if a.AzureLocations != nil {
+		objectMap["azureLocations"] = a.AzureLocations
 	}
-	return json.Marshal(aux)
+	if a.EndTime != nil {
+		objectMap["endTime"] = (*timeRFC3339)(a.EndTime)
+	}
+	if a.ProviderLocation != nil {
+		objectMap["providerLocation"] = a.ProviderLocation
+	}
+	if a.Providers != nil {
+		objectMap["providers"] = a.Providers
+	}
+	if a.StartTime != nil {
+		objectMap["startTime"] = (*timeRFC3339)(a.StartTime)
+	}
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureReachabilityReportParameters.
 func (a *AzureReachabilityReportParameters) UnmarshalJSON(data []byte) error {
-	type alias AzureReachabilityReportParameters
-	aux := &struct {
-		*alias
-		EndTime   *timeRFC3339 `json:"endTime"`
-		StartTime *timeRFC3339 `json:"startTime"`
-	}{
-		alias: (*alias)(a),
-	}
-	if err := json.Unmarshal(data, aux); err != nil {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	a.EndTime = (*time.Time)(aux.EndTime)
-	a.StartTime = (*time.Time)(aux.StartTime)
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "azureLocations":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.AzureLocations)
+			}
+			delete(rawMsg, key)
+		case "endTime":
+			if val != nil {
+				var aux timeRFC3339
+				err = json.Unmarshal(*val, &aux)
+				a.EndTime = (*time.Time)(&aux)
+			}
+			delete(rawMsg, key)
+		case "providerLocation":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.ProviderLocation)
+			}
+			delete(rawMsg, key)
+		case "providers":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.Providers)
+			}
+			delete(rawMsg, key)
+		case "startTime":
+			if val != nil {
+				var aux timeRFC3339
+				err = json.Unmarshal(*val, &aux)
+				a.StartTime = (*time.Time)(&aux)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
 	return nil
 }
 
@@ -2730,6 +2776,95 @@ type ConnectionMonitorParameters struct {
 	TestGroups *[]ConnectionMonitorTestGroup `json:"testGroups,omitempty"`
 }
 
+func (c ConnectionMonitorParameters) marshalInternal() map[string]interface{} {
+	objectMap := make(map[string]interface{})
+	if c.AutoStart != nil {
+		objectMap["autoStart"] = c.AutoStart
+	}
+	if c.Destination != nil {
+		objectMap["destination"] = c.Destination
+	}
+	if c.Endpoints != nil {
+		objectMap["endpoints"] = c.Endpoints
+	}
+	if c.MonitoringIntervalInSeconds != nil {
+		objectMap["monitoringIntervalInSeconds"] = c.MonitoringIntervalInSeconds
+	}
+	if c.Notes != nil {
+		objectMap["notes"] = c.Notes
+	}
+	if c.Outputs != nil {
+		objectMap["outputs"] = c.Outputs
+	}
+	if c.Source != nil {
+		objectMap["source"] = c.Source
+	}
+	if c.TestConfigurations != nil {
+		objectMap["testConfigurations"] = c.TestConfigurations
+	}
+	if c.TestGroups != nil {
+		objectMap["testGroups"] = c.TestGroups
+	}
+	return objectMap
+}
+
+func (c *ConnectionMonitorParameters) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "autoStart":
+			if val != nil {
+				err = json.Unmarshal(*val, &c.AutoStart)
+			}
+			delete(rawMsg, key)
+		case "destination":
+			if val != nil {
+				err = json.Unmarshal(*val, &c.Destination)
+			}
+			delete(rawMsg, key)
+		case "endpoints":
+			if val != nil {
+				err = json.Unmarshal(*val, &c.Endpoints)
+			}
+			delete(rawMsg, key)
+		case "monitoringIntervalInSeconds":
+			if val != nil {
+				err = json.Unmarshal(*val, &c.MonitoringIntervalInSeconds)
+			}
+			delete(rawMsg, key)
+		case "notes":
+			if val != nil {
+				err = json.Unmarshal(*val, &c.Notes)
+			}
+			delete(rawMsg, key)
+		case "outputs":
+			if val != nil {
+				err = json.Unmarshal(*val, &c.Outputs)
+			}
+			delete(rawMsg, key)
+		case "source":
+			if val != nil {
+				err = json.Unmarshal(*val, &c.Source)
+			}
+			delete(rawMsg, key)
+		case "testConfigurations":
+			if val != nil {
+				err = json.Unmarshal(*val, &c.TestConfigurations)
+			}
+			delete(rawMsg, key)
+		case "testGroups":
+			if val != nil {
+				err = json.Unmarshal(*val, &c.TestGroups)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 // List of connection states snapshots.
 type ConnectionMonitorQueryResult struct {
 	// Status of connection monitor source.
@@ -2817,31 +2952,59 @@ type ConnectionMonitorResultProperties struct {
 
 // MarshalJSON implements the json.Marshaller interface for type ConnectionMonitorResultProperties.
 func (c ConnectionMonitorResultProperties) MarshalJSON() ([]byte, error) {
-	type alias ConnectionMonitorResultProperties
-	aux := &struct {
-		*alias
-		StartTime *timeRFC3339 `json:"startTime"`
-	}{
-		alias:     (*alias)(&c),
-		StartTime: (*timeRFC3339)(c.StartTime),
+	objectMap := c.ConnectionMonitorParameters.marshalInternal()
+	if c.ConnectionMonitorType != nil {
+		objectMap["connectionMonitorType"] = c.ConnectionMonitorType
 	}
-	return json.Marshal(aux)
+	if c.MonitoringStatus != nil {
+		objectMap["monitoringStatus"] = c.MonitoringStatus
+	}
+	if c.ProvisioningState != nil {
+		objectMap["provisioningState"] = c.ProvisioningState
+	}
+	if c.StartTime != nil {
+		objectMap["startTime"] = (*timeRFC3339)(c.StartTime)
+	}
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ConnectionMonitorResultProperties.
 func (c *ConnectionMonitorResultProperties) UnmarshalJSON(data []byte) error {
-	type alias ConnectionMonitorResultProperties
-	aux := &struct {
-		*alias
-		StartTime *timeRFC3339 `json:"startTime"`
-	}{
-		alias: (*alias)(c),
-	}
-	if err := json.Unmarshal(data, aux); err != nil {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	c.StartTime = (*time.Time)(aux.StartTime)
-	return nil
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "connectionMonitorType":
+			if val != nil {
+				err = json.Unmarshal(*val, &c.ConnectionMonitorType)
+			}
+			delete(rawMsg, key)
+		case "monitoringStatus":
+			if val != nil {
+				err = json.Unmarshal(*val, &c.MonitoringStatus)
+			}
+			delete(rawMsg, key)
+		case "provisioningState":
+			if val != nil {
+				err = json.Unmarshal(*val, &c.ProvisioningState)
+			}
+			delete(rawMsg, key)
+		case "startTime":
+			if val != nil {
+				var aux timeRFC3339
+				err = json.Unmarshal(*val, &aux)
+				c.StartTime = (*time.Time)(&aux)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return c.ConnectionMonitorParameters.unmarshalInternal(rawMsg)
 }
 
 // ConnectionMonitorResultResponse is the response envelope for operations that return a ConnectionMonitorResult type.
@@ -3024,34 +3187,108 @@ type ConnectionStateSnapshot struct {
 
 // MarshalJSON implements the json.Marshaller interface for type ConnectionStateSnapshot.
 func (c ConnectionStateSnapshot) MarshalJSON() ([]byte, error) {
-	type alias ConnectionStateSnapshot
-	aux := &struct {
-		*alias
-		EndTime   *timeRFC3339 `json:"endTime"`
-		StartTime *timeRFC3339 `json:"startTime"`
-	}{
-		alias:     (*alias)(&c),
-		EndTime:   (*timeRFC3339)(c.EndTime),
-		StartTime: (*timeRFC3339)(c.StartTime),
+	objectMap := make(map[string]interface{})
+	if c.AvgLatencyInMS != nil {
+		objectMap["avgLatencyInMs"] = c.AvgLatencyInMS
 	}
-	return json.Marshal(aux)
+	if c.ConnectionState != nil {
+		objectMap["connectionState"] = c.ConnectionState
+	}
+	if c.EndTime != nil {
+		objectMap["endTime"] = (*timeRFC3339)(c.EndTime)
+	}
+	if c.EvaluationState != nil {
+		objectMap["evaluationState"] = c.EvaluationState
+	}
+	if c.Hops != nil {
+		objectMap["hops"] = c.Hops
+	}
+	if c.MaxLatencyInMS != nil {
+		objectMap["maxLatencyInMs"] = c.MaxLatencyInMS
+	}
+	if c.MinLatencyInMS != nil {
+		objectMap["minLatencyInMs"] = c.MinLatencyInMS
+	}
+	if c.ProbesFailed != nil {
+		objectMap["probesFailed"] = c.ProbesFailed
+	}
+	if c.ProbesSent != nil {
+		objectMap["probesSent"] = c.ProbesSent
+	}
+	if c.StartTime != nil {
+		objectMap["startTime"] = (*timeRFC3339)(c.StartTime)
+	}
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ConnectionStateSnapshot.
 func (c *ConnectionStateSnapshot) UnmarshalJSON(data []byte) error {
-	type alias ConnectionStateSnapshot
-	aux := &struct {
-		*alias
-		EndTime   *timeRFC3339 `json:"endTime"`
-		StartTime *timeRFC3339 `json:"startTime"`
-	}{
-		alias: (*alias)(c),
-	}
-	if err := json.Unmarshal(data, aux); err != nil {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	c.EndTime = (*time.Time)(aux.EndTime)
-	c.StartTime = (*time.Time)(aux.StartTime)
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "avgLatencyInMs":
+			if val != nil {
+				err = json.Unmarshal(*val, &c.AvgLatencyInMS)
+			}
+			delete(rawMsg, key)
+		case "connectionState":
+			if val != nil {
+				err = json.Unmarshal(*val, &c.ConnectionState)
+			}
+			delete(rawMsg, key)
+		case "endTime":
+			if val != nil {
+				var aux timeRFC3339
+				err = json.Unmarshal(*val, &aux)
+				c.EndTime = (*time.Time)(&aux)
+			}
+			delete(rawMsg, key)
+		case "evaluationState":
+			if val != nil {
+				err = json.Unmarshal(*val, &c.EvaluationState)
+			}
+			delete(rawMsg, key)
+		case "hops":
+			if val != nil {
+				err = json.Unmarshal(*val, &c.Hops)
+			}
+			delete(rawMsg, key)
+		case "maxLatencyInMs":
+			if val != nil {
+				err = json.Unmarshal(*val, &c.MaxLatencyInMS)
+			}
+			delete(rawMsg, key)
+		case "minLatencyInMs":
+			if val != nil {
+				err = json.Unmarshal(*val, &c.MinLatencyInMS)
+			}
+			delete(rawMsg, key)
+		case "probesFailed":
+			if val != nil {
+				err = json.Unmarshal(*val, &c.ProbesFailed)
+			}
+			delete(rawMsg, key)
+		case "probesSent":
+			if val != nil {
+				err = json.Unmarshal(*val, &c.ProbesSent)
+			}
+			delete(rawMsg, key)
+		case "startTime":
+			if val != nil {
+				var aux timeRFC3339
+				err = json.Unmarshal(*val, &aux)
+				c.StartTime = (*time.Time)(&aux)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
 	return nil
 }
 
@@ -8296,30 +8533,74 @@ type PacketCaptureQueryStatusResult struct {
 
 // MarshalJSON implements the json.Marshaller interface for type PacketCaptureQueryStatusResult.
 func (p PacketCaptureQueryStatusResult) MarshalJSON() ([]byte, error) {
-	type alias PacketCaptureQueryStatusResult
-	aux := &struct {
-		*alias
-		CaptureStartTime *timeRFC3339 `json:"captureStartTime"`
-	}{
-		alias:            (*alias)(&p),
-		CaptureStartTime: (*timeRFC3339)(p.CaptureStartTime),
+	objectMap := make(map[string]interface{})
+	if p.CaptureStartTime != nil {
+		objectMap["captureStartTime"] = (*timeRFC3339)(p.CaptureStartTime)
 	}
-	return json.Marshal(aux)
+	if p.ID != nil {
+		objectMap["id"] = p.ID
+	}
+	if p.Name != nil {
+		objectMap["name"] = p.Name
+	}
+	if p.PacketCaptureError != nil {
+		objectMap["packetCaptureError"] = p.PacketCaptureError
+	}
+	if p.PacketCaptureStatus != nil {
+		objectMap["packetCaptureStatus"] = p.PacketCaptureStatus
+	}
+	if p.StopReason != nil {
+		objectMap["stopReason"] = p.StopReason
+	}
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type PacketCaptureQueryStatusResult.
 func (p *PacketCaptureQueryStatusResult) UnmarshalJSON(data []byte) error {
-	type alias PacketCaptureQueryStatusResult
-	aux := &struct {
-		*alias
-		CaptureStartTime *timeRFC3339 `json:"captureStartTime"`
-	}{
-		alias: (*alias)(p),
-	}
-	if err := json.Unmarshal(data, aux); err != nil {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	p.CaptureStartTime = (*time.Time)(aux.CaptureStartTime)
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "captureStartTime":
+			if val != nil {
+				var aux timeRFC3339
+				err = json.Unmarshal(*val, &aux)
+				p.CaptureStartTime = (*time.Time)(&aux)
+			}
+			delete(rawMsg, key)
+		case "id":
+			if val != nil {
+				err = json.Unmarshal(*val, &p.ID)
+			}
+			delete(rawMsg, key)
+		case "name":
+			if val != nil {
+				err = json.Unmarshal(*val, &p.Name)
+			}
+			delete(rawMsg, key)
+		case "packetCaptureError":
+			if val != nil {
+				err = json.Unmarshal(*val, &p.PacketCaptureError)
+			}
+			delete(rawMsg, key)
+		case "packetCaptureStatus":
+			if val != nil {
+				err = json.Unmarshal(*val, &p.PacketCaptureStatus)
+			}
+			delete(rawMsg, key)
+		case "stopReason":
+			if val != nil {
+				err = json.Unmarshal(*val, &p.StopReason)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
 	return nil
 }
 
@@ -10366,34 +10647,60 @@ type Topology struct {
 
 // MarshalJSON implements the json.Marshaller interface for type Topology.
 func (t Topology) MarshalJSON() ([]byte, error) {
-	type alias Topology
-	aux := &struct {
-		*alias
-		CreatedDateTime *timeRFC3339 `json:"createdDateTime"`
-		LastModified    *timeRFC3339 `json:"lastModified"`
-	}{
-		alias:           (*alias)(&t),
-		CreatedDateTime: (*timeRFC3339)(t.CreatedDateTime),
-		LastModified:    (*timeRFC3339)(t.LastModified),
+	objectMap := make(map[string]interface{})
+	if t.CreatedDateTime != nil {
+		objectMap["createdDateTime"] = (*timeRFC3339)(t.CreatedDateTime)
 	}
-	return json.Marshal(aux)
+	if t.ID != nil {
+		objectMap["id"] = t.ID
+	}
+	if t.LastModified != nil {
+		objectMap["lastModified"] = (*timeRFC3339)(t.LastModified)
+	}
+	if t.Resources != nil {
+		objectMap["resources"] = t.Resources
+	}
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type Topology.
 func (t *Topology) UnmarshalJSON(data []byte) error {
-	type alias Topology
-	aux := &struct {
-		*alias
-		CreatedDateTime *timeRFC3339 `json:"createdDateTime"`
-		LastModified    *timeRFC3339 `json:"lastModified"`
-	}{
-		alias: (*alias)(t),
-	}
-	if err := json.Unmarshal(data, aux); err != nil {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	t.CreatedDateTime = (*time.Time)(aux.CreatedDateTime)
-	t.LastModified = (*time.Time)(aux.LastModified)
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "createdDateTime":
+			if val != nil {
+				var aux timeRFC3339
+				err = json.Unmarshal(*val, &aux)
+				t.CreatedDateTime = (*time.Time)(&aux)
+			}
+			delete(rawMsg, key)
+		case "id":
+			if val != nil {
+				err = json.Unmarshal(*val, &t.ID)
+			}
+			delete(rawMsg, key)
+		case "lastModified":
+			if val != nil {
+				var aux timeRFC3339
+				err = json.Unmarshal(*val, &aux)
+				t.LastModified = (*time.Time)(&aux)
+			}
+			delete(rawMsg, key)
+		case "resources":
+			if val != nil {
+				err = json.Unmarshal(*val, &t.Resources)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
 	return nil
 }
 
@@ -10546,34 +10853,60 @@ type TroubleshootingResult struct {
 
 // MarshalJSON implements the json.Marshaller interface for type TroubleshootingResult.
 func (t TroubleshootingResult) MarshalJSON() ([]byte, error) {
-	type alias TroubleshootingResult
-	aux := &struct {
-		*alias
-		EndTime   *timeRFC3339 `json:"endTime"`
-		StartTime *timeRFC3339 `json:"startTime"`
-	}{
-		alias:     (*alias)(&t),
-		EndTime:   (*timeRFC3339)(t.EndTime),
-		StartTime: (*timeRFC3339)(t.StartTime),
+	objectMap := make(map[string]interface{})
+	if t.Code != nil {
+		objectMap["code"] = t.Code
 	}
-	return json.Marshal(aux)
+	if t.EndTime != nil {
+		objectMap["endTime"] = (*timeRFC3339)(t.EndTime)
+	}
+	if t.Results != nil {
+		objectMap["results"] = t.Results
+	}
+	if t.StartTime != nil {
+		objectMap["startTime"] = (*timeRFC3339)(t.StartTime)
+	}
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type TroubleshootingResult.
 func (t *TroubleshootingResult) UnmarshalJSON(data []byte) error {
-	type alias TroubleshootingResult
-	aux := &struct {
-		*alias
-		EndTime   *timeRFC3339 `json:"endTime"`
-		StartTime *timeRFC3339 `json:"startTime"`
-	}{
-		alias: (*alias)(t),
-	}
-	if err := json.Unmarshal(data, aux); err != nil {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	t.EndTime = (*time.Time)(aux.EndTime)
-	t.StartTime = (*time.Time)(aux.StartTime)
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "code":
+			if val != nil {
+				err = json.Unmarshal(*val, &t.Code)
+			}
+			delete(rawMsg, key)
+		case "endTime":
+			if val != nil {
+				var aux timeRFC3339
+				err = json.Unmarshal(*val, &aux)
+				t.EndTime = (*time.Time)(&aux)
+			}
+			delete(rawMsg, key)
+		case "results":
+			if val != nil {
+				err = json.Unmarshal(*val, &t.Results)
+			}
+			delete(rawMsg, key)
+		case "startTime":
+			if val != nil {
+				var aux timeRFC3339
+				err = json.Unmarshal(*val, &aux)
+				t.StartTime = (*time.Time)(&aux)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
 	return nil
 }
 

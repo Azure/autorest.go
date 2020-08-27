@@ -18,23 +18,9 @@ type CatApTrue struct {
 
 // MarshalJSON implements the json.Marshaller interface for type CatApTrue.
 func (c CatApTrue) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if c.ID != nil {
-		objectMap["id"] = c.ID
-	}
-	if c.Name != nil {
-		objectMap["name"] = c.Name
-	}
-	if c.Status != nil {
-		objectMap["status"] = c.Status
-	}
+	objectMap := c.PetApTrue.marshalInternal()
 	if c.Friendly != nil {
 		objectMap["friendly"] = c.Friendly
-	}
-	if c.AdditionalProperties != nil {
-		for key, val := range *c.AdditionalProperties {
-			objectMap[key] = val
-		}
 	}
 	return json.Marshal(objectMap)
 }
@@ -48,37 +34,17 @@ func (c *CatApTrue) UnmarshalJSON(data []byte) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
-		case "id":
-			if val != nil {
-				err = json.Unmarshal(*val, &c.ID)
-			}
-		case "name":
-			if val != nil {
-				err = json.Unmarshal(*val, &c.Name)
-			}
-		case "status":
-			if val != nil {
-				err = json.Unmarshal(*val, &c.Status)
-			}
 		case "friendly":
 			if val != nil {
 				err = json.Unmarshal(*val, &c.Friendly)
 			}
-		default:
-			if c.AdditionalProperties == nil {
-				c.AdditionalProperties = &map[string]interface{}{}
-			}
-			if val != nil {
-				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
-				(*c.AdditionalProperties)[key] = aux
-			}
+			delete(rawMsg, key)
 		}
 		if err != nil {
 			return err
 		}
 	}
-	return nil
+	return c.PetApTrue.unmarshalInternal(rawMsg)
 }
 
 // CatApTrueResponse is the response envelope for operations that return a CatApTrue type.
@@ -176,22 +142,27 @@ func (p *PetApInPropertiesWithApstring) UnmarshalJSON(data []byte) error {
 			if val != nil {
 				err = json.Unmarshal(*val, &p.AdditionalProperties1)
 			}
+			delete(rawMsg, key)
 		case "id":
 			if val != nil {
 				err = json.Unmarshal(*val, &p.ID)
 			}
+			delete(rawMsg, key)
 		case "name":
 			if val != nil {
 				err = json.Unmarshal(*val, &p.Name)
 			}
+			delete(rawMsg, key)
 		case "@odata.location":
 			if val != nil {
 				err = json.Unmarshal(*val, &p.OdataLocation)
 			}
+			delete(rawMsg, key)
 		case "status":
 			if val != nil {
 				err = json.Unmarshal(*val, &p.Status)
 			}
+			delete(rawMsg, key)
 		default:
 			if p.AdditionalProperties == nil {
 				p.AdditionalProperties = &map[string]string{}
@@ -201,6 +172,7 @@ func (p *PetApInPropertiesWithApstring) UnmarshalJSON(data []byte) error {
 				err = json.Unmarshal(*val, &aux)
 				(*p.AdditionalProperties)[key] = aux
 			}
+			delete(rawMsg, key)
 		}
 		if err != nil {
 			return err
@@ -259,14 +231,17 @@ func (p *PetApObject) UnmarshalJSON(data []byte) error {
 			if val != nil {
 				err = json.Unmarshal(*val, &p.ID)
 			}
+			delete(rawMsg, key)
 		case "name":
 			if val != nil {
 				err = json.Unmarshal(*val, &p.Name)
 			}
+			delete(rawMsg, key)
 		case "status":
 			if val != nil {
 				err = json.Unmarshal(*val, &p.Status)
 			}
+			delete(rawMsg, key)
 		default:
 			if p.AdditionalProperties == nil {
 				p.AdditionalProperties = &map[string]interface{}{}
@@ -276,6 +251,7 @@ func (p *PetApObject) UnmarshalJSON(data []byte) error {
 				err = json.Unmarshal(*val, &aux)
 				(*p.AdditionalProperties)[key] = aux
 			}
+			delete(rawMsg, key)
 		}
 		if err != nil {
 			return err
@@ -333,14 +309,17 @@ func (p *PetApString) UnmarshalJSON(data []byte) error {
 			if val != nil {
 				err = json.Unmarshal(*val, &p.ID)
 			}
+			delete(rawMsg, key)
 		case "name":
 			if val != nil {
 				err = json.Unmarshal(*val, &p.Name)
 			}
+			delete(rawMsg, key)
 		case "status":
 			if val != nil {
 				err = json.Unmarshal(*val, &p.Status)
 			}
+			delete(rawMsg, key)
 		default:
 			if p.AdditionalProperties == nil {
 				p.AdditionalProperties = &map[string]string{}
@@ -350,6 +329,7 @@ func (p *PetApString) UnmarshalJSON(data []byte) error {
 				err = json.Unmarshal(*val, &aux)
 				(*p.AdditionalProperties)[key] = aux
 			}
+			delete(rawMsg, key)
 		}
 		if err != nil {
 			return err
@@ -376,6 +356,20 @@ type PetApTrue struct {
 
 // MarshalJSON implements the json.Marshaller interface for type PetApTrue.
 func (p PetApTrue) MarshalJSON() ([]byte, error) {
+	objectMap := p.marshalInternal()
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type PetApTrue.
+func (p *PetApTrue) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	return p.unmarshalInternal(rawMsg)
+}
+
+func (p PetApTrue) marshalInternal() map[string]interface{} {
 	objectMap := make(map[string]interface{})
 	if p.ID != nil {
 		objectMap["id"] = p.ID
@@ -391,15 +385,10 @@ func (p PetApTrue) MarshalJSON() ([]byte, error) {
 			objectMap[key] = val
 		}
 	}
-	return json.Marshal(objectMap)
+	return objectMap
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type PetApTrue.
-func (p *PetApTrue) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
+func (p *PetApTrue) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -407,14 +396,17 @@ func (p *PetApTrue) UnmarshalJSON(data []byte) error {
 			if val != nil {
 				err = json.Unmarshal(*val, &p.ID)
 			}
+			delete(rawMsg, key)
 		case "name":
 			if val != nil {
 				err = json.Unmarshal(*val, &p.Name)
 			}
+			delete(rawMsg, key)
 		case "status":
 			if val != nil {
 				err = json.Unmarshal(*val, &p.Status)
 			}
+			delete(rawMsg, key)
 		default:
 			if p.AdditionalProperties == nil {
 				p.AdditionalProperties = &map[string]interface{}{}
@@ -424,6 +416,7 @@ func (p *PetApTrue) UnmarshalJSON(data []byte) error {
 				err = json.Unmarshal(*val, &aux)
 				(*p.AdditionalProperties)[key] = aux
 			}
+			delete(rawMsg, key)
 		}
 		if err != nil {
 			return err
