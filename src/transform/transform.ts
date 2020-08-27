@@ -419,10 +419,17 @@ function processOperationResponses(session: Session<CodeModel>) {
               prop.language.go!.name = 'Inner' + prop.language.go!.name;
             }
           }
+          // annotate all child and parent error types.  note that errorType has
+          // special significance which is why we use inheritedErrorType instead.
           for (const child of values(schemaError.children?.all)) {
-            // annotate all child error types.  note that errorType has special
-            // significance which is why we use childErrorType instead.
-            child.language.go!.childErrorType = true;
+            if (isObjectSchema(child)) {
+              child.language.go!.inheritedErrorType = true;
+            }
+          }
+          for (const parent of values(schemaError.parents?.all)) {
+            if (isObjectSchema(parent)) {
+              parent.language.go!.inheritedErrorType = true;
+            }
           }
           if (schemaError.discriminator) {
             // if the error is a discriminator we need to create an internal wrapper type

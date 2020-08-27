@@ -103,34 +103,44 @@ type DatetimeWrapper struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DatetimeWrapper.
 func (d DatetimeWrapper) MarshalJSON() ([]byte, error) {
-	type alias DatetimeWrapper
-	aux := &struct {
-		*alias
-		Field *timeRFC3339 `json:"field"`
-		Now   *timeRFC3339 `json:"now"`
-	}{
-		alias: (*alias)(&d),
-		Field: (*timeRFC3339)(d.Field),
-		Now:   (*timeRFC3339)(d.Now),
+	objectMap := make(map[string]interface{})
+	if d.Field != nil {
+		objectMap["field"] = (*timeRFC3339)(d.Field)
 	}
-	return json.Marshal(aux)
+	if d.Now != nil {
+		objectMap["now"] = (*timeRFC3339)(d.Now)
+	}
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DatetimeWrapper.
 func (d *DatetimeWrapper) UnmarshalJSON(data []byte) error {
-	type alias DatetimeWrapper
-	aux := &struct {
-		*alias
-		Field *timeRFC3339 `json:"field"`
-		Now   *timeRFC3339 `json:"now"`
-	}{
-		alias: (*alias)(d),
-	}
-	if err := json.Unmarshal(data, aux); err != nil {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	d.Field = (*time.Time)(aux.Field)
-	d.Now = (*time.Time)(aux.Now)
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "field":
+			if val != nil {
+				var aux timeRFC3339
+				err = json.Unmarshal(*val, &aux)
+				d.Field = (*time.Time)(&aux)
+			}
+			delete(rawMsg, key)
+		case "now":
+			if val != nil {
+				var aux timeRFC3339
+				err = json.Unmarshal(*val, &aux)
+				d.Now = (*time.Time)(&aux)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
 	return nil
 }
 
@@ -149,34 +159,44 @@ type Datetimerfc1123Wrapper struct {
 
 // MarshalJSON implements the json.Marshaller interface for type Datetimerfc1123Wrapper.
 func (d Datetimerfc1123Wrapper) MarshalJSON() ([]byte, error) {
-	type alias Datetimerfc1123Wrapper
-	aux := &struct {
-		*alias
-		Field *timeRFC1123 `json:"field"`
-		Now   *timeRFC1123 `json:"now"`
-	}{
-		alias: (*alias)(&d),
-		Field: (*timeRFC1123)(d.Field),
-		Now:   (*timeRFC1123)(d.Now),
+	objectMap := make(map[string]interface{})
+	if d.Field != nil {
+		objectMap["field"] = (*timeRFC1123)(d.Field)
 	}
-	return json.Marshal(aux)
+	if d.Now != nil {
+		objectMap["now"] = (*timeRFC1123)(d.Now)
+	}
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type Datetimerfc1123Wrapper.
 func (d *Datetimerfc1123Wrapper) UnmarshalJSON(data []byte) error {
-	type alias Datetimerfc1123Wrapper
-	aux := &struct {
-		*alias
-		Field *timeRFC1123 `json:"field"`
-		Now   *timeRFC1123 `json:"now"`
-	}{
-		alias: (*alias)(d),
-	}
-	if err := json.Unmarshal(data, aux); err != nil {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	d.Field = (*time.Time)(aux.Field)
-	d.Now = (*time.Time)(aux.Now)
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "field":
+			if val != nil {
+				var aux timeRFC1123
+				err = json.Unmarshal(*val, &aux)
+				d.Field = (*time.Time)(&aux)
+			}
+			delete(rawMsg, key)
+		case "now":
+			if val != nil {
+				var aux timeRFC1123
+				err = json.Unmarshal(*val, &aux)
+				d.Now = (*time.Time)(&aux)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
 	return nil
 }
 
@@ -956,11 +976,6 @@ func (s *SmartSalmon) UnmarshalJSON(data []byte) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
-		case "AdditionalProperties":
-			if val != nil {
-				err = json.Unmarshal(*val, &s.AdditionalProperties)
-			}
-			delete(rawMsg, key)
 		case "college_degree":
 			if val != nil {
 				err = json.Unmarshal(*val, &s.CollegeDegree)
