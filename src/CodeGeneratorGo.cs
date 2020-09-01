@@ -57,13 +57,7 @@ namespace AutoRest.Go
             // this is a bit of a hack until we have proper support for this in the swagger->sdk bot so it's opt-in.
             if (Settings.Instance.Host.GetValue<bool>("preview-chk").Result)
             {
-                const string previewSubdir = "/preview/";
-                var files = await Settings.Instance.Host.GetValue<string[]>("input-file");
-                // only evaluate composite builds if all swaggers are preview as we don't have a well-defined model for mixed preview/stable swaggers
-                if (files.All(file => file.IndexOf(previewSubdir) > -1) && folder.IndexOf(previewSubdir) == -1)
-                {
-                    throw new InvalidOperationException($"output-folder must be under a preview subdirectory for preview swagger {files[0]}");
-                }
+                PreviewCheck(folder);
             }
 
             var codeModel = cm as CodeModelGo;
@@ -171,6 +165,32 @@ namespace AutoRest.Go
                 return "";
             }
             return "stage/";
+        }
+
+        private void PreviewCheck(string folder)
+        {
+            var isProfile = Settings.Instance.Host.GetValue<bool>("is-profile").Result;
+            if (isProfile) // if a tag is designed to serve profile building, we could omit the preview check
+            {
+                return;
+            }
+            var files = Settings.Instance.Host.GetValue<string[]>("input-file").Result;
+            if (IsPreviewPackage(files) && folder.IndexOf(previewSubDir) < 0)
+            {
+                throw new InvalidOperationException($"output-folder must be under a preview subdirectory for preview swagger set {string.Join(", ", files)}");
+            }
+            if (!IsPreviewPackage(files) && folder.IndexOf(previewSubDir) >= 0)
+            {
+                throw new InvalidOperationException($"output-folder must not be under a preview subdirectory for stable swagger set {string.Join(", ", files)}");
+            }
+        }
+
+        private const string previewSubDir = "/preview/";
+
+        private static bool IsPreviewPackage(string[] files)
+        {
+            // only evaluate composite builds if all swaggers are preview as we don't have a well-defined model for mixed preview/stable swaggers
+            return files.All(file => file.IndexOf(previewSubDir) >= 0);
         }
     }
 }
