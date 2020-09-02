@@ -175,7 +175,7 @@ type BlobProperties struct {
 
 	// Size in bytes
 	ContentLength          *int64             `xml:"Content-Length"`
-	ContentMd5             *string            `xml:"Content-MD5"`
+	ContentMD5             *string            `xml:"Content-MD5"`
 	ContentType            *string            `xml:"Content-Type"`
 	CopyCompletionTime     *time.Time         `xml:"CopyCompletionTime"`
 	CopyID                 *string            `xml:"CopyId"`

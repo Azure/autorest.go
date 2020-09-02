@@ -5,7 +5,7 @@
 
 import { pascalCase, camelCase } from '@azure-tools/codegen';
 import { Session } from '@azure-tools/autorest-extension-base';
-import { CodeModel, Language } from '@azure-tools/codemodel';
+import { CodeModel, HttpHeader, Language } from '@azure-tools/codemodel';
 import { visitor, clone, values } from '@azure-tools/linq';
 import { CommonAcronyms, ReservedWords } from './mappings';
 import { aggregateParameters, hasAdditionalProperties, isLROOperation } from '../common/helpers';
@@ -106,6 +106,12 @@ export async function namer(session: Session<CodeModel>) {
       details.protocolNaming = new protocolMethods(camelCase(details.name));
       if (op.language.go!.paging && op.language.go!.paging.nextLinkName !== null) {
         op.language.go!.paging.nextLinkName = pascalCase(op.language.go!.paging.nextLinkName);
+      }
+      for (const resp of values(op.responses)) {
+        for (const header of values(resp.protocol.http!.headers)) {
+          const head = <HttpHeader>header;
+          head.language.go!.name = getEscapedReservedName(capitalizeAcronyms(removePrefix(pascalCase(head.language.go!.name), 'XMS')), 'Header');
+        }
       }
     }
   }

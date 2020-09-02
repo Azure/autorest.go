@@ -68,7 +68,7 @@ func (client *headerOperations) customNamedRequestIdHandleResponse(resp *azcore.
 	}
 	result := HeaderCustomNamedRequestIDResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("foo-request-id"); val != "" {
-		result.FooRequestId = &val
+		result.FooRequestID = &val
 	}
 	return &result, nil
 }
@@ -122,7 +122,7 @@ func (client *headerOperations) customNamedRequestIdHeadHandleResponse(resp *azc
 	}
 	result := HeaderCustomNamedRequestIDHeadResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("foo-request-id"); val != "" {
-		result.FooRequestId = &val
+		result.FooRequestID = &val
 	}
 	return &result, nil
 }
@@ -176,7 +176,7 @@ func (client *headerOperations) customNamedRequestIdParamGroupingHandleResponse(
 	}
 	result := HeaderCustomNamedRequestIDParamGroupingResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("foo-request-id"); val != "" {
-		result.FooRequestId = &val
+		result.FooRequestID = &val
 	}
 	return &result, nil
 }

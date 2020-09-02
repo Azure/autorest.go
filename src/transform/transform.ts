@@ -520,18 +520,16 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
   const headers = new Map<string, HttpHeaderWithDescription>();
   for (const resp of values(op.responses)) {
     // check if the response is expecting information from headers
-    if (resp.protocol.http!.headers) {
-      for (const header of values(resp.protocol.http!.headers)) {
-        const head = <HttpHeader>header;
-        // convert each header to a property and append it to the response properties list
-        const name = removePrefix(pascalCase(head.header), 'XMS');
-        if (!headers.has(name)) {
-          const description = `${name} contains the information returned from the ${head.header} header response.`
-          headers.set(name, <HttpHeaderWithDescription>{
-            ...head,
-            description: description
-          });
-        }
+    for (const header of values(resp.protocol.http!.headers)) {
+      const head = <HttpHeader>header;
+      // convert each header to a property and append it to the response properties list
+      const name = head.language.go!.name;
+      if (!headers.has(name)) {
+        const description = `${name} contains the information returned from the ${head.header} header response.`
+        headers.set(name, <HttpHeaderWithDescription>{
+          ...head,
+          description: description
+        });
       }
     }
   }
