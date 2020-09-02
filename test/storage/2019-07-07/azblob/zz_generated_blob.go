@@ -59,25 +59,25 @@ type BlobOperations interface {
 	Undelete(ctx context.Context, blobUndeleteOptions *BlobUndeleteOptions) (*BlobUndeleteResponse, error)
 }
 
-// BlobClient implements the BlobOperations interface.
-// Don't use this type directly, use NewBlobClient() instead.
-type BlobClient struct {
+// blobClient implements the BlobOperations interface.
+// Don't use this type directly, use newBlobClient() instead.
+type blobClient struct {
 	*client
 	pathRenameMode *PathRenameMode
 }
 
-// NewBlobClient creates a new instance of BlobClient with the specified values.
-func NewBlobClient(c *Client, pathRenameMode *PathRenameMode) BlobOperations {
-	return &BlobClient{Client: c, pathRenameMode: pathRenameMode}
+// newBlobClient creates a new instance of blobClient with the specified values.
+func newBlobClient(c *client, pathRenameMode *PathRenameMode) BlobOperations {
+	return &blobClient{client: c, pathRenameMode: pathRenameMode}
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *BlobClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
+func (client *blobClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
 	return client.p.Do(ctx, req)
 }
 
 // AbortCopyFromURL - The Abort Copy From URL operation aborts a pending Copy From URL operation, and leaves a destination blob with zero length and full metadata.
-func (client *BlobClient) AbortCopyFromURL(ctx context.Context, copyId string, blobAbortCopyFromUrlOptions *BlobAbortCopyFromURLOptions, leaseAccessConditions *LeaseAccessConditions) (*BlobAbortCopyFromURLResponse, error) {
+func (client *blobClient) AbortCopyFromURL(ctx context.Context, copyId string, blobAbortCopyFromUrlOptions *BlobAbortCopyFromURLOptions, leaseAccessConditions *LeaseAccessConditions) (*BlobAbortCopyFromURLResponse, error) {
 	req, err := client.AbortCopyFromURLCreateRequest(copyId, blobAbortCopyFromUrlOptions, leaseAccessConditions)
 	if err != nil {
 		return nil, err
@@ -94,7 +94,7 @@ func (client *BlobClient) AbortCopyFromURL(ctx context.Context, copyId string, b
 }
 
 // AbortCopyFromURLCreateRequest creates the AbortCopyFromURL request.
-func (client *BlobClient) AbortCopyFromURLCreateRequest(copyId string, blobAbortCopyFromUrlOptions *BlobAbortCopyFromURLOptions, leaseAccessConditions *LeaseAccessConditions) (*azcore.Request, error) {
+func (client *blobClient) AbortCopyFromURLCreateRequest(copyId string, blobAbortCopyFromUrlOptions *BlobAbortCopyFromURLOptions, leaseAccessConditions *LeaseAccessConditions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -119,7 +119,7 @@ func (client *BlobClient) AbortCopyFromURLCreateRequest(copyId string, blobAbort
 }
 
 // AbortCopyFromURLHandleResponse handles the AbortCopyFromURL response.
-func (client *BlobClient) AbortCopyFromURLHandleResponse(resp *azcore.Response) (*BlobAbortCopyFromURLResponse, error) {
+func (client *blobClient) AbortCopyFromURLHandleResponse(resp *azcore.Response) (*BlobAbortCopyFromURLResponse, error) {
 	if !resp.HasStatusCode(http.StatusNoContent) {
 		return nil, client.AbortCopyFromURLHandleError(resp)
 	}
@@ -144,7 +144,7 @@ func (client *BlobClient) AbortCopyFromURLHandleResponse(resp *azcore.Response) 
 }
 
 // AbortCopyFromURLHandleError handles the AbortCopyFromURL error response.
-func (client *BlobClient) AbortCopyFromURLHandleError(resp *azcore.Response) error {
+func (client *blobClient) AbortCopyFromURLHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -153,7 +153,7 @@ func (client *BlobClient) AbortCopyFromURLHandleError(resp *azcore.Response) err
 }
 
 // AcquireLease - [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations
-func (client *BlobClient) AcquireLease(ctx context.Context, blobAcquireLeaseOptions *BlobAcquireLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*BlobAcquireLeaseResponse, error) {
+func (client *blobClient) AcquireLease(ctx context.Context, blobAcquireLeaseOptions *BlobAcquireLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*BlobAcquireLeaseResponse, error) {
 	req, err := client.AcquireLeaseCreateRequest(blobAcquireLeaseOptions, modifiedAccessConditions)
 	if err != nil {
 		return nil, err
@@ -170,7 +170,7 @@ func (client *BlobClient) AcquireLease(ctx context.Context, blobAcquireLeaseOpti
 }
 
 // AcquireLeaseCreateRequest creates the AcquireLease request.
-func (client *BlobClient) AcquireLeaseCreateRequest(blobAcquireLeaseOptions *BlobAcquireLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+func (client *blobClient) AcquireLeaseCreateRequest(blobAcquireLeaseOptions *BlobAcquireLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -209,7 +209,7 @@ func (client *BlobClient) AcquireLeaseCreateRequest(blobAcquireLeaseOptions *Blo
 }
 
 // AcquireLeaseHandleResponse handles the AcquireLease response.
-func (client *BlobClient) AcquireLeaseHandleResponse(resp *azcore.Response) (*BlobAcquireLeaseResponse, error) {
+func (client *blobClient) AcquireLeaseHandleResponse(resp *azcore.Response) (*BlobAcquireLeaseResponse, error) {
 	if !resp.HasStatusCode(http.StatusCreated) {
 		return nil, client.AcquireLeaseHandleError(resp)
 	}
@@ -247,7 +247,7 @@ func (client *BlobClient) AcquireLeaseHandleResponse(resp *azcore.Response) (*Bl
 }
 
 // AcquireLeaseHandleError handles the AcquireLease error response.
-func (client *BlobClient) AcquireLeaseHandleError(resp *azcore.Response) error {
+func (client *blobClient) AcquireLeaseHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -256,7 +256,7 @@ func (client *BlobClient) AcquireLeaseHandleError(resp *azcore.Response) error {
 }
 
 // BreakLease - [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations
-func (client *BlobClient) BreakLease(ctx context.Context, blobBreakLeaseOptions *BlobBreakLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*BlobBreakLeaseResponse, error) {
+func (client *blobClient) BreakLease(ctx context.Context, blobBreakLeaseOptions *BlobBreakLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*BlobBreakLeaseResponse, error) {
 	req, err := client.BreakLeaseCreateRequest(blobBreakLeaseOptions, modifiedAccessConditions)
 	if err != nil {
 		return nil, err
@@ -273,7 +273,7 @@ func (client *BlobClient) BreakLease(ctx context.Context, blobBreakLeaseOptions 
 }
 
 // BreakLeaseCreateRequest creates the BreakLease request.
-func (client *BlobClient) BreakLeaseCreateRequest(blobBreakLeaseOptions *BlobBreakLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+func (client *blobClient) BreakLeaseCreateRequest(blobBreakLeaseOptions *BlobBreakLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -309,7 +309,7 @@ func (client *BlobClient) BreakLeaseCreateRequest(blobBreakLeaseOptions *BlobBre
 }
 
 // BreakLeaseHandleResponse handles the BreakLease response.
-func (client *BlobClient) BreakLeaseHandleResponse(resp *azcore.Response) (*BlobBreakLeaseResponse, error) {
+func (client *blobClient) BreakLeaseHandleResponse(resp *azcore.Response) (*BlobBreakLeaseResponse, error) {
 	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.BreakLeaseHandleError(resp)
 	}
@@ -352,7 +352,7 @@ func (client *BlobClient) BreakLeaseHandleResponse(resp *azcore.Response) (*Blob
 }
 
 // BreakLeaseHandleError handles the BreakLease error response.
-func (client *BlobClient) BreakLeaseHandleError(resp *azcore.Response) error {
+func (client *blobClient) BreakLeaseHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -361,7 +361,7 @@ func (client *BlobClient) BreakLeaseHandleError(resp *azcore.Response) error {
 }
 
 // ChangeLease - [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations
-func (client *BlobClient) ChangeLease(ctx context.Context, leaseId string, proposedLeaseId string, blobChangeLeaseOptions *BlobChangeLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*BlobChangeLeaseResponse, error) {
+func (client *blobClient) ChangeLease(ctx context.Context, leaseId string, proposedLeaseId string, blobChangeLeaseOptions *BlobChangeLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*BlobChangeLeaseResponse, error) {
 	req, err := client.ChangeLeaseCreateRequest(leaseId, proposedLeaseId, blobChangeLeaseOptions, modifiedAccessConditions)
 	if err != nil {
 		return nil, err
@@ -378,7 +378,7 @@ func (client *BlobClient) ChangeLease(ctx context.Context, leaseId string, propo
 }
 
 // ChangeLeaseCreateRequest creates the ChangeLease request.
-func (client *BlobClient) ChangeLeaseCreateRequest(leaseId string, proposedLeaseId string, blobChangeLeaseOptions *BlobChangeLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+func (client *blobClient) ChangeLeaseCreateRequest(leaseId string, proposedLeaseId string, blobChangeLeaseOptions *BlobChangeLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -413,7 +413,7 @@ func (client *BlobClient) ChangeLeaseCreateRequest(leaseId string, proposedLease
 }
 
 // ChangeLeaseHandleResponse handles the ChangeLease response.
-func (client *BlobClient) ChangeLeaseHandleResponse(resp *azcore.Response) (*BlobChangeLeaseResponse, error) {
+func (client *blobClient) ChangeLeaseHandleResponse(resp *azcore.Response) (*BlobChangeLeaseResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.ChangeLeaseHandleError(resp)
 	}
@@ -451,7 +451,7 @@ func (client *BlobClient) ChangeLeaseHandleResponse(resp *azcore.Response) (*Blo
 }
 
 // ChangeLeaseHandleError handles the ChangeLease error response.
-func (client *BlobClient) ChangeLeaseHandleError(resp *azcore.Response) error {
+func (client *blobClient) ChangeLeaseHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -460,7 +460,7 @@ func (client *BlobClient) ChangeLeaseHandleError(resp *azcore.Response) error {
 }
 
 // CopyFromURL - The Copy From URL operation copies a blob or an internet resource to a new blob. It will not return a response until the copy is complete.
-func (client *BlobClient) CopyFromURL(ctx context.Context, copySource url.URL, blobCopyFromUrlOptions *BlobCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*BlobCopyFromURLResponse, error) {
+func (client *blobClient) CopyFromURL(ctx context.Context, copySource url.URL, blobCopyFromUrlOptions *BlobCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*BlobCopyFromURLResponse, error) {
 	req, err := client.CopyFromURLCreateRequest(copySource, blobCopyFromUrlOptions, sourceModifiedAccessConditions, modifiedAccessConditions, leaseAccessConditions)
 	if err != nil {
 		return nil, err
@@ -477,7 +477,7 @@ func (client *BlobClient) CopyFromURL(ctx context.Context, copySource url.URL, b
 }
 
 // CopyFromURLCreateRequest creates the CopyFromURL request.
-func (client *BlobClient) CopyFromURLCreateRequest(copySource url.URL, blobCopyFromUrlOptions *BlobCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*azcore.Request, error) {
+func (client *blobClient) CopyFromURLCreateRequest(copySource url.URL, blobCopyFromUrlOptions *BlobCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -536,7 +536,7 @@ func (client *BlobClient) CopyFromURLCreateRequest(copySource url.URL, blobCopyF
 }
 
 // CopyFromURLHandleResponse handles the CopyFromURL response.
-func (client *BlobClient) CopyFromURLHandleResponse(resp *azcore.Response) (*BlobCopyFromURLResponse, error) {
+func (client *blobClient) CopyFromURLHandleResponse(resp *azcore.Response) (*BlobCopyFromURLResponse, error) {
 	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.CopyFromURLHandleError(resp)
 	}
@@ -591,7 +591,7 @@ func (client *BlobClient) CopyFromURLHandleResponse(resp *azcore.Response) (*Blo
 }
 
 // CopyFromURLHandleError handles the CopyFromURL error response.
-func (client *BlobClient) CopyFromURLHandleError(resp *azcore.Response) error {
+func (client *blobClient) CopyFromURLHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -600,7 +600,7 @@ func (client *BlobClient) CopyFromURLHandleError(resp *azcore.Response) error {
 }
 
 // CreateSnapshot - The Create Snapshot operation creates a read-only snapshot of a blob
-func (client *BlobClient) CreateSnapshot(ctx context.Context, blobCreateSnapshotOptions *BlobCreateSnapshotOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*BlobCreateSnapshotResponse, error) {
+func (client *blobClient) CreateSnapshot(ctx context.Context, blobCreateSnapshotOptions *BlobCreateSnapshotOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*BlobCreateSnapshotResponse, error) {
 	req, err := client.CreateSnapshotCreateRequest(blobCreateSnapshotOptions, cpkInfo, cpkScopeInfo, modifiedAccessConditions, leaseAccessConditions)
 	if err != nil {
 		return nil, err
@@ -617,7 +617,7 @@ func (client *BlobClient) CreateSnapshot(ctx context.Context, blobCreateSnapshot
 }
 
 // CreateSnapshotCreateRequest creates the CreateSnapshot request.
-func (client *BlobClient) CreateSnapshotCreateRequest(blobCreateSnapshotOptions *BlobCreateSnapshotOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*azcore.Request, error) {
+func (client *blobClient) CreateSnapshotCreateRequest(blobCreateSnapshotOptions *BlobCreateSnapshotOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -666,7 +666,7 @@ func (client *BlobClient) CreateSnapshotCreateRequest(blobCreateSnapshotOptions 
 }
 
 // CreateSnapshotHandleResponse handles the CreateSnapshot response.
-func (client *BlobClient) CreateSnapshotHandleResponse(resp *azcore.Response) (*BlobCreateSnapshotResponse, error) {
+func (client *blobClient) CreateSnapshotHandleResponse(resp *azcore.Response) (*BlobCreateSnapshotResponse, error) {
 	if !resp.HasStatusCode(http.StatusCreated) {
 		return nil, client.CreateSnapshotHandleError(resp)
 	}
@@ -711,7 +711,7 @@ func (client *BlobClient) CreateSnapshotHandleResponse(resp *azcore.Response) (*
 }
 
 // CreateSnapshotHandleError handles the CreateSnapshot error response.
-func (client *BlobClient) CreateSnapshotHandleError(resp *azcore.Response) error {
+func (client *blobClient) CreateSnapshotHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -720,7 +720,7 @@ func (client *BlobClient) CreateSnapshotHandleError(resp *azcore.Response) error
 }
 
 // Delete - If the storage account's soft delete feature is disabled then, when a blob is deleted, it is permanently removed from the storage account. If the storage account's soft delete feature is enabled, then, when a blob is deleted, it is marked for deletion and becomes inaccessible immediately. However, the blob service retains the blob or snapshot for the number of days specified by the DeleteRetentionPolicy section of [Storage service properties] (Set-Blob-Service-Properties.md). After the specified number of days has passed, the blob's data is permanently removed from the storage account. Note that you continue to be charged for the soft-deleted blob's storage until it is permanently removed. Use the List Blobs API and specify the "include=deleted" query parameter to discover which blobs and snapshots have been soft deleted. You can then use the Undelete Blob API to restore a soft-deleted blob. All other operations on a soft-deleted blob or snapshot causes the service to return an HTTP status code of 404 (ResourceNotFound).
-func (client *BlobClient) Delete(ctx context.Context, blobDeleteOptions *BlobDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*BlobDeleteResponse, error) {
+func (client *blobClient) Delete(ctx context.Context, blobDeleteOptions *BlobDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*BlobDeleteResponse, error) {
 	req, err := client.DeleteCreateRequest(blobDeleteOptions, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
 		return nil, err
@@ -737,7 +737,7 @@ func (client *BlobClient) Delete(ctx context.Context, blobDeleteOptions *BlobDel
 }
 
 // DeleteCreateRequest creates the Delete request.
-func (client *BlobClient) DeleteCreateRequest(blobDeleteOptions *BlobDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+func (client *blobClient) DeleteCreateRequest(blobDeleteOptions *BlobDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -777,7 +777,7 @@ func (client *BlobClient) DeleteCreateRequest(blobDeleteOptions *BlobDeleteOptio
 }
 
 // DeleteHandleResponse handles the Delete response.
-func (client *BlobClient) DeleteHandleResponse(resp *azcore.Response) (*BlobDeleteResponse, error) {
+func (client *blobClient) DeleteHandleResponse(resp *azcore.Response) (*BlobDeleteResponse, error) {
 	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.DeleteHandleError(resp)
 	}
@@ -802,7 +802,7 @@ func (client *BlobClient) DeleteHandleResponse(resp *azcore.Response) (*BlobDele
 }
 
 // DeleteHandleError handles the Delete error response.
-func (client *BlobClient) DeleteHandleError(resp *azcore.Response) error {
+func (client *blobClient) DeleteHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -811,7 +811,7 @@ func (client *BlobClient) DeleteHandleError(resp *azcore.Response) error {
 }
 
 // Download - The Download operation reads or downloads a blob from the system, including its metadata and properties. You can also call Download to read a snapshot.
-func (client *BlobClient) Download(ctx context.Context, blobDownloadOptions *BlobDownloadOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (*BlobDownloadResponse, error) {
+func (client *blobClient) Download(ctx context.Context, blobDownloadOptions *BlobDownloadOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (*BlobDownloadResponse, error) {
 	req, err := client.DownloadCreateRequest(blobDownloadOptions, leaseAccessConditions, cpkInfo, modifiedAccessConditions)
 	if err != nil {
 		return nil, err
@@ -828,7 +828,7 @@ func (client *BlobClient) Download(ctx context.Context, blobDownloadOptions *Blo
 }
 
 // DownloadCreateRequest creates the Download request.
-func (client *BlobClient) DownloadCreateRequest(blobDownloadOptions *BlobDownloadOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+func (client *blobClient) DownloadCreateRequest(blobDownloadOptions *BlobDownloadOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -881,7 +881,7 @@ func (client *BlobClient) DownloadCreateRequest(blobDownloadOptions *BlobDownloa
 }
 
 // DownloadHandleResponse handles the Download response.
-func (client *BlobClient) DownloadHandleResponse(resp *azcore.Response) (*BlobDownloadResponse, error) {
+func (client *blobClient) DownloadHandleResponse(resp *azcore.Response) (*BlobDownloadResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK, http.StatusPartialContent) {
 		return nil, client.DownloadHandleError(resp)
 	}
@@ -1030,7 +1030,7 @@ func (client *BlobClient) DownloadHandleResponse(resp *azcore.Response) (*BlobDo
 }
 
 // DownloadHandleError handles the Download error response.
-func (client *BlobClient) DownloadHandleError(resp *azcore.Response) error {
+func (client *blobClient) DownloadHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -1039,7 +1039,7 @@ func (client *BlobClient) DownloadHandleError(resp *azcore.Response) error {
 }
 
 // GetAccessControl - Get the owner, group, permissions, or access control list for a blob.
-func (client *BlobClient) GetAccessControl(ctx context.Context, blobGetAccessControlOptions *BlobGetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*BlobGetAccessControlResponse, error) {
+func (client *blobClient) GetAccessControl(ctx context.Context, blobGetAccessControlOptions *BlobGetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*BlobGetAccessControlResponse, error) {
 	req, err := client.GetAccessControlCreateRequest(blobGetAccessControlOptions, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
 		return nil, err
@@ -1056,7 +1056,7 @@ func (client *BlobClient) GetAccessControl(ctx context.Context, blobGetAccessCon
 }
 
 // GetAccessControlCreateRequest creates the GetAccessControl request.
-func (client *BlobClient) GetAccessControlCreateRequest(blobGetAccessControlOptions *BlobGetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+func (client *blobClient) GetAccessControlCreateRequest(blobGetAccessControlOptions *BlobGetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -1094,7 +1094,7 @@ func (client *BlobClient) GetAccessControlCreateRequest(blobGetAccessControlOpti
 }
 
 // GetAccessControlHandleResponse handles the GetAccessControl response.
-func (client *BlobClient) GetAccessControlHandleResponse(resp *azcore.Response) (*BlobGetAccessControlResponse, error) {
+func (client *blobClient) GetAccessControlHandleResponse(resp *azcore.Response) (*BlobGetAccessControlResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.GetAccessControlHandleError(resp)
 	}
@@ -1138,7 +1138,7 @@ func (client *BlobClient) GetAccessControlHandleResponse(resp *azcore.Response) 
 }
 
 // GetAccessControlHandleError handles the GetAccessControl error response.
-func (client *BlobClient) GetAccessControlHandleError(resp *azcore.Response) error {
+func (client *blobClient) GetAccessControlHandleError(resp *azcore.Response) error {
 	var err DataLakeStorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -1147,7 +1147,7 @@ func (client *BlobClient) GetAccessControlHandleError(resp *azcore.Response) err
 }
 
 // GetAccountInfo - Returns the sku name and account kind
-func (client *BlobClient) GetAccountInfo(ctx context.Context) (*BlobGetAccountInfoResponse, error) {
+func (client *blobClient) GetAccountInfo(ctx context.Context) (*BlobGetAccountInfoResponse, error) {
 	req, err := client.GetAccountInfoCreateRequest()
 	if err != nil {
 		return nil, err
@@ -1164,7 +1164,7 @@ func (client *BlobClient) GetAccountInfo(ctx context.Context) (*BlobGetAccountIn
 }
 
 // GetAccountInfoCreateRequest creates the GetAccountInfo request.
-func (client *BlobClient) GetAccountInfoCreateRequest() (*azcore.Request, error) {
+func (client *blobClient) GetAccountInfoCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -1179,7 +1179,7 @@ func (client *BlobClient) GetAccountInfoCreateRequest() (*azcore.Request, error)
 }
 
 // GetAccountInfoHandleResponse handles the GetAccountInfo response.
-func (client *BlobClient) GetAccountInfoHandleResponse(resp *azcore.Response) (*BlobGetAccountInfoResponse, error) {
+func (client *blobClient) GetAccountInfoHandleResponse(resp *azcore.Response) (*BlobGetAccountInfoResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.GetAccountInfoHandleError(resp)
 	}
@@ -1210,7 +1210,7 @@ func (client *BlobClient) GetAccountInfoHandleResponse(resp *azcore.Response) (*
 }
 
 // GetAccountInfoHandleError handles the GetAccountInfo error response.
-func (client *BlobClient) GetAccountInfoHandleError(resp *azcore.Response) error {
+func (client *blobClient) GetAccountInfoHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -1219,7 +1219,7 @@ func (client *BlobClient) GetAccountInfoHandleError(resp *azcore.Response) error
 }
 
 // GetProperties - The Get Properties operation returns all user-defined metadata, standard HTTP properties, and system properties for the blob. It does not return the content of the blob.
-func (client *BlobClient) GetProperties(ctx context.Context, blobGetPropertiesOptions *BlobGetPropertiesOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (*BlobGetPropertiesResponse, error) {
+func (client *blobClient) GetProperties(ctx context.Context, blobGetPropertiesOptions *BlobGetPropertiesOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (*BlobGetPropertiesResponse, error) {
 	req, err := client.GetPropertiesCreateRequest(blobGetPropertiesOptions, leaseAccessConditions, cpkInfo, modifiedAccessConditions)
 	if err != nil {
 		return nil, err
@@ -1236,7 +1236,7 @@ func (client *BlobClient) GetProperties(ctx context.Context, blobGetPropertiesOp
 }
 
 // GetPropertiesCreateRequest creates the GetProperties request.
-func (client *BlobClient) GetPropertiesCreateRequest(blobGetPropertiesOptions *BlobGetPropertiesOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+func (client *blobClient) GetPropertiesCreateRequest(blobGetPropertiesOptions *BlobGetPropertiesOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -1279,7 +1279,7 @@ func (client *BlobClient) GetPropertiesCreateRequest(blobGetPropertiesOptions *B
 }
 
 // GetPropertiesHandleResponse handles the GetProperties response.
-func (client *BlobClient) GetPropertiesHandleResponse(resp *azcore.Response) (*BlobGetPropertiesResponse, error) {
+func (client *blobClient) GetPropertiesHandleResponse(resp *azcore.Response) (*BlobGetPropertiesResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.GetPropertiesHandleError(resp)
 	}
@@ -1448,7 +1448,7 @@ func (client *BlobClient) GetPropertiesHandleResponse(resp *azcore.Response) (*B
 }
 
 // GetPropertiesHandleError handles the GetProperties error response.
-func (client *BlobClient) GetPropertiesHandleError(resp *azcore.Response) error {
+func (client *blobClient) GetPropertiesHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -1457,7 +1457,7 @@ func (client *BlobClient) GetPropertiesHandleError(resp *azcore.Response) error 
 }
 
 // ReleaseLease - [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations
-func (client *BlobClient) ReleaseLease(ctx context.Context, leaseId string, blobReleaseLeaseOptions *BlobReleaseLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*BlobReleaseLeaseResponse, error) {
+func (client *blobClient) ReleaseLease(ctx context.Context, leaseId string, blobReleaseLeaseOptions *BlobReleaseLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*BlobReleaseLeaseResponse, error) {
 	req, err := client.ReleaseLeaseCreateRequest(leaseId, blobReleaseLeaseOptions, modifiedAccessConditions)
 	if err != nil {
 		return nil, err
@@ -1474,7 +1474,7 @@ func (client *BlobClient) ReleaseLease(ctx context.Context, leaseId string, blob
 }
 
 // ReleaseLeaseCreateRequest creates the ReleaseLease request.
-func (client *BlobClient) ReleaseLeaseCreateRequest(leaseId string, blobReleaseLeaseOptions *BlobReleaseLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+func (client *blobClient) ReleaseLeaseCreateRequest(leaseId string, blobReleaseLeaseOptions *BlobReleaseLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -1508,7 +1508,7 @@ func (client *BlobClient) ReleaseLeaseCreateRequest(leaseId string, blobReleaseL
 }
 
 // ReleaseLeaseHandleResponse handles the ReleaseLease response.
-func (client *BlobClient) ReleaseLeaseHandleResponse(resp *azcore.Response) (*BlobReleaseLeaseResponse, error) {
+func (client *blobClient) ReleaseLeaseHandleResponse(resp *azcore.Response) (*BlobReleaseLeaseResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.ReleaseLeaseHandleError(resp)
 	}
@@ -1543,7 +1543,7 @@ func (client *BlobClient) ReleaseLeaseHandleResponse(resp *azcore.Response) (*Bl
 }
 
 // ReleaseLeaseHandleError handles the ReleaseLease error response.
-func (client *BlobClient) ReleaseLeaseHandleError(resp *azcore.Response) error {
+func (client *blobClient) ReleaseLeaseHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -1552,7 +1552,7 @@ func (client *BlobClient) ReleaseLeaseHandleError(resp *azcore.Response) error {
 }
 
 // Rename - Rename a blob/file.  By default, the destination is overwritten and if the destination already exists and has a lease the lease is broken.  This operation supports conditional HTTP requests.  For more information, see [Specifying Conditional Headers for Blob Service Operations](https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations).  To fail if the destination already exists, use a conditional request with If-None-Match: "*".
-func (client *BlobClient) Rename(ctx context.Context, renameSource string, blobRenameOptions *BlobRenameOptions, directoryHttpHeaders *DirectoryHttpHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*BlobRenameResponse, error) {
+func (client *blobClient) Rename(ctx context.Context, renameSource string, blobRenameOptions *BlobRenameOptions, directoryHttpHeaders *DirectoryHttpHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*BlobRenameResponse, error) {
 	req, err := client.RenameCreateRequest(renameSource, blobRenameOptions, directoryHttpHeaders, leaseAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
 		return nil, err
@@ -1569,7 +1569,7 @@ func (client *BlobClient) Rename(ctx context.Context, renameSource string, blobR
 }
 
 // RenameCreateRequest creates the Rename request.
-func (client *BlobClient) RenameCreateRequest(renameSource string, blobRenameOptions *BlobRenameOptions, directoryHttpHeaders *DirectoryHttpHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*azcore.Request, error) {
+func (client *blobClient) RenameCreateRequest(renameSource string, blobRenameOptions *BlobRenameOptions, directoryHttpHeaders *DirectoryHttpHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -1646,7 +1646,7 @@ func (client *BlobClient) RenameCreateRequest(renameSource string, blobRenameOpt
 }
 
 // RenameHandleResponse handles the Rename response.
-func (client *BlobClient) RenameHandleResponse(resp *azcore.Response) (*BlobRenameResponse, error) {
+func (client *blobClient) RenameHandleResponse(resp *azcore.Response) (*BlobRenameResponse, error) {
 	if !resp.HasStatusCode(http.StatusCreated) {
 		return nil, client.RenameHandleError(resp)
 	}
@@ -1688,7 +1688,7 @@ func (client *BlobClient) RenameHandleResponse(resp *azcore.Response) (*BlobRena
 }
 
 // RenameHandleError handles the Rename error response.
-func (client *BlobClient) RenameHandleError(resp *azcore.Response) error {
+func (client *blobClient) RenameHandleError(resp *azcore.Response) error {
 	var err DataLakeStorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -1697,7 +1697,7 @@ func (client *BlobClient) RenameHandleError(resp *azcore.Response) error {
 }
 
 // RenewLease - [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations
-func (client *BlobClient) RenewLease(ctx context.Context, leaseId string, blobRenewLeaseOptions *BlobRenewLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*BlobRenewLeaseResponse, error) {
+func (client *blobClient) RenewLease(ctx context.Context, leaseId string, blobRenewLeaseOptions *BlobRenewLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*BlobRenewLeaseResponse, error) {
 	req, err := client.RenewLeaseCreateRequest(leaseId, blobRenewLeaseOptions, modifiedAccessConditions)
 	if err != nil {
 		return nil, err
@@ -1714,7 +1714,7 @@ func (client *BlobClient) RenewLease(ctx context.Context, leaseId string, blobRe
 }
 
 // RenewLeaseCreateRequest creates the RenewLease request.
-func (client *BlobClient) RenewLeaseCreateRequest(leaseId string, blobRenewLeaseOptions *BlobRenewLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+func (client *blobClient) RenewLeaseCreateRequest(leaseId string, blobRenewLeaseOptions *BlobRenewLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -1748,7 +1748,7 @@ func (client *BlobClient) RenewLeaseCreateRequest(leaseId string, blobRenewLease
 }
 
 // RenewLeaseHandleResponse handles the RenewLease response.
-func (client *BlobClient) RenewLeaseHandleResponse(resp *azcore.Response) (*BlobRenewLeaseResponse, error) {
+func (client *blobClient) RenewLeaseHandleResponse(resp *azcore.Response) (*BlobRenewLeaseResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.RenewLeaseHandleError(resp)
 	}
@@ -1786,7 +1786,7 @@ func (client *BlobClient) RenewLeaseHandleResponse(resp *azcore.Response) (*Blob
 }
 
 // RenewLeaseHandleError handles the RenewLease error response.
-func (client *BlobClient) RenewLeaseHandleError(resp *azcore.Response) error {
+func (client *blobClient) RenewLeaseHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -1795,7 +1795,7 @@ func (client *BlobClient) RenewLeaseHandleError(resp *azcore.Response) error {
 }
 
 // SetAccessControl - Set the owner, group, permissions, or access control list for a blob.
-func (client *BlobClient) SetAccessControl(ctx context.Context, blobSetAccessControlOptions *BlobSetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*BlobSetAccessControlResponse, error) {
+func (client *blobClient) SetAccessControl(ctx context.Context, blobSetAccessControlOptions *BlobSetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*BlobSetAccessControlResponse, error) {
 	req, err := client.SetAccessControlCreateRequest(blobSetAccessControlOptions, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
 		return nil, err
@@ -1812,7 +1812,7 @@ func (client *BlobClient) SetAccessControl(ctx context.Context, blobSetAccessCon
 }
 
 // SetAccessControlCreateRequest creates the SetAccessControl request.
-func (client *BlobClient) SetAccessControlCreateRequest(blobSetAccessControlOptions *BlobSetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+func (client *blobClient) SetAccessControlCreateRequest(blobSetAccessControlOptions *BlobSetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -1859,7 +1859,7 @@ func (client *BlobClient) SetAccessControlCreateRequest(blobSetAccessControlOpti
 }
 
 // SetAccessControlHandleResponse handles the SetAccessControl response.
-func (client *BlobClient) SetAccessControlHandleResponse(resp *azcore.Response) (*BlobSetAccessControlResponse, error) {
+func (client *blobClient) SetAccessControlHandleResponse(resp *azcore.Response) (*BlobSetAccessControlResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.SetAccessControlHandleError(resp)
 	}
@@ -1891,7 +1891,7 @@ func (client *BlobClient) SetAccessControlHandleResponse(resp *azcore.Response) 
 }
 
 // SetAccessControlHandleError handles the SetAccessControl error response.
-func (client *BlobClient) SetAccessControlHandleError(resp *azcore.Response) error {
+func (client *blobClient) SetAccessControlHandleError(resp *azcore.Response) error {
 	var err DataLakeStorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -1900,7 +1900,7 @@ func (client *BlobClient) SetAccessControlHandleError(resp *azcore.Response) err
 }
 
 // SetHTTPHeaders - The Set HTTP Headers operation sets system properties on the blob
-func (client *BlobClient) SetHTTPHeaders(ctx context.Context, blobSetHttpHeadersOptions *BlobSetHTTPHeadersOptions, blobHttpHeaders *BlobHttpHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*BlobSetHTTPHeadersResponse, error) {
+func (client *blobClient) SetHTTPHeaders(ctx context.Context, blobSetHttpHeadersOptions *BlobSetHTTPHeadersOptions, blobHttpHeaders *BlobHttpHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*BlobSetHTTPHeadersResponse, error) {
 	req, err := client.SetHTTPHeadersCreateRequest(blobSetHttpHeadersOptions, blobHttpHeaders, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
 		return nil, err
@@ -1917,7 +1917,7 @@ func (client *BlobClient) SetHTTPHeaders(ctx context.Context, blobSetHttpHeaders
 }
 
 // SetHTTPHeadersCreateRequest creates the SetHTTPHeaders request.
-func (client *BlobClient) SetHTTPHeadersCreateRequest(blobSetHttpHeadersOptions *BlobSetHTTPHeadersOptions, blobHttpHeaders *BlobHttpHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+func (client *blobClient) SetHTTPHeadersCreateRequest(blobSetHttpHeadersOptions *BlobSetHTTPHeadersOptions, blobHttpHeaders *BlobHttpHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -1970,7 +1970,7 @@ func (client *BlobClient) SetHTTPHeadersCreateRequest(blobSetHttpHeadersOptions 
 }
 
 // SetHTTPHeadersHandleResponse handles the SetHTTPHeaders response.
-func (client *BlobClient) SetHTTPHeadersHandleResponse(resp *azcore.Response) (*BlobSetHTTPHeadersResponse, error) {
+func (client *blobClient) SetHTTPHeadersHandleResponse(resp *azcore.Response) (*BlobSetHTTPHeadersResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.SetHTTPHeadersHandleError(resp)
 	}
@@ -2012,7 +2012,7 @@ func (client *BlobClient) SetHTTPHeadersHandleResponse(resp *azcore.Response) (*
 }
 
 // SetHTTPHeadersHandleError handles the SetHTTPHeaders error response.
-func (client *BlobClient) SetHTTPHeadersHandleError(resp *azcore.Response) error {
+func (client *blobClient) SetHTTPHeadersHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -2021,7 +2021,7 @@ func (client *BlobClient) SetHTTPHeadersHandleError(resp *azcore.Response) error
 }
 
 // SetMetadata - The Set Blob Metadata operation sets user-defined metadata for the specified blob as one or more name-value pairs
-func (client *BlobClient) SetMetadata(ctx context.Context, blobSetMetadataOptions *BlobSetMetadataOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*BlobSetMetadataResponse, error) {
+func (client *blobClient) SetMetadata(ctx context.Context, blobSetMetadataOptions *BlobSetMetadataOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*BlobSetMetadataResponse, error) {
 	req, err := client.SetMetadataCreateRequest(blobSetMetadataOptions, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
 		return nil, err
@@ -2038,7 +2038,7 @@ func (client *BlobClient) SetMetadata(ctx context.Context, blobSetMetadataOption
 }
 
 // SetMetadataCreateRequest creates the SetMetadata request.
-func (client *BlobClient) SetMetadataCreateRequest(blobSetMetadataOptions *BlobSetMetadataOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+func (client *blobClient) SetMetadataCreateRequest(blobSetMetadataOptions *BlobSetMetadataOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -2087,7 +2087,7 @@ func (client *BlobClient) SetMetadataCreateRequest(blobSetMetadataOptions *BlobS
 }
 
 // SetMetadataHandleResponse handles the SetMetadata response.
-func (client *BlobClient) SetMetadataHandleResponse(resp *azcore.Response) (*BlobSetMetadataResponse, error) {
+func (client *blobClient) SetMetadataHandleResponse(resp *azcore.Response) (*BlobSetMetadataResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.SetMetadataHandleError(resp)
 	}
@@ -2135,7 +2135,7 @@ func (client *BlobClient) SetMetadataHandleResponse(resp *azcore.Response) (*Blo
 }
 
 // SetMetadataHandleError handles the SetMetadata error response.
-func (client *BlobClient) SetMetadataHandleError(resp *azcore.Response) error {
+func (client *blobClient) SetMetadataHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -2144,7 +2144,7 @@ func (client *BlobClient) SetMetadataHandleError(resp *azcore.Response) error {
 }
 
 // SetTier - The Set Tier operation sets the tier on a blob. The operation is allowed on a page blob in a premium storage account and on a block blob in a blob storage account (locally redundant storage only). A premium page blob's tier determines the allowed size, IOPS, and bandwidth of the blob. A block blob's tier determines Hot/Cool/Archive storage type. This operation does not update the blob's ETag.
-func (client *BlobClient) SetTier(ctx context.Context, tier AccessTier, blobSetTierOptions *BlobSetTierOptions, leaseAccessConditions *LeaseAccessConditions) (*BlobSetTierResponse, error) {
+func (client *blobClient) SetTier(ctx context.Context, tier AccessTier, blobSetTierOptions *BlobSetTierOptions, leaseAccessConditions *LeaseAccessConditions) (*BlobSetTierResponse, error) {
 	req, err := client.SetTierCreateRequest(tier, blobSetTierOptions, leaseAccessConditions)
 	if err != nil {
 		return nil, err
@@ -2161,7 +2161,7 @@ func (client *BlobClient) SetTier(ctx context.Context, tier AccessTier, blobSetT
 }
 
 // SetTierCreateRequest creates the SetTier request.
-func (client *BlobClient) SetTierCreateRequest(tier AccessTier, blobSetTierOptions *BlobSetTierOptions, leaseAccessConditions *LeaseAccessConditions) (*azcore.Request, error) {
+func (client *blobClient) SetTierCreateRequest(tier AccessTier, blobSetTierOptions *BlobSetTierOptions, leaseAccessConditions *LeaseAccessConditions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -2188,7 +2188,7 @@ func (client *BlobClient) SetTierCreateRequest(tier AccessTier, blobSetTierOptio
 }
 
 // SetTierHandleResponse handles the SetTier response.
-func (client *BlobClient) SetTierHandleResponse(resp *azcore.Response) (*BlobSetTierResponse, error) {
+func (client *blobClient) SetTierHandleResponse(resp *azcore.Response) (*BlobSetTierResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.SetTierHandleError(resp)
 	}
@@ -2206,7 +2206,7 @@ func (client *BlobClient) SetTierHandleResponse(resp *azcore.Response) (*BlobSet
 }
 
 // SetTierHandleError handles the SetTier error response.
-func (client *BlobClient) SetTierHandleError(resp *azcore.Response) error {
+func (client *blobClient) SetTierHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -2215,7 +2215,7 @@ func (client *BlobClient) SetTierHandleError(resp *azcore.Response) error {
 }
 
 // StartCopyFromURL - The Start Copy From URL operation copies a blob or an internet resource to a new blob.
-func (client *BlobClient) StartCopyFromURL(ctx context.Context, copySource url.URL, blobStartCopyFromUrlOptions *BlobStartCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*BlobStartCopyFromURLResponse, error) {
+func (client *blobClient) StartCopyFromURL(ctx context.Context, copySource url.URL, blobStartCopyFromUrlOptions *BlobStartCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*BlobStartCopyFromURLResponse, error) {
 	req, err := client.StartCopyFromURLCreateRequest(copySource, blobStartCopyFromUrlOptions, sourceModifiedAccessConditions, modifiedAccessConditions, leaseAccessConditions)
 	if err != nil {
 		return nil, err
@@ -2232,7 +2232,7 @@ func (client *BlobClient) StartCopyFromURL(ctx context.Context, copySource url.U
 }
 
 // StartCopyFromURLCreateRequest creates the StartCopyFromURL request.
-func (client *BlobClient) StartCopyFromURLCreateRequest(copySource url.URL, blobStartCopyFromUrlOptions *BlobStartCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*azcore.Request, error) {
+func (client *blobClient) StartCopyFromURLCreateRequest(copySource url.URL, blobStartCopyFromUrlOptions *BlobStartCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -2290,7 +2290,7 @@ func (client *BlobClient) StartCopyFromURLCreateRequest(copySource url.URL, blob
 }
 
 // StartCopyFromURLHandleResponse handles the StartCopyFromURL response.
-func (client *BlobClient) StartCopyFromURLHandleResponse(resp *azcore.Response) (*BlobStartCopyFromURLResponse, error) {
+func (client *blobClient) StartCopyFromURLHandleResponse(resp *azcore.Response) (*BlobStartCopyFromURLResponse, error) {
 	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.StartCopyFromURLHandleError(resp)
 	}
@@ -2331,7 +2331,7 @@ func (client *BlobClient) StartCopyFromURLHandleResponse(resp *azcore.Response) 
 }
 
 // StartCopyFromURLHandleError handles the StartCopyFromURL error response.
-func (client *BlobClient) StartCopyFromURLHandleError(resp *azcore.Response) error {
+func (client *blobClient) StartCopyFromURLHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -2340,7 +2340,7 @@ func (client *BlobClient) StartCopyFromURLHandleError(resp *azcore.Response) err
 }
 
 // Undelete - Undelete a blob that was previously soft deleted
-func (client *BlobClient) Undelete(ctx context.Context, blobUndeleteOptions *BlobUndeleteOptions) (*BlobUndeleteResponse, error) {
+func (client *blobClient) Undelete(ctx context.Context, blobUndeleteOptions *BlobUndeleteOptions) (*BlobUndeleteResponse, error) {
 	req, err := client.UndeleteCreateRequest(blobUndeleteOptions)
 	if err != nil {
 		return nil, err
@@ -2357,7 +2357,7 @@ func (client *BlobClient) Undelete(ctx context.Context, blobUndeleteOptions *Blo
 }
 
 // UndeleteCreateRequest creates the Undelete request.
-func (client *BlobClient) UndeleteCreateRequest(blobUndeleteOptions *BlobUndeleteOptions) (*azcore.Request, error) {
+func (client *blobClient) UndeleteCreateRequest(blobUndeleteOptions *BlobUndeleteOptions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -2377,7 +2377,7 @@ func (client *BlobClient) UndeleteCreateRequest(blobUndeleteOptions *BlobUndelet
 }
 
 // UndeleteHandleResponse handles the Undelete response.
-func (client *BlobClient) UndeleteHandleResponse(resp *azcore.Response) (*BlobUndeleteResponse, error) {
+func (client *blobClient) UndeleteHandleResponse(resp *azcore.Response) (*BlobUndeleteResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.UndeleteHandleError(resp)
 	}
@@ -2402,7 +2402,7 @@ func (client *BlobClient) UndeleteHandleResponse(resp *azcore.Response) (*BlobUn
 }
 
 // UndeleteHandleError handles the Undelete error response.
-func (client *BlobClient) UndeleteHandleError(resp *azcore.Response) error {
+func (client *blobClient) UndeleteHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err

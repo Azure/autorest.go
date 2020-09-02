@@ -55,16 +55,17 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     let text = await contentPreamble(session);
     const exportClient = await session.getValue('export-client', true);
     let client = 'Client';
+    let clientName = group.language.go!.clientName;
     if (!exportClient) {
       client = 'client';
     }
+    const clientCtor = group.language.go!.clientCtorName;
     text += imports.text();
     text += interfaceText;
     // generate the operation client
-    const clientName = group.language.go!.clientName;
     const interfaceName = group.language.go!.interfaceName;
     text += `// ${clientName} implements the ${interfaceName} interface.\n`;
-    text += `// Don't use this type directly, use New${clientName}() instead.\n`;
+    text += `// Don't use this type directly, use ${clientCtor}() instead.\n`;
     text += `type ${clientName} struct {\n`;
     text += `\t*${client}\n`;
     if (group.language.go!.clientParams) {
@@ -75,8 +76,8 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     }
     text += '}\n\n';
     // operation client constructor
-    const clientLiterals = ['Client: c'];
-    const methodParams = ['c *Client'];
+    const clientLiterals = [`${client}: c`];
+    const methodParams = [`c *${client}`];
     // add client params to the operation client constructor
     if (group.language.go!.clientParams) {
       const clientParams = <Array<Parameter>>group.language.go!.clientParams;
@@ -86,8 +87,8 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
         methodParams.push(`${clientParam.language.go!.name} ${formatParameterTypeName(clientParam)}`);
       }
     }
-    text += `// New${clientName} creates a new instance of ${clientName} with the specified values.\n`;
-    text += `func New${clientName}(${methodParams.join(', ')}) ${interfaceName} {\n`;
+    text += `// ${clientCtor} creates a new instance of ${clientName} with the specified values.\n`;
+    text += `func ${clientCtor}(${methodParams.join(', ')}) ${interfaceName} {\n`;
     text += `\treturn &${clientName}{${clientLiterals.join(', ')}}\n`;
     text += '}\n\n';
     // operation client Do method

@@ -74,6 +74,7 @@ export async function namer(session: Session<CodeModel>) {
     }
   }
 
+  const exportClient = await session.getValue('export-client', true);
   // pascal-case and capitzalize acronym operation groups and their operations
   for (const group of values(model.operationGroups)) {
     const groupDetails = <Language>group.language.go;
@@ -86,6 +87,11 @@ export async function namer(session: Session<CodeModel>) {
     if (groupDetails.name.endsWith('Client')) {
       // don't generate a name like FooClientClient
       groupDetails.clientName = groupDetails.name;
+    }
+    groupDetails.clientCtorName = `New${groupDetails.clientName}`;
+    if (!exportClient) {
+      groupDetails.clientName = camelCase(groupDetails.clientName);
+      groupDetails.clientCtorName = camelCase(groupDetails.clientCtorName);
     }
     groupDetails.interfaceName = `${groupDetails.name}Operations`;
     if (groupDetails.name === 'Operations') {
