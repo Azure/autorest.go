@@ -9,7 +9,7 @@ import { ArraySchema, ByteArraySchema, CodeModel, ConstantSchema, DateTimeSchema
 import { values } from '@azure-tools/linq';
 import { aggregateParameters, isArraySchema, isPageableOperation, isSchemaResponse, PagerInfo, isLROOperation } from '../common/helpers';
 import { OperationNaming } from '../transform/namer';
-import { contentPreamble, formatParameterTypeName, hasDescription, skipURLEncoding, sortAscending, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format } from './helpers';
+import { contentPreamble, formatParameterTypeName, hasDescription, skipURLEncoding, sortAscending, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired } from './helpers';
 import { ImportManager } from './imports';
 
 // represents the generated content for an operation group
@@ -40,16 +40,15 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     imports.add('net/url');
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
 
-    const clientName = camelCase(group.language.go!.clientName);
     let opText = '';
     group.operations.sort((a: Operation, b: Operation) => { return sortAscending(a.language.go!.name, b.language.go!.name) });
     for (const op of values(group.operations)) {
       // protocol creation can add imports to the list so
       // it must be done before the imports are written out
-      opText += generateOperation(clientName, op, imports, isDataPlane);
-      opText += createProtocolRequest(session.model, clientName, op, imports);
-      opText += createProtocolResponse(clientName, op, imports);
-      opText += createProtocolErrHandler(clientName, op, imports);
+      opText += generateOperation(op, imports, isDataPlane);
+      opText += createProtocolRequest(session.model, op, imports);
+      opText += createProtocolResponse(op, imports);
+      opText += createProtocolErrHandler(op, imports);
     }
     const interfaceText = createInterfaceDefinition(group, imports);
     // stitch it all together
@@ -61,7 +60,11 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     }
     text += imports.text();
     text += interfaceText;
-    text += `// ${clientName} implements the ${group.language.go!.clientName} interface.\n`;
+    // generate the operation client
+    const clientName = group.language.go!.clientName;
+    const interfaceName = group.language.go!.interfaceName;
+    text += `// ${clientName} implements the ${interfaceName} interface.\n`;
+    text += `// Don't use this type directly, use New${clientName}() instead.\n`;
     text += `type ${clientName} struct {\n`;
     text += `\t*${client}\n`;
     if (group.language.go!.clientParams) {
@@ -71,8 +74,29 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       }
     }
     text += '}\n\n';
+    // operation client constructor
+    const clientLiterals = ['Client: c'];
+    const methodParams = ['c *Client'];
+    // add client params to the operation client constructor
+    if (group.language.go!.clientParams) {
+      const clientParams = <Array<Parameter>>group.language.go!.clientParams;
+      clientParams.sort(sortParametersByRequired);
+      for (const clientParam of values(clientParams)) {
+        clientLiterals.push(`${clientParam.language.go!.name}: ${clientParam.language.go!.name}`);
+        methodParams.push(`${clientParam.language.go!.name} ${formatParameterTypeName(clientParam)}`);
+      }
+    }
+    text += `// New${clientName} creates a new instance of ${clientName} with the specified values.\n`;
+    text += `func New${clientName}(${methodParams.join(', ')}) ${interfaceName} {\n`;
+    text += `\treturn &${clientName}{${clientLiterals.join(', ')}}\n`;
+    text += '}\n\n';
+    // operation client Do method
+    text += '// Do invokes the Do() method on the pipeline associated with this client.\n';
+    text += `func (client *${clientName}) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {\n`;
+    text += '\treturn client.p.Do(ctx, req)\n';
+    text += '}\n\n';
+    // add operations content last
     text += opText;
-
     operations.push(new OperationGroupContent(group.language.go!.name, text));
   }
   return operations;
@@ -159,7 +183,7 @@ function generateMultiRespComment(op: Operation): string {
   return `// Possible return types are ${returnTypes.join(', ')}\n`;
 }
 
-function generateOperation(clientName: string, op: Operation, imports: ImportManager, isDataPlane: boolean): string {
+function generateOperation(op: Operation, imports: ImportManager, isDataPlane: boolean): string {
   if (op.language.go!.paging && op.language.go!.paging.isNextOp) {
     // don't generate a public API for the methods used to advance pages
     return '';
@@ -167,6 +191,7 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
   const info = <OperationNaming>op.language.go!;
   const params = getAPIParametersSig(op, imports);
   const returns = generateReturnsInfo(op, false);
+  const clientName = op.language.go!.clientName;
   let text = '';
   if (hasDescription(op.language.go!)) {
     text += `// ${op.language.go!.name} - ${op.language.go!.description} \n`;
@@ -201,7 +226,7 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
     text += `\t\treturn nil, err\n`;
     text += `\t}\n`;
     text += `\t// send the first request to initialize the poller\n`;
-    text += `\tresp, err := client.p.Do(ctx, req)\n`;
+    text += `\tresp, err := client.Do(ctx, req)\n`;
     text += `\tif err != nil {\n`;
     text += `\t\treturn nil, err\n`;
     text += `\t}\n`;
@@ -274,7 +299,7 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
         }
       }
       text += `\t\tadvancer: func(resp *${schemaResponse.schema.language.go!.responseType.name}) (*azcore.Request, error) {\n`;
-      text += `\t\t\treturn client.${camelCase(op.language.go!.paging.member)}CreateRequest(${nextOpParams.join(', ')})\n`;
+      text += `\t\t\treturn client.${op.language.go!.paging.member}CreateRequest(${nextOpParams.join(', ')})\n`;
       text += '\t\t},\n';
     } else {
       imports.add('fmt');
@@ -298,7 +323,7 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
     text += '}\n\n';
     return text;
   }
-  text += `\tresp, err := client.p.Do(ctx, req)\n`;
+  text += `\tresp, err := client.Do(ctx, req)\n`;
   text += `\tif err != nil {\n`;
   text += `\t\treturn nil, err\n`;
   text += `\t}\n`;
@@ -312,7 +337,7 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
   return text;
 }
 
-function createProtocolRequest(codeModel: CodeModel, client: string, op: Operation, imports: ImportManager): string {
+function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: ImportManager): string {
   const info = <OperationNaming>op.language.go!;
   const name = info.protocolNaming.requestMethod;
   for (const param of values(aggregateParameters(op))) {
@@ -323,7 +348,7 @@ function createProtocolRequest(codeModel: CodeModel, client: string, op: Operati
   }
   const returns = ['*azcore.Request', 'error'];
   let text = `${comment(name, '// ')} creates the ${info.name} request.\n`;
-  text += `func (client *${client}) ${name}(${getCreateRequestParametersSig(op)}) (${returns.join(', ')}) {\n`;
+  text += `func (client *${op.language.go!.clientName}) ${name}(${getCreateRequestParametersSig(op)}) (${returns.join(', ')}) {\n`;
   // default to host on the client
   let hostParam = 'client.u';
   if (codeModel.language.go!.complexHostParams) {
@@ -588,11 +613,12 @@ function isArrayOfTimesForMarshalling(schema: Schema): boolean {
   return (<DateTimeSchema>arrayElem).format === 'date-time-rfc1123';
 }
 
-function createProtocolResponse(client: string, op: Operation, imports: ImportManager): string {
+function createProtocolResponse(op: Operation, imports: ImportManager): string {
   const info = <OperationNaming>op.language.go!;
   const name = info.protocolNaming.responseMethod;
+  const clientName = op.language.go!.clientName;
   let text = `${comment(name, '// ')} handles the ${info.name} response.\n`;
-  text += `func (client *${client}) ${name}(resp *azcore.Response) (${generateReturnsInfo(op, true).join(', ')}) {\n`;
+  text += `func (client *${clientName}) ${name}(resp *azcore.Response) (${generateReturnsInfo(op, true).join(', ')}) {\n`;
   if (!op.responses) {
     text += `\treturn nil, client.${info.protocolNaming.errorMethod}(resp)`;
     text += '}\n\n';
@@ -686,7 +712,7 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
       text += generateResponseUnmarshaller(op.responses![0], true);
       text += '}\n\n';
       text += `${comment(name, '// ')} handles the ${info.name} response.\n`;
-      text += `func (client *${client}) ${camelCase(op.language.go!.pageableType.name)}HandleResponse(resp *azcore.Response) (*${(<SchemaResponse>op.responses![0]).schema.language.go!.responseType.value}Response, error) {\n`;
+      text += `func (client *${clientName}) ${camelCase(op.language.go!.pageableType.name)}HandleResponse(resp *azcore.Response) (*${(<SchemaResponse>op.responses![0]).schema.language.go!.responseType.value}Response, error) {\n`;
       const index = statusCodes.indexOf('204');
       if (index > -1) {
         statusCodes.splice(index, 1);
@@ -713,11 +739,11 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
   return text;
 }
 
-function createProtocolErrHandler(client: string, op: Operation, imports: ImportManager): string {
+function createProtocolErrHandler(op: Operation, imports: ImportManager): string {
   const info = <OperationNaming>op.language.go!;
   const name = info.protocolNaming.errorMethod;
   let text = `${comment(name, '// ')} handles the ${info.name} error response.\n`;
-  text += `func (client *${client}) ${name}(resp *azcore.Response) error {\n`;
+  text += `func (client *${op.language.go!.clientName}) ${name}(resp *azcore.Response) error {\n`;
 
   // define a generic error for when there are no exceptions or no error schema
   const generateGenericError = function () {
@@ -809,8 +835,8 @@ function isMapOfDateTime(schema: Schema): boolean {
 }
 
 function createInterfaceDefinition(group: OperationGroup, imports: ImportManager): string {
-  let interfaceText = `// ${group.language.go!.clientName} contains the methods for the ${group.language.go!.name} group.\n`;
-  interfaceText += `type ${group.language.go!.clientName} interface {\n`;
+  let interfaceText = `// ${group.language.go!.interfaceName} contains the methods for the ${group.language.go!.name} group.\n`;
+  interfaceText += `type ${group.language.go!.interfaceName} interface {\n`;
   for (const op of values(group.operations)) {
     let opName = op.language.go!.name;
     if (op.language.go!.paging && op.language.go!.paging.isNextOp) {

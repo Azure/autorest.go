@@ -23,31 +23,42 @@ type ExpressRouteLinksOperations interface {
 	List(resourceGroupName string, expressRoutePortName string) (ExpressRouteLinkListResultPager, error)
 }
 
-// expressRouteLinksOperations implements the ExpressRouteLinksOperations interface.
-type expressRouteLinksOperations struct {
+// ExpressRouteLinksClient implements the ExpressRouteLinksOperations interface.
+// Don't use this type directly, use NewExpressRouteLinksClient() instead.
+type ExpressRouteLinksClient struct {
 	*Client
 	subscriptionID string
 }
 
+// NewExpressRouteLinksClient creates a new instance of ExpressRouteLinksClient with the specified values.
+func NewExpressRouteLinksClient(c *Client, subscriptionID string) ExpressRouteLinksOperations {
+	return &ExpressRouteLinksClient{Client: c, subscriptionID: subscriptionID}
+}
+
+// Do invokes the Do() method on the pipeline associated with this client.
+func (client *ExpressRouteLinksClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(ctx, req)
+}
+
 // Get - Retrieves the specified ExpressRouteLink resource.
-func (client *expressRouteLinksOperations) Get(ctx context.Context, resourceGroupName string, expressRoutePortName string, linkName string) (*ExpressRouteLinkResponse, error) {
-	req, err := client.getCreateRequest(resourceGroupName, expressRoutePortName, linkName)
+func (client *ExpressRouteLinksClient) Get(ctx context.Context, resourceGroupName string, expressRoutePortName string, linkName string) (*ExpressRouteLinkResponse, error) {
+	req, err := client.GetCreateRequest(resourceGroupName, expressRoutePortName, linkName)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getHandleResponse(resp)
+	result, err := client.GetHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getCreateRequest creates the Get request.
-func (client *expressRouteLinksOperations) getCreateRequest(resourceGroupName string, expressRoutePortName string, linkName string) (*azcore.Request, error) {
+// GetCreateRequest creates the Get request.
+func (client *ExpressRouteLinksClient) GetCreateRequest(resourceGroupName string, expressRoutePortName string, linkName string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -68,17 +79,17 @@ func (client *expressRouteLinksOperations) getCreateRequest(resourceGroupName st
 	return req, nil
 }
 
-// getHandleResponse handles the Get response.
-func (client *expressRouteLinksOperations) getHandleResponse(resp *azcore.Response) (*ExpressRouteLinkResponse, error) {
+// GetHandleResponse handles the Get response.
+func (client *ExpressRouteLinksClient) GetHandleResponse(resp *azcore.Response) (*ExpressRouteLinkResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getHandleError(resp)
+		return nil, client.GetHandleError(resp)
 	}
 	result := ExpressRouteLinkResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ExpressRouteLink)
 }
 
-// getHandleError handles the Get error response.
-func (client *expressRouteLinksOperations) getHandleError(resp *azcore.Response) error {
+// GetHandleError handles the Get error response.
+func (client *ExpressRouteLinksClient) GetHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -87,15 +98,15 @@ func (client *expressRouteLinksOperations) getHandleError(resp *azcore.Response)
 }
 
 // List - Retrieve the ExpressRouteLink sub-resources of the specified ExpressRoutePort resource.
-func (client *expressRouteLinksOperations) List(resourceGroupName string, expressRoutePortName string) (ExpressRouteLinkListResultPager, error) {
-	req, err := client.listCreateRequest(resourceGroupName, expressRoutePortName)
+func (client *ExpressRouteLinksClient) List(resourceGroupName string, expressRoutePortName string) (ExpressRouteLinkListResultPager, error) {
+	req, err := client.ListCreateRequest(resourceGroupName, expressRoutePortName)
 	if err != nil {
 		return nil, err
 	}
 	return &expressRouteLinkListResultPager{
 		pipeline:  client.p,
 		request:   req,
-		responder: client.listHandleResponse,
+		responder: client.ListHandleResponse,
 		advancer: func(resp *ExpressRouteLinkListResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.ExpressRouteLinkListResult.NextLink)
 			if err != nil {
@@ -109,8 +120,8 @@ func (client *expressRouteLinksOperations) List(resourceGroupName string, expres
 	}, nil
 }
 
-// listCreateRequest creates the List request.
-func (client *expressRouteLinksOperations) listCreateRequest(resourceGroupName string, expressRoutePortName string) (*azcore.Request, error) {
+// ListCreateRequest creates the List request.
+func (client *ExpressRouteLinksClient) ListCreateRequest(resourceGroupName string, expressRoutePortName string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -130,17 +141,17 @@ func (client *expressRouteLinksOperations) listCreateRequest(resourceGroupName s
 	return req, nil
 }
 
-// listHandleResponse handles the List response.
-func (client *expressRouteLinksOperations) listHandleResponse(resp *azcore.Response) (*ExpressRouteLinkListResultResponse, error) {
+// ListHandleResponse handles the List response.
+func (client *ExpressRouteLinksClient) ListHandleResponse(resp *azcore.Response) (*ExpressRouteLinkListResultResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.listHandleError(resp)
+		return nil, client.ListHandleError(resp)
 	}
 	result := ExpressRouteLinkListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ExpressRouteLinkListResult)
 }
 
-// listHandleError handles the List error response.
-func (client *expressRouteLinksOperations) listHandleError(resp *azcore.Response) error {
+// ListHandleError handles the List error response.
+func (client *ExpressRouteLinksClient) ListHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

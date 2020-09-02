@@ -13,9 +13,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
+func newDurationClient() durationgroup.DurationOperations {
+	return durationgroup.NewDurationClient(durationgroup.NewDefaultClient(nil))
+}
+
 func TestGetInvalid(t *testing.T) {
 	t.Skip("this does not apply to us meanwhile we do not parse durations")
-	client := durationgroup.NewDefaultClient(nil).DurationOperations()
+	client := newDurationClient()
 	_, err := client.GetInvalid(context.Background())
 	if err == nil {
 		t.Fatal("unexpected nil error")
@@ -23,7 +27,7 @@ func TestGetInvalid(t *testing.T) {
 }
 
 func TestGetNull(t *testing.T) {
-	client := durationgroup.NewDefaultClient(nil).DurationOperations()
+	client := newDurationClient()
 	result, err := client.GetNull(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -33,7 +37,7 @@ func TestGetNull(t *testing.T) {
 }
 
 func TestGetPositiveDuration(t *testing.T) {
-	client := durationgroup.NewDefaultClient(nil).DurationOperations()
+	client := newDurationClient()
 	result, err := client.GetPositiveDuration(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -42,7 +46,7 @@ func TestGetPositiveDuration(t *testing.T) {
 }
 
 func TestPutPositiveDuration(t *testing.T) {
-	client := durationgroup.NewDefaultClient(nil).DurationOperations()
+	client := newDurationClient()
 	result, err := client.PutPositiveDuration(context.Background(), "P123DT22H14M12.011S")
 	if err != nil {
 		t.Fatal(err)

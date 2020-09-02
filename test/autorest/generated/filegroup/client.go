@@ -74,8 +74,3 @@ func NewClient(endpoint string, options *ClientOptions) *Client {
 func NewClientWithPipeline(endpoint string, p azcore.Pipeline) *Client {
 	return &Client{u: endpoint, p: p}
 }
-
-// FilesOperations returns the FilesOperations associated with this client.
-func (client *Client) FilesOperations() FilesOperations {
-	return &filesOperations{Client: client}
-}

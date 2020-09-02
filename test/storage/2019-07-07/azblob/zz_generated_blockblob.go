@@ -29,30 +29,41 @@ type BlockBlobOperations interface {
 	Upload(ctx context.Context, contentLength int64, body azcore.ReadSeekCloser, blockBlobUploadOptions *BlockBlobUploadOptions, blobHttpHeaders *BlobHttpHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*BlockBlobUploadResponse, error)
 }
 
-// blockBlobOperations implements the BlockBlobOperations interface.
-type blockBlobOperations struct {
+// BlockBlobClient implements the BlockBlobOperations interface.
+// Don't use this type directly, use NewBlockBlobClient() instead.
+type BlockBlobClient struct {
 	*client
 }
 
+// NewBlockBlobClient creates a new instance of BlockBlobClient with the specified values.
+func NewBlockBlobClient(c *Client) BlockBlobOperations {
+	return &BlockBlobClient{Client: c}
+}
+
+// Do invokes the Do() method on the pipeline associated with this client.
+func (client *BlockBlobClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(ctx, req)
+}
+
 // CommitBlockList - The Commit Block List operation writes a blob by specifying the list of block IDs that make up the blob. In order to be written as part of a blob, a block must have been successfully written to the server in a prior Put Block operation. You can call Put Block List to update a blob by uploading only those blocks that have changed, then committing the new and existing blocks together. You can do this by specifying whether to commit a block from the committed block list or from the uncommitted block list, or to commit the most recently uploaded version of the block, whichever list it may belong to.
-func (client *blockBlobOperations) CommitBlockList(ctx context.Context, blocks BlockLookupList, blockBlobCommitBlockListOptions *BlockBlobCommitBlockListOptions, blobHttpHeaders *BlobHttpHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*BlockBlobCommitBlockListResponse, error) {
-	req, err := client.commitBlockListCreateRequest(blocks, blockBlobCommitBlockListOptions, blobHttpHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
+func (client *BlockBlobClient) CommitBlockList(ctx context.Context, blocks BlockLookupList, blockBlobCommitBlockListOptions *BlockBlobCommitBlockListOptions, blobHttpHeaders *BlobHttpHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*BlockBlobCommitBlockListResponse, error) {
+	req, err := client.CommitBlockListCreateRequest(blocks, blockBlobCommitBlockListOptions, blobHttpHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.commitBlockListHandleResponse(resp)
+	result, err := client.CommitBlockListHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// commitBlockListCreateRequest creates the CommitBlockList request.
-func (client *blockBlobOperations) commitBlockListCreateRequest(blocks BlockLookupList, blockBlobCommitBlockListOptions *BlockBlobCommitBlockListOptions, blobHttpHeaders *BlobHttpHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+// CommitBlockListCreateRequest creates the CommitBlockList request.
+func (client *BlockBlobClient) CommitBlockListCreateRequest(blocks BlockLookupList, blockBlobCommitBlockListOptions *BlockBlobCommitBlockListOptions, blobHttpHeaders *BlobHttpHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -127,10 +138,10 @@ func (client *blockBlobOperations) commitBlockListCreateRequest(blocks BlockLook
 	return req, req.MarshalAsXML(blocks)
 }
 
-// commitBlockListHandleResponse handles the CommitBlockList response.
-func (client *blockBlobOperations) commitBlockListHandleResponse(resp *azcore.Response) (*BlockBlobCommitBlockListResponse, error) {
+// CommitBlockListHandleResponse handles the CommitBlockList response.
+func (client *BlockBlobClient) CommitBlockListHandleResponse(resp *azcore.Response) (*BlockBlobCommitBlockListResponse, error) {
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.commitBlockListHandleError(resp)
+		return nil, client.CommitBlockListHandleError(resp)
 	}
 	result := BlockBlobCommitBlockListResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
@@ -189,8 +200,8 @@ func (client *blockBlobOperations) commitBlockListHandleResponse(resp *azcore.Re
 	return &result, nil
 }
 
-// commitBlockListHandleError handles the CommitBlockList error response.
-func (client *blockBlobOperations) commitBlockListHandleError(resp *azcore.Response) error {
+// CommitBlockListHandleError handles the CommitBlockList error response.
+func (client *BlockBlobClient) CommitBlockListHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -199,24 +210,24 @@ func (client *blockBlobOperations) commitBlockListHandleError(resp *azcore.Respo
 }
 
 // GetBlockList - The Get Block List operation retrieves the list of blocks that have been uploaded as part of a block blob
-func (client *blockBlobOperations) GetBlockList(ctx context.Context, listType BlockListType, blockBlobGetBlockListOptions *BlockBlobGetBlockListOptions, leaseAccessConditions *LeaseAccessConditions) (*BlockListResponse, error) {
-	req, err := client.getBlockListCreateRequest(listType, blockBlobGetBlockListOptions, leaseAccessConditions)
+func (client *BlockBlobClient) GetBlockList(ctx context.Context, listType BlockListType, blockBlobGetBlockListOptions *BlockBlobGetBlockListOptions, leaseAccessConditions *LeaseAccessConditions) (*BlockListResponse, error) {
+	req, err := client.GetBlockListCreateRequest(listType, blockBlobGetBlockListOptions, leaseAccessConditions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getBlockListHandleResponse(resp)
+	result, err := client.GetBlockListHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getBlockListCreateRequest creates the GetBlockList request.
-func (client *blockBlobOperations) getBlockListCreateRequest(listType BlockListType, blockBlobGetBlockListOptions *BlockBlobGetBlockListOptions, leaseAccessConditions *LeaseAccessConditions) (*azcore.Request, error) {
+// GetBlockListCreateRequest creates the GetBlockList request.
+func (client *BlockBlobClient) GetBlockListCreateRequest(listType BlockListType, blockBlobGetBlockListOptions *BlockBlobGetBlockListOptions, leaseAccessConditions *LeaseAccessConditions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -242,10 +253,10 @@ func (client *blockBlobOperations) getBlockListCreateRequest(listType BlockListT
 	return req, nil
 }
 
-// getBlockListHandleResponse handles the GetBlockList response.
-func (client *blockBlobOperations) getBlockListHandleResponse(resp *azcore.Response) (*BlockListResponse, error) {
+// GetBlockListHandleResponse handles the GetBlockList response.
+func (client *BlockBlobClient) GetBlockListHandleResponse(resp *azcore.Response) (*BlockListResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getBlockListHandleError(resp)
+		return nil, client.GetBlockListHandleError(resp)
 	}
 	result := BlockListResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
@@ -287,8 +298,8 @@ func (client *blockBlobOperations) getBlockListHandleResponse(resp *azcore.Respo
 	return &result, resp.UnmarshalAsXML(&result.BlockList)
 }
 
-// getBlockListHandleError handles the GetBlockList error response.
-func (client *blockBlobOperations) getBlockListHandleError(resp *azcore.Response) error {
+// GetBlockListHandleError handles the GetBlockList error response.
+func (client *BlockBlobClient) GetBlockListHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -297,24 +308,24 @@ func (client *blockBlobOperations) getBlockListHandleError(resp *azcore.Response
 }
 
 // StageBlock - The Stage Block operation creates a new block to be committed as part of a blob
-func (client *blockBlobOperations) StageBlock(ctx context.Context, blockId string, contentLength int64, body azcore.ReadSeekCloser, blockBlobStageBlockOptions *BlockBlobStageBlockOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo) (*BlockBlobStageBlockResponse, error) {
-	req, err := client.stageBlockCreateRequest(blockId, contentLength, body, blockBlobStageBlockOptions, leaseAccessConditions, cpkInfo, cpkScopeInfo)
+func (client *BlockBlobClient) StageBlock(ctx context.Context, blockId string, contentLength int64, body azcore.ReadSeekCloser, blockBlobStageBlockOptions *BlockBlobStageBlockOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo) (*BlockBlobStageBlockResponse, error) {
+	req, err := client.StageBlockCreateRequest(blockId, contentLength, body, blockBlobStageBlockOptions, leaseAccessConditions, cpkInfo, cpkScopeInfo)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.stageBlockHandleResponse(resp)
+	result, err := client.StageBlockHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// stageBlockCreateRequest creates the StageBlock request.
-func (client *blockBlobOperations) stageBlockCreateRequest(blockId string, contentLength int64, body azcore.ReadSeekCloser, blockBlobStageBlockOptions *BlockBlobStageBlockOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo) (*azcore.Request, error) {
+// StageBlockCreateRequest creates the StageBlock request.
+func (client *BlockBlobClient) StageBlockCreateRequest(blockId string, contentLength int64, body azcore.ReadSeekCloser, blockBlobStageBlockOptions *BlockBlobStageBlockOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -353,10 +364,10 @@ func (client *blockBlobOperations) stageBlockCreateRequest(blockId string, conte
 	return req, req.SetBody(body)
 }
 
-// stageBlockHandleResponse handles the StageBlock response.
-func (client *blockBlobOperations) stageBlockHandleResponse(resp *azcore.Response) (*BlockBlobStageBlockResponse, error) {
+// StageBlockHandleResponse handles the StageBlock response.
+func (client *BlockBlobClient) StageBlockHandleResponse(resp *azcore.Response) (*BlockBlobStageBlockResponse, error) {
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.stageBlockHandleError(resp)
+		return nil, client.StageBlockHandleError(resp)
 	}
 	result := BlockBlobStageBlockResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("Content-MD5"); val != "" {
@@ -405,8 +416,8 @@ func (client *blockBlobOperations) stageBlockHandleResponse(resp *azcore.Respons
 	return &result, nil
 }
 
-// stageBlockHandleError handles the StageBlock error response.
-func (client *blockBlobOperations) stageBlockHandleError(resp *azcore.Response) error {
+// StageBlockHandleError handles the StageBlock error response.
+func (client *BlockBlobClient) StageBlockHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -415,24 +426,24 @@ func (client *blockBlobOperations) stageBlockHandleError(resp *azcore.Response) 
 }
 
 // StageBlockFromURL - The Stage Block operation creates a new block to be committed as part of a blob where the contents are read from a URL.
-func (client *blockBlobOperations) StageBlockFromURL(ctx context.Context, blockId string, contentLength int64, sourceUrl url.URL, blockBlobStageBlockFromUrlOptions *BlockBlobStageBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*BlockBlobStageBlockFromURLResponse, error) {
-	req, err := client.stageBlockFromUrlCreateRequest(blockId, contentLength, sourceUrl, blockBlobStageBlockFromUrlOptions, cpkInfo, cpkScopeInfo, leaseAccessConditions, sourceModifiedAccessConditions)
+func (client *BlockBlobClient) StageBlockFromURL(ctx context.Context, blockId string, contentLength int64, sourceUrl url.URL, blockBlobStageBlockFromUrlOptions *BlockBlobStageBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*BlockBlobStageBlockFromURLResponse, error) {
+	req, err := client.StageBlockFromURLCreateRequest(blockId, contentLength, sourceUrl, blockBlobStageBlockFromUrlOptions, cpkInfo, cpkScopeInfo, leaseAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.stageBlockFromUrlHandleResponse(resp)
+	result, err := client.StageBlockFromURLHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// stageBlockFromUrlCreateRequest creates the StageBlockFromURL request.
-func (client *blockBlobOperations) stageBlockFromUrlCreateRequest(blockId string, contentLength int64, sourceUrl url.URL, blockBlobStageBlockFromUrlOptions *BlockBlobStageBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*azcore.Request, error) {
+// StageBlockFromURLCreateRequest creates the StageBlockFromURL request.
+func (client *BlockBlobClient) StageBlockFromURLCreateRequest(blockId string, contentLength int64, sourceUrl url.URL, blockBlobStageBlockFromUrlOptions *BlockBlobStageBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -487,10 +498,10 @@ func (client *blockBlobOperations) stageBlockFromUrlCreateRequest(blockId string
 	return req, nil
 }
 
-// stageBlockFromUrlHandleResponse handles the StageBlockFromURL response.
-func (client *blockBlobOperations) stageBlockFromUrlHandleResponse(resp *azcore.Response) (*BlockBlobStageBlockFromURLResponse, error) {
+// StageBlockFromURLHandleResponse handles the StageBlockFromURL response.
+func (client *BlockBlobClient) StageBlockFromURLHandleResponse(resp *azcore.Response) (*BlockBlobStageBlockFromURLResponse, error) {
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.stageBlockFromUrlHandleError(resp)
+		return nil, client.StageBlockFromURLHandleError(resp)
 	}
 	result := BlockBlobStageBlockFromURLResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("Content-MD5"); val != "" {
@@ -539,8 +550,8 @@ func (client *blockBlobOperations) stageBlockFromUrlHandleResponse(resp *azcore.
 	return &result, nil
 }
 
-// stageBlockFromUrlHandleError handles the StageBlockFromURL error response.
-func (client *blockBlobOperations) stageBlockFromUrlHandleError(resp *azcore.Response) error {
+// StageBlockFromURLHandleError handles the StageBlockFromURL error response.
+func (client *BlockBlobClient) StageBlockFromURLHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -549,24 +560,24 @@ func (client *blockBlobOperations) stageBlockFromUrlHandleError(resp *azcore.Res
 }
 
 // Upload - The Upload Block Blob operation updates the content of an existing block blob. Updating an existing block blob overwrites any existing metadata on the blob. Partial updates are not supported with Put Blob; the content of the existing blob is overwritten with the content of the new blob. To perform a partial update of the content of a block blob, use the Put Block List operation.
-func (client *blockBlobOperations) Upload(ctx context.Context, contentLength int64, body azcore.ReadSeekCloser, blockBlobUploadOptions *BlockBlobUploadOptions, blobHttpHeaders *BlobHttpHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*BlockBlobUploadResponse, error) {
-	req, err := client.uploadCreateRequest(contentLength, body, blockBlobUploadOptions, blobHttpHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
+func (client *BlockBlobClient) Upload(ctx context.Context, contentLength int64, body azcore.ReadSeekCloser, blockBlobUploadOptions *BlockBlobUploadOptions, blobHttpHeaders *BlobHttpHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*BlockBlobUploadResponse, error) {
+	req, err := client.UploadCreateRequest(contentLength, body, blockBlobUploadOptions, blobHttpHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.uploadHandleResponse(resp)
+	result, err := client.UploadHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// uploadCreateRequest creates the Upload request.
-func (client *blockBlobOperations) uploadCreateRequest(contentLength int64, body azcore.ReadSeekCloser, blockBlobUploadOptions *BlockBlobUploadOptions, blobHttpHeaders *BlobHttpHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+// UploadCreateRequest creates the Upload request.
+func (client *BlockBlobClient) UploadCreateRequest(contentLength int64, body azcore.ReadSeekCloser, blockBlobUploadOptions *BlockBlobUploadOptions, blobHttpHeaders *BlobHttpHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -639,10 +650,10 @@ func (client *blockBlobOperations) uploadCreateRequest(contentLength int64, body
 	return req, req.SetBody(body)
 }
 
-// uploadHandleResponse handles the Upload response.
-func (client *blockBlobOperations) uploadHandleResponse(resp *azcore.Response) (*BlockBlobUploadResponse, error) {
+// UploadHandleResponse handles the Upload response.
+func (client *BlockBlobClient) UploadHandleResponse(resp *azcore.Response) (*BlockBlobUploadResponse, error) {
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.uploadHandleError(resp)
+		return nil, client.UploadHandleError(resp)
 	}
 	result := BlockBlobUploadResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
@@ -694,8 +705,8 @@ func (client *blockBlobOperations) uploadHandleResponse(resp *azcore.Response) (
 	return &result, nil
 }
 
-// uploadHandleError handles the Upload error response.
-func (client *blockBlobOperations) uploadHandleError(resp *azcore.Response) error {
+// UploadHandleError handles the Upload error response.
+func (client *BlockBlobClient) UploadHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err

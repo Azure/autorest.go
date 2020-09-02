@@ -9,8 +9,12 @@ import (
 	"testing"
 )
 
+func newHTTPClientFailureClient() httpinfrastructuregroup.HTTPClientFailureOperations {
+	return httpinfrastructuregroup.NewHTTPClientFailureClient(httpinfrastructuregroup.NewDefaultClient(nil))
+}
+
 func TestHTTPClientFailureDelete400(t *testing.T) {
-	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPClientFailureOperations()
+	client := newHTTPClientFailureClient()
 	result, err := client.Delete400(context.Background())
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
@@ -21,7 +25,7 @@ func TestHTTPClientFailureDelete400(t *testing.T) {
 }
 
 func TestHTTPClientFailureDelete407(t *testing.T) {
-	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPClientFailureOperations()
+	client := newHTTPClientFailureClient()
 	result, err := client.Delete407(context.Background())
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
@@ -32,7 +36,7 @@ func TestHTTPClientFailureDelete407(t *testing.T) {
 }
 
 func TestHTTPClientFailureDelete417(t *testing.T) {
-	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPClientFailureOperations()
+	client := newHTTPClientFailureClient()
 	result, err := client.Delete417(context.Background())
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
@@ -43,7 +47,7 @@ func TestHTTPClientFailureDelete417(t *testing.T) {
 }
 
 func TestHTTPClientFailureGet400(t *testing.T) {
-	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPClientFailureOperations()
+	client := newHTTPClientFailureClient()
 	result, err := client.Get400(context.Background())
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
@@ -54,7 +58,7 @@ func TestHTTPClientFailureGet400(t *testing.T) {
 }
 
 func TestHTTPClientFailureGet402(t *testing.T) {
-	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPClientFailureOperations()
+	client := newHTTPClientFailureClient()
 	result, err := client.Get402(context.Background())
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
@@ -65,7 +69,7 @@ func TestHTTPClientFailureGet402(t *testing.T) {
 }
 
 func TestHTTPClientFailureGet403(t *testing.T) {
-	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPClientFailureOperations()
+	client := newHTTPClientFailureClient()
 	result, err := client.Get403(context.Background())
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
@@ -76,7 +80,7 @@ func TestHTTPClientFailureGet403(t *testing.T) {
 }
 
 func TestHTTPClientFailureGet411(t *testing.T) {
-	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPClientFailureOperations()
+	client := newHTTPClientFailureClient()
 	result, err := client.Get411(context.Background())
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
@@ -87,7 +91,7 @@ func TestHTTPClientFailureGet411(t *testing.T) {
 }
 
 func TestHTTPClientFailureGet412(t *testing.T) {
-	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPClientFailureOperations()
+	client := newHTTPClientFailureClient()
 	result, err := client.Get412(context.Background())
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
@@ -98,7 +102,7 @@ func TestHTTPClientFailureGet412(t *testing.T) {
 }
 
 func TestHTTPClientFailureGet416(t *testing.T) {
-	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPClientFailureOperations()
+	client := newHTTPClientFailureClient()
 	result, err := client.Get416(context.Background())
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
@@ -109,7 +113,7 @@ func TestHTTPClientFailureGet416(t *testing.T) {
 }
 
 func TestHTTPClientFailureHead400(t *testing.T) {
-	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPClientFailureOperations()
+	client := newHTTPClientFailureClient()
 	result, err := client.Head400(context.Background())
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
@@ -120,7 +124,7 @@ func TestHTTPClientFailureHead400(t *testing.T) {
 }
 
 func TestHTTPClientFailureHead401(t *testing.T) {
-	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPClientFailureOperations()
+	client := newHTTPClientFailureClient()
 	result, err := client.Head401(context.Background())
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
@@ -131,7 +135,7 @@ func TestHTTPClientFailureHead401(t *testing.T) {
 }
 
 func TestHTTPClientFailureHead410(t *testing.T) {
-	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPClientFailureOperations()
+	client := newHTTPClientFailureClient()
 	result, err := client.Head410(context.Background())
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
@@ -142,7 +146,7 @@ func TestHTTPClientFailureHead410(t *testing.T) {
 }
 
 func TestHTTPClientFailureHead429(t *testing.T) {
-	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPClientFailureOperations()
+	client := newHTTPClientFailureClient()
 	result, err := client.Head429(context.Background())
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
@@ -153,7 +157,7 @@ func TestHTTPClientFailureHead429(t *testing.T) {
 }
 
 func TestHTTPClientFailureOptions400(t *testing.T) {
-	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPClientFailureOperations()
+	client := newHTTPClientFailureClient()
 	result, err := client.Options400(context.Background())
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
@@ -164,7 +168,7 @@ func TestHTTPClientFailureOptions400(t *testing.T) {
 }
 
 func TestHTTPClientFailureOptions403(t *testing.T) {
-	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPClientFailureOperations()
+	client := newHTTPClientFailureClient()
 	result, err := client.Options403(context.Background())
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
@@ -175,7 +179,7 @@ func TestHTTPClientFailureOptions403(t *testing.T) {
 }
 
 func TestHTTPClientFailureOptions412(t *testing.T) {
-	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPClientFailureOperations()
+	client := newHTTPClientFailureClient()
 	result, err := client.Options412(context.Background())
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
@@ -186,7 +190,7 @@ func TestHTTPClientFailureOptions412(t *testing.T) {
 }
 
 func TestHTTPClientFailurePatch400(t *testing.T) {
-	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPClientFailureOperations()
+	client := newHTTPClientFailureClient()
 	result, err := client.Patch400(context.Background())
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
@@ -197,7 +201,7 @@ func TestHTTPClientFailurePatch400(t *testing.T) {
 }
 
 func TestHTTPClientFailurePatch405(t *testing.T) {
-	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPClientFailureOperations()
+	client := newHTTPClientFailureClient()
 	result, err := client.Patch405(context.Background())
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
@@ -208,7 +212,7 @@ func TestHTTPClientFailurePatch405(t *testing.T) {
 }
 
 func TestHTTPClientFailurePatch414(t *testing.T) {
-	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPClientFailureOperations()
+	client := newHTTPClientFailureClient()
 	result, err := client.Patch414(context.Background())
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
@@ -219,7 +223,7 @@ func TestHTTPClientFailurePatch414(t *testing.T) {
 }
 
 func TestHTTPClientFailurePost400(t *testing.T) {
-	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPClientFailureOperations()
+	client := newHTTPClientFailureClient()
 	result, err := client.Post400(context.Background())
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
@@ -230,7 +234,7 @@ func TestHTTPClientFailurePost400(t *testing.T) {
 }
 
 func TestHTTPClientFailurePost406(t *testing.T) {
-	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPClientFailureOperations()
+	client := newHTTPClientFailureClient()
 	result, err := client.Post406(context.Background())
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
@@ -241,7 +245,7 @@ func TestHTTPClientFailurePost406(t *testing.T) {
 }
 
 func TestHTTPClientFailurePost415(t *testing.T) {
-	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPClientFailureOperations()
+	client := newHTTPClientFailureClient()
 	result, err := client.Post415(context.Background())
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
@@ -252,7 +256,7 @@ func TestHTTPClientFailurePost415(t *testing.T) {
 }
 
 func TestHTTPClientFailurePut400(t *testing.T) {
-	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPClientFailureOperations()
+	client := newHTTPClientFailureClient()
 	result, err := client.Put400(context.Background())
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
@@ -263,7 +267,7 @@ func TestHTTPClientFailurePut400(t *testing.T) {
 }
 
 func TestHTTPClientFailurePut404(t *testing.T) {
-	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPClientFailureOperations()
+	client := newHTTPClientFailureClient()
 	result, err := client.Put404(context.Background())
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
@@ -274,7 +278,7 @@ func TestHTTPClientFailurePut404(t *testing.T) {
 }
 
 func TestHTTPClientFailurePut409(t *testing.T) {
-	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPClientFailureOperations()
+	client := newHTTPClientFailureClient()
 	result, err := client.Put409(context.Background())
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
@@ -285,7 +289,7 @@ func TestHTTPClientFailurePut409(t *testing.T) {
 }
 
 func TestHTTPClientFailurePut413(t *testing.T) {
-	client := httpinfrastructuregroup.NewDefaultClient(nil).HTTPClientFailureOperations()
+	client := newHTTPClientFailureClient()
 	result, err := client.Put413(context.Background())
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")

@@ -23,31 +23,42 @@ type VpnSiteLinksOperations interface {
 	ListByVpnSite(resourceGroupName string, vpnSiteName string) (ListVpnSiteLinksResultPager, error)
 }
 
-// vpnSiteLinksOperations implements the VpnSiteLinksOperations interface.
-type vpnSiteLinksOperations struct {
+// VpnSiteLinksClient implements the VpnSiteLinksOperations interface.
+// Don't use this type directly, use NewVpnSiteLinksClient() instead.
+type VpnSiteLinksClient struct {
 	*Client
 	subscriptionID string
 }
 
+// NewVpnSiteLinksClient creates a new instance of VpnSiteLinksClient with the specified values.
+func NewVpnSiteLinksClient(c *Client, subscriptionID string) VpnSiteLinksOperations {
+	return &VpnSiteLinksClient{Client: c, subscriptionID: subscriptionID}
+}
+
+// Do invokes the Do() method on the pipeline associated with this client.
+func (client *VpnSiteLinksClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(ctx, req)
+}
+
 // Get - Retrieves the details of a VPN site link.
-func (client *vpnSiteLinksOperations) Get(ctx context.Context, resourceGroupName string, vpnSiteName string, vpnSiteLinkName string) (*VpnSiteLinkResponse, error) {
-	req, err := client.getCreateRequest(resourceGroupName, vpnSiteName, vpnSiteLinkName)
+func (client *VpnSiteLinksClient) Get(ctx context.Context, resourceGroupName string, vpnSiteName string, vpnSiteLinkName string) (*VpnSiteLinkResponse, error) {
+	req, err := client.GetCreateRequest(resourceGroupName, vpnSiteName, vpnSiteLinkName)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getHandleResponse(resp)
+	result, err := client.GetHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getCreateRequest creates the Get request.
-func (client *vpnSiteLinksOperations) getCreateRequest(resourceGroupName string, vpnSiteName string, vpnSiteLinkName string) (*azcore.Request, error) {
+// GetCreateRequest creates the Get request.
+func (client *VpnSiteLinksClient) GetCreateRequest(resourceGroupName string, vpnSiteName string, vpnSiteLinkName string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -68,17 +79,17 @@ func (client *vpnSiteLinksOperations) getCreateRequest(resourceGroupName string,
 	return req, nil
 }
 
-// getHandleResponse handles the Get response.
-func (client *vpnSiteLinksOperations) getHandleResponse(resp *azcore.Response) (*VpnSiteLinkResponse, error) {
+// GetHandleResponse handles the Get response.
+func (client *VpnSiteLinksClient) GetHandleResponse(resp *azcore.Response) (*VpnSiteLinkResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getHandleError(resp)
+		return nil, client.GetHandleError(resp)
 	}
 	result := VpnSiteLinkResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VpnSiteLink)
 }
 
-// getHandleError handles the Get error response.
-func (client *vpnSiteLinksOperations) getHandleError(resp *azcore.Response) error {
+// GetHandleError handles the Get error response.
+func (client *VpnSiteLinksClient) GetHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -87,15 +98,15 @@ func (client *vpnSiteLinksOperations) getHandleError(resp *azcore.Response) erro
 }
 
 // ListByVpnSite - Lists all the vpnSiteLinks in a resource group for a vpn site.
-func (client *vpnSiteLinksOperations) ListByVpnSite(resourceGroupName string, vpnSiteName string) (ListVpnSiteLinksResultPager, error) {
-	req, err := client.listByVpnSiteCreateRequest(resourceGroupName, vpnSiteName)
+func (client *VpnSiteLinksClient) ListByVpnSite(resourceGroupName string, vpnSiteName string) (ListVpnSiteLinksResultPager, error) {
+	req, err := client.ListByVpnSiteCreateRequest(resourceGroupName, vpnSiteName)
 	if err != nil {
 		return nil, err
 	}
 	return &listVpnSiteLinksResultPager{
 		pipeline:  client.p,
 		request:   req,
-		responder: client.listByVpnSiteHandleResponse,
+		responder: client.ListByVpnSiteHandleResponse,
 		advancer: func(resp *ListVpnSiteLinksResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.ListVpnSiteLinksResult.NextLink)
 			if err != nil {
@@ -109,8 +120,8 @@ func (client *vpnSiteLinksOperations) ListByVpnSite(resourceGroupName string, vp
 	}, nil
 }
 
-// listByVpnSiteCreateRequest creates the ListByVpnSite request.
-func (client *vpnSiteLinksOperations) listByVpnSiteCreateRequest(resourceGroupName string, vpnSiteName string) (*azcore.Request, error) {
+// ListByVpnSiteCreateRequest creates the ListByVpnSite request.
+func (client *VpnSiteLinksClient) ListByVpnSiteCreateRequest(resourceGroupName string, vpnSiteName string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -130,17 +141,17 @@ func (client *vpnSiteLinksOperations) listByVpnSiteCreateRequest(resourceGroupNa
 	return req, nil
 }
 
-// listByVpnSiteHandleResponse handles the ListByVpnSite response.
-func (client *vpnSiteLinksOperations) listByVpnSiteHandleResponse(resp *azcore.Response) (*ListVpnSiteLinksResultResponse, error) {
+// ListByVpnSiteHandleResponse handles the ListByVpnSite response.
+func (client *VpnSiteLinksClient) ListByVpnSiteHandleResponse(resp *azcore.Response) (*ListVpnSiteLinksResultResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.listByVpnSiteHandleError(resp)
+		return nil, client.ListByVpnSiteHandleError(resp)
 	}
 	result := ListVpnSiteLinksResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ListVpnSiteLinksResult)
 }
 
-// listByVpnSiteHandleError handles the ListByVpnSite error response.
-func (client *vpnSiteLinksOperations) listByVpnSiteHandleError(resp *azcore.Response) error {
+// ListByVpnSiteHandleError handles the ListByVpnSite error response.
+func (client *VpnSiteLinksClient) ListByVpnSiteHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

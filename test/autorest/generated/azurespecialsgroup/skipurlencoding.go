@@ -32,30 +32,41 @@ type SkipURLEncodingOperations interface {
 	GetSwaggerQueryValid(ctx context.Context) (*http.Response, error)
 }
 
-// skipUrlEncodingOperations implements the SkipURLEncodingOperations interface.
-type skipUrlEncodingOperations struct {
+// SkipURLEncodingClient implements the SkipURLEncodingOperations interface.
+// Don't use this type directly, use NewSkipURLEncodingClient() instead.
+type SkipURLEncodingClient struct {
 	*Client
 }
 
+// NewSkipURLEncodingClient creates a new instance of SkipURLEncodingClient with the specified values.
+func NewSkipURLEncodingClient(c *Client) SkipURLEncodingOperations {
+	return &SkipURLEncodingClient{Client: c}
+}
+
+// Do invokes the Do() method on the pipeline associated with this client.
+func (client *SkipURLEncodingClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(ctx, req)
+}
+
 // GetMethodPathValid - Get method with unencoded path parameter with value 'path1/path2/path3'
-func (client *skipUrlEncodingOperations) GetMethodPathValid(ctx context.Context, unencodedPathParam string) (*http.Response, error) {
-	req, err := client.getMethodPathValidCreateRequest(unencodedPathParam)
+func (client *SkipURLEncodingClient) GetMethodPathValid(ctx context.Context, unencodedPathParam string) (*http.Response, error) {
+	req, err := client.GetMethodPathValidCreateRequest(unencodedPathParam)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getMethodPathValidHandleResponse(resp)
+	result, err := client.GetMethodPathValidHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getMethodPathValidCreateRequest creates the GetMethodPathValid request.
-func (client *skipUrlEncodingOperations) getMethodPathValidCreateRequest(unencodedPathParam string) (*azcore.Request, error) {
+// GetMethodPathValidCreateRequest creates the GetMethodPathValid request.
+func (client *SkipURLEncodingClient) GetMethodPathValidCreateRequest(unencodedPathParam string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -70,16 +81,16 @@ func (client *skipUrlEncodingOperations) getMethodPathValidCreateRequest(unencod
 	return req, nil
 }
 
-// getMethodPathValidHandleResponse handles the GetMethodPathValid response.
-func (client *skipUrlEncodingOperations) getMethodPathValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
+// GetMethodPathValidHandleResponse handles the GetMethodPathValid response.
+func (client *SkipURLEncodingClient) GetMethodPathValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getMethodPathValidHandleError(resp)
+		return nil, client.GetMethodPathValidHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// getMethodPathValidHandleError handles the GetMethodPathValid error response.
-func (client *skipUrlEncodingOperations) getMethodPathValidHandleError(resp *azcore.Response) error {
+// GetMethodPathValidHandleError handles the GetMethodPathValid error response.
+func (client *SkipURLEncodingClient) GetMethodPathValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -88,24 +99,24 @@ func (client *skipUrlEncodingOperations) getMethodPathValidHandleError(resp *azc
 }
 
 // GetMethodQueryNull - Get method with unencoded query parameter with value null
-func (client *skipUrlEncodingOperations) GetMethodQueryNull(ctx context.Context, skipUrlEncodingGetMethodQueryNullOptions *SkipURLEncodingGetMethodQueryNullOptions) (*http.Response, error) {
-	req, err := client.getMethodQueryNullCreateRequest(skipUrlEncodingGetMethodQueryNullOptions)
+func (client *SkipURLEncodingClient) GetMethodQueryNull(ctx context.Context, skipUrlEncodingGetMethodQueryNullOptions *SkipURLEncodingGetMethodQueryNullOptions) (*http.Response, error) {
+	req, err := client.GetMethodQueryNullCreateRequest(skipUrlEncodingGetMethodQueryNullOptions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getMethodQueryNullHandleResponse(resp)
+	result, err := client.GetMethodQueryNullHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getMethodQueryNullCreateRequest creates the GetMethodQueryNull request.
-func (client *skipUrlEncodingOperations) getMethodQueryNullCreateRequest(skipUrlEncodingGetMethodQueryNullOptions *SkipURLEncodingGetMethodQueryNullOptions) (*azcore.Request, error) {
+// GetMethodQueryNullCreateRequest creates the GetMethodQueryNull request.
+func (client *SkipURLEncodingClient) GetMethodQueryNullCreateRequest(skipUrlEncodingGetMethodQueryNullOptions *SkipURLEncodingGetMethodQueryNullOptions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -124,16 +135,16 @@ func (client *skipUrlEncodingOperations) getMethodQueryNullCreateRequest(skipUrl
 	return req, nil
 }
 
-// getMethodQueryNullHandleResponse handles the GetMethodQueryNull response.
-func (client *skipUrlEncodingOperations) getMethodQueryNullHandleResponse(resp *azcore.Response) (*http.Response, error) {
+// GetMethodQueryNullHandleResponse handles the GetMethodQueryNull response.
+func (client *SkipURLEncodingClient) GetMethodQueryNullHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getMethodQueryNullHandleError(resp)
+		return nil, client.GetMethodQueryNullHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// getMethodQueryNullHandleError handles the GetMethodQueryNull error response.
-func (client *skipUrlEncodingOperations) getMethodQueryNullHandleError(resp *azcore.Response) error {
+// GetMethodQueryNullHandleError handles the GetMethodQueryNull error response.
+func (client *SkipURLEncodingClient) GetMethodQueryNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -142,24 +153,24 @@ func (client *skipUrlEncodingOperations) getMethodQueryNullHandleError(resp *azc
 }
 
 // GetMethodQueryValid - Get method with unencoded query parameter with value 'value1&q2=value2&q3=value3'
-func (client *skipUrlEncodingOperations) GetMethodQueryValid(ctx context.Context, q1 string) (*http.Response, error) {
-	req, err := client.getMethodQueryValidCreateRequest(q1)
+func (client *SkipURLEncodingClient) GetMethodQueryValid(ctx context.Context, q1 string) (*http.Response, error) {
+	req, err := client.GetMethodQueryValidCreateRequest(q1)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getMethodQueryValidHandleResponse(resp)
+	result, err := client.GetMethodQueryValidHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getMethodQueryValidCreateRequest creates the GetMethodQueryValid request.
-func (client *skipUrlEncodingOperations) getMethodQueryValidCreateRequest(q1 string) (*azcore.Request, error) {
+// GetMethodQueryValidCreateRequest creates the GetMethodQueryValid request.
+func (client *SkipURLEncodingClient) GetMethodQueryValidCreateRequest(q1 string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -176,16 +187,16 @@ func (client *skipUrlEncodingOperations) getMethodQueryValidCreateRequest(q1 str
 	return req, nil
 }
 
-// getMethodQueryValidHandleResponse handles the GetMethodQueryValid response.
-func (client *skipUrlEncodingOperations) getMethodQueryValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
+// GetMethodQueryValidHandleResponse handles the GetMethodQueryValid response.
+func (client *SkipURLEncodingClient) GetMethodQueryValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getMethodQueryValidHandleError(resp)
+		return nil, client.GetMethodQueryValidHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// getMethodQueryValidHandleError handles the GetMethodQueryValid error response.
-func (client *skipUrlEncodingOperations) getMethodQueryValidHandleError(resp *azcore.Response) error {
+// GetMethodQueryValidHandleError handles the GetMethodQueryValid error response.
+func (client *SkipURLEncodingClient) GetMethodQueryValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -194,24 +205,24 @@ func (client *skipUrlEncodingOperations) getMethodQueryValidHandleError(resp *az
 }
 
 // GetPathQueryValid - Get method with unencoded query parameter with value 'value1&q2=value2&q3=value3'
-func (client *skipUrlEncodingOperations) GetPathQueryValid(ctx context.Context, q1 string) (*http.Response, error) {
-	req, err := client.getPathQueryValidCreateRequest(q1)
+func (client *SkipURLEncodingClient) GetPathQueryValid(ctx context.Context, q1 string) (*http.Response, error) {
+	req, err := client.GetPathQueryValidCreateRequest(q1)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getPathQueryValidHandleResponse(resp)
+	result, err := client.GetPathQueryValidHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getPathQueryValidCreateRequest creates the GetPathQueryValid request.
-func (client *skipUrlEncodingOperations) getPathQueryValidCreateRequest(q1 string) (*azcore.Request, error) {
+// GetPathQueryValidCreateRequest creates the GetPathQueryValid request.
+func (client *SkipURLEncodingClient) GetPathQueryValidCreateRequest(q1 string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -228,16 +239,16 @@ func (client *skipUrlEncodingOperations) getPathQueryValidCreateRequest(q1 strin
 	return req, nil
 }
 
-// getPathQueryValidHandleResponse handles the GetPathQueryValid response.
-func (client *skipUrlEncodingOperations) getPathQueryValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
+// GetPathQueryValidHandleResponse handles the GetPathQueryValid response.
+func (client *SkipURLEncodingClient) GetPathQueryValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getPathQueryValidHandleError(resp)
+		return nil, client.GetPathQueryValidHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// getPathQueryValidHandleError handles the GetPathQueryValid error response.
-func (client *skipUrlEncodingOperations) getPathQueryValidHandleError(resp *azcore.Response) error {
+// GetPathQueryValidHandleError handles the GetPathQueryValid error response.
+func (client *SkipURLEncodingClient) GetPathQueryValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -246,24 +257,24 @@ func (client *skipUrlEncodingOperations) getPathQueryValidHandleError(resp *azco
 }
 
 // GetPathValid - Get method with unencoded path parameter with value 'path1/path2/path3'
-func (client *skipUrlEncodingOperations) GetPathValid(ctx context.Context, unencodedPathParam string) (*http.Response, error) {
-	req, err := client.getPathValidCreateRequest(unencodedPathParam)
+func (client *SkipURLEncodingClient) GetPathValid(ctx context.Context, unencodedPathParam string) (*http.Response, error) {
+	req, err := client.GetPathValidCreateRequest(unencodedPathParam)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getPathValidHandleResponse(resp)
+	result, err := client.GetPathValidHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getPathValidCreateRequest creates the GetPathValid request.
-func (client *skipUrlEncodingOperations) getPathValidCreateRequest(unencodedPathParam string) (*azcore.Request, error) {
+// GetPathValidCreateRequest creates the GetPathValid request.
+func (client *SkipURLEncodingClient) GetPathValidCreateRequest(unencodedPathParam string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -278,16 +289,16 @@ func (client *skipUrlEncodingOperations) getPathValidCreateRequest(unencodedPath
 	return req, nil
 }
 
-// getPathValidHandleResponse handles the GetPathValid response.
-func (client *skipUrlEncodingOperations) getPathValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
+// GetPathValidHandleResponse handles the GetPathValid response.
+func (client *SkipURLEncodingClient) GetPathValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getPathValidHandleError(resp)
+		return nil, client.GetPathValidHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// getPathValidHandleError handles the GetPathValid error response.
-func (client *skipUrlEncodingOperations) getPathValidHandleError(resp *azcore.Response) error {
+// GetPathValidHandleError handles the GetPathValid error response.
+func (client *SkipURLEncodingClient) GetPathValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -296,24 +307,24 @@ func (client *skipUrlEncodingOperations) getPathValidHandleError(resp *azcore.Re
 }
 
 // GetSwaggerPathValid - Get method with unencoded path parameter with value 'path1/path2/path3'
-func (client *skipUrlEncodingOperations) GetSwaggerPathValid(ctx context.Context) (*http.Response, error) {
-	req, err := client.getSwaggerPathValidCreateRequest()
+func (client *SkipURLEncodingClient) GetSwaggerPathValid(ctx context.Context) (*http.Response, error) {
+	req, err := client.GetSwaggerPathValidCreateRequest()
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getSwaggerPathValidHandleResponse(resp)
+	result, err := client.GetSwaggerPathValidHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getSwaggerPathValidCreateRequest creates the GetSwaggerPathValid request.
-func (client *skipUrlEncodingOperations) getSwaggerPathValidCreateRequest() (*azcore.Request, error) {
+// GetSwaggerPathValidCreateRequest creates the GetSwaggerPathValid request.
+func (client *SkipURLEncodingClient) GetSwaggerPathValidCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -328,16 +339,16 @@ func (client *skipUrlEncodingOperations) getSwaggerPathValidCreateRequest() (*az
 	return req, nil
 }
 
-// getSwaggerPathValidHandleResponse handles the GetSwaggerPathValid response.
-func (client *skipUrlEncodingOperations) getSwaggerPathValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
+// GetSwaggerPathValidHandleResponse handles the GetSwaggerPathValid response.
+func (client *SkipURLEncodingClient) GetSwaggerPathValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getSwaggerPathValidHandleError(resp)
+		return nil, client.GetSwaggerPathValidHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// getSwaggerPathValidHandleError handles the GetSwaggerPathValid error response.
-func (client *skipUrlEncodingOperations) getSwaggerPathValidHandleError(resp *azcore.Response) error {
+// GetSwaggerPathValidHandleError handles the GetSwaggerPathValid error response.
+func (client *SkipURLEncodingClient) GetSwaggerPathValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -346,24 +357,24 @@ func (client *skipUrlEncodingOperations) getSwaggerPathValidHandleError(resp *az
 }
 
 // GetSwaggerQueryValid - Get method with unencoded query parameter with value 'value1&q2=value2&q3=value3'
-func (client *skipUrlEncodingOperations) GetSwaggerQueryValid(ctx context.Context) (*http.Response, error) {
-	req, err := client.getSwaggerQueryValidCreateRequest()
+func (client *SkipURLEncodingClient) GetSwaggerQueryValid(ctx context.Context) (*http.Response, error) {
+	req, err := client.GetSwaggerQueryValidCreateRequest()
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getSwaggerQueryValidHandleResponse(resp)
+	result, err := client.GetSwaggerQueryValidHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getSwaggerQueryValidCreateRequest creates the GetSwaggerQueryValid request.
-func (client *skipUrlEncodingOperations) getSwaggerQueryValidCreateRequest() (*azcore.Request, error) {
+// GetSwaggerQueryValidCreateRequest creates the GetSwaggerQueryValid request.
+func (client *SkipURLEncodingClient) GetSwaggerQueryValidCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -380,16 +391,16 @@ func (client *skipUrlEncodingOperations) getSwaggerQueryValidCreateRequest() (*a
 	return req, nil
 }
 
-// getSwaggerQueryValidHandleResponse handles the GetSwaggerQueryValid response.
-func (client *skipUrlEncodingOperations) getSwaggerQueryValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
+// GetSwaggerQueryValidHandleResponse handles the GetSwaggerQueryValid response.
+func (client *SkipURLEncodingClient) GetSwaggerQueryValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getSwaggerQueryValidHandleError(resp)
+		return nil, client.GetSwaggerQueryValidHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// getSwaggerQueryValidHandleError handles the GetSwaggerQueryValid error response.
-func (client *skipUrlEncodingOperations) getSwaggerQueryValidHandleError(resp *azcore.Response) error {
+// GetSwaggerQueryValidHandleError handles the GetSwaggerQueryValid error response.
+func (client *SkipURLEncodingClient) GetSwaggerQueryValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

@@ -74,13 +74,3 @@ func NewClient(endpoint string, options *ClientOptions) *Client {
 func NewClientWithPipeline(endpoint string, p azcore.Pipeline) *Client {
 	return &Client{u: endpoint, p: p}
 }
-
-// StringOperations returns the StringOperations associated with this client.
-func (client *Client) StringOperations() StringOperations {
-	return &stringOperations{Client: client}
-}
-
-// EnumOperations returns the EnumOperations associated with this client.
-func (client *Client) EnumOperations() EnumOperations {
-	return &enumOperations{Client: client}
-}

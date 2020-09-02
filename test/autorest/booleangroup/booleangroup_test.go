@@ -11,8 +11,12 @@ import (
 	"testing"
 )
 
+func newBoolClient() booleangroup.BoolOperations {
+	return booleangroup.NewBoolClient(booleangroup.NewDefaultClient(nil))
+}
+
 func TestGetTrue(t *testing.T) {
-	client := booleangroup.NewDefaultClient(nil).BoolOperations()
+	client := newBoolClient()
 	result, err := client.GetTrue(context.Background())
 	if err != nil {
 		t.Fatalf("GetTrue: %v", err)
@@ -23,7 +27,7 @@ func TestGetTrue(t *testing.T) {
 }
 
 func TestGetFalse(t *testing.T) {
-	client := booleangroup.NewDefaultClient(nil).BoolOperations()
+	client := newBoolClient()
 	result, err := client.GetFalse(context.Background())
 	if err != nil {
 		t.Fatalf("GetFalse: %v", err)
@@ -34,7 +38,7 @@ func TestGetFalse(t *testing.T) {
 }
 
 func TestGetNull(t *testing.T) {
-	client := booleangroup.NewDefaultClient(nil).BoolOperations()
+	client := newBoolClient()
 	result, err := client.GetNull(context.Background())
 	if err != nil {
 		t.Fatalf("GetNull: %v", err)
@@ -44,7 +48,7 @@ func TestGetNull(t *testing.T) {
 }
 
 func TestGetInvalid(t *testing.T) {
-	client := booleangroup.NewDefaultClient(nil).BoolOperations()
+	client := newBoolClient()
 	result, err := client.GetInvalid(context.Background())
 	// TODO: verify error response is clear and actionable
 	if err == nil {
@@ -56,7 +60,7 @@ func TestGetInvalid(t *testing.T) {
 }
 
 func TestPutTrue(t *testing.T) {
-	client := booleangroup.NewDefaultClient(nil).BoolOperations()
+	client := newBoolClient()
 	result, err := client.PutTrue(context.Background())
 	if err != nil {
 		t.Fatalf("PutTrue: %v", err)
@@ -65,7 +69,7 @@ func TestPutTrue(t *testing.T) {
 }
 
 func TestPutFalse(t *testing.T) {
-	client := booleangroup.NewDefaultClient(nil).BoolOperations()
+	client := newBoolClient()
 	result, err := client.PutFalse(context.Background())
 	if err != nil {
 		t.Fatalf("PutFalse: %v", err)

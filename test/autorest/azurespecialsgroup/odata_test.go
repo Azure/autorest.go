@@ -13,9 +13,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
+func newOdataClient() azurespecialsgroup.OdataOperations {
+	return azurespecialsgroup.NewOdataClient(azurespecialsgroup.NewDefaultClient(nil))
+}
+
 // GetWithFilter - Specify filter parameter with value '$filter=id gt 5 and name eq 'foo'&$orderby=id&$top=10'
 func TestGetWithFilter(t *testing.T) {
-	client := azurespecialsgroup.NewDefaultClient(nil).OdataOperations()
+	client := newOdataClient()
 	result, err := client.GetWithFilter(context.Background(), &azurespecialsgroup.OdataGetWithFilterOptions{
 		Filter:  to.StringPtr("id gt 5 and name eq 'foo'"),
 		Orderby: to.StringPtr("id"),

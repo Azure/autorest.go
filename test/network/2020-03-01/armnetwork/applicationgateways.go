@@ -67,28 +67,39 @@ type ApplicationGatewaysOperations interface {
 	UpdateTags(ctx context.Context, resourceGroupName string, applicationGatewayName string, parameters TagsObject) (*ApplicationGatewayResponse, error)
 }
 
-// applicationGatewaysOperations implements the ApplicationGatewaysOperations interface.
-type applicationGatewaysOperations struct {
+// ApplicationGatewaysClient implements the ApplicationGatewaysOperations interface.
+// Don't use this type directly, use NewApplicationGatewaysClient() instead.
+type ApplicationGatewaysClient struct {
 	*Client
 	subscriptionID string
 }
 
+// NewApplicationGatewaysClient creates a new instance of ApplicationGatewaysClient with the specified values.
+func NewApplicationGatewaysClient(c *Client, subscriptionID string) ApplicationGatewaysOperations {
+	return &ApplicationGatewaysClient{Client: c, subscriptionID: subscriptionID}
+}
+
+// Do invokes the Do() method on the pipeline associated with this client.
+func (client *ApplicationGatewaysClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(ctx, req)
+}
+
 // BackendHealth - Gets the backend health of the specified application gateway in a resource group.
-func (client *applicationGatewaysOperations) BeginBackendHealth(ctx context.Context, resourceGroupName string, applicationGatewayName string, applicationGatewaysBackendHealthOptions *ApplicationGatewaysBackendHealthOptions) (*ApplicationGatewayBackendHealthPollerResponse, error) {
-	req, err := client.backendHealthCreateRequest(resourceGroupName, applicationGatewayName, applicationGatewaysBackendHealthOptions)
+func (client *ApplicationGatewaysClient) BeginBackendHealth(ctx context.Context, resourceGroupName string, applicationGatewayName string, applicationGatewaysBackendHealthOptions *ApplicationGatewaysBackendHealthOptions) (*ApplicationGatewayBackendHealthPollerResponse, error) {
+	req, err := client.BackendHealthCreateRequest(resourceGroupName, applicationGatewayName, applicationGatewaysBackendHealthOptions)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.backendHealthHandleResponse(resp)
+	result, err := client.BackendHealthHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
-	pt, err := armcore.NewPoller("applicationGatewaysOperations.BackendHealth", "location", resp, client.backendHealthHandleError)
+	pt, err := armcore.NewPoller("ApplicationGatewaysClient.BackendHealth", "location", resp, client.BackendHealthHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -103,8 +114,8 @@ func (client *applicationGatewaysOperations) BeginBackendHealth(ctx context.Cont
 	return result, nil
 }
 
-func (client *applicationGatewaysOperations) ResumeBackendHealth(token string) (ApplicationGatewayBackendHealthPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("applicationGatewaysOperations.BackendHealth", token, client.backendHealthHandleError)
+func (client *ApplicationGatewaysClient) ResumeBackendHealth(token string) (ApplicationGatewayBackendHealthPoller, error) {
+	pt, err := armcore.NewPollerFromResumeToken("ApplicationGatewaysClient.BackendHealth", token, client.BackendHealthHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -114,8 +125,8 @@ func (client *applicationGatewaysOperations) ResumeBackendHealth(token string) (
 	}, nil
 }
 
-// backendHealthCreateRequest creates the BackendHealth request.
-func (client *applicationGatewaysOperations) backendHealthCreateRequest(resourceGroupName string, applicationGatewayName string, applicationGatewaysBackendHealthOptions *ApplicationGatewaysBackendHealthOptions) (*azcore.Request, error) {
+// BackendHealthCreateRequest creates the BackendHealth request.
+func (client *ApplicationGatewaysClient) BackendHealthCreateRequest(resourceGroupName string, applicationGatewayName string, applicationGatewaysBackendHealthOptions *ApplicationGatewaysBackendHealthOptions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -138,16 +149,16 @@ func (client *applicationGatewaysOperations) backendHealthCreateRequest(resource
 	return req, nil
 }
 
-// backendHealthHandleResponse handles the BackendHealth response.
-func (client *applicationGatewaysOperations) backendHealthHandleResponse(resp *azcore.Response) (*ApplicationGatewayBackendHealthPollerResponse, error) {
+// BackendHealthHandleResponse handles the BackendHealth response.
+func (client *ApplicationGatewaysClient) BackendHealthHandleResponse(resp *azcore.Response) (*ApplicationGatewayBackendHealthPollerResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.backendHealthHandleError(resp)
+		return nil, client.BackendHealthHandleError(resp)
 	}
 	return &ApplicationGatewayBackendHealthPollerResponse{RawResponse: resp.Response}, nil
 }
 
-// backendHealthHandleError handles the BackendHealth error response.
-func (client *applicationGatewaysOperations) backendHealthHandleError(resp *azcore.Response) error {
+// BackendHealthHandleError handles the BackendHealth error response.
+func (client *ApplicationGatewaysClient) BackendHealthHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -156,21 +167,21 @@ func (client *applicationGatewaysOperations) backendHealthHandleError(resp *azco
 }
 
 // BackendHealthOnDemand - Gets the backend health for given combination of backend pool and http setting of the specified application gateway in a resource group.
-func (client *applicationGatewaysOperations) BeginBackendHealthOnDemand(ctx context.Context, resourceGroupName string, applicationGatewayName string, probeRequest ApplicationGatewayOnDemandProbe, applicationGatewaysBackendHealthOnDemandOptions *ApplicationGatewaysBackendHealthOnDemandOptions) (*ApplicationGatewayBackendHealthOnDemandPollerResponse, error) {
-	req, err := client.backendHealthOnDemandCreateRequest(resourceGroupName, applicationGatewayName, probeRequest, applicationGatewaysBackendHealthOnDemandOptions)
+func (client *ApplicationGatewaysClient) BeginBackendHealthOnDemand(ctx context.Context, resourceGroupName string, applicationGatewayName string, probeRequest ApplicationGatewayOnDemandProbe, applicationGatewaysBackendHealthOnDemandOptions *ApplicationGatewaysBackendHealthOnDemandOptions) (*ApplicationGatewayBackendHealthOnDemandPollerResponse, error) {
+	req, err := client.BackendHealthOnDemandCreateRequest(resourceGroupName, applicationGatewayName, probeRequest, applicationGatewaysBackendHealthOnDemandOptions)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.backendHealthOnDemandHandleResponse(resp)
+	result, err := client.BackendHealthOnDemandHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
-	pt, err := armcore.NewPoller("applicationGatewaysOperations.BackendHealthOnDemand", "location", resp, client.backendHealthOnDemandHandleError)
+	pt, err := armcore.NewPoller("ApplicationGatewaysClient.BackendHealthOnDemand", "location", resp, client.BackendHealthOnDemandHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -185,8 +196,8 @@ func (client *applicationGatewaysOperations) BeginBackendHealthOnDemand(ctx cont
 	return result, nil
 }
 
-func (client *applicationGatewaysOperations) ResumeBackendHealthOnDemand(token string) (ApplicationGatewayBackendHealthOnDemandPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("applicationGatewaysOperations.BackendHealthOnDemand", token, client.backendHealthOnDemandHandleError)
+func (client *ApplicationGatewaysClient) ResumeBackendHealthOnDemand(token string) (ApplicationGatewayBackendHealthOnDemandPoller, error) {
+	pt, err := armcore.NewPollerFromResumeToken("ApplicationGatewaysClient.BackendHealthOnDemand", token, client.BackendHealthOnDemandHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -196,8 +207,8 @@ func (client *applicationGatewaysOperations) ResumeBackendHealthOnDemand(token s
 	}, nil
 }
 
-// backendHealthOnDemandCreateRequest creates the BackendHealthOnDemand request.
-func (client *applicationGatewaysOperations) backendHealthOnDemandCreateRequest(resourceGroupName string, applicationGatewayName string, probeRequest ApplicationGatewayOnDemandProbe, applicationGatewaysBackendHealthOnDemandOptions *ApplicationGatewaysBackendHealthOnDemandOptions) (*azcore.Request, error) {
+// BackendHealthOnDemandCreateRequest creates the BackendHealthOnDemand request.
+func (client *ApplicationGatewaysClient) BackendHealthOnDemandCreateRequest(resourceGroupName string, applicationGatewayName string, probeRequest ApplicationGatewayOnDemandProbe, applicationGatewaysBackendHealthOnDemandOptions *ApplicationGatewaysBackendHealthOnDemandOptions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -220,16 +231,16 @@ func (client *applicationGatewaysOperations) backendHealthOnDemandCreateRequest(
 	return req, req.MarshalAsJSON(probeRequest)
 }
 
-// backendHealthOnDemandHandleResponse handles the BackendHealthOnDemand response.
-func (client *applicationGatewaysOperations) backendHealthOnDemandHandleResponse(resp *azcore.Response) (*ApplicationGatewayBackendHealthOnDemandPollerResponse, error) {
+// BackendHealthOnDemandHandleResponse handles the BackendHealthOnDemand response.
+func (client *ApplicationGatewaysClient) BackendHealthOnDemandHandleResponse(resp *azcore.Response) (*ApplicationGatewayBackendHealthOnDemandPollerResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.backendHealthOnDemandHandleError(resp)
+		return nil, client.BackendHealthOnDemandHandleError(resp)
 	}
 	return &ApplicationGatewayBackendHealthOnDemandPollerResponse{RawResponse: resp.Response}, nil
 }
 
-// backendHealthOnDemandHandleError handles the BackendHealthOnDemand error response.
-func (client *applicationGatewaysOperations) backendHealthOnDemandHandleError(resp *azcore.Response) error {
+// BackendHealthOnDemandHandleError handles the BackendHealthOnDemand error response.
+func (client *ApplicationGatewaysClient) BackendHealthOnDemandHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -238,21 +249,21 @@ func (client *applicationGatewaysOperations) backendHealthOnDemandHandleError(re
 }
 
 // CreateOrUpdate - Creates or updates the specified application gateway.
-func (client *applicationGatewaysOperations) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, applicationGatewayName string, parameters ApplicationGateway) (*ApplicationGatewayPollerResponse, error) {
-	req, err := client.createOrUpdateCreateRequest(resourceGroupName, applicationGatewayName, parameters)
+func (client *ApplicationGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, applicationGatewayName string, parameters ApplicationGateway) (*ApplicationGatewayPollerResponse, error) {
+	req, err := client.CreateOrUpdateCreateRequest(resourceGroupName, applicationGatewayName, parameters)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.createOrUpdateHandleResponse(resp)
+	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
-	pt, err := armcore.NewPoller("applicationGatewaysOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("ApplicationGatewaysClient.CreateOrUpdate", "azure-async-operation", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -267,8 +278,8 @@ func (client *applicationGatewaysOperations) BeginCreateOrUpdate(ctx context.Con
 	return result, nil
 }
 
-func (client *applicationGatewaysOperations) ResumeCreateOrUpdate(token string) (ApplicationGatewayPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("applicationGatewaysOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+func (client *ApplicationGatewaysClient) ResumeCreateOrUpdate(token string) (ApplicationGatewayPoller, error) {
+	pt, err := armcore.NewPollerFromResumeToken("ApplicationGatewaysClient.CreateOrUpdate", token, client.CreateOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -278,8 +289,8 @@ func (client *applicationGatewaysOperations) ResumeCreateOrUpdate(token string) 
 	}, nil
 }
 
-// createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *applicationGatewaysOperations) createOrUpdateCreateRequest(resourceGroupName string, applicationGatewayName string, parameters ApplicationGateway) (*azcore.Request, error) {
+// CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
+func (client *ApplicationGatewaysClient) CreateOrUpdateCreateRequest(resourceGroupName string, applicationGatewayName string, parameters ApplicationGateway) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -299,16 +310,16 @@ func (client *applicationGatewaysOperations) createOrUpdateCreateRequest(resourc
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *applicationGatewaysOperations) createOrUpdateHandleResponse(resp *azcore.Response) (*ApplicationGatewayPollerResponse, error) {
+// CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
+func (client *ApplicationGatewaysClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*ApplicationGatewayPollerResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, client.CreateOrUpdateHandleError(resp)
 	}
 	return &ApplicationGatewayPollerResponse{RawResponse: resp.Response}, nil
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *applicationGatewaysOperations) createOrUpdateHandleError(resp *azcore.Response) error {
+// CreateOrUpdateHandleError handles the CreateOrUpdate error response.
+func (client *ApplicationGatewaysClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -317,21 +328,21 @@ func (client *applicationGatewaysOperations) createOrUpdateHandleError(resp *azc
 }
 
 // Delete - Deletes the specified application gateway.
-func (client *applicationGatewaysOperations) BeginDelete(ctx context.Context, resourceGroupName string, applicationGatewayName string) (*HTTPPollerResponse, error) {
-	req, err := client.deleteCreateRequest(resourceGroupName, applicationGatewayName)
+func (client *ApplicationGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, applicationGatewayName string) (*HTTPPollerResponse, error) {
+	req, err := client.DeleteCreateRequest(resourceGroupName, applicationGatewayName)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.deleteHandleResponse(resp)
+	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
-	pt, err := armcore.NewPoller("applicationGatewaysOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("ApplicationGatewaysClient.Delete", "location", resp, client.DeleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -346,8 +357,8 @@ func (client *applicationGatewaysOperations) BeginDelete(ctx context.Context, re
 	return result, nil
 }
 
-func (client *applicationGatewaysOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("applicationGatewaysOperations.Delete", token, client.deleteHandleError)
+func (client *ApplicationGatewaysClient) ResumeDelete(token string) (HTTPPoller, error) {
+	pt, err := armcore.NewPollerFromResumeToken("ApplicationGatewaysClient.Delete", token, client.DeleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -357,8 +368,8 @@ func (client *applicationGatewaysOperations) ResumeDelete(token string) (HTTPPol
 	}, nil
 }
 
-// deleteCreateRequest creates the Delete request.
-func (client *applicationGatewaysOperations) deleteCreateRequest(resourceGroupName string, applicationGatewayName string) (*azcore.Request, error) {
+// DeleteCreateRequest creates the Delete request.
+func (client *ApplicationGatewaysClient) DeleteCreateRequest(resourceGroupName string, applicationGatewayName string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -378,16 +389,16 @@ func (client *applicationGatewaysOperations) deleteCreateRequest(resourceGroupNa
 	return req, nil
 }
 
-// deleteHandleResponse handles the Delete response.
-func (client *applicationGatewaysOperations) deleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
+// DeleteHandleResponse handles the Delete response.
+func (client *ApplicationGatewaysClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, client.DeleteHandleError(resp)
 	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *applicationGatewaysOperations) deleteHandleError(resp *azcore.Response) error {
+// DeleteHandleError handles the Delete error response.
+func (client *ApplicationGatewaysClient) DeleteHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -396,24 +407,24 @@ func (client *applicationGatewaysOperations) deleteHandleError(resp *azcore.Resp
 }
 
 // Get - Gets the specified application gateway.
-func (client *applicationGatewaysOperations) Get(ctx context.Context, resourceGroupName string, applicationGatewayName string) (*ApplicationGatewayResponse, error) {
-	req, err := client.getCreateRequest(resourceGroupName, applicationGatewayName)
+func (client *ApplicationGatewaysClient) Get(ctx context.Context, resourceGroupName string, applicationGatewayName string) (*ApplicationGatewayResponse, error) {
+	req, err := client.GetCreateRequest(resourceGroupName, applicationGatewayName)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getHandleResponse(resp)
+	result, err := client.GetHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getCreateRequest creates the Get request.
-func (client *applicationGatewaysOperations) getCreateRequest(resourceGroupName string, applicationGatewayName string) (*azcore.Request, error) {
+// GetCreateRequest creates the Get request.
+func (client *ApplicationGatewaysClient) GetCreateRequest(resourceGroupName string, applicationGatewayName string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -433,17 +444,17 @@ func (client *applicationGatewaysOperations) getCreateRequest(resourceGroupName 
 	return req, nil
 }
 
-// getHandleResponse handles the Get response.
-func (client *applicationGatewaysOperations) getHandleResponse(resp *azcore.Response) (*ApplicationGatewayResponse, error) {
+// GetHandleResponse handles the Get response.
+func (client *ApplicationGatewaysClient) GetHandleResponse(resp *azcore.Response) (*ApplicationGatewayResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getHandleError(resp)
+		return nil, client.GetHandleError(resp)
 	}
 	result := ApplicationGatewayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ApplicationGateway)
 }
 
-// getHandleError handles the Get error response.
-func (client *applicationGatewaysOperations) getHandleError(resp *azcore.Response) error {
+// GetHandleError handles the Get error response.
+func (client *ApplicationGatewaysClient) GetHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -452,24 +463,24 @@ func (client *applicationGatewaysOperations) getHandleError(resp *azcore.Respons
 }
 
 // GetSslPredefinedPolicy - Gets Ssl predefined policy with the specified policy name.
-func (client *applicationGatewaysOperations) GetSslPredefinedPolicy(ctx context.Context, predefinedPolicyName string) (*ApplicationGatewaySslPredefinedPolicyResponse, error) {
-	req, err := client.getSslPredefinedPolicyCreateRequest(predefinedPolicyName)
+func (client *ApplicationGatewaysClient) GetSslPredefinedPolicy(ctx context.Context, predefinedPolicyName string) (*ApplicationGatewaySslPredefinedPolicyResponse, error) {
+	req, err := client.GetSslPredefinedPolicyCreateRequest(predefinedPolicyName)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getSslPredefinedPolicyHandleResponse(resp)
+	result, err := client.GetSslPredefinedPolicyHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getSslPredefinedPolicyCreateRequest creates the GetSslPredefinedPolicy request.
-func (client *applicationGatewaysOperations) getSslPredefinedPolicyCreateRequest(predefinedPolicyName string) (*azcore.Request, error) {
+// GetSslPredefinedPolicyCreateRequest creates the GetSslPredefinedPolicy request.
+func (client *ApplicationGatewaysClient) GetSslPredefinedPolicyCreateRequest(predefinedPolicyName string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -488,17 +499,17 @@ func (client *applicationGatewaysOperations) getSslPredefinedPolicyCreateRequest
 	return req, nil
 }
 
-// getSslPredefinedPolicyHandleResponse handles the GetSslPredefinedPolicy response.
-func (client *applicationGatewaysOperations) getSslPredefinedPolicyHandleResponse(resp *azcore.Response) (*ApplicationGatewaySslPredefinedPolicyResponse, error) {
+// GetSslPredefinedPolicyHandleResponse handles the GetSslPredefinedPolicy response.
+func (client *ApplicationGatewaysClient) GetSslPredefinedPolicyHandleResponse(resp *azcore.Response) (*ApplicationGatewaySslPredefinedPolicyResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getSslPredefinedPolicyHandleError(resp)
+		return nil, client.GetSslPredefinedPolicyHandleError(resp)
 	}
 	result := ApplicationGatewaySslPredefinedPolicyResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ApplicationGatewaySslPredefinedPolicy)
 }
 
-// getSslPredefinedPolicyHandleError handles the GetSslPredefinedPolicy error response.
-func (client *applicationGatewaysOperations) getSslPredefinedPolicyHandleError(resp *azcore.Response) error {
+// GetSslPredefinedPolicyHandleError handles the GetSslPredefinedPolicy error response.
+func (client *ApplicationGatewaysClient) GetSslPredefinedPolicyHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -507,15 +518,15 @@ func (client *applicationGatewaysOperations) getSslPredefinedPolicyHandleError(r
 }
 
 // List - Lists all application gateways in a resource group.
-func (client *applicationGatewaysOperations) List(resourceGroupName string) (ApplicationGatewayListResultPager, error) {
-	req, err := client.listCreateRequest(resourceGroupName)
+func (client *ApplicationGatewaysClient) List(resourceGroupName string) (ApplicationGatewayListResultPager, error) {
+	req, err := client.ListCreateRequest(resourceGroupName)
 	if err != nil {
 		return nil, err
 	}
 	return &applicationGatewayListResultPager{
 		pipeline:  client.p,
 		request:   req,
-		responder: client.listHandleResponse,
+		responder: client.ListHandleResponse,
 		advancer: func(resp *ApplicationGatewayListResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.ApplicationGatewayListResult.NextLink)
 			if err != nil {
@@ -529,8 +540,8 @@ func (client *applicationGatewaysOperations) List(resourceGroupName string) (App
 	}, nil
 }
 
-// listCreateRequest creates the List request.
-func (client *applicationGatewaysOperations) listCreateRequest(resourceGroupName string) (*azcore.Request, error) {
+// ListCreateRequest creates the List request.
+func (client *ApplicationGatewaysClient) ListCreateRequest(resourceGroupName string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -549,17 +560,17 @@ func (client *applicationGatewaysOperations) listCreateRequest(resourceGroupName
 	return req, nil
 }
 
-// listHandleResponse handles the List response.
-func (client *applicationGatewaysOperations) listHandleResponse(resp *azcore.Response) (*ApplicationGatewayListResultResponse, error) {
+// ListHandleResponse handles the List response.
+func (client *ApplicationGatewaysClient) ListHandleResponse(resp *azcore.Response) (*ApplicationGatewayListResultResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.listHandleError(resp)
+		return nil, client.ListHandleError(resp)
 	}
 	result := ApplicationGatewayListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ApplicationGatewayListResult)
 }
 
-// listHandleError handles the List error response.
-func (client *applicationGatewaysOperations) listHandleError(resp *azcore.Response) error {
+// ListHandleError handles the List error response.
+func (client *ApplicationGatewaysClient) ListHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -568,15 +579,15 @@ func (client *applicationGatewaysOperations) listHandleError(resp *azcore.Respon
 }
 
 // ListAll - Gets all the application gateways in a subscription.
-func (client *applicationGatewaysOperations) ListAll() (ApplicationGatewayListResultPager, error) {
-	req, err := client.listAllCreateRequest()
+func (client *ApplicationGatewaysClient) ListAll() (ApplicationGatewayListResultPager, error) {
+	req, err := client.ListAllCreateRequest()
 	if err != nil {
 		return nil, err
 	}
 	return &applicationGatewayListResultPager{
 		pipeline:  client.p,
 		request:   req,
-		responder: client.listAllHandleResponse,
+		responder: client.ListAllHandleResponse,
 		advancer: func(resp *ApplicationGatewayListResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.ApplicationGatewayListResult.NextLink)
 			if err != nil {
@@ -590,8 +601,8 @@ func (client *applicationGatewaysOperations) ListAll() (ApplicationGatewayListRe
 	}, nil
 }
 
-// listAllCreateRequest creates the ListAll request.
-func (client *applicationGatewaysOperations) listAllCreateRequest() (*azcore.Request, error) {
+// ListAllCreateRequest creates the ListAll request.
+func (client *ApplicationGatewaysClient) ListAllCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -609,17 +620,17 @@ func (client *applicationGatewaysOperations) listAllCreateRequest() (*azcore.Req
 	return req, nil
 }
 
-// listAllHandleResponse handles the ListAll response.
-func (client *applicationGatewaysOperations) listAllHandleResponse(resp *azcore.Response) (*ApplicationGatewayListResultResponse, error) {
+// ListAllHandleResponse handles the ListAll response.
+func (client *ApplicationGatewaysClient) ListAllHandleResponse(resp *azcore.Response) (*ApplicationGatewayListResultResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.listAllHandleError(resp)
+		return nil, client.ListAllHandleError(resp)
 	}
 	result := ApplicationGatewayListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ApplicationGatewayListResult)
 }
 
-// listAllHandleError handles the ListAll error response.
-func (client *applicationGatewaysOperations) listAllHandleError(resp *azcore.Response) error {
+// ListAllHandleError handles the ListAll error response.
+func (client *ApplicationGatewaysClient) ListAllHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -628,24 +639,24 @@ func (client *applicationGatewaysOperations) listAllHandleError(resp *azcore.Res
 }
 
 // ListAvailableRequestHeaders - Lists all available request headers.
-func (client *applicationGatewaysOperations) ListAvailableRequestHeaders(ctx context.Context) (*StringArrayResponse, error) {
-	req, err := client.listAvailableRequestHeadersCreateRequest()
+func (client *ApplicationGatewaysClient) ListAvailableRequestHeaders(ctx context.Context) (*StringArrayResponse, error) {
+	req, err := client.ListAvailableRequestHeadersCreateRequest()
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.listAvailableRequestHeadersHandleResponse(resp)
+	result, err := client.ListAvailableRequestHeadersHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// listAvailableRequestHeadersCreateRequest creates the ListAvailableRequestHeaders request.
-func (client *applicationGatewaysOperations) listAvailableRequestHeadersCreateRequest() (*azcore.Request, error) {
+// ListAvailableRequestHeadersCreateRequest creates the ListAvailableRequestHeaders request.
+func (client *ApplicationGatewaysClient) ListAvailableRequestHeadersCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -663,17 +674,17 @@ func (client *applicationGatewaysOperations) listAvailableRequestHeadersCreateRe
 	return req, nil
 }
 
-// listAvailableRequestHeadersHandleResponse handles the ListAvailableRequestHeaders response.
-func (client *applicationGatewaysOperations) listAvailableRequestHeadersHandleResponse(resp *azcore.Response) (*StringArrayResponse, error) {
+// ListAvailableRequestHeadersHandleResponse handles the ListAvailableRequestHeaders response.
+func (client *ApplicationGatewaysClient) ListAvailableRequestHeadersHandleResponse(resp *azcore.Response) (*StringArrayResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.listAvailableRequestHeadersHandleError(resp)
+		return nil, client.ListAvailableRequestHeadersHandleError(resp)
 	}
 	result := StringArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.StringArray)
 }
 
-// listAvailableRequestHeadersHandleError handles the ListAvailableRequestHeaders error response.
-func (client *applicationGatewaysOperations) listAvailableRequestHeadersHandleError(resp *azcore.Response) error {
+// ListAvailableRequestHeadersHandleError handles the ListAvailableRequestHeaders error response.
+func (client *ApplicationGatewaysClient) ListAvailableRequestHeadersHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -682,24 +693,24 @@ func (client *applicationGatewaysOperations) listAvailableRequestHeadersHandleEr
 }
 
 // ListAvailableResponseHeaders - Lists all available response headers.
-func (client *applicationGatewaysOperations) ListAvailableResponseHeaders(ctx context.Context) (*StringArrayResponse, error) {
-	req, err := client.listAvailableResponseHeadersCreateRequest()
+func (client *ApplicationGatewaysClient) ListAvailableResponseHeaders(ctx context.Context) (*StringArrayResponse, error) {
+	req, err := client.ListAvailableResponseHeadersCreateRequest()
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.listAvailableResponseHeadersHandleResponse(resp)
+	result, err := client.ListAvailableResponseHeadersHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// listAvailableResponseHeadersCreateRequest creates the ListAvailableResponseHeaders request.
-func (client *applicationGatewaysOperations) listAvailableResponseHeadersCreateRequest() (*azcore.Request, error) {
+// ListAvailableResponseHeadersCreateRequest creates the ListAvailableResponseHeaders request.
+func (client *ApplicationGatewaysClient) ListAvailableResponseHeadersCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -717,17 +728,17 @@ func (client *applicationGatewaysOperations) listAvailableResponseHeadersCreateR
 	return req, nil
 }
 
-// listAvailableResponseHeadersHandleResponse handles the ListAvailableResponseHeaders response.
-func (client *applicationGatewaysOperations) listAvailableResponseHeadersHandleResponse(resp *azcore.Response) (*StringArrayResponse, error) {
+// ListAvailableResponseHeadersHandleResponse handles the ListAvailableResponseHeaders response.
+func (client *ApplicationGatewaysClient) ListAvailableResponseHeadersHandleResponse(resp *azcore.Response) (*StringArrayResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.listAvailableResponseHeadersHandleError(resp)
+		return nil, client.ListAvailableResponseHeadersHandleError(resp)
 	}
 	result := StringArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.StringArray)
 }
 
-// listAvailableResponseHeadersHandleError handles the ListAvailableResponseHeaders error response.
-func (client *applicationGatewaysOperations) listAvailableResponseHeadersHandleError(resp *azcore.Response) error {
+// ListAvailableResponseHeadersHandleError handles the ListAvailableResponseHeaders error response.
+func (client *ApplicationGatewaysClient) ListAvailableResponseHeadersHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -736,24 +747,24 @@ func (client *applicationGatewaysOperations) listAvailableResponseHeadersHandleE
 }
 
 // ListAvailableServerVariables - Lists all available server variables.
-func (client *applicationGatewaysOperations) ListAvailableServerVariables(ctx context.Context) (*StringArrayResponse, error) {
-	req, err := client.listAvailableServerVariablesCreateRequest()
+func (client *ApplicationGatewaysClient) ListAvailableServerVariables(ctx context.Context) (*StringArrayResponse, error) {
+	req, err := client.ListAvailableServerVariablesCreateRequest()
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.listAvailableServerVariablesHandleResponse(resp)
+	result, err := client.ListAvailableServerVariablesHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// listAvailableServerVariablesCreateRequest creates the ListAvailableServerVariables request.
-func (client *applicationGatewaysOperations) listAvailableServerVariablesCreateRequest() (*azcore.Request, error) {
+// ListAvailableServerVariablesCreateRequest creates the ListAvailableServerVariables request.
+func (client *ApplicationGatewaysClient) ListAvailableServerVariablesCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -771,17 +782,17 @@ func (client *applicationGatewaysOperations) listAvailableServerVariablesCreateR
 	return req, nil
 }
 
-// listAvailableServerVariablesHandleResponse handles the ListAvailableServerVariables response.
-func (client *applicationGatewaysOperations) listAvailableServerVariablesHandleResponse(resp *azcore.Response) (*StringArrayResponse, error) {
+// ListAvailableServerVariablesHandleResponse handles the ListAvailableServerVariables response.
+func (client *ApplicationGatewaysClient) ListAvailableServerVariablesHandleResponse(resp *azcore.Response) (*StringArrayResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.listAvailableServerVariablesHandleError(resp)
+		return nil, client.ListAvailableServerVariablesHandleError(resp)
 	}
 	result := StringArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.StringArray)
 }
 
-// listAvailableServerVariablesHandleError handles the ListAvailableServerVariables error response.
-func (client *applicationGatewaysOperations) listAvailableServerVariablesHandleError(resp *azcore.Response) error {
+// ListAvailableServerVariablesHandleError handles the ListAvailableServerVariables error response.
+func (client *ApplicationGatewaysClient) ListAvailableServerVariablesHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -790,24 +801,24 @@ func (client *applicationGatewaysOperations) listAvailableServerVariablesHandleE
 }
 
 // ListAvailableSslOptions - Lists available Ssl options for configuring Ssl policy.
-func (client *applicationGatewaysOperations) ListAvailableSslOptions(ctx context.Context) (*ApplicationGatewayAvailableSslOptionsResponse, error) {
-	req, err := client.listAvailableSslOptionsCreateRequest()
+func (client *ApplicationGatewaysClient) ListAvailableSslOptions(ctx context.Context) (*ApplicationGatewayAvailableSslOptionsResponse, error) {
+	req, err := client.ListAvailableSslOptionsCreateRequest()
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.listAvailableSslOptionsHandleResponse(resp)
+	result, err := client.ListAvailableSslOptionsHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// listAvailableSslOptionsCreateRequest creates the ListAvailableSslOptions request.
-func (client *applicationGatewaysOperations) listAvailableSslOptionsCreateRequest() (*azcore.Request, error) {
+// ListAvailableSslOptionsCreateRequest creates the ListAvailableSslOptions request.
+func (client *ApplicationGatewaysClient) ListAvailableSslOptionsCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -825,17 +836,17 @@ func (client *applicationGatewaysOperations) listAvailableSslOptionsCreateReques
 	return req, nil
 }
 
-// listAvailableSslOptionsHandleResponse handles the ListAvailableSslOptions response.
-func (client *applicationGatewaysOperations) listAvailableSslOptionsHandleResponse(resp *azcore.Response) (*ApplicationGatewayAvailableSslOptionsResponse, error) {
+// ListAvailableSslOptionsHandleResponse handles the ListAvailableSslOptions response.
+func (client *ApplicationGatewaysClient) ListAvailableSslOptionsHandleResponse(resp *azcore.Response) (*ApplicationGatewayAvailableSslOptionsResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.listAvailableSslOptionsHandleError(resp)
+		return nil, client.ListAvailableSslOptionsHandleError(resp)
 	}
 	result := ApplicationGatewayAvailableSslOptionsResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ApplicationGatewayAvailableSslOptions)
 }
 
-// listAvailableSslOptionsHandleError handles the ListAvailableSslOptions error response.
-func (client *applicationGatewaysOperations) listAvailableSslOptionsHandleError(resp *azcore.Response) error {
+// ListAvailableSslOptionsHandleError handles the ListAvailableSslOptions error response.
+func (client *ApplicationGatewaysClient) ListAvailableSslOptionsHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -844,15 +855,15 @@ func (client *applicationGatewaysOperations) listAvailableSslOptionsHandleError(
 }
 
 // ListAvailableSslPredefinedPolicies - Lists all SSL predefined policies for configuring Ssl policy.
-func (client *applicationGatewaysOperations) ListAvailableSslPredefinedPolicies() (ApplicationGatewayAvailableSslPredefinedPoliciesPager, error) {
-	req, err := client.listAvailableSslPredefinedPoliciesCreateRequest()
+func (client *ApplicationGatewaysClient) ListAvailableSslPredefinedPolicies() (ApplicationGatewayAvailableSslPredefinedPoliciesPager, error) {
+	req, err := client.ListAvailableSslPredefinedPoliciesCreateRequest()
 	if err != nil {
 		return nil, err
 	}
 	return &applicationGatewayAvailableSslPredefinedPoliciesPager{
 		pipeline:  client.p,
 		request:   req,
-		responder: client.listAvailableSslPredefinedPoliciesHandleResponse,
+		responder: client.ListAvailableSslPredefinedPoliciesHandleResponse,
 		advancer: func(resp *ApplicationGatewayAvailableSslPredefinedPoliciesResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.ApplicationGatewayAvailableSslPredefinedPolicies.NextLink)
 			if err != nil {
@@ -866,8 +877,8 @@ func (client *applicationGatewaysOperations) ListAvailableSslPredefinedPolicies(
 	}, nil
 }
 
-// listAvailableSslPredefinedPoliciesCreateRequest creates the ListAvailableSslPredefinedPolicies request.
-func (client *applicationGatewaysOperations) listAvailableSslPredefinedPoliciesCreateRequest() (*azcore.Request, error) {
+// ListAvailableSslPredefinedPoliciesCreateRequest creates the ListAvailableSslPredefinedPolicies request.
+func (client *ApplicationGatewaysClient) ListAvailableSslPredefinedPoliciesCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -885,17 +896,17 @@ func (client *applicationGatewaysOperations) listAvailableSslPredefinedPoliciesC
 	return req, nil
 }
 
-// listAvailableSslPredefinedPoliciesHandleResponse handles the ListAvailableSslPredefinedPolicies response.
-func (client *applicationGatewaysOperations) listAvailableSslPredefinedPoliciesHandleResponse(resp *azcore.Response) (*ApplicationGatewayAvailableSslPredefinedPoliciesResponse, error) {
+// ListAvailableSslPredefinedPoliciesHandleResponse handles the ListAvailableSslPredefinedPolicies response.
+func (client *ApplicationGatewaysClient) ListAvailableSslPredefinedPoliciesHandleResponse(resp *azcore.Response) (*ApplicationGatewayAvailableSslPredefinedPoliciesResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.listAvailableSslPredefinedPoliciesHandleError(resp)
+		return nil, client.ListAvailableSslPredefinedPoliciesHandleError(resp)
 	}
 	result := ApplicationGatewayAvailableSslPredefinedPoliciesResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ApplicationGatewayAvailableSslPredefinedPolicies)
 }
 
-// listAvailableSslPredefinedPoliciesHandleError handles the ListAvailableSslPredefinedPolicies error response.
-func (client *applicationGatewaysOperations) listAvailableSslPredefinedPoliciesHandleError(resp *azcore.Response) error {
+// ListAvailableSslPredefinedPoliciesHandleError handles the ListAvailableSslPredefinedPolicies error response.
+func (client *ApplicationGatewaysClient) ListAvailableSslPredefinedPoliciesHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -904,24 +915,24 @@ func (client *applicationGatewaysOperations) listAvailableSslPredefinedPoliciesH
 }
 
 // ListAvailableWafRuleSets - Lists all available web application firewall rule sets.
-func (client *applicationGatewaysOperations) ListAvailableWafRuleSets(ctx context.Context) (*ApplicationGatewayAvailableWafRuleSetsResultResponse, error) {
-	req, err := client.listAvailableWafRuleSetsCreateRequest()
+func (client *ApplicationGatewaysClient) ListAvailableWafRuleSets(ctx context.Context) (*ApplicationGatewayAvailableWafRuleSetsResultResponse, error) {
+	req, err := client.ListAvailableWafRuleSetsCreateRequest()
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.listAvailableWafRuleSetsHandleResponse(resp)
+	result, err := client.ListAvailableWafRuleSetsHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// listAvailableWafRuleSetsCreateRequest creates the ListAvailableWafRuleSets request.
-func (client *applicationGatewaysOperations) listAvailableWafRuleSetsCreateRequest() (*azcore.Request, error) {
+// ListAvailableWafRuleSetsCreateRequest creates the ListAvailableWafRuleSets request.
+func (client *ApplicationGatewaysClient) ListAvailableWafRuleSetsCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -939,17 +950,17 @@ func (client *applicationGatewaysOperations) listAvailableWafRuleSetsCreateReque
 	return req, nil
 }
 
-// listAvailableWafRuleSetsHandleResponse handles the ListAvailableWafRuleSets response.
-func (client *applicationGatewaysOperations) listAvailableWafRuleSetsHandleResponse(resp *azcore.Response) (*ApplicationGatewayAvailableWafRuleSetsResultResponse, error) {
+// ListAvailableWafRuleSetsHandleResponse handles the ListAvailableWafRuleSets response.
+func (client *ApplicationGatewaysClient) ListAvailableWafRuleSetsHandleResponse(resp *azcore.Response) (*ApplicationGatewayAvailableWafRuleSetsResultResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.listAvailableWafRuleSetsHandleError(resp)
+		return nil, client.ListAvailableWafRuleSetsHandleError(resp)
 	}
 	result := ApplicationGatewayAvailableWafRuleSetsResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ApplicationGatewayAvailableWafRuleSetsResult)
 }
 
-// listAvailableWafRuleSetsHandleError handles the ListAvailableWafRuleSets error response.
-func (client *applicationGatewaysOperations) listAvailableWafRuleSetsHandleError(resp *azcore.Response) error {
+// ListAvailableWafRuleSetsHandleError handles the ListAvailableWafRuleSets error response.
+func (client *ApplicationGatewaysClient) ListAvailableWafRuleSetsHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -958,21 +969,21 @@ func (client *applicationGatewaysOperations) listAvailableWafRuleSetsHandleError
 }
 
 // Start - Starts the specified application gateway.
-func (client *applicationGatewaysOperations) BeginStart(ctx context.Context, resourceGroupName string, applicationGatewayName string) (*HTTPPollerResponse, error) {
-	req, err := client.startCreateRequest(resourceGroupName, applicationGatewayName)
+func (client *ApplicationGatewaysClient) BeginStart(ctx context.Context, resourceGroupName string, applicationGatewayName string) (*HTTPPollerResponse, error) {
+	req, err := client.StartCreateRequest(resourceGroupName, applicationGatewayName)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.startHandleResponse(resp)
+	result, err := client.StartHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
-	pt, err := armcore.NewPoller("applicationGatewaysOperations.Start", "location", resp, client.startHandleError)
+	pt, err := armcore.NewPoller("ApplicationGatewaysClient.Start", "location", resp, client.StartHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -987,8 +998,8 @@ func (client *applicationGatewaysOperations) BeginStart(ctx context.Context, res
 	return result, nil
 }
 
-func (client *applicationGatewaysOperations) ResumeStart(token string) (HTTPPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("applicationGatewaysOperations.Start", token, client.startHandleError)
+func (client *ApplicationGatewaysClient) ResumeStart(token string) (HTTPPoller, error) {
+	pt, err := armcore.NewPollerFromResumeToken("ApplicationGatewaysClient.Start", token, client.StartHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -998,8 +1009,8 @@ func (client *applicationGatewaysOperations) ResumeStart(token string) (HTTPPoll
 	}, nil
 }
 
-// startCreateRequest creates the Start request.
-func (client *applicationGatewaysOperations) startCreateRequest(resourceGroupName string, applicationGatewayName string) (*azcore.Request, error) {
+// StartCreateRequest creates the Start request.
+func (client *ApplicationGatewaysClient) StartCreateRequest(resourceGroupName string, applicationGatewayName string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -1019,16 +1030,16 @@ func (client *applicationGatewaysOperations) startCreateRequest(resourceGroupNam
 	return req, nil
 }
 
-// startHandleResponse handles the Start response.
-func (client *applicationGatewaysOperations) startHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
+// StartHandleResponse handles the Start response.
+func (client *ApplicationGatewaysClient) StartHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.startHandleError(resp)
+		return nil, client.StartHandleError(resp)
 	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
-// startHandleError handles the Start error response.
-func (client *applicationGatewaysOperations) startHandleError(resp *azcore.Response) error {
+// StartHandleError handles the Start error response.
+func (client *ApplicationGatewaysClient) StartHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1037,21 +1048,21 @@ func (client *applicationGatewaysOperations) startHandleError(resp *azcore.Respo
 }
 
 // Stop - Stops the specified application gateway in a resource group.
-func (client *applicationGatewaysOperations) BeginStop(ctx context.Context, resourceGroupName string, applicationGatewayName string) (*HTTPPollerResponse, error) {
-	req, err := client.stopCreateRequest(resourceGroupName, applicationGatewayName)
+func (client *ApplicationGatewaysClient) BeginStop(ctx context.Context, resourceGroupName string, applicationGatewayName string) (*HTTPPollerResponse, error) {
+	req, err := client.StopCreateRequest(resourceGroupName, applicationGatewayName)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.stopHandleResponse(resp)
+	result, err := client.StopHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
-	pt, err := armcore.NewPoller("applicationGatewaysOperations.Stop", "location", resp, client.stopHandleError)
+	pt, err := armcore.NewPoller("ApplicationGatewaysClient.Stop", "location", resp, client.StopHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1066,8 +1077,8 @@ func (client *applicationGatewaysOperations) BeginStop(ctx context.Context, reso
 	return result, nil
 }
 
-func (client *applicationGatewaysOperations) ResumeStop(token string) (HTTPPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("applicationGatewaysOperations.Stop", token, client.stopHandleError)
+func (client *ApplicationGatewaysClient) ResumeStop(token string) (HTTPPoller, error) {
+	pt, err := armcore.NewPollerFromResumeToken("ApplicationGatewaysClient.Stop", token, client.StopHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1077,8 +1088,8 @@ func (client *applicationGatewaysOperations) ResumeStop(token string) (HTTPPolle
 	}, nil
 }
 
-// stopCreateRequest creates the Stop request.
-func (client *applicationGatewaysOperations) stopCreateRequest(resourceGroupName string, applicationGatewayName string) (*azcore.Request, error) {
+// StopCreateRequest creates the Stop request.
+func (client *ApplicationGatewaysClient) StopCreateRequest(resourceGroupName string, applicationGatewayName string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -1098,16 +1109,16 @@ func (client *applicationGatewaysOperations) stopCreateRequest(resourceGroupName
 	return req, nil
 }
 
-// stopHandleResponse handles the Stop response.
-func (client *applicationGatewaysOperations) stopHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
+// StopHandleResponse handles the Stop response.
+func (client *ApplicationGatewaysClient) StopHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.stopHandleError(resp)
+		return nil, client.StopHandleError(resp)
 	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
-// stopHandleError handles the Stop error response.
-func (client *applicationGatewaysOperations) stopHandleError(resp *azcore.Response) error {
+// StopHandleError handles the Stop error response.
+func (client *ApplicationGatewaysClient) StopHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1116,24 +1127,24 @@ func (client *applicationGatewaysOperations) stopHandleError(resp *azcore.Respon
 }
 
 // UpdateTags - Updates the specified application gateway tags.
-func (client *applicationGatewaysOperations) UpdateTags(ctx context.Context, resourceGroupName string, applicationGatewayName string, parameters TagsObject) (*ApplicationGatewayResponse, error) {
-	req, err := client.updateTagsCreateRequest(resourceGroupName, applicationGatewayName, parameters)
+func (client *ApplicationGatewaysClient) UpdateTags(ctx context.Context, resourceGroupName string, applicationGatewayName string, parameters TagsObject) (*ApplicationGatewayResponse, error) {
+	req, err := client.UpdateTagsCreateRequest(resourceGroupName, applicationGatewayName, parameters)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.updateTagsHandleResponse(resp)
+	result, err := client.UpdateTagsHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// updateTagsCreateRequest creates the UpdateTags request.
-func (client *applicationGatewaysOperations) updateTagsCreateRequest(resourceGroupName string, applicationGatewayName string, parameters TagsObject) (*azcore.Request, error) {
+// UpdateTagsCreateRequest creates the UpdateTags request.
+func (client *ApplicationGatewaysClient) UpdateTagsCreateRequest(resourceGroupName string, applicationGatewayName string, parameters TagsObject) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -1153,17 +1164,17 @@ func (client *applicationGatewaysOperations) updateTagsCreateRequest(resourceGro
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// updateTagsHandleResponse handles the UpdateTags response.
-func (client *applicationGatewaysOperations) updateTagsHandleResponse(resp *azcore.Response) (*ApplicationGatewayResponse, error) {
+// UpdateTagsHandleResponse handles the UpdateTags response.
+func (client *ApplicationGatewaysClient) UpdateTagsHandleResponse(resp *azcore.Response) (*ApplicationGatewayResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.updateTagsHandleError(resp)
+		return nil, client.UpdateTagsHandleError(resp)
 	}
 	result := ApplicationGatewayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ApplicationGateway)
 }
 
-// updateTagsHandleError handles the UpdateTags error response.
-func (client *applicationGatewaysOperations) updateTagsHandleError(resp *azcore.Response) error {
+// UpdateTagsHandleError handles the UpdateTags error response.
+func (client *ApplicationGatewaysClient) UpdateTagsHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

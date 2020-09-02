@@ -74,8 +74,3 @@ func NewClient(endpoint string, options *ClientOptions) *Client {
 func NewClientWithPipeline(endpoint string, p azcore.Pipeline) *Client {
 	return &Client{u: endpoint, p: p}
 }
-
-// ByteOperations returns the ByteOperations associated with this client.
-func (client *Client) ByteOperations() ByteOperations {
-	return &byteOperations{Client: client}
-}

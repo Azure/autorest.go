@@ -28,30 +28,41 @@ type AutoRestValidationTestOperations interface {
 	ValidationOfMethodParameters(ctx context.Context, resourceGroupName string, id int32) (*ProductResponse, error)
 }
 
-// autoRestValidationTestOperations implements the AutoRestValidationTestOperations interface.
-type autoRestValidationTestOperations struct {
+// AutoRestValidationTestClient implements the AutoRestValidationTestOperations interface.
+// Don't use this type directly, use NewAutoRestValidationTestClient() instead.
+type AutoRestValidationTestClient struct {
 	*Client
 	subscriptionID string
 }
 
-func (client *autoRestValidationTestOperations) GetWithConstantInPath(ctx context.Context) (*http.Response, error) {
-	req, err := client.getWithConstantInPathCreateRequest()
+// NewAutoRestValidationTestClient creates a new instance of AutoRestValidationTestClient with the specified values.
+func NewAutoRestValidationTestClient(c *Client, subscriptionID string) AutoRestValidationTestOperations {
+	return &AutoRestValidationTestClient{Client: c, subscriptionID: subscriptionID}
+}
+
+// Do invokes the Do() method on the pipeline associated with this client.
+func (client *AutoRestValidationTestClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(ctx, req)
+}
+
+func (client *AutoRestValidationTestClient) GetWithConstantInPath(ctx context.Context) (*http.Response, error) {
+	req, err := client.GetWithConstantInPathCreateRequest()
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getWithConstantInPathHandleResponse(resp)
+	result, err := client.GetWithConstantInPathHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getWithConstantInPathCreateRequest creates the GetWithConstantInPath request.
-func (client *autoRestValidationTestOperations) getWithConstantInPathCreateRequest() (*azcore.Request, error) {
+// GetWithConstantInPathCreateRequest creates the GetWithConstantInPath request.
+func (client *AutoRestValidationTestClient) GetWithConstantInPathCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -66,16 +77,16 @@ func (client *autoRestValidationTestOperations) getWithConstantInPathCreateReque
 	return req, nil
 }
 
-// getWithConstantInPathHandleResponse handles the GetWithConstantInPath response.
-func (client *autoRestValidationTestOperations) getWithConstantInPathHandleResponse(resp *azcore.Response) (*http.Response, error) {
+// GetWithConstantInPathHandleResponse handles the GetWithConstantInPath response.
+func (client *AutoRestValidationTestClient) GetWithConstantInPathHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getWithConstantInPathHandleError(resp)
+		return nil, client.GetWithConstantInPathHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// getWithConstantInPathHandleError handles the GetWithConstantInPath error response.
-func (client *autoRestValidationTestOperations) getWithConstantInPathHandleError(resp *azcore.Response) error {
+// GetWithConstantInPathHandleError handles the GetWithConstantInPath error response.
+func (client *AutoRestValidationTestClient) GetWithConstantInPathHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -86,24 +97,24 @@ func (client *autoRestValidationTestOperations) getWithConstantInPathHandleError
 	return errors.New(string(body))
 }
 
-func (client *autoRestValidationTestOperations) PostWithConstantInBody(ctx context.Context, autoRestValidationTestPostWithConstantInBodyOptions *AutoRestValidationTestPostWithConstantInBodyOptions) (*ProductResponse, error) {
-	req, err := client.postWithConstantInBodyCreateRequest(autoRestValidationTestPostWithConstantInBodyOptions)
+func (client *AutoRestValidationTestClient) PostWithConstantInBody(ctx context.Context, autoRestValidationTestPostWithConstantInBodyOptions *AutoRestValidationTestPostWithConstantInBodyOptions) (*ProductResponse, error) {
+	req, err := client.PostWithConstantInBodyCreateRequest(autoRestValidationTestPostWithConstantInBodyOptions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.postWithConstantInBodyHandleResponse(resp)
+	result, err := client.PostWithConstantInBodyHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// postWithConstantInBodyCreateRequest creates the PostWithConstantInBody request.
-func (client *autoRestValidationTestOperations) postWithConstantInBodyCreateRequest(autoRestValidationTestPostWithConstantInBodyOptions *AutoRestValidationTestPostWithConstantInBodyOptions) (*azcore.Request, error) {
+// PostWithConstantInBodyCreateRequest creates the PostWithConstantInBody request.
+func (client *AutoRestValidationTestClient) PostWithConstantInBodyCreateRequest(autoRestValidationTestPostWithConstantInBodyOptions *AutoRestValidationTestPostWithConstantInBodyOptions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -121,17 +132,17 @@ func (client *autoRestValidationTestOperations) postWithConstantInBodyCreateRequ
 	return req, nil
 }
 
-// postWithConstantInBodyHandleResponse handles the PostWithConstantInBody response.
-func (client *autoRestValidationTestOperations) postWithConstantInBodyHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
+// PostWithConstantInBodyHandleResponse handles the PostWithConstantInBody response.
+func (client *AutoRestValidationTestClient) PostWithConstantInBodyHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.postWithConstantInBodyHandleError(resp)
+		return nil, client.PostWithConstantInBodyHandleError(resp)
 	}
 	result := ProductResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
 
-// postWithConstantInBodyHandleError handles the PostWithConstantInBody error response.
-func (client *autoRestValidationTestOperations) postWithConstantInBodyHandleError(resp *azcore.Response) error {
+// PostWithConstantInBodyHandleError handles the PostWithConstantInBody error response.
+func (client *AutoRestValidationTestClient) PostWithConstantInBodyHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -143,24 +154,24 @@ func (client *autoRestValidationTestOperations) postWithConstantInBodyHandleErro
 }
 
 // ValidationOfBody - Validates body parameters on the method. See swagger for details.
-func (client *autoRestValidationTestOperations) ValidationOfBody(ctx context.Context, resourceGroupName string, id int32, autoRestValidationTestValidationOfBodyOptions *AutoRestValidationTestValidationOfBodyOptions) (*ProductResponse, error) {
-	req, err := client.validationOfBodyCreateRequest(resourceGroupName, id, autoRestValidationTestValidationOfBodyOptions)
+func (client *AutoRestValidationTestClient) ValidationOfBody(ctx context.Context, resourceGroupName string, id int32, autoRestValidationTestValidationOfBodyOptions *AutoRestValidationTestValidationOfBodyOptions) (*ProductResponse, error) {
+	req, err := client.ValidationOfBodyCreateRequest(resourceGroupName, id, autoRestValidationTestValidationOfBodyOptions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.validationOfBodyHandleResponse(resp)
+	result, err := client.ValidationOfBodyHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// validationOfBodyCreateRequest creates the ValidationOfBody request.
-func (client *autoRestValidationTestOperations) validationOfBodyCreateRequest(resourceGroupName string, id int32, autoRestValidationTestValidationOfBodyOptions *AutoRestValidationTestValidationOfBodyOptions) (*azcore.Request, error) {
+// ValidationOfBodyCreateRequest creates the ValidationOfBody request.
+func (client *AutoRestValidationTestClient) ValidationOfBodyCreateRequest(resourceGroupName string, id int32, autoRestValidationTestValidationOfBodyOptions *AutoRestValidationTestValidationOfBodyOptions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -183,17 +194,17 @@ func (client *autoRestValidationTestOperations) validationOfBodyCreateRequest(re
 	return req, nil
 }
 
-// validationOfBodyHandleResponse handles the ValidationOfBody response.
-func (client *autoRestValidationTestOperations) validationOfBodyHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
+// ValidationOfBodyHandleResponse handles the ValidationOfBody response.
+func (client *AutoRestValidationTestClient) ValidationOfBodyHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.validationOfBodyHandleError(resp)
+		return nil, client.ValidationOfBodyHandleError(resp)
 	}
 	result := ProductResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
 
-// validationOfBodyHandleError handles the ValidationOfBody error response.
-func (client *autoRestValidationTestOperations) validationOfBodyHandleError(resp *azcore.Response) error {
+// ValidationOfBodyHandleError handles the ValidationOfBody error response.
+func (client *AutoRestValidationTestClient) ValidationOfBodyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -202,24 +213,24 @@ func (client *autoRestValidationTestOperations) validationOfBodyHandleError(resp
 }
 
 // ValidationOfMethodParameters - Validates input parameters on the method. See swagger for details.
-func (client *autoRestValidationTestOperations) ValidationOfMethodParameters(ctx context.Context, resourceGroupName string, id int32) (*ProductResponse, error) {
-	req, err := client.validationOfMethodParametersCreateRequest(resourceGroupName, id)
+func (client *AutoRestValidationTestClient) ValidationOfMethodParameters(ctx context.Context, resourceGroupName string, id int32) (*ProductResponse, error) {
+	req, err := client.ValidationOfMethodParametersCreateRequest(resourceGroupName, id)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.validationOfMethodParametersHandleResponse(resp)
+	result, err := client.ValidationOfMethodParametersHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// validationOfMethodParametersCreateRequest creates the ValidationOfMethodParameters request.
-func (client *autoRestValidationTestOperations) validationOfMethodParametersCreateRequest(resourceGroupName string, id int32) (*azcore.Request, error) {
+// ValidationOfMethodParametersCreateRequest creates the ValidationOfMethodParameters request.
+func (client *AutoRestValidationTestClient) ValidationOfMethodParametersCreateRequest(resourceGroupName string, id int32) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -239,17 +250,17 @@ func (client *autoRestValidationTestOperations) validationOfMethodParametersCrea
 	return req, nil
 }
 
-// validationOfMethodParametersHandleResponse handles the ValidationOfMethodParameters response.
-func (client *autoRestValidationTestOperations) validationOfMethodParametersHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
+// ValidationOfMethodParametersHandleResponse handles the ValidationOfMethodParameters response.
+func (client *AutoRestValidationTestClient) ValidationOfMethodParametersHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.validationOfMethodParametersHandleError(resp)
+		return nil, client.ValidationOfMethodParametersHandleError(resp)
 	}
 	result := ProductResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
 
-// validationOfMethodParametersHandleError handles the ValidationOfMethodParameters error response.
-func (client *autoRestValidationTestOperations) validationOfMethodParametersHandleError(resp *azcore.Response) error {
+// ValidationOfMethodParametersHandleError handles the ValidationOfMethodParameters error response.
+func (client *AutoRestValidationTestClient) ValidationOfMethodParametersHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

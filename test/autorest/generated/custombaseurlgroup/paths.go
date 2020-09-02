@@ -20,30 +20,41 @@ type PathsOperations interface {
 	GetEmpty(ctx context.Context, accountName string) (*http.Response, error)
 }
 
-// pathsOperations implements the PathsOperations interface.
-type pathsOperations struct {
+// PathsClient implements the PathsOperations interface.
+// Don't use this type directly, use NewPathsClient() instead.
+type PathsClient struct {
 	*Client
 }
 
+// NewPathsClient creates a new instance of PathsClient with the specified values.
+func NewPathsClient(c *Client) PathsOperations {
+	return &PathsClient{Client: c}
+}
+
+// Do invokes the Do() method on the pipeline associated with this client.
+func (client *PathsClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(ctx, req)
+}
+
 // GetEmpty - Get a 200 to test a valid base uri
-func (client *pathsOperations) GetEmpty(ctx context.Context, accountName string) (*http.Response, error) {
-	req, err := client.getEmptyCreateRequest(accountName)
+func (client *PathsClient) GetEmpty(ctx context.Context, accountName string) (*http.Response, error) {
+	req, err := client.GetEmptyCreateRequest(accountName)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getEmptyHandleResponse(resp)
+	result, err := client.GetEmptyHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getEmptyCreateRequest creates the GetEmpty request.
-func (client *pathsOperations) getEmptyCreateRequest(accountName string) (*azcore.Request, error) {
+// GetEmptyCreateRequest creates the GetEmpty request.
+func (client *PathsClient) GetEmptyCreateRequest(accountName string) (*azcore.Request, error) {
 	host := "http://{accountName}{host}"
 	host = strings.ReplaceAll(host, "{host}", client.host)
 	host = strings.ReplaceAll(host, "{accountName}", accountName)
@@ -60,16 +71,16 @@ func (client *pathsOperations) getEmptyCreateRequest(accountName string) (*azcor
 	return req, nil
 }
 
-// getEmptyHandleResponse handles the GetEmpty response.
-func (client *pathsOperations) getEmptyHandleResponse(resp *azcore.Response) (*http.Response, error) {
+// GetEmptyHandleResponse handles the GetEmpty response.
+func (client *PathsClient) GetEmptyHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getEmptyHandleError(resp)
+		return nil, client.GetEmptyHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// getEmptyHandleError handles the GetEmpty error response.
-func (client *pathsOperations) getEmptyHandleError(resp *azcore.Response) error {
+// GetEmptyHandleError handles the GetEmpty error response.
+func (client *PathsClient) GetEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

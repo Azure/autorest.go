@@ -37,28 +37,39 @@ type VirtualWansOperations interface {
 	UpdateTags(ctx context.Context, resourceGroupName string, virtualWanName string, wanParameters TagsObject) (*VirtualWanResponse, error)
 }
 
-// virtualWansOperations implements the VirtualWansOperations interface.
-type virtualWansOperations struct {
+// VirtualWansClient implements the VirtualWansOperations interface.
+// Don't use this type directly, use NewVirtualWansClient() instead.
+type VirtualWansClient struct {
 	*Client
 	subscriptionID string
 }
 
+// NewVirtualWansClient creates a new instance of VirtualWansClient with the specified values.
+func NewVirtualWansClient(c *Client, subscriptionID string) VirtualWansOperations {
+	return &VirtualWansClient{Client: c, subscriptionID: subscriptionID}
+}
+
+// Do invokes the Do() method on the pipeline associated with this client.
+func (client *VirtualWansClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(ctx, req)
+}
+
 // CreateOrUpdate - Creates a VirtualWAN resource if it doesn't exist else updates the existing VirtualWAN.
-func (client *virtualWansOperations) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualWanName string, wanParameters VirtualWan) (*VirtualWanPollerResponse, error) {
-	req, err := client.createOrUpdateCreateRequest(resourceGroupName, virtualWanName, wanParameters)
+func (client *VirtualWansClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualWanName string, wanParameters VirtualWan) (*VirtualWanPollerResponse, error) {
+	req, err := client.CreateOrUpdateCreateRequest(resourceGroupName, virtualWanName, wanParameters)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.createOrUpdateHandleResponse(resp)
+	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
-	pt, err := armcore.NewPoller("virtualWansOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("VirtualWansClient.CreateOrUpdate", "azure-async-operation", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -73,8 +84,8 @@ func (client *virtualWansOperations) BeginCreateOrUpdate(ctx context.Context, re
 	return result, nil
 }
 
-func (client *virtualWansOperations) ResumeCreateOrUpdate(token string) (VirtualWanPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("virtualWansOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+func (client *VirtualWansClient) ResumeCreateOrUpdate(token string) (VirtualWanPoller, error) {
+	pt, err := armcore.NewPollerFromResumeToken("VirtualWansClient.CreateOrUpdate", token, client.CreateOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -84,8 +95,8 @@ func (client *virtualWansOperations) ResumeCreateOrUpdate(token string) (Virtual
 	}, nil
 }
 
-// createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *virtualWansOperations) createOrUpdateCreateRequest(resourceGroupName string, virtualWanName string, wanParameters VirtualWan) (*azcore.Request, error) {
+// CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
+func (client *VirtualWansClient) CreateOrUpdateCreateRequest(resourceGroupName string, virtualWanName string, wanParameters VirtualWan) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -105,16 +116,16 @@ func (client *virtualWansOperations) createOrUpdateCreateRequest(resourceGroupNa
 	return req, req.MarshalAsJSON(wanParameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *virtualWansOperations) createOrUpdateHandleResponse(resp *azcore.Response) (*VirtualWanPollerResponse, error) {
+// CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
+func (client *VirtualWansClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*VirtualWanPollerResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, client.CreateOrUpdateHandleError(resp)
 	}
 	return &VirtualWanPollerResponse{RawResponse: resp.Response}, nil
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *virtualWansOperations) createOrUpdateHandleError(resp *azcore.Response) error {
+// CreateOrUpdateHandleError handles the CreateOrUpdate error response.
+func (client *VirtualWansClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -123,21 +134,21 @@ func (client *virtualWansOperations) createOrUpdateHandleError(resp *azcore.Resp
 }
 
 // Delete - Deletes a VirtualWAN.
-func (client *virtualWansOperations) BeginDelete(ctx context.Context, resourceGroupName string, virtualWanName string) (*HTTPPollerResponse, error) {
-	req, err := client.deleteCreateRequest(resourceGroupName, virtualWanName)
+func (client *VirtualWansClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualWanName string) (*HTTPPollerResponse, error) {
+	req, err := client.DeleteCreateRequest(resourceGroupName, virtualWanName)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.deleteHandleResponse(resp)
+	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
-	pt, err := armcore.NewPoller("virtualWansOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("VirtualWansClient.Delete", "location", resp, client.DeleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -152,8 +163,8 @@ func (client *virtualWansOperations) BeginDelete(ctx context.Context, resourceGr
 	return result, nil
 }
 
-func (client *virtualWansOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("virtualWansOperations.Delete", token, client.deleteHandleError)
+func (client *VirtualWansClient) ResumeDelete(token string) (HTTPPoller, error) {
+	pt, err := armcore.NewPollerFromResumeToken("VirtualWansClient.Delete", token, client.DeleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -163,8 +174,8 @@ func (client *virtualWansOperations) ResumeDelete(token string) (HTTPPoller, err
 	}, nil
 }
 
-// deleteCreateRequest creates the Delete request.
-func (client *virtualWansOperations) deleteCreateRequest(resourceGroupName string, virtualWanName string) (*azcore.Request, error) {
+// DeleteCreateRequest creates the Delete request.
+func (client *VirtualWansClient) DeleteCreateRequest(resourceGroupName string, virtualWanName string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -184,16 +195,16 @@ func (client *virtualWansOperations) deleteCreateRequest(resourceGroupName strin
 	return req, nil
 }
 
-// deleteHandleResponse handles the Delete response.
-func (client *virtualWansOperations) deleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
+// DeleteHandleResponse handles the Delete response.
+func (client *VirtualWansClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, client.DeleteHandleError(resp)
 	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *virtualWansOperations) deleteHandleError(resp *azcore.Response) error {
+// DeleteHandleError handles the Delete error response.
+func (client *VirtualWansClient) DeleteHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -202,24 +213,24 @@ func (client *virtualWansOperations) deleteHandleError(resp *azcore.Response) er
 }
 
 // Get - Retrieves the details of a VirtualWAN.
-func (client *virtualWansOperations) Get(ctx context.Context, resourceGroupName string, virtualWanName string) (*VirtualWanResponse, error) {
-	req, err := client.getCreateRequest(resourceGroupName, virtualWanName)
+func (client *VirtualWansClient) Get(ctx context.Context, resourceGroupName string, virtualWanName string) (*VirtualWanResponse, error) {
+	req, err := client.GetCreateRequest(resourceGroupName, virtualWanName)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getHandleResponse(resp)
+	result, err := client.GetHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getCreateRequest creates the Get request.
-func (client *virtualWansOperations) getCreateRequest(resourceGroupName string, virtualWanName string) (*azcore.Request, error) {
+// GetCreateRequest creates the Get request.
+func (client *VirtualWansClient) GetCreateRequest(resourceGroupName string, virtualWanName string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -239,17 +250,17 @@ func (client *virtualWansOperations) getCreateRequest(resourceGroupName string, 
 	return req, nil
 }
 
-// getHandleResponse handles the Get response.
-func (client *virtualWansOperations) getHandleResponse(resp *azcore.Response) (*VirtualWanResponse, error) {
+// GetHandleResponse handles the Get response.
+func (client *VirtualWansClient) GetHandleResponse(resp *azcore.Response) (*VirtualWanResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getHandleError(resp)
+		return nil, client.GetHandleError(resp)
 	}
 	result := VirtualWanResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualWan)
 }
 
-// getHandleError handles the Get error response.
-func (client *virtualWansOperations) getHandleError(resp *azcore.Response) error {
+// GetHandleError handles the Get error response.
+func (client *VirtualWansClient) GetHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -258,15 +269,15 @@ func (client *virtualWansOperations) getHandleError(resp *azcore.Response) error
 }
 
 // List - Lists all the VirtualWANs in a subscription.
-func (client *virtualWansOperations) List() (ListVirtualWaNsResultPager, error) {
-	req, err := client.listCreateRequest()
+func (client *VirtualWansClient) List() (ListVirtualWaNsResultPager, error) {
+	req, err := client.ListCreateRequest()
 	if err != nil {
 		return nil, err
 	}
 	return &listVirtualWaNsResultPager{
 		pipeline:  client.p,
 		request:   req,
-		responder: client.listHandleResponse,
+		responder: client.ListHandleResponse,
 		advancer: func(resp *ListVirtualWaNsResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.ListVirtualWaNsResult.NextLink)
 			if err != nil {
@@ -280,8 +291,8 @@ func (client *virtualWansOperations) List() (ListVirtualWaNsResultPager, error) 
 	}, nil
 }
 
-// listCreateRequest creates the List request.
-func (client *virtualWansOperations) listCreateRequest() (*azcore.Request, error) {
+// ListCreateRequest creates the List request.
+func (client *VirtualWansClient) ListCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -299,17 +310,17 @@ func (client *virtualWansOperations) listCreateRequest() (*azcore.Request, error
 	return req, nil
 }
 
-// listHandleResponse handles the List response.
-func (client *virtualWansOperations) listHandleResponse(resp *azcore.Response) (*ListVirtualWaNsResultResponse, error) {
+// ListHandleResponse handles the List response.
+func (client *VirtualWansClient) ListHandleResponse(resp *azcore.Response) (*ListVirtualWaNsResultResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.listHandleError(resp)
+		return nil, client.ListHandleError(resp)
 	}
 	result := ListVirtualWaNsResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ListVirtualWaNsResult)
 }
 
-// listHandleError handles the List error response.
-func (client *virtualWansOperations) listHandleError(resp *azcore.Response) error {
+// ListHandleError handles the List error response.
+func (client *VirtualWansClient) ListHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -318,15 +329,15 @@ func (client *virtualWansOperations) listHandleError(resp *azcore.Response) erro
 }
 
 // ListByResourceGroup - Lists all the VirtualWANs in a resource group.
-func (client *virtualWansOperations) ListByResourceGroup(resourceGroupName string) (ListVirtualWaNsResultPager, error) {
-	req, err := client.listByResourceGroupCreateRequest(resourceGroupName)
+func (client *VirtualWansClient) ListByResourceGroup(resourceGroupName string) (ListVirtualWaNsResultPager, error) {
+	req, err := client.ListByResourceGroupCreateRequest(resourceGroupName)
 	if err != nil {
 		return nil, err
 	}
 	return &listVirtualWaNsResultPager{
 		pipeline:  client.p,
 		request:   req,
-		responder: client.listByResourceGroupHandleResponse,
+		responder: client.ListByResourceGroupHandleResponse,
 		advancer: func(resp *ListVirtualWaNsResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.ListVirtualWaNsResult.NextLink)
 			if err != nil {
@@ -340,8 +351,8 @@ func (client *virtualWansOperations) ListByResourceGroup(resourceGroupName strin
 	}, nil
 }
 
-// listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *virtualWansOperations) listByResourceGroupCreateRequest(resourceGroupName string) (*azcore.Request, error) {
+// ListByResourceGroupCreateRequest creates the ListByResourceGroup request.
+func (client *VirtualWansClient) ListByResourceGroupCreateRequest(resourceGroupName string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -360,17 +371,17 @@ func (client *virtualWansOperations) listByResourceGroupCreateRequest(resourceGr
 	return req, nil
 }
 
-// listByResourceGroupHandleResponse handles the ListByResourceGroup response.
-func (client *virtualWansOperations) listByResourceGroupHandleResponse(resp *azcore.Response) (*ListVirtualWaNsResultResponse, error) {
+// ListByResourceGroupHandleResponse handles the ListByResourceGroup response.
+func (client *VirtualWansClient) ListByResourceGroupHandleResponse(resp *azcore.Response) (*ListVirtualWaNsResultResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.listByResourceGroupHandleError(resp)
+		return nil, client.ListByResourceGroupHandleError(resp)
 	}
 	result := ListVirtualWaNsResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ListVirtualWaNsResult)
 }
 
-// listByResourceGroupHandleError handles the ListByResourceGroup error response.
-func (client *virtualWansOperations) listByResourceGroupHandleError(resp *azcore.Response) error {
+// ListByResourceGroupHandleError handles the ListByResourceGroup error response.
+func (client *VirtualWansClient) ListByResourceGroupHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -379,24 +390,24 @@ func (client *virtualWansOperations) listByResourceGroupHandleError(resp *azcore
 }
 
 // UpdateTags - Updates a VirtualWAN tags.
-func (client *virtualWansOperations) UpdateTags(ctx context.Context, resourceGroupName string, virtualWanName string, wanParameters TagsObject) (*VirtualWanResponse, error) {
-	req, err := client.updateTagsCreateRequest(resourceGroupName, virtualWanName, wanParameters)
+func (client *VirtualWansClient) UpdateTags(ctx context.Context, resourceGroupName string, virtualWanName string, wanParameters TagsObject) (*VirtualWanResponse, error) {
+	req, err := client.UpdateTagsCreateRequest(resourceGroupName, virtualWanName, wanParameters)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.updateTagsHandleResponse(resp)
+	result, err := client.UpdateTagsHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// updateTagsCreateRequest creates the UpdateTags request.
-func (client *virtualWansOperations) updateTagsCreateRequest(resourceGroupName string, virtualWanName string, wanParameters TagsObject) (*azcore.Request, error) {
+// UpdateTagsCreateRequest creates the UpdateTags request.
+func (client *VirtualWansClient) UpdateTagsCreateRequest(resourceGroupName string, virtualWanName string, wanParameters TagsObject) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -416,17 +427,17 @@ func (client *virtualWansOperations) updateTagsCreateRequest(resourceGroupName s
 	return req, req.MarshalAsJSON(wanParameters)
 }
 
-// updateTagsHandleResponse handles the UpdateTags response.
-func (client *virtualWansOperations) updateTagsHandleResponse(resp *azcore.Response) (*VirtualWanResponse, error) {
+// UpdateTagsHandleResponse handles the UpdateTags response.
+func (client *VirtualWansClient) UpdateTagsHandleResponse(resp *azcore.Response) (*VirtualWanResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.updateTagsHandleError(resp)
+		return nil, client.UpdateTagsHandleError(resp)
 	}
 	result := VirtualWanResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualWan)
 }
 
-// updateTagsHandleError handles the UpdateTags error response.
-func (client *virtualWansOperations) updateTagsHandleError(resp *azcore.Response) error {
+// UpdateTagsHandleError handles the UpdateTags error response.
+func (client *VirtualWansClient) UpdateTagsHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

@@ -25,30 +25,41 @@ type AppendBlobOperations interface {
 	Create(ctx context.Context, contentLength int64, appendBlobCreateOptions *AppendBlobCreateOptions, blobHttpHeaders *BlobHttpHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*AppendBlobCreateResponse, error)
 }
 
-// appendBlobOperations implements the AppendBlobOperations interface.
-type appendBlobOperations struct {
+// AppendBlobClient implements the AppendBlobOperations interface.
+// Don't use this type directly, use NewAppendBlobClient() instead.
+type AppendBlobClient struct {
 	*client
 }
 
+// NewAppendBlobClient creates a new instance of AppendBlobClient with the specified values.
+func NewAppendBlobClient(c *Client) AppendBlobOperations {
+	return &AppendBlobClient{Client: c}
+}
+
+// Do invokes the Do() method on the pipeline associated with this client.
+func (client *AppendBlobClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(ctx, req)
+}
+
 // AppendBlock - The Append Block operation commits a new block of data to the end of an existing append blob. The Append Block operation is permitted only if the blob was created with x-ms-blob-type set to AppendBlob. Append Block is supported only on version 2015-02-21 version or later.
-func (client *appendBlobOperations) AppendBlock(ctx context.Context, contentLength int64, body azcore.ReadSeekCloser, appendBlobAppendBlockOptions *AppendBlobAppendBlockOptions, leaseAccessConditions *LeaseAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*AppendBlobAppendBlockResponse, error) {
-	req, err := client.appendBlockCreateRequest(contentLength, body, appendBlobAppendBlockOptions, leaseAccessConditions, appendPositionAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
+func (client *AppendBlobClient) AppendBlock(ctx context.Context, contentLength int64, body azcore.ReadSeekCloser, appendBlobAppendBlockOptions *AppendBlobAppendBlockOptions, leaseAccessConditions *LeaseAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*AppendBlobAppendBlockResponse, error) {
+	req, err := client.AppendBlockCreateRequest(contentLength, body, appendBlobAppendBlockOptions, leaseAccessConditions, appendPositionAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.appendBlockHandleResponse(resp)
+	result, err := client.AppendBlockHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// appendBlockCreateRequest creates the AppendBlock request.
-func (client *appendBlobOperations) appendBlockCreateRequest(contentLength int64, body azcore.ReadSeekCloser, appendBlobAppendBlockOptions *AppendBlobAppendBlockOptions, leaseAccessConditions *LeaseAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+// AppendBlockCreateRequest creates the AppendBlock request.
+func (client *AppendBlobClient) AppendBlockCreateRequest(contentLength int64, body azcore.ReadSeekCloser, appendBlobAppendBlockOptions *AppendBlobAppendBlockOptions, leaseAccessConditions *LeaseAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -104,10 +115,10 @@ func (client *appendBlobOperations) appendBlockCreateRequest(contentLength int64
 	return req, req.SetBody(body)
 }
 
-// appendBlockHandleResponse handles the AppendBlock response.
-func (client *appendBlobOperations) appendBlockHandleResponse(resp *azcore.Response) (*AppendBlobAppendBlockResponse, error) {
+// AppendBlockHandleResponse handles the AppendBlock response.
+func (client *AppendBlobClient) AppendBlockHandleResponse(resp *azcore.Response) (*AppendBlobAppendBlockResponse, error) {
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.appendBlockHandleError(resp)
+		return nil, client.AppendBlockHandleError(resp)
 	}
 	result := AppendBlobAppendBlockResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
@@ -177,8 +188,8 @@ func (client *appendBlobOperations) appendBlockHandleResponse(resp *azcore.Respo
 	return &result, nil
 }
 
-// appendBlockHandleError handles the AppendBlock error response.
-func (client *appendBlobOperations) appendBlockHandleError(resp *azcore.Response) error {
+// AppendBlockHandleError handles the AppendBlock error response.
+func (client *AppendBlobClient) AppendBlockHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -187,24 +198,24 @@ func (client *appendBlobOperations) appendBlockHandleError(resp *azcore.Response
 }
 
 // AppendBlockFromURL - The Append Block operation commits a new block of data to the end of an existing append blob where the contents are read from a source url. The Append Block operation is permitted only if the blob was created with x-ms-blob-type set to AppendBlob. Append Block is supported only on version 2015-02-21 version or later.
-func (client *appendBlobOperations) AppendBlockFromURL(ctx context.Context, sourceUrl url.URL, contentLength int64, appendBlobAppendBlockFromUrlOptions *AppendBlobAppendBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*AppendBlobAppendBlockFromURLResponse, error) {
-	req, err := client.appendBlockFromUrlCreateRequest(sourceUrl, contentLength, appendBlobAppendBlockFromUrlOptions, cpkInfo, cpkScopeInfo, leaseAccessConditions, appendPositionAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions)
+func (client *AppendBlobClient) AppendBlockFromURL(ctx context.Context, sourceUrl url.URL, contentLength int64, appendBlobAppendBlockFromUrlOptions *AppendBlobAppendBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*AppendBlobAppendBlockFromURLResponse, error) {
+	req, err := client.AppendBlockFromURLCreateRequest(sourceUrl, contentLength, appendBlobAppendBlockFromUrlOptions, cpkInfo, cpkScopeInfo, leaseAccessConditions, appendPositionAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.appendBlockFromUrlHandleResponse(resp)
+	result, err := client.AppendBlockFromURLHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// appendBlockFromUrlCreateRequest creates the AppendBlockFromURL request.
-func (client *appendBlobOperations) appendBlockFromUrlCreateRequest(sourceUrl url.URL, contentLength int64, appendBlobAppendBlockFromUrlOptions *AppendBlobAppendBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*azcore.Request, error) {
+// AppendBlockFromURLCreateRequest creates the AppendBlockFromURL request.
+func (client *AppendBlobClient) AppendBlockFromURLCreateRequest(sourceUrl url.URL, contentLength int64, appendBlobAppendBlockFromUrlOptions *AppendBlobAppendBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -279,10 +290,10 @@ func (client *appendBlobOperations) appendBlockFromUrlCreateRequest(sourceUrl ur
 	return req, nil
 }
 
-// appendBlockFromUrlHandleResponse handles the AppendBlockFromURL response.
-func (client *appendBlobOperations) appendBlockFromUrlHandleResponse(resp *azcore.Response) (*AppendBlobAppendBlockFromURLResponse, error) {
+// AppendBlockFromURLHandleResponse handles the AppendBlockFromURL response.
+func (client *AppendBlobClient) AppendBlockFromURLHandleResponse(resp *azcore.Response) (*AppendBlobAppendBlockFromURLResponse, error) {
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.appendBlockFromUrlHandleError(resp)
+		return nil, client.AppendBlockFromURLHandleError(resp)
 	}
 	result := AppendBlobAppendBlockFromURLResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
@@ -349,8 +360,8 @@ func (client *appendBlobOperations) appendBlockFromUrlHandleResponse(resp *azcor
 	return &result, nil
 }
 
-// appendBlockFromUrlHandleError handles the AppendBlockFromURL error response.
-func (client *appendBlobOperations) appendBlockFromUrlHandleError(resp *azcore.Response) error {
+// AppendBlockFromURLHandleError handles the AppendBlockFromURL error response.
+func (client *AppendBlobClient) AppendBlockFromURLHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -359,24 +370,24 @@ func (client *appendBlobOperations) appendBlockFromUrlHandleError(resp *azcore.R
 }
 
 // Create - The Create Append Blob operation creates a new append blob.
-func (client *appendBlobOperations) Create(ctx context.Context, contentLength int64, appendBlobCreateOptions *AppendBlobCreateOptions, blobHttpHeaders *BlobHttpHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*AppendBlobCreateResponse, error) {
-	req, err := client.createCreateRequest(contentLength, appendBlobCreateOptions, blobHttpHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
+func (client *AppendBlobClient) Create(ctx context.Context, contentLength int64, appendBlobCreateOptions *AppendBlobCreateOptions, blobHttpHeaders *BlobHttpHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*AppendBlobCreateResponse, error) {
+	req, err := client.CreateCreateRequest(contentLength, appendBlobCreateOptions, blobHttpHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.createHandleResponse(resp)
+	result, err := client.CreateHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// createCreateRequest creates the Create request.
-func (client *appendBlobOperations) createCreateRequest(contentLength int64, appendBlobCreateOptions *AppendBlobCreateOptions, blobHttpHeaders *BlobHttpHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+// CreateCreateRequest creates the Create request.
+func (client *AppendBlobClient) CreateCreateRequest(contentLength int64, appendBlobCreateOptions *AppendBlobCreateOptions, blobHttpHeaders *BlobHttpHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -443,10 +454,10 @@ func (client *appendBlobOperations) createCreateRequest(contentLength int64, app
 	return req, nil
 }
 
-// createHandleResponse handles the Create response.
-func (client *appendBlobOperations) createHandleResponse(resp *azcore.Response) (*AppendBlobCreateResponse, error) {
+// CreateHandleResponse handles the Create response.
+func (client *AppendBlobClient) CreateHandleResponse(resp *azcore.Response) (*AppendBlobCreateResponse, error) {
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.createHandleError(resp)
+		return nil, client.CreateHandleError(resp)
 	}
 	result := AppendBlobCreateResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
@@ -498,8 +509,8 @@ func (client *appendBlobOperations) createHandleResponse(resp *azcore.Response) 
 	return &result, nil
 }
 
-// createHandleError handles the Create error response.
-func (client *appendBlobOperations) createHandleError(resp *azcore.Response) error {
+// CreateHandleError handles the Create error response.
+func (client *AppendBlobClient) CreateHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err

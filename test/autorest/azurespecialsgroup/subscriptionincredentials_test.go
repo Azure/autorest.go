@@ -11,9 +11,13 @@ import (
 	"testing"
 )
 
+func newSubscriptionInCredentialsClient() azurespecialsgroup.SubscriptionInCredentialsOperations {
+	return azurespecialsgroup.NewSubscriptionInCredentialsClient(azurespecialsgroup.NewDefaultClient(nil), "1234-5678-9012-3456")
+}
+
 // PostMethodGlobalNotProvidedValid - POST method with subscriptionId modeled in credentials.  Set the credential subscriptionId to '1234-5678-9012-3456' to succeed
 func TestPostMethodGlobalNotProvidedValid(t *testing.T) {
-	client := azurespecialsgroup.NewDefaultClient(nil).SubscriptionInCredentialsOperations("1234-5678-9012-3456")
+	client := newSubscriptionInCredentialsClient()
 	result, err := client.PostMethodGlobalNotProvidedValid(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -28,7 +32,7 @@ func TestPostMethodGlobalNull(t *testing.T) {
 
 // PostMethodGlobalValid - POST method with subscriptionId modeled in credentials.  Set the credential subscriptionId to '1234-5678-9012-3456' to succeed
 func TestPostMethodGlobalValid(t *testing.T) {
-	client := azurespecialsgroup.NewDefaultClient(nil).SubscriptionInCredentialsOperations("1234-5678-9012-3456")
+	client := newSubscriptionInCredentialsClient()
 	result, err := client.PostMethodGlobalValid(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -38,7 +42,7 @@ func TestPostMethodGlobalValid(t *testing.T) {
 
 // PostPathGlobalValid - POST method with subscriptionId modeled in credentials.  Set the credential subscriptionId to '1234-5678-9012-3456' to succeed
 func TestPostPathGlobalValid(t *testing.T) {
-	client := azurespecialsgroup.NewDefaultClient(nil).SubscriptionInCredentialsOperations("1234-5678-9012-3456")
+	client := newSubscriptionInCredentialsClient()
 	result, err := client.PostPathGlobalValid(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -48,7 +52,7 @@ func TestPostPathGlobalValid(t *testing.T) {
 
 // PostSwaggerGlobalValid - POST method with subscriptionId modeled in credentials.  Set the credential subscriptionId to '1234-5678-9012-3456' to succeed
 func TestPostSwaggerGlobalValid(t *testing.T) {
-	client := azurespecialsgroup.NewDefaultClient(nil).SubscriptionInCredentialsOperations("1234-5678-9012-3456")
+	client := newSubscriptionInCredentialsClient()
 	result, err := client.PostSwaggerGlobalValid(context.Background())
 	if err != nil {
 		t.Fatal(err)

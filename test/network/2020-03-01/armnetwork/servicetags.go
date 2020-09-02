@@ -20,31 +20,42 @@ type ServiceTagsOperations interface {
 	List(ctx context.Context, location string) (*ServiceTagsListResultResponse, error)
 }
 
-// serviceTagsOperations implements the ServiceTagsOperations interface.
-type serviceTagsOperations struct {
+// ServiceTagsClient implements the ServiceTagsOperations interface.
+// Don't use this type directly, use NewServiceTagsClient() instead.
+type ServiceTagsClient struct {
 	*Client
 	subscriptionID string
 }
 
+// NewServiceTagsClient creates a new instance of ServiceTagsClient with the specified values.
+func NewServiceTagsClient(c *Client, subscriptionID string) ServiceTagsOperations {
+	return &ServiceTagsClient{Client: c, subscriptionID: subscriptionID}
+}
+
+// Do invokes the Do() method on the pipeline associated with this client.
+func (client *ServiceTagsClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(ctx, req)
+}
+
 // List - Gets a list of service tag information resources.
-func (client *serviceTagsOperations) List(ctx context.Context, location string) (*ServiceTagsListResultResponse, error) {
-	req, err := client.listCreateRequest(location)
+func (client *ServiceTagsClient) List(ctx context.Context, location string) (*ServiceTagsListResultResponse, error) {
+	req, err := client.ListCreateRequest(location)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.listHandleResponse(resp)
+	result, err := client.ListHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// listCreateRequest creates the List request.
-func (client *serviceTagsOperations) listCreateRequest(location string) (*azcore.Request, error) {
+// ListCreateRequest creates the List request.
+func (client *ServiceTagsClient) ListCreateRequest(location string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -63,17 +74,17 @@ func (client *serviceTagsOperations) listCreateRequest(location string) (*azcore
 	return req, nil
 }
 
-// listHandleResponse handles the List response.
-func (client *serviceTagsOperations) listHandleResponse(resp *azcore.Response) (*ServiceTagsListResultResponse, error) {
+// ListHandleResponse handles the List response.
+func (client *ServiceTagsClient) ListHandleResponse(resp *azcore.Response) (*ServiceTagsListResultResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.listHandleError(resp)
+		return nil, client.ListHandleError(resp)
 	}
 	result := ServiceTagsListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ServiceTagsListResult)
 }
 
-// listHandleError handles the List error response.
-func (client *serviceTagsOperations) listHandleError(resp *azcore.Response) error {
+// ListHandleError handles the List error response.
+func (client *ServiceTagsClient) ListHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

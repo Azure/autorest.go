@@ -74,8 +74,3 @@ func NewClient(endpoint string, options *ClientOptions) *Client {
 func NewClientWithPipeline(endpoint string, p azcore.Pipeline) *Client {
 	return &Client{u: endpoint, p: p}
 }
-
-// QueriesOperations returns the QueriesOperations associated with this client.
-func (client *Client) QueriesOperations() QueriesOperations {
-	return &queriesOperations{Client: client}
-}

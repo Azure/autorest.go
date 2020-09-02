@@ -14,9 +14,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
+func newPolymorphicrecursiveClient() complexgroup.PolymorphicrecursiveOperations {
+	return complexgroup.NewPolymorphicrecursiveClient(complexgroup.NewDefaultClient(nil))
+}
+
 // GetValid - Get complex types that are polymorphic and have recursive references
 func TestGetValid(t *testing.T) {
-	client := complexgroup.NewDefaultClient(nil).PolymorphicrecursiveOperations()
+	client := newPolymorphicrecursiveClient()
 	result, err := client.GetValid(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -107,7 +111,7 @@ func TestGetValid(t *testing.T) {
 
 // PutValid - Put complex types that are polymorphic and have recursive references
 func TestPutValid(t *testing.T) {
-	client := complexgroup.NewDefaultClient(nil).PolymorphicrecursiveOperations()
+	client := newPolymorphicrecursiveClient()
 	sawBday := time.Date(1900, time.January, 5, 1, 0, 0, 0, time.UTC)
 	sharkBday := time.Date(2012, time.January, 5, 1, 0, 0, 0, time.UTC)
 	result, err := client.PutValid(context.Background(), &complexgroup.Salmon{

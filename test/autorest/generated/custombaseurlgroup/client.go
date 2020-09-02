@@ -73,8 +73,3 @@ func NewClientWithPipeline(host *string, p azcore.Pipeline) *Client {
 	}
 	return client
 }
-
-// PathsOperations returns the PathsOperations associated with this client.
-func (client *Client) PathsOperations() PathsOperations {
-	return &pathsOperations{Client: client}
-}

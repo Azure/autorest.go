@@ -20,22 +20,33 @@ type AvailableDelegationsOperations interface {
 	List(location string) (AvailableDelegationsResultPager, error)
 }
 
-// availableDelegationsOperations implements the AvailableDelegationsOperations interface.
-type availableDelegationsOperations struct {
+// AvailableDelegationsClient implements the AvailableDelegationsOperations interface.
+// Don't use this type directly, use NewAvailableDelegationsClient() instead.
+type AvailableDelegationsClient struct {
 	*Client
 	subscriptionID string
 }
 
+// NewAvailableDelegationsClient creates a new instance of AvailableDelegationsClient with the specified values.
+func NewAvailableDelegationsClient(c *Client, subscriptionID string) AvailableDelegationsOperations {
+	return &AvailableDelegationsClient{Client: c, subscriptionID: subscriptionID}
+}
+
+// Do invokes the Do() method on the pipeline associated with this client.
+func (client *AvailableDelegationsClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(ctx, req)
+}
+
 // List - Gets all of the available subnet delegations for this subscription in this region.
-func (client *availableDelegationsOperations) List(location string) (AvailableDelegationsResultPager, error) {
-	req, err := client.listCreateRequest(location)
+func (client *AvailableDelegationsClient) List(location string) (AvailableDelegationsResultPager, error) {
+	req, err := client.ListCreateRequest(location)
 	if err != nil {
 		return nil, err
 	}
 	return &availableDelegationsResultPager{
 		pipeline:  client.p,
 		request:   req,
-		responder: client.listHandleResponse,
+		responder: client.ListHandleResponse,
 		advancer: func(resp *AvailableDelegationsResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.AvailableDelegationsResult.NextLink)
 			if err != nil {
@@ -49,8 +60,8 @@ func (client *availableDelegationsOperations) List(location string) (AvailableDe
 	}, nil
 }
 
-// listCreateRequest creates the List request.
-func (client *availableDelegationsOperations) listCreateRequest(location string) (*azcore.Request, error) {
+// ListCreateRequest creates the List request.
+func (client *AvailableDelegationsClient) ListCreateRequest(location string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -69,17 +80,17 @@ func (client *availableDelegationsOperations) listCreateRequest(location string)
 	return req, nil
 }
 
-// listHandleResponse handles the List response.
-func (client *availableDelegationsOperations) listHandleResponse(resp *azcore.Response) (*AvailableDelegationsResultResponse, error) {
+// ListHandleResponse handles the List response.
+func (client *AvailableDelegationsClient) ListHandleResponse(resp *azcore.Response) (*AvailableDelegationsResultResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.listHandleError(resp)
+		return nil, client.ListHandleError(resp)
 	}
 	result := AvailableDelegationsResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.AvailableDelegationsResult)
 }
 
-// listHandleError handles the List error response.
-func (client *availableDelegationsOperations) listHandleError(resp *azcore.Response) error {
+// ListHandleError handles the List error response.
+func (client *AvailableDelegationsClient) ListHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

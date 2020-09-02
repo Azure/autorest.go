@@ -12,8 +12,12 @@ import (
 	"testing"
 )
 
+func newQueriesClient() urlmultigroup.QueriesOperations {
+	return urlmultigroup.NewQueriesClient(urlmultigroup.NewDefaultClient(nil))
+}
+
 func TestURLMultiArrayStringMultiEmpty(t *testing.T) {
-	client := urlmultigroup.NewDefaultClient(nil).QueriesOperations()
+	client := newQueriesClient()
 	result, err := client.ArrayStringMultiEmpty(context.Background(), &urlmultigroup.QueriesArrayStringMultiEmptyOptions{
 		ArrayQuery: &[]string{},
 	})
@@ -24,7 +28,7 @@ func TestURLMultiArrayStringMultiEmpty(t *testing.T) {
 }
 
 func TestURLMultiArrayStringMultiNull(t *testing.T) {
-	client := urlmultigroup.NewDefaultClient(nil).QueriesOperations()
+	client := newQueriesClient()
 	result, err := client.ArrayStringMultiNull(context.Background(), &urlmultigroup.QueriesArrayStringMultiNullOptions{
 		ArrayQuery: nil,
 	})
@@ -36,7 +40,7 @@ func TestURLMultiArrayStringMultiNull(t *testing.T) {
 
 func TestURLMultiArrayStringMultiValid(t *testing.T) {
 	t.Skip("Cannot set nil for string value in string slice")
-	client := urlmultigroup.NewDefaultClient(nil).QueriesOperations()
+	client := newQueriesClient()
 	result, err := client.ArrayStringMultiValid(context.Background(), &urlmultigroup.QueriesArrayStringMultiValidOptions{
 		ArrayQuery: &[]string{"ArrayQuery1", url.QueryEscape("begin!*'();:@ &=+$,/?#[]end"), "", ""},
 	})

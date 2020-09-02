@@ -74,8 +74,3 @@ func NewClient(endpoint string, options *ClientOptions) *Client {
 func NewClientWithPipeline(endpoint string, p azcore.Pipeline) *Client {
 	return &Client{u: endpoint, p: p}
 }
-
-// ArrayOperations returns the ArrayOperations associated with this client.
-func (client *Client) ArrayOperations() ArrayOperations {
-	return &arrayOperations{Client: client}
-}

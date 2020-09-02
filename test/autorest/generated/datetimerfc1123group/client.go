@@ -74,8 +74,3 @@ func NewClient(endpoint string, options *ClientOptions) *Client {
 func NewClientWithPipeline(endpoint string, p azcore.Pipeline) *Client {
 	return &Client{u: endpoint, p: p}
 }
-
-// Datetimerfc1123Operations returns the Datetimerfc1123Operations associated with this client.
-func (client *Client) Datetimerfc1123Operations() Datetimerfc1123Operations {
-	return &datetimerfc1123Operations{Client: client}
-}

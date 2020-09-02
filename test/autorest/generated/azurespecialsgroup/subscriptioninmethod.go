@@ -26,30 +26,41 @@ type SubscriptionInMethodOperations interface {
 	PostSwaggerLocalValid(ctx context.Context, subscriptionId string) (*http.Response, error)
 }
 
-// subscriptionInMethodOperations implements the SubscriptionInMethodOperations interface.
-type subscriptionInMethodOperations struct {
+// SubscriptionInMethodClient implements the SubscriptionInMethodOperations interface.
+// Don't use this type directly, use NewSubscriptionInMethodClient() instead.
+type SubscriptionInMethodClient struct {
 	*Client
 }
 
+// NewSubscriptionInMethodClient creates a new instance of SubscriptionInMethodClient with the specified values.
+func NewSubscriptionInMethodClient(c *Client) SubscriptionInMethodOperations {
+	return &SubscriptionInMethodClient{Client: c}
+}
+
+// Do invokes the Do() method on the pipeline associated with this client.
+func (client *SubscriptionInMethodClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(ctx, req)
+}
+
 // PostMethodLocalNull - POST method with subscriptionId modeled in the method.  pass in subscription id = null, client-side validation should prevent you from making this call
-func (client *subscriptionInMethodOperations) PostMethodLocalNull(ctx context.Context, subscriptionId string) (*http.Response, error) {
-	req, err := client.postMethodLocalNullCreateRequest(subscriptionId)
+func (client *SubscriptionInMethodClient) PostMethodLocalNull(ctx context.Context, subscriptionId string) (*http.Response, error) {
+	req, err := client.PostMethodLocalNullCreateRequest(subscriptionId)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.postMethodLocalNullHandleResponse(resp)
+	result, err := client.PostMethodLocalNullHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// postMethodLocalNullCreateRequest creates the PostMethodLocalNull request.
-func (client *subscriptionInMethodOperations) postMethodLocalNullCreateRequest(subscriptionId string) (*azcore.Request, error) {
+// PostMethodLocalNullCreateRequest creates the PostMethodLocalNull request.
+func (client *SubscriptionInMethodClient) PostMethodLocalNullCreateRequest(subscriptionId string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -64,16 +75,16 @@ func (client *subscriptionInMethodOperations) postMethodLocalNullCreateRequest(s
 	return req, nil
 }
 
-// postMethodLocalNullHandleResponse handles the PostMethodLocalNull response.
-func (client *subscriptionInMethodOperations) postMethodLocalNullHandleResponse(resp *azcore.Response) (*http.Response, error) {
+// PostMethodLocalNullHandleResponse handles the PostMethodLocalNull response.
+func (client *SubscriptionInMethodClient) PostMethodLocalNullHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.postMethodLocalNullHandleError(resp)
+		return nil, client.PostMethodLocalNullHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// postMethodLocalNullHandleError handles the PostMethodLocalNull error response.
-func (client *subscriptionInMethodOperations) postMethodLocalNullHandleError(resp *azcore.Response) error {
+// PostMethodLocalNullHandleError handles the PostMethodLocalNull error response.
+func (client *SubscriptionInMethodClient) PostMethodLocalNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -82,24 +93,24 @@ func (client *subscriptionInMethodOperations) postMethodLocalNullHandleError(res
 }
 
 // PostMethodLocalValid - POST method with subscriptionId modeled in the method.  pass in subscription id = '1234-5678-9012-3456' to succeed
-func (client *subscriptionInMethodOperations) PostMethodLocalValid(ctx context.Context, subscriptionId string) (*http.Response, error) {
-	req, err := client.postMethodLocalValidCreateRequest(subscriptionId)
+func (client *SubscriptionInMethodClient) PostMethodLocalValid(ctx context.Context, subscriptionId string) (*http.Response, error) {
+	req, err := client.PostMethodLocalValidCreateRequest(subscriptionId)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.postMethodLocalValidHandleResponse(resp)
+	result, err := client.PostMethodLocalValidHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// postMethodLocalValidCreateRequest creates the PostMethodLocalValid request.
-func (client *subscriptionInMethodOperations) postMethodLocalValidCreateRequest(subscriptionId string) (*azcore.Request, error) {
+// PostMethodLocalValidCreateRequest creates the PostMethodLocalValid request.
+func (client *SubscriptionInMethodClient) PostMethodLocalValidCreateRequest(subscriptionId string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -114,16 +125,16 @@ func (client *subscriptionInMethodOperations) postMethodLocalValidCreateRequest(
 	return req, nil
 }
 
-// postMethodLocalValidHandleResponse handles the PostMethodLocalValid response.
-func (client *subscriptionInMethodOperations) postMethodLocalValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
+// PostMethodLocalValidHandleResponse handles the PostMethodLocalValid response.
+func (client *SubscriptionInMethodClient) PostMethodLocalValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.postMethodLocalValidHandleError(resp)
+		return nil, client.PostMethodLocalValidHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// postMethodLocalValidHandleError handles the PostMethodLocalValid error response.
-func (client *subscriptionInMethodOperations) postMethodLocalValidHandleError(resp *azcore.Response) error {
+// PostMethodLocalValidHandleError handles the PostMethodLocalValid error response.
+func (client *SubscriptionInMethodClient) PostMethodLocalValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -132,24 +143,24 @@ func (client *subscriptionInMethodOperations) postMethodLocalValidHandleError(re
 }
 
 // PostPathLocalValid - POST method with subscriptionId modeled in the method.  pass in subscription id = '1234-5678-9012-3456' to succeed
-func (client *subscriptionInMethodOperations) PostPathLocalValid(ctx context.Context, subscriptionId string) (*http.Response, error) {
-	req, err := client.postPathLocalValidCreateRequest(subscriptionId)
+func (client *SubscriptionInMethodClient) PostPathLocalValid(ctx context.Context, subscriptionId string) (*http.Response, error) {
+	req, err := client.PostPathLocalValidCreateRequest(subscriptionId)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.postPathLocalValidHandleResponse(resp)
+	result, err := client.PostPathLocalValidHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// postPathLocalValidCreateRequest creates the PostPathLocalValid request.
-func (client *subscriptionInMethodOperations) postPathLocalValidCreateRequest(subscriptionId string) (*azcore.Request, error) {
+// PostPathLocalValidCreateRequest creates the PostPathLocalValid request.
+func (client *SubscriptionInMethodClient) PostPathLocalValidCreateRequest(subscriptionId string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -164,16 +175,16 @@ func (client *subscriptionInMethodOperations) postPathLocalValidCreateRequest(su
 	return req, nil
 }
 
-// postPathLocalValidHandleResponse handles the PostPathLocalValid response.
-func (client *subscriptionInMethodOperations) postPathLocalValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
+// PostPathLocalValidHandleResponse handles the PostPathLocalValid response.
+func (client *SubscriptionInMethodClient) PostPathLocalValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.postPathLocalValidHandleError(resp)
+		return nil, client.PostPathLocalValidHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// postPathLocalValidHandleError handles the PostPathLocalValid error response.
-func (client *subscriptionInMethodOperations) postPathLocalValidHandleError(resp *azcore.Response) error {
+// PostPathLocalValidHandleError handles the PostPathLocalValid error response.
+func (client *SubscriptionInMethodClient) PostPathLocalValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -182,24 +193,24 @@ func (client *subscriptionInMethodOperations) postPathLocalValidHandleError(resp
 }
 
 // PostSwaggerLocalValid - POST method with subscriptionId modeled in the method.  pass in subscription id = '1234-5678-9012-3456' to succeed
-func (client *subscriptionInMethodOperations) PostSwaggerLocalValid(ctx context.Context, subscriptionId string) (*http.Response, error) {
-	req, err := client.postSwaggerLocalValidCreateRequest(subscriptionId)
+func (client *SubscriptionInMethodClient) PostSwaggerLocalValid(ctx context.Context, subscriptionId string) (*http.Response, error) {
+	req, err := client.PostSwaggerLocalValidCreateRequest(subscriptionId)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.postSwaggerLocalValidHandleResponse(resp)
+	result, err := client.PostSwaggerLocalValidHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// postSwaggerLocalValidCreateRequest creates the PostSwaggerLocalValid request.
-func (client *subscriptionInMethodOperations) postSwaggerLocalValidCreateRequest(subscriptionId string) (*azcore.Request, error) {
+// PostSwaggerLocalValidCreateRequest creates the PostSwaggerLocalValid request.
+func (client *SubscriptionInMethodClient) PostSwaggerLocalValidCreateRequest(subscriptionId string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -214,16 +225,16 @@ func (client *subscriptionInMethodOperations) postSwaggerLocalValidCreateRequest
 	return req, nil
 }
 
-// postSwaggerLocalValidHandleResponse handles the PostSwaggerLocalValid response.
-func (client *subscriptionInMethodOperations) postSwaggerLocalValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
+// PostSwaggerLocalValidHandleResponse handles the PostSwaggerLocalValid response.
+func (client *SubscriptionInMethodClient) PostSwaggerLocalValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.postSwaggerLocalValidHandleError(resp)
+		return nil, client.PostSwaggerLocalValidHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// postSwaggerLocalValidHandleError handles the PostSwaggerLocalValid error response.
-func (client *subscriptionInMethodOperations) postSwaggerLocalValidHandleError(resp *azcore.Response) error {
+// PostSwaggerLocalValidHandleError handles the PostSwaggerLocalValid error response.
+func (client *SubscriptionInMethodClient) PostSwaggerLocalValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

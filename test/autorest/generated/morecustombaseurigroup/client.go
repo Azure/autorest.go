@@ -73,8 +73,3 @@ func NewClientWithPipeline(dnsSuffix *string, p azcore.Pipeline) *Client {
 	}
 	return client
 }
-
-// PathsOperations returns the PathsOperations associated with this client.
-func (client *Client) PathsOperations(subscriptionID string) PathsOperations {
-	return &pathsOperations{Client: client, subscriptionID: subscriptionID}
-}

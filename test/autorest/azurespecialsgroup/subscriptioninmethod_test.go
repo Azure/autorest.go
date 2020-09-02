@@ -11,6 +11,10 @@ import (
 	"testing"
 )
 
+func newSubscriptionInMethodClient() azurespecialsgroup.SubscriptionInMethodOperations {
+	return azurespecialsgroup.NewSubscriptionInMethodClient(azurespecialsgroup.NewDefaultClient(nil))
+}
+
 // PostMethodLocalNull - POST method with subscriptionId modeled in the method.  pass in subscription id = null, client-side validation should prevent you from making this call
 func TestPostMethodLocalNull(t *testing.T) {
 	t.Skip("invalid test, missing x-nullable")
@@ -18,7 +22,7 @@ func TestPostMethodLocalNull(t *testing.T) {
 
 // PostMethodLocalValid - POST method with subscriptionId modeled in the method.  pass in subscription id = '1234-5678-9012-3456' to succeed
 func TestPostMethodLocalValid(t *testing.T) {
-	client := azurespecialsgroup.NewDefaultClient(nil).SubscriptionInMethodOperations()
+	client := newSubscriptionInMethodClient()
 	result, err := client.PostMethodLocalValid(context.Background(), "1234-5678-9012-3456")
 	if err != nil {
 		t.Fatal(err)
@@ -28,7 +32,7 @@ func TestPostMethodLocalValid(t *testing.T) {
 
 // PostPathLocalValid - POST method with subscriptionId modeled in the method.  pass in subscription id = '1234-5678-9012-3456' to succeed
 func TestPostPathLocalValid(t *testing.T) {
-	client := azurespecialsgroup.NewDefaultClient(nil).SubscriptionInMethodOperations()
+	client := newSubscriptionInMethodClient()
 	result, err := client.PostPathLocalValid(context.Background(), "1234-5678-9012-3456")
 	if err != nil {
 		t.Fatal(err)
@@ -38,7 +42,7 @@ func TestPostPathLocalValid(t *testing.T) {
 
 // PostSwaggerLocalValid - POST method with subscriptionId modeled in the method.  pass in subscription id = '1234-5678-9012-3456' to succeed
 func TestPostSwaggerLocalValid(t *testing.T) {
-	client := azurespecialsgroup.NewDefaultClient(nil).SubscriptionInMethodOperations()
+	client := newSubscriptionInMethodClient()
 	result, err := client.PostSwaggerLocalValid(context.Background(), "1234-5678-9012-3456")
 	if err != nil {
 		t.Fatal(err)

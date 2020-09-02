@@ -19,30 +19,41 @@ type AutoRestReportServiceForAzureOperations interface {
 	GetReport(ctx context.Context, autoRestReportServiceForAzureGetReportOptions *AutoRestReportServiceForAzureGetReportOptions) (*MapOfInt32Response, error)
 }
 
-// autoRestReportServiceForAzureOperations implements the AutoRestReportServiceForAzureOperations interface.
-type autoRestReportServiceForAzureOperations struct {
+// AutoRestReportServiceForAzureClient implements the AutoRestReportServiceForAzureOperations interface.
+// Don't use this type directly, use NewAutoRestReportServiceForAzureClient() instead.
+type AutoRestReportServiceForAzureClient struct {
 	*Client
 }
 
+// NewAutoRestReportServiceForAzureClient creates a new instance of AutoRestReportServiceForAzureClient with the specified values.
+func NewAutoRestReportServiceForAzureClient(c *Client) AutoRestReportServiceForAzureOperations {
+	return &AutoRestReportServiceForAzureClient{Client: c}
+}
+
+// Do invokes the Do() method on the pipeline associated with this client.
+func (client *AutoRestReportServiceForAzureClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(ctx, req)
+}
+
 // GetReport - Get test coverage report
-func (client *autoRestReportServiceForAzureOperations) GetReport(ctx context.Context, autoRestReportServiceForAzureGetReportOptions *AutoRestReportServiceForAzureGetReportOptions) (*MapOfInt32Response, error) {
-	req, err := client.getReportCreateRequest(autoRestReportServiceForAzureGetReportOptions)
+func (client *AutoRestReportServiceForAzureClient) GetReport(ctx context.Context, autoRestReportServiceForAzureGetReportOptions *AutoRestReportServiceForAzureGetReportOptions) (*MapOfInt32Response, error) {
+	req, err := client.GetReportCreateRequest(autoRestReportServiceForAzureGetReportOptions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getReportHandleResponse(resp)
+	result, err := client.GetReportHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getReportCreateRequest creates the GetReport request.
-func (client *autoRestReportServiceForAzureOperations) getReportCreateRequest(autoRestReportServiceForAzureGetReportOptions *AutoRestReportServiceForAzureGetReportOptions) (*azcore.Request, error) {
+// GetReportCreateRequest creates the GetReport request.
+func (client *AutoRestReportServiceForAzureClient) GetReportCreateRequest(autoRestReportServiceForAzureGetReportOptions *AutoRestReportServiceForAzureGetReportOptions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -61,17 +72,17 @@ func (client *autoRestReportServiceForAzureOperations) getReportCreateRequest(au
 	return req, nil
 }
 
-// getReportHandleResponse handles the GetReport response.
-func (client *autoRestReportServiceForAzureOperations) getReportHandleResponse(resp *azcore.Response) (*MapOfInt32Response, error) {
+// GetReportHandleResponse handles the GetReport response.
+func (client *AutoRestReportServiceForAzureClient) GetReportHandleResponse(resp *azcore.Response) (*MapOfInt32Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getReportHandleError(resp)
+		return nil, client.GetReportHandleError(resp)
 	}
 	result := MapOfInt32Response{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
-// getReportHandleError handles the GetReport error response.
-func (client *autoRestReportServiceForAzureOperations) getReportHandleError(resp *azcore.Response) error {
+// GetReportHandleError handles the GetReport error response.
+func (client *AutoRestReportServiceForAzureClient) GetReportHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

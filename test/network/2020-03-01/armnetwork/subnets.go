@@ -41,28 +41,39 @@ type SubnetsOperations interface {
 	ResumeUnprepareNetworkPolicies(token string) (HTTPPoller, error)
 }
 
-// subnetsOperations implements the SubnetsOperations interface.
-type subnetsOperations struct {
+// SubnetsClient implements the SubnetsOperations interface.
+// Don't use this type directly, use NewSubnetsClient() instead.
+type SubnetsClient struct {
 	*Client
 	subscriptionID string
 }
 
+// NewSubnetsClient creates a new instance of SubnetsClient with the specified values.
+func NewSubnetsClient(c *Client, subscriptionID string) SubnetsOperations {
+	return &SubnetsClient{Client: c, subscriptionID: subscriptionID}
+}
+
+// Do invokes the Do() method on the pipeline associated with this client.
+func (client *SubnetsClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(ctx, req)
+}
+
 // CreateOrUpdate - Creates or updates a subnet in the specified virtual network.
-func (client *subnetsOperations) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, subnetParameters Subnet) (*SubnetPollerResponse, error) {
-	req, err := client.createOrUpdateCreateRequest(resourceGroupName, virtualNetworkName, subnetName, subnetParameters)
+func (client *SubnetsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, subnetParameters Subnet) (*SubnetPollerResponse, error) {
+	req, err := client.CreateOrUpdateCreateRequest(resourceGroupName, virtualNetworkName, subnetName, subnetParameters)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.createOrUpdateHandleResponse(resp)
+	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
-	pt, err := armcore.NewPoller("subnetsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("SubnetsClient.CreateOrUpdate", "azure-async-operation", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -77,8 +88,8 @@ func (client *subnetsOperations) BeginCreateOrUpdate(ctx context.Context, resour
 	return result, nil
 }
 
-func (client *subnetsOperations) ResumeCreateOrUpdate(token string) (SubnetPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("subnetsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+func (client *SubnetsClient) ResumeCreateOrUpdate(token string) (SubnetPoller, error) {
+	pt, err := armcore.NewPollerFromResumeToken("SubnetsClient.CreateOrUpdate", token, client.CreateOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -88,8 +99,8 @@ func (client *subnetsOperations) ResumeCreateOrUpdate(token string) (SubnetPolle
 	}, nil
 }
 
-// createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *subnetsOperations) createOrUpdateCreateRequest(resourceGroupName string, virtualNetworkName string, subnetName string, subnetParameters Subnet) (*azcore.Request, error) {
+// CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
+func (client *SubnetsClient) CreateOrUpdateCreateRequest(resourceGroupName string, virtualNetworkName string, subnetName string, subnetParameters Subnet) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -110,16 +121,16 @@ func (client *subnetsOperations) createOrUpdateCreateRequest(resourceGroupName s
 	return req, req.MarshalAsJSON(subnetParameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *subnetsOperations) createOrUpdateHandleResponse(resp *azcore.Response) (*SubnetPollerResponse, error) {
+// CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
+func (client *SubnetsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*SubnetPollerResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, client.CreateOrUpdateHandleError(resp)
 	}
 	return &SubnetPollerResponse{RawResponse: resp.Response}, nil
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *subnetsOperations) createOrUpdateHandleError(resp *azcore.Response) error {
+// CreateOrUpdateHandleError handles the CreateOrUpdate error response.
+func (client *SubnetsClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -128,21 +139,21 @@ func (client *subnetsOperations) createOrUpdateHandleError(resp *azcore.Response
 }
 
 // Delete - Deletes the specified subnet.
-func (client *subnetsOperations) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string) (*HTTPPollerResponse, error) {
-	req, err := client.deleteCreateRequest(resourceGroupName, virtualNetworkName, subnetName)
+func (client *SubnetsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string) (*HTTPPollerResponse, error) {
+	req, err := client.DeleteCreateRequest(resourceGroupName, virtualNetworkName, subnetName)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.deleteHandleResponse(resp)
+	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
-	pt, err := armcore.NewPoller("subnetsOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("SubnetsClient.Delete", "location", resp, client.DeleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -157,8 +168,8 @@ func (client *subnetsOperations) BeginDelete(ctx context.Context, resourceGroupN
 	return result, nil
 }
 
-func (client *subnetsOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("subnetsOperations.Delete", token, client.deleteHandleError)
+func (client *SubnetsClient) ResumeDelete(token string) (HTTPPoller, error) {
+	pt, err := armcore.NewPollerFromResumeToken("SubnetsClient.Delete", token, client.DeleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -168,8 +179,8 @@ func (client *subnetsOperations) ResumeDelete(token string) (HTTPPoller, error) 
 	}, nil
 }
 
-// deleteCreateRequest creates the Delete request.
-func (client *subnetsOperations) deleteCreateRequest(resourceGroupName string, virtualNetworkName string, subnetName string) (*azcore.Request, error) {
+// DeleteCreateRequest creates the Delete request.
+func (client *SubnetsClient) DeleteCreateRequest(resourceGroupName string, virtualNetworkName string, subnetName string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -190,16 +201,16 @@ func (client *subnetsOperations) deleteCreateRequest(resourceGroupName string, v
 	return req, nil
 }
 
-// deleteHandleResponse handles the Delete response.
-func (client *subnetsOperations) deleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
+// DeleteHandleResponse handles the Delete response.
+func (client *SubnetsClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, client.DeleteHandleError(resp)
 	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *subnetsOperations) deleteHandleError(resp *azcore.Response) error {
+// DeleteHandleError handles the Delete error response.
+func (client *SubnetsClient) DeleteHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -208,24 +219,24 @@ func (client *subnetsOperations) deleteHandleError(resp *azcore.Response) error 
 }
 
 // Get - Gets the specified subnet by virtual network and resource group.
-func (client *subnetsOperations) Get(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, subnetsGetOptions *SubnetsGetOptions) (*SubnetResponse, error) {
-	req, err := client.getCreateRequest(resourceGroupName, virtualNetworkName, subnetName, subnetsGetOptions)
+func (client *SubnetsClient) Get(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, subnetsGetOptions *SubnetsGetOptions) (*SubnetResponse, error) {
+	req, err := client.GetCreateRequest(resourceGroupName, virtualNetworkName, subnetName, subnetsGetOptions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getHandleResponse(resp)
+	result, err := client.GetHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getCreateRequest creates the Get request.
-func (client *subnetsOperations) getCreateRequest(resourceGroupName string, virtualNetworkName string, subnetName string, subnetsGetOptions *SubnetsGetOptions) (*azcore.Request, error) {
+// GetCreateRequest creates the Get request.
+func (client *SubnetsClient) GetCreateRequest(resourceGroupName string, virtualNetworkName string, subnetName string, subnetsGetOptions *SubnetsGetOptions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -249,17 +260,17 @@ func (client *subnetsOperations) getCreateRequest(resourceGroupName string, virt
 	return req, nil
 }
 
-// getHandleResponse handles the Get response.
-func (client *subnetsOperations) getHandleResponse(resp *azcore.Response) (*SubnetResponse, error) {
+// GetHandleResponse handles the Get response.
+func (client *SubnetsClient) GetHandleResponse(resp *azcore.Response) (*SubnetResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getHandleError(resp)
+		return nil, client.GetHandleError(resp)
 	}
 	result := SubnetResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Subnet)
 }
 
-// getHandleError handles the Get error response.
-func (client *subnetsOperations) getHandleError(resp *azcore.Response) error {
+// GetHandleError handles the Get error response.
+func (client *SubnetsClient) GetHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -268,15 +279,15 @@ func (client *subnetsOperations) getHandleError(resp *azcore.Response) error {
 }
 
 // List - Gets all subnets in a virtual network.
-func (client *subnetsOperations) List(resourceGroupName string, virtualNetworkName string) (SubnetListResultPager, error) {
-	req, err := client.listCreateRequest(resourceGroupName, virtualNetworkName)
+func (client *SubnetsClient) List(resourceGroupName string, virtualNetworkName string) (SubnetListResultPager, error) {
+	req, err := client.ListCreateRequest(resourceGroupName, virtualNetworkName)
 	if err != nil {
 		return nil, err
 	}
 	return &subnetListResultPager{
 		pipeline:  client.p,
 		request:   req,
-		responder: client.listHandleResponse,
+		responder: client.ListHandleResponse,
 		advancer: func(resp *SubnetListResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.SubnetListResult.NextLink)
 			if err != nil {
@@ -290,8 +301,8 @@ func (client *subnetsOperations) List(resourceGroupName string, virtualNetworkNa
 	}, nil
 }
 
-// listCreateRequest creates the List request.
-func (client *subnetsOperations) listCreateRequest(resourceGroupName string, virtualNetworkName string) (*azcore.Request, error) {
+// ListCreateRequest creates the List request.
+func (client *SubnetsClient) ListCreateRequest(resourceGroupName string, virtualNetworkName string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -311,17 +322,17 @@ func (client *subnetsOperations) listCreateRequest(resourceGroupName string, vir
 	return req, nil
 }
 
-// listHandleResponse handles the List response.
-func (client *subnetsOperations) listHandleResponse(resp *azcore.Response) (*SubnetListResultResponse, error) {
+// ListHandleResponse handles the List response.
+func (client *SubnetsClient) ListHandleResponse(resp *azcore.Response) (*SubnetListResultResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.listHandleError(resp)
+		return nil, client.ListHandleError(resp)
 	}
 	result := SubnetListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.SubnetListResult)
 }
 
-// listHandleError handles the List error response.
-func (client *subnetsOperations) listHandleError(resp *azcore.Response) error {
+// ListHandleError handles the List error response.
+func (client *SubnetsClient) ListHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -330,21 +341,21 @@ func (client *subnetsOperations) listHandleError(resp *azcore.Response) error {
 }
 
 // PrepareNetworkPolicies - Prepares a subnet by applying network intent policies.
-func (client *subnetsOperations) BeginPrepareNetworkPolicies(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, prepareNetworkPoliciesRequestParameters PrepareNetworkPoliciesRequest) (*HTTPPollerResponse, error) {
-	req, err := client.prepareNetworkPoliciesCreateRequest(resourceGroupName, virtualNetworkName, subnetName, prepareNetworkPoliciesRequestParameters)
+func (client *SubnetsClient) BeginPrepareNetworkPolicies(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, prepareNetworkPoliciesRequestParameters PrepareNetworkPoliciesRequest) (*HTTPPollerResponse, error) {
+	req, err := client.PrepareNetworkPoliciesCreateRequest(resourceGroupName, virtualNetworkName, subnetName, prepareNetworkPoliciesRequestParameters)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.prepareNetworkPoliciesHandleResponse(resp)
+	result, err := client.PrepareNetworkPoliciesHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
-	pt, err := armcore.NewPoller("subnetsOperations.PrepareNetworkPolicies", "location", resp, client.prepareNetworkPoliciesHandleError)
+	pt, err := armcore.NewPoller("SubnetsClient.PrepareNetworkPolicies", "location", resp, client.PrepareNetworkPoliciesHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -359,8 +370,8 @@ func (client *subnetsOperations) BeginPrepareNetworkPolicies(ctx context.Context
 	return result, nil
 }
 
-func (client *subnetsOperations) ResumePrepareNetworkPolicies(token string) (HTTPPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("subnetsOperations.PrepareNetworkPolicies", token, client.prepareNetworkPoliciesHandleError)
+func (client *SubnetsClient) ResumePrepareNetworkPolicies(token string) (HTTPPoller, error) {
+	pt, err := armcore.NewPollerFromResumeToken("SubnetsClient.PrepareNetworkPolicies", token, client.PrepareNetworkPoliciesHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -370,8 +381,8 @@ func (client *subnetsOperations) ResumePrepareNetworkPolicies(token string) (HTT
 	}, nil
 }
 
-// prepareNetworkPoliciesCreateRequest creates the PrepareNetworkPolicies request.
-func (client *subnetsOperations) prepareNetworkPoliciesCreateRequest(resourceGroupName string, virtualNetworkName string, subnetName string, prepareNetworkPoliciesRequestParameters PrepareNetworkPoliciesRequest) (*azcore.Request, error) {
+// PrepareNetworkPoliciesCreateRequest creates the PrepareNetworkPolicies request.
+func (client *SubnetsClient) PrepareNetworkPoliciesCreateRequest(resourceGroupName string, virtualNetworkName string, subnetName string, prepareNetworkPoliciesRequestParameters PrepareNetworkPoliciesRequest) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -392,16 +403,16 @@ func (client *subnetsOperations) prepareNetworkPoliciesCreateRequest(resourceGro
 	return req, req.MarshalAsJSON(prepareNetworkPoliciesRequestParameters)
 }
 
-// prepareNetworkPoliciesHandleResponse handles the PrepareNetworkPolicies response.
-func (client *subnetsOperations) prepareNetworkPoliciesHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
+// PrepareNetworkPoliciesHandleResponse handles the PrepareNetworkPolicies response.
+func (client *SubnetsClient) PrepareNetworkPoliciesHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.prepareNetworkPoliciesHandleError(resp)
+		return nil, client.PrepareNetworkPoliciesHandleError(resp)
 	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
-// prepareNetworkPoliciesHandleError handles the PrepareNetworkPolicies error response.
-func (client *subnetsOperations) prepareNetworkPoliciesHandleError(resp *azcore.Response) error {
+// PrepareNetworkPoliciesHandleError handles the PrepareNetworkPolicies error response.
+func (client *SubnetsClient) PrepareNetworkPoliciesHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -410,21 +421,21 @@ func (client *subnetsOperations) prepareNetworkPoliciesHandleError(resp *azcore.
 }
 
 // UnprepareNetworkPolicies - Unprepares a subnet by removing network intent policies.
-func (client *subnetsOperations) BeginUnprepareNetworkPolicies(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, unprepareNetworkPoliciesRequestParameters UnprepareNetworkPoliciesRequest) (*HTTPPollerResponse, error) {
-	req, err := client.unprepareNetworkPoliciesCreateRequest(resourceGroupName, virtualNetworkName, subnetName, unprepareNetworkPoliciesRequestParameters)
+func (client *SubnetsClient) BeginUnprepareNetworkPolicies(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, unprepareNetworkPoliciesRequestParameters UnprepareNetworkPoliciesRequest) (*HTTPPollerResponse, error) {
+	req, err := client.UnprepareNetworkPoliciesCreateRequest(resourceGroupName, virtualNetworkName, subnetName, unprepareNetworkPoliciesRequestParameters)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.unprepareNetworkPoliciesHandleResponse(resp)
+	result, err := client.UnprepareNetworkPoliciesHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
-	pt, err := armcore.NewPoller("subnetsOperations.UnprepareNetworkPolicies", "location", resp, client.unprepareNetworkPoliciesHandleError)
+	pt, err := armcore.NewPoller("SubnetsClient.UnprepareNetworkPolicies", "location", resp, client.UnprepareNetworkPoliciesHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -439,8 +450,8 @@ func (client *subnetsOperations) BeginUnprepareNetworkPolicies(ctx context.Conte
 	return result, nil
 }
 
-func (client *subnetsOperations) ResumeUnprepareNetworkPolicies(token string) (HTTPPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("subnetsOperations.UnprepareNetworkPolicies", token, client.unprepareNetworkPoliciesHandleError)
+func (client *SubnetsClient) ResumeUnprepareNetworkPolicies(token string) (HTTPPoller, error) {
+	pt, err := armcore.NewPollerFromResumeToken("SubnetsClient.UnprepareNetworkPolicies", token, client.UnprepareNetworkPoliciesHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -450,8 +461,8 @@ func (client *subnetsOperations) ResumeUnprepareNetworkPolicies(token string) (H
 	}, nil
 }
 
-// unprepareNetworkPoliciesCreateRequest creates the UnprepareNetworkPolicies request.
-func (client *subnetsOperations) unprepareNetworkPoliciesCreateRequest(resourceGroupName string, virtualNetworkName string, subnetName string, unprepareNetworkPoliciesRequestParameters UnprepareNetworkPoliciesRequest) (*azcore.Request, error) {
+// UnprepareNetworkPoliciesCreateRequest creates the UnprepareNetworkPolicies request.
+func (client *SubnetsClient) UnprepareNetworkPoliciesCreateRequest(resourceGroupName string, virtualNetworkName string, subnetName string, unprepareNetworkPoliciesRequestParameters UnprepareNetworkPoliciesRequest) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -472,16 +483,16 @@ func (client *subnetsOperations) unprepareNetworkPoliciesCreateRequest(resourceG
 	return req, req.MarshalAsJSON(unprepareNetworkPoliciesRequestParameters)
 }
 
-// unprepareNetworkPoliciesHandleResponse handles the UnprepareNetworkPolicies response.
-func (client *subnetsOperations) unprepareNetworkPoliciesHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
+// UnprepareNetworkPoliciesHandleResponse handles the UnprepareNetworkPolicies response.
+func (client *SubnetsClient) UnprepareNetworkPoliciesHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.unprepareNetworkPoliciesHandleError(resp)
+		return nil, client.UnprepareNetworkPoliciesHandleError(resp)
 	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
-// unprepareNetworkPoliciesHandleError handles the UnprepareNetworkPolicies error response.
-func (client *subnetsOperations) unprepareNetworkPoliciesHandleError(resp *azcore.Response) error {
+// UnprepareNetworkPoliciesHandleError handles the UnprepareNetworkPolicies error response.
+func (client *SubnetsClient) UnprepareNetworkPoliciesHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

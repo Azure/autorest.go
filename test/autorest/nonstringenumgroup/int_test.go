@@ -11,9 +11,13 @@ import (
 	"testing"
 )
 
+func newIntClient() nonstringenumgroup.IntOperations {
+	return nonstringenumgroup.NewIntClient(nonstringenumgroup.NewDefaultClient(nil))
+}
+
 // Get - Get an int enum
 func TestIntGet(t *testing.T) {
-	client := nonstringenumgroup.NewDefaultClient(nil).IntOperations()
+	client := newIntClient()
 	result, err := client.Get(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -23,7 +27,7 @@ func TestIntGet(t *testing.T) {
 
 // Put - Put an int enum
 func TestIntPut(t *testing.T) {
-	client := nonstringenumgroup.NewDefaultClient(nil).IntOperations()
+	client := newIntClient()
 	result, err := client.Put(context.Background(), &nonstringenumgroup.IntPutOptions{
 		Input: nonstringenumgroup.IntEnumTwoHundred.ToPtr(),
 	})

@@ -33,28 +33,39 @@ type VirtualNetworkPeeringsOperations interface {
 	List(resourceGroupName string, virtualNetworkName string) (VirtualNetworkPeeringListResultPager, error)
 }
 
-// virtualNetworkPeeringsOperations implements the VirtualNetworkPeeringsOperations interface.
-type virtualNetworkPeeringsOperations struct {
+// VirtualNetworkPeeringsClient implements the VirtualNetworkPeeringsOperations interface.
+// Don't use this type directly, use NewVirtualNetworkPeeringsClient() instead.
+type VirtualNetworkPeeringsClient struct {
 	*Client
 	subscriptionID string
 }
 
+// NewVirtualNetworkPeeringsClient creates a new instance of VirtualNetworkPeeringsClient with the specified values.
+func NewVirtualNetworkPeeringsClient(c *Client, subscriptionID string) VirtualNetworkPeeringsOperations {
+	return &VirtualNetworkPeeringsClient{Client: c, subscriptionID: subscriptionID}
+}
+
+// Do invokes the Do() method on the pipeline associated with this client.
+func (client *VirtualNetworkPeeringsClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(ctx, req)
+}
+
 // CreateOrUpdate - Creates or updates a peering in the specified virtual network.
-func (client *virtualNetworkPeeringsOperations) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, virtualNetworkPeeringName string, virtualNetworkPeeringParameters VirtualNetworkPeering) (*VirtualNetworkPeeringPollerResponse, error) {
-	req, err := client.createOrUpdateCreateRequest(resourceGroupName, virtualNetworkName, virtualNetworkPeeringName, virtualNetworkPeeringParameters)
+func (client *VirtualNetworkPeeringsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, virtualNetworkPeeringName string, virtualNetworkPeeringParameters VirtualNetworkPeering) (*VirtualNetworkPeeringPollerResponse, error) {
+	req, err := client.CreateOrUpdateCreateRequest(resourceGroupName, virtualNetworkName, virtualNetworkPeeringName, virtualNetworkPeeringParameters)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.createOrUpdateHandleResponse(resp)
+	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
-	pt, err := armcore.NewPoller("virtualNetworkPeeringsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("VirtualNetworkPeeringsClient.CreateOrUpdate", "azure-async-operation", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -69,8 +80,8 @@ func (client *virtualNetworkPeeringsOperations) BeginCreateOrUpdate(ctx context.
 	return result, nil
 }
 
-func (client *virtualNetworkPeeringsOperations) ResumeCreateOrUpdate(token string) (VirtualNetworkPeeringPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("virtualNetworkPeeringsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+func (client *VirtualNetworkPeeringsClient) ResumeCreateOrUpdate(token string) (VirtualNetworkPeeringPoller, error) {
+	pt, err := armcore.NewPollerFromResumeToken("VirtualNetworkPeeringsClient.CreateOrUpdate", token, client.CreateOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -80,8 +91,8 @@ func (client *virtualNetworkPeeringsOperations) ResumeCreateOrUpdate(token strin
 	}, nil
 }
 
-// createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *virtualNetworkPeeringsOperations) createOrUpdateCreateRequest(resourceGroupName string, virtualNetworkName string, virtualNetworkPeeringName string, virtualNetworkPeeringParameters VirtualNetworkPeering) (*azcore.Request, error) {
+// CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
+func (client *VirtualNetworkPeeringsClient) CreateOrUpdateCreateRequest(resourceGroupName string, virtualNetworkName string, virtualNetworkPeeringName string, virtualNetworkPeeringParameters VirtualNetworkPeering) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -102,16 +113,16 @@ func (client *virtualNetworkPeeringsOperations) createOrUpdateCreateRequest(reso
 	return req, req.MarshalAsJSON(virtualNetworkPeeringParameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *virtualNetworkPeeringsOperations) createOrUpdateHandleResponse(resp *azcore.Response) (*VirtualNetworkPeeringPollerResponse, error) {
+// CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
+func (client *VirtualNetworkPeeringsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*VirtualNetworkPeeringPollerResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, client.CreateOrUpdateHandleError(resp)
 	}
 	return &VirtualNetworkPeeringPollerResponse{RawResponse: resp.Response}, nil
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *virtualNetworkPeeringsOperations) createOrUpdateHandleError(resp *azcore.Response) error {
+// CreateOrUpdateHandleError handles the CreateOrUpdate error response.
+func (client *VirtualNetworkPeeringsClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -120,21 +131,21 @@ func (client *virtualNetworkPeeringsOperations) createOrUpdateHandleError(resp *
 }
 
 // Delete - Deletes the specified virtual network peering.
-func (client *virtualNetworkPeeringsOperations) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkName string, virtualNetworkPeeringName string) (*HTTPPollerResponse, error) {
-	req, err := client.deleteCreateRequest(resourceGroupName, virtualNetworkName, virtualNetworkPeeringName)
+func (client *VirtualNetworkPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkName string, virtualNetworkPeeringName string) (*HTTPPollerResponse, error) {
+	req, err := client.DeleteCreateRequest(resourceGroupName, virtualNetworkName, virtualNetworkPeeringName)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.deleteHandleResponse(resp)
+	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
-	pt, err := armcore.NewPoller("virtualNetworkPeeringsOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("VirtualNetworkPeeringsClient.Delete", "location", resp, client.DeleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -149,8 +160,8 @@ func (client *virtualNetworkPeeringsOperations) BeginDelete(ctx context.Context,
 	return result, nil
 }
 
-func (client *virtualNetworkPeeringsOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("virtualNetworkPeeringsOperations.Delete", token, client.deleteHandleError)
+func (client *VirtualNetworkPeeringsClient) ResumeDelete(token string) (HTTPPoller, error) {
+	pt, err := armcore.NewPollerFromResumeToken("VirtualNetworkPeeringsClient.Delete", token, client.DeleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -160,8 +171,8 @@ func (client *virtualNetworkPeeringsOperations) ResumeDelete(token string) (HTTP
 	}, nil
 }
 
-// deleteCreateRequest creates the Delete request.
-func (client *virtualNetworkPeeringsOperations) deleteCreateRequest(resourceGroupName string, virtualNetworkName string, virtualNetworkPeeringName string) (*azcore.Request, error) {
+// DeleteCreateRequest creates the Delete request.
+func (client *VirtualNetworkPeeringsClient) DeleteCreateRequest(resourceGroupName string, virtualNetworkName string, virtualNetworkPeeringName string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -182,16 +193,16 @@ func (client *virtualNetworkPeeringsOperations) deleteCreateRequest(resourceGrou
 	return req, nil
 }
 
-// deleteHandleResponse handles the Delete response.
-func (client *virtualNetworkPeeringsOperations) deleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
+// DeleteHandleResponse handles the Delete response.
+func (client *VirtualNetworkPeeringsClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, client.DeleteHandleError(resp)
 	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *virtualNetworkPeeringsOperations) deleteHandleError(resp *azcore.Response) error {
+// DeleteHandleError handles the Delete error response.
+func (client *VirtualNetworkPeeringsClient) DeleteHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -200,24 +211,24 @@ func (client *virtualNetworkPeeringsOperations) deleteHandleError(resp *azcore.R
 }
 
 // Get - Gets the specified virtual network peering.
-func (client *virtualNetworkPeeringsOperations) Get(ctx context.Context, resourceGroupName string, virtualNetworkName string, virtualNetworkPeeringName string) (*VirtualNetworkPeeringResponse, error) {
-	req, err := client.getCreateRequest(resourceGroupName, virtualNetworkName, virtualNetworkPeeringName)
+func (client *VirtualNetworkPeeringsClient) Get(ctx context.Context, resourceGroupName string, virtualNetworkName string, virtualNetworkPeeringName string) (*VirtualNetworkPeeringResponse, error) {
+	req, err := client.GetCreateRequest(resourceGroupName, virtualNetworkName, virtualNetworkPeeringName)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getHandleResponse(resp)
+	result, err := client.GetHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getCreateRequest creates the Get request.
-func (client *virtualNetworkPeeringsOperations) getCreateRequest(resourceGroupName string, virtualNetworkName string, virtualNetworkPeeringName string) (*azcore.Request, error) {
+// GetCreateRequest creates the Get request.
+func (client *VirtualNetworkPeeringsClient) GetCreateRequest(resourceGroupName string, virtualNetworkName string, virtualNetworkPeeringName string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -238,17 +249,17 @@ func (client *virtualNetworkPeeringsOperations) getCreateRequest(resourceGroupNa
 	return req, nil
 }
 
-// getHandleResponse handles the Get response.
-func (client *virtualNetworkPeeringsOperations) getHandleResponse(resp *azcore.Response) (*VirtualNetworkPeeringResponse, error) {
+// GetHandleResponse handles the Get response.
+func (client *VirtualNetworkPeeringsClient) GetHandleResponse(resp *azcore.Response) (*VirtualNetworkPeeringResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getHandleError(resp)
+		return nil, client.GetHandleError(resp)
 	}
 	result := VirtualNetworkPeeringResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualNetworkPeering)
 }
 
-// getHandleError handles the Get error response.
-func (client *virtualNetworkPeeringsOperations) getHandleError(resp *azcore.Response) error {
+// GetHandleError handles the Get error response.
+func (client *VirtualNetworkPeeringsClient) GetHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -257,15 +268,15 @@ func (client *virtualNetworkPeeringsOperations) getHandleError(resp *azcore.Resp
 }
 
 // List - Gets all virtual network peerings in a virtual network.
-func (client *virtualNetworkPeeringsOperations) List(resourceGroupName string, virtualNetworkName string) (VirtualNetworkPeeringListResultPager, error) {
-	req, err := client.listCreateRequest(resourceGroupName, virtualNetworkName)
+func (client *VirtualNetworkPeeringsClient) List(resourceGroupName string, virtualNetworkName string) (VirtualNetworkPeeringListResultPager, error) {
+	req, err := client.ListCreateRequest(resourceGroupName, virtualNetworkName)
 	if err != nil {
 		return nil, err
 	}
 	return &virtualNetworkPeeringListResultPager{
 		pipeline:  client.p,
 		request:   req,
-		responder: client.listHandleResponse,
+		responder: client.ListHandleResponse,
 		advancer: func(resp *VirtualNetworkPeeringListResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.VirtualNetworkPeeringListResult.NextLink)
 			if err != nil {
@@ -279,8 +290,8 @@ func (client *virtualNetworkPeeringsOperations) List(resourceGroupName string, v
 	}, nil
 }
 
-// listCreateRequest creates the List request.
-func (client *virtualNetworkPeeringsOperations) listCreateRequest(resourceGroupName string, virtualNetworkName string) (*azcore.Request, error) {
+// ListCreateRequest creates the List request.
+func (client *VirtualNetworkPeeringsClient) ListCreateRequest(resourceGroupName string, virtualNetworkName string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -300,17 +311,17 @@ func (client *virtualNetworkPeeringsOperations) listCreateRequest(resourceGroupN
 	return req, nil
 }
 
-// listHandleResponse handles the List response.
-func (client *virtualNetworkPeeringsOperations) listHandleResponse(resp *azcore.Response) (*VirtualNetworkPeeringListResultResponse, error) {
+// ListHandleResponse handles the List response.
+func (client *VirtualNetworkPeeringsClient) ListHandleResponse(resp *azcore.Response) (*VirtualNetworkPeeringListResultResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.listHandleError(resp)
+		return nil, client.ListHandleError(resp)
 	}
 	result := VirtualNetworkPeeringListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualNetworkPeeringListResult)
 }
 
-// listHandleError handles the List error response.
-func (client *virtualNetworkPeeringsOperations) listHandleError(resp *azcore.Response) error {
+// ListHandleError handles the List error response.
+func (client *VirtualNetworkPeeringsClient) ListHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

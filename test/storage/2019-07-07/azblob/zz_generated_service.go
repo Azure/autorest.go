@@ -33,30 +33,41 @@ type ServiceOperations interface {
 	SubmitBatch(ctx context.Context, contentLength int64, multipartContentType string, body azcore.ReadSeekCloser, serviceSubmitBatchOptions *ServiceSubmitBatchOptions) (*ServiceSubmitBatchResponse, error)
 }
 
-// serviceOperations implements the ServiceOperations interface.
-type serviceOperations struct {
+// ServiceClient implements the ServiceOperations interface.
+// Don't use this type directly, use NewServiceClient() instead.
+type ServiceClient struct {
 	*client
 }
 
+// NewServiceClient creates a new instance of ServiceClient with the specified values.
+func NewServiceClient(c *Client) ServiceOperations {
+	return &ServiceClient{Client: c}
+}
+
+// Do invokes the Do() method on the pipeline associated with this client.
+func (client *ServiceClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(ctx, req)
+}
+
 // GetAccountInfo - Returns the sku name and account kind
-func (client *serviceOperations) GetAccountInfo(ctx context.Context) (*ServiceGetAccountInfoResponse, error) {
-	req, err := client.getAccountInfoCreateRequest()
+func (client *ServiceClient) GetAccountInfo(ctx context.Context) (*ServiceGetAccountInfoResponse, error) {
+	req, err := client.GetAccountInfoCreateRequest()
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getAccountInfoHandleResponse(resp)
+	result, err := client.GetAccountInfoHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getAccountInfoCreateRequest creates the GetAccountInfo request.
-func (client *serviceOperations) getAccountInfoCreateRequest() (*azcore.Request, error) {
+// GetAccountInfoCreateRequest creates the GetAccountInfo request.
+func (client *ServiceClient) GetAccountInfoCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -70,10 +81,10 @@ func (client *serviceOperations) getAccountInfoCreateRequest() (*azcore.Request,
 	return req, nil
 }
 
-// getAccountInfoHandleResponse handles the GetAccountInfo response.
-func (client *serviceOperations) getAccountInfoHandleResponse(resp *azcore.Response) (*ServiceGetAccountInfoResponse, error) {
+// GetAccountInfoHandleResponse handles the GetAccountInfo response.
+func (client *ServiceClient) GetAccountInfoHandleResponse(resp *azcore.Response) (*ServiceGetAccountInfoResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getAccountInfoHandleError(resp)
+		return nil, client.GetAccountInfoHandleError(resp)
 	}
 	result := ServiceGetAccountInfoResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
@@ -101,8 +112,8 @@ func (client *serviceOperations) getAccountInfoHandleResponse(resp *azcore.Respo
 	return &result, nil
 }
 
-// getAccountInfoHandleError handles the GetAccountInfo error response.
-func (client *serviceOperations) getAccountInfoHandleError(resp *azcore.Response) error {
+// GetAccountInfoHandleError handles the GetAccountInfo error response.
+func (client *ServiceClient) GetAccountInfoHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -111,24 +122,24 @@ func (client *serviceOperations) getAccountInfoHandleError(resp *azcore.Response
 }
 
 // GetProperties - gets the properties of a storage account's Blob service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules.
-func (client *serviceOperations) GetProperties(ctx context.Context, serviceGetPropertiesOptions *ServiceGetPropertiesOptions) (*StorageServicePropertiesResponse, error) {
-	req, err := client.getPropertiesCreateRequest(serviceGetPropertiesOptions)
+func (client *ServiceClient) GetProperties(ctx context.Context, serviceGetPropertiesOptions *ServiceGetPropertiesOptions) (*StorageServicePropertiesResponse, error) {
+	req, err := client.GetPropertiesCreateRequest(serviceGetPropertiesOptions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getPropertiesHandleResponse(resp)
+	result, err := client.GetPropertiesHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getPropertiesCreateRequest creates the GetProperties request.
-func (client *serviceOperations) getPropertiesCreateRequest(serviceGetPropertiesOptions *ServiceGetPropertiesOptions) (*azcore.Request, error) {
+// GetPropertiesCreateRequest creates the GetProperties request.
+func (client *ServiceClient) GetPropertiesCreateRequest(serviceGetPropertiesOptions *ServiceGetPropertiesOptions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -148,10 +159,10 @@ func (client *serviceOperations) getPropertiesCreateRequest(serviceGetProperties
 	return req, nil
 }
 
-// getPropertiesHandleResponse handles the GetProperties response.
-func (client *serviceOperations) getPropertiesHandleResponse(resp *azcore.Response) (*StorageServicePropertiesResponse, error) {
+// GetPropertiesHandleResponse handles the GetProperties response.
+func (client *ServiceClient) GetPropertiesHandleResponse(resp *azcore.Response) (*StorageServicePropertiesResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getPropertiesHandleError(resp)
+		return nil, client.GetPropertiesHandleError(resp)
 	}
 	result := StorageServicePropertiesResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
@@ -166,8 +177,8 @@ func (client *serviceOperations) getPropertiesHandleResponse(resp *azcore.Respon
 	return &result, resp.UnmarshalAsXML(&result.StorageServiceProperties)
 }
 
-// getPropertiesHandleError handles the GetProperties error response.
-func (client *serviceOperations) getPropertiesHandleError(resp *azcore.Response) error {
+// GetPropertiesHandleError handles the GetProperties error response.
+func (client *ServiceClient) GetPropertiesHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -176,24 +187,24 @@ func (client *serviceOperations) getPropertiesHandleError(resp *azcore.Response)
 }
 
 // GetStatistics - Retrieves statistics related to replication for the Blob service. It is only available on the secondary location endpoint when read-access geo-redundant replication is enabled for the storage account.
-func (client *serviceOperations) GetStatistics(ctx context.Context, serviceGetStatisticsOptions *ServiceGetStatisticsOptions) (*StorageServiceStatsResponse, error) {
-	req, err := client.getStatisticsCreateRequest(serviceGetStatisticsOptions)
+func (client *ServiceClient) GetStatistics(ctx context.Context, serviceGetStatisticsOptions *ServiceGetStatisticsOptions) (*StorageServiceStatsResponse, error) {
+	req, err := client.GetStatisticsCreateRequest(serviceGetStatisticsOptions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getStatisticsHandleResponse(resp)
+	result, err := client.GetStatisticsHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getStatisticsCreateRequest creates the GetStatistics request.
-func (client *serviceOperations) getStatisticsCreateRequest(serviceGetStatisticsOptions *ServiceGetStatisticsOptions) (*azcore.Request, error) {
+// GetStatisticsCreateRequest creates the GetStatistics request.
+func (client *ServiceClient) GetStatisticsCreateRequest(serviceGetStatisticsOptions *ServiceGetStatisticsOptions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -213,10 +224,10 @@ func (client *serviceOperations) getStatisticsCreateRequest(serviceGetStatistics
 	return req, nil
 }
 
-// getStatisticsHandleResponse handles the GetStatistics response.
-func (client *serviceOperations) getStatisticsHandleResponse(resp *azcore.Response) (*StorageServiceStatsResponse, error) {
+// GetStatisticsHandleResponse handles the GetStatistics response.
+func (client *ServiceClient) GetStatisticsHandleResponse(resp *azcore.Response) (*StorageServiceStatsResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getStatisticsHandleError(resp)
+		return nil, client.GetStatisticsHandleError(resp)
 	}
 	result := StorageServiceStatsResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
@@ -238,8 +249,8 @@ func (client *serviceOperations) getStatisticsHandleResponse(resp *azcore.Respon
 	return &result, resp.UnmarshalAsXML(&result.StorageServiceStats)
 }
 
-// getStatisticsHandleError handles the GetStatistics error response.
-func (client *serviceOperations) getStatisticsHandleError(resp *azcore.Response) error {
+// GetStatisticsHandleError handles the GetStatistics error response.
+func (client *ServiceClient) GetStatisticsHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -248,24 +259,24 @@ func (client *serviceOperations) getStatisticsHandleError(resp *azcore.Response)
 }
 
 // GetUserDelegationKey - Retrieves a user delegation key for the Blob service. This is only a valid operation when using bearer token authentication.
-func (client *serviceOperations) GetUserDelegationKey(ctx context.Context, keyInfo KeyInfo, serviceGetUserDelegationKeyOptions *ServiceGetUserDelegationKeyOptions) (*UserDelegationKeyResponse, error) {
-	req, err := client.getUserDelegationKeyCreateRequest(keyInfo, serviceGetUserDelegationKeyOptions)
+func (client *ServiceClient) GetUserDelegationKey(ctx context.Context, keyInfo KeyInfo, serviceGetUserDelegationKeyOptions *ServiceGetUserDelegationKeyOptions) (*UserDelegationKeyResponse, error) {
+	req, err := client.GetUserDelegationKeyCreateRequest(keyInfo, serviceGetUserDelegationKeyOptions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getUserDelegationKeyHandleResponse(resp)
+	result, err := client.GetUserDelegationKeyHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getUserDelegationKeyCreateRequest creates the GetUserDelegationKey request.
-func (client *serviceOperations) getUserDelegationKeyCreateRequest(keyInfo KeyInfo, serviceGetUserDelegationKeyOptions *ServiceGetUserDelegationKeyOptions) (*azcore.Request, error) {
+// GetUserDelegationKeyCreateRequest creates the GetUserDelegationKey request.
+func (client *ServiceClient) GetUserDelegationKeyCreateRequest(keyInfo KeyInfo, serviceGetUserDelegationKeyOptions *ServiceGetUserDelegationKeyOptions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -285,10 +296,10 @@ func (client *serviceOperations) getUserDelegationKeyCreateRequest(keyInfo KeyIn
 	return req, req.MarshalAsXML(keyInfo)
 }
 
-// getUserDelegationKeyHandleResponse handles the GetUserDelegationKey response.
-func (client *serviceOperations) getUserDelegationKeyHandleResponse(resp *azcore.Response) (*UserDelegationKeyResponse, error) {
+// GetUserDelegationKeyHandleResponse handles the GetUserDelegationKey response.
+func (client *ServiceClient) GetUserDelegationKeyHandleResponse(resp *azcore.Response) (*UserDelegationKeyResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getUserDelegationKeyHandleError(resp)
+		return nil, client.GetUserDelegationKeyHandleError(resp)
 	}
 	result := UserDelegationKeyResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
@@ -310,8 +321,8 @@ func (client *serviceOperations) getUserDelegationKeyHandleResponse(resp *azcore
 	return &result, resp.UnmarshalAsXML(&result.UserDelegationKey)
 }
 
-// getUserDelegationKeyHandleError handles the GetUserDelegationKey error response.
-func (client *serviceOperations) getUserDelegationKeyHandleError(resp *azcore.Response) error {
+// GetUserDelegationKeyHandleError handles the GetUserDelegationKey error response.
+func (client *ServiceClient) GetUserDelegationKeyHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -320,15 +331,15 @@ func (client *serviceOperations) getUserDelegationKeyHandleError(resp *azcore.Re
 }
 
 // ListContainersSegment - The List Containers Segment operation returns a list of the containers under the specified account
-func (client *serviceOperations) ListContainersSegment(serviceListContainersSegmentOptions *ServiceListContainersSegmentOptions) (ListContainersSegmentResponsePager, error) {
-	req, err := client.listContainersSegmentCreateRequest(serviceListContainersSegmentOptions)
+func (client *ServiceClient) ListContainersSegment(serviceListContainersSegmentOptions *ServiceListContainersSegmentOptions) (ListContainersSegmentResponsePager, error) {
+	req, err := client.ListContainersSegmentCreateRequest(serviceListContainersSegmentOptions)
 	if err != nil {
 		return nil, err
 	}
 	return &listContainersSegmentResponsePager{
 		pipeline:  client.p,
 		request:   req,
-		responder: client.listContainersSegmentHandleResponse,
+		responder: client.ListContainersSegmentHandleResponse,
 		advancer: func(resp *ListContainersSegmentResponseResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.EnumerationResults.NextMarker)
 			if err != nil {
@@ -342,8 +353,8 @@ func (client *serviceOperations) ListContainersSegment(serviceListContainersSegm
 	}, nil
 }
 
-// listContainersSegmentCreateRequest creates the ListContainersSegment request.
-func (client *serviceOperations) listContainersSegmentCreateRequest(serviceListContainersSegmentOptions *ServiceListContainersSegmentOptions) (*azcore.Request, error) {
+// ListContainersSegmentCreateRequest creates the ListContainersSegment request.
+func (client *ServiceClient) ListContainersSegmentCreateRequest(serviceListContainersSegmentOptions *ServiceListContainersSegmentOptions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -371,10 +382,10 @@ func (client *serviceOperations) listContainersSegmentCreateRequest(serviceListC
 	return req, nil
 }
 
-// listContainersSegmentHandleResponse handles the ListContainersSegment response.
-func (client *serviceOperations) listContainersSegmentHandleResponse(resp *azcore.Response) (*ListContainersSegmentResponseResponse, error) {
+// ListContainersSegmentHandleResponse handles the ListContainersSegment response.
+func (client *ServiceClient) ListContainersSegmentHandleResponse(resp *azcore.Response) (*ListContainersSegmentResponseResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.listContainersSegmentHandleError(resp)
+		return nil, client.ListContainersSegmentHandleError(resp)
 	}
 	result := ListContainersSegmentResponseResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
@@ -389,8 +400,8 @@ func (client *serviceOperations) listContainersSegmentHandleResponse(resp *azcor
 	return &result, resp.UnmarshalAsXML(&result.EnumerationResults)
 }
 
-// listContainersSegmentHandleError handles the ListContainersSegment error response.
-func (client *serviceOperations) listContainersSegmentHandleError(resp *azcore.Response) error {
+// ListContainersSegmentHandleError handles the ListContainersSegment error response.
+func (client *ServiceClient) ListContainersSegmentHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -399,24 +410,24 @@ func (client *serviceOperations) listContainersSegmentHandleError(resp *azcore.R
 }
 
 // SetProperties - Sets properties for a storage account's Blob service endpoint, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules
-func (client *serviceOperations) SetProperties(ctx context.Context, storageServiceProperties StorageServiceProperties, serviceSetPropertiesOptions *ServiceSetPropertiesOptions) (*ServiceSetPropertiesResponse, error) {
-	req, err := client.setPropertiesCreateRequest(storageServiceProperties, serviceSetPropertiesOptions)
+func (client *ServiceClient) SetProperties(ctx context.Context, storageServiceProperties StorageServiceProperties, serviceSetPropertiesOptions *ServiceSetPropertiesOptions) (*ServiceSetPropertiesResponse, error) {
+	req, err := client.SetPropertiesCreateRequest(storageServiceProperties, serviceSetPropertiesOptions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.setPropertiesHandleResponse(resp)
+	result, err := client.SetPropertiesHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// setPropertiesCreateRequest creates the SetProperties request.
-func (client *serviceOperations) setPropertiesCreateRequest(storageServiceProperties StorageServiceProperties, serviceSetPropertiesOptions *ServiceSetPropertiesOptions) (*azcore.Request, error) {
+// SetPropertiesCreateRequest creates the SetProperties request.
+func (client *ServiceClient) SetPropertiesCreateRequest(storageServiceProperties StorageServiceProperties, serviceSetPropertiesOptions *ServiceSetPropertiesOptions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -436,10 +447,10 @@ func (client *serviceOperations) setPropertiesCreateRequest(storageServiceProper
 	return req, req.MarshalAsXML(storageServiceProperties)
 }
 
-// setPropertiesHandleResponse handles the SetProperties response.
-func (client *serviceOperations) setPropertiesHandleResponse(resp *azcore.Response) (*ServiceSetPropertiesResponse, error) {
+// SetPropertiesHandleResponse handles the SetProperties response.
+func (client *ServiceClient) SetPropertiesHandleResponse(resp *azcore.Response) (*ServiceSetPropertiesResponse, error) {
 	if !resp.HasStatusCode(http.StatusAccepted) {
-		return nil, client.setPropertiesHandleError(resp)
+		return nil, client.SetPropertiesHandleError(resp)
 	}
 	result := ServiceSetPropertiesResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
@@ -454,8 +465,8 @@ func (client *serviceOperations) setPropertiesHandleResponse(resp *azcore.Respon
 	return &result, nil
 }
 
-// setPropertiesHandleError handles the SetProperties error response.
-func (client *serviceOperations) setPropertiesHandleError(resp *azcore.Response) error {
+// SetPropertiesHandleError handles the SetProperties error response.
+func (client *ServiceClient) SetPropertiesHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -464,24 +475,24 @@ func (client *serviceOperations) setPropertiesHandleError(resp *azcore.Response)
 }
 
 // SubmitBatch - The Batch operation allows multiple API calls to be embedded into a single HTTP request.
-func (client *serviceOperations) SubmitBatch(ctx context.Context, contentLength int64, multipartContentType string, body azcore.ReadSeekCloser, serviceSubmitBatchOptions *ServiceSubmitBatchOptions) (*ServiceSubmitBatchResponse, error) {
-	req, err := client.submitBatchCreateRequest(contentLength, multipartContentType, body, serviceSubmitBatchOptions)
+func (client *ServiceClient) SubmitBatch(ctx context.Context, contentLength int64, multipartContentType string, body azcore.ReadSeekCloser, serviceSubmitBatchOptions *ServiceSubmitBatchOptions) (*ServiceSubmitBatchResponse, error) {
+	req, err := client.SubmitBatchCreateRequest(contentLength, multipartContentType, body, serviceSubmitBatchOptions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.submitBatchHandleResponse(resp)
+	result, err := client.SubmitBatchHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// submitBatchCreateRequest creates the SubmitBatch request.
-func (client *serviceOperations) submitBatchCreateRequest(contentLength int64, multipartContentType string, body azcore.ReadSeekCloser, serviceSubmitBatchOptions *ServiceSubmitBatchOptions) (*azcore.Request, error) {
+// SubmitBatchCreateRequest creates the SubmitBatch request.
+func (client *ServiceClient) SubmitBatchCreateRequest(contentLength int64, multipartContentType string, body azcore.ReadSeekCloser, serviceSubmitBatchOptions *ServiceSubmitBatchOptions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -503,10 +514,10 @@ func (client *serviceOperations) submitBatchCreateRequest(contentLength int64, m
 	return req, req.MarshalAsXML(body)
 }
 
-// submitBatchHandleResponse handles the SubmitBatch response.
-func (client *serviceOperations) submitBatchHandleResponse(resp *azcore.Response) (*ServiceSubmitBatchResponse, error) {
+// SubmitBatchHandleResponse handles the SubmitBatch response.
+func (client *ServiceClient) SubmitBatchHandleResponse(resp *azcore.Response) (*ServiceSubmitBatchResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.submitBatchHandleError(resp)
+		return nil, client.SubmitBatchHandleError(resp)
 	}
 	result := ServiceSubmitBatchResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("Content-Type"); val != "" {
@@ -521,8 +532,8 @@ func (client *serviceOperations) submitBatchHandleResponse(resp *azcore.Response
 	return &result, nil
 }
 
-// submitBatchHandleError handles the SubmitBatch error response.
-func (client *serviceOperations) submitBatchHandleError(resp *azcore.Response) error {
+// SubmitBatchHandleError handles the SubmitBatch error response.
+func (client *ServiceClient) SubmitBatchHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err

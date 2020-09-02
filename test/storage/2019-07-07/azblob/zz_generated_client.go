@@ -67,38 +67,3 @@ func newClient(endpoint string, cred azcore.Credential, options *clientOptions) 
 func newClientWithPipeline(endpoint string, p azcore.Pipeline) *client {
 	return &client{u: endpoint, p: p}
 }
-
-// ServiceOperations returns the ServiceOperations associated with this client.
-func (client *client) ServiceOperations() ServiceOperations {
-	return &serviceOperations{client: client}
-}
-
-// ContainerOperations returns the ContainerOperations associated with this client.
-func (client *client) ContainerOperations() ContainerOperations {
-	return &containerOperations{client: client}
-}
-
-// DirectoryOperations returns the DirectoryOperations associated with this client.
-func (client *client) DirectoryOperations(pathRenameMode *PathRenameMode) DirectoryOperations {
-	return &directoryOperations{client: client, pathRenameMode: pathRenameMode}
-}
-
-// BlobOperations returns the BlobOperations associated with this client.
-func (client *client) BlobOperations(pathRenameMode *PathRenameMode) BlobOperations {
-	return &blobOperations{client: client, pathRenameMode: pathRenameMode}
-}
-
-// PageBlobOperations returns the PageBlobOperations associated with this client.
-func (client *client) PageBlobOperations() PageBlobOperations {
-	return &pageBlobOperations{client: client}
-}
-
-// AppendBlobOperations returns the AppendBlobOperations associated with this client.
-func (client *client) AppendBlobOperations() AppendBlobOperations {
-	return &appendBlobOperations{client: client}
-}
-
-// BlockBlobOperations returns the BlockBlobOperations associated with this client.
-func (client *client) BlockBlobOperations() BlockBlobOperations {
-	return &blockBlobOperations{client: client}
-}

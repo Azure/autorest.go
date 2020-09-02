@@ -74,8 +74,3 @@ func NewClient(endpoint string, options *ClientOptions) *Client {
 func NewClientWithPipeline(endpoint string, p azcore.Pipeline) *Client {
 	return &Client{u: endpoint, p: p}
 }
-
-// PetOperations returns the PetOperations associated with this client.
-func (client *Client) PetOperations() PetOperations {
-	return &petOperations{Client: client}
-}

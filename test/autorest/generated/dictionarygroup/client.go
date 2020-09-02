@@ -74,8 +74,3 @@ func NewClient(endpoint string, options *ClientOptions) *Client {
 func NewClientWithPipeline(endpoint string, p azcore.Pipeline) *Client {
 	return &Client{u: endpoint, p: p}
 }
-
-// DictionaryOperations returns the DictionaryOperations associated with this client.
-func (client *Client) DictionaryOperations() DictionaryOperations {
-	return &dictionaryOperations{Client: client}
-}

@@ -21,30 +21,41 @@ type ReadonlypropertyOperations interface {
 	PutValid(ctx context.Context, complexBody ReadonlyObj) (*http.Response, error)
 }
 
-// readonlypropertyOperations implements the ReadonlypropertyOperations interface.
-type readonlypropertyOperations struct {
+// ReadonlypropertyClient implements the ReadonlypropertyOperations interface.
+// Don't use this type directly, use NewReadonlypropertyClient() instead.
+type ReadonlypropertyClient struct {
 	*Client
 }
 
+// NewReadonlypropertyClient creates a new instance of ReadonlypropertyClient with the specified values.
+func NewReadonlypropertyClient(c *Client) ReadonlypropertyOperations {
+	return &ReadonlypropertyClient{Client: c}
+}
+
+// Do invokes the Do() method on the pipeline associated with this client.
+func (client *ReadonlypropertyClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(ctx, req)
+}
+
 // GetValid - Get complex types that have readonly properties
-func (client *readonlypropertyOperations) GetValid(ctx context.Context) (*ReadonlyObjResponse, error) {
-	req, err := client.getValidCreateRequest()
+func (client *ReadonlypropertyClient) GetValid(ctx context.Context) (*ReadonlyObjResponse, error) {
+	req, err := client.GetValidCreateRequest()
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getValidHandleResponse(resp)
+	result, err := client.GetValidHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getValidCreateRequest creates the GetValid request.
-func (client *readonlypropertyOperations) getValidCreateRequest() (*azcore.Request, error) {
+// GetValidCreateRequest creates the GetValid request.
+func (client *ReadonlypropertyClient) GetValidCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -58,17 +69,17 @@ func (client *readonlypropertyOperations) getValidCreateRequest() (*azcore.Reque
 	return req, nil
 }
 
-// getValidHandleResponse handles the GetValid response.
-func (client *readonlypropertyOperations) getValidHandleResponse(resp *azcore.Response) (*ReadonlyObjResponse, error) {
+// GetValidHandleResponse handles the GetValid response.
+func (client *ReadonlypropertyClient) GetValidHandleResponse(resp *azcore.Response) (*ReadonlyObjResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getValidHandleError(resp)
+		return nil, client.GetValidHandleError(resp)
 	}
 	result := ReadonlyObjResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ReadonlyObj)
 }
 
-// getValidHandleError handles the GetValid error response.
-func (client *readonlypropertyOperations) getValidHandleError(resp *azcore.Response) error {
+// GetValidHandleError handles the GetValid error response.
+func (client *ReadonlypropertyClient) GetValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -77,24 +88,24 @@ func (client *readonlypropertyOperations) getValidHandleError(resp *azcore.Respo
 }
 
 // PutValid - Put complex types that have readonly properties
-func (client *readonlypropertyOperations) PutValid(ctx context.Context, complexBody ReadonlyObj) (*http.Response, error) {
-	req, err := client.putValidCreateRequest(complexBody)
+func (client *ReadonlypropertyClient) PutValid(ctx context.Context, complexBody ReadonlyObj) (*http.Response, error) {
+	req, err := client.PutValidCreateRequest(complexBody)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.putValidHandleResponse(resp)
+	result, err := client.PutValidHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// putValidCreateRequest creates the PutValid request.
-func (client *readonlypropertyOperations) putValidCreateRequest(complexBody ReadonlyObj) (*azcore.Request, error) {
+// PutValidCreateRequest creates the PutValid request.
+func (client *ReadonlypropertyClient) PutValidCreateRequest(complexBody ReadonlyObj) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -108,16 +119,16 @@ func (client *readonlypropertyOperations) putValidCreateRequest(complexBody Read
 	return req, req.MarshalAsJSON(complexBody)
 }
 
-// putValidHandleResponse handles the PutValid response.
-func (client *readonlypropertyOperations) putValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
+// PutValidHandleResponse handles the PutValid response.
+func (client *ReadonlypropertyClient) PutValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.putValidHandleError(resp)
+		return nil, client.PutValidHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// putValidHandleError handles the PutValid error response.
-func (client *readonlypropertyOperations) putValidHandleError(resp *azcore.Response) error {
+// PutValidHandleError handles the PutValid error response.
+func (client *ReadonlypropertyClient) PutValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

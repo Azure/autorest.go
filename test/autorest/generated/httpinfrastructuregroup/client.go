@@ -74,38 +74,3 @@ func NewClient(endpoint string, options *ClientOptions) *Client {
 func NewClientWithPipeline(endpoint string, p azcore.Pipeline) *Client {
 	return &Client{u: endpoint, p: p}
 }
-
-// HTTPFailureOperations returns the HTTPFailureOperations associated with this client.
-func (client *Client) HTTPFailureOperations() HTTPFailureOperations {
-	return &httpFailureOperations{Client: client}
-}
-
-// HTTPSuccessOperations returns the HTTPSuccessOperations associated with this client.
-func (client *Client) HTTPSuccessOperations() HTTPSuccessOperations {
-	return &httpSuccessOperations{Client: client}
-}
-
-// HTTPRedirectsOperations returns the HTTPRedirectsOperations associated with this client.
-func (client *Client) HTTPRedirectsOperations() HTTPRedirectsOperations {
-	return &httpRedirectsOperations{Client: client}
-}
-
-// HTTPClientFailureOperations returns the HTTPClientFailureOperations associated with this client.
-func (client *Client) HTTPClientFailureOperations() HTTPClientFailureOperations {
-	return &httpClientFailureOperations{Client: client}
-}
-
-// HTTPServerFailureOperations returns the HTTPServerFailureOperations associated with this client.
-func (client *Client) HTTPServerFailureOperations() HTTPServerFailureOperations {
-	return &httpServerFailureOperations{Client: client}
-}
-
-// HTTPRetryOperations returns the HTTPRetryOperations associated with this client.
-func (client *Client) HTTPRetryOperations() HTTPRetryOperations {
-	return &httpRetryOperations{Client: client}
-}
-
-// MultipleResponsesOperations returns the MultipleResponsesOperations associated with this client.
-func (client *Client) MultipleResponsesOperations() MultipleResponsesOperations {
-	return &multipleResponsesOperations{Client: client}
-}

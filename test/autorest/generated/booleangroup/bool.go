@@ -29,30 +29,41 @@ type BoolOperations interface {
 	PutTrue(ctx context.Context) (*http.Response, error)
 }
 
-// boolOperations implements the BoolOperations interface.
-type boolOperations struct {
+// BoolClient implements the BoolOperations interface.
+// Don't use this type directly, use NewBoolClient() instead.
+type BoolClient struct {
 	*Client
 }
 
+// NewBoolClient creates a new instance of BoolClient with the specified values.
+func NewBoolClient(c *Client) BoolOperations {
+	return &BoolClient{Client: c}
+}
+
+// Do invokes the Do() method on the pipeline associated with this client.
+func (client *BoolClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(ctx, req)
+}
+
 // GetFalse - Get false Boolean value
-func (client *boolOperations) GetFalse(ctx context.Context) (*BoolResponse, error) {
-	req, err := client.getFalseCreateRequest()
+func (client *BoolClient) GetFalse(ctx context.Context) (*BoolResponse, error) {
+	req, err := client.GetFalseCreateRequest()
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getFalseHandleResponse(resp)
+	result, err := client.GetFalseHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getFalseCreateRequest creates the GetFalse request.
-func (client *boolOperations) getFalseCreateRequest() (*azcore.Request, error) {
+// GetFalseCreateRequest creates the GetFalse request.
+func (client *BoolClient) GetFalseCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -66,17 +77,17 @@ func (client *boolOperations) getFalseCreateRequest() (*azcore.Request, error) {
 	return req, nil
 }
 
-// getFalseHandleResponse handles the GetFalse response.
-func (client *boolOperations) getFalseHandleResponse(resp *azcore.Response) (*BoolResponse, error) {
+// GetFalseHandleResponse handles the GetFalse response.
+func (client *BoolClient) GetFalseHandleResponse(resp *azcore.Response) (*BoolResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getFalseHandleError(resp)
+		return nil, client.GetFalseHandleError(resp)
 	}
 	result := BoolResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
-// getFalseHandleError handles the GetFalse error response.
-func (client *boolOperations) getFalseHandleError(resp *azcore.Response) error {
+// GetFalseHandleError handles the GetFalse error response.
+func (client *BoolClient) GetFalseHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -85,24 +96,24 @@ func (client *boolOperations) getFalseHandleError(resp *azcore.Response) error {
 }
 
 // GetInvalid - Get invalid Boolean value
-func (client *boolOperations) GetInvalid(ctx context.Context) (*BoolResponse, error) {
-	req, err := client.getInvalidCreateRequest()
+func (client *BoolClient) GetInvalid(ctx context.Context) (*BoolResponse, error) {
+	req, err := client.GetInvalidCreateRequest()
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getInvalidHandleResponse(resp)
+	result, err := client.GetInvalidHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getInvalidCreateRequest creates the GetInvalid request.
-func (client *boolOperations) getInvalidCreateRequest() (*azcore.Request, error) {
+// GetInvalidCreateRequest creates the GetInvalid request.
+func (client *BoolClient) GetInvalidCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -116,17 +127,17 @@ func (client *boolOperations) getInvalidCreateRequest() (*azcore.Request, error)
 	return req, nil
 }
 
-// getInvalidHandleResponse handles the GetInvalid response.
-func (client *boolOperations) getInvalidHandleResponse(resp *azcore.Response) (*BoolResponse, error) {
+// GetInvalidHandleResponse handles the GetInvalid response.
+func (client *BoolClient) GetInvalidHandleResponse(resp *azcore.Response) (*BoolResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getInvalidHandleError(resp)
+		return nil, client.GetInvalidHandleError(resp)
 	}
 	result := BoolResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
-// getInvalidHandleError handles the GetInvalid error response.
-func (client *boolOperations) getInvalidHandleError(resp *azcore.Response) error {
+// GetInvalidHandleError handles the GetInvalid error response.
+func (client *BoolClient) GetInvalidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -135,24 +146,24 @@ func (client *boolOperations) getInvalidHandleError(resp *azcore.Response) error
 }
 
 // GetNull - Get null Boolean value
-func (client *boolOperations) GetNull(ctx context.Context) (*BoolResponse, error) {
-	req, err := client.getNullCreateRequest()
+func (client *BoolClient) GetNull(ctx context.Context) (*BoolResponse, error) {
+	req, err := client.GetNullCreateRequest()
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getNullHandleResponse(resp)
+	result, err := client.GetNullHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getNullCreateRequest creates the GetNull request.
-func (client *boolOperations) getNullCreateRequest() (*azcore.Request, error) {
+// GetNullCreateRequest creates the GetNull request.
+func (client *BoolClient) GetNullCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -166,17 +177,17 @@ func (client *boolOperations) getNullCreateRequest() (*azcore.Request, error) {
 	return req, nil
 }
 
-// getNullHandleResponse handles the GetNull response.
-func (client *boolOperations) getNullHandleResponse(resp *azcore.Response) (*BoolResponse, error) {
+// GetNullHandleResponse handles the GetNull response.
+func (client *BoolClient) GetNullHandleResponse(resp *azcore.Response) (*BoolResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getNullHandleError(resp)
+		return nil, client.GetNullHandleError(resp)
 	}
 	result := BoolResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
-// getNullHandleError handles the GetNull error response.
-func (client *boolOperations) getNullHandleError(resp *azcore.Response) error {
+// GetNullHandleError handles the GetNull error response.
+func (client *BoolClient) GetNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -185,24 +196,24 @@ func (client *boolOperations) getNullHandleError(resp *azcore.Response) error {
 }
 
 // GetTrue - Get true Boolean value
-func (client *boolOperations) GetTrue(ctx context.Context) (*BoolResponse, error) {
-	req, err := client.getTrueCreateRequest()
+func (client *BoolClient) GetTrue(ctx context.Context) (*BoolResponse, error) {
+	req, err := client.GetTrueCreateRequest()
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getTrueHandleResponse(resp)
+	result, err := client.GetTrueHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getTrueCreateRequest creates the GetTrue request.
-func (client *boolOperations) getTrueCreateRequest() (*azcore.Request, error) {
+// GetTrueCreateRequest creates the GetTrue request.
+func (client *BoolClient) GetTrueCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -216,17 +227,17 @@ func (client *boolOperations) getTrueCreateRequest() (*azcore.Request, error) {
 	return req, nil
 }
 
-// getTrueHandleResponse handles the GetTrue response.
-func (client *boolOperations) getTrueHandleResponse(resp *azcore.Response) (*BoolResponse, error) {
+// GetTrueHandleResponse handles the GetTrue response.
+func (client *BoolClient) GetTrueHandleResponse(resp *azcore.Response) (*BoolResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getTrueHandleError(resp)
+		return nil, client.GetTrueHandleError(resp)
 	}
 	result := BoolResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
-// getTrueHandleError handles the GetTrue error response.
-func (client *boolOperations) getTrueHandleError(resp *azcore.Response) error {
+// GetTrueHandleError handles the GetTrue error response.
+func (client *BoolClient) GetTrueHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -235,24 +246,24 @@ func (client *boolOperations) getTrueHandleError(resp *azcore.Response) error {
 }
 
 // PutFalse - Set Boolean value false
-func (client *boolOperations) PutFalse(ctx context.Context) (*http.Response, error) {
-	req, err := client.putFalseCreateRequest()
+func (client *BoolClient) PutFalse(ctx context.Context) (*http.Response, error) {
+	req, err := client.PutFalseCreateRequest()
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.putFalseHandleResponse(resp)
+	result, err := client.PutFalseHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// putFalseCreateRequest creates the PutFalse request.
-func (client *boolOperations) putFalseCreateRequest() (*azcore.Request, error) {
+// PutFalseCreateRequest creates the PutFalse request.
+func (client *BoolClient) PutFalseCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -266,16 +277,16 @@ func (client *boolOperations) putFalseCreateRequest() (*azcore.Request, error) {
 	return req, req.MarshalAsJSON(false)
 }
 
-// putFalseHandleResponse handles the PutFalse response.
-func (client *boolOperations) putFalseHandleResponse(resp *azcore.Response) (*http.Response, error) {
+// PutFalseHandleResponse handles the PutFalse response.
+func (client *BoolClient) PutFalseHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.putFalseHandleError(resp)
+		return nil, client.PutFalseHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// putFalseHandleError handles the PutFalse error response.
-func (client *boolOperations) putFalseHandleError(resp *azcore.Response) error {
+// PutFalseHandleError handles the PutFalse error response.
+func (client *BoolClient) PutFalseHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -284,24 +295,24 @@ func (client *boolOperations) putFalseHandleError(resp *azcore.Response) error {
 }
 
 // PutTrue - Set Boolean value true
-func (client *boolOperations) PutTrue(ctx context.Context) (*http.Response, error) {
-	req, err := client.putTrueCreateRequest()
+func (client *BoolClient) PutTrue(ctx context.Context) (*http.Response, error) {
+	req, err := client.PutTrueCreateRequest()
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.putTrueHandleResponse(resp)
+	result, err := client.PutTrueHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// putTrueCreateRequest creates the PutTrue request.
-func (client *boolOperations) putTrueCreateRequest() (*azcore.Request, error) {
+// PutTrueCreateRequest creates the PutTrue request.
+func (client *BoolClient) PutTrueCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -315,16 +326,16 @@ func (client *boolOperations) putTrueCreateRequest() (*azcore.Request, error) {
 	return req, req.MarshalAsJSON(true)
 }
 
-// putTrueHandleResponse handles the PutTrue response.
-func (client *boolOperations) putTrueHandleResponse(resp *azcore.Response) (*http.Response, error) {
+// PutTrueHandleResponse handles the PutTrue response.
+func (client *BoolClient) PutTrueHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.putTrueHandleError(resp)
+		return nil, client.PutTrueHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// putTrueHandleError handles the PutTrue error response.
-func (client *boolOperations) putTrueHandleError(resp *azcore.Response) error {
+// PutTrueHandleError handles the PutTrue error response.
+func (client *BoolClient) PutTrueHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

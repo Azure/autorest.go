@@ -74,8 +74,3 @@ func NewClient(endpoint string, options *ClientOptions) *Client {
 func NewClientWithPipeline(endpoint string, p azcore.Pipeline) *Client {
 	return &Client{u: endpoint, p: p}
 }
-
-// BoolOperations returns the BoolOperations associated with this client.
-func (client *Client) BoolOperations() BoolOperations {
-	return &boolOperations{Client: client}
-}

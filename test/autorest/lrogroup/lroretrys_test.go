@@ -13,16 +13,15 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func getLRORetrysOperations() lrogroup.LroRetrysOperations {
+func newLRORetrysClient() lrogroup.LroRetrysOperations {
 	options := lrogroup.DefaultClientOptions()
 	options.Retry.RetryDelay = 10 * time.Millisecond
 	options.HTTPClient = httpClientWithCookieJar()
-	client := lrogroup.NewDefaultClient(&options)
-	return client.LroRetrysOperations()
+	return lrogroup.NewLroRetrysClient(lrogroup.NewDefaultClient(&options))
 }
 
 func TestLRORetrysBeginDelete202Retry200(t *testing.T) {
-	op := getLRORetrysOperations()
+	op := newLRORetrysClient()
 	resp, err := op.BeginDelete202Retry200(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -44,7 +43,7 @@ func TestLRORetrysBeginDelete202Retry200(t *testing.T) {
 }
 
 func TestLRORetrysBeginDeleteAsyncRelativeRetrySucceeded(t *testing.T) {
-	op := getLRORetrysOperations()
+	op := newLRORetrysClient()
 	resp, err := op.BeginDeleteAsyncRelativeRetrySucceeded(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -66,7 +65,7 @@ func TestLRORetrysBeginDeleteAsyncRelativeRetrySucceeded(t *testing.T) {
 }
 
 func TestLRORetrysBeginDeleteProvisioning202Accepted200Succeeded(t *testing.T) {
-	op := getLRORetrysOperations()
+	op := newLRORetrysClient()
 	resp, err := op.BeginDeleteProvisioning202Accepted200Succeeded(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -97,7 +96,7 @@ func TestLRORetrysBeginDeleteProvisioning202Accepted200Succeeded(t *testing.T) {
 }
 
 func TestLRORetrysBeginPost202Retry200(t *testing.T) {
-	op := getLRORetrysOperations()
+	op := newLRORetrysClient()
 	resp, err := op.BeginPost202Retry200(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
@@ -119,7 +118,7 @@ func TestLRORetrysBeginPost202Retry200(t *testing.T) {
 }
 
 func TestLRORetrysBeginPostAsyncRelativeRetrySucceeded(t *testing.T) {
-	op := getLRORetrysOperations()
+	op := newLRORetrysClient()
 	resp, err := op.BeginPostAsyncRelativeRetrySucceeded(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
@@ -141,7 +140,7 @@ func TestLRORetrysBeginPostAsyncRelativeRetrySucceeded(t *testing.T) {
 }
 
 func TestLRORetrysBeginPut201CreatingSucceeded200(t *testing.T) {
-	op := getLRORetrysOperations()
+	op := newLRORetrysClient()
 	resp, err := op.BeginPut201CreatingSucceeded200(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
@@ -172,7 +171,7 @@ func TestLRORetrysBeginPut201CreatingSucceeded200(t *testing.T) {
 }
 
 func TestLRORetrysBeginPutAsyncRelativeRetrySucceeded(t *testing.T) {
-	op := getLRORetrysOperations()
+	op := newLRORetrysClient()
 	resp, err := op.BeginPutAsyncRelativeRetrySucceeded(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)

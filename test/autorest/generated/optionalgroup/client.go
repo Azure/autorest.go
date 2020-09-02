@@ -74,13 +74,3 @@ func NewClient(endpoint string, options *ClientOptions) *Client {
 func NewClientWithPipeline(endpoint string, p azcore.Pipeline) *Client {
 	return &Client{u: endpoint, p: p}
 }
-
-// ImplicitOperations returns the ImplicitOperations associated with this client.
-func (client *Client) ImplicitOperations(requiredGlobalPath string, requiredGlobalQuery string, optionalGlobalQuery *int32) ImplicitOperations {
-	return &implicitOperations{Client: client, requiredGlobalPath: requiredGlobalPath, requiredGlobalQuery: requiredGlobalQuery, optionalGlobalQuery: optionalGlobalQuery}
-}
-
-// ExplicitOperations returns the ExplicitOperations associated with this client.
-func (client *Client) ExplicitOperations() ExplicitOperations {
-	return &explicitOperations{Client: client}
-}

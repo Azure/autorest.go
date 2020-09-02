@@ -82,16 +82,21 @@ export async function namer(session: Session<CodeModel>) {
       groupDetails.name = session.model.info.title;
     }
     groupDetails.name = capitalizeAcronyms(pascalCase(groupDetails.name));
-    groupDetails.clientName = `${groupDetails.name}Operations`;
+    groupDetails.clientName = `${groupDetails.name}Client`;
+    if (groupDetails.name.endsWith('Client')) {
+      // don't generate a name like FooClientClient
+      groupDetails.clientName = groupDetails.name;
+    }
+    groupDetails.interfaceName = `${groupDetails.name}Operations`;
     if (groupDetails.name === 'Operations') {
       // if the group name is 'Operations' don't name it 'OperationsOperations'
-      groupDetails.clientName = groupDetails.name;
+      groupDetails.interfaceName = groupDetails.name;
     }
     for (const op of values(group.operations)) {
       const details = <OperationNaming>op.language.go;
       details.name = getEscapedReservedName(capitalizeAcronyms(pascalCase(details.name)), 'Method');
       // add the client name to the operation as it's needed all over the place
-      details.clientName = camelCase(groupDetails.clientName);
+      details.clientName = groupDetails.clientName;
       if (isLROOperation(op)) {
         op.language.go!.methodPrefix = 'Begin';
       }
@@ -103,7 +108,7 @@ export async function namer(session: Session<CodeModel>) {
         const paramDetails = <Language>param.language.go;
         paramDetails.name = getEscapedReservedName(removePrefix(camelCase(paramDetails.name), 'XMS'), 'Parameter');
       }
-      details.protocolNaming = new protocolMethods(camelCase(details.name));
+      details.protocolNaming = new protocolMethods(details.name);
       if (op.language.go!.paging && op.language.go!.paging.nextLinkName !== null) {
         op.language.go!.paging.nextLinkName = pascalCase(op.language.go!.paging.nextLinkName);
       }

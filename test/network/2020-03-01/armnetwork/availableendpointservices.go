@@ -20,22 +20,33 @@ type AvailableEndpointServicesOperations interface {
 	List(location string) (EndpointServicesListResultPager, error)
 }
 
-// availableEndpointServicesOperations implements the AvailableEndpointServicesOperations interface.
-type availableEndpointServicesOperations struct {
+// AvailableEndpointServicesClient implements the AvailableEndpointServicesOperations interface.
+// Don't use this type directly, use NewAvailableEndpointServicesClient() instead.
+type AvailableEndpointServicesClient struct {
 	*Client
 	subscriptionID string
 }
 
+// NewAvailableEndpointServicesClient creates a new instance of AvailableEndpointServicesClient with the specified values.
+func NewAvailableEndpointServicesClient(c *Client, subscriptionID string) AvailableEndpointServicesOperations {
+	return &AvailableEndpointServicesClient{Client: c, subscriptionID: subscriptionID}
+}
+
+// Do invokes the Do() method on the pipeline associated with this client.
+func (client *AvailableEndpointServicesClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(ctx, req)
+}
+
 // List - List what values of endpoint services are available for use.
-func (client *availableEndpointServicesOperations) List(location string) (EndpointServicesListResultPager, error) {
-	req, err := client.listCreateRequest(location)
+func (client *AvailableEndpointServicesClient) List(location string) (EndpointServicesListResultPager, error) {
+	req, err := client.ListCreateRequest(location)
 	if err != nil {
 		return nil, err
 	}
 	return &endpointServicesListResultPager{
 		pipeline:  client.p,
 		request:   req,
-		responder: client.listHandleResponse,
+		responder: client.ListHandleResponse,
 		advancer: func(resp *EndpointServicesListResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.EndpointServicesListResult.NextLink)
 			if err != nil {
@@ -49,8 +60,8 @@ func (client *availableEndpointServicesOperations) List(location string) (Endpoi
 	}, nil
 }
 
-// listCreateRequest creates the List request.
-func (client *availableEndpointServicesOperations) listCreateRequest(location string) (*azcore.Request, error) {
+// ListCreateRequest creates the List request.
+func (client *AvailableEndpointServicesClient) ListCreateRequest(location string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -69,17 +80,17 @@ func (client *availableEndpointServicesOperations) listCreateRequest(location st
 	return req, nil
 }
 
-// listHandleResponse handles the List response.
-func (client *availableEndpointServicesOperations) listHandleResponse(resp *azcore.Response) (*EndpointServicesListResultResponse, error) {
+// ListHandleResponse handles the List response.
+func (client *AvailableEndpointServicesClient) ListHandleResponse(resp *azcore.Response) (*EndpointServicesListResultResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.listHandleError(resp)
+		return nil, client.ListHandleError(resp)
 	}
 	result := EndpointServicesListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.EndpointServicesListResult)
 }
 
-// listHandleError handles the List error response.
-func (client *availableEndpointServicesOperations) listHandleError(resp *azcore.Response) error {
+// ListHandleError handles the List error response.
+func (client *AvailableEndpointServicesClient) ListHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
