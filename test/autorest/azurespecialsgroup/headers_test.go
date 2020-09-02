@@ -19,7 +19,7 @@ func TestCustomNamedRequestID(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.FooRequestId, to.StringPtr("123"))
+	helpers.DeepEqualOrFatal(t, result.FooRequestID, to.StringPtr("123"))
 }
 
 // CustomNamedRequestIDHead - Send foo-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request
@@ -29,7 +29,7 @@ func TestCustomNamedRequestIDHead(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.FooRequestId, to.StringPtr("123"))
+	helpers.DeepEqualOrFatal(t, result.FooRequestID, to.StringPtr("123"))
 }
 
 // CustomNamedRequestIDParamGrouping - Send foo-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request, via a parameter group
@@ -41,5 +41,5 @@ func TestCustomNamedRequestIDParamGrouping(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.FooRequestId, to.StringPtr("123"))
+	helpers.DeepEqualOrFatal(t, result.FooRequestID, to.StringPtr("123"))
 }

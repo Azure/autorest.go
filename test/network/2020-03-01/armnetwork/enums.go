@@ -223,66 +223,66 @@ func (c ApplicationGatewaySKUName) ToPtr() *ApplicationGatewaySKUName {
 type ApplicationGatewaySslCipherSuite string
 
 const (
-	ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAes128Cbcsha    ApplicationGatewaySslCipherSuite = "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA"
-	ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAes128Cbcsha256 ApplicationGatewaySslCipherSuite = "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256"
-	ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAes128Gcmsha256 ApplicationGatewaySslCipherSuite = "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256"
-	ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAes256Cbcsha    ApplicationGatewaySslCipherSuite = "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA"
-	ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAes256Cbcsha384 ApplicationGatewaySslCipherSuite = "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384"
-	ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAes256Gcmsha384 ApplicationGatewaySslCipherSuite = "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384"
-	ApplicationGatewaySslCipherSuiteTLSEcdheRsawithAes128Cbcsha      ApplicationGatewaySslCipherSuite = "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA"
-	ApplicationGatewaySslCipherSuiteTLSEcdheRsawithAes128Cbcsha256   ApplicationGatewaySslCipherSuite = "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256"
-	ApplicationGatewaySslCipherSuiteTLSEcdheRsawithAes128Gcmsha256   ApplicationGatewaySslCipherSuite = "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
-	ApplicationGatewaySslCipherSuiteTLSEcdheRsawithAes256Cbcsha      ApplicationGatewaySslCipherSuite = "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA"
-	ApplicationGatewaySslCipherSuiteTLSEcdheRsawithAes256Cbcsha384   ApplicationGatewaySslCipherSuite = "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384"
-	ApplicationGatewaySslCipherSuiteTLSEcdheRsawithAes256Gcmsha384   ApplicationGatewaySslCipherSuite = "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384"
+	ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES128Cbcsha    ApplicationGatewaySslCipherSuite = "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA"
+	ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES128Cbcsha256 ApplicationGatewaySslCipherSuite = "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256"
+	ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES128GCMsha256 ApplicationGatewaySslCipherSuite = "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256"
+	ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES256Cbcsha    ApplicationGatewaySslCipherSuite = "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA"
+	ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES256Cbcsha384 ApplicationGatewaySslCipherSuite = "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384"
+	ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES256GCMsha384 ApplicationGatewaySslCipherSuite = "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384"
+	ApplicationGatewaySslCipherSuiteTLSEcdheRsawithAES128Cbcsha      ApplicationGatewaySslCipherSuite = "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA"
+	ApplicationGatewaySslCipherSuiteTLSEcdheRsawithAES128Cbcsha256   ApplicationGatewaySslCipherSuite = "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256"
+	ApplicationGatewaySslCipherSuiteTLSEcdheRsawithAES128GCMsha256   ApplicationGatewaySslCipherSuite = "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
+	ApplicationGatewaySslCipherSuiteTLSEcdheRsawithAES256Cbcsha      ApplicationGatewaySslCipherSuite = "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA"
+	ApplicationGatewaySslCipherSuiteTLSEcdheRsawithAES256Cbcsha384   ApplicationGatewaySslCipherSuite = "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384"
+	ApplicationGatewaySslCipherSuiteTLSEcdheRsawithAES256GCMsha384   ApplicationGatewaySslCipherSuite = "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384"
 	ApplicationGatewaySslCipherSuiteTLSdhedssWith3Desedecbcsha       ApplicationGatewaySslCipherSuite = "TLS_DHE_DSS_WITH_3DES_EDE_CBC_SHA"
-	ApplicationGatewaySslCipherSuiteTLSdhedssWithAes128Cbcsha        ApplicationGatewaySslCipherSuite = "TLS_DHE_DSS_WITH_AES_128_CBC_SHA"
-	ApplicationGatewaySslCipherSuiteTLSdhedssWithAes128Cbcsha256     ApplicationGatewaySslCipherSuite = "TLS_DHE_DSS_WITH_AES_128_CBC_SHA256"
-	ApplicationGatewaySslCipherSuiteTLSdhedssWithAes256Cbcsha        ApplicationGatewaySslCipherSuite = "TLS_DHE_DSS_WITH_AES_256_CBC_SHA"
-	ApplicationGatewaySslCipherSuiteTLSdhedssWithAes256Cbcsha256     ApplicationGatewaySslCipherSuite = "TLS_DHE_DSS_WITH_AES_256_CBC_SHA256"
-	ApplicationGatewaySslCipherSuiteTLSdhersaWithAes128Cbcsha        ApplicationGatewaySslCipherSuite = "TLS_DHE_RSA_WITH_AES_128_CBC_SHA"
-	ApplicationGatewaySslCipherSuiteTLSdhersaWithAes128Gcmsha256     ApplicationGatewaySslCipherSuite = "TLS_DHE_RSA_WITH_AES_128_GCM_SHA256"
-	ApplicationGatewaySslCipherSuiteTLSdhersaWithAes256Cbcsha        ApplicationGatewaySslCipherSuite = "TLS_DHE_RSA_WITH_AES_256_CBC_SHA"
-	ApplicationGatewaySslCipherSuiteTLSdhersaWithAes256Gcmsha384     ApplicationGatewaySslCipherSuite = "TLS_DHE_RSA_WITH_AES_256_GCM_SHA384"
+	ApplicationGatewaySslCipherSuiteTLSdhedssWithAES128Cbcsha        ApplicationGatewaySslCipherSuite = "TLS_DHE_DSS_WITH_AES_128_CBC_SHA"
+	ApplicationGatewaySslCipherSuiteTLSdhedssWithAES128Cbcsha256     ApplicationGatewaySslCipherSuite = "TLS_DHE_DSS_WITH_AES_128_CBC_SHA256"
+	ApplicationGatewaySslCipherSuiteTLSdhedssWithAES256Cbcsha        ApplicationGatewaySslCipherSuite = "TLS_DHE_DSS_WITH_AES_256_CBC_SHA"
+	ApplicationGatewaySslCipherSuiteTLSdhedssWithAES256Cbcsha256     ApplicationGatewaySslCipherSuite = "TLS_DHE_DSS_WITH_AES_256_CBC_SHA256"
+	ApplicationGatewaySslCipherSuiteTLSdhersaWithAES128Cbcsha        ApplicationGatewaySslCipherSuite = "TLS_DHE_RSA_WITH_AES_128_CBC_SHA"
+	ApplicationGatewaySslCipherSuiteTLSdhersaWithAES128GCMsha256     ApplicationGatewaySslCipherSuite = "TLS_DHE_RSA_WITH_AES_128_GCM_SHA256"
+	ApplicationGatewaySslCipherSuiteTLSdhersaWithAES256Cbcsha        ApplicationGatewaySslCipherSuite = "TLS_DHE_RSA_WITH_AES_256_CBC_SHA"
+	ApplicationGatewaySslCipherSuiteTLSdhersaWithAES256GCMsha384     ApplicationGatewaySslCipherSuite = "TLS_DHE_RSA_WITH_AES_256_GCM_SHA384"
 	ApplicationGatewaySslCipherSuiteTLSrsaWith3Desedecbcsha          ApplicationGatewaySslCipherSuite = "TLS_RSA_WITH_3DES_EDE_CBC_SHA"
-	ApplicationGatewaySslCipherSuiteTLSrsaWithAes128Cbcsha           ApplicationGatewaySslCipherSuite = "TLS_RSA_WITH_AES_128_CBC_SHA"
-	ApplicationGatewaySslCipherSuiteTLSrsaWithAes128Cbcsha256        ApplicationGatewaySslCipherSuite = "TLS_RSA_WITH_AES_128_CBC_SHA256"
-	ApplicationGatewaySslCipherSuiteTLSrsaWithAes128Gcmsha256        ApplicationGatewaySslCipherSuite = "TLS_RSA_WITH_AES_128_GCM_SHA256"
-	ApplicationGatewaySslCipherSuiteTLSrsaWithAes256Cbcsha           ApplicationGatewaySslCipherSuite = "TLS_RSA_WITH_AES_256_CBC_SHA"
-	ApplicationGatewaySslCipherSuiteTLSrsaWithAes256Cbcsha256        ApplicationGatewaySslCipherSuite = "TLS_RSA_WITH_AES_256_CBC_SHA256"
-	ApplicationGatewaySslCipherSuiteTLSrsaWithAes256Gcmsha384        ApplicationGatewaySslCipherSuite = "TLS_RSA_WITH_AES_256_GCM_SHA384"
+	ApplicationGatewaySslCipherSuiteTLSrsaWithAES128Cbcsha           ApplicationGatewaySslCipherSuite = "TLS_RSA_WITH_AES_128_CBC_SHA"
+	ApplicationGatewaySslCipherSuiteTLSrsaWithAES128Cbcsha256        ApplicationGatewaySslCipherSuite = "TLS_RSA_WITH_AES_128_CBC_SHA256"
+	ApplicationGatewaySslCipherSuiteTLSrsaWithAES128GCMsha256        ApplicationGatewaySslCipherSuite = "TLS_RSA_WITH_AES_128_GCM_SHA256"
+	ApplicationGatewaySslCipherSuiteTLSrsaWithAES256Cbcsha           ApplicationGatewaySslCipherSuite = "TLS_RSA_WITH_AES_256_CBC_SHA"
+	ApplicationGatewaySslCipherSuiteTLSrsaWithAES256Cbcsha256        ApplicationGatewaySslCipherSuite = "TLS_RSA_WITH_AES_256_CBC_SHA256"
+	ApplicationGatewaySslCipherSuiteTLSrsaWithAES256GCMsha384        ApplicationGatewaySslCipherSuite = "TLS_RSA_WITH_AES_256_GCM_SHA384"
 )
 
 func PossibleApplicationGatewaySslCipherSuiteValues() []ApplicationGatewaySslCipherSuite {
 	return []ApplicationGatewaySslCipherSuite{
-		ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAes128Cbcsha,
-		ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAes128Cbcsha256,
-		ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAes128Gcmsha256,
-		ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAes256Cbcsha,
-		ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAes256Cbcsha384,
-		ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAes256Gcmsha384,
-		ApplicationGatewaySslCipherSuiteTLSEcdheRsawithAes128Cbcsha,
-		ApplicationGatewaySslCipherSuiteTLSEcdheRsawithAes128Cbcsha256,
-		ApplicationGatewaySslCipherSuiteTLSEcdheRsawithAes128Gcmsha256,
-		ApplicationGatewaySslCipherSuiteTLSEcdheRsawithAes256Cbcsha,
-		ApplicationGatewaySslCipherSuiteTLSEcdheRsawithAes256Cbcsha384,
-		ApplicationGatewaySslCipherSuiteTLSEcdheRsawithAes256Gcmsha384,
+		ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES128Cbcsha,
+		ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES128Cbcsha256,
+		ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES128GCMsha256,
+		ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES256Cbcsha,
+		ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES256Cbcsha384,
+		ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES256GCMsha384,
+		ApplicationGatewaySslCipherSuiteTLSEcdheRsawithAES128Cbcsha,
+		ApplicationGatewaySslCipherSuiteTLSEcdheRsawithAES128Cbcsha256,
+		ApplicationGatewaySslCipherSuiteTLSEcdheRsawithAES128GCMsha256,
+		ApplicationGatewaySslCipherSuiteTLSEcdheRsawithAES256Cbcsha,
+		ApplicationGatewaySslCipherSuiteTLSEcdheRsawithAES256Cbcsha384,
+		ApplicationGatewaySslCipherSuiteTLSEcdheRsawithAES256GCMsha384,
 		ApplicationGatewaySslCipherSuiteTLSdhedssWith3Desedecbcsha,
-		ApplicationGatewaySslCipherSuiteTLSdhedssWithAes128Cbcsha,
-		ApplicationGatewaySslCipherSuiteTLSdhedssWithAes128Cbcsha256,
-		ApplicationGatewaySslCipherSuiteTLSdhedssWithAes256Cbcsha,
-		ApplicationGatewaySslCipherSuiteTLSdhedssWithAes256Cbcsha256,
-		ApplicationGatewaySslCipherSuiteTLSdhersaWithAes128Cbcsha,
-		ApplicationGatewaySslCipherSuiteTLSdhersaWithAes128Gcmsha256,
-		ApplicationGatewaySslCipherSuiteTLSdhersaWithAes256Cbcsha,
-		ApplicationGatewaySslCipherSuiteTLSdhersaWithAes256Gcmsha384,
+		ApplicationGatewaySslCipherSuiteTLSdhedssWithAES128Cbcsha,
+		ApplicationGatewaySslCipherSuiteTLSdhedssWithAES128Cbcsha256,
+		ApplicationGatewaySslCipherSuiteTLSdhedssWithAES256Cbcsha,
+		ApplicationGatewaySslCipherSuiteTLSdhedssWithAES256Cbcsha256,
+		ApplicationGatewaySslCipherSuiteTLSdhersaWithAES128Cbcsha,
+		ApplicationGatewaySslCipherSuiteTLSdhersaWithAES128GCMsha256,
+		ApplicationGatewaySslCipherSuiteTLSdhersaWithAES256Cbcsha,
+		ApplicationGatewaySslCipherSuiteTLSdhersaWithAES256GCMsha384,
 		ApplicationGatewaySslCipherSuiteTLSrsaWith3Desedecbcsha,
-		ApplicationGatewaySslCipherSuiteTLSrsaWithAes128Cbcsha,
-		ApplicationGatewaySslCipherSuiteTLSrsaWithAes128Cbcsha256,
-		ApplicationGatewaySslCipherSuiteTLSrsaWithAes128Gcmsha256,
-		ApplicationGatewaySslCipherSuiteTLSrsaWithAes256Cbcsha,
-		ApplicationGatewaySslCipherSuiteTLSrsaWithAes256Cbcsha256,
-		ApplicationGatewaySslCipherSuiteTLSrsaWithAes256Gcmsha384,
+		ApplicationGatewaySslCipherSuiteTLSrsaWithAES128Cbcsha,
+		ApplicationGatewaySslCipherSuiteTLSrsaWithAES128Cbcsha256,
+		ApplicationGatewaySslCipherSuiteTLSrsaWithAES128GCMsha256,
+		ApplicationGatewaySslCipherSuiteTLSrsaWithAES256Cbcsha,
+		ApplicationGatewaySslCipherSuiteTLSrsaWithAES256Cbcsha256,
+		ApplicationGatewaySslCipherSuiteTLSrsaWithAES256GCMsha384,
 	}
 }
 
@@ -1097,14 +1097,14 @@ func (c ExpressRouteLinkConnectorType) ToPtr() *ExpressRouteLinkConnectorType {
 type ExpressRouteLinkMacSecCipher string
 
 const (
-	ExpressRouteLinkMacSecCipherGcmAes128 ExpressRouteLinkMacSecCipher = "gcm-aes-128"
-	ExpressRouteLinkMacSecCipherGcmAes256 ExpressRouteLinkMacSecCipher = "gcm-aes-256"
+	ExpressRouteLinkMacSecCipherGCMAES128 ExpressRouteLinkMacSecCipher = "gcm-aes-128"
+	ExpressRouteLinkMacSecCipherGCMAES256 ExpressRouteLinkMacSecCipher = "gcm-aes-256"
 )
 
 func PossibleExpressRouteLinkMacSecCipherValues() []ExpressRouteLinkMacSecCipher {
 	return []ExpressRouteLinkMacSecCipher{
-		ExpressRouteLinkMacSecCipherGcmAes128,
-		ExpressRouteLinkMacSecCipherGcmAes256,
+		ExpressRouteLinkMacSecCipherGCMAES128,
+		ExpressRouteLinkMacSecCipherGCMAES256,
 	}
 }
 
@@ -1445,27 +1445,27 @@ func (c IPVersion) ToPtr() *IPVersion {
 type IPsecEncryption string
 
 const (
-	IPsecEncryptionAes128    IPsecEncryption = "AES128"
-	IPsecEncryptionAes192    IPsecEncryption = "AES192"
-	IPsecEncryptionAes256    IPsecEncryption = "AES256"
+	IPsecEncryptionAES128    IPsecEncryption = "AES128"
+	IPsecEncryptionAES192    IPsecEncryption = "AES192"
+	IPsecEncryptionAES256    IPsecEncryption = "AES256"
 	IPsecEncryptionDes       IPsecEncryption = "DES"
 	IPsecEncryptionDes3      IPsecEncryption = "DES3"
-	IPsecEncryptionGcmaes128 IPsecEncryption = "GCMAES128"
-	IPsecEncryptionGcmaes192 IPsecEncryption = "GCMAES192"
-	IPsecEncryptionGcmaes256 IPsecEncryption = "GCMAES256"
+	IPsecEncryptionGCMaes128 IPsecEncryption = "GCMAES128"
+	IPsecEncryptionGCMaes192 IPsecEncryption = "GCMAES192"
+	IPsecEncryptionGCMaes256 IPsecEncryption = "GCMAES256"
 	IPsecEncryptionNone      IPsecEncryption = "None"
 )
 
 func PossibleIPsecEncryptionValues() []IPsecEncryption {
 	return []IPsecEncryption{
-		IPsecEncryptionAes128,
-		IPsecEncryptionAes192,
-		IPsecEncryptionAes256,
+		IPsecEncryptionAES128,
+		IPsecEncryptionAES192,
+		IPsecEncryptionAES256,
 		IPsecEncryptionDes,
 		IPsecEncryptionDes3,
-		IPsecEncryptionGcmaes128,
-		IPsecEncryptionGcmaes192,
-		IPsecEncryptionGcmaes256,
+		IPsecEncryptionGCMaes128,
+		IPsecEncryptionGCMaes192,
+		IPsecEncryptionGCMaes256,
 		IPsecEncryptionNone,
 	}
 }
@@ -1478,22 +1478,22 @@ func (c IPsecEncryption) ToPtr() *IPsecEncryption {
 type IPsecIntegrity string
 
 const (
-	IPsecIntegrityGcmaes128 IPsecIntegrity = "GCMAES128"
-	IPsecIntegrityGcmaes192 IPsecIntegrity = "GCMAES192"
-	IPsecIntegrityGcmaes256 IPsecIntegrity = "GCMAES256"
-	IPsecIntegrityMd5       IPsecIntegrity = "MD5"
-	IPsecIntegritySha1      IPsecIntegrity = "SHA1"
-	IPsecIntegritySha256    IPsecIntegrity = "SHA256"
+	IPsecIntegrityGCMaes128 IPsecIntegrity = "GCMAES128"
+	IPsecIntegrityGCMaes192 IPsecIntegrity = "GCMAES192"
+	IPsecIntegrityGCMaes256 IPsecIntegrity = "GCMAES256"
+	IPsecIntegrityMD5       IPsecIntegrity = "MD5"
+	IPsecIntegritySHA1      IPsecIntegrity = "SHA1"
+	IPsecIntegritySHA256    IPsecIntegrity = "SHA256"
 )
 
 func PossibleIPsecIntegrityValues() []IPsecIntegrity {
 	return []IPsecIntegrity{
-		IPsecIntegrityGcmaes128,
-		IPsecIntegrityGcmaes192,
-		IPsecIntegrityGcmaes256,
-		IPsecIntegrityMd5,
-		IPsecIntegritySha1,
-		IPsecIntegritySha256,
+		IPsecIntegrityGCMaes128,
+		IPsecIntegrityGCMaes192,
+		IPsecIntegrityGCMaes256,
+		IPsecIntegrityMD5,
+		IPsecIntegritySHA1,
+		IPsecIntegritySHA256,
 	}
 }
 
@@ -1505,24 +1505,24 @@ func (c IPsecIntegrity) ToPtr() *IPsecIntegrity {
 type IkeEncryption string
 
 const (
-	IkeEncryptionAes128    IkeEncryption = "AES128"
-	IkeEncryptionAes192    IkeEncryption = "AES192"
-	IkeEncryptionAes256    IkeEncryption = "AES256"
+	IkeEncryptionAES128    IkeEncryption = "AES128"
+	IkeEncryptionAES192    IkeEncryption = "AES192"
+	IkeEncryptionAES256    IkeEncryption = "AES256"
 	IkeEncryptionDes       IkeEncryption = "DES"
 	IkeEncryptionDes3      IkeEncryption = "DES3"
-	IkeEncryptionGcmaes128 IkeEncryption = "GCMAES128"
-	IkeEncryptionGcmaes256 IkeEncryption = "GCMAES256"
+	IkeEncryptionGCMaes128 IkeEncryption = "GCMAES128"
+	IkeEncryptionGCMaes256 IkeEncryption = "GCMAES256"
 )
 
 func PossibleIkeEncryptionValues() []IkeEncryption {
 	return []IkeEncryption{
-		IkeEncryptionAes128,
-		IkeEncryptionAes192,
-		IkeEncryptionAes256,
+		IkeEncryptionAES128,
+		IkeEncryptionAES192,
+		IkeEncryptionAES256,
 		IkeEncryptionDes,
 		IkeEncryptionDes3,
-		IkeEncryptionGcmaes128,
-		IkeEncryptionGcmaes256,
+		IkeEncryptionGCMaes128,
+		IkeEncryptionGCMaes256,
 	}
 }
 
@@ -1534,22 +1534,22 @@ func (c IkeEncryption) ToPtr() *IkeEncryption {
 type IkeIntegrity string
 
 const (
-	IkeIntegrityGcmaes128 IkeIntegrity = "GCMAES128"
-	IkeIntegrityGcmaes256 IkeIntegrity = "GCMAES256"
-	IkeIntegrityMd5       IkeIntegrity = "MD5"
-	IkeIntegritySha1      IkeIntegrity = "SHA1"
-	IkeIntegritySha256    IkeIntegrity = "SHA256"
-	IkeIntegritySha384    IkeIntegrity = "SHA384"
+	IkeIntegrityGCMaes128 IkeIntegrity = "GCMAES128"
+	IkeIntegrityGCMaes256 IkeIntegrity = "GCMAES256"
+	IkeIntegrityMD5       IkeIntegrity = "MD5"
+	IkeIntegritySHA1      IkeIntegrity = "SHA1"
+	IkeIntegritySHA256    IkeIntegrity = "SHA256"
+	IkeIntegritySHA384    IkeIntegrity = "SHA384"
 )
 
 func PossibleIkeIntegrityValues() []IkeIntegrity {
 	return []IkeIntegrity{
-		IkeIntegrityGcmaes128,
-		IkeIntegrityGcmaes256,
-		IkeIntegrityMd5,
-		IkeIntegritySha1,
-		IkeIntegritySha256,
-		IkeIntegritySha384,
+		IkeIntegrityGCMaes128,
+		IkeIntegrityGCMaes256,
+		IkeIntegrityMD5,
+		IkeIntegritySHA1,
+		IkeIntegritySHA256,
+		IkeIntegritySHA384,
 	}
 }
 

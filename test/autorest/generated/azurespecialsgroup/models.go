@@ -42,8 +42,8 @@ func (e Error) Error() string {
 
 // HeaderCustomNamedRequestIDHeadResponse contains the response from method Header.CustomNamedRequestIDHead.
 type HeaderCustomNamedRequestIDHeadResponse struct {
-	// FooRequestId contains the information returned from the foo-request-id header response.
-	FooRequestId *string
+	// FooRequestID contains the information returned from the foo-request-id header response.
+	FooRequestID *string
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -58,8 +58,8 @@ type HeaderCustomNamedRequestIDParamGroupingParameters struct {
 
 // HeaderCustomNamedRequestIDParamGroupingResponse contains the response from method Header.CustomNamedRequestIDParamGrouping.
 type HeaderCustomNamedRequestIDParamGroupingResponse struct {
-	// FooRequestId contains the information returned from the foo-request-id header response.
-	FooRequestId *string
+	// FooRequestID contains the information returned from the foo-request-id header response.
+	FooRequestID *string
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -67,8 +67,8 @@ type HeaderCustomNamedRequestIDParamGroupingResponse struct {
 
 // HeaderCustomNamedRequestIDResponse contains the response from method Header.CustomNamedRequestID.
 type HeaderCustomNamedRequestIDResponse struct {
-	// FooRequestId contains the information returned from the foo-request-id header response.
-	FooRequestId *string
+	// FooRequestID contains the information returned from the foo-request-id header response.
+	FooRequestID *string
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response

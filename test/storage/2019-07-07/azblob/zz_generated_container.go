@@ -122,13 +122,13 @@ func (client *containerOperations) acquireLeaseHandleResponse(resp *azcore.Respo
 		result.LastModified = &lastModified
 	}
 	if val := resp.Header.Get("x-ms-lease-id"); val != "" {
-		result.LeaseId = &val
+		result.LeaseID = &val
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestId = &val
+		result.ClientRequestID = &val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestId = &val
+		result.RequestID = &val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
 		result.Version = &val
@@ -225,10 +225,10 @@ func (client *containerOperations) breakLeaseHandleResponse(resp *azcore.Respons
 		result.LeaseTime = &leaseTime
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestId = &val
+		result.ClientRequestID = &val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestId = &val
+		result.RequestID = &val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
 		result.Version = &val
@@ -316,13 +316,13 @@ func (client *containerOperations) changeLeaseHandleResponse(resp *azcore.Respon
 		result.LastModified = &lastModified
 	}
 	if val := resp.Header.Get("x-ms-lease-id"); val != "" {
-		result.LeaseId = &val
+		result.LeaseID = &val
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestId = &val
+		result.ClientRequestID = &val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestId = &val
+		result.RequestID = &val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
 		result.Version = &val
@@ -414,10 +414,10 @@ func (client *containerOperations) createHandleResponse(resp *azcore.Response) (
 		result.LastModified = &lastModified
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestId = &val
+		result.ClientRequestID = &val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestId = &val
+		result.RequestID = &val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
 		result.Version = &val
@@ -494,10 +494,10 @@ func (client *containerOperations) deleteHandleResponse(resp *azcore.Response) (
 	}
 	result := ContainerDeleteResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestId = &val
+		result.ClientRequestID = &val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestId = &val
+		result.RequestID = &val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
 		result.Version = &val
@@ -582,10 +582,10 @@ func (client *containerOperations) getAccessPolicyHandleResponse(resp *azcore.Re
 		result.LastModified = &lastModified
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestId = &val
+		result.ClientRequestID = &val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestId = &val
+		result.RequestID = &val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
 		result.Version = &val
@@ -648,10 +648,10 @@ func (client *containerOperations) getAccountInfoHandleResponse(resp *azcore.Res
 	}
 	result := ContainerGetAccountInfoResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestId = &val
+		result.ClientRequestID = &val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestId = &val
+		result.RequestID = &val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
 		result.Version = &val
@@ -664,7 +664,7 @@ func (client *containerOperations) getAccountInfoHandleResponse(resp *azcore.Res
 		result.Date = &date
 	}
 	if val := resp.Header.Get("x-ms-sku-name"); val != "" {
-		result.SkuName = (*SKUName)(&val)
+		result.SKUName = (*SKUName)(&val)
 	}
 	if val := resp.Header.Get("x-ms-account-kind"); val != "" {
 		result.AccountKind = (*AccountKind)(&val)
@@ -728,7 +728,7 @@ func (client *containerOperations) getPropertiesHandleResponse(resp *azcore.Resp
 	}
 	result := ContainerGetPropertiesResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-meta"); val != "" {
-		result.Meta = &val
+		result.Metadata = &val
 	}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -750,10 +750,10 @@ func (client *containerOperations) getPropertiesHandleResponse(resp *azcore.Resp
 		result.LeaseStatus = (*LeaseStatusType)(&val)
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestId = &val
+		result.ClientRequestID = &val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestId = &val
+		result.RequestID = &val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
 		result.Version = &val
@@ -870,10 +870,10 @@ func (client *containerOperations) listBlobFlatSegmentHandleResponse(resp *azcor
 		result.ContentType = &val
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestId = &val
+		result.ClientRequestID = &val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestId = &val
+		result.RequestID = &val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
 		result.Version = &val
@@ -964,10 +964,10 @@ func (client *containerOperations) listBlobHierarchySegmentHandleResponse(resp *
 		result.ContentType = &val
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestId = &val
+		result.ClientRequestID = &val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestId = &val
+		result.RequestID = &val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
 		result.Version = &val
@@ -1054,10 +1054,10 @@ func (client *containerOperations) releaseLeaseHandleResponse(resp *azcore.Respo
 		result.LastModified = &lastModified
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestId = &val
+		result.ClientRequestID = &val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestId = &val
+		result.RequestID = &val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
 		result.Version = &val
@@ -1144,13 +1144,13 @@ func (client *containerOperations) renewLeaseHandleResponse(resp *azcore.Respons
 		result.LastModified = &lastModified
 	}
 	if val := resp.Header.Get("x-ms-lease-id"); val != "" {
-		result.LeaseId = &val
+		result.LeaseID = &val
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestId = &val
+		result.ClientRequestID = &val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestId = &val
+		result.RequestID = &val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
 		result.Version = &val
@@ -1248,10 +1248,10 @@ func (client *containerOperations) setAccessPolicyHandleResponse(resp *azcore.Re
 		result.LastModified = &lastModified
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestId = &val
+		result.ClientRequestID = &val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestId = &val
+		result.RequestID = &val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
 		result.Version = &val
@@ -1341,10 +1341,10 @@ func (client *containerOperations) setMetadataHandleResponse(resp *azcore.Respon
 		result.LastModified = &lastModified
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestId = &val
+		result.ClientRequestID = &val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestId = &val
+		result.RequestID = &val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
 		result.Version = &val
