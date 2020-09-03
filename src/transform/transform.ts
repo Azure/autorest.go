@@ -5,10 +5,10 @@
 
 import { camelCase, KnownMediaType, pascalCase, serialize } from '@azure-tools/codegen';
 import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
-import { ObjectSchema, ArraySchema, ChoiceValue, codeModelSchema, CodeModel, DateTimeSchema, GroupProperty, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema } from '@azure-tools/codemodel';
+import { ObjectSchema, ArraySchema, ChoiceValue, codeModelSchema, CodeModel, DateTimeSchema, GroupProperty, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema, Request } from '@azure-tools/codemodel';
 import { items, values } from '@azure-tools/linq';
 import { aggregateParameters, hasAdditionalProperties, isPageableOperation, isObjectSchema, isSchemaResponse, PagerInfo, isLROOperation, PollerInfo } from '../common/helpers';
-import { namer, removePrefix } from './namer';
+import { namer, protocolMethods } from './namer';
 
 // The transformer adds Go-specific information to the code model.
 export async function transform(host: Host) {
@@ -223,7 +223,19 @@ function processOperationRequests(session: Session<CodeModel>) {
   for (const group of values(session.model.operationGroups)) {
     for (const op of values(group.operations)) {
       if (op.requests!.length > 1) {
-        throw console.error('multiple requests NYI');
+        for (const req of values(op.requests)) {
+          const newOp = JSON.parse(JSON.stringify(op));
+          newOp.requests = (<Array<Request>>op.requests).filter(r => r === req);
+          let name = op.language.go!.name;
+          if (req.protocol.http!.knownMediaType === 'json') {
+            name = name + 'With' + req.parameters![0].schema.language.go!.name;
+          }
+          newOp.language.go!.name = name;
+          newOp.language.go!.protocolNaming = new protocolMethods(newOp.language.go!.name);
+          group.addOperation(newOp);
+        }
+        group.operations.splice(group.operations.indexOf(op), 1);
+        continue;
       }
       if (op.requests![0].protocol.http!.headers) {
         for (const header of values(op.requests![0].protocol.http!.headers)) {
