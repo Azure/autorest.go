@@ -74,18 +74,3 @@ func NewClient(endpoint string, options *ClientOptions) *Client {
 func NewClientWithPipeline(endpoint string, p azcore.Pipeline) *Client {
 	return &Client{u: endpoint, p: p}
 }
-
-// PathsOperations returns the PathsOperations associated with this client.
-func (client *Client) PathsOperations() PathsOperations {
-	return &pathsOperations{Client: client}
-}
-
-// QueriesOperations returns the QueriesOperations associated with this client.
-func (client *Client) QueriesOperations() QueriesOperations {
-	return &queriesOperations{Client: client}
-}
-
-// PathItemsOperations returns the PathItemsOperations associated with this client.
-func (client *Client) PathItemsOperations(globalStringPath string, globalStringQuery *string) PathItemsOperations {
-	return &pathItemsOperations{Client: client, globalStringPath: globalStringPath, globalStringQuery: globalStringQuery}
-}

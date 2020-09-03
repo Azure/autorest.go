@@ -12,8 +12,12 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
+func newPetClient() extenumsgroup.PetOperations {
+	return extenumsgroup.NewPetClient(extenumsgroup.NewDefaultClient(nil))
+}
+
 func TestAddPet(t *testing.T) {
-	client := extenumsgroup.NewDefaultClient(nil).PetOperations()
+	client := newPetClient()
 	result, err := client.AddPet(context.Background(), &extenumsgroup.PetAddPetOptions{
 		PetParam: &extenumsgroup.Pet{
 			Name: to.StringPtr("Retriever"),
@@ -28,7 +32,7 @@ func TestAddPet(t *testing.T) {
 }
 
 func TestGetByPetIDExpected(t *testing.T) {
-	client := extenumsgroup.NewDefaultClient(nil).PetOperations()
+	client := newPetClient()
 	result, err := client.GetByPetID(context.Background(), "tommy")
 	if err != nil {
 		t.Fatal(err)
@@ -41,7 +45,7 @@ func TestGetByPetIDExpected(t *testing.T) {
 }
 
 func TestGetByPetIDUnexpected(t *testing.T) {
-	client := extenumsgroup.NewDefaultClient(nil).PetOperations()
+	client := newPetClient()
 	result, err := client.GetByPetID(context.Background(), "casper")
 	if err != nil {
 		t.Fatal(err)
@@ -54,7 +58,7 @@ func TestGetByPetIDUnexpected(t *testing.T) {
 }
 
 func TestGetByPetIDAllowed(t *testing.T) {
-	client := extenumsgroup.NewDefaultClient(nil).PetOperations()
+	client := newPetClient()
 	result, err := client.GetByPetID(context.Background(), "scooby")
 	if err != nil {
 		t.Fatal(err)

@@ -20,31 +20,42 @@ type ServiceAssociationLinksOperations interface {
 	List(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string) (*ServiceAssociationLinksListResultResponse, error)
 }
 
-// serviceAssociationLinksOperations implements the ServiceAssociationLinksOperations interface.
-type serviceAssociationLinksOperations struct {
+// ServiceAssociationLinksClient implements the ServiceAssociationLinksOperations interface.
+// Don't use this type directly, use NewServiceAssociationLinksClient() instead.
+type ServiceAssociationLinksClient struct {
 	*Client
 	subscriptionID string
 }
 
+// NewServiceAssociationLinksClient creates a new instance of ServiceAssociationLinksClient with the specified values.
+func NewServiceAssociationLinksClient(c *Client, subscriptionID string) ServiceAssociationLinksOperations {
+	return &ServiceAssociationLinksClient{Client: c, subscriptionID: subscriptionID}
+}
+
+// Do invokes the Do() method on the pipeline associated with this client.
+func (client *ServiceAssociationLinksClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(ctx, req)
+}
+
 // List - Gets a list of service association links for a subnet.
-func (client *serviceAssociationLinksOperations) List(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string) (*ServiceAssociationLinksListResultResponse, error) {
-	req, err := client.listCreateRequest(resourceGroupName, virtualNetworkName, subnetName)
+func (client *ServiceAssociationLinksClient) List(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string) (*ServiceAssociationLinksListResultResponse, error) {
+	req, err := client.ListCreateRequest(resourceGroupName, virtualNetworkName, subnetName)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.listHandleResponse(resp)
+	result, err := client.ListHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// listCreateRequest creates the List request.
-func (client *serviceAssociationLinksOperations) listCreateRequest(resourceGroupName string, virtualNetworkName string, subnetName string) (*azcore.Request, error) {
+// ListCreateRequest creates the List request.
+func (client *ServiceAssociationLinksClient) ListCreateRequest(resourceGroupName string, virtualNetworkName string, subnetName string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -65,17 +76,17 @@ func (client *serviceAssociationLinksOperations) listCreateRequest(resourceGroup
 	return req, nil
 }
 
-// listHandleResponse handles the List response.
-func (client *serviceAssociationLinksOperations) listHandleResponse(resp *azcore.Response) (*ServiceAssociationLinksListResultResponse, error) {
+// ListHandleResponse handles the List response.
+func (client *ServiceAssociationLinksClient) ListHandleResponse(resp *azcore.Response) (*ServiceAssociationLinksListResultResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.listHandleError(resp)
+		return nil, client.ListHandleError(resp)
 	}
 	result := ServiceAssociationLinksListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ServiceAssociationLinksListResult)
 }
 
-// listHandleError handles the List error response.
-func (client *serviceAssociationLinksOperations) listHandleError(resp *azcore.Response) error {
+// ListHandleError handles the List error response.
+func (client *ServiceAssociationLinksClient) ListHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

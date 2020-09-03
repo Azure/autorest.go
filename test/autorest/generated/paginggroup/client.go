@@ -74,8 +74,3 @@ func NewClient(endpoint string, options *ClientOptions) *Client {
 func NewClientWithPipeline(endpoint string, p azcore.Pipeline) *Client {
 	return &Client{u: endpoint, p: p}
 }
-
-// PagingOperations returns the PagingOperations associated with this client.
-func (client *Client) PagingOperations() PagingOperations {
-	return &pagingOperations{Client: client}
-}

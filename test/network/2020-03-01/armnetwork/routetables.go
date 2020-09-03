@@ -37,28 +37,39 @@ type RouteTablesOperations interface {
 	UpdateTags(ctx context.Context, resourceGroupName string, routeTableName string, parameters TagsObject) (*RouteTableResponse, error)
 }
 
-// routeTablesOperations implements the RouteTablesOperations interface.
-type routeTablesOperations struct {
+// RouteTablesClient implements the RouteTablesOperations interface.
+// Don't use this type directly, use NewRouteTablesClient() instead.
+type RouteTablesClient struct {
 	*Client
 	subscriptionID string
 }
 
+// NewRouteTablesClient creates a new instance of RouteTablesClient with the specified values.
+func NewRouteTablesClient(c *Client, subscriptionID string) RouteTablesOperations {
+	return &RouteTablesClient{Client: c, subscriptionID: subscriptionID}
+}
+
+// Do invokes the Do() method on the pipeline associated with this client.
+func (client *RouteTablesClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(ctx, req)
+}
+
 // CreateOrUpdate - Create or updates a route table in a specified resource group.
-func (client *routeTablesOperations) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, routeTableName string, parameters RouteTable) (*RouteTablePollerResponse, error) {
-	req, err := client.createOrUpdateCreateRequest(resourceGroupName, routeTableName, parameters)
+func (client *RouteTablesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, routeTableName string, parameters RouteTable) (*RouteTablePollerResponse, error) {
+	req, err := client.CreateOrUpdateCreateRequest(resourceGroupName, routeTableName, parameters)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.createOrUpdateHandleResponse(resp)
+	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
-	pt, err := armcore.NewPoller("routeTablesOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("RouteTablesClient.CreateOrUpdate", "azure-async-operation", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -73,8 +84,8 @@ func (client *routeTablesOperations) BeginCreateOrUpdate(ctx context.Context, re
 	return result, nil
 }
 
-func (client *routeTablesOperations) ResumeCreateOrUpdate(token string) (RouteTablePoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("routeTablesOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+func (client *RouteTablesClient) ResumeCreateOrUpdate(token string) (RouteTablePoller, error) {
+	pt, err := armcore.NewPollerFromResumeToken("RouteTablesClient.CreateOrUpdate", token, client.CreateOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -84,8 +95,8 @@ func (client *routeTablesOperations) ResumeCreateOrUpdate(token string) (RouteTa
 	}, nil
 }
 
-// createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *routeTablesOperations) createOrUpdateCreateRequest(resourceGroupName string, routeTableName string, parameters RouteTable) (*azcore.Request, error) {
+// CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
+func (client *RouteTablesClient) CreateOrUpdateCreateRequest(resourceGroupName string, routeTableName string, parameters RouteTable) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -105,16 +116,16 @@ func (client *routeTablesOperations) createOrUpdateCreateRequest(resourceGroupNa
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *routeTablesOperations) createOrUpdateHandleResponse(resp *azcore.Response) (*RouteTablePollerResponse, error) {
+// CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
+func (client *RouteTablesClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*RouteTablePollerResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, client.CreateOrUpdateHandleError(resp)
 	}
 	return &RouteTablePollerResponse{RawResponse: resp.Response}, nil
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *routeTablesOperations) createOrUpdateHandleError(resp *azcore.Response) error {
+// CreateOrUpdateHandleError handles the CreateOrUpdate error response.
+func (client *RouteTablesClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -123,21 +134,21 @@ func (client *routeTablesOperations) createOrUpdateHandleError(resp *azcore.Resp
 }
 
 // Delete - Deletes the specified route table.
-func (client *routeTablesOperations) BeginDelete(ctx context.Context, resourceGroupName string, routeTableName string) (*HTTPPollerResponse, error) {
-	req, err := client.deleteCreateRequest(resourceGroupName, routeTableName)
+func (client *RouteTablesClient) BeginDelete(ctx context.Context, resourceGroupName string, routeTableName string) (*HTTPPollerResponse, error) {
+	req, err := client.DeleteCreateRequest(resourceGroupName, routeTableName)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.deleteHandleResponse(resp)
+	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
-	pt, err := armcore.NewPoller("routeTablesOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("RouteTablesClient.Delete", "location", resp, client.DeleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -152,8 +163,8 @@ func (client *routeTablesOperations) BeginDelete(ctx context.Context, resourceGr
 	return result, nil
 }
 
-func (client *routeTablesOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("routeTablesOperations.Delete", token, client.deleteHandleError)
+func (client *RouteTablesClient) ResumeDelete(token string) (HTTPPoller, error) {
+	pt, err := armcore.NewPollerFromResumeToken("RouteTablesClient.Delete", token, client.DeleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -163,8 +174,8 @@ func (client *routeTablesOperations) ResumeDelete(token string) (HTTPPoller, err
 	}, nil
 }
 
-// deleteCreateRequest creates the Delete request.
-func (client *routeTablesOperations) deleteCreateRequest(resourceGroupName string, routeTableName string) (*azcore.Request, error) {
+// DeleteCreateRequest creates the Delete request.
+func (client *RouteTablesClient) DeleteCreateRequest(resourceGroupName string, routeTableName string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -184,16 +195,16 @@ func (client *routeTablesOperations) deleteCreateRequest(resourceGroupName strin
 	return req, nil
 }
 
-// deleteHandleResponse handles the Delete response.
-func (client *routeTablesOperations) deleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
+// DeleteHandleResponse handles the Delete response.
+func (client *RouteTablesClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, client.DeleteHandleError(resp)
 	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *routeTablesOperations) deleteHandleError(resp *azcore.Response) error {
+// DeleteHandleError handles the Delete error response.
+func (client *RouteTablesClient) DeleteHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -202,24 +213,24 @@ func (client *routeTablesOperations) deleteHandleError(resp *azcore.Response) er
 }
 
 // Get - Gets the specified route table.
-func (client *routeTablesOperations) Get(ctx context.Context, resourceGroupName string, routeTableName string, routeTablesGetOptions *RouteTablesGetOptions) (*RouteTableResponse, error) {
-	req, err := client.getCreateRequest(resourceGroupName, routeTableName, routeTablesGetOptions)
+func (client *RouteTablesClient) Get(ctx context.Context, resourceGroupName string, routeTableName string, routeTablesGetOptions *RouteTablesGetOptions) (*RouteTableResponse, error) {
+	req, err := client.GetCreateRequest(resourceGroupName, routeTableName, routeTablesGetOptions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getHandleResponse(resp)
+	result, err := client.GetHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getCreateRequest creates the Get request.
-func (client *routeTablesOperations) getCreateRequest(resourceGroupName string, routeTableName string, routeTablesGetOptions *RouteTablesGetOptions) (*azcore.Request, error) {
+// GetCreateRequest creates the Get request.
+func (client *RouteTablesClient) GetCreateRequest(resourceGroupName string, routeTableName string, routeTablesGetOptions *RouteTablesGetOptions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -242,17 +253,17 @@ func (client *routeTablesOperations) getCreateRequest(resourceGroupName string, 
 	return req, nil
 }
 
-// getHandleResponse handles the Get response.
-func (client *routeTablesOperations) getHandleResponse(resp *azcore.Response) (*RouteTableResponse, error) {
+// GetHandleResponse handles the Get response.
+func (client *RouteTablesClient) GetHandleResponse(resp *azcore.Response) (*RouteTableResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getHandleError(resp)
+		return nil, client.GetHandleError(resp)
 	}
 	result := RouteTableResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.RouteTable)
 }
 
-// getHandleError handles the Get error response.
-func (client *routeTablesOperations) getHandleError(resp *azcore.Response) error {
+// GetHandleError handles the Get error response.
+func (client *RouteTablesClient) GetHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -261,15 +272,15 @@ func (client *routeTablesOperations) getHandleError(resp *azcore.Response) error
 }
 
 // List - Gets all route tables in a resource group.
-func (client *routeTablesOperations) List(resourceGroupName string) (RouteTableListResultPager, error) {
-	req, err := client.listCreateRequest(resourceGroupName)
+func (client *RouteTablesClient) List(resourceGroupName string) (RouteTableListResultPager, error) {
+	req, err := client.ListCreateRequest(resourceGroupName)
 	if err != nil {
 		return nil, err
 	}
 	return &routeTableListResultPager{
 		pipeline:  client.p,
 		request:   req,
-		responder: client.listHandleResponse,
+		responder: client.ListHandleResponse,
 		advancer: func(resp *RouteTableListResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.RouteTableListResult.NextLink)
 			if err != nil {
@@ -283,8 +294,8 @@ func (client *routeTablesOperations) List(resourceGroupName string) (RouteTableL
 	}, nil
 }
 
-// listCreateRequest creates the List request.
-func (client *routeTablesOperations) listCreateRequest(resourceGroupName string) (*azcore.Request, error) {
+// ListCreateRequest creates the List request.
+func (client *RouteTablesClient) ListCreateRequest(resourceGroupName string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -303,17 +314,17 @@ func (client *routeTablesOperations) listCreateRequest(resourceGroupName string)
 	return req, nil
 }
 
-// listHandleResponse handles the List response.
-func (client *routeTablesOperations) listHandleResponse(resp *azcore.Response) (*RouteTableListResultResponse, error) {
+// ListHandleResponse handles the List response.
+func (client *RouteTablesClient) ListHandleResponse(resp *azcore.Response) (*RouteTableListResultResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.listHandleError(resp)
+		return nil, client.ListHandleError(resp)
 	}
 	result := RouteTableListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.RouteTableListResult)
 }
 
-// listHandleError handles the List error response.
-func (client *routeTablesOperations) listHandleError(resp *azcore.Response) error {
+// ListHandleError handles the List error response.
+func (client *RouteTablesClient) ListHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -322,15 +333,15 @@ func (client *routeTablesOperations) listHandleError(resp *azcore.Response) erro
 }
 
 // ListAll - Gets all route tables in a subscription.
-func (client *routeTablesOperations) ListAll() (RouteTableListResultPager, error) {
-	req, err := client.listAllCreateRequest()
+func (client *RouteTablesClient) ListAll() (RouteTableListResultPager, error) {
+	req, err := client.ListAllCreateRequest()
 	if err != nil {
 		return nil, err
 	}
 	return &routeTableListResultPager{
 		pipeline:  client.p,
 		request:   req,
-		responder: client.listAllHandleResponse,
+		responder: client.ListAllHandleResponse,
 		advancer: func(resp *RouteTableListResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.RouteTableListResult.NextLink)
 			if err != nil {
@@ -344,8 +355,8 @@ func (client *routeTablesOperations) ListAll() (RouteTableListResultPager, error
 	}, nil
 }
 
-// listAllCreateRequest creates the ListAll request.
-func (client *routeTablesOperations) listAllCreateRequest() (*azcore.Request, error) {
+// ListAllCreateRequest creates the ListAll request.
+func (client *RouteTablesClient) ListAllCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -363,17 +374,17 @@ func (client *routeTablesOperations) listAllCreateRequest() (*azcore.Request, er
 	return req, nil
 }
 
-// listAllHandleResponse handles the ListAll response.
-func (client *routeTablesOperations) listAllHandleResponse(resp *azcore.Response) (*RouteTableListResultResponse, error) {
+// ListAllHandleResponse handles the ListAll response.
+func (client *RouteTablesClient) ListAllHandleResponse(resp *azcore.Response) (*RouteTableListResultResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.listAllHandleError(resp)
+		return nil, client.ListAllHandleError(resp)
 	}
 	result := RouteTableListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.RouteTableListResult)
 }
 
-// listAllHandleError handles the ListAll error response.
-func (client *routeTablesOperations) listAllHandleError(resp *azcore.Response) error {
+// ListAllHandleError handles the ListAll error response.
+func (client *RouteTablesClient) ListAllHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -382,24 +393,24 @@ func (client *routeTablesOperations) listAllHandleError(resp *azcore.Response) e
 }
 
 // UpdateTags - Updates a route table tags.
-func (client *routeTablesOperations) UpdateTags(ctx context.Context, resourceGroupName string, routeTableName string, parameters TagsObject) (*RouteTableResponse, error) {
-	req, err := client.updateTagsCreateRequest(resourceGroupName, routeTableName, parameters)
+func (client *RouteTablesClient) UpdateTags(ctx context.Context, resourceGroupName string, routeTableName string, parameters TagsObject) (*RouteTableResponse, error) {
+	req, err := client.UpdateTagsCreateRequest(resourceGroupName, routeTableName, parameters)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.updateTagsHandleResponse(resp)
+	result, err := client.UpdateTagsHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// updateTagsCreateRequest creates the UpdateTags request.
-func (client *routeTablesOperations) updateTagsCreateRequest(resourceGroupName string, routeTableName string, parameters TagsObject) (*azcore.Request, error) {
+// UpdateTagsCreateRequest creates the UpdateTags request.
+func (client *RouteTablesClient) UpdateTagsCreateRequest(resourceGroupName string, routeTableName string, parameters TagsObject) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -419,17 +430,17 @@ func (client *routeTablesOperations) updateTagsCreateRequest(resourceGroupName s
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// updateTagsHandleResponse handles the UpdateTags response.
-func (client *routeTablesOperations) updateTagsHandleResponse(resp *azcore.Response) (*RouteTableResponse, error) {
+// UpdateTagsHandleResponse handles the UpdateTags response.
+func (client *RouteTablesClient) UpdateTagsHandleResponse(resp *azcore.Response) (*RouteTableResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.updateTagsHandleError(resp)
+		return nil, client.UpdateTagsHandleError(resp)
 	}
 	result := RouteTableResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.RouteTable)
 }
 
-// updateTagsHandleError handles the UpdateTags error response.
-func (client *routeTablesOperations) updateTagsHandleError(resp *azcore.Response) error {
+// UpdateTagsHandleError handles the UpdateTags error response.
+func (client *RouteTablesClient) UpdateTagsHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

@@ -15,7 +15,7 @@ import (
 
 func TestGetAllWithValues(t *testing.T) {
 	client := urlgroup.NewDefaultClient(nil)
-	grp := client.PathItemsOperations("globalStringPath", to.StringPtr("globalStringQuery"))
+	grp := urlgroup.NewPathItemsClient(client, "globalStringPath", to.StringPtr("globalStringQuery"))
 	result, err := grp.GetAllWithValues(context.Background(), "pathItemStringPath", "localStringPath", &urlgroup.PathItemsGetAllWithValuesOptions{
 		LocalStringQuery:    to.StringPtr("localStringQuery"),
 		PathItemStringQuery: to.StringPtr("pathItemStringQuery"),
@@ -28,7 +28,7 @@ func TestGetAllWithValues(t *testing.T) {
 
 func TestGetGlobalAndLocalQueryNull(t *testing.T) {
 	client := urlgroup.NewDefaultClient(nil)
-	grp := client.PathItemsOperations("globalStringPath", nil)
+	grp := urlgroup.NewPathItemsClient(client, "globalStringPath", nil)
 	result, err := grp.GetGlobalAndLocalQueryNull(context.Background(), "pathItemStringPath", "localStringPath", &urlgroup.PathItemsGetGlobalAndLocalQueryNullOptions{
 		PathItemStringQuery: to.StringPtr("pathItemStringQuery"),
 	})
@@ -40,7 +40,7 @@ func TestGetGlobalAndLocalQueryNull(t *testing.T) {
 
 func TestGetGlobalQueryNull(t *testing.T) {
 	client := urlgroup.NewDefaultClient(nil)
-	grp := client.PathItemsOperations("globalStringPath", nil)
+	grp := urlgroup.NewPathItemsClient(client, "globalStringPath", nil)
 	result, err := grp.GetGlobalQueryNull(context.Background(), "pathItemStringPath", "localStringPath", &urlgroup.PathItemsGetGlobalQueryNullOptions{
 		LocalStringQuery:    to.StringPtr("localStringQuery"),
 		PathItemStringQuery: to.StringPtr("pathItemStringQuery"),
@@ -53,7 +53,7 @@ func TestGetGlobalQueryNull(t *testing.T) {
 
 func TestGetLocalPathItemQueryNull(t *testing.T) {
 	client := urlgroup.NewDefaultClient(nil)
-	grp := client.PathItemsOperations("globalStringPath", to.StringPtr("globalStringQuery"))
+	grp := urlgroup.NewPathItemsClient(client, "globalStringPath", to.StringPtr("globalStringQuery"))
 	result, err := grp.GetLocalPathItemQueryNull(context.Background(), "pathItemStringPath", "localStringPath", nil)
 	if err != nil {
 		t.Fatal(err)

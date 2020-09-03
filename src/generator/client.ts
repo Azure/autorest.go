@@ -238,27 +238,7 @@ function generateContent(session: Session<CodeModel>, exportClient: boolean): st
     }
     text += '\treturn client\n';
   }
-
   text += '}\n\n';
-
-  for (const group of values(session.model.operationGroups)) {
-    const clientLiterals = [`${client}: client`];
-    const methodParams = new Array<string>();
-    // add client params to the operation group getter method
-    if (group.language.go!.clientParams) {
-      const clientParams = <Array<Parameter>>group.language.go!.clientParams;
-      clientParams.sort(sortParametersByRequired);
-      for (const clientParam of values(clientParams)) {
-        clientLiterals.push(`${clientParam.language.go!.name}: ${clientParam.language.go!.name}`);
-        methodParams.push(`${clientParam.language.go!.name} ${formatParameterTypeName(clientParam)}`);
-      }
-    }
-    text += `// ${group.language.go!.clientName} returns the ${group.language.go!.clientName} associated with this client.\n`;
-    text += `func (client *${client}) ${group.language.go!.clientName}(${methodParams}) ${group.language.go!.clientName} {\n`;
-    text += `\treturn &${camelCase(group.language.go!.clientName)}{${clientLiterals.join(', ')}}\n`;
-    text += '}\n\n';
-  }
-
   return text;
 }
 

@@ -25,30 +25,41 @@ type PetOperations interface {
 	GetByPetID(ctx context.Context, petId string) (*PetResponse, error)
 }
 
-// petOperations implements the PetOperations interface.
-type petOperations struct {
+// PetClient implements the PetOperations interface.
+// Don't use this type directly, use NewPetClient() instead.
+type PetClient struct {
 	*Client
 }
 
+// NewPetClient creates a new instance of PetClient with the specified values.
+func NewPetClient(c *Client) PetOperations {
+	return &PetClient{Client: c}
+}
+
+// Do invokes the Do() method on the pipeline associated with this client.
+func (client *PetClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(ctx, req)
+}
+
 // AddPet - add pet
-func (client *petOperations) AddPet(ctx context.Context, petAddPetOptions *PetAddPetOptions) (*PetResponse, error) {
-	req, err := client.addPetCreateRequest(petAddPetOptions)
+func (client *PetClient) AddPet(ctx context.Context, petAddPetOptions *PetAddPetOptions) (*PetResponse, error) {
+	req, err := client.AddPetCreateRequest(petAddPetOptions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.addPetHandleResponse(resp)
+	result, err := client.AddPetHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// addPetCreateRequest creates the AddPet request.
-func (client *petOperations) addPetCreateRequest(petAddPetOptions *PetAddPetOptions) (*azcore.Request, error) {
+// AddPetCreateRequest creates the AddPet request.
+func (client *PetClient) AddPetCreateRequest(petAddPetOptions *PetAddPetOptions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -65,17 +76,17 @@ func (client *petOperations) addPetCreateRequest(petAddPetOptions *PetAddPetOpti
 	return req, nil
 }
 
-// addPetHandleResponse handles the AddPet response.
-func (client *petOperations) addPetHandleResponse(resp *azcore.Response) (*PetResponse, error) {
+// AddPetHandleResponse handles the AddPet response.
+func (client *PetClient) AddPetHandleResponse(resp *azcore.Response) (*PetResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.addPetHandleError(resp)
+		return nil, client.AddPetHandleError(resp)
 	}
 	result := PetResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Pet)
 }
 
-// addPetHandleError handles the AddPet error response.
-func (client *petOperations) addPetHandleError(resp *azcore.Response) error {
+// AddPetHandleError handles the AddPet error response.
+func (client *PetClient) AddPetHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -87,24 +98,24 @@ func (client *petOperations) addPetHandleError(resp *azcore.Response) error {
 }
 
 // GetByPetID - get pet by id
-func (client *petOperations) GetByPetID(ctx context.Context, petId string) (*PetResponse, error) {
-	req, err := client.getByPetIdCreateRequest(petId)
+func (client *PetClient) GetByPetID(ctx context.Context, petId string) (*PetResponse, error) {
+	req, err := client.GetByPetIDCreateRequest(petId)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getByPetIdHandleResponse(resp)
+	result, err := client.GetByPetIDHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getByPetIdCreateRequest creates the GetByPetID request.
-func (client *petOperations) getByPetIdCreateRequest(petId string) (*azcore.Request, error) {
+// GetByPetIDCreateRequest creates the GetByPetID request.
+func (client *PetClient) GetByPetIDCreateRequest(petId string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -119,17 +130,17 @@ func (client *petOperations) getByPetIdCreateRequest(petId string) (*azcore.Requ
 	return req, nil
 }
 
-// getByPetIdHandleResponse handles the GetByPetID response.
-func (client *petOperations) getByPetIdHandleResponse(resp *azcore.Response) (*PetResponse, error) {
+// GetByPetIDHandleResponse handles the GetByPetID response.
+func (client *PetClient) GetByPetIDHandleResponse(resp *azcore.Response) (*PetResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getByPetIdHandleError(resp)
+		return nil, client.GetByPetIDHandleError(resp)
 	}
 	result := PetResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Pet)
 }
 
-// getByPetIdHandleError handles the GetByPetID error response.
-func (client *petOperations) getByPetIdHandleError(resp *azcore.Response) error {
+// GetByPetIDHandleError handles the GetByPetID error response.
+func (client *PetClient) GetByPetIDHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)

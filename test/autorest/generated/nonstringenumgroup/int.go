@@ -24,30 +24,41 @@ type IntOperations interface {
 	Put(ctx context.Context, intPutOptions *IntPutOptions) (*StringResponse, error)
 }
 
-// intOperations implements the IntOperations interface.
-type intOperations struct {
+// IntClient implements the IntOperations interface.
+// Don't use this type directly, use NewIntClient() instead.
+type IntClient struct {
 	*Client
 }
 
+// NewIntClient creates a new instance of IntClient with the specified values.
+func NewIntClient(c *Client) IntOperations {
+	return &IntClient{Client: c}
+}
+
+// Do invokes the Do() method on the pipeline associated with this client.
+func (client *IntClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(ctx, req)
+}
+
 // Get - Get an int enum
-func (client *intOperations) Get(ctx context.Context) (*IntEnumResponse, error) {
-	req, err := client.getCreateRequest()
+func (client *IntClient) Get(ctx context.Context) (*IntEnumResponse, error) {
+	req, err := client.GetCreateRequest()
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getHandleResponse(resp)
+	result, err := client.GetHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getCreateRequest creates the Get request.
-func (client *intOperations) getCreateRequest() (*azcore.Request, error) {
+// GetCreateRequest creates the Get request.
+func (client *IntClient) GetCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -61,17 +72,17 @@ func (client *intOperations) getCreateRequest() (*azcore.Request, error) {
 	return req, nil
 }
 
-// getHandleResponse handles the Get response.
-func (client *intOperations) getHandleResponse(resp *azcore.Response) (*IntEnumResponse, error) {
+// GetHandleResponse handles the Get response.
+func (client *IntClient) GetHandleResponse(resp *azcore.Response) (*IntEnumResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getHandleError(resp)
+		return nil, client.GetHandleError(resp)
 	}
 	result := IntEnumResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
-// getHandleError handles the Get error response.
-func (client *intOperations) getHandleError(resp *azcore.Response) error {
+// GetHandleError handles the Get error response.
+func (client *IntClient) GetHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -83,24 +94,24 @@ func (client *intOperations) getHandleError(resp *azcore.Response) error {
 }
 
 // Put - Put an int enum
-func (client *intOperations) Put(ctx context.Context, intPutOptions *IntPutOptions) (*StringResponse, error) {
-	req, err := client.putCreateRequest(intPutOptions)
+func (client *IntClient) Put(ctx context.Context, intPutOptions *IntPutOptions) (*StringResponse, error) {
+	req, err := client.PutCreateRequest(intPutOptions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.putHandleResponse(resp)
+	result, err := client.PutHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// putCreateRequest creates the Put request.
-func (client *intOperations) putCreateRequest(intPutOptions *IntPutOptions) (*azcore.Request, error) {
+// PutCreateRequest creates the Put request.
+func (client *IntClient) PutCreateRequest(intPutOptions *IntPutOptions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -117,17 +128,17 @@ func (client *intOperations) putCreateRequest(intPutOptions *IntPutOptions) (*az
 	return req, nil
 }
 
-// putHandleResponse handles the Put response.
-func (client *intOperations) putHandleResponse(resp *azcore.Response) (*StringResponse, error) {
+// PutHandleResponse handles the Put response.
+func (client *IntClient) PutHandleResponse(resp *azcore.Response) (*StringResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.putHandleError(resp)
+		return nil, client.PutHandleError(resp)
 	}
 	result := StringResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
-// putHandleError handles the Put error response.
-func (client *intOperations) putHandleError(resp *azcore.Response) error {
+// PutHandleError handles the Put error response.
+func (client *IntClient) PutHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)

@@ -20,31 +20,42 @@ type ResourceNavigationLinksOperations interface {
 	List(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string) (*ResourceNavigationLinksListResultResponse, error)
 }
 
-// resourceNavigationLinksOperations implements the ResourceNavigationLinksOperations interface.
-type resourceNavigationLinksOperations struct {
+// ResourceNavigationLinksClient implements the ResourceNavigationLinksOperations interface.
+// Don't use this type directly, use NewResourceNavigationLinksClient() instead.
+type ResourceNavigationLinksClient struct {
 	*Client
 	subscriptionID string
 }
 
+// NewResourceNavigationLinksClient creates a new instance of ResourceNavigationLinksClient with the specified values.
+func NewResourceNavigationLinksClient(c *Client, subscriptionID string) ResourceNavigationLinksOperations {
+	return &ResourceNavigationLinksClient{Client: c, subscriptionID: subscriptionID}
+}
+
+// Do invokes the Do() method on the pipeline associated with this client.
+func (client *ResourceNavigationLinksClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(ctx, req)
+}
+
 // List - Gets a list of resource navigation links for a subnet.
-func (client *resourceNavigationLinksOperations) List(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string) (*ResourceNavigationLinksListResultResponse, error) {
-	req, err := client.listCreateRequest(resourceGroupName, virtualNetworkName, subnetName)
+func (client *ResourceNavigationLinksClient) List(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string) (*ResourceNavigationLinksListResultResponse, error) {
+	req, err := client.ListCreateRequest(resourceGroupName, virtualNetworkName, subnetName)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.listHandleResponse(resp)
+	result, err := client.ListHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// listCreateRequest creates the List request.
-func (client *resourceNavigationLinksOperations) listCreateRequest(resourceGroupName string, virtualNetworkName string, subnetName string) (*azcore.Request, error) {
+// ListCreateRequest creates the List request.
+func (client *ResourceNavigationLinksClient) ListCreateRequest(resourceGroupName string, virtualNetworkName string, subnetName string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -65,17 +76,17 @@ func (client *resourceNavigationLinksOperations) listCreateRequest(resourceGroup
 	return req, nil
 }
 
-// listHandleResponse handles the List response.
-func (client *resourceNavigationLinksOperations) listHandleResponse(resp *azcore.Response) (*ResourceNavigationLinksListResultResponse, error) {
+// ListHandleResponse handles the List response.
+func (client *ResourceNavigationLinksClient) ListHandleResponse(resp *azcore.Response) (*ResourceNavigationLinksListResultResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.listHandleError(resp)
+		return nil, client.ListHandleError(resp)
 	}
 	result := ResourceNavigationLinksListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ResourceNavigationLinksListResult)
 }
 
-// listHandleError handles the List error response.
-func (client *resourceNavigationLinksOperations) listHandleError(resp *azcore.Response) error {
+// ListHandleError handles the List error response.
+func (client *ResourceNavigationLinksClient) ListHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

@@ -37,28 +37,39 @@ type VpnSitesOperations interface {
 	UpdateTags(ctx context.Context, resourceGroupName string, vpnSiteName string, vpnSiteParameters TagsObject) (*VpnSiteResponse, error)
 }
 
-// vpnSitesOperations implements the VpnSitesOperations interface.
-type vpnSitesOperations struct {
+// VpnSitesClient implements the VpnSitesOperations interface.
+// Don't use this type directly, use NewVpnSitesClient() instead.
+type VpnSitesClient struct {
 	*Client
 	subscriptionID string
 }
 
+// NewVpnSitesClient creates a new instance of VpnSitesClient with the specified values.
+func NewVpnSitesClient(c *Client, subscriptionID string) VpnSitesOperations {
+	return &VpnSitesClient{Client: c, subscriptionID: subscriptionID}
+}
+
+// Do invokes the Do() method on the pipeline associated with this client.
+func (client *VpnSitesClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(ctx, req)
+}
+
 // CreateOrUpdate - Creates a VpnSite resource if it doesn't exist else updates the existing VpnSite.
-func (client *vpnSitesOperations) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vpnSiteName string, vpnSiteParameters VpnSite) (*VpnSitePollerResponse, error) {
-	req, err := client.createOrUpdateCreateRequest(resourceGroupName, vpnSiteName, vpnSiteParameters)
+func (client *VpnSitesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vpnSiteName string, vpnSiteParameters VpnSite) (*VpnSitePollerResponse, error) {
+	req, err := client.CreateOrUpdateCreateRequest(resourceGroupName, vpnSiteName, vpnSiteParameters)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.createOrUpdateHandleResponse(resp)
+	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
-	pt, err := armcore.NewPoller("vpnSitesOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("VpnSitesClient.CreateOrUpdate", "azure-async-operation", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -73,8 +84,8 @@ func (client *vpnSitesOperations) BeginCreateOrUpdate(ctx context.Context, resou
 	return result, nil
 }
 
-func (client *vpnSitesOperations) ResumeCreateOrUpdate(token string) (VpnSitePoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("vpnSitesOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+func (client *VpnSitesClient) ResumeCreateOrUpdate(token string) (VpnSitePoller, error) {
+	pt, err := armcore.NewPollerFromResumeToken("VpnSitesClient.CreateOrUpdate", token, client.CreateOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -84,8 +95,8 @@ func (client *vpnSitesOperations) ResumeCreateOrUpdate(token string) (VpnSitePol
 	}, nil
 }
 
-// createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *vpnSitesOperations) createOrUpdateCreateRequest(resourceGroupName string, vpnSiteName string, vpnSiteParameters VpnSite) (*azcore.Request, error) {
+// CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
+func (client *VpnSitesClient) CreateOrUpdateCreateRequest(resourceGroupName string, vpnSiteName string, vpnSiteParameters VpnSite) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -105,16 +116,16 @@ func (client *vpnSitesOperations) createOrUpdateCreateRequest(resourceGroupName 
 	return req, req.MarshalAsJSON(vpnSiteParameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *vpnSitesOperations) createOrUpdateHandleResponse(resp *azcore.Response) (*VpnSitePollerResponse, error) {
+// CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
+func (client *VpnSitesClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*VpnSitePollerResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, client.CreateOrUpdateHandleError(resp)
 	}
 	return &VpnSitePollerResponse{RawResponse: resp.Response}, nil
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *vpnSitesOperations) createOrUpdateHandleError(resp *azcore.Response) error {
+// CreateOrUpdateHandleError handles the CreateOrUpdate error response.
+func (client *VpnSitesClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -123,21 +134,21 @@ func (client *vpnSitesOperations) createOrUpdateHandleError(resp *azcore.Respons
 }
 
 // Delete - Deletes a VpnSite.
-func (client *vpnSitesOperations) BeginDelete(ctx context.Context, resourceGroupName string, vpnSiteName string) (*HTTPPollerResponse, error) {
-	req, err := client.deleteCreateRequest(resourceGroupName, vpnSiteName)
+func (client *VpnSitesClient) BeginDelete(ctx context.Context, resourceGroupName string, vpnSiteName string) (*HTTPPollerResponse, error) {
+	req, err := client.DeleteCreateRequest(resourceGroupName, vpnSiteName)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.deleteHandleResponse(resp)
+	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
-	pt, err := armcore.NewPoller("vpnSitesOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("VpnSitesClient.Delete", "location", resp, client.DeleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -152,8 +163,8 @@ func (client *vpnSitesOperations) BeginDelete(ctx context.Context, resourceGroup
 	return result, nil
 }
 
-func (client *vpnSitesOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("vpnSitesOperations.Delete", token, client.deleteHandleError)
+func (client *VpnSitesClient) ResumeDelete(token string) (HTTPPoller, error) {
+	pt, err := armcore.NewPollerFromResumeToken("VpnSitesClient.Delete", token, client.DeleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -163,8 +174,8 @@ func (client *vpnSitesOperations) ResumeDelete(token string) (HTTPPoller, error)
 	}, nil
 }
 
-// deleteCreateRequest creates the Delete request.
-func (client *vpnSitesOperations) deleteCreateRequest(resourceGroupName string, vpnSiteName string) (*azcore.Request, error) {
+// DeleteCreateRequest creates the Delete request.
+func (client *VpnSitesClient) DeleteCreateRequest(resourceGroupName string, vpnSiteName string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -184,16 +195,16 @@ func (client *vpnSitesOperations) deleteCreateRequest(resourceGroupName string, 
 	return req, nil
 }
 
-// deleteHandleResponse handles the Delete response.
-func (client *vpnSitesOperations) deleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
+// DeleteHandleResponse handles the Delete response.
+func (client *VpnSitesClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, client.DeleteHandleError(resp)
 	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *vpnSitesOperations) deleteHandleError(resp *azcore.Response) error {
+// DeleteHandleError handles the Delete error response.
+func (client *VpnSitesClient) DeleteHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -202,24 +213,24 @@ func (client *vpnSitesOperations) deleteHandleError(resp *azcore.Response) error
 }
 
 // Get - Retrieves the details of a VPN site.
-func (client *vpnSitesOperations) Get(ctx context.Context, resourceGroupName string, vpnSiteName string) (*VpnSiteResponse, error) {
-	req, err := client.getCreateRequest(resourceGroupName, vpnSiteName)
+func (client *VpnSitesClient) Get(ctx context.Context, resourceGroupName string, vpnSiteName string) (*VpnSiteResponse, error) {
+	req, err := client.GetCreateRequest(resourceGroupName, vpnSiteName)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getHandleResponse(resp)
+	result, err := client.GetHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getCreateRequest creates the Get request.
-func (client *vpnSitesOperations) getCreateRequest(resourceGroupName string, vpnSiteName string) (*azcore.Request, error) {
+// GetCreateRequest creates the Get request.
+func (client *VpnSitesClient) GetCreateRequest(resourceGroupName string, vpnSiteName string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -239,17 +250,17 @@ func (client *vpnSitesOperations) getCreateRequest(resourceGroupName string, vpn
 	return req, nil
 }
 
-// getHandleResponse handles the Get response.
-func (client *vpnSitesOperations) getHandleResponse(resp *azcore.Response) (*VpnSiteResponse, error) {
+// GetHandleResponse handles the Get response.
+func (client *VpnSitesClient) GetHandleResponse(resp *azcore.Response) (*VpnSiteResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getHandleError(resp)
+		return nil, client.GetHandleError(resp)
 	}
 	result := VpnSiteResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VpnSite)
 }
 
-// getHandleError handles the Get error response.
-func (client *vpnSitesOperations) getHandleError(resp *azcore.Response) error {
+// GetHandleError handles the Get error response.
+func (client *VpnSitesClient) GetHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -258,15 +269,15 @@ func (client *vpnSitesOperations) getHandleError(resp *azcore.Response) error {
 }
 
 // List - Lists all the VpnSites in a subscription.
-func (client *vpnSitesOperations) List() (ListVpnSitesResultPager, error) {
-	req, err := client.listCreateRequest()
+func (client *VpnSitesClient) List() (ListVpnSitesResultPager, error) {
+	req, err := client.ListCreateRequest()
 	if err != nil {
 		return nil, err
 	}
 	return &listVpnSitesResultPager{
 		pipeline:  client.p,
 		request:   req,
-		responder: client.listHandleResponse,
+		responder: client.ListHandleResponse,
 		advancer: func(resp *ListVpnSitesResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.ListVpnSitesResult.NextLink)
 			if err != nil {
@@ -280,8 +291,8 @@ func (client *vpnSitesOperations) List() (ListVpnSitesResultPager, error) {
 	}, nil
 }
 
-// listCreateRequest creates the List request.
-func (client *vpnSitesOperations) listCreateRequest() (*azcore.Request, error) {
+// ListCreateRequest creates the List request.
+func (client *VpnSitesClient) ListCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -299,17 +310,17 @@ func (client *vpnSitesOperations) listCreateRequest() (*azcore.Request, error) {
 	return req, nil
 }
 
-// listHandleResponse handles the List response.
-func (client *vpnSitesOperations) listHandleResponse(resp *azcore.Response) (*ListVpnSitesResultResponse, error) {
+// ListHandleResponse handles the List response.
+func (client *VpnSitesClient) ListHandleResponse(resp *azcore.Response) (*ListVpnSitesResultResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.listHandleError(resp)
+		return nil, client.ListHandleError(resp)
 	}
 	result := ListVpnSitesResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ListVpnSitesResult)
 }
 
-// listHandleError handles the List error response.
-func (client *vpnSitesOperations) listHandleError(resp *azcore.Response) error {
+// ListHandleError handles the List error response.
+func (client *VpnSitesClient) ListHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -318,15 +329,15 @@ func (client *vpnSitesOperations) listHandleError(resp *azcore.Response) error {
 }
 
 // ListByResourceGroup - Lists all the vpnSites in a resource group.
-func (client *vpnSitesOperations) ListByResourceGroup(resourceGroupName string) (ListVpnSitesResultPager, error) {
-	req, err := client.listByResourceGroupCreateRequest(resourceGroupName)
+func (client *VpnSitesClient) ListByResourceGroup(resourceGroupName string) (ListVpnSitesResultPager, error) {
+	req, err := client.ListByResourceGroupCreateRequest(resourceGroupName)
 	if err != nil {
 		return nil, err
 	}
 	return &listVpnSitesResultPager{
 		pipeline:  client.p,
 		request:   req,
-		responder: client.listByResourceGroupHandleResponse,
+		responder: client.ListByResourceGroupHandleResponse,
 		advancer: func(resp *ListVpnSitesResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.ListVpnSitesResult.NextLink)
 			if err != nil {
@@ -340,8 +351,8 @@ func (client *vpnSitesOperations) ListByResourceGroup(resourceGroupName string) 
 	}, nil
 }
 
-// listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *vpnSitesOperations) listByResourceGroupCreateRequest(resourceGroupName string) (*azcore.Request, error) {
+// ListByResourceGroupCreateRequest creates the ListByResourceGroup request.
+func (client *VpnSitesClient) ListByResourceGroupCreateRequest(resourceGroupName string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -360,17 +371,17 @@ func (client *vpnSitesOperations) listByResourceGroupCreateRequest(resourceGroup
 	return req, nil
 }
 
-// listByResourceGroupHandleResponse handles the ListByResourceGroup response.
-func (client *vpnSitesOperations) listByResourceGroupHandleResponse(resp *azcore.Response) (*ListVpnSitesResultResponse, error) {
+// ListByResourceGroupHandleResponse handles the ListByResourceGroup response.
+func (client *VpnSitesClient) ListByResourceGroupHandleResponse(resp *azcore.Response) (*ListVpnSitesResultResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.listByResourceGroupHandleError(resp)
+		return nil, client.ListByResourceGroupHandleError(resp)
 	}
 	result := ListVpnSitesResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ListVpnSitesResult)
 }
 
-// listByResourceGroupHandleError handles the ListByResourceGroup error response.
-func (client *vpnSitesOperations) listByResourceGroupHandleError(resp *azcore.Response) error {
+// ListByResourceGroupHandleError handles the ListByResourceGroup error response.
+func (client *VpnSitesClient) ListByResourceGroupHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -379,24 +390,24 @@ func (client *vpnSitesOperations) listByResourceGroupHandleError(resp *azcore.Re
 }
 
 // UpdateTags - Updates VpnSite tags.
-func (client *vpnSitesOperations) UpdateTags(ctx context.Context, resourceGroupName string, vpnSiteName string, vpnSiteParameters TagsObject) (*VpnSiteResponse, error) {
-	req, err := client.updateTagsCreateRequest(resourceGroupName, vpnSiteName, vpnSiteParameters)
+func (client *VpnSitesClient) UpdateTags(ctx context.Context, resourceGroupName string, vpnSiteName string, vpnSiteParameters TagsObject) (*VpnSiteResponse, error) {
+	req, err := client.UpdateTagsCreateRequest(resourceGroupName, vpnSiteName, vpnSiteParameters)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.updateTagsHandleResponse(resp)
+	result, err := client.UpdateTagsHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// updateTagsCreateRequest creates the UpdateTags request.
-func (client *vpnSitesOperations) updateTagsCreateRequest(resourceGroupName string, vpnSiteName string, vpnSiteParameters TagsObject) (*azcore.Request, error) {
+// UpdateTagsCreateRequest creates the UpdateTags request.
+func (client *VpnSitesClient) UpdateTagsCreateRequest(resourceGroupName string, vpnSiteName string, vpnSiteParameters TagsObject) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -416,17 +427,17 @@ func (client *vpnSitesOperations) updateTagsCreateRequest(resourceGroupName stri
 	return req, req.MarshalAsJSON(vpnSiteParameters)
 }
 
-// updateTagsHandleResponse handles the UpdateTags response.
-func (client *vpnSitesOperations) updateTagsHandleResponse(resp *azcore.Response) (*VpnSiteResponse, error) {
+// UpdateTagsHandleResponse handles the UpdateTags response.
+func (client *VpnSitesClient) UpdateTagsHandleResponse(resp *azcore.Response) (*VpnSiteResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.updateTagsHandleError(resp)
+		return nil, client.UpdateTagsHandleError(resp)
 	}
 	result := VpnSiteResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VpnSite)
 }
 
-// updateTagsHandleError handles the UpdateTags error response.
-func (client *vpnSitesOperations) updateTagsHandleError(resp *azcore.Response) error {
+// UpdateTagsHandleError handles the UpdateTags error response.
+func (client *VpnSitesClient) UpdateTagsHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

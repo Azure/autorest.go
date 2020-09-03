@@ -74,8 +74,3 @@ func NewClient(endpoint string, options *ClientOptions) *Client {
 func NewClientWithPipeline(endpoint string, p azcore.Pipeline) *Client {
 	return &Client{u: endpoint, p: p}
 }
-
-// IntOperations returns the IntOperations associated with this client.
-func (client *Client) IntOperations() IntOperations {
-	return &intOperations{Client: client}
-}

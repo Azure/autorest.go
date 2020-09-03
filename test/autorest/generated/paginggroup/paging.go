@@ -58,21 +58,32 @@ type PagingOperations interface {
 	GetWithQueryParams(requiredQueryParameter int32) (ProductResultPager, error)
 }
 
-// pagingOperations implements the PagingOperations interface.
-type pagingOperations struct {
+// PagingClient implements the PagingOperations interface.
+// Don't use this type directly, use NewPagingClient() instead.
+type PagingClient struct {
 	*Client
 }
 
+// NewPagingClient creates a new instance of PagingClient with the specified values.
+func NewPagingClient(c *Client) PagingOperations {
+	return &PagingClient{Client: c}
+}
+
+// Do invokes the Do() method on the pipeline associated with this client.
+func (client *PagingClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(ctx, req)
+}
+
 // GetMultiplePages - A paging operation that includes a nextLink that has 10 pages
-func (client *pagingOperations) GetMultiplePages(pagingGetMultiplePagesOptions *PagingGetMultiplePagesOptions) (ProductResultPager, error) {
-	req, err := client.getMultiplePagesCreateRequest(pagingGetMultiplePagesOptions)
+func (client *PagingClient) GetMultiplePages(pagingGetMultiplePagesOptions *PagingGetMultiplePagesOptions) (ProductResultPager, error) {
+	req, err := client.GetMultiplePagesCreateRequest(pagingGetMultiplePagesOptions)
 	if err != nil {
 		return nil, err
 	}
 	return &productResultPager{
 		pipeline:  client.p,
 		request:   req,
-		responder: client.getMultiplePagesHandleResponse,
+		responder: client.GetMultiplePagesHandleResponse,
 		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.ProductResult.NextLink)
 			if err != nil {
@@ -86,8 +97,8 @@ func (client *pagingOperations) GetMultiplePages(pagingGetMultiplePagesOptions *
 	}, nil
 }
 
-// getMultiplePagesCreateRequest creates the GetMultiplePages request.
-func (client *pagingOperations) getMultiplePagesCreateRequest(pagingGetMultiplePagesOptions *PagingGetMultiplePagesOptions) (*azcore.Request, error) {
+// GetMultiplePagesCreateRequest creates the GetMultiplePages request.
+func (client *PagingClient) GetMultiplePagesCreateRequest(pagingGetMultiplePagesOptions *PagingGetMultiplePagesOptions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -110,17 +121,17 @@ func (client *pagingOperations) getMultiplePagesCreateRequest(pagingGetMultipleP
 	return req, nil
 }
 
-// getMultiplePagesHandleResponse handles the GetMultiplePages response.
-func (client *pagingOperations) getMultiplePagesHandleResponse(resp *azcore.Response) (*ProductResultResponse, error) {
+// GetMultiplePagesHandleResponse handles the GetMultiplePages response.
+func (client *PagingClient) GetMultiplePagesHandleResponse(resp *azcore.Response) (*ProductResultResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getMultiplePagesHandleError(resp)
+		return nil, client.GetMultiplePagesHandleError(resp)
 	}
 	result := ProductResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ProductResult)
 }
 
-// getMultiplePagesHandleError handles the GetMultiplePages error response.
-func (client *pagingOperations) getMultiplePagesHandleError(resp *azcore.Response) error {
+// GetMultiplePagesHandleError handles the GetMultiplePages error response.
+func (client *PagingClient) GetMultiplePagesHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -132,15 +143,15 @@ func (client *pagingOperations) getMultiplePagesHandleError(resp *azcore.Respons
 }
 
 // GetMultiplePagesFailure - A paging operation that receives a 400 on the second call
-func (client *pagingOperations) GetMultiplePagesFailure() (ProductResultPager, error) {
-	req, err := client.getMultiplePagesFailureCreateRequest()
+func (client *PagingClient) GetMultiplePagesFailure() (ProductResultPager, error) {
+	req, err := client.GetMultiplePagesFailureCreateRequest()
 	if err != nil {
 		return nil, err
 	}
 	return &productResultPager{
 		pipeline:  client.p,
 		request:   req,
-		responder: client.getMultiplePagesFailureHandleResponse,
+		responder: client.GetMultiplePagesFailureHandleResponse,
 		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.ProductResult.NextLink)
 			if err != nil {
@@ -154,8 +165,8 @@ func (client *pagingOperations) GetMultiplePagesFailure() (ProductResultPager, e
 	}, nil
 }
 
-// getMultiplePagesFailureCreateRequest creates the GetMultiplePagesFailure request.
-func (client *pagingOperations) getMultiplePagesFailureCreateRequest() (*azcore.Request, error) {
+// GetMultiplePagesFailureCreateRequest creates the GetMultiplePagesFailure request.
+func (client *PagingClient) GetMultiplePagesFailureCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -169,17 +180,17 @@ func (client *pagingOperations) getMultiplePagesFailureCreateRequest() (*azcore.
 	return req, nil
 }
 
-// getMultiplePagesFailureHandleResponse handles the GetMultiplePagesFailure response.
-func (client *pagingOperations) getMultiplePagesFailureHandleResponse(resp *azcore.Response) (*ProductResultResponse, error) {
+// GetMultiplePagesFailureHandleResponse handles the GetMultiplePagesFailure response.
+func (client *PagingClient) GetMultiplePagesFailureHandleResponse(resp *azcore.Response) (*ProductResultResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getMultiplePagesFailureHandleError(resp)
+		return nil, client.GetMultiplePagesFailureHandleError(resp)
 	}
 	result := ProductResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ProductResult)
 }
 
-// getMultiplePagesFailureHandleError handles the GetMultiplePagesFailure error response.
-func (client *pagingOperations) getMultiplePagesFailureHandleError(resp *azcore.Response) error {
+// GetMultiplePagesFailureHandleError handles the GetMultiplePagesFailure error response.
+func (client *PagingClient) GetMultiplePagesFailureHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -191,15 +202,15 @@ func (client *pagingOperations) getMultiplePagesFailureHandleError(resp *azcore.
 }
 
 // GetMultiplePagesFailureURI - A paging operation that receives an invalid nextLink
-func (client *pagingOperations) GetMultiplePagesFailureURI() (ProductResultPager, error) {
-	req, err := client.getMultiplePagesFailureUriCreateRequest()
+func (client *PagingClient) GetMultiplePagesFailureURI() (ProductResultPager, error) {
+	req, err := client.GetMultiplePagesFailureURICreateRequest()
 	if err != nil {
 		return nil, err
 	}
 	return &productResultPager{
 		pipeline:  client.p,
 		request:   req,
-		responder: client.getMultiplePagesFailureUriHandleResponse,
+		responder: client.GetMultiplePagesFailureURIHandleResponse,
 		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.ProductResult.NextLink)
 			if err != nil {
@@ -213,8 +224,8 @@ func (client *pagingOperations) GetMultiplePagesFailureURI() (ProductResultPager
 	}, nil
 }
 
-// getMultiplePagesFailureUriCreateRequest creates the GetMultiplePagesFailureURI request.
-func (client *pagingOperations) getMultiplePagesFailureUriCreateRequest() (*azcore.Request, error) {
+// GetMultiplePagesFailureURICreateRequest creates the GetMultiplePagesFailureURI request.
+func (client *PagingClient) GetMultiplePagesFailureURICreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -228,17 +239,17 @@ func (client *pagingOperations) getMultiplePagesFailureUriCreateRequest() (*azco
 	return req, nil
 }
 
-// getMultiplePagesFailureUriHandleResponse handles the GetMultiplePagesFailureURI response.
-func (client *pagingOperations) getMultiplePagesFailureUriHandleResponse(resp *azcore.Response) (*ProductResultResponse, error) {
+// GetMultiplePagesFailureURIHandleResponse handles the GetMultiplePagesFailureURI response.
+func (client *PagingClient) GetMultiplePagesFailureURIHandleResponse(resp *azcore.Response) (*ProductResultResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getMultiplePagesFailureUriHandleError(resp)
+		return nil, client.GetMultiplePagesFailureURIHandleError(resp)
 	}
 	result := ProductResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ProductResult)
 }
 
-// getMultiplePagesFailureUriHandleError handles the GetMultiplePagesFailureURI error response.
-func (client *pagingOperations) getMultiplePagesFailureUriHandleError(resp *azcore.Response) error {
+// GetMultiplePagesFailureURIHandleError handles the GetMultiplePagesFailureURI error response.
+func (client *PagingClient) GetMultiplePagesFailureURIHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -250,23 +261,23 @@ func (client *pagingOperations) getMultiplePagesFailureUriHandleError(resp *azco
 }
 
 // GetMultiplePagesFragmentNextLink - A paging operation that doesn't return a full URL, just a fragment
-func (client *pagingOperations) GetMultiplePagesFragmentNextLink(apiVersion string, tenant string) (OdataProductResultPager, error) {
-	req, err := client.getMultiplePagesFragmentNextLinkCreateRequest(apiVersion, tenant)
+func (client *PagingClient) GetMultiplePagesFragmentNextLink(apiVersion string, tenant string) (OdataProductResultPager, error) {
+	req, err := client.GetMultiplePagesFragmentNextLinkCreateRequest(apiVersion, tenant)
 	if err != nil {
 		return nil, err
 	}
 	return &odataProductResultPager{
 		pipeline:  client.p,
 		request:   req,
-		responder: client.getMultiplePagesFragmentNextLinkHandleResponse,
+		responder: client.GetMultiplePagesFragmentNextLinkHandleResponse,
 		advancer: func(resp *OdataProductResultResponse) (*azcore.Request, error) {
-			return client.nextFragmentCreateRequest(apiVersion, tenant, *resp.OdataProductResult.OdataNextLink)
+			return client.NextFragmentCreateRequest(apiVersion, tenant, *resp.OdataProductResult.OdataNextLink)
 		},
 	}, nil
 }
 
-// getMultiplePagesFragmentNextLinkCreateRequest creates the GetMultiplePagesFragmentNextLink request.
-func (client *pagingOperations) getMultiplePagesFragmentNextLinkCreateRequest(apiVersion string, tenant string) (*azcore.Request, error) {
+// GetMultiplePagesFragmentNextLinkCreateRequest creates the GetMultiplePagesFragmentNextLink request.
+func (client *PagingClient) GetMultiplePagesFragmentNextLinkCreateRequest(apiVersion string, tenant string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -284,17 +295,17 @@ func (client *pagingOperations) getMultiplePagesFragmentNextLinkCreateRequest(ap
 	return req, nil
 }
 
-// getMultiplePagesFragmentNextLinkHandleResponse handles the GetMultiplePagesFragmentNextLink response.
-func (client *pagingOperations) getMultiplePagesFragmentNextLinkHandleResponse(resp *azcore.Response) (*OdataProductResultResponse, error) {
+// GetMultiplePagesFragmentNextLinkHandleResponse handles the GetMultiplePagesFragmentNextLink response.
+func (client *PagingClient) GetMultiplePagesFragmentNextLinkHandleResponse(resp *azcore.Response) (*OdataProductResultResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getMultiplePagesFragmentNextLinkHandleError(resp)
+		return nil, client.GetMultiplePagesFragmentNextLinkHandleError(resp)
 	}
 	result := OdataProductResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.OdataProductResult)
 }
 
-// getMultiplePagesFragmentNextLinkHandleError handles the GetMultiplePagesFragmentNextLink error response.
-func (client *pagingOperations) getMultiplePagesFragmentNextLinkHandleError(resp *azcore.Response) error {
+// GetMultiplePagesFragmentNextLinkHandleError handles the GetMultiplePagesFragmentNextLink error response.
+func (client *PagingClient) GetMultiplePagesFragmentNextLinkHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -306,23 +317,23 @@ func (client *pagingOperations) getMultiplePagesFragmentNextLinkHandleError(resp
 }
 
 // GetMultiplePagesFragmentWithGroupingNextLink - A paging operation that doesn't return a full URL, just a fragment with parameters grouped
-func (client *pagingOperations) GetMultiplePagesFragmentWithGroupingNextLink(customParameterGroup CustomParameterGroup) (OdataProductResultPager, error) {
-	req, err := client.getMultiplePagesFragmentWithGroupingNextLinkCreateRequest(customParameterGroup)
+func (client *PagingClient) GetMultiplePagesFragmentWithGroupingNextLink(customParameterGroup CustomParameterGroup) (OdataProductResultPager, error) {
+	req, err := client.GetMultiplePagesFragmentWithGroupingNextLinkCreateRequest(customParameterGroup)
 	if err != nil {
 		return nil, err
 	}
 	return &odataProductResultPager{
 		pipeline:  client.p,
 		request:   req,
-		responder: client.getMultiplePagesFragmentWithGroupingNextLinkHandleResponse,
+		responder: client.GetMultiplePagesFragmentWithGroupingNextLinkHandleResponse,
 		advancer: func(resp *OdataProductResultResponse) (*azcore.Request, error) {
-			return client.nextFragmentWithGroupingCreateRequest(*resp.OdataProductResult.OdataNextLink, customParameterGroup)
+			return client.NextFragmentWithGroupingCreateRequest(*resp.OdataProductResult.OdataNextLink, customParameterGroup)
 		},
 	}, nil
 }
 
-// getMultiplePagesFragmentWithGroupingNextLinkCreateRequest creates the GetMultiplePagesFragmentWithGroupingNextLink request.
-func (client *pagingOperations) getMultiplePagesFragmentWithGroupingNextLinkCreateRequest(customParameterGroup CustomParameterGroup) (*azcore.Request, error) {
+// GetMultiplePagesFragmentWithGroupingNextLinkCreateRequest creates the GetMultiplePagesFragmentWithGroupingNextLink request.
+func (client *PagingClient) GetMultiplePagesFragmentWithGroupingNextLinkCreateRequest(customParameterGroup CustomParameterGroup) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -340,17 +351,17 @@ func (client *pagingOperations) getMultiplePagesFragmentWithGroupingNextLinkCrea
 	return req, nil
 }
 
-// getMultiplePagesFragmentWithGroupingNextLinkHandleResponse handles the GetMultiplePagesFragmentWithGroupingNextLink response.
-func (client *pagingOperations) getMultiplePagesFragmentWithGroupingNextLinkHandleResponse(resp *azcore.Response) (*OdataProductResultResponse, error) {
+// GetMultiplePagesFragmentWithGroupingNextLinkHandleResponse handles the GetMultiplePagesFragmentWithGroupingNextLink response.
+func (client *PagingClient) GetMultiplePagesFragmentWithGroupingNextLinkHandleResponse(resp *azcore.Response) (*OdataProductResultResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getMultiplePagesFragmentWithGroupingNextLinkHandleError(resp)
+		return nil, client.GetMultiplePagesFragmentWithGroupingNextLinkHandleError(resp)
 	}
 	result := OdataProductResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.OdataProductResult)
 }
 
-// getMultiplePagesFragmentWithGroupingNextLinkHandleError handles the GetMultiplePagesFragmentWithGroupingNextLink error response.
-func (client *pagingOperations) getMultiplePagesFragmentWithGroupingNextLinkHandleError(resp *azcore.Response) error {
+// GetMultiplePagesFragmentWithGroupingNextLinkHandleError handles the GetMultiplePagesFragmentWithGroupingNextLink error response.
+func (client *PagingClient) GetMultiplePagesFragmentWithGroupingNextLinkHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -362,21 +373,21 @@ func (client *pagingOperations) getMultiplePagesFragmentWithGroupingNextLinkHand
 }
 
 // GetMultiplePagesLro - A long-running paging operation that includes a nextLink that has 10 pages
-func (client *pagingOperations) BeginGetMultiplePagesLro(ctx context.Context, pagingGetMultiplePagesLroOptions *PagingGetMultiplePagesLroOptions) (*ProductResultPagerPollerResponse, error) {
-	req, err := client.getMultiplePagesLroCreateRequest(pagingGetMultiplePagesLroOptions)
+func (client *PagingClient) BeginGetMultiplePagesLro(ctx context.Context, pagingGetMultiplePagesLroOptions *PagingGetMultiplePagesLroOptions) (*ProductResultPagerPollerResponse, error) {
+	req, err := client.GetMultiplePagesLroCreateRequest(pagingGetMultiplePagesLroOptions)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getMultiplePagesLroHandleResponse(resp)
+	result, err := client.GetMultiplePagesLroHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
-	pt, err := armcore.NewPoller("pagingOperations.GetMultiplePagesLro", "", resp, client.getMultiplePagesLroHandleError)
+	pt, err := armcore.NewPoller("PagingClient.GetMultiplePagesLro", "", resp, client.GetMultiplePagesLroHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -392,8 +403,8 @@ func (client *pagingOperations) BeginGetMultiplePagesLro(ctx context.Context, pa
 	return result, nil
 }
 
-func (client *pagingOperations) ResumeGetMultiplePagesLro(token string) (ProductResultPagerPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("pagingOperations.GetMultiplePagesLro", token, client.getMultiplePagesLroHandleError)
+func (client *PagingClient) ResumeGetMultiplePagesLro(token string) (ProductResultPagerPoller, error) {
+	pt, err := armcore.NewPollerFromResumeToken("PagingClient.GetMultiplePagesLro", token, client.GetMultiplePagesLroHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -403,8 +414,8 @@ func (client *pagingOperations) ResumeGetMultiplePagesLro(token string) (Product
 	}, nil
 }
 
-// getMultiplePagesLroCreateRequest creates the GetMultiplePagesLro request.
-func (client *pagingOperations) getMultiplePagesLroCreateRequest(pagingGetMultiplePagesLroOptions *PagingGetMultiplePagesLroOptions) (*azcore.Request, error) {
+// GetMultiplePagesLroCreateRequest creates the GetMultiplePagesLro request.
+func (client *PagingClient) GetMultiplePagesLroCreateRequest(pagingGetMultiplePagesLroOptions *PagingGetMultiplePagesLroOptions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -427,25 +438,25 @@ func (client *pagingOperations) getMultiplePagesLroCreateRequest(pagingGetMultip
 	return req, nil
 }
 
-// getMultiplePagesLroHandleResponse handles the GetMultiplePagesLro response.
-func (client *pagingOperations) getMultiplePagesLroHandleResponse(resp *azcore.Response) (*ProductResultPagerPollerResponse, error) {
+// GetMultiplePagesLroHandleResponse handles the GetMultiplePagesLro response.
+func (client *PagingClient) GetMultiplePagesLroHandleResponse(resp *azcore.Response) (*ProductResultPagerPollerResponse, error) {
 	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.getMultiplePagesLroHandleError(resp)
+		return nil, client.GetMultiplePagesLroHandleError(resp)
 	}
 	return &ProductResultPagerPollerResponse{RawResponse: resp.Response}, nil
 }
 
-// getMultiplePagesLroHandleResponse handles the GetMultiplePagesLro response.
-func (client *pagingOperations) productResultPagerHandleResponse(resp *azcore.Response) (*ProductResultResponse, error) {
+// GetMultiplePagesLroHandleResponse handles the GetMultiplePagesLro response.
+func (client *PagingClient) productResultPagerHandleResponse(resp *azcore.Response) (*ProductResultResponse, error) {
 	if !resp.HasStatusCode(http.StatusAccepted, http.StatusOK) {
-		return nil, client.getMultiplePagesLroHandleError(resp)
+		return nil, client.GetMultiplePagesLroHandleError(resp)
 	}
 	result := ProductResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ProductResult)
 }
 
-// getMultiplePagesLroHandleError handles the GetMultiplePagesLro error response.
-func (client *pagingOperations) getMultiplePagesLroHandleError(resp *azcore.Response) error {
+// GetMultiplePagesLroHandleError handles the GetMultiplePagesLro error response.
+func (client *PagingClient) GetMultiplePagesLroHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -457,15 +468,15 @@ func (client *pagingOperations) getMultiplePagesLroHandleError(resp *azcore.Resp
 }
 
 // GetMultiplePagesRetryFirst - A paging operation that fails on the first call with 500 and then retries and then get a response including a nextLink that has 10 pages
-func (client *pagingOperations) GetMultiplePagesRetryFirst() (ProductResultPager, error) {
-	req, err := client.getMultiplePagesRetryFirstCreateRequest()
+func (client *PagingClient) GetMultiplePagesRetryFirst() (ProductResultPager, error) {
+	req, err := client.GetMultiplePagesRetryFirstCreateRequest()
 	if err != nil {
 		return nil, err
 	}
 	return &productResultPager{
 		pipeline:  client.p,
 		request:   req,
-		responder: client.getMultiplePagesRetryFirstHandleResponse,
+		responder: client.GetMultiplePagesRetryFirstHandleResponse,
 		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.ProductResult.NextLink)
 			if err != nil {
@@ -479,8 +490,8 @@ func (client *pagingOperations) GetMultiplePagesRetryFirst() (ProductResultPager
 	}, nil
 }
 
-// getMultiplePagesRetryFirstCreateRequest creates the GetMultiplePagesRetryFirst request.
-func (client *pagingOperations) getMultiplePagesRetryFirstCreateRequest() (*azcore.Request, error) {
+// GetMultiplePagesRetryFirstCreateRequest creates the GetMultiplePagesRetryFirst request.
+func (client *PagingClient) GetMultiplePagesRetryFirstCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -494,17 +505,17 @@ func (client *pagingOperations) getMultiplePagesRetryFirstCreateRequest() (*azco
 	return req, nil
 }
 
-// getMultiplePagesRetryFirstHandleResponse handles the GetMultiplePagesRetryFirst response.
-func (client *pagingOperations) getMultiplePagesRetryFirstHandleResponse(resp *azcore.Response) (*ProductResultResponse, error) {
+// GetMultiplePagesRetryFirstHandleResponse handles the GetMultiplePagesRetryFirst response.
+func (client *PagingClient) GetMultiplePagesRetryFirstHandleResponse(resp *azcore.Response) (*ProductResultResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getMultiplePagesRetryFirstHandleError(resp)
+		return nil, client.GetMultiplePagesRetryFirstHandleError(resp)
 	}
 	result := ProductResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ProductResult)
 }
 
-// getMultiplePagesRetryFirstHandleError handles the GetMultiplePagesRetryFirst error response.
-func (client *pagingOperations) getMultiplePagesRetryFirstHandleError(resp *azcore.Response) error {
+// GetMultiplePagesRetryFirstHandleError handles the GetMultiplePagesRetryFirst error response.
+func (client *PagingClient) GetMultiplePagesRetryFirstHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -516,15 +527,15 @@ func (client *pagingOperations) getMultiplePagesRetryFirstHandleError(resp *azco
 }
 
 // GetMultiplePagesRetrySecond - A paging operation that includes a nextLink that has 10 pages, of which the 2nd call fails first with 500. The client should retry and finish all 10 pages eventually.
-func (client *pagingOperations) GetMultiplePagesRetrySecond() (ProductResultPager, error) {
-	req, err := client.getMultiplePagesRetrySecondCreateRequest()
+func (client *PagingClient) GetMultiplePagesRetrySecond() (ProductResultPager, error) {
+	req, err := client.GetMultiplePagesRetrySecondCreateRequest()
 	if err != nil {
 		return nil, err
 	}
 	return &productResultPager{
 		pipeline:  client.p,
 		request:   req,
-		responder: client.getMultiplePagesRetrySecondHandleResponse,
+		responder: client.GetMultiplePagesRetrySecondHandleResponse,
 		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.ProductResult.NextLink)
 			if err != nil {
@@ -538,8 +549,8 @@ func (client *pagingOperations) GetMultiplePagesRetrySecond() (ProductResultPage
 	}, nil
 }
 
-// getMultiplePagesRetrySecondCreateRequest creates the GetMultiplePagesRetrySecond request.
-func (client *pagingOperations) getMultiplePagesRetrySecondCreateRequest() (*azcore.Request, error) {
+// GetMultiplePagesRetrySecondCreateRequest creates the GetMultiplePagesRetrySecond request.
+func (client *PagingClient) GetMultiplePagesRetrySecondCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -553,17 +564,17 @@ func (client *pagingOperations) getMultiplePagesRetrySecondCreateRequest() (*azc
 	return req, nil
 }
 
-// getMultiplePagesRetrySecondHandleResponse handles the GetMultiplePagesRetrySecond response.
-func (client *pagingOperations) getMultiplePagesRetrySecondHandleResponse(resp *azcore.Response) (*ProductResultResponse, error) {
+// GetMultiplePagesRetrySecondHandleResponse handles the GetMultiplePagesRetrySecond response.
+func (client *PagingClient) GetMultiplePagesRetrySecondHandleResponse(resp *azcore.Response) (*ProductResultResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getMultiplePagesRetrySecondHandleError(resp)
+		return nil, client.GetMultiplePagesRetrySecondHandleError(resp)
 	}
 	result := ProductResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ProductResult)
 }
 
-// getMultiplePagesRetrySecondHandleError handles the GetMultiplePagesRetrySecond error response.
-func (client *pagingOperations) getMultiplePagesRetrySecondHandleError(resp *azcore.Response) error {
+// GetMultiplePagesRetrySecondHandleError handles the GetMultiplePagesRetrySecond error response.
+func (client *PagingClient) GetMultiplePagesRetrySecondHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -575,15 +586,15 @@ func (client *pagingOperations) getMultiplePagesRetrySecondHandleError(resp *azc
 }
 
 // GetMultiplePagesWithOffset - A paging operation that includes a nextLink that has 10 pages
-func (client *pagingOperations) GetMultiplePagesWithOffset(pagingGetMultiplePagesWithOffsetOptions PagingGetMultiplePagesWithOffsetOptions) (ProductResultPager, error) {
-	req, err := client.getMultiplePagesWithOffsetCreateRequest(pagingGetMultiplePagesWithOffsetOptions)
+func (client *PagingClient) GetMultiplePagesWithOffset(pagingGetMultiplePagesWithOffsetOptions PagingGetMultiplePagesWithOffsetOptions) (ProductResultPager, error) {
+	req, err := client.GetMultiplePagesWithOffsetCreateRequest(pagingGetMultiplePagesWithOffsetOptions)
 	if err != nil {
 		return nil, err
 	}
 	return &productResultPager{
 		pipeline:  client.p,
 		request:   req,
-		responder: client.getMultiplePagesWithOffsetHandleResponse,
+		responder: client.GetMultiplePagesWithOffsetHandleResponse,
 		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.ProductResult.NextLink)
 			if err != nil {
@@ -597,8 +608,8 @@ func (client *pagingOperations) GetMultiplePagesWithOffset(pagingGetMultiplePage
 	}, nil
 }
 
-// getMultiplePagesWithOffsetCreateRequest creates the GetMultiplePagesWithOffset request.
-func (client *pagingOperations) getMultiplePagesWithOffsetCreateRequest(pagingGetMultiplePagesWithOffsetOptions PagingGetMultiplePagesWithOffsetOptions) (*azcore.Request, error) {
+// GetMultiplePagesWithOffsetCreateRequest creates the GetMultiplePagesWithOffset request.
+func (client *PagingClient) GetMultiplePagesWithOffsetCreateRequest(pagingGetMultiplePagesWithOffsetOptions PagingGetMultiplePagesWithOffsetOptions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -622,17 +633,17 @@ func (client *pagingOperations) getMultiplePagesWithOffsetCreateRequest(pagingGe
 	return req, nil
 }
 
-// getMultiplePagesWithOffsetHandleResponse handles the GetMultiplePagesWithOffset response.
-func (client *pagingOperations) getMultiplePagesWithOffsetHandleResponse(resp *azcore.Response) (*ProductResultResponse, error) {
+// GetMultiplePagesWithOffsetHandleResponse handles the GetMultiplePagesWithOffset response.
+func (client *PagingClient) GetMultiplePagesWithOffsetHandleResponse(resp *azcore.Response) (*ProductResultResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getMultiplePagesWithOffsetHandleError(resp)
+		return nil, client.GetMultiplePagesWithOffsetHandleError(resp)
 	}
 	result := ProductResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ProductResult)
 }
 
-// getMultiplePagesWithOffsetHandleError handles the GetMultiplePagesWithOffset error response.
-func (client *pagingOperations) getMultiplePagesWithOffsetHandleError(resp *azcore.Response) error {
+// GetMultiplePagesWithOffsetHandleError handles the GetMultiplePagesWithOffset error response.
+func (client *PagingClient) GetMultiplePagesWithOffsetHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -644,15 +655,15 @@ func (client *pagingOperations) getMultiplePagesWithOffsetHandleError(resp *azco
 }
 
 // GetNoItemNamePages - A paging operation that must return result of the default 'value' node.
-func (client *pagingOperations) GetNoItemNamePages() (ProductResultValuePager, error) {
-	req, err := client.getNoItemNamePagesCreateRequest()
+func (client *PagingClient) GetNoItemNamePages() (ProductResultValuePager, error) {
+	req, err := client.GetNoItemNamePagesCreateRequest()
 	if err != nil {
 		return nil, err
 	}
 	return &productResultValuePager{
 		pipeline:  client.p,
 		request:   req,
-		responder: client.getNoItemNamePagesHandleResponse,
+		responder: client.GetNoItemNamePagesHandleResponse,
 		advancer: func(resp *ProductResultValueResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.ProductResultValue.NextLink)
 			if err != nil {
@@ -666,8 +677,8 @@ func (client *pagingOperations) GetNoItemNamePages() (ProductResultValuePager, e
 	}, nil
 }
 
-// getNoItemNamePagesCreateRequest creates the GetNoItemNamePages request.
-func (client *pagingOperations) getNoItemNamePagesCreateRequest() (*azcore.Request, error) {
+// GetNoItemNamePagesCreateRequest creates the GetNoItemNamePages request.
+func (client *PagingClient) GetNoItemNamePagesCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -681,17 +692,17 @@ func (client *pagingOperations) getNoItemNamePagesCreateRequest() (*azcore.Reque
 	return req, nil
 }
 
-// getNoItemNamePagesHandleResponse handles the GetNoItemNamePages response.
-func (client *pagingOperations) getNoItemNamePagesHandleResponse(resp *azcore.Response) (*ProductResultValueResponse, error) {
+// GetNoItemNamePagesHandleResponse handles the GetNoItemNamePages response.
+func (client *PagingClient) GetNoItemNamePagesHandleResponse(resp *azcore.Response) (*ProductResultValueResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getNoItemNamePagesHandleError(resp)
+		return nil, client.GetNoItemNamePagesHandleError(resp)
 	}
 	result := ProductResultValueResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ProductResultValue)
 }
 
-// getNoItemNamePagesHandleError handles the GetNoItemNamePages error response.
-func (client *pagingOperations) getNoItemNamePagesHandleError(resp *azcore.Response) error {
+// GetNoItemNamePagesHandleError handles the GetNoItemNamePages error response.
+func (client *PagingClient) GetNoItemNamePagesHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -703,24 +714,24 @@ func (client *pagingOperations) getNoItemNamePagesHandleError(resp *azcore.Respo
 }
 
 // GetNullNextLinkNamePages - A paging operation that must ignore any kind of nextLink, and stop after page 1.
-func (client *pagingOperations) GetNullNextLinkNamePages(ctx context.Context) (*ProductResultResponse, error) {
-	req, err := client.getNullNextLinkNamePagesCreateRequest()
+func (client *PagingClient) GetNullNextLinkNamePages(ctx context.Context) (*ProductResultResponse, error) {
+	req, err := client.GetNullNextLinkNamePagesCreateRequest()
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getNullNextLinkNamePagesHandleResponse(resp)
+	result, err := client.GetNullNextLinkNamePagesHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getNullNextLinkNamePagesCreateRequest creates the GetNullNextLinkNamePages request.
-func (client *pagingOperations) getNullNextLinkNamePagesCreateRequest() (*azcore.Request, error) {
+// GetNullNextLinkNamePagesCreateRequest creates the GetNullNextLinkNamePages request.
+func (client *PagingClient) GetNullNextLinkNamePagesCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -734,17 +745,17 @@ func (client *pagingOperations) getNullNextLinkNamePagesCreateRequest() (*azcore
 	return req, nil
 }
 
-// getNullNextLinkNamePagesHandleResponse handles the GetNullNextLinkNamePages response.
-func (client *pagingOperations) getNullNextLinkNamePagesHandleResponse(resp *azcore.Response) (*ProductResultResponse, error) {
+// GetNullNextLinkNamePagesHandleResponse handles the GetNullNextLinkNamePages response.
+func (client *PagingClient) GetNullNextLinkNamePagesHandleResponse(resp *azcore.Response) (*ProductResultResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getNullNextLinkNamePagesHandleError(resp)
+		return nil, client.GetNullNextLinkNamePagesHandleError(resp)
 	}
 	result := ProductResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ProductResult)
 }
 
-// getNullNextLinkNamePagesHandleError handles the GetNullNextLinkNamePages error response.
-func (client *pagingOperations) getNullNextLinkNamePagesHandleError(resp *azcore.Response) error {
+// GetNullNextLinkNamePagesHandleError handles the GetNullNextLinkNamePages error response.
+func (client *PagingClient) GetNullNextLinkNamePagesHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -756,15 +767,15 @@ func (client *pagingOperations) getNullNextLinkNamePagesHandleError(resp *azcore
 }
 
 // GetOdataMultiplePages - A paging operation that includes a nextLink in odata format that has 10 pages
-func (client *pagingOperations) GetOdataMultiplePages(pagingGetOdataMultiplePagesOptions *PagingGetOdataMultiplePagesOptions) (OdataProductResultPager, error) {
-	req, err := client.getOdataMultiplePagesCreateRequest(pagingGetOdataMultiplePagesOptions)
+func (client *PagingClient) GetOdataMultiplePages(pagingGetOdataMultiplePagesOptions *PagingGetOdataMultiplePagesOptions) (OdataProductResultPager, error) {
+	req, err := client.GetOdataMultiplePagesCreateRequest(pagingGetOdataMultiplePagesOptions)
 	if err != nil {
 		return nil, err
 	}
 	return &odataProductResultPager{
 		pipeline:  client.p,
 		request:   req,
-		responder: client.getOdataMultiplePagesHandleResponse,
+		responder: client.GetOdataMultiplePagesHandleResponse,
 		advancer: func(resp *OdataProductResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.OdataProductResult.OdataNextLink)
 			if err != nil {
@@ -778,8 +789,8 @@ func (client *pagingOperations) GetOdataMultiplePages(pagingGetOdataMultiplePage
 	}, nil
 }
 
-// getOdataMultiplePagesCreateRequest creates the GetOdataMultiplePages request.
-func (client *pagingOperations) getOdataMultiplePagesCreateRequest(pagingGetOdataMultiplePagesOptions *PagingGetOdataMultiplePagesOptions) (*azcore.Request, error) {
+// GetOdataMultiplePagesCreateRequest creates the GetOdataMultiplePages request.
+func (client *PagingClient) GetOdataMultiplePagesCreateRequest(pagingGetOdataMultiplePagesOptions *PagingGetOdataMultiplePagesOptions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -802,17 +813,17 @@ func (client *pagingOperations) getOdataMultiplePagesCreateRequest(pagingGetOdat
 	return req, nil
 }
 
-// getOdataMultiplePagesHandleResponse handles the GetOdataMultiplePages response.
-func (client *pagingOperations) getOdataMultiplePagesHandleResponse(resp *azcore.Response) (*OdataProductResultResponse, error) {
+// GetOdataMultiplePagesHandleResponse handles the GetOdataMultiplePages response.
+func (client *PagingClient) GetOdataMultiplePagesHandleResponse(resp *azcore.Response) (*OdataProductResultResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getOdataMultiplePagesHandleError(resp)
+		return nil, client.GetOdataMultiplePagesHandleError(resp)
 	}
 	result := OdataProductResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.OdataProductResult)
 }
 
-// getOdataMultiplePagesHandleError handles the GetOdataMultiplePages error response.
-func (client *pagingOperations) getOdataMultiplePagesHandleError(resp *azcore.Response) error {
+// GetOdataMultiplePagesHandleError handles the GetOdataMultiplePages error response.
+func (client *PagingClient) GetOdataMultiplePagesHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -824,15 +835,15 @@ func (client *pagingOperations) getOdataMultiplePagesHandleError(resp *azcore.Re
 }
 
 // GetPagingModelWithItemNameWithXmsClientName - A paging operation that returns a paging model whose item name is is overriden by x-ms-client-name 'indexes'.
-func (client *pagingOperations) GetPagingModelWithItemNameWithXmsClientName() (ProductResultValueWithXmsClientNamePager, error) {
-	req, err := client.getPagingModelWithItemNameWithXmsClientNameCreateRequest()
+func (client *PagingClient) GetPagingModelWithItemNameWithXmsClientName() (ProductResultValueWithXmsClientNamePager, error) {
+	req, err := client.GetPagingModelWithItemNameWithXmsClientNameCreateRequest()
 	if err != nil {
 		return nil, err
 	}
 	return &productResultValueWithXmsClientNamePager{
 		pipeline:  client.p,
 		request:   req,
-		responder: client.getPagingModelWithItemNameWithXmsClientNameHandleResponse,
+		responder: client.GetPagingModelWithItemNameWithXmsClientNameHandleResponse,
 		advancer: func(resp *ProductResultValueWithXmsClientNameResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.ProductResultValueWithXmsClientName.NextLink)
 			if err != nil {
@@ -846,8 +857,8 @@ func (client *pagingOperations) GetPagingModelWithItemNameWithXmsClientName() (P
 	}, nil
 }
 
-// getPagingModelWithItemNameWithXmsClientNameCreateRequest creates the GetPagingModelWithItemNameWithXmsClientName request.
-func (client *pagingOperations) getPagingModelWithItemNameWithXmsClientNameCreateRequest() (*azcore.Request, error) {
+// GetPagingModelWithItemNameWithXmsClientNameCreateRequest creates the GetPagingModelWithItemNameWithXmsClientName request.
+func (client *PagingClient) GetPagingModelWithItemNameWithXmsClientNameCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -861,17 +872,17 @@ func (client *pagingOperations) getPagingModelWithItemNameWithXmsClientNameCreat
 	return req, nil
 }
 
-// getPagingModelWithItemNameWithXmsClientNameHandleResponse handles the GetPagingModelWithItemNameWithXmsClientName response.
-func (client *pagingOperations) getPagingModelWithItemNameWithXmsClientNameHandleResponse(resp *azcore.Response) (*ProductResultValueWithXmsClientNameResponse, error) {
+// GetPagingModelWithItemNameWithXmsClientNameHandleResponse handles the GetPagingModelWithItemNameWithXmsClientName response.
+func (client *PagingClient) GetPagingModelWithItemNameWithXmsClientNameHandleResponse(resp *azcore.Response) (*ProductResultValueWithXmsClientNameResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getPagingModelWithItemNameWithXmsClientNameHandleError(resp)
+		return nil, client.GetPagingModelWithItemNameWithXmsClientNameHandleError(resp)
 	}
 	result := ProductResultValueWithXmsClientNameResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ProductResultValueWithXmsClientName)
 }
 
-// getPagingModelWithItemNameWithXmsClientNameHandleError handles the GetPagingModelWithItemNameWithXmsClientName error response.
-func (client *pagingOperations) getPagingModelWithItemNameWithXmsClientNameHandleError(resp *azcore.Response) error {
+// GetPagingModelWithItemNameWithXmsClientNameHandleError handles the GetPagingModelWithItemNameWithXmsClientName error response.
+func (client *PagingClient) GetPagingModelWithItemNameWithXmsClientNameHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -883,15 +894,15 @@ func (client *pagingOperations) getPagingModelWithItemNameWithXmsClientNameHandl
 }
 
 // GetSinglePages - A paging operation that finishes on the first call without a nextlink
-func (client *pagingOperations) GetSinglePages() (ProductResultPager, error) {
-	req, err := client.getSinglePagesCreateRequest()
+func (client *PagingClient) GetSinglePages() (ProductResultPager, error) {
+	req, err := client.GetSinglePagesCreateRequest()
 	if err != nil {
 		return nil, err
 	}
 	return &productResultPager{
 		pipeline:  client.p,
 		request:   req,
-		responder: client.getSinglePagesHandleResponse,
+		responder: client.GetSinglePagesHandleResponse,
 		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.ProductResult.NextLink)
 			if err != nil {
@@ -905,8 +916,8 @@ func (client *pagingOperations) GetSinglePages() (ProductResultPager, error) {
 	}, nil
 }
 
-// getSinglePagesCreateRequest creates the GetSinglePages request.
-func (client *pagingOperations) getSinglePagesCreateRequest() (*azcore.Request, error) {
+// GetSinglePagesCreateRequest creates the GetSinglePages request.
+func (client *PagingClient) GetSinglePagesCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -920,17 +931,17 @@ func (client *pagingOperations) getSinglePagesCreateRequest() (*azcore.Request, 
 	return req, nil
 }
 
-// getSinglePagesHandleResponse handles the GetSinglePages response.
-func (client *pagingOperations) getSinglePagesHandleResponse(resp *azcore.Response) (*ProductResultResponse, error) {
+// GetSinglePagesHandleResponse handles the GetSinglePages response.
+func (client *PagingClient) GetSinglePagesHandleResponse(resp *azcore.Response) (*ProductResultResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getSinglePagesHandleError(resp)
+		return nil, client.GetSinglePagesHandleError(resp)
 	}
 	result := ProductResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ProductResult)
 }
 
-// getSinglePagesHandleError handles the GetSinglePages error response.
-func (client *pagingOperations) getSinglePagesHandleError(resp *azcore.Response) error {
+// GetSinglePagesHandleError handles the GetSinglePages error response.
+func (client *PagingClient) GetSinglePagesHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -942,15 +953,15 @@ func (client *pagingOperations) getSinglePagesHandleError(resp *azcore.Response)
 }
 
 // GetSinglePagesFailure - A paging operation that receives a 400 on the first call
-func (client *pagingOperations) GetSinglePagesFailure() (ProductResultPager, error) {
-	req, err := client.getSinglePagesFailureCreateRequest()
+func (client *PagingClient) GetSinglePagesFailure() (ProductResultPager, error) {
+	req, err := client.GetSinglePagesFailureCreateRequest()
 	if err != nil {
 		return nil, err
 	}
 	return &productResultPager{
 		pipeline:  client.p,
 		request:   req,
-		responder: client.getSinglePagesFailureHandleResponse,
+		responder: client.GetSinglePagesFailureHandleResponse,
 		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.ProductResult.NextLink)
 			if err != nil {
@@ -964,8 +975,8 @@ func (client *pagingOperations) GetSinglePagesFailure() (ProductResultPager, err
 	}, nil
 }
 
-// getSinglePagesFailureCreateRequest creates the GetSinglePagesFailure request.
-func (client *pagingOperations) getSinglePagesFailureCreateRequest() (*azcore.Request, error) {
+// GetSinglePagesFailureCreateRequest creates the GetSinglePagesFailure request.
+func (client *PagingClient) GetSinglePagesFailureCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -979,17 +990,17 @@ func (client *pagingOperations) getSinglePagesFailureCreateRequest() (*azcore.Re
 	return req, nil
 }
 
-// getSinglePagesFailureHandleResponse handles the GetSinglePagesFailure response.
-func (client *pagingOperations) getSinglePagesFailureHandleResponse(resp *azcore.Response) (*ProductResultResponse, error) {
+// GetSinglePagesFailureHandleResponse handles the GetSinglePagesFailure response.
+func (client *PagingClient) GetSinglePagesFailureHandleResponse(resp *azcore.Response) (*ProductResultResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getSinglePagesFailureHandleError(resp)
+		return nil, client.GetSinglePagesFailureHandleError(resp)
 	}
 	result := ProductResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ProductResult)
 }
 
-// getSinglePagesFailureHandleError handles the GetSinglePagesFailure error response.
-func (client *pagingOperations) getSinglePagesFailureHandleError(resp *azcore.Response) error {
+// GetSinglePagesFailureHandleError handles the GetSinglePagesFailure error response.
+func (client *PagingClient) GetSinglePagesFailureHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -1001,23 +1012,23 @@ func (client *pagingOperations) getSinglePagesFailureHandleError(resp *azcore.Re
 }
 
 // GetWithQueryParams - A paging operation that includes a next operation. It has a different query parameter from it's next operation nextOperationWithQueryParams. Returns a ProductResult
-func (client *pagingOperations) GetWithQueryParams(requiredQueryParameter int32) (ProductResultPager, error) {
-	req, err := client.getWithQueryParamsCreateRequest(requiredQueryParameter)
+func (client *PagingClient) GetWithQueryParams(requiredQueryParameter int32) (ProductResultPager, error) {
+	req, err := client.GetWithQueryParamsCreateRequest(requiredQueryParameter)
 	if err != nil {
 		return nil, err
 	}
 	return &productResultPager{
 		pipeline:  client.p,
 		request:   req,
-		responder: client.getWithQueryParamsHandleResponse,
+		responder: client.GetWithQueryParamsHandleResponse,
 		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
-			return client.nextOperationWithQueryParamsCreateRequest()
+			return client.NextOperationWithQueryParamsCreateRequest()
 		},
 	}, nil
 }
 
-// getWithQueryParamsCreateRequest creates the GetWithQueryParams request.
-func (client *pagingOperations) getWithQueryParamsCreateRequest(requiredQueryParameter int32) (*azcore.Request, error) {
+// GetWithQueryParamsCreateRequest creates the GetWithQueryParams request.
+func (client *PagingClient) GetWithQueryParamsCreateRequest(requiredQueryParameter int32) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -1035,17 +1046,17 @@ func (client *pagingOperations) getWithQueryParamsCreateRequest(requiredQueryPar
 	return req, nil
 }
 
-// getWithQueryParamsHandleResponse handles the GetWithQueryParams response.
-func (client *pagingOperations) getWithQueryParamsHandleResponse(resp *azcore.Response) (*ProductResultResponse, error) {
+// GetWithQueryParamsHandleResponse handles the GetWithQueryParams response.
+func (client *PagingClient) GetWithQueryParamsHandleResponse(resp *azcore.Response) (*ProductResultResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getWithQueryParamsHandleError(resp)
+		return nil, client.GetWithQueryParamsHandleError(resp)
 	}
 	result := ProductResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ProductResult)
 }
 
-// getWithQueryParamsHandleError handles the GetWithQueryParams error response.
-func (client *pagingOperations) getWithQueryParamsHandleError(resp *azcore.Response) error {
+// GetWithQueryParamsHandleError handles the GetWithQueryParams error response.
+func (client *PagingClient) GetWithQueryParamsHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -1056,8 +1067,8 @@ func (client *pagingOperations) getWithQueryParamsHandleError(resp *azcore.Respo
 	return errors.New(string(body))
 }
 
-// nextFragmentCreateRequest creates the NextFragment request.
-func (client *pagingOperations) nextFragmentCreateRequest(apiVersion string, tenant string, nextLink string) (*azcore.Request, error) {
+// NextFragmentCreateRequest creates the NextFragment request.
+func (client *PagingClient) NextFragmentCreateRequest(apiVersion string, tenant string, nextLink string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -1076,17 +1087,17 @@ func (client *pagingOperations) nextFragmentCreateRequest(apiVersion string, ten
 	return req, nil
 }
 
-// nextFragmentHandleResponse handles the NextFragment response.
-func (client *pagingOperations) nextFragmentHandleResponse(resp *azcore.Response) (*OdataProductResultResponse, error) {
+// NextFragmentHandleResponse handles the NextFragment response.
+func (client *PagingClient) NextFragmentHandleResponse(resp *azcore.Response) (*OdataProductResultResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.nextFragmentHandleError(resp)
+		return nil, client.NextFragmentHandleError(resp)
 	}
 	result := OdataProductResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.OdataProductResult)
 }
 
-// nextFragmentHandleError handles the NextFragment error response.
-func (client *pagingOperations) nextFragmentHandleError(resp *azcore.Response) error {
+// NextFragmentHandleError handles the NextFragment error response.
+func (client *PagingClient) NextFragmentHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -1097,8 +1108,8 @@ func (client *pagingOperations) nextFragmentHandleError(resp *azcore.Response) e
 	return errors.New(string(body))
 }
 
-// nextFragmentWithGroupingCreateRequest creates the NextFragmentWithGrouping request.
-func (client *pagingOperations) nextFragmentWithGroupingCreateRequest(nextLink string, customParameterGroup CustomParameterGroup) (*azcore.Request, error) {
+// NextFragmentWithGroupingCreateRequest creates the NextFragmentWithGrouping request.
+func (client *PagingClient) NextFragmentWithGroupingCreateRequest(nextLink string, customParameterGroup CustomParameterGroup) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -1117,17 +1128,17 @@ func (client *pagingOperations) nextFragmentWithGroupingCreateRequest(nextLink s
 	return req, nil
 }
 
-// nextFragmentWithGroupingHandleResponse handles the NextFragmentWithGrouping response.
-func (client *pagingOperations) nextFragmentWithGroupingHandleResponse(resp *azcore.Response) (*OdataProductResultResponse, error) {
+// NextFragmentWithGroupingHandleResponse handles the NextFragmentWithGrouping response.
+func (client *PagingClient) NextFragmentWithGroupingHandleResponse(resp *azcore.Response) (*OdataProductResultResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.nextFragmentWithGroupingHandleError(resp)
+		return nil, client.NextFragmentWithGroupingHandleError(resp)
 	}
 	result := OdataProductResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.OdataProductResult)
 }
 
-// nextFragmentWithGroupingHandleError handles the NextFragmentWithGrouping error response.
-func (client *pagingOperations) nextFragmentWithGroupingHandleError(resp *azcore.Response) error {
+// NextFragmentWithGroupingHandleError handles the NextFragmentWithGrouping error response.
+func (client *PagingClient) NextFragmentWithGroupingHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -1138,8 +1149,8 @@ func (client *pagingOperations) nextFragmentWithGroupingHandleError(resp *azcore
 	return errors.New(string(body))
 }
 
-// nextOperationWithQueryParamsCreateRequest creates the NextOperationWithQueryParams request.
-func (client *pagingOperations) nextOperationWithQueryParamsCreateRequest() (*azcore.Request, error) {
+// NextOperationWithQueryParamsCreateRequest creates the NextOperationWithQueryParams request.
+func (client *PagingClient) NextOperationWithQueryParamsCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -1156,17 +1167,17 @@ func (client *pagingOperations) nextOperationWithQueryParamsCreateRequest() (*az
 	return req, nil
 }
 
-// nextOperationWithQueryParamsHandleResponse handles the NextOperationWithQueryParams response.
-func (client *pagingOperations) nextOperationWithQueryParamsHandleResponse(resp *azcore.Response) (*ProductResultResponse, error) {
+// NextOperationWithQueryParamsHandleResponse handles the NextOperationWithQueryParams response.
+func (client *PagingClient) NextOperationWithQueryParamsHandleResponse(resp *azcore.Response) (*ProductResultResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.nextOperationWithQueryParamsHandleError(resp)
+		return nil, client.NextOperationWithQueryParamsHandleError(resp)
 	}
 	result := ProductResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ProductResult)
 }
 
-// nextOperationWithQueryParamsHandleError handles the NextOperationWithQueryParams error response.
-func (client *pagingOperations) nextOperationWithQueryParamsHandleError(resp *azcore.Response) error {
+// NextOperationWithQueryParamsHandleError handles the NextOperationWithQueryParams error response.
+func (client *PagingClient) NextOperationWithQueryParamsHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)

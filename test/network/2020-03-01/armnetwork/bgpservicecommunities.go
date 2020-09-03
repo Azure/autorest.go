@@ -20,22 +20,33 @@ type BgpServiceCommunitiesOperations interface {
 	List() (BgpServiceCommunityListResultPager, error)
 }
 
-// bgpServiceCommunitiesOperations implements the BgpServiceCommunitiesOperations interface.
-type bgpServiceCommunitiesOperations struct {
+// BgpServiceCommunitiesClient implements the BgpServiceCommunitiesOperations interface.
+// Don't use this type directly, use NewBgpServiceCommunitiesClient() instead.
+type BgpServiceCommunitiesClient struct {
 	*Client
 	subscriptionID string
 }
 
+// NewBgpServiceCommunitiesClient creates a new instance of BgpServiceCommunitiesClient with the specified values.
+func NewBgpServiceCommunitiesClient(c *Client, subscriptionID string) BgpServiceCommunitiesOperations {
+	return &BgpServiceCommunitiesClient{Client: c, subscriptionID: subscriptionID}
+}
+
+// Do invokes the Do() method on the pipeline associated with this client.
+func (client *BgpServiceCommunitiesClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(ctx, req)
+}
+
 // List - Gets all the available bgp service communities.
-func (client *bgpServiceCommunitiesOperations) List() (BgpServiceCommunityListResultPager, error) {
-	req, err := client.listCreateRequest()
+func (client *BgpServiceCommunitiesClient) List() (BgpServiceCommunityListResultPager, error) {
+	req, err := client.ListCreateRequest()
 	if err != nil {
 		return nil, err
 	}
 	return &bgpServiceCommunityListResultPager{
 		pipeline:  client.p,
 		request:   req,
-		responder: client.listHandleResponse,
+		responder: client.ListHandleResponse,
 		advancer: func(resp *BgpServiceCommunityListResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.BgpServiceCommunityListResult.NextLink)
 			if err != nil {
@@ -49,8 +60,8 @@ func (client *bgpServiceCommunitiesOperations) List() (BgpServiceCommunityListRe
 	}, nil
 }
 
-// listCreateRequest creates the List request.
-func (client *bgpServiceCommunitiesOperations) listCreateRequest() (*azcore.Request, error) {
+// ListCreateRequest creates the List request.
+func (client *BgpServiceCommunitiesClient) ListCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -68,17 +79,17 @@ func (client *bgpServiceCommunitiesOperations) listCreateRequest() (*azcore.Requ
 	return req, nil
 }
 
-// listHandleResponse handles the List response.
-func (client *bgpServiceCommunitiesOperations) listHandleResponse(resp *azcore.Response) (*BgpServiceCommunityListResultResponse, error) {
+// ListHandleResponse handles the List response.
+func (client *BgpServiceCommunitiesClient) ListHandleResponse(resp *azcore.Response) (*BgpServiceCommunityListResultResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.listHandleError(resp)
+		return nil, client.ListHandleError(resp)
 	}
 	result := BgpServiceCommunityListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.BgpServiceCommunityListResult)
 }
 
-// listHandleError handles the List error response.
-func (client *bgpServiceCommunitiesOperations) listHandleError(resp *azcore.Response) error {
+// ListHandleError handles the List error response.
+func (client *BgpServiceCommunitiesClient) ListHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

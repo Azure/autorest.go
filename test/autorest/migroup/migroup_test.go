@@ -12,9 +12,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
+func newMultipleInheritanceServiceClient() migroup.MultipleInheritanceServiceClientOperations {
+	return migroup.NewMultipleInheritanceServiceClient(migroup.NewDefaultClient(nil))
+}
+
 // GetCat - Get a cat with name 'Whiskers' where likesMilk, meows, and hisses is true
 func TestGetCat(t *testing.T) {
-	client := migroup.NewDefaultClient(nil).MultipleInheritanceServiceClientOperations()
+	client := newMultipleInheritanceServiceClient()
 	result, err := client.GetCat(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -33,7 +37,7 @@ func TestGetCat(t *testing.T) {
 
 // GetFeline - Get a feline where meows and hisses are true
 func TestGetFeline(t *testing.T) {
-	client := migroup.NewDefaultClient(nil).MultipleInheritanceServiceClientOperations()
+	client := newMultipleInheritanceServiceClient()
 	result, err := client.GetFeline(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -46,7 +50,7 @@ func TestGetFeline(t *testing.T) {
 
 // GetHorse - Get a horse with name 'Fred' and isAShowHorse true
 func TestGetHorse(t *testing.T) {
-	client := migroup.NewDefaultClient(nil).MultipleInheritanceServiceClientOperations()
+	client := newMultipleInheritanceServiceClient()
 	result, err := client.GetHorse(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -61,7 +65,7 @@ func TestGetHorse(t *testing.T) {
 
 // GetKitten - Get a kitten with name 'Gatito' where likesMilk and meows is true, and hisses and eatsMiceYet is false
 func TestGetKitten(t *testing.T) {
-	client := migroup.NewDefaultClient(nil).MultipleInheritanceServiceClientOperations()
+	client := newMultipleInheritanceServiceClient()
 	result, err := client.GetKitten(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -83,7 +87,7 @@ func TestGetKitten(t *testing.T) {
 
 // GetPet - Get a pet with name 'Peanut'
 func TestGetPet(t *testing.T) {
-	client := migroup.NewDefaultClient(nil).MultipleInheritanceServiceClientOperations()
+	client := newMultipleInheritanceServiceClient()
 	result, err := client.GetPet(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -95,7 +99,7 @@ func TestGetPet(t *testing.T) {
 
 // PutCat - Put a cat with name 'Boots' where likesMilk and hisses is false, meows is true
 func TestPutCat(t *testing.T) {
-	client := migroup.NewDefaultClient(nil).MultipleInheritanceServiceClientOperations()
+	client := newMultipleInheritanceServiceClient()
 	result, err := client.PutCat(context.Background(), migroup.Cat{
 		Feline: migroup.Feline{
 			Hisses: to.BoolPtr(false),
@@ -114,7 +118,7 @@ func TestPutCat(t *testing.T) {
 
 // PutFeline - Put a feline who hisses and doesn't meow
 func TestPutFeline(t *testing.T) {
-	client := migroup.NewDefaultClient(nil).MultipleInheritanceServiceClientOperations()
+	client := newMultipleInheritanceServiceClient()
 	result, err := client.PutFeline(context.Background(), migroup.Feline{
 		Hisses: to.BoolPtr(true),
 		Meows:  to.BoolPtr(false),
@@ -127,7 +131,7 @@ func TestPutFeline(t *testing.T) {
 
 // PutHorse - Put a horse with name 'General' and isAShowHorse false
 func TestPutHorse(t *testing.T) {
-	client := migroup.NewDefaultClient(nil).MultipleInheritanceServiceClientOperations()
+	client := newMultipleInheritanceServiceClient()
 	result, err := client.PutHorse(context.Background(), migroup.Horse{
 		Pet: migroup.Pet{
 			Name: to.StringPtr("General"),
@@ -142,7 +146,7 @@ func TestPutHorse(t *testing.T) {
 
 // PutKitten - Put a kitten with name 'Kitty' where likesMilk and hisses is false, meows and eatsMiceYet is true
 func TestPutKitten(t *testing.T) {
-	client := migroup.NewDefaultClient(nil).MultipleInheritanceServiceClientOperations()
+	client := newMultipleInheritanceServiceClient()
 	result, err := client.PutKitten(context.Background(), migroup.Kitten{
 		Cat: migroup.Cat{
 			Feline: migroup.Feline{
@@ -164,7 +168,7 @@ func TestPutKitten(t *testing.T) {
 
 // PutPet - Put a pet with name 'Butter'
 func TestPutPet(t *testing.T) {
-	client := migroup.NewDefaultClient(nil).MultipleInheritanceServiceClientOperations()
+	client := newMultipleInheritanceServiceClient()
 	result, err := client.PutPet(context.Background(), migroup.Pet{
 		Name: to.StringPtr("Butter"),
 	})

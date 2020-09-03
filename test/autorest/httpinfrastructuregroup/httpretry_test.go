@@ -15,12 +15,11 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
-func getHTTPRetryOperations() httpinfrastructuregroup.HTTPRetryOperations {
+func newHTTPRetryClient() httpinfrastructuregroup.HTTPRetryOperations {
 	options := httpinfrastructuregroup.DefaultClientOptions()
 	options.Retry.RetryDelay = 10 * time.Millisecond
 	options.HTTPClient = httpClientWithCookieJar()
-	client := httpinfrastructuregroup.NewDefaultClient(&options)
-	return client.HTTPRetryOperations()
+	return httpinfrastructuregroup.NewHTTPRetryClient(httpinfrastructuregroup.NewDefaultClient(&options))
 }
 
 func httpClientWithCookieJar() azcore.Transport {
@@ -35,7 +34,7 @@ func httpClientWithCookieJar() azcore.Transport {
 }
 
 func TestHTTPRetryDelete503(t *testing.T) {
-	client := getHTTPRetryOperations()
+	client := newHTTPRetryClient()
 	result, err := client.Delete503(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error but received: %v", err)
@@ -44,7 +43,7 @@ func TestHTTPRetryDelete503(t *testing.T) {
 }
 
 func TestHTTPRetryGet502(t *testing.T) {
-	client := getHTTPRetryOperations()
+	client := newHTTPRetryClient()
 	result, err := client.Get502(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
@@ -53,7 +52,7 @@ func TestHTTPRetryGet502(t *testing.T) {
 }
 
 func TestHTTPRetryHead408(t *testing.T) {
-	client := getHTTPRetryOperations()
+	client := newHTTPRetryClient()
 	result, err := client.Head408(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
@@ -63,7 +62,7 @@ func TestHTTPRetryHead408(t *testing.T) {
 
 func TestHTTPRetryOptions502(t *testing.T) {
 	t.Skip("options method not enabled by test server")
-	client := getHTTPRetryOperations()
+	client := newHTTPRetryClient()
 	result, err := client.Options502(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
@@ -72,7 +71,7 @@ func TestHTTPRetryOptions502(t *testing.T) {
 }
 
 func TestHTTPRetryPatch500(t *testing.T) {
-	client := getHTTPRetryOperations()
+	client := newHTTPRetryClient()
 	result, err := client.Patch500(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
@@ -81,7 +80,7 @@ func TestHTTPRetryPatch500(t *testing.T) {
 }
 
 func TestHTTPRetryPatch504(t *testing.T) {
-	client := getHTTPRetryOperations()
+	client := newHTTPRetryClient()
 	result, err := client.Patch504(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
@@ -90,7 +89,7 @@ func TestHTTPRetryPatch504(t *testing.T) {
 }
 
 func TestHTTPRetryPost503(t *testing.T) {
-	client := getHTTPRetryOperations()
+	client := newHTTPRetryClient()
 	result, err := client.Post503(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
@@ -99,7 +98,7 @@ func TestHTTPRetryPost503(t *testing.T) {
 }
 
 func TestHTTPRetryPut500(t *testing.T) {
-	client := getHTTPRetryOperations()
+	client := newHTTPRetryClient()
 	result, err := client.Put500(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
@@ -108,7 +107,7 @@ func TestHTTPRetryPut500(t *testing.T) {
 }
 
 func TestHTTPRetryPut504(t *testing.T) {
-	client := getHTTPRetryOperations()
+	client := newHTTPRetryClient()
 	result, err := client.Put504(context.Background())
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)

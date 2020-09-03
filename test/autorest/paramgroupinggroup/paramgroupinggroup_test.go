@@ -11,9 +11,13 @@ import (
 	"testing"
 )
 
+func newParameterGroupingClient() paramgroupinggroup.ParameterGroupingOperations {
+	return paramgroupinggroup.NewParameterGroupingClient(paramgroupinggroup.NewDefaultClient(nil))
+}
+
 // PostMultiParamGroups - Post parameters from multiple different parameter groups
 func TestPostMultiParamGroups(t *testing.T) {
-	client := paramgroupinggroup.NewDefaultClient(nil).ParameterGroupingOperations()
+	client := newParameterGroupingClient()
 	result, err := client.PostMultiParamGroups(context.Background(), nil, nil)
 	if err != nil {
 		t.Fatal(err)
@@ -23,7 +27,7 @@ func TestPostMultiParamGroups(t *testing.T) {
 
 // PostOptional - Post a bunch of optional parameters grouped
 func TestPostOptional(t *testing.T) {
-	client := paramgroupinggroup.NewDefaultClient(nil).ParameterGroupingOperations()
+	client := newParameterGroupingClient()
 	result, err := client.PostOptional(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
@@ -33,7 +37,7 @@ func TestPostOptional(t *testing.T) {
 
 // PostRequired - Post a bunch of required parameters grouped
 func TestPostRequired(t *testing.T) {
-	client := paramgroupinggroup.NewDefaultClient(nil).ParameterGroupingOperations()
+	client := newParameterGroupingClient()
 	result, err := client.PostRequired(context.Background(), paramgroupinggroup.ParameterGroupingPostRequiredParameters{
 		Body:          1234,
 		PathParameter: "path",
@@ -46,7 +50,7 @@ func TestPostRequired(t *testing.T) {
 
 // PostSharedParameterGroupObject - Post parameters with a shared parameter group object
 func TestPostSharedParameterGroupObject(t *testing.T) {
-	client := paramgroupinggroup.NewDefaultClient(nil).ParameterGroupingOperations()
+	client := newParameterGroupingClient()
 	result, err := client.PostSharedParameterGroupObject(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)

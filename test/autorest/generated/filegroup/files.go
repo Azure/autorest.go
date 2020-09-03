@@ -23,30 +23,41 @@ type FilesOperations interface {
 	GetFileLarge(ctx context.Context) (*http.Response, error)
 }
 
-// filesOperations implements the FilesOperations interface.
-type filesOperations struct {
+// FilesClient implements the FilesOperations interface.
+// Don't use this type directly, use NewFilesClient() instead.
+type FilesClient struct {
 	*Client
 }
 
+// NewFilesClient creates a new instance of FilesClient with the specified values.
+func NewFilesClient(c *Client) FilesOperations {
+	return &FilesClient{Client: c}
+}
+
+// Do invokes the Do() method on the pipeline associated with this client.
+func (client *FilesClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(ctx, req)
+}
+
 // GetEmptyFile - Get empty file
-func (client *filesOperations) GetEmptyFile(ctx context.Context) (*http.Response, error) {
-	req, err := client.getEmptyFileCreateRequest()
+func (client *FilesClient) GetEmptyFile(ctx context.Context) (*http.Response, error) {
+	req, err := client.GetEmptyFileCreateRequest()
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getEmptyFileHandleResponse(resp)
+	result, err := client.GetEmptyFileHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getEmptyFileCreateRequest creates the GetEmptyFile request.
-func (client *filesOperations) getEmptyFileCreateRequest() (*azcore.Request, error) {
+// GetEmptyFileCreateRequest creates the GetEmptyFile request.
+func (client *FilesClient) GetEmptyFileCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -61,16 +72,16 @@ func (client *filesOperations) getEmptyFileCreateRequest() (*azcore.Request, err
 	return req, nil
 }
 
-// getEmptyFileHandleResponse handles the GetEmptyFile response.
-func (client *filesOperations) getEmptyFileHandleResponse(resp *azcore.Response) (*http.Response, error) {
+// GetEmptyFileHandleResponse handles the GetEmptyFile response.
+func (client *FilesClient) GetEmptyFileHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getEmptyFileHandleError(resp)
+		return nil, client.GetEmptyFileHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// getEmptyFileHandleError handles the GetEmptyFile error response.
-func (client *filesOperations) getEmptyFileHandleError(resp *azcore.Response) error {
+// GetEmptyFileHandleError handles the GetEmptyFile error response.
+func (client *FilesClient) GetEmptyFileHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -79,24 +90,24 @@ func (client *filesOperations) getEmptyFileHandleError(resp *azcore.Response) er
 }
 
 // GetFile - Get file
-func (client *filesOperations) GetFile(ctx context.Context) (*http.Response, error) {
-	req, err := client.getFileCreateRequest()
+func (client *FilesClient) GetFile(ctx context.Context) (*http.Response, error) {
+	req, err := client.GetFileCreateRequest()
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getFileHandleResponse(resp)
+	result, err := client.GetFileHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getFileCreateRequest creates the GetFile request.
-func (client *filesOperations) getFileCreateRequest() (*azcore.Request, error) {
+// GetFileCreateRequest creates the GetFile request.
+func (client *FilesClient) GetFileCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -111,16 +122,16 @@ func (client *filesOperations) getFileCreateRequest() (*azcore.Request, error) {
 	return req, nil
 }
 
-// getFileHandleResponse handles the GetFile response.
-func (client *filesOperations) getFileHandleResponse(resp *azcore.Response) (*http.Response, error) {
+// GetFileHandleResponse handles the GetFile response.
+func (client *FilesClient) GetFileHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getFileHandleError(resp)
+		return nil, client.GetFileHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// getFileHandleError handles the GetFile error response.
-func (client *filesOperations) getFileHandleError(resp *azcore.Response) error {
+// GetFileHandleError handles the GetFile error response.
+func (client *FilesClient) GetFileHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -129,24 +140,24 @@ func (client *filesOperations) getFileHandleError(resp *azcore.Response) error {
 }
 
 // GetFileLarge - Get a large file
-func (client *filesOperations) GetFileLarge(ctx context.Context) (*http.Response, error) {
-	req, err := client.getFileLargeCreateRequest()
+func (client *FilesClient) GetFileLarge(ctx context.Context) (*http.Response, error) {
+	req, err := client.GetFileLargeCreateRequest()
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getFileLargeHandleResponse(resp)
+	result, err := client.GetFileLargeHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getFileLargeCreateRequest creates the GetFileLarge request.
-func (client *filesOperations) getFileLargeCreateRequest() (*azcore.Request, error) {
+// GetFileLargeCreateRequest creates the GetFileLarge request.
+func (client *FilesClient) GetFileLargeCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -161,16 +172,16 @@ func (client *filesOperations) getFileLargeCreateRequest() (*azcore.Request, err
 	return req, nil
 }
 
-// getFileLargeHandleResponse handles the GetFileLarge response.
-func (client *filesOperations) getFileLargeHandleResponse(resp *azcore.Response) (*http.Response, error) {
+// GetFileLargeHandleResponse handles the GetFileLarge response.
+func (client *FilesClient) GetFileLargeHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getFileLargeHandleError(resp)
+		return nil, client.GetFileLargeHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// getFileLargeHandleError handles the GetFileLarge error response.
-func (client *filesOperations) getFileLargeHandleError(resp *azcore.Response) error {
+// GetFileLargeHandleError handles the GetFileLarge error response.
+func (client *FilesClient) GetFileLargeHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

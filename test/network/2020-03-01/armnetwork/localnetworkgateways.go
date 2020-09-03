@@ -35,28 +35,39 @@ type LocalNetworkGatewaysOperations interface {
 	UpdateTags(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, parameters TagsObject) (*LocalNetworkGatewayResponse, error)
 }
 
-// localNetworkGatewaysOperations implements the LocalNetworkGatewaysOperations interface.
-type localNetworkGatewaysOperations struct {
+// LocalNetworkGatewaysClient implements the LocalNetworkGatewaysOperations interface.
+// Don't use this type directly, use NewLocalNetworkGatewaysClient() instead.
+type LocalNetworkGatewaysClient struct {
 	*Client
 	subscriptionID string
 }
 
+// NewLocalNetworkGatewaysClient creates a new instance of LocalNetworkGatewaysClient with the specified values.
+func NewLocalNetworkGatewaysClient(c *Client, subscriptionID string) LocalNetworkGatewaysOperations {
+	return &LocalNetworkGatewaysClient{Client: c, subscriptionID: subscriptionID}
+}
+
+// Do invokes the Do() method on the pipeline associated with this client.
+func (client *LocalNetworkGatewaysClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(ctx, req)
+}
+
 // CreateOrUpdate - Creates or updates a local network gateway in the specified resource group.
-func (client *localNetworkGatewaysOperations) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, parameters LocalNetworkGateway) (*LocalNetworkGatewayPollerResponse, error) {
-	req, err := client.createOrUpdateCreateRequest(resourceGroupName, localNetworkGatewayName, parameters)
+func (client *LocalNetworkGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, parameters LocalNetworkGateway) (*LocalNetworkGatewayPollerResponse, error) {
+	req, err := client.CreateOrUpdateCreateRequest(resourceGroupName, localNetworkGatewayName, parameters)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.createOrUpdateHandleResponse(resp)
+	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
-	pt, err := armcore.NewPoller("localNetworkGatewaysOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("LocalNetworkGatewaysClient.CreateOrUpdate", "azure-async-operation", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -71,8 +82,8 @@ func (client *localNetworkGatewaysOperations) BeginCreateOrUpdate(ctx context.Co
 	return result, nil
 }
 
-func (client *localNetworkGatewaysOperations) ResumeCreateOrUpdate(token string) (LocalNetworkGatewayPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("localNetworkGatewaysOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+func (client *LocalNetworkGatewaysClient) ResumeCreateOrUpdate(token string) (LocalNetworkGatewayPoller, error) {
+	pt, err := armcore.NewPollerFromResumeToken("LocalNetworkGatewaysClient.CreateOrUpdate", token, client.CreateOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -82,8 +93,8 @@ func (client *localNetworkGatewaysOperations) ResumeCreateOrUpdate(token string)
 	}, nil
 }
 
-// createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *localNetworkGatewaysOperations) createOrUpdateCreateRequest(resourceGroupName string, localNetworkGatewayName string, parameters LocalNetworkGateway) (*azcore.Request, error) {
+// CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
+func (client *LocalNetworkGatewaysClient) CreateOrUpdateCreateRequest(resourceGroupName string, localNetworkGatewayName string, parameters LocalNetworkGateway) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -103,16 +114,16 @@ func (client *localNetworkGatewaysOperations) createOrUpdateCreateRequest(resour
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *localNetworkGatewaysOperations) createOrUpdateHandleResponse(resp *azcore.Response) (*LocalNetworkGatewayPollerResponse, error) {
+// CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
+func (client *LocalNetworkGatewaysClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*LocalNetworkGatewayPollerResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, client.CreateOrUpdateHandleError(resp)
 	}
 	return &LocalNetworkGatewayPollerResponse{RawResponse: resp.Response}, nil
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *localNetworkGatewaysOperations) createOrUpdateHandleError(resp *azcore.Response) error {
+// CreateOrUpdateHandleError handles the CreateOrUpdate error response.
+func (client *LocalNetworkGatewaysClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -121,21 +132,21 @@ func (client *localNetworkGatewaysOperations) createOrUpdateHandleError(resp *az
 }
 
 // Delete - Deletes the specified local network gateway.
-func (client *localNetworkGatewaysOperations) BeginDelete(ctx context.Context, resourceGroupName string, localNetworkGatewayName string) (*HTTPPollerResponse, error) {
-	req, err := client.deleteCreateRequest(resourceGroupName, localNetworkGatewayName)
+func (client *LocalNetworkGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, localNetworkGatewayName string) (*HTTPPollerResponse, error) {
+	req, err := client.DeleteCreateRequest(resourceGroupName, localNetworkGatewayName)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.deleteHandleResponse(resp)
+	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
-	pt, err := armcore.NewPoller("localNetworkGatewaysOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("LocalNetworkGatewaysClient.Delete", "location", resp, client.DeleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -150,8 +161,8 @@ func (client *localNetworkGatewaysOperations) BeginDelete(ctx context.Context, r
 	return result, nil
 }
 
-func (client *localNetworkGatewaysOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("localNetworkGatewaysOperations.Delete", token, client.deleteHandleError)
+func (client *LocalNetworkGatewaysClient) ResumeDelete(token string) (HTTPPoller, error) {
+	pt, err := armcore.NewPollerFromResumeToken("LocalNetworkGatewaysClient.Delete", token, client.DeleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -161,8 +172,8 @@ func (client *localNetworkGatewaysOperations) ResumeDelete(token string) (HTTPPo
 	}, nil
 }
 
-// deleteCreateRequest creates the Delete request.
-func (client *localNetworkGatewaysOperations) deleteCreateRequest(resourceGroupName string, localNetworkGatewayName string) (*azcore.Request, error) {
+// DeleteCreateRequest creates the Delete request.
+func (client *LocalNetworkGatewaysClient) DeleteCreateRequest(resourceGroupName string, localNetworkGatewayName string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -182,16 +193,16 @@ func (client *localNetworkGatewaysOperations) deleteCreateRequest(resourceGroupN
 	return req, nil
 }
 
-// deleteHandleResponse handles the Delete response.
-func (client *localNetworkGatewaysOperations) deleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
+// DeleteHandleResponse handles the Delete response.
+func (client *LocalNetworkGatewaysClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, client.DeleteHandleError(resp)
 	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *localNetworkGatewaysOperations) deleteHandleError(resp *azcore.Response) error {
+// DeleteHandleError handles the Delete error response.
+func (client *LocalNetworkGatewaysClient) DeleteHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -200,24 +211,24 @@ func (client *localNetworkGatewaysOperations) deleteHandleError(resp *azcore.Res
 }
 
 // Get - Gets the specified local network gateway in a resource group.
-func (client *localNetworkGatewaysOperations) Get(ctx context.Context, resourceGroupName string, localNetworkGatewayName string) (*LocalNetworkGatewayResponse, error) {
-	req, err := client.getCreateRequest(resourceGroupName, localNetworkGatewayName)
+func (client *LocalNetworkGatewaysClient) Get(ctx context.Context, resourceGroupName string, localNetworkGatewayName string) (*LocalNetworkGatewayResponse, error) {
+	req, err := client.GetCreateRequest(resourceGroupName, localNetworkGatewayName)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getHandleResponse(resp)
+	result, err := client.GetHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getCreateRequest creates the Get request.
-func (client *localNetworkGatewaysOperations) getCreateRequest(resourceGroupName string, localNetworkGatewayName string) (*azcore.Request, error) {
+// GetCreateRequest creates the Get request.
+func (client *LocalNetworkGatewaysClient) GetCreateRequest(resourceGroupName string, localNetworkGatewayName string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -237,17 +248,17 @@ func (client *localNetworkGatewaysOperations) getCreateRequest(resourceGroupName
 	return req, nil
 }
 
-// getHandleResponse handles the Get response.
-func (client *localNetworkGatewaysOperations) getHandleResponse(resp *azcore.Response) (*LocalNetworkGatewayResponse, error) {
+// GetHandleResponse handles the Get response.
+func (client *LocalNetworkGatewaysClient) GetHandleResponse(resp *azcore.Response) (*LocalNetworkGatewayResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getHandleError(resp)
+		return nil, client.GetHandleError(resp)
 	}
 	result := LocalNetworkGatewayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.LocalNetworkGateway)
 }
 
-// getHandleError handles the Get error response.
-func (client *localNetworkGatewaysOperations) getHandleError(resp *azcore.Response) error {
+// GetHandleError handles the Get error response.
+func (client *LocalNetworkGatewaysClient) GetHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -256,15 +267,15 @@ func (client *localNetworkGatewaysOperations) getHandleError(resp *azcore.Respon
 }
 
 // List - Gets all the local network gateways in a resource group.
-func (client *localNetworkGatewaysOperations) List(resourceGroupName string) (LocalNetworkGatewayListResultPager, error) {
-	req, err := client.listCreateRequest(resourceGroupName)
+func (client *LocalNetworkGatewaysClient) List(resourceGroupName string) (LocalNetworkGatewayListResultPager, error) {
+	req, err := client.ListCreateRequest(resourceGroupName)
 	if err != nil {
 		return nil, err
 	}
 	return &localNetworkGatewayListResultPager{
 		pipeline:  client.p,
 		request:   req,
-		responder: client.listHandleResponse,
+		responder: client.ListHandleResponse,
 		advancer: func(resp *LocalNetworkGatewayListResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.LocalNetworkGatewayListResult.NextLink)
 			if err != nil {
@@ -278,8 +289,8 @@ func (client *localNetworkGatewaysOperations) List(resourceGroupName string) (Lo
 	}, nil
 }
 
-// listCreateRequest creates the List request.
-func (client *localNetworkGatewaysOperations) listCreateRequest(resourceGroupName string) (*azcore.Request, error) {
+// ListCreateRequest creates the List request.
+func (client *LocalNetworkGatewaysClient) ListCreateRequest(resourceGroupName string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -298,17 +309,17 @@ func (client *localNetworkGatewaysOperations) listCreateRequest(resourceGroupNam
 	return req, nil
 }
 
-// listHandleResponse handles the List response.
-func (client *localNetworkGatewaysOperations) listHandleResponse(resp *azcore.Response) (*LocalNetworkGatewayListResultResponse, error) {
+// ListHandleResponse handles the List response.
+func (client *LocalNetworkGatewaysClient) ListHandleResponse(resp *azcore.Response) (*LocalNetworkGatewayListResultResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.listHandleError(resp)
+		return nil, client.ListHandleError(resp)
 	}
 	result := LocalNetworkGatewayListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.LocalNetworkGatewayListResult)
 }
 
-// listHandleError handles the List error response.
-func (client *localNetworkGatewaysOperations) listHandleError(resp *azcore.Response) error {
+// ListHandleError handles the List error response.
+func (client *LocalNetworkGatewaysClient) ListHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -317,24 +328,24 @@ func (client *localNetworkGatewaysOperations) listHandleError(resp *azcore.Respo
 }
 
 // UpdateTags - Updates a local network gateway tags.
-func (client *localNetworkGatewaysOperations) UpdateTags(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, parameters TagsObject) (*LocalNetworkGatewayResponse, error) {
-	req, err := client.updateTagsCreateRequest(resourceGroupName, localNetworkGatewayName, parameters)
+func (client *LocalNetworkGatewaysClient) UpdateTags(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, parameters TagsObject) (*LocalNetworkGatewayResponse, error) {
+	req, err := client.UpdateTagsCreateRequest(resourceGroupName, localNetworkGatewayName, parameters)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.updateTagsHandleResponse(resp)
+	result, err := client.UpdateTagsHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// updateTagsCreateRequest creates the UpdateTags request.
-func (client *localNetworkGatewaysOperations) updateTagsCreateRequest(resourceGroupName string, localNetworkGatewayName string, parameters TagsObject) (*azcore.Request, error) {
+// UpdateTagsCreateRequest creates the UpdateTags request.
+func (client *LocalNetworkGatewaysClient) UpdateTagsCreateRequest(resourceGroupName string, localNetworkGatewayName string, parameters TagsObject) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -354,17 +365,17 @@ func (client *localNetworkGatewaysOperations) updateTagsCreateRequest(resourceGr
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// updateTagsHandleResponse handles the UpdateTags response.
-func (client *localNetworkGatewaysOperations) updateTagsHandleResponse(resp *azcore.Response) (*LocalNetworkGatewayResponse, error) {
+// UpdateTagsHandleResponse handles the UpdateTags response.
+func (client *LocalNetworkGatewaysClient) UpdateTagsHandleResponse(resp *azcore.Response) (*LocalNetworkGatewayResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.updateTagsHandleError(resp)
+		return nil, client.UpdateTagsHandleError(resp)
 	}
 	result := LocalNetworkGatewayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.LocalNetworkGateway)
 }
 
-// updateTagsHandleError handles the UpdateTags error response.
-func (client *localNetworkGatewaysOperations) updateTagsHandleError(resp *azcore.Response) error {
+// UpdateTagsHandleError handles the UpdateTags error response.
+func (client *LocalNetworkGatewaysClient) UpdateTagsHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

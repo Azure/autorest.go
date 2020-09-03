@@ -53,28 +53,39 @@ type ExpressRouteCircuitsOperations interface {
 	UpdateTags(ctx context.Context, resourceGroupName string, circuitName string, parameters TagsObject) (*ExpressRouteCircuitResponse, error)
 }
 
-// expressRouteCircuitsOperations implements the ExpressRouteCircuitsOperations interface.
-type expressRouteCircuitsOperations struct {
+// ExpressRouteCircuitsClient implements the ExpressRouteCircuitsOperations interface.
+// Don't use this type directly, use NewExpressRouteCircuitsClient() instead.
+type ExpressRouteCircuitsClient struct {
 	*Client
 	subscriptionID string
 }
 
+// NewExpressRouteCircuitsClient creates a new instance of ExpressRouteCircuitsClient with the specified values.
+func NewExpressRouteCircuitsClient(c *Client, subscriptionID string) ExpressRouteCircuitsOperations {
+	return &ExpressRouteCircuitsClient{Client: c, subscriptionID: subscriptionID}
+}
+
+// Do invokes the Do() method on the pipeline associated with this client.
+func (client *ExpressRouteCircuitsClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(ctx, req)
+}
+
 // CreateOrUpdate - Creates or updates an express route circuit.
-func (client *expressRouteCircuitsOperations) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, parameters ExpressRouteCircuit) (*ExpressRouteCircuitPollerResponse, error) {
-	req, err := client.createOrUpdateCreateRequest(resourceGroupName, circuitName, parameters)
+func (client *ExpressRouteCircuitsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, parameters ExpressRouteCircuit) (*ExpressRouteCircuitPollerResponse, error) {
+	req, err := client.CreateOrUpdateCreateRequest(resourceGroupName, circuitName, parameters)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.createOrUpdateHandleResponse(resp)
+	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
-	pt, err := armcore.NewPoller("expressRouteCircuitsOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("ExpressRouteCircuitsClient.CreateOrUpdate", "azure-async-operation", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -89,8 +100,8 @@ func (client *expressRouteCircuitsOperations) BeginCreateOrUpdate(ctx context.Co
 	return result, nil
 }
 
-func (client *expressRouteCircuitsOperations) ResumeCreateOrUpdate(token string) (ExpressRouteCircuitPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("expressRouteCircuitsOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+func (client *ExpressRouteCircuitsClient) ResumeCreateOrUpdate(token string) (ExpressRouteCircuitPoller, error) {
+	pt, err := armcore.NewPollerFromResumeToken("ExpressRouteCircuitsClient.CreateOrUpdate", token, client.CreateOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -100,8 +111,8 @@ func (client *expressRouteCircuitsOperations) ResumeCreateOrUpdate(token string)
 	}, nil
 }
 
-// createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *expressRouteCircuitsOperations) createOrUpdateCreateRequest(resourceGroupName string, circuitName string, parameters ExpressRouteCircuit) (*azcore.Request, error) {
+// CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
+func (client *ExpressRouteCircuitsClient) CreateOrUpdateCreateRequest(resourceGroupName string, circuitName string, parameters ExpressRouteCircuit) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -121,16 +132,16 @@ func (client *expressRouteCircuitsOperations) createOrUpdateCreateRequest(resour
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *expressRouteCircuitsOperations) createOrUpdateHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitPollerResponse, error) {
+// CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
+func (client *ExpressRouteCircuitsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitPollerResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, client.CreateOrUpdateHandleError(resp)
 	}
 	return &ExpressRouteCircuitPollerResponse{RawResponse: resp.Response}, nil
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *expressRouteCircuitsOperations) createOrUpdateHandleError(resp *azcore.Response) error {
+// CreateOrUpdateHandleError handles the CreateOrUpdate error response.
+func (client *ExpressRouteCircuitsClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -139,21 +150,21 @@ func (client *expressRouteCircuitsOperations) createOrUpdateHandleError(resp *az
 }
 
 // Delete - Deletes the specified express route circuit.
-func (client *expressRouteCircuitsOperations) BeginDelete(ctx context.Context, resourceGroupName string, circuitName string) (*HTTPPollerResponse, error) {
-	req, err := client.deleteCreateRequest(resourceGroupName, circuitName)
+func (client *ExpressRouteCircuitsClient) BeginDelete(ctx context.Context, resourceGroupName string, circuitName string) (*HTTPPollerResponse, error) {
+	req, err := client.DeleteCreateRequest(resourceGroupName, circuitName)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.deleteHandleResponse(resp)
+	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
-	pt, err := armcore.NewPoller("expressRouteCircuitsOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("ExpressRouteCircuitsClient.Delete", "location", resp, client.DeleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -168,8 +179,8 @@ func (client *expressRouteCircuitsOperations) BeginDelete(ctx context.Context, r
 	return result, nil
 }
 
-func (client *expressRouteCircuitsOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("expressRouteCircuitsOperations.Delete", token, client.deleteHandleError)
+func (client *ExpressRouteCircuitsClient) ResumeDelete(token string) (HTTPPoller, error) {
+	pt, err := armcore.NewPollerFromResumeToken("ExpressRouteCircuitsClient.Delete", token, client.DeleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -179,8 +190,8 @@ func (client *expressRouteCircuitsOperations) ResumeDelete(token string) (HTTPPo
 	}, nil
 }
 
-// deleteCreateRequest creates the Delete request.
-func (client *expressRouteCircuitsOperations) deleteCreateRequest(resourceGroupName string, circuitName string) (*azcore.Request, error) {
+// DeleteCreateRequest creates the Delete request.
+func (client *ExpressRouteCircuitsClient) DeleteCreateRequest(resourceGroupName string, circuitName string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -200,16 +211,16 @@ func (client *expressRouteCircuitsOperations) deleteCreateRequest(resourceGroupN
 	return req, nil
 }
 
-// deleteHandleResponse handles the Delete response.
-func (client *expressRouteCircuitsOperations) deleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
+// DeleteHandleResponse handles the Delete response.
+func (client *ExpressRouteCircuitsClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, client.DeleteHandleError(resp)
 	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *expressRouteCircuitsOperations) deleteHandleError(resp *azcore.Response) error {
+// DeleteHandleError handles the Delete error response.
+func (client *ExpressRouteCircuitsClient) DeleteHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -218,24 +229,24 @@ func (client *expressRouteCircuitsOperations) deleteHandleError(resp *azcore.Res
 }
 
 // Get - Gets information about the specified express route circuit.
-func (client *expressRouteCircuitsOperations) Get(ctx context.Context, resourceGroupName string, circuitName string) (*ExpressRouteCircuitResponse, error) {
-	req, err := client.getCreateRequest(resourceGroupName, circuitName)
+func (client *ExpressRouteCircuitsClient) Get(ctx context.Context, resourceGroupName string, circuitName string) (*ExpressRouteCircuitResponse, error) {
+	req, err := client.GetCreateRequest(resourceGroupName, circuitName)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getHandleResponse(resp)
+	result, err := client.GetHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getCreateRequest creates the Get request.
-func (client *expressRouteCircuitsOperations) getCreateRequest(resourceGroupName string, circuitName string) (*azcore.Request, error) {
+// GetCreateRequest creates the Get request.
+func (client *ExpressRouteCircuitsClient) GetCreateRequest(resourceGroupName string, circuitName string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -255,17 +266,17 @@ func (client *expressRouteCircuitsOperations) getCreateRequest(resourceGroupName
 	return req, nil
 }
 
-// getHandleResponse handles the Get response.
-func (client *expressRouteCircuitsOperations) getHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitResponse, error) {
+// GetHandleResponse handles the Get response.
+func (client *ExpressRouteCircuitsClient) GetHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getHandleError(resp)
+		return nil, client.GetHandleError(resp)
 	}
 	result := ExpressRouteCircuitResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ExpressRouteCircuit)
 }
 
-// getHandleError handles the Get error response.
-func (client *expressRouteCircuitsOperations) getHandleError(resp *azcore.Response) error {
+// GetHandleError handles the Get error response.
+func (client *ExpressRouteCircuitsClient) GetHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -274,24 +285,24 @@ func (client *expressRouteCircuitsOperations) getHandleError(resp *azcore.Respon
 }
 
 // GetPeeringStats - Gets all stats from an express route circuit in a resource group.
-func (client *expressRouteCircuitsOperations) GetPeeringStats(ctx context.Context, resourceGroupName string, circuitName string, peeringName string) (*ExpressRouteCircuitStatsResponse, error) {
-	req, err := client.getPeeringStatsCreateRequest(resourceGroupName, circuitName, peeringName)
+func (client *ExpressRouteCircuitsClient) GetPeeringStats(ctx context.Context, resourceGroupName string, circuitName string, peeringName string) (*ExpressRouteCircuitStatsResponse, error) {
+	req, err := client.GetPeeringStatsCreateRequest(resourceGroupName, circuitName, peeringName)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getPeeringStatsHandleResponse(resp)
+	result, err := client.GetPeeringStatsHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getPeeringStatsCreateRequest creates the GetPeeringStats request.
-func (client *expressRouteCircuitsOperations) getPeeringStatsCreateRequest(resourceGroupName string, circuitName string, peeringName string) (*azcore.Request, error) {
+// GetPeeringStatsCreateRequest creates the GetPeeringStats request.
+func (client *ExpressRouteCircuitsClient) GetPeeringStatsCreateRequest(resourceGroupName string, circuitName string, peeringName string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -312,17 +323,17 @@ func (client *expressRouteCircuitsOperations) getPeeringStatsCreateRequest(resou
 	return req, nil
 }
 
-// getPeeringStatsHandleResponse handles the GetPeeringStats response.
-func (client *expressRouteCircuitsOperations) getPeeringStatsHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitStatsResponse, error) {
+// GetPeeringStatsHandleResponse handles the GetPeeringStats response.
+func (client *ExpressRouteCircuitsClient) GetPeeringStatsHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitStatsResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getPeeringStatsHandleError(resp)
+		return nil, client.GetPeeringStatsHandleError(resp)
 	}
 	result := ExpressRouteCircuitStatsResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ExpressRouteCircuitStats)
 }
 
-// getPeeringStatsHandleError handles the GetPeeringStats error response.
-func (client *expressRouteCircuitsOperations) getPeeringStatsHandleError(resp *azcore.Response) error {
+// GetPeeringStatsHandleError handles the GetPeeringStats error response.
+func (client *ExpressRouteCircuitsClient) GetPeeringStatsHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -331,24 +342,24 @@ func (client *expressRouteCircuitsOperations) getPeeringStatsHandleError(resp *a
 }
 
 // GetStats - Gets all the stats from an express route circuit in a resource group.
-func (client *expressRouteCircuitsOperations) GetStats(ctx context.Context, resourceGroupName string, circuitName string) (*ExpressRouteCircuitStatsResponse, error) {
-	req, err := client.getStatsCreateRequest(resourceGroupName, circuitName)
+func (client *ExpressRouteCircuitsClient) GetStats(ctx context.Context, resourceGroupName string, circuitName string) (*ExpressRouteCircuitStatsResponse, error) {
+	req, err := client.GetStatsCreateRequest(resourceGroupName, circuitName)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getStatsHandleResponse(resp)
+	result, err := client.GetStatsHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getStatsCreateRequest creates the GetStats request.
-func (client *expressRouteCircuitsOperations) getStatsCreateRequest(resourceGroupName string, circuitName string) (*azcore.Request, error) {
+// GetStatsCreateRequest creates the GetStats request.
+func (client *ExpressRouteCircuitsClient) GetStatsCreateRequest(resourceGroupName string, circuitName string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -368,17 +379,17 @@ func (client *expressRouteCircuitsOperations) getStatsCreateRequest(resourceGrou
 	return req, nil
 }
 
-// getStatsHandleResponse handles the GetStats response.
-func (client *expressRouteCircuitsOperations) getStatsHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitStatsResponse, error) {
+// GetStatsHandleResponse handles the GetStats response.
+func (client *ExpressRouteCircuitsClient) GetStatsHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitStatsResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getStatsHandleError(resp)
+		return nil, client.GetStatsHandleError(resp)
 	}
 	result := ExpressRouteCircuitStatsResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ExpressRouteCircuitStats)
 }
 
-// getStatsHandleError handles the GetStats error response.
-func (client *expressRouteCircuitsOperations) getStatsHandleError(resp *azcore.Response) error {
+// GetStatsHandleError handles the GetStats error response.
+func (client *ExpressRouteCircuitsClient) GetStatsHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -387,15 +398,15 @@ func (client *expressRouteCircuitsOperations) getStatsHandleError(resp *azcore.R
 }
 
 // List - Gets all the express route circuits in a resource group.
-func (client *expressRouteCircuitsOperations) List(resourceGroupName string) (ExpressRouteCircuitListResultPager, error) {
-	req, err := client.listCreateRequest(resourceGroupName)
+func (client *ExpressRouteCircuitsClient) List(resourceGroupName string) (ExpressRouteCircuitListResultPager, error) {
+	req, err := client.ListCreateRequest(resourceGroupName)
 	if err != nil {
 		return nil, err
 	}
 	return &expressRouteCircuitListResultPager{
 		pipeline:  client.p,
 		request:   req,
-		responder: client.listHandleResponse,
+		responder: client.ListHandleResponse,
 		advancer: func(resp *ExpressRouteCircuitListResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.ExpressRouteCircuitListResult.NextLink)
 			if err != nil {
@@ -409,8 +420,8 @@ func (client *expressRouteCircuitsOperations) List(resourceGroupName string) (Ex
 	}, nil
 }
 
-// listCreateRequest creates the List request.
-func (client *expressRouteCircuitsOperations) listCreateRequest(resourceGroupName string) (*azcore.Request, error) {
+// ListCreateRequest creates the List request.
+func (client *ExpressRouteCircuitsClient) ListCreateRequest(resourceGroupName string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -429,17 +440,17 @@ func (client *expressRouteCircuitsOperations) listCreateRequest(resourceGroupNam
 	return req, nil
 }
 
-// listHandleResponse handles the List response.
-func (client *expressRouteCircuitsOperations) listHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitListResultResponse, error) {
+// ListHandleResponse handles the List response.
+func (client *ExpressRouteCircuitsClient) ListHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitListResultResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.listHandleError(resp)
+		return nil, client.ListHandleError(resp)
 	}
 	result := ExpressRouteCircuitListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ExpressRouteCircuitListResult)
 }
 
-// listHandleError handles the List error response.
-func (client *expressRouteCircuitsOperations) listHandleError(resp *azcore.Response) error {
+// ListHandleError handles the List error response.
+func (client *ExpressRouteCircuitsClient) ListHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -448,15 +459,15 @@ func (client *expressRouteCircuitsOperations) listHandleError(resp *azcore.Respo
 }
 
 // ListAll - Gets all the express route circuits in a subscription.
-func (client *expressRouteCircuitsOperations) ListAll() (ExpressRouteCircuitListResultPager, error) {
-	req, err := client.listAllCreateRequest()
+func (client *ExpressRouteCircuitsClient) ListAll() (ExpressRouteCircuitListResultPager, error) {
+	req, err := client.ListAllCreateRequest()
 	if err != nil {
 		return nil, err
 	}
 	return &expressRouteCircuitListResultPager{
 		pipeline:  client.p,
 		request:   req,
-		responder: client.listAllHandleResponse,
+		responder: client.ListAllHandleResponse,
 		advancer: func(resp *ExpressRouteCircuitListResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.ExpressRouteCircuitListResult.NextLink)
 			if err != nil {
@@ -470,8 +481,8 @@ func (client *expressRouteCircuitsOperations) ListAll() (ExpressRouteCircuitList
 	}, nil
 }
 
-// listAllCreateRequest creates the ListAll request.
-func (client *expressRouteCircuitsOperations) listAllCreateRequest() (*azcore.Request, error) {
+// ListAllCreateRequest creates the ListAll request.
+func (client *ExpressRouteCircuitsClient) ListAllCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -489,17 +500,17 @@ func (client *expressRouteCircuitsOperations) listAllCreateRequest() (*azcore.Re
 	return req, nil
 }
 
-// listAllHandleResponse handles the ListAll response.
-func (client *expressRouteCircuitsOperations) listAllHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitListResultResponse, error) {
+// ListAllHandleResponse handles the ListAll response.
+func (client *ExpressRouteCircuitsClient) ListAllHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitListResultResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.listAllHandleError(resp)
+		return nil, client.ListAllHandleError(resp)
 	}
 	result := ExpressRouteCircuitListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ExpressRouteCircuitListResult)
 }
 
-// listAllHandleError handles the ListAll error response.
-func (client *expressRouteCircuitsOperations) listAllHandleError(resp *azcore.Response) error {
+// ListAllHandleError handles the ListAll error response.
+func (client *ExpressRouteCircuitsClient) ListAllHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -508,21 +519,21 @@ func (client *expressRouteCircuitsOperations) listAllHandleError(resp *azcore.Re
 }
 
 // ListArpTable - Gets the currently advertised ARP table associated with the express route circuit in a resource group.
-func (client *expressRouteCircuitsOperations) BeginListArpTable(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string) (*ExpressRouteCircuitsArpTableListResultPollerResponse, error) {
-	req, err := client.listArpTableCreateRequest(resourceGroupName, circuitName, peeringName, devicePath)
+func (client *ExpressRouteCircuitsClient) BeginListArpTable(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string) (*ExpressRouteCircuitsArpTableListResultPollerResponse, error) {
+	req, err := client.ListArpTableCreateRequest(resourceGroupName, circuitName, peeringName, devicePath)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.listArpTableHandleResponse(resp)
+	result, err := client.ListArpTableHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
-	pt, err := armcore.NewPoller("expressRouteCircuitsOperations.ListArpTable", "location", resp, client.listArpTableHandleError)
+	pt, err := armcore.NewPoller("ExpressRouteCircuitsClient.ListArpTable", "location", resp, client.ListArpTableHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -537,8 +548,8 @@ func (client *expressRouteCircuitsOperations) BeginListArpTable(ctx context.Cont
 	return result, nil
 }
 
-func (client *expressRouteCircuitsOperations) ResumeListArpTable(token string) (ExpressRouteCircuitsArpTableListResultPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("expressRouteCircuitsOperations.ListArpTable", token, client.listArpTableHandleError)
+func (client *ExpressRouteCircuitsClient) ResumeListArpTable(token string) (ExpressRouteCircuitsArpTableListResultPoller, error) {
+	pt, err := armcore.NewPollerFromResumeToken("ExpressRouteCircuitsClient.ListArpTable", token, client.ListArpTableHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -548,8 +559,8 @@ func (client *expressRouteCircuitsOperations) ResumeListArpTable(token string) (
 	}, nil
 }
 
-// listArpTableCreateRequest creates the ListArpTable request.
-func (client *expressRouteCircuitsOperations) listArpTableCreateRequest(resourceGroupName string, circuitName string, peeringName string, devicePath string) (*azcore.Request, error) {
+// ListArpTableCreateRequest creates the ListArpTable request.
+func (client *ExpressRouteCircuitsClient) ListArpTableCreateRequest(resourceGroupName string, circuitName string, peeringName string, devicePath string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -571,16 +582,16 @@ func (client *expressRouteCircuitsOperations) listArpTableCreateRequest(resource
 	return req, nil
 }
 
-// listArpTableHandleResponse handles the ListArpTable response.
-func (client *expressRouteCircuitsOperations) listArpTableHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitsArpTableListResultPollerResponse, error) {
+// ListArpTableHandleResponse handles the ListArpTable response.
+func (client *ExpressRouteCircuitsClient) ListArpTableHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitsArpTableListResultPollerResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.listArpTableHandleError(resp)
+		return nil, client.ListArpTableHandleError(resp)
 	}
 	return &ExpressRouteCircuitsArpTableListResultPollerResponse{RawResponse: resp.Response}, nil
 }
 
-// listArpTableHandleError handles the ListArpTable error response.
-func (client *expressRouteCircuitsOperations) listArpTableHandleError(resp *azcore.Response) error {
+// ListArpTableHandleError handles the ListArpTable error response.
+func (client *ExpressRouteCircuitsClient) ListArpTableHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -589,21 +600,21 @@ func (client *expressRouteCircuitsOperations) listArpTableHandleError(resp *azco
 }
 
 // ListRoutesTable - Gets the currently advertised routes table associated with the express route circuit in a resource group.
-func (client *expressRouteCircuitsOperations) BeginListRoutesTable(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string) (*ExpressRouteCircuitsRoutesTableListResultPollerResponse, error) {
-	req, err := client.listRoutesTableCreateRequest(resourceGroupName, circuitName, peeringName, devicePath)
+func (client *ExpressRouteCircuitsClient) BeginListRoutesTable(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string) (*ExpressRouteCircuitsRoutesTableListResultPollerResponse, error) {
+	req, err := client.ListRoutesTableCreateRequest(resourceGroupName, circuitName, peeringName, devicePath)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.listRoutesTableHandleResponse(resp)
+	result, err := client.ListRoutesTableHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
-	pt, err := armcore.NewPoller("expressRouteCircuitsOperations.ListRoutesTable", "location", resp, client.listRoutesTableHandleError)
+	pt, err := armcore.NewPoller("ExpressRouteCircuitsClient.ListRoutesTable", "location", resp, client.ListRoutesTableHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -618,8 +629,8 @@ func (client *expressRouteCircuitsOperations) BeginListRoutesTable(ctx context.C
 	return result, nil
 }
 
-func (client *expressRouteCircuitsOperations) ResumeListRoutesTable(token string) (ExpressRouteCircuitsRoutesTableListResultPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("expressRouteCircuitsOperations.ListRoutesTable", token, client.listRoutesTableHandleError)
+func (client *ExpressRouteCircuitsClient) ResumeListRoutesTable(token string) (ExpressRouteCircuitsRoutesTableListResultPoller, error) {
+	pt, err := armcore.NewPollerFromResumeToken("ExpressRouteCircuitsClient.ListRoutesTable", token, client.ListRoutesTableHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -629,8 +640,8 @@ func (client *expressRouteCircuitsOperations) ResumeListRoutesTable(token string
 	}, nil
 }
 
-// listRoutesTableCreateRequest creates the ListRoutesTable request.
-func (client *expressRouteCircuitsOperations) listRoutesTableCreateRequest(resourceGroupName string, circuitName string, peeringName string, devicePath string) (*azcore.Request, error) {
+// ListRoutesTableCreateRequest creates the ListRoutesTable request.
+func (client *ExpressRouteCircuitsClient) ListRoutesTableCreateRequest(resourceGroupName string, circuitName string, peeringName string, devicePath string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -652,16 +663,16 @@ func (client *expressRouteCircuitsOperations) listRoutesTableCreateRequest(resou
 	return req, nil
 }
 
-// listRoutesTableHandleResponse handles the ListRoutesTable response.
-func (client *expressRouteCircuitsOperations) listRoutesTableHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitsRoutesTableListResultPollerResponse, error) {
+// ListRoutesTableHandleResponse handles the ListRoutesTable response.
+func (client *ExpressRouteCircuitsClient) ListRoutesTableHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitsRoutesTableListResultPollerResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.listRoutesTableHandleError(resp)
+		return nil, client.ListRoutesTableHandleError(resp)
 	}
 	return &ExpressRouteCircuitsRoutesTableListResultPollerResponse{RawResponse: resp.Response}, nil
 }
 
-// listRoutesTableHandleError handles the ListRoutesTable error response.
-func (client *expressRouteCircuitsOperations) listRoutesTableHandleError(resp *azcore.Response) error {
+// ListRoutesTableHandleError handles the ListRoutesTable error response.
+func (client *ExpressRouteCircuitsClient) ListRoutesTableHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -670,21 +681,21 @@ func (client *expressRouteCircuitsOperations) listRoutesTableHandleError(resp *a
 }
 
 // ListRoutesTableSummary - Gets the currently advertised routes table summary associated with the express route circuit in a resource group.
-func (client *expressRouteCircuitsOperations) BeginListRoutesTableSummary(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string) (*ExpressRouteCircuitsRoutesTableSummaryListResultPollerResponse, error) {
-	req, err := client.listRoutesTableSummaryCreateRequest(resourceGroupName, circuitName, peeringName, devicePath)
+func (client *ExpressRouteCircuitsClient) BeginListRoutesTableSummary(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string) (*ExpressRouteCircuitsRoutesTableSummaryListResultPollerResponse, error) {
+	req, err := client.ListRoutesTableSummaryCreateRequest(resourceGroupName, circuitName, peeringName, devicePath)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.listRoutesTableSummaryHandleResponse(resp)
+	result, err := client.ListRoutesTableSummaryHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
-	pt, err := armcore.NewPoller("expressRouteCircuitsOperations.ListRoutesTableSummary", "location", resp, client.listRoutesTableSummaryHandleError)
+	pt, err := armcore.NewPoller("ExpressRouteCircuitsClient.ListRoutesTableSummary", "location", resp, client.ListRoutesTableSummaryHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -699,8 +710,8 @@ func (client *expressRouteCircuitsOperations) BeginListRoutesTableSummary(ctx co
 	return result, nil
 }
 
-func (client *expressRouteCircuitsOperations) ResumeListRoutesTableSummary(token string) (ExpressRouteCircuitsRoutesTableSummaryListResultPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("expressRouteCircuitsOperations.ListRoutesTableSummary", token, client.listRoutesTableSummaryHandleError)
+func (client *ExpressRouteCircuitsClient) ResumeListRoutesTableSummary(token string) (ExpressRouteCircuitsRoutesTableSummaryListResultPoller, error) {
+	pt, err := armcore.NewPollerFromResumeToken("ExpressRouteCircuitsClient.ListRoutesTableSummary", token, client.ListRoutesTableSummaryHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -710,8 +721,8 @@ func (client *expressRouteCircuitsOperations) ResumeListRoutesTableSummary(token
 	}, nil
 }
 
-// listRoutesTableSummaryCreateRequest creates the ListRoutesTableSummary request.
-func (client *expressRouteCircuitsOperations) listRoutesTableSummaryCreateRequest(resourceGroupName string, circuitName string, peeringName string, devicePath string) (*azcore.Request, error) {
+// ListRoutesTableSummaryCreateRequest creates the ListRoutesTableSummary request.
+func (client *ExpressRouteCircuitsClient) ListRoutesTableSummaryCreateRequest(resourceGroupName string, circuitName string, peeringName string, devicePath string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -733,16 +744,16 @@ func (client *expressRouteCircuitsOperations) listRoutesTableSummaryCreateReques
 	return req, nil
 }
 
-// listRoutesTableSummaryHandleResponse handles the ListRoutesTableSummary response.
-func (client *expressRouteCircuitsOperations) listRoutesTableSummaryHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitsRoutesTableSummaryListResultPollerResponse, error) {
+// ListRoutesTableSummaryHandleResponse handles the ListRoutesTableSummary response.
+func (client *ExpressRouteCircuitsClient) ListRoutesTableSummaryHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitsRoutesTableSummaryListResultPollerResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.listRoutesTableSummaryHandleError(resp)
+		return nil, client.ListRoutesTableSummaryHandleError(resp)
 	}
 	return &ExpressRouteCircuitsRoutesTableSummaryListResultPollerResponse{RawResponse: resp.Response}, nil
 }
 
-// listRoutesTableSummaryHandleError handles the ListRoutesTableSummary error response.
-func (client *expressRouteCircuitsOperations) listRoutesTableSummaryHandleError(resp *azcore.Response) error {
+// ListRoutesTableSummaryHandleError handles the ListRoutesTableSummary error response.
+func (client *ExpressRouteCircuitsClient) ListRoutesTableSummaryHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -751,24 +762,24 @@ func (client *expressRouteCircuitsOperations) listRoutesTableSummaryHandleError(
 }
 
 // UpdateTags - Updates an express route circuit tags.
-func (client *expressRouteCircuitsOperations) UpdateTags(ctx context.Context, resourceGroupName string, circuitName string, parameters TagsObject) (*ExpressRouteCircuitResponse, error) {
-	req, err := client.updateTagsCreateRequest(resourceGroupName, circuitName, parameters)
+func (client *ExpressRouteCircuitsClient) UpdateTags(ctx context.Context, resourceGroupName string, circuitName string, parameters TagsObject) (*ExpressRouteCircuitResponse, error) {
+	req, err := client.UpdateTagsCreateRequest(resourceGroupName, circuitName, parameters)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.updateTagsHandleResponse(resp)
+	result, err := client.UpdateTagsHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// updateTagsCreateRequest creates the UpdateTags request.
-func (client *expressRouteCircuitsOperations) updateTagsCreateRequest(resourceGroupName string, circuitName string, parameters TagsObject) (*azcore.Request, error) {
+// UpdateTagsCreateRequest creates the UpdateTags request.
+func (client *ExpressRouteCircuitsClient) UpdateTagsCreateRequest(resourceGroupName string, circuitName string, parameters TagsObject) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -788,17 +799,17 @@ func (client *expressRouteCircuitsOperations) updateTagsCreateRequest(resourceGr
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// updateTagsHandleResponse handles the UpdateTags response.
-func (client *expressRouteCircuitsOperations) updateTagsHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitResponse, error) {
+// UpdateTagsHandleResponse handles the UpdateTags response.
+func (client *ExpressRouteCircuitsClient) UpdateTagsHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.updateTagsHandleError(resp)
+		return nil, client.UpdateTagsHandleError(resp)
 	}
 	result := ExpressRouteCircuitResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ExpressRouteCircuit)
 }
 
-// updateTagsHandleError handles the UpdateTags error response.
-func (client *expressRouteCircuitsOperations) updateTagsHandleError(resp *azcore.Response) error {
+// UpdateTagsHandleError handles the UpdateTags error response.
+func (client *ExpressRouteCircuitsClient) UpdateTagsHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

@@ -11,9 +11,13 @@ import (
 	"testing"
 )
 
+func newAPIVersionLocalClient() azurespecialsgroup.APIVersionLocalOperations {
+	return azurespecialsgroup.NewAPIVersionLocalClient(azurespecialsgroup.NewDefaultClient(nil))
+}
+
 // GetMethodLocalNull - Get method with api-version modeled in the method.  pass in api-version = null to succeed
 func TestGetMethodLocalNull(t *testing.T) {
-	client := azurespecialsgroup.NewDefaultClient(nil).APIVersionLocalOperations()
+	client := newAPIVersionLocalClient()
 	result, err := client.GetMethodLocalNull(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
@@ -23,7 +27,7 @@ func TestGetMethodLocalNull(t *testing.T) {
 
 // GetMethodLocalValid - Get method with api-version modeled in the method.  pass in api-version = '2.0' to succeed
 func TestGetMethodLocalValid(t *testing.T) {
-	client := azurespecialsgroup.NewDefaultClient(nil).APIVersionLocalOperations()
+	client := newAPIVersionLocalClient()
 	result, err := client.GetMethodLocalValid(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -33,7 +37,7 @@ func TestGetMethodLocalValid(t *testing.T) {
 
 // GetPathLocalValid - Get method with api-version modeled in the method.  pass in api-version = '2.0' to succeed
 func TestGetPathLocalValid(t *testing.T) {
-	client := azurespecialsgroup.NewDefaultClient(nil).APIVersionLocalOperations()
+	client := newAPIVersionLocalClient()
 	result, err := client.GetPathLocalValid(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -43,7 +47,7 @@ func TestGetPathLocalValid(t *testing.T) {
 
 // GetSwaggerLocalValid - Get method with api-version modeled in the method.  pass in api-version = '2.0' to succeed
 func TestGetSwaggerLocalValid(t *testing.T) {
-	client := azurespecialsgroup.NewDefaultClient(nil).APIVersionLocalOperations()
+	client := newAPIVersionLocalClient()
 	result, err := client.GetSwaggerLocalValid(context.Background())
 	if err != nil {
 		t.Fatal(err)

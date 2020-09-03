@@ -20,30 +20,41 @@ type OdataOperations interface {
 	GetWithFilter(ctx context.Context, odataGetWithFilterOptions *OdataGetWithFilterOptions) (*http.Response, error)
 }
 
-// odataOperations implements the OdataOperations interface.
-type odataOperations struct {
+// OdataClient implements the OdataOperations interface.
+// Don't use this type directly, use NewOdataClient() instead.
+type OdataClient struct {
 	*Client
 }
 
+// NewOdataClient creates a new instance of OdataClient with the specified values.
+func NewOdataClient(c *Client) OdataOperations {
+	return &OdataClient{Client: c}
+}
+
+// Do invokes the Do() method on the pipeline associated with this client.
+func (client *OdataClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(ctx, req)
+}
+
 // GetWithFilter - Specify filter parameter with value '$filter=id gt 5 and name eq 'foo'&$orderby=id&$top=10'
-func (client *odataOperations) GetWithFilter(ctx context.Context, odataGetWithFilterOptions *OdataGetWithFilterOptions) (*http.Response, error) {
-	req, err := client.getWithFilterCreateRequest(odataGetWithFilterOptions)
+func (client *OdataClient) GetWithFilter(ctx context.Context, odataGetWithFilterOptions *OdataGetWithFilterOptions) (*http.Response, error) {
+	req, err := client.GetWithFilterCreateRequest(odataGetWithFilterOptions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getWithFilterHandleResponse(resp)
+	result, err := client.GetWithFilterHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getWithFilterCreateRequest creates the GetWithFilter request.
-func (client *odataOperations) getWithFilterCreateRequest(odataGetWithFilterOptions *OdataGetWithFilterOptions) (*azcore.Request, error) {
+// GetWithFilterCreateRequest creates the GetWithFilter request.
+func (client *OdataClient) GetWithFilterCreateRequest(odataGetWithFilterOptions *OdataGetWithFilterOptions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -68,16 +79,16 @@ func (client *odataOperations) getWithFilterCreateRequest(odataGetWithFilterOpti
 	return req, nil
 }
 
-// getWithFilterHandleResponse handles the GetWithFilter response.
-func (client *odataOperations) getWithFilterHandleResponse(resp *azcore.Response) (*http.Response, error) {
+// GetWithFilterHandleResponse handles the GetWithFilter response.
+func (client *OdataClient) GetWithFilterHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getWithFilterHandleError(resp)
+		return nil, client.GetWithFilterHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// getWithFilterHandleError handles the GetWithFilter error response.
-func (client *odataOperations) getWithFilterHandleError(resp *azcore.Response) error {
+// GetWithFilterHandleError handles the GetWithFilter error response.
+func (client *OdataClient) GetWithFilterHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

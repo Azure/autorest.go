@@ -13,8 +13,12 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
+func newAutoRestValidationTestClient() validationgroup.AutoRestValidationTestOperations {
+	return validationgroup.NewAutoRestValidationTestClient(validationgroup.NewDefaultClient(nil), "")
+}
+
 func TestValidationGetWithConstantInPath(t *testing.T) {
-	client := validationgroup.NewDefaultClient(nil).AutoRestValidationTestOperations("")
+	client := newAutoRestValidationTestClient()
 	result, err := client.GetWithConstantInPath(context.Background())
 	if err != nil {
 		t.Fatalf("GetWithConstantInPath: %v", err)
@@ -23,7 +27,7 @@ func TestValidationGetWithConstantInPath(t *testing.T) {
 }
 
 func TestValidationPostWithConstantInBody(t *testing.T) {
-	client := validationgroup.NewDefaultClient(nil).AutoRestValidationTestOperations("")
+	client := newAutoRestValidationTestClient()
 	result, err := client.PostWithConstantInBody(context.Background(), &validationgroup.AutoRestValidationTestPostWithConstantInBodyOptions{Body: &validationgroup.Product{
 		Child: &validationgroup.ChildProduct{
 			ConstProperty: to.StringPtr("constant")},
@@ -40,7 +44,7 @@ func TestValidationPostWithConstantInBody(t *testing.T) {
 
 func TestValidationValidationOfBody(t *testing.T) {
 	t.Skip("need to confirm if this test will remain in the testserver and what values it's expecting")
-	client := validationgroup.NewDefaultClient(nil).AutoRestValidationTestOperations("")
+	client := newAutoRestValidationTestClient()
 	result, err := client.ValidationOfBody(context.Background(), "123", 150, &validationgroup.AutoRestValidationTestValidationOfBodyOptions{
 		Body: &validationgroup.Product{
 			DisplayNames: &[]string{

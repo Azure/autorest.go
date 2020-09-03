@@ -37,28 +37,39 @@ type SecurityPartnerProvidersOperations interface {
 	UpdateTags(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, parameters TagsObject) (*SecurityPartnerProviderResponse, error)
 }
 
-// securityPartnerProvidersOperations implements the SecurityPartnerProvidersOperations interface.
-type securityPartnerProvidersOperations struct {
+// SecurityPartnerProvidersClient implements the SecurityPartnerProvidersOperations interface.
+// Don't use this type directly, use NewSecurityPartnerProvidersClient() instead.
+type SecurityPartnerProvidersClient struct {
 	*Client
 	subscriptionID string
 }
 
+// NewSecurityPartnerProvidersClient creates a new instance of SecurityPartnerProvidersClient with the specified values.
+func NewSecurityPartnerProvidersClient(c *Client, subscriptionID string) SecurityPartnerProvidersOperations {
+	return &SecurityPartnerProvidersClient{Client: c, subscriptionID: subscriptionID}
+}
+
+// Do invokes the Do() method on the pipeline associated with this client.
+func (client *SecurityPartnerProvidersClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(ctx, req)
+}
+
 // CreateOrUpdate - Creates or updates the specified Security Partner Provider.
-func (client *securityPartnerProvidersOperations) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, parameters SecurityPartnerProvider) (*SecurityPartnerProviderPollerResponse, error) {
-	req, err := client.createOrUpdateCreateRequest(resourceGroupName, securityPartnerProviderName, parameters)
+func (client *SecurityPartnerProvidersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, parameters SecurityPartnerProvider) (*SecurityPartnerProviderPollerResponse, error) {
+	req, err := client.CreateOrUpdateCreateRequest(resourceGroupName, securityPartnerProviderName, parameters)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.createOrUpdateHandleResponse(resp)
+	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
-	pt, err := armcore.NewPoller("securityPartnerProvidersOperations.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewPoller("SecurityPartnerProvidersClient.CreateOrUpdate", "azure-async-operation", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -73,8 +84,8 @@ func (client *securityPartnerProvidersOperations) BeginCreateOrUpdate(ctx contex
 	return result, nil
 }
 
-func (client *securityPartnerProvidersOperations) ResumeCreateOrUpdate(token string) (SecurityPartnerProviderPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("securityPartnerProvidersOperations.CreateOrUpdate", token, client.createOrUpdateHandleError)
+func (client *SecurityPartnerProvidersClient) ResumeCreateOrUpdate(token string) (SecurityPartnerProviderPoller, error) {
+	pt, err := armcore.NewPollerFromResumeToken("SecurityPartnerProvidersClient.CreateOrUpdate", token, client.CreateOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -84,8 +95,8 @@ func (client *securityPartnerProvidersOperations) ResumeCreateOrUpdate(token str
 	}, nil
 }
 
-// createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *securityPartnerProvidersOperations) createOrUpdateCreateRequest(resourceGroupName string, securityPartnerProviderName string, parameters SecurityPartnerProvider) (*azcore.Request, error) {
+// CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
+func (client *SecurityPartnerProvidersClient) CreateOrUpdateCreateRequest(resourceGroupName string, securityPartnerProviderName string, parameters SecurityPartnerProvider) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -105,16 +116,16 @@ func (client *securityPartnerProvidersOperations) createOrUpdateCreateRequest(re
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *securityPartnerProvidersOperations) createOrUpdateHandleResponse(resp *azcore.Response) (*SecurityPartnerProviderPollerResponse, error) {
+// CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
+func (client *SecurityPartnerProvidersClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*SecurityPartnerProviderPollerResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, client.CreateOrUpdateHandleError(resp)
 	}
 	return &SecurityPartnerProviderPollerResponse{RawResponse: resp.Response}, nil
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *securityPartnerProvidersOperations) createOrUpdateHandleError(resp *azcore.Response) error {
+// CreateOrUpdateHandleError handles the CreateOrUpdate error response.
+func (client *SecurityPartnerProvidersClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -123,21 +134,21 @@ func (client *securityPartnerProvidersOperations) createOrUpdateHandleError(resp
 }
 
 // Delete - Deletes the specified Security Partner Provider.
-func (client *securityPartnerProvidersOperations) BeginDelete(ctx context.Context, resourceGroupName string, securityPartnerProviderName string) (*HTTPPollerResponse, error) {
-	req, err := client.deleteCreateRequest(resourceGroupName, securityPartnerProviderName)
+func (client *SecurityPartnerProvidersClient) BeginDelete(ctx context.Context, resourceGroupName string, securityPartnerProviderName string) (*HTTPPollerResponse, error) {
+	req, err := client.DeleteCreateRequest(resourceGroupName, securityPartnerProviderName)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.deleteHandleResponse(resp)
+	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
-	pt, err := armcore.NewPoller("securityPartnerProvidersOperations.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewPoller("SecurityPartnerProvidersClient.Delete", "location", resp, client.DeleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -152,8 +163,8 @@ func (client *securityPartnerProvidersOperations) BeginDelete(ctx context.Contex
 	return result, nil
 }
 
-func (client *securityPartnerProvidersOperations) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("securityPartnerProvidersOperations.Delete", token, client.deleteHandleError)
+func (client *SecurityPartnerProvidersClient) ResumeDelete(token string) (HTTPPoller, error) {
+	pt, err := armcore.NewPollerFromResumeToken("SecurityPartnerProvidersClient.Delete", token, client.DeleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -163,8 +174,8 @@ func (client *securityPartnerProvidersOperations) ResumeDelete(token string) (HT
 	}, nil
 }
 
-// deleteCreateRequest creates the Delete request.
-func (client *securityPartnerProvidersOperations) deleteCreateRequest(resourceGroupName string, securityPartnerProviderName string) (*azcore.Request, error) {
+// DeleteCreateRequest creates the Delete request.
+func (client *SecurityPartnerProvidersClient) DeleteCreateRequest(resourceGroupName string, securityPartnerProviderName string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -184,16 +195,16 @@ func (client *securityPartnerProvidersOperations) deleteCreateRequest(resourceGr
 	return req, nil
 }
 
-// deleteHandleResponse handles the Delete response.
-func (client *securityPartnerProvidersOperations) deleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
+// DeleteHandleResponse handles the Delete response.
+func (client *SecurityPartnerProvidersClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, client.DeleteHandleError(resp)
 	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *securityPartnerProvidersOperations) deleteHandleError(resp *azcore.Response) error {
+// DeleteHandleError handles the Delete error response.
+func (client *SecurityPartnerProvidersClient) DeleteHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -202,24 +213,24 @@ func (client *securityPartnerProvidersOperations) deleteHandleError(resp *azcore
 }
 
 // Get - Gets the specified Security Partner Provider.
-func (client *securityPartnerProvidersOperations) Get(ctx context.Context, resourceGroupName string, securityPartnerProviderName string) (*SecurityPartnerProviderResponse, error) {
-	req, err := client.getCreateRequest(resourceGroupName, securityPartnerProviderName)
+func (client *SecurityPartnerProvidersClient) Get(ctx context.Context, resourceGroupName string, securityPartnerProviderName string) (*SecurityPartnerProviderResponse, error) {
+	req, err := client.GetCreateRequest(resourceGroupName, securityPartnerProviderName)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getHandleResponse(resp)
+	result, err := client.GetHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getCreateRequest creates the Get request.
-func (client *securityPartnerProvidersOperations) getCreateRequest(resourceGroupName string, securityPartnerProviderName string) (*azcore.Request, error) {
+// GetCreateRequest creates the Get request.
+func (client *SecurityPartnerProvidersClient) GetCreateRequest(resourceGroupName string, securityPartnerProviderName string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -239,17 +250,17 @@ func (client *securityPartnerProvidersOperations) getCreateRequest(resourceGroup
 	return req, nil
 }
 
-// getHandleResponse handles the Get response.
-func (client *securityPartnerProvidersOperations) getHandleResponse(resp *azcore.Response) (*SecurityPartnerProviderResponse, error) {
+// GetHandleResponse handles the Get response.
+func (client *SecurityPartnerProvidersClient) GetHandleResponse(resp *azcore.Response) (*SecurityPartnerProviderResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getHandleError(resp)
+		return nil, client.GetHandleError(resp)
 	}
 	result := SecurityPartnerProviderResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.SecurityPartnerProvider)
 }
 
-// getHandleError handles the Get error response.
-func (client *securityPartnerProvidersOperations) getHandleError(resp *azcore.Response) error {
+// GetHandleError handles the Get error response.
+func (client *SecurityPartnerProvidersClient) GetHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -258,15 +269,15 @@ func (client *securityPartnerProvidersOperations) getHandleError(resp *azcore.Re
 }
 
 // List - Gets all the Security Partner Providers in a subscription.
-func (client *securityPartnerProvidersOperations) List() (SecurityPartnerProviderListResultPager, error) {
-	req, err := client.listCreateRequest()
+func (client *SecurityPartnerProvidersClient) List() (SecurityPartnerProviderListResultPager, error) {
+	req, err := client.ListCreateRequest()
 	if err != nil {
 		return nil, err
 	}
 	return &securityPartnerProviderListResultPager{
 		pipeline:  client.p,
 		request:   req,
-		responder: client.listHandleResponse,
+		responder: client.ListHandleResponse,
 		advancer: func(resp *SecurityPartnerProviderListResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.SecurityPartnerProviderListResult.NextLink)
 			if err != nil {
@@ -280,8 +291,8 @@ func (client *securityPartnerProvidersOperations) List() (SecurityPartnerProvide
 	}, nil
 }
 
-// listCreateRequest creates the List request.
-func (client *securityPartnerProvidersOperations) listCreateRequest() (*azcore.Request, error) {
+// ListCreateRequest creates the List request.
+func (client *SecurityPartnerProvidersClient) ListCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -299,17 +310,17 @@ func (client *securityPartnerProvidersOperations) listCreateRequest() (*azcore.R
 	return req, nil
 }
 
-// listHandleResponse handles the List response.
-func (client *securityPartnerProvidersOperations) listHandleResponse(resp *azcore.Response) (*SecurityPartnerProviderListResultResponse, error) {
+// ListHandleResponse handles the List response.
+func (client *SecurityPartnerProvidersClient) ListHandleResponse(resp *azcore.Response) (*SecurityPartnerProviderListResultResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.listHandleError(resp)
+		return nil, client.ListHandleError(resp)
 	}
 	result := SecurityPartnerProviderListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.SecurityPartnerProviderListResult)
 }
 
-// listHandleError handles the List error response.
-func (client *securityPartnerProvidersOperations) listHandleError(resp *azcore.Response) error {
+// ListHandleError handles the List error response.
+func (client *SecurityPartnerProvidersClient) ListHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -318,15 +329,15 @@ func (client *securityPartnerProvidersOperations) listHandleError(resp *azcore.R
 }
 
 // ListByResourceGroup - Lists all Security Partner Providers in a resource group.
-func (client *securityPartnerProvidersOperations) ListByResourceGroup(resourceGroupName string) (SecurityPartnerProviderListResultPager, error) {
-	req, err := client.listByResourceGroupCreateRequest(resourceGroupName)
+func (client *SecurityPartnerProvidersClient) ListByResourceGroup(resourceGroupName string) (SecurityPartnerProviderListResultPager, error) {
+	req, err := client.ListByResourceGroupCreateRequest(resourceGroupName)
 	if err != nil {
 		return nil, err
 	}
 	return &securityPartnerProviderListResultPager{
 		pipeline:  client.p,
 		request:   req,
-		responder: client.listByResourceGroupHandleResponse,
+		responder: client.ListByResourceGroupHandleResponse,
 		advancer: func(resp *SecurityPartnerProviderListResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.SecurityPartnerProviderListResult.NextLink)
 			if err != nil {
@@ -340,8 +351,8 @@ func (client *securityPartnerProvidersOperations) ListByResourceGroup(resourceGr
 	}, nil
 }
 
-// listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *securityPartnerProvidersOperations) listByResourceGroupCreateRequest(resourceGroupName string) (*azcore.Request, error) {
+// ListByResourceGroupCreateRequest creates the ListByResourceGroup request.
+func (client *SecurityPartnerProvidersClient) ListByResourceGroupCreateRequest(resourceGroupName string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -360,17 +371,17 @@ func (client *securityPartnerProvidersOperations) listByResourceGroupCreateReque
 	return req, nil
 }
 
-// listByResourceGroupHandleResponse handles the ListByResourceGroup response.
-func (client *securityPartnerProvidersOperations) listByResourceGroupHandleResponse(resp *azcore.Response) (*SecurityPartnerProviderListResultResponse, error) {
+// ListByResourceGroupHandleResponse handles the ListByResourceGroup response.
+func (client *SecurityPartnerProvidersClient) ListByResourceGroupHandleResponse(resp *azcore.Response) (*SecurityPartnerProviderListResultResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.listByResourceGroupHandleError(resp)
+		return nil, client.ListByResourceGroupHandleError(resp)
 	}
 	result := SecurityPartnerProviderListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.SecurityPartnerProviderListResult)
 }
 
-// listByResourceGroupHandleError handles the ListByResourceGroup error response.
-func (client *securityPartnerProvidersOperations) listByResourceGroupHandleError(resp *azcore.Response) error {
+// ListByResourceGroupHandleError handles the ListByResourceGroup error response.
+func (client *SecurityPartnerProvidersClient) ListByResourceGroupHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -379,24 +390,24 @@ func (client *securityPartnerProvidersOperations) listByResourceGroupHandleError
 }
 
 // UpdateTags - Updates tags of a Security Partner Provider resource.
-func (client *securityPartnerProvidersOperations) UpdateTags(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, parameters TagsObject) (*SecurityPartnerProviderResponse, error) {
-	req, err := client.updateTagsCreateRequest(resourceGroupName, securityPartnerProviderName, parameters)
+func (client *SecurityPartnerProvidersClient) UpdateTags(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, parameters TagsObject) (*SecurityPartnerProviderResponse, error) {
+	req, err := client.UpdateTagsCreateRequest(resourceGroupName, securityPartnerProviderName, parameters)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.updateTagsHandleResponse(resp)
+	result, err := client.UpdateTagsHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// updateTagsCreateRequest creates the UpdateTags request.
-func (client *securityPartnerProvidersOperations) updateTagsCreateRequest(resourceGroupName string, securityPartnerProviderName string, parameters TagsObject) (*azcore.Request, error) {
+// UpdateTagsCreateRequest creates the UpdateTags request.
+func (client *SecurityPartnerProvidersClient) UpdateTagsCreateRequest(resourceGroupName string, securityPartnerProviderName string, parameters TagsObject) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -416,17 +427,17 @@ func (client *securityPartnerProvidersOperations) updateTagsCreateRequest(resour
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// updateTagsHandleResponse handles the UpdateTags response.
-func (client *securityPartnerProvidersOperations) updateTagsHandleResponse(resp *azcore.Response) (*SecurityPartnerProviderResponse, error) {
+// UpdateTagsHandleResponse handles the UpdateTags response.
+func (client *SecurityPartnerProvidersClient) UpdateTagsHandleResponse(resp *azcore.Response) (*SecurityPartnerProviderResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.updateTagsHandleError(resp)
+		return nil, client.UpdateTagsHandleError(resp)
 	}
 	result := SecurityPartnerProviderResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.SecurityPartnerProvider)
 }
 
-// updateTagsHandleError handles the UpdateTags error response.
-func (client *securityPartnerProvidersOperations) updateTagsHandleError(resp *azcore.Response) error {
+// UpdateTagsHandleError handles the UpdateTags error response.
+func (client *SecurityPartnerProvidersClient) UpdateTagsHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

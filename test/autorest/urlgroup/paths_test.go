@@ -12,8 +12,12 @@ import (
 	"time"
 )
 
+func newPathsClient() urlgroup.PathsOperations {
+	return urlgroup.NewPathsClient(urlgroup.NewDefaultClient(nil))
+}
+
 func TestArrayCSVInPath(t *testing.T) {
-	client := urlgroup.NewDefaultClient(nil).PathsOperations()
+	client := newPathsClient()
 	result, err := client.ArrayCSVInPath(context.Background(), []string{"ArrayPath1", "begin!*'();:@ &=+$,/?#[]end", "", ""})
 	if err != nil {
 		t.Fatal(err)
@@ -22,7 +26,7 @@ func TestArrayCSVInPath(t *testing.T) {
 }
 
 func TestPathsBase64URL(t *testing.T) {
-	client := urlgroup.NewDefaultClient(nil).PathsOperations()
+	client := newPathsClient()
 	result, err := client.Base64URL(context.Background(), []byte("lorem"))
 	if err != nil {
 		t.Fatal(err)
@@ -31,7 +35,7 @@ func TestPathsBase64URL(t *testing.T) {
 }
 
 func TestPathsByteEmpty(t *testing.T) {
-	client := urlgroup.NewDefaultClient(nil).PathsOperations()
+	client := newPathsClient()
 	result, err := client.ByteEmpty(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -40,7 +44,7 @@ func TestPathsByteEmpty(t *testing.T) {
 }
 
 func TestPathsByteMultiByte(t *testing.T) {
-	client := urlgroup.NewDefaultClient(nil).PathsOperations()
+	client := newPathsClient()
 	result, err := client.ByteMultiByte(context.Background(), []byte("啊齄丂狛狜隣郎隣兀﨩"))
 	if err != nil {
 		t.Fatal(err)
@@ -50,7 +54,7 @@ func TestPathsByteMultiByte(t *testing.T) {
 
 // TODO: check
 func TestPathsByteNull(t *testing.T) {
-	client := urlgroup.NewDefaultClient(nil).PathsOperations()
+	client := newPathsClient()
 	_, err := client.ByteNull(context.Background(), nil)
 	if err == nil {
 		t.Fatalf("Did not receive an error, but expected one")
@@ -58,7 +62,7 @@ func TestPathsByteNull(t *testing.T) {
 }
 
 func TestPathsDateNull(t *testing.T) {
-	client := urlgroup.NewDefaultClient(nil).PathsOperations()
+	client := newPathsClient()
 	var time time.Time
 	result, err := client.DateNull(context.Background(), time)
 	if err != nil {
@@ -68,7 +72,7 @@ func TestPathsDateNull(t *testing.T) {
 }
 
 func TestPathsDateTimeNull(t *testing.T) {
-	client := urlgroup.NewDefaultClient(nil).PathsOperations()
+	client := newPathsClient()
 	var time time.Time
 	result, err := client.DateTimeNull(context.Background(), time)
 	if err != nil {
@@ -78,7 +82,7 @@ func TestPathsDateTimeNull(t *testing.T) {
 }
 
 func TestPathsDateTimeValid(t *testing.T) {
-	client := urlgroup.NewDefaultClient(nil).PathsOperations()
+	client := newPathsClient()
 	result, err := client.DateTimeValid(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -87,7 +91,7 @@ func TestPathsDateTimeValid(t *testing.T) {
 }
 
 func TestPathsDateValid(t *testing.T) {
-	client := urlgroup.NewDefaultClient(nil).PathsOperations()
+	client := newPathsClient()
 	result, err := client.DateValid(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -96,7 +100,7 @@ func TestPathsDateValid(t *testing.T) {
 }
 
 func TestPathsDoubleDecimalNegative(t *testing.T) {
-	client := urlgroup.NewDefaultClient(nil).PathsOperations()
+	client := newPathsClient()
 	result, err := client.DoubleDecimalNegative(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -105,7 +109,7 @@ func TestPathsDoubleDecimalNegative(t *testing.T) {
 }
 
 func TestPathsDoubleDecimalPositive(t *testing.T) {
-	client := urlgroup.NewDefaultClient(nil).PathsOperations()
+	client := newPathsClient()
 	result, err := client.DoubleDecimalPositive(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -114,7 +118,7 @@ func TestPathsDoubleDecimalPositive(t *testing.T) {
 }
 
 func TestPathsEnumNull(t *testing.T) {
-	client := urlgroup.NewDefaultClient(nil).PathsOperations()
+	client := newPathsClient()
 	var color urlgroup.URIColor
 	_, err := client.EnumNull(context.Background(), color)
 	if err == nil {
@@ -123,7 +127,7 @@ func TestPathsEnumNull(t *testing.T) {
 }
 
 func TestPathsEnumValid(t *testing.T) {
-	client := urlgroup.NewDefaultClient(nil).PathsOperations()
+	client := newPathsClient()
 	color := urlgroup.URIColorGreenColor
 	result, err := client.EnumValid(context.Background(), color)
 	if err != nil {
@@ -133,7 +137,7 @@ func TestPathsEnumValid(t *testing.T) {
 }
 
 func TestPathsFloatScientificNegative(t *testing.T) {
-	client := urlgroup.NewDefaultClient(nil).PathsOperations()
+	client := newPathsClient()
 	result, err := client.FloatScientificNegative(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -142,7 +146,7 @@ func TestPathsFloatScientificNegative(t *testing.T) {
 }
 
 func TestPathsFloatScientificPositive(t *testing.T) {
-	client := urlgroup.NewDefaultClient(nil).PathsOperations()
+	client := newPathsClient()
 	result, err := client.FloatScientificPositive(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -151,7 +155,7 @@ func TestPathsFloatScientificPositive(t *testing.T) {
 }
 
 func TestPathsGetBooleanFalse(t *testing.T) {
-	client := urlgroup.NewDefaultClient(nil).PathsOperations()
+	client := newPathsClient()
 	result, err := client.GetBooleanFalse(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -160,7 +164,7 @@ func TestPathsGetBooleanFalse(t *testing.T) {
 }
 
 func TestPathsGetBooleanTrue(t *testing.T) {
-	client := urlgroup.NewDefaultClient(nil).PathsOperations()
+	client := newPathsClient()
 	result, err := client.GetBooleanTrue(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -169,7 +173,7 @@ func TestPathsGetBooleanTrue(t *testing.T) {
 }
 
 func TestPathsGetIntNegativeOneMillion(t *testing.T) {
-	client := urlgroup.NewDefaultClient(nil).PathsOperations()
+	client := newPathsClient()
 	result, err := client.GetIntNegativeOneMillion(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -178,7 +182,7 @@ func TestPathsGetIntNegativeOneMillion(t *testing.T) {
 }
 
 func TestPathsGetIntOneMillion(t *testing.T) {
-	client := urlgroup.NewDefaultClient(nil).PathsOperations()
+	client := newPathsClient()
 	result, err := client.GetIntOneMillion(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -187,7 +191,7 @@ func TestPathsGetIntOneMillion(t *testing.T) {
 }
 
 func TestPathsGetNegativeTenBillion(t *testing.T) {
-	client := urlgroup.NewDefaultClient(nil).PathsOperations()
+	client := newPathsClient()
 	result, err := client.GetNegativeTenBillion(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -196,7 +200,7 @@ func TestPathsGetNegativeTenBillion(t *testing.T) {
 }
 
 func TestPathsGetTenBillion(t *testing.T) {
-	client := urlgroup.NewDefaultClient(nil).PathsOperations()
+	client := newPathsClient()
 	result, err := client.GetTenBillion(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -205,7 +209,7 @@ func TestPathsGetTenBillion(t *testing.T) {
 }
 
 func TestPathsStringEmpty(t *testing.T) {
-	client := urlgroup.NewDefaultClient(nil).PathsOperations()
+	client := newPathsClient()
 	result, err := client.StringEmpty(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -214,7 +218,7 @@ func TestPathsStringEmpty(t *testing.T) {
 }
 
 func TestPathsStringNull(t *testing.T) {
-	client := urlgroup.NewDefaultClient(nil).PathsOperations()
+	client := newPathsClient()
 	var s string
 	_, err := client.StringNull(context.Background(), s)
 	if err == nil {
@@ -223,7 +227,7 @@ func TestPathsStringNull(t *testing.T) {
 }
 
 func TestPathsStringURLEncoded(t *testing.T) {
-	client := urlgroup.NewDefaultClient(nil).PathsOperations()
+	client := newPathsClient()
 	result, err := client.StringURLEncoded(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -232,7 +236,7 @@ func TestPathsStringURLEncoded(t *testing.T) {
 }
 
 func TestPathsStringURLNonEncoded(t *testing.T) {
-	client := urlgroup.NewDefaultClient(nil).PathsOperations()
+	client := newPathsClient()
 	result, err := client.StringURLNonEncoded(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -241,7 +245,7 @@ func TestPathsStringURLNonEncoded(t *testing.T) {
 }
 
 func TestPathsStringUnicode(t *testing.T) {
-	client := urlgroup.NewDefaultClient(nil).PathsOperations()
+	client := newPathsClient()
 	result, err := client.StringUnicode(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -250,7 +254,7 @@ func TestPathsStringUnicode(t *testing.T) {
 }
 
 func TestPathsUnixTimeURL(t *testing.T) {
-	client := urlgroup.NewDefaultClient(nil).PathsOperations()
+	client := newPathsClient()
 	d, err := time.Parse("2006-01-02", "2016-04-13")
 	if err != nil {
 		t.Fatal(err)

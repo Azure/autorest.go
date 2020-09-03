@@ -13,9 +13,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
+func newPetsClient() additionalpropsgroup.PetsOperations {
+	return additionalpropsgroup.NewPetsClient(additionalpropsgroup.NewDefaultClient(nil))
+}
+
 // CreateApInProperties - Create a Pet which contains more properties than what is defined.
 func TestCreateApInProperties(t *testing.T) {
-	client := additionalpropsgroup.NewDefaultClient(nil).PetsOperations()
+	client := newPetsClient()
 	result, err := client.CreateApInProperties(context.Background(), additionalpropsgroup.PetApInProperties{
 		ID:   to.Int32Ptr(4),
 		Name: to.StringPtr("Bunny"),
@@ -42,7 +46,7 @@ func TestCreateApInProperties(t *testing.T) {
 
 // CreateApInPropertiesWithApstring - Create a Pet which contains more properties than what is defined.
 func TestCreateApInPropertiesWithApstring(t *testing.T) {
-	client := additionalpropsgroup.NewDefaultClient(nil).PetsOperations()
+	client := newPetsClient()
 	result, err := client.CreateApInPropertiesWithApstring(context.Background(), additionalpropsgroup.PetApInPropertiesWithApstring{
 		ID:            to.Int32Ptr(5),
 		Name:          to.StringPtr("Funny"),
@@ -81,7 +85,7 @@ func TestCreateApInPropertiesWithApstring(t *testing.T) {
 
 // CreateApObject - Create a Pet which contains more properties than what is defined.
 func TestCreateApObject(t *testing.T) {
-	client := additionalpropsgroup.NewDefaultClient(nil).PetsOperations()
+	client := newPetsClient()
 	result, err := client.CreateApObject(context.Background(), additionalpropsgroup.PetApObject{
 		ID:   to.Int32Ptr(2),
 		Name: to.StringPtr("Hira"),
@@ -124,7 +128,7 @@ func TestCreateApObject(t *testing.T) {
 
 // CreateApString - Create a Pet which contains more properties than what is defined.
 func TestCreateApString(t *testing.T) {
-	client := additionalpropsgroup.NewDefaultClient(nil).PetsOperations()
+	client := newPetsClient()
 	result, err := client.CreateApString(context.Background(), additionalpropsgroup.PetApString{
 		ID:   to.Int32Ptr(3),
 		Name: to.StringPtr("Tommy"),
@@ -151,7 +155,7 @@ func TestCreateApString(t *testing.T) {
 
 // CreateApTrue - Create a Pet which contains more properties than what is defined.
 func TestCreateApTrue(t *testing.T) {
-	client := additionalpropsgroup.NewDefaultClient(nil).PetsOperations()
+	client := newPetsClient()
 	result, err := client.CreateApTrue(context.Background(), additionalpropsgroup.PetApTrue{
 		ID:   to.Int32Ptr(1),
 		Name: to.StringPtr("Puppy"),
@@ -180,7 +184,7 @@ func TestCreateApTrue(t *testing.T) {
 
 // CreateCatApTrue - Create a CatAPTrue which contains more properties than what is defined.
 func TestCreateCatApTrue(t *testing.T) {
-	client := additionalpropsgroup.NewDefaultClient(nil).PetsOperations()
+	client := newPetsClient()
 	result, err := client.CreateCatApTrue(context.Background(), additionalpropsgroup.CatApTrue{
 		PetApTrue: additionalpropsgroup.PetApTrue{
 			ID:   to.Int32Ptr(1),

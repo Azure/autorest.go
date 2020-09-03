@@ -21,30 +21,41 @@ type InheritanceOperations interface {
 	PutValid(ctx context.Context, complexBody Siamese) (*http.Response, error)
 }
 
-// inheritanceOperations implements the InheritanceOperations interface.
-type inheritanceOperations struct {
+// InheritanceClient implements the InheritanceOperations interface.
+// Don't use this type directly, use NewInheritanceClient() instead.
+type InheritanceClient struct {
 	*Client
 }
 
+// NewInheritanceClient creates a new instance of InheritanceClient with the specified values.
+func NewInheritanceClient(c *Client) InheritanceOperations {
+	return &InheritanceClient{Client: c}
+}
+
+// Do invokes the Do() method on the pipeline associated with this client.
+func (client *InheritanceClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(ctx, req)
+}
+
 // GetValid - Get complex types that extend others
-func (client *inheritanceOperations) GetValid(ctx context.Context) (*SiameseResponse, error) {
-	req, err := client.getValidCreateRequest()
+func (client *InheritanceClient) GetValid(ctx context.Context) (*SiameseResponse, error) {
+	req, err := client.GetValidCreateRequest()
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getValidHandleResponse(resp)
+	result, err := client.GetValidHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getValidCreateRequest creates the GetValid request.
-func (client *inheritanceOperations) getValidCreateRequest() (*azcore.Request, error) {
+// GetValidCreateRequest creates the GetValid request.
+func (client *InheritanceClient) GetValidCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -58,17 +69,17 @@ func (client *inheritanceOperations) getValidCreateRequest() (*azcore.Request, e
 	return req, nil
 }
 
-// getValidHandleResponse handles the GetValid response.
-func (client *inheritanceOperations) getValidHandleResponse(resp *azcore.Response) (*SiameseResponse, error) {
+// GetValidHandleResponse handles the GetValid response.
+func (client *InheritanceClient) GetValidHandleResponse(resp *azcore.Response) (*SiameseResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getValidHandleError(resp)
+		return nil, client.GetValidHandleError(resp)
 	}
 	result := SiameseResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Siamese)
 }
 
-// getValidHandleError handles the GetValid error response.
-func (client *inheritanceOperations) getValidHandleError(resp *azcore.Response) error {
+// GetValidHandleError handles the GetValid error response.
+func (client *InheritanceClient) GetValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -77,24 +88,24 @@ func (client *inheritanceOperations) getValidHandleError(resp *azcore.Response) 
 }
 
 // PutValid - Put complex types that extend others
-func (client *inheritanceOperations) PutValid(ctx context.Context, complexBody Siamese) (*http.Response, error) {
-	req, err := client.putValidCreateRequest(complexBody)
+func (client *InheritanceClient) PutValid(ctx context.Context, complexBody Siamese) (*http.Response, error) {
+	req, err := client.PutValidCreateRequest(complexBody)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.putValidHandleResponse(resp)
+	result, err := client.PutValidHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// putValidCreateRequest creates the PutValid request.
-func (client *inheritanceOperations) putValidCreateRequest(complexBody Siamese) (*azcore.Request, error) {
+// PutValidCreateRequest creates the PutValid request.
+func (client *InheritanceClient) PutValidCreateRequest(complexBody Siamese) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -108,16 +119,16 @@ func (client *inheritanceOperations) putValidCreateRequest(complexBody Siamese) 
 	return req, req.MarshalAsJSON(complexBody)
 }
 
-// putValidHandleResponse handles the PutValid response.
-func (client *inheritanceOperations) putValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
+// PutValidHandleResponse handles the PutValid response.
+func (client *InheritanceClient) PutValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.putValidHandleError(resp)
+		return nil, client.PutValidHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// putValidHandleError handles the PutValid error response.
-func (client *inheritanceOperations) putValidHandleError(resp *azcore.Response) error {
+// PutValidHandleError handles the PutValid error response.
+func (client *InheritanceClient) PutValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

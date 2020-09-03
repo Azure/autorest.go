@@ -21,30 +21,41 @@ type PolymorphicrecursiveOperations interface {
 	PutValid(ctx context.Context, complexBody FishClassification) (*http.Response, error)
 }
 
-// polymorphicrecursiveOperations implements the PolymorphicrecursiveOperations interface.
-type polymorphicrecursiveOperations struct {
+// PolymorphicrecursiveClient implements the PolymorphicrecursiveOperations interface.
+// Don't use this type directly, use NewPolymorphicrecursiveClient() instead.
+type PolymorphicrecursiveClient struct {
 	*Client
 }
 
+// NewPolymorphicrecursiveClient creates a new instance of PolymorphicrecursiveClient with the specified values.
+func NewPolymorphicrecursiveClient(c *Client) PolymorphicrecursiveOperations {
+	return &PolymorphicrecursiveClient{Client: c}
+}
+
+// Do invokes the Do() method on the pipeline associated with this client.
+func (client *PolymorphicrecursiveClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(ctx, req)
+}
+
 // GetValid - Get complex types that are polymorphic and have recursive references
-func (client *polymorphicrecursiveOperations) GetValid(ctx context.Context) (*FishResponse, error) {
-	req, err := client.getValidCreateRequest()
+func (client *PolymorphicrecursiveClient) GetValid(ctx context.Context) (*FishResponse, error) {
+	req, err := client.GetValidCreateRequest()
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getValidHandleResponse(resp)
+	result, err := client.GetValidHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getValidCreateRequest creates the GetValid request.
-func (client *polymorphicrecursiveOperations) getValidCreateRequest() (*azcore.Request, error) {
+// GetValidCreateRequest creates the GetValid request.
+func (client *PolymorphicrecursiveClient) GetValidCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -58,17 +69,17 @@ func (client *polymorphicrecursiveOperations) getValidCreateRequest() (*azcore.R
 	return req, nil
 }
 
-// getValidHandleResponse handles the GetValid response.
-func (client *polymorphicrecursiveOperations) getValidHandleResponse(resp *azcore.Response) (*FishResponse, error) {
+// GetValidHandleResponse handles the GetValid response.
+func (client *PolymorphicrecursiveClient) GetValidHandleResponse(resp *azcore.Response) (*FishResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getValidHandleError(resp)
+		return nil, client.GetValidHandleError(resp)
 	}
 	result := FishResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result)
 }
 
-// getValidHandleError handles the GetValid error response.
-func (client *polymorphicrecursiveOperations) getValidHandleError(resp *azcore.Response) error {
+// GetValidHandleError handles the GetValid error response.
+func (client *PolymorphicrecursiveClient) GetValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -77,24 +88,24 @@ func (client *polymorphicrecursiveOperations) getValidHandleError(resp *azcore.R
 }
 
 // PutValid - Put complex types that are polymorphic and have recursive references
-func (client *polymorphicrecursiveOperations) PutValid(ctx context.Context, complexBody FishClassification) (*http.Response, error) {
-	req, err := client.putValidCreateRequest(complexBody)
+func (client *PolymorphicrecursiveClient) PutValid(ctx context.Context, complexBody FishClassification) (*http.Response, error) {
+	req, err := client.PutValidCreateRequest(complexBody)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.putValidHandleResponse(resp)
+	result, err := client.PutValidHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// putValidCreateRequest creates the PutValid request.
-func (client *polymorphicrecursiveOperations) putValidCreateRequest(complexBody FishClassification) (*azcore.Request, error) {
+// PutValidCreateRequest creates the PutValid request.
+func (client *PolymorphicrecursiveClient) PutValidCreateRequest(complexBody FishClassification) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -108,16 +119,16 @@ func (client *polymorphicrecursiveOperations) putValidCreateRequest(complexBody 
 	return req, req.MarshalAsJSON(complexBody)
 }
 
-// putValidHandleResponse handles the PutValid response.
-func (client *polymorphicrecursiveOperations) putValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
+// PutValidHandleResponse handles the PutValid response.
+func (client *PolymorphicrecursiveClient) PutValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.putValidHandleError(resp)
+		return nil, client.PutValidHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// putValidHandleError handles the PutValid error response.
-func (client *polymorphicrecursiveOperations) putValidHandleError(resp *azcore.Response) error {
+// PutValidHandleError handles the PutValid error response.
+func (client *PolymorphicrecursiveClient) PutValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

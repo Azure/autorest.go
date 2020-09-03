@@ -78,30 +78,41 @@ type HeaderOperations interface {
 	ResponseString(ctx context.Context, scenario string) (*HeaderResponseStringResponse, error)
 }
 
-// headerOperations implements the HeaderOperations interface.
-type headerOperations struct {
+// HeaderClient implements the HeaderOperations interface.
+// Don't use this type directly, use NewHeaderClient() instead.
+type HeaderClient struct {
 	*Client
 }
 
+// NewHeaderClient creates a new instance of HeaderClient with the specified values.
+func NewHeaderClient(c *Client) HeaderOperations {
+	return &HeaderClient{Client: c}
+}
+
+// Do invokes the Do() method on the pipeline associated with this client.
+func (client *HeaderClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(ctx, req)
+}
+
 // CustomRequestID - Send x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request
-func (client *headerOperations) CustomRequestID(ctx context.Context) (*http.Response, error) {
-	req, err := client.customRequestIdCreateRequest()
+func (client *HeaderClient) CustomRequestID(ctx context.Context) (*http.Response, error) {
+	req, err := client.CustomRequestIDCreateRequest()
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.customRequestIdHandleResponse(resp)
+	result, err := client.CustomRequestIDHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// customRequestIdCreateRequest creates the CustomRequestID request.
-func (client *headerOperations) customRequestIdCreateRequest() (*azcore.Request, error) {
+// CustomRequestIDCreateRequest creates the CustomRequestID request.
+func (client *HeaderClient) CustomRequestIDCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -115,16 +126,16 @@ func (client *headerOperations) customRequestIdCreateRequest() (*azcore.Request,
 	return req, nil
 }
 
-// customRequestIdHandleResponse handles the CustomRequestID response.
-func (client *headerOperations) customRequestIdHandleResponse(resp *azcore.Response) (*http.Response, error) {
+// CustomRequestIDHandleResponse handles the CustomRequestID response.
+func (client *HeaderClient) CustomRequestIDHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.customRequestIdHandleError(resp)
+		return nil, client.CustomRequestIDHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// customRequestIdHandleError handles the CustomRequestID error response.
-func (client *headerOperations) customRequestIdHandleError(resp *azcore.Response) error {
+// CustomRequestIDHandleError handles the CustomRequestID error response.
+func (client *HeaderClient) CustomRequestIDHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -133,24 +144,24 @@ func (client *headerOperations) customRequestIdHandleError(resp *azcore.Response
 }
 
 // ParamBool - Send a post request with header values "scenario": "true", "value": true or "scenario": "false", "value": false
-func (client *headerOperations) ParamBool(ctx context.Context, scenario string, value bool) (*http.Response, error) {
-	req, err := client.paramBoolCreateRequest(scenario, value)
+func (client *HeaderClient) ParamBool(ctx context.Context, scenario string, value bool) (*http.Response, error) {
+	req, err := client.ParamBoolCreateRequest(scenario, value)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.paramBoolHandleResponse(resp)
+	result, err := client.ParamBoolHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// paramBoolCreateRequest creates the ParamBool request.
-func (client *headerOperations) paramBoolCreateRequest(scenario string, value bool) (*azcore.Request, error) {
+// ParamBoolCreateRequest creates the ParamBool request.
+func (client *HeaderClient) ParamBoolCreateRequest(scenario string, value bool) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -166,16 +177,16 @@ func (client *headerOperations) paramBoolCreateRequest(scenario string, value bo
 	return req, nil
 }
 
-// paramBoolHandleResponse handles the ParamBool response.
-func (client *headerOperations) paramBoolHandleResponse(resp *azcore.Response) (*http.Response, error) {
+// ParamBoolHandleResponse handles the ParamBool response.
+func (client *HeaderClient) ParamBoolHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.paramBoolHandleError(resp)
+		return nil, client.ParamBoolHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// paramBoolHandleError handles the ParamBool error response.
-func (client *headerOperations) paramBoolHandleError(resp *azcore.Response) error {
+// ParamBoolHandleError handles the ParamBool error response.
+func (client *HeaderClient) ParamBoolHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -184,24 +195,24 @@ func (client *headerOperations) paramBoolHandleError(resp *azcore.Response) erro
 }
 
 // ParamByte - Send a post request with header values "scenario": "valid", "value": "啊齄丂狛狜隣郎隣兀﨩"
-func (client *headerOperations) ParamByte(ctx context.Context, scenario string, value []byte) (*http.Response, error) {
-	req, err := client.paramByteCreateRequest(scenario, value)
+func (client *HeaderClient) ParamByte(ctx context.Context, scenario string, value []byte) (*http.Response, error) {
+	req, err := client.ParamByteCreateRequest(scenario, value)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.paramByteHandleResponse(resp)
+	result, err := client.ParamByteHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// paramByteCreateRequest creates the ParamByte request.
-func (client *headerOperations) paramByteCreateRequest(scenario string, value []byte) (*azcore.Request, error) {
+// ParamByteCreateRequest creates the ParamByte request.
+func (client *HeaderClient) ParamByteCreateRequest(scenario string, value []byte) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -217,16 +228,16 @@ func (client *headerOperations) paramByteCreateRequest(scenario string, value []
 	return req, nil
 }
 
-// paramByteHandleResponse handles the ParamByte response.
-func (client *headerOperations) paramByteHandleResponse(resp *azcore.Response) (*http.Response, error) {
+// ParamByteHandleResponse handles the ParamByte response.
+func (client *HeaderClient) ParamByteHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.paramByteHandleError(resp)
+		return nil, client.ParamByteHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// paramByteHandleError handles the ParamByte error response.
-func (client *headerOperations) paramByteHandleError(resp *azcore.Response) error {
+// ParamByteHandleError handles the ParamByte error response.
+func (client *HeaderClient) ParamByteHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -235,24 +246,24 @@ func (client *headerOperations) paramByteHandleError(resp *azcore.Response) erro
 }
 
 // ParamDate - Send a post request with header values "scenario": "valid", "value": "2010-01-01" or "scenario": "min", "value": "0001-01-01"
-func (client *headerOperations) ParamDate(ctx context.Context, scenario string, value time.Time) (*http.Response, error) {
-	req, err := client.paramDateCreateRequest(scenario, value)
+func (client *HeaderClient) ParamDate(ctx context.Context, scenario string, value time.Time) (*http.Response, error) {
+	req, err := client.ParamDateCreateRequest(scenario, value)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.paramDateHandleResponse(resp)
+	result, err := client.ParamDateHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// paramDateCreateRequest creates the ParamDate request.
-func (client *headerOperations) paramDateCreateRequest(scenario string, value time.Time) (*azcore.Request, error) {
+// ParamDateCreateRequest creates the ParamDate request.
+func (client *HeaderClient) ParamDateCreateRequest(scenario string, value time.Time) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -268,16 +279,16 @@ func (client *headerOperations) paramDateCreateRequest(scenario string, value ti
 	return req, nil
 }
 
-// paramDateHandleResponse handles the ParamDate response.
-func (client *headerOperations) paramDateHandleResponse(resp *azcore.Response) (*http.Response, error) {
+// ParamDateHandleResponse handles the ParamDate response.
+func (client *HeaderClient) ParamDateHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.paramDateHandleError(resp)
+		return nil, client.ParamDateHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// paramDateHandleError handles the ParamDate error response.
-func (client *headerOperations) paramDateHandleError(resp *azcore.Response) error {
+// ParamDateHandleError handles the ParamDate error response.
+func (client *HeaderClient) ParamDateHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -286,24 +297,24 @@ func (client *headerOperations) paramDateHandleError(resp *azcore.Response) erro
 }
 
 // ParamDatetime - Send a post request with header values "scenario": "valid", "value": "2010-01-01T12:34:56Z" or "scenario": "min", "value": "0001-01-01T00:00:00Z"
-func (client *headerOperations) ParamDatetime(ctx context.Context, scenario string, value time.Time) (*http.Response, error) {
-	req, err := client.paramDatetimeCreateRequest(scenario, value)
+func (client *HeaderClient) ParamDatetime(ctx context.Context, scenario string, value time.Time) (*http.Response, error) {
+	req, err := client.ParamDatetimeCreateRequest(scenario, value)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.paramDatetimeHandleResponse(resp)
+	result, err := client.ParamDatetimeHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// paramDatetimeCreateRequest creates the ParamDatetime request.
-func (client *headerOperations) paramDatetimeCreateRequest(scenario string, value time.Time) (*azcore.Request, error) {
+// ParamDatetimeCreateRequest creates the ParamDatetime request.
+func (client *HeaderClient) ParamDatetimeCreateRequest(scenario string, value time.Time) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -319,16 +330,16 @@ func (client *headerOperations) paramDatetimeCreateRequest(scenario string, valu
 	return req, nil
 }
 
-// paramDatetimeHandleResponse handles the ParamDatetime response.
-func (client *headerOperations) paramDatetimeHandleResponse(resp *azcore.Response) (*http.Response, error) {
+// ParamDatetimeHandleResponse handles the ParamDatetime response.
+func (client *HeaderClient) ParamDatetimeHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.paramDatetimeHandleError(resp)
+		return nil, client.ParamDatetimeHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// paramDatetimeHandleError handles the ParamDatetime error response.
-func (client *headerOperations) paramDatetimeHandleError(resp *azcore.Response) error {
+// ParamDatetimeHandleError handles the ParamDatetime error response.
+func (client *HeaderClient) ParamDatetimeHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -337,24 +348,24 @@ func (client *headerOperations) paramDatetimeHandleError(resp *azcore.Response) 
 }
 
 // ParamDatetimeRFC1123 - Send a post request with header values "scenario": "valid", "value": "Wed, 01 Jan 2010 12:34:56 GMT" or "scenario": "min", "value": "Mon, 01 Jan 0001 00:00:00 GMT"
-func (client *headerOperations) ParamDatetimeRFC1123(ctx context.Context, scenario string, headerParamDatetimeRfc1123Options *HeaderParamDatetimeRFC1123Options) (*http.Response, error) {
-	req, err := client.paramDatetimeRfc1123CreateRequest(scenario, headerParamDatetimeRfc1123Options)
+func (client *HeaderClient) ParamDatetimeRFC1123(ctx context.Context, scenario string, headerParamDatetimeRfc1123Options *HeaderParamDatetimeRFC1123Options) (*http.Response, error) {
+	req, err := client.ParamDatetimeRFC1123CreateRequest(scenario, headerParamDatetimeRfc1123Options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.paramDatetimeRfc1123HandleResponse(resp)
+	result, err := client.ParamDatetimeRFC1123HandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// paramDatetimeRfc1123CreateRequest creates the ParamDatetimeRFC1123 request.
-func (client *headerOperations) paramDatetimeRfc1123CreateRequest(scenario string, headerParamDatetimeRfc1123Options *HeaderParamDatetimeRFC1123Options) (*azcore.Request, error) {
+// ParamDatetimeRFC1123CreateRequest creates the ParamDatetimeRFC1123 request.
+func (client *HeaderClient) ParamDatetimeRFC1123CreateRequest(scenario string, headerParamDatetimeRfc1123Options *HeaderParamDatetimeRFC1123Options) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -372,16 +383,16 @@ func (client *headerOperations) paramDatetimeRfc1123CreateRequest(scenario strin
 	return req, nil
 }
 
-// paramDatetimeRfc1123HandleResponse handles the ParamDatetimeRFC1123 response.
-func (client *headerOperations) paramDatetimeRfc1123HandleResponse(resp *azcore.Response) (*http.Response, error) {
+// ParamDatetimeRFC1123HandleResponse handles the ParamDatetimeRFC1123 response.
+func (client *HeaderClient) ParamDatetimeRFC1123HandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.paramDatetimeRfc1123HandleError(resp)
+		return nil, client.ParamDatetimeRFC1123HandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// paramDatetimeRfc1123HandleError handles the ParamDatetimeRFC1123 error response.
-func (client *headerOperations) paramDatetimeRfc1123HandleError(resp *azcore.Response) error {
+// ParamDatetimeRFC1123HandleError handles the ParamDatetimeRFC1123 error response.
+func (client *HeaderClient) ParamDatetimeRFC1123HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -390,24 +401,24 @@ func (client *headerOperations) paramDatetimeRfc1123HandleError(resp *azcore.Res
 }
 
 // ParamDouble - Send a post request with header values "scenario": "positive", "value": 7e120 or "scenario": "negative", "value": -3.0
-func (client *headerOperations) ParamDouble(ctx context.Context, scenario string, value float64) (*http.Response, error) {
-	req, err := client.paramDoubleCreateRequest(scenario, value)
+func (client *HeaderClient) ParamDouble(ctx context.Context, scenario string, value float64) (*http.Response, error) {
+	req, err := client.ParamDoubleCreateRequest(scenario, value)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.paramDoubleHandleResponse(resp)
+	result, err := client.ParamDoubleHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// paramDoubleCreateRequest creates the ParamDouble request.
-func (client *headerOperations) paramDoubleCreateRequest(scenario string, value float64) (*azcore.Request, error) {
+// ParamDoubleCreateRequest creates the ParamDouble request.
+func (client *HeaderClient) ParamDoubleCreateRequest(scenario string, value float64) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -423,16 +434,16 @@ func (client *headerOperations) paramDoubleCreateRequest(scenario string, value 
 	return req, nil
 }
 
-// paramDoubleHandleResponse handles the ParamDouble response.
-func (client *headerOperations) paramDoubleHandleResponse(resp *azcore.Response) (*http.Response, error) {
+// ParamDoubleHandleResponse handles the ParamDouble response.
+func (client *HeaderClient) ParamDoubleHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.paramDoubleHandleError(resp)
+		return nil, client.ParamDoubleHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// paramDoubleHandleError handles the ParamDouble error response.
-func (client *headerOperations) paramDoubleHandleError(resp *azcore.Response) error {
+// ParamDoubleHandleError handles the ParamDouble error response.
+func (client *HeaderClient) ParamDoubleHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -441,24 +452,24 @@ func (client *headerOperations) paramDoubleHandleError(resp *azcore.Response) er
 }
 
 // ParamDuration - Send a post request with header values "scenario": "valid", "value": "P123DT22H14M12.011S"
-func (client *headerOperations) ParamDuration(ctx context.Context, scenario string, value string) (*http.Response, error) {
-	req, err := client.paramDurationCreateRequest(scenario, value)
+func (client *HeaderClient) ParamDuration(ctx context.Context, scenario string, value string) (*http.Response, error) {
+	req, err := client.ParamDurationCreateRequest(scenario, value)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.paramDurationHandleResponse(resp)
+	result, err := client.ParamDurationHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// paramDurationCreateRequest creates the ParamDuration request.
-func (client *headerOperations) paramDurationCreateRequest(scenario string, value string) (*azcore.Request, error) {
+// ParamDurationCreateRequest creates the ParamDuration request.
+func (client *HeaderClient) ParamDurationCreateRequest(scenario string, value string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -474,16 +485,16 @@ func (client *headerOperations) paramDurationCreateRequest(scenario string, valu
 	return req, nil
 }
 
-// paramDurationHandleResponse handles the ParamDuration response.
-func (client *headerOperations) paramDurationHandleResponse(resp *azcore.Response) (*http.Response, error) {
+// ParamDurationHandleResponse handles the ParamDuration response.
+func (client *HeaderClient) ParamDurationHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.paramDurationHandleError(resp)
+		return nil, client.ParamDurationHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// paramDurationHandleError handles the ParamDuration error response.
-func (client *headerOperations) paramDurationHandleError(resp *azcore.Response) error {
+// ParamDurationHandleError handles the ParamDuration error response.
+func (client *HeaderClient) ParamDurationHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -492,24 +503,24 @@ func (client *headerOperations) paramDurationHandleError(resp *azcore.Response) 
 }
 
 // ParamEnum - Send a post request with header values "scenario": "valid", "value": "GREY" or "scenario": "null", "value": null
-func (client *headerOperations) ParamEnum(ctx context.Context, scenario string, headerParamEnumOptions *HeaderParamEnumOptions) (*http.Response, error) {
-	req, err := client.paramEnumCreateRequest(scenario, headerParamEnumOptions)
+func (client *HeaderClient) ParamEnum(ctx context.Context, scenario string, headerParamEnumOptions *HeaderParamEnumOptions) (*http.Response, error) {
+	req, err := client.ParamEnumCreateRequest(scenario, headerParamEnumOptions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.paramEnumHandleResponse(resp)
+	result, err := client.ParamEnumHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// paramEnumCreateRequest creates the ParamEnum request.
-func (client *headerOperations) paramEnumCreateRequest(scenario string, headerParamEnumOptions *HeaderParamEnumOptions) (*azcore.Request, error) {
+// ParamEnumCreateRequest creates the ParamEnum request.
+func (client *HeaderClient) ParamEnumCreateRequest(scenario string, headerParamEnumOptions *HeaderParamEnumOptions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -527,16 +538,16 @@ func (client *headerOperations) paramEnumCreateRequest(scenario string, headerPa
 	return req, nil
 }
 
-// paramEnumHandleResponse handles the ParamEnum response.
-func (client *headerOperations) paramEnumHandleResponse(resp *azcore.Response) (*http.Response, error) {
+// ParamEnumHandleResponse handles the ParamEnum response.
+func (client *HeaderClient) ParamEnumHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.paramEnumHandleError(resp)
+		return nil, client.ParamEnumHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// paramEnumHandleError handles the ParamEnum error response.
-func (client *headerOperations) paramEnumHandleError(resp *azcore.Response) error {
+// ParamEnumHandleError handles the ParamEnum error response.
+func (client *HeaderClient) ParamEnumHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -545,24 +556,24 @@ func (client *headerOperations) paramEnumHandleError(resp *azcore.Response) erro
 }
 
 // ParamExistingKey - Send a post request with header value "User-Agent": "overwrite"
-func (client *headerOperations) ParamExistingKey(ctx context.Context, userAgent string) (*http.Response, error) {
-	req, err := client.paramExistingKeyCreateRequest(userAgent)
+func (client *HeaderClient) ParamExistingKey(ctx context.Context, userAgent string) (*http.Response, error) {
+	req, err := client.ParamExistingKeyCreateRequest(userAgent)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.paramExistingKeyHandleResponse(resp)
+	result, err := client.ParamExistingKeyHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// paramExistingKeyCreateRequest creates the ParamExistingKey request.
-func (client *headerOperations) paramExistingKeyCreateRequest(userAgent string) (*azcore.Request, error) {
+// ParamExistingKeyCreateRequest creates the ParamExistingKey request.
+func (client *HeaderClient) ParamExistingKeyCreateRequest(userAgent string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -577,16 +588,16 @@ func (client *headerOperations) paramExistingKeyCreateRequest(userAgent string) 
 	return req, nil
 }
 
-// paramExistingKeyHandleResponse handles the ParamExistingKey response.
-func (client *headerOperations) paramExistingKeyHandleResponse(resp *azcore.Response) (*http.Response, error) {
+// ParamExistingKeyHandleResponse handles the ParamExistingKey response.
+func (client *HeaderClient) ParamExistingKeyHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.paramExistingKeyHandleError(resp)
+		return nil, client.ParamExistingKeyHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// paramExistingKeyHandleError handles the ParamExistingKey error response.
-func (client *headerOperations) paramExistingKeyHandleError(resp *azcore.Response) error {
+// ParamExistingKeyHandleError handles the ParamExistingKey error response.
+func (client *HeaderClient) ParamExistingKeyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -595,24 +606,24 @@ func (client *headerOperations) paramExistingKeyHandleError(resp *azcore.Respons
 }
 
 // ParamFloat - Send a post request with header values "scenario": "positive", "value": 0.07 or "scenario": "negative", "value": -3.0
-func (client *headerOperations) ParamFloat(ctx context.Context, scenario string, value float32) (*http.Response, error) {
-	req, err := client.paramFloatCreateRequest(scenario, value)
+func (client *HeaderClient) ParamFloat(ctx context.Context, scenario string, value float32) (*http.Response, error) {
+	req, err := client.ParamFloatCreateRequest(scenario, value)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.paramFloatHandleResponse(resp)
+	result, err := client.ParamFloatHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// paramFloatCreateRequest creates the ParamFloat request.
-func (client *headerOperations) paramFloatCreateRequest(scenario string, value float32) (*azcore.Request, error) {
+// ParamFloatCreateRequest creates the ParamFloat request.
+func (client *HeaderClient) ParamFloatCreateRequest(scenario string, value float32) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -628,16 +639,16 @@ func (client *headerOperations) paramFloatCreateRequest(scenario string, value f
 	return req, nil
 }
 
-// paramFloatHandleResponse handles the ParamFloat response.
-func (client *headerOperations) paramFloatHandleResponse(resp *azcore.Response) (*http.Response, error) {
+// ParamFloatHandleResponse handles the ParamFloat response.
+func (client *HeaderClient) ParamFloatHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.paramFloatHandleError(resp)
+		return nil, client.ParamFloatHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// paramFloatHandleError handles the ParamFloat error response.
-func (client *headerOperations) paramFloatHandleError(resp *azcore.Response) error {
+// ParamFloatHandleError handles the ParamFloat error response.
+func (client *HeaderClient) ParamFloatHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -646,24 +657,24 @@ func (client *headerOperations) paramFloatHandleError(resp *azcore.Response) err
 }
 
 // ParamInteger - Send a post request with header values "scenario": "positive", "value": 1 or "scenario": "negative", "value": -2
-func (client *headerOperations) ParamInteger(ctx context.Context, scenario string, value int32) (*http.Response, error) {
-	req, err := client.paramIntegerCreateRequest(scenario, value)
+func (client *HeaderClient) ParamInteger(ctx context.Context, scenario string, value int32) (*http.Response, error) {
+	req, err := client.ParamIntegerCreateRequest(scenario, value)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.paramIntegerHandleResponse(resp)
+	result, err := client.ParamIntegerHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// paramIntegerCreateRequest creates the ParamInteger request.
-func (client *headerOperations) paramIntegerCreateRequest(scenario string, value int32) (*azcore.Request, error) {
+// ParamIntegerCreateRequest creates the ParamInteger request.
+func (client *HeaderClient) ParamIntegerCreateRequest(scenario string, value int32) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -679,16 +690,16 @@ func (client *headerOperations) paramIntegerCreateRequest(scenario string, value
 	return req, nil
 }
 
-// paramIntegerHandleResponse handles the ParamInteger response.
-func (client *headerOperations) paramIntegerHandleResponse(resp *azcore.Response) (*http.Response, error) {
+// ParamIntegerHandleResponse handles the ParamInteger response.
+func (client *HeaderClient) ParamIntegerHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.paramIntegerHandleError(resp)
+		return nil, client.ParamIntegerHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// paramIntegerHandleError handles the ParamInteger error response.
-func (client *headerOperations) paramIntegerHandleError(resp *azcore.Response) error {
+// ParamIntegerHandleError handles the ParamInteger error response.
+func (client *HeaderClient) ParamIntegerHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -697,24 +708,24 @@ func (client *headerOperations) paramIntegerHandleError(resp *azcore.Response) e
 }
 
 // ParamLong - Send a post request with header values "scenario": "positive", "value": 105 or "scenario": "negative", "value": -2
-func (client *headerOperations) ParamLong(ctx context.Context, scenario string, value int64) (*http.Response, error) {
-	req, err := client.paramLongCreateRequest(scenario, value)
+func (client *HeaderClient) ParamLong(ctx context.Context, scenario string, value int64) (*http.Response, error) {
+	req, err := client.ParamLongCreateRequest(scenario, value)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.paramLongHandleResponse(resp)
+	result, err := client.ParamLongHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// paramLongCreateRequest creates the ParamLong request.
-func (client *headerOperations) paramLongCreateRequest(scenario string, value int64) (*azcore.Request, error) {
+// ParamLongCreateRequest creates the ParamLong request.
+func (client *HeaderClient) ParamLongCreateRequest(scenario string, value int64) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -730,16 +741,16 @@ func (client *headerOperations) paramLongCreateRequest(scenario string, value in
 	return req, nil
 }
 
-// paramLongHandleResponse handles the ParamLong response.
-func (client *headerOperations) paramLongHandleResponse(resp *azcore.Response) (*http.Response, error) {
+// ParamLongHandleResponse handles the ParamLong response.
+func (client *HeaderClient) ParamLongHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.paramLongHandleError(resp)
+		return nil, client.ParamLongHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// paramLongHandleError handles the ParamLong error response.
-func (client *headerOperations) paramLongHandleError(resp *azcore.Response) error {
+// ParamLongHandleError handles the ParamLong error response.
+func (client *HeaderClient) ParamLongHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -748,24 +759,24 @@ func (client *headerOperations) paramLongHandleError(resp *azcore.Response) erro
 }
 
 // ParamProtectedKey - Send a post request with header value "Content-Type": "text/html"
-func (client *headerOperations) ParamProtectedKey(ctx context.Context, contentType string) (*http.Response, error) {
-	req, err := client.paramProtectedKeyCreateRequest(contentType)
+func (client *HeaderClient) ParamProtectedKey(ctx context.Context, contentType string) (*http.Response, error) {
+	req, err := client.ParamProtectedKeyCreateRequest(contentType)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.paramProtectedKeyHandleResponse(resp)
+	result, err := client.ParamProtectedKeyHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// paramProtectedKeyCreateRequest creates the ParamProtectedKey request.
-func (client *headerOperations) paramProtectedKeyCreateRequest(contentType string) (*azcore.Request, error) {
+// ParamProtectedKeyCreateRequest creates the ParamProtectedKey request.
+func (client *HeaderClient) ParamProtectedKeyCreateRequest(contentType string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -780,16 +791,16 @@ func (client *headerOperations) paramProtectedKeyCreateRequest(contentType strin
 	return req, nil
 }
 
-// paramProtectedKeyHandleResponse handles the ParamProtectedKey response.
-func (client *headerOperations) paramProtectedKeyHandleResponse(resp *azcore.Response) (*http.Response, error) {
+// ParamProtectedKeyHandleResponse handles the ParamProtectedKey response.
+func (client *HeaderClient) ParamProtectedKeyHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.paramProtectedKeyHandleError(resp)
+		return nil, client.ParamProtectedKeyHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// paramProtectedKeyHandleError handles the ParamProtectedKey error response.
-func (client *headerOperations) paramProtectedKeyHandleError(resp *azcore.Response) error {
+// ParamProtectedKeyHandleError handles the ParamProtectedKey error response.
+func (client *HeaderClient) ParamProtectedKeyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -798,24 +809,24 @@ func (client *headerOperations) paramProtectedKeyHandleError(resp *azcore.Respon
 }
 
 // ParamString - Send a post request with header values "scenario": "valid", "value": "The quick brown fox jumps over the lazy dog" or "scenario": "null", "value": null or "scenario": "empty", "value": ""
-func (client *headerOperations) ParamString(ctx context.Context, scenario string, headerParamStringOptions *HeaderParamStringOptions) (*http.Response, error) {
-	req, err := client.paramStringCreateRequest(scenario, headerParamStringOptions)
+func (client *HeaderClient) ParamString(ctx context.Context, scenario string, headerParamStringOptions *HeaderParamStringOptions) (*http.Response, error) {
+	req, err := client.ParamStringCreateRequest(scenario, headerParamStringOptions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.paramStringHandleResponse(resp)
+	result, err := client.ParamStringHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// paramStringCreateRequest creates the ParamString request.
-func (client *headerOperations) paramStringCreateRequest(scenario string, headerParamStringOptions *HeaderParamStringOptions) (*azcore.Request, error) {
+// ParamStringCreateRequest creates the ParamString request.
+func (client *HeaderClient) ParamStringCreateRequest(scenario string, headerParamStringOptions *HeaderParamStringOptions) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -833,16 +844,16 @@ func (client *headerOperations) paramStringCreateRequest(scenario string, header
 	return req, nil
 }
 
-// paramStringHandleResponse handles the ParamString response.
-func (client *headerOperations) paramStringHandleResponse(resp *azcore.Response) (*http.Response, error) {
+// ParamStringHandleResponse handles the ParamString response.
+func (client *HeaderClient) ParamStringHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.paramStringHandleError(resp)
+		return nil, client.ParamStringHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// paramStringHandleError handles the ParamString error response.
-func (client *headerOperations) paramStringHandleError(resp *azcore.Response) error {
+// ParamStringHandleError handles the ParamString error response.
+func (client *HeaderClient) ParamStringHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -851,24 +862,24 @@ func (client *headerOperations) paramStringHandleError(resp *azcore.Response) er
 }
 
 // ResponseBool - Get a response with header value "value": true or false
-func (client *headerOperations) ResponseBool(ctx context.Context, scenario string) (*HeaderResponseBoolResponse, error) {
-	req, err := client.responseBoolCreateRequest(scenario)
+func (client *HeaderClient) ResponseBool(ctx context.Context, scenario string) (*HeaderResponseBoolResponse, error) {
+	req, err := client.ResponseBoolCreateRequest(scenario)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.responseBoolHandleResponse(resp)
+	result, err := client.ResponseBoolHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// responseBoolCreateRequest creates the ResponseBool request.
-func (client *headerOperations) responseBoolCreateRequest(scenario string) (*azcore.Request, error) {
+// ResponseBoolCreateRequest creates the ResponseBool request.
+func (client *HeaderClient) ResponseBoolCreateRequest(scenario string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -883,10 +894,10 @@ func (client *headerOperations) responseBoolCreateRequest(scenario string) (*azc
 	return req, nil
 }
 
-// responseBoolHandleResponse handles the ResponseBool response.
-func (client *headerOperations) responseBoolHandleResponse(resp *azcore.Response) (*HeaderResponseBoolResponse, error) {
+// ResponseBoolHandleResponse handles the ResponseBool response.
+func (client *HeaderClient) ResponseBoolHandleResponse(resp *azcore.Response) (*HeaderResponseBoolResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.responseBoolHandleError(resp)
+		return nil, client.ResponseBoolHandleError(resp)
 	}
 	result := HeaderResponseBoolResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("value"); val != "" {
@@ -899,8 +910,8 @@ func (client *headerOperations) responseBoolHandleResponse(resp *azcore.Response
 	return &result, nil
 }
 
-// responseBoolHandleError handles the ResponseBool error response.
-func (client *headerOperations) responseBoolHandleError(resp *azcore.Response) error {
+// ResponseBoolHandleError handles the ResponseBool error response.
+func (client *HeaderClient) ResponseBoolHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -909,24 +920,24 @@ func (client *headerOperations) responseBoolHandleError(resp *azcore.Response) e
 }
 
 // ResponseByte - Get a response with header values "啊齄丂狛狜隣郎隣兀﨩"
-func (client *headerOperations) ResponseByte(ctx context.Context, scenario string) (*HeaderResponseByteResponse, error) {
-	req, err := client.responseByteCreateRequest(scenario)
+func (client *HeaderClient) ResponseByte(ctx context.Context, scenario string) (*HeaderResponseByteResponse, error) {
+	req, err := client.ResponseByteCreateRequest(scenario)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.responseByteHandleResponse(resp)
+	result, err := client.ResponseByteHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// responseByteCreateRequest creates the ResponseByte request.
-func (client *headerOperations) responseByteCreateRequest(scenario string) (*azcore.Request, error) {
+// ResponseByteCreateRequest creates the ResponseByte request.
+func (client *HeaderClient) ResponseByteCreateRequest(scenario string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -941,10 +952,10 @@ func (client *headerOperations) responseByteCreateRequest(scenario string) (*azc
 	return req, nil
 }
 
-// responseByteHandleResponse handles the ResponseByte response.
-func (client *headerOperations) responseByteHandleResponse(resp *azcore.Response) (*HeaderResponseByteResponse, error) {
+// ResponseByteHandleResponse handles the ResponseByte response.
+func (client *HeaderClient) ResponseByteHandleResponse(resp *azcore.Response) (*HeaderResponseByteResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.responseByteHandleError(resp)
+		return nil, client.ResponseByteHandleError(resp)
 	}
 	result := HeaderResponseByteResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("value"); val != "" {
@@ -957,8 +968,8 @@ func (client *headerOperations) responseByteHandleResponse(resp *azcore.Response
 	return &result, nil
 }
 
-// responseByteHandleError handles the ResponseByte error response.
-func (client *headerOperations) responseByteHandleError(resp *azcore.Response) error {
+// ResponseByteHandleError handles the ResponseByte error response.
+func (client *HeaderClient) ResponseByteHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -967,24 +978,24 @@ func (client *headerOperations) responseByteHandleError(resp *azcore.Response) e
 }
 
 // ResponseDate - Get a response with header values "2010-01-01" or "0001-01-01"
-func (client *headerOperations) ResponseDate(ctx context.Context, scenario string) (*HeaderResponseDateResponse, error) {
-	req, err := client.responseDateCreateRequest(scenario)
+func (client *HeaderClient) ResponseDate(ctx context.Context, scenario string) (*HeaderResponseDateResponse, error) {
+	req, err := client.ResponseDateCreateRequest(scenario)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.responseDateHandleResponse(resp)
+	result, err := client.ResponseDateHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// responseDateCreateRequest creates the ResponseDate request.
-func (client *headerOperations) responseDateCreateRequest(scenario string) (*azcore.Request, error) {
+// ResponseDateCreateRequest creates the ResponseDate request.
+func (client *HeaderClient) ResponseDateCreateRequest(scenario string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -999,10 +1010,10 @@ func (client *headerOperations) responseDateCreateRequest(scenario string) (*azc
 	return req, nil
 }
 
-// responseDateHandleResponse handles the ResponseDate response.
-func (client *headerOperations) responseDateHandleResponse(resp *azcore.Response) (*HeaderResponseDateResponse, error) {
+// ResponseDateHandleResponse handles the ResponseDate response.
+func (client *HeaderClient) ResponseDateHandleResponse(resp *azcore.Response) (*HeaderResponseDateResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.responseDateHandleError(resp)
+		return nil, client.ResponseDateHandleError(resp)
 	}
 	result := HeaderResponseDateResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("value"); val != "" {
@@ -1015,8 +1026,8 @@ func (client *headerOperations) responseDateHandleResponse(resp *azcore.Response
 	return &result, nil
 }
 
-// responseDateHandleError handles the ResponseDate error response.
-func (client *headerOperations) responseDateHandleError(resp *azcore.Response) error {
+// ResponseDateHandleError handles the ResponseDate error response.
+func (client *HeaderClient) ResponseDateHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1025,24 +1036,24 @@ func (client *headerOperations) responseDateHandleError(resp *azcore.Response) e
 }
 
 // ResponseDatetime - Get a response with header values "2010-01-01T12:34:56Z" or "0001-01-01T00:00:00Z"
-func (client *headerOperations) ResponseDatetime(ctx context.Context, scenario string) (*HeaderResponseDatetimeResponse, error) {
-	req, err := client.responseDatetimeCreateRequest(scenario)
+func (client *HeaderClient) ResponseDatetime(ctx context.Context, scenario string) (*HeaderResponseDatetimeResponse, error) {
+	req, err := client.ResponseDatetimeCreateRequest(scenario)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.responseDatetimeHandleResponse(resp)
+	result, err := client.ResponseDatetimeHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// responseDatetimeCreateRequest creates the ResponseDatetime request.
-func (client *headerOperations) responseDatetimeCreateRequest(scenario string) (*azcore.Request, error) {
+// ResponseDatetimeCreateRequest creates the ResponseDatetime request.
+func (client *HeaderClient) ResponseDatetimeCreateRequest(scenario string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -1057,10 +1068,10 @@ func (client *headerOperations) responseDatetimeCreateRequest(scenario string) (
 	return req, nil
 }
 
-// responseDatetimeHandleResponse handles the ResponseDatetime response.
-func (client *headerOperations) responseDatetimeHandleResponse(resp *azcore.Response) (*HeaderResponseDatetimeResponse, error) {
+// ResponseDatetimeHandleResponse handles the ResponseDatetime response.
+func (client *HeaderClient) ResponseDatetimeHandleResponse(resp *azcore.Response) (*HeaderResponseDatetimeResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.responseDatetimeHandleError(resp)
+		return nil, client.ResponseDatetimeHandleError(resp)
 	}
 	result := HeaderResponseDatetimeResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("value"); val != "" {
@@ -1073,8 +1084,8 @@ func (client *headerOperations) responseDatetimeHandleResponse(resp *azcore.Resp
 	return &result, nil
 }
 
-// responseDatetimeHandleError handles the ResponseDatetime error response.
-func (client *headerOperations) responseDatetimeHandleError(resp *azcore.Response) error {
+// ResponseDatetimeHandleError handles the ResponseDatetime error response.
+func (client *HeaderClient) ResponseDatetimeHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1083,24 +1094,24 @@ func (client *headerOperations) responseDatetimeHandleError(resp *azcore.Respons
 }
 
 // ResponseDatetimeRFC1123 - Get a response with header values "Wed, 01 Jan 2010 12:34:56 GMT" or "Mon, 01 Jan 0001 00:00:00 GMT"
-func (client *headerOperations) ResponseDatetimeRFC1123(ctx context.Context, scenario string) (*HeaderResponseDatetimeRFC1123Response, error) {
-	req, err := client.responseDatetimeRfc1123CreateRequest(scenario)
+func (client *HeaderClient) ResponseDatetimeRFC1123(ctx context.Context, scenario string) (*HeaderResponseDatetimeRFC1123Response, error) {
+	req, err := client.ResponseDatetimeRFC1123CreateRequest(scenario)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.responseDatetimeRfc1123HandleResponse(resp)
+	result, err := client.ResponseDatetimeRFC1123HandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// responseDatetimeRfc1123CreateRequest creates the ResponseDatetimeRFC1123 request.
-func (client *headerOperations) responseDatetimeRfc1123CreateRequest(scenario string) (*azcore.Request, error) {
+// ResponseDatetimeRFC1123CreateRequest creates the ResponseDatetimeRFC1123 request.
+func (client *HeaderClient) ResponseDatetimeRFC1123CreateRequest(scenario string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -1115,10 +1126,10 @@ func (client *headerOperations) responseDatetimeRfc1123CreateRequest(scenario st
 	return req, nil
 }
 
-// responseDatetimeRfc1123HandleResponse handles the ResponseDatetimeRFC1123 response.
-func (client *headerOperations) responseDatetimeRfc1123HandleResponse(resp *azcore.Response) (*HeaderResponseDatetimeRFC1123Response, error) {
+// ResponseDatetimeRFC1123HandleResponse handles the ResponseDatetimeRFC1123 response.
+func (client *HeaderClient) ResponseDatetimeRFC1123HandleResponse(resp *azcore.Response) (*HeaderResponseDatetimeRFC1123Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.responseDatetimeRfc1123HandleError(resp)
+		return nil, client.ResponseDatetimeRFC1123HandleError(resp)
 	}
 	result := HeaderResponseDatetimeRFC1123Response{RawResponse: resp.Response}
 	if val := resp.Header.Get("value"); val != "" {
@@ -1131,8 +1142,8 @@ func (client *headerOperations) responseDatetimeRfc1123HandleResponse(resp *azco
 	return &result, nil
 }
 
-// responseDatetimeRfc1123HandleError handles the ResponseDatetimeRFC1123 error response.
-func (client *headerOperations) responseDatetimeRfc1123HandleError(resp *azcore.Response) error {
+// ResponseDatetimeRFC1123HandleError handles the ResponseDatetimeRFC1123 error response.
+func (client *HeaderClient) ResponseDatetimeRFC1123HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1141,24 +1152,24 @@ func (client *headerOperations) responseDatetimeRfc1123HandleError(resp *azcore.
 }
 
 // ResponseDouble - Get a response with header value "value": 7e120 or -3.0
-func (client *headerOperations) ResponseDouble(ctx context.Context, scenario string) (*HeaderResponseDoubleResponse, error) {
-	req, err := client.responseDoubleCreateRequest(scenario)
+func (client *HeaderClient) ResponseDouble(ctx context.Context, scenario string) (*HeaderResponseDoubleResponse, error) {
+	req, err := client.ResponseDoubleCreateRequest(scenario)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.responseDoubleHandleResponse(resp)
+	result, err := client.ResponseDoubleHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// responseDoubleCreateRequest creates the ResponseDouble request.
-func (client *headerOperations) responseDoubleCreateRequest(scenario string) (*azcore.Request, error) {
+// ResponseDoubleCreateRequest creates the ResponseDouble request.
+func (client *HeaderClient) ResponseDoubleCreateRequest(scenario string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -1173,10 +1184,10 @@ func (client *headerOperations) responseDoubleCreateRequest(scenario string) (*a
 	return req, nil
 }
 
-// responseDoubleHandleResponse handles the ResponseDouble response.
-func (client *headerOperations) responseDoubleHandleResponse(resp *azcore.Response) (*HeaderResponseDoubleResponse, error) {
+// ResponseDoubleHandleResponse handles the ResponseDouble response.
+func (client *HeaderClient) ResponseDoubleHandleResponse(resp *azcore.Response) (*HeaderResponseDoubleResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.responseDoubleHandleError(resp)
+		return nil, client.ResponseDoubleHandleError(resp)
 	}
 	result := HeaderResponseDoubleResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("value"); val != "" {
@@ -1189,8 +1200,8 @@ func (client *headerOperations) responseDoubleHandleResponse(resp *azcore.Respon
 	return &result, nil
 }
 
-// responseDoubleHandleError handles the ResponseDouble error response.
-func (client *headerOperations) responseDoubleHandleError(resp *azcore.Response) error {
+// ResponseDoubleHandleError handles the ResponseDouble error response.
+func (client *HeaderClient) ResponseDoubleHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1199,24 +1210,24 @@ func (client *headerOperations) responseDoubleHandleError(resp *azcore.Response)
 }
 
 // ResponseDuration - Get a response with header values "P123DT22H14M12.011S"
-func (client *headerOperations) ResponseDuration(ctx context.Context, scenario string) (*HeaderResponseDurationResponse, error) {
-	req, err := client.responseDurationCreateRequest(scenario)
+func (client *HeaderClient) ResponseDuration(ctx context.Context, scenario string) (*HeaderResponseDurationResponse, error) {
+	req, err := client.ResponseDurationCreateRequest(scenario)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.responseDurationHandleResponse(resp)
+	result, err := client.ResponseDurationHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// responseDurationCreateRequest creates the ResponseDuration request.
-func (client *headerOperations) responseDurationCreateRequest(scenario string) (*azcore.Request, error) {
+// ResponseDurationCreateRequest creates the ResponseDuration request.
+func (client *HeaderClient) ResponseDurationCreateRequest(scenario string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -1231,10 +1242,10 @@ func (client *headerOperations) responseDurationCreateRequest(scenario string) (
 	return req, nil
 }
 
-// responseDurationHandleResponse handles the ResponseDuration response.
-func (client *headerOperations) responseDurationHandleResponse(resp *azcore.Response) (*HeaderResponseDurationResponse, error) {
+// ResponseDurationHandleResponse handles the ResponseDuration response.
+func (client *HeaderClient) ResponseDurationHandleResponse(resp *azcore.Response) (*HeaderResponseDurationResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.responseDurationHandleError(resp)
+		return nil, client.ResponseDurationHandleError(resp)
 	}
 	result := HeaderResponseDurationResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("value"); val != "" {
@@ -1243,8 +1254,8 @@ func (client *headerOperations) responseDurationHandleResponse(resp *azcore.Resp
 	return &result, nil
 }
 
-// responseDurationHandleError handles the ResponseDuration error response.
-func (client *headerOperations) responseDurationHandleError(resp *azcore.Response) error {
+// ResponseDurationHandleError handles the ResponseDuration error response.
+func (client *HeaderClient) ResponseDurationHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1253,24 +1264,24 @@ func (client *headerOperations) responseDurationHandleError(resp *azcore.Respons
 }
 
 // ResponseEnum - Get a response with header values "GREY" or null
-func (client *headerOperations) ResponseEnum(ctx context.Context, scenario string) (*HeaderResponseEnumResponse, error) {
-	req, err := client.responseEnumCreateRequest(scenario)
+func (client *HeaderClient) ResponseEnum(ctx context.Context, scenario string) (*HeaderResponseEnumResponse, error) {
+	req, err := client.ResponseEnumCreateRequest(scenario)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.responseEnumHandleResponse(resp)
+	result, err := client.ResponseEnumHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// responseEnumCreateRequest creates the ResponseEnum request.
-func (client *headerOperations) responseEnumCreateRequest(scenario string) (*azcore.Request, error) {
+// ResponseEnumCreateRequest creates the ResponseEnum request.
+func (client *HeaderClient) ResponseEnumCreateRequest(scenario string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -1285,10 +1296,10 @@ func (client *headerOperations) responseEnumCreateRequest(scenario string) (*azc
 	return req, nil
 }
 
-// responseEnumHandleResponse handles the ResponseEnum response.
-func (client *headerOperations) responseEnumHandleResponse(resp *azcore.Response) (*HeaderResponseEnumResponse, error) {
+// ResponseEnumHandleResponse handles the ResponseEnum response.
+func (client *HeaderClient) ResponseEnumHandleResponse(resp *azcore.Response) (*HeaderResponseEnumResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.responseEnumHandleError(resp)
+		return nil, client.ResponseEnumHandleError(resp)
 	}
 	result := HeaderResponseEnumResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("value"); val != "" {
@@ -1297,8 +1308,8 @@ func (client *headerOperations) responseEnumHandleResponse(resp *azcore.Response
 	return &result, nil
 }
 
-// responseEnumHandleError handles the ResponseEnum error response.
-func (client *headerOperations) responseEnumHandleError(resp *azcore.Response) error {
+// ResponseEnumHandleError handles the ResponseEnum error response.
+func (client *HeaderClient) ResponseEnumHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1307,24 +1318,24 @@ func (client *headerOperations) responseEnumHandleError(resp *azcore.Response) e
 }
 
 // ResponseExistingKey - Get a response with header value "User-Agent": "overwrite"
-func (client *headerOperations) ResponseExistingKey(ctx context.Context) (*HeaderResponseExistingKeyResponse, error) {
-	req, err := client.responseExistingKeyCreateRequest()
+func (client *HeaderClient) ResponseExistingKey(ctx context.Context) (*HeaderResponseExistingKeyResponse, error) {
+	req, err := client.ResponseExistingKeyCreateRequest()
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.responseExistingKeyHandleResponse(resp)
+	result, err := client.ResponseExistingKeyHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// responseExistingKeyCreateRequest creates the ResponseExistingKey request.
-func (client *headerOperations) responseExistingKeyCreateRequest() (*azcore.Request, error) {
+// ResponseExistingKeyCreateRequest creates the ResponseExistingKey request.
+func (client *HeaderClient) ResponseExistingKeyCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -1338,10 +1349,10 @@ func (client *headerOperations) responseExistingKeyCreateRequest() (*azcore.Requ
 	return req, nil
 }
 
-// responseExistingKeyHandleResponse handles the ResponseExistingKey response.
-func (client *headerOperations) responseExistingKeyHandleResponse(resp *azcore.Response) (*HeaderResponseExistingKeyResponse, error) {
+// ResponseExistingKeyHandleResponse handles the ResponseExistingKey response.
+func (client *HeaderClient) ResponseExistingKeyHandleResponse(resp *azcore.Response) (*HeaderResponseExistingKeyResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.responseExistingKeyHandleError(resp)
+		return nil, client.ResponseExistingKeyHandleError(resp)
 	}
 	result := HeaderResponseExistingKeyResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("User-Agent"); val != "" {
@@ -1350,8 +1361,8 @@ func (client *headerOperations) responseExistingKeyHandleResponse(resp *azcore.R
 	return &result, nil
 }
 
-// responseExistingKeyHandleError handles the ResponseExistingKey error response.
-func (client *headerOperations) responseExistingKeyHandleError(resp *azcore.Response) error {
+// ResponseExistingKeyHandleError handles the ResponseExistingKey error response.
+func (client *HeaderClient) ResponseExistingKeyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1360,24 +1371,24 @@ func (client *headerOperations) responseExistingKeyHandleError(resp *azcore.Resp
 }
 
 // ResponseFloat - Get a response with header value "value": 0.07 or -3.0
-func (client *headerOperations) ResponseFloat(ctx context.Context, scenario string) (*HeaderResponseFloatResponse, error) {
-	req, err := client.responseFloatCreateRequest(scenario)
+func (client *HeaderClient) ResponseFloat(ctx context.Context, scenario string) (*HeaderResponseFloatResponse, error) {
+	req, err := client.ResponseFloatCreateRequest(scenario)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.responseFloatHandleResponse(resp)
+	result, err := client.ResponseFloatHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// responseFloatCreateRequest creates the ResponseFloat request.
-func (client *headerOperations) responseFloatCreateRequest(scenario string) (*azcore.Request, error) {
+// ResponseFloatCreateRequest creates the ResponseFloat request.
+func (client *HeaderClient) ResponseFloatCreateRequest(scenario string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -1392,10 +1403,10 @@ func (client *headerOperations) responseFloatCreateRequest(scenario string) (*az
 	return req, nil
 }
 
-// responseFloatHandleResponse handles the ResponseFloat response.
-func (client *headerOperations) responseFloatHandleResponse(resp *azcore.Response) (*HeaderResponseFloatResponse, error) {
+// ResponseFloatHandleResponse handles the ResponseFloat response.
+func (client *HeaderClient) ResponseFloatHandleResponse(resp *azcore.Response) (*HeaderResponseFloatResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.responseFloatHandleError(resp)
+		return nil, client.ResponseFloatHandleError(resp)
 	}
 	result := HeaderResponseFloatResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("value"); val != "" {
@@ -1409,8 +1420,8 @@ func (client *headerOperations) responseFloatHandleResponse(resp *azcore.Respons
 	return &result, nil
 }
 
-// responseFloatHandleError handles the ResponseFloat error response.
-func (client *headerOperations) responseFloatHandleError(resp *azcore.Response) error {
+// ResponseFloatHandleError handles the ResponseFloat error response.
+func (client *HeaderClient) ResponseFloatHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1419,24 +1430,24 @@ func (client *headerOperations) responseFloatHandleError(resp *azcore.Response) 
 }
 
 // ResponseInteger - Get a response with header value "value": 1 or -2
-func (client *headerOperations) ResponseInteger(ctx context.Context, scenario string) (*HeaderResponseIntegerResponse, error) {
-	req, err := client.responseIntegerCreateRequest(scenario)
+func (client *HeaderClient) ResponseInteger(ctx context.Context, scenario string) (*HeaderResponseIntegerResponse, error) {
+	req, err := client.ResponseIntegerCreateRequest(scenario)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.responseIntegerHandleResponse(resp)
+	result, err := client.ResponseIntegerHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// responseIntegerCreateRequest creates the ResponseInteger request.
-func (client *headerOperations) responseIntegerCreateRequest(scenario string) (*azcore.Request, error) {
+// ResponseIntegerCreateRequest creates the ResponseInteger request.
+func (client *HeaderClient) ResponseIntegerCreateRequest(scenario string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -1451,10 +1462,10 @@ func (client *headerOperations) responseIntegerCreateRequest(scenario string) (*
 	return req, nil
 }
 
-// responseIntegerHandleResponse handles the ResponseInteger response.
-func (client *headerOperations) responseIntegerHandleResponse(resp *azcore.Response) (*HeaderResponseIntegerResponse, error) {
+// ResponseIntegerHandleResponse handles the ResponseInteger response.
+func (client *HeaderClient) ResponseIntegerHandleResponse(resp *azcore.Response) (*HeaderResponseIntegerResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.responseIntegerHandleError(resp)
+		return nil, client.ResponseIntegerHandleError(resp)
 	}
 	result := HeaderResponseIntegerResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("value"); val != "" {
@@ -1468,8 +1479,8 @@ func (client *headerOperations) responseIntegerHandleResponse(resp *azcore.Respo
 	return &result, nil
 }
 
-// responseIntegerHandleError handles the ResponseInteger error response.
-func (client *headerOperations) responseIntegerHandleError(resp *azcore.Response) error {
+// ResponseIntegerHandleError handles the ResponseInteger error response.
+func (client *HeaderClient) ResponseIntegerHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1478,24 +1489,24 @@ func (client *headerOperations) responseIntegerHandleError(resp *azcore.Response
 }
 
 // ResponseLong - Get a response with header value "value": 105 or -2
-func (client *headerOperations) ResponseLong(ctx context.Context, scenario string) (*HeaderResponseLongResponse, error) {
-	req, err := client.responseLongCreateRequest(scenario)
+func (client *HeaderClient) ResponseLong(ctx context.Context, scenario string) (*HeaderResponseLongResponse, error) {
+	req, err := client.ResponseLongCreateRequest(scenario)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.responseLongHandleResponse(resp)
+	result, err := client.ResponseLongHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// responseLongCreateRequest creates the ResponseLong request.
-func (client *headerOperations) responseLongCreateRequest(scenario string) (*azcore.Request, error) {
+// ResponseLongCreateRequest creates the ResponseLong request.
+func (client *HeaderClient) ResponseLongCreateRequest(scenario string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -1510,10 +1521,10 @@ func (client *headerOperations) responseLongCreateRequest(scenario string) (*azc
 	return req, nil
 }
 
-// responseLongHandleResponse handles the ResponseLong response.
-func (client *headerOperations) responseLongHandleResponse(resp *azcore.Response) (*HeaderResponseLongResponse, error) {
+// ResponseLongHandleResponse handles the ResponseLong response.
+func (client *HeaderClient) ResponseLongHandleResponse(resp *azcore.Response) (*HeaderResponseLongResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.responseLongHandleError(resp)
+		return nil, client.ResponseLongHandleError(resp)
 	}
 	result := HeaderResponseLongResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("value"); val != "" {
@@ -1526,8 +1537,8 @@ func (client *headerOperations) responseLongHandleResponse(resp *azcore.Response
 	return &result, nil
 }
 
-// responseLongHandleError handles the ResponseLong error response.
-func (client *headerOperations) responseLongHandleError(resp *azcore.Response) error {
+// ResponseLongHandleError handles the ResponseLong error response.
+func (client *HeaderClient) ResponseLongHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1536,24 +1547,24 @@ func (client *headerOperations) responseLongHandleError(resp *azcore.Response) e
 }
 
 // ResponseProtectedKey - Get a response with header value "Content-Type": "text/html"
-func (client *headerOperations) ResponseProtectedKey(ctx context.Context) (*HeaderResponseProtectedKeyResponse, error) {
-	req, err := client.responseProtectedKeyCreateRequest()
+func (client *HeaderClient) ResponseProtectedKey(ctx context.Context) (*HeaderResponseProtectedKeyResponse, error) {
+	req, err := client.ResponseProtectedKeyCreateRequest()
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.responseProtectedKeyHandleResponse(resp)
+	result, err := client.ResponseProtectedKeyHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// responseProtectedKeyCreateRequest creates the ResponseProtectedKey request.
-func (client *headerOperations) responseProtectedKeyCreateRequest() (*azcore.Request, error) {
+// ResponseProtectedKeyCreateRequest creates the ResponseProtectedKey request.
+func (client *HeaderClient) ResponseProtectedKeyCreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -1567,10 +1578,10 @@ func (client *headerOperations) responseProtectedKeyCreateRequest() (*azcore.Req
 	return req, nil
 }
 
-// responseProtectedKeyHandleResponse handles the ResponseProtectedKey response.
-func (client *headerOperations) responseProtectedKeyHandleResponse(resp *azcore.Response) (*HeaderResponseProtectedKeyResponse, error) {
+// ResponseProtectedKeyHandleResponse handles the ResponseProtectedKey response.
+func (client *HeaderClient) ResponseProtectedKeyHandleResponse(resp *azcore.Response) (*HeaderResponseProtectedKeyResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.responseProtectedKeyHandleError(resp)
+		return nil, client.ResponseProtectedKeyHandleError(resp)
 	}
 	result := HeaderResponseProtectedKeyResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("Content-Type"); val != "" {
@@ -1579,8 +1590,8 @@ func (client *headerOperations) responseProtectedKeyHandleResponse(resp *azcore.
 	return &result, nil
 }
 
-// responseProtectedKeyHandleError handles the ResponseProtectedKey error response.
-func (client *headerOperations) responseProtectedKeyHandleError(resp *azcore.Response) error {
+// ResponseProtectedKeyHandleError handles the ResponseProtectedKey error response.
+func (client *HeaderClient) ResponseProtectedKeyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1589,24 +1600,24 @@ func (client *headerOperations) responseProtectedKeyHandleError(resp *azcore.Res
 }
 
 // ResponseString - Get a response with header values "The quick brown fox jumps over the lazy dog" or null or ""
-func (client *headerOperations) ResponseString(ctx context.Context, scenario string) (*HeaderResponseStringResponse, error) {
-	req, err := client.responseStringCreateRequest(scenario)
+func (client *HeaderClient) ResponseString(ctx context.Context, scenario string) (*HeaderResponseStringResponse, error) {
+	req, err := client.ResponseStringCreateRequest(scenario)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.responseStringHandleResponse(resp)
+	result, err := client.ResponseStringHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// responseStringCreateRequest creates the ResponseString request.
-func (client *headerOperations) responseStringCreateRequest(scenario string) (*azcore.Request, error) {
+// ResponseStringCreateRequest creates the ResponseString request.
+func (client *HeaderClient) ResponseStringCreateRequest(scenario string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -1621,10 +1632,10 @@ func (client *headerOperations) responseStringCreateRequest(scenario string) (*a
 	return req, nil
 }
 
-// responseStringHandleResponse handles the ResponseString response.
-func (client *headerOperations) responseStringHandleResponse(resp *azcore.Response) (*HeaderResponseStringResponse, error) {
+// ResponseStringHandleResponse handles the ResponseString response.
+func (client *HeaderClient) ResponseStringHandleResponse(resp *azcore.Response) (*HeaderResponseStringResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.responseStringHandleError(resp)
+		return nil, client.ResponseStringHandleError(resp)
 	}
 	result := HeaderResponseStringResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("value"); val != "" {
@@ -1633,8 +1644,8 @@ func (client *headerOperations) responseStringHandleResponse(resp *azcore.Respon
 	return &result, nil
 }
 
-// responseStringHandleError handles the ResponseString error response.
-func (client *headerOperations) responseStringHandleError(resp *azcore.Response) error {
+// ResponseStringHandleError handles the ResponseString error response.
+func (client *HeaderClient) ResponseStringHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

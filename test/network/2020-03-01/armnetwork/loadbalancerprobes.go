@@ -23,31 +23,42 @@ type LoadBalancerProbesOperations interface {
 	List(resourceGroupName string, loadBalancerName string) (LoadBalancerProbeListResultPager, error)
 }
 
-// loadBalancerProbesOperations implements the LoadBalancerProbesOperations interface.
-type loadBalancerProbesOperations struct {
+// LoadBalancerProbesClient implements the LoadBalancerProbesOperations interface.
+// Don't use this type directly, use NewLoadBalancerProbesClient() instead.
+type LoadBalancerProbesClient struct {
 	*Client
 	subscriptionID string
 }
 
+// NewLoadBalancerProbesClient creates a new instance of LoadBalancerProbesClient with the specified values.
+func NewLoadBalancerProbesClient(c *Client, subscriptionID string) LoadBalancerProbesOperations {
+	return &LoadBalancerProbesClient{Client: c, subscriptionID: subscriptionID}
+}
+
+// Do invokes the Do() method on the pipeline associated with this client.
+func (client *LoadBalancerProbesClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(ctx, req)
+}
+
 // Get - Gets load balancer probe.
-func (client *loadBalancerProbesOperations) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, probeName string) (*ProbeResponse, error) {
-	req, err := client.getCreateRequest(resourceGroupName, loadBalancerName, probeName)
+func (client *LoadBalancerProbesClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, probeName string) (*ProbeResponse, error) {
+	req, err := client.GetCreateRequest(resourceGroupName, loadBalancerName, probeName)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.getHandleResponse(resp)
+	result, err := client.GetHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// getCreateRequest creates the Get request.
-func (client *loadBalancerProbesOperations) getCreateRequest(resourceGroupName string, loadBalancerName string, probeName string) (*azcore.Request, error) {
+// GetCreateRequest creates the Get request.
+func (client *LoadBalancerProbesClient) GetCreateRequest(resourceGroupName string, loadBalancerName string, probeName string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -68,17 +79,17 @@ func (client *loadBalancerProbesOperations) getCreateRequest(resourceGroupName s
 	return req, nil
 }
 
-// getHandleResponse handles the Get response.
-func (client *loadBalancerProbesOperations) getHandleResponse(resp *azcore.Response) (*ProbeResponse, error) {
+// GetHandleResponse handles the Get response.
+func (client *LoadBalancerProbesClient) GetHandleResponse(resp *azcore.Response) (*ProbeResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getHandleError(resp)
+		return nil, client.GetHandleError(resp)
 	}
 	result := ProbeResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Probe)
 }
 
-// getHandleError handles the Get error response.
-func (client *loadBalancerProbesOperations) getHandleError(resp *azcore.Response) error {
+// GetHandleError handles the Get error response.
+func (client *LoadBalancerProbesClient) GetHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -87,15 +98,15 @@ func (client *loadBalancerProbesOperations) getHandleError(resp *azcore.Response
 }
 
 // List - Gets all the load balancer probes.
-func (client *loadBalancerProbesOperations) List(resourceGroupName string, loadBalancerName string) (LoadBalancerProbeListResultPager, error) {
-	req, err := client.listCreateRequest(resourceGroupName, loadBalancerName)
+func (client *LoadBalancerProbesClient) List(resourceGroupName string, loadBalancerName string) (LoadBalancerProbeListResultPager, error) {
+	req, err := client.ListCreateRequest(resourceGroupName, loadBalancerName)
 	if err != nil {
 		return nil, err
 	}
 	return &loadBalancerProbeListResultPager{
 		pipeline:  client.p,
 		request:   req,
-		responder: client.listHandleResponse,
+		responder: client.ListHandleResponse,
 		advancer: func(resp *LoadBalancerProbeListResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.LoadBalancerProbeListResult.NextLink)
 			if err != nil {
@@ -109,8 +120,8 @@ func (client *loadBalancerProbesOperations) List(resourceGroupName string, loadB
 	}, nil
 }
 
-// listCreateRequest creates the List request.
-func (client *loadBalancerProbesOperations) listCreateRequest(resourceGroupName string, loadBalancerName string) (*azcore.Request, error) {
+// ListCreateRequest creates the List request.
+func (client *LoadBalancerProbesClient) ListCreateRequest(resourceGroupName string, loadBalancerName string) (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -130,17 +141,17 @@ func (client *loadBalancerProbesOperations) listCreateRequest(resourceGroupName 
 	return req, nil
 }
 
-// listHandleResponse handles the List response.
-func (client *loadBalancerProbesOperations) listHandleResponse(resp *azcore.Response) (*LoadBalancerProbeListResultResponse, error) {
+// ListHandleResponse handles the List response.
+func (client *LoadBalancerProbesClient) ListHandleResponse(resp *azcore.Response) (*LoadBalancerProbeListResultResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.listHandleError(resp)
+		return nil, client.ListHandleError(resp)
 	}
 	result := LoadBalancerProbeListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.LoadBalancerProbeListResult)
 }
 
-// listHandleError handles the List error response.
-func (client *loadBalancerProbesOperations) listHandleError(resp *azcore.Response) error {
+// ListHandleError handles the List error response.
+func (client *LoadBalancerProbesClient) ListHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

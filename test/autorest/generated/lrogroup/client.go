@@ -74,23 +74,3 @@ func NewClient(endpoint string, options *ClientOptions) *Client {
 func NewClientWithPipeline(endpoint string, p azcore.Pipeline) *Client {
 	return &Client{u: endpoint, p: p}
 }
-
-// LrOSOperations returns the LrOSOperations associated with this client.
-func (client *Client) LrOSOperations() LrOSOperations {
-	return &lrOSOperations{Client: client}
-}
-
-// LroRetrysOperations returns the LroRetrysOperations associated with this client.
-func (client *Client) LroRetrysOperations() LroRetrysOperations {
-	return &lroRetrysOperations{Client: client}
-}
-
-// LrosaDsOperations returns the LrosaDsOperations associated with this client.
-func (client *Client) LrosaDsOperations() LrosaDsOperations {
-	return &lrosaDsOperations{Client: client}
-}
-
-// LrOSCustomHeaderOperations returns the LrOSCustomHeaderOperations associated with this client.
-func (client *Client) LrOSCustomHeaderOperations() LrOSCustomHeaderOperations {
-	return &lrOSCustomHeaderOperations{Client: client}
-}

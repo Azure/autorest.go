@@ -74,8 +74,3 @@ func NewClient(endpoint string, options *ClientOptions) *Client {
 func NewClientWithPipeline(endpoint string, p azcore.Pipeline) *Client {
 	return &Client{u: endpoint, p: p}
 }
-
-// DurationOperations returns the DurationOperations associated with this client.
-func (client *Client) DurationOperations() DurationOperations {
-	return &durationOperations{Client: client}
-}

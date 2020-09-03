@@ -74,8 +74,3 @@ func NewClient(endpoint string, options *ClientOptions) *Client {
 func NewClientWithPipeline(endpoint string, p azcore.Pipeline) *Client {
 	return &Client{u: endpoint, p: p}
 }
-
-// NumberOperations returns the NumberOperations associated with this client.
-func (client *Client) NumberOperations() NumberOperations {
-	return &numberOperations{Client: client}
-}

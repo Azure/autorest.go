@@ -35,30 +35,41 @@ type HTTPRetryOperations interface {
 	Put504(ctx context.Context) (*http.Response, error)
 }
 
-// httpRetryOperations implements the HTTPRetryOperations interface.
-type httpRetryOperations struct {
+// HTTPRetryClient implements the HTTPRetryOperations interface.
+// Don't use this type directly, use NewHTTPRetryClient() instead.
+type HTTPRetryClient struct {
 	*Client
 }
 
+// NewHTTPRetryClient creates a new instance of HTTPRetryClient with the specified values.
+func NewHTTPRetryClient(c *Client) HTTPRetryOperations {
+	return &HTTPRetryClient{Client: c}
+}
+
+// Do invokes the Do() method on the pipeline associated with this client.
+func (client *HTTPRetryClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(ctx, req)
+}
+
 // Delete503 - Return 503 status code, then 200 after retry
-func (client *httpRetryOperations) Delete503(ctx context.Context) (*http.Response, error) {
-	req, err := client.delete503CreateRequest()
+func (client *HTTPRetryClient) Delete503(ctx context.Context) (*http.Response, error) {
+	req, err := client.Delete503CreateRequest()
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.delete503HandleResponse(resp)
+	result, err := client.Delete503HandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// delete503CreateRequest creates the Delete503 request.
-func (client *httpRetryOperations) delete503CreateRequest() (*azcore.Request, error) {
+// Delete503CreateRequest creates the Delete503 request.
+func (client *HTTPRetryClient) Delete503CreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -72,16 +83,16 @@ func (client *httpRetryOperations) delete503CreateRequest() (*azcore.Request, er
 	return req, req.MarshalAsJSON(true)
 }
 
-// delete503HandleResponse handles the Delete503 response.
-func (client *httpRetryOperations) delete503HandleResponse(resp *azcore.Response) (*http.Response, error) {
+// Delete503HandleResponse handles the Delete503 response.
+func (client *HTTPRetryClient) Delete503HandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.delete503HandleError(resp)
+		return nil, client.Delete503HandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// delete503HandleError handles the Delete503 error response.
-func (client *httpRetryOperations) delete503HandleError(resp *azcore.Response) error {
+// Delete503HandleError handles the Delete503 error response.
+func (client *HTTPRetryClient) Delete503HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -90,24 +101,24 @@ func (client *httpRetryOperations) delete503HandleError(resp *azcore.Response) e
 }
 
 // Get502 - Return 502 status code, then 200 after retry
-func (client *httpRetryOperations) Get502(ctx context.Context) (*http.Response, error) {
-	req, err := client.get502CreateRequest()
+func (client *HTTPRetryClient) Get502(ctx context.Context) (*http.Response, error) {
+	req, err := client.Get502CreateRequest()
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.get502HandleResponse(resp)
+	result, err := client.Get502HandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// get502CreateRequest creates the Get502 request.
-func (client *httpRetryOperations) get502CreateRequest() (*azcore.Request, error) {
+// Get502CreateRequest creates the Get502 request.
+func (client *HTTPRetryClient) Get502CreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -121,16 +132,16 @@ func (client *httpRetryOperations) get502CreateRequest() (*azcore.Request, error
 	return req, nil
 }
 
-// get502HandleResponse handles the Get502 response.
-func (client *httpRetryOperations) get502HandleResponse(resp *azcore.Response) (*http.Response, error) {
+// Get502HandleResponse handles the Get502 response.
+func (client *HTTPRetryClient) Get502HandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.get502HandleError(resp)
+		return nil, client.Get502HandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// get502HandleError handles the Get502 error response.
-func (client *httpRetryOperations) get502HandleError(resp *azcore.Response) error {
+// Get502HandleError handles the Get502 error response.
+func (client *HTTPRetryClient) Get502HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -139,24 +150,24 @@ func (client *httpRetryOperations) get502HandleError(resp *azcore.Response) erro
 }
 
 // Head408 - Return 408 status code, then 200 after retry
-func (client *httpRetryOperations) Head408(ctx context.Context) (*http.Response, error) {
-	req, err := client.head408CreateRequest()
+func (client *HTTPRetryClient) Head408(ctx context.Context) (*http.Response, error) {
+	req, err := client.Head408CreateRequest()
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.head408HandleResponse(resp)
+	result, err := client.Head408HandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// head408CreateRequest creates the Head408 request.
-func (client *httpRetryOperations) head408CreateRequest() (*azcore.Request, error) {
+// Head408CreateRequest creates the Head408 request.
+func (client *HTTPRetryClient) Head408CreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -170,16 +181,16 @@ func (client *httpRetryOperations) head408CreateRequest() (*azcore.Request, erro
 	return req, nil
 }
 
-// head408HandleResponse handles the Head408 response.
-func (client *httpRetryOperations) head408HandleResponse(resp *azcore.Response) (*http.Response, error) {
+// Head408HandleResponse handles the Head408 response.
+func (client *HTTPRetryClient) Head408HandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.head408HandleError(resp)
+		return nil, client.Head408HandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// head408HandleError handles the Head408 error response.
-func (client *httpRetryOperations) head408HandleError(resp *azcore.Response) error {
+// Head408HandleError handles the Head408 error response.
+func (client *HTTPRetryClient) Head408HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -188,24 +199,24 @@ func (client *httpRetryOperations) head408HandleError(resp *azcore.Response) err
 }
 
 // Options502 - Return 502 status code, then 200 after retry
-func (client *httpRetryOperations) Options502(ctx context.Context) (*BoolResponse, error) {
-	req, err := client.options502CreateRequest()
+func (client *HTTPRetryClient) Options502(ctx context.Context) (*BoolResponse, error) {
+	req, err := client.Options502CreateRequest()
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.options502HandleResponse(resp)
+	result, err := client.Options502HandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// options502CreateRequest creates the Options502 request.
-func (client *httpRetryOperations) options502CreateRequest() (*azcore.Request, error) {
+// Options502CreateRequest creates the Options502 request.
+func (client *HTTPRetryClient) Options502CreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -219,17 +230,17 @@ func (client *httpRetryOperations) options502CreateRequest() (*azcore.Request, e
 	return req, nil
 }
 
-// options502HandleResponse handles the Options502 response.
-func (client *httpRetryOperations) options502HandleResponse(resp *azcore.Response) (*BoolResponse, error) {
+// Options502HandleResponse handles the Options502 response.
+func (client *HTTPRetryClient) Options502HandleResponse(resp *azcore.Response) (*BoolResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.options502HandleError(resp)
+		return nil, client.Options502HandleError(resp)
 	}
 	result := BoolResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
-// options502HandleError handles the Options502 error response.
-func (client *httpRetryOperations) options502HandleError(resp *azcore.Response) error {
+// Options502HandleError handles the Options502 error response.
+func (client *HTTPRetryClient) Options502HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -238,24 +249,24 @@ func (client *httpRetryOperations) options502HandleError(resp *azcore.Response) 
 }
 
 // Patch500 - Return 500 status code, then 200 after retry
-func (client *httpRetryOperations) Patch500(ctx context.Context) (*http.Response, error) {
-	req, err := client.patch500CreateRequest()
+func (client *HTTPRetryClient) Patch500(ctx context.Context) (*http.Response, error) {
+	req, err := client.Patch500CreateRequest()
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.patch500HandleResponse(resp)
+	result, err := client.Patch500HandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// patch500CreateRequest creates the Patch500 request.
-func (client *httpRetryOperations) patch500CreateRequest() (*azcore.Request, error) {
+// Patch500CreateRequest creates the Patch500 request.
+func (client *HTTPRetryClient) Patch500CreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -269,16 +280,16 @@ func (client *httpRetryOperations) patch500CreateRequest() (*azcore.Request, err
 	return req, req.MarshalAsJSON(true)
 }
 
-// patch500HandleResponse handles the Patch500 response.
-func (client *httpRetryOperations) patch500HandleResponse(resp *azcore.Response) (*http.Response, error) {
+// Patch500HandleResponse handles the Patch500 response.
+func (client *HTTPRetryClient) Patch500HandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.patch500HandleError(resp)
+		return nil, client.Patch500HandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// patch500HandleError handles the Patch500 error response.
-func (client *httpRetryOperations) patch500HandleError(resp *azcore.Response) error {
+// Patch500HandleError handles the Patch500 error response.
+func (client *HTTPRetryClient) Patch500HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -287,24 +298,24 @@ func (client *httpRetryOperations) patch500HandleError(resp *azcore.Response) er
 }
 
 // Patch504 - Return 504 status code, then 200 after retry
-func (client *httpRetryOperations) Patch504(ctx context.Context) (*http.Response, error) {
-	req, err := client.patch504CreateRequest()
+func (client *HTTPRetryClient) Patch504(ctx context.Context) (*http.Response, error) {
+	req, err := client.Patch504CreateRequest()
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.patch504HandleResponse(resp)
+	result, err := client.Patch504HandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// patch504CreateRequest creates the Patch504 request.
-func (client *httpRetryOperations) patch504CreateRequest() (*azcore.Request, error) {
+// Patch504CreateRequest creates the Patch504 request.
+func (client *HTTPRetryClient) Patch504CreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -318,16 +329,16 @@ func (client *httpRetryOperations) patch504CreateRequest() (*azcore.Request, err
 	return req, req.MarshalAsJSON(true)
 }
 
-// patch504HandleResponse handles the Patch504 response.
-func (client *httpRetryOperations) patch504HandleResponse(resp *azcore.Response) (*http.Response, error) {
+// Patch504HandleResponse handles the Patch504 response.
+func (client *HTTPRetryClient) Patch504HandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.patch504HandleError(resp)
+		return nil, client.Patch504HandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// patch504HandleError handles the Patch504 error response.
-func (client *httpRetryOperations) patch504HandleError(resp *azcore.Response) error {
+// Patch504HandleError handles the Patch504 error response.
+func (client *HTTPRetryClient) Patch504HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -336,24 +347,24 @@ func (client *httpRetryOperations) patch504HandleError(resp *azcore.Response) er
 }
 
 // Post503 - Return 503 status code, then 200 after retry
-func (client *httpRetryOperations) Post503(ctx context.Context) (*http.Response, error) {
-	req, err := client.post503CreateRequest()
+func (client *HTTPRetryClient) Post503(ctx context.Context) (*http.Response, error) {
+	req, err := client.Post503CreateRequest()
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.post503HandleResponse(resp)
+	result, err := client.Post503HandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// post503CreateRequest creates the Post503 request.
-func (client *httpRetryOperations) post503CreateRequest() (*azcore.Request, error) {
+// Post503CreateRequest creates the Post503 request.
+func (client *HTTPRetryClient) Post503CreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -367,16 +378,16 @@ func (client *httpRetryOperations) post503CreateRequest() (*azcore.Request, erro
 	return req, req.MarshalAsJSON(true)
 }
 
-// post503HandleResponse handles the Post503 response.
-func (client *httpRetryOperations) post503HandleResponse(resp *azcore.Response) (*http.Response, error) {
+// Post503HandleResponse handles the Post503 response.
+func (client *HTTPRetryClient) Post503HandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.post503HandleError(resp)
+		return nil, client.Post503HandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// post503HandleError handles the Post503 error response.
-func (client *httpRetryOperations) post503HandleError(resp *azcore.Response) error {
+// Post503HandleError handles the Post503 error response.
+func (client *HTTPRetryClient) Post503HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -385,24 +396,24 @@ func (client *httpRetryOperations) post503HandleError(resp *azcore.Response) err
 }
 
 // Put500 - Return 500 status code, then 200 after retry
-func (client *httpRetryOperations) Put500(ctx context.Context) (*http.Response, error) {
-	req, err := client.put500CreateRequest()
+func (client *HTTPRetryClient) Put500(ctx context.Context) (*http.Response, error) {
+	req, err := client.Put500CreateRequest()
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.put500HandleResponse(resp)
+	result, err := client.Put500HandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// put500CreateRequest creates the Put500 request.
-func (client *httpRetryOperations) put500CreateRequest() (*azcore.Request, error) {
+// Put500CreateRequest creates the Put500 request.
+func (client *HTTPRetryClient) Put500CreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -416,16 +427,16 @@ func (client *httpRetryOperations) put500CreateRequest() (*azcore.Request, error
 	return req, req.MarshalAsJSON(true)
 }
 
-// put500HandleResponse handles the Put500 response.
-func (client *httpRetryOperations) put500HandleResponse(resp *azcore.Response) (*http.Response, error) {
+// Put500HandleResponse handles the Put500 response.
+func (client *HTTPRetryClient) Put500HandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.put500HandleError(resp)
+		return nil, client.Put500HandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// put500HandleError handles the Put500 error response.
-func (client *httpRetryOperations) put500HandleError(resp *azcore.Response) error {
+// Put500HandleError handles the Put500 error response.
+func (client *HTTPRetryClient) Put500HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -434,24 +445,24 @@ func (client *httpRetryOperations) put500HandleError(resp *azcore.Response) erro
 }
 
 // Put504 - Return 504 status code, then 200 after retry
-func (client *httpRetryOperations) Put504(ctx context.Context) (*http.Response, error) {
-	req, err := client.put504CreateRequest()
+func (client *HTTPRetryClient) Put504(ctx context.Context) (*http.Response, error) {
+	req, err := client.Put504CreateRequest()
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.p.Do(ctx, req)
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.put504HandleResponse(resp)
+	result, err := client.Put504HandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// put504CreateRequest creates the Put504 request.
-func (client *httpRetryOperations) put504CreateRequest() (*azcore.Request, error) {
+// Put504CreateRequest creates the Put504 request.
+func (client *HTTPRetryClient) Put504CreateRequest() (*azcore.Request, error) {
 	u, err := url.Parse(client.u)
 	if err != nil {
 		return nil, err
@@ -465,16 +476,16 @@ func (client *httpRetryOperations) put504CreateRequest() (*azcore.Request, error
 	return req, req.MarshalAsJSON(true)
 }
 
-// put504HandleResponse handles the Put504 response.
-func (client *httpRetryOperations) put504HandleResponse(resp *azcore.Response) (*http.Response, error) {
+// Put504HandleResponse handles the Put504 response.
+func (client *HTTPRetryClient) Put504HandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.put504HandleError(resp)
+		return nil, client.Put504HandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// put504HandleError handles the Put504 error response.
-func (client *httpRetryOperations) put504HandleError(resp *azcore.Response) error {
+// Put504HandleError handles the Put504 error response.
+func (client *HTTPRetryClient) Put504HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
