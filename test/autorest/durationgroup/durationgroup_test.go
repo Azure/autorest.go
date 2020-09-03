@@ -5,7 +5,6 @@ package durationgroup
 
 import (
 	"context"
-	"generatortests/autorest/generated/durationgroup"
 	"generatortests/helpers"
 	"net/http"
 	"testing"
@@ -13,8 +12,8 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func newDurationClient() durationgroup.DurationOperations {
-	return durationgroup.NewDurationClient(durationgroup.NewDefaultClient(nil))
+func newDurationClient() DurationOperations {
+	return NewDurationClient(NewDefaultClient(nil))
 }
 
 func TestGetInvalid(t *testing.T) {

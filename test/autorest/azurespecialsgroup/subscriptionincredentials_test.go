@@ -1,18 +1,17 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package azurespecialsgrouptest
+package azurespecialsgroup
 
 import (
 	"context"
-	"generatortests/autorest/generated/azurespecialsgroup"
 	"generatortests/helpers"
 	"net/http"
 	"testing"
 )
 
-func newSubscriptionInCredentialsClient() azurespecialsgroup.SubscriptionInCredentialsOperations {
-	return azurespecialsgroup.NewSubscriptionInCredentialsClient(azurespecialsgroup.NewDefaultClient(nil), "1234-5678-9012-3456")
+func newSubscriptionInCredentialsClient() SubscriptionInCredentialsOperations {
+	return NewSubscriptionInCredentialsClient(NewDefaultClient(nil), "1234-5678-9012-3456")
 }
 
 // PostMethodGlobalNotProvidedValid - POST method with subscriptionId modeled in credentials.  Set the credential subscriptionId to '1234-5678-9012-3456' to succeed

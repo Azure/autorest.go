@@ -1,18 +1,17 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package booleangrouptest
+package booleangroup
 
 import (
 	"context"
-	"generatortests/autorest/generated/booleangroup"
 	"generatortests/helpers"
 	"net/http"
 	"testing"
 )
 
-func newBoolClient() booleangroup.BoolOperations {
-	return booleangroup.NewBoolClient(booleangroup.NewDefaultClient(nil))
+func newBoolClient() BoolOperations {
+	return NewBoolClient(NewDefaultClient(nil))
 }
 
 func TestGetTrue(t *testing.T) {

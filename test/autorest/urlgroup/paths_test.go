@@ -1,19 +1,18 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package urlgrouptest
+package urlgroup
 
 import (
 	"context"
-	"generatortests/autorest/generated/urlgroup"
 	"generatortests/helpers"
 	"net/http"
 	"testing"
 	"time"
 )
 
-func newPathsClient() urlgroup.PathsOperations {
-	return urlgroup.NewPathsClient(urlgroup.NewDefaultClient(nil))
+func newPathsClient() PathsOperations {
+	return NewPathsClient(NewDefaultClient(nil))
 }
 
 func TestArrayCSVInPath(t *testing.T) {
@@ -119,7 +118,7 @@ func TestPathsDoubleDecimalPositive(t *testing.T) {
 
 func TestPathsEnumNull(t *testing.T) {
 	client := newPathsClient()
-	var color urlgroup.URIColor
+	var color URIColor
 	_, err := client.EnumNull(context.Background(), color)
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
@@ -128,7 +127,7 @@ func TestPathsEnumNull(t *testing.T) {
 
 func TestPathsEnumValid(t *testing.T) {
 	client := newPathsClient()
-	color := urlgroup.URIColorGreenColor
+	color := URIColorGreenColor
 	result, err := client.EnumValid(context.Background(), color)
 	if err != nil {
 		t.Fatal(err)

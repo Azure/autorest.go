@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package lrogrouptest
+package lrogroup
 
 import (
 	"context"
-	"generatortests/autorest/generated/lrogroup"
 	"generatortests/helpers"
 	"testing"
 	"time"
@@ -13,11 +12,11 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func newLRORetrysClient() lrogroup.LroRetrysOperations {
-	options := lrogroup.DefaultClientOptions()
+func newLRORetrysClient() LroRetrysOperations {
+	options := DefaultClientOptions()
 	options.Retry.RetryDelay = 10 * time.Millisecond
 	options.HTTPClient = httpClientWithCookieJar()
-	return lrogroup.NewLroRetrysClient(lrogroup.NewDefaultClient(&options))
+	return NewLroRetrysClient(NewDefaultClient(&options))
 }
 
 func TestLRORetrysBeginDelete202Retry200(t *testing.T) {
@@ -84,12 +83,12 @@ func TestLRORetrysBeginDeleteProvisioning202Accepted200Succeeded(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.Product, &lrogroup.Product{
-		Resource: lrogroup.Resource{
+	helpers.DeepEqualOrFatal(t, res.Product, &Product{
+		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
 		},
-		Properties: &lrogroup.ProductProperties{
+		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
 	})
@@ -159,12 +158,12 @@ func TestLRORetrysBeginPut201CreatingSucceeded200(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.Product, &lrogroup.Product{
-		Resource: lrogroup.Resource{
+	helpers.DeepEqualOrFatal(t, res.Product, &Product{
+		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
 		},
-		Properties: &lrogroup.ProductProperties{
+		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
 	})
@@ -190,12 +189,12 @@ func TestLRORetrysBeginPutAsyncRelativeRetrySucceeded(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.Product, &lrogroup.Product{
-		Resource: lrogroup.Resource{
+	helpers.DeepEqualOrFatal(t, res.Product, &Product{
+		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
 		},
-		Properties: &lrogroup.ProductProperties{
+		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
 	})

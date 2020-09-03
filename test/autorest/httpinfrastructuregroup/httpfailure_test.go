@@ -1,16 +1,15 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package httpinfrastructuregrouptest
+package httpinfrastructuregroup
 
 import (
 	"context"
-	"generatortests/autorest/generated/httpinfrastructuregroup"
 	"testing"
 )
 
-func newHTTPFailureClient() httpinfrastructuregroup.HTTPFailureOperations {
-	return httpinfrastructuregroup.NewHTTPFailureClient(httpinfrastructuregroup.NewDefaultClient(nil))
+func newHTTPFailureClient() HTTPFailureOperations {
+	return NewHTTPFailureClient(NewDefaultClient(nil))
 }
 
 func TestHTTPFailureGetEmptyError(t *testing.T) {

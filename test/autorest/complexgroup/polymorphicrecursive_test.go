@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package complexgrouptest
+package complexgroup
 
 import (
 	"context"
-	"generatortests/autorest/generated/complexgroup"
 	"generatortests/helpers"
 	"net/http"
 	"testing"
@@ -14,8 +13,8 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func newPolymorphicrecursiveClient() complexgroup.PolymorphicrecursiveOperations {
-	return complexgroup.NewPolymorphicrecursiveClient(complexgroup.NewDefaultClient(nil))
+func newPolymorphicrecursiveClient() PolymorphicrecursiveOperations {
+	return NewPolymorphicrecursiveClient(NewDefaultClient(nil))
 }
 
 // GetValid - Get complex types that are polymorphic and have recursive references
@@ -27,23 +26,23 @@ func TestGetValid(t *testing.T) {
 	}
 	sawBday := time.Date(1900, time.January, 5, 1, 0, 0, 0, time.UTC)
 	sharkBday := time.Date(2012, time.January, 5, 1, 0, 0, 0, time.UTC)
-	helpers.DeepEqualOrFatal(t, result.Fish, &complexgroup.Salmon{
-		Fish: complexgroup.Fish{
+	helpers.DeepEqualOrFatal(t, result.Fish, &Salmon{
+		Fish: Fish{
 			Fishtype: to.StringPtr("salmon"),
 			Length:   to.Float32Ptr(1),
-			Siblings: &[]complexgroup.FishClassification{
-				&complexgroup.Shark{
-					Fish: complexgroup.Fish{
+			Siblings: &[]FishClassification{
+				&Shark{
+					Fish: Fish{
 						Fishtype: to.StringPtr("shark"),
 						Length:   to.Float32Ptr(20),
-						Siblings: &[]complexgroup.FishClassification{
-							&complexgroup.Salmon{
-								Fish: complexgroup.Fish{
+						Siblings: &[]FishClassification{
+							&Salmon{
+								Fish: Fish{
 									Fishtype: to.StringPtr("salmon"),
 									Length:   to.Float32Ptr(2),
-									Siblings: &[]complexgroup.FishClassification{
-										&complexgroup.Shark{
-											Fish: complexgroup.Fish{
+									Siblings: &[]FishClassification{
+										&Shark{
+											Fish: Fish{
 												Fishtype: to.StringPtr("shark"),
 												Length:   to.Float32Ptr(20),
 												Species:  to.StringPtr("predator"),
@@ -51,9 +50,9 @@ func TestGetValid(t *testing.T) {
 											Age:      to.Int32Ptr(6),
 											Birthday: &sharkBday,
 										},
-										&complexgroup.Sawshark{
-											Shark: complexgroup.Shark{
-												Fish: complexgroup.Fish{
+										&Sawshark{
+											Shark: Shark{
+												Fish: Fish{
 													Fishtype: to.StringPtr("sawshark"),
 													Length:   to.Float32Ptr(10),
 													Species:  to.StringPtr("dangerous"),
@@ -69,12 +68,12 @@ func TestGetValid(t *testing.T) {
 								Iswild:   to.BoolPtr(true),
 								Location: to.StringPtr("atlantic"),
 							},
-							&complexgroup.Sawshark{
-								Shark: complexgroup.Shark{
-									Fish: complexgroup.Fish{
+							&Sawshark{
+								Shark: Shark{
+									Fish: Fish{
 										Fishtype: to.StringPtr("sawshark"),
 										Length:   to.Float32Ptr(10),
-										Siblings: &[]complexgroup.FishClassification{},
+										Siblings: &[]FishClassification{},
 										Species:  to.StringPtr("dangerous"),
 									},
 									Age:      to.Int32Ptr(105),
@@ -88,12 +87,12 @@ func TestGetValid(t *testing.T) {
 					Age:      to.Int32Ptr(6),
 					Birthday: &sharkBday,
 				},
-				&complexgroup.Sawshark{
-					Shark: complexgroup.Shark{
-						Fish: complexgroup.Fish{
+				&Sawshark{
+					Shark: Shark{
+						Fish: Fish{
 							Fishtype: to.StringPtr("sawshark"),
 							Length:   to.Float32Ptr(10),
-							Siblings: &[]complexgroup.FishClassification{},
+							Siblings: &[]FishClassification{},
 							Species:  to.StringPtr("dangerous"),
 						},
 						Age:      to.Int32Ptr(105),
@@ -114,23 +113,23 @@ func TestPutValid(t *testing.T) {
 	client := newPolymorphicrecursiveClient()
 	sawBday := time.Date(1900, time.January, 5, 1, 0, 0, 0, time.UTC)
 	sharkBday := time.Date(2012, time.January, 5, 1, 0, 0, 0, time.UTC)
-	result, err := client.PutValid(context.Background(), &complexgroup.Salmon{
-		Fish: complexgroup.Fish{
+	result, err := client.PutValid(context.Background(), &Salmon{
+		Fish: Fish{
 			Fishtype: to.StringPtr("salmon"),
 			Length:   to.Float32Ptr(1),
-			Siblings: &[]complexgroup.FishClassification{
-				&complexgroup.Shark{
-					Fish: complexgroup.Fish{
+			Siblings: &[]FishClassification{
+				&Shark{
+					Fish: Fish{
 						Fishtype: to.StringPtr("shark"),
 						Length:   to.Float32Ptr(20),
-						Siblings: &[]complexgroup.FishClassification{
-							&complexgroup.Salmon{
-								Fish: complexgroup.Fish{
+						Siblings: &[]FishClassification{
+							&Salmon{
+								Fish: Fish{
 									Fishtype: to.StringPtr("salmon"),
 									Length:   to.Float32Ptr(2),
-									Siblings: &[]complexgroup.FishClassification{
-										&complexgroup.Shark{
-											Fish: complexgroup.Fish{
+									Siblings: &[]FishClassification{
+										&Shark{
+											Fish: Fish{
 												Fishtype: to.StringPtr("shark"),
 												Length:   to.Float32Ptr(20),
 												Species:  to.StringPtr("predator"),
@@ -138,9 +137,9 @@ func TestPutValid(t *testing.T) {
 											Age:      to.Int32Ptr(6),
 											Birthday: &sharkBday,
 										},
-										&complexgroup.Sawshark{
-											Shark: complexgroup.Shark{
-												Fish: complexgroup.Fish{
+										&Sawshark{
+											Shark: Shark{
+												Fish: Fish{
 													Fishtype: to.StringPtr("sawshark"),
 													Length:   to.Float32Ptr(10),
 													Species:  to.StringPtr("dangerous"),
@@ -156,12 +155,12 @@ func TestPutValid(t *testing.T) {
 								Iswild:   to.BoolPtr(true),
 								Location: to.StringPtr("atlantic"),
 							},
-							&complexgroup.Sawshark{
-								Shark: complexgroup.Shark{
-									Fish: complexgroup.Fish{
+							&Sawshark{
+								Shark: Shark{
+									Fish: Fish{
 										Fishtype: to.StringPtr("sawshark"),
 										Length:   to.Float32Ptr(10),
-										Siblings: &[]complexgroup.FishClassification{},
+										Siblings: &[]FishClassification{},
 										Species:  to.StringPtr("dangerous"),
 									},
 									Age:      to.Int32Ptr(105),
@@ -175,12 +174,12 @@ func TestPutValid(t *testing.T) {
 					Age:      to.Int32Ptr(6),
 					Birthday: &sharkBday,
 				},
-				&complexgroup.Sawshark{
-					Shark: complexgroup.Shark{
-						Fish: complexgroup.Fish{
+				&Sawshark{
+					Shark: Shark{
+						Fish: Fish{
 							Fishtype: to.StringPtr("sawshark"),
 							Length:   to.Float32Ptr(10),
-							Siblings: &[]complexgroup.FishClassification{},
+							Siblings: &[]FishClassification{},
 							Species:  to.StringPtr("dangerous"),
 						},
 						Age:      to.Int32Ptr(105),

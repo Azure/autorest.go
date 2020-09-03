@@ -1,18 +1,17 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package optionalgrouptest
+package optionalgroup
 
 import (
 	"context"
-	"generatortests/autorest/generated/optionalgroup"
 	"generatortests/helpers"
 	"net/http"
 	"testing"
 )
 
-func newExplicitClient() optionalgroup.ExplicitOperations {
-	return optionalgroup.NewExplicitClient(optionalgroup.NewDefaultClient(nil))
+func newExplicitClient() ExplicitOperations {
+	return NewExplicitClient(NewDefaultClient(nil))
 }
 
 func TestExplicitPostOptionalArrayHeader(t *testing.T) {
@@ -143,7 +142,7 @@ func TestExplicitPostRequiredArrayParameter(t *testing.T) {
 func TestExplicitPostRequiredArrayProperty(t *testing.T) {
 	t.Skip("are not validating parameters in track2")
 	client := newExplicitClient()
-	result, err := client.PostRequiredArrayProperty(context.Background(), optionalgroup.ArrayWrapper{Value: nil})
+	result, err := client.PostRequiredArrayProperty(context.Background(), ArrayWrapper{Value: nil})
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
@@ -156,7 +155,7 @@ func TestExplicitPostRequiredArrayProperty(t *testing.T) {
 func TestExplicitPostRequiredClassParameter(t *testing.T) {
 	t.Skip("are not validating parameters in track2")
 	client := newExplicitClient()
-	result, err := client.PostRequiredClassParameter(context.Background(), optionalgroup.Product{})
+	result, err := client.PostRequiredClassParameter(context.Background(), Product{})
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
@@ -168,7 +167,7 @@ func TestExplicitPostRequiredClassParameter(t *testing.T) {
 func TestExplicitPostRequiredClassProperty(t *testing.T) {
 	t.Skip("are not validating parameters in track2")
 	client := newExplicitClient()
-	result, err := client.PostRequiredClassProperty(context.Background(), optionalgroup.ClassWrapper{})
+	result, err := client.PostRequiredClassProperty(context.Background(), ClassWrapper{})
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
@@ -207,7 +206,7 @@ func TestExplicitPostRequiredIntegerParameter(t *testing.T) {
 func TestExplicitPostRequiredIntegerProperty(t *testing.T) {
 	t.Skip("are not validating parameters in track2")
 	client := newExplicitClient()
-	result, err := client.PostRequiredIntegerProperty(context.Background(), optionalgroup.IntWrapper{})
+	result, err := client.PostRequiredIntegerProperty(context.Background(), IntWrapper{})
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
@@ -246,7 +245,7 @@ func TestExplicitPostRequiredStringParameter(t *testing.T) {
 func TestExplicitPostRequiredStringProperty(t *testing.T) {
 	t.Skip("are not validating parameters in track2")
 	client := newExplicitClient()
-	result, err := client.PostRequiredStringProperty(context.Background(), optionalgroup.StringWrapper{})
+	result, err := client.PostRequiredStringProperty(context.Background(), StringWrapper{})
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}

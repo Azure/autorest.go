@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package complexgrouptest
+package complexgroup
 
 import (
 	"context"
-	"generatortests/autorest/generated/complexgroup"
 	"generatortests/helpers"
 	"net/http"
 	"testing"
@@ -13,8 +12,8 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func newBasicClient() complexgroup.BasicOperations {
-	return complexgroup.NewBasicClient(complexgroup.NewDefaultClient(nil))
+func newBasicClient() BasicOperations {
+	return NewBasicClient(NewDefaultClient(nil))
 }
 
 func TestBasicGetValid(t *testing.T) {
@@ -23,15 +22,15 @@ func TestBasicGetValid(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetValid: %v", err)
 	}
-	helpers.DeepEqualOrFatal(t, result.Basic, &complexgroup.Basic{ID: to.Int32Ptr(2), Name: to.StringPtr("abc"), Color: complexgroup.CMYKColorsYellow.ToPtr()})
+	helpers.DeepEqualOrFatal(t, result.Basic, &Basic{ID: to.Int32Ptr(2), Name: to.StringPtr("abc"), Color: CMYKColorsYellow.ToPtr()})
 }
 
 func TestBasicPutValid(t *testing.T) {
 	client := newBasicClient()
-	result, err := client.PutValid(context.Background(), complexgroup.Basic{
+	result, err := client.PutValid(context.Background(), Basic{
 		ID:    to.Int32Ptr(2),
 		Name:  to.StringPtr("abc"),
-		Color: complexgroup.CMYKColorsMagenta.ToPtr(),
+		Color: CMYKColorsMagenta.ToPtr(),
 	})
 	if err != nil {
 		t.Fatalf("PutValid: %v", err)
@@ -56,7 +55,7 @@ func TestBasicGetEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetEmpty: %v", err)
 	}
-	helpers.DeepEqualOrFatal(t, result.Basic, &complexgroup.Basic{})
+	helpers.DeepEqualOrFatal(t, result.Basic, &Basic{})
 }
 
 func TestBasicGetNull(t *testing.T) {
@@ -65,7 +64,7 @@ func TestBasicGetNull(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetNull: %v", err)
 	}
-	helpers.DeepEqualOrFatal(t, result.Basic, &complexgroup.Basic{})
+	helpers.DeepEqualOrFatal(t, result.Basic, &Basic{})
 }
 
 func TestBasicGetNotProvided(t *testing.T) {
@@ -74,5 +73,5 @@ func TestBasicGetNotProvided(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetNotProvided: %v", err)
 	}
-	helpers.DeepEqualOrFatal(t, result.Basic, (*complexgroup.Basic)(nil))
+	helpers.DeepEqualOrFatal(t, result.Basic, (*Basic)(nil))
 }

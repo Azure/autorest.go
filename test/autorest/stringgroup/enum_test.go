@@ -1,18 +1,17 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package stringgrouptest
+package stringgroup
 
 import (
 	"context"
-	"generatortests/autorest/generated/stringgroup"
 	"generatortests/helpers"
 	"net/http"
 	"testing"
 )
 
-func newEnumClient() stringgroup.EnumOperations {
-	return stringgroup.NewEnumClient(stringgroup.NewDefaultClient(nil))
+func newEnumClient() EnumOperations {
+	return NewEnumClient(NewDefaultClient(nil))
 }
 
 func TestEnumGetNotExpandable(t *testing.T) {
@@ -22,7 +21,7 @@ func TestEnumGetNotExpandable(t *testing.T) {
 		t.Fatalf("GetNotExpandable: %v", err)
 	}
 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
-	helpers.DeepEqualOrFatal(t, result.Value, stringgroup.ColorsRedColor.ToPtr())
+	helpers.DeepEqualOrFatal(t, result.Value, ColorsRedColor.ToPtr())
 }
 
 func TestEnumGetReferenced(t *testing.T) {
@@ -32,7 +31,7 @@ func TestEnumGetReferenced(t *testing.T) {
 		t.Fatalf("GetReferenced: %v", err)
 	}
 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
-	helpers.DeepEqualOrFatal(t, result.Value, stringgroup.ColorsRedColor.ToPtr())
+	helpers.DeepEqualOrFatal(t, result.Value, ColorsRedColor.ToPtr())
 }
 
 func TestEnumGetReferencedConstant(t *testing.T) {
@@ -43,12 +42,12 @@ func TestEnumGetReferencedConstant(t *testing.T) {
 	}
 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 	val := "Sample String"
-	helpers.DeepEqualOrFatal(t, result.RefColorConstant, &stringgroup.RefColorConstant{Field1: &val})
+	helpers.DeepEqualOrFatal(t, result.RefColorConstant, &RefColorConstant{Field1: &val})
 }
 
 func TestEnumPutNotExpandable(t *testing.T) {
 	client := newEnumClient()
-	result, err := client.PutNotExpandable(context.Background(), stringgroup.ColorsRedColor)
+	result, err := client.PutNotExpandable(context.Background(), ColorsRedColor)
 	if err != nil {
 		t.Fatalf("PutNotExpandable: %v", err)
 	}
@@ -57,7 +56,7 @@ func TestEnumPutNotExpandable(t *testing.T) {
 
 func TestEnumPutReferenced(t *testing.T) {
 	client := newEnumClient()
-	result, err := client.PutReferenced(context.Background(), stringgroup.ColorsRedColor)
+	result, err := client.PutReferenced(context.Background(), ColorsRedColor)
 	if err != nil {
 		t.Fatalf("PutReferenced: %v", err)
 	}
@@ -66,8 +65,8 @@ func TestEnumPutReferenced(t *testing.T) {
 
 func TestEnumPutReferencedConstant(t *testing.T) {
 	client := newEnumClient()
-	val := string(stringgroup.ColorsGreenColor)
-	result, err := client.PutReferencedConstant(context.Background(), stringgroup.RefColorConstant{ColorConstant: &val})
+	val := string(ColorsGreenColor)
+	result, err := client.PutReferencedConstant(context.Background(), RefColorConstant{ColorConstant: &val})
 	if err != nil {
 		t.Fatalf("PutReferencedConstant: %v", err)
 	}

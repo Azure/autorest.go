@@ -1,12 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package lrogrouptest
+package lrogroup
 
 import (
 	"context"
 	"errors"
-	"generatortests/autorest/generated/lrogroup"
 	"generatortests/helpers"
 	"net/http"
 	"net/http/cookiejar"
@@ -18,11 +17,11 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
-func newLROSClient() lrogroup.LrOSOperations {
-	options := lrogroup.DefaultClientOptions()
+func newLROSClient() LrOSOperations {
+	options := DefaultClientOptions()
 	options.Retry.RetryDelay = 10 * time.Millisecond
 	options.HTTPClient = httpClientWithCookieJar()
-	return lrogroup.NewLrOSClient(lrogroup.NewDefaultClient(&options))
+	return NewLrOSClient(NewDefaultClient(&options))
 }
 
 func httpClientWithCookieJar() azcore.Transport {
@@ -184,7 +183,7 @@ func TestLROBeginDeleteAsyncRetryFailed(t *testing.T) {
 	if res != nil {
 		t.Fatal("expected a nil response from the polling operation")
 	}
-	var cloudErr lrogroup.CloudError
+	var cloudErr CloudError
 	if !errors.Is(err, cloudErr) {
 		t.Fatal("expected a CloudError but did not receive one")
 	}
@@ -234,7 +233,7 @@ func TestLROBeginDeleteAsyncRetrycanceled(t *testing.T) {
 	if res != nil {
 		t.Fatal("expected a nil response from the polling operation")
 	}
-	var cloudErr lrogroup.CloudError
+	var cloudErr CloudError
 	if !errors.Is(err, cloudErr) {
 		t.Fatal("expected a CloudError but did not receive one")
 	}
@@ -346,7 +345,7 @@ func TestLROBeginPost200WithPayload(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.VerifyStatusCode(t, skuResp.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, skuResp.SKU, &lrogroup.SKU{
+	helpers.DeepEqualOrFatal(t, skuResp.SKU, &SKU{
 		ID:   to.StringPtr("1"),
 		Name: to.StringPtr("product"),
 	})
@@ -372,9 +371,9 @@ func TestLROBeginPost202List(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.VerifyStatusCode(t, prodArrayResp.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, prodArrayResp.ProductArray, &[]lrogroup.Product{
+	helpers.DeepEqualOrFatal(t, prodArrayResp.ProductArray, &[]Product{
 		{
-			Resource: lrogroup.Resource{
+			Resource: Resource{
 				ID:   to.StringPtr("100"),
 				Name: to.StringPtr("foo"),
 			},
@@ -446,12 +445,12 @@ func TestLROBeginPostAsyncNoRetrySucceeded(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.Product, &lrogroup.Product{
-		Resource: lrogroup.Resource{
+	helpers.DeepEqualOrFatal(t, res.Product, &Product{
+		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
 		},
-		Properties: &lrogroup.ProductProperties{
+		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
 	})
@@ -479,7 +478,7 @@ func TestLROBeginPostAsyncRetryFailed(t *testing.T) {
 	if res != nil {
 		t.Fatal("expected a nil response from the polling operation")
 	}
-	var cloudErr lrogroup.CloudError
+	var cloudErr CloudError
 	if !errors.Is(err, cloudErr) {
 		t.Fatal("expected a CloudError but did not receive one")
 	}
@@ -505,12 +504,12 @@ func TestLROBeginPostAsyncRetrySucceeded(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.Product, &lrogroup.Product{
-		Resource: lrogroup.Resource{
+	helpers.DeepEqualOrFatal(t, res.Product, &Product{
+		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
 		},
-		Properties: &lrogroup.ProductProperties{
+		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
 	})
@@ -538,7 +537,7 @@ func TestLROBeginPostAsyncRetrycanceled(t *testing.T) {
 	if res != nil {
 		t.Fatal("expected a nil response from the polling operation")
 	}
-	var cloudErr lrogroup.CloudError
+	var cloudErr CloudError
 	if !errors.Is(err, cloudErr) {
 		t.Fatal("expected a CloudError but did not receive one")
 	}
@@ -564,8 +563,8 @@ func TestLROBeginPostDoubleHeadersFinalAzureHeaderGet(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.Product, &lrogroup.Product{
-		Resource: lrogroup.Resource{
+	helpers.DeepEqualOrFatal(t, res.Product, &Product{
+		Resource: Resource{
 			ID: to.StringPtr("100"),
 		},
 	})
@@ -591,8 +590,8 @@ func TestLROBeginPostDoubleHeadersFinalAzureHeaderGetDefault(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.Product, &lrogroup.Product{
-		Resource: lrogroup.Resource{
+	helpers.DeepEqualOrFatal(t, res.Product, &Product{
+		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
 		},
@@ -619,7 +618,7 @@ func TestLROBeginPostDoubleHeadersFinalLocationGet(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.Product, &lrogroup.Product{})
+	helpers.DeepEqualOrFatal(t, res.Product, &Product{})
 }
 
 func TestLROBeginPut200Acceptedcanceled200(t *testing.T) {
@@ -644,7 +643,7 @@ func TestLROBeginPut200Acceptedcanceled200(t *testing.T) {
 	if res != nil {
 		t.Fatal("expected a nil response from the polling operation")
 	}
-	var cloudErr lrogroup.CloudError
+	var cloudErr CloudError
 	if !errors.Is(err, cloudErr) {
 		t.Fatal("expected a CloudError but did not receive one")
 	}
@@ -666,12 +665,12 @@ func TestLROBeginPut200Succeeded(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.Product, &lrogroup.Product{
-		Resource: lrogroup.Resource{
+	helpers.DeepEqualOrFatal(t, res.Product, &Product{
+		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
 		},
-		Properties: &lrogroup.ProductProperties{
+		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
 	})
@@ -693,8 +692,8 @@ func TestLROBeginPut200SucceededNoState(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.Product, &lrogroup.Product{
-		Resource: lrogroup.Resource{
+	helpers.DeepEqualOrFatal(t, res.Product, &Product{
+		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
 		},
@@ -722,12 +721,12 @@ func TestLROBeginPut200UpdatingSucceeded204(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.Product, &lrogroup.Product{
-		Resource: lrogroup.Resource{
+	helpers.DeepEqualOrFatal(t, res.Product, &Product{
+		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
 		},
-		Properties: &lrogroup.ProductProperties{
+		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
 	})
@@ -755,7 +754,7 @@ func TestLROBeginPut201CreatingFailed200(t *testing.T) {
 	if res != nil {
 		t.Fatal("expected a nil response from the polling operation")
 	}
-	var cloudErr lrogroup.CloudError
+	var cloudErr CloudError
 	if !errors.Is(err, cloudErr) {
 		t.Fatal("expected a CloudError but did not receive one")
 	}
@@ -763,7 +762,7 @@ func TestLROBeginPut201CreatingFailed200(t *testing.T) {
 
 func TestLROBeginPut201CreatingSucceeded200(t *testing.T) {
 	op := newLROSClient()
-	resp, err := op.BeginPut201CreatingSucceeded200(context.Background(), &lrogroup.LrOSPut201CreatingSucceeded200Options{Product: &lrogroup.Product{}})
+	resp, err := op.BeginPut201CreatingSucceeded200(context.Background(), &LrOSPut201CreatingSucceeded200Options{Product: &Product{}})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -781,12 +780,12 @@ func TestLROBeginPut201CreatingSucceeded200(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.Product, &lrogroup.Product{
-		Resource: lrogroup.Resource{
+	helpers.DeepEqualOrFatal(t, res.Product, &Product{
+		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
 		},
-		Properties: &lrogroup.ProductProperties{
+		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
 	})
@@ -794,7 +793,7 @@ func TestLROBeginPut201CreatingSucceeded200(t *testing.T) {
 
 func TestLROBeginPut202Retry200(t *testing.T) {
 	op := newLROSClient()
-	resp, err := op.BeginPut202Retry200(context.Background(), &lrogroup.LrOSPut202Retry200Options{Product: &lrogroup.Product{}})
+	resp, err := op.BeginPut202Retry200(context.Background(), &LrOSPut202Retry200Options{Product: &Product{}})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -812,8 +811,8 @@ func TestLROBeginPut202Retry200(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.Product, &lrogroup.Product{
-		Resource: lrogroup.Resource{
+	helpers.DeepEqualOrFatal(t, res.Product, &Product{
+		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
 		},
@@ -822,7 +821,7 @@ func TestLROBeginPut202Retry200(t *testing.T) {
 
 func TestLROBeginPutAsyncNoHeaderInRetry(t *testing.T) {
 	op := newLROSClient()
-	resp, err := op.BeginPutAsyncNoHeaderInRetry(context.Background(), &lrogroup.LrOSPutAsyncNoHeaderInRetryOptions{Product: &lrogroup.Product{}})
+	resp, err := op.BeginPutAsyncNoHeaderInRetry(context.Background(), &LrOSPutAsyncNoHeaderInRetryOptions{Product: &Product{}})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -840,12 +839,12 @@ func TestLROBeginPutAsyncNoHeaderInRetry(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.Product, &lrogroup.Product{
-		Resource: lrogroup.Resource{
+	helpers.DeepEqualOrFatal(t, res.Product, &Product{
+		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
 		},
-		Properties: &lrogroup.ProductProperties{
+		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
 	})
@@ -853,7 +852,7 @@ func TestLROBeginPutAsyncNoHeaderInRetry(t *testing.T) {
 
 func TestLROBeginPutAsyncNoRetrySucceeded(t *testing.T) {
 	op := newLROSClient()
-	resp, err := op.BeginPutAsyncNoRetrySucceeded(context.Background(), &lrogroup.LrOSPutAsyncNoRetrySucceededOptions{Product: &lrogroup.Product{}})
+	resp, err := op.BeginPutAsyncNoRetrySucceeded(context.Background(), &LrOSPutAsyncNoRetrySucceededOptions{Product: &Product{}})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -871,12 +870,12 @@ func TestLROBeginPutAsyncNoRetrySucceeded(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.Product, &lrogroup.Product{
-		Resource: lrogroup.Resource{
+	helpers.DeepEqualOrFatal(t, res.Product, &Product{
+		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
 		},
-		Properties: &lrogroup.ProductProperties{
+		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
 	})
@@ -904,7 +903,7 @@ func TestLROBeginPutAsyncNoRetrycanceled(t *testing.T) {
 	if res != nil {
 		t.Fatal("expected a nil response from the polling operation")
 	}
-	var cloudErr lrogroup.CloudError
+	var cloudErr CloudError
 	if !errors.Is(err, cloudErr) {
 		t.Fatal("expected a CloudError but did not receive one")
 	}
@@ -930,7 +929,7 @@ func TestLROBeginPutAsyncNonResource(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.SKU, &lrogroup.SKU{
+	helpers.DeepEqualOrFatal(t, res.SKU, &SKU{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("sku"),
 	})
@@ -958,7 +957,7 @@ func TestLROBeginPutAsyncRetryFailed(t *testing.T) {
 	if res != nil {
 		t.Fatal("expected a nil response from the polling operation")
 	}
-	var cloudErr lrogroup.CloudError
+	var cloudErr CloudError
 	if !errors.Is(err, cloudErr) {
 		t.Fatal("expected a CloudError but did not receive one")
 	}
@@ -984,12 +983,12 @@ func TestLROBeginPutAsyncRetrySucceeded(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.Product, &lrogroup.Product{
-		Resource: lrogroup.Resource{
+	helpers.DeepEqualOrFatal(t, res.Product, &Product{
+		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
 		},
-		Properties: &lrogroup.ProductProperties{
+		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
 	})
@@ -1015,11 +1014,11 @@ func TestLROBeginPutAsyncSubResource(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.SubProduct, &lrogroup.SubProduct{
-		SubResource: lrogroup.SubResource{
+	helpers.DeepEqualOrFatal(t, res.SubProduct, &SubProduct{
+		SubResource: SubResource{
 			ID: to.StringPtr("100"),
 		},
-		Properties: &lrogroup.SubProductProperties{
+		Properties: &SubProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
 	})
@@ -1046,11 +1045,11 @@ func TestLROBeginPutNoHeaderInRetry(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.Product, &lrogroup.Product{
-		Resource: lrogroup.Resource{
+	helpers.DeepEqualOrFatal(t, res.Product, &Product{
+		Resource: Resource{
 			ID: to.StringPtr("100"),
 		},
-		Properties: &lrogroup.ProductProperties{
+		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
 	})
@@ -1077,7 +1076,7 @@ func TestLROBeginPutNonResource(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.SKU, &lrogroup.SKU{
+	helpers.DeepEqualOrFatal(t, res.SKU, &SKU{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("sku"),
 	})
@@ -1104,11 +1103,11 @@ func TestLROBeginPutSubResource(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.SubProduct, &lrogroup.SubProduct{
-		SubResource: lrogroup.SubResource{
+	helpers.DeepEqualOrFatal(t, res.SubProduct, &SubProduct{
+		SubResource: SubResource{
 			ID: to.StringPtr("100"),
 		},
-		Properties: &lrogroup.SubProductProperties{
+		Properties: &SubProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
 	})

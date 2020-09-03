@@ -1,19 +1,18 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package datetimegroup
+package datetimerfc1123group
 
 import (
 	"context"
-	"generatortests/autorest/generated/datetimerfc1123group"
 	"generatortests/helpers"
 	"net/http"
 	"testing"
 	"time"
 )
 
-func newDatetimerfc1123Client() datetimerfc1123group.Datetimerfc1123Operations {
-	return datetimerfc1123group.NewDatetimerfc1123Client(datetimerfc1123group.NewDefaultClient(nil))
+func newDatetimerfc1123Client() Datetimerfc1123Operations {
+	return NewDatetimerfc1123Client(NewDefaultClient(nil))
 }
 
 func TestGetInvalid(t *testing.T) {

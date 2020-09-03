@@ -5,7 +5,6 @@ package dictionarygroup
 
 import (
 	"context"
-	"generatortests/autorest/generated/dictionarygroup"
 	"generatortests/helpers"
 	"net/http"
 	"testing"
@@ -14,8 +13,8 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func newDictionaryClient() dictionarygroup.DictionaryOperations {
-	return dictionarygroup.NewDictionaryClient(dictionarygroup.NewDefaultClient(nil))
+func newDictionaryClient() DictionaryOperations {
+	return NewDictionaryClient(NewDefaultClient(nil))
 }
 
 // GetArrayEmpty - Get an empty dictionary {}
@@ -164,7 +163,7 @@ func TestGetComplexEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.Value, &map[string]dictionarygroup.Widget{})
+	helpers.DeepEqualOrFatal(t, resp.Value, &map[string]Widget{})
 }
 
 // GetComplexItemEmpty - Get dictionary of complex type with empty item {"0": {"integer": 1, "string": "2"}, "1:" {}, "2": {"integer": 5, "string": "6"}}
@@ -174,10 +173,10 @@ func TestGetComplexItemEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.Value, &map[string]dictionarygroup.Widget{
-		"0": dictionarygroup.Widget{Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
-		"1": dictionarygroup.Widget{},
-		"2": dictionarygroup.Widget{Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
+	helpers.DeepEqualOrFatal(t, resp.Value, &map[string]Widget{
+		"0": Widget{Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
+		"1": Widget{},
+		"2": Widget{Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
 	})
 }
 
@@ -190,10 +189,10 @@ func TestGetComplexItemNull(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.Value, &map[string]dictionarygroup.Widget{
-		"0": dictionarygroup.Widget{Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
+	helpers.DeepEqualOrFatal(t, resp.Value, &map[string]Widget{
+		"0": Widget{Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
 		"1": nil,
-		"2": dictionarygroup.Widget{Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
+		"2": Widget{Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
 	})
 }*/
 
@@ -216,10 +215,10 @@ func TestGetComplexValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.Value, &map[string]dictionarygroup.Widget{
-		"0": dictionarygroup.Widget{Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
-		"1": dictionarygroup.Widget{Integer: to.Int32Ptr(3), String: to.StringPtr("4")},
-		"2": dictionarygroup.Widget{Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
+	helpers.DeepEqualOrFatal(t, resp.Value, &map[string]Widget{
+		"0": Widget{Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
+		"1": Widget{Integer: to.Int32Ptr(3), String: to.StringPtr("4")},
+		"2": Widget{Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
 	})
 }
 
@@ -659,10 +658,10 @@ func TestPutByteValid(t *testing.T) {
 // PutComplexValid - Put an dictionary of complex type with values {"0": {"integer": 1, "string": "2"}, "1": {"integer": 3, "string": "4"}, "2": {"integer": 5, "string": "6"}}
 func TestPutComplexValid(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.PutComplexValid(context.Background(), map[string]dictionarygroup.Widget{
-		"0": dictionarygroup.Widget{Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
-		"1": dictionarygroup.Widget{Integer: to.Int32Ptr(3), String: to.StringPtr("4")},
-		"2": dictionarygroup.Widget{Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
+	resp, err := client.PutComplexValid(context.Background(), map[string]Widget{
+		"0": Widget{Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
+		"1": Widget{Integer: to.Int32Ptr(3), String: to.StringPtr("4")},
+		"2": Widget{Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
 	})
 	if err != nil {
 		t.Fatal(err)

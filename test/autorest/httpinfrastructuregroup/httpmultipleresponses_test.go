@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package httpinfrastructuregrouptest
+package httpinfrastructuregroup
 
 import (
 	"context"
-	"generatortests/autorest/generated/httpinfrastructuregroup"
 	"generatortests/helpers"
 	"net/http"
 	"testing"
@@ -13,8 +12,8 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func newMultipleResponsesClient() httpinfrastructuregroup.MultipleResponsesOperations {
-	return httpinfrastructuregroup.NewMultipleResponsesClient(httpinfrastructuregroup.NewDefaultClient(nil))
+func newMultipleResponsesClient() MultipleResponsesOperations {
+	return NewMultipleResponsesClient(NewDefaultClient(nil))
 }
 
 // Get200Model201ModelDefaultError200Valid - Send a 200 response with valid payload: {'statusCode': '200'}
@@ -25,9 +24,9 @@ func TestGet200Model201ModelDefaultError200Valid(t *testing.T) {
 		t.Fatal(err)
 	}
 	switch x := result.(type) {
-	case *httpinfrastructuregroup.MyExceptionResponse:
+	case *MyExceptionResponse:
 		helpers.DeepEqualOrFatal(t, x.MyException.StatusCode, to.StringPtr("200"))
-	case *httpinfrastructuregroup.BResponse:
+	case *BResponse:
 		helpers.VerifyStatusCode(t, x.RawResponse, http.StatusCreated)
 	default:
 		t.Fatalf("unhandled response type %v", x)
@@ -41,12 +40,12 @@ func TestGet200Model201ModelDefaultError201Valid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	r, ok := result.(*httpinfrastructuregroup.BResponse)
+	r, ok := result.(*BResponse)
 	if !ok {
 		t.Fatal("unexpected response type")
 	}
-	helpers.DeepEqualOrFatal(t, r.B, &httpinfrastructuregroup.B{
-		MyException: httpinfrastructuregroup.MyException{
+	helpers.DeepEqualOrFatal(t, r.B, &B{
+		MyException: MyException{
 			StatusCode: to.StringPtr("201"),
 		},
 		TextStatusCode: to.StringPtr("Created"),
@@ -57,11 +56,11 @@ func TestGet200Model201ModelDefaultError201Valid(t *testing.T) {
 func TestGet200Model201ModelDefaultError400Valid(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get200Model201ModelDefaultError400Valid(context.Background())
-	r, ok := err.(httpinfrastructuregroup.Error)
+	r, ok := err.(Error)
 	if !ok {
 		t.Fatal("unexpected error type")
 	}
-	helpers.DeepEqualOrFatal(t, r, httpinfrastructuregroup.Error{
+	helpers.DeepEqualOrFatal(t, r, Error{
 		Message: to.StringPtr("client error"),
 		Status:  to.Int32Ptr(400),
 	})
@@ -77,7 +76,7 @@ func TestGet200Model204NoModelDefaultError200Valid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.MyException, &httpinfrastructuregroup.MyException{
+	helpers.DeepEqualOrFatal(t, result.MyException, &MyException{
 		StatusCode: to.StringPtr("200"),
 	})
 }
@@ -86,11 +85,11 @@ func TestGet200Model204NoModelDefaultError200Valid(t *testing.T) {
 func TestGet200Model204NoModelDefaultError201Invalid(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get200Model204NoModelDefaultError201Invalid(context.Background())
-	r, ok := err.(httpinfrastructuregroup.Error)
+	r, ok := err.(Error)
 	if !ok {
 		t.Fatal("unexpected error type")
 	}
-	helpers.DeepEqualOrFatal(t, r, httpinfrastructuregroup.Error{})
+	helpers.DeepEqualOrFatal(t, r, Error{})
 	if result != nil {
 		t.Fatal("expected nil result")
 	}
@@ -100,11 +99,11 @@ func TestGet200Model204NoModelDefaultError201Invalid(t *testing.T) {
 func TestGet200Model204NoModelDefaultError202None(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get200Model204NoModelDefaultError202None(context.Background())
-	r, ok := err.(httpinfrastructuregroup.Error)
+	r, ok := err.(Error)
 	if !ok {
 		t.Fatal("unexpected error type")
 	}
-	helpers.DeepEqualOrFatal(t, r, httpinfrastructuregroup.Error{})
+	helpers.DeepEqualOrFatal(t, r, Error{})
 	if result != nil {
 		t.Fatal("expected nil result")
 	}
@@ -127,11 +126,11 @@ func TestGet200Model204NoModelDefaultError204Valid(t *testing.T) {
 func TestGet200Model204NoModelDefaultError400Valid(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get200Model204NoModelDefaultError400Valid(context.Background())
-	r, ok := err.(httpinfrastructuregroup.Error)
+	r, ok := err.(Error)
 	if !ok {
 		t.Fatal("unexpected error type")
 	}
-	helpers.DeepEqualOrFatal(t, r, httpinfrastructuregroup.Error{
+	helpers.DeepEqualOrFatal(t, r, Error{
 		Message: to.StringPtr("client error"),
 		Status:  to.Int32Ptr(400),
 	})
@@ -164,7 +163,7 @@ func TestGet200ModelA200Valid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.MyException, &httpinfrastructuregroup.MyException{
+	helpers.DeepEqualOrFatal(t, result.MyException, &MyException{
 		StatusCode: to.StringPtr("200"),
 	})
 }
@@ -176,11 +175,11 @@ func TestGet200ModelA201ModelC404ModelDDefaultError200Valid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	r, ok := result.(*httpinfrastructuregroup.MyExceptionResponse)
+	r, ok := result.(*MyExceptionResponse)
 	if !ok {
 		t.Fatal("unexpected result type")
 	}
-	helpers.DeepEqualOrFatal(t, r.MyException, &httpinfrastructuregroup.MyException{
+	helpers.DeepEqualOrFatal(t, r.MyException, &MyException{
 		StatusCode: to.StringPtr("200"),
 	})
 }
@@ -192,11 +191,11 @@ func TestGet200ModelA201ModelC404ModelDDefaultError201Valid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	r, ok := result.(*httpinfrastructuregroup.CResponse)
+	r, ok := result.(*CResponse)
 	if !ok {
 		t.Fatal("unexpected result type")
 	}
-	helpers.DeepEqualOrFatal(t, r.C, &httpinfrastructuregroup.C{
+	helpers.DeepEqualOrFatal(t, r.C, &C{
 		HTTPCode: to.StringPtr("201"),
 	})
 }
@@ -205,11 +204,11 @@ func TestGet200ModelA201ModelC404ModelDDefaultError201Valid(t *testing.T) {
 func TestGet200ModelA201ModelC404ModelDDefaultError400Valid(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get200ModelA201ModelC404ModelDDefaultError400Valid(context.Background())
-	r, ok := err.(httpinfrastructuregroup.Error)
+	r, ok := err.(Error)
 	if !ok {
 		t.Fatal("unexpected error type")
 	}
-	helpers.DeepEqualOrFatal(t, r, httpinfrastructuregroup.Error{
+	helpers.DeepEqualOrFatal(t, r, Error{
 		Message: to.StringPtr("client error"),
 		Status:  to.Int32Ptr(400),
 	})
@@ -225,11 +224,11 @@ func TestGet200ModelA201ModelC404ModelDDefaultError404Valid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	r, ok := result.(*httpinfrastructuregroup.DResponse)
+	r, ok := result.(*DResponse)
 	if !ok {
 		t.Fatal("unexpected result type")
 	}
-	helpers.DeepEqualOrFatal(t, r.D, &httpinfrastructuregroup.D{
+	helpers.DeepEqualOrFatal(t, r.D, &D{
 		HTTPStatusCode: to.StringPtr("404"),
 	})
 }
@@ -241,7 +240,7 @@ func TestGet200ModelA202Valid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.MyException, &httpinfrastructuregroup.MyException{
+	helpers.DeepEqualOrFatal(t, result.MyException, &MyException{
 		StatusCode: to.StringPtr("200"),
 	})
 }
@@ -370,7 +369,7 @@ func TestGetDefaultModelA200Valid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.MyException, &httpinfrastructuregroup.MyException{
+	helpers.DeepEqualOrFatal(t, result.MyException, &MyException{
 		StatusCode: to.StringPtr("200"),
 	})
 }

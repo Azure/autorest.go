@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package stringgrouptest
+package stringgroup
 
 import (
 	"context"
-	"generatortests/autorest/generated/stringgroup"
 	"generatortests/helpers"
 	"net/http"
 	"testing"
@@ -13,8 +12,8 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func newStringClient() stringgroup.StringOperations {
-	return stringgroup.NewStringClient(stringgroup.NewDefaultClient(nil))
+func newStringClient() StringOperations {
+	return NewStringClient(NewDefaultClient(nil))
 }
 
 func TestStringGetMBCS(t *testing.T) {

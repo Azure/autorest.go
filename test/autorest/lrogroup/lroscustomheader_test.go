@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package lrogrouptest
+package lrogroup
 
 import (
 	"context"
-	"generatortests/autorest/generated/lrogroup"
 	"generatortests/helpers"
 	"net/http"
 	"testing"
@@ -15,11 +14,11 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func newLrOSCustomHeaderClient() lrogroup.LrOSCustomHeaderOperations {
-	options := lrogroup.DefaultClientOptions()
+func newLrOSCustomHeaderClient() LrOSCustomHeaderOperations {
+	options := DefaultClientOptions()
 	options.Retry.RetryDelay = 10 * time.Millisecond
 	options.HTTPClient = httpClientWithCookieJar()
-	return lrogroup.NewLrOSCustomHeaderClient(lrogroup.NewDefaultClient(&options))
+	return NewLrOSCustomHeaderClient(NewDefaultClient(&options))
 }
 
 func ctxWithHTTPHeader() context.Context {
@@ -121,12 +120,12 @@ func TestBeginPut201CreatingSucceeded200(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.VerifyStatusCode(t, pr.RawResponse, http.StatusOK)
-	helpers.DeepEqualOrFatal(t, pr.Product, &lrogroup.Product{
-		Resource: lrogroup.Resource{
+	helpers.DeepEqualOrFatal(t, pr.Product, &Product{
+		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
 		},
-		Properties: &lrogroup.ProductProperties{
+		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
 	})
@@ -161,12 +160,12 @@ func TestBeginPutAsyncRetrySucceeded(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.VerifyStatusCode(t, pr.RawResponse, http.StatusOK)
-	helpers.DeepEqualOrFatal(t, pr.Product, &lrogroup.Product{
-		Resource: lrogroup.Resource{
+	helpers.DeepEqualOrFatal(t, pr.Product, &Product{
+		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
 		},
-		Properties: &lrogroup.ProductProperties{
+		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
 	})

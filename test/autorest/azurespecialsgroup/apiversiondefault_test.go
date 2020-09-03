@@ -1,18 +1,17 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package azurespecialsgrouptest
+package azurespecialsgroup
 
 import (
 	"context"
-	"generatortests/autorest/generated/azurespecialsgroup"
 	"generatortests/helpers"
 	"net/http"
 	"testing"
 )
 
-func newAPIVersionDefaultClient() azurespecialsgroup.APIVersionDefaultOperations {
-	return azurespecialsgroup.NewAPIVersionDefaultClient(azurespecialsgroup.NewDefaultClient(nil))
+func newAPIVersionDefaultClient() APIVersionDefaultOperations {
+	return NewAPIVersionDefaultClient(NewDefaultClient(nil))
 }
 
 // GetMethodGlobalNotProvidedValid - GET method with api-version modeled in global settings.

@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package azurespecialsgrouptest
+package azurespecialsgroup
 
 import (
 	"context"
-	"generatortests/autorest/generated/azurespecialsgroup"
 	"generatortests/helpers"
 	"net/http"
 	"testing"
@@ -13,14 +12,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func newOdataClient() azurespecialsgroup.OdataOperations {
-	return azurespecialsgroup.NewOdataClient(azurespecialsgroup.NewDefaultClient(nil))
+func newOdataClient() OdataOperations {
+	return NewOdataClient(NewDefaultClient(nil))
 }
 
 // GetWithFilter - Specify filter parameter with value '$filter=id gt 5 and name eq 'foo'&$orderby=id&$top=10'
 func TestGetWithFilter(t *testing.T) {
 	client := newOdataClient()
-	result, err := client.GetWithFilter(context.Background(), &azurespecialsgroup.OdataGetWithFilterOptions{
+	result, err := client.GetWithFilter(context.Background(), &OdataGetWithFilterOptions{
 		Filter:  to.StringPtr("id gt 5 and name eq 'foo'"),
 		Orderby: to.StringPtr("id"),
 		Top:     to.Int32Ptr(10),

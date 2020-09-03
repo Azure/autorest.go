@@ -1,18 +1,17 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package httpinfrastructuregrouptest
+package httpinfrastructuregroup
 
 import (
 	"context"
-	"generatortests/autorest/generated/httpinfrastructuregroup"
 	"generatortests/helpers"
 	"net/http"
 	"testing"
 )
 
-func newHTTPRedirectsClient() httpinfrastructuregroup.HTTPRedirectsOperations {
-	return httpinfrastructuregroup.NewHTTPRedirectsClient(httpinfrastructuregroup.NewDefaultClient(nil))
+func newHTTPRedirectsClient() HTTPRedirectsOperations {
+	return NewHTTPRedirectsClient(NewDefaultClient(nil))
 }
 
 func TestHTTPRedirectsDelete307(t *testing.T) {
@@ -32,9 +31,9 @@ func TestHTTPRedirectsGet300(t *testing.T) {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
 	switch x := result.(type) {
-	case *httpinfrastructuregroup.HTTPRedirectsGet300Response:
+	case *HTTPRedirectsGet300Response:
 		helpers.VerifyStatusCode(t, x.RawResponse, http.StatusOK)
-	case *httpinfrastructuregroup.StringArrayResponse:
+	case *StringArrayResponse:
 		helpers.VerifyStatusCode(t, x.RawResponse, http.StatusMultipleChoices)
 	default:
 		t.Fatalf("unhandled response type %v", x)
