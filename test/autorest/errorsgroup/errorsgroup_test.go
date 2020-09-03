@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package errorsgrouptest
+package errorsgroup
 
 import (
 	"context"
-	"generatortests/autorest/generated/errorsgroup"
 	"generatortests/helpers"
 	"net/http"
 	"testing"
@@ -14,11 +13,11 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func newPetClient() errorsgroup.PetOperations {
-	options := errorsgroup.DefaultClientOptions()
+func newPetClient() PetOperations {
+	options := DefaultClientOptions()
 	options.Retry.MaxRetryDelay = 20 * time.Millisecond
-	client := errorsgroup.NewClient("http://localhost:3000", &options)
-	return errorsgroup.NewPetClient(client)
+	client := NewClient("http://localhost:3000", &options)
+	return NewPetClient(client)
 }
 
 // DoSomething - Asks pet to do something
@@ -29,18 +28,18 @@ func TestDoSomethingSuccess(t *testing.T) {
 		t.Fatal(err)
 	}
 	// bug in test server, route returns wrong JSON model so PetAction is empty
-	helpers.DeepEqualOrFatal(t, result.PetAction, &errorsgroup.PetAction{})
+	helpers.DeepEqualOrFatal(t, result.PetAction, &PetAction{})
 }
 
 func TestDoSomethingError1(t *testing.T) {
 	client := newPetClient()
 	result, err := client.DoSomething(context.Background(), "jump")
-	sadErr, ok := err.(*errorsgroup.PetSadError)
+	sadErr, ok := err.(*PetSadError)
 	if !ok {
 		t.Fatalf("expected PetSadError: %v", err)
 	}
-	helpers.DeepEqualOrFatal(t, sadErr, &errorsgroup.PetSadError{
-		PetActionError: errorsgroup.PetActionError{
+	helpers.DeepEqualOrFatal(t, sadErr, &PetSadError{
+		PetActionError: PetActionError{
 			ErrorMessage: to.StringPtr("casper aint happy"),
 			ErrorType:    to.StringPtr("PetSadError"),
 		},
@@ -54,13 +53,13 @@ func TestDoSomethingError1(t *testing.T) {
 func TestDoSomethingError2(t *testing.T) {
 	client := newPetClient()
 	result, err := client.DoSomething(context.Background(), "fetch")
-	hungrErr, ok := err.(*errorsgroup.PetHungryOrThirstyError)
+	hungrErr, ok := err.(*PetHungryOrThirstyError)
 	if !ok {
 		t.Fatal("expected PetHungryOrThirstyError")
 	}
-	helpers.DeepEqualOrFatal(t, hungrErr, &errorsgroup.PetHungryOrThirstyError{
-		PetSadError: errorsgroup.PetSadError{
-			PetActionError: errorsgroup.PetActionError{
+	helpers.DeepEqualOrFatal(t, hungrErr, &PetHungryOrThirstyError{
+		PetSadError: PetSadError{
+			PetActionError: PetActionError{
 				ErrorMessage: to.StringPtr("scooby is low"),
 				ErrorType:    to.StringPtr("PetHungryOrThirstyError"),
 			},
@@ -76,11 +75,11 @@ func TestDoSomethingError2(t *testing.T) {
 func TestDoSomethingError3(t *testing.T) {
 	client := newPetClient()
 	result, err := client.DoSomething(context.Background(), "unknown")
-	actErr, ok := err.(*errorsgroup.PetActionError)
+	actErr, ok := err.(*PetActionError)
 	if !ok {
 		t.Fatal("expected PetActionError")
 	}
-	helpers.DeepEqualOrFatal(t, actErr, &errorsgroup.PetActionError{})
+	helpers.DeepEqualOrFatal(t, actErr, &PetActionError{})
 	if result != nil {
 		t.Fatal("expected nil result")
 	}
@@ -93,8 +92,8 @@ func TestGetPetByIDSuccess1(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.Pet, &errorsgroup.Pet{
-		Animal: errorsgroup.Animal{
+	helpers.DeepEqualOrFatal(t, result.Pet, &Pet{
+		Animal: Animal{
 			AniType: to.StringPtr("Dog"),
 		},
 		Name: to.StringPtr("Tommy Tomson"),
@@ -113,13 +112,13 @@ func TestGetPetByIDSuccess2(t *testing.T) {
 func TestGetPetByIDError1(t *testing.T) {
 	client := newPetClient()
 	result, err := client.GetPetByID(context.Background(), "coyoteUgly")
-	anfe, ok := err.(*errorsgroup.AnimalNotFound)
+	anfe, ok := err.(*AnimalNotFound)
 	if !ok {
 		t.Fatal("expected AnimalNotFoundError")
 	}
-	helpers.DeepEqualOrFatal(t, anfe, &errorsgroup.AnimalNotFound{
-		NotFoundErrorBase: errorsgroup.NotFoundErrorBase{
-			BaseError: errorsgroup.BaseError{
+	helpers.DeepEqualOrFatal(t, anfe, &AnimalNotFound{
+		NotFoundErrorBase: NotFoundErrorBase{
+			BaseError: BaseError{
 				SomeBaseProp: to.StringPtr("problem finding animal"),
 			},
 			Reason:       to.StringPtr("the type of animal requested is not available"),
@@ -135,13 +134,13 @@ func TestGetPetByIDError1(t *testing.T) {
 func TestGetPetByIDError2(t *testing.T) {
 	client := newPetClient()
 	result, err := client.GetPetByID(context.Background(), "weirdAlYankovic")
-	lnfe, ok := err.(*errorsgroup.LinkNotFound)
+	lnfe, ok := err.(*LinkNotFound)
 	if !ok {
 		t.Fatal("expected LinkNotFoundError")
 	}
-	helpers.DeepEqualOrFatal(t, lnfe, &errorsgroup.LinkNotFound{
-		NotFoundErrorBase: errorsgroup.NotFoundErrorBase{
-			BaseError: errorsgroup.BaseError{
+	helpers.DeepEqualOrFatal(t, lnfe, &LinkNotFound{
+		NotFoundErrorBase: NotFoundErrorBase{
+			BaseError: BaseError{
 				SomeBaseProp: to.StringPtr("problem finding pet"),
 			},
 			Reason:       to.StringPtr("link to pet not found"),

@@ -1,19 +1,18 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package filegrouptest
+package filegroup
 
 import (
 	"context"
-	"generatortests/autorest/generated/filegroup"
 	"generatortests/helpers"
 	"io/ioutil"
 	"net/http"
 	"testing"
 )
 
-func newFilesClient() filegroup.FilesOperations {
-	return filegroup.NewFilesClient(filegroup.NewDefaultClient(nil))
+func newFilesClient() FilesOperations {
+	return NewFilesClient(NewDefaultClient(nil))
 }
 
 func TestGetEmptyFile(t *testing.T) {

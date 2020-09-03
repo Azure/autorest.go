@@ -1,18 +1,17 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package azurespecialsgrouptest
+package azurespecialsgroup
 
 import (
 	"context"
-	"generatortests/autorest/generated/azurespecialsgroup"
 	"generatortests/helpers"
 	"net/http"
 	"testing"
 )
 
-func newSubscriptionInMethodClient() azurespecialsgroup.SubscriptionInMethodOperations {
-	return azurespecialsgroup.NewSubscriptionInMethodClient(azurespecialsgroup.NewDefaultClient(nil))
+func newSubscriptionInMethodClient() SubscriptionInMethodOperations {
+	return NewSubscriptionInMethodClient(NewDefaultClient(nil))
 }
 
 // PostMethodLocalNull - POST method with subscriptionId modeled in the method.  pass in subscription id = null, client-side validation should prevent you from making this call

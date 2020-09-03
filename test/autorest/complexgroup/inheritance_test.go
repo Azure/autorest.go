@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package complexgrouptest
+package complexgroup
 
 import (
 	"context"
-	"generatortests/autorest/generated/complexgroup"
 	"generatortests/helpers"
 	"net/http"
 	"testing"
@@ -13,8 +12,8 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func newInheritanceClient() complexgroup.InheritanceOperations {
-	return complexgroup.NewInheritanceClient(complexgroup.NewDefaultClient(nil))
+func newInheritanceClient() InheritanceOperations {
+	return NewInheritanceClient(NewDefaultClient(nil))
 }
 
 func TestInheritanceGetValid(t *testing.T) {
@@ -23,23 +22,23 @@ func TestInheritanceGetValid(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetValid: %v", err)
 	}
-	helpers.DeepEqualOrFatal(t, result.Siamese, &complexgroup.Siamese{
-		Cat: complexgroup.Cat{
-			Pet: complexgroup.Pet{
+	helpers.DeepEqualOrFatal(t, result.Siamese, &Siamese{
+		Cat: Cat{
+			Pet: Pet{
 				ID:   to.Int32Ptr(2),
 				Name: to.StringPtr("Siameeee"),
 			},
 			Color: to.StringPtr("green"),
-			Hates: &[]complexgroup.Dog{
+			Hates: &[]Dog{
 				{
-					Pet: complexgroup.Pet{
+					Pet: Pet{
 						ID:   to.Int32Ptr(1),
 						Name: to.StringPtr("Potato"),
 					},
 					Food: to.StringPtr("tomato"),
 				},
 				{
-					Pet: complexgroup.Pet{
+					Pet: Pet{
 						ID:   to.Int32Ptr(-1),
 						Name: to.StringPtr("Tomato"),
 					},
@@ -53,23 +52,23 @@ func TestInheritanceGetValid(t *testing.T) {
 
 func TestInheritancePutValid(t *testing.T) {
 	client := newInheritanceClient()
-	result, err := client.PutValid(context.Background(), complexgroup.Siamese{
-		Cat: complexgroup.Cat{
-			Pet: complexgroup.Pet{
+	result, err := client.PutValid(context.Background(), Siamese{
+		Cat: Cat{
+			Pet: Pet{
 				ID:   to.Int32Ptr(2),
 				Name: to.StringPtr("Siameeee"),
 			},
 			Color: to.StringPtr("green"),
-			Hates: &[]complexgroup.Dog{
+			Hates: &[]Dog{
 				{
-					Pet: complexgroup.Pet{
+					Pet: Pet{
 						ID:   to.Int32Ptr(1),
 						Name: to.StringPtr("Potato"),
 					},
 					Food: to.StringPtr("tomato"),
 				},
 				{
-					Pet: complexgroup.Pet{
+					Pet: Pet{
 						ID:   to.Int32Ptr(-1),
 						Name: to.StringPtr("Tomato"),
 					},

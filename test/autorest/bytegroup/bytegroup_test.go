@@ -1,18 +1,17 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package bytegrouptest
+package bytegroup
 
 import (
 	"context"
-	"generatortests/autorest/generated/bytegroup"
 	"generatortests/helpers"
 	"net/http"
 	"testing"
 )
 
-func newByteClient() bytegroup.ByteOperations {
-	return bytegroup.NewByteClient(bytegroup.NewDefaultClient(nil))
+func newByteClient() ByteOperations {
+	return NewByteClient(NewDefaultClient(nil))
 }
 
 func TestGetEmpty(t *testing.T) {

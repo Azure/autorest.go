@@ -1,18 +1,17 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package httpinfrastructuregrouptest
+package httpinfrastructuregroup
 
 import (
 	"context"
-	"generatortests/autorest/generated/httpinfrastructuregroup"
 	"generatortests/helpers"
 	"net/http"
 	"testing"
 )
 
-func newHTTPSuccessClient() httpinfrastructuregroup.HTTPSuccessOperations {
-	return httpinfrastructuregroup.NewHTTPSuccessClient(httpinfrastructuregroup.NewDefaultClient(nil))
+func newHTTPSuccessClient() HTTPSuccessOperations {
+	return NewHTTPSuccessClient(NewDefaultClient(nil))
 }
 
 func TestHTTPSuccessDelete200(t *testing.T) {

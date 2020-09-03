@@ -1,24 +1,23 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package urlgrouptest
+package urlgroup
 
 import (
 	"context"
-	"generatortests/autorest/generated/urlgroup"
 	"generatortests/helpers"
 	"net/http"
 	"testing"
 )
 
-func newQueriesClient() urlgroup.QueriesOperations {
-	return urlgroup.NewQueriesClient(urlgroup.NewDefaultClient(nil))
+func newQueriesClient() QueriesOperations {
+	return NewQueriesClient(NewDefaultClient(nil))
 }
 
 // ArrayStringCSVEmpty - Get an empty array [] of string using the csv-array format
 func TestArrayStringCSVEmpty(t *testing.T) {
 	client := newQueriesClient()
-	result, err := client.ArrayStringCSVEmpty(context.Background(), &urlgroup.QueriesArrayStringCSVEmptyOptions{
+	result, err := client.ArrayStringCSVEmpty(context.Background(), &QueriesArrayStringCSVEmptyOptions{
 		ArrayQuery: &[]string{},
 	})
 	if err != nil {
@@ -40,7 +39,7 @@ func TestArrayStringCSVNull(t *testing.T) {
 // ArrayStringCSVValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
 func TestArrayStringCsvValid(t *testing.T) {
 	client := newQueriesClient()
-	result, err := client.ArrayStringCSVValid(context.Background(), &urlgroup.QueriesArrayStringCSVValidOptions{
+	result, err := client.ArrayStringCSVValid(context.Background(), &QueriesArrayStringCSVValidOptions{
 		ArrayQuery: &[]string{"ArrayQuery1", "begin!*'();:@ &=+$,/?#[]end", "", ""},
 	})
 	if err != nil {
@@ -52,7 +51,7 @@ func TestArrayStringCsvValid(t *testing.T) {
 // ArrayStringPipesValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the pipes-array format
 func TestArrayStringPipesValid(t *testing.T) {
 	client := newQueriesClient()
-	result, err := client.ArrayStringPipesValid(context.Background(), &urlgroup.QueriesArrayStringPipesValidOptions{
+	result, err := client.ArrayStringPipesValid(context.Background(), &QueriesArrayStringPipesValidOptions{
 		ArrayQuery: &[]string{"ArrayQuery1", "begin!*'();:@ &=+$,/?#[]end", "", ""},
 	})
 	if err != nil {
@@ -64,7 +63,7 @@ func TestArrayStringPipesValid(t *testing.T) {
 // ArrayStringSsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the ssv-array format
 func TestArrayStringSsvValid(t *testing.T) {
 	client := newQueriesClient()
-	result, err := client.ArrayStringSsvValid(context.Background(), &urlgroup.QueriesArrayStringSsvValidOptions{
+	result, err := client.ArrayStringSsvValid(context.Background(), &QueriesArrayStringSsvValidOptions{
 		ArrayQuery: &[]string{"ArrayQuery1", "begin!*'();:@ &=+$,/?#[]end", "", ""},
 	})
 	if err != nil {
@@ -76,7 +75,7 @@ func TestArrayStringSsvValid(t *testing.T) {
 // ArrayStringTsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the tsv-array format
 func TestArrayStringTsvValid(t *testing.T) {
 	client := newQueriesClient()
-	result, err := client.ArrayStringTsvValid(context.Background(), &urlgroup.QueriesArrayStringTsvValidOptions{
+	result, err := client.ArrayStringTsvValid(context.Background(), &QueriesArrayStringTsvValidOptions{
 		ArrayQuery: &[]string{"ArrayQuery1", "begin!*'();:@ &=+$,/?#[]end", "", ""},
 	})
 	if err != nil {
@@ -98,7 +97,7 @@ func TestByteEmpty(t *testing.T) {
 // ByteMultiByte - Get '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
 func TestByteMultiByte(t *testing.T) {
 	client := newQueriesClient()
-	result, err := client.ByteMultiByte(context.Background(), &urlgroup.QueriesByteMultiByteOptions{
+	result, err := client.ByteMultiByte(context.Background(), &QueriesByteMultiByteOptions{
 		ByteQuery: toByteSlicePtr([]byte("啊齄丂狛狜隣郎隣兀﨩")),
 	})
 	if err != nil {
@@ -200,8 +199,8 @@ func TestEnumNull(t *testing.T) {
 // EnumValid - Get using uri with query parameter 'green color'
 func TestEnumValid(t *testing.T) {
 	client := newQueriesClient()
-	result, err := client.EnumValid(context.Background(), &urlgroup.QueriesEnumValidOptions{
-		EnumQuery: urlgroup.URIColorGreenColor.ToPtr(),
+	result, err := client.EnumValid(context.Background(), &QueriesEnumValidOptions{
+		EnumQuery: URIColorGreenColor.ToPtr(),
 	})
 	if err != nil {
 		t.Fatal(err)

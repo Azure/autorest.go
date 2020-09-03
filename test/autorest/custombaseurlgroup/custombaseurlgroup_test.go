@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package custombaseurlgrouptest
+package custombaseurlgroup
 
 import (
 	"context"
-	"generatortests/autorest/generated/custombaseurlgroup"
 	"generatortests/helpers"
 	"net/http"
 	"testing"
@@ -13,9 +12,9 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func newPathsClient() custombaseurlgroup.PathsOperations {
-	client := custombaseurlgroup.NewClient(to.StringPtr(":3000"), nil)
-	return custombaseurlgroup.NewPathsClient(client)
+func newPathsClient() PathsOperations {
+	client := NewClient(to.StringPtr(":3000"), nil)
+	return NewPathsClient(client)
 }
 
 func TestGetEmpty(t *testing.T) {

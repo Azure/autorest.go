@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package validationgrouptest
+package validationgroup
 
 import (
 	"context"
-	"generatortests/autorest/generated/validationgroup"
 	"generatortests/helpers"
 	"net/http"
 	"testing"
@@ -13,8 +12,8 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func newAutoRestValidationTestClient() validationgroup.AutoRestValidationTestOperations {
-	return validationgroup.NewAutoRestValidationTestClient(validationgroup.NewDefaultClient(nil), "")
+func newAutoRestValidationTestClient() AutoRestValidationTestOperations {
+	return NewAutoRestValidationTestClient(NewDefaultClient(nil), "")
 }
 
 func TestValidationGetWithConstantInPath(t *testing.T) {
@@ -28,12 +27,12 @@ func TestValidationGetWithConstantInPath(t *testing.T) {
 
 func TestValidationPostWithConstantInBody(t *testing.T) {
 	client := newAutoRestValidationTestClient()
-	result, err := client.PostWithConstantInBody(context.Background(), &validationgroup.AutoRestValidationTestPostWithConstantInBodyOptions{Body: &validationgroup.Product{
-		Child: &validationgroup.ChildProduct{
+	result, err := client.PostWithConstantInBody(context.Background(), &AutoRestValidationTestPostWithConstantInBodyOptions{Body: &Product{
+		Child: &ChildProduct{
 			ConstProperty: to.StringPtr("constant")},
 		ConstString: to.StringPtr("constant"),
 		ConstInt:    to.Int32Ptr(0),
-		ConstChild: &validationgroup.ConstantProduct{
+		ConstChild: &ConstantProduct{
 			ConstProperty:  to.StringPtr("constant"),
 			ConstProperty2: to.StringPtr("constant2")}}})
 	if err != nil {
@@ -45,8 +44,8 @@ func TestValidationPostWithConstantInBody(t *testing.T) {
 func TestValidationValidationOfBody(t *testing.T) {
 	t.Skip("need to confirm if this test will remain in the testserver and what values it's expecting")
 	client := newAutoRestValidationTestClient()
-	result, err := client.ValidationOfBody(context.Background(), "123", 150, &validationgroup.AutoRestValidationTestValidationOfBodyOptions{
-		Body: &validationgroup.Product{
+	result, err := client.ValidationOfBody(context.Background(), "123", 150, &AutoRestValidationTestValidationOfBodyOptions{
+		Body: &Product{
 			DisplayNames: &[]string{
 				"displayname1",
 				"displayname2",

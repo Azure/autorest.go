@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package integergrouptest
+package integergroup
 
 import (
 	"context"
-	"generatortests/autorest/generated/integergroup"
 	"generatortests/helpers"
 	"math"
 	"net/http"
@@ -13,8 +12,8 @@ import (
 	"time"
 )
 
-func newIntClient() integergroup.IntOperations {
-	return integergroup.NewIntClient(integergroup.NewDefaultClient(nil))
+func newIntClient() IntOperations {
+	return NewIntClient(NewDefaultClient(nil))
 }
 
 func TestIntGetInvalid(t *testing.T) {

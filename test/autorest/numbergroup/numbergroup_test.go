@@ -1,18 +1,17 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package numbergrouptest
+package numbergroup
 
 import (
 	"context"
-	"generatortests/autorest/generated/numbergroup"
 	"generatortests/helpers"
 	"net/http"
 	"testing"
 )
 
-func newNumberClient() numbergroup.NumberOperations {
-	return numbergroup.NewNumberClient(numbergroup.NewDefaultClient(nil))
+func newNumberClient() NumberOperations {
+	return NewNumberClient(NewDefaultClient(nil))
 }
 
 func TestNumberGetBigDecimal(t *testing.T) {

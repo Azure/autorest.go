@@ -1,32 +1,31 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package extenumsgrouptest
+package extenumsgroup
 
 import (
 	"context"
-	"generatortests/autorest/generated/extenumsgroup"
 	"generatortests/helpers"
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func newPetClient() extenumsgroup.PetOperations {
-	return extenumsgroup.NewPetClient(extenumsgroup.NewDefaultClient(nil))
+func newPetClient() PetOperations {
+	return NewPetClient(NewDefaultClient(nil))
 }
 
 func TestAddPet(t *testing.T) {
 	client := newPetClient()
-	result, err := client.AddPet(context.Background(), &extenumsgroup.PetAddPetOptions{
-		PetParam: &extenumsgroup.Pet{
+	result, err := client.AddPet(context.Background(), &PetAddPetOptions{
+		PetParam: &Pet{
 			Name: to.StringPtr("Retriever"),
 		},
 	})
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.Pet, &extenumsgroup.Pet{
+	helpers.DeepEqualOrFatal(t, result.Pet, &Pet{
 		Name: to.StringPtr("Retriever"),
 	})
 }
@@ -37,9 +36,9 @@ func TestGetByPetIDExpected(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.Pet, &extenumsgroup.Pet{
-		DaysOfWeek: extenumsgroup.DaysOfWeekExtensibleEnumMonday.ToPtr(),
-		IntEnum:    extenumsgroup.IntEnumOne.ToPtr(),
+	helpers.DeepEqualOrFatal(t, result.Pet, &Pet{
+		DaysOfWeek: DaysOfWeekExtensibleEnumMonday.ToPtr(),
+		IntEnum:    IntEnumOne.ToPtr(),
 		Name:       to.StringPtr("Tommy Tomson"),
 	})
 }
@@ -50,9 +49,9 @@ func TestGetByPetIDUnexpected(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.Pet, &extenumsgroup.Pet{
-		DaysOfWeek: (*extenumsgroup.DaysOfWeekExtensibleEnum)(to.StringPtr("Weekend")),
-		IntEnum:    extenumsgroup.IntEnumTwo.ToPtr(),
+	helpers.DeepEqualOrFatal(t, result.Pet, &Pet{
+		DaysOfWeek: (*DaysOfWeekExtensibleEnum)(to.StringPtr("Weekend")),
+		IntEnum:    IntEnumTwo.ToPtr(),
 		Name:       to.StringPtr("Casper Ghosty"),
 	})
 }
@@ -63,9 +62,9 @@ func TestGetByPetIDAllowed(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.Pet, &extenumsgroup.Pet{
-		DaysOfWeek: extenumsgroup.DaysOfWeekExtensibleEnumThursday.ToPtr(),
-		IntEnum:    (*extenumsgroup.IntEnum)(to.StringPtr("2.1")),
+	helpers.DeepEqualOrFatal(t, result.Pet, &Pet{
+		DaysOfWeek: DaysOfWeekExtensibleEnumThursday.ToPtr(),
+		IntEnum:    (*IntEnum)(to.StringPtr("2.1")),
 		Name:       to.StringPtr("Scooby Scarface"),
 	})
 }

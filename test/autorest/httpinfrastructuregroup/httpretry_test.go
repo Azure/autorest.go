@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package httpinfrastructuregrouptest
+package httpinfrastructuregroup
 
 import (
 	"context"
-	"generatortests/autorest/generated/httpinfrastructuregroup"
 	"generatortests/helpers"
 	"net/http"
 	"net/http/cookiejar"
@@ -15,11 +14,11 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
-func newHTTPRetryClient() httpinfrastructuregroup.HTTPRetryOperations {
-	options := httpinfrastructuregroup.DefaultClientOptions()
+func newHTTPRetryClient() HTTPRetryOperations {
+	options := DefaultClientOptions()
 	options.Retry.RetryDelay = 10 * time.Millisecond
 	options.HTTPClient = httpClientWithCookieJar()
-	return httpinfrastructuregroup.NewHTTPRetryClient(httpinfrastructuregroup.NewDefaultClient(&options))
+	return NewHTTPRetryClient(NewDefaultClient(&options))
 }
 
 func httpClientWithCookieJar() azcore.Transport {

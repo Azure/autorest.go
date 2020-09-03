@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 const exec = require('child_process').exec;
+const fs = require('fs');
 
 // limit to 8 concurrent builds
 const sem = require('./semaphore')(8);
@@ -10,7 +11,7 @@ const swaggerDir = 'src/node_modules/@microsoft.azure/autorest.testserver/swagge
 const goMappings = {
     'additionalpropsgroup': 'additionalProperties.json',
     'arraygroup': 'body-array.json',
-    'azurereportgroup': 'azure-report.json',
+    //'azurereportgroup': 'azure-report.json', used for reporting test coverage
     'azurespecialsgroup': 'azure-special-properties.json',
     'booleangroup': 'body-boolean.json',
     'bytegroup': 'body-byte.json',
@@ -38,7 +39,7 @@ const goMappings = {
     'optionalgroup': 'required-optional.json',
     'paginggroup': 'paging.json',
     'paramgroupinggroup': 'azure-parameter-grouping.json',
-    'reportgroup': 'report.json',
+    //'reportgroup': 'report.json', used for reporting test coverage
     'stringgroup': 'body-string.json',
     'urlgroup': 'url.json',
     'urlmultigroup': 'url-multi-collectionFormat.json',
@@ -50,31 +51,50 @@ const goMappings = {
 for (namespace in goMappings) {
     // for each swagger run the autorest command to generate code based on the swagger for the relevant namespace and output to the /generated directory
     const inputFile = swaggerDir + goMappings[namespace];
-    generate(inputFile, 'test/autorest/generated/' + namespace);
+    generate(inputFile, 'test/autorest/' + namespace, '--file-prefix="zz_generated_"');
 }
 
 const blobStorage = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/storage-dataplane-preview/specification/storage/data-plane/Microsoft.BlobStorage/preview/2019-07-07/blob.json';
 generate(blobStorage, 'test/storage/2019-07-07/azblob', '--credential-scope="https://storage.azure.com/.default" --module="azstorage" --export-client="false" --file-prefix="zz_generated_" --openapi-type="data-plane"');
 
 const network = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/network/resource-manager/readme.md';
-generateFromReadme(network, 'package-2020-03', 'test/network/2020-03-01/armnetwork', '--credential-scope="https://management.azure.com//.default" --module=armnetwork');
+generateFromReadme(network, 'package-2020-03', 'test/network/2020-03-01/armnetwork', '--credential-scope="https://management.azure.com//.default" --module=armnetwork --file-prefix="zz_generated_"');
 
 // const synapseArtifacts = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/synapse/data-plane/Microsoft.Synapse/preview/2019-06-01-preview/artifacts.json';
 // generate(synapseArtifacts, 'test/synapse/2019-06-01/azartifacts', '--module="azartifacts" --openapi-type="data-plane"');
 
 // helper to log the package being generated before invocation
 function generate(inputFile, outputDir, additionalArgs) {
-    console.log('generating ' + inputFile);
     sem.take(function() {
-        exec('autorest --use=. --clear-output-folder --license-header=MICROSOFT_MIT_NO_VERSION --input-file=' + inputFile + ' --output-folder=' + outputDir + ' ' + additionalArgs, autorestCallback(outputDir, inputFile));
+        console.log('generating ' + inputFile);
+        cleanGeneratedFiles(outputDir);
+        exec('autorest --use=. --license-header=MICROSOFT_MIT_NO_VERSION --input-file=' + inputFile + ' --output-folder=' + outputDir + ' ' + additionalArgs, autorestCallback(outputDir, inputFile));
     });
 }
 
 function generateFromReadme(readme, tag, outputDir, additionalArgs) {
-    console.log('generating ' + readme);
     sem.take(function() {
+        console.log('generating ' + readme);
+        cleanGeneratedFiles(outputDir);
         exec('autorest --use=. ' + readme + ' --tag=' + tag + ' --clear-output-folder --license-header=MICROSOFT_MIT_NO_VERSION --output-folder=' + outputDir + ' ' + additionalArgs, autorestCallback(outputDir, readme));
     });
+}
+
+function cleanGeneratedFiles(outputDir) {
+    if (!fs.existsSync(outputDir)) {
+        return;
+    }
+    const dir = fs.opendirSync(outputDir);
+    while (true) {
+        const dirEnt = dir.readSync()
+        if (dirEnt === null) {
+            break;
+        }
+        if (dirEnt.isFile() && dirEnt.name.startsWith('zz_generated_')) {
+            fs.unlinkSync(dir.path + '/' + dirEnt.name);
+        }
+    }
+    dir.close();
 }
 
 // use a function factory to create the closure so that the values of namespace and inputFile are captured on each iteration

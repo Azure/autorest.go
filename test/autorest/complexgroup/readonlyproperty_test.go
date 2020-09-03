@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package complexgrouptest
+package complexgroup
 
 import (
 	"context"
-	"generatortests/autorest/generated/complexgroup"
 	"generatortests/helpers"
 	"net/http"
 	"testing"
@@ -13,8 +12,8 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func newReadonlypropertyClient() complexgroup.ReadonlypropertyOperations {
-	return complexgroup.NewReadonlypropertyClient(complexgroup.NewDefaultClient(nil))
+func newReadonlypropertyClient() ReadonlypropertyOperations {
+	return NewReadonlypropertyClient(NewDefaultClient(nil))
 }
 
 func TestReadonlypropertyGetValid(t *testing.T) {
@@ -23,13 +22,13 @@ func TestReadonlypropertyGetValid(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetValid: %v", err)
 	}
-	helpers.DeepEqualOrFatal(t, result.ReadonlyObj, &complexgroup.ReadonlyObj{ID: to.StringPtr("1234"), Size: to.Int32Ptr(2)})
+	helpers.DeepEqualOrFatal(t, result.ReadonlyObj, &ReadonlyObj{ID: to.StringPtr("1234"), Size: to.Int32Ptr(2)})
 }
 
 func TestReadonlypropertyPutValid(t *testing.T) {
 	client := newReadonlypropertyClient()
 	id, size := "1234", int32(2)
-	result, err := client.PutValid(context.Background(), complexgroup.ReadonlyObj{ID: &id, Size: &size})
+	result, err := client.PutValid(context.Background(), ReadonlyObj{ID: &id, Size: &size})
 	if err != nil {
 		t.Fatalf("PutValid: %v", err)
 	}

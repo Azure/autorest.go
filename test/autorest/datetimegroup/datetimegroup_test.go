@@ -5,15 +5,14 @@ package datetimegroup
 
 import (
 	"context"
-	"generatortests/autorest/generated/datetimegroup"
 	"generatortests/helpers"
 	"net/http"
 	"testing"
 	"time"
 )
 
-func newDatetimeClient() datetimegroup.DatetimeOperations {
-	return datetimegroup.NewDatetimeClient(datetimegroup.NewDefaultClient(nil))
+func newDatetimeClient() DatetimeOperations {
+	return NewDatetimeClient(NewDefaultClient(nil))
 }
 
 func TestGetInvalid(t *testing.T) {

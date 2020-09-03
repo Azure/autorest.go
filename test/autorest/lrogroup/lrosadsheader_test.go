@@ -1,21 +1,20 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package lrogrouptest
+package lrogroup
 
 import (
 	"context"
-	"generatortests/autorest/generated/lrogroup"
 	"generatortests/helpers"
 	"testing"
 	"time"
 )
 
-func newLrosaDsClient() lrogroup.LrosaDsOperations {
-	options := lrogroup.DefaultClientOptions()
+func newLrosaDsClient() LrosaDsOperations {
+	options := DefaultClientOptions()
 	options.Retry.RetryDelay = 10 * time.Millisecond
 	options.HTTPClient = httpClientWithCookieJar()
-	return lrogroup.NewLrosaDsClient(lrogroup.NewDefaultClient(&options))
+	return NewLrosaDsClient(NewDefaultClient(&options))
 }
 
 func TestLROSADSBeginDelete202NonRetry400(t *testing.T) {

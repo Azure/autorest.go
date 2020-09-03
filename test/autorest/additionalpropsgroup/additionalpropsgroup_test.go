@@ -1,26 +1,25 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package additionalpropsgrouptest
+package additionalpropsgroup
 
 import (
 	"context"
 	"encoding/base64"
-	"generatortests/autorest/generated/additionalpropsgroup"
 	"generatortests/helpers"
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func newPetsClient() additionalpropsgroup.PetsOperations {
-	return additionalpropsgroup.NewPetsClient(additionalpropsgroup.NewDefaultClient(nil))
+func newPetsClient() PetsOperations {
+	return NewPetsClient(NewDefaultClient(nil))
 }
 
 // CreateApInProperties - Create a Pet which contains more properties than what is defined.
 func TestCreateApInProperties(t *testing.T) {
 	client := newPetsClient()
-	result, err := client.CreateApInProperties(context.Background(), additionalpropsgroup.PetApInProperties{
+	result, err := client.CreateApInProperties(context.Background(), PetApInProperties{
 		ID:   to.Int32Ptr(4),
 		Name: to.StringPtr("Bunny"),
 		AdditionalProperties: &map[string]float32{
@@ -32,7 +31,7 @@ func TestCreateApInProperties(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.PetApInProperties, &additionalpropsgroup.PetApInProperties{
+	helpers.DeepEqualOrFatal(t, result.PetApInProperties, &PetApInProperties{
 		ID:     to.Int32Ptr(4),
 		Name:   to.StringPtr("Bunny"),
 		Status: to.BoolPtr(true),
@@ -47,7 +46,7 @@ func TestCreateApInProperties(t *testing.T) {
 // CreateApInPropertiesWithApstring - Create a Pet which contains more properties than what is defined.
 func TestCreateApInPropertiesWithApstring(t *testing.T) {
 	client := newPetsClient()
-	result, err := client.CreateApInPropertiesWithApstring(context.Background(), additionalpropsgroup.PetApInPropertiesWithApstring{
+	result, err := client.CreateApInPropertiesWithApstring(context.Background(), PetApInPropertiesWithApstring{
 		ID:            to.Int32Ptr(5),
 		Name:          to.StringPtr("Funny"),
 		OdataLocation: to.StringPtr("westus"),
@@ -65,7 +64,7 @@ func TestCreateApInPropertiesWithApstring(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.PetApInPropertiesWithApstring, &additionalpropsgroup.PetApInPropertiesWithApstring{
+	helpers.DeepEqualOrFatal(t, result.PetApInPropertiesWithApstring, &PetApInPropertiesWithApstring{
 		ID:            to.Int32Ptr(5),
 		Name:          to.StringPtr("Funny"),
 		OdataLocation: to.StringPtr("westus"),
@@ -86,7 +85,7 @@ func TestCreateApInPropertiesWithApstring(t *testing.T) {
 // CreateApObject - Create a Pet which contains more properties than what is defined.
 func TestCreateApObject(t *testing.T) {
 	client := newPetsClient()
-	result, err := client.CreateApObject(context.Background(), additionalpropsgroup.PetApObject{
+	result, err := client.CreateApObject(context.Background(), PetApObject{
 		ID:   to.Int32Ptr(2),
 		Name: to.StringPtr("Hira"),
 		AdditionalProperties: &map[string]interface{}{
@@ -106,7 +105,7 @@ func TestCreateApObject(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.PetApObject, &additionalpropsgroup.PetApObject{
+	helpers.DeepEqualOrFatal(t, result.PetApObject, &PetApObject{
 		ID:     to.Int32Ptr(2),
 		Name:   to.StringPtr("Hira"),
 		Status: to.BoolPtr(true),
@@ -129,7 +128,7 @@ func TestCreateApObject(t *testing.T) {
 // CreateApString - Create a Pet which contains more properties than what is defined.
 func TestCreateApString(t *testing.T) {
 	client := newPetsClient()
-	result, err := client.CreateApString(context.Background(), additionalpropsgroup.PetApString{
+	result, err := client.CreateApString(context.Background(), PetApString{
 		ID:   to.Int32Ptr(3),
 		Name: to.StringPtr("Tommy"),
 		AdditionalProperties: &map[string]string{
@@ -141,7 +140,7 @@ func TestCreateApString(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.PetApString, &additionalpropsgroup.PetApString{
+	helpers.DeepEqualOrFatal(t, result.PetApString, &PetApString{
 		ID:     to.Int32Ptr(3),
 		Name:   to.StringPtr("Tommy"),
 		Status: to.BoolPtr(true),
@@ -156,7 +155,7 @@ func TestCreateApString(t *testing.T) {
 // CreateApTrue - Create a Pet which contains more properties than what is defined.
 func TestCreateApTrue(t *testing.T) {
 	client := newPetsClient()
-	result, err := client.CreateApTrue(context.Background(), additionalpropsgroup.PetApTrue{
+	result, err := client.CreateApTrue(context.Background(), PetApTrue{
 		ID:   to.Int32Ptr(1),
 		Name: to.StringPtr("Puppy"),
 		AdditionalProperties: &map[string]interface{}{
@@ -169,7 +168,7 @@ func TestCreateApTrue(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.PetApTrue, &additionalpropsgroup.PetApTrue{
+	helpers.DeepEqualOrFatal(t, result.PetApTrue, &PetApTrue{
 		ID:     to.Int32Ptr(1),
 		Name:   to.StringPtr("Puppy"),
 		Status: to.BoolPtr(true),
@@ -185,8 +184,8 @@ func TestCreateApTrue(t *testing.T) {
 // CreateCatApTrue - Create a CatAPTrue which contains more properties than what is defined.
 func TestCreateCatApTrue(t *testing.T) {
 	client := newPetsClient()
-	result, err := client.CreateCatApTrue(context.Background(), additionalpropsgroup.CatApTrue{
-		PetApTrue: additionalpropsgroup.PetApTrue{
+	result, err := client.CreateCatApTrue(context.Background(), CatApTrue{
+		PetApTrue: PetApTrue{
 			ID:   to.Int32Ptr(1),
 			Name: to.StringPtr("Lisa"),
 			AdditionalProperties: &map[string]interface{}{
@@ -201,8 +200,8 @@ func TestCreateCatApTrue(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.CatApTrue, &additionalpropsgroup.CatApTrue{
-		PetApTrue: additionalpropsgroup.PetApTrue{
+	helpers.DeepEqualOrFatal(t, result.CatApTrue, &CatApTrue{
+		PetApTrue: PetApTrue{
 			ID:     to.Int32Ptr(1),
 			Name:   to.StringPtr("Lisa"),
 			Status: to.BoolPtr(true),

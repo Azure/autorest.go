@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package paginggrouptest
+package paginggroup
 
 import (
 	"context"
-	"generatortests/autorest/generated/paginggroup"
 	"generatortests/helpers"
 	"net/http"
 	"net/http/cookiejar"
@@ -15,11 +14,11 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
-func newPagingClient() paginggroup.PagingOperations {
-	options := paginggroup.DefaultClientOptions()
+func newPagingClient() PagingOperations {
+	options := DefaultClientOptions()
 	options.Retry.RetryDelay = 10 * time.Millisecond
 	options.HTTPClient = httpClientWithCookieJar()
-	return paginggroup.NewPagingClient(paginggroup.NewDefaultClient(&options))
+	return NewPagingClient(NewDefaultClient(&options))
 }
 
 func httpClientWithCookieJar() azcore.Transport {
@@ -140,7 +139,7 @@ func TestGetMultiplePagesFragmentNextLink(t *testing.T) {
 // GetMultiplePagesFragmentWithGroupingNextLink - A paging operation that doesn't return a full URL, just a fragment with parameters grouped
 func TestGetMultiplePagesFragmentWithGroupingNextLink(t *testing.T) {
 	client := newPagingClient()
-	page, err := client.GetMultiplePagesFragmentWithGroupingNextLink(paginggroup.CustomParameterGroup{
+	page, err := client.GetMultiplePagesFragmentWithGroupingNextLink(CustomParameterGroup{
 		ApiVersion: "1.6",
 		Tenant:     "test_user",
 	})
@@ -258,7 +257,7 @@ func TestGetMultiplePagesRetrySecond(t *testing.T) {
 // GetMultiplePagesWithOffset - A paging operation that includes a nextLink that has 10 pages
 func TestGetMultiplePagesWithOffset(t *testing.T) {
 	client := newPagingClient()
-	page, err := client.GetMultiplePagesWithOffset(paginggroup.PagingGetMultiplePagesWithOffsetOptions{})
+	page, err := client.GetMultiplePagesWithOffset(PagingGetMultiplePagesWithOffsetOptions{})
 	if err != nil {
 		t.Fatal(err)
 	}

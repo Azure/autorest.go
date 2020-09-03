@@ -1,18 +1,17 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package azurespecialsgrouptest
+package azurespecialsgroup
 
 import (
 	"context"
-	"generatortests/autorest/generated/azurespecialsgroup"
 	"generatortests/helpers"
 	"net/http"
 	"testing"
 )
 
-func newSkipURLEncodingClient() azurespecialsgroup.SkipURLEncodingOperations {
-	return azurespecialsgroup.NewSkipURLEncodingClient(azurespecialsgroup.NewDefaultClient(nil))
+func newSkipURLEncodingClient() SkipURLEncodingOperations {
+	return NewSkipURLEncodingClient(NewDefaultClient(nil))
 }
 
 // GetMethodPathValid - Get method with unencoded path parameter with value 'path1/path2/path3'

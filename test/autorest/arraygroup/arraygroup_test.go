@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package arraygrouptest
+package arraygroup
 
 import (
 	"context"
-	"generatortests/autorest/generated/arraygroup"
 	"generatortests/helpers"
 	"net/http"
 	"testing"
@@ -14,8 +13,8 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func newArrayClient() arraygroup.ArrayOperations {
-	return arraygroup.NewArrayClient(arraygroup.NewDefaultClient(nil))
+func newArrayClient() ArrayOperations {
+	return NewArrayClient(NewDefaultClient(nil))
 }
 
 // GetArrayEmpty - Get an empty array []
@@ -186,10 +185,10 @@ func TestGetComplexItemEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.ProductArray, &[]arraygroup.Product{
-		arraygroup.Product{Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
-		arraygroup.Product{},
-		arraygroup.Product{Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
+	helpers.DeepEqualOrFatal(t, resp.ProductArray, &[]Product{
+		Product{Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
+		Product{},
+		Product{Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
 	})
 }
 
@@ -210,10 +209,10 @@ func TestGetComplexValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.ProductArray, &[]arraygroup.Product{
-		arraygroup.Product{Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
-		arraygroup.Product{Integer: to.Int32Ptr(3), String: to.StringPtr("4")},
-		arraygroup.Product{Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
+	helpers.DeepEqualOrFatal(t, resp.ProductArray, &[]Product{
+		Product{Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
+		Product{Integer: to.Int32Ptr(3), String: to.StringPtr("4")},
+		Product{Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
 	})
 }
 
@@ -466,7 +465,7 @@ func TestGetEnumValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.FooEnumArray, &[]arraygroup.FooEnum{arraygroup.FooEnumFoo1, arraygroup.FooEnumFoo2, arraygroup.FooEnumFoo3})
+	helpers.DeepEqualOrFatal(t, resp.FooEnumArray, &[]FooEnum{FooEnumFoo1, FooEnumFoo2, FooEnumFoo3})
 }
 
 // GetFloatInvalidNull - Get float array value [0.0, null, -1.2e20]
@@ -605,7 +604,7 @@ func TestGetStringEnumValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.Enum0Array, &[]arraygroup.Enum0{arraygroup.Enum0Foo1, arraygroup.Enum0Foo2, arraygroup.Enum0Foo3})
+	helpers.DeepEqualOrFatal(t, resp.Enum0Array, &[]Enum0{Enum0Foo1, Enum0Foo2, Enum0Foo3})
 }
 
 // GetStringValid - Get string array value ['foo1', 'foo2', 'foo3']
@@ -699,10 +698,10 @@ func TestPutByteValid(t *testing.T) {
 // PutComplexValid - Put an array of complex type with values [{'integer': 1 'string': '2'}, {'integer': 3, 'string': '4'}, {'integer': 5, 'string': '6'}]
 func TestPutComplexValid(t *testing.T) {
 	client := newArrayClient()
-	resp, err := client.PutComplexValid(context.Background(), []arraygroup.Product{
-		arraygroup.Product{Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
-		arraygroup.Product{Integer: to.Int32Ptr(3), String: to.StringPtr("4")},
-		arraygroup.Product{Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
+	resp, err := client.PutComplexValid(context.Background(), []Product{
+		Product{Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
+		Product{Integer: to.Int32Ptr(3), String: to.StringPtr("4")},
+		Product{Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
 	})
 	if err != nil {
 		t.Fatal(err)
@@ -800,7 +799,7 @@ func TestPutEmpty(t *testing.T) {
 // PutEnumValid - Set array value ['foo1', 'foo2', 'foo3']
 func TestPutEnumValid(t *testing.T) {
 	client := newArrayClient()
-	resp, err := client.PutEnumValid(context.Background(), []arraygroup.FooEnum{arraygroup.FooEnumFoo1, arraygroup.FooEnumFoo2, arraygroup.FooEnumFoo3})
+	resp, err := client.PutEnumValid(context.Background(), []FooEnum{FooEnumFoo1, FooEnumFoo2, FooEnumFoo3})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -840,7 +839,7 @@ func TestPutLongValid(t *testing.T) {
 // PutStringEnumValid - Set array value ['foo1', 'foo2', 'foo3']
 func TestPutStringEnumValid(t *testing.T) {
 	client := newArrayClient()
-	resp, err := client.PutStringEnumValid(context.Background(), []arraygroup.Enum1{arraygroup.Enum1Foo1, arraygroup.Enum1Foo2, arraygroup.Enum1Foo3})
+	resp, err := client.PutStringEnumValid(context.Background(), []Enum1{Enum1Foo1, Enum1Foo2, Enum1Foo3})
 	if err != nil {
 		t.Fatal(err)
 	}

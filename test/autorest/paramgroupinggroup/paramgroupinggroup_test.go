@@ -1,18 +1,17 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package paramgroupinggrouptest
+package paramgroupinggroup
 
 import (
 	"context"
-	"generatortests/autorest/generated/paramgroupinggroup"
 	"generatortests/helpers"
 	"net/http"
 	"testing"
 )
 
-func newParameterGroupingClient() paramgroupinggroup.ParameterGroupingOperations {
-	return paramgroupinggroup.NewParameterGroupingClient(paramgroupinggroup.NewDefaultClient(nil))
+func newParameterGroupingClient() ParameterGroupingOperations {
+	return NewParameterGroupingClient(NewDefaultClient(nil))
 }
 
 // PostMultiParamGroups - Post parameters from multiple different parameter groups
@@ -38,7 +37,7 @@ func TestPostOptional(t *testing.T) {
 // PostRequired - Post a bunch of required parameters grouped
 func TestPostRequired(t *testing.T) {
 	client := newParameterGroupingClient()
-	result, err := client.PostRequired(context.Background(), paramgroupinggroup.ParameterGroupingPostRequiredParameters{
+	result, err := client.PostRequired(context.Background(), ParameterGroupingPostRequiredParameters{
 		Body:          1234,
 		PathParameter: "path",
 	})
