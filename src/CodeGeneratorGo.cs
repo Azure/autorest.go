@@ -169,8 +169,8 @@ namespace AutoRest.Go
 
         private void PreviewCheck(string folder)
         {
-            var ignore = Settings.Instance.Host.GetValue<bool>("ignore-preview-chk").Result;
-            if (ignore) // if a tag is designed to serve profile building, we could omit the preview check
+            var asProfile = Settings.Instance.Host.GetValue<bool>("profile").Result;
+            if (asProfile) // if a tag is designed to serve profile building, we could omit the preview check
             {
                 return;
             }
