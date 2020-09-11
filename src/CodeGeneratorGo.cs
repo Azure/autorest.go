@@ -53,12 +53,8 @@ namespace AutoRest.Go
                 throw new InvalidOperationException($"namespace can only contains lower case letters, numbers and underscore");
             }
 
-            // if preview-chk:true is specified verify that preview swagger is output under a preview subdirectory.
-            // this is a bit of a hack until we have proper support for this in the swagger->sdk bot so it's opt-in.
-            if (Settings.Instance.Host.GetValue<bool>("preview-chk").Result)
-            {
-                PreviewCheck(folder);
-            }
+            // we always do a preview check here. To disable preview-chk, you need to explicitly assign `--ignore-preview-chk` flag
+            PreviewCheck(folder);
 
             var codeModel = cm as CodeModelGo;
             if (codeModel == null)
@@ -169,8 +165,8 @@ namespace AutoRest.Go
 
         private void PreviewCheck(string folder)
         {
-            var asProfile = Settings.Instance.Host.GetValue<bool>("profile").Result;
-            if (asProfile) // if a tag is designed to serve profile building, we could omit the preview check
+            // skip the preview check when explicitly assigned flag --ignore-preview-chk
+            if (Settings.Instance.Host.GetValue<bool>("ignore-preview-chk").Result)
             {
                 return;
             }
