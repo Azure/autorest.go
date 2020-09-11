@@ -7,12 +7,10 @@ package armnetwork
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 	"time"
 )
@@ -30,9 +28,9 @@ type PrivateEndpointsOperations interface {
 	// Get - Gets the specified private endpoint by resource group.
 	Get(ctx context.Context, resourceGroupName string, privateEndpointName string, privateEndpointsGetOptions *PrivateEndpointsGetOptions) (*PrivateEndpointResponse, error)
 	// List - Gets all private endpoints in a resource group.
-	List(resourceGroupName string) (PrivateEndpointListResultPager, error)
+	List(resourceGroupName string) PrivateEndpointListResultPager
 	// ListBySubscription - Gets all private endpoints in a subscription.
-	ListBySubscription() (PrivateEndpointListResultPager, error)
+	ListBySubscription() PrivateEndpointListResultPager
 }
 
 // PrivateEndpointsClient implements the PrivateEndpointsOperations interface.
@@ -48,18 +46,18 @@ func NewPrivateEndpointsClient(c *Client, subscriptionID string) PrivateEndpoint
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *PrivateEndpointsClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *PrivateEndpointsClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // CreateOrUpdate - Creates or updates an private endpoint in the specified resource group.
 func (client *PrivateEndpointsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, privateEndpointName string, parameters PrivateEndpoint) (*PrivateEndpointPollerResponse, error) {
-	req, err := client.CreateOrUpdateCreateRequest(resourceGroupName, privateEndpointName, parameters)
+	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, privateEndpointName, parameters)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -94,23 +92,18 @@ func (client *PrivateEndpointsClient) ResumeCreateOrUpdate(token string) (Privat
 }
 
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *PrivateEndpointsClient) CreateOrUpdateCreateRequest(resourceGroupName string, privateEndpointName string, parameters PrivateEndpoint) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *PrivateEndpointsClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, privateEndpointName string, parameters PrivateEndpoint) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints/{privateEndpointName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{privateEndpointName}", url.PathEscape(privateEndpointName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPut, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -133,12 +126,12 @@ func (client *PrivateEndpointsClient) CreateOrUpdateHandleError(resp *azcore.Res
 
 // Delete - Deletes the specified private endpoint.
 func (client *PrivateEndpointsClient) BeginDelete(ctx context.Context, resourceGroupName string, privateEndpointName string) (*HTTPPollerResponse, error) {
-	req, err := client.DeleteCreateRequest(resourceGroupName, privateEndpointName)
+	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, privateEndpointName)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -173,23 +166,18 @@ func (client *PrivateEndpointsClient) ResumeDelete(token string) (HTTPPoller, er
 }
 
 // DeleteCreateRequest creates the Delete request.
-func (client *PrivateEndpointsClient) DeleteCreateRequest(resourceGroupName string, privateEndpointName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *PrivateEndpointsClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, privateEndpointName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints/{privateEndpointName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{privateEndpointName}", url.PathEscape(privateEndpointName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodDelete, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -212,11 +200,11 @@ func (client *PrivateEndpointsClient) DeleteHandleError(resp *azcore.Response) e
 
 // Get - Gets the specified private endpoint by resource group.
 func (client *PrivateEndpointsClient) Get(ctx context.Context, resourceGroupName string, privateEndpointName string, privateEndpointsGetOptions *PrivateEndpointsGetOptions) (*PrivateEndpointResponse, error) {
-	req, err := client.GetCreateRequest(resourceGroupName, privateEndpointName, privateEndpointsGetOptions)
+	req, err := client.GetCreateRequest(ctx, resourceGroupName, privateEndpointName, privateEndpointsGetOptions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -228,26 +216,21 @@ func (client *PrivateEndpointsClient) Get(ctx context.Context, resourceGroupName
 }
 
 // GetCreateRequest creates the Get request.
-func (client *PrivateEndpointsClient) GetCreateRequest(resourceGroupName string, privateEndpointName string, privateEndpointsGetOptions *PrivateEndpointsGetOptions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *PrivateEndpointsClient) GetCreateRequest(ctx context.Context, resourceGroupName string, privateEndpointName string, privateEndpointsGetOptions *PrivateEndpointsGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints/{privateEndpointName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{privateEndpointName}", url.PathEscape(privateEndpointName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	if privateEndpointsGetOptions != nil && privateEndpointsGetOptions.Expand != nil {
 		query.Set("$expand", *privateEndpointsGetOptions.Expand)
 	}
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -270,45 +253,31 @@ func (client *PrivateEndpointsClient) GetHandleError(resp *azcore.Response) erro
 }
 
 // List - Gets all private endpoints in a resource group.
-func (client *PrivateEndpointsClient) List(resourceGroupName string) (PrivateEndpointListResultPager, error) {
-	req, err := client.ListCreateRequest(resourceGroupName)
-	if err != nil {
-		return nil, err
-	}
+func (client *PrivateEndpointsClient) List(resourceGroupName string) PrivateEndpointListResultPager {
 	return &privateEndpointListResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListHandleResponse,
-		advancer: func(resp *PrivateEndpointListResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.PrivateEndpointListResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.PrivateEndpointListResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListCreateRequest(ctx, resourceGroupName)
 		},
-	}, nil
+		responder: client.ListHandleResponse,
+		advancer: func(ctx context.Context, resp *PrivateEndpointListResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.PrivateEndpointListResult.NextLink)
+		},
+	}
 }
 
 // ListCreateRequest creates the List request.
-func (client *PrivateEndpointsClient) ListCreateRequest(resourceGroupName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *PrivateEndpointsClient) ListCreateRequest(ctx context.Context, resourceGroupName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -331,44 +300,30 @@ func (client *PrivateEndpointsClient) ListHandleError(resp *azcore.Response) err
 }
 
 // ListBySubscription - Gets all private endpoints in a subscription.
-func (client *PrivateEndpointsClient) ListBySubscription() (PrivateEndpointListResultPager, error) {
-	req, err := client.ListBySubscriptionCreateRequest()
-	if err != nil {
-		return nil, err
-	}
+func (client *PrivateEndpointsClient) ListBySubscription() PrivateEndpointListResultPager {
 	return &privateEndpointListResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListBySubscriptionHandleResponse,
-		advancer: func(resp *PrivateEndpointListResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.PrivateEndpointListResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.PrivateEndpointListResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListBySubscriptionCreateRequest(ctx)
 		},
-	}, nil
+		responder: client.ListBySubscriptionHandleResponse,
+		advancer: func(ctx context.Context, resp *PrivateEndpointListResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.PrivateEndpointListResult.NextLink)
+		},
+	}
 }
 
 // ListBySubscriptionCreateRequest creates the ListBySubscription request.
-func (client *PrivateEndpointsClient) ListBySubscriptionCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *PrivateEndpointsClient) ListBySubscriptionCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/privateEndpoints"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 

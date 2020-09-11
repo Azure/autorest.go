@@ -7,12 +7,10 @@ package armnetwork
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 	"time"
 )
@@ -30,7 +28,7 @@ type VpnConnectionsOperations interface {
 	// Get - Retrieves the details of a vpn connection.
 	Get(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string) (*VpnConnectionResponse, error)
 	// ListByVpnGateway - Retrieves all vpn connections for a particular virtual wan vpn gateway.
-	ListByVpnGateway(resourceGroupName string, gatewayName string) (ListVpnConnectionsResultPager, error)
+	ListByVpnGateway(resourceGroupName string, gatewayName string) ListVpnConnectionsResultPager
 }
 
 // VpnConnectionsClient implements the VpnConnectionsOperations interface.
@@ -46,18 +44,18 @@ func NewVpnConnectionsClient(c *Client, subscriptionID string) VpnConnectionsOpe
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *VpnConnectionsClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *VpnConnectionsClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // CreateOrUpdate - Creates a vpn connection to a scalable vpn gateway if it doesn't exist else updates the existing connection.
 func (client *VpnConnectionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, vpnConnectionParameters VpnConnection) (*VpnConnectionPollerResponse, error) {
-	req, err := client.CreateOrUpdateCreateRequest(resourceGroupName, gatewayName, connectionName, vpnConnectionParameters)
+	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, gatewayName, connectionName, vpnConnectionParameters)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -92,24 +90,19 @@ func (client *VpnConnectionsClient) ResumeCreateOrUpdate(token string) (VpnConne
 }
 
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *VpnConnectionsClient) CreateOrUpdateCreateRequest(resourceGroupName string, gatewayName string, connectionName string, vpnConnectionParameters VpnConnection) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *VpnConnectionsClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, vpnConnectionParameters VpnConnection) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{gatewayName}", url.PathEscape(gatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{connectionName}", url.PathEscape(connectionName))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPut, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(vpnConnectionParameters)
 }
 
@@ -132,12 +125,12 @@ func (client *VpnConnectionsClient) CreateOrUpdateHandleError(resp *azcore.Respo
 
 // Delete - Deletes a vpn connection.
 func (client *VpnConnectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string) (*HTTPPollerResponse, error) {
-	req, err := client.DeleteCreateRequest(resourceGroupName, gatewayName, connectionName)
+	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, gatewayName, connectionName)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -172,24 +165,19 @@ func (client *VpnConnectionsClient) ResumeDelete(token string) (HTTPPoller, erro
 }
 
 // DeleteCreateRequest creates the Delete request.
-func (client *VpnConnectionsClient) DeleteCreateRequest(resourceGroupName string, gatewayName string, connectionName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *VpnConnectionsClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{gatewayName}", url.PathEscape(gatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{connectionName}", url.PathEscape(connectionName))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodDelete, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -212,11 +200,11 @@ func (client *VpnConnectionsClient) DeleteHandleError(resp *azcore.Response) err
 
 // Get - Retrieves the details of a vpn connection.
 func (client *VpnConnectionsClient) Get(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string) (*VpnConnectionResponse, error) {
-	req, err := client.GetCreateRequest(resourceGroupName, gatewayName, connectionName)
+	req, err := client.GetCreateRequest(ctx, resourceGroupName, gatewayName, connectionName)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -228,24 +216,19 @@ func (client *VpnConnectionsClient) Get(ctx context.Context, resourceGroupName s
 }
 
 // GetCreateRequest creates the Get request.
-func (client *VpnConnectionsClient) GetCreateRequest(resourceGroupName string, gatewayName string, connectionName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *VpnConnectionsClient) GetCreateRequest(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{gatewayName}", url.PathEscape(gatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{connectionName}", url.PathEscape(connectionName))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -268,46 +251,32 @@ func (client *VpnConnectionsClient) GetHandleError(resp *azcore.Response) error 
 }
 
 // ListByVpnGateway - Retrieves all vpn connections for a particular virtual wan vpn gateway.
-func (client *VpnConnectionsClient) ListByVpnGateway(resourceGroupName string, gatewayName string) (ListVpnConnectionsResultPager, error) {
-	req, err := client.ListByVpnGatewayCreateRequest(resourceGroupName, gatewayName)
-	if err != nil {
-		return nil, err
-	}
+func (client *VpnConnectionsClient) ListByVpnGateway(resourceGroupName string, gatewayName string) ListVpnConnectionsResultPager {
 	return &listVpnConnectionsResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListByVpnGatewayHandleResponse,
-		advancer: func(resp *ListVpnConnectionsResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.ListVpnConnectionsResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.ListVpnConnectionsResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListByVpnGatewayCreateRequest(ctx, resourceGroupName, gatewayName)
 		},
-	}, nil
+		responder: client.ListByVpnGatewayHandleResponse,
+		advancer: func(ctx context.Context, resp *ListVpnConnectionsResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.ListVpnConnectionsResult.NextLink)
+		},
+	}
 }
 
 // ListByVpnGatewayCreateRequest creates the ListByVpnGateway request.
-func (client *VpnConnectionsClient) ListByVpnGatewayCreateRequest(resourceGroupName string, gatewayName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *VpnConnectionsClient) ListByVpnGatewayCreateRequest(ctx context.Context, resourceGroupName string, gatewayName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{gatewayName}", url.PathEscape(gatewayName))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 

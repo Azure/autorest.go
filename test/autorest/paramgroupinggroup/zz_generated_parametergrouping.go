@@ -10,7 +10,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strconv"
 	"strings"
 )
@@ -39,17 +38,17 @@ func NewParameterGroupingClient(c *Client) ParameterGroupingOperations {
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *ParameterGroupingClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *ParameterGroupingClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // PostMultiParamGroups - Post parameters from multiple different parameter groups
 func (client *ParameterGroupingClient) PostMultiParamGroups(ctx context.Context, firstParameterGroup *FirstParameterGroup, parameterGroupingPostMultiParamGroupsSecondParamGroup *ParameterGroupingPostMultiParamGroupsSecondParamGroup) (*http.Response, error) {
-	req, err := client.PostMultiParamGroupsCreateRequest(firstParameterGroup, parameterGroupingPostMultiParamGroupsSecondParamGroup)
+	req, err := client.PostMultiParamGroupsCreateRequest(ctx, firstParameterGroup, parameterGroupingPostMultiParamGroupsSecondParamGroup)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -61,25 +60,20 @@ func (client *ParameterGroupingClient) PostMultiParamGroups(ctx context.Context,
 }
 
 // PostMultiParamGroupsCreateRequest creates the PostMultiParamGroups request.
-func (client *ParameterGroupingClient) PostMultiParamGroupsCreateRequest(firstParameterGroup *FirstParameterGroup, parameterGroupingPostMultiParamGroupsSecondParamGroup *ParameterGroupingPostMultiParamGroupsSecondParamGroup) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ParameterGroupingClient) PostMultiParamGroupsCreateRequest(ctx context.Context, firstParameterGroup *FirstParameterGroup, parameterGroupingPostMultiParamGroupsSecondParamGroup *ParameterGroupingPostMultiParamGroupsSecondParamGroup) (*azcore.Request, error) {
 	urlPath := "/parameterGrouping/postMultipleParameterGroups"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	if firstParameterGroup != nil && firstParameterGroup.QueryOne != nil {
 		query.Set("query-one", strconv.FormatInt(int64(*firstParameterGroup.QueryOne), 10))
 	}
 	if parameterGroupingPostMultiParamGroupsSecondParamGroup != nil && parameterGroupingPostMultiParamGroupsSecondParamGroup.QueryTwo != nil {
 		query.Set("query-two", strconv.FormatInt(int64(*parameterGroupingPostMultiParamGroupsSecondParamGroup.QueryTwo), 10))
 	}
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPost, *u)
+	req.URL.RawQuery = query.Encode()
 	if firstParameterGroup != nil && firstParameterGroup.HeaderOne != nil {
 		req.Header.Set("header-one", *firstParameterGroup.HeaderOne)
 	}
@@ -108,11 +102,11 @@ func (client *ParameterGroupingClient) PostMultiParamGroupsHandleError(resp *azc
 
 // PostOptional - Post a bunch of optional parameters grouped
 func (client *ParameterGroupingClient) PostOptional(ctx context.Context, parameterGroupingPostOptionalParameters *ParameterGroupingPostOptionalParameters) (*http.Response, error) {
-	req, err := client.PostOptionalCreateRequest(parameterGroupingPostOptionalParameters)
+	req, err := client.PostOptionalCreateRequest(ctx, parameterGroupingPostOptionalParameters)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -124,22 +118,17 @@ func (client *ParameterGroupingClient) PostOptional(ctx context.Context, paramet
 }
 
 // PostOptionalCreateRequest creates the PostOptional request.
-func (client *ParameterGroupingClient) PostOptionalCreateRequest(parameterGroupingPostOptionalParameters *ParameterGroupingPostOptionalParameters) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ParameterGroupingClient) PostOptionalCreateRequest(ctx context.Context, parameterGroupingPostOptionalParameters *ParameterGroupingPostOptionalParameters) (*azcore.Request, error) {
 	urlPath := "/parameterGrouping/postOptional"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	if parameterGroupingPostOptionalParameters != nil && parameterGroupingPostOptionalParameters.Query != nil {
 		query.Set("query", strconv.FormatInt(int64(*parameterGroupingPostOptionalParameters.Query), 10))
 	}
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPost, *u)
+	req.URL.RawQuery = query.Encode()
 	if parameterGroupingPostOptionalParameters != nil && parameterGroupingPostOptionalParameters.CustomHeader != nil {
 		req.Header.Set("customHeader", *parameterGroupingPostOptionalParameters.CustomHeader)
 	}
@@ -165,11 +154,11 @@ func (client *ParameterGroupingClient) PostOptionalHandleError(resp *azcore.Resp
 
 // PostRequired - Post a bunch of required parameters grouped
 func (client *ParameterGroupingClient) PostRequired(ctx context.Context, parameterGroupingPostRequiredParameters ParameterGroupingPostRequiredParameters) (*http.Response, error) {
-	req, err := client.PostRequiredCreateRequest(parameterGroupingPostRequiredParameters)
+	req, err := client.PostRequiredCreateRequest(ctx, parameterGroupingPostRequiredParameters)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -181,23 +170,18 @@ func (client *ParameterGroupingClient) PostRequired(ctx context.Context, paramet
 }
 
 // PostRequiredCreateRequest creates the PostRequired request.
-func (client *ParameterGroupingClient) PostRequiredCreateRequest(parameterGroupingPostRequiredParameters ParameterGroupingPostRequiredParameters) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ParameterGroupingClient) PostRequiredCreateRequest(ctx context.Context, parameterGroupingPostRequiredParameters ParameterGroupingPostRequiredParameters) (*azcore.Request, error) {
 	urlPath := "/parameterGrouping/postRequired/{path}"
 	urlPath = strings.ReplaceAll(urlPath, "{path}", url.PathEscape(parameterGroupingPostRequiredParameters.PathParameter))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	if parameterGroupingPostRequiredParameters.Query != nil {
 		query.Set("query", strconv.FormatInt(int64(*parameterGroupingPostRequiredParameters.Query), 10))
 	}
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPost, *u)
+	req.URL.RawQuery = query.Encode()
 	if parameterGroupingPostRequiredParameters.CustomHeader != nil {
 		req.Header.Set("customHeader", *parameterGroupingPostRequiredParameters.CustomHeader)
 	}
@@ -223,11 +207,11 @@ func (client *ParameterGroupingClient) PostRequiredHandleError(resp *azcore.Resp
 
 // PostSharedParameterGroupObject - Post parameters with a shared parameter group object
 func (client *ParameterGroupingClient) PostSharedParameterGroupObject(ctx context.Context, firstParameterGroup *FirstParameterGroup) (*http.Response, error) {
-	req, err := client.PostSharedParameterGroupObjectCreateRequest(firstParameterGroup)
+	req, err := client.PostSharedParameterGroupObjectCreateRequest(ctx, firstParameterGroup)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -239,22 +223,17 @@ func (client *ParameterGroupingClient) PostSharedParameterGroupObject(ctx contex
 }
 
 // PostSharedParameterGroupObjectCreateRequest creates the PostSharedParameterGroupObject request.
-func (client *ParameterGroupingClient) PostSharedParameterGroupObjectCreateRequest(firstParameterGroup *FirstParameterGroup) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ParameterGroupingClient) PostSharedParameterGroupObjectCreateRequest(ctx context.Context, firstParameterGroup *FirstParameterGroup) (*azcore.Request, error) {
 	urlPath := "/parameterGrouping/sharedParameterGroupObject"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	if firstParameterGroup != nil && firstParameterGroup.QueryOne != nil {
 		query.Set("query-one", strconv.FormatInt(int64(*firstParameterGroup.QueryOne), 10))
 	}
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPost, *u)
+	req.URL.RawQuery = query.Encode()
 	if firstParameterGroup != nil && firstParameterGroup.HeaderOne != nil {
 		req.Header.Set("header-one", *firstParameterGroup.HeaderOne)
 	}

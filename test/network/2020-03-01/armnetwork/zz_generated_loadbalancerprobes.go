@@ -7,11 +7,9 @@ package armnetwork
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 )
 
@@ -20,7 +18,7 @@ type LoadBalancerProbesOperations interface {
 	// Get - Gets load balancer probe.
 	Get(ctx context.Context, resourceGroupName string, loadBalancerName string, probeName string) (*ProbeResponse, error)
 	// List - Gets all the load balancer probes.
-	List(resourceGroupName string, loadBalancerName string) (LoadBalancerProbeListResultPager, error)
+	List(resourceGroupName string, loadBalancerName string) LoadBalancerProbeListResultPager
 }
 
 // LoadBalancerProbesClient implements the LoadBalancerProbesOperations interface.
@@ -36,17 +34,17 @@ func NewLoadBalancerProbesClient(c *Client, subscriptionID string) LoadBalancerP
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *LoadBalancerProbesClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *LoadBalancerProbesClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // Get - Gets load balancer probe.
 func (client *LoadBalancerProbesClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, probeName string) (*ProbeResponse, error) {
-	req, err := client.GetCreateRequest(resourceGroupName, loadBalancerName, probeName)
+	req, err := client.GetCreateRequest(ctx, resourceGroupName, loadBalancerName, probeName)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -58,24 +56,19 @@ func (client *LoadBalancerProbesClient) Get(ctx context.Context, resourceGroupNa
 }
 
 // GetCreateRequest creates the Get request.
-func (client *LoadBalancerProbesClient) GetCreateRequest(resourceGroupName string, loadBalancerName string, probeName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LoadBalancerProbesClient) GetCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, probeName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/probes/{probeName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{loadBalancerName}", url.PathEscape(loadBalancerName))
 	urlPath = strings.ReplaceAll(urlPath, "{probeName}", url.PathEscape(probeName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -98,46 +91,32 @@ func (client *LoadBalancerProbesClient) GetHandleError(resp *azcore.Response) er
 }
 
 // List - Gets all the load balancer probes.
-func (client *LoadBalancerProbesClient) List(resourceGroupName string, loadBalancerName string) (LoadBalancerProbeListResultPager, error) {
-	req, err := client.ListCreateRequest(resourceGroupName, loadBalancerName)
-	if err != nil {
-		return nil, err
-	}
+func (client *LoadBalancerProbesClient) List(resourceGroupName string, loadBalancerName string) LoadBalancerProbeListResultPager {
 	return &loadBalancerProbeListResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListHandleResponse,
-		advancer: func(resp *LoadBalancerProbeListResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.LoadBalancerProbeListResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.LoadBalancerProbeListResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListCreateRequest(ctx, resourceGroupName, loadBalancerName)
 		},
-	}, nil
+		responder: client.ListHandleResponse,
+		advancer: func(ctx context.Context, resp *LoadBalancerProbeListResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.LoadBalancerProbeListResult.NextLink)
+		},
+	}
 }
 
 // ListCreateRequest creates the List request.
-func (client *LoadBalancerProbesClient) ListCreateRequest(resourceGroupName string, loadBalancerName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LoadBalancerProbesClient) ListCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/probes"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{loadBalancerName}", url.PathEscape(loadBalancerName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 

@@ -7,12 +7,10 @@ package armnetwork
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 	"time"
 )
@@ -30,7 +28,7 @@ type VirtualRouterPeeringsOperations interface {
 	// Get - Gets the specified Virtual Router Peering.
 	Get(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string) (*VirtualRouterPeeringResponse, error)
 	// List - Lists all Virtual Router Peerings in a Virtual Router resource.
-	List(resourceGroupName string, virtualRouterName string) (VirtualRouterPeeringListResultPager, error)
+	List(resourceGroupName string, virtualRouterName string) VirtualRouterPeeringListResultPager
 }
 
 // VirtualRouterPeeringsClient implements the VirtualRouterPeeringsOperations interface.
@@ -46,18 +44,18 @@ func NewVirtualRouterPeeringsClient(c *Client, subscriptionID string) VirtualRou
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *VirtualRouterPeeringsClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *VirtualRouterPeeringsClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // CreateOrUpdate - Creates or updates the specified Virtual Router Peering.
 func (client *VirtualRouterPeeringsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string, parameters VirtualRouterPeering) (*VirtualRouterPeeringPollerResponse, error) {
-	req, err := client.CreateOrUpdateCreateRequest(resourceGroupName, virtualRouterName, peeringName, parameters)
+	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, virtualRouterName, peeringName, parameters)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -92,24 +90,19 @@ func (client *VirtualRouterPeeringsClient) ResumeCreateOrUpdate(token string) (V
 }
 
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *VirtualRouterPeeringsClient) CreateOrUpdateCreateRequest(resourceGroupName string, virtualRouterName string, peeringName string, parameters VirtualRouterPeering) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *VirtualRouterPeeringsClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string, parameters VirtualRouterPeering) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualRouters/{virtualRouterName}/peerings/{peeringName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualRouterName}", url.PathEscape(virtualRouterName))
 	urlPath = strings.ReplaceAll(urlPath, "{peeringName}", url.PathEscape(peeringName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPut, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -132,12 +125,12 @@ func (client *VirtualRouterPeeringsClient) CreateOrUpdateHandleError(resp *azcor
 
 // Delete - Deletes the specified peering from a Virtual Router.
 func (client *VirtualRouterPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string) (*HTTPPollerResponse, error) {
-	req, err := client.DeleteCreateRequest(resourceGroupName, virtualRouterName, peeringName)
+	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, virtualRouterName, peeringName)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -172,24 +165,19 @@ func (client *VirtualRouterPeeringsClient) ResumeDelete(token string) (HTTPPolle
 }
 
 // DeleteCreateRequest creates the Delete request.
-func (client *VirtualRouterPeeringsClient) DeleteCreateRequest(resourceGroupName string, virtualRouterName string, peeringName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *VirtualRouterPeeringsClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualRouters/{virtualRouterName}/peerings/{peeringName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualRouterName}", url.PathEscape(virtualRouterName))
 	urlPath = strings.ReplaceAll(urlPath, "{peeringName}", url.PathEscape(peeringName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodDelete, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -212,11 +200,11 @@ func (client *VirtualRouterPeeringsClient) DeleteHandleError(resp *azcore.Respon
 
 // Get - Gets the specified Virtual Router Peering.
 func (client *VirtualRouterPeeringsClient) Get(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string) (*VirtualRouterPeeringResponse, error) {
-	req, err := client.GetCreateRequest(resourceGroupName, virtualRouterName, peeringName)
+	req, err := client.GetCreateRequest(ctx, resourceGroupName, virtualRouterName, peeringName)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -228,24 +216,19 @@ func (client *VirtualRouterPeeringsClient) Get(ctx context.Context, resourceGrou
 }
 
 // GetCreateRequest creates the Get request.
-func (client *VirtualRouterPeeringsClient) GetCreateRequest(resourceGroupName string, virtualRouterName string, peeringName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *VirtualRouterPeeringsClient) GetCreateRequest(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualRouters/{virtualRouterName}/peerings/{peeringName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualRouterName}", url.PathEscape(virtualRouterName))
 	urlPath = strings.ReplaceAll(urlPath, "{peeringName}", url.PathEscape(peeringName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -268,46 +251,32 @@ func (client *VirtualRouterPeeringsClient) GetHandleError(resp *azcore.Response)
 }
 
 // List - Lists all Virtual Router Peerings in a Virtual Router resource.
-func (client *VirtualRouterPeeringsClient) List(resourceGroupName string, virtualRouterName string) (VirtualRouterPeeringListResultPager, error) {
-	req, err := client.ListCreateRequest(resourceGroupName, virtualRouterName)
-	if err != nil {
-		return nil, err
-	}
+func (client *VirtualRouterPeeringsClient) List(resourceGroupName string, virtualRouterName string) VirtualRouterPeeringListResultPager {
 	return &virtualRouterPeeringListResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListHandleResponse,
-		advancer: func(resp *VirtualRouterPeeringListResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.VirtualRouterPeeringListResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.VirtualRouterPeeringListResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListCreateRequest(ctx, resourceGroupName, virtualRouterName)
 		},
-	}, nil
+		responder: client.ListHandleResponse,
+		advancer: func(ctx context.Context, resp *VirtualRouterPeeringListResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.VirtualRouterPeeringListResult.NextLink)
+		},
+	}
 }
 
 // ListCreateRequest creates the List request.
-func (client *VirtualRouterPeeringsClient) ListCreateRequest(resourceGroupName string, virtualRouterName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *VirtualRouterPeeringsClient) ListCreateRequest(ctx context.Context, resourceGroupName string, virtualRouterName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualRouters/{virtualRouterName}/peerings"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualRouterName}", url.PathEscape(virtualRouterName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 

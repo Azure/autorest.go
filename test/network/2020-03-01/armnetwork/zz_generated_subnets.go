@@ -7,12 +7,10 @@ package armnetwork
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 	"time"
 )
@@ -30,7 +28,7 @@ type SubnetsOperations interface {
 	// Get - Gets the specified subnet by virtual network and resource group.
 	Get(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, subnetsGetOptions *SubnetsGetOptions) (*SubnetResponse, error)
 	// List - Gets all subnets in a virtual network.
-	List(resourceGroupName string, virtualNetworkName string) (SubnetListResultPager, error)
+	List(resourceGroupName string, virtualNetworkName string) SubnetListResultPager
 	// BeginPrepareNetworkPolicies - Prepares a subnet by applying network intent policies.
 	BeginPrepareNetworkPolicies(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, prepareNetworkPoliciesRequestParameters PrepareNetworkPoliciesRequest) (*HTTPPollerResponse, error)
 	// ResumePrepareNetworkPolicies - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
@@ -54,18 +52,18 @@ func NewSubnetsClient(c *Client, subscriptionID string) SubnetsOperations {
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *SubnetsClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *SubnetsClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // CreateOrUpdate - Creates or updates a subnet in the specified virtual network.
 func (client *SubnetsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, subnetParameters Subnet) (*SubnetPollerResponse, error) {
-	req, err := client.CreateOrUpdateCreateRequest(resourceGroupName, virtualNetworkName, subnetName, subnetParameters)
+	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, virtualNetworkName, subnetName, subnetParameters)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -100,24 +98,19 @@ func (client *SubnetsClient) ResumeCreateOrUpdate(token string) (SubnetPoller, e
 }
 
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *SubnetsClient) CreateOrUpdateCreateRequest(resourceGroupName string, virtualNetworkName string, subnetName string, subnetParameters Subnet) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *SubnetsClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, subnetParameters Subnet) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkName}", url.PathEscape(virtualNetworkName))
 	urlPath = strings.ReplaceAll(urlPath, "{subnetName}", url.PathEscape(subnetName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPut, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(subnetParameters)
 }
 
@@ -140,12 +133,12 @@ func (client *SubnetsClient) CreateOrUpdateHandleError(resp *azcore.Response) er
 
 // Delete - Deletes the specified subnet.
 func (client *SubnetsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string) (*HTTPPollerResponse, error) {
-	req, err := client.DeleteCreateRequest(resourceGroupName, virtualNetworkName, subnetName)
+	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, virtualNetworkName, subnetName)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -180,24 +173,19 @@ func (client *SubnetsClient) ResumeDelete(token string) (HTTPPoller, error) {
 }
 
 // DeleteCreateRequest creates the Delete request.
-func (client *SubnetsClient) DeleteCreateRequest(resourceGroupName string, virtualNetworkName string, subnetName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *SubnetsClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkName}", url.PathEscape(virtualNetworkName))
 	urlPath = strings.ReplaceAll(urlPath, "{subnetName}", url.PathEscape(subnetName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodDelete, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -220,11 +208,11 @@ func (client *SubnetsClient) DeleteHandleError(resp *azcore.Response) error {
 
 // Get - Gets the specified subnet by virtual network and resource group.
 func (client *SubnetsClient) Get(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, subnetsGetOptions *SubnetsGetOptions) (*SubnetResponse, error) {
-	req, err := client.GetCreateRequest(resourceGroupName, virtualNetworkName, subnetName, subnetsGetOptions)
+	req, err := client.GetCreateRequest(ctx, resourceGroupName, virtualNetworkName, subnetName, subnetsGetOptions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -236,27 +224,22 @@ func (client *SubnetsClient) Get(ctx context.Context, resourceGroupName string, 
 }
 
 // GetCreateRequest creates the Get request.
-func (client *SubnetsClient) GetCreateRequest(resourceGroupName string, virtualNetworkName string, subnetName string, subnetsGetOptions *SubnetsGetOptions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *SubnetsClient) GetCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, subnetsGetOptions *SubnetsGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkName}", url.PathEscape(virtualNetworkName))
 	urlPath = strings.ReplaceAll(urlPath, "{subnetName}", url.PathEscape(subnetName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	if subnetsGetOptions != nil && subnetsGetOptions.Expand != nil {
 		query.Set("$expand", *subnetsGetOptions.Expand)
 	}
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -279,46 +262,32 @@ func (client *SubnetsClient) GetHandleError(resp *azcore.Response) error {
 }
 
 // List - Gets all subnets in a virtual network.
-func (client *SubnetsClient) List(resourceGroupName string, virtualNetworkName string) (SubnetListResultPager, error) {
-	req, err := client.ListCreateRequest(resourceGroupName, virtualNetworkName)
-	if err != nil {
-		return nil, err
-	}
+func (client *SubnetsClient) List(resourceGroupName string, virtualNetworkName string) SubnetListResultPager {
 	return &subnetListResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListHandleResponse,
-		advancer: func(resp *SubnetListResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.SubnetListResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.SubnetListResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListCreateRequest(ctx, resourceGroupName, virtualNetworkName)
 		},
-	}, nil
+		responder: client.ListHandleResponse,
+		advancer: func(ctx context.Context, resp *SubnetListResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.SubnetListResult.NextLink)
+		},
+	}
 }
 
 // ListCreateRequest creates the List request.
-func (client *SubnetsClient) ListCreateRequest(resourceGroupName string, virtualNetworkName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *SubnetsClient) ListCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkName}", url.PathEscape(virtualNetworkName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -342,12 +311,12 @@ func (client *SubnetsClient) ListHandleError(resp *azcore.Response) error {
 
 // PrepareNetworkPolicies - Prepares a subnet by applying network intent policies.
 func (client *SubnetsClient) BeginPrepareNetworkPolicies(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, prepareNetworkPoliciesRequestParameters PrepareNetworkPoliciesRequest) (*HTTPPollerResponse, error) {
-	req, err := client.PrepareNetworkPoliciesCreateRequest(resourceGroupName, virtualNetworkName, subnetName, prepareNetworkPoliciesRequestParameters)
+	req, err := client.PrepareNetworkPoliciesCreateRequest(ctx, resourceGroupName, virtualNetworkName, subnetName, prepareNetworkPoliciesRequestParameters)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -382,24 +351,19 @@ func (client *SubnetsClient) ResumePrepareNetworkPolicies(token string) (HTTPPol
 }
 
 // PrepareNetworkPoliciesCreateRequest creates the PrepareNetworkPolicies request.
-func (client *SubnetsClient) PrepareNetworkPoliciesCreateRequest(resourceGroupName string, virtualNetworkName string, subnetName string, prepareNetworkPoliciesRequestParameters PrepareNetworkPoliciesRequest) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *SubnetsClient) PrepareNetworkPoliciesCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, prepareNetworkPoliciesRequestParameters PrepareNetworkPoliciesRequest) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}/PrepareNetworkPolicies"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkName}", url.PathEscape(virtualNetworkName))
 	urlPath = strings.ReplaceAll(urlPath, "{subnetName}", url.PathEscape(subnetName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPost, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(prepareNetworkPoliciesRequestParameters)
 }
 
@@ -422,12 +386,12 @@ func (client *SubnetsClient) PrepareNetworkPoliciesHandleError(resp *azcore.Resp
 
 // UnprepareNetworkPolicies - Unprepares a subnet by removing network intent policies.
 func (client *SubnetsClient) BeginUnprepareNetworkPolicies(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, unprepareNetworkPoliciesRequestParameters UnprepareNetworkPoliciesRequest) (*HTTPPollerResponse, error) {
-	req, err := client.UnprepareNetworkPoliciesCreateRequest(resourceGroupName, virtualNetworkName, subnetName, unprepareNetworkPoliciesRequestParameters)
+	req, err := client.UnprepareNetworkPoliciesCreateRequest(ctx, resourceGroupName, virtualNetworkName, subnetName, unprepareNetworkPoliciesRequestParameters)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -462,24 +426,19 @@ func (client *SubnetsClient) ResumeUnprepareNetworkPolicies(token string) (HTTPP
 }
 
 // UnprepareNetworkPoliciesCreateRequest creates the UnprepareNetworkPolicies request.
-func (client *SubnetsClient) UnprepareNetworkPoliciesCreateRequest(resourceGroupName string, virtualNetworkName string, subnetName string, unprepareNetworkPoliciesRequestParameters UnprepareNetworkPoliciesRequest) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *SubnetsClient) UnprepareNetworkPoliciesCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, unprepareNetworkPoliciesRequestParameters UnprepareNetworkPoliciesRequest) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}/UnprepareNetworkPolicies"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkName}", url.PathEscape(virtualNetworkName))
 	urlPath = strings.ReplaceAll(urlPath, "{subnetName}", url.PathEscape(subnetName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPost, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(unprepareNetworkPoliciesRequestParameters)
 }
 

@@ -9,8 +9,6 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
-	"net/url"
-	"path"
 	"time"
 )
 
@@ -168,17 +166,17 @@ func NewArrayClient(c *Client) ArrayOperations {
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *ArrayClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *ArrayClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // GetArrayEmpty - Get an empty array []
 func (client *ArrayClient) GetArrayEmpty(ctx context.Context) (*StringArrayArrayResponse, error) {
-	req, err := client.GetArrayEmptyCreateRequest()
+	req, err := client.GetArrayEmptyCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -190,17 +188,12 @@ func (client *ArrayClient) GetArrayEmpty(ctx context.Context) (*StringArrayArray
 }
 
 // GetArrayEmptyCreateRequest creates the GetArrayEmpty request.
-func (client *ArrayClient) GetArrayEmptyCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetArrayEmptyCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/array/empty"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -224,11 +217,11 @@ func (client *ArrayClient) GetArrayEmptyHandleError(resp *azcore.Response) error
 
 // GetArrayItemEmpty - Get an array of array of strings [['1', '2', '3'], [], ['7', '8', '9']]
 func (client *ArrayClient) GetArrayItemEmpty(ctx context.Context) (*StringArrayArrayResponse, error) {
-	req, err := client.GetArrayItemEmptyCreateRequest()
+	req, err := client.GetArrayItemEmptyCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -240,17 +233,12 @@ func (client *ArrayClient) GetArrayItemEmpty(ctx context.Context) (*StringArrayA
 }
 
 // GetArrayItemEmptyCreateRequest creates the GetArrayItemEmpty request.
-func (client *ArrayClient) GetArrayItemEmptyCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetArrayItemEmptyCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/array/itemempty"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -274,11 +262,11 @@ func (client *ArrayClient) GetArrayItemEmptyHandleError(resp *azcore.Response) e
 
 // GetArrayItemNull - Get an array of array of strings [['1', '2', '3'], null, ['7', '8', '9']]
 func (client *ArrayClient) GetArrayItemNull(ctx context.Context) (*StringArrayArrayResponse, error) {
-	req, err := client.GetArrayItemNullCreateRequest()
+	req, err := client.GetArrayItemNullCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -290,17 +278,12 @@ func (client *ArrayClient) GetArrayItemNull(ctx context.Context) (*StringArrayAr
 }
 
 // GetArrayItemNullCreateRequest creates the GetArrayItemNull request.
-func (client *ArrayClient) GetArrayItemNullCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetArrayItemNullCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/array/itemnull"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -324,11 +307,11 @@ func (client *ArrayClient) GetArrayItemNullHandleError(resp *azcore.Response) er
 
 // GetArrayNull - Get a null array
 func (client *ArrayClient) GetArrayNull(ctx context.Context) (*StringArrayArrayResponse, error) {
-	req, err := client.GetArrayNullCreateRequest()
+	req, err := client.GetArrayNullCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -340,17 +323,12 @@ func (client *ArrayClient) GetArrayNull(ctx context.Context) (*StringArrayArrayR
 }
 
 // GetArrayNullCreateRequest creates the GetArrayNull request.
-func (client *ArrayClient) GetArrayNullCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetArrayNullCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/array/null"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -374,11 +352,11 @@ func (client *ArrayClient) GetArrayNullHandleError(resp *azcore.Response) error 
 
 // GetArrayValid - Get an array of array of strings [['1', '2', '3'], ['4', '5', '6'], ['7', '8', '9']]
 func (client *ArrayClient) GetArrayValid(ctx context.Context) (*StringArrayArrayResponse, error) {
-	req, err := client.GetArrayValidCreateRequest()
+	req, err := client.GetArrayValidCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -390,17 +368,12 @@ func (client *ArrayClient) GetArrayValid(ctx context.Context) (*StringArrayArray
 }
 
 // GetArrayValidCreateRequest creates the GetArrayValid request.
-func (client *ArrayClient) GetArrayValidCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetArrayValidCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/array/valid"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -424,11 +397,11 @@ func (client *ArrayClient) GetArrayValidHandleError(resp *azcore.Response) error
 
 // GetBase64URL - Get array value ['a string that gets encoded with base64url', 'test string' 'Lorem ipsum'] with the items base64url encoded
 func (client *ArrayClient) GetBase64URL(ctx context.Context) (*ByteArrayArrayResponse, error) {
-	req, err := client.GetBase64URLCreateRequest()
+	req, err := client.GetBase64URLCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -440,17 +413,12 @@ func (client *ArrayClient) GetBase64URL(ctx context.Context) (*ByteArrayArrayRes
 }
 
 // GetBase64URLCreateRequest creates the GetBase64URL request.
-func (client *ArrayClient) GetBase64URLCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetBase64URLCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/prim/base64url/valid"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -474,11 +442,11 @@ func (client *ArrayClient) GetBase64URLHandleError(resp *azcore.Response) error 
 
 // GetBooleanInvalidNull - Get boolean array value [true, null, false]
 func (client *ArrayClient) GetBooleanInvalidNull(ctx context.Context) (*BoolArrayResponse, error) {
-	req, err := client.GetBooleanInvalidNullCreateRequest()
+	req, err := client.GetBooleanInvalidNullCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -490,17 +458,12 @@ func (client *ArrayClient) GetBooleanInvalidNull(ctx context.Context) (*BoolArra
 }
 
 // GetBooleanInvalidNullCreateRequest creates the GetBooleanInvalidNull request.
-func (client *ArrayClient) GetBooleanInvalidNullCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetBooleanInvalidNullCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/prim/boolean/true.null.false"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -524,11 +487,11 @@ func (client *ArrayClient) GetBooleanInvalidNullHandleError(resp *azcore.Respons
 
 // GetBooleanInvalidString - Get boolean array value [true, 'boolean', false]
 func (client *ArrayClient) GetBooleanInvalidString(ctx context.Context) (*BoolArrayResponse, error) {
-	req, err := client.GetBooleanInvalidStringCreateRequest()
+	req, err := client.GetBooleanInvalidStringCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -540,17 +503,12 @@ func (client *ArrayClient) GetBooleanInvalidString(ctx context.Context) (*BoolAr
 }
 
 // GetBooleanInvalidStringCreateRequest creates the GetBooleanInvalidString request.
-func (client *ArrayClient) GetBooleanInvalidStringCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetBooleanInvalidStringCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/prim/boolean/true.boolean.false"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -574,11 +532,11 @@ func (client *ArrayClient) GetBooleanInvalidStringHandleError(resp *azcore.Respo
 
 // GetBooleanTfft - Get boolean array value [true, false, false, true]
 func (client *ArrayClient) GetBooleanTfft(ctx context.Context) (*BoolArrayResponse, error) {
-	req, err := client.GetBooleanTfftCreateRequest()
+	req, err := client.GetBooleanTfftCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -590,17 +548,12 @@ func (client *ArrayClient) GetBooleanTfft(ctx context.Context) (*BoolArrayRespon
 }
 
 // GetBooleanTfftCreateRequest creates the GetBooleanTfft request.
-func (client *ArrayClient) GetBooleanTfftCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetBooleanTfftCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/prim/boolean/tfft"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -624,11 +577,11 @@ func (client *ArrayClient) GetBooleanTfftHandleError(resp *azcore.Response) erro
 
 // GetByteInvalidNull - Get byte array value [hex(AB, AC, AD), null] with the first item base64 encoded
 func (client *ArrayClient) GetByteInvalidNull(ctx context.Context) (*ByteArrayArrayResponse, error) {
-	req, err := client.GetByteInvalidNullCreateRequest()
+	req, err := client.GetByteInvalidNullCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -640,17 +593,12 @@ func (client *ArrayClient) GetByteInvalidNull(ctx context.Context) (*ByteArrayAr
 }
 
 // GetByteInvalidNullCreateRequest creates the GetByteInvalidNull request.
-func (client *ArrayClient) GetByteInvalidNullCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetByteInvalidNullCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/prim/byte/invalidnull"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -674,11 +622,11 @@ func (client *ArrayClient) GetByteInvalidNullHandleError(resp *azcore.Response) 
 
 // GetByteValid - Get byte array value [hex(FF FF FF FA), hex(01 02 03), hex (25, 29, 43)] with each item encoded in base64
 func (client *ArrayClient) GetByteValid(ctx context.Context) (*ByteArrayArrayResponse, error) {
-	req, err := client.GetByteValidCreateRequest()
+	req, err := client.GetByteValidCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -690,17 +638,12 @@ func (client *ArrayClient) GetByteValid(ctx context.Context) (*ByteArrayArrayRes
 }
 
 // GetByteValidCreateRequest creates the GetByteValid request.
-func (client *ArrayClient) GetByteValidCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetByteValidCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/prim/byte/valid"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -724,11 +667,11 @@ func (client *ArrayClient) GetByteValidHandleError(resp *azcore.Response) error 
 
 // GetComplexEmpty - Get empty array of complex type []
 func (client *ArrayClient) GetComplexEmpty(ctx context.Context) (*ProductArrayResponse, error) {
-	req, err := client.GetComplexEmptyCreateRequest()
+	req, err := client.GetComplexEmptyCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -740,17 +683,12 @@ func (client *ArrayClient) GetComplexEmpty(ctx context.Context) (*ProductArrayRe
 }
 
 // GetComplexEmptyCreateRequest creates the GetComplexEmpty request.
-func (client *ArrayClient) GetComplexEmptyCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetComplexEmptyCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/complex/empty"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -774,11 +712,11 @@ func (client *ArrayClient) GetComplexEmptyHandleError(resp *azcore.Response) err
 
 // GetComplexItemEmpty - Get array of complex type with empty item [{'integer': 1 'string': '2'}, {}, {'integer': 5, 'string': '6'}]
 func (client *ArrayClient) GetComplexItemEmpty(ctx context.Context) (*ProductArrayResponse, error) {
-	req, err := client.GetComplexItemEmptyCreateRequest()
+	req, err := client.GetComplexItemEmptyCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -790,17 +728,12 @@ func (client *ArrayClient) GetComplexItemEmpty(ctx context.Context) (*ProductArr
 }
 
 // GetComplexItemEmptyCreateRequest creates the GetComplexItemEmpty request.
-func (client *ArrayClient) GetComplexItemEmptyCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetComplexItemEmptyCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/complex/itemempty"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -824,11 +757,11 @@ func (client *ArrayClient) GetComplexItemEmptyHandleError(resp *azcore.Response)
 
 // GetComplexItemNull - Get array of complex type with null item [{'integer': 1 'string': '2'}, null, {'integer': 5, 'string': '6'}]
 func (client *ArrayClient) GetComplexItemNull(ctx context.Context) (*ProductArrayResponse, error) {
-	req, err := client.GetComplexItemNullCreateRequest()
+	req, err := client.GetComplexItemNullCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -840,17 +773,12 @@ func (client *ArrayClient) GetComplexItemNull(ctx context.Context) (*ProductArra
 }
 
 // GetComplexItemNullCreateRequest creates the GetComplexItemNull request.
-func (client *ArrayClient) GetComplexItemNullCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetComplexItemNullCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/complex/itemnull"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -874,11 +802,11 @@ func (client *ArrayClient) GetComplexItemNullHandleError(resp *azcore.Response) 
 
 // GetComplexNull - Get array of complex type null value
 func (client *ArrayClient) GetComplexNull(ctx context.Context) (*ProductArrayResponse, error) {
-	req, err := client.GetComplexNullCreateRequest()
+	req, err := client.GetComplexNullCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -890,17 +818,12 @@ func (client *ArrayClient) GetComplexNull(ctx context.Context) (*ProductArrayRes
 }
 
 // GetComplexNullCreateRequest creates the GetComplexNull request.
-func (client *ArrayClient) GetComplexNullCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetComplexNullCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/complex/null"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -924,11 +847,11 @@ func (client *ArrayClient) GetComplexNullHandleError(resp *azcore.Response) erro
 
 // GetComplexValid - Get array of complex type with [{'integer': 1 'string': '2'}, {'integer': 3, 'string': '4'}, {'integer': 5, 'string': '6'}]
 func (client *ArrayClient) GetComplexValid(ctx context.Context) (*ProductArrayResponse, error) {
-	req, err := client.GetComplexValidCreateRequest()
+	req, err := client.GetComplexValidCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -940,17 +863,12 @@ func (client *ArrayClient) GetComplexValid(ctx context.Context) (*ProductArrayRe
 }
 
 // GetComplexValidCreateRequest creates the GetComplexValid request.
-func (client *ArrayClient) GetComplexValidCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetComplexValidCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/complex/valid"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -974,11 +892,11 @@ func (client *ArrayClient) GetComplexValidHandleError(resp *azcore.Response) err
 
 // GetDateInvalidChars - Get date array value ['2011-03-22', 'date']
 func (client *ArrayClient) GetDateInvalidChars(ctx context.Context) (*TimeArrayResponse, error) {
-	req, err := client.GetDateInvalidCharsCreateRequest()
+	req, err := client.GetDateInvalidCharsCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -990,17 +908,12 @@ func (client *ArrayClient) GetDateInvalidChars(ctx context.Context) (*TimeArrayR
 }
 
 // GetDateInvalidCharsCreateRequest creates the GetDateInvalidChars request.
-func (client *ArrayClient) GetDateInvalidCharsCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetDateInvalidCharsCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/prim/date/invalidchars"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -1024,11 +937,11 @@ func (client *ArrayClient) GetDateInvalidCharsHandleError(resp *azcore.Response)
 
 // GetDateInvalidNull - Get date array value ['2012-01-01', null, '1776-07-04']
 func (client *ArrayClient) GetDateInvalidNull(ctx context.Context) (*TimeArrayResponse, error) {
-	req, err := client.GetDateInvalidNullCreateRequest()
+	req, err := client.GetDateInvalidNullCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1040,17 +953,12 @@ func (client *ArrayClient) GetDateInvalidNull(ctx context.Context) (*TimeArrayRe
 }
 
 // GetDateInvalidNullCreateRequest creates the GetDateInvalidNull request.
-func (client *ArrayClient) GetDateInvalidNullCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetDateInvalidNullCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/prim/date/invalidnull"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -1074,11 +982,11 @@ func (client *ArrayClient) GetDateInvalidNullHandleError(resp *azcore.Response) 
 
 // GetDateTimeInvalidChars - Get date array value ['2000-12-01t00:00:01z', 'date-time']
 func (client *ArrayClient) GetDateTimeInvalidChars(ctx context.Context) (*TimeArrayResponse, error) {
-	req, err := client.GetDateTimeInvalidCharsCreateRequest()
+	req, err := client.GetDateTimeInvalidCharsCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1090,17 +998,12 @@ func (client *ArrayClient) GetDateTimeInvalidChars(ctx context.Context) (*TimeAr
 }
 
 // GetDateTimeInvalidCharsCreateRequest creates the GetDateTimeInvalidChars request.
-func (client *ArrayClient) GetDateTimeInvalidCharsCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetDateTimeInvalidCharsCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/prim/date-time/invalidchars"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -1131,11 +1034,11 @@ func (client *ArrayClient) GetDateTimeInvalidCharsHandleError(resp *azcore.Respo
 
 // GetDateTimeInvalidNull - Get date array value ['2000-12-01t00:00:01z', null]
 func (client *ArrayClient) GetDateTimeInvalidNull(ctx context.Context) (*TimeArrayResponse, error) {
-	req, err := client.GetDateTimeInvalidNullCreateRequest()
+	req, err := client.GetDateTimeInvalidNullCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1147,17 +1050,12 @@ func (client *ArrayClient) GetDateTimeInvalidNull(ctx context.Context) (*TimeArr
 }
 
 // GetDateTimeInvalidNullCreateRequest creates the GetDateTimeInvalidNull request.
-func (client *ArrayClient) GetDateTimeInvalidNullCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetDateTimeInvalidNullCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/prim/date-time/invalidnull"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -1188,11 +1086,11 @@ func (client *ArrayClient) GetDateTimeInvalidNullHandleError(resp *azcore.Respon
 
 // GetDateTimeRFC1123Valid - Get date-time array value ['Fri, 01 Dec 2000 00:00:01 GMT', 'Wed, 02 Jan 1980 00:11:35 GMT', 'Wed, 12 Oct 1492 10:15:01 GMT']
 func (client *ArrayClient) GetDateTimeRFC1123Valid(ctx context.Context) (*TimeArrayResponse, error) {
-	req, err := client.GetDateTimeRFC1123ValidCreateRequest()
+	req, err := client.GetDateTimeRFC1123ValidCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1204,17 +1102,12 @@ func (client *ArrayClient) GetDateTimeRFC1123Valid(ctx context.Context) (*TimeAr
 }
 
 // GetDateTimeRFC1123ValidCreateRequest creates the GetDateTimeRFC1123Valid request.
-func (client *ArrayClient) GetDateTimeRFC1123ValidCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetDateTimeRFC1123ValidCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/prim/date-time-rfc1123/valid"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -1245,11 +1138,11 @@ func (client *ArrayClient) GetDateTimeRFC1123ValidHandleError(resp *azcore.Respo
 
 // GetDateTimeValid - Get date-time array value ['2000-12-01t00:00:01z', '1980-01-02T00:11:35+01:00', '1492-10-12T10:15:01-08:00']
 func (client *ArrayClient) GetDateTimeValid(ctx context.Context) (*TimeArrayResponse, error) {
-	req, err := client.GetDateTimeValidCreateRequest()
+	req, err := client.GetDateTimeValidCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1261,17 +1154,12 @@ func (client *ArrayClient) GetDateTimeValid(ctx context.Context) (*TimeArrayResp
 }
 
 // GetDateTimeValidCreateRequest creates the GetDateTimeValid request.
-func (client *ArrayClient) GetDateTimeValidCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetDateTimeValidCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/prim/date-time/valid"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -1302,11 +1190,11 @@ func (client *ArrayClient) GetDateTimeValidHandleError(resp *azcore.Response) er
 
 // GetDateValid - Get integer array value ['2000-12-01', '1980-01-02', '1492-10-12']
 func (client *ArrayClient) GetDateValid(ctx context.Context) (*TimeArrayResponse, error) {
-	req, err := client.GetDateValidCreateRequest()
+	req, err := client.GetDateValidCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1318,17 +1206,12 @@ func (client *ArrayClient) GetDateValid(ctx context.Context) (*TimeArrayResponse
 }
 
 // GetDateValidCreateRequest creates the GetDateValid request.
-func (client *ArrayClient) GetDateValidCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetDateValidCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/prim/date/valid"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -1352,11 +1235,11 @@ func (client *ArrayClient) GetDateValidHandleError(resp *azcore.Response) error 
 
 // GetDictionaryEmpty - Get an array of Dictionaries of type <string, string> with value []
 func (client *ArrayClient) GetDictionaryEmpty(ctx context.Context) (*MapOfStringArrayResponse, error) {
-	req, err := client.GetDictionaryEmptyCreateRequest()
+	req, err := client.GetDictionaryEmptyCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1368,17 +1251,12 @@ func (client *ArrayClient) GetDictionaryEmpty(ctx context.Context) (*MapOfString
 }
 
 // GetDictionaryEmptyCreateRequest creates the GetDictionaryEmpty request.
-func (client *ArrayClient) GetDictionaryEmptyCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetDictionaryEmptyCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/dictionary/empty"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -1402,11 +1280,11 @@ func (client *ArrayClient) GetDictionaryEmptyHandleError(resp *azcore.Response) 
 
 // GetDictionaryItemEmpty - Get an array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two', '3': 'three'}, {}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
 func (client *ArrayClient) GetDictionaryItemEmpty(ctx context.Context) (*MapOfStringArrayResponse, error) {
-	req, err := client.GetDictionaryItemEmptyCreateRequest()
+	req, err := client.GetDictionaryItemEmptyCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1418,17 +1296,12 @@ func (client *ArrayClient) GetDictionaryItemEmpty(ctx context.Context) (*MapOfSt
 }
 
 // GetDictionaryItemEmptyCreateRequest creates the GetDictionaryItemEmpty request.
-func (client *ArrayClient) GetDictionaryItemEmptyCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetDictionaryItemEmptyCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/dictionary/itemempty"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -1452,11 +1325,11 @@ func (client *ArrayClient) GetDictionaryItemEmptyHandleError(resp *azcore.Respon
 
 // GetDictionaryItemNull - Get an array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two', '3': 'three'}, null, {'7': 'seven', '8': 'eight', '9': 'nine'}]
 func (client *ArrayClient) GetDictionaryItemNull(ctx context.Context) (*MapOfStringArrayResponse, error) {
-	req, err := client.GetDictionaryItemNullCreateRequest()
+	req, err := client.GetDictionaryItemNullCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1468,17 +1341,12 @@ func (client *ArrayClient) GetDictionaryItemNull(ctx context.Context) (*MapOfStr
 }
 
 // GetDictionaryItemNullCreateRequest creates the GetDictionaryItemNull request.
-func (client *ArrayClient) GetDictionaryItemNullCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetDictionaryItemNullCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/dictionary/itemnull"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -1502,11 +1370,11 @@ func (client *ArrayClient) GetDictionaryItemNullHandleError(resp *azcore.Respons
 
 // GetDictionaryNull - Get an array of Dictionaries with value null
 func (client *ArrayClient) GetDictionaryNull(ctx context.Context) (*MapOfStringArrayResponse, error) {
-	req, err := client.GetDictionaryNullCreateRequest()
+	req, err := client.GetDictionaryNullCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1518,17 +1386,12 @@ func (client *ArrayClient) GetDictionaryNull(ctx context.Context) (*MapOfStringA
 }
 
 // GetDictionaryNullCreateRequest creates the GetDictionaryNull request.
-func (client *ArrayClient) GetDictionaryNullCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetDictionaryNullCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/dictionary/null"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -1552,11 +1415,11 @@ func (client *ArrayClient) GetDictionaryNullHandleError(resp *azcore.Response) e
 
 // GetDictionaryValid - Get an array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two', '3': 'three'}, {'4': 'four', '5': 'five', '6': 'six'}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
 func (client *ArrayClient) GetDictionaryValid(ctx context.Context) (*MapOfStringArrayResponse, error) {
-	req, err := client.GetDictionaryValidCreateRequest()
+	req, err := client.GetDictionaryValidCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1568,17 +1431,12 @@ func (client *ArrayClient) GetDictionaryValid(ctx context.Context) (*MapOfString
 }
 
 // GetDictionaryValidCreateRequest creates the GetDictionaryValid request.
-func (client *ArrayClient) GetDictionaryValidCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetDictionaryValidCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/dictionary/valid"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -1602,11 +1460,11 @@ func (client *ArrayClient) GetDictionaryValidHandleError(resp *azcore.Response) 
 
 // GetDoubleInvalidNull - Get float array value [0.0, null, -1.2e20]
 func (client *ArrayClient) GetDoubleInvalidNull(ctx context.Context) (*Float64ArrayResponse, error) {
-	req, err := client.GetDoubleInvalidNullCreateRequest()
+	req, err := client.GetDoubleInvalidNullCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1618,17 +1476,12 @@ func (client *ArrayClient) GetDoubleInvalidNull(ctx context.Context) (*Float64Ar
 }
 
 // GetDoubleInvalidNullCreateRequest creates the GetDoubleInvalidNull request.
-func (client *ArrayClient) GetDoubleInvalidNullCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetDoubleInvalidNullCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/prim/double/0.0-null-1.2e20"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -1652,11 +1505,11 @@ func (client *ArrayClient) GetDoubleInvalidNullHandleError(resp *azcore.Response
 
 // GetDoubleInvalidString - Get boolean array value [1.0, 'number', 0.0]
 func (client *ArrayClient) GetDoubleInvalidString(ctx context.Context) (*Float64ArrayResponse, error) {
-	req, err := client.GetDoubleInvalidStringCreateRequest()
+	req, err := client.GetDoubleInvalidStringCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1668,17 +1521,12 @@ func (client *ArrayClient) GetDoubleInvalidString(ctx context.Context) (*Float64
 }
 
 // GetDoubleInvalidStringCreateRequest creates the GetDoubleInvalidString request.
-func (client *ArrayClient) GetDoubleInvalidStringCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetDoubleInvalidStringCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/prim/double/1.number.0"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -1702,11 +1550,11 @@ func (client *ArrayClient) GetDoubleInvalidStringHandleError(resp *azcore.Respon
 
 // GetDoubleValid - Get float array value [0, -0.01, 1.2e20]
 func (client *ArrayClient) GetDoubleValid(ctx context.Context) (*Float64ArrayResponse, error) {
-	req, err := client.GetDoubleValidCreateRequest()
+	req, err := client.GetDoubleValidCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1718,17 +1566,12 @@ func (client *ArrayClient) GetDoubleValid(ctx context.Context) (*Float64ArrayRes
 }
 
 // GetDoubleValidCreateRequest creates the GetDoubleValid request.
-func (client *ArrayClient) GetDoubleValidCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetDoubleValidCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/prim/double/0--0.01-1.2e20"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -1752,11 +1595,11 @@ func (client *ArrayClient) GetDoubleValidHandleError(resp *azcore.Response) erro
 
 // GetDurationValid - Get duration array value ['P123DT22H14M12.011S', 'P5DT1H0M0S']
 func (client *ArrayClient) GetDurationValid(ctx context.Context) (*StringArrayResponse, error) {
-	req, err := client.GetDurationValidCreateRequest()
+	req, err := client.GetDurationValidCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1768,17 +1611,12 @@ func (client *ArrayClient) GetDurationValid(ctx context.Context) (*StringArrayRe
 }
 
 // GetDurationValidCreateRequest creates the GetDurationValid request.
-func (client *ArrayClient) GetDurationValidCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetDurationValidCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/prim/duration/valid"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -1802,11 +1640,11 @@ func (client *ArrayClient) GetDurationValidHandleError(resp *azcore.Response) er
 
 // GetEmpty - Get empty array value []
 func (client *ArrayClient) GetEmpty(ctx context.Context) (*Int32ArrayResponse, error) {
-	req, err := client.GetEmptyCreateRequest()
+	req, err := client.GetEmptyCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1818,17 +1656,12 @@ func (client *ArrayClient) GetEmpty(ctx context.Context) (*Int32ArrayResponse, e
 }
 
 // GetEmptyCreateRequest creates the GetEmpty request.
-func (client *ArrayClient) GetEmptyCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetEmptyCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/empty"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -1852,11 +1685,11 @@ func (client *ArrayClient) GetEmptyHandleError(resp *azcore.Response) error {
 
 // GetEnumValid - Get enum array value ['foo1', 'foo2', 'foo3']
 func (client *ArrayClient) GetEnumValid(ctx context.Context) (*FooEnumArrayResponse, error) {
-	req, err := client.GetEnumValidCreateRequest()
+	req, err := client.GetEnumValidCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1868,17 +1701,12 @@ func (client *ArrayClient) GetEnumValid(ctx context.Context) (*FooEnumArrayRespo
 }
 
 // GetEnumValidCreateRequest creates the GetEnumValid request.
-func (client *ArrayClient) GetEnumValidCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetEnumValidCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/prim/enum/foo1.foo2.foo3"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -1902,11 +1730,11 @@ func (client *ArrayClient) GetEnumValidHandleError(resp *azcore.Response) error 
 
 // GetFloatInvalidNull - Get float array value [0.0, null, -1.2e20]
 func (client *ArrayClient) GetFloatInvalidNull(ctx context.Context) (*Float32ArrayResponse, error) {
-	req, err := client.GetFloatInvalidNullCreateRequest()
+	req, err := client.GetFloatInvalidNullCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1918,17 +1746,12 @@ func (client *ArrayClient) GetFloatInvalidNull(ctx context.Context) (*Float32Arr
 }
 
 // GetFloatInvalidNullCreateRequest creates the GetFloatInvalidNull request.
-func (client *ArrayClient) GetFloatInvalidNullCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetFloatInvalidNullCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/prim/float/0.0-null-1.2e20"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -1952,11 +1775,11 @@ func (client *ArrayClient) GetFloatInvalidNullHandleError(resp *azcore.Response)
 
 // GetFloatInvalidString - Get boolean array value [1.0, 'number', 0.0]
 func (client *ArrayClient) GetFloatInvalidString(ctx context.Context) (*Float32ArrayResponse, error) {
-	req, err := client.GetFloatInvalidStringCreateRequest()
+	req, err := client.GetFloatInvalidStringCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1968,17 +1791,12 @@ func (client *ArrayClient) GetFloatInvalidString(ctx context.Context) (*Float32A
 }
 
 // GetFloatInvalidStringCreateRequest creates the GetFloatInvalidString request.
-func (client *ArrayClient) GetFloatInvalidStringCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetFloatInvalidStringCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/prim/float/1.number.0"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -2002,11 +1820,11 @@ func (client *ArrayClient) GetFloatInvalidStringHandleError(resp *azcore.Respons
 
 // GetFloatValid - Get float array value [0, -0.01, 1.2e20]
 func (client *ArrayClient) GetFloatValid(ctx context.Context) (*Float32ArrayResponse, error) {
-	req, err := client.GetFloatValidCreateRequest()
+	req, err := client.GetFloatValidCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2018,17 +1836,12 @@ func (client *ArrayClient) GetFloatValid(ctx context.Context) (*Float32ArrayResp
 }
 
 // GetFloatValidCreateRequest creates the GetFloatValid request.
-func (client *ArrayClient) GetFloatValidCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetFloatValidCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/prim/float/0--0.01-1.2e20"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -2052,11 +1865,11 @@ func (client *ArrayClient) GetFloatValidHandleError(resp *azcore.Response) error
 
 // GetIntInvalidNull - Get integer array value [1, null, 0]
 func (client *ArrayClient) GetIntInvalidNull(ctx context.Context) (*Int32ArrayResponse, error) {
-	req, err := client.GetIntInvalidNullCreateRequest()
+	req, err := client.GetIntInvalidNullCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2068,17 +1881,12 @@ func (client *ArrayClient) GetIntInvalidNull(ctx context.Context) (*Int32ArrayRe
 }
 
 // GetIntInvalidNullCreateRequest creates the GetIntInvalidNull request.
-func (client *ArrayClient) GetIntInvalidNullCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetIntInvalidNullCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/prim/integer/1.null.zero"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -2102,11 +1910,11 @@ func (client *ArrayClient) GetIntInvalidNullHandleError(resp *azcore.Response) e
 
 // GetIntInvalidString - Get integer array value [1, 'integer', 0]
 func (client *ArrayClient) GetIntInvalidString(ctx context.Context) (*Int32ArrayResponse, error) {
-	req, err := client.GetIntInvalidStringCreateRequest()
+	req, err := client.GetIntInvalidStringCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2118,17 +1926,12 @@ func (client *ArrayClient) GetIntInvalidString(ctx context.Context) (*Int32Array
 }
 
 // GetIntInvalidStringCreateRequest creates the GetIntInvalidString request.
-func (client *ArrayClient) GetIntInvalidStringCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetIntInvalidStringCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/prim/integer/1.integer.0"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -2152,11 +1955,11 @@ func (client *ArrayClient) GetIntInvalidStringHandleError(resp *azcore.Response)
 
 // GetIntegerValid - Get integer array value [1, -1, 3, 300]
 func (client *ArrayClient) GetIntegerValid(ctx context.Context) (*Int32ArrayResponse, error) {
-	req, err := client.GetIntegerValidCreateRequest()
+	req, err := client.GetIntegerValidCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2168,17 +1971,12 @@ func (client *ArrayClient) GetIntegerValid(ctx context.Context) (*Int32ArrayResp
 }
 
 // GetIntegerValidCreateRequest creates the GetIntegerValid request.
-func (client *ArrayClient) GetIntegerValidCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetIntegerValidCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/prim/integer/1.-1.3.300"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -2202,11 +2000,11 @@ func (client *ArrayClient) GetIntegerValidHandleError(resp *azcore.Response) err
 
 // GetInvalid - Get invalid array [1, 2, 3
 func (client *ArrayClient) GetInvalid(ctx context.Context) (*Int32ArrayResponse, error) {
-	req, err := client.GetInvalidCreateRequest()
+	req, err := client.GetInvalidCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2218,17 +2016,12 @@ func (client *ArrayClient) GetInvalid(ctx context.Context) (*Int32ArrayResponse,
 }
 
 // GetInvalidCreateRequest creates the GetInvalid request.
-func (client *ArrayClient) GetInvalidCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetInvalidCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/invalid"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -2252,11 +2045,11 @@ func (client *ArrayClient) GetInvalidHandleError(resp *azcore.Response) error {
 
 // GetLongInvalidNull - Get long array value [1, null, 0]
 func (client *ArrayClient) GetLongInvalidNull(ctx context.Context) (*Int64ArrayResponse, error) {
-	req, err := client.GetLongInvalidNullCreateRequest()
+	req, err := client.GetLongInvalidNullCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2268,17 +2061,12 @@ func (client *ArrayClient) GetLongInvalidNull(ctx context.Context) (*Int64ArrayR
 }
 
 // GetLongInvalidNullCreateRequest creates the GetLongInvalidNull request.
-func (client *ArrayClient) GetLongInvalidNullCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetLongInvalidNullCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/prim/long/1.null.zero"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -2302,11 +2090,11 @@ func (client *ArrayClient) GetLongInvalidNullHandleError(resp *azcore.Response) 
 
 // GetLongInvalidString - Get long array value [1, 'integer', 0]
 func (client *ArrayClient) GetLongInvalidString(ctx context.Context) (*Int64ArrayResponse, error) {
-	req, err := client.GetLongInvalidStringCreateRequest()
+	req, err := client.GetLongInvalidStringCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2318,17 +2106,12 @@ func (client *ArrayClient) GetLongInvalidString(ctx context.Context) (*Int64Arra
 }
 
 // GetLongInvalidStringCreateRequest creates the GetLongInvalidString request.
-func (client *ArrayClient) GetLongInvalidStringCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetLongInvalidStringCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/prim/long/1.integer.0"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -2352,11 +2135,11 @@ func (client *ArrayClient) GetLongInvalidStringHandleError(resp *azcore.Response
 
 // GetLongValid - Get integer array value [1, -1, 3, 300]
 func (client *ArrayClient) GetLongValid(ctx context.Context) (*Int64ArrayResponse, error) {
-	req, err := client.GetLongValidCreateRequest()
+	req, err := client.GetLongValidCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2368,17 +2151,12 @@ func (client *ArrayClient) GetLongValid(ctx context.Context) (*Int64ArrayRespons
 }
 
 // GetLongValidCreateRequest creates the GetLongValid request.
-func (client *ArrayClient) GetLongValidCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetLongValidCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/prim/long/1.-1.3.300"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -2402,11 +2180,11 @@ func (client *ArrayClient) GetLongValidHandleError(resp *azcore.Response) error 
 
 // GetNull - Get null array value
 func (client *ArrayClient) GetNull(ctx context.Context) (*Int32ArrayResponse, error) {
-	req, err := client.GetNullCreateRequest()
+	req, err := client.GetNullCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2418,17 +2196,12 @@ func (client *ArrayClient) GetNull(ctx context.Context) (*Int32ArrayResponse, er
 }
 
 // GetNullCreateRequest creates the GetNull request.
-func (client *ArrayClient) GetNullCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetNullCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/null"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -2452,11 +2225,11 @@ func (client *ArrayClient) GetNullHandleError(resp *azcore.Response) error {
 
 // GetStringEnumValid - Get enum array value ['foo1', 'foo2', 'foo3']
 func (client *ArrayClient) GetStringEnumValid(ctx context.Context) (*Enum0ArrayResponse, error) {
-	req, err := client.GetStringEnumValidCreateRequest()
+	req, err := client.GetStringEnumValidCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2468,17 +2241,12 @@ func (client *ArrayClient) GetStringEnumValid(ctx context.Context) (*Enum0ArrayR
 }
 
 // GetStringEnumValidCreateRequest creates the GetStringEnumValid request.
-func (client *ArrayClient) GetStringEnumValidCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetStringEnumValidCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/prim/string-enum/foo1.foo2.foo3"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -2502,11 +2270,11 @@ func (client *ArrayClient) GetStringEnumValidHandleError(resp *azcore.Response) 
 
 // GetStringValid - Get string array value ['foo1', 'foo2', 'foo3']
 func (client *ArrayClient) GetStringValid(ctx context.Context) (*StringArrayResponse, error) {
-	req, err := client.GetStringValidCreateRequest()
+	req, err := client.GetStringValidCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2518,17 +2286,12 @@ func (client *ArrayClient) GetStringValid(ctx context.Context) (*StringArrayResp
 }
 
 // GetStringValidCreateRequest creates the GetStringValid request.
-func (client *ArrayClient) GetStringValidCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetStringValidCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/prim/string/foo1.foo2.foo3"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -2552,11 +2315,11 @@ func (client *ArrayClient) GetStringValidHandleError(resp *azcore.Response) erro
 
 // GetStringWithInvalid - Get string array value ['foo', 123, 'foo2']
 func (client *ArrayClient) GetStringWithInvalid(ctx context.Context) (*StringArrayResponse, error) {
-	req, err := client.GetStringWithInvalidCreateRequest()
+	req, err := client.GetStringWithInvalidCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2568,17 +2331,12 @@ func (client *ArrayClient) GetStringWithInvalid(ctx context.Context) (*StringArr
 }
 
 // GetStringWithInvalidCreateRequest creates the GetStringWithInvalid request.
-func (client *ArrayClient) GetStringWithInvalidCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetStringWithInvalidCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/prim/string/foo.123.foo2"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -2602,11 +2360,11 @@ func (client *ArrayClient) GetStringWithInvalidHandleError(resp *azcore.Response
 
 // GetStringWithNull - Get string array value ['foo', null, 'foo2']
 func (client *ArrayClient) GetStringWithNull(ctx context.Context) (*StringArrayResponse, error) {
-	req, err := client.GetStringWithNullCreateRequest()
+	req, err := client.GetStringWithNullCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2618,17 +2376,12 @@ func (client *ArrayClient) GetStringWithNull(ctx context.Context) (*StringArrayR
 }
 
 // GetStringWithNullCreateRequest creates the GetStringWithNull request.
-func (client *ArrayClient) GetStringWithNullCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetStringWithNullCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/prim/string/foo.null.foo2"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -2652,11 +2405,11 @@ func (client *ArrayClient) GetStringWithNullHandleError(resp *azcore.Response) e
 
 // GetUUIDInvalidChars - Get uuid array value ['6dcc7237-45fe-45c4-8a6b-3a8a3f625652', 'foo']
 func (client *ArrayClient) GetUUIDInvalidChars(ctx context.Context) (*StringArrayResponse, error) {
-	req, err := client.GetUUIDInvalidCharsCreateRequest()
+	req, err := client.GetUUIDInvalidCharsCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2668,17 +2421,12 @@ func (client *ArrayClient) GetUUIDInvalidChars(ctx context.Context) (*StringArra
 }
 
 // GetUUIDInvalidCharsCreateRequest creates the GetUUIDInvalidChars request.
-func (client *ArrayClient) GetUUIDInvalidCharsCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetUUIDInvalidCharsCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/prim/uuid/invalidchars"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -2702,11 +2450,11 @@ func (client *ArrayClient) GetUUIDInvalidCharsHandleError(resp *azcore.Response)
 
 // GetUUIDValid - Get uuid array value ['6dcc7237-45fe-45c4-8a6b-3a8a3f625652', 'd1399005-30f7-40d6-8da6-dd7c89ad34db', 'f42f6aa1-a5bc-4ddf-907e-5f915de43205']
 func (client *ArrayClient) GetUUIDValid(ctx context.Context) (*StringArrayResponse, error) {
-	req, err := client.GetUUIDValidCreateRequest()
+	req, err := client.GetUUIDValidCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2718,17 +2466,12 @@ func (client *ArrayClient) GetUUIDValid(ctx context.Context) (*StringArrayRespon
 }
 
 // GetUUIDValidCreateRequest creates the GetUUIDValid request.
-func (client *ArrayClient) GetUUIDValidCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) GetUUIDValidCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/array/prim/uuid/valid"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -2752,11 +2495,11 @@ func (client *ArrayClient) GetUUIDValidHandleError(resp *azcore.Response) error 
 
 // PutArrayValid - Put An array of array of strings [['1', '2', '3'], ['4', '5', '6'], ['7', '8', '9']]
 func (client *ArrayClient) PutArrayValid(ctx context.Context, arrayBody [][]string) (*http.Response, error) {
-	req, err := client.PutArrayValidCreateRequest(arrayBody)
+	req, err := client.PutArrayValidCreateRequest(ctx, arrayBody)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2768,17 +2511,12 @@ func (client *ArrayClient) PutArrayValid(ctx context.Context, arrayBody [][]stri
 }
 
 // PutArrayValidCreateRequest creates the PutArrayValid request.
-func (client *ArrayClient) PutArrayValidCreateRequest(arrayBody [][]string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) PutArrayValidCreateRequest(ctx context.Context, arrayBody [][]string) (*azcore.Request, error) {
 	urlPath := "/array/array/valid"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	return req, req.MarshalAsJSON(arrayBody)
 }
 
@@ -2801,11 +2539,11 @@ func (client *ArrayClient) PutArrayValidHandleError(resp *azcore.Response) error
 
 // PutBooleanTfft - Set array value empty [true, false, false, true]
 func (client *ArrayClient) PutBooleanTfft(ctx context.Context, arrayBody []bool) (*http.Response, error) {
-	req, err := client.PutBooleanTfftCreateRequest(arrayBody)
+	req, err := client.PutBooleanTfftCreateRequest(ctx, arrayBody)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2817,17 +2555,12 @@ func (client *ArrayClient) PutBooleanTfft(ctx context.Context, arrayBody []bool)
 }
 
 // PutBooleanTfftCreateRequest creates the PutBooleanTfft request.
-func (client *ArrayClient) PutBooleanTfftCreateRequest(arrayBody []bool) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) PutBooleanTfftCreateRequest(ctx context.Context, arrayBody []bool) (*azcore.Request, error) {
 	urlPath := "/array/prim/boolean/tfft"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	return req, req.MarshalAsJSON(arrayBody)
 }
 
@@ -2850,11 +2583,11 @@ func (client *ArrayClient) PutBooleanTfftHandleError(resp *azcore.Response) erro
 
 // PutByteValid - Put the array value [hex(FF FF FF FA), hex(01 02 03), hex (25, 29, 43)] with each elementencoded in base 64
 func (client *ArrayClient) PutByteValid(ctx context.Context, arrayBody [][]byte) (*http.Response, error) {
-	req, err := client.PutByteValidCreateRequest(arrayBody)
+	req, err := client.PutByteValidCreateRequest(ctx, arrayBody)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2866,17 +2599,12 @@ func (client *ArrayClient) PutByteValid(ctx context.Context, arrayBody [][]byte)
 }
 
 // PutByteValidCreateRequest creates the PutByteValid request.
-func (client *ArrayClient) PutByteValidCreateRequest(arrayBody [][]byte) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) PutByteValidCreateRequest(ctx context.Context, arrayBody [][]byte) (*azcore.Request, error) {
 	urlPath := "/array/prim/byte/valid"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	return req, req.MarshalAsJSON(arrayBody)
 }
 
@@ -2899,11 +2627,11 @@ func (client *ArrayClient) PutByteValidHandleError(resp *azcore.Response) error 
 
 // PutComplexValid - Put an array of complex type with values [{'integer': 1 'string': '2'}, {'integer': 3, 'string': '4'}, {'integer': 5, 'string': '6'}]
 func (client *ArrayClient) PutComplexValid(ctx context.Context, arrayBody []Product) (*http.Response, error) {
-	req, err := client.PutComplexValidCreateRequest(arrayBody)
+	req, err := client.PutComplexValidCreateRequest(ctx, arrayBody)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2915,17 +2643,12 @@ func (client *ArrayClient) PutComplexValid(ctx context.Context, arrayBody []Prod
 }
 
 // PutComplexValidCreateRequest creates the PutComplexValid request.
-func (client *ArrayClient) PutComplexValidCreateRequest(arrayBody []Product) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) PutComplexValidCreateRequest(ctx context.Context, arrayBody []Product) (*azcore.Request, error) {
 	urlPath := "/array/complex/valid"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	return req, req.MarshalAsJSON(arrayBody)
 }
 
@@ -2948,11 +2671,11 @@ func (client *ArrayClient) PutComplexValidHandleError(resp *azcore.Response) err
 
 // PutDateTimeRFC1123Valid - Set array value  ['Fri, 01 Dec 2000 00:00:01 GMT', 'Wed, 02 Jan 1980 00:11:35 GMT', 'Wed, 12 Oct 1492 10:15:01 GMT']
 func (client *ArrayClient) PutDateTimeRFC1123Valid(ctx context.Context, arrayBody []time.Time) (*http.Response, error) {
-	req, err := client.PutDateTimeRFC1123ValidCreateRequest(arrayBody)
+	req, err := client.PutDateTimeRFC1123ValidCreateRequest(ctx, arrayBody)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2964,17 +2687,12 @@ func (client *ArrayClient) PutDateTimeRFC1123Valid(ctx context.Context, arrayBod
 }
 
 // PutDateTimeRFC1123ValidCreateRequest creates the PutDateTimeRFC1123Valid request.
-func (client *ArrayClient) PutDateTimeRFC1123ValidCreateRequest(arrayBody []time.Time) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) PutDateTimeRFC1123ValidCreateRequest(ctx context.Context, arrayBody []time.Time) (*azcore.Request, error) {
 	urlPath := "/array/prim/date-time-rfc1123/valid"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	aux := make([]timeRFC1123, len(arrayBody), len(arrayBody))
 	for i := 0; i < len(arrayBody); i++ {
 		aux[i] = timeRFC1123(arrayBody[i])
@@ -3001,11 +2719,11 @@ func (client *ArrayClient) PutDateTimeRFC1123ValidHandleError(resp *azcore.Respo
 
 // PutDateTimeValid - Set array value  ['2000-12-01t00:00:01z', '1980-01-02T00:11:35+01:00', '1492-10-12T10:15:01-08:00']
 func (client *ArrayClient) PutDateTimeValid(ctx context.Context, arrayBody []time.Time) (*http.Response, error) {
-	req, err := client.PutDateTimeValidCreateRequest(arrayBody)
+	req, err := client.PutDateTimeValidCreateRequest(ctx, arrayBody)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -3017,17 +2735,12 @@ func (client *ArrayClient) PutDateTimeValid(ctx context.Context, arrayBody []tim
 }
 
 // PutDateTimeValidCreateRequest creates the PutDateTimeValid request.
-func (client *ArrayClient) PutDateTimeValidCreateRequest(arrayBody []time.Time) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) PutDateTimeValidCreateRequest(ctx context.Context, arrayBody []time.Time) (*azcore.Request, error) {
 	urlPath := "/array/prim/date-time/valid"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	return req, req.MarshalAsJSON(arrayBody)
 }
 
@@ -3050,11 +2763,11 @@ func (client *ArrayClient) PutDateTimeValidHandleError(resp *azcore.Response) er
 
 // PutDateValid - Set array value  ['2000-12-01', '1980-01-02', '1492-10-12']
 func (client *ArrayClient) PutDateValid(ctx context.Context, arrayBody []time.Time) (*http.Response, error) {
-	req, err := client.PutDateValidCreateRequest(arrayBody)
+	req, err := client.PutDateValidCreateRequest(ctx, arrayBody)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -3066,17 +2779,12 @@ func (client *ArrayClient) PutDateValid(ctx context.Context, arrayBody []time.Ti
 }
 
 // PutDateValidCreateRequest creates the PutDateValid request.
-func (client *ArrayClient) PutDateValidCreateRequest(arrayBody []time.Time) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) PutDateValidCreateRequest(ctx context.Context, arrayBody []time.Time) (*azcore.Request, error) {
 	urlPath := "/array/prim/date/valid"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	return req, req.MarshalAsJSON(arrayBody)
 }
 
@@ -3099,11 +2807,11 @@ func (client *ArrayClient) PutDateValidHandleError(resp *azcore.Response) error 
 
 // PutDictionaryValid - Get an array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two', '3': 'three'}, {'4': 'four', '5': 'five', '6': 'six'}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
 func (client *ArrayClient) PutDictionaryValid(ctx context.Context, arrayBody []map[string]string) (*http.Response, error) {
-	req, err := client.PutDictionaryValidCreateRequest(arrayBody)
+	req, err := client.PutDictionaryValidCreateRequest(ctx, arrayBody)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -3115,17 +2823,12 @@ func (client *ArrayClient) PutDictionaryValid(ctx context.Context, arrayBody []m
 }
 
 // PutDictionaryValidCreateRequest creates the PutDictionaryValid request.
-func (client *ArrayClient) PutDictionaryValidCreateRequest(arrayBody []map[string]string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) PutDictionaryValidCreateRequest(ctx context.Context, arrayBody []map[string]string) (*azcore.Request, error) {
 	urlPath := "/array/dictionary/valid"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	return req, req.MarshalAsJSON(arrayBody)
 }
 
@@ -3148,11 +2851,11 @@ func (client *ArrayClient) PutDictionaryValidHandleError(resp *azcore.Response) 
 
 // PutDoubleValid - Set array value [0, -0.01, 1.2e20]
 func (client *ArrayClient) PutDoubleValid(ctx context.Context, arrayBody []float64) (*http.Response, error) {
-	req, err := client.PutDoubleValidCreateRequest(arrayBody)
+	req, err := client.PutDoubleValidCreateRequest(ctx, arrayBody)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -3164,17 +2867,12 @@ func (client *ArrayClient) PutDoubleValid(ctx context.Context, arrayBody []float
 }
 
 // PutDoubleValidCreateRequest creates the PutDoubleValid request.
-func (client *ArrayClient) PutDoubleValidCreateRequest(arrayBody []float64) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) PutDoubleValidCreateRequest(ctx context.Context, arrayBody []float64) (*azcore.Request, error) {
 	urlPath := "/array/prim/double/0--0.01-1.2e20"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	return req, req.MarshalAsJSON(arrayBody)
 }
 
@@ -3197,11 +2895,11 @@ func (client *ArrayClient) PutDoubleValidHandleError(resp *azcore.Response) erro
 
 // PutDurationValid - Set array value  ['P123DT22H14M12.011S', 'P5DT1H0M0S']
 func (client *ArrayClient) PutDurationValid(ctx context.Context, arrayBody []string) (*http.Response, error) {
-	req, err := client.PutDurationValidCreateRequest(arrayBody)
+	req, err := client.PutDurationValidCreateRequest(ctx, arrayBody)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -3213,17 +2911,12 @@ func (client *ArrayClient) PutDurationValid(ctx context.Context, arrayBody []str
 }
 
 // PutDurationValidCreateRequest creates the PutDurationValid request.
-func (client *ArrayClient) PutDurationValidCreateRequest(arrayBody []string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) PutDurationValidCreateRequest(ctx context.Context, arrayBody []string) (*azcore.Request, error) {
 	urlPath := "/array/prim/duration/valid"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	return req, req.MarshalAsJSON(arrayBody)
 }
 
@@ -3246,11 +2939,11 @@ func (client *ArrayClient) PutDurationValidHandleError(resp *azcore.Response) er
 
 // PutEmpty - Set array value empty []
 func (client *ArrayClient) PutEmpty(ctx context.Context, arrayBody []string) (*http.Response, error) {
-	req, err := client.PutEmptyCreateRequest(arrayBody)
+	req, err := client.PutEmptyCreateRequest(ctx, arrayBody)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -3262,17 +2955,12 @@ func (client *ArrayClient) PutEmpty(ctx context.Context, arrayBody []string) (*h
 }
 
 // PutEmptyCreateRequest creates the PutEmpty request.
-func (client *ArrayClient) PutEmptyCreateRequest(arrayBody []string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) PutEmptyCreateRequest(ctx context.Context, arrayBody []string) (*azcore.Request, error) {
 	urlPath := "/array/empty"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	return req, req.MarshalAsJSON(arrayBody)
 }
 
@@ -3295,11 +2983,11 @@ func (client *ArrayClient) PutEmptyHandleError(resp *azcore.Response) error {
 
 // PutEnumValid - Set array value ['foo1', 'foo2', 'foo3']
 func (client *ArrayClient) PutEnumValid(ctx context.Context, arrayBody []FooEnum) (*http.Response, error) {
-	req, err := client.PutEnumValidCreateRequest(arrayBody)
+	req, err := client.PutEnumValidCreateRequest(ctx, arrayBody)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -3311,17 +2999,12 @@ func (client *ArrayClient) PutEnumValid(ctx context.Context, arrayBody []FooEnum
 }
 
 // PutEnumValidCreateRequest creates the PutEnumValid request.
-func (client *ArrayClient) PutEnumValidCreateRequest(arrayBody []FooEnum) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) PutEnumValidCreateRequest(ctx context.Context, arrayBody []FooEnum) (*azcore.Request, error) {
 	urlPath := "/array/prim/enum/foo1.foo2.foo3"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	return req, req.MarshalAsJSON(arrayBody)
 }
 
@@ -3344,11 +3027,11 @@ func (client *ArrayClient) PutEnumValidHandleError(resp *azcore.Response) error 
 
 // PutFloatValid - Set array value [0, -0.01, 1.2e20]
 func (client *ArrayClient) PutFloatValid(ctx context.Context, arrayBody []float32) (*http.Response, error) {
-	req, err := client.PutFloatValidCreateRequest(arrayBody)
+	req, err := client.PutFloatValidCreateRequest(ctx, arrayBody)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -3360,17 +3043,12 @@ func (client *ArrayClient) PutFloatValid(ctx context.Context, arrayBody []float3
 }
 
 // PutFloatValidCreateRequest creates the PutFloatValid request.
-func (client *ArrayClient) PutFloatValidCreateRequest(arrayBody []float32) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) PutFloatValidCreateRequest(ctx context.Context, arrayBody []float32) (*azcore.Request, error) {
 	urlPath := "/array/prim/float/0--0.01-1.2e20"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	return req, req.MarshalAsJSON(arrayBody)
 }
 
@@ -3393,11 +3071,11 @@ func (client *ArrayClient) PutFloatValidHandleError(resp *azcore.Response) error
 
 // PutIntegerValid - Set array value empty [1, -1, 3, 300]
 func (client *ArrayClient) PutIntegerValid(ctx context.Context, arrayBody []int32) (*http.Response, error) {
-	req, err := client.PutIntegerValidCreateRequest(arrayBody)
+	req, err := client.PutIntegerValidCreateRequest(ctx, arrayBody)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -3409,17 +3087,12 @@ func (client *ArrayClient) PutIntegerValid(ctx context.Context, arrayBody []int3
 }
 
 // PutIntegerValidCreateRequest creates the PutIntegerValid request.
-func (client *ArrayClient) PutIntegerValidCreateRequest(arrayBody []int32) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) PutIntegerValidCreateRequest(ctx context.Context, arrayBody []int32) (*azcore.Request, error) {
 	urlPath := "/array/prim/integer/1.-1.3.300"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	return req, req.MarshalAsJSON(arrayBody)
 }
 
@@ -3442,11 +3115,11 @@ func (client *ArrayClient) PutIntegerValidHandleError(resp *azcore.Response) err
 
 // PutLongValid - Set array value empty [1, -1, 3, 300]
 func (client *ArrayClient) PutLongValid(ctx context.Context, arrayBody []int64) (*http.Response, error) {
-	req, err := client.PutLongValidCreateRequest(arrayBody)
+	req, err := client.PutLongValidCreateRequest(ctx, arrayBody)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -3458,17 +3131,12 @@ func (client *ArrayClient) PutLongValid(ctx context.Context, arrayBody []int64) 
 }
 
 // PutLongValidCreateRequest creates the PutLongValid request.
-func (client *ArrayClient) PutLongValidCreateRequest(arrayBody []int64) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) PutLongValidCreateRequest(ctx context.Context, arrayBody []int64) (*azcore.Request, error) {
 	urlPath := "/array/prim/long/1.-1.3.300"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	return req, req.MarshalAsJSON(arrayBody)
 }
 
@@ -3491,11 +3159,11 @@ func (client *ArrayClient) PutLongValidHandleError(resp *azcore.Response) error 
 
 // PutStringEnumValid - Set array value ['foo1', 'foo2', 'foo3']
 func (client *ArrayClient) PutStringEnumValid(ctx context.Context, arrayBody []Enum1) (*http.Response, error) {
-	req, err := client.PutStringEnumValidCreateRequest(arrayBody)
+	req, err := client.PutStringEnumValidCreateRequest(ctx, arrayBody)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -3507,17 +3175,12 @@ func (client *ArrayClient) PutStringEnumValid(ctx context.Context, arrayBody []E
 }
 
 // PutStringEnumValidCreateRequest creates the PutStringEnumValid request.
-func (client *ArrayClient) PutStringEnumValidCreateRequest(arrayBody []Enum1) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) PutStringEnumValidCreateRequest(ctx context.Context, arrayBody []Enum1) (*azcore.Request, error) {
 	urlPath := "/array/prim/string-enum/foo1.foo2.foo3"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	return req, req.MarshalAsJSON(arrayBody)
 }
 
@@ -3540,11 +3203,11 @@ func (client *ArrayClient) PutStringEnumValidHandleError(resp *azcore.Response) 
 
 // PutStringValid - Set array value ['foo1', 'foo2', 'foo3']
 func (client *ArrayClient) PutStringValid(ctx context.Context, arrayBody []string) (*http.Response, error) {
-	req, err := client.PutStringValidCreateRequest(arrayBody)
+	req, err := client.PutStringValidCreateRequest(ctx, arrayBody)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -3556,17 +3219,12 @@ func (client *ArrayClient) PutStringValid(ctx context.Context, arrayBody []strin
 }
 
 // PutStringValidCreateRequest creates the PutStringValid request.
-func (client *ArrayClient) PutStringValidCreateRequest(arrayBody []string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) PutStringValidCreateRequest(ctx context.Context, arrayBody []string) (*azcore.Request, error) {
 	urlPath := "/array/prim/string/foo1.foo2.foo3"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	return req, req.MarshalAsJSON(arrayBody)
 }
 
@@ -3589,11 +3247,11 @@ func (client *ArrayClient) PutStringValidHandleError(resp *azcore.Response) erro
 
 // PutUUIDValid - Set array value  ['6dcc7237-45fe-45c4-8a6b-3a8a3f625652', 'd1399005-30f7-40d6-8da6-dd7c89ad34db', 'f42f6aa1-a5bc-4ddf-907e-5f915de43205']
 func (client *ArrayClient) PutUUIDValid(ctx context.Context, arrayBody []string) (*http.Response, error) {
-	req, err := client.PutUUIDValidCreateRequest(arrayBody)
+	req, err := client.PutUUIDValidCreateRequest(ctx, arrayBody)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -3605,17 +3263,12 @@ func (client *ArrayClient) PutUUIDValid(ctx context.Context, arrayBody []string)
 }
 
 // PutUUIDValidCreateRequest creates the PutUUIDValid request.
-func (client *ArrayClient) PutUUIDValidCreateRequest(arrayBody []string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ArrayClient) PutUUIDValidCreateRequest(ctx context.Context, arrayBody []string) (*azcore.Request, error) {
 	urlPath := "/array/prim/uuid/valid"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	return req, req.MarshalAsJSON(arrayBody)
 }
 

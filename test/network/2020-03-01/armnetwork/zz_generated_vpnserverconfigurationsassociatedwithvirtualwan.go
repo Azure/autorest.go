@@ -11,7 +11,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 	"time"
 )
@@ -37,18 +36,18 @@ func NewVpnServerConfigurationsAssociatedWithVirtualWanClient(c *Client, subscri
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *VpnServerConfigurationsAssociatedWithVirtualWanClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *VpnServerConfigurationsAssociatedWithVirtualWanClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // List - Gives the list of VpnServerConfigurations associated with Virtual Wan in a resource group.
 func (client *VpnServerConfigurationsAssociatedWithVirtualWanClient) BeginList(ctx context.Context, resourceGroupName string, virtualWanName string) (*VpnServerConfigurationsResponsePollerResponse, error) {
-	req, err := client.ListCreateRequest(resourceGroupName, virtualWanName)
+	req, err := client.ListCreateRequest(ctx, resourceGroupName, virtualWanName)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -83,23 +82,18 @@ func (client *VpnServerConfigurationsAssociatedWithVirtualWanClient) ResumeList(
 }
 
 // ListCreateRequest creates the List request.
-func (client *VpnServerConfigurationsAssociatedWithVirtualWanClient) ListCreateRequest(resourceGroupName string, virtualWanName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *VpnServerConfigurationsAssociatedWithVirtualWanClient) ListCreateRequest(ctx context.Context, resourceGroupName string, virtualWanName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/vpnServerConfigurations"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualWANName}", url.PathEscape(virtualWanName))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPost, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 

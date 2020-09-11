@@ -7,11 +7,9 @@ package paginggroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
-	"net/url"
 	"time"
 )
 
@@ -69,24 +67,8 @@ func (p *productResultPagerPoller) handleResponse(resp *azcore.Response) (Produc
 		pipeline:  p.pipeline,
 		resp:      resp,
 		responder: p.respHandler,
-		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.ProductResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.ProductResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		advancer: func(ctx context.Context, resp *ProductResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.ProductResult.NextLink)
 		},
 	}, nil
-}
-
-func delay(ctx context.Context, delay time.Duration) error {
-	select {
-	case <-time.After(delay):
-		return nil
-	case <-ctx.Done():
-		return ctx.Err()
-	}
 }

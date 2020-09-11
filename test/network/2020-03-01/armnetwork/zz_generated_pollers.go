@@ -7,11 +7,9 @@ package armnetwork
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
-	"net/url"
 	"time"
 )
 
@@ -419,15 +417,8 @@ func (p *bastionActiveSessionListResultPagerPoller) handleResponse(resp *azcore.
 		pipeline:  p.pipeline,
 		resp:      resp,
 		responder: p.respHandler,
-		advancer: func(resp *BastionActiveSessionListResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.BastionActiveSessionListResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.BastionActiveSessionListResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		advancer: func(ctx context.Context, resp *BastionActiveSessionListResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.BastionActiveSessionListResult.NextLink)
 		},
 	}, nil
 }
@@ -536,15 +527,8 @@ func (p *bastionShareableLinkListResultPagerPoller) handleResponse(resp *azcore.
 		pipeline:  p.pipeline,
 		resp:      resp,
 		responder: p.respHandler,
-		advancer: func(resp *BastionShareableLinkListResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.BastionShareableLinkListResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.BastionShareableLinkListResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		advancer: func(ctx context.Context, resp *BastionShareableLinkListResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.BastionShareableLinkListResult.NextLink)
 		},
 	}, nil
 }
@@ -4637,13 +4621,4 @@ func (p *vpnSitePoller) pollUntilDone(ctx context.Context, frequency time.Durati
 	}
 	respType.RawResponse = resp
 	return respType, nil
-}
-
-func delay(ctx context.Context, delay time.Duration) error {
-	select {
-	case <-time.After(delay):
-		return nil
-	case <-ctx.Done():
-		return ctx.Err()
-	}
 }

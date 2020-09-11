@@ -7,11 +7,9 @@ package armnetwork
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 )
 
@@ -20,7 +18,7 @@ type HubVirtualNetworkConnectionsOperations interface {
 	// Get - Retrieves the details of a HubVirtualNetworkConnection.
 	Get(ctx context.Context, resourceGroupName string, virtualHubName string, connectionName string) (*HubVirtualNetworkConnectionResponse, error)
 	// List - Retrieves the details of all HubVirtualNetworkConnections.
-	List(resourceGroupName string, virtualHubName string) (ListHubVirtualNetworkConnectionsResultPager, error)
+	List(resourceGroupName string, virtualHubName string) ListHubVirtualNetworkConnectionsResultPager
 }
 
 // HubVirtualNetworkConnectionsClient implements the HubVirtualNetworkConnectionsOperations interface.
@@ -36,17 +34,17 @@ func NewHubVirtualNetworkConnectionsClient(c *Client, subscriptionID string) Hub
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *HubVirtualNetworkConnectionsClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *HubVirtualNetworkConnectionsClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // Get - Retrieves the details of a HubVirtualNetworkConnection.
 func (client *HubVirtualNetworkConnectionsClient) Get(ctx context.Context, resourceGroupName string, virtualHubName string, connectionName string) (*HubVirtualNetworkConnectionResponse, error) {
-	req, err := client.GetCreateRequest(resourceGroupName, virtualHubName, connectionName)
+	req, err := client.GetCreateRequest(ctx, resourceGroupName, virtualHubName, connectionName)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -58,24 +56,19 @@ func (client *HubVirtualNetworkConnectionsClient) Get(ctx context.Context, resou
 }
 
 // GetCreateRequest creates the Get request.
-func (client *HubVirtualNetworkConnectionsClient) GetCreateRequest(resourceGroupName string, virtualHubName string, connectionName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *HubVirtualNetworkConnectionsClient) GetCreateRequest(ctx context.Context, resourceGroupName string, virtualHubName string, connectionName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/hubVirtualNetworkConnections/{connectionName}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualHubName}", url.PathEscape(virtualHubName))
 	urlPath = strings.ReplaceAll(urlPath, "{connectionName}", url.PathEscape(connectionName))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -98,46 +91,32 @@ func (client *HubVirtualNetworkConnectionsClient) GetHandleError(resp *azcore.Re
 }
 
 // List - Retrieves the details of all HubVirtualNetworkConnections.
-func (client *HubVirtualNetworkConnectionsClient) List(resourceGroupName string, virtualHubName string) (ListHubVirtualNetworkConnectionsResultPager, error) {
-	req, err := client.ListCreateRequest(resourceGroupName, virtualHubName)
-	if err != nil {
-		return nil, err
-	}
+func (client *HubVirtualNetworkConnectionsClient) List(resourceGroupName string, virtualHubName string) ListHubVirtualNetworkConnectionsResultPager {
 	return &listHubVirtualNetworkConnectionsResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListHandleResponse,
-		advancer: func(resp *ListHubVirtualNetworkConnectionsResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.ListHubVirtualNetworkConnectionsResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.ListHubVirtualNetworkConnectionsResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListCreateRequest(ctx, resourceGroupName, virtualHubName)
 		},
-	}, nil
+		responder: client.ListHandleResponse,
+		advancer: func(ctx context.Context, resp *ListHubVirtualNetworkConnectionsResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.ListHubVirtualNetworkConnectionsResult.NextLink)
+		},
+	}
 }
 
 // ListCreateRequest creates the List request.
-func (client *HubVirtualNetworkConnectionsClient) ListCreateRequest(resourceGroupName string, virtualHubName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *HubVirtualNetworkConnectionsClient) ListCreateRequest(ctx context.Context, resourceGroupName string, virtualHubName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/hubVirtualNetworkConnections"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualHubName}", url.PathEscape(virtualHubName))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 

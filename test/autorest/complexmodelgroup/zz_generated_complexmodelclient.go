@@ -10,7 +10,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 )
 
@@ -36,17 +35,17 @@ func NewComplexModelClient(c *Client) ComplexModelClientOperations {
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *ComplexModelClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *ComplexModelClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // Create - Resets products.
 func (client *ComplexModelClient) Create(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogDictionaryOfArray) (*CatalogDictionaryResponse, error) {
-	req, err := client.CreateCreateRequest(subscriptionId, resourceGroupName, bodyParameter)
+	req, err := client.CreateCreateRequest(ctx, subscriptionId, resourceGroupName, bodyParameter)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -58,22 +57,17 @@ func (client *ComplexModelClient) Create(ctx context.Context, subscriptionId str
 }
 
 // CreateCreateRequest creates the Create request.
-func (client *ComplexModelClient) CreateCreateRequest(subscriptionId string, resourceGroupName string, bodyParameter CatalogDictionaryOfArray) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ComplexModelClient) CreateCreateRequest(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogDictionaryOfArray) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/Microsoft.Cache/Redis"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionId))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2014-04-01-preview")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPost, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(bodyParameter)
 }
 
@@ -97,11 +91,11 @@ func (client *ComplexModelClient) CreateHandleError(resp *azcore.Response) error
 
 // List - The Products endpoint returns information about the Uber products offered at a given location. The response includes the display name and other details about each product, and lists the products in the proper display order.
 func (client *ComplexModelClient) List(ctx context.Context, resourceGroupName string) (*CatalogArrayResponse, error) {
-	req, err := client.ListCreateRequest(resourceGroupName)
+	req, err := client.ListCreateRequest(ctx, resourceGroupName)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -113,22 +107,17 @@ func (client *ComplexModelClient) List(ctx context.Context, resourceGroupName st
 }
 
 // ListCreateRequest creates the List request.
-func (client *ComplexModelClient) ListCreateRequest(resourceGroupName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ComplexModelClient) ListCreateRequest(ctx context.Context, resourceGroupName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/Microsoft.Cache/Redis"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape("123456"))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2014-04-01-preview")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -152,11 +141,11 @@ func (client *ComplexModelClient) ListHandleError(resp *azcore.Response) error {
 
 // Update - Resets products.
 func (client *ComplexModelClient) Update(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogArrayOfDictionary) (*CatalogArrayResponse, error) {
-	req, err := client.UpdateCreateRequest(subscriptionId, resourceGroupName, bodyParameter)
+	req, err := client.UpdateCreateRequest(ctx, subscriptionId, resourceGroupName, bodyParameter)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -168,22 +157,17 @@ func (client *ComplexModelClient) Update(ctx context.Context, subscriptionId str
 }
 
 // UpdateCreateRequest creates the Update request.
-func (client *ComplexModelClient) UpdateCreateRequest(subscriptionId string, resourceGroupName string, bodyParameter CatalogArrayOfDictionary) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ComplexModelClient) UpdateCreateRequest(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogArrayOfDictionary) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/Microsoft.Cache/Redis"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionId))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2014-04-01-preview")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPut, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(bodyParameter)
 }
 

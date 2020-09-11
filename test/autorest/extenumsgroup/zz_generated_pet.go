@@ -13,7 +13,6 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 )
 
@@ -37,17 +36,17 @@ func NewPetClient(c *Client) PetOperations {
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *PetClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *PetClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // AddPet - add pet
 func (client *PetClient) AddPet(ctx context.Context, petAddPetOptions *PetAddPetOptions) (*PetResponse, error) {
-	req, err := client.AddPetCreateRequest(petAddPetOptions)
+	req, err := client.AddPetCreateRequest(ctx, petAddPetOptions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -59,17 +58,12 @@ func (client *PetClient) AddPet(ctx context.Context, petAddPetOptions *PetAddPet
 }
 
 // AddPetCreateRequest creates the AddPet request.
-func (client *PetClient) AddPetCreateRequest(petAddPetOptions *PetAddPetOptions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *PetClient) AddPetCreateRequest(ctx context.Context, petAddPetOptions *PetAddPetOptions) (*azcore.Request, error) {
 	urlPath := "/extensibleenums/pet/addPet"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPost, *u)
 	if petAddPetOptions != nil {
 		return req, req.MarshalAsJSON(petAddPetOptions.PetParam)
 	}
@@ -99,11 +93,11 @@ func (client *PetClient) AddPetHandleError(resp *azcore.Response) error {
 
 // GetByPetID - get pet by id
 func (client *PetClient) GetByPetID(ctx context.Context, petId string) (*PetResponse, error) {
-	req, err := client.GetByPetIDCreateRequest(petId)
+	req, err := client.GetByPetIDCreateRequest(ctx, petId)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -115,18 +109,13 @@ func (client *PetClient) GetByPetID(ctx context.Context, petId string) (*PetResp
 }
 
 // GetByPetIDCreateRequest creates the GetByPetID request.
-func (client *PetClient) GetByPetIDCreateRequest(petId string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *PetClient) GetByPetIDCreateRequest(ctx context.Context, petId string) (*azcore.Request, error) {
 	urlPath := "/extensibleenums/pet/{petId}"
 	urlPath = strings.ReplaceAll(urlPath, "{petId}", url.PathEscape(petId))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 

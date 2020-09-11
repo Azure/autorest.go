@@ -7,12 +7,10 @@ package armnetwork
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 	"time"
 )
@@ -38,19 +36,19 @@ type NetworkInterfacesOperations interface {
 	// GetVirtualMachineScaleSetNetworkInterface - Get the specified network interface in a virtual machine scale set.
 	GetVirtualMachineScaleSetNetworkInterface(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, networkInterfacesGetVirtualMachineScaleSetNetworkInterfaceOptions *NetworkInterfacesGetVirtualMachineScaleSetNetworkInterfaceOptions) (*NetworkInterfaceResponse, error)
 	// List - Gets all network interfaces in a resource group.
-	List(resourceGroupName string) (NetworkInterfaceListResultPager, error)
+	List(resourceGroupName string) NetworkInterfaceListResultPager
 	// ListAll - Gets all network interfaces in a subscription.
-	ListAll() (NetworkInterfaceListResultPager, error)
+	ListAll() NetworkInterfaceListResultPager
 	// BeginListEffectiveNetworkSecurityGroups - Gets all network security groups applied to a network interface.
 	BeginListEffectiveNetworkSecurityGroups(ctx context.Context, resourceGroupName string, networkInterfaceName string) (*EffectiveNetworkSecurityGroupListResultPollerResponse, error)
 	// ResumeListEffectiveNetworkSecurityGroups - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeListEffectiveNetworkSecurityGroups(token string) (EffectiveNetworkSecurityGroupListResultPoller, error)
 	// ListVirtualMachineScaleSetIPConfigurations - Get the specified network interface ip configuration in a virtual machine scale set.
-	ListVirtualMachineScaleSetIPConfigurations(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, networkInterfacesListVirtualMachineScaleSetIPConfigurationsOptions *NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsOptions) (NetworkInterfaceIPConfigurationListResultPager, error)
+	ListVirtualMachineScaleSetIPConfigurations(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, networkInterfacesListVirtualMachineScaleSetIPConfigurationsOptions *NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsOptions) NetworkInterfaceIPConfigurationListResultPager
 	// ListVirtualMachineScaleSetNetworkInterfaces - Gets all network interfaces in a virtual machine scale set.
-	ListVirtualMachineScaleSetNetworkInterfaces(resourceGroupName string, virtualMachineScaleSetName string) (NetworkInterfaceListResultPager, error)
+	ListVirtualMachineScaleSetNetworkInterfaces(resourceGroupName string, virtualMachineScaleSetName string) NetworkInterfaceListResultPager
 	// ListVirtualMachineScaleSetVMNetworkInterfaces - Gets information about all network interfaces in a virtual machine in a virtual machine scale set.
-	ListVirtualMachineScaleSetVMNetworkInterfaces(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string) (NetworkInterfaceListResultPager, error)
+	ListVirtualMachineScaleSetVMNetworkInterfaces(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string) NetworkInterfaceListResultPager
 	// UpdateTags - Updates a network interface tags.
 	UpdateTags(ctx context.Context, resourceGroupName string, networkInterfaceName string, parameters TagsObject) (*NetworkInterfaceResponse, error)
 }
@@ -68,18 +66,18 @@ func NewNetworkInterfacesClient(c *Client, subscriptionID string) NetworkInterfa
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *NetworkInterfacesClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *NetworkInterfacesClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // CreateOrUpdate - Creates or updates a network interface.
 func (client *NetworkInterfacesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, parameters NetworkInterface) (*NetworkInterfacePollerResponse, error) {
-	req, err := client.CreateOrUpdateCreateRequest(resourceGroupName, networkInterfaceName, parameters)
+	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, networkInterfaceName, parameters)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -114,23 +112,18 @@ func (client *NetworkInterfacesClient) ResumeCreateOrUpdate(token string) (Netwo
 }
 
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *NetworkInterfacesClient) CreateOrUpdateCreateRequest(resourceGroupName string, networkInterfaceName string, parameters NetworkInterface) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkInterfacesClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, parameters NetworkInterface) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkInterfaceName}", url.PathEscape(networkInterfaceName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPut, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -153,12 +146,12 @@ func (client *NetworkInterfacesClient) CreateOrUpdateHandleError(resp *azcore.Re
 
 // Delete - Deletes the specified network interface.
 func (client *NetworkInterfacesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkInterfaceName string) (*HTTPPollerResponse, error) {
-	req, err := client.DeleteCreateRequest(resourceGroupName, networkInterfaceName)
+	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, networkInterfaceName)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -193,23 +186,18 @@ func (client *NetworkInterfacesClient) ResumeDelete(token string) (HTTPPoller, e
 }
 
 // DeleteCreateRequest creates the Delete request.
-func (client *NetworkInterfacesClient) DeleteCreateRequest(resourceGroupName string, networkInterfaceName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkInterfacesClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkInterfaceName}", url.PathEscape(networkInterfaceName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodDelete, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -232,11 +220,11 @@ func (client *NetworkInterfacesClient) DeleteHandleError(resp *azcore.Response) 
 
 // Get - Gets information about the specified network interface.
 func (client *NetworkInterfacesClient) Get(ctx context.Context, resourceGroupName string, networkInterfaceName string, networkInterfacesGetOptions *NetworkInterfacesGetOptions) (*NetworkInterfaceResponse, error) {
-	req, err := client.GetCreateRequest(resourceGroupName, networkInterfaceName, networkInterfacesGetOptions)
+	req, err := client.GetCreateRequest(ctx, resourceGroupName, networkInterfaceName, networkInterfacesGetOptions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -248,26 +236,21 @@ func (client *NetworkInterfacesClient) Get(ctx context.Context, resourceGroupNam
 }
 
 // GetCreateRequest creates the Get request.
-func (client *NetworkInterfacesClient) GetCreateRequest(resourceGroupName string, networkInterfaceName string, networkInterfacesGetOptions *NetworkInterfacesGetOptions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkInterfacesClient) GetCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, networkInterfacesGetOptions *NetworkInterfacesGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkInterfaceName}", url.PathEscape(networkInterfaceName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	if networkInterfacesGetOptions != nil && networkInterfacesGetOptions.Expand != nil {
 		query.Set("$expand", *networkInterfacesGetOptions.Expand)
 	}
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -291,12 +274,12 @@ func (client *NetworkInterfacesClient) GetHandleError(resp *azcore.Response) err
 
 // GetEffectiveRouteTable - Gets all route tables applied to a network interface.
 func (client *NetworkInterfacesClient) BeginGetEffectiveRouteTable(ctx context.Context, resourceGroupName string, networkInterfaceName string) (*EffectiveRouteListResultPollerResponse, error) {
-	req, err := client.GetEffectiveRouteTableCreateRequest(resourceGroupName, networkInterfaceName)
+	req, err := client.GetEffectiveRouteTableCreateRequest(ctx, resourceGroupName, networkInterfaceName)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -331,23 +314,18 @@ func (client *NetworkInterfacesClient) ResumeGetEffectiveRouteTable(token string
 }
 
 // GetEffectiveRouteTableCreateRequest creates the GetEffectiveRouteTable request.
-func (client *NetworkInterfacesClient) GetEffectiveRouteTableCreateRequest(resourceGroupName string, networkInterfaceName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkInterfacesClient) GetEffectiveRouteTableCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/effectiveRouteTable"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkInterfaceName}", url.PathEscape(networkInterfaceName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPost, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -370,11 +348,11 @@ func (client *NetworkInterfacesClient) GetEffectiveRouteTableHandleError(resp *a
 
 // GetVirtualMachineScaleSetIPConfiguration - Get the specified network interface ip configuration in a virtual machine scale set.
 func (client *NetworkInterfacesClient) GetVirtualMachineScaleSetIPConfiguration(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, ipConfigurationName string, networkInterfacesGetVirtualMachineScaleSetIPConfigurationOptions *NetworkInterfacesGetVirtualMachineScaleSetIPConfigurationOptions) (*NetworkInterfaceIPConfigurationResponse, error) {
-	req, err := client.GetVirtualMachineScaleSetIPConfigurationCreateRequest(resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, ipConfigurationName, networkInterfacesGetVirtualMachineScaleSetIPConfigurationOptions)
+	req, err := client.GetVirtualMachineScaleSetIPConfigurationCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, ipConfigurationName, networkInterfacesGetVirtualMachineScaleSetIPConfigurationOptions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -386,11 +364,7 @@ func (client *NetworkInterfacesClient) GetVirtualMachineScaleSetIPConfiguration(
 }
 
 // GetVirtualMachineScaleSetIPConfigurationCreateRequest creates the GetVirtualMachineScaleSetIPConfiguration request.
-func (client *NetworkInterfacesClient) GetVirtualMachineScaleSetIPConfigurationCreateRequest(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, ipConfigurationName string, networkInterfacesGetVirtualMachineScaleSetIPConfigurationOptions *NetworkInterfacesGetVirtualMachineScaleSetIPConfigurationOptions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkInterfacesClient) GetVirtualMachineScaleSetIPConfigurationCreateRequest(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, ipConfigurationName string, networkInterfacesGetVirtualMachineScaleSetIPConfigurationOptions *NetworkInterfacesGetVirtualMachineScaleSetIPConfigurationOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}/networkInterfaces/{networkInterfaceName}/ipConfigurations/{ipConfigurationName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualMachineScaleSetName}", url.PathEscape(virtualMachineScaleSetName))
@@ -398,17 +372,16 @@ func (client *NetworkInterfacesClient) GetVirtualMachineScaleSetIPConfigurationC
 	urlPath = strings.ReplaceAll(urlPath, "{networkInterfaceName}", url.PathEscape(networkInterfaceName))
 	urlPath = strings.ReplaceAll(urlPath, "{ipConfigurationName}", url.PathEscape(ipConfigurationName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2018-10-01")
 	if networkInterfacesGetVirtualMachineScaleSetIPConfigurationOptions != nil && networkInterfacesGetVirtualMachineScaleSetIPConfigurationOptions.Expand != nil {
 		query.Set("$expand", *networkInterfacesGetVirtualMachineScaleSetIPConfigurationOptions.Expand)
 	}
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -432,11 +405,11 @@ func (client *NetworkInterfacesClient) GetVirtualMachineScaleSetIPConfigurationH
 
 // GetVirtualMachineScaleSetNetworkInterface - Get the specified network interface in a virtual machine scale set.
 func (client *NetworkInterfacesClient) GetVirtualMachineScaleSetNetworkInterface(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, networkInterfacesGetVirtualMachineScaleSetNetworkInterfaceOptions *NetworkInterfacesGetVirtualMachineScaleSetNetworkInterfaceOptions) (*NetworkInterfaceResponse, error) {
-	req, err := client.GetVirtualMachineScaleSetNetworkInterfaceCreateRequest(resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, networkInterfacesGetVirtualMachineScaleSetNetworkInterfaceOptions)
+	req, err := client.GetVirtualMachineScaleSetNetworkInterfaceCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, networkInterfacesGetVirtualMachineScaleSetNetworkInterfaceOptions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -448,28 +421,23 @@ func (client *NetworkInterfacesClient) GetVirtualMachineScaleSetNetworkInterface
 }
 
 // GetVirtualMachineScaleSetNetworkInterfaceCreateRequest creates the GetVirtualMachineScaleSetNetworkInterface request.
-func (client *NetworkInterfacesClient) GetVirtualMachineScaleSetNetworkInterfaceCreateRequest(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, networkInterfacesGetVirtualMachineScaleSetNetworkInterfaceOptions *NetworkInterfacesGetVirtualMachineScaleSetNetworkInterfaceOptions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkInterfacesClient) GetVirtualMachineScaleSetNetworkInterfaceCreateRequest(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, networkInterfacesGetVirtualMachineScaleSetNetworkInterfaceOptions *NetworkInterfacesGetVirtualMachineScaleSetNetworkInterfaceOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}/networkInterfaces/{networkInterfaceName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualMachineScaleSetName}", url.PathEscape(virtualMachineScaleSetName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualmachineIndex}", url.PathEscape(virtualmachineIndex))
 	urlPath = strings.ReplaceAll(urlPath, "{networkInterfaceName}", url.PathEscape(networkInterfaceName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2018-10-01")
 	if networkInterfacesGetVirtualMachineScaleSetNetworkInterfaceOptions != nil && networkInterfacesGetVirtualMachineScaleSetNetworkInterfaceOptions.Expand != nil {
 		query.Set("$expand", *networkInterfacesGetVirtualMachineScaleSetNetworkInterfaceOptions.Expand)
 	}
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -492,45 +460,31 @@ func (client *NetworkInterfacesClient) GetVirtualMachineScaleSetNetworkInterface
 }
 
 // List - Gets all network interfaces in a resource group.
-func (client *NetworkInterfacesClient) List(resourceGroupName string) (NetworkInterfaceListResultPager, error) {
-	req, err := client.ListCreateRequest(resourceGroupName)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkInterfacesClient) List(resourceGroupName string) NetworkInterfaceListResultPager {
 	return &networkInterfaceListResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListHandleResponse,
-		advancer: func(resp *NetworkInterfaceListResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.NetworkInterfaceListResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.NetworkInterfaceListResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListCreateRequest(ctx, resourceGroupName)
 		},
-	}, nil
+		responder: client.ListHandleResponse,
+		advancer: func(ctx context.Context, resp *NetworkInterfaceListResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.NetworkInterfaceListResult.NextLink)
+		},
+	}
 }
 
 // ListCreateRequest creates the List request.
-func (client *NetworkInterfacesClient) ListCreateRequest(resourceGroupName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkInterfacesClient) ListCreateRequest(ctx context.Context, resourceGroupName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -553,44 +507,30 @@ func (client *NetworkInterfacesClient) ListHandleError(resp *azcore.Response) er
 }
 
 // ListAll - Gets all network interfaces in a subscription.
-func (client *NetworkInterfacesClient) ListAll() (NetworkInterfaceListResultPager, error) {
-	req, err := client.ListAllCreateRequest()
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkInterfacesClient) ListAll() NetworkInterfaceListResultPager {
 	return &networkInterfaceListResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListAllHandleResponse,
-		advancer: func(resp *NetworkInterfaceListResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.NetworkInterfaceListResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.NetworkInterfaceListResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListAllCreateRequest(ctx)
 		},
-	}, nil
+		responder: client.ListAllHandleResponse,
+		advancer: func(ctx context.Context, resp *NetworkInterfaceListResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.NetworkInterfaceListResult.NextLink)
+		},
+	}
 }
 
 // ListAllCreateRequest creates the ListAll request.
-func (client *NetworkInterfacesClient) ListAllCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkInterfacesClient) ListAllCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkInterfaces"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -614,12 +554,12 @@ func (client *NetworkInterfacesClient) ListAllHandleError(resp *azcore.Response)
 
 // ListEffectiveNetworkSecurityGroups - Gets all network security groups applied to a network interface.
 func (client *NetworkInterfacesClient) BeginListEffectiveNetworkSecurityGroups(ctx context.Context, resourceGroupName string, networkInterfaceName string) (*EffectiveNetworkSecurityGroupListResultPollerResponse, error) {
-	req, err := client.ListEffectiveNetworkSecurityGroupsCreateRequest(resourceGroupName, networkInterfaceName)
+	req, err := client.ListEffectiveNetworkSecurityGroupsCreateRequest(ctx, resourceGroupName, networkInterfaceName)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -654,23 +594,18 @@ func (client *NetworkInterfacesClient) ResumeListEffectiveNetworkSecurityGroups(
 }
 
 // ListEffectiveNetworkSecurityGroupsCreateRequest creates the ListEffectiveNetworkSecurityGroups request.
-func (client *NetworkInterfacesClient) ListEffectiveNetworkSecurityGroupsCreateRequest(resourceGroupName string, networkInterfaceName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkInterfacesClient) ListEffectiveNetworkSecurityGroupsCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/effectiveNetworkSecurityGroups"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkInterfaceName}", url.PathEscape(networkInterfaceName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPost, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -692,51 +627,37 @@ func (client *NetworkInterfacesClient) ListEffectiveNetworkSecurityGroupsHandleE
 }
 
 // ListVirtualMachineScaleSetIPConfigurations - Get the specified network interface ip configuration in a virtual machine scale set.
-func (client *NetworkInterfacesClient) ListVirtualMachineScaleSetIPConfigurations(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, networkInterfacesListVirtualMachineScaleSetIPConfigurationsOptions *NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsOptions) (NetworkInterfaceIPConfigurationListResultPager, error) {
-	req, err := client.ListVirtualMachineScaleSetIPConfigurationsCreateRequest(resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, networkInterfacesListVirtualMachineScaleSetIPConfigurationsOptions)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkInterfacesClient) ListVirtualMachineScaleSetIPConfigurations(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, networkInterfacesListVirtualMachineScaleSetIPConfigurationsOptions *NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsOptions) NetworkInterfaceIPConfigurationListResultPager {
 	return &networkInterfaceIPConfigurationListResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListVirtualMachineScaleSetIPConfigurationsHandleResponse,
-		advancer: func(resp *NetworkInterfaceIPConfigurationListResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.NetworkInterfaceIPConfigurationListResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.NetworkInterfaceIPConfigurationListResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListVirtualMachineScaleSetIPConfigurationsCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, networkInterfacesListVirtualMachineScaleSetIPConfigurationsOptions)
 		},
-	}, nil
+		responder: client.ListVirtualMachineScaleSetIPConfigurationsHandleResponse,
+		advancer: func(ctx context.Context, resp *NetworkInterfaceIPConfigurationListResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.NetworkInterfaceIPConfigurationListResult.NextLink)
+		},
+	}
 }
 
 // ListVirtualMachineScaleSetIPConfigurationsCreateRequest creates the ListVirtualMachineScaleSetIPConfigurations request.
-func (client *NetworkInterfacesClient) ListVirtualMachineScaleSetIPConfigurationsCreateRequest(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, networkInterfacesListVirtualMachineScaleSetIPConfigurationsOptions *NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsOptions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkInterfacesClient) ListVirtualMachineScaleSetIPConfigurationsCreateRequest(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, networkInterfacesListVirtualMachineScaleSetIPConfigurationsOptions *NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}/networkInterfaces/{networkInterfaceName}/ipConfigurations"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualMachineScaleSetName}", url.PathEscape(virtualMachineScaleSetName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualmachineIndex}", url.PathEscape(virtualmachineIndex))
 	urlPath = strings.ReplaceAll(urlPath, "{networkInterfaceName}", url.PathEscape(networkInterfaceName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2018-10-01")
 	if networkInterfacesListVirtualMachineScaleSetIPConfigurationsOptions != nil && networkInterfacesListVirtualMachineScaleSetIPConfigurationsOptions.Expand != nil {
 		query.Set("$expand", *networkInterfacesListVirtualMachineScaleSetIPConfigurationsOptions.Expand)
 	}
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -759,46 +680,32 @@ func (client *NetworkInterfacesClient) ListVirtualMachineScaleSetIPConfiguration
 }
 
 // ListVirtualMachineScaleSetNetworkInterfaces - Gets all network interfaces in a virtual machine scale set.
-func (client *NetworkInterfacesClient) ListVirtualMachineScaleSetNetworkInterfaces(resourceGroupName string, virtualMachineScaleSetName string) (NetworkInterfaceListResultPager, error) {
-	req, err := client.ListVirtualMachineScaleSetNetworkInterfacesCreateRequest(resourceGroupName, virtualMachineScaleSetName)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkInterfacesClient) ListVirtualMachineScaleSetNetworkInterfaces(resourceGroupName string, virtualMachineScaleSetName string) NetworkInterfaceListResultPager {
 	return &networkInterfaceListResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListVirtualMachineScaleSetNetworkInterfacesHandleResponse,
-		advancer: func(resp *NetworkInterfaceListResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.NetworkInterfaceListResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.NetworkInterfaceListResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListVirtualMachineScaleSetNetworkInterfacesCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName)
 		},
-	}, nil
+		responder: client.ListVirtualMachineScaleSetNetworkInterfacesHandleResponse,
+		advancer: func(ctx context.Context, resp *NetworkInterfaceListResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.NetworkInterfaceListResult.NextLink)
+		},
+	}
 }
 
 // ListVirtualMachineScaleSetNetworkInterfacesCreateRequest creates the ListVirtualMachineScaleSetNetworkInterfaces request.
-func (client *NetworkInterfacesClient) ListVirtualMachineScaleSetNetworkInterfacesCreateRequest(resourceGroupName string, virtualMachineScaleSetName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkInterfacesClient) ListVirtualMachineScaleSetNetworkInterfacesCreateRequest(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/networkInterfaces"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualMachineScaleSetName}", url.PathEscape(virtualMachineScaleSetName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2018-10-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -821,47 +728,33 @@ func (client *NetworkInterfacesClient) ListVirtualMachineScaleSetNetworkInterfac
 }
 
 // ListVirtualMachineScaleSetVMNetworkInterfaces - Gets information about all network interfaces in a virtual machine in a virtual machine scale set.
-func (client *NetworkInterfacesClient) ListVirtualMachineScaleSetVMNetworkInterfaces(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string) (NetworkInterfaceListResultPager, error) {
-	req, err := client.ListVirtualMachineScaleSetVMNetworkInterfacesCreateRequest(resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkInterfacesClient) ListVirtualMachineScaleSetVMNetworkInterfaces(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string) NetworkInterfaceListResultPager {
 	return &networkInterfaceListResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListVirtualMachineScaleSetVMNetworkInterfacesHandleResponse,
-		advancer: func(resp *NetworkInterfaceListResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.NetworkInterfaceListResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.NetworkInterfaceListResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListVirtualMachineScaleSetVMNetworkInterfacesCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex)
 		},
-	}, nil
+		responder: client.ListVirtualMachineScaleSetVMNetworkInterfacesHandleResponse,
+		advancer: func(ctx context.Context, resp *NetworkInterfaceListResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.NetworkInterfaceListResult.NextLink)
+		},
+	}
 }
 
 // ListVirtualMachineScaleSetVMNetworkInterfacesCreateRequest creates the ListVirtualMachineScaleSetVMNetworkInterfaces request.
-func (client *NetworkInterfacesClient) ListVirtualMachineScaleSetVMNetworkInterfacesCreateRequest(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkInterfacesClient) ListVirtualMachineScaleSetVMNetworkInterfacesCreateRequest(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}/networkInterfaces"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualMachineScaleSetName}", url.PathEscape(virtualMachineScaleSetName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualmachineIndex}", url.PathEscape(virtualmachineIndex))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2018-10-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -885,11 +778,11 @@ func (client *NetworkInterfacesClient) ListVirtualMachineScaleSetVMNetworkInterf
 
 // UpdateTags - Updates a network interface tags.
 func (client *NetworkInterfacesClient) UpdateTags(ctx context.Context, resourceGroupName string, networkInterfaceName string, parameters TagsObject) (*NetworkInterfaceResponse, error) {
-	req, err := client.UpdateTagsCreateRequest(resourceGroupName, networkInterfaceName, parameters)
+	req, err := client.UpdateTagsCreateRequest(ctx, resourceGroupName, networkInterfaceName, parameters)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -901,23 +794,18 @@ func (client *NetworkInterfacesClient) UpdateTags(ctx context.Context, resourceG
 }
 
 // UpdateTagsCreateRequest creates the UpdateTags request.
-func (client *NetworkInterfacesClient) UpdateTagsCreateRequest(resourceGroupName string, networkInterfaceName string, parameters TagsObject) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkInterfacesClient) UpdateTagsCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, parameters TagsObject) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkInterfaceName}", url.PathEscape(networkInterfaceName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPatch, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(parameters)
 }
 

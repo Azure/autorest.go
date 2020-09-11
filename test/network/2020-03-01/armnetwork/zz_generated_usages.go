@@ -6,18 +6,17 @@
 package armnetwork
 
 import (
-	"fmt"
+	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 )
 
 // UsagesOperations contains the methods for the Usages group.
 type UsagesOperations interface {
 	// List - List network usages for a subscription.
-	List(location string) (UsagesListResultPager, error)
+	List(location string) UsagesListResultPager
 }
 
 // UsagesClient implements the UsagesOperations interface.
@@ -33,50 +32,36 @@ func NewUsagesClient(c *Client, subscriptionID string) UsagesOperations {
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *UsagesClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *UsagesClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // List - List network usages for a subscription.
-func (client *UsagesClient) List(location string) (UsagesListResultPager, error) {
-	req, err := client.ListCreateRequest(location)
-	if err != nil {
-		return nil, err
-	}
+func (client *UsagesClient) List(location string) UsagesListResultPager {
 	return &usagesListResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListHandleResponse,
-		advancer: func(resp *UsagesListResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.UsagesListResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.UsagesListResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListCreateRequest(ctx, location)
 		},
-	}, nil
+		responder: client.ListHandleResponse,
+		advancer: func(ctx context.Context, resp *UsagesListResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.UsagesListResult.NextLink)
+		},
+	}
 }
 
 // ListCreateRequest creates the List request.
-func (client *UsagesClient) ListCreateRequest(location string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *UsagesClient) ListCreateRequest(ctx context.Context, location string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/usages"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 

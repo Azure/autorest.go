@@ -10,7 +10,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 )
 
@@ -38,17 +37,17 @@ func NewSubscriptionInMethodClient(c *Client) SubscriptionInMethodOperations {
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *SubscriptionInMethodClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *SubscriptionInMethodClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // PostMethodLocalNull - POST method with subscriptionId modeled in the method.  pass in subscription id = null, client-side validation should prevent you from making this call
 func (client *SubscriptionInMethodClient) PostMethodLocalNull(ctx context.Context, subscriptionId string) (*http.Response, error) {
-	req, err := client.PostMethodLocalNullCreateRequest(subscriptionId)
+	req, err := client.PostMethodLocalNullCreateRequest(ctx, subscriptionId)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -60,18 +59,13 @@ func (client *SubscriptionInMethodClient) PostMethodLocalNull(ctx context.Contex
 }
 
 // PostMethodLocalNullCreateRequest creates the PostMethodLocalNull request.
-func (client *SubscriptionInMethodClient) PostMethodLocalNullCreateRequest(subscriptionId string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *SubscriptionInMethodClient) PostMethodLocalNullCreateRequest(ctx context.Context, subscriptionId string) (*azcore.Request, error) {
 	urlPath := "/azurespecials/subscriptionId/method/string/none/path/local/null/{subscriptionId}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionId))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPost, *u)
 	return req, nil
 }
 
@@ -94,11 +88,11 @@ func (client *SubscriptionInMethodClient) PostMethodLocalNullHandleError(resp *a
 
 // PostMethodLocalValid - POST method with subscriptionId modeled in the method.  pass in subscription id = '1234-5678-9012-3456' to succeed
 func (client *SubscriptionInMethodClient) PostMethodLocalValid(ctx context.Context, subscriptionId string) (*http.Response, error) {
-	req, err := client.PostMethodLocalValidCreateRequest(subscriptionId)
+	req, err := client.PostMethodLocalValidCreateRequest(ctx, subscriptionId)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -110,18 +104,13 @@ func (client *SubscriptionInMethodClient) PostMethodLocalValid(ctx context.Conte
 }
 
 // PostMethodLocalValidCreateRequest creates the PostMethodLocalValid request.
-func (client *SubscriptionInMethodClient) PostMethodLocalValidCreateRequest(subscriptionId string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *SubscriptionInMethodClient) PostMethodLocalValidCreateRequest(ctx context.Context, subscriptionId string) (*azcore.Request, error) {
 	urlPath := "/azurespecials/subscriptionId/method/string/none/path/local/1234-5678-9012-3456/{subscriptionId}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionId))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPost, *u)
 	return req, nil
 }
 
@@ -144,11 +133,11 @@ func (client *SubscriptionInMethodClient) PostMethodLocalValidHandleError(resp *
 
 // PostPathLocalValid - POST method with subscriptionId modeled in the method.  pass in subscription id = '1234-5678-9012-3456' to succeed
 func (client *SubscriptionInMethodClient) PostPathLocalValid(ctx context.Context, subscriptionId string) (*http.Response, error) {
-	req, err := client.PostPathLocalValidCreateRequest(subscriptionId)
+	req, err := client.PostPathLocalValidCreateRequest(ctx, subscriptionId)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -160,18 +149,13 @@ func (client *SubscriptionInMethodClient) PostPathLocalValid(ctx context.Context
 }
 
 // PostPathLocalValidCreateRequest creates the PostPathLocalValid request.
-func (client *SubscriptionInMethodClient) PostPathLocalValidCreateRequest(subscriptionId string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *SubscriptionInMethodClient) PostPathLocalValidCreateRequest(ctx context.Context, subscriptionId string) (*azcore.Request, error) {
 	urlPath := "/azurespecials/subscriptionId/path/string/none/path/local/1234-5678-9012-3456/{subscriptionId}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionId))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPost, *u)
 	return req, nil
 }
 
@@ -194,11 +178,11 @@ func (client *SubscriptionInMethodClient) PostPathLocalValidHandleError(resp *az
 
 // PostSwaggerLocalValid - POST method with subscriptionId modeled in the method.  pass in subscription id = '1234-5678-9012-3456' to succeed
 func (client *SubscriptionInMethodClient) PostSwaggerLocalValid(ctx context.Context, subscriptionId string) (*http.Response, error) {
-	req, err := client.PostSwaggerLocalValidCreateRequest(subscriptionId)
+	req, err := client.PostSwaggerLocalValidCreateRequest(ctx, subscriptionId)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -210,18 +194,13 @@ func (client *SubscriptionInMethodClient) PostSwaggerLocalValid(ctx context.Cont
 }
 
 // PostSwaggerLocalValidCreateRequest creates the PostSwaggerLocalValid request.
-func (client *SubscriptionInMethodClient) PostSwaggerLocalValidCreateRequest(subscriptionId string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *SubscriptionInMethodClient) PostSwaggerLocalValidCreateRequest(ctx context.Context, subscriptionId string) (*azcore.Request, error) {
 	urlPath := "/azurespecials/subscriptionId/swagger/string/none/path/local/1234-5678-9012-3456/{subscriptionId}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionId))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPost, *u)
 	return req, nil
 }
 

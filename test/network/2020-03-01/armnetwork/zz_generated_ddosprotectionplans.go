@@ -7,12 +7,10 @@ package armnetwork
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 	"time"
 )
@@ -30,9 +28,9 @@ type DdosProtectionPlansOperations interface {
 	// Get - Gets information about the specified DDoS protection plan.
 	Get(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string) (*DdosProtectionPlanResponse, error)
 	// List - Gets all DDoS protection plans in a subscription.
-	List() (DdosProtectionPlanListResultPager, error)
+	List() DdosProtectionPlanListResultPager
 	// ListByResourceGroup - Gets all the DDoS protection plans in a resource group.
-	ListByResourceGroup(resourceGroupName string) (DdosProtectionPlanListResultPager, error)
+	ListByResourceGroup(resourceGroupName string) DdosProtectionPlanListResultPager
 	// UpdateTags - Update a DDoS protection plan tags.
 	UpdateTags(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters TagsObject) (*DdosProtectionPlanResponse, error)
 }
@@ -50,18 +48,18 @@ func NewDdosProtectionPlansClient(c *Client, subscriptionID string) DdosProtecti
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *DdosProtectionPlansClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *DdosProtectionPlansClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // CreateOrUpdate - Creates or updates a DDoS protection plan.
 func (client *DdosProtectionPlansClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters DdosProtectionPlan) (*DdosProtectionPlanPollerResponse, error) {
-	req, err := client.CreateOrUpdateCreateRequest(resourceGroupName, ddosProtectionPlanName, parameters)
+	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, ddosProtectionPlanName, parameters)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -96,23 +94,18 @@ func (client *DdosProtectionPlansClient) ResumeCreateOrUpdate(token string) (Ddo
 }
 
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *DdosProtectionPlansClient) CreateOrUpdateCreateRequest(resourceGroupName string, ddosProtectionPlanName string, parameters DdosProtectionPlan) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *DdosProtectionPlansClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters DdosProtectionPlan) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosProtectionPlans/{ddosProtectionPlanName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{ddosProtectionPlanName}", url.PathEscape(ddosProtectionPlanName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPut, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -135,12 +128,12 @@ func (client *DdosProtectionPlansClient) CreateOrUpdateHandleError(resp *azcore.
 
 // Delete - Deletes the specified DDoS protection plan.
 func (client *DdosProtectionPlansClient) BeginDelete(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string) (*HTTPPollerResponse, error) {
-	req, err := client.DeleteCreateRequest(resourceGroupName, ddosProtectionPlanName)
+	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, ddosProtectionPlanName)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -175,23 +168,18 @@ func (client *DdosProtectionPlansClient) ResumeDelete(token string) (HTTPPoller,
 }
 
 // DeleteCreateRequest creates the Delete request.
-func (client *DdosProtectionPlansClient) DeleteCreateRequest(resourceGroupName string, ddosProtectionPlanName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *DdosProtectionPlansClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosProtectionPlans/{ddosProtectionPlanName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{ddosProtectionPlanName}", url.PathEscape(ddosProtectionPlanName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodDelete, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -214,11 +202,11 @@ func (client *DdosProtectionPlansClient) DeleteHandleError(resp *azcore.Response
 
 // Get - Gets information about the specified DDoS protection plan.
 func (client *DdosProtectionPlansClient) Get(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string) (*DdosProtectionPlanResponse, error) {
-	req, err := client.GetCreateRequest(resourceGroupName, ddosProtectionPlanName)
+	req, err := client.GetCreateRequest(ctx, resourceGroupName, ddosProtectionPlanName)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -230,23 +218,18 @@ func (client *DdosProtectionPlansClient) Get(ctx context.Context, resourceGroupN
 }
 
 // GetCreateRequest creates the Get request.
-func (client *DdosProtectionPlansClient) GetCreateRequest(resourceGroupName string, ddosProtectionPlanName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *DdosProtectionPlansClient) GetCreateRequest(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosProtectionPlans/{ddosProtectionPlanName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{ddosProtectionPlanName}", url.PathEscape(ddosProtectionPlanName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -269,44 +252,30 @@ func (client *DdosProtectionPlansClient) GetHandleError(resp *azcore.Response) e
 }
 
 // List - Gets all DDoS protection plans in a subscription.
-func (client *DdosProtectionPlansClient) List() (DdosProtectionPlanListResultPager, error) {
-	req, err := client.ListCreateRequest()
-	if err != nil {
-		return nil, err
-	}
+func (client *DdosProtectionPlansClient) List() DdosProtectionPlanListResultPager {
 	return &ddosProtectionPlanListResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListHandleResponse,
-		advancer: func(resp *DdosProtectionPlanListResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.DdosProtectionPlanListResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.DdosProtectionPlanListResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListCreateRequest(ctx)
 		},
-	}, nil
+		responder: client.ListHandleResponse,
+		advancer: func(ctx context.Context, resp *DdosProtectionPlanListResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.DdosProtectionPlanListResult.NextLink)
+		},
+	}
 }
 
 // ListCreateRequest creates the List request.
-func (client *DdosProtectionPlansClient) ListCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *DdosProtectionPlansClient) ListCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/ddosProtectionPlans"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -329,45 +298,31 @@ func (client *DdosProtectionPlansClient) ListHandleError(resp *azcore.Response) 
 }
 
 // ListByResourceGroup - Gets all the DDoS protection plans in a resource group.
-func (client *DdosProtectionPlansClient) ListByResourceGroup(resourceGroupName string) (DdosProtectionPlanListResultPager, error) {
-	req, err := client.ListByResourceGroupCreateRequest(resourceGroupName)
-	if err != nil {
-		return nil, err
-	}
+func (client *DdosProtectionPlansClient) ListByResourceGroup(resourceGroupName string) DdosProtectionPlanListResultPager {
 	return &ddosProtectionPlanListResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListByResourceGroupHandleResponse,
-		advancer: func(resp *DdosProtectionPlanListResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.DdosProtectionPlanListResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.DdosProtectionPlanListResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListByResourceGroupCreateRequest(ctx, resourceGroupName)
 		},
-	}, nil
+		responder: client.ListByResourceGroupHandleResponse,
+		advancer: func(ctx context.Context, resp *DdosProtectionPlanListResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.DdosProtectionPlanListResult.NextLink)
+		},
+	}
 }
 
 // ListByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *DdosProtectionPlansClient) ListByResourceGroupCreateRequest(resourceGroupName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *DdosProtectionPlansClient) ListByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosProtectionPlans"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -391,11 +346,11 @@ func (client *DdosProtectionPlansClient) ListByResourceGroupHandleError(resp *az
 
 // UpdateTags - Update a DDoS protection plan tags.
 func (client *DdosProtectionPlansClient) UpdateTags(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters TagsObject) (*DdosProtectionPlanResponse, error) {
-	req, err := client.UpdateTagsCreateRequest(resourceGroupName, ddosProtectionPlanName, parameters)
+	req, err := client.UpdateTagsCreateRequest(ctx, resourceGroupName, ddosProtectionPlanName, parameters)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -407,23 +362,18 @@ func (client *DdosProtectionPlansClient) UpdateTags(ctx context.Context, resourc
 }
 
 // UpdateTagsCreateRequest creates the UpdateTags request.
-func (client *DdosProtectionPlansClient) UpdateTagsCreateRequest(resourceGroupName string, ddosProtectionPlanName string, parameters TagsObject) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *DdosProtectionPlansClient) UpdateTagsCreateRequest(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters TagsObject) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosProtectionPlans/{ddosProtectionPlanName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{ddosProtectionPlanName}", url.PathEscape(ddosProtectionPlanName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPatch, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(parameters)
 }
 

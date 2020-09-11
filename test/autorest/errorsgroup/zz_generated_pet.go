@@ -13,7 +13,6 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 )
 
@@ -37,17 +36,17 @@ func NewPetClient(c *Client) PetOperations {
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *PetClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *PetClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // DoSomething - Asks pet to do something
 func (client *PetClient) DoSomething(ctx context.Context, whatAction string) (*PetActionResponse, error) {
-	req, err := client.DoSomethingCreateRequest(whatAction)
+	req, err := client.DoSomethingCreateRequest(ctx, whatAction)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -59,18 +58,13 @@ func (client *PetClient) DoSomething(ctx context.Context, whatAction string) (*P
 }
 
 // DoSomethingCreateRequest creates the DoSomething request.
-func (client *PetClient) DoSomethingCreateRequest(whatAction string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *PetClient) DoSomethingCreateRequest(ctx context.Context, whatAction string) (*azcore.Request, error) {
 	urlPath := "/errorStatusCodes/Pets/doSomething/{whatAction}"
 	urlPath = strings.ReplaceAll(urlPath, "{whatAction}", url.PathEscape(whatAction))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPost, *u)
 	return req, nil
 }
 
@@ -103,11 +97,11 @@ func (client *PetClient) DoSomethingHandleError(resp *azcore.Response) error {
 
 // GetPetByID - Gets pets by id.
 func (client *PetClient) GetPetByID(ctx context.Context, petId string) (*PetResponse, error) {
-	req, err := client.GetPetByIDCreateRequest(petId)
+	req, err := client.GetPetByIDCreateRequest(ctx, petId)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -119,18 +113,13 @@ func (client *PetClient) GetPetByID(ctx context.Context, petId string) (*PetResp
 }
 
 // GetPetByIDCreateRequest creates the GetPetByID request.
-func (client *PetClient) GetPetByIDCreateRequest(petId string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *PetClient) GetPetByIDCreateRequest(ctx context.Context, petId string) (*azcore.Request, error) {
 	urlPath := "/errorStatusCodes/Pets/{petId}/GetPet"
 	urlPath = strings.ReplaceAll(urlPath, "{petId}", url.PathEscape(petId))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 

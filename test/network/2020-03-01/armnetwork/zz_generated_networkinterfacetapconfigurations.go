@@ -7,12 +7,10 @@ package armnetwork
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 	"time"
 )
@@ -30,7 +28,7 @@ type NetworkInterfaceTapConfigurationsOperations interface {
 	// Get - Get the specified tap configuration on a network interface.
 	Get(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string) (*NetworkInterfaceTapConfigurationResponse, error)
 	// List - Get all Tap configurations in a network interface.
-	List(resourceGroupName string, networkInterfaceName string) (NetworkInterfaceTapConfigurationListResultPager, error)
+	List(resourceGroupName string, networkInterfaceName string) NetworkInterfaceTapConfigurationListResultPager
 }
 
 // NetworkInterfaceTapConfigurationsClient implements the NetworkInterfaceTapConfigurationsOperations interface.
@@ -46,18 +44,18 @@ func NewNetworkInterfaceTapConfigurationsClient(c *Client, subscriptionID string
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *NetworkInterfaceTapConfigurationsClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *NetworkInterfaceTapConfigurationsClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // CreateOrUpdate - Creates or updates a Tap configuration in the specified NetworkInterface.
 func (client *NetworkInterfaceTapConfigurationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, tapConfigurationParameters NetworkInterfaceTapConfiguration) (*NetworkInterfaceTapConfigurationPollerResponse, error) {
-	req, err := client.CreateOrUpdateCreateRequest(resourceGroupName, networkInterfaceName, tapConfigurationName, tapConfigurationParameters)
+	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName, tapConfigurationParameters)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -92,24 +90,19 @@ func (client *NetworkInterfaceTapConfigurationsClient) ResumeCreateOrUpdate(toke
 }
 
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *NetworkInterfaceTapConfigurationsClient) CreateOrUpdateCreateRequest(resourceGroupName string, networkInterfaceName string, tapConfigurationName string, tapConfigurationParameters NetworkInterfaceTapConfiguration) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkInterfaceTapConfigurationsClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, tapConfigurationParameters NetworkInterfaceTapConfiguration) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/tapConfigurations/{tapConfigurationName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkInterfaceName}", url.PathEscape(networkInterfaceName))
 	urlPath = strings.ReplaceAll(urlPath, "{tapConfigurationName}", url.PathEscape(tapConfigurationName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPut, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(tapConfigurationParameters)
 }
 
@@ -132,12 +125,12 @@ func (client *NetworkInterfaceTapConfigurationsClient) CreateOrUpdateHandleError
 
 // Delete - Deletes the specified tap configuration from the NetworkInterface.
 func (client *NetworkInterfaceTapConfigurationsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string) (*HTTPPollerResponse, error) {
-	req, err := client.DeleteCreateRequest(resourceGroupName, networkInterfaceName, tapConfigurationName)
+	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -172,24 +165,19 @@ func (client *NetworkInterfaceTapConfigurationsClient) ResumeDelete(token string
 }
 
 // DeleteCreateRequest creates the Delete request.
-func (client *NetworkInterfaceTapConfigurationsClient) DeleteCreateRequest(resourceGroupName string, networkInterfaceName string, tapConfigurationName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkInterfaceTapConfigurationsClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/tapConfigurations/{tapConfigurationName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkInterfaceName}", url.PathEscape(networkInterfaceName))
 	urlPath = strings.ReplaceAll(urlPath, "{tapConfigurationName}", url.PathEscape(tapConfigurationName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodDelete, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -212,11 +200,11 @@ func (client *NetworkInterfaceTapConfigurationsClient) DeleteHandleError(resp *a
 
 // Get - Get the specified tap configuration on a network interface.
 func (client *NetworkInterfaceTapConfigurationsClient) Get(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string) (*NetworkInterfaceTapConfigurationResponse, error) {
-	req, err := client.GetCreateRequest(resourceGroupName, networkInterfaceName, tapConfigurationName)
+	req, err := client.GetCreateRequest(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -228,24 +216,19 @@ func (client *NetworkInterfaceTapConfigurationsClient) Get(ctx context.Context, 
 }
 
 // GetCreateRequest creates the Get request.
-func (client *NetworkInterfaceTapConfigurationsClient) GetCreateRequest(resourceGroupName string, networkInterfaceName string, tapConfigurationName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkInterfaceTapConfigurationsClient) GetCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/tapConfigurations/{tapConfigurationName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkInterfaceName}", url.PathEscape(networkInterfaceName))
 	urlPath = strings.ReplaceAll(urlPath, "{tapConfigurationName}", url.PathEscape(tapConfigurationName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -268,46 +251,32 @@ func (client *NetworkInterfaceTapConfigurationsClient) GetHandleError(resp *azco
 }
 
 // List - Get all Tap configurations in a network interface.
-func (client *NetworkInterfaceTapConfigurationsClient) List(resourceGroupName string, networkInterfaceName string) (NetworkInterfaceTapConfigurationListResultPager, error) {
-	req, err := client.ListCreateRequest(resourceGroupName, networkInterfaceName)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkInterfaceTapConfigurationsClient) List(resourceGroupName string, networkInterfaceName string) NetworkInterfaceTapConfigurationListResultPager {
 	return &networkInterfaceTapConfigurationListResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListHandleResponse,
-		advancer: func(resp *NetworkInterfaceTapConfigurationListResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.NetworkInterfaceTapConfigurationListResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.NetworkInterfaceTapConfigurationListResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListCreateRequest(ctx, resourceGroupName, networkInterfaceName)
 		},
-	}, nil
+		responder: client.ListHandleResponse,
+		advancer: func(ctx context.Context, resp *NetworkInterfaceTapConfigurationListResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.NetworkInterfaceTapConfigurationListResult.NextLink)
+		},
+	}
 }
 
 // ListCreateRequest creates the List request.
-func (client *NetworkInterfaceTapConfigurationsClient) ListCreateRequest(resourceGroupName string, networkInterfaceName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkInterfaceTapConfigurationsClient) ListCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/tapConfigurations"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkInterfaceName}", url.PathEscape(networkInterfaceName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 

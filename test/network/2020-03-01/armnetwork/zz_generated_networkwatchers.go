@@ -11,7 +11,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 	"time"
 )
@@ -93,18 +92,18 @@ func NewNetworkWatchersClient(c *Client, subscriptionID string) NetworkWatchersO
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *NetworkWatchersClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *NetworkWatchersClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // CheckConnectivity - Verifies the possibility of establishing a direct TCP connection from a virtual machine to a given endpoint including another VM or an arbitrary remote server.
 func (client *NetworkWatchersClient) BeginCheckConnectivity(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters ConnectivityParameters) (*ConnectivityInformationPollerResponse, error) {
-	req, err := client.CheckConnectivityCreateRequest(resourceGroupName, networkWatcherName, parameters)
+	req, err := client.CheckConnectivityCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -139,23 +138,18 @@ func (client *NetworkWatchersClient) ResumeCheckConnectivity(token string) (Conn
 }
 
 // CheckConnectivityCreateRequest creates the CheckConnectivity request.
-func (client *NetworkWatchersClient) CheckConnectivityCreateRequest(resourceGroupName string, networkWatcherName string, parameters ConnectivityParameters) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkWatchersClient) CheckConnectivityCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters ConnectivityParameters) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectivityCheck"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkWatcherName}", url.PathEscape(networkWatcherName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPost, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -178,11 +172,11 @@ func (client *NetworkWatchersClient) CheckConnectivityHandleError(resp *azcore.R
 
 // CreateOrUpdate - Creates or updates a network watcher in the specified resource group.
 func (client *NetworkWatchersClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters NetworkWatcher) (*NetworkWatcherResponse, error) {
-	req, err := client.CreateOrUpdateCreateRequest(resourceGroupName, networkWatcherName, parameters)
+	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -194,23 +188,18 @@ func (client *NetworkWatchersClient) CreateOrUpdate(ctx context.Context, resourc
 }
 
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *NetworkWatchersClient) CreateOrUpdateCreateRequest(resourceGroupName string, networkWatcherName string, parameters NetworkWatcher) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkWatchersClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters NetworkWatcher) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkWatcherName}", url.PathEscape(networkWatcherName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPut, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -234,12 +223,12 @@ func (client *NetworkWatchersClient) CreateOrUpdateHandleError(resp *azcore.Resp
 
 // Delete - Deletes the specified network watcher resource.
 func (client *NetworkWatchersClient) BeginDelete(ctx context.Context, resourceGroupName string, networkWatcherName string) (*HTTPPollerResponse, error) {
-	req, err := client.DeleteCreateRequest(resourceGroupName, networkWatcherName)
+	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, networkWatcherName)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -274,23 +263,18 @@ func (client *NetworkWatchersClient) ResumeDelete(token string) (HTTPPoller, err
 }
 
 // DeleteCreateRequest creates the Delete request.
-func (client *NetworkWatchersClient) DeleteCreateRequest(resourceGroupName string, networkWatcherName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkWatchersClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkWatcherName}", url.PathEscape(networkWatcherName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodDelete, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -313,11 +297,11 @@ func (client *NetworkWatchersClient) DeleteHandleError(resp *azcore.Response) er
 
 // Get - Gets the specified network watcher by resource group.
 func (client *NetworkWatchersClient) Get(ctx context.Context, resourceGroupName string, networkWatcherName string) (*NetworkWatcherResponse, error) {
-	req, err := client.GetCreateRequest(resourceGroupName, networkWatcherName)
+	req, err := client.GetCreateRequest(ctx, resourceGroupName, networkWatcherName)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -329,23 +313,18 @@ func (client *NetworkWatchersClient) Get(ctx context.Context, resourceGroupName 
 }
 
 // GetCreateRequest creates the Get request.
-func (client *NetworkWatchersClient) GetCreateRequest(resourceGroupName string, networkWatcherName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkWatchersClient) GetCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkWatcherName}", url.PathEscape(networkWatcherName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -369,12 +348,12 @@ func (client *NetworkWatchersClient) GetHandleError(resp *azcore.Response) error
 
 // GetAzureReachabilityReport - NOTE: This feature is currently in preview and still being tested for stability. Gets the relative latency score for internet service providers from a specified location to Azure regions.
 func (client *NetworkWatchersClient) BeginGetAzureReachabilityReport(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters AzureReachabilityReportParameters) (*AzureReachabilityReportPollerResponse, error) {
-	req, err := client.GetAzureReachabilityReportCreateRequest(resourceGroupName, networkWatcherName, parameters)
+	req, err := client.GetAzureReachabilityReportCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -409,23 +388,18 @@ func (client *NetworkWatchersClient) ResumeGetAzureReachabilityReport(token stri
 }
 
 // GetAzureReachabilityReportCreateRequest creates the GetAzureReachabilityReport request.
-func (client *NetworkWatchersClient) GetAzureReachabilityReportCreateRequest(resourceGroupName string, networkWatcherName string, parameters AzureReachabilityReportParameters) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkWatchersClient) GetAzureReachabilityReportCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters AzureReachabilityReportParameters) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/azureReachabilityReport"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkWatcherName}", url.PathEscape(networkWatcherName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPost, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -448,12 +422,12 @@ func (client *NetworkWatchersClient) GetAzureReachabilityReportHandleError(resp 
 
 // GetFlowLogStatus - Queries status of flow log and traffic analytics (optional) on a specified resource.
 func (client *NetworkWatchersClient) BeginGetFlowLogStatus(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters FlowLogStatusParameters) (*FlowLogInformationPollerResponse, error) {
-	req, err := client.GetFlowLogStatusCreateRequest(resourceGroupName, networkWatcherName, parameters)
+	req, err := client.GetFlowLogStatusCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -488,23 +462,18 @@ func (client *NetworkWatchersClient) ResumeGetFlowLogStatus(token string) (FlowL
 }
 
 // GetFlowLogStatusCreateRequest creates the GetFlowLogStatus request.
-func (client *NetworkWatchersClient) GetFlowLogStatusCreateRequest(resourceGroupName string, networkWatcherName string, parameters FlowLogStatusParameters) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkWatchersClient) GetFlowLogStatusCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters FlowLogStatusParameters) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/queryFlowLogStatus"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkWatcherName}", url.PathEscape(networkWatcherName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPost, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -527,12 +496,12 @@ func (client *NetworkWatchersClient) GetFlowLogStatusHandleError(resp *azcore.Re
 
 // GetNetworkConfigurationDiagnostic - Gets Network Configuration Diagnostic data to help customers understand and debug network behavior. It provides detailed information on what security rules were applied to a specified traffic flow and the result of evaluating these rules. Customers must provide details of a flow like source, destination, protocol, etc. The API returns whether traffic was allowed or denied, the rules evaluated for the specified flow and the evaluation results.
 func (client *NetworkWatchersClient) BeginGetNetworkConfigurationDiagnostic(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters NetworkConfigurationDiagnosticParameters) (*NetworkConfigurationDiagnosticResponsePollerResponse, error) {
-	req, err := client.GetNetworkConfigurationDiagnosticCreateRequest(resourceGroupName, networkWatcherName, parameters)
+	req, err := client.GetNetworkConfigurationDiagnosticCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -567,23 +536,18 @@ func (client *NetworkWatchersClient) ResumeGetNetworkConfigurationDiagnostic(tok
 }
 
 // GetNetworkConfigurationDiagnosticCreateRequest creates the GetNetworkConfigurationDiagnostic request.
-func (client *NetworkWatchersClient) GetNetworkConfigurationDiagnosticCreateRequest(resourceGroupName string, networkWatcherName string, parameters NetworkConfigurationDiagnosticParameters) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkWatchersClient) GetNetworkConfigurationDiagnosticCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters NetworkConfigurationDiagnosticParameters) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/networkConfigurationDiagnostic"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkWatcherName}", url.PathEscape(networkWatcherName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPost, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -606,12 +570,12 @@ func (client *NetworkWatchersClient) GetNetworkConfigurationDiagnosticHandleErro
 
 // GetNextHop - Gets the next hop from the specified VM.
 func (client *NetworkWatchersClient) BeginGetNextHop(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters NextHopParameters) (*NextHopResultPollerResponse, error) {
-	req, err := client.GetNextHopCreateRequest(resourceGroupName, networkWatcherName, parameters)
+	req, err := client.GetNextHopCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -646,23 +610,18 @@ func (client *NetworkWatchersClient) ResumeGetNextHop(token string) (NextHopResu
 }
 
 // GetNextHopCreateRequest creates the GetNextHop request.
-func (client *NetworkWatchersClient) GetNextHopCreateRequest(resourceGroupName string, networkWatcherName string, parameters NextHopParameters) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkWatchersClient) GetNextHopCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters NextHopParameters) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/nextHop"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkWatcherName}", url.PathEscape(networkWatcherName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPost, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -685,11 +644,11 @@ func (client *NetworkWatchersClient) GetNextHopHandleError(resp *azcore.Response
 
 // GetTopology - Gets the current network topology by resource group.
 func (client *NetworkWatchersClient) GetTopology(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters TopologyParameters) (*TopologyResponse, error) {
-	req, err := client.GetTopologyCreateRequest(resourceGroupName, networkWatcherName, parameters)
+	req, err := client.GetTopologyCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -701,23 +660,18 @@ func (client *NetworkWatchersClient) GetTopology(ctx context.Context, resourceGr
 }
 
 // GetTopologyCreateRequest creates the GetTopology request.
-func (client *NetworkWatchersClient) GetTopologyCreateRequest(resourceGroupName string, networkWatcherName string, parameters TopologyParameters) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkWatchersClient) GetTopologyCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters TopologyParameters) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/topology"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkWatcherName}", url.PathEscape(networkWatcherName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPost, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -741,12 +695,12 @@ func (client *NetworkWatchersClient) GetTopologyHandleError(resp *azcore.Respons
 
 // GetTroubleshooting - Initiate troubleshooting on a specified resource.
 func (client *NetworkWatchersClient) BeginGetTroubleshooting(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters TroubleshootingParameters) (*TroubleshootingResultPollerResponse, error) {
-	req, err := client.GetTroubleshootingCreateRequest(resourceGroupName, networkWatcherName, parameters)
+	req, err := client.GetTroubleshootingCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -781,23 +735,18 @@ func (client *NetworkWatchersClient) ResumeGetTroubleshooting(token string) (Tro
 }
 
 // GetTroubleshootingCreateRequest creates the GetTroubleshooting request.
-func (client *NetworkWatchersClient) GetTroubleshootingCreateRequest(resourceGroupName string, networkWatcherName string, parameters TroubleshootingParameters) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkWatchersClient) GetTroubleshootingCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters TroubleshootingParameters) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/troubleshoot"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkWatcherName}", url.PathEscape(networkWatcherName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPost, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -820,12 +769,12 @@ func (client *NetworkWatchersClient) GetTroubleshootingHandleError(resp *azcore.
 
 // GetTroubleshootingResult - Get the last completed troubleshooting result on a specified resource.
 func (client *NetworkWatchersClient) BeginGetTroubleshootingResult(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters QueryTroubleshootingParameters) (*TroubleshootingResultPollerResponse, error) {
-	req, err := client.GetTroubleshootingResultCreateRequest(resourceGroupName, networkWatcherName, parameters)
+	req, err := client.GetTroubleshootingResultCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -860,23 +809,18 @@ func (client *NetworkWatchersClient) ResumeGetTroubleshootingResult(token string
 }
 
 // GetTroubleshootingResultCreateRequest creates the GetTroubleshootingResult request.
-func (client *NetworkWatchersClient) GetTroubleshootingResultCreateRequest(resourceGroupName string, networkWatcherName string, parameters QueryTroubleshootingParameters) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkWatchersClient) GetTroubleshootingResultCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters QueryTroubleshootingParameters) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/queryTroubleshootResult"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkWatcherName}", url.PathEscape(networkWatcherName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPost, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -899,12 +843,12 @@ func (client *NetworkWatchersClient) GetTroubleshootingResultHandleError(resp *a
 
 // GetVMSecurityRules - Gets the configured and effective security group rules on the specified VM.
 func (client *NetworkWatchersClient) BeginGetVMSecurityRules(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters SecurityGroupViewParameters) (*SecurityGroupViewResultPollerResponse, error) {
-	req, err := client.GetVMSecurityRulesCreateRequest(resourceGroupName, networkWatcherName, parameters)
+	req, err := client.GetVMSecurityRulesCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -939,23 +883,18 @@ func (client *NetworkWatchersClient) ResumeGetVMSecurityRules(token string) (Sec
 }
 
 // GetVMSecurityRulesCreateRequest creates the GetVMSecurityRules request.
-func (client *NetworkWatchersClient) GetVMSecurityRulesCreateRequest(resourceGroupName string, networkWatcherName string, parameters SecurityGroupViewParameters) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkWatchersClient) GetVMSecurityRulesCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters SecurityGroupViewParameters) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/securityGroupView"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkWatcherName}", url.PathEscape(networkWatcherName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPost, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -978,11 +917,11 @@ func (client *NetworkWatchersClient) GetVMSecurityRulesHandleError(resp *azcore.
 
 // List - Gets all network watchers by resource group.
 func (client *NetworkWatchersClient) List(ctx context.Context, resourceGroupName string) (*NetworkWatcherListResultResponse, error) {
-	req, err := client.ListCreateRequest(resourceGroupName)
+	req, err := client.ListCreateRequest(ctx, resourceGroupName)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -994,22 +933,17 @@ func (client *NetworkWatchersClient) List(ctx context.Context, resourceGroupName
 }
 
 // ListCreateRequest creates the List request.
-func (client *NetworkWatchersClient) ListCreateRequest(resourceGroupName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkWatchersClient) ListCreateRequest(ctx context.Context, resourceGroupName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -1033,11 +967,11 @@ func (client *NetworkWatchersClient) ListHandleError(resp *azcore.Response) erro
 
 // ListAll - Gets all network watchers by subscription.
 func (client *NetworkWatchersClient) ListAll(ctx context.Context) (*NetworkWatcherListResultResponse, error) {
-	req, err := client.ListAllCreateRequest()
+	req, err := client.ListAllCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1049,21 +983,16 @@ func (client *NetworkWatchersClient) ListAll(ctx context.Context) (*NetworkWatch
 }
 
 // ListAllCreateRequest creates the ListAll request.
-func (client *NetworkWatchersClient) ListAllCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkWatchersClient) ListAllCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkWatchers"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -1087,12 +1016,12 @@ func (client *NetworkWatchersClient) ListAllHandleError(resp *azcore.Response) e
 
 // ListAvailableProviders - NOTE: This feature is currently in preview and still being tested for stability. Lists all available internet service providers for a specified Azure region.
 func (client *NetworkWatchersClient) BeginListAvailableProviders(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters AvailableProvidersListParameters) (*AvailableProvidersListPollerResponse, error) {
-	req, err := client.ListAvailableProvidersCreateRequest(resourceGroupName, networkWatcherName, parameters)
+	req, err := client.ListAvailableProvidersCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1127,23 +1056,18 @@ func (client *NetworkWatchersClient) ResumeListAvailableProviders(token string) 
 }
 
 // ListAvailableProvidersCreateRequest creates the ListAvailableProviders request.
-func (client *NetworkWatchersClient) ListAvailableProvidersCreateRequest(resourceGroupName string, networkWatcherName string, parameters AvailableProvidersListParameters) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkWatchersClient) ListAvailableProvidersCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters AvailableProvidersListParameters) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/availableProvidersList"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkWatcherName}", url.PathEscape(networkWatcherName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPost, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -1166,12 +1090,12 @@ func (client *NetworkWatchersClient) ListAvailableProvidersHandleError(resp *azc
 
 // SetFlowLogConfiguration - Configures flow log and traffic analytics (optional) on a specified resource.
 func (client *NetworkWatchersClient) BeginSetFlowLogConfiguration(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters FlowLogInformation) (*FlowLogInformationPollerResponse, error) {
-	req, err := client.SetFlowLogConfigurationCreateRequest(resourceGroupName, networkWatcherName, parameters)
+	req, err := client.SetFlowLogConfigurationCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1206,23 +1130,18 @@ func (client *NetworkWatchersClient) ResumeSetFlowLogConfiguration(token string)
 }
 
 // SetFlowLogConfigurationCreateRequest creates the SetFlowLogConfiguration request.
-func (client *NetworkWatchersClient) SetFlowLogConfigurationCreateRequest(resourceGroupName string, networkWatcherName string, parameters FlowLogInformation) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkWatchersClient) SetFlowLogConfigurationCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters FlowLogInformation) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/configureFlowLog"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkWatcherName}", url.PathEscape(networkWatcherName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPost, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -1245,11 +1164,11 @@ func (client *NetworkWatchersClient) SetFlowLogConfigurationHandleError(resp *az
 
 // UpdateTags - Updates a network watcher tags.
 func (client *NetworkWatchersClient) UpdateTags(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters TagsObject) (*NetworkWatcherResponse, error) {
-	req, err := client.UpdateTagsCreateRequest(resourceGroupName, networkWatcherName, parameters)
+	req, err := client.UpdateTagsCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1261,23 +1180,18 @@ func (client *NetworkWatchersClient) UpdateTags(ctx context.Context, resourceGro
 }
 
 // UpdateTagsCreateRequest creates the UpdateTags request.
-func (client *NetworkWatchersClient) UpdateTagsCreateRequest(resourceGroupName string, networkWatcherName string, parameters TagsObject) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkWatchersClient) UpdateTagsCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters TagsObject) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkWatcherName}", url.PathEscape(networkWatcherName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPatch, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -1301,12 +1215,12 @@ func (client *NetworkWatchersClient) UpdateTagsHandleError(resp *azcore.Response
 
 // VerifyIPFlow - Verify IP flow from the specified VM to a location given the currently configured NSG rules.
 func (client *NetworkWatchersClient) BeginVerifyIPFlow(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters VerificationIPFlowParameters) (*VerificationIPFlowResultPollerResponse, error) {
-	req, err := client.VerifyIPFlowCreateRequest(resourceGroupName, networkWatcherName, parameters)
+	req, err := client.VerifyIPFlowCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1341,23 +1255,18 @@ func (client *NetworkWatchersClient) ResumeVerifyIPFlow(token string) (Verificat
 }
 
 // VerifyIPFlowCreateRequest creates the VerifyIPFlow request.
-func (client *NetworkWatchersClient) VerifyIPFlowCreateRequest(resourceGroupName string, networkWatcherName string, parameters VerificationIPFlowParameters) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkWatchersClient) VerifyIPFlowCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters VerificationIPFlowParameters) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/ipFlowVerify"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkWatcherName}", url.PathEscape(networkWatcherName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPost, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(parameters)
 }
 

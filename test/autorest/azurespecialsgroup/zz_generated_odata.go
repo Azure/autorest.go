@@ -9,8 +9,6 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
-	"net/url"
-	"path"
 	"strconv"
 )
 
@@ -32,17 +30,17 @@ func NewOdataClient(c *Client) OdataOperations {
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *OdataClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *OdataClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // GetWithFilter - Specify filter parameter with value '$filter=id gt 5 and name eq 'foo'&$orderby=id&$top=10'
 func (client *OdataClient) GetWithFilter(ctx context.Context, odataGetWithFilterOptions *OdataGetWithFilterOptions) (*http.Response, error) {
-	req, err := client.GetWithFilterCreateRequest(odataGetWithFilterOptions)
+	req, err := client.GetWithFilterCreateRequest(ctx, odataGetWithFilterOptions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -54,17 +52,13 @@ func (client *OdataClient) GetWithFilter(ctx context.Context, odataGetWithFilter
 }
 
 // GetWithFilterCreateRequest creates the GetWithFilter request.
-func (client *OdataClient) GetWithFilterCreateRequest(odataGetWithFilterOptions *OdataGetWithFilterOptions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *OdataClient) GetWithFilterCreateRequest(ctx context.Context, odataGetWithFilterOptions *OdataGetWithFilterOptions) (*azcore.Request, error) {
 	urlPath := "/azurespecials/odata/filter"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	if odataGetWithFilterOptions != nil && odataGetWithFilterOptions.Filter != nil {
 		query.Set("$filter", *odataGetWithFilterOptions.Filter)
 	}
@@ -74,8 +68,7 @@ func (client *OdataClient) GetWithFilterCreateRequest(odataGetWithFilterOptions 
 	if odataGetWithFilterOptions != nil && odataGetWithFilterOptions.Orderby != nil {
 		query.Set("$orderby", *odataGetWithFilterOptions.Orderby)
 	}
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 

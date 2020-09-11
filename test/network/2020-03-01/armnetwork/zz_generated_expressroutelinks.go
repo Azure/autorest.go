@@ -7,11 +7,9 @@ package armnetwork
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 )
 
@@ -20,7 +18,7 @@ type ExpressRouteLinksOperations interface {
 	// Get - Retrieves the specified ExpressRouteLink resource.
 	Get(ctx context.Context, resourceGroupName string, expressRoutePortName string, linkName string) (*ExpressRouteLinkResponse, error)
 	// List - Retrieve the ExpressRouteLink sub-resources of the specified ExpressRoutePort resource.
-	List(resourceGroupName string, expressRoutePortName string) (ExpressRouteLinkListResultPager, error)
+	List(resourceGroupName string, expressRoutePortName string) ExpressRouteLinkListResultPager
 }
 
 // ExpressRouteLinksClient implements the ExpressRouteLinksOperations interface.
@@ -36,17 +34,17 @@ func NewExpressRouteLinksClient(c *Client, subscriptionID string) ExpressRouteLi
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *ExpressRouteLinksClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *ExpressRouteLinksClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // Get - Retrieves the specified ExpressRouteLink resource.
 func (client *ExpressRouteLinksClient) Get(ctx context.Context, resourceGroupName string, expressRoutePortName string, linkName string) (*ExpressRouteLinkResponse, error) {
-	req, err := client.GetCreateRequest(resourceGroupName, expressRoutePortName, linkName)
+	req, err := client.GetCreateRequest(ctx, resourceGroupName, expressRoutePortName, linkName)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -58,24 +56,19 @@ func (client *ExpressRouteLinksClient) Get(ctx context.Context, resourceGroupNam
 }
 
 // GetCreateRequest creates the Get request.
-func (client *ExpressRouteLinksClient) GetCreateRequest(resourceGroupName string, expressRoutePortName string, linkName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ExpressRouteLinksClient) GetCreateRequest(ctx context.Context, resourceGroupName string, expressRoutePortName string, linkName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}/links/{linkName}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{expressRoutePortName}", url.PathEscape(expressRoutePortName))
 	urlPath = strings.ReplaceAll(urlPath, "{linkName}", url.PathEscape(linkName))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -98,46 +91,32 @@ func (client *ExpressRouteLinksClient) GetHandleError(resp *azcore.Response) err
 }
 
 // List - Retrieve the ExpressRouteLink sub-resources of the specified ExpressRoutePort resource.
-func (client *ExpressRouteLinksClient) List(resourceGroupName string, expressRoutePortName string) (ExpressRouteLinkListResultPager, error) {
-	req, err := client.ListCreateRequest(resourceGroupName, expressRoutePortName)
-	if err != nil {
-		return nil, err
-	}
+func (client *ExpressRouteLinksClient) List(resourceGroupName string, expressRoutePortName string) ExpressRouteLinkListResultPager {
 	return &expressRouteLinkListResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListHandleResponse,
-		advancer: func(resp *ExpressRouteLinkListResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.ExpressRouteLinkListResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.ExpressRouteLinkListResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListCreateRequest(ctx, resourceGroupName, expressRoutePortName)
 		},
-	}, nil
+		responder: client.ListHandleResponse,
+		advancer: func(ctx context.Context, resp *ExpressRouteLinkListResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.ExpressRouteLinkListResult.NextLink)
+		},
+	}
 }
 
 // ListCreateRequest creates the List request.
-func (client *ExpressRouteLinksClient) ListCreateRequest(resourceGroupName string, expressRoutePortName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ExpressRouteLinksClient) ListCreateRequest(ctx context.Context, resourceGroupName string, expressRoutePortName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}/links"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{expressRoutePortName}", url.PathEscape(expressRoutePortName))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 

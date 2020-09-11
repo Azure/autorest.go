@@ -7,11 +7,9 @@ package armnetwork
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 )
 
@@ -20,7 +18,7 @@ type DefaultSecurityRulesOperations interface {
 	// Get - Get the specified default network security rule.
 	Get(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, defaultSecurityRuleName string) (*SecurityRuleResponse, error)
 	// List - Gets all default security rules in a network security group.
-	List(resourceGroupName string, networkSecurityGroupName string) (SecurityRuleListResultPager, error)
+	List(resourceGroupName string, networkSecurityGroupName string) SecurityRuleListResultPager
 }
 
 // DefaultSecurityRulesClient implements the DefaultSecurityRulesOperations interface.
@@ -36,17 +34,17 @@ func NewDefaultSecurityRulesClient(c *Client, subscriptionID string) DefaultSecu
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *DefaultSecurityRulesClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *DefaultSecurityRulesClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // Get - Get the specified default network security rule.
 func (client *DefaultSecurityRulesClient) Get(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, defaultSecurityRuleName string) (*SecurityRuleResponse, error) {
-	req, err := client.GetCreateRequest(resourceGroupName, networkSecurityGroupName, defaultSecurityRuleName)
+	req, err := client.GetCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, defaultSecurityRuleName)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -58,24 +56,19 @@ func (client *DefaultSecurityRulesClient) Get(ctx context.Context, resourceGroup
 }
 
 // GetCreateRequest creates the Get request.
-func (client *DefaultSecurityRulesClient) GetCreateRequest(resourceGroupName string, networkSecurityGroupName string, defaultSecurityRuleName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *DefaultSecurityRulesClient) GetCreateRequest(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, defaultSecurityRuleName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/defaultSecurityRules/{defaultSecurityRuleName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkSecurityGroupName}", url.PathEscape(networkSecurityGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{defaultSecurityRuleName}", url.PathEscape(defaultSecurityRuleName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -98,46 +91,32 @@ func (client *DefaultSecurityRulesClient) GetHandleError(resp *azcore.Response) 
 }
 
 // List - Gets all default security rules in a network security group.
-func (client *DefaultSecurityRulesClient) List(resourceGroupName string, networkSecurityGroupName string) (SecurityRuleListResultPager, error) {
-	req, err := client.ListCreateRequest(resourceGroupName, networkSecurityGroupName)
-	if err != nil {
-		return nil, err
-	}
+func (client *DefaultSecurityRulesClient) List(resourceGroupName string, networkSecurityGroupName string) SecurityRuleListResultPager {
 	return &securityRuleListResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListHandleResponse,
-		advancer: func(resp *SecurityRuleListResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.SecurityRuleListResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.SecurityRuleListResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListCreateRequest(ctx, resourceGroupName, networkSecurityGroupName)
 		},
-	}, nil
+		responder: client.ListHandleResponse,
+		advancer: func(ctx context.Context, resp *SecurityRuleListResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.SecurityRuleListResult.NextLink)
+		},
+	}
 }
 
 // ListCreateRequest creates the List request.
-func (client *DefaultSecurityRulesClient) ListCreateRequest(resourceGroupName string, networkSecurityGroupName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *DefaultSecurityRulesClient) ListCreateRequest(ctx context.Context, resourceGroupName string, networkSecurityGroupName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/defaultSecurityRules"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkSecurityGroupName}", url.PathEscape(networkSecurityGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 

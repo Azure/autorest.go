@@ -7,12 +7,10 @@ package armnetwork
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 	"time"
 )
@@ -30,9 +28,9 @@ type IPAllocationsOperations interface {
 	// Get - Gets the specified IpAllocation by resource group.
 	Get(ctx context.Context, resourceGroupName string, ipAllocationName string, ipAllocationsGetOptions *IPAllocationsGetOptions) (*IPAllocationResponse, error)
 	// List - Gets all IpAllocations in a subscription.
-	List() (IPAllocationListResultPager, error)
+	List() IPAllocationListResultPager
 	// ListByResourceGroup - Gets all IpAllocations in a resource group.
-	ListByResourceGroup(resourceGroupName string) (IPAllocationListResultPager, error)
+	ListByResourceGroup(resourceGroupName string) IPAllocationListResultPager
 	// UpdateTags - Updates a IpAllocation tags.
 	UpdateTags(ctx context.Context, resourceGroupName string, ipAllocationName string, parameters TagsObject) (*IPAllocationResponse, error)
 }
@@ -50,18 +48,18 @@ func NewIPAllocationsClient(c *Client, subscriptionID string) IPAllocationsOpera
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *IPAllocationsClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *IPAllocationsClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // CreateOrUpdate - Creates or updates an IpAllocation in the specified resource group.
 func (client *IPAllocationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ipAllocationName string, parameters IPAllocation) (*IPAllocationPollerResponse, error) {
-	req, err := client.CreateOrUpdateCreateRequest(resourceGroupName, ipAllocationName, parameters)
+	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, ipAllocationName, parameters)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -96,23 +94,18 @@ func (client *IPAllocationsClient) ResumeCreateOrUpdate(token string) (IPAllocat
 }
 
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *IPAllocationsClient) CreateOrUpdateCreateRequest(resourceGroupName string, ipAllocationName string, parameters IPAllocation) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *IPAllocationsClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, ipAllocationName string, parameters IPAllocation) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/IpAllocations/{ipAllocationName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{ipAllocationName}", url.PathEscape(ipAllocationName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPut, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -135,12 +128,12 @@ func (client *IPAllocationsClient) CreateOrUpdateHandleError(resp *azcore.Respon
 
 // Delete - Deletes the specified IpAllocation.
 func (client *IPAllocationsClient) BeginDelete(ctx context.Context, resourceGroupName string, ipAllocationName string) (*HTTPPollerResponse, error) {
-	req, err := client.DeleteCreateRequest(resourceGroupName, ipAllocationName)
+	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, ipAllocationName)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -175,23 +168,18 @@ func (client *IPAllocationsClient) ResumeDelete(token string) (HTTPPoller, error
 }
 
 // DeleteCreateRequest creates the Delete request.
-func (client *IPAllocationsClient) DeleteCreateRequest(resourceGroupName string, ipAllocationName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *IPAllocationsClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, ipAllocationName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/IpAllocations/{ipAllocationName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{ipAllocationName}", url.PathEscape(ipAllocationName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodDelete, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -214,11 +202,11 @@ func (client *IPAllocationsClient) DeleteHandleError(resp *azcore.Response) erro
 
 // Get - Gets the specified IpAllocation by resource group.
 func (client *IPAllocationsClient) Get(ctx context.Context, resourceGroupName string, ipAllocationName string, ipAllocationsGetOptions *IPAllocationsGetOptions) (*IPAllocationResponse, error) {
-	req, err := client.GetCreateRequest(resourceGroupName, ipAllocationName, ipAllocationsGetOptions)
+	req, err := client.GetCreateRequest(ctx, resourceGroupName, ipAllocationName, ipAllocationsGetOptions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -230,26 +218,21 @@ func (client *IPAllocationsClient) Get(ctx context.Context, resourceGroupName st
 }
 
 // GetCreateRequest creates the Get request.
-func (client *IPAllocationsClient) GetCreateRequest(resourceGroupName string, ipAllocationName string, ipAllocationsGetOptions *IPAllocationsGetOptions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *IPAllocationsClient) GetCreateRequest(ctx context.Context, resourceGroupName string, ipAllocationName string, ipAllocationsGetOptions *IPAllocationsGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/IpAllocations/{ipAllocationName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{ipAllocationName}", url.PathEscape(ipAllocationName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	if ipAllocationsGetOptions != nil && ipAllocationsGetOptions.Expand != nil {
 		query.Set("$expand", *ipAllocationsGetOptions.Expand)
 	}
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -272,44 +255,30 @@ func (client *IPAllocationsClient) GetHandleError(resp *azcore.Response) error {
 }
 
 // List - Gets all IpAllocations in a subscription.
-func (client *IPAllocationsClient) List() (IPAllocationListResultPager, error) {
-	req, err := client.ListCreateRequest()
-	if err != nil {
-		return nil, err
-	}
+func (client *IPAllocationsClient) List() IPAllocationListResultPager {
 	return &ipAllocationListResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListHandleResponse,
-		advancer: func(resp *IPAllocationListResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.IPAllocationListResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.IPAllocationListResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListCreateRequest(ctx)
 		},
-	}, nil
+		responder: client.ListHandleResponse,
+		advancer: func(ctx context.Context, resp *IPAllocationListResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.IPAllocationListResult.NextLink)
+		},
+	}
 }
 
 // ListCreateRequest creates the List request.
-func (client *IPAllocationsClient) ListCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *IPAllocationsClient) ListCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/IpAllocations"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -332,45 +301,31 @@ func (client *IPAllocationsClient) ListHandleError(resp *azcore.Response) error 
 }
 
 // ListByResourceGroup - Gets all IpAllocations in a resource group.
-func (client *IPAllocationsClient) ListByResourceGroup(resourceGroupName string) (IPAllocationListResultPager, error) {
-	req, err := client.ListByResourceGroupCreateRequest(resourceGroupName)
-	if err != nil {
-		return nil, err
-	}
+func (client *IPAllocationsClient) ListByResourceGroup(resourceGroupName string) IPAllocationListResultPager {
 	return &ipAllocationListResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListByResourceGroupHandleResponse,
-		advancer: func(resp *IPAllocationListResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.IPAllocationListResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.IPAllocationListResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListByResourceGroupCreateRequest(ctx, resourceGroupName)
 		},
-	}, nil
+		responder: client.ListByResourceGroupHandleResponse,
+		advancer: func(ctx context.Context, resp *IPAllocationListResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.IPAllocationListResult.NextLink)
+		},
+	}
 }
 
 // ListByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *IPAllocationsClient) ListByResourceGroupCreateRequest(resourceGroupName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *IPAllocationsClient) ListByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/IpAllocations"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -394,11 +349,11 @@ func (client *IPAllocationsClient) ListByResourceGroupHandleError(resp *azcore.R
 
 // UpdateTags - Updates a IpAllocation tags.
 func (client *IPAllocationsClient) UpdateTags(ctx context.Context, resourceGroupName string, ipAllocationName string, parameters TagsObject) (*IPAllocationResponse, error) {
-	req, err := client.UpdateTagsCreateRequest(resourceGroupName, ipAllocationName, parameters)
+	req, err := client.UpdateTagsCreateRequest(ctx, resourceGroupName, ipAllocationName, parameters)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -410,23 +365,18 @@ func (client *IPAllocationsClient) UpdateTags(ctx context.Context, resourceGroup
 }
 
 // UpdateTagsCreateRequest creates the UpdateTags request.
-func (client *IPAllocationsClient) UpdateTagsCreateRequest(resourceGroupName string, ipAllocationName string, parameters TagsObject) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *IPAllocationsClient) UpdateTagsCreateRequest(ctx context.Context, resourceGroupName string, ipAllocationName string, parameters TagsObject) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/IpAllocations/{ipAllocationName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{ipAllocationName}", url.PathEscape(ipAllocationName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPatch, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(parameters)
 }
 

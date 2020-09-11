@@ -9,8 +9,6 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
-	"net/url"
-	"path"
 )
 
 // BoolOperations contains the methods for the Bool group.
@@ -41,17 +39,17 @@ func NewBoolClient(c *Client) BoolOperations {
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *BoolClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *BoolClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // GetFalse - Get false Boolean value
 func (client *BoolClient) GetFalse(ctx context.Context) (*BoolResponse, error) {
-	req, err := client.GetFalseCreateRequest()
+	req, err := client.GetFalseCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -63,17 +61,12 @@ func (client *BoolClient) GetFalse(ctx context.Context) (*BoolResponse, error) {
 }
 
 // GetFalseCreateRequest creates the GetFalse request.
-func (client *BoolClient) GetFalseCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *BoolClient) GetFalseCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/bool/false"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -97,11 +90,11 @@ func (client *BoolClient) GetFalseHandleError(resp *azcore.Response) error {
 
 // GetInvalid - Get invalid Boolean value
 func (client *BoolClient) GetInvalid(ctx context.Context) (*BoolResponse, error) {
-	req, err := client.GetInvalidCreateRequest()
+	req, err := client.GetInvalidCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -113,17 +106,12 @@ func (client *BoolClient) GetInvalid(ctx context.Context) (*BoolResponse, error)
 }
 
 // GetInvalidCreateRequest creates the GetInvalid request.
-func (client *BoolClient) GetInvalidCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *BoolClient) GetInvalidCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/bool/invalid"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -147,11 +135,11 @@ func (client *BoolClient) GetInvalidHandleError(resp *azcore.Response) error {
 
 // GetNull - Get null Boolean value
 func (client *BoolClient) GetNull(ctx context.Context) (*BoolResponse, error) {
-	req, err := client.GetNullCreateRequest()
+	req, err := client.GetNullCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -163,17 +151,12 @@ func (client *BoolClient) GetNull(ctx context.Context) (*BoolResponse, error) {
 }
 
 // GetNullCreateRequest creates the GetNull request.
-func (client *BoolClient) GetNullCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *BoolClient) GetNullCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/bool/null"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -197,11 +180,11 @@ func (client *BoolClient) GetNullHandleError(resp *azcore.Response) error {
 
 // GetTrue - Get true Boolean value
 func (client *BoolClient) GetTrue(ctx context.Context) (*BoolResponse, error) {
-	req, err := client.GetTrueCreateRequest()
+	req, err := client.GetTrueCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -213,17 +196,12 @@ func (client *BoolClient) GetTrue(ctx context.Context) (*BoolResponse, error) {
 }
 
 // GetTrueCreateRequest creates the GetTrue request.
-func (client *BoolClient) GetTrueCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *BoolClient) GetTrueCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/bool/true"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -247,11 +225,11 @@ func (client *BoolClient) GetTrueHandleError(resp *azcore.Response) error {
 
 // PutFalse - Set Boolean value false
 func (client *BoolClient) PutFalse(ctx context.Context) (*http.Response, error) {
-	req, err := client.PutFalseCreateRequest()
+	req, err := client.PutFalseCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -263,17 +241,12 @@ func (client *BoolClient) PutFalse(ctx context.Context) (*http.Response, error) 
 }
 
 // PutFalseCreateRequest creates the PutFalse request.
-func (client *BoolClient) PutFalseCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *BoolClient) PutFalseCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/bool/false"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	return req, req.MarshalAsJSON(false)
 }
 
@@ -296,11 +269,11 @@ func (client *BoolClient) PutFalseHandleError(resp *azcore.Response) error {
 
 // PutTrue - Set Boolean value true
 func (client *BoolClient) PutTrue(ctx context.Context) (*http.Response, error) {
-	req, err := client.PutTrueCreateRequest()
+	req, err := client.PutTrueCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -312,17 +285,12 @@ func (client *BoolClient) PutTrue(ctx context.Context) (*http.Response, error) {
 }
 
 // PutTrueCreateRequest creates the PutTrue request.
-func (client *BoolClient) PutTrueCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *BoolClient) PutTrueCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/bool/true"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	return req, req.MarshalAsJSON(true)
 }
 

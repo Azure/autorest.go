@@ -7,12 +7,10 @@ package armnetwork
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 	"time"
 )
@@ -30,9 +28,9 @@ type NatGatewaysOperations interface {
 	// Get - Gets the specified nat gateway in a specified resource group.
 	Get(ctx context.Context, resourceGroupName string, natGatewayName string, natGatewaysGetOptions *NatGatewaysGetOptions) (*NatGatewayResponse, error)
 	// List - Gets all nat gateways in a resource group.
-	List(resourceGroupName string) (NatGatewayListResultPager, error)
+	List(resourceGroupName string) NatGatewayListResultPager
 	// ListAll - Gets all the Nat Gateways in a subscription.
-	ListAll() (NatGatewayListResultPager, error)
+	ListAll() NatGatewayListResultPager
 	// UpdateTags - Updates nat gateway tags.
 	UpdateTags(ctx context.Context, resourceGroupName string, natGatewayName string, parameters TagsObject) (*NatGatewayResponse, error)
 }
@@ -50,18 +48,18 @@ func NewNatGatewaysClient(c *Client, subscriptionID string) NatGatewaysOperation
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *NatGatewaysClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *NatGatewaysClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // CreateOrUpdate - Creates or updates a nat gateway.
 func (client *NatGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, natGatewayName string, parameters NatGateway) (*NatGatewayPollerResponse, error) {
-	req, err := client.CreateOrUpdateCreateRequest(resourceGroupName, natGatewayName, parameters)
+	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, natGatewayName, parameters)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -96,23 +94,18 @@ func (client *NatGatewaysClient) ResumeCreateOrUpdate(token string) (NatGatewayP
 }
 
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *NatGatewaysClient) CreateOrUpdateCreateRequest(resourceGroupName string, natGatewayName string, parameters NatGateway) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NatGatewaysClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, natGatewayName string, parameters NatGateway) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/natGateways/{natGatewayName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{natGatewayName}", url.PathEscape(natGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPut, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -135,12 +128,12 @@ func (client *NatGatewaysClient) CreateOrUpdateHandleError(resp *azcore.Response
 
 // Delete - Deletes the specified nat gateway.
 func (client *NatGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, natGatewayName string) (*HTTPPollerResponse, error) {
-	req, err := client.DeleteCreateRequest(resourceGroupName, natGatewayName)
+	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, natGatewayName)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -175,23 +168,18 @@ func (client *NatGatewaysClient) ResumeDelete(token string) (HTTPPoller, error) 
 }
 
 // DeleteCreateRequest creates the Delete request.
-func (client *NatGatewaysClient) DeleteCreateRequest(resourceGroupName string, natGatewayName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NatGatewaysClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, natGatewayName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/natGateways/{natGatewayName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{natGatewayName}", url.PathEscape(natGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodDelete, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -214,11 +202,11 @@ func (client *NatGatewaysClient) DeleteHandleError(resp *azcore.Response) error 
 
 // Get - Gets the specified nat gateway in a specified resource group.
 func (client *NatGatewaysClient) Get(ctx context.Context, resourceGroupName string, natGatewayName string, natGatewaysGetOptions *NatGatewaysGetOptions) (*NatGatewayResponse, error) {
-	req, err := client.GetCreateRequest(resourceGroupName, natGatewayName, natGatewaysGetOptions)
+	req, err := client.GetCreateRequest(ctx, resourceGroupName, natGatewayName, natGatewaysGetOptions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -230,26 +218,21 @@ func (client *NatGatewaysClient) Get(ctx context.Context, resourceGroupName stri
 }
 
 // GetCreateRequest creates the Get request.
-func (client *NatGatewaysClient) GetCreateRequest(resourceGroupName string, natGatewayName string, natGatewaysGetOptions *NatGatewaysGetOptions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NatGatewaysClient) GetCreateRequest(ctx context.Context, resourceGroupName string, natGatewayName string, natGatewaysGetOptions *NatGatewaysGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/natGateways/{natGatewayName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{natGatewayName}", url.PathEscape(natGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	if natGatewaysGetOptions != nil && natGatewaysGetOptions.Expand != nil {
 		query.Set("$expand", *natGatewaysGetOptions.Expand)
 	}
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -272,45 +255,31 @@ func (client *NatGatewaysClient) GetHandleError(resp *azcore.Response) error {
 }
 
 // List - Gets all nat gateways in a resource group.
-func (client *NatGatewaysClient) List(resourceGroupName string) (NatGatewayListResultPager, error) {
-	req, err := client.ListCreateRequest(resourceGroupName)
-	if err != nil {
-		return nil, err
-	}
+func (client *NatGatewaysClient) List(resourceGroupName string) NatGatewayListResultPager {
 	return &natGatewayListResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListHandleResponse,
-		advancer: func(resp *NatGatewayListResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.NatGatewayListResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.NatGatewayListResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListCreateRequest(ctx, resourceGroupName)
 		},
-	}, nil
+		responder: client.ListHandleResponse,
+		advancer: func(ctx context.Context, resp *NatGatewayListResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.NatGatewayListResult.NextLink)
+		},
+	}
 }
 
 // ListCreateRequest creates the List request.
-func (client *NatGatewaysClient) ListCreateRequest(resourceGroupName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NatGatewaysClient) ListCreateRequest(ctx context.Context, resourceGroupName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/natGateways"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -333,44 +302,30 @@ func (client *NatGatewaysClient) ListHandleError(resp *azcore.Response) error {
 }
 
 // ListAll - Gets all the Nat Gateways in a subscription.
-func (client *NatGatewaysClient) ListAll() (NatGatewayListResultPager, error) {
-	req, err := client.ListAllCreateRequest()
-	if err != nil {
-		return nil, err
-	}
+func (client *NatGatewaysClient) ListAll() NatGatewayListResultPager {
 	return &natGatewayListResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListAllHandleResponse,
-		advancer: func(resp *NatGatewayListResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.NatGatewayListResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.NatGatewayListResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListAllCreateRequest(ctx)
 		},
-	}, nil
+		responder: client.ListAllHandleResponse,
+		advancer: func(ctx context.Context, resp *NatGatewayListResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.NatGatewayListResult.NextLink)
+		},
+	}
 }
 
 // ListAllCreateRequest creates the ListAll request.
-func (client *NatGatewaysClient) ListAllCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NatGatewaysClient) ListAllCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/natGateways"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -394,11 +349,11 @@ func (client *NatGatewaysClient) ListAllHandleError(resp *azcore.Response) error
 
 // UpdateTags - Updates nat gateway tags.
 func (client *NatGatewaysClient) UpdateTags(ctx context.Context, resourceGroupName string, natGatewayName string, parameters TagsObject) (*NatGatewayResponse, error) {
-	req, err := client.UpdateTagsCreateRequest(resourceGroupName, natGatewayName, parameters)
+	req, err := client.UpdateTagsCreateRequest(ctx, resourceGroupName, natGatewayName, parameters)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -410,23 +365,18 @@ func (client *NatGatewaysClient) UpdateTags(ctx context.Context, resourceGroupNa
 }
 
 // UpdateTagsCreateRequest creates the UpdateTags request.
-func (client *NatGatewaysClient) UpdateTagsCreateRequest(resourceGroupName string, natGatewayName string, parameters TagsObject) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NatGatewaysClient) UpdateTagsCreateRequest(ctx context.Context, resourceGroupName string, natGatewayName string, parameters TagsObject) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/natGateways/{natGatewayName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{natGatewayName}", url.PathEscape(natGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPatch, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(parameters)
 }
 

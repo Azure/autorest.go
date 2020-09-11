@@ -426,6 +426,7 @@ const (
 	StorageErrorCodeBlobAlreadyExists                                 StorageErrorCode = "BlobAlreadyExists"
 	StorageErrorCodeBlobArchived                                      StorageErrorCode = "BlobArchived"
 	StorageErrorCodeBlobBeingRehydrated                               StorageErrorCode = "BlobBeingRehydrated"
+	StorageErrorCodeBlobImmutableDueToPolicy                          StorageErrorCode = "BlobImmutableDueToPolicy"
 	StorageErrorCodeBlobNotArchived                                   StorageErrorCode = "BlobNotArchived"
 	StorageErrorCodeBlobNotFound                                      StorageErrorCode = "BlobNotFound"
 	StorageErrorCodeBlobOverwritten                                   StorageErrorCode = "BlobOverwritten"
@@ -541,6 +542,7 @@ func PossibleStorageErrorCodeValues() []StorageErrorCode {
 		StorageErrorCodeBlobAlreadyExists,
 		StorageErrorCodeBlobArchived,
 		StorageErrorCodeBlobBeingRehydrated,
+		StorageErrorCodeBlobImmutableDueToPolicy,
 		StorageErrorCodeBlobNotArchived,
 		StorageErrorCodeBlobNotFound,
 		StorageErrorCodeBlobOverwritten,

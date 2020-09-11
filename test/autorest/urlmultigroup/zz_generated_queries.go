@@ -9,8 +9,6 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
-	"net/url"
-	"path"
 )
 
 // QueriesOperations contains the methods for the Queries group.
@@ -35,17 +33,17 @@ func NewQueriesClient(c *Client) QueriesOperations {
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *QueriesClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *QueriesClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // ArrayStringMultiEmpty - Get an empty array [] of string using the multi-array format
 func (client *QueriesClient) ArrayStringMultiEmpty(ctx context.Context, queriesArrayStringMultiEmptyOptions *QueriesArrayStringMultiEmptyOptions) (*http.Response, error) {
-	req, err := client.ArrayStringMultiEmptyCreateRequest(queriesArrayStringMultiEmptyOptions)
+	req, err := client.ArrayStringMultiEmptyCreateRequest(ctx, queriesArrayStringMultiEmptyOptions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -57,24 +55,19 @@ func (client *QueriesClient) ArrayStringMultiEmpty(ctx context.Context, queriesA
 }
 
 // ArrayStringMultiEmptyCreateRequest creates the ArrayStringMultiEmpty request.
-func (client *QueriesClient) ArrayStringMultiEmptyCreateRequest(queriesArrayStringMultiEmptyOptions *QueriesArrayStringMultiEmptyOptions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *QueriesClient) ArrayStringMultiEmptyCreateRequest(ctx context.Context, queriesArrayStringMultiEmptyOptions *QueriesArrayStringMultiEmptyOptions) (*azcore.Request, error) {
 	urlPath := "/queries/array/multi/string/empty"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	if queriesArrayStringMultiEmptyOptions != nil && queriesArrayStringMultiEmptyOptions.ArrayQuery != nil {
 		for _, qv := range *queriesArrayStringMultiEmptyOptions.ArrayQuery {
 			query.Add("arrayQuery", qv)
 		}
 	}
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -97,11 +90,11 @@ func (client *QueriesClient) ArrayStringMultiEmptyHandleError(resp *azcore.Respo
 
 // ArrayStringMultiNull - Get a null array of string using the multi-array format
 func (client *QueriesClient) ArrayStringMultiNull(ctx context.Context, queriesArrayStringMultiNullOptions *QueriesArrayStringMultiNullOptions) (*http.Response, error) {
-	req, err := client.ArrayStringMultiNullCreateRequest(queriesArrayStringMultiNullOptions)
+	req, err := client.ArrayStringMultiNullCreateRequest(ctx, queriesArrayStringMultiNullOptions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -113,24 +106,19 @@ func (client *QueriesClient) ArrayStringMultiNull(ctx context.Context, queriesAr
 }
 
 // ArrayStringMultiNullCreateRequest creates the ArrayStringMultiNull request.
-func (client *QueriesClient) ArrayStringMultiNullCreateRequest(queriesArrayStringMultiNullOptions *QueriesArrayStringMultiNullOptions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *QueriesClient) ArrayStringMultiNullCreateRequest(ctx context.Context, queriesArrayStringMultiNullOptions *QueriesArrayStringMultiNullOptions) (*azcore.Request, error) {
 	urlPath := "/queries/array/multi/string/null"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	if queriesArrayStringMultiNullOptions != nil && queriesArrayStringMultiNullOptions.ArrayQuery != nil {
 		for _, qv := range *queriesArrayStringMultiNullOptions.ArrayQuery {
 			query.Add("arrayQuery", qv)
 		}
 	}
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -153,11 +141,11 @@ func (client *QueriesClient) ArrayStringMultiNullHandleError(resp *azcore.Respon
 
 // ArrayStringMultiValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the mult-array format
 func (client *QueriesClient) ArrayStringMultiValid(ctx context.Context, queriesArrayStringMultiValidOptions *QueriesArrayStringMultiValidOptions) (*http.Response, error) {
-	req, err := client.ArrayStringMultiValidCreateRequest(queriesArrayStringMultiValidOptions)
+	req, err := client.ArrayStringMultiValidCreateRequest(ctx, queriesArrayStringMultiValidOptions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -169,24 +157,19 @@ func (client *QueriesClient) ArrayStringMultiValid(ctx context.Context, queriesA
 }
 
 // ArrayStringMultiValidCreateRequest creates the ArrayStringMultiValid request.
-func (client *QueriesClient) ArrayStringMultiValidCreateRequest(queriesArrayStringMultiValidOptions *QueriesArrayStringMultiValidOptions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *QueriesClient) ArrayStringMultiValidCreateRequest(ctx context.Context, queriesArrayStringMultiValidOptions *QueriesArrayStringMultiValidOptions) (*azcore.Request, error) {
 	urlPath := "/queries/array/multi/string/valid"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	if queriesArrayStringMultiValidOptions != nil && queriesArrayStringMultiValidOptions.ArrayQuery != nil {
 		for _, qv := range *queriesArrayStringMultiValidOptions.ArrayQuery {
 			query.Add("arrayQuery", qv)
 		}
 	}
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 

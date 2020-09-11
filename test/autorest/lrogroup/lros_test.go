@@ -30,8 +30,8 @@ func httpClientWithCookieJar() azcore.Transport {
 		panic(err)
 	}
 	http.DefaultClient.Jar = j
-	return azcore.TransportFunc(func(ctx context.Context, req *http.Request) (*http.Response, error) {
-		return http.DefaultClient.Do(req.WithContext(ctx))
+	return azcore.TransportFunc(func(req *http.Request) (*http.Response, error) {
+		return http.DefaultClient.Do(req)
 	})
 }
 

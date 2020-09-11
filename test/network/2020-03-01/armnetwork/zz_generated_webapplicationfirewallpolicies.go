@@ -7,12 +7,10 @@ package armnetwork
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 	"time"
 )
@@ -28,9 +26,9 @@ type WebApplicationFirewallPoliciesOperations interface {
 	// Get - Retrieve protection policy with specified name within a resource group.
 	Get(ctx context.Context, resourceGroupName string, policyName string) (*WebApplicationFirewallPolicyResponse, error)
 	// List - Lists all of the protection policies within a resource group.
-	List(resourceGroupName string) (WebApplicationFirewallPolicyListResultPager, error)
+	List(resourceGroupName string) WebApplicationFirewallPolicyListResultPager
 	// ListAll - Gets all the WAF policies in a subscription.
-	ListAll() (WebApplicationFirewallPolicyListResultPager, error)
+	ListAll() WebApplicationFirewallPolicyListResultPager
 }
 
 // WebApplicationFirewallPoliciesClient implements the WebApplicationFirewallPoliciesOperations interface.
@@ -46,17 +44,17 @@ func NewWebApplicationFirewallPoliciesClient(c *Client, subscriptionID string) W
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *WebApplicationFirewallPoliciesClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *WebApplicationFirewallPoliciesClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // CreateOrUpdate - Creates or update policy with specified rule set name within a resource group.
 func (client *WebApplicationFirewallPoliciesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, policyName string, parameters WebApplicationFirewallPolicy) (*WebApplicationFirewallPolicyResponse, error) {
-	req, err := client.CreateOrUpdateCreateRequest(resourceGroupName, policyName, parameters)
+	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, policyName, parameters)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -68,23 +66,18 @@ func (client *WebApplicationFirewallPoliciesClient) CreateOrUpdate(ctx context.C
 }
 
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *WebApplicationFirewallPoliciesClient) CreateOrUpdateCreateRequest(resourceGroupName string, policyName string, parameters WebApplicationFirewallPolicy) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *WebApplicationFirewallPoliciesClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, policyName string, parameters WebApplicationFirewallPolicy) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies/{policyName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{policyName}", url.PathEscape(policyName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPut, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -108,12 +101,12 @@ func (client *WebApplicationFirewallPoliciesClient) CreateOrUpdateHandleError(re
 
 // Delete - Deletes Policy.
 func (client *WebApplicationFirewallPoliciesClient) BeginDelete(ctx context.Context, resourceGroupName string, policyName string) (*HTTPPollerResponse, error) {
-	req, err := client.DeleteCreateRequest(resourceGroupName, policyName)
+	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, policyName)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -148,23 +141,18 @@ func (client *WebApplicationFirewallPoliciesClient) ResumeDelete(token string) (
 }
 
 // DeleteCreateRequest creates the Delete request.
-func (client *WebApplicationFirewallPoliciesClient) DeleteCreateRequest(resourceGroupName string, policyName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *WebApplicationFirewallPoliciesClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, policyName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies/{policyName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{policyName}", url.PathEscape(policyName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodDelete, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -187,11 +175,11 @@ func (client *WebApplicationFirewallPoliciesClient) DeleteHandleError(resp *azco
 
 // Get - Retrieve protection policy with specified name within a resource group.
 func (client *WebApplicationFirewallPoliciesClient) Get(ctx context.Context, resourceGroupName string, policyName string) (*WebApplicationFirewallPolicyResponse, error) {
-	req, err := client.GetCreateRequest(resourceGroupName, policyName)
+	req, err := client.GetCreateRequest(ctx, resourceGroupName, policyName)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -203,23 +191,18 @@ func (client *WebApplicationFirewallPoliciesClient) Get(ctx context.Context, res
 }
 
 // GetCreateRequest creates the Get request.
-func (client *WebApplicationFirewallPoliciesClient) GetCreateRequest(resourceGroupName string, policyName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *WebApplicationFirewallPoliciesClient) GetCreateRequest(ctx context.Context, resourceGroupName string, policyName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies/{policyName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{policyName}", url.PathEscape(policyName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -242,45 +225,31 @@ func (client *WebApplicationFirewallPoliciesClient) GetHandleError(resp *azcore.
 }
 
 // List - Lists all of the protection policies within a resource group.
-func (client *WebApplicationFirewallPoliciesClient) List(resourceGroupName string) (WebApplicationFirewallPolicyListResultPager, error) {
-	req, err := client.ListCreateRequest(resourceGroupName)
-	if err != nil {
-		return nil, err
-	}
+func (client *WebApplicationFirewallPoliciesClient) List(resourceGroupName string) WebApplicationFirewallPolicyListResultPager {
 	return &webApplicationFirewallPolicyListResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListHandleResponse,
-		advancer: func(resp *WebApplicationFirewallPolicyListResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.WebApplicationFirewallPolicyListResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.WebApplicationFirewallPolicyListResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListCreateRequest(ctx, resourceGroupName)
 		},
-	}, nil
+		responder: client.ListHandleResponse,
+		advancer: func(ctx context.Context, resp *WebApplicationFirewallPolicyListResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.WebApplicationFirewallPolicyListResult.NextLink)
+		},
+	}
 }
 
 // ListCreateRequest creates the List request.
-func (client *WebApplicationFirewallPoliciesClient) ListCreateRequest(resourceGroupName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *WebApplicationFirewallPoliciesClient) ListCreateRequest(ctx context.Context, resourceGroupName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -303,44 +272,30 @@ func (client *WebApplicationFirewallPoliciesClient) ListHandleError(resp *azcore
 }
 
 // ListAll - Gets all the WAF policies in a subscription.
-func (client *WebApplicationFirewallPoliciesClient) ListAll() (WebApplicationFirewallPolicyListResultPager, error) {
-	req, err := client.ListAllCreateRequest()
-	if err != nil {
-		return nil, err
-	}
+func (client *WebApplicationFirewallPoliciesClient) ListAll() WebApplicationFirewallPolicyListResultPager {
 	return &webApplicationFirewallPolicyListResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListAllHandleResponse,
-		advancer: func(resp *WebApplicationFirewallPolicyListResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.WebApplicationFirewallPolicyListResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.WebApplicationFirewallPolicyListResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListAllCreateRequest(ctx)
 		},
-	}, nil
+		responder: client.ListAllHandleResponse,
+		advancer: func(ctx context.Context, resp *WebApplicationFirewallPolicyListResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.WebApplicationFirewallPolicyListResult.NextLink)
+		},
+	}
 }
 
 // ListAllCreateRequest creates the ListAll request.
-func (client *WebApplicationFirewallPoliciesClient) ListAllCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *WebApplicationFirewallPoliciesClient) ListAllCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 

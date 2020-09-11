@@ -10,8 +10,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
-	"net/url"
-	"path"
 	"time"
 )
 
@@ -195,18 +193,18 @@ func NewLrOSClient(c *Client) LrOSOperations {
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *LrOSClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *LrOSClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // Delete202NoRetry204 - Long running delete request, service returns a 202 to the initial request. Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
 func (client *LrOSClient) BeginDelete202NoRetry204(ctx context.Context) (*ProductPollerResponse, error) {
-	req, err := client.Delete202NoRetry204CreateRequest()
+	req, err := client.Delete202NoRetry204CreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -241,17 +239,12 @@ func (client *LrOSClient) ResumeDelete202NoRetry204(token string) (ProductPoller
 }
 
 // Delete202NoRetry204CreateRequest creates the Delete202NoRetry204 request.
-func (client *LrOSClient) Delete202NoRetry204CreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LrOSClient) Delete202NoRetry204CreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/lro/delete/202/noretry/204"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodDelete, *u)
 	return req, nil
 }
 
@@ -274,12 +267,12 @@ func (client *LrOSClient) Delete202NoRetry204HandleError(resp *azcore.Response) 
 
 // Delete202Retry200 - Long running delete request, service returns a 202 to the initial request. Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
 func (client *LrOSClient) BeginDelete202Retry200(ctx context.Context) (*ProductPollerResponse, error) {
-	req, err := client.Delete202Retry200CreateRequest()
+	req, err := client.Delete202Retry200CreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -314,17 +307,12 @@ func (client *LrOSClient) ResumeDelete202Retry200(token string) (ProductPoller, 
 }
 
 // Delete202Retry200CreateRequest creates the Delete202Retry200 request.
-func (client *LrOSClient) Delete202Retry200CreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LrOSClient) Delete202Retry200CreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/lro/delete/202/retry/200"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodDelete, *u)
 	return req, nil
 }
 
@@ -347,12 +335,12 @@ func (client *LrOSClient) Delete202Retry200HandleError(resp *azcore.Response) er
 
 // Delete204Succeeded - Long running delete succeeds and returns right away
 func (client *LrOSClient) BeginDelete204Succeeded(ctx context.Context) (*HTTPPollerResponse, error) {
-	req, err := client.Delete204SucceededCreateRequest()
+	req, err := client.Delete204SucceededCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -387,17 +375,12 @@ func (client *LrOSClient) ResumeDelete204Succeeded(token string) (HTTPPoller, er
 }
 
 // Delete204SucceededCreateRequest creates the Delete204Succeeded request.
-func (client *LrOSClient) Delete204SucceededCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LrOSClient) Delete204SucceededCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/lro/delete/204/succeeded"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodDelete, *u)
 	return req, nil
 }
 
@@ -420,12 +403,12 @@ func (client *LrOSClient) Delete204SucceededHandleError(resp *azcore.Response) e
 
 // DeleteAsyncNoHeaderInRetry - Long running delete request, service returns an Azure-AsyncOperation header in the initial request. Subsequent calls to operation status do not contain Azure-AsyncOperation header.
 func (client *LrOSClient) BeginDeleteAsyncNoHeaderInRetry(ctx context.Context) (*HTTPPollerResponse, error) {
-	req, err := client.DeleteAsyncNoHeaderInRetryCreateRequest()
+	req, err := client.DeleteAsyncNoHeaderInRetryCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -460,17 +443,12 @@ func (client *LrOSClient) ResumeDeleteAsyncNoHeaderInRetry(token string) (HTTPPo
 }
 
 // DeleteAsyncNoHeaderInRetryCreateRequest creates the DeleteAsyncNoHeaderInRetry request.
-func (client *LrOSClient) DeleteAsyncNoHeaderInRetryCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LrOSClient) DeleteAsyncNoHeaderInRetryCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/lro/deleteasync/noheader/202/204"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodDelete, *u)
 	return req, nil
 }
 
@@ -493,12 +471,12 @@ func (client *LrOSClient) DeleteAsyncNoHeaderInRetryHandleError(resp *azcore.Res
 
 // DeleteAsyncNoRetrySucceeded - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 func (client *LrOSClient) BeginDeleteAsyncNoRetrySucceeded(ctx context.Context) (*HTTPPollerResponse, error) {
-	req, err := client.DeleteAsyncNoRetrySucceededCreateRequest()
+	req, err := client.DeleteAsyncNoRetrySucceededCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -533,17 +511,12 @@ func (client *LrOSClient) ResumeDeleteAsyncNoRetrySucceeded(token string) (HTTPP
 }
 
 // DeleteAsyncNoRetrySucceededCreateRequest creates the DeleteAsyncNoRetrySucceeded request.
-func (client *LrOSClient) DeleteAsyncNoRetrySucceededCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LrOSClient) DeleteAsyncNoRetrySucceededCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/lro/deleteasync/noretry/succeeded"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodDelete, *u)
 	return req, nil
 }
 
@@ -566,12 +539,12 @@ func (client *LrOSClient) DeleteAsyncNoRetrySucceededHandleError(resp *azcore.Re
 
 // DeleteAsyncRetryFailed - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 func (client *LrOSClient) BeginDeleteAsyncRetryFailed(ctx context.Context) (*HTTPPollerResponse, error) {
-	req, err := client.DeleteAsyncRetryFailedCreateRequest()
+	req, err := client.DeleteAsyncRetryFailedCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -606,17 +579,12 @@ func (client *LrOSClient) ResumeDeleteAsyncRetryFailed(token string) (HTTPPoller
 }
 
 // DeleteAsyncRetryFailedCreateRequest creates the DeleteAsyncRetryFailed request.
-func (client *LrOSClient) DeleteAsyncRetryFailedCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LrOSClient) DeleteAsyncRetryFailedCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/lro/deleteasync/retry/failed"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodDelete, *u)
 	return req, nil
 }
 
@@ -639,12 +607,12 @@ func (client *LrOSClient) DeleteAsyncRetryFailedHandleError(resp *azcore.Respons
 
 // DeleteAsyncRetrySucceeded - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 func (client *LrOSClient) BeginDeleteAsyncRetrySucceeded(ctx context.Context) (*HTTPPollerResponse, error) {
-	req, err := client.DeleteAsyncRetrySucceededCreateRequest()
+	req, err := client.DeleteAsyncRetrySucceededCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -679,17 +647,12 @@ func (client *LrOSClient) ResumeDeleteAsyncRetrySucceeded(token string) (HTTPPol
 }
 
 // DeleteAsyncRetrySucceededCreateRequest creates the DeleteAsyncRetrySucceeded request.
-func (client *LrOSClient) DeleteAsyncRetrySucceededCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LrOSClient) DeleteAsyncRetrySucceededCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/lro/deleteasync/retry/succeeded"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodDelete, *u)
 	return req, nil
 }
 
@@ -712,12 +675,12 @@ func (client *LrOSClient) DeleteAsyncRetrySucceededHandleError(resp *azcore.Resp
 
 // DeleteAsyncRetrycanceled - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 func (client *LrOSClient) BeginDeleteAsyncRetrycanceled(ctx context.Context) (*HTTPPollerResponse, error) {
-	req, err := client.DeleteAsyncRetrycanceledCreateRequest()
+	req, err := client.DeleteAsyncRetrycanceledCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -752,17 +715,12 @@ func (client *LrOSClient) ResumeDeleteAsyncRetrycanceled(token string) (HTTPPoll
 }
 
 // DeleteAsyncRetrycanceledCreateRequest creates the DeleteAsyncRetrycanceled request.
-func (client *LrOSClient) DeleteAsyncRetrycanceledCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LrOSClient) DeleteAsyncRetrycanceledCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/lro/deleteasync/retry/canceled"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodDelete, *u)
 	return req, nil
 }
 
@@ -785,12 +743,12 @@ func (client *LrOSClient) DeleteAsyncRetrycanceledHandleError(resp *azcore.Respo
 
 // DeleteNoHeaderInRetry - Long running delete request, service returns a location header in the initial request. Subsequent calls to operation status do not contain location header.
 func (client *LrOSClient) BeginDeleteNoHeaderInRetry(ctx context.Context) (*HTTPPollerResponse, error) {
-	req, err := client.DeleteNoHeaderInRetryCreateRequest()
+	req, err := client.DeleteNoHeaderInRetryCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -825,17 +783,12 @@ func (client *LrOSClient) ResumeDeleteNoHeaderInRetry(token string) (HTTPPoller,
 }
 
 // DeleteNoHeaderInRetryCreateRequest creates the DeleteNoHeaderInRetry request.
-func (client *LrOSClient) DeleteNoHeaderInRetryCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LrOSClient) DeleteNoHeaderInRetryCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/lro/delete/noheader"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodDelete, *u)
 	return req, nil
 }
 
@@ -858,12 +811,12 @@ func (client *LrOSClient) DeleteNoHeaderInRetryHandleError(resp *azcore.Response
 
 // DeleteProvisioning202Accepted200Succeeded - Long running delete request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Accepted’.  Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
 func (client *LrOSClient) BeginDeleteProvisioning202Accepted200Succeeded(ctx context.Context) (*ProductPollerResponse, error) {
-	req, err := client.DeleteProvisioning202Accepted200SucceededCreateRequest()
+	req, err := client.DeleteProvisioning202Accepted200SucceededCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -898,17 +851,12 @@ func (client *LrOSClient) ResumeDeleteProvisioning202Accepted200Succeeded(token 
 }
 
 // DeleteProvisioning202Accepted200SucceededCreateRequest creates the DeleteProvisioning202Accepted200Succeeded request.
-func (client *LrOSClient) DeleteProvisioning202Accepted200SucceededCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LrOSClient) DeleteProvisioning202Accepted200SucceededCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/lro/delete/provisioning/202/accepted/200/succeeded"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodDelete, *u)
 	return req, nil
 }
 
@@ -931,12 +879,12 @@ func (client *LrOSClient) DeleteProvisioning202Accepted200SucceededHandleError(r
 
 // DeleteProvisioning202DeletingFailed200 - Long running delete request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’.  Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Failed’
 func (client *LrOSClient) BeginDeleteProvisioning202DeletingFailed200(ctx context.Context) (*ProductPollerResponse, error) {
-	req, err := client.DeleteProvisioning202DeletingFailed200CreateRequest()
+	req, err := client.DeleteProvisioning202DeletingFailed200CreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -971,17 +919,12 @@ func (client *LrOSClient) ResumeDeleteProvisioning202DeletingFailed200(token str
 }
 
 // DeleteProvisioning202DeletingFailed200CreateRequest creates the DeleteProvisioning202DeletingFailed200 request.
-func (client *LrOSClient) DeleteProvisioning202DeletingFailed200CreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LrOSClient) DeleteProvisioning202DeletingFailed200CreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/lro/delete/provisioning/202/deleting/200/failed"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodDelete, *u)
 	return req, nil
 }
 
@@ -1004,12 +947,12 @@ func (client *LrOSClient) DeleteProvisioning202DeletingFailed200HandleError(resp
 
 // DeleteProvisioning202Deletingcanceled200 - Long running delete request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’.  Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Canceled’
 func (client *LrOSClient) BeginDeleteProvisioning202Deletingcanceled200(ctx context.Context) (*ProductPollerResponse, error) {
-	req, err := client.DeleteProvisioning202Deletingcanceled200CreateRequest()
+	req, err := client.DeleteProvisioning202Deletingcanceled200CreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1044,17 +987,12 @@ func (client *LrOSClient) ResumeDeleteProvisioning202Deletingcanceled200(token s
 }
 
 // DeleteProvisioning202Deletingcanceled200CreateRequest creates the DeleteProvisioning202Deletingcanceled200 request.
-func (client *LrOSClient) DeleteProvisioning202Deletingcanceled200CreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LrOSClient) DeleteProvisioning202Deletingcanceled200CreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/lro/delete/provisioning/202/deleting/200/canceled"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodDelete, *u)
 	return req, nil
 }
 
@@ -1077,12 +1015,12 @@ func (client *LrOSClient) DeleteProvisioning202Deletingcanceled200HandleError(re
 
 // Post200WithPayload - Long running post request, service returns a 202 to the initial request, with 'Location' header. Poll returns a 200 with a response body after success.
 func (client *LrOSClient) BeginPost200WithPayload(ctx context.Context) (*SKUPollerResponse, error) {
-	req, err := client.Post200WithPayloadCreateRequest()
+	req, err := client.Post200WithPayloadCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1117,17 +1055,12 @@ func (client *LrOSClient) ResumePost200WithPayload(token string) (SKUPoller, err
 }
 
 // Post200WithPayloadCreateRequest creates the Post200WithPayload request.
-func (client *LrOSClient) Post200WithPayloadCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LrOSClient) Post200WithPayloadCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/lro/post/payload/200"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPost, *u)
 	return req, nil
 }
 
@@ -1150,12 +1083,12 @@ func (client *LrOSClient) Post200WithPayloadHandleError(resp *azcore.Response) e
 
 // Post202List - Long running put request, service returns a 202 with empty body to first request, returns a 200 with body [{ 'id': '100', 'name': 'foo' }].
 func (client *LrOSClient) BeginPost202List(ctx context.Context) (*ProductArrayPollerResponse, error) {
-	req, err := client.Post202ListCreateRequest()
+	req, err := client.Post202ListCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1190,17 +1123,12 @@ func (client *LrOSClient) ResumePost202List(token string) (ProductArrayPoller, e
 }
 
 // Post202ListCreateRequest creates the Post202List request.
-func (client *LrOSClient) Post202ListCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LrOSClient) Post202ListCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/lro/list"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPost, *u)
 	return req, nil
 }
 
@@ -1223,12 +1151,12 @@ func (client *LrOSClient) Post202ListHandleError(resp *azcore.Response) error {
 
 // Post202NoRetry204 - Long running post request, service returns a 202 to the initial request, with 'Location' header, 204 with noresponse body after success
 func (client *LrOSClient) BeginPost202NoRetry204(ctx context.Context, lrOSPost202NoRetry204Options *LrOSPost202NoRetry204Options) (*ProductPollerResponse, error) {
-	req, err := client.Post202NoRetry204CreateRequest(lrOSPost202NoRetry204Options)
+	req, err := client.Post202NoRetry204CreateRequest(ctx, lrOSPost202NoRetry204Options)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1263,17 +1191,12 @@ func (client *LrOSClient) ResumePost202NoRetry204(token string) (ProductPoller, 
 }
 
 // Post202NoRetry204CreateRequest creates the Post202NoRetry204 request.
-func (client *LrOSClient) Post202NoRetry204CreateRequest(lrOSPost202NoRetry204Options *LrOSPost202NoRetry204Options) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LrOSClient) Post202NoRetry204CreateRequest(ctx context.Context, lrOSPost202NoRetry204Options *LrOSPost202NoRetry204Options) (*azcore.Request, error) {
 	urlPath := "/lro/post/202/noretry/204"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPost, *u)
 	if lrOSPost202NoRetry204Options != nil {
 		return req, req.MarshalAsJSON(lrOSPost202NoRetry204Options.Product)
 	}
@@ -1299,12 +1222,12 @@ func (client *LrOSClient) Post202NoRetry204HandleError(resp *azcore.Response) er
 
 // Post202Retry200 - Long running post request, service returns a 202 to the initial request, with 'Location' and 'Retry-After' headers, Polls return a 200 with a response body after success
 func (client *LrOSClient) BeginPost202Retry200(ctx context.Context, lrOSPost202Retry200Options *LrOSPost202Retry200Options) (*HTTPPollerResponse, error) {
-	req, err := client.Post202Retry200CreateRequest(lrOSPost202Retry200Options)
+	req, err := client.Post202Retry200CreateRequest(ctx, lrOSPost202Retry200Options)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1339,17 +1262,12 @@ func (client *LrOSClient) ResumePost202Retry200(token string) (HTTPPoller, error
 }
 
 // Post202Retry200CreateRequest creates the Post202Retry200 request.
-func (client *LrOSClient) Post202Retry200CreateRequest(lrOSPost202Retry200Options *LrOSPost202Retry200Options) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LrOSClient) Post202Retry200CreateRequest(ctx context.Context, lrOSPost202Retry200Options *LrOSPost202Retry200Options) (*azcore.Request, error) {
 	urlPath := "/lro/post/202/retry/200"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPost, *u)
 	if lrOSPost202Retry200Options != nil {
 		return req, req.MarshalAsJSON(lrOSPost202Retry200Options.Product)
 	}
@@ -1375,12 +1293,12 @@ func (client *LrOSClient) Post202Retry200HandleError(resp *azcore.Response) erro
 
 // PostAsyncNoRetrySucceeded - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 func (client *LrOSClient) BeginPostAsyncNoRetrySucceeded(ctx context.Context, lrOSPostAsyncNoRetrySucceededOptions *LrOSPostAsyncNoRetrySucceededOptions) (*ProductPollerResponse, error) {
-	req, err := client.PostAsyncNoRetrySucceededCreateRequest(lrOSPostAsyncNoRetrySucceededOptions)
+	req, err := client.PostAsyncNoRetrySucceededCreateRequest(ctx, lrOSPostAsyncNoRetrySucceededOptions)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1415,17 +1333,12 @@ func (client *LrOSClient) ResumePostAsyncNoRetrySucceeded(token string) (Product
 }
 
 // PostAsyncNoRetrySucceededCreateRequest creates the PostAsyncNoRetrySucceeded request.
-func (client *LrOSClient) PostAsyncNoRetrySucceededCreateRequest(lrOSPostAsyncNoRetrySucceededOptions *LrOSPostAsyncNoRetrySucceededOptions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LrOSClient) PostAsyncNoRetrySucceededCreateRequest(ctx context.Context, lrOSPostAsyncNoRetrySucceededOptions *LrOSPostAsyncNoRetrySucceededOptions) (*azcore.Request, error) {
 	urlPath := "/lro/postasync/noretry/succeeded"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPost, *u)
 	if lrOSPostAsyncNoRetrySucceededOptions != nil {
 		return req, req.MarshalAsJSON(lrOSPostAsyncNoRetrySucceededOptions.Product)
 	}
@@ -1451,12 +1364,12 @@ func (client *LrOSClient) PostAsyncNoRetrySucceededHandleError(resp *azcore.Resp
 
 // PostAsyncRetryFailed - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 func (client *LrOSClient) BeginPostAsyncRetryFailed(ctx context.Context, lrOSPostAsyncRetryFailedOptions *LrOSPostAsyncRetryFailedOptions) (*HTTPPollerResponse, error) {
-	req, err := client.PostAsyncRetryFailedCreateRequest(lrOSPostAsyncRetryFailedOptions)
+	req, err := client.PostAsyncRetryFailedCreateRequest(ctx, lrOSPostAsyncRetryFailedOptions)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1491,17 +1404,12 @@ func (client *LrOSClient) ResumePostAsyncRetryFailed(token string) (HTTPPoller, 
 }
 
 // PostAsyncRetryFailedCreateRequest creates the PostAsyncRetryFailed request.
-func (client *LrOSClient) PostAsyncRetryFailedCreateRequest(lrOSPostAsyncRetryFailedOptions *LrOSPostAsyncRetryFailedOptions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LrOSClient) PostAsyncRetryFailedCreateRequest(ctx context.Context, lrOSPostAsyncRetryFailedOptions *LrOSPostAsyncRetryFailedOptions) (*azcore.Request, error) {
 	urlPath := "/lro/postasync/retry/failed"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPost, *u)
 	if lrOSPostAsyncRetryFailedOptions != nil {
 		return req, req.MarshalAsJSON(lrOSPostAsyncRetryFailedOptions.Product)
 	}
@@ -1527,12 +1435,12 @@ func (client *LrOSClient) PostAsyncRetryFailedHandleError(resp *azcore.Response)
 
 // PostAsyncRetrySucceeded - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 func (client *LrOSClient) BeginPostAsyncRetrySucceeded(ctx context.Context, lrOSPostAsyncRetrySucceededOptions *LrOSPostAsyncRetrySucceededOptions) (*ProductPollerResponse, error) {
-	req, err := client.PostAsyncRetrySucceededCreateRequest(lrOSPostAsyncRetrySucceededOptions)
+	req, err := client.PostAsyncRetrySucceededCreateRequest(ctx, lrOSPostAsyncRetrySucceededOptions)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1567,17 +1475,12 @@ func (client *LrOSClient) ResumePostAsyncRetrySucceeded(token string) (ProductPo
 }
 
 // PostAsyncRetrySucceededCreateRequest creates the PostAsyncRetrySucceeded request.
-func (client *LrOSClient) PostAsyncRetrySucceededCreateRequest(lrOSPostAsyncRetrySucceededOptions *LrOSPostAsyncRetrySucceededOptions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LrOSClient) PostAsyncRetrySucceededCreateRequest(ctx context.Context, lrOSPostAsyncRetrySucceededOptions *LrOSPostAsyncRetrySucceededOptions) (*azcore.Request, error) {
 	urlPath := "/lro/postasync/retry/succeeded"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPost, *u)
 	if lrOSPostAsyncRetrySucceededOptions != nil {
 		return req, req.MarshalAsJSON(lrOSPostAsyncRetrySucceededOptions.Product)
 	}
@@ -1603,12 +1506,12 @@ func (client *LrOSClient) PostAsyncRetrySucceededHandleError(resp *azcore.Respon
 
 // PostAsyncRetrycanceled - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 func (client *LrOSClient) BeginPostAsyncRetrycanceled(ctx context.Context, lrOSPostAsyncRetrycanceledOptions *LrOSPostAsyncRetrycanceledOptions) (*HTTPPollerResponse, error) {
-	req, err := client.PostAsyncRetrycanceledCreateRequest(lrOSPostAsyncRetrycanceledOptions)
+	req, err := client.PostAsyncRetrycanceledCreateRequest(ctx, lrOSPostAsyncRetrycanceledOptions)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1643,17 +1546,12 @@ func (client *LrOSClient) ResumePostAsyncRetrycanceled(token string) (HTTPPoller
 }
 
 // PostAsyncRetrycanceledCreateRequest creates the PostAsyncRetrycanceled request.
-func (client *LrOSClient) PostAsyncRetrycanceledCreateRequest(lrOSPostAsyncRetrycanceledOptions *LrOSPostAsyncRetrycanceledOptions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LrOSClient) PostAsyncRetrycanceledCreateRequest(ctx context.Context, lrOSPostAsyncRetrycanceledOptions *LrOSPostAsyncRetrycanceledOptions) (*azcore.Request, error) {
 	urlPath := "/lro/postasync/retry/canceled"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPost, *u)
 	if lrOSPostAsyncRetrycanceledOptions != nil {
 		return req, req.MarshalAsJSON(lrOSPostAsyncRetrycanceledOptions.Product)
 	}
@@ -1679,12 +1577,12 @@ func (client *LrOSClient) PostAsyncRetrycanceledHandleError(resp *azcore.Respons
 
 // PostDoubleHeadersFinalAzureHeaderGet - Long running post request, service returns a 202 to the initial request with both Location and Azure-Async header. Poll Azure-Async and it's success. Should NOT poll Location to get the final object
 func (client *LrOSClient) BeginPostDoubleHeadersFinalAzureHeaderGet(ctx context.Context) (*ProductPollerResponse, error) {
-	req, err := client.PostDoubleHeadersFinalAzureHeaderGetCreateRequest()
+	req, err := client.PostDoubleHeadersFinalAzureHeaderGetCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1719,17 +1617,12 @@ func (client *LrOSClient) ResumePostDoubleHeadersFinalAzureHeaderGet(token strin
 }
 
 // PostDoubleHeadersFinalAzureHeaderGetCreateRequest creates the PostDoubleHeadersFinalAzureHeaderGet request.
-func (client *LrOSClient) PostDoubleHeadersFinalAzureHeaderGetCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LrOSClient) PostDoubleHeadersFinalAzureHeaderGetCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/lro/LROPostDoubleHeadersFinalAzureHeaderGet"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPost, *u)
 	return req, nil
 }
 
@@ -1752,12 +1645,12 @@ func (client *LrOSClient) PostDoubleHeadersFinalAzureHeaderGetHandleError(resp *
 
 // PostDoubleHeadersFinalAzureHeaderGetDefault - Long running post request, service returns a 202 to the initial request with both Location and Azure-Async header. Poll Azure-Async and it's success. Should NOT poll Location to get the final object if you support initial Autorest behavior.
 func (client *LrOSClient) BeginPostDoubleHeadersFinalAzureHeaderGetDefault(ctx context.Context) (*ProductPollerResponse, error) {
-	req, err := client.PostDoubleHeadersFinalAzureHeaderGetDefaultCreateRequest()
+	req, err := client.PostDoubleHeadersFinalAzureHeaderGetDefaultCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1792,17 +1685,12 @@ func (client *LrOSClient) ResumePostDoubleHeadersFinalAzureHeaderGetDefault(toke
 }
 
 // PostDoubleHeadersFinalAzureHeaderGetDefaultCreateRequest creates the PostDoubleHeadersFinalAzureHeaderGetDefault request.
-func (client *LrOSClient) PostDoubleHeadersFinalAzureHeaderGetDefaultCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LrOSClient) PostDoubleHeadersFinalAzureHeaderGetDefaultCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/lro/LROPostDoubleHeadersFinalAzureHeaderGetDefault"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPost, *u)
 	return req, nil
 }
 
@@ -1825,12 +1713,12 @@ func (client *LrOSClient) PostDoubleHeadersFinalAzureHeaderGetDefaultHandleError
 
 // PostDoubleHeadersFinalLocationGet - Long running post request, service returns a 202 to the initial request with both Location and Azure-Async header. Poll Azure-Async and it's success. Should poll Location to get the final object
 func (client *LrOSClient) BeginPostDoubleHeadersFinalLocationGet(ctx context.Context) (*ProductPollerResponse, error) {
-	req, err := client.PostDoubleHeadersFinalLocationGetCreateRequest()
+	req, err := client.PostDoubleHeadersFinalLocationGetCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1865,17 +1753,12 @@ func (client *LrOSClient) ResumePostDoubleHeadersFinalLocationGet(token string) 
 }
 
 // PostDoubleHeadersFinalLocationGetCreateRequest creates the PostDoubleHeadersFinalLocationGet request.
-func (client *LrOSClient) PostDoubleHeadersFinalLocationGetCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LrOSClient) PostDoubleHeadersFinalLocationGetCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/lro/LROPostDoubleHeadersFinalLocationGet"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPost, *u)
 	return req, nil
 }
 
@@ -1898,12 +1781,12 @@ func (client *LrOSClient) PostDoubleHeadersFinalLocationGetHandleError(resp *azc
 
 // Put200Acceptedcanceled200 - Long running put request, service returns a 201 to the initial request, with an entity that contains ProvisioningState=’Creating’.  Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Canceled’
 func (client *LrOSClient) BeginPut200Acceptedcanceled200(ctx context.Context, lrOSPut200Acceptedcanceled200Options *LrOSPut200Acceptedcanceled200Options) (*ProductPollerResponse, error) {
-	req, err := client.Put200Acceptedcanceled200CreateRequest(lrOSPut200Acceptedcanceled200Options)
+	req, err := client.Put200Acceptedcanceled200CreateRequest(ctx, lrOSPut200Acceptedcanceled200Options)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1938,17 +1821,12 @@ func (client *LrOSClient) ResumePut200Acceptedcanceled200(token string) (Product
 }
 
 // Put200Acceptedcanceled200CreateRequest creates the Put200Acceptedcanceled200 request.
-func (client *LrOSClient) Put200Acceptedcanceled200CreateRequest(lrOSPut200Acceptedcanceled200Options *LrOSPut200Acceptedcanceled200Options) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LrOSClient) Put200Acceptedcanceled200CreateRequest(ctx context.Context, lrOSPut200Acceptedcanceled200Options *LrOSPut200Acceptedcanceled200Options) (*azcore.Request, error) {
 	urlPath := "/lro/put/200/accepted/canceled/200"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	if lrOSPut200Acceptedcanceled200Options != nil {
 		return req, req.MarshalAsJSON(lrOSPut200Acceptedcanceled200Options.Product)
 	}
@@ -1974,12 +1852,12 @@ func (client *LrOSClient) Put200Acceptedcanceled200HandleError(resp *azcore.Resp
 
 // Put200Succeeded - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Succeeded’.
 func (client *LrOSClient) BeginPut200Succeeded(ctx context.Context, lrOSPut200SucceededOptions *LrOSPut200SucceededOptions) (*ProductPollerResponse, error) {
-	req, err := client.Put200SucceededCreateRequest(lrOSPut200SucceededOptions)
+	req, err := client.Put200SucceededCreateRequest(ctx, lrOSPut200SucceededOptions)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2014,17 +1892,12 @@ func (client *LrOSClient) ResumePut200Succeeded(token string) (ProductPoller, er
 }
 
 // Put200SucceededCreateRequest creates the Put200Succeeded request.
-func (client *LrOSClient) Put200SucceededCreateRequest(lrOSPut200SucceededOptions *LrOSPut200SucceededOptions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LrOSClient) Put200SucceededCreateRequest(ctx context.Context, lrOSPut200SucceededOptions *LrOSPut200SucceededOptions) (*azcore.Request, error) {
 	urlPath := "/lro/put/200/succeeded"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	if lrOSPut200SucceededOptions != nil {
 		return req, req.MarshalAsJSON(lrOSPut200SucceededOptions.Product)
 	}
@@ -2050,12 +1923,12 @@ func (client *LrOSClient) Put200SucceededHandleError(resp *azcore.Response) erro
 
 // Put200SucceededNoState - Long running put request, service returns a 200 to the initial request, with an entity that does not contain ProvisioningState=’Succeeded’.
 func (client *LrOSClient) BeginPut200SucceededNoState(ctx context.Context, lrOSPut200SucceededNoStateOptions *LrOSPut200SucceededNoStateOptions) (*ProductPollerResponse, error) {
-	req, err := client.Put200SucceededNoStateCreateRequest(lrOSPut200SucceededNoStateOptions)
+	req, err := client.Put200SucceededNoStateCreateRequest(ctx, lrOSPut200SucceededNoStateOptions)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2090,17 +1963,12 @@ func (client *LrOSClient) ResumePut200SucceededNoState(token string) (ProductPol
 }
 
 // Put200SucceededNoStateCreateRequest creates the Put200SucceededNoState request.
-func (client *LrOSClient) Put200SucceededNoStateCreateRequest(lrOSPut200SucceededNoStateOptions *LrOSPut200SucceededNoStateOptions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LrOSClient) Put200SucceededNoStateCreateRequest(ctx context.Context, lrOSPut200SucceededNoStateOptions *LrOSPut200SucceededNoStateOptions) (*azcore.Request, error) {
 	urlPath := "/lro/put/200/succeeded/nostate"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	if lrOSPut200SucceededNoStateOptions != nil {
 		return req, req.MarshalAsJSON(lrOSPut200SucceededNoStateOptions.Product)
 	}
@@ -2126,12 +1994,12 @@ func (client *LrOSClient) Put200SucceededNoStateHandleError(resp *azcore.Respons
 
 // Put200UpdatingSucceeded204 - Long running put request, service returns a 201 to the initial request, with an entity that contains ProvisioningState=’Updating’.  Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
 func (client *LrOSClient) BeginPut200UpdatingSucceeded204(ctx context.Context, lrOSPut200UpdatingSucceeded204Options *LrOSPut200UpdatingSucceeded204Options) (*ProductPollerResponse, error) {
-	req, err := client.Put200UpdatingSucceeded204CreateRequest(lrOSPut200UpdatingSucceeded204Options)
+	req, err := client.Put200UpdatingSucceeded204CreateRequest(ctx, lrOSPut200UpdatingSucceeded204Options)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2166,17 +2034,12 @@ func (client *LrOSClient) ResumePut200UpdatingSucceeded204(token string) (Produc
 }
 
 // Put200UpdatingSucceeded204CreateRequest creates the Put200UpdatingSucceeded204 request.
-func (client *LrOSClient) Put200UpdatingSucceeded204CreateRequest(lrOSPut200UpdatingSucceeded204Options *LrOSPut200UpdatingSucceeded204Options) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LrOSClient) Put200UpdatingSucceeded204CreateRequest(ctx context.Context, lrOSPut200UpdatingSucceeded204Options *LrOSPut200UpdatingSucceeded204Options) (*azcore.Request, error) {
 	urlPath := "/lro/put/200/updating/succeeded/200"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	if lrOSPut200UpdatingSucceeded204Options != nil {
 		return req, req.MarshalAsJSON(lrOSPut200UpdatingSucceeded204Options.Product)
 	}
@@ -2202,12 +2065,12 @@ func (client *LrOSClient) Put200UpdatingSucceeded204HandleError(resp *azcore.Res
 
 // Put201CreatingFailed200 - Long running put request, service returns a 201 to the initial request, with an entity that contains ProvisioningState=’Created’.  Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Failed’
 func (client *LrOSClient) BeginPut201CreatingFailed200(ctx context.Context, lrOSPut201CreatingFailed200Options *LrOSPut201CreatingFailed200Options) (*ProductPollerResponse, error) {
-	req, err := client.Put201CreatingFailed200CreateRequest(lrOSPut201CreatingFailed200Options)
+	req, err := client.Put201CreatingFailed200CreateRequest(ctx, lrOSPut201CreatingFailed200Options)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2242,17 +2105,12 @@ func (client *LrOSClient) ResumePut201CreatingFailed200(token string) (ProductPo
 }
 
 // Put201CreatingFailed200CreateRequest creates the Put201CreatingFailed200 request.
-func (client *LrOSClient) Put201CreatingFailed200CreateRequest(lrOSPut201CreatingFailed200Options *LrOSPut201CreatingFailed200Options) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LrOSClient) Put201CreatingFailed200CreateRequest(ctx context.Context, lrOSPut201CreatingFailed200Options *LrOSPut201CreatingFailed200Options) (*azcore.Request, error) {
 	urlPath := "/lro/put/201/created/failed/200"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	if lrOSPut201CreatingFailed200Options != nil {
 		return req, req.MarshalAsJSON(lrOSPut201CreatingFailed200Options.Product)
 	}
@@ -2278,12 +2136,12 @@ func (client *LrOSClient) Put201CreatingFailed200HandleError(resp *azcore.Respon
 
 // Put201CreatingSucceeded200 - Long running put request, service returns a 201 to the initial request, with an entity that contains ProvisioningState=’Creating’.  Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
 func (client *LrOSClient) BeginPut201CreatingSucceeded200(ctx context.Context, lrOSPut201CreatingSucceeded200Options *LrOSPut201CreatingSucceeded200Options) (*ProductPollerResponse, error) {
-	req, err := client.Put201CreatingSucceeded200CreateRequest(lrOSPut201CreatingSucceeded200Options)
+	req, err := client.Put201CreatingSucceeded200CreateRequest(ctx, lrOSPut201CreatingSucceeded200Options)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2318,17 +2176,12 @@ func (client *LrOSClient) ResumePut201CreatingSucceeded200(token string) (Produc
 }
 
 // Put201CreatingSucceeded200CreateRequest creates the Put201CreatingSucceeded200 request.
-func (client *LrOSClient) Put201CreatingSucceeded200CreateRequest(lrOSPut201CreatingSucceeded200Options *LrOSPut201CreatingSucceeded200Options) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LrOSClient) Put201CreatingSucceeded200CreateRequest(ctx context.Context, lrOSPut201CreatingSucceeded200Options *LrOSPut201CreatingSucceeded200Options) (*azcore.Request, error) {
 	urlPath := "/lro/put/201/creating/succeeded/200"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	if lrOSPut201CreatingSucceeded200Options != nil {
 		return req, req.MarshalAsJSON(lrOSPut201CreatingSucceeded200Options.Product)
 	}
@@ -2354,12 +2207,12 @@ func (client *LrOSClient) Put201CreatingSucceeded200HandleError(resp *azcore.Res
 
 // Put201Succeeded - Long running put request, service returns a 201 to the initial request, with an entity that contains ProvisioningState=’Succeeded’.
 func (client *LrOSClient) BeginPut201Succeeded(ctx context.Context, lrOSPut201SucceededOptions *LrOSPut201SucceededOptions) (*ProductPollerResponse, error) {
-	req, err := client.Put201SucceededCreateRequest(lrOSPut201SucceededOptions)
+	req, err := client.Put201SucceededCreateRequest(ctx, lrOSPut201SucceededOptions)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2394,17 +2247,12 @@ func (client *LrOSClient) ResumePut201Succeeded(token string) (ProductPoller, er
 }
 
 // Put201SucceededCreateRequest creates the Put201Succeeded request.
-func (client *LrOSClient) Put201SucceededCreateRequest(lrOSPut201SucceededOptions *LrOSPut201SucceededOptions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LrOSClient) Put201SucceededCreateRequest(ctx context.Context, lrOSPut201SucceededOptions *LrOSPut201SucceededOptions) (*azcore.Request, error) {
 	urlPath := "/lro/put/201/succeeded"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	if lrOSPut201SucceededOptions != nil {
 		return req, req.MarshalAsJSON(lrOSPut201SucceededOptions.Product)
 	}
@@ -2430,12 +2278,12 @@ func (client *LrOSClient) Put201SucceededHandleError(resp *azcore.Response) erro
 
 // Put202Retry200 - Long running put request, service returns a 202 to the initial request, with a location header that points to a polling URL that returns a 200 and an entity that doesn't contains ProvisioningState
 func (client *LrOSClient) BeginPut202Retry200(ctx context.Context, lrOSPut202Retry200Options *LrOSPut202Retry200Options) (*ProductPollerResponse, error) {
-	req, err := client.Put202Retry200CreateRequest(lrOSPut202Retry200Options)
+	req, err := client.Put202Retry200CreateRequest(ctx, lrOSPut202Retry200Options)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2470,17 +2318,12 @@ func (client *LrOSClient) ResumePut202Retry200(token string) (ProductPoller, err
 }
 
 // Put202Retry200CreateRequest creates the Put202Retry200 request.
-func (client *LrOSClient) Put202Retry200CreateRequest(lrOSPut202Retry200Options *LrOSPut202Retry200Options) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LrOSClient) Put202Retry200CreateRequest(ctx context.Context, lrOSPut202Retry200Options *LrOSPut202Retry200Options) (*azcore.Request, error) {
 	urlPath := "/lro/put/202/retry/200"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	if lrOSPut202Retry200Options != nil {
 		return req, req.MarshalAsJSON(lrOSPut202Retry200Options.Product)
 	}
@@ -2506,12 +2349,12 @@ func (client *LrOSClient) Put202Retry200HandleError(resp *azcore.Response) error
 
 // PutAsyncNoHeaderInRetry - Long running put request, service returns a 202 to the initial request with Azure-AsyncOperation header. Subsequent calls to operation status do not contain Azure-AsyncOperation header.
 func (client *LrOSClient) BeginPutAsyncNoHeaderInRetry(ctx context.Context, lrOSPutAsyncNoHeaderInRetryOptions *LrOSPutAsyncNoHeaderInRetryOptions) (*ProductPollerResponse, error) {
-	req, err := client.PutAsyncNoHeaderInRetryCreateRequest(lrOSPutAsyncNoHeaderInRetryOptions)
+	req, err := client.PutAsyncNoHeaderInRetryCreateRequest(ctx, lrOSPutAsyncNoHeaderInRetryOptions)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2546,17 +2389,12 @@ func (client *LrOSClient) ResumePutAsyncNoHeaderInRetry(token string) (ProductPo
 }
 
 // PutAsyncNoHeaderInRetryCreateRequest creates the PutAsyncNoHeaderInRetry request.
-func (client *LrOSClient) PutAsyncNoHeaderInRetryCreateRequest(lrOSPutAsyncNoHeaderInRetryOptions *LrOSPutAsyncNoHeaderInRetryOptions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LrOSClient) PutAsyncNoHeaderInRetryCreateRequest(ctx context.Context, lrOSPutAsyncNoHeaderInRetryOptions *LrOSPutAsyncNoHeaderInRetryOptions) (*azcore.Request, error) {
 	urlPath := "/lro/putasync/noheader/201/200"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	if lrOSPutAsyncNoHeaderInRetryOptions != nil {
 		return req, req.MarshalAsJSON(lrOSPutAsyncNoHeaderInRetryOptions.Product)
 	}
@@ -2582,12 +2420,12 @@ func (client *LrOSClient) PutAsyncNoHeaderInRetryHandleError(resp *azcore.Respon
 
 // PutAsyncNoRetrySucceeded - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 func (client *LrOSClient) BeginPutAsyncNoRetrySucceeded(ctx context.Context, lrOSPutAsyncNoRetrySucceededOptions *LrOSPutAsyncNoRetrySucceededOptions) (*ProductPollerResponse, error) {
-	req, err := client.PutAsyncNoRetrySucceededCreateRequest(lrOSPutAsyncNoRetrySucceededOptions)
+	req, err := client.PutAsyncNoRetrySucceededCreateRequest(ctx, lrOSPutAsyncNoRetrySucceededOptions)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2622,17 +2460,12 @@ func (client *LrOSClient) ResumePutAsyncNoRetrySucceeded(token string) (ProductP
 }
 
 // PutAsyncNoRetrySucceededCreateRequest creates the PutAsyncNoRetrySucceeded request.
-func (client *LrOSClient) PutAsyncNoRetrySucceededCreateRequest(lrOSPutAsyncNoRetrySucceededOptions *LrOSPutAsyncNoRetrySucceededOptions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LrOSClient) PutAsyncNoRetrySucceededCreateRequest(ctx context.Context, lrOSPutAsyncNoRetrySucceededOptions *LrOSPutAsyncNoRetrySucceededOptions) (*azcore.Request, error) {
 	urlPath := "/lro/putasync/noretry/succeeded"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	if lrOSPutAsyncNoRetrySucceededOptions != nil {
 		return req, req.MarshalAsJSON(lrOSPutAsyncNoRetrySucceededOptions.Product)
 	}
@@ -2658,12 +2491,12 @@ func (client *LrOSClient) PutAsyncNoRetrySucceededHandleError(resp *azcore.Respo
 
 // PutAsyncNoRetrycanceled - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 func (client *LrOSClient) BeginPutAsyncNoRetrycanceled(ctx context.Context, lrOSPutAsyncNoRetrycanceledOptions *LrOSPutAsyncNoRetrycanceledOptions) (*ProductPollerResponse, error) {
-	req, err := client.PutAsyncNoRetrycanceledCreateRequest(lrOSPutAsyncNoRetrycanceledOptions)
+	req, err := client.PutAsyncNoRetrycanceledCreateRequest(ctx, lrOSPutAsyncNoRetrycanceledOptions)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2698,17 +2531,12 @@ func (client *LrOSClient) ResumePutAsyncNoRetrycanceled(token string) (ProductPo
 }
 
 // PutAsyncNoRetrycanceledCreateRequest creates the PutAsyncNoRetrycanceled request.
-func (client *LrOSClient) PutAsyncNoRetrycanceledCreateRequest(lrOSPutAsyncNoRetrycanceledOptions *LrOSPutAsyncNoRetrycanceledOptions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LrOSClient) PutAsyncNoRetrycanceledCreateRequest(ctx context.Context, lrOSPutAsyncNoRetrycanceledOptions *LrOSPutAsyncNoRetrycanceledOptions) (*azcore.Request, error) {
 	urlPath := "/lro/putasync/noretry/canceled"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	if lrOSPutAsyncNoRetrycanceledOptions != nil {
 		return req, req.MarshalAsJSON(lrOSPutAsyncNoRetrycanceledOptions.Product)
 	}
@@ -2734,12 +2562,12 @@ func (client *LrOSClient) PutAsyncNoRetrycanceledHandleError(resp *azcore.Respon
 
 // PutAsyncNonResource - Long running put request with non resource.
 func (client *LrOSClient) BeginPutAsyncNonResource(ctx context.Context, lrOSPutAsyncNonResourceOptions *LrOSPutAsyncNonResourceOptions) (*SKUPollerResponse, error) {
-	req, err := client.PutAsyncNonResourceCreateRequest(lrOSPutAsyncNonResourceOptions)
+	req, err := client.PutAsyncNonResourceCreateRequest(ctx, lrOSPutAsyncNonResourceOptions)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2774,17 +2602,12 @@ func (client *LrOSClient) ResumePutAsyncNonResource(token string) (SKUPoller, er
 }
 
 // PutAsyncNonResourceCreateRequest creates the PutAsyncNonResource request.
-func (client *LrOSClient) PutAsyncNonResourceCreateRequest(lrOSPutAsyncNonResourceOptions *LrOSPutAsyncNonResourceOptions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LrOSClient) PutAsyncNonResourceCreateRequest(ctx context.Context, lrOSPutAsyncNonResourceOptions *LrOSPutAsyncNonResourceOptions) (*azcore.Request, error) {
 	urlPath := "/lro/putnonresourceasync/202/200"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	if lrOSPutAsyncNonResourceOptions != nil {
 		return req, req.MarshalAsJSON(lrOSPutAsyncNonResourceOptions.Sku)
 	}
@@ -2810,12 +2633,12 @@ func (client *LrOSClient) PutAsyncNonResourceHandleError(resp *azcore.Response) 
 
 // PutAsyncRetryFailed - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 func (client *LrOSClient) BeginPutAsyncRetryFailed(ctx context.Context, lrOSPutAsyncRetryFailedOptions *LrOSPutAsyncRetryFailedOptions) (*ProductPollerResponse, error) {
-	req, err := client.PutAsyncRetryFailedCreateRequest(lrOSPutAsyncRetryFailedOptions)
+	req, err := client.PutAsyncRetryFailedCreateRequest(ctx, lrOSPutAsyncRetryFailedOptions)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2850,17 +2673,12 @@ func (client *LrOSClient) ResumePutAsyncRetryFailed(token string) (ProductPoller
 }
 
 // PutAsyncRetryFailedCreateRequest creates the PutAsyncRetryFailed request.
-func (client *LrOSClient) PutAsyncRetryFailedCreateRequest(lrOSPutAsyncRetryFailedOptions *LrOSPutAsyncRetryFailedOptions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LrOSClient) PutAsyncRetryFailedCreateRequest(ctx context.Context, lrOSPutAsyncRetryFailedOptions *LrOSPutAsyncRetryFailedOptions) (*azcore.Request, error) {
 	urlPath := "/lro/putasync/retry/failed"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	if lrOSPutAsyncRetryFailedOptions != nil {
 		return req, req.MarshalAsJSON(lrOSPutAsyncRetryFailedOptions.Product)
 	}
@@ -2886,12 +2704,12 @@ func (client *LrOSClient) PutAsyncRetryFailedHandleError(resp *azcore.Response) 
 
 // PutAsyncRetrySucceeded - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 func (client *LrOSClient) BeginPutAsyncRetrySucceeded(ctx context.Context, lrOSPutAsyncRetrySucceededOptions *LrOSPutAsyncRetrySucceededOptions) (*ProductPollerResponse, error) {
-	req, err := client.PutAsyncRetrySucceededCreateRequest(lrOSPutAsyncRetrySucceededOptions)
+	req, err := client.PutAsyncRetrySucceededCreateRequest(ctx, lrOSPutAsyncRetrySucceededOptions)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2926,17 +2744,12 @@ func (client *LrOSClient) ResumePutAsyncRetrySucceeded(token string) (ProductPol
 }
 
 // PutAsyncRetrySucceededCreateRequest creates the PutAsyncRetrySucceeded request.
-func (client *LrOSClient) PutAsyncRetrySucceededCreateRequest(lrOSPutAsyncRetrySucceededOptions *LrOSPutAsyncRetrySucceededOptions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LrOSClient) PutAsyncRetrySucceededCreateRequest(ctx context.Context, lrOSPutAsyncRetrySucceededOptions *LrOSPutAsyncRetrySucceededOptions) (*azcore.Request, error) {
 	urlPath := "/lro/putasync/retry/succeeded"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	if lrOSPutAsyncRetrySucceededOptions != nil {
 		return req, req.MarshalAsJSON(lrOSPutAsyncRetrySucceededOptions.Product)
 	}
@@ -2962,12 +2775,12 @@ func (client *LrOSClient) PutAsyncRetrySucceededHandleError(resp *azcore.Respons
 
 // PutAsyncSubResource - Long running put request with sub resource.
 func (client *LrOSClient) BeginPutAsyncSubResource(ctx context.Context, lrOSPutAsyncSubResourceOptions *LrOSPutAsyncSubResourceOptions) (*SubProductPollerResponse, error) {
-	req, err := client.PutAsyncSubResourceCreateRequest(lrOSPutAsyncSubResourceOptions)
+	req, err := client.PutAsyncSubResourceCreateRequest(ctx, lrOSPutAsyncSubResourceOptions)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -3002,17 +2815,12 @@ func (client *LrOSClient) ResumePutAsyncSubResource(token string) (SubProductPol
 }
 
 // PutAsyncSubResourceCreateRequest creates the PutAsyncSubResource request.
-func (client *LrOSClient) PutAsyncSubResourceCreateRequest(lrOSPutAsyncSubResourceOptions *LrOSPutAsyncSubResourceOptions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LrOSClient) PutAsyncSubResourceCreateRequest(ctx context.Context, lrOSPutAsyncSubResourceOptions *LrOSPutAsyncSubResourceOptions) (*azcore.Request, error) {
 	urlPath := "/lro/putsubresourceasync/202/200"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	if lrOSPutAsyncSubResourceOptions != nil {
 		return req, req.MarshalAsJSON(lrOSPutAsyncSubResourceOptions.Product)
 	}
@@ -3038,12 +2846,12 @@ func (client *LrOSClient) PutAsyncSubResourceHandleError(resp *azcore.Response) 
 
 // PutNoHeaderInRetry - Long running put request, service returns a 202 to the initial request with location header. Subsequent calls to operation status do not contain location header.
 func (client *LrOSClient) BeginPutNoHeaderInRetry(ctx context.Context, lrOSPutNoHeaderInRetryOptions *LrOSPutNoHeaderInRetryOptions) (*ProductPollerResponse, error) {
-	req, err := client.PutNoHeaderInRetryCreateRequest(lrOSPutNoHeaderInRetryOptions)
+	req, err := client.PutNoHeaderInRetryCreateRequest(ctx, lrOSPutNoHeaderInRetryOptions)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -3078,17 +2886,12 @@ func (client *LrOSClient) ResumePutNoHeaderInRetry(token string) (ProductPoller,
 }
 
 // PutNoHeaderInRetryCreateRequest creates the PutNoHeaderInRetry request.
-func (client *LrOSClient) PutNoHeaderInRetryCreateRequest(lrOSPutNoHeaderInRetryOptions *LrOSPutNoHeaderInRetryOptions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LrOSClient) PutNoHeaderInRetryCreateRequest(ctx context.Context, lrOSPutNoHeaderInRetryOptions *LrOSPutNoHeaderInRetryOptions) (*azcore.Request, error) {
 	urlPath := "/lro/put/noheader/202/200"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	if lrOSPutNoHeaderInRetryOptions != nil {
 		return req, req.MarshalAsJSON(lrOSPutNoHeaderInRetryOptions.Product)
 	}
@@ -3114,12 +2917,12 @@ func (client *LrOSClient) PutNoHeaderInRetryHandleError(resp *azcore.Response) e
 
 // PutNonResource - Long running put request with non resource.
 func (client *LrOSClient) BeginPutNonResource(ctx context.Context, lrOSPutNonResourceOptions *LrOSPutNonResourceOptions) (*SKUPollerResponse, error) {
-	req, err := client.PutNonResourceCreateRequest(lrOSPutNonResourceOptions)
+	req, err := client.PutNonResourceCreateRequest(ctx, lrOSPutNonResourceOptions)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -3154,17 +2957,12 @@ func (client *LrOSClient) ResumePutNonResource(token string) (SKUPoller, error) 
 }
 
 // PutNonResourceCreateRequest creates the PutNonResource request.
-func (client *LrOSClient) PutNonResourceCreateRequest(lrOSPutNonResourceOptions *LrOSPutNonResourceOptions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LrOSClient) PutNonResourceCreateRequest(ctx context.Context, lrOSPutNonResourceOptions *LrOSPutNonResourceOptions) (*azcore.Request, error) {
 	urlPath := "/lro/putnonresource/202/200"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	if lrOSPutNonResourceOptions != nil {
 		return req, req.MarshalAsJSON(lrOSPutNonResourceOptions.Sku)
 	}
@@ -3190,12 +2988,12 @@ func (client *LrOSClient) PutNonResourceHandleError(resp *azcore.Response) error
 
 // PutSubResource - Long running put request with sub resource.
 func (client *LrOSClient) BeginPutSubResource(ctx context.Context, lrOSPutSubResourceOptions *LrOSPutSubResourceOptions) (*SubProductPollerResponse, error) {
-	req, err := client.PutSubResourceCreateRequest(lrOSPutSubResourceOptions)
+	req, err := client.PutSubResourceCreateRequest(ctx, lrOSPutSubResourceOptions)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -3230,17 +3028,12 @@ func (client *LrOSClient) ResumePutSubResource(token string) (SubProductPoller, 
 }
 
 // PutSubResourceCreateRequest creates the PutSubResource request.
-func (client *LrOSClient) PutSubResourceCreateRequest(lrOSPutSubResourceOptions *LrOSPutSubResourceOptions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LrOSClient) PutSubResourceCreateRequest(ctx context.Context, lrOSPutSubResourceOptions *LrOSPutSubResourceOptions) (*azcore.Request, error) {
 	urlPath := "/lro/putsubresource/202/200"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	if lrOSPutSubResourceOptions != nil {
 		return req, req.MarshalAsJSON(lrOSPutSubResourceOptions.Product)
 	}

@@ -7,12 +7,10 @@ package armnetwork
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 	"time"
 )
@@ -30,9 +28,9 @@ type ServiceEndpointPoliciesOperations interface {
 	// Get - Gets the specified service Endpoint Policies in a specified resource group.
 	Get(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, serviceEndpointPoliciesGetOptions *ServiceEndpointPoliciesGetOptions) (*ServiceEndpointPolicyResponse, error)
 	// List - Gets all the service endpoint policies in a subscription.
-	List() (ServiceEndpointPolicyListResultPager, error)
+	List() ServiceEndpointPolicyListResultPager
 	// ListByResourceGroup - Gets all service endpoint Policies in a resource group.
-	ListByResourceGroup(resourceGroupName string) (ServiceEndpointPolicyListResultPager, error)
+	ListByResourceGroup(resourceGroupName string) ServiceEndpointPolicyListResultPager
 	// UpdateTags - Updates tags of a service endpoint policy.
 	UpdateTags(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, parameters TagsObject) (*ServiceEndpointPolicyResponse, error)
 }
@@ -50,18 +48,18 @@ func NewServiceEndpointPoliciesClient(c *Client, subscriptionID string) ServiceE
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *ServiceEndpointPoliciesClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *ServiceEndpointPoliciesClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // CreateOrUpdate - Creates or updates a service Endpoint Policies.
 func (client *ServiceEndpointPoliciesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, parameters ServiceEndpointPolicy) (*ServiceEndpointPolicyPollerResponse, error) {
-	req, err := client.CreateOrUpdateCreateRequest(resourceGroupName, serviceEndpointPolicyName, parameters)
+	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, serviceEndpointPolicyName, parameters)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -96,23 +94,18 @@ func (client *ServiceEndpointPoliciesClient) ResumeCreateOrUpdate(token string) 
 }
 
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *ServiceEndpointPoliciesClient) CreateOrUpdateCreateRequest(resourceGroupName string, serviceEndpointPolicyName string, parameters ServiceEndpointPolicy) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ServiceEndpointPoliciesClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, parameters ServiceEndpointPolicy) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{serviceEndpointPolicyName}", url.PathEscape(serviceEndpointPolicyName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPut, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -135,12 +128,12 @@ func (client *ServiceEndpointPoliciesClient) CreateOrUpdateHandleError(resp *azc
 
 // Delete - Deletes the specified service endpoint policy.
 func (client *ServiceEndpointPoliciesClient) BeginDelete(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string) (*HTTPPollerResponse, error) {
-	req, err := client.DeleteCreateRequest(resourceGroupName, serviceEndpointPolicyName)
+	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, serviceEndpointPolicyName)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -175,23 +168,18 @@ func (client *ServiceEndpointPoliciesClient) ResumeDelete(token string) (HTTPPol
 }
 
 // DeleteCreateRequest creates the Delete request.
-func (client *ServiceEndpointPoliciesClient) DeleteCreateRequest(resourceGroupName string, serviceEndpointPolicyName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ServiceEndpointPoliciesClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{serviceEndpointPolicyName}", url.PathEscape(serviceEndpointPolicyName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodDelete, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -214,11 +202,11 @@ func (client *ServiceEndpointPoliciesClient) DeleteHandleError(resp *azcore.Resp
 
 // Get - Gets the specified service Endpoint Policies in a specified resource group.
 func (client *ServiceEndpointPoliciesClient) Get(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, serviceEndpointPoliciesGetOptions *ServiceEndpointPoliciesGetOptions) (*ServiceEndpointPolicyResponse, error) {
-	req, err := client.GetCreateRequest(resourceGroupName, serviceEndpointPolicyName, serviceEndpointPoliciesGetOptions)
+	req, err := client.GetCreateRequest(ctx, resourceGroupName, serviceEndpointPolicyName, serviceEndpointPoliciesGetOptions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -230,26 +218,21 @@ func (client *ServiceEndpointPoliciesClient) Get(ctx context.Context, resourceGr
 }
 
 // GetCreateRequest creates the Get request.
-func (client *ServiceEndpointPoliciesClient) GetCreateRequest(resourceGroupName string, serviceEndpointPolicyName string, serviceEndpointPoliciesGetOptions *ServiceEndpointPoliciesGetOptions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ServiceEndpointPoliciesClient) GetCreateRequest(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, serviceEndpointPoliciesGetOptions *ServiceEndpointPoliciesGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{serviceEndpointPolicyName}", url.PathEscape(serviceEndpointPolicyName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	if serviceEndpointPoliciesGetOptions != nil && serviceEndpointPoliciesGetOptions.Expand != nil {
 		query.Set("$expand", *serviceEndpointPoliciesGetOptions.Expand)
 	}
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -272,44 +255,30 @@ func (client *ServiceEndpointPoliciesClient) GetHandleError(resp *azcore.Respons
 }
 
 // List - Gets all the service endpoint policies in a subscription.
-func (client *ServiceEndpointPoliciesClient) List() (ServiceEndpointPolicyListResultPager, error) {
-	req, err := client.ListCreateRequest()
-	if err != nil {
-		return nil, err
-	}
+func (client *ServiceEndpointPoliciesClient) List() ServiceEndpointPolicyListResultPager {
 	return &serviceEndpointPolicyListResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListHandleResponse,
-		advancer: func(resp *ServiceEndpointPolicyListResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.ServiceEndpointPolicyListResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.ServiceEndpointPolicyListResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListCreateRequest(ctx)
 		},
-	}, nil
+		responder: client.ListHandleResponse,
+		advancer: func(ctx context.Context, resp *ServiceEndpointPolicyListResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.ServiceEndpointPolicyListResult.NextLink)
+		},
+	}
 }
 
 // ListCreateRequest creates the List request.
-func (client *ServiceEndpointPoliciesClient) ListCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ServiceEndpointPoliciesClient) ListCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/ServiceEndpointPolicies"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -332,45 +301,31 @@ func (client *ServiceEndpointPoliciesClient) ListHandleError(resp *azcore.Respon
 }
 
 // ListByResourceGroup - Gets all service endpoint Policies in a resource group.
-func (client *ServiceEndpointPoliciesClient) ListByResourceGroup(resourceGroupName string) (ServiceEndpointPolicyListResultPager, error) {
-	req, err := client.ListByResourceGroupCreateRequest(resourceGroupName)
-	if err != nil {
-		return nil, err
-	}
+func (client *ServiceEndpointPoliciesClient) ListByResourceGroup(resourceGroupName string) ServiceEndpointPolicyListResultPager {
 	return &serviceEndpointPolicyListResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListByResourceGroupHandleResponse,
-		advancer: func(resp *ServiceEndpointPolicyListResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.ServiceEndpointPolicyListResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.ServiceEndpointPolicyListResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListByResourceGroupCreateRequest(ctx, resourceGroupName)
 		},
-	}, nil
+		responder: client.ListByResourceGroupHandleResponse,
+		advancer: func(ctx context.Context, resp *ServiceEndpointPolicyListResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.ServiceEndpointPolicyListResult.NextLink)
+		},
+	}
 }
 
 // ListByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *ServiceEndpointPoliciesClient) ListByResourceGroupCreateRequest(resourceGroupName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ServiceEndpointPoliciesClient) ListByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -394,11 +349,11 @@ func (client *ServiceEndpointPoliciesClient) ListByResourceGroupHandleError(resp
 
 // UpdateTags - Updates tags of a service endpoint policy.
 func (client *ServiceEndpointPoliciesClient) UpdateTags(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, parameters TagsObject) (*ServiceEndpointPolicyResponse, error) {
-	req, err := client.UpdateTagsCreateRequest(resourceGroupName, serviceEndpointPolicyName, parameters)
+	req, err := client.UpdateTagsCreateRequest(ctx, resourceGroupName, serviceEndpointPolicyName, parameters)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -410,23 +365,18 @@ func (client *ServiceEndpointPoliciesClient) UpdateTags(ctx context.Context, res
 }
 
 // UpdateTagsCreateRequest creates the UpdateTags request.
-func (client *ServiceEndpointPoliciesClient) UpdateTagsCreateRequest(resourceGroupName string, serviceEndpointPolicyName string, parameters TagsObject) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ServiceEndpointPoliciesClient) UpdateTagsCreateRequest(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, parameters TagsObject) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{serviceEndpointPolicyName}", url.PathEscape(serviceEndpointPolicyName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPatch, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(parameters)
 }
 

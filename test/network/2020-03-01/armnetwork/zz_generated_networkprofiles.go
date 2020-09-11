@@ -7,12 +7,10 @@ package armnetwork
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 	"time"
 )
@@ -28,9 +26,9 @@ type NetworkProfilesOperations interface {
 	// Get - Gets the specified network profile in a specified resource group.
 	Get(ctx context.Context, resourceGroupName string, networkProfileName string, networkProfilesGetOptions *NetworkProfilesGetOptions) (*NetworkProfileResponse, error)
 	// List - Gets all network profiles in a resource group.
-	List(resourceGroupName string) (NetworkProfileListResultPager, error)
+	List(resourceGroupName string) NetworkProfileListResultPager
 	// ListAll - Gets all the network profiles in a subscription.
-	ListAll() (NetworkProfileListResultPager, error)
+	ListAll() NetworkProfileListResultPager
 	// UpdateTags - Updates network profile tags.
 	UpdateTags(ctx context.Context, resourceGroupName string, networkProfileName string, parameters TagsObject) (*NetworkProfileResponse, error)
 }
@@ -48,17 +46,17 @@ func NewNetworkProfilesClient(c *Client, subscriptionID string) NetworkProfilesO
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *NetworkProfilesClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *NetworkProfilesClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // CreateOrUpdate - Creates or updates a network profile.
 func (client *NetworkProfilesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, networkProfileName string, parameters NetworkProfile) (*NetworkProfileResponse, error) {
-	req, err := client.CreateOrUpdateCreateRequest(resourceGroupName, networkProfileName, parameters)
+	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, networkProfileName, parameters)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -70,23 +68,18 @@ func (client *NetworkProfilesClient) CreateOrUpdate(ctx context.Context, resourc
 }
 
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *NetworkProfilesClient) CreateOrUpdateCreateRequest(resourceGroupName string, networkProfileName string, parameters NetworkProfile) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkProfilesClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkProfileName string, parameters NetworkProfile) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkProfiles/{networkProfileName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkProfileName}", url.PathEscape(networkProfileName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPut, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -110,12 +103,12 @@ func (client *NetworkProfilesClient) CreateOrUpdateHandleError(resp *azcore.Resp
 
 // Delete - Deletes the specified network profile.
 func (client *NetworkProfilesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkProfileName string) (*HTTPPollerResponse, error) {
-	req, err := client.DeleteCreateRequest(resourceGroupName, networkProfileName)
+	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, networkProfileName)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -150,23 +143,18 @@ func (client *NetworkProfilesClient) ResumeDelete(token string) (HTTPPoller, err
 }
 
 // DeleteCreateRequest creates the Delete request.
-func (client *NetworkProfilesClient) DeleteCreateRequest(resourceGroupName string, networkProfileName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkProfilesClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, networkProfileName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkProfiles/{networkProfileName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkProfileName}", url.PathEscape(networkProfileName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodDelete, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -189,11 +177,11 @@ func (client *NetworkProfilesClient) DeleteHandleError(resp *azcore.Response) er
 
 // Get - Gets the specified network profile in a specified resource group.
 func (client *NetworkProfilesClient) Get(ctx context.Context, resourceGroupName string, networkProfileName string, networkProfilesGetOptions *NetworkProfilesGetOptions) (*NetworkProfileResponse, error) {
-	req, err := client.GetCreateRequest(resourceGroupName, networkProfileName, networkProfilesGetOptions)
+	req, err := client.GetCreateRequest(ctx, resourceGroupName, networkProfileName, networkProfilesGetOptions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -205,26 +193,21 @@ func (client *NetworkProfilesClient) Get(ctx context.Context, resourceGroupName 
 }
 
 // GetCreateRequest creates the Get request.
-func (client *NetworkProfilesClient) GetCreateRequest(resourceGroupName string, networkProfileName string, networkProfilesGetOptions *NetworkProfilesGetOptions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkProfilesClient) GetCreateRequest(ctx context.Context, resourceGroupName string, networkProfileName string, networkProfilesGetOptions *NetworkProfilesGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkProfiles/{networkProfileName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkProfileName}", url.PathEscape(networkProfileName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	if networkProfilesGetOptions != nil && networkProfilesGetOptions.Expand != nil {
 		query.Set("$expand", *networkProfilesGetOptions.Expand)
 	}
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -247,45 +230,31 @@ func (client *NetworkProfilesClient) GetHandleError(resp *azcore.Response) error
 }
 
 // List - Gets all network profiles in a resource group.
-func (client *NetworkProfilesClient) List(resourceGroupName string) (NetworkProfileListResultPager, error) {
-	req, err := client.ListCreateRequest(resourceGroupName)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkProfilesClient) List(resourceGroupName string) NetworkProfileListResultPager {
 	return &networkProfileListResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListHandleResponse,
-		advancer: func(resp *NetworkProfileListResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.NetworkProfileListResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.NetworkProfileListResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListCreateRequest(ctx, resourceGroupName)
 		},
-	}, nil
+		responder: client.ListHandleResponse,
+		advancer: func(ctx context.Context, resp *NetworkProfileListResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.NetworkProfileListResult.NextLink)
+		},
+	}
 }
 
 // ListCreateRequest creates the List request.
-func (client *NetworkProfilesClient) ListCreateRequest(resourceGroupName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkProfilesClient) ListCreateRequest(ctx context.Context, resourceGroupName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkProfiles"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -308,44 +277,30 @@ func (client *NetworkProfilesClient) ListHandleError(resp *azcore.Response) erro
 }
 
 // ListAll - Gets all the network profiles in a subscription.
-func (client *NetworkProfilesClient) ListAll() (NetworkProfileListResultPager, error) {
-	req, err := client.ListAllCreateRequest()
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkProfilesClient) ListAll() NetworkProfileListResultPager {
 	return &networkProfileListResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListAllHandleResponse,
-		advancer: func(resp *NetworkProfileListResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.NetworkProfileListResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.NetworkProfileListResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListAllCreateRequest(ctx)
 		},
-	}, nil
+		responder: client.ListAllHandleResponse,
+		advancer: func(ctx context.Context, resp *NetworkProfileListResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.NetworkProfileListResult.NextLink)
+		},
+	}
 }
 
 // ListAllCreateRequest creates the ListAll request.
-func (client *NetworkProfilesClient) ListAllCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkProfilesClient) ListAllCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkProfiles"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -369,11 +324,11 @@ func (client *NetworkProfilesClient) ListAllHandleError(resp *azcore.Response) e
 
 // UpdateTags - Updates network profile tags.
 func (client *NetworkProfilesClient) UpdateTags(ctx context.Context, resourceGroupName string, networkProfileName string, parameters TagsObject) (*NetworkProfileResponse, error) {
-	req, err := client.UpdateTagsCreateRequest(resourceGroupName, networkProfileName, parameters)
+	req, err := client.UpdateTagsCreateRequest(ctx, resourceGroupName, networkProfileName, parameters)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -385,23 +340,18 @@ func (client *NetworkProfilesClient) UpdateTags(ctx context.Context, resourceGro
 }
 
 // UpdateTagsCreateRequest creates the UpdateTags request.
-func (client *NetworkProfilesClient) UpdateTagsCreateRequest(resourceGroupName string, networkProfileName string, parameters TagsObject) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkProfilesClient) UpdateTagsCreateRequest(ctx context.Context, resourceGroupName string, networkProfileName string, parameters TagsObject) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkProfiles/{networkProfileName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkProfileName}", url.PathEscape(networkProfileName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPatch, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(parameters)
 }
 

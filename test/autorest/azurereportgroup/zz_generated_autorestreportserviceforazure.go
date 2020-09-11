@@ -9,8 +9,6 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
-	"net/url"
-	"path"
 )
 
 // AutoRestReportServiceForAzureOperations contains the methods for the AutoRestReportServiceForAzure group.
@@ -31,17 +29,17 @@ func NewAutoRestReportServiceForAzureClient(c *Client) AutoRestReportServiceForA
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *AutoRestReportServiceForAzureClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *AutoRestReportServiceForAzureClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // GetReport - Get test coverage report
 func (client *AutoRestReportServiceForAzureClient) GetReport(ctx context.Context, autoRestReportServiceForAzureGetReportOptions *AutoRestReportServiceForAzureGetReportOptions) (*MapOfInt32Response, error) {
-	req, err := client.GetReportCreateRequest(autoRestReportServiceForAzureGetReportOptions)
+	req, err := client.GetReportCreateRequest(ctx, autoRestReportServiceForAzureGetReportOptions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -53,22 +51,17 @@ func (client *AutoRestReportServiceForAzureClient) GetReport(ctx context.Context
 }
 
 // GetReportCreateRequest creates the GetReport request.
-func (client *AutoRestReportServiceForAzureClient) GetReportCreateRequest(autoRestReportServiceForAzureGetReportOptions *AutoRestReportServiceForAzureGetReportOptions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *AutoRestReportServiceForAzureClient) GetReportCreateRequest(ctx context.Context, autoRestReportServiceForAzureGetReportOptions *AutoRestReportServiceForAzureGetReportOptions) (*azcore.Request, error) {
 	urlPath := "/report/azure"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	if autoRestReportServiceForAzureGetReportOptions != nil && autoRestReportServiceForAzureGetReportOptions.Qualifier != nil {
 		query.Set("qualifier", *autoRestReportServiceForAzureGetReportOptions.Qualifier)
 	}
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 

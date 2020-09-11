@@ -37,7 +37,6 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     const imports = new ImportManager();
     // add standard imorts
     imports.add('net/http');
-    imports.add('net/url');
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
 
     let opText = '';
@@ -93,8 +92,8 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     text += '}\n\n';
     // operation client Do method
     text += '// Do invokes the Do() method on the pipeline associated with this client.\n';
-    text += `func (client *${clientName}) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {\n`;
-    text += '\treturn client.p.Do(ctx, req)\n';
+    text += `func (client *${clientName}) Do(req *azcore.Request) (*azcore.Response, error) {\n`;
+    text += '\treturn client.p.Do(req)\n';
     text += '}\n\n';
     // add operations content last
     text += opText;
@@ -227,7 +226,7 @@ function generateOperation(op: Operation, imports: ImportManager, isDataPlane: b
     text += `\t\treturn nil, err\n`;
     text += `\t}\n`;
     text += `\t// send the first request to initialize the poller\n`;
-    text += `\tresp, err := client.Do(ctx, req)\n`;
+    text += `\tresp, err := client.Do(req)\n`;
     text += `\tif err != nil {\n`;
     text += `\t\treturn nil, err\n`;
     text += `\t}\n`;
@@ -274,15 +273,13 @@ function generateOperation(op: Operation, imports: ImportManager, isDataPlane: b
     text += '}\n\n';
     text += addResumePollerMethod(op, clientName, isDataPlane);
     return text;
-  }
-  text += `\treq, err := client.${info.protocolNaming.requestMethod}(${reqParams.join(', ')})\n`;
-  text += `\tif err != nil {\n`;
-  text += `\t\treturn nil, err\n`;
-  text += `\t}\n`;
-  if (isPageableOperation(op)) {
+  } else if (isPageableOperation(op)) {
+    imports.add('context');
     text += `\treturn &${camelCase(op.language.go!.pageableType.name)}{\n`;
     text += `\t\tpipeline: client.p,\n`;
-    text += `\t\trequest: req,\n`;
+    text += `\t\trequester: func(ctx context.Context) (*azcore.Request, error) {\n`;
+    text += `\t\t\treturn client.${info.protocolNaming.requestMethod}(${reqParams.join(', ')})\n`;
+    text += '\t\t},\n';
     text += `\t\tresponder: client.${info.protocolNaming.responseMethod},\n`;
     const pager = <PagerInfo>op.language.go!.pageableType;
     const schemaResponse = <SchemaResponse>pager.op.responses![0];
@@ -299,32 +296,28 @@ function generateOperation(op: Operation, imports: ImportManager, isDataPlane: b
           nextOpParams[i] = paramName;
         }
       }
-      text += `\t\tadvancer: func(resp *${schemaResponse.schema.language.go!.responseType.name}) (*azcore.Request, error) {\n`;
+      text += `\t\tadvancer: func(ctx context.Context, resp *${schemaResponse.schema.language.go!.responseType.name}) (*azcore.Request, error) {\n`;
       text += `\t\t\treturn client.${op.language.go!.paging.member}CreateRequest(${nextOpParams.join(', ')})\n`;
       text += '\t\t},\n';
     } else {
-      imports.add('fmt');
       let resultTypeName = schemaResponse.schema.language.go!.name;
       if (schemaResponse.schema.serialization?.xml?.name) {
         // xml can specifiy its own name, prefer that if available
         resultTypeName = schemaResponse.schema.serialization.xml.name;
       }
-      text += `\t\tadvancer: func(resp *${schemaResponse.schema.language.go!.responseType.name}) (*azcore.Request, error) {\n`;
-      text += `\t\t\tu, err := url.Parse(*resp.${resultTypeName}.${nextLink})\n`;
-      text += `\t\t\tif err != nil {\n`;
-      text += `\t\t\t\treturn nil, fmt.Errorf("invalid ${nextLink}: %w", err)\n`;
-      text += `\t\t\t}\n`;
-      text += `\t\t\tif u.Scheme == "" {\n`;
-      text += `\t\t\t\treturn nil, fmt.Errorf("no scheme detected in ${nextLink} %s", *resp.${resultTypeName}.${nextLink})\n`;
-      text += `\t\t\t}\n`;
-      text += `\t\t\treturn azcore.NewRequest(http.MethodGet, *u), nil\n`;
+      text += `\t\tadvancer: func(ctx context.Context, resp *${schemaResponse.schema.language.go!.responseType.name}) (*azcore.Request, error) {\n`;
+      text += `\t\t\treturn azcore.NewRequest(ctx, http.MethodGet, *resp.${resultTypeName}.${nextLink})\n`;
       text += `\t\t},\n`;
     }
-    text += `\t}, nil\n`;
+    text += `\t}\n`;
     text += '}\n\n';
     return text;
   }
-  text += `\tresp, err := client.Do(ctx, req)\n`;
+  text += `\treq, err := client.${info.protocolNaming.requestMethod}(${reqParams.join(', ')})\n`;
+  text += `\tif err != nil {\n`;
+  text += `\t\treturn nil, err\n`;
+  text += `\t}\n`;
+  text += `\tresp, err := client.Do(req)\n`;
   text += `\tif err != nil {\n`;
   text += `\t\treturn nil, err\n`;
   text += `\t}\n`;
@@ -369,10 +362,6 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
     }
     hostParam = 'host';
   }
-  text += `\tu, err := url.Parse(${hostParam})\n`;
-  text += '\tif err != nil {\n';
-  text += '\t\treturn nil, err\n';
-  text += '\t}\n';
   const hasPathParams = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'path'; }).any();
   // storage needs the client.u to be the source-of-truth for the full path.
   // however, swagger requires that all operations specify a path, which is at odds with storage.
@@ -381,11 +370,10 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
   // so, if a path contains tokens but there are no path params, skip emitting the path.
   const pathStr = <string>op.requests![0].protocol.http!.path;
   const pathContainsParms = pathStr.includes('{');
-  let hasURLPath = false;
   if (hasPathParams || (!pathContainsParms && pathStr.length > 1)) {
     // there are path params, or the path doesn't contain tokens and is not "/" so emit it
     text += `\turlPath := "${op.requests![0].protocol.http!.path}"\n`;
-    hasURLPath = true;
+    hostParam = `azcore.JoinPaths(${hostParam}, urlPath)`;
   }
   if (hasPathParams) {
     // swagger defines path params, emit path and replace tokens
@@ -394,18 +382,16 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
     for (const pp of values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'path'; })) {
       let paramValue = formatParamValue(pp, imports);
       if (!skipURLEncoding(pp)) {
+        imports.add('net/url');
         paramValue = `url.PathEscape(${formatParamValue(pp, imports)})`;
       }
       text += `\turlPath = strings.ReplaceAll(urlPath, "{${pp.language.go!.serializedName}}", ${paramValue})\n`;
     }
   }
-  if (hasURLPath) {
-    imports.add('path');
-    text += '\tu, err = u.Parse(path.Join(u.Path, urlPath))\n';
-    text += '\tif err != nil {\n';
-    text += '\t\treturn nil, err\n';
-    text += '\t}\n';
-  }
+  text += `\treq, err := azcore.NewRequest(ctx, http.Method${pascalCase(op.requests![0].protocol.http!.method)}, ${hostParam})\n`;
+  text += '\tif err != nil {\n';
+  text += '\t\treturn nil, err\n';
+  text += '\t}\n';
   const hasQueryParams = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'query'; }).any();
   // helper to build nil checks for param groups
   const emitParamGroupCheck = function (gp: GroupProperty, param: Parameter): string {
@@ -447,7 +433,7 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
     }
     // emit encoded params first
     if (encodedParams.length > 0) {
-      text += '\tquery := u.Query()\n';
+      text += '\tquery := req.URL.Query()\n';
       for (const qp of values(encodedParams)) {
         let setter: string;
         if (qp.protocol.http?.explode === true) {
@@ -460,12 +446,12 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
         }
         text += emitQueryParam(qp, setter);
       }
-      text += '\tu.RawQuery = query.Encode()\n';
+      text += '\treq.URL.RawQuery = query.Encode()\n';
     }
     // tack on any unencoded params to the end
     if (unencodedParams.length > 0) {
       if (encodedParams.length > 0) {
-        text += '\tunencodedParams := []string{u.RawQuery}\n';
+        text += '\tunencodedParams := []string{req.URL.RawQuery}\n';
       } else {
         text += '\tunencodedParams := []string{}\n';
       }
@@ -480,10 +466,9 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
         }
         text += emitQueryParam(qp, `unencodedParams = append(unencodedParams, "${qp.language.go!.serializedName}="+${formatParamValue(qp, imports)})`);
       }
-      text += '\tu.RawQuery = strings.Join(unencodedParams, "&")\n';
+      text += '\treq.URL.RawQuery = strings.Join(unencodedParams, "&")\n';
     }
   }
-  text += `\treq := azcore.NewRequest(http.Method${pascalCase(op.requests![0].protocol.http!.method)}, *u)\n`;
   if (hasBinaryResponse(op.responses!)) {
     // skip auto-body downloading for binary stream responses
     text += '\treq.SkipBodyDownload()\n';
@@ -577,8 +562,9 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
       text += '\treturn req, nil\n';
     }
   } else if (mediaType === 'binary') {
+    const contentType = op.requests![0].protocol.http!.mediaTypes[0];
     const bodyParam = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http!.in === 'body'; }).first();
-    text += `\treturn req, req.SetBody(${bodyParam?.language.go!.name})\n`;
+    text += `\treturn req, req.SetBody(${bodyParam?.language.go!.name}, "${contentType}")\n`;
   } else {
     text += `\treturn req, nil\n`;
   }
@@ -984,7 +970,7 @@ function generateReturnsInfo(op: Operation, forHandler: boolean): string[] {
     // but LRO operations that return a pager are an exception and need to return LRO specific
     // responses
     if (!forHandler && isPageableOperation(op) && !isLROOperation(op)) {
-      returnType = op.language.go!.pageableType.name;
+      return [op.language.go!.pageableType.name];
     } else if (isSchemaResponse(firstResp)) {
       returnType = '*' + firstResp.schema.language.go!.responseType.name;
       if (isLROOperation(op)) {

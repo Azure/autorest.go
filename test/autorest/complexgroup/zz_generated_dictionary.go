@@ -9,8 +9,6 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
-	"net/url"
-	"path"
 )
 
 // DictionaryOperations contains the methods for the Dictionary group.
@@ -41,17 +39,17 @@ func NewDictionaryClient(c *Client) DictionaryOperations {
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *DictionaryClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *DictionaryClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // GetEmpty - Get complex types with dictionary property which is empty
 func (client *DictionaryClient) GetEmpty(ctx context.Context) (*DictionaryWrapperResponse, error) {
-	req, err := client.GetEmptyCreateRequest()
+	req, err := client.GetEmptyCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -63,17 +61,12 @@ func (client *DictionaryClient) GetEmpty(ctx context.Context) (*DictionaryWrappe
 }
 
 // GetEmptyCreateRequest creates the GetEmpty request.
-func (client *DictionaryClient) GetEmptyCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *DictionaryClient) GetEmptyCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/complex/dictionary/typed/empty"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -97,11 +90,11 @@ func (client *DictionaryClient) GetEmptyHandleError(resp *azcore.Response) error
 
 // GetNotProvided - Get complex types with dictionary property while server doesn't provide a response payload
 func (client *DictionaryClient) GetNotProvided(ctx context.Context) (*DictionaryWrapperResponse, error) {
-	req, err := client.GetNotProvidedCreateRequest()
+	req, err := client.GetNotProvidedCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -113,17 +106,12 @@ func (client *DictionaryClient) GetNotProvided(ctx context.Context) (*Dictionary
 }
 
 // GetNotProvidedCreateRequest creates the GetNotProvided request.
-func (client *DictionaryClient) GetNotProvidedCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *DictionaryClient) GetNotProvidedCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/complex/dictionary/typed/notprovided"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -147,11 +135,11 @@ func (client *DictionaryClient) GetNotProvidedHandleError(resp *azcore.Response)
 
 // GetNull - Get complex types with dictionary property which is null
 func (client *DictionaryClient) GetNull(ctx context.Context) (*DictionaryWrapperResponse, error) {
-	req, err := client.GetNullCreateRequest()
+	req, err := client.GetNullCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -163,17 +151,12 @@ func (client *DictionaryClient) GetNull(ctx context.Context) (*DictionaryWrapper
 }
 
 // GetNullCreateRequest creates the GetNull request.
-func (client *DictionaryClient) GetNullCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *DictionaryClient) GetNullCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/complex/dictionary/typed/null"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -197,11 +180,11 @@ func (client *DictionaryClient) GetNullHandleError(resp *azcore.Response) error 
 
 // GetValid - Get complex types with dictionary property
 func (client *DictionaryClient) GetValid(ctx context.Context) (*DictionaryWrapperResponse, error) {
-	req, err := client.GetValidCreateRequest()
+	req, err := client.GetValidCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -213,17 +196,12 @@ func (client *DictionaryClient) GetValid(ctx context.Context) (*DictionaryWrappe
 }
 
 // GetValidCreateRequest creates the GetValid request.
-func (client *DictionaryClient) GetValidCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *DictionaryClient) GetValidCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/complex/dictionary/typed/valid"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -247,11 +225,11 @@ func (client *DictionaryClient) GetValidHandleError(resp *azcore.Response) error
 
 // PutEmpty - Put complex types with dictionary property which is empty
 func (client *DictionaryClient) PutEmpty(ctx context.Context, complexBody DictionaryWrapper) (*http.Response, error) {
-	req, err := client.PutEmptyCreateRequest(complexBody)
+	req, err := client.PutEmptyCreateRequest(ctx, complexBody)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -263,17 +241,12 @@ func (client *DictionaryClient) PutEmpty(ctx context.Context, complexBody Dictio
 }
 
 // PutEmptyCreateRequest creates the PutEmpty request.
-func (client *DictionaryClient) PutEmptyCreateRequest(complexBody DictionaryWrapper) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *DictionaryClient) PutEmptyCreateRequest(ctx context.Context, complexBody DictionaryWrapper) (*azcore.Request, error) {
 	urlPath := "/complex/dictionary/typed/empty"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	return req, req.MarshalAsJSON(complexBody)
 }
 
@@ -296,11 +269,11 @@ func (client *DictionaryClient) PutEmptyHandleError(resp *azcore.Response) error
 
 // PutValid - Put complex types with dictionary property
 func (client *DictionaryClient) PutValid(ctx context.Context, complexBody DictionaryWrapper) (*http.Response, error) {
-	req, err := client.PutValidCreateRequest(complexBody)
+	req, err := client.PutValidCreateRequest(ctx, complexBody)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -312,17 +285,12 @@ func (client *DictionaryClient) PutValid(ctx context.Context, complexBody Dictio
 }
 
 // PutValidCreateRequest creates the PutValid request.
-func (client *DictionaryClient) PutValidCreateRequest(complexBody DictionaryWrapper) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *DictionaryClient) PutValidCreateRequest(ctx context.Context, complexBody DictionaryWrapper) (*azcore.Request, error) {
 	urlPath := "/complex/dictionary/typed/valid"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	return req, req.MarshalAsJSON(complexBody)
 }
 

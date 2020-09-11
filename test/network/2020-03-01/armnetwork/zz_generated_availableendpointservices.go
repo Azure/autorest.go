@@ -6,18 +6,17 @@
 package armnetwork
 
 import (
-	"fmt"
+	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 )
 
 // AvailableEndpointServicesOperations contains the methods for the AvailableEndpointServices group.
 type AvailableEndpointServicesOperations interface {
 	// List - List what values of endpoint services are available for use.
-	List(location string) (EndpointServicesListResultPager, error)
+	List(location string) EndpointServicesListResultPager
 }
 
 // AvailableEndpointServicesClient implements the AvailableEndpointServicesOperations interface.
@@ -33,50 +32,36 @@ func NewAvailableEndpointServicesClient(c *Client, subscriptionID string) Availa
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *AvailableEndpointServicesClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *AvailableEndpointServicesClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // List - List what values of endpoint services are available for use.
-func (client *AvailableEndpointServicesClient) List(location string) (EndpointServicesListResultPager, error) {
-	req, err := client.ListCreateRequest(location)
-	if err != nil {
-		return nil, err
-	}
+func (client *AvailableEndpointServicesClient) List(location string) EndpointServicesListResultPager {
 	return &endpointServicesListResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListHandleResponse,
-		advancer: func(resp *EndpointServicesListResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.EndpointServicesListResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.EndpointServicesListResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListCreateRequest(ctx, location)
 		},
-	}, nil
+		responder: client.ListHandleResponse,
+		advancer: func(ctx context.Context, resp *EndpointServicesListResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.EndpointServicesListResult.NextLink)
+		},
+	}
 }
 
 // ListCreateRequest creates the List request.
-func (client *AvailableEndpointServicesClient) ListCreateRequest(location string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *AvailableEndpointServicesClient) ListCreateRequest(ctx context.Context, location string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/virtualNetworkAvailableEndpointServices"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 

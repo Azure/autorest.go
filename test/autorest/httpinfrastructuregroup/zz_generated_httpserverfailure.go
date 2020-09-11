@@ -9,8 +9,6 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
-	"net/url"
-	"path"
 )
 
 // HTTPServerFailureOperations contains the methods for the HTTPServerFailure group.
@@ -37,17 +35,17 @@ func NewHTTPServerFailureClient(c *Client) HTTPServerFailureOperations {
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *HTTPServerFailureClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *HTTPServerFailureClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // Delete505 - Return 505 status code - should be represented in the client as an error
 func (client *HTTPServerFailureClient) Delete505(ctx context.Context) (*http.Response, error) {
-	req, err := client.Delete505CreateRequest()
+	req, err := client.Delete505CreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -59,17 +57,12 @@ func (client *HTTPServerFailureClient) Delete505(ctx context.Context) (*http.Res
 }
 
 // Delete505CreateRequest creates the Delete505 request.
-func (client *HTTPServerFailureClient) Delete505CreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *HTTPServerFailureClient) Delete505CreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/http/failure/server/505"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodDelete, *u)
 	return req, req.MarshalAsJSON(true)
 }
 
@@ -89,11 +82,11 @@ func (client *HTTPServerFailureClient) Delete505HandleError(resp *azcore.Respons
 
 // Get501 - Return 501 status code - should be represented in the client as an error
 func (client *HTTPServerFailureClient) Get501(ctx context.Context) (*http.Response, error) {
-	req, err := client.Get501CreateRequest()
+	req, err := client.Get501CreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -105,17 +98,12 @@ func (client *HTTPServerFailureClient) Get501(ctx context.Context) (*http.Respon
 }
 
 // Get501CreateRequest creates the Get501 request.
-func (client *HTTPServerFailureClient) Get501CreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *HTTPServerFailureClient) Get501CreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/http/failure/server/501"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -135,11 +123,11 @@ func (client *HTTPServerFailureClient) Get501HandleError(resp *azcore.Response) 
 
 // Head501 - Return 501 status code - should be represented in the client as an error
 func (client *HTTPServerFailureClient) Head501(ctx context.Context) (*http.Response, error) {
-	req, err := client.Head501CreateRequest()
+	req, err := client.Head501CreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -151,17 +139,12 @@ func (client *HTTPServerFailureClient) Head501(ctx context.Context) (*http.Respo
 }
 
 // Head501CreateRequest creates the Head501 request.
-func (client *HTTPServerFailureClient) Head501CreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *HTTPServerFailureClient) Head501CreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/http/failure/server/501"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodHead, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodHead, *u)
 	return req, nil
 }
 
@@ -181,11 +164,11 @@ func (client *HTTPServerFailureClient) Head501HandleError(resp *azcore.Response)
 
 // Post505 - Return 505 status code - should be represented in the client as an error
 func (client *HTTPServerFailureClient) Post505(ctx context.Context) (*http.Response, error) {
-	req, err := client.Post505CreateRequest()
+	req, err := client.Post505CreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -197,17 +180,12 @@ func (client *HTTPServerFailureClient) Post505(ctx context.Context) (*http.Respo
 }
 
 // Post505CreateRequest creates the Post505 request.
-func (client *HTTPServerFailureClient) Post505CreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *HTTPServerFailureClient) Post505CreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/http/failure/server/505"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPost, *u)
 	return req, req.MarshalAsJSON(true)
 }
 

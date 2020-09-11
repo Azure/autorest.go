@@ -7,12 +7,10 @@ package armnetwork
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 	"time"
 )
@@ -30,9 +28,9 @@ type VirtualNetworkTapsOperations interface {
 	// Get - Gets information about the specified virtual network tap.
 	Get(ctx context.Context, resourceGroupName string, tapName string) (*VirtualNetworkTapResponse, error)
 	// ListAll - Gets all the VirtualNetworkTaps in a subscription.
-	ListAll() (VirtualNetworkTapListResultPager, error)
+	ListAll() VirtualNetworkTapListResultPager
 	// ListByResourceGroup - Gets all the VirtualNetworkTaps in a subscription.
-	ListByResourceGroup(resourceGroupName string) (VirtualNetworkTapListResultPager, error)
+	ListByResourceGroup(resourceGroupName string) VirtualNetworkTapListResultPager
 	// UpdateTags - Updates an VirtualNetworkTap tags.
 	UpdateTags(ctx context.Context, resourceGroupName string, tapName string, tapParameters TagsObject) (*VirtualNetworkTapResponse, error)
 }
@@ -50,18 +48,18 @@ func NewVirtualNetworkTapsClient(c *Client, subscriptionID string) VirtualNetwor
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *VirtualNetworkTapsClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *VirtualNetworkTapsClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // CreateOrUpdate - Creates or updates a Virtual Network Tap.
 func (client *VirtualNetworkTapsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, tapName string, parameters VirtualNetworkTap) (*VirtualNetworkTapPollerResponse, error) {
-	req, err := client.CreateOrUpdateCreateRequest(resourceGroupName, tapName, parameters)
+	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, tapName, parameters)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -96,23 +94,18 @@ func (client *VirtualNetworkTapsClient) ResumeCreateOrUpdate(token string) (Virt
 }
 
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *VirtualNetworkTapsClient) CreateOrUpdateCreateRequest(resourceGroupName string, tapName string, parameters VirtualNetworkTap) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *VirtualNetworkTapsClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, tapName string, parameters VirtualNetworkTap) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkTaps/{tapName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{tapName}", url.PathEscape(tapName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPut, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -135,12 +128,12 @@ func (client *VirtualNetworkTapsClient) CreateOrUpdateHandleError(resp *azcore.R
 
 // Delete - Deletes the specified virtual network tap.
 func (client *VirtualNetworkTapsClient) BeginDelete(ctx context.Context, resourceGroupName string, tapName string) (*HTTPPollerResponse, error) {
-	req, err := client.DeleteCreateRequest(resourceGroupName, tapName)
+	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, tapName)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -175,23 +168,18 @@ func (client *VirtualNetworkTapsClient) ResumeDelete(token string) (HTTPPoller, 
 }
 
 // DeleteCreateRequest creates the Delete request.
-func (client *VirtualNetworkTapsClient) DeleteCreateRequest(resourceGroupName string, tapName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *VirtualNetworkTapsClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, tapName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkTaps/{tapName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{tapName}", url.PathEscape(tapName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodDelete, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -214,11 +202,11 @@ func (client *VirtualNetworkTapsClient) DeleteHandleError(resp *azcore.Response)
 
 // Get - Gets information about the specified virtual network tap.
 func (client *VirtualNetworkTapsClient) Get(ctx context.Context, resourceGroupName string, tapName string) (*VirtualNetworkTapResponse, error) {
-	req, err := client.GetCreateRequest(resourceGroupName, tapName)
+	req, err := client.GetCreateRequest(ctx, resourceGroupName, tapName)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -230,23 +218,18 @@ func (client *VirtualNetworkTapsClient) Get(ctx context.Context, resourceGroupNa
 }
 
 // GetCreateRequest creates the Get request.
-func (client *VirtualNetworkTapsClient) GetCreateRequest(resourceGroupName string, tapName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *VirtualNetworkTapsClient) GetCreateRequest(ctx context.Context, resourceGroupName string, tapName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkTaps/{tapName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{tapName}", url.PathEscape(tapName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -269,44 +252,30 @@ func (client *VirtualNetworkTapsClient) GetHandleError(resp *azcore.Response) er
 }
 
 // ListAll - Gets all the VirtualNetworkTaps in a subscription.
-func (client *VirtualNetworkTapsClient) ListAll() (VirtualNetworkTapListResultPager, error) {
-	req, err := client.ListAllCreateRequest()
-	if err != nil {
-		return nil, err
-	}
+func (client *VirtualNetworkTapsClient) ListAll() VirtualNetworkTapListResultPager {
 	return &virtualNetworkTapListResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListAllHandleResponse,
-		advancer: func(resp *VirtualNetworkTapListResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.VirtualNetworkTapListResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.VirtualNetworkTapListResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListAllCreateRequest(ctx)
 		},
-	}, nil
+		responder: client.ListAllHandleResponse,
+		advancer: func(ctx context.Context, resp *VirtualNetworkTapListResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.VirtualNetworkTapListResult.NextLink)
+		},
+	}
 }
 
 // ListAllCreateRequest creates the ListAll request.
-func (client *VirtualNetworkTapsClient) ListAllCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *VirtualNetworkTapsClient) ListAllCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualNetworkTaps"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -329,45 +298,31 @@ func (client *VirtualNetworkTapsClient) ListAllHandleError(resp *azcore.Response
 }
 
 // ListByResourceGroup - Gets all the VirtualNetworkTaps in a subscription.
-func (client *VirtualNetworkTapsClient) ListByResourceGroup(resourceGroupName string) (VirtualNetworkTapListResultPager, error) {
-	req, err := client.ListByResourceGroupCreateRequest(resourceGroupName)
-	if err != nil {
-		return nil, err
-	}
+func (client *VirtualNetworkTapsClient) ListByResourceGroup(resourceGroupName string) VirtualNetworkTapListResultPager {
 	return &virtualNetworkTapListResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListByResourceGroupHandleResponse,
-		advancer: func(resp *VirtualNetworkTapListResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.VirtualNetworkTapListResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.VirtualNetworkTapListResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListByResourceGroupCreateRequest(ctx, resourceGroupName)
 		},
-	}, nil
+		responder: client.ListByResourceGroupHandleResponse,
+		advancer: func(ctx context.Context, resp *VirtualNetworkTapListResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.VirtualNetworkTapListResult.NextLink)
+		},
+	}
 }
 
 // ListByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *VirtualNetworkTapsClient) ListByResourceGroupCreateRequest(resourceGroupName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *VirtualNetworkTapsClient) ListByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkTaps"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -391,11 +346,11 @@ func (client *VirtualNetworkTapsClient) ListByResourceGroupHandleError(resp *azc
 
 // UpdateTags - Updates an VirtualNetworkTap tags.
 func (client *VirtualNetworkTapsClient) UpdateTags(ctx context.Context, resourceGroupName string, tapName string, tapParameters TagsObject) (*VirtualNetworkTapResponse, error) {
-	req, err := client.UpdateTagsCreateRequest(resourceGroupName, tapName, tapParameters)
+	req, err := client.UpdateTagsCreateRequest(ctx, resourceGroupName, tapName, tapParameters)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -407,23 +362,18 @@ func (client *VirtualNetworkTapsClient) UpdateTags(ctx context.Context, resource
 }
 
 // UpdateTagsCreateRequest creates the UpdateTags request.
-func (client *VirtualNetworkTapsClient) UpdateTagsCreateRequest(resourceGroupName string, tapName string, tapParameters TagsObject) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *VirtualNetworkTapsClient) UpdateTagsCreateRequest(ctx context.Context, resourceGroupName string, tapName string, tapParameters TagsObject) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkTaps/{tapName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{tapName}", url.PathEscape(tapName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPatch, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(tapParameters)
 }
 

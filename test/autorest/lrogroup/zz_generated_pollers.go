@@ -250,12 +250,3 @@ func (p *subProductPoller) pollUntilDone(ctx context.Context, frequency time.Dur
 	respType.RawResponse = resp
 	return respType, nil
 }
-
-func delay(ctx context.Context, delay time.Duration) error {
-	select {
-	case <-time.After(delay):
-		return nil
-	case <-ctx.Done():
-		return ctx.Err()
-	}
-}

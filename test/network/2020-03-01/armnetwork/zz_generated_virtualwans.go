@@ -7,12 +7,10 @@ package armnetwork
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 	"time"
 )
@@ -30,9 +28,9 @@ type VirtualWansOperations interface {
 	// Get - Retrieves the details of a VirtualWAN.
 	Get(ctx context.Context, resourceGroupName string, virtualWanName string) (*VirtualWanResponse, error)
 	// List - Lists all the VirtualWANs in a subscription.
-	List() (ListVirtualWaNsResultPager, error)
+	List() ListVirtualWaNsResultPager
 	// ListByResourceGroup - Lists all the VirtualWANs in a resource group.
-	ListByResourceGroup(resourceGroupName string) (ListVirtualWaNsResultPager, error)
+	ListByResourceGroup(resourceGroupName string) ListVirtualWaNsResultPager
 	// UpdateTags - Updates a VirtualWAN tags.
 	UpdateTags(ctx context.Context, resourceGroupName string, virtualWanName string, wanParameters TagsObject) (*VirtualWanResponse, error)
 }
@@ -50,18 +48,18 @@ func NewVirtualWansClient(c *Client, subscriptionID string) VirtualWansOperation
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *VirtualWansClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *VirtualWansClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // CreateOrUpdate - Creates a VirtualWAN resource if it doesn't exist else updates the existing VirtualWAN.
 func (client *VirtualWansClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualWanName string, wanParameters VirtualWan) (*VirtualWanPollerResponse, error) {
-	req, err := client.CreateOrUpdateCreateRequest(resourceGroupName, virtualWanName, wanParameters)
+	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, virtualWanName, wanParameters)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -96,23 +94,18 @@ func (client *VirtualWansClient) ResumeCreateOrUpdate(token string) (VirtualWanP
 }
 
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *VirtualWansClient) CreateOrUpdateCreateRequest(resourceGroupName string, virtualWanName string, wanParameters VirtualWan) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *VirtualWansClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, virtualWanName string, wanParameters VirtualWan) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{VirtualWANName}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{VirtualWANName}", url.PathEscape(virtualWanName))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPut, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(wanParameters)
 }
 
@@ -135,12 +128,12 @@ func (client *VirtualWansClient) CreateOrUpdateHandleError(resp *azcore.Response
 
 // Delete - Deletes a VirtualWAN.
 func (client *VirtualWansClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualWanName string) (*HTTPPollerResponse, error) {
-	req, err := client.DeleteCreateRequest(resourceGroupName, virtualWanName)
+	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, virtualWanName)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -175,23 +168,18 @@ func (client *VirtualWansClient) ResumeDelete(token string) (HTTPPoller, error) 
 }
 
 // DeleteCreateRequest creates the Delete request.
-func (client *VirtualWansClient) DeleteCreateRequest(resourceGroupName string, virtualWanName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *VirtualWansClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, virtualWanName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{VirtualWANName}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{VirtualWANName}", url.PathEscape(virtualWanName))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodDelete, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -214,11 +202,11 @@ func (client *VirtualWansClient) DeleteHandleError(resp *azcore.Response) error 
 
 // Get - Retrieves the details of a VirtualWAN.
 func (client *VirtualWansClient) Get(ctx context.Context, resourceGroupName string, virtualWanName string) (*VirtualWanResponse, error) {
-	req, err := client.GetCreateRequest(resourceGroupName, virtualWanName)
+	req, err := client.GetCreateRequest(ctx, resourceGroupName, virtualWanName)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -230,23 +218,18 @@ func (client *VirtualWansClient) Get(ctx context.Context, resourceGroupName stri
 }
 
 // GetCreateRequest creates the Get request.
-func (client *VirtualWansClient) GetCreateRequest(resourceGroupName string, virtualWanName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *VirtualWansClient) GetCreateRequest(ctx context.Context, resourceGroupName string, virtualWanName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{VirtualWANName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{VirtualWANName}", url.PathEscape(virtualWanName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -269,44 +252,30 @@ func (client *VirtualWansClient) GetHandleError(resp *azcore.Response) error {
 }
 
 // List - Lists all the VirtualWANs in a subscription.
-func (client *VirtualWansClient) List() (ListVirtualWaNsResultPager, error) {
-	req, err := client.ListCreateRequest()
-	if err != nil {
-		return nil, err
-	}
+func (client *VirtualWansClient) List() ListVirtualWaNsResultPager {
 	return &listVirtualWaNsResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListHandleResponse,
-		advancer: func(resp *ListVirtualWaNsResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.ListVirtualWaNsResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.ListVirtualWaNsResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListCreateRequest(ctx)
 		},
-	}, nil
+		responder: client.ListHandleResponse,
+		advancer: func(ctx context.Context, resp *ListVirtualWaNsResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.ListVirtualWaNsResult.NextLink)
+		},
+	}
 }
 
 // ListCreateRequest creates the List request.
-func (client *VirtualWansClient) ListCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *VirtualWansClient) ListCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualWans"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -329,45 +298,31 @@ func (client *VirtualWansClient) ListHandleError(resp *azcore.Response) error {
 }
 
 // ListByResourceGroup - Lists all the VirtualWANs in a resource group.
-func (client *VirtualWansClient) ListByResourceGroup(resourceGroupName string) (ListVirtualWaNsResultPager, error) {
-	req, err := client.ListByResourceGroupCreateRequest(resourceGroupName)
-	if err != nil {
-		return nil, err
-	}
+func (client *VirtualWansClient) ListByResourceGroup(resourceGroupName string) ListVirtualWaNsResultPager {
 	return &listVirtualWaNsResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListByResourceGroupHandleResponse,
-		advancer: func(resp *ListVirtualWaNsResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.ListVirtualWaNsResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.ListVirtualWaNsResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListByResourceGroupCreateRequest(ctx, resourceGroupName)
 		},
-	}, nil
+		responder: client.ListByResourceGroupHandleResponse,
+		advancer: func(ctx context.Context, resp *ListVirtualWaNsResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.ListVirtualWaNsResult.NextLink)
+		},
+	}
 }
 
 // ListByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *VirtualWansClient) ListByResourceGroupCreateRequest(resourceGroupName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *VirtualWansClient) ListByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -391,11 +346,11 @@ func (client *VirtualWansClient) ListByResourceGroupHandleError(resp *azcore.Res
 
 // UpdateTags - Updates a VirtualWAN tags.
 func (client *VirtualWansClient) UpdateTags(ctx context.Context, resourceGroupName string, virtualWanName string, wanParameters TagsObject) (*VirtualWanResponse, error) {
-	req, err := client.UpdateTagsCreateRequest(resourceGroupName, virtualWanName, wanParameters)
+	req, err := client.UpdateTagsCreateRequest(ctx, resourceGroupName, virtualWanName, wanParameters)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -407,23 +362,18 @@ func (client *VirtualWansClient) UpdateTags(ctx context.Context, resourceGroupNa
 }
 
 // UpdateTagsCreateRequest creates the UpdateTags request.
-func (client *VirtualWansClient) UpdateTagsCreateRequest(resourceGroupName string, virtualWanName string, wanParameters TagsObject) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *VirtualWansClient) UpdateTagsCreateRequest(ctx context.Context, resourceGroupName string, virtualWanName string, wanParameters TagsObject) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{VirtualWANName}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{VirtualWANName}", url.PathEscape(virtualWanName))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPatch, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(wanParameters)
 }
 

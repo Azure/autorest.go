@@ -6,18 +6,17 @@
 package armnetwork
 
 import (
-	"fmt"
+	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 )
 
 // AvailableResourceGroupDelegationsOperations contains the methods for the AvailableResourceGroupDelegations group.
 type AvailableResourceGroupDelegationsOperations interface {
 	// List - Gets all of the available subnet delegations for this resource group in this region.
-	List(location string, resourceGroupName string) (AvailableDelegationsResultPager, error)
+	List(location string, resourceGroupName string) AvailableDelegationsResultPager
 }
 
 // AvailableResourceGroupDelegationsClient implements the AvailableResourceGroupDelegationsOperations interface.
@@ -33,51 +32,37 @@ func NewAvailableResourceGroupDelegationsClient(c *Client, subscriptionID string
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *AvailableResourceGroupDelegationsClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *AvailableResourceGroupDelegationsClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // List - Gets all of the available subnet delegations for this resource group in this region.
-func (client *AvailableResourceGroupDelegationsClient) List(location string, resourceGroupName string) (AvailableDelegationsResultPager, error) {
-	req, err := client.ListCreateRequest(location, resourceGroupName)
-	if err != nil {
-		return nil, err
-	}
+func (client *AvailableResourceGroupDelegationsClient) List(location string, resourceGroupName string) AvailableDelegationsResultPager {
 	return &availableDelegationsResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListHandleResponse,
-		advancer: func(resp *AvailableDelegationsResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.AvailableDelegationsResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.AvailableDelegationsResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListCreateRequest(ctx, location, resourceGroupName)
 		},
-	}, nil
+		responder: client.ListHandleResponse,
+		advancer: func(ctx context.Context, resp *AvailableDelegationsResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.AvailableDelegationsResult.NextLink)
+		},
+	}
 }
 
 // ListCreateRequest creates the List request.
-func (client *AvailableResourceGroupDelegationsClient) ListCreateRequest(location string, resourceGroupName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *AvailableResourceGroupDelegationsClient) ListCreateRequest(ctx context.Context, location string, resourceGroupName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableDelegations"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 

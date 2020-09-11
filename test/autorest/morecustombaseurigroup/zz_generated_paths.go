@@ -10,7 +10,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 )
 
@@ -33,17 +32,17 @@ func NewPathsClient(c *Client, subscriptionID string) PathsOperations {
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *PathsClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *PathsClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // GetEmpty - Get a 200 to test a valid base uri
 func (client *PathsClient) GetEmpty(ctx context.Context, vault string, secret string, keyName string, pathsGetEmptyOptions *PathsGetEmptyOptions) (*http.Response, error) {
-	req, err := client.GetEmptyCreateRequest(vault, secret, keyName, pathsGetEmptyOptions)
+	req, err := client.GetEmptyCreateRequest(ctx, vault, secret, keyName, pathsGetEmptyOptions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -55,28 +54,23 @@ func (client *PathsClient) GetEmpty(ctx context.Context, vault string, secret st
 }
 
 // GetEmptyCreateRequest creates the GetEmpty request.
-func (client *PathsClient) GetEmptyCreateRequest(vault string, secret string, keyName string, pathsGetEmptyOptions *PathsGetEmptyOptions) (*azcore.Request, error) {
+func (client *PathsClient) GetEmptyCreateRequest(ctx context.Context, vault string, secret string, keyName string, pathsGetEmptyOptions *PathsGetEmptyOptions) (*azcore.Request, error) {
 	host := "{vault}{secret}{dnsSuffix}"
 	host = strings.ReplaceAll(host, "{dnsSuffix}", client.dnsSuffix)
 	host = strings.ReplaceAll(host, "{vault}", vault)
 	host = strings.ReplaceAll(host, "{secret}", secret)
-	u, err := url.Parse(host)
-	if err != nil {
-		return nil, err
-	}
 	urlPath := "/customuri/{subscriptionId}/{keyName}"
 	urlPath = strings.ReplaceAll(urlPath, "{keyName}", url.PathEscape(keyName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	if pathsGetEmptyOptions != nil && pathsGetEmptyOptions.KeyVersion != nil {
 		query.Set("keyVersion", *pathsGetEmptyOptions.KeyVersion)
 	}
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 

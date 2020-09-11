@@ -7,11 +7,9 @@ package armnetwork
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 )
 
@@ -20,7 +18,7 @@ type VpnSiteLinksOperations interface {
 	// Get - Retrieves the details of a VPN site link.
 	Get(ctx context.Context, resourceGroupName string, vpnSiteName string, vpnSiteLinkName string) (*VpnSiteLinkResponse, error)
 	// ListByVpnSite - Lists all the vpnSiteLinks in a resource group for a vpn site.
-	ListByVpnSite(resourceGroupName string, vpnSiteName string) (ListVpnSiteLinksResultPager, error)
+	ListByVpnSite(resourceGroupName string, vpnSiteName string) ListVpnSiteLinksResultPager
 }
 
 // VpnSiteLinksClient implements the VpnSiteLinksOperations interface.
@@ -36,17 +34,17 @@ func NewVpnSiteLinksClient(c *Client, subscriptionID string) VpnSiteLinksOperati
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *VpnSiteLinksClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *VpnSiteLinksClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // Get - Retrieves the details of a VPN site link.
 func (client *VpnSiteLinksClient) Get(ctx context.Context, resourceGroupName string, vpnSiteName string, vpnSiteLinkName string) (*VpnSiteLinkResponse, error) {
-	req, err := client.GetCreateRequest(resourceGroupName, vpnSiteName, vpnSiteLinkName)
+	req, err := client.GetCreateRequest(ctx, resourceGroupName, vpnSiteName, vpnSiteLinkName)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -58,24 +56,19 @@ func (client *VpnSiteLinksClient) Get(ctx context.Context, resourceGroupName str
 }
 
 // GetCreateRequest creates the Get request.
-func (client *VpnSiteLinksClient) GetCreateRequest(resourceGroupName string, vpnSiteName string, vpnSiteLinkName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *VpnSiteLinksClient) GetCreateRequest(ctx context.Context, resourceGroupName string, vpnSiteName string, vpnSiteLinkName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnSites/{vpnSiteName}/vpnSiteLinks/{vpnSiteLinkName}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{vpnSiteName}", url.PathEscape(vpnSiteName))
 	urlPath = strings.ReplaceAll(urlPath, "{vpnSiteLinkName}", url.PathEscape(vpnSiteLinkName))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -98,46 +91,32 @@ func (client *VpnSiteLinksClient) GetHandleError(resp *azcore.Response) error {
 }
 
 // ListByVpnSite - Lists all the vpnSiteLinks in a resource group for a vpn site.
-func (client *VpnSiteLinksClient) ListByVpnSite(resourceGroupName string, vpnSiteName string) (ListVpnSiteLinksResultPager, error) {
-	req, err := client.ListByVpnSiteCreateRequest(resourceGroupName, vpnSiteName)
-	if err != nil {
-		return nil, err
-	}
+func (client *VpnSiteLinksClient) ListByVpnSite(resourceGroupName string, vpnSiteName string) ListVpnSiteLinksResultPager {
 	return &listVpnSiteLinksResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListByVpnSiteHandleResponse,
-		advancer: func(resp *ListVpnSiteLinksResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.ListVpnSiteLinksResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.ListVpnSiteLinksResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListByVpnSiteCreateRequest(ctx, resourceGroupName, vpnSiteName)
 		},
-	}, nil
+		responder: client.ListByVpnSiteHandleResponse,
+		advancer: func(ctx context.Context, resp *ListVpnSiteLinksResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.ListVpnSiteLinksResult.NextLink)
+		},
+	}
 }
 
 // ListByVpnSiteCreateRequest creates the ListByVpnSite request.
-func (client *VpnSiteLinksClient) ListByVpnSiteCreateRequest(resourceGroupName string, vpnSiteName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *VpnSiteLinksClient) ListByVpnSiteCreateRequest(ctx context.Context, resourceGroupName string, vpnSiteName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnSites/{vpnSiteName}/vpnSiteLinks"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{vpnSiteName}", url.PathEscape(vpnSiteName))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
