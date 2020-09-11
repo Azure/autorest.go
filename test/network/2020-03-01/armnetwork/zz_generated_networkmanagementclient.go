@@ -90,6 +90,7 @@ func (client *NetworkManagementClient) CheckDNSNameAvailabilityCreateRequest(ctx
 	query.Set("domainNameLabel", domainNameLabel)
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -165,6 +166,7 @@ func (client *NetworkManagementClient) DeleteBastionShareableLinkCreateRequest(c
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(bslRequest)
 }
 
@@ -212,6 +214,7 @@ func (client *NetworkManagementClient) DisconnectActiveSessionsCreateRequest(ctx
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(sessionIds)
 }
 
@@ -287,6 +290,7 @@ func (client *NetworkManagementClient) Generatevirtualwanvpnserverconfigurationv
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(vpnClientParams)
 }
 
@@ -362,6 +366,7 @@ func (client *NetworkManagementClient) GetActiveSessionsCreateRequest(ctx contex
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -418,6 +423,7 @@ func (client *NetworkManagementClient) GetBastionShareableLinkCreateRequest(ctx 
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(bslRequest)
 }
 
@@ -494,6 +500,7 @@ func (client *NetworkManagementClient) PutBastionShareableLinkCreateRequest(ctx 
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(bslRequest)
 }
 
@@ -553,6 +560,7 @@ func (client *NetworkManagementClient) SupportedSecurityProvidersCreateRequest(c
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 

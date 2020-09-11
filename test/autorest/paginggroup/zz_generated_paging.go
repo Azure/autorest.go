@@ -103,6 +103,7 @@ func (client *PagingClient) GetMultiplePagesCreateRequest(ctx context.Context, p
 	if pagingGetMultiplePagesOptions != nil && pagingGetMultiplePagesOptions.Timeout != nil {
 		req.Header.Set("timeout", strconv.FormatInt(int64(*pagingGetMultiplePagesOptions.Timeout), 10))
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -148,6 +149,7 @@ func (client *PagingClient) GetMultiplePagesFailureCreateRequest(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -193,6 +195,7 @@ func (client *PagingClient) GetMultiplePagesFailureURICreateRequest(ctx context.
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -242,6 +245,7 @@ func (client *PagingClient) GetMultiplePagesFragmentNextLinkCreateRequest(ctx co
 	query := req.URL.Query()
 	query.Set("api_version", apiVersion)
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -291,6 +295,7 @@ func (client *PagingClient) GetMultiplePagesFragmentWithGroupingNextLinkCreateRe
 	query := req.URL.Query()
 	query.Set("api_version", customParameterGroup.ApiVersion)
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -373,6 +378,7 @@ func (client *PagingClient) GetMultiplePagesLroCreateRequest(ctx context.Context
 	if pagingGetMultiplePagesLroOptions != nil && pagingGetMultiplePagesLroOptions.Timeout != nil {
 		req.Header.Set("timeout", strconv.FormatInt(int64(*pagingGetMultiplePagesLroOptions.Timeout), 10))
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -426,6 +432,7 @@ func (client *PagingClient) GetMultiplePagesRetryFirstCreateRequest(ctx context.
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -471,6 +478,7 @@ func (client *PagingClient) GetMultiplePagesRetrySecondCreateRequest(ctx context
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -526,6 +534,7 @@ func (client *PagingClient) GetMultiplePagesWithOffsetCreateRequest(ctx context.
 	if pagingGetMultiplePagesWithOffsetOptions.Timeout != nil {
 		req.Header.Set("timeout", strconv.FormatInt(int64(*pagingGetMultiplePagesWithOffsetOptions.Timeout), 10))
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -571,6 +580,7 @@ func (client *PagingClient) GetNoItemNamePagesCreateRequest(ctx context.Context)
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -619,6 +629,7 @@ func (client *PagingClient) GetNullNextLinkNamePagesCreateRequest(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -673,6 +684,7 @@ func (client *PagingClient) GetOdataMultiplePagesCreateRequest(ctx context.Conte
 	if pagingGetOdataMultiplePagesOptions != nil && pagingGetOdataMultiplePagesOptions.Timeout != nil {
 		req.Header.Set("timeout", strconv.FormatInt(int64(*pagingGetOdataMultiplePagesOptions.Timeout), 10))
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -718,6 +730,7 @@ func (client *PagingClient) GetPagingModelWithItemNameWithXmsClientNameCreateReq
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -763,6 +776,7 @@ func (client *PagingClient) GetSinglePagesCreateRequest(ctx context.Context) (*a
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -808,6 +822,7 @@ func (client *PagingClient) GetSinglePagesFailureCreateRequest(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -857,6 +872,7 @@ func (client *PagingClient) GetWithQueryParamsCreateRequest(ctx context.Context,
 	query.Set("requiredQueryParameter", strconv.FormatInt(int64(requiredQueryParameter), 10))
 	query.Set("queryConstant", "true")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -893,6 +909,7 @@ func (client *PagingClient) NextFragmentCreateRequest(ctx context.Context, apiVe
 	query := req.URL.Query()
 	query.Set("api_version", apiVersion)
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -929,6 +946,7 @@ func (client *PagingClient) NextFragmentWithGroupingCreateRequest(ctx context.Co
 	query := req.URL.Query()
 	query.Set("api_version", customParameterGroup.ApiVersion)
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -963,6 +981,7 @@ func (client *PagingClient) NextOperationWithQueryParamsCreateRequest(ctx contex
 	query := req.URL.Query()
 	query.Set("queryConstant", "true")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 

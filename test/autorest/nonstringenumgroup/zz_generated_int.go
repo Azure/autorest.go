@@ -62,6 +62,7 @@ func (client *IntClient) GetCreateRequest(ctx context.Context) (*azcore.Request,
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -110,6 +111,7 @@ func (client *IntClient) PutCreateRequest(ctx context.Context, intPutOptions *In
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	if intPutOptions != nil {
 		return req, req.MarshalAsJSON(intPutOptions.Input)
 	}

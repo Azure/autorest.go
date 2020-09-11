@@ -125,6 +125,7 @@ func (client *PrivateLinkServicesClient) CheckPrivateLinkServiceVisibilityCreate
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -199,6 +200,7 @@ func (client *PrivateLinkServicesClient) CheckPrivateLinkServiceVisibilityByReso
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -273,6 +275,7 @@ func (client *PrivateLinkServicesClient) CreateOrUpdateCreateRequest(ctx context
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -347,6 +350,7 @@ func (client *PrivateLinkServicesClient) DeleteCreateRequest(ctx context.Context
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -422,6 +426,7 @@ func (client *PrivateLinkServicesClient) DeletePrivateEndpointConnectionCreateRe
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -475,6 +480,7 @@ func (client *PrivateLinkServicesClient) GetCreateRequest(ctx context.Context, r
 		query.Set("$expand", *privateLinkServicesGetOptions.Expand)
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -530,6 +536,7 @@ func (client *PrivateLinkServicesClient) GetPrivateEndpointConnectionCreateReque
 		query.Set("$expand", *privateLinkServicesGetPrivateEndpointConnectionOptions.Expand)
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -577,6 +584,7 @@ func (client *PrivateLinkServicesClient) ListCreateRequest(ctx context.Context, 
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -624,6 +632,7 @@ func (client *PrivateLinkServicesClient) ListAutoApprovedPrivateLinkServicesCrea
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -672,6 +681,7 @@ func (client *PrivateLinkServicesClient) ListAutoApprovedPrivateLinkServicesByRe
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -718,6 +728,7 @@ func (client *PrivateLinkServicesClient) ListBySubscriptionCreateRequest(ctx con
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -766,6 +777,7 @@ func (client *PrivateLinkServicesClient) ListPrivateEndpointConnectionsCreateReq
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -818,6 +830,7 @@ func (client *PrivateLinkServicesClient) UpdatePrivateEndpointConnectionCreateRe
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 

@@ -114,6 +114,7 @@ func (client *ExpressRouteCrossConnectionsClient) CreateOrUpdateCreateRequest(ct
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -164,6 +165,7 @@ func (client *ExpressRouteCrossConnectionsClient) GetCreateRequest(ctx context.C
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -210,6 +212,7 @@ func (client *ExpressRouteCrossConnectionsClient) ListCreateRequest(ctx context.
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -287,6 +290,7 @@ func (client *ExpressRouteCrossConnectionsClient) ListArpTableCreateRequest(ctx 
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -333,6 +337,7 @@ func (client *ExpressRouteCrossConnectionsClient) ListByResourceGroupCreateReque
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -410,6 +415,7 @@ func (client *ExpressRouteCrossConnectionsClient) ListRoutesTableCreateRequest(c
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -486,6 +492,7 @@ func (client *ExpressRouteCrossConnectionsClient) ListRoutesTableSummaryCreateRe
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -536,6 +543,7 @@ func (client *ExpressRouteCrossConnectionsClient) UpdateTagsCreateRequest(ctx co
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(crossConnectionParameters)
 }
 

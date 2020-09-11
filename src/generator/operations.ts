@@ -104,6 +104,19 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
 
 // use this to generate the code that will help process values returned in response headers
 function formatHeaderResponseValue(propName: string, header: string, schema: Schema, imports: ImportManager, respObj: string): string {
+  // dictionaries are handled slightly different so we do that first
+  if (schema.type === SchemaType.Dictionary) {
+    imports.add('strings');
+    let text = '\tfor hh := range resp.Header {\n';
+    text += `\t\tif strings.HasPrefix(hh, "${schema.language.go!.headerCollectionPrefix}") {\n`;
+    text += `\t\t\tif ${respObj}.Metadata == nil {\n`;
+    text += `\t\t\t\t${respObj}.Metadata = &map[string]string{}\n`;
+    text += '\t\t\t}\n';
+    text += `\t\t\t(*${respObj}.Metadata)[hh[len("${schema.language.go!.headerCollectionPrefix}"):]] = resp.Header.Get(hh)\n`;
+    text += '\t\t}\n';
+    text += '\t}\n';
+    return text;
+  }
   let text = `\tif val := resp.Header.Get("${header}"); val != "" {\n`;
   const name = camelCase(propName);
   switch (schema.type) {

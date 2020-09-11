@@ -62,6 +62,7 @@ func (client *AutoRestReportServiceForAzureClient) GetReportCreateRequest(ctx co
 		query.Set("qualifier", *autoRestReportServiceForAzureGetReportOptions.Qualifier)
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 

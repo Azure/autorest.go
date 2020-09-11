@@ -122,6 +122,7 @@ func (client *ExpressRouteCircuitsClient) CreateOrUpdateCreateRequest(ctx contex
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -196,6 +197,7 @@ func (client *ExpressRouteCircuitsClient) DeleteCreateRequest(ctx context.Contex
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -246,6 +248,7 @@ func (client *ExpressRouteCircuitsClient) GetCreateRequest(ctx context.Context, 
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -298,6 +301,7 @@ func (client *ExpressRouteCircuitsClient) GetPeeringStatsCreateRequest(ctx conte
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -349,6 +353,7 @@ func (client *ExpressRouteCircuitsClient) GetStatsCreateRequest(ctx context.Cont
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -396,6 +401,7 @@ func (client *ExpressRouteCircuitsClient) ListCreateRequest(ctx context.Context,
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -442,6 +448,7 @@ func (client *ExpressRouteCircuitsClient) ListAllCreateRequest(ctx context.Conte
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -519,6 +526,7 @@ func (client *ExpressRouteCircuitsClient) ListArpTableCreateRequest(ctx context.
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -595,6 +603,7 @@ func (client *ExpressRouteCircuitsClient) ListRoutesTableCreateRequest(ctx conte
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -671,6 +680,7 @@ func (client *ExpressRouteCircuitsClient) ListRoutesTableSummaryCreateRequest(ct
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -721,6 +731,7 @@ func (client *ExpressRouteCircuitsClient) UpdateTagsCreateRequest(ctx context.Co
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 

@@ -116,6 +116,7 @@ func (client *directoryClient) CreateCreateRequest(ctx context.Context, director
 	if directoryCreateOptions != nil && directoryCreateOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *directoryCreateOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -221,6 +222,7 @@ func (client *directoryClient) DeleteCreateRequest(ctx context.Context, recursiv
 	if directoryDeleteOptions != nil && directoryDeleteOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *directoryDeleteOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -312,6 +314,7 @@ func (client *directoryClient) GetAccessControlCreateRequest(ctx context.Context
 		req.Header.Set("x-ms-client-request-id", *directoryGetAccessControlOptions.RequestId)
 	}
 	req.Header.Set("x-ms-version", "2019-07-07")
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -461,6 +464,7 @@ func (client *directoryClient) RenameCreateRequest(ctx context.Context, renameSo
 	if directoryRenameOptions != nil && directoryRenameOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *directoryRenameOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -578,6 +582,7 @@ func (client *directoryClient) SetAccessControlCreateRequest(ctx context.Context
 		req.Header.Set("x-ms-client-request-id", *directorySetAccessControlOptions.RequestId)
 	}
 	req.Header.Set("x-ms-version", "2019-07-07")
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 

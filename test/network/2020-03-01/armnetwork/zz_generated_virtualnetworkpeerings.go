@@ -103,6 +103,7 @@ func (client *VirtualNetworkPeeringsClient) CreateOrUpdateCreateRequest(ctx cont
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(virtualNetworkPeeringParameters)
 }
 
@@ -178,6 +179,7 @@ func (client *VirtualNetworkPeeringsClient) DeleteCreateRequest(ctx context.Cont
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -229,6 +231,7 @@ func (client *VirtualNetworkPeeringsClient) GetCreateRequest(ctx context.Context
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -277,6 +280,7 @@ func (client *VirtualNetworkPeeringsClient) ListCreateRequest(ctx context.Contex
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 

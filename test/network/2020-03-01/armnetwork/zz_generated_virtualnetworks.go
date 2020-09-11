@@ -87,6 +87,7 @@ func (client *VirtualNetworksClient) CheckIPAddressAvailabilityCreateRequest(ctx
 	query.Set("ipAddress", ipAddress)
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -162,6 +163,7 @@ func (client *VirtualNetworksClient) CreateOrUpdateCreateRequest(ctx context.Con
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -236,6 +238,7 @@ func (client *VirtualNetworksClient) DeleteCreateRequest(ctx context.Context, re
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -289,6 +292,7 @@ func (client *VirtualNetworksClient) GetCreateRequest(ctx context.Context, resou
 		query.Set("$expand", *virtualNetworksGetOptions.Expand)
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -336,6 +340,7 @@ func (client *VirtualNetworksClient) ListCreateRequest(ctx context.Context, reso
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -382,6 +387,7 @@ func (client *VirtualNetworksClient) ListAllCreateRequest(ctx context.Context) (
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -430,6 +436,7 @@ func (client *VirtualNetworksClient) ListUsageCreateRequest(ctx context.Context,
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -481,6 +488,7 @@ func (client *VirtualNetworksClient) UpdateTagsCreateRequest(ctx context.Context
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 

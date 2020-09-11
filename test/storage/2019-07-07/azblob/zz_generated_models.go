@@ -644,7 +644,7 @@ type BlobDownloadResponse struct {
 	LeaseStatus *LeaseStatusType
 
 	// Metadata contains the information returned from the x-ms-meta header response.
-	Metadata *string
+	Metadata *map[string]string
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -851,7 +851,7 @@ type BlobGetPropertiesResponse struct {
 	LeaseStatus *LeaseStatusType
 
 	// Metadata contains the information returned from the x-ms-meta header response.
-	Metadata *string
+	Metadata *map[string]string
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -1930,7 +1930,7 @@ type ContainerGetPropertiesResponse struct {
 	LeaseStatus *LeaseStatusType
 
 	// Metadata contains the information returned from the x-ms-meta header response.
-	Metadata *string
+	Metadata *map[string]string
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response

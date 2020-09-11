@@ -63,6 +63,7 @@ func (client *HTTPServerFailureClient) Delete505CreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
 
@@ -104,6 +105,7 @@ func (client *HTTPServerFailureClient) Get501CreateRequest(ctx context.Context) 
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -145,6 +147,7 @@ func (client *HTTPServerFailureClient) Head501CreateRequest(ctx context.Context)
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -186,6 +189,7 @@ func (client *HTTPServerFailureClient) Post505CreateRequest(ctx context.Context)
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
 

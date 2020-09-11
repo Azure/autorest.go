@@ -81,6 +81,7 @@ func (client *StringClient) GetBase64EncodedCreateRequest(ctx context.Context) (
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -126,6 +127,7 @@ func (client *StringClient) GetBase64URLEncodedCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -171,6 +173,7 @@ func (client *StringClient) GetEmptyCreateRequest(ctx context.Context) (*azcore.
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -216,6 +219,7 @@ func (client *StringClient) GetMBCSCreateRequest(ctx context.Context) (*azcore.R
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -261,6 +265,7 @@ func (client *StringClient) GetNotProvidedCreateRequest(ctx context.Context) (*a
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -306,6 +311,7 @@ func (client *StringClient) GetNullCreateRequest(ctx context.Context) (*azcore.R
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -351,6 +357,7 @@ func (client *StringClient) GetNullBase64URLEncodedCreateRequest(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -396,6 +403,7 @@ func (client *StringClient) GetWhitespaceCreateRequest(ctx context.Context) (*az
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -441,6 +449,7 @@ func (client *StringClient) PutBase64URLEncodedCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsByteArray(stringBody, azcore.Base64URLFormat)
 }
 
@@ -485,6 +494,7 @@ func (client *StringClient) PutEmptyCreateRequest(ctx context.Context) (*azcore.
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON("")
 }
 
@@ -529,6 +539,7 @@ func (client *StringClient) PutMBCSCreateRequest(ctx context.Context) (*azcore.R
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON("啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€")
 }
 
@@ -573,6 +584,7 @@ func (client *StringClient) PutNullCreateRequest(ctx context.Context, stringPutN
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	if stringPutNullOptions != nil {
 		return req, req.MarshalAsJSON(stringPutNullOptions.StringBody)
 	}
@@ -620,6 +632,7 @@ func (client *StringClient) PutWhitespaceCreateRequest(ctx context.Context) (*az
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON("    Now is the time for all good men to come to the aid of their country    ")
 }
 

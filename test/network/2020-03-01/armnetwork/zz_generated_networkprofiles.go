@@ -80,6 +80,7 @@ func (client *NetworkProfilesClient) CreateOrUpdateCreateRequest(ctx context.Con
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -155,6 +156,7 @@ func (client *NetworkProfilesClient) DeleteCreateRequest(ctx context.Context, re
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -208,6 +210,7 @@ func (client *NetworkProfilesClient) GetCreateRequest(ctx context.Context, resou
 		query.Set("$expand", *networkProfilesGetOptions.Expand)
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -255,6 +258,7 @@ func (client *NetworkProfilesClient) ListCreateRequest(ctx context.Context, reso
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -301,6 +305,7 @@ func (client *NetworkProfilesClient) ListAllCreateRequest(ctx context.Context) (
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -352,6 +357,7 @@ func (client *NetworkProfilesClient) UpdateTagsCreateRequest(ctx context.Context
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 

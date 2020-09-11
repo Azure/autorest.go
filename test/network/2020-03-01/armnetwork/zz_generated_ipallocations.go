@@ -106,6 +106,7 @@ func (client *IPAllocationsClient) CreateOrUpdateCreateRequest(ctx context.Conte
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -180,6 +181,7 @@ func (client *IPAllocationsClient) DeleteCreateRequest(ctx context.Context, reso
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -233,6 +235,7 @@ func (client *IPAllocationsClient) GetCreateRequest(ctx context.Context, resourc
 		query.Set("$expand", *ipAllocationsGetOptions.Expand)
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -279,6 +282,7 @@ func (client *IPAllocationsClient) ListCreateRequest(ctx context.Context) (*azco
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -326,6 +330,7 @@ func (client *IPAllocationsClient) ListByResourceGroupCreateRequest(ctx context.
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -377,6 +382,7 @@ func (client *IPAllocationsClient) UpdateTagsCreateRequest(ctx context.Context, 
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 

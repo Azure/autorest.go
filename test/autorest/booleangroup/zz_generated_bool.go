@@ -67,6 +67,7 @@ func (client *BoolClient) GetFalseCreateRequest(ctx context.Context) (*azcore.Re
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -112,6 +113,7 @@ func (client *BoolClient) GetInvalidCreateRequest(ctx context.Context) (*azcore.
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -157,6 +159,7 @@ func (client *BoolClient) GetNullCreateRequest(ctx context.Context) (*azcore.Req
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -202,6 +205,7 @@ func (client *BoolClient) GetTrueCreateRequest(ctx context.Context) (*azcore.Req
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -247,6 +251,7 @@ func (client *BoolClient) PutFalseCreateRequest(ctx context.Context) (*azcore.Re
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(false)
 }
 
@@ -291,6 +296,7 @@ func (client *BoolClient) PutTrueCreateRequest(ctx context.Context) (*azcore.Req
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
 

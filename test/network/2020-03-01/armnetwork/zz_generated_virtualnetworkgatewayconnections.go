@@ -124,6 +124,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) CreateOrUpdateCreateReques
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -198,6 +199,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) DeleteCreateRequest(ctx co
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -248,6 +250,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) GetCreateRequest(ctx conte
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -299,6 +302,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) GetSharedKeyCreateRequest(
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -346,6 +350,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) ListCreateRequest(ctx cont
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -421,6 +426,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) ResetSharedKeyCreateReques
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -495,6 +501,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) SetSharedKeyCreateRequest(
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -569,6 +576,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) StartPacketCaptureCreateRe
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	if virtualNetworkGatewayConnectionsStartPacketCaptureOptions != nil {
 		return req, req.MarshalAsJSON(virtualNetworkGatewayConnectionsStartPacketCaptureOptions.Parameters)
 	}
@@ -646,6 +654,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) StopPacketCaptureCreateReq
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -720,6 +729,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) UpdateTagsCreateRequest(ct
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 

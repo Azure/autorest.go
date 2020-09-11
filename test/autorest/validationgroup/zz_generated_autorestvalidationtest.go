@@ -115,6 +115,7 @@ func (client *AutoRestValidationTestClient) PostWithConstantInBodyCreateRequest(
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	if autoRestValidationTestPostWithConstantInBodyOptions != nil {
 		return req, req.MarshalAsJSON(autoRestValidationTestPostWithConstantInBodyOptions.Body)
 	}
@@ -172,6 +173,7 @@ func (client *AutoRestValidationTestClient) ValidationOfBodyCreateRequest(ctx co
 	query := req.URL.Query()
 	query.Set("apiVersion", "1.0.0")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	if autoRestValidationTestValidationOfBodyOptions != nil {
 		return req, req.MarshalAsJSON(autoRestValidationTestValidationOfBodyOptions.Body)
 	}
@@ -226,6 +228,7 @@ func (client *AutoRestValidationTestClient) ValidationOfMethodParametersCreateRe
 	query := req.URL.Query()
 	query.Set("apiVersion", "1.0.0")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 

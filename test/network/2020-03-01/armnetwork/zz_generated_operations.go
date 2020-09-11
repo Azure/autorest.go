@@ -57,6 +57,7 @@ func (client *OperationsClient) ListCreateRequest(ctx context.Context) (*azcore.
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 

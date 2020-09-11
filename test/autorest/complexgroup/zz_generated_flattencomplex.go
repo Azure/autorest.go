@@ -58,6 +58,7 @@ func (client *FlattencomplexClient) GetValidCreateRequest(ctx context.Context) (
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 

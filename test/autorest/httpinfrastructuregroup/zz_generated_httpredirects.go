@@ -88,6 +88,7 @@ func (client *HTTPRedirectsClient) Delete307CreateRequest(ctx context.Context) (
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
 
@@ -133,6 +134,7 @@ func (client *HTTPRedirectsClient) Get300CreateRequest(ctx context.Context) (*az
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -189,6 +191,7 @@ func (client *HTTPRedirectsClient) Get301CreateRequest(ctx context.Context) (*az
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -233,6 +236,7 @@ func (client *HTTPRedirectsClient) Get302CreateRequest(ctx context.Context) (*az
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -277,6 +281,7 @@ func (client *HTTPRedirectsClient) Get307CreateRequest(ctx context.Context) (*az
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -321,6 +326,7 @@ func (client *HTTPRedirectsClient) Head300CreateRequest(ctx context.Context) (*a
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -369,6 +375,7 @@ func (client *HTTPRedirectsClient) Head301CreateRequest(ctx context.Context) (*a
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -413,6 +420,7 @@ func (client *HTTPRedirectsClient) Head302CreateRequest(ctx context.Context) (*a
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -457,6 +465,7 @@ func (client *HTTPRedirectsClient) Head307CreateRequest(ctx context.Context) (*a
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -501,6 +510,7 @@ func (client *HTTPRedirectsClient) Options307CreateRequest(ctx context.Context) 
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -545,6 +555,7 @@ func (client *HTTPRedirectsClient) Patch302CreateRequest(ctx context.Context) (*
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
 
@@ -593,6 +604,7 @@ func (client *HTTPRedirectsClient) Patch307CreateRequest(ctx context.Context) (*
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
 
@@ -637,6 +649,7 @@ func (client *HTTPRedirectsClient) Post303CreateRequest(ctx context.Context) (*a
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
 
@@ -685,6 +698,7 @@ func (client *HTTPRedirectsClient) Post307CreateRequest(ctx context.Context) (*a
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
 
@@ -729,6 +743,7 @@ func (client *HTTPRedirectsClient) Put301CreateRequest(ctx context.Context) (*az
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
 
@@ -777,6 +792,7 @@ func (client *HTTPRedirectsClient) Put307CreateRequest(ctx context.Context) (*az
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
 

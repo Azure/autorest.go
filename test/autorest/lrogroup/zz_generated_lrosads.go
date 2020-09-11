@@ -185,6 +185,7 @@ func (client *LrosaDsClient) Delete202NonRetry400CreateRequest(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -253,6 +254,7 @@ func (client *LrosaDsClient) Delete202RetryInvalidHeaderCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -321,6 +323,7 @@ func (client *LrosaDsClient) Delete204SucceededCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -389,6 +392,7 @@ func (client *LrosaDsClient) DeleteAsyncRelativeRetry400CreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -457,6 +461,7 @@ func (client *LrosaDsClient) DeleteAsyncRelativeRetryInvalidHeaderCreateRequest(
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -525,6 +530,7 @@ func (client *LrosaDsClient) DeleteAsyncRelativeRetryInvalidJSONPollingCreateReq
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -593,6 +599,7 @@ func (client *LrosaDsClient) DeleteAsyncRelativeRetryNoStatusCreateRequest(ctx c
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -661,6 +668,7 @@ func (client *LrosaDsClient) DeleteNonRetry400CreateRequest(ctx context.Context)
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -729,6 +737,7 @@ func (client *LrosaDsClient) Post202NoLocationCreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	if lrosaDsPost202NoLocationOptions != nil {
 		return req, req.MarshalAsJSON(lrosaDsPost202NoLocationOptions.Product)
 	}
@@ -800,6 +809,7 @@ func (client *LrosaDsClient) Post202NonRetry400CreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	if lrosaDsPost202NonRetry400Options != nil {
 		return req, req.MarshalAsJSON(lrosaDsPost202NonRetry400Options.Product)
 	}
@@ -871,6 +881,7 @@ func (client *LrosaDsClient) Post202RetryInvalidHeaderCreateRequest(ctx context.
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	if lrosaDsPost202RetryInvalidHeaderOptions != nil {
 		return req, req.MarshalAsJSON(lrosaDsPost202RetryInvalidHeaderOptions.Product)
 	}
@@ -942,6 +953,7 @@ func (client *LrosaDsClient) PostAsyncRelativeRetry400CreateRequest(ctx context.
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	if lrosaDsPostAsyncRelativeRetry400Options != nil {
 		return req, req.MarshalAsJSON(lrosaDsPostAsyncRelativeRetry400Options.Product)
 	}
@@ -1013,6 +1025,7 @@ func (client *LrosaDsClient) PostAsyncRelativeRetryInvalidHeaderCreateRequest(ct
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	if lrosaDsPostAsyncRelativeRetryInvalidHeaderOptions != nil {
 		return req, req.MarshalAsJSON(lrosaDsPostAsyncRelativeRetryInvalidHeaderOptions.Product)
 	}
@@ -1084,6 +1097,7 @@ func (client *LrosaDsClient) PostAsyncRelativeRetryInvalidJSONPollingCreateReque
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	if lrosaDsPostAsyncRelativeRetryInvalidJsonPollingOptions != nil {
 		return req, req.MarshalAsJSON(lrosaDsPostAsyncRelativeRetryInvalidJsonPollingOptions.Product)
 	}
@@ -1155,6 +1169,7 @@ func (client *LrosaDsClient) PostAsyncRelativeRetryNoPayloadCreateRequest(ctx co
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	if lrosaDsPostAsyncRelativeRetryNoPayloadOptions != nil {
 		return req, req.MarshalAsJSON(lrosaDsPostAsyncRelativeRetryNoPayloadOptions.Product)
 	}
@@ -1226,6 +1241,7 @@ func (client *LrosaDsClient) PostNonRetry400CreateRequest(ctx context.Context, l
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	if lrosaDsPostNonRetry400Options != nil {
 		return req, req.MarshalAsJSON(lrosaDsPostNonRetry400Options.Product)
 	}
@@ -1297,6 +1313,7 @@ func (client *LrosaDsClient) Put200InvalidJSONCreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	if lrosaDsPut200InvalidJsonOptions != nil {
 		return req, req.MarshalAsJSON(lrosaDsPut200InvalidJsonOptions.Product)
 	}
@@ -1368,6 +1385,7 @@ func (client *LrosaDsClient) PutAsyncRelativeRetry400CreateRequest(ctx context.C
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	if lrosaDsPutAsyncRelativeRetry400Options != nil {
 		return req, req.MarshalAsJSON(lrosaDsPutAsyncRelativeRetry400Options.Product)
 	}
@@ -1439,6 +1457,7 @@ func (client *LrosaDsClient) PutAsyncRelativeRetryInvalidHeaderCreateRequest(ctx
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	if lrosaDsPutAsyncRelativeRetryInvalidHeaderOptions != nil {
 		return req, req.MarshalAsJSON(lrosaDsPutAsyncRelativeRetryInvalidHeaderOptions.Product)
 	}
@@ -1510,6 +1529,7 @@ func (client *LrosaDsClient) PutAsyncRelativeRetryInvalidJSONPollingCreateReques
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	if lrosaDsPutAsyncRelativeRetryInvalidJsonPollingOptions != nil {
 		return req, req.MarshalAsJSON(lrosaDsPutAsyncRelativeRetryInvalidJsonPollingOptions.Product)
 	}
@@ -1581,6 +1601,7 @@ func (client *LrosaDsClient) PutAsyncRelativeRetryNoStatusCreateRequest(ctx cont
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	if lrosaDsPutAsyncRelativeRetryNoStatusOptions != nil {
 		return req, req.MarshalAsJSON(lrosaDsPutAsyncRelativeRetryNoStatusOptions.Product)
 	}
@@ -1652,6 +1673,7 @@ func (client *LrosaDsClient) PutAsyncRelativeRetryNoStatusPayloadCreateRequest(c
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	if lrosaDsPutAsyncRelativeRetryNoStatusPayloadOptions != nil {
 		return req, req.MarshalAsJSON(lrosaDsPutAsyncRelativeRetryNoStatusPayloadOptions.Product)
 	}
@@ -1723,6 +1745,7 @@ func (client *LrosaDsClient) PutError201NoProvisioningStatePayloadCreateRequest(
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	if lrosaDsPutError201NoProvisioningStatePayloadOptions != nil {
 		return req, req.MarshalAsJSON(lrosaDsPutError201NoProvisioningStatePayloadOptions.Product)
 	}
@@ -1794,6 +1817,7 @@ func (client *LrosaDsClient) PutNonRetry201Creating400CreateRequest(ctx context.
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	if lrosaDsPutNonRetry201Creating400Options != nil {
 		return req, req.MarshalAsJSON(lrosaDsPutNonRetry201Creating400Options.Product)
 	}
@@ -1865,6 +1889,7 @@ func (client *LrosaDsClient) PutNonRetry201Creating400InvalidJSONCreateRequest(c
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	if lrosaDsPutNonRetry201Creating400InvalidJsonOptions != nil {
 		return req, req.MarshalAsJSON(lrosaDsPutNonRetry201Creating400InvalidJsonOptions.Product)
 	}
@@ -1936,6 +1961,7 @@ func (client *LrosaDsClient) PutNonRetry400CreateRequest(ctx context.Context, lr
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	if lrosaDsPutNonRetry400Options != nil {
 		return req, req.MarshalAsJSON(lrosaDsPutNonRetry400Options.Product)
 	}

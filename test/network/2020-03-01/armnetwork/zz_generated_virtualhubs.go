@@ -106,6 +106,7 @@ func (client *VirtualHubsClient) CreateOrUpdateCreateRequest(ctx context.Context
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(virtualHubParameters)
 }
 
@@ -180,6 +181,7 @@ func (client *VirtualHubsClient) DeleteCreateRequest(ctx context.Context, resour
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -230,6 +232,7 @@ func (client *VirtualHubsClient) GetCreateRequest(ctx context.Context, resourceG
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -276,6 +279,7 @@ func (client *VirtualHubsClient) ListCreateRequest(ctx context.Context) (*azcore
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -323,6 +327,7 @@ func (client *VirtualHubsClient) ListByResourceGroupCreateRequest(ctx context.Co
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -374,6 +379,7 @@ func (client *VirtualHubsClient) UpdateTagsCreateRequest(ctx context.Context, re
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(virtualHubParameters)
 }
 

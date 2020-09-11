@@ -68,6 +68,7 @@ func (client *APIVersionLocalClient) GetMethodLocalNullCreateRequest(ctx context
 		query.Set("api-version", *apiVersionLocalGetMethodLocalNullOptions.ApiVersion)
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -115,6 +116,7 @@ func (client *APIVersionLocalClient) GetMethodLocalValidCreateRequest(ctx contex
 	query := req.URL.Query()
 	query.Set("api-version", "2.0")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -162,6 +164,7 @@ func (client *APIVersionLocalClient) GetPathLocalValidCreateRequest(ctx context.
 	query := req.URL.Query()
 	query.Set("api-version", "2.0")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -209,6 +212,7 @@ func (client *APIVersionLocalClient) GetSwaggerLocalValidCreateRequest(ctx conte
 	query := req.URL.Query()
 	query.Set("api-version", "2.0")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 

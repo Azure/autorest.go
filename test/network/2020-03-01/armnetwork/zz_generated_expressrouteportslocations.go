@@ -67,6 +67,7 @@ func (client *ExpressRoutePortsLocationsClient) GetCreateRequest(ctx context.Con
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -113,6 +114,7 @@ func (client *ExpressRoutePortsLocationsClient) ListCreateRequest(ctx context.Co
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 

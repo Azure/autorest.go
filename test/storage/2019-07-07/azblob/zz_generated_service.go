@@ -75,6 +75,7 @@ func (client *serviceClient) GetAccountInfoCreateRequest(ctx context.Context) (*
 	query.Set("comp", "properties")
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("x-ms-version", "2019-07-07")
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -152,6 +153,7 @@ func (client *serviceClient) GetPropertiesCreateRequest(ctx context.Context, ser
 	if serviceGetPropertiesOptions != nil && serviceGetPropertiesOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *serviceGetPropertiesOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -216,6 +218,7 @@ func (client *serviceClient) GetStatisticsCreateRequest(ctx context.Context, ser
 	if serviceGetStatisticsOptions != nil && serviceGetStatisticsOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *serviceGetStatisticsOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -287,6 +290,7 @@ func (client *serviceClient) GetUserDelegationKeyCreateRequest(ctx context.Conte
 	if serviceGetUserDelegationKeyOptions != nil && serviceGetUserDelegationKeyOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *serviceGetUserDelegationKeyOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, req.MarshalAsXML(keyInfo)
 }
 
@@ -363,6 +367,7 @@ func (client *serviceClient) ListContainersSegmentCreateRequest(ctx context.Cont
 	if serviceListContainersSegmentOptions != nil && serviceListContainersSegmentOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *serviceListContainersSegmentOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -427,6 +432,7 @@ func (client *serviceClient) SetPropertiesCreateRequest(ctx context.Context, sto
 	if serviceSetPropertiesOptions != nil && serviceSetPropertiesOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *serviceSetPropertiesOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, req.MarshalAsXML(storageServiceProperties)
 }
 
@@ -493,6 +499,7 @@ func (client *serviceClient) SubmitBatchCreateRequest(ctx context.Context, conte
 	if serviceSubmitBatchOptions != nil && serviceSubmitBatchOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *serviceSubmitBatchOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, req.MarshalAsXML(body)
 }
 

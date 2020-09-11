@@ -69,6 +69,7 @@ func (client *ExpressRouteLinksClient) GetCreateRequest(ctx context.Context, res
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -117,6 +118,7 @@ func (client *ExpressRouteLinksClient) ListCreateRequest(ctx context.Context, re
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 

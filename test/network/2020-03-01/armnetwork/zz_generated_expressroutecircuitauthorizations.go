@@ -103,6 +103,7 @@ func (client *ExpressRouteCircuitAuthorizationsClient) CreateOrUpdateCreateReque
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(authorizationParameters)
 }
 
@@ -178,6 +179,7 @@ func (client *ExpressRouteCircuitAuthorizationsClient) DeleteCreateRequest(ctx c
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -229,6 +231,7 @@ func (client *ExpressRouteCircuitAuthorizationsClient) GetCreateRequest(ctx cont
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -277,6 +280,7 @@ func (client *ExpressRouteCircuitAuthorizationsClient) ListCreateRequest(ctx con
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 

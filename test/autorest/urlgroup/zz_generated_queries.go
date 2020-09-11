@@ -134,6 +134,7 @@ func (client *QueriesClient) ArrayStringCSVEmptyCreateRequest(ctx context.Contex
 		query.Set("arrayQuery", strings.Join(*queriesArrayStringCsvEmptyOptions.ArrayQuery, ","))
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -183,6 +184,7 @@ func (client *QueriesClient) ArrayStringCSVNullCreateRequest(ctx context.Context
 		query.Set("arrayQuery", strings.Join(*queriesArrayStringCsvNullOptions.ArrayQuery, ","))
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -232,6 +234,7 @@ func (client *QueriesClient) ArrayStringCSVValidCreateRequest(ctx context.Contex
 		query.Set("arrayQuery", strings.Join(*queriesArrayStringCsvValidOptions.ArrayQuery, ","))
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -281,6 +284,7 @@ func (client *QueriesClient) ArrayStringNoCollectionFormatEmptyCreateRequest(ctx
 		query.Set("arrayQuery", strings.Join(*queriesArrayStringNoCollectionFormatEmptyOptions.ArrayQuery, ","))
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -330,6 +334,7 @@ func (client *QueriesClient) ArrayStringPipesValidCreateRequest(ctx context.Cont
 		query.Set("arrayQuery", strings.Join(*queriesArrayStringPipesValidOptions.ArrayQuery, "|"))
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -379,6 +384,7 @@ func (client *QueriesClient) ArrayStringSsvValidCreateRequest(ctx context.Contex
 		query.Set("arrayQuery", strings.Join(*queriesArrayStringSsvValidOptions.ArrayQuery, " "))
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -428,6 +434,7 @@ func (client *QueriesClient) ArrayStringTsvValidCreateRequest(ctx context.Contex
 		query.Set("arrayQuery", strings.Join(*queriesArrayStringTsvValidOptions.ArrayQuery, "\t"))
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -475,6 +482,7 @@ func (client *QueriesClient) ByteEmptyCreateRequest(ctx context.Context) (*azcor
 	query := req.URL.Query()
 	query.Set("byteQuery", "")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -524,6 +532,7 @@ func (client *QueriesClient) ByteMultiByteCreateRequest(ctx context.Context, que
 		query.Set("byteQuery", base64.StdEncoding.EncodeToString(*queriesByteMultiByteOptions.ByteQuery))
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -573,6 +582,7 @@ func (client *QueriesClient) ByteNullCreateRequest(ctx context.Context, queriesB
 		query.Set("byteQuery", base64.StdEncoding.EncodeToString(*queriesByteNullOptions.ByteQuery))
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -622,6 +632,7 @@ func (client *QueriesClient) DateNullCreateRequest(ctx context.Context, queriesD
 		query.Set("dateQuery", queriesDateNullOptions.DateQuery.Format("2006-01-02"))
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -671,6 +682,7 @@ func (client *QueriesClient) DateTimeNullCreateRequest(ctx context.Context, quer
 		query.Set("dateTimeQuery", queriesDateTimeNullOptions.DateTimeQuery.Format(time.RFC3339Nano))
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -718,6 +730,7 @@ func (client *QueriesClient) DateTimeValidCreateRequest(ctx context.Context) (*a
 	query := req.URL.Query()
 	query.Set("dateTimeQuery", "2012-01-01T01:01:01Z")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -765,6 +778,7 @@ func (client *QueriesClient) DateValidCreateRequest(ctx context.Context) (*azcor
 	query := req.URL.Query()
 	query.Set("dateQuery", "2012-01-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -812,6 +826,7 @@ func (client *QueriesClient) DoubleDecimalNegativeCreateRequest(ctx context.Cont
 	query := req.URL.Query()
 	query.Set("doubleQuery", "-9999999.999")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -859,6 +874,7 @@ func (client *QueriesClient) DoubleDecimalPositiveCreateRequest(ctx context.Cont
 	query := req.URL.Query()
 	query.Set("doubleQuery", "9999999.999")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -908,6 +924,7 @@ func (client *QueriesClient) DoubleNullCreateRequest(ctx context.Context, querie
 		query.Set("doubleQuery", strconv.FormatFloat(*queriesDoubleNullOptions.DoubleQuery, 'f', -1, 64))
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -957,6 +974,7 @@ func (client *QueriesClient) EnumNullCreateRequest(ctx context.Context, queriesE
 		query.Set("enumQuery", string(*queriesEnumNullOptions.EnumQuery))
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1006,6 +1024,7 @@ func (client *QueriesClient) EnumValidCreateRequest(ctx context.Context, queries
 		query.Set("enumQuery", string(*queriesEnumValidOptions.EnumQuery))
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1055,6 +1074,7 @@ func (client *QueriesClient) FloatNullCreateRequest(ctx context.Context, queries
 		query.Set("floatQuery", strconv.FormatFloat(float64(*queriesFloatNullOptions.FloatQuery), 'f', -1, 32))
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1102,6 +1122,7 @@ func (client *QueriesClient) FloatScientificNegativeCreateRequest(ctx context.Co
 	query := req.URL.Query()
 	query.Set("floatQuery", "-1.034e-20")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1149,6 +1170,7 @@ func (client *QueriesClient) FloatScientificPositiveCreateRequest(ctx context.Co
 	query := req.URL.Query()
 	query.Set("floatQuery", "103400000000000000000")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1196,6 +1218,7 @@ func (client *QueriesClient) GetBooleanFalseCreateRequest(ctx context.Context) (
 	query := req.URL.Query()
 	query.Set("boolQuery", "false")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1245,6 +1268,7 @@ func (client *QueriesClient) GetBooleanNullCreateRequest(ctx context.Context, qu
 		query.Set("boolQuery", strconv.FormatBool(*queriesGetBooleanNullOptions.BoolQuery))
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1292,6 +1316,7 @@ func (client *QueriesClient) GetBooleanTrueCreateRequest(ctx context.Context) (*
 	query := req.URL.Query()
 	query.Set("boolQuery", "true")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1339,6 +1364,7 @@ func (client *QueriesClient) GetIntNegativeOneMillionCreateRequest(ctx context.C
 	query := req.URL.Query()
 	query.Set("intQuery", "-1000000")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1388,6 +1414,7 @@ func (client *QueriesClient) GetIntNullCreateRequest(ctx context.Context, querie
 		query.Set("intQuery", strconv.FormatInt(int64(*queriesGetIntNullOptions.IntQuery), 10))
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1435,6 +1462,7 @@ func (client *QueriesClient) GetIntOneMillionCreateRequest(ctx context.Context) 
 	query := req.URL.Query()
 	query.Set("intQuery", "1000000")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1484,6 +1512,7 @@ func (client *QueriesClient) GetLongNullCreateRequest(ctx context.Context, queri
 		query.Set("longQuery", strconv.FormatInt(*queriesGetLongNullOptions.LongQuery, 10))
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1531,6 +1560,7 @@ func (client *QueriesClient) GetNegativeTenBillionCreateRequest(ctx context.Cont
 	query := req.URL.Query()
 	query.Set("longQuery", "-10000000000")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1578,6 +1608,7 @@ func (client *QueriesClient) GetTenBillionCreateRequest(ctx context.Context) (*a
 	query := req.URL.Query()
 	query.Set("longQuery", "10000000000")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1625,6 +1656,7 @@ func (client *QueriesClient) StringEmptyCreateRequest(ctx context.Context) (*azc
 	query := req.URL.Query()
 	query.Set("stringQuery", "")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1674,6 +1706,7 @@ func (client *QueriesClient) StringNullCreateRequest(ctx context.Context, querie
 		query.Set("stringQuery", *queriesStringNullOptions.StringQuery)
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1721,6 +1754,7 @@ func (client *QueriesClient) StringURLEncodedCreateRequest(ctx context.Context) 
 	query := req.URL.Query()
 	query.Set("stringQuery", "begin!*'();:@ &=+$,/?#[]end")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1768,6 +1802,7 @@ func (client *QueriesClient) StringUnicodeCreateRequest(ctx context.Context) (*a
 	query := req.URL.Query()
 	query.Set("stringQuery", "啊齄丂狛狜隣郎隣兀﨩")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 

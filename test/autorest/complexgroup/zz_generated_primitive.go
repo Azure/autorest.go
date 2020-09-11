@@ -99,6 +99,7 @@ func (client *PrimitiveClient) GetBoolCreateRequest(ctx context.Context) (*azcor
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -144,6 +145,7 @@ func (client *PrimitiveClient) GetByteCreateRequest(ctx context.Context) (*azcor
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -189,6 +191,7 @@ func (client *PrimitiveClient) GetDateCreateRequest(ctx context.Context) (*azcor
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -234,6 +237,7 @@ func (client *PrimitiveClient) GetDateTimeCreateRequest(ctx context.Context) (*a
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -279,6 +283,7 @@ func (client *PrimitiveClient) GetDateTimeRFC1123CreateRequest(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -324,6 +329,7 @@ func (client *PrimitiveClient) GetDoubleCreateRequest(ctx context.Context) (*azc
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -369,6 +375,7 @@ func (client *PrimitiveClient) GetDurationCreateRequest(ctx context.Context) (*a
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -414,6 +421,7 @@ func (client *PrimitiveClient) GetFloatCreateRequest(ctx context.Context) (*azco
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -459,6 +467,7 @@ func (client *PrimitiveClient) GetIntCreateRequest(ctx context.Context) (*azcore
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -504,6 +513,7 @@ func (client *PrimitiveClient) GetLongCreateRequest(ctx context.Context) (*azcor
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -549,6 +559,7 @@ func (client *PrimitiveClient) GetStringCreateRequest(ctx context.Context) (*azc
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -594,6 +605,7 @@ func (client *PrimitiveClient) PutBoolCreateRequest(ctx context.Context, complex
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(complexBody)
 }
 
@@ -638,6 +650,7 @@ func (client *PrimitiveClient) PutByteCreateRequest(ctx context.Context, complex
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(complexBody)
 }
 
@@ -682,6 +695,7 @@ func (client *PrimitiveClient) PutDateCreateRequest(ctx context.Context, complex
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(complexBody)
 }
 
@@ -726,6 +740,7 @@ func (client *PrimitiveClient) PutDateTimeCreateRequest(ctx context.Context, com
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(complexBody)
 }
 
@@ -770,6 +785,7 @@ func (client *PrimitiveClient) PutDateTimeRFC1123CreateRequest(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(complexBody)
 }
 
@@ -814,6 +830,7 @@ func (client *PrimitiveClient) PutDoubleCreateRequest(ctx context.Context, compl
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(complexBody)
 }
 
@@ -858,6 +875,7 @@ func (client *PrimitiveClient) PutDurationCreateRequest(ctx context.Context, com
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(complexBody)
 }
 
@@ -902,6 +920,7 @@ func (client *PrimitiveClient) PutFloatCreateRequest(ctx context.Context, comple
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(complexBody)
 }
 
@@ -946,6 +965,7 @@ func (client *PrimitiveClient) PutIntCreateRequest(ctx context.Context, complexB
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(complexBody)
 }
 
@@ -990,6 +1010,7 @@ func (client *PrimitiveClient) PutLongCreateRequest(ctx context.Context, complex
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(complexBody)
 }
 
@@ -1034,6 +1055,7 @@ func (client *PrimitiveClient) PutStringCreateRequest(ctx context.Context, compl
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(complexBody)
 }
 

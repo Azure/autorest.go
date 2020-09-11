@@ -106,6 +106,7 @@ func (client *LoadBalancersClient) CreateOrUpdateCreateRequest(ctx context.Conte
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -180,6 +181,7 @@ func (client *LoadBalancersClient) DeleteCreateRequest(ctx context.Context, reso
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -233,6 +235,7 @@ func (client *LoadBalancersClient) GetCreateRequest(ctx context.Context, resourc
 		query.Set("$expand", *loadBalancersGetOptions.Expand)
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -280,6 +283,7 @@ func (client *LoadBalancersClient) ListCreateRequest(ctx context.Context, resour
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -326,6 +330,7 @@ func (client *LoadBalancersClient) ListAllCreateRequest(ctx context.Context) (*a
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -377,6 +382,7 @@ func (client *LoadBalancersClient) UpdateTagsCreateRequest(ctx context.Context, 
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 

@@ -100,6 +100,7 @@ func (client *DatetimeClient) GetInvalidCreateRequest(ctx context.Context) (*azc
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -146,6 +147,7 @@ func (client *DatetimeClient) GetLocalNegativeOffsetLowercaseMaxDateTimeCreateRe
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -192,6 +194,7 @@ func (client *DatetimeClient) GetLocalNegativeOffsetMinDateTimeCreateRequest(ctx
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -238,6 +241,7 @@ func (client *DatetimeClient) GetLocalNegativeOffsetUppercaseMaxDateTimeCreateRe
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -284,6 +288,7 @@ func (client *DatetimeClient) GetLocalNoOffsetMinDateTimeCreateRequest(ctx conte
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -330,6 +335,7 @@ func (client *DatetimeClient) GetLocalPositiveOffsetLowercaseMaxDateTimeCreateRe
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -376,6 +382,7 @@ func (client *DatetimeClient) GetLocalPositiveOffsetMinDateTimeCreateRequest(ctx
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -422,6 +429,7 @@ func (client *DatetimeClient) GetLocalPositiveOffsetUppercaseMaxDateTimeCreateRe
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -468,6 +476,7 @@ func (client *DatetimeClient) GetNullCreateRequest(ctx context.Context) (*azcore
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -514,6 +523,7 @@ func (client *DatetimeClient) GetOverflowCreateRequest(ctx context.Context) (*az
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -560,6 +570,7 @@ func (client *DatetimeClient) GetUTCLowercaseMaxDateTimeCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -606,6 +617,7 @@ func (client *DatetimeClient) GetUTCMinDateTimeCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -652,6 +664,7 @@ func (client *DatetimeClient) GetUTCUppercaseMaxDateTimeCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -698,6 +711,7 @@ func (client *DatetimeClient) GetUTCUppercaseMaxDateTime7DigitsCreateRequest(ctx
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -744,6 +758,7 @@ func (client *DatetimeClient) GetUnderflowCreateRequest(ctx context.Context) (*a
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -790,6 +805,7 @@ func (client *DatetimeClient) PutLocalNegativeOffsetMaxDateTimeCreateRequest(ctx
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(datetimeBody)
 }
 
@@ -834,6 +850,7 @@ func (client *DatetimeClient) PutLocalNegativeOffsetMinDateTimeCreateRequest(ctx
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(datetimeBody)
 }
 
@@ -878,6 +895,7 @@ func (client *DatetimeClient) PutLocalPositiveOffsetMaxDateTimeCreateRequest(ctx
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(datetimeBody)
 }
 
@@ -922,6 +940,7 @@ func (client *DatetimeClient) PutLocalPositiveOffsetMinDateTimeCreateRequest(ctx
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(datetimeBody)
 }
 
@@ -966,6 +985,7 @@ func (client *DatetimeClient) PutUTCMaxDateTimeCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(datetimeBody)
 }
 
@@ -1010,6 +1030,7 @@ func (client *DatetimeClient) PutUTCMaxDateTime7DigitsCreateRequest(ctx context.
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(datetimeBody)
 }
 
@@ -1054,6 +1075,7 @@ func (client *DatetimeClient) PutUTCMinDateTimeCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(datetimeBody)
 }
 

@@ -69,6 +69,7 @@ func (client *DefaultSecurityRulesClient) GetCreateRequest(ctx context.Context, 
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -117,6 +118,7 @@ func (client *DefaultSecurityRulesClient) ListCreateRequest(ctx context.Context,
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 

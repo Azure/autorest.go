@@ -67,6 +67,7 @@ func (client *DictionaryClient) GetEmptyCreateRequest(ctx context.Context) (*azc
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -112,6 +113,7 @@ func (client *DictionaryClient) GetNotProvidedCreateRequest(ctx context.Context)
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -157,6 +159,7 @@ func (client *DictionaryClient) GetNullCreateRequest(ctx context.Context) (*azco
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -202,6 +205,7 @@ func (client *DictionaryClient) GetValidCreateRequest(ctx context.Context) (*azc
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -247,6 +251,7 @@ func (client *DictionaryClient) PutEmptyCreateRequest(ctx context.Context, compl
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(complexBody)
 }
 
@@ -291,6 +296,7 @@ func (client *DictionaryClient) PutValidCreateRequest(ctx context.Context, compl
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(complexBody)
 }
 

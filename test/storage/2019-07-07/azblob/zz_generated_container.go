@@ -111,6 +111,7 @@ func (client *containerClient) AcquireLeaseCreateRequest(ctx context.Context, co
 	if containerAcquireLeaseOptions != nil && containerAcquireLeaseOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *containerAcquireLeaseOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -205,6 +206,7 @@ func (client *containerClient) BreakLeaseCreateRequest(ctx context.Context, cont
 	if containerBreakLeaseOptions != nil && containerBreakLeaseOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *containerBreakLeaseOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -303,6 +305,7 @@ func (client *containerClient) ChangeLeaseCreateRequest(ctx context.Context, lea
 	if containerChangeLeaseOptions != nil && containerChangeLeaseOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *containerChangeLeaseOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -400,6 +403,7 @@ func (client *containerClient) CreateCreateRequest(ctx context.Context, containe
 	if containerCpkScopeInfo != nil && containerCpkScopeInfo.PreventEncryptionScopeOverride != nil {
 		req.Header.Set("x-ms-deny-encryption-scope-override", strconv.FormatBool(*containerCpkScopeInfo.PreventEncryptionScopeOverride))
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -489,6 +493,7 @@ func (client *containerClient) DeleteCreateRequest(ctx context.Context, containe
 	if containerDeleteOptions != nil && containerDeleteOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *containerDeleteOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -563,6 +568,7 @@ func (client *containerClient) GetAccessPolicyCreateRequest(ctx context.Context,
 	if containerGetAccessPolicyOptions != nil && containerGetAccessPolicyOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *containerGetAccessPolicyOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -641,6 +647,7 @@ func (client *containerClient) GetAccountInfoCreateRequest(ctx context.Context) 
 	query.Set("comp", "properties")
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("x-ms-version", "2019-07-07")
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -720,6 +727,7 @@ func (client *containerClient) GetPropertiesCreateRequest(ctx context.Context, c
 	if containerGetPropertiesOptions != nil && containerGetPropertiesOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *containerGetPropertiesOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -729,8 +737,13 @@ func (client *containerClient) GetPropertiesHandleResponse(resp *azcore.Response
 		return nil, client.GetPropertiesHandleError(resp)
 	}
 	result := ContainerGetPropertiesResponse{RawResponse: resp.Response}
-	if val := resp.Header.Get("x-ms-meta"); val != "" {
-		result.Metadata = &val
+	for hh := range resp.Header {
+		if strings.HasPrefix(hh, "x-ms-meta-") {
+			if result.Metadata == nil {
+				result.Metadata = &map[string]string{}
+			}
+			(*result.Metadata)[hh[len("x-ms-meta-"):]] = resp.Header.Get(hh)
+		}
 	}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -849,6 +862,7 @@ func (client *containerClient) ListBlobFlatSegmentCreateRequest(ctx context.Cont
 	if containerListBlobFlatSegmentOptions != nil && containerListBlobFlatSegmentOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *containerListBlobFlatSegmentOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -933,6 +947,7 @@ func (client *containerClient) ListBlobHierarchySegmentCreateRequest(ctx context
 	if containerListBlobHierarchySegmentOptions != nil && containerListBlobHierarchySegmentOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *containerListBlobHierarchySegmentOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -1015,6 +1030,7 @@ func (client *containerClient) ReleaseLeaseCreateRequest(ctx context.Context, le
 	if containerReleaseLeaseOptions != nil && containerReleaseLeaseOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *containerReleaseLeaseOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -1104,6 +1120,7 @@ func (client *containerClient) RenewLeaseCreateRequest(ctx context.Context, leas
 	if containerRenewLeaseOptions != nil && containerRenewLeaseOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *containerRenewLeaseOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -1200,6 +1217,7 @@ func (client *containerClient) SetAccessPolicyCreateRequest(ctx context.Context,
 	if containerSetAccessPolicyOptions != nil && containerSetAccessPolicyOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *containerSetAccessPolicyOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	type wrapper struct {
 		XMLName      xml.Name            `xml:"SignedIdentifiers"`
 		ContainerAcl *[]SignedIDentifier `xml:"SignedIdentifier"`
@@ -1299,6 +1317,7 @@ func (client *containerClient) SetMetadataCreateRequest(ctx context.Context, con
 	if containerSetMetadataOptions != nil && containerSetMetadataOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *containerSetMetadataOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 

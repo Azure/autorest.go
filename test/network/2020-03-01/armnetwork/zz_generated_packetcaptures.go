@@ -111,6 +111,7 @@ func (client *PacketCapturesClient) CreateCreateRequest(ctx context.Context, res
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -186,6 +187,7 @@ func (client *PacketCapturesClient) DeleteCreateRequest(ctx context.Context, res
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -237,6 +239,7 @@ func (client *PacketCapturesClient) GetCreateRequest(ctx context.Context, resour
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -313,6 +316,7 @@ func (client *PacketCapturesClient) GetStatusCreateRequest(ctx context.Context, 
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -363,6 +367,7 @@ func (client *PacketCapturesClient) ListCreateRequest(ctx context.Context, resou
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -439,6 +444,7 @@ func (client *PacketCapturesClient) StopCreateRequest(ctx context.Context, resou
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 

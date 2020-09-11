@@ -103,6 +103,7 @@ func (client *VirtualHubRouteTableV2SClient) CreateOrUpdateCreateRequest(ctx con
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(virtualHubRouteTableV2Parameters)
 }
 
@@ -178,6 +179,7 @@ func (client *VirtualHubRouteTableV2SClient) DeleteCreateRequest(ctx context.Con
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -229,6 +231,7 @@ func (client *VirtualHubRouteTableV2SClient) GetCreateRequest(ctx context.Contex
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -277,6 +280,7 @@ func (client *VirtualHubRouteTableV2SClient) ListCreateRequest(ctx context.Conte
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 

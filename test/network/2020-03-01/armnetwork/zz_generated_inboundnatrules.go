@@ -103,6 +103,7 @@ func (client *InboundNatRulesClient) CreateOrUpdateCreateRequest(ctx context.Con
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(inboundNatRuleParameters)
 }
 
@@ -178,6 +179,7 @@ func (client *InboundNatRulesClient) DeleteCreateRequest(ctx context.Context, re
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -232,6 +234,7 @@ func (client *InboundNatRulesClient) GetCreateRequest(ctx context.Context, resou
 		query.Set("$expand", *inboundNatRulesGetOptions.Expand)
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -280,6 +283,7 @@ func (client *InboundNatRulesClient) ListCreateRequest(ctx context.Context, reso
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
