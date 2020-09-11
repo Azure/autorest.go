@@ -104,6 +104,7 @@ func (client *ExplicitClient) PostOptionalArrayHeaderCreateRequest(ctx context.C
 	if explicitPostOptionalArrayHeaderOptions != nil && explicitPostOptionalArrayHeaderOptions.HeaderParameter != nil {
 		req.Header.Set("headerParameter", strings.Join(*explicitPostOptionalArrayHeaderOptions.HeaderParameter, ","))
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -148,6 +149,7 @@ func (client *ExplicitClient) PostOptionalArrayParameterCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	if explicitPostOptionalArrayParameterOptions != nil {
 		return req, req.MarshalAsJSON(explicitPostOptionalArrayParameterOptions.BodyParameter)
 	}
@@ -195,6 +197,7 @@ func (client *ExplicitClient) PostOptionalArrayPropertyCreateRequest(ctx context
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	if explicitPostOptionalArrayPropertyOptions != nil {
 		return req, req.MarshalAsJSON(explicitPostOptionalArrayPropertyOptions.BodyParameter)
 	}
@@ -242,6 +245,7 @@ func (client *ExplicitClient) PostOptionalClassParameterCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	if explicitPostOptionalClassParameterOptions != nil {
 		return req, req.MarshalAsJSON(explicitPostOptionalClassParameterOptions.BodyParameter)
 	}
@@ -289,6 +293,7 @@ func (client *ExplicitClient) PostOptionalClassPropertyCreateRequest(ctx context
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	if explicitPostOptionalClassPropertyOptions != nil {
 		return req, req.MarshalAsJSON(explicitPostOptionalClassPropertyOptions.BodyParameter)
 	}
@@ -339,6 +344,7 @@ func (client *ExplicitClient) PostOptionalIntegerHeaderCreateRequest(ctx context
 	if explicitPostOptionalIntegerHeaderOptions != nil && explicitPostOptionalIntegerHeaderOptions.HeaderParameter != nil {
 		req.Header.Set("headerParameter", strconv.FormatInt(int64(*explicitPostOptionalIntegerHeaderOptions.HeaderParameter), 10))
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -383,6 +389,7 @@ func (client *ExplicitClient) PostOptionalIntegerParameterCreateRequest(ctx cont
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	if explicitPostOptionalIntegerParameterOptions != nil {
 		return req, req.MarshalAsJSON(explicitPostOptionalIntegerParameterOptions.BodyParameter)
 	}
@@ -430,6 +437,7 @@ func (client *ExplicitClient) PostOptionalIntegerPropertyCreateRequest(ctx conte
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	if explicitPostOptionalIntegerPropertyOptions != nil {
 		return req, req.MarshalAsJSON(explicitPostOptionalIntegerPropertyOptions.BodyParameter)
 	}
@@ -480,6 +488,7 @@ func (client *ExplicitClient) PostOptionalStringHeaderCreateRequest(ctx context.
 	if explicitPostOptionalStringHeaderOptions != nil && explicitPostOptionalStringHeaderOptions.BodyParameter != nil {
 		req.Header.Set("bodyParameter", *explicitPostOptionalStringHeaderOptions.BodyParameter)
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -524,6 +533,7 @@ func (client *ExplicitClient) PostOptionalStringParameterCreateRequest(ctx conte
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	if explicitPostOptionalStringParameterOptions != nil {
 		return req, req.MarshalAsJSON(explicitPostOptionalStringParameterOptions.BodyParameter)
 	}
@@ -571,6 +581,7 @@ func (client *ExplicitClient) PostOptionalStringPropertyCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	if explicitPostOptionalStringPropertyOptions != nil {
 		return req, req.MarshalAsJSON(explicitPostOptionalStringPropertyOptions.BodyParameter)
 	}
@@ -619,6 +630,7 @@ func (client *ExplicitClient) PostRequiredArrayHeaderCreateRequest(ctx context.C
 		return nil, err
 	}
 	req.Header.Set("headerParameter", strings.Join(headerParameter, ","))
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -663,6 +675,7 @@ func (client *ExplicitClient) PostRequiredArrayParameterCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(bodyParameter)
 }
 
@@ -707,6 +720,7 @@ func (client *ExplicitClient) PostRequiredArrayPropertyCreateRequest(ctx context
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(bodyParameter)
 }
 
@@ -751,6 +765,7 @@ func (client *ExplicitClient) PostRequiredClassParameterCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(bodyParameter)
 }
 
@@ -795,6 +810,7 @@ func (client *ExplicitClient) PostRequiredClassPropertyCreateRequest(ctx context
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(bodyParameter)
 }
 
@@ -840,6 +856,7 @@ func (client *ExplicitClient) PostRequiredIntegerHeaderCreateRequest(ctx context
 		return nil, err
 	}
 	req.Header.Set("headerParameter", strconv.FormatInt(int64(headerParameter), 10))
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -884,6 +901,7 @@ func (client *ExplicitClient) PostRequiredIntegerParameterCreateRequest(ctx cont
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(bodyParameter)
 }
 
@@ -928,6 +946,7 @@ func (client *ExplicitClient) PostRequiredIntegerPropertyCreateRequest(ctx conte
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(bodyParameter)
 }
 
@@ -973,6 +992,7 @@ func (client *ExplicitClient) PostRequiredStringHeaderCreateRequest(ctx context.
 		return nil, err
 	}
 	req.Header.Set("headerParameter", headerParameter)
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1017,6 +1037,7 @@ func (client *ExplicitClient) PostRequiredStringParameterCreateRequest(ctx conte
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(bodyParameter)
 }
 
@@ -1061,6 +1082,7 @@ func (client *ExplicitClient) PostRequiredStringPropertyCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(bodyParameter)
 }
 

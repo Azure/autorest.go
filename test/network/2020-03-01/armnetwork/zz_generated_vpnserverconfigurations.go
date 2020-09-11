@@ -106,6 +106,7 @@ func (client *VpnServerConfigurationsClient) CreateOrUpdateCreateRequest(ctx con
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(vpnServerConfigurationParameters)
 }
 
@@ -180,6 +181,7 @@ func (client *VpnServerConfigurationsClient) DeleteCreateRequest(ctx context.Con
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -230,6 +232,7 @@ func (client *VpnServerConfigurationsClient) GetCreateRequest(ctx context.Contex
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -276,6 +279,7 @@ func (client *VpnServerConfigurationsClient) ListCreateRequest(ctx context.Conte
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -323,6 +327,7 @@ func (client *VpnServerConfigurationsClient) ListByResourceGroupCreateRequest(ct
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -374,6 +379,7 @@ func (client *VpnServerConfigurationsClient) UpdateTagsCreateRequest(ctx context
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(vpnServerConfigurationParameters)
 }
 

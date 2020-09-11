@@ -134,6 +134,7 @@ func (client *blockBlobClient) CommitBlockListCreateRequest(ctx context.Context,
 	if blockBlobCommitBlockListOptions != nil && blockBlobCommitBlockListOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *blockBlobCommitBlockListOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, req.MarshalAsXML(blocks)
 }
 
@@ -248,6 +249,7 @@ func (client *blockBlobClient) GetBlockListCreateRequest(ctx context.Context, li
 	if blockBlobGetBlockListOptions != nil && blockBlobGetBlockListOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *blockBlobGetBlockListOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -358,6 +360,7 @@ func (client *blockBlobClient) StageBlockCreateRequest(ctx context.Context, bloc
 	if blockBlobStageBlockOptions != nil && blockBlobStageBlockOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *blockBlobStageBlockOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, req.SetBody(body, "application/octet-stream")
 }
 
@@ -491,6 +494,7 @@ func (client *blockBlobClient) StageBlockFromURLCreateRequest(ctx context.Contex
 	if blockBlobStageBlockFromUrlOptions != nil && blockBlobStageBlockFromUrlOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *blockBlobStageBlockFromUrlOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -642,6 +646,7 @@ func (client *blockBlobClient) UploadCreateRequest(ctx context.Context, contentL
 	if blockBlobUploadOptions != nil && blockBlobUploadOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *blockBlobUploadOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, req.SetBody(body, "application/octet-stream")
 }
 

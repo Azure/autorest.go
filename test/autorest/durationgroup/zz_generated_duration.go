@@ -63,6 +63,7 @@ func (client *DurationClient) GetInvalidCreateRequest(ctx context.Context) (*azc
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -108,6 +109,7 @@ func (client *DurationClient) GetNullCreateRequest(ctx context.Context) (*azcore
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -153,6 +155,7 @@ func (client *DurationClient) GetPositiveDurationCreateRequest(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -198,6 +201,7 @@ func (client *DurationClient) PutPositiveDurationCreateRequest(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(durationBody)
 }
 

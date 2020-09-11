@@ -139,6 +139,7 @@ func (client *ApplicationGatewaysClient) BackendHealthCreateRequest(ctx context.
 		query.Set("$expand", *applicationGatewaysBackendHealthOptions.Expand)
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -216,6 +217,7 @@ func (client *ApplicationGatewaysClient) BackendHealthOnDemandCreateRequest(ctx 
 		query.Set("$expand", *applicationGatewaysBackendHealthOnDemandOptions.Expand)
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(probeRequest)
 }
 
@@ -290,6 +292,7 @@ func (client *ApplicationGatewaysClient) CreateOrUpdateCreateRequest(ctx context
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -364,6 +367,7 @@ func (client *ApplicationGatewaysClient) DeleteCreateRequest(ctx context.Context
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -414,6 +418,7 @@ func (client *ApplicationGatewaysClient) GetCreateRequest(ctx context.Context, r
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -464,6 +469,7 @@ func (client *ApplicationGatewaysClient) GetSslPredefinedPolicyCreateRequest(ctx
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -511,6 +517,7 @@ func (client *ApplicationGatewaysClient) ListCreateRequest(ctx context.Context, 
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -557,6 +564,7 @@ func (client *ApplicationGatewaysClient) ListAllCreateRequest(ctx context.Contex
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -606,6 +614,7 @@ func (client *ApplicationGatewaysClient) ListAvailableRequestHeadersCreateReques
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -655,6 +664,7 @@ func (client *ApplicationGatewaysClient) ListAvailableResponseHeadersCreateReque
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -704,6 +714,7 @@ func (client *ApplicationGatewaysClient) ListAvailableServerVariablesCreateReque
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -753,6 +764,7 @@ func (client *ApplicationGatewaysClient) ListAvailableSslOptionsCreateRequest(ct
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -799,6 +811,7 @@ func (client *ApplicationGatewaysClient) ListAvailableSslPredefinedPoliciesCreat
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -848,6 +861,7 @@ func (client *ApplicationGatewaysClient) ListAvailableWafRuleSetsCreateRequest(c
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -923,6 +937,7 @@ func (client *ApplicationGatewaysClient) StartCreateRequest(ctx context.Context,
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -997,6 +1012,7 @@ func (client *ApplicationGatewaysClient) StopCreateRequest(ctx context.Context, 
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1047,6 +1063,7 @@ func (client *ApplicationGatewaysClient) UpdateTagsCreateRequest(ctx context.Con
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 

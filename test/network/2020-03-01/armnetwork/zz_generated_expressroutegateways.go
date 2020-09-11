@@ -104,6 +104,7 @@ func (client *ExpressRouteGatewaysClient) CreateOrUpdateCreateRequest(ctx contex
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(putExpressRouteGatewayParameters)
 }
 
@@ -178,6 +179,7 @@ func (client *ExpressRouteGatewaysClient) DeleteCreateRequest(ctx context.Contex
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -228,6 +230,7 @@ func (client *ExpressRouteGatewaysClient) GetCreateRequest(ctx context.Context, 
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -278,6 +281,7 @@ func (client *ExpressRouteGatewaysClient) ListByResourceGroupCreateRequest(ctx c
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -327,6 +331,7 @@ func (client *ExpressRouteGatewaysClient) ListBySubscriptionCreateRequest(ctx co
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 

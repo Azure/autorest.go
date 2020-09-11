@@ -67,6 +67,7 @@ func (client *BasicClient) GetEmptyCreateRequest(ctx context.Context) (*azcore.R
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -112,6 +113,7 @@ func (client *BasicClient) GetInvalidCreateRequest(ctx context.Context) (*azcore
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -157,6 +159,7 @@ func (client *BasicClient) GetNotProvidedCreateRequest(ctx context.Context) (*az
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -202,6 +205,7 @@ func (client *BasicClient) GetNullCreateRequest(ctx context.Context) (*azcore.Re
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -247,6 +251,7 @@ func (client *BasicClient) GetValidCreateRequest(ctx context.Context) (*azcore.R
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -295,6 +300,7 @@ func (client *BasicClient) PutValidCreateRequest(ctx context.Context, complexBod
 	query := req.URL.Query()
 	query.Set("api-version", "2016-02-29")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(complexBody)
 }
 

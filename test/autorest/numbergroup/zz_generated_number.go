@@ -103,6 +103,7 @@ func (client *NumberClient) GetBigDecimalCreateRequest(ctx context.Context) (*az
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -148,6 +149,7 @@ func (client *NumberClient) GetBigDecimalNegativeDecimalCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -193,6 +195,7 @@ func (client *NumberClient) GetBigDecimalPositiveDecimalCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -238,6 +241,7 @@ func (client *NumberClient) GetBigDoubleCreateRequest(ctx context.Context) (*azc
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -283,6 +287,7 @@ func (client *NumberClient) GetBigDoubleNegativeDecimalCreateRequest(ctx context
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -328,6 +333,7 @@ func (client *NumberClient) GetBigDoublePositiveDecimalCreateRequest(ctx context
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -373,6 +379,7 @@ func (client *NumberClient) GetBigFloatCreateRequest(ctx context.Context) (*azco
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -418,6 +425,7 @@ func (client *NumberClient) GetInvalidDecimalCreateRequest(ctx context.Context) 
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -463,6 +471,7 @@ func (client *NumberClient) GetInvalidDoubleCreateRequest(ctx context.Context) (
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -508,6 +517,7 @@ func (client *NumberClient) GetInvalidFloatCreateRequest(ctx context.Context) (*
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -553,6 +563,7 @@ func (client *NumberClient) GetNullCreateRequest(ctx context.Context) (*azcore.R
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -598,6 +609,7 @@ func (client *NumberClient) GetSmallDecimalCreateRequest(ctx context.Context) (*
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -643,6 +655,7 @@ func (client *NumberClient) GetSmallDoubleCreateRequest(ctx context.Context) (*a
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -688,6 +701,7 @@ func (client *NumberClient) GetSmallFloatCreateRequest(ctx context.Context) (*az
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -733,6 +747,7 @@ func (client *NumberClient) PutBigDecimalCreateRequest(ctx context.Context, numb
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(numberBody)
 }
 
@@ -777,6 +792,7 @@ func (client *NumberClient) PutBigDecimalNegativeDecimalCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(-99999999.99)
 }
 
@@ -821,6 +837,7 @@ func (client *NumberClient) PutBigDecimalPositiveDecimalCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(99999999.99)
 }
 
@@ -865,6 +882,7 @@ func (client *NumberClient) PutBigDoubleCreateRequest(ctx context.Context, numbe
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(numberBody)
 }
 
@@ -909,6 +927,7 @@ func (client *NumberClient) PutBigDoubleNegativeDecimalCreateRequest(ctx context
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(-99999999.99)
 }
 
@@ -953,6 +972,7 @@ func (client *NumberClient) PutBigDoublePositiveDecimalCreateRequest(ctx context
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(99999999.99)
 }
 
@@ -997,6 +1017,7 @@ func (client *NumberClient) PutBigFloatCreateRequest(ctx context.Context, number
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(numberBody)
 }
 
@@ -1041,6 +1062,7 @@ func (client *NumberClient) PutSmallDecimalCreateRequest(ctx context.Context, nu
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(numberBody)
 }
 
@@ -1085,6 +1107,7 @@ func (client *NumberClient) PutSmallDoubleCreateRequest(ctx context.Context, num
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(numberBody)
 }
 
@@ -1129,6 +1152,7 @@ func (client *NumberClient) PutSmallFloatCreateRequest(ctx context.Context, numb
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(numberBody)
 }
 

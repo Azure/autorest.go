@@ -106,6 +106,7 @@ func (client *NetworkVirtualAppliancesClient) CreateOrUpdateCreateRequest(ctx co
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -180,6 +181,7 @@ func (client *NetworkVirtualAppliancesClient) DeleteCreateRequest(ctx context.Co
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -233,6 +235,7 @@ func (client *NetworkVirtualAppliancesClient) GetCreateRequest(ctx context.Conte
 		query.Set("$expand", *networkVirtualAppliancesGetOptions.Expand)
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -279,6 +282,7 @@ func (client *NetworkVirtualAppliancesClient) ListCreateRequest(ctx context.Cont
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -326,6 +330,7 @@ func (client *NetworkVirtualAppliancesClient) ListByResourceGroupCreateRequest(c
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -377,6 +382,7 @@ func (client *NetworkVirtualAppliancesClient) UpdateTagsCreateRequest(ctx contex
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 

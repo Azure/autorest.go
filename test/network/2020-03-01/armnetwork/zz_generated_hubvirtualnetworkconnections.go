@@ -69,6 +69,7 @@ func (client *HubVirtualNetworkConnectionsClient) GetCreateRequest(ctx context.C
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -117,6 +118,7 @@ func (client *HubVirtualNetworkConnectionsClient) ListCreateRequest(ctx context.
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 

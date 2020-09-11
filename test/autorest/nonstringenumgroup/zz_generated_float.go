@@ -62,6 +62,7 @@ func (client *FloatClient) GetCreateRequest(ctx context.Context) (*azcore.Reques
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -110,6 +111,7 @@ func (client *FloatClient) PutCreateRequest(ctx context.Context, floatPutOptions
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	if floatPutOptions != nil {
 		return req, req.MarshalAsJSON(floatPutOptions.Input)
 	}

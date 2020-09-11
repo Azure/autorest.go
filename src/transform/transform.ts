@@ -463,6 +463,14 @@ function processOperationResponses(session: Session<CodeModel>) {
         const httpResponse = <HttpResponse>resp.protocol.http;
         for (const header of values(httpResponse.headers)) {
           header.schema.language.go!.name = schemaTypeToGoType(session.model, header.schema, false);
+          // check if this is a header collection
+          if (header.extensions?.['x-ms-header-collection-prefix']) {
+            // key is always string, use the specified type for the value
+            const ds = new DictionarySchema(`map[string]${header.schema.language.go!.name}`, '', header.schema);
+            ds.language.go = ds.language.default;
+            ds.language.go!.headerCollectionPrefix = header.extensions['x-ms-header-collection-prefix'];
+            header.schema = ds;
+          }
         }
         filtered.push(resp);
       }

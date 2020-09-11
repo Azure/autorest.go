@@ -134,6 +134,7 @@ func (client *MultipleResponsesClient) Get200Model201ModelDefaultError200ValidCr
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -185,6 +186,7 @@ func (client *MultipleResponsesClient) Get200Model201ModelDefaultError201ValidCr
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -236,6 +238,7 @@ func (client *MultipleResponsesClient) Get200Model201ModelDefaultError400ValidCr
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -286,6 +289,7 @@ func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError200Valid
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -331,6 +335,7 @@ func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError201Inval
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -376,6 +381,7 @@ func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError202NoneC
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -421,6 +427,7 @@ func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError204Valid
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -466,6 +473,7 @@ func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError400Valid
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -511,6 +519,7 @@ func (client *MultipleResponsesClient) Get200ModelA200InvalidCreateRequest(ctx c
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -559,6 +568,7 @@ func (client *MultipleResponsesClient) Get200ModelA200NoneCreateRequest(ctx cont
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -607,6 +617,7 @@ func (client *MultipleResponsesClient) Get200ModelA200ValidCreateRequest(ctx con
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -656,6 +667,7 @@ func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultErro
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -710,6 +722,7 @@ func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultErro
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -764,6 +777,7 @@ func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultErro
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -818,6 +832,7 @@ func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultErro
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -871,6 +886,7 @@ func (client *MultipleResponsesClient) Get200ModelA202ValidCreateRequest(ctx con
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -919,6 +935,7 @@ func (client *MultipleResponsesClient) Get200ModelA400InvalidCreateRequest(ctx c
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -967,6 +984,7 @@ func (client *MultipleResponsesClient) Get200ModelA400NoneCreateRequest(ctx cont
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1015,6 +1033,7 @@ func (client *MultipleResponsesClient) Get200ModelA400ValidCreateRequest(ctx con
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1063,6 +1082,7 @@ func (client *MultipleResponsesClient) Get202None204NoneDefaultError202NoneCreat
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1107,6 +1127,7 @@ func (client *MultipleResponsesClient) Get202None204NoneDefaultError204NoneCreat
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1151,6 +1172,7 @@ func (client *MultipleResponsesClient) Get202None204NoneDefaultError400ValidCrea
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1383,6 +1405,7 @@ func (client *MultipleResponsesClient) GetDefaultModelA200NoneCreateRequest(ctx 
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1431,6 +1454,7 @@ func (client *MultipleResponsesClient) GetDefaultModelA200ValidCreateRequest(ctx
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1479,6 +1503,7 @@ func (client *MultipleResponsesClient) GetDefaultModelA400NoneCreateRequest(ctx 
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1523,6 +1548,7 @@ func (client *MultipleResponsesClient) GetDefaultModelA400ValidCreateRequest(ctx
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 

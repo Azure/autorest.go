@@ -106,6 +106,7 @@ func (client *NetworkSecurityGroupsClient) CreateOrUpdateCreateRequest(ctx conte
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -180,6 +181,7 @@ func (client *NetworkSecurityGroupsClient) DeleteCreateRequest(ctx context.Conte
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -233,6 +235,7 @@ func (client *NetworkSecurityGroupsClient) GetCreateRequest(ctx context.Context,
 		query.Set("$expand", *networkSecurityGroupsGetOptions.Expand)
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -280,6 +283,7 @@ func (client *NetworkSecurityGroupsClient) ListCreateRequest(ctx context.Context
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -326,6 +330,7 @@ func (client *NetworkSecurityGroupsClient) ListAllCreateRequest(ctx context.Cont
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -377,6 +382,7 @@ func (client *NetworkSecurityGroupsClient) UpdateTagsCreateRequest(ctx context.C
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 

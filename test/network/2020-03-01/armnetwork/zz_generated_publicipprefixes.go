@@ -106,6 +106,7 @@ func (client *PublicIPPrefixesClient) CreateOrUpdateCreateRequest(ctx context.Co
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -180,6 +181,7 @@ func (client *PublicIPPrefixesClient) DeleteCreateRequest(ctx context.Context, r
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -233,6 +235,7 @@ func (client *PublicIPPrefixesClient) GetCreateRequest(ctx context.Context, reso
 		query.Set("$expand", *publicIPPrefixesGetOptions.Expand)
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -280,6 +283,7 @@ func (client *PublicIPPrefixesClient) ListCreateRequest(ctx context.Context, res
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -326,6 +330,7 @@ func (client *PublicIPPrefixesClient) ListAllCreateRequest(ctx context.Context) 
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -377,6 +382,7 @@ func (client *PublicIPPrefixesClient) UpdateTagsCreateRequest(ctx context.Contex
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 

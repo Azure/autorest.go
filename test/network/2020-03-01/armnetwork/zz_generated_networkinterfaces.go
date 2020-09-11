@@ -124,6 +124,7 @@ func (client *NetworkInterfacesClient) CreateOrUpdateCreateRequest(ctx context.C
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -198,6 +199,7 @@ func (client *NetworkInterfacesClient) DeleteCreateRequest(ctx context.Context, 
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -251,6 +253,7 @@ func (client *NetworkInterfacesClient) GetCreateRequest(ctx context.Context, res
 		query.Set("$expand", *networkInterfacesGetOptions.Expand)
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -326,6 +329,7 @@ func (client *NetworkInterfacesClient) GetEffectiveRouteTableCreateRequest(ctx c
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -382,6 +386,7 @@ func (client *NetworkInterfacesClient) GetVirtualMachineScaleSetIPConfigurationC
 		query.Set("$expand", *networkInterfacesGetVirtualMachineScaleSetIPConfigurationOptions.Expand)
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -438,6 +443,7 @@ func (client *NetworkInterfacesClient) GetVirtualMachineScaleSetNetworkInterface
 		query.Set("$expand", *networkInterfacesGetVirtualMachineScaleSetNetworkInterfaceOptions.Expand)
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -485,6 +491,7 @@ func (client *NetworkInterfacesClient) ListCreateRequest(ctx context.Context, re
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -531,6 +538,7 @@ func (client *NetworkInterfacesClient) ListAllCreateRequest(ctx context.Context)
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -606,6 +614,7 @@ func (client *NetworkInterfacesClient) ListEffectiveNetworkSecurityGroupsCreateR
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -658,6 +667,7 @@ func (client *NetworkInterfacesClient) ListVirtualMachineScaleSetIPConfiguration
 		query.Set("$expand", *networkInterfacesListVirtualMachineScaleSetIPConfigurationsOptions.Expand)
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -706,6 +716,7 @@ func (client *NetworkInterfacesClient) ListVirtualMachineScaleSetNetworkInterfac
 	query := req.URL.Query()
 	query.Set("api-version", "2018-10-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -755,6 +766,7 @@ func (client *NetworkInterfacesClient) ListVirtualMachineScaleSetVMNetworkInterf
 	query := req.URL.Query()
 	query.Set("api-version", "2018-10-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -806,6 +818,7 @@ func (client *NetworkInterfacesClient) UpdateTagsCreateRequest(ctx context.Conte
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 

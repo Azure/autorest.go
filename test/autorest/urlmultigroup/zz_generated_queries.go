@@ -68,6 +68,7 @@ func (client *QueriesClient) ArrayStringMultiEmptyCreateRequest(ctx context.Cont
 		}
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -119,6 +120,7 @@ func (client *QueriesClient) ArrayStringMultiNullCreateRequest(ctx context.Conte
 		}
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -170,6 +172,7 @@ func (client *QueriesClient) ArrayStringMultiValidCreateRequest(ctx context.Cont
 		}
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 

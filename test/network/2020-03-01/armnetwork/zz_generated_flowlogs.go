@@ -103,6 +103,7 @@ func (client *FlowLogsClient) CreateOrUpdateCreateRequest(ctx context.Context, r
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -178,6 +179,7 @@ func (client *FlowLogsClient) DeleteCreateRequest(ctx context.Context, resourceG
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -229,6 +231,7 @@ func (client *FlowLogsClient) GetCreateRequest(ctx context.Context, resourceGrou
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -277,6 +280,7 @@ func (client *FlowLogsClient) ListCreateRequest(ctx context.Context, resourceGro
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 

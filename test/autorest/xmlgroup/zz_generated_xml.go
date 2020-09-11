@@ -123,6 +123,7 @@ func (client *XMLClient) GetACLsCreateRequest(ctx context.Context) (*azcore.Requ
 	query.Set("comp", "acl")
 	query.Set("restype", "container")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -171,6 +172,7 @@ func (client *XMLClient) GetComplexTypeRefNoMetaCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -219,6 +221,7 @@ func (client *XMLClient) GetComplexTypeRefWithMetaCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -267,6 +270,7 @@ func (client *XMLClient) GetEmptyChildElementCreateRequest(ctx context.Context) 
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -315,6 +319,7 @@ func (client *XMLClient) GetEmptyListCreateRequest(ctx context.Context) (*azcore
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -363,6 +368,7 @@ func (client *XMLClient) GetEmptyRootListCreateRequest(ctx context.Context) (*az
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -411,6 +417,7 @@ func (client *XMLClient) GetEmptyWrappedListsCreateRequest(ctx context.Context) 
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -510,6 +517,7 @@ func (client *XMLClient) GetRootListCreateRequest(ctx context.Context) (*azcore.
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -558,6 +566,7 @@ func (client *XMLClient) GetRootListSingleItemCreateRequest(ctx context.Context)
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -610,6 +619,7 @@ func (client *XMLClient) GetServicePropertiesCreateRequest(ctx context.Context) 
 	query.Set("comp", "properties")
 	query.Set("restype", "service")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -658,6 +668,7 @@ func (client *XMLClient) GetSimpleCreateRequest(ctx context.Context) (*azcore.Re
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -703,6 +714,7 @@ func (client *XMLClient) GetWrappedListsCreateRequest(ctx context.Context) (*azc
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -751,6 +763,7 @@ func (client *XMLClient) GetXMSTextCreateRequest(ctx context.Context) (*azcore.R
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -846,6 +859,7 @@ func (client *XMLClient) JSONOutputCreateRequest(ctx context.Context) (*azcore.R
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -898,6 +912,7 @@ func (client *XMLClient) ListBlobsCreateRequest(ctx context.Context) (*azcore.Re
 	query.Set("comp", "list")
 	query.Set("restype", "container")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -949,6 +964,7 @@ func (client *XMLClient) ListContainersCreateRequest(ctx context.Context) (*azco
 	query := req.URL.Query()
 	query.Set("comp", "list")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -1491,6 +1507,7 @@ func (client *XMLClient) PutSimpleCreateRequest(ctx context.Context, slideshow S
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, req.MarshalAsXML(slideshow)
 }
 
@@ -1535,6 +1552,7 @@ func (client *XMLClient) PutWrappedListsCreateRequest(ctx context.Context, wrapp
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, req.MarshalAsXML(wrappedLists)
 }
 

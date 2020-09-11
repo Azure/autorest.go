@@ -78,6 +78,7 @@ func (client *MultipleInheritanceServiceClient) GetCatCreateRequest(ctx context.
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -123,6 +124,7 @@ func (client *MultipleInheritanceServiceClient) GetFelineCreateRequest(ctx conte
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -168,6 +170,7 @@ func (client *MultipleInheritanceServiceClient) GetHorseCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -213,6 +216,7 @@ func (client *MultipleInheritanceServiceClient) GetKittenCreateRequest(ctx conte
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -258,6 +262,7 @@ func (client *MultipleInheritanceServiceClient) GetPetCreateRequest(ctx context.
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -303,6 +308,7 @@ func (client *MultipleInheritanceServiceClient) PutCatCreateRequest(ctx context.
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(cat)
 }
 
@@ -351,6 +357,7 @@ func (client *MultipleInheritanceServiceClient) PutFelineCreateRequest(ctx conte
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(feline)
 }
 
@@ -399,6 +406,7 @@ func (client *MultipleInheritanceServiceClient) PutHorseCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(horse)
 }
 
@@ -447,6 +455,7 @@ func (client *MultipleInheritanceServiceClient) PutKittenCreateRequest(ctx conte
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(kitten)
 }
 
@@ -495,6 +504,7 @@ func (client *MultipleInheritanceServiceClient) PutPetCreateRequest(ctx context.
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(pet)
 }
 

@@ -67,6 +67,7 @@ func (client *EnumClient) GetNotExpandableCreateRequest(ctx context.Context) (*a
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -112,6 +113,7 @@ func (client *EnumClient) GetReferencedCreateRequest(ctx context.Context) (*azco
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -157,6 +159,7 @@ func (client *EnumClient) GetReferencedConstantCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -202,6 +205,7 @@ func (client *EnumClient) PutNotExpandableCreateRequest(ctx context.Context, str
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(stringBody)
 }
 
@@ -246,6 +250,7 @@ func (client *EnumClient) PutReferencedCreateRequest(ctx context.Context, enumSt
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(enumStringBody)
 }
 
@@ -290,6 +295,7 @@ func (client *EnumClient) PutReferencedConstantCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(enumStringBody)
 }
 

@@ -104,6 +104,7 @@ func (client *VirtualRoutersClient) CreateOrUpdateCreateRequest(ctx context.Cont
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -178,6 +179,7 @@ func (client *VirtualRoutersClient) DeleteCreateRequest(ctx context.Context, res
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -231,6 +233,7 @@ func (client *VirtualRoutersClient) GetCreateRequest(ctx context.Context, resour
 		query.Set("$expand", *virtualRoutersGetOptions.Expand)
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -277,6 +280,7 @@ func (client *VirtualRoutersClient) ListCreateRequest(ctx context.Context) (*azc
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -324,6 +328,7 @@ func (client *VirtualRoutersClient) ListByResourceGroupCreateRequest(ctx context
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 

@@ -168,6 +168,7 @@ func (client *VirtualNetworkGatewaysClient) CreateOrUpdateCreateRequest(ctx cont
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -242,6 +243,7 @@ func (client *VirtualNetworkGatewaysClient) DeleteCreateRequest(ctx context.Cont
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -316,6 +318,7 @@ func (client *VirtualNetworkGatewaysClient) DisconnectVirtualNetworkGatewayVpnCo
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(request)
 }
 
@@ -390,6 +393,7 @@ func (client *VirtualNetworkGatewaysClient) GenerateVpnProfileCreateRequest(ctx 
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -464,6 +468,7 @@ func (client *VirtualNetworkGatewaysClient) GeneratevpnclientpackageCreateReques
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -514,6 +519,7 @@ func (client *VirtualNetworkGatewaysClient) GetCreateRequest(ctx context.Context
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -590,6 +596,7 @@ func (client *VirtualNetworkGatewaysClient) GetAdvertisedRoutesCreateRequest(ctx
 	query.Set("peer", peer)
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -667,6 +674,7 @@ func (client *VirtualNetworkGatewaysClient) GetBgpPeerStatusCreateRequest(ctx co
 	}
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -741,6 +749,7 @@ func (client *VirtualNetworkGatewaysClient) GetLearnedRoutesCreateRequest(ctx co
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -815,6 +824,7 @@ func (client *VirtualNetworkGatewaysClient) GetVpnProfilePackageURLCreateRequest
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -889,6 +899,7 @@ func (client *VirtualNetworkGatewaysClient) GetVpnclientConnectionHealthCreateRe
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -963,6 +974,7 @@ func (client *VirtualNetworkGatewaysClient) GetVpnclientIPsecParametersCreateReq
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1009,6 +1021,7 @@ func (client *VirtualNetworkGatewaysClient) ListCreateRequest(ctx context.Contex
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1057,6 +1070,7 @@ func (client *VirtualNetworkGatewaysClient) ListConnectionsCreateRequest(ctx con
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1135,6 +1149,7 @@ func (client *VirtualNetworkGatewaysClient) ResetCreateRequest(ctx context.Conte
 	}
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1209,6 +1224,7 @@ func (client *VirtualNetworkGatewaysClient) ResetVpnClientSharedKeyCreateRequest
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1283,6 +1299,7 @@ func (client *VirtualNetworkGatewaysClient) SetVpnclientIPsecParametersCreateReq
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(vpnclientIpsecParams)
 }
 
@@ -1357,6 +1374,7 @@ func (client *VirtualNetworkGatewaysClient) StartPacketCaptureCreateRequest(ctx 
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	if virtualNetworkGatewaysStartPacketCaptureOptions != nil {
 		return req, req.MarshalAsJSON(virtualNetworkGatewaysStartPacketCaptureOptions.Parameters)
 	}
@@ -1434,6 +1452,7 @@ func (client *VirtualNetworkGatewaysClient) StopPacketCaptureCreateRequest(ctx c
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -1484,6 +1503,7 @@ func (client *VirtualNetworkGatewaysClient) SupportedVpnDevicesCreateRequest(ctx
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1559,6 +1579,7 @@ func (client *VirtualNetworkGatewaysClient) UpdateTagsCreateRequest(ctx context.
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -1609,6 +1630,7 @@ func (client *VirtualNetworkGatewaysClient) VpnDeviceConfigurationScriptCreateRe
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 

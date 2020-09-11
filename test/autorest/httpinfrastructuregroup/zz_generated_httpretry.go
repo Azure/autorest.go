@@ -73,6 +73,7 @@ func (client *HTTPRetryClient) Delete503CreateRequest(ctx context.Context) (*azc
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
 
@@ -117,6 +118,7 @@ func (client *HTTPRetryClient) Get502CreateRequest(ctx context.Context) (*azcore
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -161,6 +163,7 @@ func (client *HTTPRetryClient) Head408CreateRequest(ctx context.Context) (*azcor
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -205,6 +208,7 @@ func (client *HTTPRetryClient) Options502CreateRequest(ctx context.Context) (*az
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -250,6 +254,7 @@ func (client *HTTPRetryClient) Patch500CreateRequest(ctx context.Context) (*azco
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
 
@@ -294,6 +299,7 @@ func (client *HTTPRetryClient) Patch504CreateRequest(ctx context.Context) (*azco
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
 
@@ -338,6 +344,7 @@ func (client *HTTPRetryClient) Post503CreateRequest(ctx context.Context) (*azcor
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
 
@@ -382,6 +389,7 @@ func (client *HTTPRetryClient) Put500CreateRequest(ctx context.Context) (*azcore
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
 
@@ -426,6 +434,7 @@ func (client *HTTPRetryClient) Put504CreateRequest(ctx context.Context) (*azcore
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
 

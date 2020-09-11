@@ -97,6 +97,7 @@ func (client *LrOSCustomHeaderClient) Post202Retry200CreateRequest(ctx context.C
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	if lrOSCustomHeaderPost202Retry200Options != nil {
 		return req, req.MarshalAsJSON(lrOSCustomHeaderPost202Retry200Options.Product)
 	}
@@ -168,6 +169,7 @@ func (client *LrOSCustomHeaderClient) PostAsyncRetrySucceededCreateRequest(ctx c
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	if lrOSCustomHeaderPostAsyncRetrySucceededOptions != nil {
 		return req, req.MarshalAsJSON(lrOSCustomHeaderPostAsyncRetrySucceededOptions.Product)
 	}
@@ -239,6 +241,7 @@ func (client *LrOSCustomHeaderClient) Put201CreatingSucceeded200CreateRequest(ct
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	if lrOSCustomHeaderPut201CreatingSucceeded200Options != nil {
 		return req, req.MarshalAsJSON(lrOSCustomHeaderPut201CreatingSucceeded200Options.Product)
 	}
@@ -310,6 +313,7 @@ func (client *LrOSCustomHeaderClient) PutAsyncRetrySucceededCreateRequest(ctx co
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	if lrOSCustomHeaderPutAsyncRetrySucceededOptions != nil {
 		return req, req.MarshalAsJSON(lrOSCustomHeaderPutAsyncRetrySucceededOptions.Product)
 	}

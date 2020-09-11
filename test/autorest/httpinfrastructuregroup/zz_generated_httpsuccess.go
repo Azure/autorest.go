@@ -93,6 +93,7 @@ func (client *HTTPSuccessClient) Delete200CreateRequest(ctx context.Context) (*a
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
 
@@ -137,6 +138,7 @@ func (client *HTTPSuccessClient) Delete202CreateRequest(ctx context.Context) (*a
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
 
@@ -181,6 +183,7 @@ func (client *HTTPSuccessClient) Delete204CreateRequest(ctx context.Context) (*a
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
 
@@ -225,6 +228,7 @@ func (client *HTTPSuccessClient) Get200CreateRequest(ctx context.Context) (*azco
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -270,6 +274,7 @@ func (client *HTTPSuccessClient) Head200CreateRequest(ctx context.Context) (*azc
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -314,6 +319,7 @@ func (client *HTTPSuccessClient) Head204CreateRequest(ctx context.Context) (*azc
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -358,6 +364,7 @@ func (client *HTTPSuccessClient) Head404CreateRequest(ctx context.Context) (*azc
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -402,6 +409,7 @@ func (client *HTTPSuccessClient) Options200CreateRequest(ctx context.Context) (*
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -447,6 +455,7 @@ func (client *HTTPSuccessClient) Patch200CreateRequest(ctx context.Context) (*az
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
 
@@ -491,6 +500,7 @@ func (client *HTTPSuccessClient) Patch202CreateRequest(ctx context.Context) (*az
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
 
@@ -535,6 +545,7 @@ func (client *HTTPSuccessClient) Patch204CreateRequest(ctx context.Context) (*az
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
 
@@ -579,6 +590,7 @@ func (client *HTTPSuccessClient) Post200CreateRequest(ctx context.Context) (*azc
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
 
@@ -623,6 +635,7 @@ func (client *HTTPSuccessClient) Post201CreateRequest(ctx context.Context) (*azc
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
 
@@ -667,6 +680,7 @@ func (client *HTTPSuccessClient) Post202CreateRequest(ctx context.Context) (*azc
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
 
@@ -711,6 +725,7 @@ func (client *HTTPSuccessClient) Post204CreateRequest(ctx context.Context) (*azc
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
 
@@ -755,6 +770,7 @@ func (client *HTTPSuccessClient) Put200CreateRequest(ctx context.Context) (*azco
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
 
@@ -799,6 +815,7 @@ func (client *HTTPSuccessClient) Put201CreateRequest(ctx context.Context) (*azco
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
 
@@ -843,6 +860,7 @@ func (client *HTTPSuccessClient) Put202CreateRequest(ctx context.Context) (*azco
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
 
@@ -887,6 +905,7 @@ func (client *HTTPSuccessClient) Put204CreateRequest(ctx context.Context) (*azco
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
 

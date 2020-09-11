@@ -111,6 +111,7 @@ func (client *appendBlobClient) AppendBlockCreateRequest(ctx context.Context, co
 	if appendBlobAppendBlockOptions != nil && appendBlobAppendBlockOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *appendBlobAppendBlockOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, req.SetBody(body, "application/octet-stream")
 }
 
@@ -285,6 +286,7 @@ func (client *appendBlobClient) AppendBlockFromURLCreateRequest(ctx context.Cont
 	if appendBlobAppendBlockFromUrlOptions != nil && appendBlobAppendBlockFromUrlOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *appendBlobAppendBlockFromUrlOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -448,6 +450,7 @@ func (client *appendBlobClient) CreateCreateRequest(ctx context.Context, content
 	if appendBlobCreateOptions != nil && appendBlobCreateOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *appendBlobCreateOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 

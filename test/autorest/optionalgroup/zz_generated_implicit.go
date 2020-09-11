@@ -80,6 +80,7 @@ func (client *ImplicitClient) GetOptionalGlobalQueryCreateRequest(ctx context.Co
 		query.Set("optional-global-query", strconv.FormatInt(int64(*client.optionalGlobalQuery), 10))
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -125,6 +126,7 @@ func (client *ImplicitClient) GetRequiredGlobalPathCreateRequest(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -172,6 +174,7 @@ func (client *ImplicitClient) GetRequiredGlobalQueryCreateRequest(ctx context.Co
 	query := req.URL.Query()
 	query.Set("required-global-query", client.requiredGlobalQuery)
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -217,6 +220,7 @@ func (client *ImplicitClient) GetRequiredPathCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -261,6 +265,7 @@ func (client *ImplicitClient) PutOptionalBodyCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	if implicitPutOptionalBodyOptions != nil {
 		return req, req.MarshalAsJSON(implicitPutOptionalBodyOptions.BodyParameter)
 	}
@@ -311,6 +316,7 @@ func (client *ImplicitClient) PutOptionalHeaderCreateRequest(ctx context.Context
 	if implicitPutOptionalHeaderOptions != nil && implicitPutOptionalHeaderOptions.QueryParameter != nil {
 		req.Header.Set("queryParameter", *implicitPutOptionalHeaderOptions.QueryParameter)
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -360,6 +366,7 @@ func (client *ImplicitClient) PutOptionalQueryCreateRequest(ctx context.Context,
 		query.Set("queryParameter", *implicitPutOptionalQueryOptions.QueryParameter)
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 

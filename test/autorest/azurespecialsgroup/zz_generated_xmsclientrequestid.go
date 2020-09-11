@@ -110,6 +110,7 @@ func (client *XMSClientRequestIDClient) ParamGetCreateRequest(ctx context.Contex
 		return nil, err
 	}
 	req.Header.Set("x-ms-client-request-id", xMSClientRequestId)
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 

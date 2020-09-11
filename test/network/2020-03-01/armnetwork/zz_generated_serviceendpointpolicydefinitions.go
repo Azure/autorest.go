@@ -103,6 +103,7 @@ func (client *ServiceEndpointPolicyDefinitionsClient) CreateOrUpdateCreateReques
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(serviceEndpointPolicyDefinitions)
 }
 
@@ -178,6 +179,7 @@ func (client *ServiceEndpointPolicyDefinitionsClient) DeleteCreateRequest(ctx co
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -229,6 +231,7 @@ func (client *ServiceEndpointPolicyDefinitionsClient) GetCreateRequest(ctx conte
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -277,6 +280,7 @@ func (client *ServiceEndpointPolicyDefinitionsClient) ListByResourceGroupCreateR
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 

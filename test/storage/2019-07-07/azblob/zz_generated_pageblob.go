@@ -124,6 +124,7 @@ func (client *pageBlobClient) ClearPagesCreateRequest(ctx context.Context, conte
 	if pageBlobClearPagesOptions != nil && pageBlobClearPagesOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *pageBlobClearPagesOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -238,6 +239,7 @@ func (client *pageBlobClient) CopyIncrementalCreateRequest(ctx context.Context, 
 	if pageBlobCopyIncrementalOptions != nil && pageBlobCopyIncrementalOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *pageBlobCopyIncrementalOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -379,6 +381,7 @@ func (client *pageBlobClient) CreateCreateRequest(ctx context.Context, contentLe
 	if pageBlobCreateOptions != nil && pageBlobCreateOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *pageBlobCreateOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -500,6 +503,7 @@ func (client *pageBlobClient) GetPageRangesCreateRequest(ctx context.Context, pa
 	if pageBlobGetPageRangesOptions != nil && pageBlobGetPageRangesOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *pageBlobGetPageRangesOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -614,6 +618,7 @@ func (client *pageBlobClient) GetPageRangesDiffCreateRequest(ctx context.Context
 	if pageBlobGetPageRangesDiffOptions != nil && pageBlobGetPageRangesDiffOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *pageBlobGetPageRangesDiffOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -726,6 +731,7 @@ func (client *pageBlobClient) ResizeCreateRequest(ctx context.Context, blobConte
 	if pageBlobResizeOptions != nil && pageBlobResizeOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *pageBlobResizeOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -832,6 +838,7 @@ func (client *pageBlobClient) UpdateSequenceNumberCreateRequest(ctx context.Cont
 	if pageBlobUpdateSequenceNumberOptions != nil && pageBlobUpdateSequenceNumberOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *pageBlobUpdateSequenceNumberOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -963,6 +970,7 @@ func (client *pageBlobClient) UploadPagesCreateRequest(ctx context.Context, cont
 	if pageBlobUploadPagesOptions != nil && pageBlobUploadPagesOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *pageBlobUploadPagesOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, req.SetBody(body, "application/octet-stream")
 }
 
@@ -1133,6 +1141,7 @@ func (client *pageBlobClient) UploadPagesFromURLCreateRequest(ctx context.Contex
 	if pageBlobUploadPagesFromUrlOptions != nil && pageBlobUploadPagesFromUrlOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *pageBlobUploadPagesFromUrlOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 

@@ -66,6 +66,7 @@ func (client *APIVersionDefaultClient) GetMethodGlobalNotProvidedValidCreateRequ
 	query := req.URL.Query()
 	query.Set("api-version", "2015-07-01-preview")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -113,6 +114,7 @@ func (client *APIVersionDefaultClient) GetMethodGlobalValidCreateRequest(ctx con
 	query := req.URL.Query()
 	query.Set("api-version", "2015-07-01-preview")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -160,6 +162,7 @@ func (client *APIVersionDefaultClient) GetPathGlobalValidCreateRequest(ctx conte
 	query := req.URL.Query()
 	query.Set("api-version", "2015-07-01-preview")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -207,6 +210,7 @@ func (client *APIVersionDefaultClient) GetSwaggerGlobalValidCreateRequest(ctx co
 	query := req.URL.Query()
 	query.Set("api-version", "2015-07-01-preview")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 

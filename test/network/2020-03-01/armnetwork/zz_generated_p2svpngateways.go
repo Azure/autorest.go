@@ -122,6 +122,7 @@ func (client *P2SVpnGatewaysClient) CreateOrUpdateCreateRequest(ctx context.Cont
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(p2SVpnGatewayParameters)
 }
 
@@ -196,6 +197,7 @@ func (client *P2SVpnGatewaysClient) DeleteCreateRequest(ctx context.Context, res
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -270,6 +272,7 @@ func (client *P2SVpnGatewaysClient) DisconnectP2SVpnConnectionsCreateRequest(ctx
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(request)
 }
 
@@ -344,6 +347,7 @@ func (client *P2SVpnGatewaysClient) GenerateVpnProfileCreateRequest(ctx context.
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -394,6 +398,7 @@ func (client *P2SVpnGatewaysClient) GetCreateRequest(ctx context.Context, resour
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -469,6 +474,7 @@ func (client *P2SVpnGatewaysClient) GetP2SVpnConnectionHealthCreateRequest(ctx c
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -543,6 +549,7 @@ func (client *P2SVpnGatewaysClient) GetP2SVpnConnectionHealthDetailedCreateReque
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(request)
 }
 
@@ -588,6 +595,7 @@ func (client *P2SVpnGatewaysClient) ListCreateRequest(ctx context.Context) (*azc
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -635,6 +643,7 @@ func (client *P2SVpnGatewaysClient) ListByResourceGroupCreateRequest(ctx context
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -686,6 +695,7 @@ func (client *P2SVpnGatewaysClient) UpdateTagsCreateRequest(ctx context.Context,
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(p2SVpnGatewayParameters)
 }
 

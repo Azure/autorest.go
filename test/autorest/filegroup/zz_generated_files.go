@@ -62,6 +62,7 @@ func (client *FilesClient) GetEmptyFileCreateRequest(ctx context.Context) (*azco
 		return nil, err
 	}
 	req.SkipBodyDownload()
+	req.Header.Set("Accept", "image/png, application/json")
 	return req, nil
 }
 
@@ -107,6 +108,7 @@ func (client *FilesClient) GetFileCreateRequest(ctx context.Context) (*azcore.Re
 		return nil, err
 	}
 	req.SkipBodyDownload()
+	req.Header.Set("Accept", "image/png, application/json")
 	return req, nil
 }
 
@@ -152,6 +154,7 @@ func (client *FilesClient) GetFileLargeCreateRequest(ctx context.Context) (*azco
 		return nil, err
 	}
 	req.SkipBodyDownload()
+	req.Header.Set("Accept", "image/png, application/json")
 	return req, nil
 }
 

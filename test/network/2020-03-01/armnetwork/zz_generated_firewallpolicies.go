@@ -104,6 +104,7 @@ func (client *FirewallPoliciesClient) CreateOrUpdateCreateRequest(ctx context.Co
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -178,6 +179,7 @@ func (client *FirewallPoliciesClient) DeleteCreateRequest(ctx context.Context, r
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -231,6 +233,7 @@ func (client *FirewallPoliciesClient) GetCreateRequest(ctx context.Context, reso
 		query.Set("$expand", *firewallPoliciesGetOptions.Expand)
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -278,6 +281,7 @@ func (client *FirewallPoliciesClient) ListCreateRequest(ctx context.Context, res
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -324,6 +328,7 @@ func (client *FirewallPoliciesClient) ListAllCreateRequest(ctx context.Context) 
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 

@@ -81,6 +81,7 @@ func (client *PathItemsClient) GetAllWithValuesCreateRequest(ctx context.Context
 		query.Set("localStringQuery", *pathItemsGetAllWithValuesOptions.LocalStringQuery)
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -139,6 +140,7 @@ func (client *PathItemsClient) GetGlobalAndLocalQueryNullCreateRequest(ctx conte
 		query.Set("localStringQuery", *pathItemsGetGlobalAndLocalQueryNullOptions.LocalStringQuery)
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -197,6 +199,7 @@ func (client *PathItemsClient) GetGlobalQueryNullCreateRequest(ctx context.Conte
 		query.Set("localStringQuery", *pathItemsGetGlobalQueryNullOptions.LocalStringQuery)
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -255,6 +258,7 @@ func (client *PathItemsClient) GetLocalPathItemQueryNullCreateRequest(ctx contex
 		query.Set("localStringQuery", *pathItemsGetLocalPathItemQueryNullOptions.LocalStringQuery)
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 

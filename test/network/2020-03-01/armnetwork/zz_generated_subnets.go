@@ -111,6 +111,7 @@ func (client *SubnetsClient) CreateOrUpdateCreateRequest(ctx context.Context, re
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(subnetParameters)
 }
 
@@ -186,6 +187,7 @@ func (client *SubnetsClient) DeleteCreateRequest(ctx context.Context, resourceGr
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -240,6 +242,7 @@ func (client *SubnetsClient) GetCreateRequest(ctx context.Context, resourceGroup
 		query.Set("$expand", *subnetsGetOptions.Expand)
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -288,6 +291,7 @@ func (client *SubnetsClient) ListCreateRequest(ctx context.Context, resourceGrou
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -364,6 +368,7 @@ func (client *SubnetsClient) PrepareNetworkPoliciesCreateRequest(ctx context.Con
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(prepareNetworkPoliciesRequestParameters)
 }
 
@@ -439,6 +444,7 @@ func (client *SubnetsClient) UnprepareNetworkPoliciesCreateRequest(ctx context.C
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(unprepareNetworkPoliciesRequestParameters)
 }
 

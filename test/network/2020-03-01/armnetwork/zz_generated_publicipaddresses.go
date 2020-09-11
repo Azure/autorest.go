@@ -112,6 +112,7 @@ func (client *PublicIPAddressesClient) CreateOrUpdateCreateRequest(ctx context.C
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 
@@ -186,6 +187,7 @@ func (client *PublicIPAddressesClient) DeleteCreateRequest(ctx context.Context, 
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -239,6 +241,7 @@ func (client *PublicIPAddressesClient) GetCreateRequest(ctx context.Context, res
 		query.Set("$expand", *publicIPAddressesGetOptions.Expand)
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -297,6 +300,7 @@ func (client *PublicIPAddressesClient) GetVirtualMachineScaleSetPublicIPAddressC
 		query.Set("$expand", *publicIPAddressesGetVirtualMachineScaleSetPublicIpaddressOptions.Expand)
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -344,6 +348,7 @@ func (client *PublicIPAddressesClient) ListCreateRequest(ctx context.Context, re
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -390,6 +395,7 @@ func (client *PublicIPAddressesClient) ListAllCreateRequest(ctx context.Context)
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -438,6 +444,7 @@ func (client *PublicIPAddressesClient) ListVirtualMachineScaleSetPublicIPAddress
 	query := req.URL.Query()
 	query.Set("api-version", "2018-10-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -489,6 +496,7 @@ func (client *PublicIPAddressesClient) ListVirtualMachineScaleSetVMPublicIPaddre
 	query := req.URL.Query()
 	query.Set("api-version", "2018-10-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -540,6 +548,7 @@ func (client *PublicIPAddressesClient) UpdateTagsCreateRequest(ctx context.Conte
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
 

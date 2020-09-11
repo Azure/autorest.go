@@ -59,6 +59,7 @@ func (client *InheritanceClient) GetValidCreateRequest(ctx context.Context) (*az
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -104,6 +105,7 @@ func (client *InheritanceClient) PutValidCreateRequest(ctx context.Context, comp
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(complexBody)
 }
 

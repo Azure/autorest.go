@@ -12,6 +12,7 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -114,6 +115,7 @@ func (client *blobClient) AbortCopyFromURLCreateRequest(ctx context.Context, cop
 	if blobAbortCopyFromUrlOptions != nil && blobAbortCopyFromUrlOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *blobAbortCopyFromUrlOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -203,6 +205,7 @@ func (client *blobClient) AcquireLeaseCreateRequest(ctx context.Context, blobAcq
 	if blobAcquireLeaseOptions != nil && blobAcquireLeaseOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *blobAcquireLeaseOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -302,6 +305,7 @@ func (client *blobClient) BreakLeaseCreateRequest(ctx context.Context, blobBreak
 	if blobBreakLeaseOptions != nil && blobBreakLeaseOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *blobBreakLeaseOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -405,6 +409,7 @@ func (client *blobClient) ChangeLeaseCreateRequest(ctx context.Context, leaseId 
 	if blobChangeLeaseOptions != nil && blobChangeLeaseOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *blobChangeLeaseOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -527,6 +532,7 @@ func (client *blobClient) CopyFromURLCreateRequest(ctx context.Context, copySour
 	if blobCopyFromUrlOptions != nil && blobCopyFromUrlOptions.SourceContentMd5 != nil {
 		req.Header.Set("x-ms-source-content-md5", base64.StdEncoding.EncodeToString(*blobCopyFromUrlOptions.SourceContentMd5))
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -656,6 +662,7 @@ func (client *blobClient) CreateSnapshotCreateRequest(ctx context.Context, blobC
 	if blobCreateSnapshotOptions != nil && blobCreateSnapshotOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *blobCreateSnapshotOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -766,6 +773,7 @@ func (client *blobClient) DeleteCreateRequest(ctx context.Context, blobDeleteOpt
 	if blobDeleteOptions != nil && blobDeleteOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *blobDeleteOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -869,6 +877,7 @@ func (client *blobClient) DownloadCreateRequest(ctx context.Context, blobDownloa
 	if blobDownloadOptions != nil && blobDownloadOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *blobDownloadOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -885,8 +894,13 @@ func (client *blobClient) DownloadHandleResponse(resp *azcore.Response) (*BlobDo
 		}
 		result.LastModified = &lastModified
 	}
-	if val := resp.Header.Get("x-ms-meta"); val != "" {
-		result.Metadata = &val
+	for hh := range resp.Header {
+		if strings.HasPrefix(hh, "x-ms-meta-") {
+			if result.Metadata == nil {
+				result.Metadata = &map[string]string{}
+			}
+			(*result.Metadata)[hh[len("x-ms-meta-"):]] = resp.Header.Get(hh)
+		}
 	}
 	if val := resp.Header.Get("Content-Length"); val != "" {
 		contentLength, err := strconv.ParseInt(val, 10, 64)
@@ -1081,6 +1095,7 @@ func (client *blobClient) GetAccessControlCreateRequest(ctx context.Context, blo
 		req.Header.Set("x-ms-client-request-id", *blobGetAccessControlOptions.RequestId)
 	}
 	req.Header.Set("x-ms-version", "2019-07-07")
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -1165,6 +1180,7 @@ func (client *blobClient) GetAccountInfoCreateRequest(ctx context.Context) (*azc
 	query.Set("comp", "properties")
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("x-ms-version", "2019-07-07")
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -1264,6 +1280,7 @@ func (client *blobClient) GetPropertiesCreateRequest(ctx context.Context, blobGe
 	if blobGetPropertiesOptions != nil && blobGetPropertiesOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *blobGetPropertiesOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -1287,8 +1304,13 @@ func (client *blobClient) GetPropertiesHandleResponse(resp *azcore.Response) (*B
 		}
 		result.CreationTime = &creationTime
 	}
-	if val := resp.Header.Get("x-ms-meta"); val != "" {
-		result.Metadata = &val
+	for hh := range resp.Header {
+		if strings.HasPrefix(hh, "x-ms-meta-") {
+			if result.Metadata == nil {
+				result.Metadata = &map[string]string{}
+			}
+			(*result.Metadata)[hh[len("x-ms-meta-"):]] = resp.Header.Get(hh)
+		}
 	}
 	if val := resp.Header.Get("x-ms-blob-type"); val != "" {
 		result.BlobType = (*BlobType)(&val)
@@ -1492,6 +1514,7 @@ func (client *blobClient) ReleaseLeaseCreateRequest(ctx context.Context, leaseId
 	if blobReleaseLeaseOptions != nil && blobReleaseLeaseOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *blobReleaseLeaseOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -1629,6 +1652,7 @@ func (client *blobClient) RenameCreateRequest(ctx context.Context, renameSource 
 	if blobRenameOptions != nil && blobRenameOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *blobRenameOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -1730,6 +1754,7 @@ func (client *blobClient) RenewLeaseCreateRequest(ctx context.Context, leaseId s
 	if blobRenewLeaseOptions != nil && blobRenewLeaseOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *blobRenewLeaseOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -1840,6 +1865,7 @@ func (client *blobClient) SetAccessControlCreateRequest(ctx context.Context, blo
 		req.Header.Set("x-ms-client-request-id", *blobSetAccessControlOptions.RequestId)
 	}
 	req.Header.Set("x-ms-version", "2019-07-07")
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -1950,6 +1976,7 @@ func (client *blobClient) SetHTTPHeadersCreateRequest(ctx context.Context, blobS
 	if blobSetHttpHeadersOptions != nil && blobSetHttpHeadersOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *blobSetHttpHeadersOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -2066,6 +2093,7 @@ func (client *blobClient) SetMetadataCreateRequest(ctx context.Context, blobSetM
 	if blobSetMetadataOptions != nil && blobSetMetadataOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *blobSetMetadataOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -2166,6 +2194,7 @@ func (client *blobClient) SetTierCreateRequest(ctx context.Context, tier AccessT
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseId != nil {
 		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -2267,6 +2296,7 @@ func (client *blobClient) StartCopyFromURLCreateRequest(ctx context.Context, cop
 	if blobStartCopyFromUrlOptions != nil && blobStartCopyFromUrlOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *blobStartCopyFromUrlOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
@@ -2353,6 +2383,7 @@ func (client *blobClient) UndeleteCreateRequest(ctx context.Context, blobUndelet
 	if blobUndeleteOptions != nil && blobUndeleteOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *blobUndeleteOptions.RequestId)
 	}
+	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 

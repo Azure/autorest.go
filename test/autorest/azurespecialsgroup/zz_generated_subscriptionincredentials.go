@@ -72,6 +72,7 @@ func (client *SubscriptionInCredentialsClient) PostMethodGlobalNotProvidedValidC
 	query := req.URL.Query()
 	query.Set("api-version", "2015-07-01-preview")
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -117,6 +118,7 @@ func (client *SubscriptionInCredentialsClient) PostMethodGlobalNullCreateRequest
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -162,6 +164,7 @@ func (client *SubscriptionInCredentialsClient) PostMethodGlobalValidCreateReques
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -207,6 +210,7 @@ func (client *SubscriptionInCredentialsClient) PostPathGlobalValidCreateRequest(
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -252,6 +256,7 @@ func (client *SubscriptionInCredentialsClient) PostSwaggerGlobalValidCreateReque
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 

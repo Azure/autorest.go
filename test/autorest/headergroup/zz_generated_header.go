@@ -116,6 +116,7 @@ func (client *HeaderClient) CustomRequestIDCreateRequest(ctx context.Context) (*
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -162,6 +163,7 @@ func (client *HeaderClient) ParamBoolCreateRequest(ctx context.Context, scenario
 	}
 	req.Header.Set("scenario", scenario)
 	req.Header.Set("value", strconv.FormatBool(value))
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -208,6 +210,7 @@ func (client *HeaderClient) ParamByteCreateRequest(ctx context.Context, scenario
 	}
 	req.Header.Set("scenario", scenario)
 	req.Header.Set("value", base64.StdEncoding.EncodeToString(value))
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -254,6 +257,7 @@ func (client *HeaderClient) ParamDateCreateRequest(ctx context.Context, scenario
 	}
 	req.Header.Set("scenario", scenario)
 	req.Header.Set("value", value.Format("2006-01-02"))
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -300,6 +304,7 @@ func (client *HeaderClient) ParamDatetimeCreateRequest(ctx context.Context, scen
 	}
 	req.Header.Set("scenario", scenario)
 	req.Header.Set("value", value.Format(time.RFC3339Nano))
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -348,6 +353,7 @@ func (client *HeaderClient) ParamDatetimeRFC1123CreateRequest(ctx context.Contex
 	if headerParamDatetimeRfc1123Options != nil && headerParamDatetimeRfc1123Options.Value != nil {
 		req.Header.Set("value", headerParamDatetimeRfc1123Options.Value.Format(time.RFC1123))
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -394,6 +400,7 @@ func (client *HeaderClient) ParamDoubleCreateRequest(ctx context.Context, scenar
 	}
 	req.Header.Set("scenario", scenario)
 	req.Header.Set("value", strconv.FormatFloat(value, 'f', -1, 64))
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -440,6 +447,7 @@ func (client *HeaderClient) ParamDurationCreateRequest(ctx context.Context, scen
 	}
 	req.Header.Set("scenario", scenario)
 	req.Header.Set("value", value)
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -488,6 +496,7 @@ func (client *HeaderClient) ParamEnumCreateRequest(ctx context.Context, scenario
 	if headerParamEnumOptions != nil && headerParamEnumOptions.Value != nil {
 		req.Header.Set("value", string(*headerParamEnumOptions.Value))
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -533,6 +542,7 @@ func (client *HeaderClient) ParamExistingKeyCreateRequest(ctx context.Context, u
 		return nil, err
 	}
 	req.Header.Set("User-Agent", userAgent)
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -579,6 +589,7 @@ func (client *HeaderClient) ParamFloatCreateRequest(ctx context.Context, scenari
 	}
 	req.Header.Set("scenario", scenario)
 	req.Header.Set("value", strconv.FormatFloat(float64(value), 'f', -1, 32))
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -625,6 +636,7 @@ func (client *HeaderClient) ParamIntegerCreateRequest(ctx context.Context, scena
 	}
 	req.Header.Set("scenario", scenario)
 	req.Header.Set("value", strconv.FormatInt(int64(value), 10))
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -671,6 +683,7 @@ func (client *HeaderClient) ParamLongCreateRequest(ctx context.Context, scenario
 	}
 	req.Header.Set("scenario", scenario)
 	req.Header.Set("value", strconv.FormatInt(value, 10))
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -716,6 +729,7 @@ func (client *HeaderClient) ParamProtectedKeyCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	req.Header.Set("Content-Type", contentType)
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -764,6 +778,7 @@ func (client *HeaderClient) ParamStringCreateRequest(ctx context.Context, scenar
 	if headerParamStringOptions != nil && headerParamStringOptions.Value != nil {
 		req.Header.Set("value", *headerParamStringOptions.Value)
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -809,6 +824,7 @@ func (client *HeaderClient) ResponseBoolCreateRequest(ctx context.Context, scena
 		return nil, err
 	}
 	req.Header.Set("scenario", scenario)
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -862,6 +878,7 @@ func (client *HeaderClient) ResponseByteCreateRequest(ctx context.Context, scena
 		return nil, err
 	}
 	req.Header.Set("scenario", scenario)
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -915,6 +932,7 @@ func (client *HeaderClient) ResponseDateCreateRequest(ctx context.Context, scena
 		return nil, err
 	}
 	req.Header.Set("scenario", scenario)
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -968,6 +986,7 @@ func (client *HeaderClient) ResponseDatetimeCreateRequest(ctx context.Context, s
 		return nil, err
 	}
 	req.Header.Set("scenario", scenario)
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1021,6 +1040,7 @@ func (client *HeaderClient) ResponseDatetimeRFC1123CreateRequest(ctx context.Con
 		return nil, err
 	}
 	req.Header.Set("scenario", scenario)
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1074,6 +1094,7 @@ func (client *HeaderClient) ResponseDoubleCreateRequest(ctx context.Context, sce
 		return nil, err
 	}
 	req.Header.Set("scenario", scenario)
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1127,6 +1148,7 @@ func (client *HeaderClient) ResponseDurationCreateRequest(ctx context.Context, s
 		return nil, err
 	}
 	req.Header.Set("scenario", scenario)
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1176,6 +1198,7 @@ func (client *HeaderClient) ResponseEnumCreateRequest(ctx context.Context, scena
 		return nil, err
 	}
 	req.Header.Set("scenario", scenario)
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1224,6 +1247,7 @@ func (client *HeaderClient) ResponseExistingKeyCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1273,6 +1297,7 @@ func (client *HeaderClient) ResponseFloatCreateRequest(ctx context.Context, scen
 		return nil, err
 	}
 	req.Header.Set("scenario", scenario)
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1327,6 +1352,7 @@ func (client *HeaderClient) ResponseIntegerCreateRequest(ctx context.Context, sc
 		return nil, err
 	}
 	req.Header.Set("scenario", scenario)
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1381,6 +1407,7 @@ func (client *HeaderClient) ResponseLongCreateRequest(ctx context.Context, scena
 		return nil, err
 	}
 	req.Header.Set("scenario", scenario)
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1433,6 +1460,7 @@ func (client *HeaderClient) ResponseProtectedKeyCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -1482,6 +1510,7 @@ func (client *HeaderClient) ResponseStringCreateRequest(ctx context.Context, sce
 		return nil, err
 	}
 	req.Header.Set("scenario", scenario)
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 

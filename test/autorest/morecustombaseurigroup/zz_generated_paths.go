@@ -71,6 +71,7 @@ func (client *PathsClient) GetEmptyCreateRequest(ctx context.Context, vault stri
 		query.Set("keyVersion", *pathsGetEmptyOptions.KeyVersion)
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 

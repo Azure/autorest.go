@@ -109,6 +109,7 @@ func (client *LroRetrysClient) Delete202Retry200CreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -177,6 +178,7 @@ func (client *LroRetrysClient) DeleteAsyncRelativeRetrySucceededCreateRequest(ct
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -245,6 +247,7 @@ func (client *LroRetrysClient) DeleteProvisioning202Accepted200SucceededCreateRe
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -313,6 +316,7 @@ func (client *LroRetrysClient) Post202Retry200CreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	if lroRetrysPost202Retry200Options != nil {
 		return req, req.MarshalAsJSON(lroRetrysPost202Retry200Options.Product)
 	}
@@ -384,6 +388,7 @@ func (client *LroRetrysClient) PostAsyncRelativeRetrySucceededCreateRequest(ctx 
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	if lroRetrysPostAsyncRelativeRetrySucceededOptions != nil {
 		return req, req.MarshalAsJSON(lroRetrysPostAsyncRelativeRetrySucceededOptions.Product)
 	}
@@ -455,6 +460,7 @@ func (client *LroRetrysClient) Put201CreatingSucceeded200CreateRequest(ctx conte
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	if lroRetrysPut201CreatingSucceeded200Options != nil {
 		return req, req.MarshalAsJSON(lroRetrysPut201CreatingSucceeded200Options.Product)
 	}
@@ -526,6 +532,7 @@ func (client *LroRetrysClient) PutAsyncRelativeRetrySucceededCreateRequest(ctx c
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	if lroRetrysPutAsyncRelativeRetrySucceededOptions != nil {
 		return req, req.MarshalAsJSON(lroRetrysPutAsyncRelativeRetrySucceededOptions.Product)
 	}

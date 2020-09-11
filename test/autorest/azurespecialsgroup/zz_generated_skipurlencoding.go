@@ -71,6 +71,7 @@ func (client *SkipURLEncodingClient) GetMethodPathValidCreateRequest(ctx context
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -120,6 +121,7 @@ func (client *SkipURLEncodingClient) GetMethodQueryNullCreateRequest(ctx context
 		unencodedParams = append(unencodedParams, "q1="+*skipUrlEncodingGetMethodQueryNullOptions.Q1)
 	}
 	req.URL.RawQuery = strings.Join(unencodedParams, "&")
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -167,6 +169,7 @@ func (client *SkipURLEncodingClient) GetMethodQueryValidCreateRequest(ctx contex
 	unencodedParams := []string{}
 	unencodedParams = append(unencodedParams, "q1="+q1)
 	req.URL.RawQuery = strings.Join(unencodedParams, "&")
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -214,6 +217,7 @@ func (client *SkipURLEncodingClient) GetPathQueryValidCreateRequest(ctx context.
 	unencodedParams := []string{}
 	unencodedParams = append(unencodedParams, "q1="+q1)
 	req.URL.RawQuery = strings.Join(unencodedParams, "&")
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -259,6 +263,7 @@ func (client *SkipURLEncodingClient) GetPathValidCreateRequest(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -304,6 +309,7 @@ func (client *SkipURLEncodingClient) GetSwaggerPathValidCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -351,6 +357,7 @@ func (client *SkipURLEncodingClient) GetSwaggerQueryValidCreateRequest(ctx conte
 	unencodedParams := []string{}
 	unencodedParams = append(unencodedParams, "q1="+"value1&q2=value2&q3=value3")
 	req.URL.RawQuery = strings.Join(unencodedParams, "&")
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 

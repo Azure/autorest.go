@@ -64,6 +64,7 @@ func (client *AutoRestReportServiceClient) GetOptionalReportCreateRequest(ctx co
 		query.Set("qualifier", *autoRestReportServiceGetOptionalReportOptions.Qualifier)
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -114,6 +115,7 @@ func (client *AutoRestReportServiceClient) GetReportCreateRequest(ctx context.Co
 		query.Set("qualifier", *autoRestReportServiceGetReportOptions.Qualifier)
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 

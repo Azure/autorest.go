@@ -80,6 +80,7 @@ func (client *ParameterGroupingClient) PostMultiParamGroupsCreateRequest(ctx con
 	if parameterGroupingPostMultiParamGroupsSecondParamGroup != nil && parameterGroupingPostMultiParamGroupsSecondParamGroup.HeaderTwo != nil {
 		req.Header.Set("header-two", *parameterGroupingPostMultiParamGroupsSecondParamGroup.HeaderTwo)
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -132,6 +133,7 @@ func (client *ParameterGroupingClient) PostOptionalCreateRequest(ctx context.Con
 	if parameterGroupingPostOptionalParameters != nil && parameterGroupingPostOptionalParameters.CustomHeader != nil {
 		req.Header.Set("customHeader", *parameterGroupingPostOptionalParameters.CustomHeader)
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -185,6 +187,7 @@ func (client *ParameterGroupingClient) PostRequiredCreateRequest(ctx context.Con
 	if parameterGroupingPostRequiredParameters.CustomHeader != nil {
 		req.Header.Set("customHeader", *parameterGroupingPostRequiredParameters.CustomHeader)
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameterGroupingPostRequiredParameters.Body)
 }
 
@@ -237,6 +240,7 @@ func (client *ParameterGroupingClient) PostSharedParameterGroupObjectCreateReque
 	if firstParameterGroup != nil && firstParameterGroup.HeaderOne != nil {
 		req.Header.Set("header-one", *firstParameterGroup.HeaderOne)
 	}
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 

@@ -69,6 +69,7 @@ func (client *OdataClient) GetWithFilterCreateRequest(ctx context.Context, odata
 		query.Set("$orderby", *odataGetWithFilterOptions.Orderby)
 	}
 	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
