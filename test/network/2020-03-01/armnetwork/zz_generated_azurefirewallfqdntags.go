@@ -6,18 +6,17 @@
 package armnetwork
 
 import (
-	"fmt"
+	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 )
 
 // AzureFirewallFqdnTagsOperations contains the methods for the AzureFirewallFqdnTags group.
 type AzureFirewallFqdnTagsOperations interface {
 	// ListAll - Gets all the Azure Firewall FQDN Tags in a subscription.
-	ListAll() (AzureFirewallFqdnTagListResultPager, error)
+	ListAll() AzureFirewallFqdnTagListResultPager
 }
 
 // AzureFirewallFqdnTagsClient implements the AzureFirewallFqdnTagsOperations interface.
@@ -33,49 +32,35 @@ func NewAzureFirewallFqdnTagsClient(c *Client, subscriptionID string) AzureFirew
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *AzureFirewallFqdnTagsClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *AzureFirewallFqdnTagsClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // ListAll - Gets all the Azure Firewall FQDN Tags in a subscription.
-func (client *AzureFirewallFqdnTagsClient) ListAll() (AzureFirewallFqdnTagListResultPager, error) {
-	req, err := client.ListAllCreateRequest()
-	if err != nil {
-		return nil, err
-	}
+func (client *AzureFirewallFqdnTagsClient) ListAll() AzureFirewallFqdnTagListResultPager {
 	return &azureFirewallFqdnTagListResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListAllHandleResponse,
-		advancer: func(resp *AzureFirewallFqdnTagListResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.AzureFirewallFqdnTagListResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.AzureFirewallFqdnTagListResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListAllCreateRequest(ctx)
 		},
-	}, nil
+		responder: client.ListAllHandleResponse,
+		advancer: func(ctx context.Context, resp *AzureFirewallFqdnTagListResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.AzureFirewallFqdnTagListResult.NextLink)
+		},
+	}
 }
 
 // ListAllCreateRequest creates the ListAll request.
-func (client *AzureFirewallFqdnTagsClient) ListAllCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *AzureFirewallFqdnTagsClient) ListAllCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/azureFirewallFqdnTags"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 

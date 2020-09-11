@@ -7,11 +7,9 @@ package armnetwork
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 )
 
@@ -20,7 +18,7 @@ type ExpressRoutePortsLocationsOperations interface {
 	// Get - Retrieves a single ExpressRoutePort peering location, including the list of available bandwidths available at said peering location.
 	Get(ctx context.Context, locationName string) (*ExpressRoutePortsLocationResponse, error)
 	// List - Retrieves all ExpressRoutePort peering locations. Does not return available bandwidths for each location. Available bandwidths can only be obtained when retrieving a specific peering location.
-	List() (ExpressRoutePortsLocationListResultPager, error)
+	List() ExpressRoutePortsLocationListResultPager
 }
 
 // ExpressRoutePortsLocationsClient implements the ExpressRoutePortsLocationsOperations interface.
@@ -36,17 +34,17 @@ func NewExpressRoutePortsLocationsClient(c *Client, subscriptionID string) Expre
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *ExpressRoutePortsLocationsClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *ExpressRoutePortsLocationsClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // Get - Retrieves a single ExpressRoutePort peering location, including the list of available bandwidths available at said peering location.
 func (client *ExpressRoutePortsLocationsClient) Get(ctx context.Context, locationName string) (*ExpressRoutePortsLocationResponse, error) {
-	req, err := client.GetCreateRequest(locationName)
+	req, err := client.GetCreateRequest(ctx, locationName)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -58,22 +56,17 @@ func (client *ExpressRoutePortsLocationsClient) Get(ctx context.Context, locatio
 }
 
 // GetCreateRequest creates the Get request.
-func (client *ExpressRoutePortsLocationsClient) GetCreateRequest(locationName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ExpressRoutePortsLocationsClient) GetCreateRequest(ctx context.Context, locationName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePortsLocations/{locationName}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{locationName}", url.PathEscape(locationName))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -96,44 +89,30 @@ func (client *ExpressRoutePortsLocationsClient) GetHandleError(resp *azcore.Resp
 }
 
 // List - Retrieves all ExpressRoutePort peering locations. Does not return available bandwidths for each location. Available bandwidths can only be obtained when retrieving a specific peering location.
-func (client *ExpressRoutePortsLocationsClient) List() (ExpressRoutePortsLocationListResultPager, error) {
-	req, err := client.ListCreateRequest()
-	if err != nil {
-		return nil, err
-	}
+func (client *ExpressRoutePortsLocationsClient) List() ExpressRoutePortsLocationListResultPager {
 	return &expressRoutePortsLocationListResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListHandleResponse,
-		advancer: func(resp *ExpressRoutePortsLocationListResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.ExpressRoutePortsLocationListResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.ExpressRoutePortsLocationListResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListCreateRequest(ctx)
 		},
-	}, nil
+		responder: client.ListHandleResponse,
+		advancer: func(ctx context.Context, resp *ExpressRoutePortsLocationListResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.ExpressRoutePortsLocationListResult.NextLink)
+		},
+	}
 }
 
 // ListCreateRequest creates the List request.
-func (client *ExpressRoutePortsLocationsClient) ListCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ExpressRoutePortsLocationsClient) ListCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePortsLocations"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 

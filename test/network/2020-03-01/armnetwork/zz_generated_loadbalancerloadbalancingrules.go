@@ -7,11 +7,9 @@ package armnetwork
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 )
 
@@ -20,7 +18,7 @@ type LoadBalancerLoadBalancingRulesOperations interface {
 	// Get - Gets the specified load balancer load balancing rule.
 	Get(ctx context.Context, resourceGroupName string, loadBalancerName string, loadBalancingRuleName string) (*LoadBalancingRuleResponse, error)
 	// List - Gets all the load balancing rules in a load balancer.
-	List(resourceGroupName string, loadBalancerName string) (LoadBalancerLoadBalancingRuleListResultPager, error)
+	List(resourceGroupName string, loadBalancerName string) LoadBalancerLoadBalancingRuleListResultPager
 }
 
 // LoadBalancerLoadBalancingRulesClient implements the LoadBalancerLoadBalancingRulesOperations interface.
@@ -36,17 +34,17 @@ func NewLoadBalancerLoadBalancingRulesClient(c *Client, subscriptionID string) L
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *LoadBalancerLoadBalancingRulesClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *LoadBalancerLoadBalancingRulesClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // Get - Gets the specified load balancer load balancing rule.
 func (client *LoadBalancerLoadBalancingRulesClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, loadBalancingRuleName string) (*LoadBalancingRuleResponse, error) {
-	req, err := client.GetCreateRequest(resourceGroupName, loadBalancerName, loadBalancingRuleName)
+	req, err := client.GetCreateRequest(ctx, resourceGroupName, loadBalancerName, loadBalancingRuleName)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -58,24 +56,19 @@ func (client *LoadBalancerLoadBalancingRulesClient) Get(ctx context.Context, res
 }
 
 // GetCreateRequest creates the Get request.
-func (client *LoadBalancerLoadBalancingRulesClient) GetCreateRequest(resourceGroupName string, loadBalancerName string, loadBalancingRuleName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LoadBalancerLoadBalancingRulesClient) GetCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, loadBalancingRuleName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/loadBalancingRules/{loadBalancingRuleName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{loadBalancerName}", url.PathEscape(loadBalancerName))
 	urlPath = strings.ReplaceAll(urlPath, "{loadBalancingRuleName}", url.PathEscape(loadBalancingRuleName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -98,46 +91,32 @@ func (client *LoadBalancerLoadBalancingRulesClient) GetHandleError(resp *azcore.
 }
 
 // List - Gets all the load balancing rules in a load balancer.
-func (client *LoadBalancerLoadBalancingRulesClient) List(resourceGroupName string, loadBalancerName string) (LoadBalancerLoadBalancingRuleListResultPager, error) {
-	req, err := client.ListCreateRequest(resourceGroupName, loadBalancerName)
-	if err != nil {
-		return nil, err
-	}
+func (client *LoadBalancerLoadBalancingRulesClient) List(resourceGroupName string, loadBalancerName string) LoadBalancerLoadBalancingRuleListResultPager {
 	return &loadBalancerLoadBalancingRuleListResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListHandleResponse,
-		advancer: func(resp *LoadBalancerLoadBalancingRuleListResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.LoadBalancerLoadBalancingRuleListResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.LoadBalancerLoadBalancingRuleListResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListCreateRequest(ctx, resourceGroupName, loadBalancerName)
 		},
-	}, nil
+		responder: client.ListHandleResponse,
+		advancer: func(ctx context.Context, resp *LoadBalancerLoadBalancingRuleListResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.LoadBalancerLoadBalancingRuleListResult.NextLink)
+		},
+	}
 }
 
 // ListCreateRequest creates the List request.
-func (client *LoadBalancerLoadBalancingRulesClient) ListCreateRequest(resourceGroupName string, loadBalancerName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LoadBalancerLoadBalancingRulesClient) ListCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/loadBalancingRules"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{loadBalancerName}", url.PathEscape(loadBalancerName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 

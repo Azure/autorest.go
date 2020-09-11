@@ -9,8 +9,6 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
-	"net/url"
-	"path"
 )
 
 // HTTPSuccessOperations contains the methods for the HTTPSuccess group.
@@ -67,17 +65,17 @@ func NewHTTPSuccessClient(c *Client) HTTPSuccessOperations {
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *HTTPSuccessClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *HTTPSuccessClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // Delete200 - Delete simple boolean value true returns 200
 func (client *HTTPSuccessClient) Delete200(ctx context.Context) (*http.Response, error) {
-	req, err := client.Delete200CreateRequest()
+	req, err := client.Delete200CreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -89,17 +87,12 @@ func (client *HTTPSuccessClient) Delete200(ctx context.Context) (*http.Response,
 }
 
 // Delete200CreateRequest creates the Delete200 request.
-func (client *HTTPSuccessClient) Delete200CreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *HTTPSuccessClient) Delete200CreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/http/success/200"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodDelete, *u)
 	return req, req.MarshalAsJSON(true)
 }
 
@@ -122,11 +115,11 @@ func (client *HTTPSuccessClient) Delete200HandleError(resp *azcore.Response) err
 
 // Delete202 - Delete true Boolean value in request returns 202 (accepted)
 func (client *HTTPSuccessClient) Delete202(ctx context.Context) (*http.Response, error) {
-	req, err := client.Delete202CreateRequest()
+	req, err := client.Delete202CreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -138,17 +131,12 @@ func (client *HTTPSuccessClient) Delete202(ctx context.Context) (*http.Response,
 }
 
 // Delete202CreateRequest creates the Delete202 request.
-func (client *HTTPSuccessClient) Delete202CreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *HTTPSuccessClient) Delete202CreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/http/success/202"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodDelete, *u)
 	return req, req.MarshalAsJSON(true)
 }
 
@@ -171,11 +159,11 @@ func (client *HTTPSuccessClient) Delete202HandleError(resp *azcore.Response) err
 
 // Delete204 - Delete true Boolean value in request returns 204 (no content)
 func (client *HTTPSuccessClient) Delete204(ctx context.Context) (*http.Response, error) {
-	req, err := client.Delete204CreateRequest()
+	req, err := client.Delete204CreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -187,17 +175,12 @@ func (client *HTTPSuccessClient) Delete204(ctx context.Context) (*http.Response,
 }
 
 // Delete204CreateRequest creates the Delete204 request.
-func (client *HTTPSuccessClient) Delete204CreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *HTTPSuccessClient) Delete204CreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/http/success/204"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodDelete, *u)
 	return req, req.MarshalAsJSON(true)
 }
 
@@ -220,11 +203,11 @@ func (client *HTTPSuccessClient) Delete204HandleError(resp *azcore.Response) err
 
 // Get200 - Get 200 success
 func (client *HTTPSuccessClient) Get200(ctx context.Context) (*BoolResponse, error) {
-	req, err := client.Get200CreateRequest()
+	req, err := client.Get200CreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -236,17 +219,12 @@ func (client *HTTPSuccessClient) Get200(ctx context.Context) (*BoolResponse, err
 }
 
 // Get200CreateRequest creates the Get200 request.
-func (client *HTTPSuccessClient) Get200CreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *HTTPSuccessClient) Get200CreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/http/success/200"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -270,11 +248,11 @@ func (client *HTTPSuccessClient) Get200HandleError(resp *azcore.Response) error 
 
 // Head200 - Return 200 status code if successful
 func (client *HTTPSuccessClient) Head200(ctx context.Context) (*http.Response, error) {
-	req, err := client.Head200CreateRequest()
+	req, err := client.Head200CreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -286,17 +264,12 @@ func (client *HTTPSuccessClient) Head200(ctx context.Context) (*http.Response, e
 }
 
 // Head200CreateRequest creates the Head200 request.
-func (client *HTTPSuccessClient) Head200CreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *HTTPSuccessClient) Head200CreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/http/success/200"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodHead, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodHead, *u)
 	return req, nil
 }
 
@@ -319,11 +292,11 @@ func (client *HTTPSuccessClient) Head200HandleError(resp *azcore.Response) error
 
 // Head204 - Return 204 status code if successful
 func (client *HTTPSuccessClient) Head204(ctx context.Context) (*http.Response, error) {
-	req, err := client.Head204CreateRequest()
+	req, err := client.Head204CreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -335,17 +308,12 @@ func (client *HTTPSuccessClient) Head204(ctx context.Context) (*http.Response, e
 }
 
 // Head204CreateRequest creates the Head204 request.
-func (client *HTTPSuccessClient) Head204CreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *HTTPSuccessClient) Head204CreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/http/success/204"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodHead, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodHead, *u)
 	return req, nil
 }
 
@@ -368,11 +336,11 @@ func (client *HTTPSuccessClient) Head204HandleError(resp *azcore.Response) error
 
 // Head404 - Return 404 status code
 func (client *HTTPSuccessClient) Head404(ctx context.Context) (*http.Response, error) {
-	req, err := client.Head404CreateRequest()
+	req, err := client.Head404CreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -384,17 +352,12 @@ func (client *HTTPSuccessClient) Head404(ctx context.Context) (*http.Response, e
 }
 
 // Head404CreateRequest creates the Head404 request.
-func (client *HTTPSuccessClient) Head404CreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *HTTPSuccessClient) Head404CreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/http/success/404"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodHead, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodHead, *u)
 	return req, nil
 }
 
@@ -417,11 +380,11 @@ func (client *HTTPSuccessClient) Head404HandleError(resp *azcore.Response) error
 
 // Options200 - Options 200 success
 func (client *HTTPSuccessClient) Options200(ctx context.Context) (*BoolResponse, error) {
-	req, err := client.Options200CreateRequest()
+	req, err := client.Options200CreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -433,17 +396,12 @@ func (client *HTTPSuccessClient) Options200(ctx context.Context) (*BoolResponse,
 }
 
 // Options200CreateRequest creates the Options200 request.
-func (client *HTTPSuccessClient) Options200CreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *HTTPSuccessClient) Options200CreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/http/success/200"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodOptions, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodOptions, *u)
 	return req, nil
 }
 
@@ -467,11 +425,11 @@ func (client *HTTPSuccessClient) Options200HandleError(resp *azcore.Response) er
 
 // Patch200 - Patch true Boolean value in request returning 200
 func (client *HTTPSuccessClient) Patch200(ctx context.Context) (*http.Response, error) {
-	req, err := client.Patch200CreateRequest()
+	req, err := client.Patch200CreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -483,17 +441,12 @@ func (client *HTTPSuccessClient) Patch200(ctx context.Context) (*http.Response, 
 }
 
 // Patch200CreateRequest creates the Patch200 request.
-func (client *HTTPSuccessClient) Patch200CreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *HTTPSuccessClient) Patch200CreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/http/success/200"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPatch, *u)
 	return req, req.MarshalAsJSON(true)
 }
 
@@ -516,11 +469,11 @@ func (client *HTTPSuccessClient) Patch200HandleError(resp *azcore.Response) erro
 
 // Patch202 - Patch true Boolean value in request returns 202
 func (client *HTTPSuccessClient) Patch202(ctx context.Context) (*http.Response, error) {
-	req, err := client.Patch202CreateRequest()
+	req, err := client.Patch202CreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -532,17 +485,12 @@ func (client *HTTPSuccessClient) Patch202(ctx context.Context) (*http.Response, 
 }
 
 // Patch202CreateRequest creates the Patch202 request.
-func (client *HTTPSuccessClient) Patch202CreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *HTTPSuccessClient) Patch202CreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/http/success/202"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPatch, *u)
 	return req, req.MarshalAsJSON(true)
 }
 
@@ -565,11 +513,11 @@ func (client *HTTPSuccessClient) Patch202HandleError(resp *azcore.Response) erro
 
 // Patch204 - Patch true Boolean value in request returns 204 (no content)
 func (client *HTTPSuccessClient) Patch204(ctx context.Context) (*http.Response, error) {
-	req, err := client.Patch204CreateRequest()
+	req, err := client.Patch204CreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -581,17 +529,12 @@ func (client *HTTPSuccessClient) Patch204(ctx context.Context) (*http.Response, 
 }
 
 // Patch204CreateRequest creates the Patch204 request.
-func (client *HTTPSuccessClient) Patch204CreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *HTTPSuccessClient) Patch204CreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/http/success/204"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPatch, *u)
 	return req, req.MarshalAsJSON(true)
 }
 
@@ -614,11 +557,11 @@ func (client *HTTPSuccessClient) Patch204HandleError(resp *azcore.Response) erro
 
 // Post200 - Post bollean value true in request that returns a 200
 func (client *HTTPSuccessClient) Post200(ctx context.Context) (*http.Response, error) {
-	req, err := client.Post200CreateRequest()
+	req, err := client.Post200CreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -630,17 +573,12 @@ func (client *HTTPSuccessClient) Post200(ctx context.Context) (*http.Response, e
 }
 
 // Post200CreateRequest creates the Post200 request.
-func (client *HTTPSuccessClient) Post200CreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *HTTPSuccessClient) Post200CreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/http/success/200"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPost, *u)
 	return req, req.MarshalAsJSON(true)
 }
 
@@ -663,11 +601,11 @@ func (client *HTTPSuccessClient) Post200HandleError(resp *azcore.Response) error
 
 // Post201 - Post true Boolean value in request returns 201 (Created)
 func (client *HTTPSuccessClient) Post201(ctx context.Context) (*http.Response, error) {
-	req, err := client.Post201CreateRequest()
+	req, err := client.Post201CreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -679,17 +617,12 @@ func (client *HTTPSuccessClient) Post201(ctx context.Context) (*http.Response, e
 }
 
 // Post201CreateRequest creates the Post201 request.
-func (client *HTTPSuccessClient) Post201CreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *HTTPSuccessClient) Post201CreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/http/success/201"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPost, *u)
 	return req, req.MarshalAsJSON(true)
 }
 
@@ -712,11 +645,11 @@ func (client *HTTPSuccessClient) Post201HandleError(resp *azcore.Response) error
 
 // Post202 - Post true Boolean value in request returns 202 (Accepted)
 func (client *HTTPSuccessClient) Post202(ctx context.Context) (*http.Response, error) {
-	req, err := client.Post202CreateRequest()
+	req, err := client.Post202CreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -728,17 +661,12 @@ func (client *HTTPSuccessClient) Post202(ctx context.Context) (*http.Response, e
 }
 
 // Post202CreateRequest creates the Post202 request.
-func (client *HTTPSuccessClient) Post202CreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *HTTPSuccessClient) Post202CreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/http/success/202"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPost, *u)
 	return req, req.MarshalAsJSON(true)
 }
 
@@ -761,11 +689,11 @@ func (client *HTTPSuccessClient) Post202HandleError(resp *azcore.Response) error
 
 // Post204 - Post true Boolean value in request returns 204 (no content)
 func (client *HTTPSuccessClient) Post204(ctx context.Context) (*http.Response, error) {
-	req, err := client.Post204CreateRequest()
+	req, err := client.Post204CreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -777,17 +705,12 @@ func (client *HTTPSuccessClient) Post204(ctx context.Context) (*http.Response, e
 }
 
 // Post204CreateRequest creates the Post204 request.
-func (client *HTTPSuccessClient) Post204CreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *HTTPSuccessClient) Post204CreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/http/success/204"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPost, *u)
 	return req, req.MarshalAsJSON(true)
 }
 
@@ -810,11 +733,11 @@ func (client *HTTPSuccessClient) Post204HandleError(resp *azcore.Response) error
 
 // Put200 - Put boolean value true returning 200 success
 func (client *HTTPSuccessClient) Put200(ctx context.Context) (*http.Response, error) {
-	req, err := client.Put200CreateRequest()
+	req, err := client.Put200CreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -826,17 +749,12 @@ func (client *HTTPSuccessClient) Put200(ctx context.Context) (*http.Response, er
 }
 
 // Put200CreateRequest creates the Put200 request.
-func (client *HTTPSuccessClient) Put200CreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *HTTPSuccessClient) Put200CreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/http/success/200"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	return req, req.MarshalAsJSON(true)
 }
 
@@ -859,11 +777,11 @@ func (client *HTTPSuccessClient) Put200HandleError(resp *azcore.Response) error 
 
 // Put201 - Put true Boolean value in request returns 201
 func (client *HTTPSuccessClient) Put201(ctx context.Context) (*http.Response, error) {
-	req, err := client.Put201CreateRequest()
+	req, err := client.Put201CreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -875,17 +793,12 @@ func (client *HTTPSuccessClient) Put201(ctx context.Context) (*http.Response, er
 }
 
 // Put201CreateRequest creates the Put201 request.
-func (client *HTTPSuccessClient) Put201CreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *HTTPSuccessClient) Put201CreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/http/success/201"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	return req, req.MarshalAsJSON(true)
 }
 
@@ -908,11 +821,11 @@ func (client *HTTPSuccessClient) Put201HandleError(resp *azcore.Response) error 
 
 // Put202 - Put true Boolean value in request returns 202 (Accepted)
 func (client *HTTPSuccessClient) Put202(ctx context.Context) (*http.Response, error) {
-	req, err := client.Put202CreateRequest()
+	req, err := client.Put202CreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -924,17 +837,12 @@ func (client *HTTPSuccessClient) Put202(ctx context.Context) (*http.Response, er
 }
 
 // Put202CreateRequest creates the Put202 request.
-func (client *HTTPSuccessClient) Put202CreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *HTTPSuccessClient) Put202CreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/http/success/202"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	return req, req.MarshalAsJSON(true)
 }
 
@@ -957,11 +865,11 @@ func (client *HTTPSuccessClient) Put202HandleError(resp *azcore.Response) error 
 
 // Put204 - Put true Boolean value in request returns 204 (no content)
 func (client *HTTPSuccessClient) Put204(ctx context.Context) (*http.Response, error) {
-	req, err := client.Put204CreateRequest()
+	req, err := client.Put204CreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -973,17 +881,12 @@ func (client *HTTPSuccessClient) Put204(ctx context.Context) (*http.Response, er
 }
 
 // Put204CreateRequest creates the Put204 request.
-func (client *HTTPSuccessClient) Put204CreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *HTTPSuccessClient) Put204CreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/http/success/204"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	return req, req.MarshalAsJSON(true)
 }
 

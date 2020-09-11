@@ -33,24 +33,26 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
     const resultType = schemaResponse.schema.language.go!.name;
     let resultTypeName = resultType;
     let pollerRespField = '';
-    let respFieldCheck = '\tresp, err := p.pipeline.Do(ctx, p.request)';
+    let respFieldCheck = '\tresp, err := p.pipeline.Do(req)';
+    let requesterCondition = '';
     if (pager.respField) {
       pollerRespField = `
-      // previous response from the endpoint
+      // previous response from the endpoint (LRO case)
       resp *azcore.Response`;
       respFieldCheck =
         `resp := p.resp
-	var err error
 	if resp == nil {
-		resp, err = p.pipeline.Do(ctx, p.request)
+		resp, err = p.pipeline.Do(req)
 	} else {
 		p.resp = nil
-	}`;
+  }`;
+      requesterCondition = ' if p.resp == nil';
     }
     if (schemaResponse.schema.serialization?.xml?.name) {
       // xml can specifiy its own name, prefer that if available
       resultTypeName = schemaResponse.schema.serialization.xml.name;
     }
+    const requesterType = `${camelCase(resultType)}CreateRequest`;
     const responderType = `${camelCase(resultType)}HandleResponse`;
     const advanceType = `${camelCase(resultType)}AdvancePage`;
     text += `// ${pager.name} provides iteration over ${resultType} pages.
@@ -66,15 +68,17 @@ type ${pager.name} interface {
 	Err() error
 }
 
+type ${requesterType} func(context.Context) (*azcore.Request, error)
+
 type ${responderType} func(*azcore.Response) (*${responseType}, error)
 
-type ${advanceType} func(*${responseType}) (*azcore.Request, error)
+type ${advanceType} func(context.Context, *${responseType}) (*azcore.Request, error)
 
 type ${pagerType} struct {
 	// the pipeline for making the request
 	pipeline azcore.Pipeline
-	// contains the pending request
-	request *azcore.Request
+	// creates the initial request (non-LRO case)
+	requester ${requesterType}
 	// callback for handling the HTTP response
 	responder ${responderType}
 	// callback for advancing to the next page
@@ -90,22 +94,21 @@ func (p *${pagerType}) Err() error {
 }
 
 func (p *${pagerType}) NextPage(ctx context.Context) bool {
+	var req *azcore.Request
+	var err error
 	if p.current != nil {
 		if p.current.${resultTypeName}.${pager.op.language.go!.paging.nextLinkName} == nil || len(*p.current.${resultTypeName}.${pager.op.language.go!.paging.nextLinkName}) == 0 {
 			return false
 		}
-		req, err := p.advancer(p.current)
-		if err != nil {
-			p.err = err
-			return false
-		}
-		p.request = req
+		req, err = p.advancer(ctx, p.current)
+  } else${requesterCondition} {
+		req, err = p.requester(ctx)
   }
-  ${respFieldCheck}
 	if err != nil {
 		p.err = err
 		return false
 	}
+  ${respFieldCheck}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err

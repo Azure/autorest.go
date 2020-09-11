@@ -12,8 +12,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"io/ioutil"
 	"net/http"
-	"net/url"
-	"path"
 )
 
 // FloatOperations contains the methods for the Float group.
@@ -36,17 +34,17 @@ func NewFloatClient(c *Client) FloatOperations {
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *FloatClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *FloatClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // Get - Get a float enum
 func (client *FloatClient) Get(ctx context.Context) (*FloatEnumResponse, error) {
-	req, err := client.GetCreateRequest()
+	req, err := client.GetCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -58,17 +56,12 @@ func (client *FloatClient) Get(ctx context.Context) (*FloatEnumResponse, error) 
 }
 
 // GetCreateRequest creates the Get request.
-func (client *FloatClient) GetCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *FloatClient) GetCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/nonStringEnums/float/get"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -95,11 +88,11 @@ func (client *FloatClient) GetHandleError(resp *azcore.Response) error {
 
 // Put - Put a float enum
 func (client *FloatClient) Put(ctx context.Context, floatPutOptions *FloatPutOptions) (*StringResponse, error) {
-	req, err := client.PutCreateRequest(floatPutOptions)
+	req, err := client.PutCreateRequest(ctx, floatPutOptions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -111,17 +104,12 @@ func (client *FloatClient) Put(ctx context.Context, floatPutOptions *FloatPutOpt
 }
 
 // PutCreateRequest creates the Put request.
-func (client *FloatClient) PutCreateRequest(floatPutOptions *FloatPutOptions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *FloatClient) PutCreateRequest(ctx context.Context, floatPutOptions *FloatPutOptions) (*azcore.Request, error) {
 	urlPath := "/nonStringEnums/float/put"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	if floatPutOptions != nil {
 		return req, req.MarshalAsJSON(floatPutOptions.Input)
 	}

@@ -6,18 +6,17 @@
 package armnetwork
 
 import (
-	"fmt"
+	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 )
 
 // LoadBalancerNetworkInterfacesOperations contains the methods for the LoadBalancerNetworkInterfaces group.
 type LoadBalancerNetworkInterfacesOperations interface {
 	// List - Gets associated load balancer network interfaces.
-	List(resourceGroupName string, loadBalancerName string) (NetworkInterfaceListResultPager, error)
+	List(resourceGroupName string, loadBalancerName string) NetworkInterfaceListResultPager
 }
 
 // LoadBalancerNetworkInterfacesClient implements the LoadBalancerNetworkInterfacesOperations interface.
@@ -33,51 +32,37 @@ func NewLoadBalancerNetworkInterfacesClient(c *Client, subscriptionID string) Lo
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *LoadBalancerNetworkInterfacesClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *LoadBalancerNetworkInterfacesClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // List - Gets associated load balancer network interfaces.
-func (client *LoadBalancerNetworkInterfacesClient) List(resourceGroupName string, loadBalancerName string) (NetworkInterfaceListResultPager, error) {
-	req, err := client.ListCreateRequest(resourceGroupName, loadBalancerName)
-	if err != nil {
-		return nil, err
-	}
+func (client *LoadBalancerNetworkInterfacesClient) List(resourceGroupName string, loadBalancerName string) NetworkInterfaceListResultPager {
 	return &networkInterfaceListResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListHandleResponse,
-		advancer: func(resp *NetworkInterfaceListResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.NetworkInterfaceListResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.NetworkInterfaceListResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListCreateRequest(ctx, resourceGroupName, loadBalancerName)
 		},
-	}, nil
+		responder: client.ListHandleResponse,
+		advancer: func(ctx context.Context, resp *NetworkInterfaceListResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.NetworkInterfaceListResult.NextLink)
+		},
+	}
 }
 
 // ListCreateRequest creates the List request.
-func (client *LoadBalancerNetworkInterfacesClient) ListCreateRequest(resourceGroupName string, loadBalancerName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *LoadBalancerNetworkInterfacesClient) ListCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/networkInterfaces"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{loadBalancerName}", url.PathEscape(loadBalancerName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 

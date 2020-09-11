@@ -10,7 +10,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 )
 
@@ -41,17 +40,17 @@ func NewSubscriptionInCredentialsClient(c *Client, subscriptionID string) Subscr
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *SubscriptionInCredentialsClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *SubscriptionInCredentialsClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // PostMethodGlobalNotProvidedValid - POST method with subscriptionId modeled in credentials.  Set the credential subscriptionId to '1234-5678-9012-3456' to succeed
 func (client *SubscriptionInCredentialsClient) PostMethodGlobalNotProvidedValid(ctx context.Context) (*http.Response, error) {
-	req, err := client.PostMethodGlobalNotProvidedValidCreateRequest()
+	req, err := client.PostMethodGlobalNotProvidedValidCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -63,21 +62,16 @@ func (client *SubscriptionInCredentialsClient) PostMethodGlobalNotProvidedValid(
 }
 
 // PostMethodGlobalNotProvidedValidCreateRequest creates the PostMethodGlobalNotProvidedValid request.
-func (client *SubscriptionInCredentialsClient) PostMethodGlobalNotProvidedValidCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *SubscriptionInCredentialsClient) PostMethodGlobalNotProvidedValidCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/azurespecials/subscriptionId/method/string/none/path/globalNotProvided/1234-5678-9012-3456/{subscriptionId}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2015-07-01-preview")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPost, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -100,11 +94,11 @@ func (client *SubscriptionInCredentialsClient) PostMethodGlobalNotProvidedValidH
 
 // PostMethodGlobalNull - POST method with subscriptionId modeled in credentials.  Set the credential subscriptionId to null, and client-side validation should prevent you from making this call
 func (client *SubscriptionInCredentialsClient) PostMethodGlobalNull(ctx context.Context) (*http.Response, error) {
-	req, err := client.PostMethodGlobalNullCreateRequest()
+	req, err := client.PostMethodGlobalNullCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -116,18 +110,13 @@ func (client *SubscriptionInCredentialsClient) PostMethodGlobalNull(ctx context.
 }
 
 // PostMethodGlobalNullCreateRequest creates the PostMethodGlobalNull request.
-func (client *SubscriptionInCredentialsClient) PostMethodGlobalNullCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *SubscriptionInCredentialsClient) PostMethodGlobalNullCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/azurespecials/subscriptionId/method/string/none/path/global/null/{subscriptionId}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPost, *u)
 	return req, nil
 }
 
@@ -150,11 +139,11 @@ func (client *SubscriptionInCredentialsClient) PostMethodGlobalNullHandleError(r
 
 // PostMethodGlobalValid - POST method with subscriptionId modeled in credentials.  Set the credential subscriptionId to '1234-5678-9012-3456' to succeed
 func (client *SubscriptionInCredentialsClient) PostMethodGlobalValid(ctx context.Context) (*http.Response, error) {
-	req, err := client.PostMethodGlobalValidCreateRequest()
+	req, err := client.PostMethodGlobalValidCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -166,18 +155,13 @@ func (client *SubscriptionInCredentialsClient) PostMethodGlobalValid(ctx context
 }
 
 // PostMethodGlobalValidCreateRequest creates the PostMethodGlobalValid request.
-func (client *SubscriptionInCredentialsClient) PostMethodGlobalValidCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *SubscriptionInCredentialsClient) PostMethodGlobalValidCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/azurespecials/subscriptionId/method/string/none/path/global/1234-5678-9012-3456/{subscriptionId}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPost, *u)
 	return req, nil
 }
 
@@ -200,11 +184,11 @@ func (client *SubscriptionInCredentialsClient) PostMethodGlobalValidHandleError(
 
 // PostPathGlobalValid - POST method with subscriptionId modeled in credentials.  Set the credential subscriptionId to '1234-5678-9012-3456' to succeed
 func (client *SubscriptionInCredentialsClient) PostPathGlobalValid(ctx context.Context) (*http.Response, error) {
-	req, err := client.PostPathGlobalValidCreateRequest()
+	req, err := client.PostPathGlobalValidCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -216,18 +200,13 @@ func (client *SubscriptionInCredentialsClient) PostPathGlobalValid(ctx context.C
 }
 
 // PostPathGlobalValidCreateRequest creates the PostPathGlobalValid request.
-func (client *SubscriptionInCredentialsClient) PostPathGlobalValidCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *SubscriptionInCredentialsClient) PostPathGlobalValidCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/azurespecials/subscriptionId/path/string/none/path/global/1234-5678-9012-3456/{subscriptionId}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPost, *u)
 	return req, nil
 }
 
@@ -250,11 +229,11 @@ func (client *SubscriptionInCredentialsClient) PostPathGlobalValidHandleError(re
 
 // PostSwaggerGlobalValid - POST method with subscriptionId modeled in credentials.  Set the credential subscriptionId to '1234-5678-9012-3456' to succeed
 func (client *SubscriptionInCredentialsClient) PostSwaggerGlobalValid(ctx context.Context) (*http.Response, error) {
-	req, err := client.PostSwaggerGlobalValidCreateRequest()
+	req, err := client.PostSwaggerGlobalValidCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -266,18 +245,13 @@ func (client *SubscriptionInCredentialsClient) PostSwaggerGlobalValid(ctx contex
 }
 
 // PostSwaggerGlobalValidCreateRequest creates the PostSwaggerGlobalValid request.
-func (client *SubscriptionInCredentialsClient) PostSwaggerGlobalValidCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *SubscriptionInCredentialsClient) PostSwaggerGlobalValidCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/azurespecials/subscriptionId/swagger/string/none/path/global/1234-5678-9012-3456/{subscriptionId}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPost, *u)
 	return req, nil
 }
 

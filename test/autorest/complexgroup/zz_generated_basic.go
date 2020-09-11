@@ -9,8 +9,6 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
-	"net/url"
-	"path"
 )
 
 // BasicOperations contains the methods for the Basic group.
@@ -41,17 +39,17 @@ func NewBasicClient(c *Client) BasicOperations {
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *BasicClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *BasicClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // GetEmpty - Get a basic complex type that is empty
 func (client *BasicClient) GetEmpty(ctx context.Context) (*BasicResponse, error) {
-	req, err := client.GetEmptyCreateRequest()
+	req, err := client.GetEmptyCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -63,17 +61,12 @@ func (client *BasicClient) GetEmpty(ctx context.Context) (*BasicResponse, error)
 }
 
 // GetEmptyCreateRequest creates the GetEmpty request.
-func (client *BasicClient) GetEmptyCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *BasicClient) GetEmptyCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/complex/basic/empty"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -97,11 +90,11 @@ func (client *BasicClient) GetEmptyHandleError(resp *azcore.Response) error {
 
 // GetInvalid - Get a basic complex type that is invalid for the local strong type
 func (client *BasicClient) GetInvalid(ctx context.Context) (*BasicResponse, error) {
-	req, err := client.GetInvalidCreateRequest()
+	req, err := client.GetInvalidCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -113,17 +106,12 @@ func (client *BasicClient) GetInvalid(ctx context.Context) (*BasicResponse, erro
 }
 
 // GetInvalidCreateRequest creates the GetInvalid request.
-func (client *BasicClient) GetInvalidCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *BasicClient) GetInvalidCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/complex/basic/invalid"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -147,11 +135,11 @@ func (client *BasicClient) GetInvalidHandleError(resp *azcore.Response) error {
 
 // GetNotProvided - Get a basic complex type while the server doesn't provide a response payload
 func (client *BasicClient) GetNotProvided(ctx context.Context) (*BasicResponse, error) {
-	req, err := client.GetNotProvidedCreateRequest()
+	req, err := client.GetNotProvidedCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -163,17 +151,12 @@ func (client *BasicClient) GetNotProvided(ctx context.Context) (*BasicResponse, 
 }
 
 // GetNotProvidedCreateRequest creates the GetNotProvided request.
-func (client *BasicClient) GetNotProvidedCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *BasicClient) GetNotProvidedCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/complex/basic/notprovided"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -197,11 +180,11 @@ func (client *BasicClient) GetNotProvidedHandleError(resp *azcore.Response) erro
 
 // GetNull - Get a basic complex type whose properties are null
 func (client *BasicClient) GetNull(ctx context.Context) (*BasicResponse, error) {
-	req, err := client.GetNullCreateRequest()
+	req, err := client.GetNullCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -213,17 +196,12 @@ func (client *BasicClient) GetNull(ctx context.Context) (*BasicResponse, error) 
 }
 
 // GetNullCreateRequest creates the GetNull request.
-func (client *BasicClient) GetNullCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *BasicClient) GetNullCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/complex/basic/null"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -247,11 +225,11 @@ func (client *BasicClient) GetNullHandleError(resp *azcore.Response) error {
 
 // GetValid - Get complex type {id: 2, name: 'abc', color: 'YELLOW'}
 func (client *BasicClient) GetValid(ctx context.Context) (*BasicResponse, error) {
-	req, err := client.GetValidCreateRequest()
+	req, err := client.GetValidCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -263,17 +241,12 @@ func (client *BasicClient) GetValid(ctx context.Context) (*BasicResponse, error)
 }
 
 // GetValidCreateRequest creates the GetValid request.
-func (client *BasicClient) GetValidCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *BasicClient) GetValidCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/complex/basic/valid"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -297,11 +270,11 @@ func (client *BasicClient) GetValidHandleError(resp *azcore.Response) error {
 
 // PutValid - Please put {id: 2, name: 'abc', color: 'Magenta'}
 func (client *BasicClient) PutValid(ctx context.Context, complexBody Basic) (*http.Response, error) {
-	req, err := client.PutValidCreateRequest(complexBody)
+	req, err := client.PutValidCreateRequest(ctx, complexBody)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -313,20 +286,15 @@ func (client *BasicClient) PutValid(ctx context.Context, complexBody Basic) (*ht
 }
 
 // PutValidCreateRequest creates the PutValid request.
-func (client *BasicClient) PutValidCreateRequest(complexBody Basic) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *BasicClient) PutValidCreateRequest(ctx context.Context, complexBody Basic) (*azcore.Request, error) {
 	urlPath := "/complex/basic/valid"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2016-02-29")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPut, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(complexBody)
 }
 

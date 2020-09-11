@@ -7,12 +7,10 @@ package armnetwork
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 	"time"
 )
@@ -30,7 +28,7 @@ type RouteFilterRulesOperations interface {
 	// Get - Gets the specified rule from a route filter.
 	Get(ctx context.Context, resourceGroupName string, routeFilterName string, ruleName string) (*RouteFilterRuleResponse, error)
 	// ListByRouteFilter - Gets all RouteFilterRules in a route filter.
-	ListByRouteFilter(resourceGroupName string, routeFilterName string) (RouteFilterRuleListResultPager, error)
+	ListByRouteFilter(resourceGroupName string, routeFilterName string) RouteFilterRuleListResultPager
 }
 
 // RouteFilterRulesClient implements the RouteFilterRulesOperations interface.
@@ -46,18 +44,18 @@ func NewRouteFilterRulesClient(c *Client, subscriptionID string) RouteFilterRule
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *RouteFilterRulesClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *RouteFilterRulesClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // CreateOrUpdate - Creates or updates a route in the specified route filter.
 func (client *RouteFilterRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, routeFilterName string, ruleName string, routeFilterRuleParameters RouteFilterRule) (*RouteFilterRulePollerResponse, error) {
-	req, err := client.CreateOrUpdateCreateRequest(resourceGroupName, routeFilterName, ruleName, routeFilterRuleParameters)
+	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, routeFilterName, ruleName, routeFilterRuleParameters)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -92,24 +90,19 @@ func (client *RouteFilterRulesClient) ResumeCreateOrUpdate(token string) (RouteF
 }
 
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *RouteFilterRulesClient) CreateOrUpdateCreateRequest(resourceGroupName string, routeFilterName string, ruleName string, routeFilterRuleParameters RouteFilterRule) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *RouteFilterRulesClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, routeFilterName string, ruleName string, routeFilterRuleParameters RouteFilterRule) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}/routeFilterRules/{ruleName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{routeFilterName}", url.PathEscape(routeFilterName))
 	urlPath = strings.ReplaceAll(urlPath, "{ruleName}", url.PathEscape(ruleName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPut, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(routeFilterRuleParameters)
 }
 
@@ -132,12 +125,12 @@ func (client *RouteFilterRulesClient) CreateOrUpdateHandleError(resp *azcore.Res
 
 // Delete - Deletes the specified rule from a route filter.
 func (client *RouteFilterRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, routeFilterName string, ruleName string) (*HTTPPollerResponse, error) {
-	req, err := client.DeleteCreateRequest(resourceGroupName, routeFilterName, ruleName)
+	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, routeFilterName, ruleName)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -172,24 +165,19 @@ func (client *RouteFilterRulesClient) ResumeDelete(token string) (HTTPPoller, er
 }
 
 // DeleteCreateRequest creates the Delete request.
-func (client *RouteFilterRulesClient) DeleteCreateRequest(resourceGroupName string, routeFilterName string, ruleName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *RouteFilterRulesClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, routeFilterName string, ruleName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}/routeFilterRules/{ruleName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{routeFilterName}", url.PathEscape(routeFilterName))
 	urlPath = strings.ReplaceAll(urlPath, "{ruleName}", url.PathEscape(ruleName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodDelete, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -212,11 +200,11 @@ func (client *RouteFilterRulesClient) DeleteHandleError(resp *azcore.Response) e
 
 // Get - Gets the specified rule from a route filter.
 func (client *RouteFilterRulesClient) Get(ctx context.Context, resourceGroupName string, routeFilterName string, ruleName string) (*RouteFilterRuleResponse, error) {
-	req, err := client.GetCreateRequest(resourceGroupName, routeFilterName, ruleName)
+	req, err := client.GetCreateRequest(ctx, resourceGroupName, routeFilterName, ruleName)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -228,24 +216,19 @@ func (client *RouteFilterRulesClient) Get(ctx context.Context, resourceGroupName
 }
 
 // GetCreateRequest creates the Get request.
-func (client *RouteFilterRulesClient) GetCreateRequest(resourceGroupName string, routeFilterName string, ruleName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *RouteFilterRulesClient) GetCreateRequest(ctx context.Context, resourceGroupName string, routeFilterName string, ruleName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}/routeFilterRules/{ruleName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{routeFilterName}", url.PathEscape(routeFilterName))
 	urlPath = strings.ReplaceAll(urlPath, "{ruleName}", url.PathEscape(ruleName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -268,46 +251,32 @@ func (client *RouteFilterRulesClient) GetHandleError(resp *azcore.Response) erro
 }
 
 // ListByRouteFilter - Gets all RouteFilterRules in a route filter.
-func (client *RouteFilterRulesClient) ListByRouteFilter(resourceGroupName string, routeFilterName string) (RouteFilterRuleListResultPager, error) {
-	req, err := client.ListByRouteFilterCreateRequest(resourceGroupName, routeFilterName)
-	if err != nil {
-		return nil, err
-	}
+func (client *RouteFilterRulesClient) ListByRouteFilter(resourceGroupName string, routeFilterName string) RouteFilterRuleListResultPager {
 	return &routeFilterRuleListResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListByRouteFilterHandleResponse,
-		advancer: func(resp *RouteFilterRuleListResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.RouteFilterRuleListResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.RouteFilterRuleListResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListByRouteFilterCreateRequest(ctx, resourceGroupName, routeFilterName)
 		},
-	}, nil
+		responder: client.ListByRouteFilterHandleResponse,
+		advancer: func(ctx context.Context, resp *RouteFilterRuleListResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.RouteFilterRuleListResult.NextLink)
+		},
+	}
 }
 
 // ListByRouteFilterCreateRequest creates the ListByRouteFilter request.
-func (client *RouteFilterRulesClient) ListByRouteFilterCreateRequest(resourceGroupName string, routeFilterName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *RouteFilterRulesClient) ListByRouteFilterCreateRequest(ctx context.Context, resourceGroupName string, routeFilterName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}/routeFilterRules"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{routeFilterName}", url.PathEscape(routeFilterName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 

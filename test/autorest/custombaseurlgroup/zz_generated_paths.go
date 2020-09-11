@@ -9,8 +9,6 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
-	"net/url"
-	"path"
 	"strings"
 )
 
@@ -32,17 +30,17 @@ func NewPathsClient(c *Client) PathsOperations {
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *PathsClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *PathsClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // GetEmpty - Get a 200 to test a valid base uri
 func (client *PathsClient) GetEmpty(ctx context.Context, accountName string) (*http.Response, error) {
-	req, err := client.GetEmptyCreateRequest(accountName)
+	req, err := client.GetEmptyCreateRequest(ctx, accountName)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -54,20 +52,15 @@ func (client *PathsClient) GetEmpty(ctx context.Context, accountName string) (*h
 }
 
 // GetEmptyCreateRequest creates the GetEmpty request.
-func (client *PathsClient) GetEmptyCreateRequest(accountName string) (*azcore.Request, error) {
+func (client *PathsClient) GetEmptyCreateRequest(ctx context.Context, accountName string) (*azcore.Request, error) {
 	host := "http://{accountName}{host}"
 	host = strings.ReplaceAll(host, "{host}", client.host)
 	host = strings.ReplaceAll(host, "{accountName}", accountName)
-	u, err := url.Parse(host)
-	if err != nil {
-		return nil, err
-	}
 	urlPath := "/customuri"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 

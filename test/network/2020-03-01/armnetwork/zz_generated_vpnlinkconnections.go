@@ -6,18 +6,17 @@
 package armnetwork
 
 import (
-	"fmt"
+	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 )
 
 // VpnLinkConnectionsOperations contains the methods for the VpnLinkConnections group.
 type VpnLinkConnectionsOperations interface {
 	// ListByVpnConnection - Retrieves all vpn site link connections for a particular virtual wan vpn gateway vpn connection.
-	ListByVpnConnection(resourceGroupName string, gatewayName string, connectionName string) (ListVpnSiteLinkConnectionsResultPager, error)
+	ListByVpnConnection(resourceGroupName string, gatewayName string, connectionName string) ListVpnSiteLinkConnectionsResultPager
 }
 
 // VpnLinkConnectionsClient implements the VpnLinkConnectionsOperations interface.
@@ -33,52 +32,38 @@ func NewVpnLinkConnectionsClient(c *Client, subscriptionID string) VpnLinkConnec
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *VpnLinkConnectionsClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *VpnLinkConnectionsClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // ListByVpnConnection - Retrieves all vpn site link connections for a particular virtual wan vpn gateway vpn connection.
-func (client *VpnLinkConnectionsClient) ListByVpnConnection(resourceGroupName string, gatewayName string, connectionName string) (ListVpnSiteLinkConnectionsResultPager, error) {
-	req, err := client.ListByVpnConnectionCreateRequest(resourceGroupName, gatewayName, connectionName)
-	if err != nil {
-		return nil, err
-	}
+func (client *VpnLinkConnectionsClient) ListByVpnConnection(resourceGroupName string, gatewayName string, connectionName string) ListVpnSiteLinkConnectionsResultPager {
 	return &listVpnSiteLinkConnectionsResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListByVpnConnectionHandleResponse,
-		advancer: func(resp *ListVpnSiteLinkConnectionsResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.ListVpnSiteLinkConnectionsResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.ListVpnSiteLinkConnectionsResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListByVpnConnectionCreateRequest(ctx, resourceGroupName, gatewayName, connectionName)
 		},
-	}, nil
+		responder: client.ListByVpnConnectionHandleResponse,
+		advancer: func(ctx context.Context, resp *ListVpnSiteLinkConnectionsResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.ListVpnSiteLinkConnectionsResult.NextLink)
+		},
+	}
 }
 
 // ListByVpnConnectionCreateRequest creates the ListByVpnConnection request.
-func (client *VpnLinkConnectionsClient) ListByVpnConnectionCreateRequest(resourceGroupName string, gatewayName string, connectionName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *VpnLinkConnectionsClient) ListByVpnConnectionCreateRequest(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}/vpnLinkConnections"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{gatewayName}", url.PathEscape(gatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{connectionName}", url.PathEscape(connectionName))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 

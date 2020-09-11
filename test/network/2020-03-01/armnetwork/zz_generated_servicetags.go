@@ -10,7 +10,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 )
 
@@ -33,17 +32,17 @@ func NewServiceTagsClient(c *Client, subscriptionID string) ServiceTagsOperation
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *ServiceTagsClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *ServiceTagsClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // List - Gets a list of service tag information resources.
 func (client *ServiceTagsClient) List(ctx context.Context, location string) (*ServiceTagsListResultResponse, error) {
-	req, err := client.ListCreateRequest(location)
+	req, err := client.ListCreateRequest(ctx, location)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -55,22 +54,17 @@ func (client *ServiceTagsClient) List(ctx context.Context, location string) (*Se
 }
 
 // ListCreateRequest creates the List request.
-func (client *ServiceTagsClient) ListCreateRequest(location string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *ServiceTagsClient) ListCreateRequest(ctx context.Context, location string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/serviceTags"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 

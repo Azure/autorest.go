@@ -42,26 +42,17 @@ function generatePagerReturnInstance(op: Operation, imports: ImportManager): str
     if (!found) {
       throw console.error(`failed to find nextLink parameter for operation ${op.language.go!.paging.nextLinkOperation.language.go!.name}`);
     }
-    text += `\t\tadvancer: func(resp *${pagerSchema.schema.language.go!.responseType.name}) (*azcore.Request, error) {\n`;
-    text += `\t\t\treturn client.${camelCase(op.language.go!.paging.member)}CreateRequest(${reqParams.join(', ')})\n`;
+    text += `\t\tadvancer: func(ctx context.Context, resp *${pagerSchema.schema.language.go!.responseType.name}) (*azcore.Request, error) {\n`;
+    text += `\t\t\treturn client.${camelCase(op.language.go!.paging.member)}CreateRequest(ctx, ${reqParams.join(', ')})\n`;
     text += '\t\t},\n';
   } else {
-    imports.add('fmt');
-    imports.add('net/url');
     let resultTypeName = pagerSchema.schema.language.go!.name;
     if (pagerSchema.schema.serialization?.xml?.name) {
       // xml can specifiy its own name, prefer that if available
       resultTypeName = pagerSchema.schema.serialization.xml.name;
     }
-    text += `\t\tadvancer: func(resp *${pagerSchema.schema.language.go!.responseType.name}) (*azcore.Request, error) {\n`;
-    text += `\t\t\tu, err := url.Parse(*resp.${resultTypeName}.${pager.op.language.go!.paging.nextLinkName})\n`;
-    text += `\t\t\tif err != nil {\n`;
-    text += `\t\t\t\treturn nil, fmt.Errorf("invalid ${pager.op.language.go!.paging.nextLinkName}: %w", err)\n`;
-    text += `\t\t\t}\n`;
-    text += `\t\t\tif u.Scheme == "" {\n`;
-    text += `\t\t\t\treturn nil, fmt.Errorf("no scheme detected in ${pager.op.language.go!.paging.nextLinkName} %s", *resp.${resultTypeName}.${pager.op.language.go!.paging.nextLinkName})\n`;
-    text += `\t\t\t}\n`;
-    text += `\t\t\treturn azcore.NewRequest(http.MethodGet, *u), nil\n`;
+    text += `\t\tadvancer: func(ctx context.Context, resp *${pagerSchema.schema.language.go!.responseType.name}) (*azcore.Request, error) {\n`;
+    text += `\t\t\treturn azcore.NewRequest(ctx, http.MethodGet, *resp.${resultTypeName}.${pager.op.language.go!.paging.nextLinkName})\n`;
     text += `\t\t},\n`;
   }
   text += `\t}, nil`;
@@ -200,17 +191,6 @@ export async function generateARMPollers(session: Session<CodeModel>): Promise<s
   }
   text += imports.text();
   text += bodyText;
-  // add delay function at the bottom of the pollers.go file
-  text += `
-  func delay(ctx context.Context, delay time.Duration) error {
-    select {
-    case <-time.After(delay):
-      return nil
-    case <-ctx.Done():
-      return ctx.Err()
-    }
-  }
-  `;
   return text;
 }
 

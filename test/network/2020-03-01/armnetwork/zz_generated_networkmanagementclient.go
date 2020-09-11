@@ -7,12 +7,10 @@ package armnetwork
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 	"time"
 )
@@ -26,7 +24,7 @@ type NetworkManagementClientOperations interface {
 	// ResumeDeleteBastionShareableLink - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeDeleteBastionShareableLink(token string) (HTTPPoller, error)
 	// DisconnectActiveSessions - Returns the list of currently active sessions on the Bastion.
-	DisconnectActiveSessions(resourceGroupName string, bastionHostName string, sessionIds SessionIDs) (BastionSessionDeleteResultPager, error)
+	DisconnectActiveSessions(resourceGroupName string, bastionHostName string, sessionIds SessionIDs) BastionSessionDeleteResultPager
 	// BeginGeneratevirtualwanvpnserverconfigurationvpnprofile - Generates a unique VPN profile for P2S clients for VirtualWan and associated VpnServerConfiguration combination in the specified resource group.
 	BeginGeneratevirtualwanvpnserverconfigurationvpnprofile(ctx context.Context, resourceGroupName string, virtualWanName string, vpnClientParams VirtualWanVpnProfileParameters) (*VpnProfileResponsePollerResponse, error)
 	// ResumeGeneratevirtualwanvpnserverconfigurationvpnprofile - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
@@ -36,7 +34,7 @@ type NetworkManagementClientOperations interface {
 	// ResumeGetActiveSessions - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeGetActiveSessions(token string) (BastionActiveSessionListResultPagerPoller, error)
 	// GetBastionShareableLink - Return the Bastion Shareable Links for all the VMs specified in the request.
-	GetBastionShareableLink(resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest) (BastionShareableLinkListResultPager, error)
+	GetBastionShareableLink(resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest) BastionShareableLinkListResultPager
 	// BeginPutBastionShareableLink - Creates a Bastion Shareable Links for all the VMs specified in the request.
 	BeginPutBastionShareableLink(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest) (*BastionShareableLinkListResultPagerPollerResponse, error)
 	// ResumePutBastionShareableLink - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
@@ -58,17 +56,17 @@ func NewNetworkManagementClient(c *Client, subscriptionID string) NetworkManagem
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *NetworkManagementClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *NetworkManagementClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // CheckDNSNameAvailability - Checks whether a domain name in the cloudapp.azure.com zone is available for use.
 func (client *NetworkManagementClient) CheckDNSNameAvailability(ctx context.Context, location string, domainNameLabel string) (*DNSNameAvailabilityResultResponse, error) {
-	req, err := client.CheckDNSNameAvailabilityCreateRequest(location, domainNameLabel)
+	req, err := client.CheckDNSNameAvailabilityCreateRequest(ctx, location, domainNameLabel)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -80,23 +78,18 @@ func (client *NetworkManagementClient) CheckDNSNameAvailability(ctx context.Cont
 }
 
 // CheckDNSNameAvailabilityCreateRequest creates the CheckDNSNameAvailability request.
-func (client *NetworkManagementClient) CheckDNSNameAvailabilityCreateRequest(location string, domainNameLabel string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkManagementClient) CheckDNSNameAvailabilityCreateRequest(ctx context.Context, location string, domainNameLabel string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/CheckDnsNameAvailability"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("domainNameLabel", domainNameLabel)
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -120,12 +113,12 @@ func (client *NetworkManagementClient) CheckDNSNameAvailabilityHandleError(resp 
 
 // DeleteBastionShareableLink - Deletes the Bastion Shareable Links for all the VMs specified in the request.
 func (client *NetworkManagementClient) BeginDeleteBastionShareableLink(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest) (*HTTPPollerResponse, error) {
-	req, err := client.DeleteBastionShareableLinkCreateRequest(resourceGroupName, bastionHostName, bslRequest)
+	req, err := client.DeleteBastionShareableLinkCreateRequest(ctx, resourceGroupName, bastionHostName, bslRequest)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -160,23 +153,18 @@ func (client *NetworkManagementClient) ResumeDeleteBastionShareableLink(token st
 }
 
 // DeleteBastionShareableLinkCreateRequest creates the DeleteBastionShareableLink request.
-func (client *NetworkManagementClient) DeleteBastionShareableLinkCreateRequest(resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkManagementClient) DeleteBastionShareableLinkCreateRequest(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}/deleteShareableLinks"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{bastionHostName}", url.PathEscape(bastionHostName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPost, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(bslRequest)
 }
 
@@ -198,46 +186,32 @@ func (client *NetworkManagementClient) DeleteBastionShareableLinkHandleError(res
 }
 
 // DisconnectActiveSessions - Returns the list of currently active sessions on the Bastion.
-func (client *NetworkManagementClient) DisconnectActiveSessions(resourceGroupName string, bastionHostName string, sessionIds SessionIDs) (BastionSessionDeleteResultPager, error) {
-	req, err := client.DisconnectActiveSessionsCreateRequest(resourceGroupName, bastionHostName, sessionIds)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkManagementClient) DisconnectActiveSessions(resourceGroupName string, bastionHostName string, sessionIds SessionIDs) BastionSessionDeleteResultPager {
 	return &bastionSessionDeleteResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.DisconnectActiveSessionsHandleResponse,
-		advancer: func(resp *BastionSessionDeleteResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.BastionSessionDeleteResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.BastionSessionDeleteResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.DisconnectActiveSessionsCreateRequest(ctx, resourceGroupName, bastionHostName, sessionIds)
 		},
-	}, nil
+		responder: client.DisconnectActiveSessionsHandleResponse,
+		advancer: func(ctx context.Context, resp *BastionSessionDeleteResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.BastionSessionDeleteResult.NextLink)
+		},
+	}
 }
 
 // DisconnectActiveSessionsCreateRequest creates the DisconnectActiveSessions request.
-func (client *NetworkManagementClient) DisconnectActiveSessionsCreateRequest(resourceGroupName string, bastionHostName string, sessionIds SessionIDs) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkManagementClient) DisconnectActiveSessionsCreateRequest(ctx context.Context, resourceGroupName string, bastionHostName string, sessionIds SessionIDs) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}/disconnectActiveSessions"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{bastionHostName}", url.PathEscape(bastionHostName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPost, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(sessionIds)
 }
 
@@ -261,12 +235,12 @@ func (client *NetworkManagementClient) DisconnectActiveSessionsHandleError(resp 
 
 // Generatevirtualwanvpnserverconfigurationvpnprofile - Generates a unique VPN profile for P2S clients for VirtualWan and associated VpnServerConfiguration combination in the specified resource group.
 func (client *NetworkManagementClient) BeginGeneratevirtualwanvpnserverconfigurationvpnprofile(ctx context.Context, resourceGroupName string, virtualWanName string, vpnClientParams VirtualWanVpnProfileParameters) (*VpnProfileResponsePollerResponse, error) {
-	req, err := client.GeneratevirtualwanvpnserverconfigurationvpnprofileCreateRequest(resourceGroupName, virtualWanName, vpnClientParams)
+	req, err := client.GeneratevirtualwanvpnserverconfigurationvpnprofileCreateRequest(ctx, resourceGroupName, virtualWanName, vpnClientParams)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -301,23 +275,18 @@ func (client *NetworkManagementClient) ResumeGeneratevirtualwanvpnserverconfigur
 }
 
 // GeneratevirtualwanvpnserverconfigurationvpnprofileCreateRequest creates the Generatevirtualwanvpnserverconfigurationvpnprofile request.
-func (client *NetworkManagementClient) GeneratevirtualwanvpnserverconfigurationvpnprofileCreateRequest(resourceGroupName string, virtualWanName string, vpnClientParams VirtualWanVpnProfileParameters) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkManagementClient) GeneratevirtualwanvpnserverconfigurationvpnprofileCreateRequest(ctx context.Context, resourceGroupName string, virtualWanName string, vpnClientParams VirtualWanVpnProfileParameters) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/GenerateVpnProfile"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualWANName}", url.PathEscape(virtualWanName))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPost, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(vpnClientParams)
 }
 
@@ -340,12 +309,12 @@ func (client *NetworkManagementClient) Generatevirtualwanvpnserverconfigurationv
 
 // GetActiveSessions - Returns the list of currently active sessions on the Bastion.
 func (client *NetworkManagementClient) BeginGetActiveSessions(ctx context.Context, resourceGroupName string, bastionHostName string) (*BastionActiveSessionListResultPagerPollerResponse, error) {
-	req, err := client.GetActiveSessionsCreateRequest(resourceGroupName, bastionHostName)
+	req, err := client.GetActiveSessionsCreateRequest(ctx, resourceGroupName, bastionHostName)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -381,23 +350,18 @@ func (client *NetworkManagementClient) ResumeGetActiveSessions(token string) (Ba
 }
 
 // GetActiveSessionsCreateRequest creates the GetActiveSessions request.
-func (client *NetworkManagementClient) GetActiveSessionsCreateRequest(resourceGroupName string, bastionHostName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkManagementClient) GetActiveSessionsCreateRequest(ctx context.Context, resourceGroupName string, bastionHostName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}/getActiveSessions"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{bastionHostName}", url.PathEscape(bastionHostName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPost, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -428,46 +392,32 @@ func (client *NetworkManagementClient) GetActiveSessionsHandleError(resp *azcore
 }
 
 // GetBastionShareableLink - Return the Bastion Shareable Links for all the VMs specified in the request.
-func (client *NetworkManagementClient) GetBastionShareableLink(resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest) (BastionShareableLinkListResultPager, error) {
-	req, err := client.GetBastionShareableLinkCreateRequest(resourceGroupName, bastionHostName, bslRequest)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkManagementClient) GetBastionShareableLink(resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest) BastionShareableLinkListResultPager {
 	return &bastionShareableLinkListResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.GetBastionShareableLinkHandleResponse,
-		advancer: func(resp *BastionShareableLinkListResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.BastionShareableLinkListResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.BastionShareableLinkListResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.GetBastionShareableLinkCreateRequest(ctx, resourceGroupName, bastionHostName, bslRequest)
 		},
-	}, nil
+		responder: client.GetBastionShareableLinkHandleResponse,
+		advancer: func(ctx context.Context, resp *BastionShareableLinkListResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.BastionShareableLinkListResult.NextLink)
+		},
+	}
 }
 
 // GetBastionShareableLinkCreateRequest creates the GetBastionShareableLink request.
-func (client *NetworkManagementClient) GetBastionShareableLinkCreateRequest(resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkManagementClient) GetBastionShareableLinkCreateRequest(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}/getShareableLinks"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{bastionHostName}", url.PathEscape(bastionHostName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPost, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(bslRequest)
 }
 
@@ -491,12 +441,12 @@ func (client *NetworkManagementClient) GetBastionShareableLinkHandleError(resp *
 
 // PutBastionShareableLink - Creates a Bastion Shareable Links for all the VMs specified in the request.
 func (client *NetworkManagementClient) BeginPutBastionShareableLink(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest) (*BastionShareableLinkListResultPagerPollerResponse, error) {
-	req, err := client.PutBastionShareableLinkCreateRequest(resourceGroupName, bastionHostName, bslRequest)
+	req, err := client.PutBastionShareableLinkCreateRequest(ctx, resourceGroupName, bastionHostName, bslRequest)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -532,23 +482,18 @@ func (client *NetworkManagementClient) ResumePutBastionShareableLink(token strin
 }
 
 // PutBastionShareableLinkCreateRequest creates the PutBastionShareableLink request.
-func (client *NetworkManagementClient) PutBastionShareableLinkCreateRequest(resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkManagementClient) PutBastionShareableLinkCreateRequest(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}/createShareableLinks"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{bastionHostName}", url.PathEscape(bastionHostName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPost, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(bslRequest)
 }
 
@@ -580,11 +525,11 @@ func (client *NetworkManagementClient) PutBastionShareableLinkHandleError(resp *
 
 // SupportedSecurityProviders - Gives the supported security providers for the virtual wan.
 func (client *NetworkManagementClient) SupportedSecurityProviders(ctx context.Context, resourceGroupName string, virtualWanName string) (*VirtualWanSecurityProvidersResponse, error) {
-	req, err := client.SupportedSecurityProvidersCreateRequest(resourceGroupName, virtualWanName)
+	req, err := client.SupportedSecurityProvidersCreateRequest(ctx, resourceGroupName, virtualWanName)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -596,23 +541,18 @@ func (client *NetworkManagementClient) SupportedSecurityProviders(ctx context.Co
 }
 
 // SupportedSecurityProvidersCreateRequest creates the SupportedSecurityProviders request.
-func (client *NetworkManagementClient) SupportedSecurityProvidersCreateRequest(resourceGroupName string, virtualWanName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *NetworkManagementClient) SupportedSecurityProvidersCreateRequest(ctx context.Context, resourceGroupName string, virtualWanName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/supportedSecurityProviders"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualWANName}", url.PathEscape(virtualWanName))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 

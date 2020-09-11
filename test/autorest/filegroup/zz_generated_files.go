@@ -9,8 +9,6 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
-	"net/url"
-	"path"
 )
 
 // FilesOperations contains the methods for the Files group.
@@ -35,17 +33,17 @@ func NewFilesClient(c *Client) FilesOperations {
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *FilesClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *FilesClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // GetEmptyFile - Get empty file
 func (client *FilesClient) GetEmptyFile(ctx context.Context) (*http.Response, error) {
-	req, err := client.GetEmptyFileCreateRequest()
+	req, err := client.GetEmptyFileCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -57,17 +55,12 @@ func (client *FilesClient) GetEmptyFile(ctx context.Context) (*http.Response, er
 }
 
 // GetEmptyFileCreateRequest creates the GetEmptyFile request.
-func (client *FilesClient) GetEmptyFileCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *FilesClient) GetEmptyFileCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/files/stream/empty"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	req.SkipBodyDownload()
 	return req, nil
 }
@@ -91,11 +84,11 @@ func (client *FilesClient) GetEmptyFileHandleError(resp *azcore.Response) error 
 
 // GetFile - Get file
 func (client *FilesClient) GetFile(ctx context.Context) (*http.Response, error) {
-	req, err := client.GetFileCreateRequest()
+	req, err := client.GetFileCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -107,17 +100,12 @@ func (client *FilesClient) GetFile(ctx context.Context) (*http.Response, error) 
 }
 
 // GetFileCreateRequest creates the GetFile request.
-func (client *FilesClient) GetFileCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *FilesClient) GetFileCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/files/stream/nonempty"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	req.SkipBodyDownload()
 	return req, nil
 }
@@ -141,11 +129,11 @@ func (client *FilesClient) GetFileHandleError(resp *azcore.Response) error {
 
 // GetFileLarge - Get a large file
 func (client *FilesClient) GetFileLarge(ctx context.Context) (*http.Response, error) {
-	req, err := client.GetFileLargeCreateRequest()
+	req, err := client.GetFileLargeCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -157,17 +145,12 @@ func (client *FilesClient) GetFileLarge(ctx context.Context) (*http.Response, er
 }
 
 // GetFileLargeCreateRequest creates the GetFileLarge request.
-func (client *FilesClient) GetFileLargeCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *FilesClient) GetFileLargeCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/files/stream/verylarge"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	req.SkipBodyDownload()
 	return req, nil
 }

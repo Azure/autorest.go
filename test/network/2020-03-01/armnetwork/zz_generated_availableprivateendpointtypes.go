@@ -6,20 +6,19 @@
 package armnetwork
 
 import (
-	"fmt"
+	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 )
 
 // AvailablePrivateEndpointTypesOperations contains the methods for the AvailablePrivateEndpointTypes group.
 type AvailablePrivateEndpointTypesOperations interface {
 	// List - Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
-	List(location string) (AvailablePrivateEndpointTypesResultPager, error)
+	List(location string) AvailablePrivateEndpointTypesResultPager
 	// ListByResourceGroup - Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
-	ListByResourceGroup(location string, resourceGroupName string) (AvailablePrivateEndpointTypesResultPager, error)
+	ListByResourceGroup(location string, resourceGroupName string) AvailablePrivateEndpointTypesResultPager
 }
 
 // AvailablePrivateEndpointTypesClient implements the AvailablePrivateEndpointTypesOperations interface.
@@ -35,50 +34,36 @@ func NewAvailablePrivateEndpointTypesClient(c *Client, subscriptionID string) Av
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *AvailablePrivateEndpointTypesClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *AvailablePrivateEndpointTypesClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // List - Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
-func (client *AvailablePrivateEndpointTypesClient) List(location string) (AvailablePrivateEndpointTypesResultPager, error) {
-	req, err := client.ListCreateRequest(location)
-	if err != nil {
-		return nil, err
-	}
+func (client *AvailablePrivateEndpointTypesClient) List(location string) AvailablePrivateEndpointTypesResultPager {
 	return &availablePrivateEndpointTypesResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListHandleResponse,
-		advancer: func(resp *AvailablePrivateEndpointTypesResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.AvailablePrivateEndpointTypesResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.AvailablePrivateEndpointTypesResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListCreateRequest(ctx, location)
 		},
-	}, nil
+		responder: client.ListHandleResponse,
+		advancer: func(ctx context.Context, resp *AvailablePrivateEndpointTypesResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.AvailablePrivateEndpointTypesResult.NextLink)
+		},
+	}
 }
 
 // ListCreateRequest creates the List request.
-func (client *AvailablePrivateEndpointTypesClient) ListCreateRequest(location string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *AvailablePrivateEndpointTypesClient) ListCreateRequest(ctx context.Context, location string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availablePrivateEndpointTypes"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -101,46 +86,32 @@ func (client *AvailablePrivateEndpointTypesClient) ListHandleError(resp *azcore.
 }
 
 // ListByResourceGroup - Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
-func (client *AvailablePrivateEndpointTypesClient) ListByResourceGroup(location string, resourceGroupName string) (AvailablePrivateEndpointTypesResultPager, error) {
-	req, err := client.ListByResourceGroupCreateRequest(location, resourceGroupName)
-	if err != nil {
-		return nil, err
-	}
+func (client *AvailablePrivateEndpointTypesClient) ListByResourceGroup(location string, resourceGroupName string) AvailablePrivateEndpointTypesResultPager {
 	return &availablePrivateEndpointTypesResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.ListByResourceGroupHandleResponse,
-		advancer: func(resp *AvailablePrivateEndpointTypesResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.AvailablePrivateEndpointTypesResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.AvailablePrivateEndpointTypesResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.ListByResourceGroupCreateRequest(ctx, location, resourceGroupName)
 		},
-	}, nil
+		responder: client.ListByResourceGroupHandleResponse,
+		advancer: func(ctx context.Context, resp *AvailablePrivateEndpointTypesResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.AvailablePrivateEndpointTypesResult.NextLink)
+		},
+	}
 }
 
 // ListByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *AvailablePrivateEndpointTypesClient) ListByResourceGroupCreateRequest(location string, resourceGroupName string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *AvailablePrivateEndpointTypesClient) ListByResourceGroupCreateRequest(ctx context.Context, location string, resourceGroupName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availablePrivateEndpointTypes"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 

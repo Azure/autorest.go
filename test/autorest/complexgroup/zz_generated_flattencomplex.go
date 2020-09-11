@@ -12,8 +12,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"io/ioutil"
 	"net/http"
-	"net/url"
-	"path"
 )
 
 // FlattencomplexOperations contains the methods for the Flattencomplex group.
@@ -33,16 +31,16 @@ func NewFlattencomplexClient(c *Client) FlattencomplexOperations {
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *FlattencomplexClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *FlattencomplexClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 func (client *FlattencomplexClient) GetValid(ctx context.Context) (*MyBaseTypeResponse, error) {
-	req, err := client.GetValidCreateRequest()
+	req, err := client.GetValidCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -54,17 +52,12 @@ func (client *FlattencomplexClient) GetValid(ctx context.Context) (*MyBaseTypeRe
 }
 
 // GetValidCreateRequest creates the GetValid request.
-func (client *FlattencomplexClient) GetValidCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *FlattencomplexClient) GetValidCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/complex/flatten/valid"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 

@@ -12,8 +12,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"io/ioutil"
 	"net/http"
-	"net/url"
-	"path"
 )
 
 // IntOperations contains the methods for the Int group.
@@ -36,17 +34,17 @@ func NewIntClient(c *Client) IntOperations {
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *IntClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *IntClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // Get - Get an int enum
 func (client *IntClient) Get(ctx context.Context) (*IntEnumResponse, error) {
-	req, err := client.GetCreateRequest()
+	req, err := client.GetCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -58,17 +56,12 @@ func (client *IntClient) Get(ctx context.Context) (*IntEnumResponse, error) {
 }
 
 // GetCreateRequest creates the Get request.
-func (client *IntClient) GetCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *IntClient) GetCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/nonStringEnums/int/get"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -95,11 +88,11 @@ func (client *IntClient) GetHandleError(resp *azcore.Response) error {
 
 // Put - Put an int enum
 func (client *IntClient) Put(ctx context.Context, intPutOptions *IntPutOptions) (*StringResponse, error) {
-	req, err := client.PutCreateRequest(intPutOptions)
+	req, err := client.PutCreateRequest(ctx, intPutOptions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -111,17 +104,12 @@ func (client *IntClient) Put(ctx context.Context, intPutOptions *IntPutOptions) 
 }
 
 // PutCreateRequest creates the Put request.
-func (client *IntClient) PutCreateRequest(intPutOptions *IntPutOptions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *IntClient) PutCreateRequest(ctx context.Context, intPutOptions *IntPutOptions) (*azcore.Request, error) {
 	urlPath := "/nonStringEnums/int/put"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	if intPutOptions != nil {
 		return req, req.MarshalAsJSON(intPutOptions.Input)
 	}

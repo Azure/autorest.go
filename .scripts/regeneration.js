@@ -11,7 +11,7 @@ const swaggerDir = 'src/node_modules/@microsoft.azure/autorest.testserver/swagge
 const goMappings = {
     'additionalpropsgroup': 'additionalProperties.json',
     'arraygroup': 'body-array.json',
-    //'azurereportgroup': 'azure-report.json', used for reporting test coverage
+    'azurereportgroup': 'azure-report.json',
     'azurespecialsgroup': 'azure-special-properties.json',
     'booleangroup': 'body-boolean.json',
     'bytegroup': 'body-byte.json',
@@ -39,7 +39,7 @@ const goMappings = {
     'optionalgroup': 'required-optional.json',
     'paginggroup': 'paging.json',
     'paramgroupinggroup': 'azure-parameter-grouping.json',
-    //'reportgroup': 'report.json', used for reporting test coverage
+    'reportgroup': 'report.json',
     'stringgroup': 'body-string.json',
     'urlgroup': 'url.json',
     'urlmultigroup': 'url-multi-collectionFormat.json',

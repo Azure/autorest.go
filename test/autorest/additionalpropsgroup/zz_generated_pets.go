@@ -9,8 +9,6 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
-	"net/url"
-	"path"
 )
 
 // PetsOperations contains the methods for the Pets group.
@@ -41,17 +39,17 @@ func NewPetsClient(c *Client) PetsOperations {
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *PetsClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *PetsClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // CreateApInProperties - Create a Pet which contains more properties than what is defined.
 func (client *PetsClient) CreateApInProperties(ctx context.Context, createParameters PetApInProperties) (*PetApInPropertiesResponse, error) {
-	req, err := client.CreateApInPropertiesCreateRequest(createParameters)
+	req, err := client.CreateApInPropertiesCreateRequest(ctx, createParameters)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -63,17 +61,12 @@ func (client *PetsClient) CreateApInProperties(ctx context.Context, createParame
 }
 
 // CreateApInPropertiesCreateRequest creates the CreateApInProperties request.
-func (client *PetsClient) CreateApInPropertiesCreateRequest(createParameters PetApInProperties) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *PetsClient) CreateApInPropertiesCreateRequest(ctx context.Context, createParameters PetApInProperties) (*azcore.Request, error) {
 	urlPath := "/additionalProperties/in/properties"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	return req, req.MarshalAsJSON(createParameters)
 }
 
@@ -97,11 +90,11 @@ func (client *PetsClient) CreateApInPropertiesHandleError(resp *azcore.Response)
 
 // CreateApInPropertiesWithApstring - Create a Pet which contains more properties than what is defined.
 func (client *PetsClient) CreateApInPropertiesWithApstring(ctx context.Context, createParameters PetApInPropertiesWithApstring) (*PetApInPropertiesWithApstringResponse, error) {
-	req, err := client.CreateApInPropertiesWithApstringCreateRequest(createParameters)
+	req, err := client.CreateApInPropertiesWithApstringCreateRequest(ctx, createParameters)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -113,17 +106,12 @@ func (client *PetsClient) CreateApInPropertiesWithApstring(ctx context.Context, 
 }
 
 // CreateApInPropertiesWithApstringCreateRequest creates the CreateApInPropertiesWithApstring request.
-func (client *PetsClient) CreateApInPropertiesWithApstringCreateRequest(createParameters PetApInPropertiesWithApstring) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *PetsClient) CreateApInPropertiesWithApstringCreateRequest(ctx context.Context, createParameters PetApInPropertiesWithApstring) (*azcore.Request, error) {
 	urlPath := "/additionalProperties/in/properties/with/additionalProperties/string"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	return req, req.MarshalAsJSON(createParameters)
 }
 
@@ -147,11 +135,11 @@ func (client *PetsClient) CreateApInPropertiesWithApstringHandleError(resp *azco
 
 // CreateApObject - Create a Pet which contains more properties than what is defined.
 func (client *PetsClient) CreateApObject(ctx context.Context, createParameters PetApObject) (*PetApObjectResponse, error) {
-	req, err := client.CreateApObjectCreateRequest(createParameters)
+	req, err := client.CreateApObjectCreateRequest(ctx, createParameters)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -163,17 +151,12 @@ func (client *PetsClient) CreateApObject(ctx context.Context, createParameters P
 }
 
 // CreateApObjectCreateRequest creates the CreateApObject request.
-func (client *PetsClient) CreateApObjectCreateRequest(createParameters PetApObject) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *PetsClient) CreateApObjectCreateRequest(ctx context.Context, createParameters PetApObject) (*azcore.Request, error) {
 	urlPath := "/additionalProperties/type/object"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	return req, req.MarshalAsJSON(createParameters)
 }
 
@@ -197,11 +180,11 @@ func (client *PetsClient) CreateApObjectHandleError(resp *azcore.Response) error
 
 // CreateApString - Create a Pet which contains more properties than what is defined.
 func (client *PetsClient) CreateApString(ctx context.Context, createParameters PetApString) (*PetApStringResponse, error) {
-	req, err := client.CreateApStringCreateRequest(createParameters)
+	req, err := client.CreateApStringCreateRequest(ctx, createParameters)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -213,17 +196,12 @@ func (client *PetsClient) CreateApString(ctx context.Context, createParameters P
 }
 
 // CreateApStringCreateRequest creates the CreateApString request.
-func (client *PetsClient) CreateApStringCreateRequest(createParameters PetApString) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *PetsClient) CreateApStringCreateRequest(ctx context.Context, createParameters PetApString) (*azcore.Request, error) {
 	urlPath := "/additionalProperties/type/string"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	return req, req.MarshalAsJSON(createParameters)
 }
 
@@ -247,11 +225,11 @@ func (client *PetsClient) CreateApStringHandleError(resp *azcore.Response) error
 
 // CreateApTrue - Create a Pet which contains more properties than what is defined.
 func (client *PetsClient) CreateApTrue(ctx context.Context, createParameters PetApTrue) (*PetApTrueResponse, error) {
-	req, err := client.CreateApTrueCreateRequest(createParameters)
+	req, err := client.CreateApTrueCreateRequest(ctx, createParameters)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -263,17 +241,12 @@ func (client *PetsClient) CreateApTrue(ctx context.Context, createParameters Pet
 }
 
 // CreateApTrueCreateRequest creates the CreateApTrue request.
-func (client *PetsClient) CreateApTrueCreateRequest(createParameters PetApTrue) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *PetsClient) CreateApTrueCreateRequest(ctx context.Context, createParameters PetApTrue) (*azcore.Request, error) {
 	urlPath := "/additionalProperties/true"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	return req, req.MarshalAsJSON(createParameters)
 }
 
@@ -297,11 +270,11 @@ func (client *PetsClient) CreateApTrueHandleError(resp *azcore.Response) error {
 
 // CreateCatApTrue - Create a CatAPTrue which contains more properties than what is defined.
 func (client *PetsClient) CreateCatApTrue(ctx context.Context, createParameters CatApTrue) (*CatApTrueResponse, error) {
-	req, err := client.CreateCatApTrueCreateRequest(createParameters)
+	req, err := client.CreateCatApTrueCreateRequest(ctx, createParameters)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -313,17 +286,12 @@ func (client *PetsClient) CreateCatApTrue(ctx context.Context, createParameters 
 }
 
 // CreateCatApTrueCreateRequest creates the CreateCatApTrue request.
-func (client *PetsClient) CreateCatApTrueCreateRequest(createParameters CatApTrue) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *PetsClient) CreateCatApTrueCreateRequest(ctx context.Context, createParameters CatApTrue) (*azcore.Request, error) {
 	urlPath := "/additionalProperties/true-subclass"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	return req, req.MarshalAsJSON(createParameters)
 }
 

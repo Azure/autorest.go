@@ -6,8 +6,8 @@ package main
 import (
 	"context"
 	"fmt"
-	"generatortests/autorest/covreport/azurereportgroup"
-	"generatortests/autorest/covreport/reportgroup"
+	"generatortests/autorest/azurereportgroup"
+	"generatortests/autorest/reportgroup"
 	"sort"
 )
 

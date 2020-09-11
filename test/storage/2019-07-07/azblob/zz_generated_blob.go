@@ -72,17 +72,17 @@ func newBlobClient(c *client, pathRenameMode *PathRenameMode) BlobOperations {
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *blobClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *blobClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // AbortCopyFromURL - The Abort Copy From URL operation aborts a pending Copy From URL operation, and leaves a destination blob with zero length and full metadata.
 func (client *blobClient) AbortCopyFromURL(ctx context.Context, copyId string, blobAbortCopyFromUrlOptions *BlobAbortCopyFromURLOptions, leaseAccessConditions *LeaseAccessConditions) (*BlobAbortCopyFromURLResponse, error) {
-	req, err := client.AbortCopyFromURLCreateRequest(copyId, blobAbortCopyFromUrlOptions, leaseAccessConditions)
+	req, err := client.AbortCopyFromURLCreateRequest(ctx, copyId, blobAbortCopyFromUrlOptions, leaseAccessConditions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -94,19 +94,18 @@ func (client *blobClient) AbortCopyFromURL(ctx context.Context, copyId string, b
 }
 
 // AbortCopyFromURLCreateRequest creates the AbortCopyFromURL request.
-func (client *blobClient) AbortCopyFromURLCreateRequest(copyId string, blobAbortCopyFromUrlOptions *BlobAbortCopyFromURLOptions, leaseAccessConditions *LeaseAccessConditions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
+func (client *blobClient) AbortCopyFromURLCreateRequest(ctx context.Context, copyId string, blobAbortCopyFromUrlOptions *BlobAbortCopyFromURLOptions, leaseAccessConditions *LeaseAccessConditions) (*azcore.Request, error) {
+	req, err := azcore.NewRequest(ctx, http.MethodPut, client.u)
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("comp", "copy")
 	query.Set("copyid", copyId)
 	if blobAbortCopyFromUrlOptions != nil && blobAbortCopyFromUrlOptions.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*blobAbortCopyFromUrlOptions.Timeout), 10))
 	}
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPut, *u)
+	req.URL.RawQuery = query.Encode()
 	req.Header.Set("x-ms-copy-action", "abort")
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseId != nil {
 		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseId)
@@ -154,11 +153,11 @@ func (client *blobClient) AbortCopyFromURLHandleError(resp *azcore.Response) err
 
 // AcquireLease - [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations
 func (client *blobClient) AcquireLease(ctx context.Context, blobAcquireLeaseOptions *BlobAcquireLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*BlobAcquireLeaseResponse, error) {
-	req, err := client.AcquireLeaseCreateRequest(blobAcquireLeaseOptions, modifiedAccessConditions)
+	req, err := client.AcquireLeaseCreateRequest(ctx, blobAcquireLeaseOptions, modifiedAccessConditions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -170,18 +169,17 @@ func (client *blobClient) AcquireLease(ctx context.Context, blobAcquireLeaseOpti
 }
 
 // AcquireLeaseCreateRequest creates the AcquireLease request.
-func (client *blobClient) AcquireLeaseCreateRequest(blobAcquireLeaseOptions *BlobAcquireLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
+func (client *blobClient) AcquireLeaseCreateRequest(ctx context.Context, blobAcquireLeaseOptions *BlobAcquireLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+	req, err := azcore.NewRequest(ctx, http.MethodPut, client.u)
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("comp", "lease")
 	if blobAcquireLeaseOptions != nil && blobAcquireLeaseOptions.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*blobAcquireLeaseOptions.Timeout), 10))
 	}
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPut, *u)
+	req.URL.RawQuery = query.Encode()
 	req.Header.Set("x-ms-lease-action", "acquire")
 	if blobAcquireLeaseOptions != nil && blobAcquireLeaseOptions.Duration != nil {
 		req.Header.Set("x-ms-lease-duration", strconv.FormatInt(int64(*blobAcquireLeaseOptions.Duration), 10))
@@ -257,11 +255,11 @@ func (client *blobClient) AcquireLeaseHandleError(resp *azcore.Response) error {
 
 // BreakLease - [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations
 func (client *blobClient) BreakLease(ctx context.Context, blobBreakLeaseOptions *BlobBreakLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*BlobBreakLeaseResponse, error) {
-	req, err := client.BreakLeaseCreateRequest(blobBreakLeaseOptions, modifiedAccessConditions)
+	req, err := client.BreakLeaseCreateRequest(ctx, blobBreakLeaseOptions, modifiedAccessConditions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -273,18 +271,17 @@ func (client *blobClient) BreakLease(ctx context.Context, blobBreakLeaseOptions 
 }
 
 // BreakLeaseCreateRequest creates the BreakLease request.
-func (client *blobClient) BreakLeaseCreateRequest(blobBreakLeaseOptions *BlobBreakLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
+func (client *blobClient) BreakLeaseCreateRequest(ctx context.Context, blobBreakLeaseOptions *BlobBreakLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+	req, err := azcore.NewRequest(ctx, http.MethodPut, client.u)
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("comp", "lease")
 	if blobBreakLeaseOptions != nil && blobBreakLeaseOptions.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*blobBreakLeaseOptions.Timeout), 10))
 	}
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPut, *u)
+	req.URL.RawQuery = query.Encode()
 	req.Header.Set("x-ms-lease-action", "break")
 	if blobBreakLeaseOptions != nil && blobBreakLeaseOptions.BreakPeriod != nil {
 		req.Header.Set("x-ms-lease-break-period", strconv.FormatInt(int64(*blobBreakLeaseOptions.BreakPeriod), 10))
@@ -362,11 +359,11 @@ func (client *blobClient) BreakLeaseHandleError(resp *azcore.Response) error {
 
 // ChangeLease - [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations
 func (client *blobClient) ChangeLease(ctx context.Context, leaseId string, proposedLeaseId string, blobChangeLeaseOptions *BlobChangeLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*BlobChangeLeaseResponse, error) {
-	req, err := client.ChangeLeaseCreateRequest(leaseId, proposedLeaseId, blobChangeLeaseOptions, modifiedAccessConditions)
+	req, err := client.ChangeLeaseCreateRequest(ctx, leaseId, proposedLeaseId, blobChangeLeaseOptions, modifiedAccessConditions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -378,18 +375,17 @@ func (client *blobClient) ChangeLease(ctx context.Context, leaseId string, propo
 }
 
 // ChangeLeaseCreateRequest creates the ChangeLease request.
-func (client *blobClient) ChangeLeaseCreateRequest(leaseId string, proposedLeaseId string, blobChangeLeaseOptions *BlobChangeLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
+func (client *blobClient) ChangeLeaseCreateRequest(ctx context.Context, leaseId string, proposedLeaseId string, blobChangeLeaseOptions *BlobChangeLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+	req, err := azcore.NewRequest(ctx, http.MethodPut, client.u)
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("comp", "lease")
 	if blobChangeLeaseOptions != nil && blobChangeLeaseOptions.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*blobChangeLeaseOptions.Timeout), 10))
 	}
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPut, *u)
+	req.URL.RawQuery = query.Encode()
 	req.Header.Set("x-ms-lease-action", "change")
 	req.Header.Set("x-ms-lease-id", leaseId)
 	req.Header.Set("x-ms-proposed-lease-id", proposedLeaseId)
@@ -461,11 +457,11 @@ func (client *blobClient) ChangeLeaseHandleError(resp *azcore.Response) error {
 
 // CopyFromURL - The Copy From URL operation copies a blob or an internet resource to a new blob. It will not return a response until the copy is complete.
 func (client *blobClient) CopyFromURL(ctx context.Context, copySource url.URL, blobCopyFromUrlOptions *BlobCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*BlobCopyFromURLResponse, error) {
-	req, err := client.CopyFromURLCreateRequest(copySource, blobCopyFromUrlOptions, sourceModifiedAccessConditions, modifiedAccessConditions, leaseAccessConditions)
+	req, err := client.CopyFromURLCreateRequest(ctx, copySource, blobCopyFromUrlOptions, sourceModifiedAccessConditions, modifiedAccessConditions, leaseAccessConditions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -477,17 +473,16 @@ func (client *blobClient) CopyFromURL(ctx context.Context, copySource url.URL, b
 }
 
 // CopyFromURLCreateRequest creates the CopyFromURL request.
-func (client *blobClient) CopyFromURLCreateRequest(copySource url.URL, blobCopyFromUrlOptions *BlobCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
+func (client *blobClient) CopyFromURLCreateRequest(ctx context.Context, copySource url.URL, blobCopyFromUrlOptions *BlobCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*azcore.Request, error) {
+	req, err := azcore.NewRequest(ctx, http.MethodPut, client.u)
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	if blobCopyFromUrlOptions != nil && blobCopyFromUrlOptions.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*blobCopyFromUrlOptions.Timeout), 10))
 	}
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPut, *u)
+	req.URL.RawQuery = query.Encode()
 	req.Header.Set("x-ms-requires-sync", "true")
 	if blobCopyFromUrlOptions != nil && blobCopyFromUrlOptions.Metadata != nil {
 		for k, v := range *blobCopyFromUrlOptions.Metadata {
@@ -601,11 +596,11 @@ func (client *blobClient) CopyFromURLHandleError(resp *azcore.Response) error {
 
 // CreateSnapshot - The Create Snapshot operation creates a read-only snapshot of a blob
 func (client *blobClient) CreateSnapshot(ctx context.Context, blobCreateSnapshotOptions *BlobCreateSnapshotOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*BlobCreateSnapshotResponse, error) {
-	req, err := client.CreateSnapshotCreateRequest(blobCreateSnapshotOptions, cpkInfo, cpkScopeInfo, modifiedAccessConditions, leaseAccessConditions)
+	req, err := client.CreateSnapshotCreateRequest(ctx, blobCreateSnapshotOptions, cpkInfo, cpkScopeInfo, modifiedAccessConditions, leaseAccessConditions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -617,18 +612,17 @@ func (client *blobClient) CreateSnapshot(ctx context.Context, blobCreateSnapshot
 }
 
 // CreateSnapshotCreateRequest creates the CreateSnapshot request.
-func (client *blobClient) CreateSnapshotCreateRequest(blobCreateSnapshotOptions *BlobCreateSnapshotOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
+func (client *blobClient) CreateSnapshotCreateRequest(ctx context.Context, blobCreateSnapshotOptions *BlobCreateSnapshotOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*azcore.Request, error) {
+	req, err := azcore.NewRequest(ctx, http.MethodPut, client.u)
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("comp", "snapshot")
 	if blobCreateSnapshotOptions != nil && blobCreateSnapshotOptions.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*blobCreateSnapshotOptions.Timeout), 10))
 	}
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPut, *u)
+	req.URL.RawQuery = query.Encode()
 	if blobCreateSnapshotOptions != nil && blobCreateSnapshotOptions.Metadata != nil {
 		for k, v := range *blobCreateSnapshotOptions.Metadata {
 			req.Header.Set("x-ms-meta-"+k, v)
@@ -721,11 +715,11 @@ func (client *blobClient) CreateSnapshotHandleError(resp *azcore.Response) error
 
 // Delete - If the storage account's soft delete feature is disabled then, when a blob is deleted, it is permanently removed from the storage account. If the storage account's soft delete feature is enabled, then, when a blob is deleted, it is marked for deletion and becomes inaccessible immediately. However, the blob service retains the blob or snapshot for the number of days specified by the DeleteRetentionPolicy section of [Storage service properties] (Set-Blob-Service-Properties.md). After the specified number of days has passed, the blob's data is permanently removed from the storage account. Note that you continue to be charged for the soft-deleted blob's storage until it is permanently removed. Use the List Blobs API and specify the "include=deleted" query parameter to discover which blobs and snapshots have been soft deleted. You can then use the Undelete Blob API to restore a soft-deleted blob. All other operations on a soft-deleted blob or snapshot causes the service to return an HTTP status code of 404 (ResourceNotFound).
 func (client *blobClient) Delete(ctx context.Context, blobDeleteOptions *BlobDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*BlobDeleteResponse, error) {
-	req, err := client.DeleteCreateRequest(blobDeleteOptions, leaseAccessConditions, modifiedAccessConditions)
+	req, err := client.DeleteCreateRequest(ctx, blobDeleteOptions, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -737,20 +731,19 @@ func (client *blobClient) Delete(ctx context.Context, blobDeleteOptions *BlobDel
 }
 
 // DeleteCreateRequest creates the Delete request.
-func (client *blobClient) DeleteCreateRequest(blobDeleteOptions *BlobDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
+func (client *blobClient) DeleteCreateRequest(ctx context.Context, blobDeleteOptions *BlobDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, client.u)
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	if blobDeleteOptions != nil && blobDeleteOptions.Snapshot != nil {
 		query.Set("snapshot", *blobDeleteOptions.Snapshot)
 	}
 	if blobDeleteOptions != nil && blobDeleteOptions.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*blobDeleteOptions.Timeout), 10))
 	}
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodDelete, *u)
+	req.URL.RawQuery = query.Encode()
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseId != nil {
 		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseId)
 	}
@@ -812,11 +805,11 @@ func (client *blobClient) DeleteHandleError(resp *azcore.Response) error {
 
 // Download - The Download operation reads or downloads a blob from the system, including its metadata and properties. You can also call Download to read a snapshot.
 func (client *blobClient) Download(ctx context.Context, blobDownloadOptions *BlobDownloadOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (*BlobDownloadResponse, error) {
-	req, err := client.DownloadCreateRequest(blobDownloadOptions, leaseAccessConditions, cpkInfo, modifiedAccessConditions)
+	req, err := client.DownloadCreateRequest(ctx, blobDownloadOptions, leaseAccessConditions, cpkInfo, modifiedAccessConditions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -828,20 +821,19 @@ func (client *blobClient) Download(ctx context.Context, blobDownloadOptions *Blo
 }
 
 // DownloadCreateRequest creates the Download request.
-func (client *blobClient) DownloadCreateRequest(blobDownloadOptions *BlobDownloadOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
+func (client *blobClient) DownloadCreateRequest(ctx context.Context, blobDownloadOptions *BlobDownloadOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+	req, err := azcore.NewRequest(ctx, http.MethodGet, client.u)
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	if blobDownloadOptions != nil && blobDownloadOptions.Snapshot != nil {
 		query.Set("snapshot", *blobDownloadOptions.Snapshot)
 	}
 	if blobDownloadOptions != nil && blobDownloadOptions.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*blobDownloadOptions.Timeout), 10))
 	}
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	req.SkipBodyDownload()
 	if blobDownloadOptions != nil && blobDownloadOptions.RangeParameter != nil {
 		req.Header.Set("x-ms-range", *blobDownloadOptions.RangeParameter)
@@ -1040,11 +1032,11 @@ func (client *blobClient) DownloadHandleError(resp *azcore.Response) error {
 
 // GetAccessControl - Get the owner, group, permissions, or access control list for a blob.
 func (client *blobClient) GetAccessControl(ctx context.Context, blobGetAccessControlOptions *BlobGetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*BlobGetAccessControlResponse, error) {
-	req, err := client.GetAccessControlCreateRequest(blobGetAccessControlOptions, leaseAccessConditions, modifiedAccessConditions)
+	req, err := client.GetAccessControlCreateRequest(ctx, blobGetAccessControlOptions, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1056,12 +1048,12 @@ func (client *blobClient) GetAccessControl(ctx context.Context, blobGetAccessCon
 }
 
 // GetAccessControlCreateRequest creates the GetAccessControl request.
-func (client *blobClient) GetAccessControlCreateRequest(blobGetAccessControlOptions *BlobGetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
+func (client *blobClient) GetAccessControlCreateRequest(ctx context.Context, blobGetAccessControlOptions *BlobGetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+	req, err := azcore.NewRequest(ctx, http.MethodHead, client.u)
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("action", "getAccessControl")
 	if blobGetAccessControlOptions != nil && blobGetAccessControlOptions.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*blobGetAccessControlOptions.Timeout), 10))
@@ -1069,8 +1061,7 @@ func (client *blobClient) GetAccessControlCreateRequest(blobGetAccessControlOpti
 	if blobGetAccessControlOptions != nil && blobGetAccessControlOptions.Upn != nil {
 		query.Set("upn", strconv.FormatBool(*blobGetAccessControlOptions.Upn))
 	}
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodHead, *u)
+	req.URL.RawQuery = query.Encode()
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseId != nil {
 		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseId)
 	}
@@ -1148,11 +1139,11 @@ func (client *blobClient) GetAccessControlHandleError(resp *azcore.Response) err
 
 // GetAccountInfo - Returns the sku name and account kind
 func (client *blobClient) GetAccountInfo(ctx context.Context) (*BlobGetAccountInfoResponse, error) {
-	req, err := client.GetAccountInfoCreateRequest()
+	req, err := client.GetAccountInfoCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1164,16 +1155,15 @@ func (client *blobClient) GetAccountInfo(ctx context.Context) (*BlobGetAccountIn
 }
 
 // GetAccountInfoCreateRequest creates the GetAccountInfo request.
-func (client *blobClient) GetAccountInfoCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
+func (client *blobClient) GetAccountInfoCreateRequest(ctx context.Context) (*azcore.Request, error) {
+	req, err := azcore.NewRequest(ctx, http.MethodGet, client.u)
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("restype", "account")
 	query.Set("comp", "properties")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	req.Header.Set("x-ms-version", "2019-07-07")
 	return req, nil
 }
@@ -1220,11 +1210,11 @@ func (client *blobClient) GetAccountInfoHandleError(resp *azcore.Response) error
 
 // GetProperties - The Get Properties operation returns all user-defined metadata, standard HTTP properties, and system properties for the blob. It does not return the content of the blob.
 func (client *blobClient) GetProperties(ctx context.Context, blobGetPropertiesOptions *BlobGetPropertiesOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (*BlobGetPropertiesResponse, error) {
-	req, err := client.GetPropertiesCreateRequest(blobGetPropertiesOptions, leaseAccessConditions, cpkInfo, modifiedAccessConditions)
+	req, err := client.GetPropertiesCreateRequest(ctx, blobGetPropertiesOptions, leaseAccessConditions, cpkInfo, modifiedAccessConditions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1236,20 +1226,19 @@ func (client *blobClient) GetProperties(ctx context.Context, blobGetPropertiesOp
 }
 
 // GetPropertiesCreateRequest creates the GetProperties request.
-func (client *blobClient) GetPropertiesCreateRequest(blobGetPropertiesOptions *BlobGetPropertiesOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
+func (client *blobClient) GetPropertiesCreateRequest(ctx context.Context, blobGetPropertiesOptions *BlobGetPropertiesOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+	req, err := azcore.NewRequest(ctx, http.MethodHead, client.u)
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	if blobGetPropertiesOptions != nil && blobGetPropertiesOptions.Snapshot != nil {
 		query.Set("snapshot", *blobGetPropertiesOptions.Snapshot)
 	}
 	if blobGetPropertiesOptions != nil && blobGetPropertiesOptions.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*blobGetPropertiesOptions.Timeout), 10))
 	}
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodHead, *u)
+	req.URL.RawQuery = query.Encode()
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseId != nil {
 		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseId)
 	}
@@ -1458,11 +1447,11 @@ func (client *blobClient) GetPropertiesHandleError(resp *azcore.Response) error 
 
 // ReleaseLease - [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations
 func (client *blobClient) ReleaseLease(ctx context.Context, leaseId string, blobReleaseLeaseOptions *BlobReleaseLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*BlobReleaseLeaseResponse, error) {
-	req, err := client.ReleaseLeaseCreateRequest(leaseId, blobReleaseLeaseOptions, modifiedAccessConditions)
+	req, err := client.ReleaseLeaseCreateRequest(ctx, leaseId, blobReleaseLeaseOptions, modifiedAccessConditions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1474,18 +1463,17 @@ func (client *blobClient) ReleaseLease(ctx context.Context, leaseId string, blob
 }
 
 // ReleaseLeaseCreateRequest creates the ReleaseLease request.
-func (client *blobClient) ReleaseLeaseCreateRequest(leaseId string, blobReleaseLeaseOptions *BlobReleaseLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
+func (client *blobClient) ReleaseLeaseCreateRequest(ctx context.Context, leaseId string, blobReleaseLeaseOptions *BlobReleaseLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+	req, err := azcore.NewRequest(ctx, http.MethodPut, client.u)
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("comp", "lease")
 	if blobReleaseLeaseOptions != nil && blobReleaseLeaseOptions.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*blobReleaseLeaseOptions.Timeout), 10))
 	}
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPut, *u)
+	req.URL.RawQuery = query.Encode()
 	req.Header.Set("x-ms-lease-action", "release")
 	req.Header.Set("x-ms-lease-id", leaseId)
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfModifiedSince != nil {
@@ -1553,11 +1541,11 @@ func (client *blobClient) ReleaseLeaseHandleError(resp *azcore.Response) error {
 
 // Rename - Rename a blob/file.  By default, the destination is overwritten and if the destination already exists and has a lease the lease is broken.  This operation supports conditional HTTP requests.  For more information, see [Specifying Conditional Headers for Blob Service Operations](https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations).  To fail if the destination already exists, use a conditional request with If-None-Match: "*".
 func (client *blobClient) Rename(ctx context.Context, renameSource string, blobRenameOptions *BlobRenameOptions, directoryHttpHeaders *DirectoryHttpHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*BlobRenameResponse, error) {
-	req, err := client.RenameCreateRequest(renameSource, blobRenameOptions, directoryHttpHeaders, leaseAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions)
+	req, err := client.RenameCreateRequest(ctx, renameSource, blobRenameOptions, directoryHttpHeaders, leaseAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1569,20 +1557,19 @@ func (client *blobClient) Rename(ctx context.Context, renameSource string, blobR
 }
 
 // RenameCreateRequest creates the Rename request.
-func (client *blobClient) RenameCreateRequest(renameSource string, blobRenameOptions *BlobRenameOptions, directoryHttpHeaders *DirectoryHttpHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
+func (client *blobClient) RenameCreateRequest(ctx context.Context, renameSource string, blobRenameOptions *BlobRenameOptions, directoryHttpHeaders *DirectoryHttpHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*azcore.Request, error) {
+	req, err := azcore.NewRequest(ctx, http.MethodPut, client.u)
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	if blobRenameOptions != nil && blobRenameOptions.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*blobRenameOptions.Timeout), 10))
 	}
 	if client.pathRenameMode != nil {
 		query.Set("mode", string(*client.pathRenameMode))
 	}
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPut, *u)
+	req.URL.RawQuery = query.Encode()
 	req.Header.Set("x-ms-rename-source", renameSource)
 	if blobRenameOptions != nil && blobRenameOptions.DirectoryProperties != nil {
 		req.Header.Set("x-ms-properties", *blobRenameOptions.DirectoryProperties)
@@ -1698,11 +1685,11 @@ func (client *blobClient) RenameHandleError(resp *azcore.Response) error {
 
 // RenewLease - [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations
 func (client *blobClient) RenewLease(ctx context.Context, leaseId string, blobRenewLeaseOptions *BlobRenewLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*BlobRenewLeaseResponse, error) {
-	req, err := client.RenewLeaseCreateRequest(leaseId, blobRenewLeaseOptions, modifiedAccessConditions)
+	req, err := client.RenewLeaseCreateRequest(ctx, leaseId, blobRenewLeaseOptions, modifiedAccessConditions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1714,18 +1701,17 @@ func (client *blobClient) RenewLease(ctx context.Context, leaseId string, blobRe
 }
 
 // RenewLeaseCreateRequest creates the RenewLease request.
-func (client *blobClient) RenewLeaseCreateRequest(leaseId string, blobRenewLeaseOptions *BlobRenewLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
+func (client *blobClient) RenewLeaseCreateRequest(ctx context.Context, leaseId string, blobRenewLeaseOptions *BlobRenewLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+	req, err := azcore.NewRequest(ctx, http.MethodPut, client.u)
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("comp", "lease")
 	if blobRenewLeaseOptions != nil && blobRenewLeaseOptions.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*blobRenewLeaseOptions.Timeout), 10))
 	}
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPut, *u)
+	req.URL.RawQuery = query.Encode()
 	req.Header.Set("x-ms-lease-action", "renew")
 	req.Header.Set("x-ms-lease-id", leaseId)
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfModifiedSince != nil {
@@ -1796,11 +1782,11 @@ func (client *blobClient) RenewLeaseHandleError(resp *azcore.Response) error {
 
 // SetAccessControl - Set the owner, group, permissions, or access control list for a blob.
 func (client *blobClient) SetAccessControl(ctx context.Context, blobSetAccessControlOptions *BlobSetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*BlobSetAccessControlResponse, error) {
-	req, err := client.SetAccessControlCreateRequest(blobSetAccessControlOptions, leaseAccessConditions, modifiedAccessConditions)
+	req, err := client.SetAccessControlCreateRequest(ctx, blobSetAccessControlOptions, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1812,18 +1798,17 @@ func (client *blobClient) SetAccessControl(ctx context.Context, blobSetAccessCon
 }
 
 // SetAccessControlCreateRequest creates the SetAccessControl request.
-func (client *blobClient) SetAccessControlCreateRequest(blobSetAccessControlOptions *BlobSetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
+func (client *blobClient) SetAccessControlCreateRequest(ctx context.Context, blobSetAccessControlOptions *BlobSetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+	req, err := azcore.NewRequest(ctx, http.MethodPatch, client.u)
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("action", "setAccessControl")
 	if blobSetAccessControlOptions != nil && blobSetAccessControlOptions.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*blobSetAccessControlOptions.Timeout), 10))
 	}
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPatch, *u)
+	req.URL.RawQuery = query.Encode()
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseId != nil {
 		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseId)
 	}
@@ -1901,11 +1886,11 @@ func (client *blobClient) SetAccessControlHandleError(resp *azcore.Response) err
 
 // SetHTTPHeaders - The Set HTTP Headers operation sets system properties on the blob
 func (client *blobClient) SetHTTPHeaders(ctx context.Context, blobSetHttpHeadersOptions *BlobSetHTTPHeadersOptions, blobHttpHeaders *BlobHttpHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*BlobSetHTTPHeadersResponse, error) {
-	req, err := client.SetHTTPHeadersCreateRequest(blobSetHttpHeadersOptions, blobHttpHeaders, leaseAccessConditions, modifiedAccessConditions)
+	req, err := client.SetHTTPHeadersCreateRequest(ctx, blobSetHttpHeadersOptions, blobHttpHeaders, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1917,18 +1902,17 @@ func (client *blobClient) SetHTTPHeaders(ctx context.Context, blobSetHttpHeaders
 }
 
 // SetHTTPHeadersCreateRequest creates the SetHTTPHeaders request.
-func (client *blobClient) SetHTTPHeadersCreateRequest(blobSetHttpHeadersOptions *BlobSetHTTPHeadersOptions, blobHttpHeaders *BlobHttpHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
+func (client *blobClient) SetHTTPHeadersCreateRequest(ctx context.Context, blobSetHttpHeadersOptions *BlobSetHTTPHeadersOptions, blobHttpHeaders *BlobHttpHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+	req, err := azcore.NewRequest(ctx, http.MethodPut, client.u)
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("comp", "properties")
 	if blobSetHttpHeadersOptions != nil && blobSetHttpHeadersOptions.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*blobSetHttpHeadersOptions.Timeout), 10))
 	}
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPut, *u)
+	req.URL.RawQuery = query.Encode()
 	if blobHttpHeaders != nil && blobHttpHeaders.BlobCacheControl != nil {
 		req.Header.Set("x-ms-blob-cache-control", *blobHttpHeaders.BlobCacheControl)
 	}
@@ -2022,11 +2006,11 @@ func (client *blobClient) SetHTTPHeadersHandleError(resp *azcore.Response) error
 
 // SetMetadata - The Set Blob Metadata operation sets user-defined metadata for the specified blob as one or more name-value pairs
 func (client *blobClient) SetMetadata(ctx context.Context, blobSetMetadataOptions *BlobSetMetadataOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*BlobSetMetadataResponse, error) {
-	req, err := client.SetMetadataCreateRequest(blobSetMetadataOptions, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
+	req, err := client.SetMetadataCreateRequest(ctx, blobSetMetadataOptions, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2038,18 +2022,17 @@ func (client *blobClient) SetMetadata(ctx context.Context, blobSetMetadataOption
 }
 
 // SetMetadataCreateRequest creates the SetMetadata request.
-func (client *blobClient) SetMetadataCreateRequest(blobSetMetadataOptions *BlobSetMetadataOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
+func (client *blobClient) SetMetadataCreateRequest(ctx context.Context, blobSetMetadataOptions *BlobSetMetadataOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+	req, err := azcore.NewRequest(ctx, http.MethodPut, client.u)
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("comp", "metadata")
 	if blobSetMetadataOptions != nil && blobSetMetadataOptions.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*blobSetMetadataOptions.Timeout), 10))
 	}
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPut, *u)
+	req.URL.RawQuery = query.Encode()
 	if blobSetMetadataOptions != nil && blobSetMetadataOptions.Metadata != nil {
 		for k, v := range *blobSetMetadataOptions.Metadata {
 			req.Header.Set("x-ms-meta-"+k, v)
@@ -2145,11 +2128,11 @@ func (client *blobClient) SetMetadataHandleError(resp *azcore.Response) error {
 
 // SetTier - The Set Tier operation sets the tier on a blob. The operation is allowed on a page blob in a premium storage account and on a block blob in a blob storage account (locally redundant storage only). A premium page blob's tier determines the allowed size, IOPS, and bandwidth of the blob. A block blob's tier determines Hot/Cool/Archive storage type. This operation does not update the blob's ETag.
 func (client *blobClient) SetTier(ctx context.Context, tier AccessTier, blobSetTierOptions *BlobSetTierOptions, leaseAccessConditions *LeaseAccessConditions) (*BlobSetTierResponse, error) {
-	req, err := client.SetTierCreateRequest(tier, blobSetTierOptions, leaseAccessConditions)
+	req, err := client.SetTierCreateRequest(ctx, tier, blobSetTierOptions, leaseAccessConditions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2161,18 +2144,17 @@ func (client *blobClient) SetTier(ctx context.Context, tier AccessTier, blobSetT
 }
 
 // SetTierCreateRequest creates the SetTier request.
-func (client *blobClient) SetTierCreateRequest(tier AccessTier, blobSetTierOptions *BlobSetTierOptions, leaseAccessConditions *LeaseAccessConditions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
+func (client *blobClient) SetTierCreateRequest(ctx context.Context, tier AccessTier, blobSetTierOptions *BlobSetTierOptions, leaseAccessConditions *LeaseAccessConditions) (*azcore.Request, error) {
+	req, err := azcore.NewRequest(ctx, http.MethodPut, client.u)
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("comp", "tier")
 	if blobSetTierOptions != nil && blobSetTierOptions.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*blobSetTierOptions.Timeout), 10))
 	}
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPut, *u)
+	req.URL.RawQuery = query.Encode()
 	req.Header.Set("x-ms-access-tier", string(tier))
 	if blobSetTierOptions != nil && blobSetTierOptions.RehydratePriority != nil {
 		req.Header.Set("x-ms-rehydrate-priority", string(*blobSetTierOptions.RehydratePriority))
@@ -2216,11 +2198,11 @@ func (client *blobClient) SetTierHandleError(resp *azcore.Response) error {
 
 // StartCopyFromURL - The Start Copy From URL operation copies a blob or an internet resource to a new blob.
 func (client *blobClient) StartCopyFromURL(ctx context.Context, copySource url.URL, blobStartCopyFromUrlOptions *BlobStartCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*BlobStartCopyFromURLResponse, error) {
-	req, err := client.StartCopyFromURLCreateRequest(copySource, blobStartCopyFromUrlOptions, sourceModifiedAccessConditions, modifiedAccessConditions, leaseAccessConditions)
+	req, err := client.StartCopyFromURLCreateRequest(ctx, copySource, blobStartCopyFromUrlOptions, sourceModifiedAccessConditions, modifiedAccessConditions, leaseAccessConditions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2232,17 +2214,16 @@ func (client *blobClient) StartCopyFromURL(ctx context.Context, copySource url.U
 }
 
 // StartCopyFromURLCreateRequest creates the StartCopyFromURL request.
-func (client *blobClient) StartCopyFromURLCreateRequest(copySource url.URL, blobStartCopyFromUrlOptions *BlobStartCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
+func (client *blobClient) StartCopyFromURLCreateRequest(ctx context.Context, copySource url.URL, blobStartCopyFromUrlOptions *BlobStartCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*azcore.Request, error) {
+	req, err := azcore.NewRequest(ctx, http.MethodPut, client.u)
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	if blobStartCopyFromUrlOptions != nil && blobStartCopyFromUrlOptions.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*blobStartCopyFromUrlOptions.Timeout), 10))
 	}
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPut, *u)
+	req.URL.RawQuery = query.Encode()
 	if blobStartCopyFromUrlOptions != nil && blobStartCopyFromUrlOptions.Metadata != nil {
 		for k, v := range *blobStartCopyFromUrlOptions.Metadata {
 			req.Header.Set("x-ms-meta-"+k, v)
@@ -2341,11 +2322,11 @@ func (client *blobClient) StartCopyFromURLHandleError(resp *azcore.Response) err
 
 // Undelete - Undelete a blob that was previously soft deleted
 func (client *blobClient) Undelete(ctx context.Context, blobUndeleteOptions *BlobUndeleteOptions) (*BlobUndeleteResponse, error) {
-	req, err := client.UndeleteCreateRequest(blobUndeleteOptions)
+	req, err := client.UndeleteCreateRequest(ctx, blobUndeleteOptions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2357,18 +2338,17 @@ func (client *blobClient) Undelete(ctx context.Context, blobUndeleteOptions *Blo
 }
 
 // UndeleteCreateRequest creates the Undelete request.
-func (client *blobClient) UndeleteCreateRequest(blobUndeleteOptions *BlobUndeleteOptions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
+func (client *blobClient) UndeleteCreateRequest(ctx context.Context, blobUndeleteOptions *BlobUndeleteOptions) (*azcore.Request, error) {
+	req, err := azcore.NewRequest(ctx, http.MethodPut, client.u)
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("comp", "undelete")
 	if blobUndeleteOptions != nil && blobUndeleteOptions.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*blobUndeleteOptions.Timeout), 10))
 	}
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPut, *u)
+	req.URL.RawQuery = query.Encode()
 	req.Header.Set("x-ms-version", "2019-07-07")
 	if blobUndeleteOptions != nil && blobUndeleteOptions.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *blobUndeleteOptions.RequestId)

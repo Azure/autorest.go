@@ -87,6 +87,7 @@ export function substituteDiscriminator(schema: Schema): string {
 export function getCreateRequestParametersSig(op: Operation): string {
   const methodParams = getMethodParameters(op);
   const params = new Array<string>();
+  params.push('ctx context.Context');
   for (const methodParam of values(methodParams)) {
     params.push(`${camelCase(methodParam.language.go!.name)} ${formatParameterTypeName(methodParam)}`);
   }

@@ -9,8 +9,6 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
-	"net/url"
-	"path"
 )
 
 // InheritanceOperations contains the methods for the Inheritance group.
@@ -33,17 +31,17 @@ func NewInheritanceClient(c *Client) InheritanceOperations {
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *InheritanceClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *InheritanceClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // GetValid - Get complex types that extend others
 func (client *InheritanceClient) GetValid(ctx context.Context) (*SiameseResponse, error) {
-	req, err := client.GetValidCreateRequest()
+	req, err := client.GetValidCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -55,17 +53,12 @@ func (client *InheritanceClient) GetValid(ctx context.Context) (*SiameseResponse
 }
 
 // GetValidCreateRequest creates the GetValid request.
-func (client *InheritanceClient) GetValidCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *InheritanceClient) GetValidCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/complex/inheritance/valid"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -89,11 +82,11 @@ func (client *InheritanceClient) GetValidHandleError(resp *azcore.Response) erro
 
 // PutValid - Put complex types that extend others
 func (client *InheritanceClient) PutValid(ctx context.Context, complexBody Siamese) (*http.Response, error) {
-	req, err := client.PutValidCreateRequest(complexBody)
+	req, err := client.PutValidCreateRequest(ctx, complexBody)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -105,17 +98,12 @@ func (client *InheritanceClient) PutValid(ctx context.Context, complexBody Siame
 }
 
 // PutValidCreateRequest creates the PutValid request.
-func (client *InheritanceClient) PutValidCreateRequest(complexBody Siamese) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *InheritanceClient) PutValidCreateRequest(ctx context.Context, complexBody Siamese) (*azcore.Request, error) {
 	urlPath := "/complex/inheritance/valid"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	return req, req.MarshalAsJSON(complexBody)
 }
 

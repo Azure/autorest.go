@@ -9,8 +9,6 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
-	"net/url"
-	"path"
 )
 
 // DurationOperations contains the methods for the Duration group.
@@ -37,17 +35,17 @@ func NewDurationClient(c *Client) DurationOperations {
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *DurationClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *DurationClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // GetInvalid - Get an invalid duration value
 func (client *DurationClient) GetInvalid(ctx context.Context) (*StringResponse, error) {
-	req, err := client.GetInvalidCreateRequest()
+	req, err := client.GetInvalidCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -59,17 +57,12 @@ func (client *DurationClient) GetInvalid(ctx context.Context) (*StringResponse, 
 }
 
 // GetInvalidCreateRequest creates the GetInvalid request.
-func (client *DurationClient) GetInvalidCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *DurationClient) GetInvalidCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/duration/invalid"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -93,11 +86,11 @@ func (client *DurationClient) GetInvalidHandleError(resp *azcore.Response) error
 
 // GetNull - Get null duration value
 func (client *DurationClient) GetNull(ctx context.Context) (*StringResponse, error) {
-	req, err := client.GetNullCreateRequest()
+	req, err := client.GetNullCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -109,17 +102,12 @@ func (client *DurationClient) GetNull(ctx context.Context) (*StringResponse, err
 }
 
 // GetNullCreateRequest creates the GetNull request.
-func (client *DurationClient) GetNullCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *DurationClient) GetNullCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/duration/null"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -143,11 +131,11 @@ func (client *DurationClient) GetNullHandleError(resp *azcore.Response) error {
 
 // GetPositiveDuration - Get a positive duration value
 func (client *DurationClient) GetPositiveDuration(ctx context.Context) (*StringResponse, error) {
-	req, err := client.GetPositiveDurationCreateRequest()
+	req, err := client.GetPositiveDurationCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -159,17 +147,12 @@ func (client *DurationClient) GetPositiveDuration(ctx context.Context) (*StringR
 }
 
 // GetPositiveDurationCreateRequest creates the GetPositiveDuration request.
-func (client *DurationClient) GetPositiveDurationCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *DurationClient) GetPositiveDurationCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/duration/positiveduration"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -193,11 +176,11 @@ func (client *DurationClient) GetPositiveDurationHandleError(resp *azcore.Respon
 
 // PutPositiveDuration - Put a positive duration value
 func (client *DurationClient) PutPositiveDuration(ctx context.Context, durationBody string) (*http.Response, error) {
-	req, err := client.PutPositiveDurationCreateRequest(durationBody)
+	req, err := client.PutPositiveDurationCreateRequest(ctx, durationBody)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -209,17 +192,12 @@ func (client *DurationClient) PutPositiveDuration(ctx context.Context, durationB
 }
 
 // PutPositiveDurationCreateRequest creates the PutPositiveDuration request.
-func (client *DurationClient) PutPositiveDurationCreateRequest(durationBody string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *DurationClient) PutPositiveDurationCreateRequest(ctx context.Context, durationBody string) (*azcore.Request, error) {
 	urlPath := "/duration/positiveduration"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPut, *u)
 	return req, req.MarshalAsJSON(durationBody)
 }
 

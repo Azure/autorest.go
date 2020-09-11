@@ -14,7 +14,6 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
-	"path"
 	"strconv"
 	"strings"
 	"time"
@@ -23,39 +22,39 @@ import (
 // PagingOperations contains the methods for the Paging group.
 type PagingOperations interface {
 	// GetMultiplePages - A paging operation that includes a nextLink that has 10 pages
-	GetMultiplePages(pagingGetMultiplePagesOptions *PagingGetMultiplePagesOptions) (ProductResultPager, error)
+	GetMultiplePages(pagingGetMultiplePagesOptions *PagingGetMultiplePagesOptions) ProductResultPager
 	// GetMultiplePagesFailure - A paging operation that receives a 400 on the second call
-	GetMultiplePagesFailure() (ProductResultPager, error)
+	GetMultiplePagesFailure() ProductResultPager
 	// GetMultiplePagesFailureURI - A paging operation that receives an invalid nextLink
-	GetMultiplePagesFailureURI() (ProductResultPager, error)
+	GetMultiplePagesFailureURI() ProductResultPager
 	// GetMultiplePagesFragmentNextLink - A paging operation that doesn't return a full URL, just a fragment
-	GetMultiplePagesFragmentNextLink(apiVersion string, tenant string) (OdataProductResultPager, error)
+	GetMultiplePagesFragmentNextLink(apiVersion string, tenant string) OdataProductResultPager
 	// GetMultiplePagesFragmentWithGroupingNextLink - A paging operation that doesn't return a full URL, just a fragment with parameters grouped
-	GetMultiplePagesFragmentWithGroupingNextLink(customParameterGroup CustomParameterGroup) (OdataProductResultPager, error)
+	GetMultiplePagesFragmentWithGroupingNextLink(customParameterGroup CustomParameterGroup) OdataProductResultPager
 	// BeginGetMultiplePagesLro - A long-running paging operation that includes a nextLink that has 10 pages
 	BeginGetMultiplePagesLro(ctx context.Context, pagingGetMultiplePagesLroOptions *PagingGetMultiplePagesLroOptions) (*ProductResultPagerPollerResponse, error)
 	// ResumeGetMultiplePagesLro - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeGetMultiplePagesLro(token string) (ProductResultPagerPoller, error)
 	// GetMultiplePagesRetryFirst - A paging operation that fails on the first call with 500 and then retries and then get a response including a nextLink that has 10 pages
-	GetMultiplePagesRetryFirst() (ProductResultPager, error)
+	GetMultiplePagesRetryFirst() ProductResultPager
 	// GetMultiplePagesRetrySecond - A paging operation that includes a nextLink that has 10 pages, of which the 2nd call fails first with 500. The client should retry and finish all 10 pages eventually.
-	GetMultiplePagesRetrySecond() (ProductResultPager, error)
+	GetMultiplePagesRetrySecond() ProductResultPager
 	// GetMultiplePagesWithOffset - A paging operation that includes a nextLink that has 10 pages
-	GetMultiplePagesWithOffset(pagingGetMultiplePagesWithOffsetOptions PagingGetMultiplePagesWithOffsetOptions) (ProductResultPager, error)
+	GetMultiplePagesWithOffset(pagingGetMultiplePagesWithOffsetOptions PagingGetMultiplePagesWithOffsetOptions) ProductResultPager
 	// GetNoItemNamePages - A paging operation that must return result of the default 'value' node.
-	GetNoItemNamePages() (ProductResultValuePager, error)
+	GetNoItemNamePages() ProductResultValuePager
 	// GetNullNextLinkNamePages - A paging operation that must ignore any kind of nextLink, and stop after page 1.
 	GetNullNextLinkNamePages(ctx context.Context) (*ProductResultResponse, error)
 	// GetOdataMultiplePages - A paging operation that includes a nextLink in odata format that has 10 pages
-	GetOdataMultiplePages(pagingGetOdataMultiplePagesOptions *PagingGetOdataMultiplePagesOptions) (OdataProductResultPager, error)
+	GetOdataMultiplePages(pagingGetOdataMultiplePagesOptions *PagingGetOdataMultiplePagesOptions) OdataProductResultPager
 	// GetPagingModelWithItemNameWithXmsClientName - A paging operation that returns a paging model whose item name is is overriden by x-ms-client-name 'indexes'.
-	GetPagingModelWithItemNameWithXmsClientName() (ProductResultValueWithXmsClientNamePager, error)
+	GetPagingModelWithItemNameWithXmsClientName() ProductResultValueWithXmsClientNamePager
 	// GetSinglePages - A paging operation that finishes on the first call without a nextlink
-	GetSinglePages() (ProductResultPager, error)
+	GetSinglePages() ProductResultPager
 	// GetSinglePagesFailure - A paging operation that receives a 400 on the first call
-	GetSinglePagesFailure() (ProductResultPager, error)
+	GetSinglePagesFailure() ProductResultPager
 	// GetWithQueryParams - A paging operation that includes a next operation. It has a different query parameter from it's next operation nextOperationWithQueryParams. Returns a ProductResult
-	GetWithQueryParams(requiredQueryParameter int32) (ProductResultPager, error)
+	GetWithQueryParams(requiredQueryParameter int32) ProductResultPager
 }
 
 // PagingClient implements the PagingOperations interface.
@@ -70,45 +69,31 @@ func NewPagingClient(c *Client) PagingOperations {
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *PagingClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *PagingClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // GetMultiplePages - A paging operation that includes a nextLink that has 10 pages
-func (client *PagingClient) GetMultiplePages(pagingGetMultiplePagesOptions *PagingGetMultiplePagesOptions) (ProductResultPager, error) {
-	req, err := client.GetMultiplePagesCreateRequest(pagingGetMultiplePagesOptions)
-	if err != nil {
-		return nil, err
-	}
+func (client *PagingClient) GetMultiplePages(pagingGetMultiplePagesOptions *PagingGetMultiplePagesOptions) ProductResultPager {
 	return &productResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.GetMultiplePagesHandleResponse,
-		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.ProductResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.ProductResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.GetMultiplePagesCreateRequest(ctx, pagingGetMultiplePagesOptions)
 		},
-	}, nil
+		responder: client.GetMultiplePagesHandleResponse,
+		advancer: func(ctx context.Context, resp *ProductResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.ProductResult.NextLink)
+		},
+	}
 }
 
 // GetMultiplePagesCreateRequest creates the GetMultiplePages request.
-func (client *PagingClient) GetMultiplePagesCreateRequest(pagingGetMultiplePagesOptions *PagingGetMultiplePagesOptions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *PagingClient) GetMultiplePagesCreateRequest(ctx context.Context, pagingGetMultiplePagesOptions *PagingGetMultiplePagesOptions) (*azcore.Request, error) {
 	urlPath := "/paging/multiple"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	if pagingGetMultiplePagesOptions != nil && pagingGetMultiplePagesOptions.ClientRequestId != nil {
 		req.Header.Set("client-request-id", *pagingGetMultiplePagesOptions.ClientRequestId)
 	}
@@ -143,40 +128,26 @@ func (client *PagingClient) GetMultiplePagesHandleError(resp *azcore.Response) e
 }
 
 // GetMultiplePagesFailure - A paging operation that receives a 400 on the second call
-func (client *PagingClient) GetMultiplePagesFailure() (ProductResultPager, error) {
-	req, err := client.GetMultiplePagesFailureCreateRequest()
-	if err != nil {
-		return nil, err
-	}
+func (client *PagingClient) GetMultiplePagesFailure() ProductResultPager {
 	return &productResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.GetMultiplePagesFailureHandleResponse,
-		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.ProductResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.ProductResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.GetMultiplePagesFailureCreateRequest(ctx)
 		},
-	}, nil
+		responder: client.GetMultiplePagesFailureHandleResponse,
+		advancer: func(ctx context.Context, resp *ProductResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.ProductResult.NextLink)
+		},
+	}
 }
 
 // GetMultiplePagesFailureCreateRequest creates the GetMultiplePagesFailure request.
-func (client *PagingClient) GetMultiplePagesFailureCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *PagingClient) GetMultiplePagesFailureCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/paging/multiple/failure"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -202,40 +173,26 @@ func (client *PagingClient) GetMultiplePagesFailureHandleError(resp *azcore.Resp
 }
 
 // GetMultiplePagesFailureURI - A paging operation that receives an invalid nextLink
-func (client *PagingClient) GetMultiplePagesFailureURI() (ProductResultPager, error) {
-	req, err := client.GetMultiplePagesFailureURICreateRequest()
-	if err != nil {
-		return nil, err
-	}
+func (client *PagingClient) GetMultiplePagesFailureURI() ProductResultPager {
 	return &productResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.GetMultiplePagesFailureURIHandleResponse,
-		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.ProductResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.ProductResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.GetMultiplePagesFailureURICreateRequest(ctx)
 		},
-	}, nil
+		responder: client.GetMultiplePagesFailureURIHandleResponse,
+		advancer: func(ctx context.Context, resp *ProductResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.ProductResult.NextLink)
+		},
+	}
 }
 
 // GetMultiplePagesFailureURICreateRequest creates the GetMultiplePagesFailureURI request.
-func (client *PagingClient) GetMultiplePagesFailureURICreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *PagingClient) GetMultiplePagesFailureURICreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/paging/multiple/failureuri"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -261,37 +218,30 @@ func (client *PagingClient) GetMultiplePagesFailureURIHandleError(resp *azcore.R
 }
 
 // GetMultiplePagesFragmentNextLink - A paging operation that doesn't return a full URL, just a fragment
-func (client *PagingClient) GetMultiplePagesFragmentNextLink(apiVersion string, tenant string) (OdataProductResultPager, error) {
-	req, err := client.GetMultiplePagesFragmentNextLinkCreateRequest(apiVersion, tenant)
-	if err != nil {
-		return nil, err
-	}
+func (client *PagingClient) GetMultiplePagesFragmentNextLink(apiVersion string, tenant string) OdataProductResultPager {
 	return &odataProductResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.GetMultiplePagesFragmentNextLinkHandleResponse,
-		advancer: func(resp *OdataProductResultResponse) (*azcore.Request, error) {
-			return client.NextFragmentCreateRequest(apiVersion, tenant, *resp.OdataProductResult.OdataNextLink)
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.GetMultiplePagesFragmentNextLinkCreateRequest(ctx, apiVersion, tenant)
 		},
-	}, nil
+		responder: client.GetMultiplePagesFragmentNextLinkHandleResponse,
+		advancer: func(ctx context.Context, resp *OdataProductResultResponse) (*azcore.Request, error) {
+			return client.NextFragmentCreateRequest(ctx, apiVersion, tenant, *resp.OdataProductResult.OdataNextLink)
+		},
+	}
 }
 
 // GetMultiplePagesFragmentNextLinkCreateRequest creates the GetMultiplePagesFragmentNextLink request.
-func (client *PagingClient) GetMultiplePagesFragmentNextLinkCreateRequest(apiVersion string, tenant string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *PagingClient) GetMultiplePagesFragmentNextLinkCreateRequest(ctx context.Context, apiVersion string, tenant string) (*azcore.Request, error) {
 	urlPath := "/paging/multiple/fragment/{tenant}"
 	urlPath = strings.ReplaceAll(urlPath, "{tenant}", url.PathEscape(tenant))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api_version", apiVersion)
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -317,37 +267,30 @@ func (client *PagingClient) GetMultiplePagesFragmentNextLinkHandleError(resp *az
 }
 
 // GetMultiplePagesFragmentWithGroupingNextLink - A paging operation that doesn't return a full URL, just a fragment with parameters grouped
-func (client *PagingClient) GetMultiplePagesFragmentWithGroupingNextLink(customParameterGroup CustomParameterGroup) (OdataProductResultPager, error) {
-	req, err := client.GetMultiplePagesFragmentWithGroupingNextLinkCreateRequest(customParameterGroup)
-	if err != nil {
-		return nil, err
-	}
+func (client *PagingClient) GetMultiplePagesFragmentWithGroupingNextLink(customParameterGroup CustomParameterGroup) OdataProductResultPager {
 	return &odataProductResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.GetMultiplePagesFragmentWithGroupingNextLinkHandleResponse,
-		advancer: func(resp *OdataProductResultResponse) (*azcore.Request, error) {
-			return client.NextFragmentWithGroupingCreateRequest(*resp.OdataProductResult.OdataNextLink, customParameterGroup)
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.GetMultiplePagesFragmentWithGroupingNextLinkCreateRequest(ctx, customParameterGroup)
 		},
-	}, nil
+		responder: client.GetMultiplePagesFragmentWithGroupingNextLinkHandleResponse,
+		advancer: func(ctx context.Context, resp *OdataProductResultResponse) (*azcore.Request, error) {
+			return client.NextFragmentWithGroupingCreateRequest(ctx, *resp.OdataProductResult.OdataNextLink, customParameterGroup)
+		},
+	}
 }
 
 // GetMultiplePagesFragmentWithGroupingNextLinkCreateRequest creates the GetMultiplePagesFragmentWithGroupingNextLink request.
-func (client *PagingClient) GetMultiplePagesFragmentWithGroupingNextLinkCreateRequest(customParameterGroup CustomParameterGroup) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *PagingClient) GetMultiplePagesFragmentWithGroupingNextLinkCreateRequest(ctx context.Context, customParameterGroup CustomParameterGroup) (*azcore.Request, error) {
 	urlPath := "/paging/multiple/fragmentwithgrouping/{tenant}"
 	urlPath = strings.ReplaceAll(urlPath, "{tenant}", url.PathEscape(customParameterGroup.Tenant))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api_version", customParameterGroup.ApiVersion)
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -374,12 +317,12 @@ func (client *PagingClient) GetMultiplePagesFragmentWithGroupingNextLinkHandleEr
 
 // GetMultiplePagesLro - A long-running paging operation that includes a nextLink that has 10 pages
 func (client *PagingClient) BeginGetMultiplePagesLro(ctx context.Context, pagingGetMultiplePagesLroOptions *PagingGetMultiplePagesLroOptions) (*ProductResultPagerPollerResponse, error) {
-	req, err := client.GetMultiplePagesLroCreateRequest(pagingGetMultiplePagesLroOptions)
+	req, err := client.GetMultiplePagesLroCreateRequest(ctx, pagingGetMultiplePagesLroOptions)
 	if err != nil {
 		return nil, err
 	}
 	// send the first request to initialize the poller
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -415,17 +358,12 @@ func (client *PagingClient) ResumeGetMultiplePagesLro(token string) (ProductResu
 }
 
 // GetMultiplePagesLroCreateRequest creates the GetMultiplePagesLro request.
-func (client *PagingClient) GetMultiplePagesLroCreateRequest(pagingGetMultiplePagesLroOptions *PagingGetMultiplePagesLroOptions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *PagingClient) GetMultiplePagesLroCreateRequest(ctx context.Context, pagingGetMultiplePagesLroOptions *PagingGetMultiplePagesLroOptions) (*azcore.Request, error) {
 	urlPath := "/paging/multiple/lro"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPost, *u)
 	if pagingGetMultiplePagesLroOptions != nil && pagingGetMultiplePagesLroOptions.ClientRequestId != nil {
 		req.Header.Set("client-request-id", *pagingGetMultiplePagesLroOptions.ClientRequestId)
 	}
@@ -468,40 +406,26 @@ func (client *PagingClient) GetMultiplePagesLroHandleError(resp *azcore.Response
 }
 
 // GetMultiplePagesRetryFirst - A paging operation that fails on the first call with 500 and then retries and then get a response including a nextLink that has 10 pages
-func (client *PagingClient) GetMultiplePagesRetryFirst() (ProductResultPager, error) {
-	req, err := client.GetMultiplePagesRetryFirstCreateRequest()
-	if err != nil {
-		return nil, err
-	}
+func (client *PagingClient) GetMultiplePagesRetryFirst() ProductResultPager {
 	return &productResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.GetMultiplePagesRetryFirstHandleResponse,
-		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.ProductResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.ProductResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.GetMultiplePagesRetryFirstCreateRequest(ctx)
 		},
-	}, nil
+		responder: client.GetMultiplePagesRetryFirstHandleResponse,
+		advancer: func(ctx context.Context, resp *ProductResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.ProductResult.NextLink)
+		},
+	}
 }
 
 // GetMultiplePagesRetryFirstCreateRequest creates the GetMultiplePagesRetryFirst request.
-func (client *PagingClient) GetMultiplePagesRetryFirstCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *PagingClient) GetMultiplePagesRetryFirstCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/paging/multiple/retryfirst"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -527,40 +451,26 @@ func (client *PagingClient) GetMultiplePagesRetryFirstHandleError(resp *azcore.R
 }
 
 // GetMultiplePagesRetrySecond - A paging operation that includes a nextLink that has 10 pages, of which the 2nd call fails first with 500. The client should retry and finish all 10 pages eventually.
-func (client *PagingClient) GetMultiplePagesRetrySecond() (ProductResultPager, error) {
-	req, err := client.GetMultiplePagesRetrySecondCreateRequest()
-	if err != nil {
-		return nil, err
-	}
+func (client *PagingClient) GetMultiplePagesRetrySecond() ProductResultPager {
 	return &productResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.GetMultiplePagesRetrySecondHandleResponse,
-		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.ProductResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.ProductResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.GetMultiplePagesRetrySecondCreateRequest(ctx)
 		},
-	}, nil
+		responder: client.GetMultiplePagesRetrySecondHandleResponse,
+		advancer: func(ctx context.Context, resp *ProductResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.ProductResult.NextLink)
+		},
+	}
 }
 
 // GetMultiplePagesRetrySecondCreateRequest creates the GetMultiplePagesRetrySecond request.
-func (client *PagingClient) GetMultiplePagesRetrySecondCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *PagingClient) GetMultiplePagesRetrySecondCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/paging/multiple/retrysecond"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -586,41 +496,27 @@ func (client *PagingClient) GetMultiplePagesRetrySecondHandleError(resp *azcore.
 }
 
 // GetMultiplePagesWithOffset - A paging operation that includes a nextLink that has 10 pages
-func (client *PagingClient) GetMultiplePagesWithOffset(pagingGetMultiplePagesWithOffsetOptions PagingGetMultiplePagesWithOffsetOptions) (ProductResultPager, error) {
-	req, err := client.GetMultiplePagesWithOffsetCreateRequest(pagingGetMultiplePagesWithOffsetOptions)
-	if err != nil {
-		return nil, err
-	}
+func (client *PagingClient) GetMultiplePagesWithOffset(pagingGetMultiplePagesWithOffsetOptions PagingGetMultiplePagesWithOffsetOptions) ProductResultPager {
 	return &productResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.GetMultiplePagesWithOffsetHandleResponse,
-		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.ProductResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.ProductResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.GetMultiplePagesWithOffsetCreateRequest(ctx, pagingGetMultiplePagesWithOffsetOptions)
 		},
-	}, nil
+		responder: client.GetMultiplePagesWithOffsetHandleResponse,
+		advancer: func(ctx context.Context, resp *ProductResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.ProductResult.NextLink)
+		},
+	}
 }
 
 // GetMultiplePagesWithOffsetCreateRequest creates the GetMultiplePagesWithOffset request.
-func (client *PagingClient) GetMultiplePagesWithOffsetCreateRequest(pagingGetMultiplePagesWithOffsetOptions PagingGetMultiplePagesWithOffsetOptions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *PagingClient) GetMultiplePagesWithOffsetCreateRequest(ctx context.Context, pagingGetMultiplePagesWithOffsetOptions PagingGetMultiplePagesWithOffsetOptions) (*azcore.Request, error) {
 	urlPath := "/paging/multiple/withpath/{offset}"
 	urlPath = strings.ReplaceAll(urlPath, "{offset}", url.PathEscape(strconv.FormatInt(int64(pagingGetMultiplePagesWithOffsetOptions.Offset), 10)))
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	if pagingGetMultiplePagesWithOffsetOptions.ClientRequestId != nil {
 		req.Header.Set("client-request-id", *pagingGetMultiplePagesWithOffsetOptions.ClientRequestId)
 	}
@@ -655,40 +551,26 @@ func (client *PagingClient) GetMultiplePagesWithOffsetHandleError(resp *azcore.R
 }
 
 // GetNoItemNamePages - A paging operation that must return result of the default 'value' node.
-func (client *PagingClient) GetNoItemNamePages() (ProductResultValuePager, error) {
-	req, err := client.GetNoItemNamePagesCreateRequest()
-	if err != nil {
-		return nil, err
-	}
+func (client *PagingClient) GetNoItemNamePages() ProductResultValuePager {
 	return &productResultValuePager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.GetNoItemNamePagesHandleResponse,
-		advancer: func(resp *ProductResultValueResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.ProductResultValue.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.ProductResultValue.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.GetNoItemNamePagesCreateRequest(ctx)
 		},
-	}, nil
+		responder: client.GetNoItemNamePagesHandleResponse,
+		advancer: func(ctx context.Context, resp *ProductResultValueResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.ProductResultValue.NextLink)
+		},
+	}
 }
 
 // GetNoItemNamePagesCreateRequest creates the GetNoItemNamePages request.
-func (client *PagingClient) GetNoItemNamePagesCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *PagingClient) GetNoItemNamePagesCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/paging/noitemname"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -715,11 +597,11 @@ func (client *PagingClient) GetNoItemNamePagesHandleError(resp *azcore.Response)
 
 // GetNullNextLinkNamePages - A paging operation that must ignore any kind of nextLink, and stop after page 1.
 func (client *PagingClient) GetNullNextLinkNamePages(ctx context.Context) (*ProductResultResponse, error) {
-	req, err := client.GetNullNextLinkNamePagesCreateRequest()
+	req, err := client.GetNullNextLinkNamePagesCreateRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -731,17 +613,12 @@ func (client *PagingClient) GetNullNextLinkNamePages(ctx context.Context) (*Prod
 }
 
 // GetNullNextLinkNamePagesCreateRequest creates the GetNullNextLinkNamePages request.
-func (client *PagingClient) GetNullNextLinkNamePagesCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *PagingClient) GetNullNextLinkNamePagesCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/paging/nullnextlink"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -767,40 +644,26 @@ func (client *PagingClient) GetNullNextLinkNamePagesHandleError(resp *azcore.Res
 }
 
 // GetOdataMultiplePages - A paging operation that includes a nextLink in odata format that has 10 pages
-func (client *PagingClient) GetOdataMultiplePages(pagingGetOdataMultiplePagesOptions *PagingGetOdataMultiplePagesOptions) (OdataProductResultPager, error) {
-	req, err := client.GetOdataMultiplePagesCreateRequest(pagingGetOdataMultiplePagesOptions)
-	if err != nil {
-		return nil, err
-	}
+func (client *PagingClient) GetOdataMultiplePages(pagingGetOdataMultiplePagesOptions *PagingGetOdataMultiplePagesOptions) OdataProductResultPager {
 	return &odataProductResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.GetOdataMultiplePagesHandleResponse,
-		advancer: func(resp *OdataProductResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.OdataProductResult.OdataNextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid OdataNextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in OdataNextLink %s", *resp.OdataProductResult.OdataNextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.GetOdataMultiplePagesCreateRequest(ctx, pagingGetOdataMultiplePagesOptions)
 		},
-	}, nil
+		responder: client.GetOdataMultiplePagesHandleResponse,
+		advancer: func(ctx context.Context, resp *OdataProductResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.OdataProductResult.OdataNextLink)
+		},
+	}
 }
 
 // GetOdataMultiplePagesCreateRequest creates the GetOdataMultiplePages request.
-func (client *PagingClient) GetOdataMultiplePagesCreateRequest(pagingGetOdataMultiplePagesOptions *PagingGetOdataMultiplePagesOptions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *PagingClient) GetOdataMultiplePagesCreateRequest(ctx context.Context, pagingGetOdataMultiplePagesOptions *PagingGetOdataMultiplePagesOptions) (*azcore.Request, error) {
 	urlPath := "/paging/multiple/odata"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	if pagingGetOdataMultiplePagesOptions != nil && pagingGetOdataMultiplePagesOptions.ClientRequestId != nil {
 		req.Header.Set("client-request-id", *pagingGetOdataMultiplePagesOptions.ClientRequestId)
 	}
@@ -835,40 +698,26 @@ func (client *PagingClient) GetOdataMultiplePagesHandleError(resp *azcore.Respon
 }
 
 // GetPagingModelWithItemNameWithXmsClientName - A paging operation that returns a paging model whose item name is is overriden by x-ms-client-name 'indexes'.
-func (client *PagingClient) GetPagingModelWithItemNameWithXmsClientName() (ProductResultValueWithXmsClientNamePager, error) {
-	req, err := client.GetPagingModelWithItemNameWithXmsClientNameCreateRequest()
-	if err != nil {
-		return nil, err
-	}
+func (client *PagingClient) GetPagingModelWithItemNameWithXmsClientName() ProductResultValueWithXmsClientNamePager {
 	return &productResultValueWithXmsClientNamePager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.GetPagingModelWithItemNameWithXmsClientNameHandleResponse,
-		advancer: func(resp *ProductResultValueWithXmsClientNameResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.ProductResultValueWithXmsClientName.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.ProductResultValueWithXmsClientName.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.GetPagingModelWithItemNameWithXmsClientNameCreateRequest(ctx)
 		},
-	}, nil
+		responder: client.GetPagingModelWithItemNameWithXmsClientNameHandleResponse,
+		advancer: func(ctx context.Context, resp *ProductResultValueWithXmsClientNameResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.ProductResultValueWithXmsClientName.NextLink)
+		},
+	}
 }
 
 // GetPagingModelWithItemNameWithXmsClientNameCreateRequest creates the GetPagingModelWithItemNameWithXmsClientName request.
-func (client *PagingClient) GetPagingModelWithItemNameWithXmsClientNameCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *PagingClient) GetPagingModelWithItemNameWithXmsClientNameCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/paging/itemNameWithXMSClientName"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -894,40 +743,26 @@ func (client *PagingClient) GetPagingModelWithItemNameWithXmsClientNameHandleErr
 }
 
 // GetSinglePages - A paging operation that finishes on the first call without a nextlink
-func (client *PagingClient) GetSinglePages() (ProductResultPager, error) {
-	req, err := client.GetSinglePagesCreateRequest()
-	if err != nil {
-		return nil, err
-	}
+func (client *PagingClient) GetSinglePages() ProductResultPager {
 	return &productResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.GetSinglePagesHandleResponse,
-		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.ProductResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.ProductResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.GetSinglePagesCreateRequest(ctx)
 		},
-	}, nil
+		responder: client.GetSinglePagesHandleResponse,
+		advancer: func(ctx context.Context, resp *ProductResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.ProductResult.NextLink)
+		},
+	}
 }
 
 // GetSinglePagesCreateRequest creates the GetSinglePages request.
-func (client *PagingClient) GetSinglePagesCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *PagingClient) GetSinglePagesCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/paging/single"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -953,40 +788,26 @@ func (client *PagingClient) GetSinglePagesHandleError(resp *azcore.Response) err
 }
 
 // GetSinglePagesFailure - A paging operation that receives a 400 on the first call
-func (client *PagingClient) GetSinglePagesFailure() (ProductResultPager, error) {
-	req, err := client.GetSinglePagesFailureCreateRequest()
-	if err != nil {
-		return nil, err
-	}
+func (client *PagingClient) GetSinglePagesFailure() ProductResultPager {
 	return &productResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.GetSinglePagesFailureHandleResponse,
-		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.ProductResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.ProductResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.GetSinglePagesFailureCreateRequest(ctx)
 		},
-	}, nil
+		responder: client.GetSinglePagesFailureHandleResponse,
+		advancer: func(ctx context.Context, resp *ProductResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.ProductResult.NextLink)
+		},
+	}
 }
 
 // GetSinglePagesFailureCreateRequest creates the GetSinglePagesFailure request.
-func (client *PagingClient) GetSinglePagesFailureCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *PagingClient) GetSinglePagesFailureCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/paging/single/failure"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -1012,37 +833,30 @@ func (client *PagingClient) GetSinglePagesFailureHandleError(resp *azcore.Respon
 }
 
 // GetWithQueryParams - A paging operation that includes a next operation. It has a different query parameter from it's next operation nextOperationWithQueryParams. Returns a ProductResult
-func (client *PagingClient) GetWithQueryParams(requiredQueryParameter int32) (ProductResultPager, error) {
-	req, err := client.GetWithQueryParamsCreateRequest(requiredQueryParameter)
-	if err != nil {
-		return nil, err
-	}
+func (client *PagingClient) GetWithQueryParams(requiredQueryParameter int32) ProductResultPager {
 	return &productResultPager{
-		pipeline:  client.p,
-		request:   req,
-		responder: client.GetWithQueryParamsHandleResponse,
-		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
-			return client.NextOperationWithQueryParamsCreateRequest()
+		pipeline: client.p,
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.GetWithQueryParamsCreateRequest(ctx, requiredQueryParameter)
 		},
-	}, nil
+		responder: client.GetWithQueryParamsHandleResponse,
+		advancer: func(ctx context.Context, resp *ProductResultResponse) (*azcore.Request, error) {
+			return client.NextOperationWithQueryParamsCreateRequest(ctx)
+		},
+	}
 }
 
 // GetWithQueryParamsCreateRequest creates the GetWithQueryParams request.
-func (client *PagingClient) GetWithQueryParamsCreateRequest(requiredQueryParameter int32) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *PagingClient) GetWithQueryParamsCreateRequest(ctx context.Context, requiredQueryParameter int32) (*azcore.Request, error) {
 	urlPath := "/paging/multiple/getWithQueryParams"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("requiredQueryParameter", strconv.FormatInt(int64(requiredQueryParameter), 10))
 	query.Set("queryConstant", "true")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -1068,22 +882,17 @@ func (client *PagingClient) GetWithQueryParamsHandleError(resp *azcore.Response)
 }
 
 // NextFragmentCreateRequest creates the NextFragment request.
-func (client *PagingClient) NextFragmentCreateRequest(apiVersion string, tenant string, nextLink string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *PagingClient) NextFragmentCreateRequest(ctx context.Context, apiVersion string, tenant string, nextLink string) (*azcore.Request, error) {
 	urlPath := "/paging/multiple/fragment/{tenant}/{nextLink}"
 	urlPath = strings.ReplaceAll(urlPath, "{tenant}", url.PathEscape(tenant))
 	urlPath = strings.ReplaceAll(urlPath, "{nextLink}", nextLink)
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api_version", apiVersion)
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -1109,22 +918,17 @@ func (client *PagingClient) NextFragmentHandleError(resp *azcore.Response) error
 }
 
 // NextFragmentWithGroupingCreateRequest creates the NextFragmentWithGrouping request.
-func (client *PagingClient) NextFragmentWithGroupingCreateRequest(nextLink string, customParameterGroup CustomParameterGroup) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *PagingClient) NextFragmentWithGroupingCreateRequest(ctx context.Context, nextLink string, customParameterGroup CustomParameterGroup) (*azcore.Request, error) {
 	urlPath := "/paging/multiple/fragmentwithgrouping/{tenant}/{nextLink}"
 	urlPath = strings.ReplaceAll(urlPath, "{tenant}", url.PathEscape(customParameterGroup.Tenant))
 	urlPath = strings.ReplaceAll(urlPath, "{nextLink}", nextLink)
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("api_version", customParameterGroup.ApiVersion)
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
@@ -1150,20 +954,15 @@ func (client *PagingClient) NextFragmentWithGroupingHandleError(resp *azcore.Res
 }
 
 // NextOperationWithQueryParamsCreateRequest creates the NextOperationWithQueryParams request.
-func (client *PagingClient) NextOperationWithQueryParamsCreateRequest() (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *PagingClient) NextOperationWithQueryParamsCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/paging/multiple/nextOperationWithQueryParams"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	query := u.Query()
+	query := req.URL.Query()
 	query.Set("queryConstant", "true")
-	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, *u)
+	req.URL.RawQuery = query.Encode()
 	return req, nil
 }
 
