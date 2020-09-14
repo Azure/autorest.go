@@ -59,6 +59,9 @@ func (client *ExpressRouteCircuitConnectionsClient) BeginCreateOrUpdate(ctx cont
 	if err != nil {
 		return nil, err
 	}
+	if err := client.CreateOrUpdateHandleError(resp); err != nil {
+		return nil, err
+	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -110,14 +113,14 @@ func (client *ExpressRouteCircuitConnectionsClient) CreateOrUpdateCreateRequest(
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *ExpressRouteCircuitConnectionsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitConnectionPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
 	return &ExpressRouteCircuitConnectionPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *ExpressRouteCircuitConnectionsClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -134,6 +137,9 @@ func (client *ExpressRouteCircuitConnectionsClient) BeginDelete(ctx context.Cont
 	// send the first request to initialize the poller
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.DeleteHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
@@ -187,14 +193,14 @@ func (client *ExpressRouteCircuitConnectionsClient) DeleteCreateRequest(ctx cont
 
 // DeleteHandleResponse handles the Delete response.
 func (client *ExpressRouteCircuitConnectionsClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteHandleError handles the Delete error response.
 func (client *ExpressRouteCircuitConnectionsClient) DeleteHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -210,6 +216,9 @@ func (client *ExpressRouteCircuitConnectionsClient) Get(ctx context.Context, res
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.GetHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.GetHandleResponse(resp)
@@ -240,15 +249,15 @@ func (client *ExpressRouteCircuitConnectionsClient) GetCreateRequest(ctx context
 
 // GetHandleResponse handles the Get response.
 func (client *ExpressRouteCircuitConnectionsClient) GetHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitConnectionResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
-	}
 	result := ExpressRouteCircuitConnectionResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ExpressRouteCircuitConnection)
 }
 
 // GetHandleError handles the Get error response.
 func (client *ExpressRouteCircuitConnectionsClient) GetHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -264,6 +273,7 @@ func (client *ExpressRouteCircuitConnectionsClient) List(resourceGroupName strin
 			return client.ListCreateRequest(ctx, resourceGroupName, circuitName, peeringName)
 		},
 		responder: client.ListHandleResponse,
+		errorer:   client.ListHandleError,
 		advancer: func(ctx context.Context, resp *ExpressRouteCircuitConnectionListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ExpressRouteCircuitConnectionListResult.NextLink)
 		},
@@ -290,15 +300,15 @@ func (client *ExpressRouteCircuitConnectionsClient) ListCreateRequest(ctx contex
 
 // ListHandleResponse handles the List response.
 func (client *ExpressRouteCircuitConnectionsClient) ListHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitConnectionListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := ExpressRouteCircuitConnectionListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ExpressRouteCircuitConnectionListResult)
 }
 
 // ListHandleError handles the List error response.
 func (client *ExpressRouteCircuitConnectionsClient) ListHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

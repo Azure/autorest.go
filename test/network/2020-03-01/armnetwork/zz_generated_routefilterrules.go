@@ -59,6 +59,9 @@ func (client *RouteFilterRulesClient) BeginCreateOrUpdate(ctx context.Context, r
 	if err != nil {
 		return nil, err
 	}
+	if err := client.CreateOrUpdateHandleError(resp); err != nil {
+		return nil, err
+	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -109,14 +112,14 @@ func (client *RouteFilterRulesClient) CreateOrUpdateCreateRequest(ctx context.Co
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *RouteFilterRulesClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*RouteFilterRulePollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
 	return &RouteFilterRulePollerResponse{RawResponse: resp.Response}, nil
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *RouteFilterRulesClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -133,6 +136,9 @@ func (client *RouteFilterRulesClient) BeginDelete(ctx context.Context, resourceG
 	// send the first request to initialize the poller
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.DeleteHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
@@ -185,14 +191,14 @@ func (client *RouteFilterRulesClient) DeleteCreateRequest(ctx context.Context, r
 
 // DeleteHandleResponse handles the Delete response.
 func (client *RouteFilterRulesClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteHandleError handles the Delete error response.
 func (client *RouteFilterRulesClient) DeleteHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -208,6 +214,9 @@ func (client *RouteFilterRulesClient) Get(ctx context.Context, resourceGroupName
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.GetHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.GetHandleResponse(resp)
@@ -237,15 +246,15 @@ func (client *RouteFilterRulesClient) GetCreateRequest(ctx context.Context, reso
 
 // GetHandleResponse handles the Get response.
 func (client *RouteFilterRulesClient) GetHandleResponse(resp *azcore.Response) (*RouteFilterRuleResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
-	}
 	result := RouteFilterRuleResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.RouteFilterRule)
 }
 
 // GetHandleError handles the Get error response.
 func (client *RouteFilterRulesClient) GetHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -261,6 +270,7 @@ func (client *RouteFilterRulesClient) ListByRouteFilter(resourceGroupName string
 			return client.ListByRouteFilterCreateRequest(ctx, resourceGroupName, routeFilterName)
 		},
 		responder: client.ListByRouteFilterHandleResponse,
+		errorer:   client.ListByRouteFilterHandleError,
 		advancer: func(ctx context.Context, resp *RouteFilterRuleListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.RouteFilterRuleListResult.NextLink)
 		},
@@ -286,15 +296,15 @@ func (client *RouteFilterRulesClient) ListByRouteFilterCreateRequest(ctx context
 
 // ListByRouteFilterHandleResponse handles the ListByRouteFilter response.
 func (client *RouteFilterRulesClient) ListByRouteFilterHandleResponse(resp *azcore.Response) (*RouteFilterRuleListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListByRouteFilterHandleError(resp)
-	}
 	result := RouteFilterRuleListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.RouteFilterRuleListResult)
 }
 
 // ListByRouteFilterHandleError handles the ListByRouteFilter error response.
 func (client *RouteFilterRulesClient) ListByRouteFilterHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

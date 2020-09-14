@@ -24,6 +24,7 @@ function generatePagerReturnInstance(op: Operation, imports: ImportManager): str
   text += `\treturn &${camelCase(op.language.go!.pageableType.name)}{\n`;
   text += `\t\tpipeline: p.pipeline,\n`;
   text += `\t\tresp: resp,\n`;
+  text += '\t\terrorer: p.errHandler,\n';
   text += `\t\tresponder: p.respHandler,\n`;
   const pager = <PagerInfo>op.language.go!.pageableType;
   const pagerSchema = <SchemaResponse>pager.op.responses![0];
@@ -107,6 +108,7 @@ export async function generateARMPollers(session: Session<CodeModel>): Promise<s
       // for operations that do return a model add a final response method that handles the final get URL scenario
       finalResponseDeclaration = `FinalResponse(ctx context.Context) (${responseType}, error)`;
       pagerFields = `
+      errHandler  ${camelCase(poller.op.language.go!.pageableType.op.responses![0].schema.language.go!.name)}HandleError
       respHandler ${camelCase(poller.op.language.go!.pageableType.op.responses![0].schema.language.go!.name)}HandleResponse`;
       handleResponse = `
       func (p *${pollerName}) handleResponse(resp *azcore.Response) (${responseType}, error) {

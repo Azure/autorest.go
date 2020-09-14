@@ -58,6 +58,9 @@ func (client *WebApplicationFirewallPoliciesClient) CreateOrUpdate(ctx context.C
 	if err != nil {
 		return nil, err
 	}
+	if err := client.CreateOrUpdateHandleError(resp); err != nil {
+		return nil, err
+	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -84,15 +87,15 @@ func (client *WebApplicationFirewallPoliciesClient) CreateOrUpdateCreateRequest(
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *WebApplicationFirewallPoliciesClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*WebApplicationFirewallPolicyResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
 	result := WebApplicationFirewallPolicyResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.WebApplicationFirewallPolicy)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *WebApplicationFirewallPoliciesClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -109,6 +112,9 @@ func (client *WebApplicationFirewallPoliciesClient) BeginDelete(ctx context.Cont
 	// send the first request to initialize the poller
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.DeleteHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
@@ -160,14 +166,14 @@ func (client *WebApplicationFirewallPoliciesClient) DeleteCreateRequest(ctx cont
 
 // DeleteHandleResponse handles the Delete response.
 func (client *WebApplicationFirewallPoliciesClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteHandleError handles the Delete error response.
 func (client *WebApplicationFirewallPoliciesClient) DeleteHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -183,6 +189,9 @@ func (client *WebApplicationFirewallPoliciesClient) Get(ctx context.Context, res
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.GetHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.GetHandleResponse(resp)
@@ -211,15 +220,15 @@ func (client *WebApplicationFirewallPoliciesClient) GetCreateRequest(ctx context
 
 // GetHandleResponse handles the Get response.
 func (client *WebApplicationFirewallPoliciesClient) GetHandleResponse(resp *azcore.Response) (*WebApplicationFirewallPolicyResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
-	}
 	result := WebApplicationFirewallPolicyResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.WebApplicationFirewallPolicy)
 }
 
 // GetHandleError handles the Get error response.
 func (client *WebApplicationFirewallPoliciesClient) GetHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -235,6 +244,7 @@ func (client *WebApplicationFirewallPoliciesClient) List(resourceGroupName strin
 			return client.ListCreateRequest(ctx, resourceGroupName)
 		},
 		responder: client.ListHandleResponse,
+		errorer:   client.ListHandleError,
 		advancer: func(ctx context.Context, resp *WebApplicationFirewallPolicyListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.WebApplicationFirewallPolicyListResult.NextLink)
 		},
@@ -259,15 +269,15 @@ func (client *WebApplicationFirewallPoliciesClient) ListCreateRequest(ctx contex
 
 // ListHandleResponse handles the List response.
 func (client *WebApplicationFirewallPoliciesClient) ListHandleResponse(resp *azcore.Response) (*WebApplicationFirewallPolicyListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := WebApplicationFirewallPolicyListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.WebApplicationFirewallPolicyListResult)
 }
 
 // ListHandleError handles the List error response.
 func (client *WebApplicationFirewallPoliciesClient) ListHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -283,6 +293,7 @@ func (client *WebApplicationFirewallPoliciesClient) ListAll() WebApplicationFire
 			return client.ListAllCreateRequest(ctx)
 		},
 		responder: client.ListAllHandleResponse,
+		errorer:   client.ListAllHandleError,
 		advancer: func(ctx context.Context, resp *WebApplicationFirewallPolicyListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.WebApplicationFirewallPolicyListResult.NextLink)
 		},
@@ -306,15 +317,15 @@ func (client *WebApplicationFirewallPoliciesClient) ListAllCreateRequest(ctx con
 
 // ListAllHandleResponse handles the ListAll response.
 func (client *WebApplicationFirewallPoliciesClient) ListAllHandleResponse(resp *azcore.Response) (*WebApplicationFirewallPolicyListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListAllHandleError(resp)
-	}
 	result := WebApplicationFirewallPolicyListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.WebApplicationFirewallPolicyListResult)
 }
 
 // ListAllHandleError handles the ListAll error response.
 func (client *WebApplicationFirewallPoliciesClient) ListAllHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

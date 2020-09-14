@@ -59,6 +59,9 @@ func (client *ServiceEndpointPolicyDefinitionsClient) BeginCreateOrUpdate(ctx co
 	if err != nil {
 		return nil, err
 	}
+	if err := client.CreateOrUpdateHandleError(resp); err != nil {
+		return nil, err
+	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -109,14 +112,14 @@ func (client *ServiceEndpointPolicyDefinitionsClient) CreateOrUpdateCreateReques
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *ServiceEndpointPolicyDefinitionsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*ServiceEndpointPolicyDefinitionPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
 	return &ServiceEndpointPolicyDefinitionPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *ServiceEndpointPolicyDefinitionsClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -133,6 +136,9 @@ func (client *ServiceEndpointPolicyDefinitionsClient) BeginDelete(ctx context.Co
 	// send the first request to initialize the poller
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.DeleteHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
@@ -185,14 +191,14 @@ func (client *ServiceEndpointPolicyDefinitionsClient) DeleteCreateRequest(ctx co
 
 // DeleteHandleResponse handles the Delete response.
 func (client *ServiceEndpointPolicyDefinitionsClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteHandleError handles the Delete error response.
 func (client *ServiceEndpointPolicyDefinitionsClient) DeleteHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -208,6 +214,9 @@ func (client *ServiceEndpointPolicyDefinitionsClient) Get(ctx context.Context, r
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.GetHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.GetHandleResponse(resp)
@@ -237,15 +246,15 @@ func (client *ServiceEndpointPolicyDefinitionsClient) GetCreateRequest(ctx conte
 
 // GetHandleResponse handles the Get response.
 func (client *ServiceEndpointPolicyDefinitionsClient) GetHandleResponse(resp *azcore.Response) (*ServiceEndpointPolicyDefinitionResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
-	}
 	result := ServiceEndpointPolicyDefinitionResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ServiceEndpointPolicyDefinition)
 }
 
 // GetHandleError handles the Get error response.
 func (client *ServiceEndpointPolicyDefinitionsClient) GetHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -261,6 +270,7 @@ func (client *ServiceEndpointPolicyDefinitionsClient) ListByResourceGroup(resour
 			return client.ListByResourceGroupCreateRequest(ctx, resourceGroupName, serviceEndpointPolicyName)
 		},
 		responder: client.ListByResourceGroupHandleResponse,
+		errorer:   client.ListByResourceGroupHandleError,
 		advancer: func(ctx context.Context, resp *ServiceEndpointPolicyDefinitionListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ServiceEndpointPolicyDefinitionListResult.NextLink)
 		},
@@ -286,15 +296,15 @@ func (client *ServiceEndpointPolicyDefinitionsClient) ListByResourceGroupCreateR
 
 // ListByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client *ServiceEndpointPolicyDefinitionsClient) ListByResourceGroupHandleResponse(resp *azcore.Response) (*ServiceEndpointPolicyDefinitionListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListByResourceGroupHandleError(resp)
-	}
 	result := ServiceEndpointPolicyDefinitionListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ServiceEndpointPolicyDefinitionListResult)
 }
 
 // ListByResourceGroupHandleError handles the ListByResourceGroup error response.
 func (client *ServiceEndpointPolicyDefinitionsClient) ListByResourceGroupHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

@@ -24,6 +24,7 @@ type ProductResultPagerPoller interface {
 type productResultPagerPoller struct {
 	// the client for making the request
 	pipeline    azcore.Pipeline
+	errHandler  productResultHandleError
 	respHandler productResultHandleResponse
 	pt          armcore.Poller
 }
@@ -66,6 +67,7 @@ func (p *productResultPagerPoller) handleResponse(resp *azcore.Response) (Produc
 	return &productResultPager{
 		pipeline:  p.pipeline,
 		resp:      resp,
+		errorer:   p.errHandler,
 		responder: p.respHandler,
 		advancer: func(ctx context.Context, resp *ProductResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ProductResult.NextLink)

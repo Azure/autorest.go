@@ -25,6 +25,8 @@ type OdataProductResultPager interface {
 
 type odataProductResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type odataProductResultHandleError func(*azcore.Response) error
+
 type odataProductResultHandleResponse func(*azcore.Response) (*OdataProductResultResponse, error)
 
 type odataProductResultAdvancePage func(context.Context, *OdataProductResultResponse) (*azcore.Request, error)
@@ -34,6 +36,8 @@ type odataProductResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester odataProductResultCreateRequest
+	// callback for handling response errors
+	errorer odataProductResultHandleError
 	// callback for handling the HTTP response
 	responder odataProductResultHandleResponse
 	// callback for advancing to the next page
@@ -64,6 +68,13 @@ func (p *odataProductResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -92,6 +103,8 @@ type ProductResultPager interface {
 
 type productResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type productResultHandleError func(*azcore.Response) error
+
 type productResultHandleResponse func(*azcore.Response) (*ProductResultResponse, error)
 
 type productResultAdvancePage func(context.Context, *ProductResultResponse) (*azcore.Request, error)
@@ -101,6 +114,8 @@ type productResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester productResultCreateRequest
+	// callback for handling response errors
+	errorer productResultHandleError
 	// callback for handling the HTTP response
 	responder productResultHandleResponse
 	// callback for advancing to the next page
@@ -138,6 +153,13 @@ func (p *productResultPager) NextPage(ctx context.Context) bool {
 	} else {
 		p.resp = nil
 	}
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -166,6 +188,8 @@ type ProductResultValuePager interface {
 
 type productResultValueCreateRequest func(context.Context) (*azcore.Request, error)
 
+type productResultValueHandleError func(*azcore.Response) error
+
 type productResultValueHandleResponse func(*azcore.Response) (*ProductResultValueResponse, error)
 
 type productResultValueAdvancePage func(context.Context, *ProductResultValueResponse) (*azcore.Request, error)
@@ -175,6 +199,8 @@ type productResultValuePager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester productResultValueCreateRequest
+	// callback for handling response errors
+	errorer productResultValueHandleError
 	// callback for handling the HTTP response
 	responder productResultValueHandleResponse
 	// callback for advancing to the next page
@@ -205,6 +231,13 @@ func (p *productResultValuePager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -233,6 +266,8 @@ type ProductResultValueWithXmsClientNamePager interface {
 
 type productResultValueWithXmsClientNameCreateRequest func(context.Context) (*azcore.Request, error)
 
+type productResultValueWithXmsClientNameHandleError func(*azcore.Response) error
+
 type productResultValueWithXmsClientNameHandleResponse func(*azcore.Response) (*ProductResultValueWithXmsClientNameResponse, error)
 
 type productResultValueWithXmsClientNameAdvancePage func(context.Context, *ProductResultValueWithXmsClientNameResponse) (*azcore.Request, error)
@@ -242,6 +277,8 @@ type productResultValueWithXmsClientNamePager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester productResultValueWithXmsClientNameCreateRequest
+	// callback for handling response errors
+	errorer productResultValueWithXmsClientNameHandleError
 	// callback for handling the HTTP response
 	responder productResultValueWithXmsClientNameHandleResponse
 	// callback for advancing to the next page
@@ -272,6 +309,13 @@ func (p *productResultValueWithXmsClientNamePager) NextPage(ctx context.Context)
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err

@@ -48,6 +48,9 @@ func (client *VpnSiteLinksClient) Get(ctx context.Context, resourceGroupName str
 	if err != nil {
 		return nil, err
 	}
+	if err := client.GetHandleError(resp); err != nil {
+		return nil, err
+	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -75,15 +78,15 @@ func (client *VpnSiteLinksClient) GetCreateRequest(ctx context.Context, resource
 
 // GetHandleResponse handles the Get response.
 func (client *VpnSiteLinksClient) GetHandleResponse(resp *azcore.Response) (*VpnSiteLinkResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
-	}
 	result := VpnSiteLinkResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VpnSiteLink)
 }
 
 // GetHandleError handles the Get error response.
 func (client *VpnSiteLinksClient) GetHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -99,6 +102,7 @@ func (client *VpnSiteLinksClient) ListByVpnSite(resourceGroupName string, vpnSit
 			return client.ListByVpnSiteCreateRequest(ctx, resourceGroupName, vpnSiteName)
 		},
 		responder: client.ListByVpnSiteHandleResponse,
+		errorer:   client.ListByVpnSiteHandleError,
 		advancer: func(ctx context.Context, resp *ListVpnSiteLinksResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ListVpnSiteLinksResult.NextLink)
 		},
@@ -124,15 +128,15 @@ func (client *VpnSiteLinksClient) ListByVpnSiteCreateRequest(ctx context.Context
 
 // ListByVpnSiteHandleResponse handles the ListByVpnSite response.
 func (client *VpnSiteLinksClient) ListByVpnSiteHandleResponse(resp *azcore.Response) (*ListVpnSiteLinksResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListByVpnSiteHandleError(resp)
-	}
 	result := ListVpnSiteLinksResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ListVpnSiteLinksResult)
 }
 
 // ListByVpnSiteHandleError handles the ListByVpnSite error response.
 func (client *VpnSiteLinksClient) ListByVpnSiteHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

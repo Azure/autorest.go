@@ -46,6 +46,9 @@ func (client *ResourceNavigationLinksClient) List(ctx context.Context, resourceG
 	if err != nil {
 		return nil, err
 	}
+	if err := client.ListHandleError(resp); err != nil {
+		return nil, err
+	}
 	result, err := client.ListHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -73,15 +76,15 @@ func (client *ResourceNavigationLinksClient) ListCreateRequest(ctx context.Conte
 
 // ListHandleResponse handles the List response.
 func (client *ResourceNavigationLinksClient) ListHandleResponse(resp *azcore.Response) (*ResourceNavigationLinksListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := ResourceNavigationLinksListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ResourceNavigationLinksListResult)
 }
 
 // ListHandleError handles the List error response.
 func (client *ResourceNavigationLinksClient) ListHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

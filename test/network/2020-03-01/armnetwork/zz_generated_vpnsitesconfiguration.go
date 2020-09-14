@@ -51,6 +51,9 @@ func (client *VpnSitesConfigurationClient) BeginDownload(ctx context.Context, re
 	if err != nil {
 		return nil, err
 	}
+	if err := client.DownloadHandleError(resp); err != nil {
+		return nil, err
+	}
 	result, err := client.DownloadHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -100,14 +103,14 @@ func (client *VpnSitesConfigurationClient) DownloadCreateRequest(ctx context.Con
 
 // DownloadHandleResponse handles the Download response.
 func (client *VpnSitesConfigurationClient) DownloadHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DownloadHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DownloadHandleError handles the Download error response.
 func (client *VpnSitesConfigurationClient) DownloadHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

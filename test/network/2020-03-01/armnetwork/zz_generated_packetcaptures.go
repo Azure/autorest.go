@@ -67,6 +67,9 @@ func (client *PacketCapturesClient) BeginCreate(ctx context.Context, resourceGro
 	if err != nil {
 		return nil, err
 	}
+	if err := client.CreateHandleError(resp); err != nil {
+		return nil, err
+	}
 	result, err := client.CreateHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -117,14 +120,14 @@ func (client *PacketCapturesClient) CreateCreateRequest(ctx context.Context, res
 
 // CreateHandleResponse handles the Create response.
 func (client *PacketCapturesClient) CreateHandleResponse(resp *azcore.Response) (*PacketCaptureResultPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusCreated, http.StatusNoContent) {
-		return nil, client.CreateHandleError(resp)
-	}
 	return &PacketCaptureResultPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // CreateHandleError handles the Create error response.
 func (client *PacketCapturesClient) CreateHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusCreated, http.StatusNoContent) {
+		return nil
+	}
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -141,6 +144,9 @@ func (client *PacketCapturesClient) BeginDelete(ctx context.Context, resourceGro
 	// send the first request to initialize the poller
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.DeleteHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
@@ -193,14 +199,14 @@ func (client *PacketCapturesClient) DeleteCreateRequest(ctx context.Context, res
 
 // DeleteHandleResponse handles the Delete response.
 func (client *PacketCapturesClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteHandleError handles the Delete error response.
 func (client *PacketCapturesClient) DeleteHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
+		return nil
+	}
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -216,6 +222,9 @@ func (client *PacketCapturesClient) Get(ctx context.Context, resourceGroupName s
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.GetHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.GetHandleResponse(resp)
@@ -245,15 +254,15 @@ func (client *PacketCapturesClient) GetCreateRequest(ctx context.Context, resour
 
 // GetHandleResponse handles the Get response.
 func (client *PacketCapturesClient) GetHandleResponse(resp *azcore.Response) (*PacketCaptureResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
-	}
 	result := PacketCaptureResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.PacketCaptureResult)
 }
 
 // GetHandleError handles the Get error response.
 func (client *PacketCapturesClient) GetHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -270,6 +279,9 @@ func (client *PacketCapturesClient) BeginGetStatus(ctx context.Context, resource
 	// send the first request to initialize the poller
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.GetStatusHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.GetStatusHandleResponse(resp)
@@ -322,14 +334,14 @@ func (client *PacketCapturesClient) GetStatusCreateRequest(ctx context.Context, 
 
 // GetStatusHandleResponse handles the GetStatus response.
 func (client *PacketCapturesClient) GetStatusHandleResponse(resp *azcore.Response) (*PacketCaptureQueryStatusResultPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.GetStatusHandleError(resp)
-	}
 	return &PacketCaptureQueryStatusResultPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // GetStatusHandleError handles the GetStatus error response.
 func (client *PacketCapturesClient) GetStatusHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil
+	}
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -345,6 +357,9 @@ func (client *PacketCapturesClient) List(ctx context.Context, resourceGroupName 
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.ListHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.ListHandleResponse(resp)
@@ -373,15 +388,15 @@ func (client *PacketCapturesClient) ListCreateRequest(ctx context.Context, resou
 
 // ListHandleResponse handles the List response.
 func (client *PacketCapturesClient) ListHandleResponse(resp *azcore.Response) (*PacketCaptureListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := PacketCaptureListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.PacketCaptureListResult)
 }
 
 // ListHandleError handles the List error response.
 func (client *PacketCapturesClient) ListHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -398,6 +413,9 @@ func (client *PacketCapturesClient) BeginStop(ctx context.Context, resourceGroup
 	// send the first request to initialize the poller
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.StopHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.StopHandleResponse(resp)
@@ -450,14 +468,14 @@ func (client *PacketCapturesClient) StopCreateRequest(ctx context.Context, resou
 
 // StopHandleResponse handles the Stop response.
 func (client *PacketCapturesClient) StopHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.StopHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // StopHandleError handles the Stop error response.
 func (client *PacketCapturesClient) StopHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil
+	}
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

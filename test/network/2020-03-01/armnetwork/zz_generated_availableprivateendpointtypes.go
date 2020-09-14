@@ -46,6 +46,7 @@ func (client *AvailablePrivateEndpointTypesClient) List(location string) Availab
 			return client.ListCreateRequest(ctx, location)
 		},
 		responder: client.ListHandleResponse,
+		errorer:   client.ListHandleError,
 		advancer: func(ctx context.Context, resp *AvailablePrivateEndpointTypesResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.AvailablePrivateEndpointTypesResult.NextLink)
 		},
@@ -70,15 +71,15 @@ func (client *AvailablePrivateEndpointTypesClient) ListCreateRequest(ctx context
 
 // ListHandleResponse handles the List response.
 func (client *AvailablePrivateEndpointTypesClient) ListHandleResponse(resp *azcore.Response) (*AvailablePrivateEndpointTypesResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := AvailablePrivateEndpointTypesResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.AvailablePrivateEndpointTypesResult)
 }
 
 // ListHandleError handles the List error response.
 func (client *AvailablePrivateEndpointTypesClient) ListHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -94,6 +95,7 @@ func (client *AvailablePrivateEndpointTypesClient) ListByResourceGroup(location 
 			return client.ListByResourceGroupCreateRequest(ctx, location, resourceGroupName)
 		},
 		responder: client.ListByResourceGroupHandleResponse,
+		errorer:   client.ListByResourceGroupHandleError,
 		advancer: func(ctx context.Context, resp *AvailablePrivateEndpointTypesResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.AvailablePrivateEndpointTypesResult.NextLink)
 		},
@@ -119,15 +121,15 @@ func (client *AvailablePrivateEndpointTypesClient) ListByResourceGroupCreateRequ
 
 // ListByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client *AvailablePrivateEndpointTypesClient) ListByResourceGroupHandleResponse(resp *azcore.Response) (*AvailablePrivateEndpointTypesResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListByResourceGroupHandleError(resp)
-	}
 	result := AvailablePrivateEndpointTypesResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.AvailablePrivateEndpointTypesResult)
 }
 
 // ListByResourceGroupHandleError handles the ListByResourceGroup error response.
 func (client *AvailablePrivateEndpointTypesClient) ListByResourceGroupHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

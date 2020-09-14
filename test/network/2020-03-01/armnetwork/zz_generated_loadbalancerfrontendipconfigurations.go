@@ -48,6 +48,9 @@ func (client *LoadBalancerFrontendIPConfigurationsClient) Get(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
+	if err := client.GetHandleError(resp); err != nil {
+		return nil, err
+	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -75,15 +78,15 @@ func (client *LoadBalancerFrontendIPConfigurationsClient) GetCreateRequest(ctx c
 
 // GetHandleResponse handles the Get response.
 func (client *LoadBalancerFrontendIPConfigurationsClient) GetHandleResponse(resp *azcore.Response) (*FrontendIPConfigurationResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
-	}
 	result := FrontendIPConfigurationResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.FrontendIPConfiguration)
 }
 
 // GetHandleError handles the Get error response.
 func (client *LoadBalancerFrontendIPConfigurationsClient) GetHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -99,6 +102,7 @@ func (client *LoadBalancerFrontendIPConfigurationsClient) List(resourceGroupName
 			return client.ListCreateRequest(ctx, resourceGroupName, loadBalancerName)
 		},
 		responder: client.ListHandleResponse,
+		errorer:   client.ListHandleError,
 		advancer: func(ctx context.Context, resp *LoadBalancerFrontendIPConfigurationListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.LoadBalancerFrontendIPConfigurationListResult.NextLink)
 		},
@@ -124,15 +128,15 @@ func (client *LoadBalancerFrontendIPConfigurationsClient) ListCreateRequest(ctx 
 
 // ListHandleResponse handles the List response.
 func (client *LoadBalancerFrontendIPConfigurationsClient) ListHandleResponse(resp *azcore.Response) (*LoadBalancerFrontendIPConfigurationListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := LoadBalancerFrontendIPConfigurationListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.LoadBalancerFrontendIPConfigurationListResult)
 }
 
 // ListHandleError handles the List error response.
 func (client *LoadBalancerFrontendIPConfigurationsClient) ListHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

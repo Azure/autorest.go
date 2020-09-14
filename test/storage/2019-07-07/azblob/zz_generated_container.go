@@ -74,6 +74,9 @@ func (client *containerClient) AcquireLease(ctx context.Context, containerAcquir
 	if err != nil {
 		return nil, err
 	}
+	if err := client.AcquireLeaseHandleError(resp); err != nil {
+		return nil, err
+	}
 	result, err := client.AcquireLeaseHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -117,9 +120,6 @@ func (client *containerClient) AcquireLeaseCreateRequest(ctx context.Context, co
 
 // AcquireLeaseHandleResponse handles the AcquireLease response.
 func (client *containerClient) AcquireLeaseHandleResponse(resp *azcore.Response) (*ContainerAcquireLeaseResponse, error) {
-	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.AcquireLeaseHandleError(resp)
-	}
 	result := ContainerAcquireLeaseResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -155,6 +155,9 @@ func (client *containerClient) AcquireLeaseHandleResponse(resp *azcore.Response)
 
 // AcquireLeaseHandleError handles the AcquireLease error response.
 func (client *containerClient) AcquireLeaseHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusCreated) {
+		return nil
+	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -170,6 +173,9 @@ func (client *containerClient) BreakLease(ctx context.Context, containerBreakLea
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.BreakLeaseHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.BreakLeaseHandleResponse(resp)
@@ -212,9 +218,6 @@ func (client *containerClient) BreakLeaseCreateRequest(ctx context.Context, cont
 
 // BreakLeaseHandleResponse handles the BreakLease response.
 func (client *containerClient) BreakLeaseHandleResponse(resp *azcore.Response) (*ContainerBreakLeaseResponse, error) {
-	if !resp.HasStatusCode(http.StatusAccepted) {
-		return nil, client.BreakLeaseHandleError(resp)
-	}
 	result := ContainerBreakLeaseResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -255,6 +258,9 @@ func (client *containerClient) BreakLeaseHandleResponse(resp *azcore.Response) (
 
 // BreakLeaseHandleError handles the BreakLease error response.
 func (client *containerClient) BreakLeaseHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusAccepted) {
+		return nil
+	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -270,6 +276,9 @@ func (client *containerClient) ChangeLease(ctx context.Context, leaseId string, 
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.ChangeLeaseHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.ChangeLeaseHandleResponse(resp)
@@ -311,9 +320,6 @@ func (client *containerClient) ChangeLeaseCreateRequest(ctx context.Context, lea
 
 // ChangeLeaseHandleResponse handles the ChangeLease response.
 func (client *containerClient) ChangeLeaseHandleResponse(resp *azcore.Response) (*ContainerChangeLeaseResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ChangeLeaseHandleError(resp)
-	}
 	result := ContainerChangeLeaseResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -349,6 +355,9 @@ func (client *containerClient) ChangeLeaseHandleResponse(resp *azcore.Response) 
 
 // ChangeLeaseHandleError handles the ChangeLease error response.
 func (client *containerClient) ChangeLeaseHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -364,6 +373,9 @@ func (client *containerClient) Create(ctx context.Context, containerCreateOption
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.CreateHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.CreateHandleResponse(resp)
@@ -409,9 +421,6 @@ func (client *containerClient) CreateCreateRequest(ctx context.Context, containe
 
 // CreateHandleResponse handles the Create response.
 func (client *containerClient) CreateHandleResponse(resp *azcore.Response) (*ContainerCreateResponse, error) {
-	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.CreateHandleError(resp)
-	}
 	result := ContainerCreateResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -444,6 +453,9 @@ func (client *containerClient) CreateHandleResponse(resp *azcore.Response) (*Con
 
 // CreateHandleError handles the Create error response.
 func (client *containerClient) CreateHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusCreated) {
+		return nil
+	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -459,6 +471,9 @@ func (client *containerClient) Delete(ctx context.Context, containerDeleteOption
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.DeleteHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
@@ -499,9 +514,6 @@ func (client *containerClient) DeleteCreateRequest(ctx context.Context, containe
 
 // DeleteHandleResponse handles the Delete response.
 func (client *containerClient) DeleteHandleResponse(resp *azcore.Response) (*ContainerDeleteResponse, error) {
-	if !resp.HasStatusCode(http.StatusAccepted) {
-		return nil, client.DeleteHandleError(resp)
-	}
 	result := ContainerDeleteResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
@@ -524,6 +536,9 @@ func (client *containerClient) DeleteHandleResponse(resp *azcore.Response) (*Con
 
 // DeleteHandleError handles the Delete error response.
 func (client *containerClient) DeleteHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusAccepted) {
+		return nil
+	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -539,6 +554,9 @@ func (client *containerClient) GetAccessPolicy(ctx context.Context, containerGet
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.GetAccessPolicyHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.GetAccessPolicyHandleResponse(resp)
@@ -574,9 +592,6 @@ func (client *containerClient) GetAccessPolicyCreateRequest(ctx context.Context,
 
 // GetAccessPolicyHandleResponse handles the GetAccessPolicy response.
 func (client *containerClient) GetAccessPolicyHandleResponse(resp *azcore.Response) (*SignedIDentifierArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetAccessPolicyHandleError(resp)
-	}
 	result := SignedIDentifierArrayResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-blob-public-access"); val != "" {
 		result.BlobPublicAccess = (*PublicAccessType)(&val)
@@ -612,6 +627,9 @@ func (client *containerClient) GetAccessPolicyHandleResponse(resp *azcore.Respon
 
 // GetAccessPolicyHandleError handles the GetAccessPolicy error response.
 func (client *containerClient) GetAccessPolicyHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -627,6 +645,9 @@ func (client *containerClient) GetAccountInfo(ctx context.Context) (*ContainerGe
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.GetAccountInfoHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.GetAccountInfoHandleResponse(resp)
@@ -653,9 +674,6 @@ func (client *containerClient) GetAccountInfoCreateRequest(ctx context.Context) 
 
 // GetAccountInfoHandleResponse handles the GetAccountInfo response.
 func (client *containerClient) GetAccountInfoHandleResponse(resp *azcore.Response) (*ContainerGetAccountInfoResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetAccountInfoHandleError(resp)
-	}
 	result := ContainerGetAccountInfoResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
@@ -684,6 +702,9 @@ func (client *containerClient) GetAccountInfoHandleResponse(resp *azcore.Respons
 
 // GetAccountInfoHandleError handles the GetAccountInfo error response.
 func (client *containerClient) GetAccountInfoHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -699,6 +720,9 @@ func (client *containerClient) GetProperties(ctx context.Context, containerGetPr
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.GetPropertiesHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.GetPropertiesHandleResponse(resp)
@@ -733,9 +757,6 @@ func (client *containerClient) GetPropertiesCreateRequest(ctx context.Context, c
 
 // GetPropertiesHandleResponse handles the GetProperties response.
 func (client *containerClient) GetPropertiesHandleResponse(resp *azcore.Response) (*ContainerGetPropertiesResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetPropertiesHandleError(resp)
-	}
 	result := ContainerGetPropertiesResponse{RawResponse: resp.Response}
 	for hh := range resp.Header {
 		if strings.HasPrefix(hh, "x-ms-meta-") {
@@ -812,6 +833,9 @@ func (client *containerClient) GetPropertiesHandleResponse(resp *azcore.Response
 
 // GetPropertiesHandleError handles the GetProperties error response.
 func (client *containerClient) GetPropertiesHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -827,6 +851,7 @@ func (client *containerClient) ListBlobFlatSegment(containerListBlobFlatSegmentO
 			return client.ListBlobFlatSegmentCreateRequest(ctx, containerListBlobFlatSegmentOptions)
 		},
 		responder: client.ListBlobFlatSegmentHandleResponse,
+		errorer:   client.ListBlobFlatSegmentHandleError,
 		advancer: func(ctx context.Context, resp *ListBlobsFlatSegmentResponseResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.EnumerationResults.NextMarker)
 		},
@@ -868,9 +893,6 @@ func (client *containerClient) ListBlobFlatSegmentCreateRequest(ctx context.Cont
 
 // ListBlobFlatSegmentHandleResponse handles the ListBlobFlatSegment response.
 func (client *containerClient) ListBlobFlatSegmentHandleResponse(resp *azcore.Response) (*ListBlobsFlatSegmentResponseResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListBlobFlatSegmentHandleError(resp)
-	}
 	result := ListBlobsFlatSegmentResponseResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("Content-Type"); val != "" {
 		result.ContentType = &val
@@ -896,6 +918,9 @@ func (client *containerClient) ListBlobFlatSegmentHandleResponse(resp *azcore.Re
 
 // ListBlobFlatSegmentHandleError handles the ListBlobFlatSegment error response.
 func (client *containerClient) ListBlobFlatSegmentHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -911,6 +936,7 @@ func (client *containerClient) ListBlobHierarchySegment(delimiter string, contai
 			return client.ListBlobHierarchySegmentCreateRequest(ctx, delimiter, containerListBlobHierarchySegmentOptions)
 		},
 		responder: client.ListBlobHierarchySegmentHandleResponse,
+		errorer:   client.ListBlobHierarchySegmentHandleError,
 		advancer: func(ctx context.Context, resp *ListBlobsHierarchySegmentResponseResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.EnumerationResults.NextMarker)
 		},
@@ -953,9 +979,6 @@ func (client *containerClient) ListBlobHierarchySegmentCreateRequest(ctx context
 
 // ListBlobHierarchySegmentHandleResponse handles the ListBlobHierarchySegment response.
 func (client *containerClient) ListBlobHierarchySegmentHandleResponse(resp *azcore.Response) (*ListBlobsHierarchySegmentResponseResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListBlobHierarchySegmentHandleError(resp)
-	}
 	result := ListBlobsHierarchySegmentResponseResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("Content-Type"); val != "" {
 		result.ContentType = &val
@@ -981,6 +1004,9 @@ func (client *containerClient) ListBlobHierarchySegmentHandleResponse(resp *azco
 
 // ListBlobHierarchySegmentHandleError handles the ListBlobHierarchySegment error response.
 func (client *containerClient) ListBlobHierarchySegmentHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -996,6 +1022,9 @@ func (client *containerClient) ReleaseLease(ctx context.Context, leaseId string,
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.ReleaseLeaseHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.ReleaseLeaseHandleResponse(resp)
@@ -1036,9 +1065,6 @@ func (client *containerClient) ReleaseLeaseCreateRequest(ctx context.Context, le
 
 // ReleaseLeaseHandleResponse handles the ReleaseLease response.
 func (client *containerClient) ReleaseLeaseHandleResponse(resp *azcore.Response) (*ContainerReleaseLeaseResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ReleaseLeaseHandleError(resp)
-	}
 	result := ContainerReleaseLeaseResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -1071,6 +1097,9 @@ func (client *containerClient) ReleaseLeaseHandleResponse(resp *azcore.Response)
 
 // ReleaseLeaseHandleError handles the ReleaseLease error response.
 func (client *containerClient) ReleaseLeaseHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -1086,6 +1115,9 @@ func (client *containerClient) RenewLease(ctx context.Context, leaseId string, c
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.RenewLeaseHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.RenewLeaseHandleResponse(resp)
@@ -1126,9 +1158,6 @@ func (client *containerClient) RenewLeaseCreateRequest(ctx context.Context, leas
 
 // RenewLeaseHandleResponse handles the RenewLease response.
 func (client *containerClient) RenewLeaseHandleResponse(resp *azcore.Response) (*ContainerRenewLeaseResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.RenewLeaseHandleError(resp)
-	}
 	result := ContainerRenewLeaseResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -1164,6 +1193,9 @@ func (client *containerClient) RenewLeaseHandleResponse(resp *azcore.Response) (
 
 // RenewLeaseHandleError handles the RenewLease error response.
 func (client *containerClient) RenewLeaseHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -1179,6 +1211,9 @@ func (client *containerClient) SetAccessPolicy(ctx context.Context, containerSet
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.SetAccessPolicyHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.SetAccessPolicyHandleResponse(resp)
@@ -1230,9 +1265,6 @@ func (client *containerClient) SetAccessPolicyCreateRequest(ctx context.Context,
 
 // SetAccessPolicyHandleResponse handles the SetAccessPolicy response.
 func (client *containerClient) SetAccessPolicyHandleResponse(resp *azcore.Response) (*ContainerSetAccessPolicyResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.SetAccessPolicyHandleError(resp)
-	}
 	result := ContainerSetAccessPolicyResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -1265,6 +1297,9 @@ func (client *containerClient) SetAccessPolicyHandleResponse(resp *azcore.Respon
 
 // SetAccessPolicyHandleError handles the SetAccessPolicy error response.
 func (client *containerClient) SetAccessPolicyHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -1280,6 +1315,9 @@ func (client *containerClient) SetMetadata(ctx context.Context, containerSetMeta
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.SetMetadataHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.SetMetadataHandleResponse(resp)
@@ -1323,9 +1361,6 @@ func (client *containerClient) SetMetadataCreateRequest(ctx context.Context, con
 
 // SetMetadataHandleResponse handles the SetMetadata response.
 func (client *containerClient) SetMetadataHandleResponse(resp *azcore.Response) (*ContainerSetMetadataResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.SetMetadataHandleError(resp)
-	}
 	result := ContainerSetMetadataResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -1358,6 +1393,9 @@ func (client *containerClient) SetMetadataHandleResponse(resp *azcore.Response) 
 
 // SetMetadataHandleError handles the SetMetadata error response.
 func (client *containerClient) SetMetadataHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err

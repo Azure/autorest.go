@@ -6,7 +6,7 @@
 import { Session } from '@azure-tools/autorest-extension-base';
 import { values } from '@azure-tools/linq';
 import { comment, camelCase, pascalCase } from '@azure-tools/codegen';
-import { aggregateParameters } from '../common/helpers';
+import { aggregateParameters, isSchemaResponse } from '../common/helpers';
 import { ArraySchema, CodeModel, DictionarySchema, Language, Parameter, Schema, SchemaType, Operation, GroupProperty, ImplementationLocation, SerializationStyle, ByteArraySchema, ConstantSchema, NumberSchema, DateTimeSchema } from '@azure-tools/codemodel';
 import { ImportManager } from './imports';
 
@@ -239,4 +239,14 @@ export function formatParamValue(param: Parameter, imports: ImportManager): stri
     default:
       return paramName;
   }
+}
+
+// returns true if at least one of the responses has a schema
+export function hasSchemaResponse(op: Operation): boolean {
+  for (const resp of values(op.responses)) {
+    if (isSchemaResponse(resp)) {
+      return true;
+    }
+  }
+  return false;
 }

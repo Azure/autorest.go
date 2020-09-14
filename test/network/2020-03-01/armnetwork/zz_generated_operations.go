@@ -41,6 +41,7 @@ func (client *OperationsClient) List() OperationListResultPager {
 			return client.ListCreateRequest(ctx)
 		},
 		responder: client.ListHandleResponse,
+		errorer:   client.ListHandleError,
 		advancer: func(ctx context.Context, resp *OperationListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.OperationListResult.NextLink)
 		},
@@ -63,15 +64,15 @@ func (client *OperationsClient) ListCreateRequest(ctx context.Context) (*azcore.
 
 // ListHandleResponse handles the List response.
 func (client *OperationsClient) ListHandleResponse(resp *azcore.Response) (*OperationListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := OperationListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.OperationListResult)
 }
 
 // ListHandleError handles the List error response.
 func (client *OperationsClient) ListHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

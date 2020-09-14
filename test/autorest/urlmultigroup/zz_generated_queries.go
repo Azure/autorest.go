@@ -47,11 +47,10 @@ func (client *QueriesClient) ArrayStringMultiEmpty(ctx context.Context, queriesA
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ArrayStringMultiEmptyHandleResponse(resp)
-	if err != nil {
+	if err := client.ArrayStringMultiEmptyHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // ArrayStringMultiEmptyCreateRequest creates the ArrayStringMultiEmpty request.
@@ -72,16 +71,11 @@ func (client *QueriesClient) ArrayStringMultiEmptyCreateRequest(ctx context.Cont
 	return req, nil
 }
 
-// ArrayStringMultiEmptyHandleResponse handles the ArrayStringMultiEmpty response.
-func (client *QueriesClient) ArrayStringMultiEmptyHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ArrayStringMultiEmptyHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // ArrayStringMultiEmptyHandleError handles the ArrayStringMultiEmpty error response.
 func (client *QueriesClient) ArrayStringMultiEmptyHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -99,11 +93,10 @@ func (client *QueriesClient) ArrayStringMultiNull(ctx context.Context, queriesAr
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ArrayStringMultiNullHandleResponse(resp)
-	if err != nil {
+	if err := client.ArrayStringMultiNullHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // ArrayStringMultiNullCreateRequest creates the ArrayStringMultiNull request.
@@ -124,16 +117,11 @@ func (client *QueriesClient) ArrayStringMultiNullCreateRequest(ctx context.Conte
 	return req, nil
 }
 
-// ArrayStringMultiNullHandleResponse handles the ArrayStringMultiNull response.
-func (client *QueriesClient) ArrayStringMultiNullHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ArrayStringMultiNullHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // ArrayStringMultiNullHandleError handles the ArrayStringMultiNull error response.
 func (client *QueriesClient) ArrayStringMultiNullHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -151,11 +139,10 @@ func (client *QueriesClient) ArrayStringMultiValid(ctx context.Context, queriesA
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ArrayStringMultiValidHandleResponse(resp)
-	if err != nil {
+	if err := client.ArrayStringMultiValidHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // ArrayStringMultiValidCreateRequest creates the ArrayStringMultiValid request.
@@ -176,16 +163,11 @@ func (client *QueriesClient) ArrayStringMultiValidCreateRequest(ctx context.Cont
 	return req, nil
 }
 
-// ArrayStringMultiValidHandleResponse handles the ArrayStringMultiValid response.
-func (client *QueriesClient) ArrayStringMultiValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ArrayStringMultiValidHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // ArrayStringMultiValidHandleError handles the ArrayStringMultiValid error response.
 func (client *QueriesClient) ArrayStringMultiValidHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

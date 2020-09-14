@@ -63,6 +63,9 @@ func (client *SecurityPartnerProvidersClient) BeginCreateOrUpdate(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
+	if err := client.CreateOrUpdateHandleError(resp); err != nil {
+		return nil, err
+	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -112,14 +115,14 @@ func (client *SecurityPartnerProvidersClient) CreateOrUpdateCreateRequest(ctx co
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *SecurityPartnerProvidersClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*SecurityPartnerProviderPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
 	return &SecurityPartnerProviderPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *SecurityPartnerProvidersClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -136,6 +139,9 @@ func (client *SecurityPartnerProvidersClient) BeginDelete(ctx context.Context, r
 	// send the first request to initialize the poller
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.DeleteHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
@@ -187,14 +193,14 @@ func (client *SecurityPartnerProvidersClient) DeleteCreateRequest(ctx context.Co
 
 // DeleteHandleResponse handles the Delete response.
 func (client *SecurityPartnerProvidersClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteHandleError handles the Delete error response.
 func (client *SecurityPartnerProvidersClient) DeleteHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -210,6 +216,9 @@ func (client *SecurityPartnerProvidersClient) Get(ctx context.Context, resourceG
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.GetHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.GetHandleResponse(resp)
@@ -238,15 +247,15 @@ func (client *SecurityPartnerProvidersClient) GetCreateRequest(ctx context.Conte
 
 // GetHandleResponse handles the Get response.
 func (client *SecurityPartnerProvidersClient) GetHandleResponse(resp *azcore.Response) (*SecurityPartnerProviderResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
-	}
 	result := SecurityPartnerProviderResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.SecurityPartnerProvider)
 }
 
 // GetHandleError handles the Get error response.
 func (client *SecurityPartnerProvidersClient) GetHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -262,6 +271,7 @@ func (client *SecurityPartnerProvidersClient) List() SecurityPartnerProviderList
 			return client.ListCreateRequest(ctx)
 		},
 		responder: client.ListHandleResponse,
+		errorer:   client.ListHandleError,
 		advancer: func(ctx context.Context, resp *SecurityPartnerProviderListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.SecurityPartnerProviderListResult.NextLink)
 		},
@@ -285,15 +295,15 @@ func (client *SecurityPartnerProvidersClient) ListCreateRequest(ctx context.Cont
 
 // ListHandleResponse handles the List response.
 func (client *SecurityPartnerProvidersClient) ListHandleResponse(resp *azcore.Response) (*SecurityPartnerProviderListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := SecurityPartnerProviderListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.SecurityPartnerProviderListResult)
 }
 
 // ListHandleError handles the List error response.
 func (client *SecurityPartnerProvidersClient) ListHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -309,6 +319,7 @@ func (client *SecurityPartnerProvidersClient) ListByResourceGroup(resourceGroupN
 			return client.ListByResourceGroupCreateRequest(ctx, resourceGroupName)
 		},
 		responder: client.ListByResourceGroupHandleResponse,
+		errorer:   client.ListByResourceGroupHandleError,
 		advancer: func(ctx context.Context, resp *SecurityPartnerProviderListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.SecurityPartnerProviderListResult.NextLink)
 		},
@@ -333,15 +344,15 @@ func (client *SecurityPartnerProvidersClient) ListByResourceGroupCreateRequest(c
 
 // ListByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client *SecurityPartnerProvidersClient) ListByResourceGroupHandleResponse(resp *azcore.Response) (*SecurityPartnerProviderListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListByResourceGroupHandleError(resp)
-	}
 	result := SecurityPartnerProviderListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.SecurityPartnerProviderListResult)
 }
 
 // ListByResourceGroupHandleError handles the ListByResourceGroup error response.
 func (client *SecurityPartnerProvidersClient) ListByResourceGroupHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -357,6 +368,9 @@ func (client *SecurityPartnerProvidersClient) UpdateTags(ctx context.Context, re
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.UpdateTagsHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.UpdateTagsHandleResponse(resp)
@@ -385,15 +399,15 @@ func (client *SecurityPartnerProvidersClient) UpdateTagsCreateRequest(ctx contex
 
 // UpdateTagsHandleResponse handles the UpdateTags response.
 func (client *SecurityPartnerProvidersClient) UpdateTagsHandleResponse(resp *azcore.Response) (*SecurityPartnerProviderResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.UpdateTagsHandleError(resp)
-	}
 	result := SecurityPartnerProviderResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.SecurityPartnerProvider)
 }
 
 // UpdateTagsHandleError handles the UpdateTags error response.
 func (client *SecurityPartnerProvidersClient) UpdateTagsHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

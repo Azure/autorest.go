@@ -54,6 +54,9 @@ func (client *directoryClient) Create(ctx context.Context, directoryCreateOption
 	if err != nil {
 		return nil, err
 	}
+	if err := client.CreateHandleError(resp); err != nil {
+		return nil, err
+	}
 	result, err := client.CreateHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -122,9 +125,6 @@ func (client *directoryClient) CreateCreateRequest(ctx context.Context, director
 
 // CreateHandleResponse handles the Create response.
 func (client *directoryClient) CreateHandleResponse(resp *azcore.Response) (*DirectoryCreateResponse, error) {
-	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.CreateHandleError(resp)
-	}
 	result := DirectoryCreateResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -164,6 +164,9 @@ func (client *directoryClient) CreateHandleResponse(resp *azcore.Response) (*Dir
 
 // CreateHandleError handles the Create error response.
 func (client *directoryClient) CreateHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusCreated) {
+		return nil
+	}
 	var err DataLakeStorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -179,6 +182,9 @@ func (client *directoryClient) Delete(ctx context.Context, recursiveDirectoryDel
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.DeleteHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
@@ -228,9 +234,6 @@ func (client *directoryClient) DeleteCreateRequest(ctx context.Context, recursiv
 
 // DeleteHandleResponse handles the Delete response.
 func (client *directoryClient) DeleteHandleResponse(resp *azcore.Response) (*DirectoryDeleteResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.DeleteHandleError(resp)
-	}
 	result := DirectoryDeleteResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-continuation"); val != "" {
 		result.Marker = &val
@@ -256,6 +259,9 @@ func (client *directoryClient) DeleteHandleResponse(resp *azcore.Response) (*Dir
 
 // DeleteHandleError handles the Delete error response.
 func (client *directoryClient) DeleteHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err DataLakeStorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -271,6 +277,9 @@ func (client *directoryClient) GetAccessControl(ctx context.Context, directoryGe
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.GetAccessControlHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.GetAccessControlHandleResponse(resp)
@@ -320,9 +329,6 @@ func (client *directoryClient) GetAccessControlCreateRequest(ctx context.Context
 
 // GetAccessControlHandleResponse handles the GetAccessControl response.
 func (client *directoryClient) GetAccessControlHandleResponse(resp *azcore.Response) (*DirectoryGetAccessControlResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetAccessControlHandleError(resp)
-	}
 	result := DirectoryGetAccessControlResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
@@ -364,6 +370,9 @@ func (client *directoryClient) GetAccessControlHandleResponse(resp *azcore.Respo
 
 // GetAccessControlHandleError handles the GetAccessControl error response.
 func (client *directoryClient) GetAccessControlHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err DataLakeStorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -379,6 +388,9 @@ func (client *directoryClient) Rename(ctx context.Context, renameSource string, 
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.RenameHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.RenameHandleResponse(resp)
@@ -470,9 +482,6 @@ func (client *directoryClient) RenameCreateRequest(ctx context.Context, renameSo
 
 // RenameHandleResponse handles the Rename response.
 func (client *directoryClient) RenameHandleResponse(resp *azcore.Response) (*DirectoryRenameResponse, error) {
-	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.RenameHandleError(resp)
-	}
 	result := DirectoryRenameResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-continuation"); val != "" {
 		result.Marker = &val
@@ -515,6 +524,9 @@ func (client *directoryClient) RenameHandleResponse(resp *azcore.Response) (*Dir
 
 // RenameHandleError handles the Rename error response.
 func (client *directoryClient) RenameHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusCreated) {
+		return nil
+	}
 	var err DataLakeStorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -530,6 +542,9 @@ func (client *directoryClient) SetAccessControl(ctx context.Context, directorySe
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.SetAccessControlHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.SetAccessControlHandleResponse(resp)
@@ -588,9 +603,6 @@ func (client *directoryClient) SetAccessControlCreateRequest(ctx context.Context
 
 // SetAccessControlHandleResponse handles the SetAccessControl response.
 func (client *directoryClient) SetAccessControlHandleResponse(resp *azcore.Response) (*DirectorySetAccessControlResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.SetAccessControlHandleError(resp)
-	}
 	result := DirectorySetAccessControlResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
@@ -620,6 +632,9 @@ func (client *directoryClient) SetAccessControlHandleResponse(resp *azcore.Respo
 
 // SetAccessControlHandleError handles the SetAccessControl error response.
 func (client *directoryClient) SetAccessControlHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err DataLakeStorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err

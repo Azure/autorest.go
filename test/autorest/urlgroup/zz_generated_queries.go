@@ -115,11 +115,10 @@ func (client *QueriesClient) ArrayStringCSVEmpty(ctx context.Context, queriesArr
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ArrayStringCSVEmptyHandleResponse(resp)
-	if err != nil {
+	if err := client.ArrayStringCSVEmptyHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // ArrayStringCSVEmptyCreateRequest creates the ArrayStringCSVEmpty request.
@@ -138,16 +137,11 @@ func (client *QueriesClient) ArrayStringCSVEmptyCreateRequest(ctx context.Contex
 	return req, nil
 }
 
-// ArrayStringCSVEmptyHandleResponse handles the ArrayStringCSVEmpty response.
-func (client *QueriesClient) ArrayStringCSVEmptyHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ArrayStringCSVEmptyHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // ArrayStringCSVEmptyHandleError handles the ArrayStringCSVEmpty error response.
 func (client *QueriesClient) ArrayStringCSVEmptyHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -165,11 +159,10 @@ func (client *QueriesClient) ArrayStringCSVNull(ctx context.Context, queriesArra
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ArrayStringCSVNullHandleResponse(resp)
-	if err != nil {
+	if err := client.ArrayStringCSVNullHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // ArrayStringCSVNullCreateRequest creates the ArrayStringCSVNull request.
@@ -188,16 +181,11 @@ func (client *QueriesClient) ArrayStringCSVNullCreateRequest(ctx context.Context
 	return req, nil
 }
 
-// ArrayStringCSVNullHandleResponse handles the ArrayStringCSVNull response.
-func (client *QueriesClient) ArrayStringCSVNullHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ArrayStringCSVNullHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // ArrayStringCSVNullHandleError handles the ArrayStringCSVNull error response.
 func (client *QueriesClient) ArrayStringCSVNullHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -215,11 +203,10 @@ func (client *QueriesClient) ArrayStringCSVValid(ctx context.Context, queriesArr
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ArrayStringCSVValidHandleResponse(resp)
-	if err != nil {
+	if err := client.ArrayStringCSVValidHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // ArrayStringCSVValidCreateRequest creates the ArrayStringCSVValid request.
@@ -238,16 +225,11 @@ func (client *QueriesClient) ArrayStringCSVValidCreateRequest(ctx context.Contex
 	return req, nil
 }
 
-// ArrayStringCSVValidHandleResponse handles the ArrayStringCSVValid response.
-func (client *QueriesClient) ArrayStringCSVValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ArrayStringCSVValidHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // ArrayStringCSVValidHandleError handles the ArrayStringCSVValid error response.
 func (client *QueriesClient) ArrayStringCSVValidHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -265,11 +247,10 @@ func (client *QueriesClient) ArrayStringNoCollectionFormatEmpty(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ArrayStringNoCollectionFormatEmptyHandleResponse(resp)
-	if err != nil {
+	if err := client.ArrayStringNoCollectionFormatEmptyHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // ArrayStringNoCollectionFormatEmptyCreateRequest creates the ArrayStringNoCollectionFormatEmpty request.
@@ -288,16 +269,11 @@ func (client *QueriesClient) ArrayStringNoCollectionFormatEmptyCreateRequest(ctx
 	return req, nil
 }
 
-// ArrayStringNoCollectionFormatEmptyHandleResponse handles the ArrayStringNoCollectionFormatEmpty response.
-func (client *QueriesClient) ArrayStringNoCollectionFormatEmptyHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ArrayStringNoCollectionFormatEmptyHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // ArrayStringNoCollectionFormatEmptyHandleError handles the ArrayStringNoCollectionFormatEmpty error response.
 func (client *QueriesClient) ArrayStringNoCollectionFormatEmptyHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -315,11 +291,10 @@ func (client *QueriesClient) ArrayStringPipesValid(ctx context.Context, queriesA
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ArrayStringPipesValidHandleResponse(resp)
-	if err != nil {
+	if err := client.ArrayStringPipesValidHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // ArrayStringPipesValidCreateRequest creates the ArrayStringPipesValid request.
@@ -338,16 +313,11 @@ func (client *QueriesClient) ArrayStringPipesValidCreateRequest(ctx context.Cont
 	return req, nil
 }
 
-// ArrayStringPipesValidHandleResponse handles the ArrayStringPipesValid response.
-func (client *QueriesClient) ArrayStringPipesValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ArrayStringPipesValidHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // ArrayStringPipesValidHandleError handles the ArrayStringPipesValid error response.
 func (client *QueriesClient) ArrayStringPipesValidHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -365,11 +335,10 @@ func (client *QueriesClient) ArrayStringSsvValid(ctx context.Context, queriesArr
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ArrayStringSsvValidHandleResponse(resp)
-	if err != nil {
+	if err := client.ArrayStringSsvValidHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // ArrayStringSsvValidCreateRequest creates the ArrayStringSsvValid request.
@@ -388,16 +357,11 @@ func (client *QueriesClient) ArrayStringSsvValidCreateRequest(ctx context.Contex
 	return req, nil
 }
 
-// ArrayStringSsvValidHandleResponse handles the ArrayStringSsvValid response.
-func (client *QueriesClient) ArrayStringSsvValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ArrayStringSsvValidHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // ArrayStringSsvValidHandleError handles the ArrayStringSsvValid error response.
 func (client *QueriesClient) ArrayStringSsvValidHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -415,11 +379,10 @@ func (client *QueriesClient) ArrayStringTsvValid(ctx context.Context, queriesArr
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ArrayStringTsvValidHandleResponse(resp)
-	if err != nil {
+	if err := client.ArrayStringTsvValidHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // ArrayStringTsvValidCreateRequest creates the ArrayStringTsvValid request.
@@ -438,16 +401,11 @@ func (client *QueriesClient) ArrayStringTsvValidCreateRequest(ctx context.Contex
 	return req, nil
 }
 
-// ArrayStringTsvValidHandleResponse handles the ArrayStringTsvValid response.
-func (client *QueriesClient) ArrayStringTsvValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ArrayStringTsvValidHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // ArrayStringTsvValidHandleError handles the ArrayStringTsvValid error response.
 func (client *QueriesClient) ArrayStringTsvValidHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -465,11 +423,10 @@ func (client *QueriesClient) ByteEmpty(ctx context.Context) (*http.Response, err
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ByteEmptyHandleResponse(resp)
-	if err != nil {
+	if err := client.ByteEmptyHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // ByteEmptyCreateRequest creates the ByteEmpty request.
@@ -486,16 +443,11 @@ func (client *QueriesClient) ByteEmptyCreateRequest(ctx context.Context) (*azcor
 	return req, nil
 }
 
-// ByteEmptyHandleResponse handles the ByteEmpty response.
-func (client *QueriesClient) ByteEmptyHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ByteEmptyHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // ByteEmptyHandleError handles the ByteEmpty error response.
 func (client *QueriesClient) ByteEmptyHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -513,11 +465,10 @@ func (client *QueriesClient) ByteMultiByte(ctx context.Context, queriesByteMulti
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ByteMultiByteHandleResponse(resp)
-	if err != nil {
+	if err := client.ByteMultiByteHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // ByteMultiByteCreateRequest creates the ByteMultiByte request.
@@ -536,16 +487,11 @@ func (client *QueriesClient) ByteMultiByteCreateRequest(ctx context.Context, que
 	return req, nil
 }
 
-// ByteMultiByteHandleResponse handles the ByteMultiByte response.
-func (client *QueriesClient) ByteMultiByteHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ByteMultiByteHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // ByteMultiByteHandleError handles the ByteMultiByte error response.
 func (client *QueriesClient) ByteMultiByteHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -563,11 +509,10 @@ func (client *QueriesClient) ByteNull(ctx context.Context, queriesByteNullOption
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ByteNullHandleResponse(resp)
-	if err != nil {
+	if err := client.ByteNullHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // ByteNullCreateRequest creates the ByteNull request.
@@ -586,16 +531,11 @@ func (client *QueriesClient) ByteNullCreateRequest(ctx context.Context, queriesB
 	return req, nil
 }
 
-// ByteNullHandleResponse handles the ByteNull response.
-func (client *QueriesClient) ByteNullHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ByteNullHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // ByteNullHandleError handles the ByteNull error response.
 func (client *QueriesClient) ByteNullHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -613,11 +553,10 @@ func (client *QueriesClient) DateNull(ctx context.Context, queriesDateNullOption
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DateNullHandleResponse(resp)
-	if err != nil {
+	if err := client.DateNullHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // DateNullCreateRequest creates the DateNull request.
@@ -636,16 +575,11 @@ func (client *QueriesClient) DateNullCreateRequest(ctx context.Context, queriesD
 	return req, nil
 }
 
-// DateNullHandleResponse handles the DateNull response.
-func (client *QueriesClient) DateNullHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.DateNullHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // DateNullHandleError handles the DateNull error response.
 func (client *QueriesClient) DateNullHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -663,11 +597,10 @@ func (client *QueriesClient) DateTimeNull(ctx context.Context, queriesDateTimeNu
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DateTimeNullHandleResponse(resp)
-	if err != nil {
+	if err := client.DateTimeNullHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // DateTimeNullCreateRequest creates the DateTimeNull request.
@@ -686,16 +619,11 @@ func (client *QueriesClient) DateTimeNullCreateRequest(ctx context.Context, quer
 	return req, nil
 }
 
-// DateTimeNullHandleResponse handles the DateTimeNull response.
-func (client *QueriesClient) DateTimeNullHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.DateTimeNullHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // DateTimeNullHandleError handles the DateTimeNull error response.
 func (client *QueriesClient) DateTimeNullHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -713,11 +641,10 @@ func (client *QueriesClient) DateTimeValid(ctx context.Context) (*http.Response,
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DateTimeValidHandleResponse(resp)
-	if err != nil {
+	if err := client.DateTimeValidHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // DateTimeValidCreateRequest creates the DateTimeValid request.
@@ -734,16 +661,11 @@ func (client *QueriesClient) DateTimeValidCreateRequest(ctx context.Context) (*a
 	return req, nil
 }
 
-// DateTimeValidHandleResponse handles the DateTimeValid response.
-func (client *QueriesClient) DateTimeValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.DateTimeValidHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // DateTimeValidHandleError handles the DateTimeValid error response.
 func (client *QueriesClient) DateTimeValidHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -761,11 +683,10 @@ func (client *QueriesClient) DateValid(ctx context.Context) (*http.Response, err
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DateValidHandleResponse(resp)
-	if err != nil {
+	if err := client.DateValidHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // DateValidCreateRequest creates the DateValid request.
@@ -782,16 +703,11 @@ func (client *QueriesClient) DateValidCreateRequest(ctx context.Context) (*azcor
 	return req, nil
 }
 
-// DateValidHandleResponse handles the DateValid response.
-func (client *QueriesClient) DateValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.DateValidHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // DateValidHandleError handles the DateValid error response.
 func (client *QueriesClient) DateValidHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -809,11 +725,10 @@ func (client *QueriesClient) DoubleDecimalNegative(ctx context.Context) (*http.R
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DoubleDecimalNegativeHandleResponse(resp)
-	if err != nil {
+	if err := client.DoubleDecimalNegativeHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // DoubleDecimalNegativeCreateRequest creates the DoubleDecimalNegative request.
@@ -830,16 +745,11 @@ func (client *QueriesClient) DoubleDecimalNegativeCreateRequest(ctx context.Cont
 	return req, nil
 }
 
-// DoubleDecimalNegativeHandleResponse handles the DoubleDecimalNegative response.
-func (client *QueriesClient) DoubleDecimalNegativeHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.DoubleDecimalNegativeHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // DoubleDecimalNegativeHandleError handles the DoubleDecimalNegative error response.
 func (client *QueriesClient) DoubleDecimalNegativeHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -857,11 +767,10 @@ func (client *QueriesClient) DoubleDecimalPositive(ctx context.Context) (*http.R
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DoubleDecimalPositiveHandleResponse(resp)
-	if err != nil {
+	if err := client.DoubleDecimalPositiveHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // DoubleDecimalPositiveCreateRequest creates the DoubleDecimalPositive request.
@@ -878,16 +787,11 @@ func (client *QueriesClient) DoubleDecimalPositiveCreateRequest(ctx context.Cont
 	return req, nil
 }
 
-// DoubleDecimalPositiveHandleResponse handles the DoubleDecimalPositive response.
-func (client *QueriesClient) DoubleDecimalPositiveHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.DoubleDecimalPositiveHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // DoubleDecimalPositiveHandleError handles the DoubleDecimalPositive error response.
 func (client *QueriesClient) DoubleDecimalPositiveHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -905,11 +809,10 @@ func (client *QueriesClient) DoubleNull(ctx context.Context, queriesDoubleNullOp
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DoubleNullHandleResponse(resp)
-	if err != nil {
+	if err := client.DoubleNullHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // DoubleNullCreateRequest creates the DoubleNull request.
@@ -928,16 +831,11 @@ func (client *QueriesClient) DoubleNullCreateRequest(ctx context.Context, querie
 	return req, nil
 }
 
-// DoubleNullHandleResponse handles the DoubleNull response.
-func (client *QueriesClient) DoubleNullHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.DoubleNullHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // DoubleNullHandleError handles the DoubleNull error response.
 func (client *QueriesClient) DoubleNullHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -955,11 +853,10 @@ func (client *QueriesClient) EnumNull(ctx context.Context, queriesEnumNullOption
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.EnumNullHandleResponse(resp)
-	if err != nil {
+	if err := client.EnumNullHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // EnumNullCreateRequest creates the EnumNull request.
@@ -978,16 +875,11 @@ func (client *QueriesClient) EnumNullCreateRequest(ctx context.Context, queriesE
 	return req, nil
 }
 
-// EnumNullHandleResponse handles the EnumNull response.
-func (client *QueriesClient) EnumNullHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.EnumNullHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // EnumNullHandleError handles the EnumNull error response.
 func (client *QueriesClient) EnumNullHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1005,11 +897,10 @@ func (client *QueriesClient) EnumValid(ctx context.Context, queriesEnumValidOpti
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.EnumValidHandleResponse(resp)
-	if err != nil {
+	if err := client.EnumValidHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // EnumValidCreateRequest creates the EnumValid request.
@@ -1028,16 +919,11 @@ func (client *QueriesClient) EnumValidCreateRequest(ctx context.Context, queries
 	return req, nil
 }
 
-// EnumValidHandleResponse handles the EnumValid response.
-func (client *QueriesClient) EnumValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.EnumValidHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // EnumValidHandleError handles the EnumValid error response.
 func (client *QueriesClient) EnumValidHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1055,11 +941,10 @@ func (client *QueriesClient) FloatNull(ctx context.Context, queriesFloatNullOpti
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.FloatNullHandleResponse(resp)
-	if err != nil {
+	if err := client.FloatNullHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // FloatNullCreateRequest creates the FloatNull request.
@@ -1078,16 +963,11 @@ func (client *QueriesClient) FloatNullCreateRequest(ctx context.Context, queries
 	return req, nil
 }
 
-// FloatNullHandleResponse handles the FloatNull response.
-func (client *QueriesClient) FloatNullHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.FloatNullHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // FloatNullHandleError handles the FloatNull error response.
 func (client *QueriesClient) FloatNullHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1105,11 +985,10 @@ func (client *QueriesClient) FloatScientificNegative(ctx context.Context) (*http
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.FloatScientificNegativeHandleResponse(resp)
-	if err != nil {
+	if err := client.FloatScientificNegativeHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // FloatScientificNegativeCreateRequest creates the FloatScientificNegative request.
@@ -1126,16 +1005,11 @@ func (client *QueriesClient) FloatScientificNegativeCreateRequest(ctx context.Co
 	return req, nil
 }
 
-// FloatScientificNegativeHandleResponse handles the FloatScientificNegative response.
-func (client *QueriesClient) FloatScientificNegativeHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.FloatScientificNegativeHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // FloatScientificNegativeHandleError handles the FloatScientificNegative error response.
 func (client *QueriesClient) FloatScientificNegativeHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1153,11 +1027,10 @@ func (client *QueriesClient) FloatScientificPositive(ctx context.Context) (*http
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.FloatScientificPositiveHandleResponse(resp)
-	if err != nil {
+	if err := client.FloatScientificPositiveHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // FloatScientificPositiveCreateRequest creates the FloatScientificPositive request.
@@ -1174,16 +1047,11 @@ func (client *QueriesClient) FloatScientificPositiveCreateRequest(ctx context.Co
 	return req, nil
 }
 
-// FloatScientificPositiveHandleResponse handles the FloatScientificPositive response.
-func (client *QueriesClient) FloatScientificPositiveHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.FloatScientificPositiveHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // FloatScientificPositiveHandleError handles the FloatScientificPositive error response.
 func (client *QueriesClient) FloatScientificPositiveHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1201,11 +1069,10 @@ func (client *QueriesClient) GetBooleanFalse(ctx context.Context) (*http.Respons
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetBooleanFalseHandleResponse(resp)
-	if err != nil {
+	if err := client.GetBooleanFalseHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // GetBooleanFalseCreateRequest creates the GetBooleanFalse request.
@@ -1222,16 +1089,11 @@ func (client *QueriesClient) GetBooleanFalseCreateRequest(ctx context.Context) (
 	return req, nil
 }
 
-// GetBooleanFalseHandleResponse handles the GetBooleanFalse response.
-func (client *QueriesClient) GetBooleanFalseHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetBooleanFalseHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // GetBooleanFalseHandleError handles the GetBooleanFalse error response.
 func (client *QueriesClient) GetBooleanFalseHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1249,11 +1111,10 @@ func (client *QueriesClient) GetBooleanNull(ctx context.Context, queriesGetBoole
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetBooleanNullHandleResponse(resp)
-	if err != nil {
+	if err := client.GetBooleanNullHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // GetBooleanNullCreateRequest creates the GetBooleanNull request.
@@ -1272,16 +1133,11 @@ func (client *QueriesClient) GetBooleanNullCreateRequest(ctx context.Context, qu
 	return req, nil
 }
 
-// GetBooleanNullHandleResponse handles the GetBooleanNull response.
-func (client *QueriesClient) GetBooleanNullHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetBooleanNullHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // GetBooleanNullHandleError handles the GetBooleanNull error response.
 func (client *QueriesClient) GetBooleanNullHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1299,11 +1155,10 @@ func (client *QueriesClient) GetBooleanTrue(ctx context.Context) (*http.Response
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetBooleanTrueHandleResponse(resp)
-	if err != nil {
+	if err := client.GetBooleanTrueHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // GetBooleanTrueCreateRequest creates the GetBooleanTrue request.
@@ -1320,16 +1175,11 @@ func (client *QueriesClient) GetBooleanTrueCreateRequest(ctx context.Context) (*
 	return req, nil
 }
 
-// GetBooleanTrueHandleResponse handles the GetBooleanTrue response.
-func (client *QueriesClient) GetBooleanTrueHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetBooleanTrueHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // GetBooleanTrueHandleError handles the GetBooleanTrue error response.
 func (client *QueriesClient) GetBooleanTrueHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1347,11 +1197,10 @@ func (client *QueriesClient) GetIntNegativeOneMillion(ctx context.Context) (*htt
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetIntNegativeOneMillionHandleResponse(resp)
-	if err != nil {
+	if err := client.GetIntNegativeOneMillionHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // GetIntNegativeOneMillionCreateRequest creates the GetIntNegativeOneMillion request.
@@ -1368,16 +1217,11 @@ func (client *QueriesClient) GetIntNegativeOneMillionCreateRequest(ctx context.C
 	return req, nil
 }
 
-// GetIntNegativeOneMillionHandleResponse handles the GetIntNegativeOneMillion response.
-func (client *QueriesClient) GetIntNegativeOneMillionHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetIntNegativeOneMillionHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // GetIntNegativeOneMillionHandleError handles the GetIntNegativeOneMillion error response.
 func (client *QueriesClient) GetIntNegativeOneMillionHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1395,11 +1239,10 @@ func (client *QueriesClient) GetIntNull(ctx context.Context, queriesGetIntNullOp
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetIntNullHandleResponse(resp)
-	if err != nil {
+	if err := client.GetIntNullHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // GetIntNullCreateRequest creates the GetIntNull request.
@@ -1418,16 +1261,11 @@ func (client *QueriesClient) GetIntNullCreateRequest(ctx context.Context, querie
 	return req, nil
 }
 
-// GetIntNullHandleResponse handles the GetIntNull response.
-func (client *QueriesClient) GetIntNullHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetIntNullHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // GetIntNullHandleError handles the GetIntNull error response.
 func (client *QueriesClient) GetIntNullHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1445,11 +1283,10 @@ func (client *QueriesClient) GetIntOneMillion(ctx context.Context) (*http.Respon
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetIntOneMillionHandleResponse(resp)
-	if err != nil {
+	if err := client.GetIntOneMillionHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // GetIntOneMillionCreateRequest creates the GetIntOneMillion request.
@@ -1466,16 +1303,11 @@ func (client *QueriesClient) GetIntOneMillionCreateRequest(ctx context.Context) 
 	return req, nil
 }
 
-// GetIntOneMillionHandleResponse handles the GetIntOneMillion response.
-func (client *QueriesClient) GetIntOneMillionHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetIntOneMillionHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // GetIntOneMillionHandleError handles the GetIntOneMillion error response.
 func (client *QueriesClient) GetIntOneMillionHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1493,11 +1325,10 @@ func (client *QueriesClient) GetLongNull(ctx context.Context, queriesGetLongNull
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetLongNullHandleResponse(resp)
-	if err != nil {
+	if err := client.GetLongNullHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // GetLongNullCreateRequest creates the GetLongNull request.
@@ -1516,16 +1347,11 @@ func (client *QueriesClient) GetLongNullCreateRequest(ctx context.Context, queri
 	return req, nil
 }
 
-// GetLongNullHandleResponse handles the GetLongNull response.
-func (client *QueriesClient) GetLongNullHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetLongNullHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // GetLongNullHandleError handles the GetLongNull error response.
 func (client *QueriesClient) GetLongNullHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1543,11 +1369,10 @@ func (client *QueriesClient) GetNegativeTenBillion(ctx context.Context) (*http.R
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetNegativeTenBillionHandleResponse(resp)
-	if err != nil {
+	if err := client.GetNegativeTenBillionHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // GetNegativeTenBillionCreateRequest creates the GetNegativeTenBillion request.
@@ -1564,16 +1389,11 @@ func (client *QueriesClient) GetNegativeTenBillionCreateRequest(ctx context.Cont
 	return req, nil
 }
 
-// GetNegativeTenBillionHandleResponse handles the GetNegativeTenBillion response.
-func (client *QueriesClient) GetNegativeTenBillionHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetNegativeTenBillionHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // GetNegativeTenBillionHandleError handles the GetNegativeTenBillion error response.
 func (client *QueriesClient) GetNegativeTenBillionHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1591,11 +1411,10 @@ func (client *QueriesClient) GetTenBillion(ctx context.Context) (*http.Response,
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetTenBillionHandleResponse(resp)
-	if err != nil {
+	if err := client.GetTenBillionHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // GetTenBillionCreateRequest creates the GetTenBillion request.
@@ -1612,16 +1431,11 @@ func (client *QueriesClient) GetTenBillionCreateRequest(ctx context.Context) (*a
 	return req, nil
 }
 
-// GetTenBillionHandleResponse handles the GetTenBillion response.
-func (client *QueriesClient) GetTenBillionHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetTenBillionHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // GetTenBillionHandleError handles the GetTenBillion error response.
 func (client *QueriesClient) GetTenBillionHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1639,11 +1453,10 @@ func (client *QueriesClient) StringEmpty(ctx context.Context) (*http.Response, e
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.StringEmptyHandleResponse(resp)
-	if err != nil {
+	if err := client.StringEmptyHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // StringEmptyCreateRequest creates the StringEmpty request.
@@ -1660,16 +1473,11 @@ func (client *QueriesClient) StringEmptyCreateRequest(ctx context.Context) (*azc
 	return req, nil
 }
 
-// StringEmptyHandleResponse handles the StringEmpty response.
-func (client *QueriesClient) StringEmptyHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.StringEmptyHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // StringEmptyHandleError handles the StringEmpty error response.
 func (client *QueriesClient) StringEmptyHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1687,11 +1495,10 @@ func (client *QueriesClient) StringNull(ctx context.Context, queriesStringNullOp
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.StringNullHandleResponse(resp)
-	if err != nil {
+	if err := client.StringNullHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // StringNullCreateRequest creates the StringNull request.
@@ -1710,16 +1517,11 @@ func (client *QueriesClient) StringNullCreateRequest(ctx context.Context, querie
 	return req, nil
 }
 
-// StringNullHandleResponse handles the StringNull response.
-func (client *QueriesClient) StringNullHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.StringNullHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // StringNullHandleError handles the StringNull error response.
 func (client *QueriesClient) StringNullHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1737,11 +1539,10 @@ func (client *QueriesClient) StringURLEncoded(ctx context.Context) (*http.Respon
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.StringURLEncodedHandleResponse(resp)
-	if err != nil {
+	if err := client.StringURLEncodedHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // StringURLEncodedCreateRequest creates the StringURLEncoded request.
@@ -1758,16 +1559,11 @@ func (client *QueriesClient) StringURLEncodedCreateRequest(ctx context.Context) 
 	return req, nil
 }
 
-// StringURLEncodedHandleResponse handles the StringURLEncoded response.
-func (client *QueriesClient) StringURLEncodedHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.StringURLEncodedHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // StringURLEncodedHandleError handles the StringURLEncoded error response.
 func (client *QueriesClient) StringURLEncodedHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1785,11 +1581,10 @@ func (client *QueriesClient) StringUnicode(ctx context.Context) (*http.Response,
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.StringUnicodeHandleResponse(resp)
-	if err != nil {
+	if err := client.StringUnicodeHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // StringUnicodeCreateRequest creates the StringUnicode request.
@@ -1806,16 +1601,11 @@ func (client *QueriesClient) StringUnicodeCreateRequest(ctx context.Context) (*a
 	return req, nil
 }
 
-// StringUnicodeHandleResponse handles the StringUnicode response.
-func (client *QueriesClient) StringUnicodeHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.StringUnicodeHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // StringUnicodeHandleError handles the StringUnicode error response.
 func (client *QueriesClient) StringUnicodeHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

@@ -59,6 +59,9 @@ func (client *PolymorphismClient) GetComplicated(ctx context.Context) (*SalmonRe
 	if err != nil {
 		return nil, err
 	}
+	if err := client.GetComplicatedHandleError(resp); err != nil {
+		return nil, err
+	}
 	result, err := client.GetComplicatedHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -79,15 +82,15 @@ func (client *PolymorphismClient) GetComplicatedCreateRequest(ctx context.Contex
 
 // GetComplicatedHandleResponse handles the GetComplicated response.
 func (client *PolymorphismClient) GetComplicatedHandleResponse(resp *azcore.Response) (*SalmonResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetComplicatedHandleError(resp)
-	}
 	result := SalmonResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result)
 }
 
 // GetComplicatedHandleError handles the GetComplicated error response.
 func (client *PolymorphismClient) GetComplicatedHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -103,6 +106,9 @@ func (client *PolymorphismClient) GetComposedWithDiscriminator(ctx context.Conte
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.GetComposedWithDiscriminatorHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.GetComposedWithDiscriminatorHandleResponse(resp)
@@ -125,15 +131,15 @@ func (client *PolymorphismClient) GetComposedWithDiscriminatorCreateRequest(ctx 
 
 // GetComposedWithDiscriminatorHandleResponse handles the GetComposedWithDiscriminator response.
 func (client *PolymorphismClient) GetComposedWithDiscriminatorHandleResponse(resp *azcore.Response) (*DotFishMarketResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetComposedWithDiscriminatorHandleError(resp)
-	}
 	result := DotFishMarketResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.DotFishMarket)
 }
 
 // GetComposedWithDiscriminatorHandleError handles the GetComposedWithDiscriminator error response.
 func (client *PolymorphismClient) GetComposedWithDiscriminatorHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -149,6 +155,9 @@ func (client *PolymorphismClient) GetComposedWithoutDiscriminator(ctx context.Co
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.GetComposedWithoutDiscriminatorHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.GetComposedWithoutDiscriminatorHandleResponse(resp)
@@ -171,15 +180,15 @@ func (client *PolymorphismClient) GetComposedWithoutDiscriminatorCreateRequest(c
 
 // GetComposedWithoutDiscriminatorHandleResponse handles the GetComposedWithoutDiscriminator response.
 func (client *PolymorphismClient) GetComposedWithoutDiscriminatorHandleResponse(resp *azcore.Response) (*DotFishMarketResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetComposedWithoutDiscriminatorHandleError(resp)
-	}
 	result := DotFishMarketResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.DotFishMarket)
 }
 
 // GetComposedWithoutDiscriminatorHandleError handles the GetComposedWithoutDiscriminator error response.
 func (client *PolymorphismClient) GetComposedWithoutDiscriminatorHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -195,6 +204,9 @@ func (client *PolymorphismClient) GetDotSyntax(ctx context.Context) (*DotFishRes
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.GetDotSyntaxHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.GetDotSyntaxHandleResponse(resp)
@@ -217,15 +229,15 @@ func (client *PolymorphismClient) GetDotSyntaxCreateRequest(ctx context.Context)
 
 // GetDotSyntaxHandleResponse handles the GetDotSyntax response.
 func (client *PolymorphismClient) GetDotSyntaxHandleResponse(resp *azcore.Response) (*DotFishResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetDotSyntaxHandleError(resp)
-	}
 	result := DotFishResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result)
 }
 
 // GetDotSyntaxHandleError handles the GetDotSyntax error response.
 func (client *PolymorphismClient) GetDotSyntaxHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -241,6 +253,9 @@ func (client *PolymorphismClient) GetValid(ctx context.Context) (*FishResponse, 
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.GetValidHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.GetValidHandleResponse(resp)
@@ -263,15 +278,15 @@ func (client *PolymorphismClient) GetValidCreateRequest(ctx context.Context) (*a
 
 // GetValidHandleResponse handles the GetValid response.
 func (client *PolymorphismClient) GetValidHandleResponse(resp *azcore.Response) (*FishResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetValidHandleError(resp)
-	}
 	result := FishResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result)
 }
 
 // GetValidHandleError handles the GetValid error response.
 func (client *PolymorphismClient) GetValidHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -289,11 +304,10 @@ func (client *PolymorphismClient) PutComplicated(ctx context.Context, complexBod
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutComplicatedHandleResponse(resp)
-	if err != nil {
+	if err := client.PutComplicatedHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PutComplicatedCreateRequest creates the PutComplicated request.
@@ -307,16 +321,11 @@ func (client *PolymorphismClient) PutComplicatedCreateRequest(ctx context.Contex
 	return req, req.MarshalAsJSON(complexBody)
 }
 
-// PutComplicatedHandleResponse handles the PutComplicated response.
-func (client *PolymorphismClient) PutComplicatedHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutComplicatedHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // PutComplicatedHandleError handles the PutComplicated error response.
 func (client *PolymorphismClient) PutComplicatedHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -332,6 +341,9 @@ func (client *PolymorphismClient) PutMissingDiscriminator(ctx context.Context, c
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.PutMissingDiscriminatorHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.PutMissingDiscriminatorHandleResponse(resp)
@@ -354,15 +366,15 @@ func (client *PolymorphismClient) PutMissingDiscriminatorCreateRequest(ctx conte
 
 // PutMissingDiscriminatorHandleResponse handles the PutMissingDiscriminator response.
 func (client *PolymorphismClient) PutMissingDiscriminatorHandleResponse(resp *azcore.Response) (*SalmonResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutMissingDiscriminatorHandleError(resp)
-	}
 	result := SalmonResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result)
 }
 
 // PutMissingDiscriminatorHandleError handles the PutMissingDiscriminator error response.
 func (client *PolymorphismClient) PutMissingDiscriminatorHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -380,11 +392,10 @@ func (client *PolymorphismClient) PutValid(ctx context.Context, complexBody Fish
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutValidHandleResponse(resp)
-	if err != nil {
+	if err := client.PutValidHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PutValidCreateRequest creates the PutValid request.
@@ -398,16 +409,11 @@ func (client *PolymorphismClient) PutValidCreateRequest(ctx context.Context, com
 	return req, req.MarshalAsJSON(complexBody)
 }
 
-// PutValidHandleResponse handles the PutValid response.
-func (client *PolymorphismClient) PutValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutValidHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // PutValidHandleError handles the PutValid error response.
 func (client *PolymorphismClient) PutValidHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -425,11 +431,10 @@ func (client *PolymorphismClient) PutValidMissingRequired(ctx context.Context, c
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutValidMissingRequiredHandleResponse(resp)
-	if err != nil {
+	if err := client.PutValidMissingRequiredHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PutValidMissingRequiredCreateRequest creates the PutValidMissingRequired request.
@@ -443,16 +448,11 @@ func (client *PolymorphismClient) PutValidMissingRequiredCreateRequest(ctx conte
 	return req, req.MarshalAsJSON(complexBody)
 }
 
-// PutValidMissingRequiredHandleResponse handles the PutValidMissingRequired response.
-func (client *PolymorphismClient) PutValidMissingRequiredHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutValidMissingRequiredHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // PutValidMissingRequiredHandleError handles the PutValidMissingRequired error response.
 func (client *PolymorphismClient) PutValidMissingRequiredHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

@@ -49,6 +49,9 @@ func (client *ComplexModelClient) Create(ctx context.Context, subscriptionId str
 	if err != nil {
 		return nil, err
 	}
+	if err := client.CreateHandleError(resp); err != nil {
+		return nil, err
+	}
 	result, err := client.CreateHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -74,15 +77,15 @@ func (client *ComplexModelClient) CreateCreateRequest(ctx context.Context, subsc
 
 // CreateHandleResponse handles the Create response.
 func (client *ComplexModelClient) CreateHandleResponse(resp *azcore.Response) (*CatalogDictionaryResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.CreateHandleError(resp)
-	}
 	result := CatalogDictionaryResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.CatalogDictionary)
 }
 
 // CreateHandleError handles the Create error response.
 func (client *ComplexModelClient) CreateHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -98,6 +101,9 @@ func (client *ComplexModelClient) List(ctx context.Context, resourceGroupName st
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.ListHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.ListHandleResponse(resp)
@@ -125,15 +131,15 @@ func (client *ComplexModelClient) ListCreateRequest(ctx context.Context, resourc
 
 // ListHandleResponse handles the List response.
 func (client *ComplexModelClient) ListHandleResponse(resp *azcore.Response) (*CatalogArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := CatalogArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.CatalogArray)
 }
 
 // ListHandleError handles the List error response.
 func (client *ComplexModelClient) ListHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -149,6 +155,9 @@ func (client *ComplexModelClient) Update(ctx context.Context, subscriptionId str
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.UpdateHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.UpdateHandleResponse(resp)
@@ -176,15 +185,15 @@ func (client *ComplexModelClient) UpdateCreateRequest(ctx context.Context, subsc
 
 // UpdateHandleResponse handles the Update response.
 func (client *ComplexModelClient) UpdateHandleResponse(resp *azcore.Response) (*CatalogArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.UpdateHandleError(resp)
-	}
 	result := CatalogArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.CatalogArray)
 }
 
 // UpdateHandleError handles the Update error response.
 func (client *ComplexModelClient) UpdateHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

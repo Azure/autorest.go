@@ -87,6 +87,9 @@ func (client *blobClient) AbortCopyFromURL(ctx context.Context, copyId string, b
 	if err != nil {
 		return nil, err
 	}
+	if err := client.AbortCopyFromURLHandleError(resp); err != nil {
+		return nil, err
+	}
 	result, err := client.AbortCopyFromURLHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -121,9 +124,6 @@ func (client *blobClient) AbortCopyFromURLCreateRequest(ctx context.Context, cop
 
 // AbortCopyFromURLHandleResponse handles the AbortCopyFromURL response.
 func (client *blobClient) AbortCopyFromURLHandleResponse(resp *azcore.Response) (*BlobAbortCopyFromURLResponse, error) {
-	if !resp.HasStatusCode(http.StatusNoContent) {
-		return nil, client.AbortCopyFromURLHandleError(resp)
-	}
 	result := BlobAbortCopyFromURLResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
@@ -146,6 +146,9 @@ func (client *blobClient) AbortCopyFromURLHandleResponse(resp *azcore.Response) 
 
 // AbortCopyFromURLHandleError handles the AbortCopyFromURL error response.
 func (client *blobClient) AbortCopyFromURLHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusNoContent) {
+		return nil
+	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -161,6 +164,9 @@ func (client *blobClient) AcquireLease(ctx context.Context, blobAcquireLeaseOpti
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.AcquireLeaseHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.AcquireLeaseHandleResponse(resp)
@@ -211,9 +217,6 @@ func (client *blobClient) AcquireLeaseCreateRequest(ctx context.Context, blobAcq
 
 // AcquireLeaseHandleResponse handles the AcquireLease response.
 func (client *blobClient) AcquireLeaseHandleResponse(resp *azcore.Response) (*BlobAcquireLeaseResponse, error) {
-	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.AcquireLeaseHandleError(resp)
-	}
 	result := BlobAcquireLeaseResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -249,6 +252,9 @@ func (client *blobClient) AcquireLeaseHandleResponse(resp *azcore.Response) (*Bl
 
 // AcquireLeaseHandleError handles the AcquireLease error response.
 func (client *blobClient) AcquireLeaseHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusCreated) {
+		return nil
+	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -264,6 +270,9 @@ func (client *blobClient) BreakLease(ctx context.Context, blobBreakLeaseOptions 
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.BreakLeaseHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.BreakLeaseHandleResponse(resp)
@@ -311,9 +320,6 @@ func (client *blobClient) BreakLeaseCreateRequest(ctx context.Context, blobBreak
 
 // BreakLeaseHandleResponse handles the BreakLease response.
 func (client *blobClient) BreakLeaseHandleResponse(resp *azcore.Response) (*BlobBreakLeaseResponse, error) {
-	if !resp.HasStatusCode(http.StatusAccepted) {
-		return nil, client.BreakLeaseHandleError(resp)
-	}
 	result := BlobBreakLeaseResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -354,6 +360,9 @@ func (client *blobClient) BreakLeaseHandleResponse(resp *azcore.Response) (*Blob
 
 // BreakLeaseHandleError handles the BreakLease error response.
 func (client *blobClient) BreakLeaseHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusAccepted) {
+		return nil
+	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -369,6 +378,9 @@ func (client *blobClient) ChangeLease(ctx context.Context, leaseId string, propo
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.ChangeLeaseHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.ChangeLeaseHandleResponse(resp)
@@ -415,9 +427,6 @@ func (client *blobClient) ChangeLeaseCreateRequest(ctx context.Context, leaseId 
 
 // ChangeLeaseHandleResponse handles the ChangeLease response.
 func (client *blobClient) ChangeLeaseHandleResponse(resp *azcore.Response) (*BlobChangeLeaseResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ChangeLeaseHandleError(resp)
-	}
 	result := BlobChangeLeaseResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -453,6 +462,9 @@ func (client *blobClient) ChangeLeaseHandleResponse(resp *azcore.Response) (*Blo
 
 // ChangeLeaseHandleError handles the ChangeLease error response.
 func (client *blobClient) ChangeLeaseHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -468,6 +480,9 @@ func (client *blobClient) CopyFromURL(ctx context.Context, copySource url.URL, b
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.CopyFromURLHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.CopyFromURLHandleResponse(resp)
@@ -538,9 +553,6 @@ func (client *blobClient) CopyFromURLCreateRequest(ctx context.Context, copySour
 
 // CopyFromURLHandleResponse handles the CopyFromURL response.
 func (client *blobClient) CopyFromURLHandleResponse(resp *azcore.Response) (*BlobCopyFromURLResponse, error) {
-	if !resp.HasStatusCode(http.StatusAccepted) {
-		return nil, client.CopyFromURLHandleError(resp)
-	}
 	result := BlobCopyFromURLResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -593,6 +605,9 @@ func (client *blobClient) CopyFromURLHandleResponse(resp *azcore.Response) (*Blo
 
 // CopyFromURLHandleError handles the CopyFromURL error response.
 func (client *blobClient) CopyFromURLHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusAccepted) {
+		return nil
+	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -608,6 +623,9 @@ func (client *blobClient) CreateSnapshot(ctx context.Context, blobCreateSnapshot
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.CreateSnapshotHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.CreateSnapshotHandleResponse(resp)
@@ -668,9 +686,6 @@ func (client *blobClient) CreateSnapshotCreateRequest(ctx context.Context, blobC
 
 // CreateSnapshotHandleResponse handles the CreateSnapshot response.
 func (client *blobClient) CreateSnapshotHandleResponse(resp *azcore.Response) (*BlobCreateSnapshotResponse, error) {
-	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.CreateSnapshotHandleError(resp)
-	}
 	result := BlobCreateSnapshotResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-snapshot"); val != "" {
 		result.Snapshot = &val
@@ -713,6 +728,9 @@ func (client *blobClient) CreateSnapshotHandleResponse(resp *azcore.Response) (*
 
 // CreateSnapshotHandleError handles the CreateSnapshot error response.
 func (client *blobClient) CreateSnapshotHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusCreated) {
+		return nil
+	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -728,6 +746,9 @@ func (client *blobClient) Delete(ctx context.Context, blobDeleteOptions *BlobDel
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.DeleteHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
@@ -779,9 +800,6 @@ func (client *blobClient) DeleteCreateRequest(ctx context.Context, blobDeleteOpt
 
 // DeleteHandleResponse handles the Delete response.
 func (client *blobClient) DeleteHandleResponse(resp *azcore.Response) (*BlobDeleteResponse, error) {
-	if !resp.HasStatusCode(http.StatusAccepted) {
-		return nil, client.DeleteHandleError(resp)
-	}
 	result := BlobDeleteResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
@@ -804,6 +822,9 @@ func (client *blobClient) DeleteHandleResponse(resp *azcore.Response) (*BlobDele
 
 // DeleteHandleError handles the Delete error response.
 func (client *blobClient) DeleteHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusAccepted) {
+		return nil
+	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -819,6 +840,9 @@ func (client *blobClient) Download(ctx context.Context, blobDownloadOptions *Blo
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.DownloadHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.DownloadHandleResponse(resp)
@@ -883,9 +907,6 @@ func (client *blobClient) DownloadCreateRequest(ctx context.Context, blobDownloa
 
 // DownloadHandleResponse handles the Download response.
 func (client *blobClient) DownloadHandleResponse(resp *azcore.Response) (*BlobDownloadResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusPartialContent) {
-		return nil, client.DownloadHandleError(resp)
-	}
 	result := BlobDownloadResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
@@ -1037,6 +1058,9 @@ func (client *blobClient) DownloadHandleResponse(resp *azcore.Response) (*BlobDo
 
 // DownloadHandleError handles the Download error response.
 func (client *blobClient) DownloadHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK, http.StatusPartialContent) {
+		return nil
+	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -1052,6 +1076,9 @@ func (client *blobClient) GetAccessControl(ctx context.Context, blobGetAccessCon
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.GetAccessControlHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.GetAccessControlHandleResponse(resp)
@@ -1101,9 +1128,6 @@ func (client *blobClient) GetAccessControlCreateRequest(ctx context.Context, blo
 
 // GetAccessControlHandleResponse handles the GetAccessControl response.
 func (client *blobClient) GetAccessControlHandleResponse(resp *azcore.Response) (*BlobGetAccessControlResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetAccessControlHandleError(resp)
-	}
 	result := BlobGetAccessControlResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
@@ -1145,6 +1169,9 @@ func (client *blobClient) GetAccessControlHandleResponse(resp *azcore.Response) 
 
 // GetAccessControlHandleError handles the GetAccessControl error response.
 func (client *blobClient) GetAccessControlHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err DataLakeStorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -1160,6 +1187,9 @@ func (client *blobClient) GetAccountInfo(ctx context.Context) (*BlobGetAccountIn
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.GetAccountInfoHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.GetAccountInfoHandleResponse(resp)
@@ -1186,9 +1216,6 @@ func (client *blobClient) GetAccountInfoCreateRequest(ctx context.Context) (*azc
 
 // GetAccountInfoHandleResponse handles the GetAccountInfo response.
 func (client *blobClient) GetAccountInfoHandleResponse(resp *azcore.Response) (*BlobGetAccountInfoResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetAccountInfoHandleError(resp)
-	}
 	result := BlobGetAccountInfoResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
@@ -1217,6 +1244,9 @@ func (client *blobClient) GetAccountInfoHandleResponse(resp *azcore.Response) (*
 
 // GetAccountInfoHandleError handles the GetAccountInfo error response.
 func (client *blobClient) GetAccountInfoHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -1232,6 +1262,9 @@ func (client *blobClient) GetProperties(ctx context.Context, blobGetPropertiesOp
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.GetPropertiesHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.GetPropertiesHandleResponse(resp)
@@ -1286,9 +1319,6 @@ func (client *blobClient) GetPropertiesCreateRequest(ctx context.Context, blobGe
 
 // GetPropertiesHandleResponse handles the GetProperties response.
 func (client *blobClient) GetPropertiesHandleResponse(resp *azcore.Response) (*BlobGetPropertiesResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetPropertiesHandleError(resp)
-	}
 	result := BlobGetPropertiesResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
@@ -1460,6 +1490,9 @@ func (client *blobClient) GetPropertiesHandleResponse(resp *azcore.Response) (*B
 
 // GetPropertiesHandleError handles the GetProperties error response.
 func (client *blobClient) GetPropertiesHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -1475,6 +1508,9 @@ func (client *blobClient) ReleaseLease(ctx context.Context, leaseId string, blob
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.ReleaseLeaseHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.ReleaseLeaseHandleResponse(resp)
@@ -1520,9 +1556,6 @@ func (client *blobClient) ReleaseLeaseCreateRequest(ctx context.Context, leaseId
 
 // ReleaseLeaseHandleResponse handles the ReleaseLease response.
 func (client *blobClient) ReleaseLeaseHandleResponse(resp *azcore.Response) (*BlobReleaseLeaseResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ReleaseLeaseHandleError(resp)
-	}
 	result := BlobReleaseLeaseResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -1555,6 +1588,9 @@ func (client *blobClient) ReleaseLeaseHandleResponse(resp *azcore.Response) (*Bl
 
 // ReleaseLeaseHandleError handles the ReleaseLease error response.
 func (client *blobClient) ReleaseLeaseHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -1570,6 +1606,9 @@ func (client *blobClient) Rename(ctx context.Context, renameSource string, blobR
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.RenameHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.RenameHandleResponse(resp)
@@ -1658,9 +1697,6 @@ func (client *blobClient) RenameCreateRequest(ctx context.Context, renameSource 
 
 // RenameHandleResponse handles the Rename response.
 func (client *blobClient) RenameHandleResponse(resp *azcore.Response) (*BlobRenameResponse, error) {
-	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.RenameHandleError(resp)
-	}
 	result := BlobRenameResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -1700,6 +1736,9 @@ func (client *blobClient) RenameHandleResponse(resp *azcore.Response) (*BlobRena
 
 // RenameHandleError handles the Rename error response.
 func (client *blobClient) RenameHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusCreated) {
+		return nil
+	}
 	var err DataLakeStorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -1715,6 +1754,9 @@ func (client *blobClient) RenewLease(ctx context.Context, leaseId string, blobRe
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.RenewLeaseHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.RenewLeaseHandleResponse(resp)
@@ -1760,9 +1802,6 @@ func (client *blobClient) RenewLeaseCreateRequest(ctx context.Context, leaseId s
 
 // RenewLeaseHandleResponse handles the RenewLease response.
 func (client *blobClient) RenewLeaseHandleResponse(resp *azcore.Response) (*BlobRenewLeaseResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.RenewLeaseHandleError(resp)
-	}
 	result := BlobRenewLeaseResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -1798,6 +1837,9 @@ func (client *blobClient) RenewLeaseHandleResponse(resp *azcore.Response) (*Blob
 
 // RenewLeaseHandleError handles the RenewLease error response.
 func (client *blobClient) RenewLeaseHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -1813,6 +1855,9 @@ func (client *blobClient) SetAccessControl(ctx context.Context, blobSetAccessCon
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.SetAccessControlHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.SetAccessControlHandleResponse(resp)
@@ -1871,9 +1916,6 @@ func (client *blobClient) SetAccessControlCreateRequest(ctx context.Context, blo
 
 // SetAccessControlHandleResponse handles the SetAccessControl response.
 func (client *blobClient) SetAccessControlHandleResponse(resp *azcore.Response) (*BlobSetAccessControlResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.SetAccessControlHandleError(resp)
-	}
 	result := BlobSetAccessControlResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
@@ -1903,6 +1945,9 @@ func (client *blobClient) SetAccessControlHandleResponse(resp *azcore.Response) 
 
 // SetAccessControlHandleError handles the SetAccessControl error response.
 func (client *blobClient) SetAccessControlHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err DataLakeStorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -1918,6 +1963,9 @@ func (client *blobClient) SetHTTPHeaders(ctx context.Context, blobSetHttpHeaders
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.SetHTTPHeadersHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.SetHTTPHeadersHandleResponse(resp)
@@ -1982,9 +2030,6 @@ func (client *blobClient) SetHTTPHeadersCreateRequest(ctx context.Context, blobS
 
 // SetHTTPHeadersHandleResponse handles the SetHTTPHeaders response.
 func (client *blobClient) SetHTTPHeadersHandleResponse(resp *azcore.Response) (*BlobSetHTTPHeadersResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.SetHTTPHeadersHandleError(resp)
-	}
 	result := BlobSetHTTPHeadersResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -2024,6 +2069,9 @@ func (client *blobClient) SetHTTPHeadersHandleResponse(resp *azcore.Response) (*
 
 // SetHTTPHeadersHandleError handles the SetHTTPHeaders error response.
 func (client *blobClient) SetHTTPHeadersHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -2039,6 +2087,9 @@ func (client *blobClient) SetMetadata(ctx context.Context, blobSetMetadataOption
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.SetMetadataHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.SetMetadataHandleResponse(resp)
@@ -2099,9 +2150,6 @@ func (client *blobClient) SetMetadataCreateRequest(ctx context.Context, blobSetM
 
 // SetMetadataHandleResponse handles the SetMetadata response.
 func (client *blobClient) SetMetadataHandleResponse(resp *azcore.Response) (*BlobSetMetadataResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.SetMetadataHandleError(resp)
-	}
 	result := BlobSetMetadataResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -2147,6 +2195,9 @@ func (client *blobClient) SetMetadataHandleResponse(resp *azcore.Response) (*Blo
 
 // SetMetadataHandleError handles the SetMetadata error response.
 func (client *blobClient) SetMetadataHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -2162,6 +2213,9 @@ func (client *blobClient) SetTier(ctx context.Context, tier AccessTier, blobSetT
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.SetTierHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.SetTierHandleResponse(resp)
@@ -2200,9 +2254,6 @@ func (client *blobClient) SetTierCreateRequest(ctx context.Context, tier AccessT
 
 // SetTierHandleResponse handles the SetTier response.
 func (client *blobClient) SetTierHandleResponse(resp *azcore.Response) (*BlobSetTierResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
-		return nil, client.SetTierHandleError(resp)
-	}
 	result := BlobSetTierResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
@@ -2218,6 +2269,9 @@ func (client *blobClient) SetTierHandleResponse(resp *azcore.Response) (*BlobSet
 
 // SetTierHandleError handles the SetTier error response.
 func (client *blobClient) SetTierHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil
+	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -2233,6 +2287,9 @@ func (client *blobClient) StartCopyFromURL(ctx context.Context, copySource url.U
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.StartCopyFromURLHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.StartCopyFromURLHandleResponse(resp)
@@ -2302,9 +2359,6 @@ func (client *blobClient) StartCopyFromURLCreateRequest(ctx context.Context, cop
 
 // StartCopyFromURLHandleResponse handles the StartCopyFromURL response.
 func (client *blobClient) StartCopyFromURLHandleResponse(resp *azcore.Response) (*BlobStartCopyFromURLResponse, error) {
-	if !resp.HasStatusCode(http.StatusAccepted) {
-		return nil, client.StartCopyFromURLHandleError(resp)
-	}
 	result := BlobStartCopyFromURLResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -2343,6 +2397,9 @@ func (client *blobClient) StartCopyFromURLHandleResponse(resp *azcore.Response) 
 
 // StartCopyFromURLHandleError handles the StartCopyFromURL error response.
 func (client *blobClient) StartCopyFromURLHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusAccepted) {
+		return nil
+	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -2358,6 +2415,9 @@ func (client *blobClient) Undelete(ctx context.Context, blobUndeleteOptions *Blo
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.UndeleteHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.UndeleteHandleResponse(resp)
@@ -2389,9 +2449,6 @@ func (client *blobClient) UndeleteCreateRequest(ctx context.Context, blobUndelet
 
 // UndeleteHandleResponse handles the Undelete response.
 func (client *blobClient) UndeleteHandleResponse(resp *azcore.Response) (*BlobUndeleteResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.UndeleteHandleError(resp)
-	}
 	result := BlobUndeleteResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
@@ -2414,6 +2471,9 @@ func (client *blobClient) UndeleteHandleResponse(resp *azcore.Response) (*BlobUn
 
 // UndeleteHandleError handles the Undelete error response.
 func (client *blobClient) UndeleteHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err

@@ -48,11 +48,10 @@ func (client *XMSClientRequestIDClient) Get(ctx context.Context) (*http.Response
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetHandleResponse(resp)
-	if err != nil {
+	if err := client.GetHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // GetCreateRequest creates the Get request.
@@ -65,16 +64,11 @@ func (client *XMSClientRequestIDClient) GetCreateRequest(ctx context.Context) (*
 	return req, nil
 }
 
-// GetHandleResponse handles the Get response.
-func (client *XMSClientRequestIDClient) GetHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // GetHandleError handles the Get error response.
 func (client *XMSClientRequestIDClient) GetHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -95,11 +89,10 @@ func (client *XMSClientRequestIDClient) ParamGet(ctx context.Context, xMSClientR
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ParamGetHandleResponse(resp)
-	if err != nil {
+	if err := client.ParamGetHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // ParamGetCreateRequest creates the ParamGet request.
@@ -114,16 +107,11 @@ func (client *XMSClientRequestIDClient) ParamGetCreateRequest(ctx context.Contex
 	return req, nil
 }
 
-// ParamGetHandleResponse handles the ParamGet response.
-func (client *XMSClientRequestIDClient) ParamGetHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ParamGetHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // ParamGetHandleError handles the ParamGet error response.
 func (client *XMSClientRequestIDClient) ParamGetHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

@@ -44,6 +44,7 @@ func (client *AzureFirewallFqdnTagsClient) ListAll() AzureFirewallFqdnTagListRes
 			return client.ListAllCreateRequest(ctx)
 		},
 		responder: client.ListAllHandleResponse,
+		errorer:   client.ListAllHandleError,
 		advancer: func(ctx context.Context, resp *AzureFirewallFqdnTagListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.AzureFirewallFqdnTagListResult.NextLink)
 		},
@@ -67,15 +68,15 @@ func (client *AzureFirewallFqdnTagsClient) ListAllCreateRequest(ctx context.Cont
 
 // ListAllHandleResponse handles the ListAll response.
 func (client *AzureFirewallFqdnTagsClient) ListAllHandleResponse(resp *azcore.Response) (*AzureFirewallFqdnTagListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListAllHandleError(resp)
-	}
 	result := AzureFirewallFqdnTagListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.AzureFirewallFqdnTagListResult)
 }
 
 // ListAllHandleError handles the ListAll error response.
 func (client *AzureFirewallFqdnTagsClient) ListAllHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

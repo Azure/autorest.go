@@ -25,6 +25,8 @@ type ApplicationGatewayAvailableSslPredefinedPoliciesPager interface {
 
 type applicationGatewayAvailableSslPredefinedPoliciesCreateRequest func(context.Context) (*azcore.Request, error)
 
+type applicationGatewayAvailableSslPredefinedPoliciesHandleError func(*azcore.Response) error
+
 type applicationGatewayAvailableSslPredefinedPoliciesHandleResponse func(*azcore.Response) (*ApplicationGatewayAvailableSslPredefinedPoliciesResponse, error)
 
 type applicationGatewayAvailableSslPredefinedPoliciesAdvancePage func(context.Context, *ApplicationGatewayAvailableSslPredefinedPoliciesResponse) (*azcore.Request, error)
@@ -34,6 +36,8 @@ type applicationGatewayAvailableSslPredefinedPoliciesPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester applicationGatewayAvailableSslPredefinedPoliciesCreateRequest
+	// callback for handling response errors
+	errorer applicationGatewayAvailableSslPredefinedPoliciesHandleError
 	// callback for handling the HTTP response
 	responder applicationGatewayAvailableSslPredefinedPoliciesHandleResponse
 	// callback for advancing to the next page
@@ -64,6 +68,13 @@ func (p *applicationGatewayAvailableSslPredefinedPoliciesPager) NextPage(ctx con
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -92,6 +103,8 @@ type ApplicationGatewayListResultPager interface {
 
 type applicationGatewayListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type applicationGatewayListResultHandleError func(*azcore.Response) error
+
 type applicationGatewayListResultHandleResponse func(*azcore.Response) (*ApplicationGatewayListResultResponse, error)
 
 type applicationGatewayListResultAdvancePage func(context.Context, *ApplicationGatewayListResultResponse) (*azcore.Request, error)
@@ -101,6 +114,8 @@ type applicationGatewayListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester applicationGatewayListResultCreateRequest
+	// callback for handling response errors
+	errorer applicationGatewayListResultHandleError
 	// callback for handling the HTTP response
 	responder applicationGatewayListResultHandleResponse
 	// callback for advancing to the next page
@@ -131,6 +146,13 @@ func (p *applicationGatewayListResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -159,6 +181,8 @@ type ApplicationSecurityGroupListResultPager interface {
 
 type applicationSecurityGroupListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type applicationSecurityGroupListResultHandleError func(*azcore.Response) error
+
 type applicationSecurityGroupListResultHandleResponse func(*azcore.Response) (*ApplicationSecurityGroupListResultResponse, error)
 
 type applicationSecurityGroupListResultAdvancePage func(context.Context, *ApplicationSecurityGroupListResultResponse) (*azcore.Request, error)
@@ -168,6 +192,8 @@ type applicationSecurityGroupListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester applicationSecurityGroupListResultCreateRequest
+	// callback for handling response errors
+	errorer applicationSecurityGroupListResultHandleError
 	// callback for handling the HTTP response
 	responder applicationSecurityGroupListResultHandleResponse
 	// callback for advancing to the next page
@@ -198,6 +224,13 @@ func (p *applicationSecurityGroupListResultPager) NextPage(ctx context.Context) 
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -226,6 +259,8 @@ type AuthorizationListResultPager interface {
 
 type authorizationListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type authorizationListResultHandleError func(*azcore.Response) error
+
 type authorizationListResultHandleResponse func(*azcore.Response) (*AuthorizationListResultResponse, error)
 
 type authorizationListResultAdvancePage func(context.Context, *AuthorizationListResultResponse) (*azcore.Request, error)
@@ -235,6 +270,8 @@ type authorizationListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester authorizationListResultCreateRequest
+	// callback for handling response errors
+	errorer authorizationListResultHandleError
 	// callback for handling the HTTP response
 	responder authorizationListResultHandleResponse
 	// callback for advancing to the next page
@@ -265,6 +302,13 @@ func (p *authorizationListResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -293,6 +337,8 @@ type AutoApprovedPrivateLinkServicesResultPager interface {
 
 type autoApprovedPrivateLinkServicesResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type autoApprovedPrivateLinkServicesResultHandleError func(*azcore.Response) error
+
 type autoApprovedPrivateLinkServicesResultHandleResponse func(*azcore.Response) (*AutoApprovedPrivateLinkServicesResultResponse, error)
 
 type autoApprovedPrivateLinkServicesResultAdvancePage func(context.Context, *AutoApprovedPrivateLinkServicesResultResponse) (*azcore.Request, error)
@@ -302,6 +348,8 @@ type autoApprovedPrivateLinkServicesResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester autoApprovedPrivateLinkServicesResultCreateRequest
+	// callback for handling response errors
+	errorer autoApprovedPrivateLinkServicesResultHandleError
 	// callback for handling the HTTP response
 	responder autoApprovedPrivateLinkServicesResultHandleResponse
 	// callback for advancing to the next page
@@ -332,6 +380,13 @@ func (p *autoApprovedPrivateLinkServicesResultPager) NextPage(ctx context.Contex
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -360,6 +415,8 @@ type AvailableDelegationsResultPager interface {
 
 type availableDelegationsResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type availableDelegationsResultHandleError func(*azcore.Response) error
+
 type availableDelegationsResultHandleResponse func(*azcore.Response) (*AvailableDelegationsResultResponse, error)
 
 type availableDelegationsResultAdvancePage func(context.Context, *AvailableDelegationsResultResponse) (*azcore.Request, error)
@@ -369,6 +426,8 @@ type availableDelegationsResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester availableDelegationsResultCreateRequest
+	// callback for handling response errors
+	errorer availableDelegationsResultHandleError
 	// callback for handling the HTTP response
 	responder availableDelegationsResultHandleResponse
 	// callback for advancing to the next page
@@ -399,6 +458,13 @@ func (p *availableDelegationsResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -427,6 +493,8 @@ type AvailablePrivateEndpointTypesResultPager interface {
 
 type availablePrivateEndpointTypesResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type availablePrivateEndpointTypesResultHandleError func(*azcore.Response) error
+
 type availablePrivateEndpointTypesResultHandleResponse func(*azcore.Response) (*AvailablePrivateEndpointTypesResultResponse, error)
 
 type availablePrivateEndpointTypesResultAdvancePage func(context.Context, *AvailablePrivateEndpointTypesResultResponse) (*azcore.Request, error)
@@ -436,6 +504,8 @@ type availablePrivateEndpointTypesResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester availablePrivateEndpointTypesResultCreateRequest
+	// callback for handling response errors
+	errorer availablePrivateEndpointTypesResultHandleError
 	// callback for handling the HTTP response
 	responder availablePrivateEndpointTypesResultHandleResponse
 	// callback for advancing to the next page
@@ -466,6 +536,13 @@ func (p *availablePrivateEndpointTypesResultPager) NextPage(ctx context.Context)
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -494,6 +571,8 @@ type AvailableServiceAliasesResultPager interface {
 
 type availableServiceAliasesResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type availableServiceAliasesResultHandleError func(*azcore.Response) error
+
 type availableServiceAliasesResultHandleResponse func(*azcore.Response) (*AvailableServiceAliasesResultResponse, error)
 
 type availableServiceAliasesResultAdvancePage func(context.Context, *AvailableServiceAliasesResultResponse) (*azcore.Request, error)
@@ -503,6 +582,8 @@ type availableServiceAliasesResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester availableServiceAliasesResultCreateRequest
+	// callback for handling response errors
+	errorer availableServiceAliasesResultHandleError
 	// callback for handling the HTTP response
 	responder availableServiceAliasesResultHandleResponse
 	// callback for advancing to the next page
@@ -533,6 +614,13 @@ func (p *availableServiceAliasesResultPager) NextPage(ctx context.Context) bool 
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -561,6 +649,8 @@ type AzureFirewallFqdnTagListResultPager interface {
 
 type azureFirewallFqdnTagListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type azureFirewallFqdnTagListResultHandleError func(*azcore.Response) error
+
 type azureFirewallFqdnTagListResultHandleResponse func(*azcore.Response) (*AzureFirewallFqdnTagListResultResponse, error)
 
 type azureFirewallFqdnTagListResultAdvancePage func(context.Context, *AzureFirewallFqdnTagListResultResponse) (*azcore.Request, error)
@@ -570,6 +660,8 @@ type azureFirewallFqdnTagListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester azureFirewallFqdnTagListResultCreateRequest
+	// callback for handling response errors
+	errorer azureFirewallFqdnTagListResultHandleError
 	// callback for handling the HTTP response
 	responder azureFirewallFqdnTagListResultHandleResponse
 	// callback for advancing to the next page
@@ -600,6 +692,13 @@ func (p *azureFirewallFqdnTagListResultPager) NextPage(ctx context.Context) bool
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -628,6 +727,8 @@ type AzureFirewallListResultPager interface {
 
 type azureFirewallListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type azureFirewallListResultHandleError func(*azcore.Response) error
+
 type azureFirewallListResultHandleResponse func(*azcore.Response) (*AzureFirewallListResultResponse, error)
 
 type azureFirewallListResultAdvancePage func(context.Context, *AzureFirewallListResultResponse) (*azcore.Request, error)
@@ -637,6 +738,8 @@ type azureFirewallListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester azureFirewallListResultCreateRequest
+	// callback for handling response errors
+	errorer azureFirewallListResultHandleError
 	// callback for handling the HTTP response
 	responder azureFirewallListResultHandleResponse
 	// callback for advancing to the next page
@@ -667,6 +770,13 @@ func (p *azureFirewallListResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -695,6 +805,8 @@ type BastionActiveSessionListResultPager interface {
 
 type bastionActiveSessionListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type bastionActiveSessionListResultHandleError func(*azcore.Response) error
+
 type bastionActiveSessionListResultHandleResponse func(*azcore.Response) (*BastionActiveSessionListResultResponse, error)
 
 type bastionActiveSessionListResultAdvancePage func(context.Context, *BastionActiveSessionListResultResponse) (*azcore.Request, error)
@@ -704,6 +816,8 @@ type bastionActiveSessionListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester bastionActiveSessionListResultCreateRequest
+	// callback for handling response errors
+	errorer bastionActiveSessionListResultHandleError
 	// callback for handling the HTTP response
 	responder bastionActiveSessionListResultHandleResponse
 	// callback for advancing to the next page
@@ -741,6 +855,13 @@ func (p *bastionActiveSessionListResultPager) NextPage(ctx context.Context) bool
 	} else {
 		p.resp = nil
 	}
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -769,6 +890,8 @@ type BastionHostListResultPager interface {
 
 type bastionHostListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type bastionHostListResultHandleError func(*azcore.Response) error
+
 type bastionHostListResultHandleResponse func(*azcore.Response) (*BastionHostListResultResponse, error)
 
 type bastionHostListResultAdvancePage func(context.Context, *BastionHostListResultResponse) (*azcore.Request, error)
@@ -778,6 +901,8 @@ type bastionHostListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester bastionHostListResultCreateRequest
+	// callback for handling response errors
+	errorer bastionHostListResultHandleError
 	// callback for handling the HTTP response
 	responder bastionHostListResultHandleResponse
 	// callback for advancing to the next page
@@ -808,6 +933,13 @@ func (p *bastionHostListResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -836,6 +968,8 @@ type BastionSessionDeleteResultPager interface {
 
 type bastionSessionDeleteResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type bastionSessionDeleteResultHandleError func(*azcore.Response) error
+
 type bastionSessionDeleteResultHandleResponse func(*azcore.Response) (*BastionSessionDeleteResultResponse, error)
 
 type bastionSessionDeleteResultAdvancePage func(context.Context, *BastionSessionDeleteResultResponse) (*azcore.Request, error)
@@ -845,6 +979,8 @@ type bastionSessionDeleteResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester bastionSessionDeleteResultCreateRequest
+	// callback for handling response errors
+	errorer bastionSessionDeleteResultHandleError
 	// callback for handling the HTTP response
 	responder bastionSessionDeleteResultHandleResponse
 	// callback for advancing to the next page
@@ -875,6 +1011,13 @@ func (p *bastionSessionDeleteResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -903,6 +1046,8 @@ type BastionShareableLinkListResultPager interface {
 
 type bastionShareableLinkListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type bastionShareableLinkListResultHandleError func(*azcore.Response) error
+
 type bastionShareableLinkListResultHandleResponse func(*azcore.Response) (*BastionShareableLinkListResultResponse, error)
 
 type bastionShareableLinkListResultAdvancePage func(context.Context, *BastionShareableLinkListResultResponse) (*azcore.Request, error)
@@ -912,6 +1057,8 @@ type bastionShareableLinkListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester bastionShareableLinkListResultCreateRequest
+	// callback for handling response errors
+	errorer bastionShareableLinkListResultHandleError
 	// callback for handling the HTTP response
 	responder bastionShareableLinkListResultHandleResponse
 	// callback for advancing to the next page
@@ -949,6 +1096,13 @@ func (p *bastionShareableLinkListResultPager) NextPage(ctx context.Context) bool
 	} else {
 		p.resp = nil
 	}
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -977,6 +1131,8 @@ type BgpServiceCommunityListResultPager interface {
 
 type bgpServiceCommunityListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type bgpServiceCommunityListResultHandleError func(*azcore.Response) error
+
 type bgpServiceCommunityListResultHandleResponse func(*azcore.Response) (*BgpServiceCommunityListResultResponse, error)
 
 type bgpServiceCommunityListResultAdvancePage func(context.Context, *BgpServiceCommunityListResultResponse) (*azcore.Request, error)
@@ -986,6 +1142,8 @@ type bgpServiceCommunityListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester bgpServiceCommunityListResultCreateRequest
+	// callback for handling response errors
+	errorer bgpServiceCommunityListResultHandleError
 	// callback for handling the HTTP response
 	responder bgpServiceCommunityListResultHandleResponse
 	// callback for advancing to the next page
@@ -1016,6 +1174,13 @@ func (p *bgpServiceCommunityListResultPager) NextPage(ctx context.Context) bool 
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -1044,6 +1209,8 @@ type DdosProtectionPlanListResultPager interface {
 
 type ddosProtectionPlanListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type ddosProtectionPlanListResultHandleError func(*azcore.Response) error
+
 type ddosProtectionPlanListResultHandleResponse func(*azcore.Response) (*DdosProtectionPlanListResultResponse, error)
 
 type ddosProtectionPlanListResultAdvancePage func(context.Context, *DdosProtectionPlanListResultResponse) (*azcore.Request, error)
@@ -1053,6 +1220,8 @@ type ddosProtectionPlanListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester ddosProtectionPlanListResultCreateRequest
+	// callback for handling response errors
+	errorer ddosProtectionPlanListResultHandleError
 	// callback for handling the HTTP response
 	responder ddosProtectionPlanListResultHandleResponse
 	// callback for advancing to the next page
@@ -1083,6 +1252,13 @@ func (p *ddosProtectionPlanListResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -1111,6 +1287,8 @@ type EndpointServicesListResultPager interface {
 
 type endpointServicesListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type endpointServicesListResultHandleError func(*azcore.Response) error
+
 type endpointServicesListResultHandleResponse func(*azcore.Response) (*EndpointServicesListResultResponse, error)
 
 type endpointServicesListResultAdvancePage func(context.Context, *EndpointServicesListResultResponse) (*azcore.Request, error)
@@ -1120,6 +1298,8 @@ type endpointServicesListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester endpointServicesListResultCreateRequest
+	// callback for handling response errors
+	errorer endpointServicesListResultHandleError
 	// callback for handling the HTTP response
 	responder endpointServicesListResultHandleResponse
 	// callback for advancing to the next page
@@ -1150,6 +1330,13 @@ func (p *endpointServicesListResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -1178,6 +1365,8 @@ type ExpressRouteCircuitConnectionListResultPager interface {
 
 type expressRouteCircuitConnectionListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type expressRouteCircuitConnectionListResultHandleError func(*azcore.Response) error
+
 type expressRouteCircuitConnectionListResultHandleResponse func(*azcore.Response) (*ExpressRouteCircuitConnectionListResultResponse, error)
 
 type expressRouteCircuitConnectionListResultAdvancePage func(context.Context, *ExpressRouteCircuitConnectionListResultResponse) (*azcore.Request, error)
@@ -1187,6 +1376,8 @@ type expressRouteCircuitConnectionListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester expressRouteCircuitConnectionListResultCreateRequest
+	// callback for handling response errors
+	errorer expressRouteCircuitConnectionListResultHandleError
 	// callback for handling the HTTP response
 	responder expressRouteCircuitConnectionListResultHandleResponse
 	// callback for advancing to the next page
@@ -1217,6 +1408,13 @@ func (p *expressRouteCircuitConnectionListResultPager) NextPage(ctx context.Cont
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -1245,6 +1443,8 @@ type ExpressRouteCircuitListResultPager interface {
 
 type expressRouteCircuitListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type expressRouteCircuitListResultHandleError func(*azcore.Response) error
+
 type expressRouteCircuitListResultHandleResponse func(*azcore.Response) (*ExpressRouteCircuitListResultResponse, error)
 
 type expressRouteCircuitListResultAdvancePage func(context.Context, *ExpressRouteCircuitListResultResponse) (*azcore.Request, error)
@@ -1254,6 +1454,8 @@ type expressRouteCircuitListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester expressRouteCircuitListResultCreateRequest
+	// callback for handling response errors
+	errorer expressRouteCircuitListResultHandleError
 	// callback for handling the HTTP response
 	responder expressRouteCircuitListResultHandleResponse
 	// callback for advancing to the next page
@@ -1284,6 +1486,13 @@ func (p *expressRouteCircuitListResultPager) NextPage(ctx context.Context) bool 
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -1312,6 +1521,8 @@ type ExpressRouteCircuitPeeringListResultPager interface {
 
 type expressRouteCircuitPeeringListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type expressRouteCircuitPeeringListResultHandleError func(*azcore.Response) error
+
 type expressRouteCircuitPeeringListResultHandleResponse func(*azcore.Response) (*ExpressRouteCircuitPeeringListResultResponse, error)
 
 type expressRouteCircuitPeeringListResultAdvancePage func(context.Context, *ExpressRouteCircuitPeeringListResultResponse) (*azcore.Request, error)
@@ -1321,6 +1532,8 @@ type expressRouteCircuitPeeringListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester expressRouteCircuitPeeringListResultCreateRequest
+	// callback for handling response errors
+	errorer expressRouteCircuitPeeringListResultHandleError
 	// callback for handling the HTTP response
 	responder expressRouteCircuitPeeringListResultHandleResponse
 	// callback for advancing to the next page
@@ -1351,6 +1564,13 @@ func (p *expressRouteCircuitPeeringListResultPager) NextPage(ctx context.Context
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -1379,6 +1599,8 @@ type ExpressRouteCrossConnectionListResultPager interface {
 
 type expressRouteCrossConnectionListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type expressRouteCrossConnectionListResultHandleError func(*azcore.Response) error
+
 type expressRouteCrossConnectionListResultHandleResponse func(*azcore.Response) (*ExpressRouteCrossConnectionListResultResponse, error)
 
 type expressRouteCrossConnectionListResultAdvancePage func(context.Context, *ExpressRouteCrossConnectionListResultResponse) (*azcore.Request, error)
@@ -1388,6 +1610,8 @@ type expressRouteCrossConnectionListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester expressRouteCrossConnectionListResultCreateRequest
+	// callback for handling response errors
+	errorer expressRouteCrossConnectionListResultHandleError
 	// callback for handling the HTTP response
 	responder expressRouteCrossConnectionListResultHandleResponse
 	// callback for advancing to the next page
@@ -1418,6 +1642,13 @@ func (p *expressRouteCrossConnectionListResultPager) NextPage(ctx context.Contex
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -1446,6 +1677,8 @@ type ExpressRouteCrossConnectionPeeringListPager interface {
 
 type expressRouteCrossConnectionPeeringListCreateRequest func(context.Context) (*azcore.Request, error)
 
+type expressRouteCrossConnectionPeeringListHandleError func(*azcore.Response) error
+
 type expressRouteCrossConnectionPeeringListHandleResponse func(*azcore.Response) (*ExpressRouteCrossConnectionPeeringListResponse, error)
 
 type expressRouteCrossConnectionPeeringListAdvancePage func(context.Context, *ExpressRouteCrossConnectionPeeringListResponse) (*azcore.Request, error)
@@ -1455,6 +1688,8 @@ type expressRouteCrossConnectionPeeringListPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester expressRouteCrossConnectionPeeringListCreateRequest
+	// callback for handling response errors
+	errorer expressRouteCrossConnectionPeeringListHandleError
 	// callback for handling the HTTP response
 	responder expressRouteCrossConnectionPeeringListHandleResponse
 	// callback for advancing to the next page
@@ -1485,6 +1720,13 @@ func (p *expressRouteCrossConnectionPeeringListPager) NextPage(ctx context.Conte
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -1513,6 +1755,8 @@ type ExpressRouteLinkListResultPager interface {
 
 type expressRouteLinkListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type expressRouteLinkListResultHandleError func(*azcore.Response) error
+
 type expressRouteLinkListResultHandleResponse func(*azcore.Response) (*ExpressRouteLinkListResultResponse, error)
 
 type expressRouteLinkListResultAdvancePage func(context.Context, *ExpressRouteLinkListResultResponse) (*azcore.Request, error)
@@ -1522,6 +1766,8 @@ type expressRouteLinkListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester expressRouteLinkListResultCreateRequest
+	// callback for handling response errors
+	errorer expressRouteLinkListResultHandleError
 	// callback for handling the HTTP response
 	responder expressRouteLinkListResultHandleResponse
 	// callback for advancing to the next page
@@ -1552,6 +1798,13 @@ func (p *expressRouteLinkListResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -1580,6 +1833,8 @@ type ExpressRoutePortListResultPager interface {
 
 type expressRoutePortListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type expressRoutePortListResultHandleError func(*azcore.Response) error
+
 type expressRoutePortListResultHandleResponse func(*azcore.Response) (*ExpressRoutePortListResultResponse, error)
 
 type expressRoutePortListResultAdvancePage func(context.Context, *ExpressRoutePortListResultResponse) (*azcore.Request, error)
@@ -1589,6 +1844,8 @@ type expressRoutePortListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester expressRoutePortListResultCreateRequest
+	// callback for handling response errors
+	errorer expressRoutePortListResultHandleError
 	// callback for handling the HTTP response
 	responder expressRoutePortListResultHandleResponse
 	// callback for advancing to the next page
@@ -1619,6 +1876,13 @@ func (p *expressRoutePortListResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -1647,6 +1911,8 @@ type ExpressRoutePortsLocationListResultPager interface {
 
 type expressRoutePortsLocationListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type expressRoutePortsLocationListResultHandleError func(*azcore.Response) error
+
 type expressRoutePortsLocationListResultHandleResponse func(*azcore.Response) (*ExpressRoutePortsLocationListResultResponse, error)
 
 type expressRoutePortsLocationListResultAdvancePage func(context.Context, *ExpressRoutePortsLocationListResultResponse) (*azcore.Request, error)
@@ -1656,6 +1922,8 @@ type expressRoutePortsLocationListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester expressRoutePortsLocationListResultCreateRequest
+	// callback for handling response errors
+	errorer expressRoutePortsLocationListResultHandleError
 	// callback for handling the HTTP response
 	responder expressRoutePortsLocationListResultHandleResponse
 	// callback for advancing to the next page
@@ -1686,6 +1954,13 @@ func (p *expressRoutePortsLocationListResultPager) NextPage(ctx context.Context)
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -1714,6 +1989,8 @@ type ExpressRouteServiceProviderListResultPager interface {
 
 type expressRouteServiceProviderListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type expressRouteServiceProviderListResultHandleError func(*azcore.Response) error
+
 type expressRouteServiceProviderListResultHandleResponse func(*azcore.Response) (*ExpressRouteServiceProviderListResultResponse, error)
 
 type expressRouteServiceProviderListResultAdvancePage func(context.Context, *ExpressRouteServiceProviderListResultResponse) (*azcore.Request, error)
@@ -1723,6 +2000,8 @@ type expressRouteServiceProviderListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester expressRouteServiceProviderListResultCreateRequest
+	// callback for handling response errors
+	errorer expressRouteServiceProviderListResultHandleError
 	// callback for handling the HTTP response
 	responder expressRouteServiceProviderListResultHandleResponse
 	// callback for advancing to the next page
@@ -1753,6 +2032,13 @@ func (p *expressRouteServiceProviderListResultPager) NextPage(ctx context.Contex
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -1781,6 +2067,8 @@ type FirewallPolicyListResultPager interface {
 
 type firewallPolicyListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type firewallPolicyListResultHandleError func(*azcore.Response) error
+
 type firewallPolicyListResultHandleResponse func(*azcore.Response) (*FirewallPolicyListResultResponse, error)
 
 type firewallPolicyListResultAdvancePage func(context.Context, *FirewallPolicyListResultResponse) (*azcore.Request, error)
@@ -1790,6 +2078,8 @@ type firewallPolicyListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester firewallPolicyListResultCreateRequest
+	// callback for handling response errors
+	errorer firewallPolicyListResultHandleError
 	// callback for handling the HTTP response
 	responder firewallPolicyListResultHandleResponse
 	// callback for advancing to the next page
@@ -1820,6 +2110,13 @@ func (p *firewallPolicyListResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -1848,6 +2145,8 @@ type FirewallPolicyRuleGroupListResultPager interface {
 
 type firewallPolicyRuleGroupListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type firewallPolicyRuleGroupListResultHandleError func(*azcore.Response) error
+
 type firewallPolicyRuleGroupListResultHandleResponse func(*azcore.Response) (*FirewallPolicyRuleGroupListResultResponse, error)
 
 type firewallPolicyRuleGroupListResultAdvancePage func(context.Context, *FirewallPolicyRuleGroupListResultResponse) (*azcore.Request, error)
@@ -1857,6 +2156,8 @@ type firewallPolicyRuleGroupListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester firewallPolicyRuleGroupListResultCreateRequest
+	// callback for handling response errors
+	errorer firewallPolicyRuleGroupListResultHandleError
 	// callback for handling the HTTP response
 	responder firewallPolicyRuleGroupListResultHandleResponse
 	// callback for advancing to the next page
@@ -1887,6 +2188,13 @@ func (p *firewallPolicyRuleGroupListResultPager) NextPage(ctx context.Context) b
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -1915,6 +2223,8 @@ type FlowLogListResultPager interface {
 
 type flowLogListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type flowLogListResultHandleError func(*azcore.Response) error
+
 type flowLogListResultHandleResponse func(*azcore.Response) (*FlowLogListResultResponse, error)
 
 type flowLogListResultAdvancePage func(context.Context, *FlowLogListResultResponse) (*azcore.Request, error)
@@ -1924,6 +2234,8 @@ type flowLogListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester flowLogListResultCreateRequest
+	// callback for handling response errors
+	errorer flowLogListResultHandleError
 	// callback for handling the HTTP response
 	responder flowLogListResultHandleResponse
 	// callback for advancing to the next page
@@ -1954,6 +2266,13 @@ func (p *flowLogListResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -1982,6 +2301,8 @@ type IPAllocationListResultPager interface {
 
 type ipAllocationListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type ipAllocationListResultHandleError func(*azcore.Response) error
+
 type ipAllocationListResultHandleResponse func(*azcore.Response) (*IPAllocationListResultResponse, error)
 
 type ipAllocationListResultAdvancePage func(context.Context, *IPAllocationListResultResponse) (*azcore.Request, error)
@@ -1991,6 +2312,8 @@ type ipAllocationListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester ipAllocationListResultCreateRequest
+	// callback for handling response errors
+	errorer ipAllocationListResultHandleError
 	// callback for handling the HTTP response
 	responder ipAllocationListResultHandleResponse
 	// callback for advancing to the next page
@@ -2021,6 +2344,13 @@ func (p *ipAllocationListResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -2049,6 +2379,8 @@ type IPGroupListResultPager interface {
 
 type ipGroupListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type ipGroupListResultHandleError func(*azcore.Response) error
+
 type ipGroupListResultHandleResponse func(*azcore.Response) (*IPGroupListResultResponse, error)
 
 type ipGroupListResultAdvancePage func(context.Context, *IPGroupListResultResponse) (*azcore.Request, error)
@@ -2058,6 +2390,8 @@ type ipGroupListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester ipGroupListResultCreateRequest
+	// callback for handling response errors
+	errorer ipGroupListResultHandleError
 	// callback for handling the HTTP response
 	responder ipGroupListResultHandleResponse
 	// callback for advancing to the next page
@@ -2088,6 +2422,13 @@ func (p *ipGroupListResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -2116,6 +2457,8 @@ type InboundNatRuleListResultPager interface {
 
 type inboundNatRuleListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type inboundNatRuleListResultHandleError func(*azcore.Response) error
+
 type inboundNatRuleListResultHandleResponse func(*azcore.Response) (*InboundNatRuleListResultResponse, error)
 
 type inboundNatRuleListResultAdvancePage func(context.Context, *InboundNatRuleListResultResponse) (*azcore.Request, error)
@@ -2125,6 +2468,8 @@ type inboundNatRuleListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester inboundNatRuleListResultCreateRequest
+	// callback for handling response errors
+	errorer inboundNatRuleListResultHandleError
 	// callback for handling the HTTP response
 	responder inboundNatRuleListResultHandleResponse
 	// callback for advancing to the next page
@@ -2155,6 +2500,13 @@ func (p *inboundNatRuleListResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -2183,6 +2535,8 @@ type ListHubVirtualNetworkConnectionsResultPager interface {
 
 type listHubVirtualNetworkConnectionsResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type listHubVirtualNetworkConnectionsResultHandleError func(*azcore.Response) error
+
 type listHubVirtualNetworkConnectionsResultHandleResponse func(*azcore.Response) (*ListHubVirtualNetworkConnectionsResultResponse, error)
 
 type listHubVirtualNetworkConnectionsResultAdvancePage func(context.Context, *ListHubVirtualNetworkConnectionsResultResponse) (*azcore.Request, error)
@@ -2192,6 +2546,8 @@ type listHubVirtualNetworkConnectionsResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester listHubVirtualNetworkConnectionsResultCreateRequest
+	// callback for handling response errors
+	errorer listHubVirtualNetworkConnectionsResultHandleError
 	// callback for handling the HTTP response
 	responder listHubVirtualNetworkConnectionsResultHandleResponse
 	// callback for advancing to the next page
@@ -2222,6 +2578,13 @@ func (p *listHubVirtualNetworkConnectionsResultPager) NextPage(ctx context.Conte
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -2250,6 +2613,8 @@ type ListP2SVpnGatewaysResultPager interface {
 
 type listP2SVpnGatewaysResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type listP2SVpnGatewaysResultHandleError func(*azcore.Response) error
+
 type listP2SVpnGatewaysResultHandleResponse func(*azcore.Response) (*ListP2SVpnGatewaysResultResponse, error)
 
 type listP2SVpnGatewaysResultAdvancePage func(context.Context, *ListP2SVpnGatewaysResultResponse) (*azcore.Request, error)
@@ -2259,6 +2624,8 @@ type listP2SVpnGatewaysResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester listP2SVpnGatewaysResultCreateRequest
+	// callback for handling response errors
+	errorer listP2SVpnGatewaysResultHandleError
 	// callback for handling the HTTP response
 	responder listP2SVpnGatewaysResultHandleResponse
 	// callback for advancing to the next page
@@ -2289,6 +2656,13 @@ func (p *listP2SVpnGatewaysResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -2317,6 +2691,8 @@ type ListVirtualHubRouteTableV2SResultPager interface {
 
 type listVirtualHubRouteTableV2SResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type listVirtualHubRouteTableV2SResultHandleError func(*azcore.Response) error
+
 type listVirtualHubRouteTableV2SResultHandleResponse func(*azcore.Response) (*ListVirtualHubRouteTableV2SResultResponse, error)
 
 type listVirtualHubRouteTableV2SResultAdvancePage func(context.Context, *ListVirtualHubRouteTableV2SResultResponse) (*azcore.Request, error)
@@ -2326,6 +2702,8 @@ type listVirtualHubRouteTableV2SResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester listVirtualHubRouteTableV2SResultCreateRequest
+	// callback for handling response errors
+	errorer listVirtualHubRouteTableV2SResultHandleError
 	// callback for handling the HTTP response
 	responder listVirtualHubRouteTableV2SResultHandleResponse
 	// callback for advancing to the next page
@@ -2356,6 +2734,13 @@ func (p *listVirtualHubRouteTableV2SResultPager) NextPage(ctx context.Context) b
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -2384,6 +2769,8 @@ type ListVirtualHubsResultPager interface {
 
 type listVirtualHubsResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type listVirtualHubsResultHandleError func(*azcore.Response) error
+
 type listVirtualHubsResultHandleResponse func(*azcore.Response) (*ListVirtualHubsResultResponse, error)
 
 type listVirtualHubsResultAdvancePage func(context.Context, *ListVirtualHubsResultResponse) (*azcore.Request, error)
@@ -2393,6 +2780,8 @@ type listVirtualHubsResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester listVirtualHubsResultCreateRequest
+	// callback for handling response errors
+	errorer listVirtualHubsResultHandleError
 	// callback for handling the HTTP response
 	responder listVirtualHubsResultHandleResponse
 	// callback for advancing to the next page
@@ -2423,6 +2812,13 @@ func (p *listVirtualHubsResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -2451,6 +2847,8 @@ type ListVirtualWaNsResultPager interface {
 
 type listVirtualWaNsResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type listVirtualWaNsResultHandleError func(*azcore.Response) error
+
 type listVirtualWaNsResultHandleResponse func(*azcore.Response) (*ListVirtualWaNsResultResponse, error)
 
 type listVirtualWaNsResultAdvancePage func(context.Context, *ListVirtualWaNsResultResponse) (*azcore.Request, error)
@@ -2460,6 +2858,8 @@ type listVirtualWaNsResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester listVirtualWaNsResultCreateRequest
+	// callback for handling response errors
+	errorer listVirtualWaNsResultHandleError
 	// callback for handling the HTTP response
 	responder listVirtualWaNsResultHandleResponse
 	// callback for advancing to the next page
@@ -2490,6 +2890,13 @@ func (p *listVirtualWaNsResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -2518,6 +2925,8 @@ type ListVpnConnectionsResultPager interface {
 
 type listVpnConnectionsResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type listVpnConnectionsResultHandleError func(*azcore.Response) error
+
 type listVpnConnectionsResultHandleResponse func(*azcore.Response) (*ListVpnConnectionsResultResponse, error)
 
 type listVpnConnectionsResultAdvancePage func(context.Context, *ListVpnConnectionsResultResponse) (*azcore.Request, error)
@@ -2527,6 +2936,8 @@ type listVpnConnectionsResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester listVpnConnectionsResultCreateRequest
+	// callback for handling response errors
+	errorer listVpnConnectionsResultHandleError
 	// callback for handling the HTTP response
 	responder listVpnConnectionsResultHandleResponse
 	// callback for advancing to the next page
@@ -2557,6 +2968,13 @@ func (p *listVpnConnectionsResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -2585,6 +3003,8 @@ type ListVpnGatewaysResultPager interface {
 
 type listVpnGatewaysResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type listVpnGatewaysResultHandleError func(*azcore.Response) error
+
 type listVpnGatewaysResultHandleResponse func(*azcore.Response) (*ListVpnGatewaysResultResponse, error)
 
 type listVpnGatewaysResultAdvancePage func(context.Context, *ListVpnGatewaysResultResponse) (*azcore.Request, error)
@@ -2594,6 +3014,8 @@ type listVpnGatewaysResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester listVpnGatewaysResultCreateRequest
+	// callback for handling response errors
+	errorer listVpnGatewaysResultHandleError
 	// callback for handling the HTTP response
 	responder listVpnGatewaysResultHandleResponse
 	// callback for advancing to the next page
@@ -2624,6 +3046,13 @@ func (p *listVpnGatewaysResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -2652,6 +3081,8 @@ type ListVpnServerConfigurationsResultPager interface {
 
 type listVpnServerConfigurationsResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type listVpnServerConfigurationsResultHandleError func(*azcore.Response) error
+
 type listVpnServerConfigurationsResultHandleResponse func(*azcore.Response) (*ListVpnServerConfigurationsResultResponse, error)
 
 type listVpnServerConfigurationsResultAdvancePage func(context.Context, *ListVpnServerConfigurationsResultResponse) (*azcore.Request, error)
@@ -2661,6 +3092,8 @@ type listVpnServerConfigurationsResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester listVpnServerConfigurationsResultCreateRequest
+	// callback for handling response errors
+	errorer listVpnServerConfigurationsResultHandleError
 	// callback for handling the HTTP response
 	responder listVpnServerConfigurationsResultHandleResponse
 	// callback for advancing to the next page
@@ -2691,6 +3124,13 @@ func (p *listVpnServerConfigurationsResultPager) NextPage(ctx context.Context) b
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -2719,6 +3159,8 @@ type ListVpnSiteLinkConnectionsResultPager interface {
 
 type listVpnSiteLinkConnectionsResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type listVpnSiteLinkConnectionsResultHandleError func(*azcore.Response) error
+
 type listVpnSiteLinkConnectionsResultHandleResponse func(*azcore.Response) (*ListVpnSiteLinkConnectionsResultResponse, error)
 
 type listVpnSiteLinkConnectionsResultAdvancePage func(context.Context, *ListVpnSiteLinkConnectionsResultResponse) (*azcore.Request, error)
@@ -2728,6 +3170,8 @@ type listVpnSiteLinkConnectionsResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester listVpnSiteLinkConnectionsResultCreateRequest
+	// callback for handling response errors
+	errorer listVpnSiteLinkConnectionsResultHandleError
 	// callback for handling the HTTP response
 	responder listVpnSiteLinkConnectionsResultHandleResponse
 	// callback for advancing to the next page
@@ -2758,6 +3202,13 @@ func (p *listVpnSiteLinkConnectionsResultPager) NextPage(ctx context.Context) bo
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -2786,6 +3237,8 @@ type ListVpnSiteLinksResultPager interface {
 
 type listVpnSiteLinksResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type listVpnSiteLinksResultHandleError func(*azcore.Response) error
+
 type listVpnSiteLinksResultHandleResponse func(*azcore.Response) (*ListVpnSiteLinksResultResponse, error)
 
 type listVpnSiteLinksResultAdvancePage func(context.Context, *ListVpnSiteLinksResultResponse) (*azcore.Request, error)
@@ -2795,6 +3248,8 @@ type listVpnSiteLinksResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester listVpnSiteLinksResultCreateRequest
+	// callback for handling response errors
+	errorer listVpnSiteLinksResultHandleError
 	// callback for handling the HTTP response
 	responder listVpnSiteLinksResultHandleResponse
 	// callback for advancing to the next page
@@ -2825,6 +3280,13 @@ func (p *listVpnSiteLinksResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -2853,6 +3315,8 @@ type ListVpnSitesResultPager interface {
 
 type listVpnSitesResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type listVpnSitesResultHandleError func(*azcore.Response) error
+
 type listVpnSitesResultHandleResponse func(*azcore.Response) (*ListVpnSitesResultResponse, error)
 
 type listVpnSitesResultAdvancePage func(context.Context, *ListVpnSitesResultResponse) (*azcore.Request, error)
@@ -2862,6 +3326,8 @@ type listVpnSitesResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester listVpnSitesResultCreateRequest
+	// callback for handling response errors
+	errorer listVpnSitesResultHandleError
 	// callback for handling the HTTP response
 	responder listVpnSitesResultHandleResponse
 	// callback for advancing to the next page
@@ -2892,6 +3358,13 @@ func (p *listVpnSitesResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -2920,6 +3393,8 @@ type LoadBalancerBackendAddressPoolListResultPager interface {
 
 type loadBalancerBackendAddressPoolListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type loadBalancerBackendAddressPoolListResultHandleError func(*azcore.Response) error
+
 type loadBalancerBackendAddressPoolListResultHandleResponse func(*azcore.Response) (*LoadBalancerBackendAddressPoolListResultResponse, error)
 
 type loadBalancerBackendAddressPoolListResultAdvancePage func(context.Context, *LoadBalancerBackendAddressPoolListResultResponse) (*azcore.Request, error)
@@ -2929,6 +3404,8 @@ type loadBalancerBackendAddressPoolListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester loadBalancerBackendAddressPoolListResultCreateRequest
+	// callback for handling response errors
+	errorer loadBalancerBackendAddressPoolListResultHandleError
 	// callback for handling the HTTP response
 	responder loadBalancerBackendAddressPoolListResultHandleResponse
 	// callback for advancing to the next page
@@ -2959,6 +3436,13 @@ func (p *loadBalancerBackendAddressPoolListResultPager) NextPage(ctx context.Con
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -2987,6 +3471,8 @@ type LoadBalancerFrontendIPConfigurationListResultPager interface {
 
 type loadBalancerFrontendIPConfigurationListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type loadBalancerFrontendIPConfigurationListResultHandleError func(*azcore.Response) error
+
 type loadBalancerFrontendIPConfigurationListResultHandleResponse func(*azcore.Response) (*LoadBalancerFrontendIPConfigurationListResultResponse, error)
 
 type loadBalancerFrontendIPConfigurationListResultAdvancePage func(context.Context, *LoadBalancerFrontendIPConfigurationListResultResponse) (*azcore.Request, error)
@@ -2996,6 +3482,8 @@ type loadBalancerFrontendIPConfigurationListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester loadBalancerFrontendIPConfigurationListResultCreateRequest
+	// callback for handling response errors
+	errorer loadBalancerFrontendIPConfigurationListResultHandleError
 	// callback for handling the HTTP response
 	responder loadBalancerFrontendIPConfigurationListResultHandleResponse
 	// callback for advancing to the next page
@@ -3026,6 +3514,13 @@ func (p *loadBalancerFrontendIPConfigurationListResultPager) NextPage(ctx contex
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -3054,6 +3549,8 @@ type LoadBalancerListResultPager interface {
 
 type loadBalancerListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type loadBalancerListResultHandleError func(*azcore.Response) error
+
 type loadBalancerListResultHandleResponse func(*azcore.Response) (*LoadBalancerListResultResponse, error)
 
 type loadBalancerListResultAdvancePage func(context.Context, *LoadBalancerListResultResponse) (*azcore.Request, error)
@@ -3063,6 +3560,8 @@ type loadBalancerListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester loadBalancerListResultCreateRequest
+	// callback for handling response errors
+	errorer loadBalancerListResultHandleError
 	// callback for handling the HTTP response
 	responder loadBalancerListResultHandleResponse
 	// callback for advancing to the next page
@@ -3093,6 +3592,13 @@ func (p *loadBalancerListResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -3121,6 +3627,8 @@ type LoadBalancerLoadBalancingRuleListResultPager interface {
 
 type loadBalancerLoadBalancingRuleListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type loadBalancerLoadBalancingRuleListResultHandleError func(*azcore.Response) error
+
 type loadBalancerLoadBalancingRuleListResultHandleResponse func(*azcore.Response) (*LoadBalancerLoadBalancingRuleListResultResponse, error)
 
 type loadBalancerLoadBalancingRuleListResultAdvancePage func(context.Context, *LoadBalancerLoadBalancingRuleListResultResponse) (*azcore.Request, error)
@@ -3130,6 +3638,8 @@ type loadBalancerLoadBalancingRuleListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester loadBalancerLoadBalancingRuleListResultCreateRequest
+	// callback for handling response errors
+	errorer loadBalancerLoadBalancingRuleListResultHandleError
 	// callback for handling the HTTP response
 	responder loadBalancerLoadBalancingRuleListResultHandleResponse
 	// callback for advancing to the next page
@@ -3160,6 +3670,13 @@ func (p *loadBalancerLoadBalancingRuleListResultPager) NextPage(ctx context.Cont
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -3188,6 +3705,8 @@ type LoadBalancerOutboundRuleListResultPager interface {
 
 type loadBalancerOutboundRuleListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type loadBalancerOutboundRuleListResultHandleError func(*azcore.Response) error
+
 type loadBalancerOutboundRuleListResultHandleResponse func(*azcore.Response) (*LoadBalancerOutboundRuleListResultResponse, error)
 
 type loadBalancerOutboundRuleListResultAdvancePage func(context.Context, *LoadBalancerOutboundRuleListResultResponse) (*azcore.Request, error)
@@ -3197,6 +3716,8 @@ type loadBalancerOutboundRuleListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester loadBalancerOutboundRuleListResultCreateRequest
+	// callback for handling response errors
+	errorer loadBalancerOutboundRuleListResultHandleError
 	// callback for handling the HTTP response
 	responder loadBalancerOutboundRuleListResultHandleResponse
 	// callback for advancing to the next page
@@ -3227,6 +3748,13 @@ func (p *loadBalancerOutboundRuleListResultPager) NextPage(ctx context.Context) 
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -3255,6 +3783,8 @@ type LoadBalancerProbeListResultPager interface {
 
 type loadBalancerProbeListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type loadBalancerProbeListResultHandleError func(*azcore.Response) error
+
 type loadBalancerProbeListResultHandleResponse func(*azcore.Response) (*LoadBalancerProbeListResultResponse, error)
 
 type loadBalancerProbeListResultAdvancePage func(context.Context, *LoadBalancerProbeListResultResponse) (*azcore.Request, error)
@@ -3264,6 +3794,8 @@ type loadBalancerProbeListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester loadBalancerProbeListResultCreateRequest
+	// callback for handling response errors
+	errorer loadBalancerProbeListResultHandleError
 	// callback for handling the HTTP response
 	responder loadBalancerProbeListResultHandleResponse
 	// callback for advancing to the next page
@@ -3294,6 +3826,13 @@ func (p *loadBalancerProbeListResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -3322,6 +3861,8 @@ type LocalNetworkGatewayListResultPager interface {
 
 type localNetworkGatewayListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type localNetworkGatewayListResultHandleError func(*azcore.Response) error
+
 type localNetworkGatewayListResultHandleResponse func(*azcore.Response) (*LocalNetworkGatewayListResultResponse, error)
 
 type localNetworkGatewayListResultAdvancePage func(context.Context, *LocalNetworkGatewayListResultResponse) (*azcore.Request, error)
@@ -3331,6 +3872,8 @@ type localNetworkGatewayListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester localNetworkGatewayListResultCreateRequest
+	// callback for handling response errors
+	errorer localNetworkGatewayListResultHandleError
 	// callback for handling the HTTP response
 	responder localNetworkGatewayListResultHandleResponse
 	// callback for advancing to the next page
@@ -3361,6 +3904,13 @@ func (p *localNetworkGatewayListResultPager) NextPage(ctx context.Context) bool 
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -3389,6 +3939,8 @@ type NatGatewayListResultPager interface {
 
 type natGatewayListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type natGatewayListResultHandleError func(*azcore.Response) error
+
 type natGatewayListResultHandleResponse func(*azcore.Response) (*NatGatewayListResultResponse, error)
 
 type natGatewayListResultAdvancePage func(context.Context, *NatGatewayListResultResponse) (*azcore.Request, error)
@@ -3398,6 +3950,8 @@ type natGatewayListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester natGatewayListResultCreateRequest
+	// callback for handling response errors
+	errorer natGatewayListResultHandleError
 	// callback for handling the HTTP response
 	responder natGatewayListResultHandleResponse
 	// callback for advancing to the next page
@@ -3428,6 +3982,13 @@ func (p *natGatewayListResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -3456,6 +4017,8 @@ type NetworkInterfaceIPConfigurationListResultPager interface {
 
 type networkInterfaceIPConfigurationListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type networkInterfaceIPConfigurationListResultHandleError func(*azcore.Response) error
+
 type networkInterfaceIPConfigurationListResultHandleResponse func(*azcore.Response) (*NetworkInterfaceIPConfigurationListResultResponse, error)
 
 type networkInterfaceIPConfigurationListResultAdvancePage func(context.Context, *NetworkInterfaceIPConfigurationListResultResponse) (*azcore.Request, error)
@@ -3465,6 +4028,8 @@ type networkInterfaceIPConfigurationListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester networkInterfaceIPConfigurationListResultCreateRequest
+	// callback for handling response errors
+	errorer networkInterfaceIPConfigurationListResultHandleError
 	// callback for handling the HTTP response
 	responder networkInterfaceIPConfigurationListResultHandleResponse
 	// callback for advancing to the next page
@@ -3495,6 +4060,13 @@ func (p *networkInterfaceIPConfigurationListResultPager) NextPage(ctx context.Co
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -3523,6 +4095,8 @@ type NetworkInterfaceListResultPager interface {
 
 type networkInterfaceListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type networkInterfaceListResultHandleError func(*azcore.Response) error
+
 type networkInterfaceListResultHandleResponse func(*azcore.Response) (*NetworkInterfaceListResultResponse, error)
 
 type networkInterfaceListResultAdvancePage func(context.Context, *NetworkInterfaceListResultResponse) (*azcore.Request, error)
@@ -3532,6 +4106,8 @@ type networkInterfaceListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester networkInterfaceListResultCreateRequest
+	// callback for handling response errors
+	errorer networkInterfaceListResultHandleError
 	// callback for handling the HTTP response
 	responder networkInterfaceListResultHandleResponse
 	// callback for advancing to the next page
@@ -3562,6 +4138,13 @@ func (p *networkInterfaceListResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -3590,6 +4173,8 @@ type NetworkInterfaceLoadBalancerListResultPager interface {
 
 type networkInterfaceLoadBalancerListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type networkInterfaceLoadBalancerListResultHandleError func(*azcore.Response) error
+
 type networkInterfaceLoadBalancerListResultHandleResponse func(*azcore.Response) (*NetworkInterfaceLoadBalancerListResultResponse, error)
 
 type networkInterfaceLoadBalancerListResultAdvancePage func(context.Context, *NetworkInterfaceLoadBalancerListResultResponse) (*azcore.Request, error)
@@ -3599,6 +4184,8 @@ type networkInterfaceLoadBalancerListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester networkInterfaceLoadBalancerListResultCreateRequest
+	// callback for handling response errors
+	errorer networkInterfaceLoadBalancerListResultHandleError
 	// callback for handling the HTTP response
 	responder networkInterfaceLoadBalancerListResultHandleResponse
 	// callback for advancing to the next page
@@ -3629,6 +4216,13 @@ func (p *networkInterfaceLoadBalancerListResultPager) NextPage(ctx context.Conte
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -3657,6 +4251,8 @@ type NetworkInterfaceTapConfigurationListResultPager interface {
 
 type networkInterfaceTapConfigurationListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type networkInterfaceTapConfigurationListResultHandleError func(*azcore.Response) error
+
 type networkInterfaceTapConfigurationListResultHandleResponse func(*azcore.Response) (*NetworkInterfaceTapConfigurationListResultResponse, error)
 
 type networkInterfaceTapConfigurationListResultAdvancePage func(context.Context, *NetworkInterfaceTapConfigurationListResultResponse) (*azcore.Request, error)
@@ -3666,6 +4262,8 @@ type networkInterfaceTapConfigurationListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester networkInterfaceTapConfigurationListResultCreateRequest
+	// callback for handling response errors
+	errorer networkInterfaceTapConfigurationListResultHandleError
 	// callback for handling the HTTP response
 	responder networkInterfaceTapConfigurationListResultHandleResponse
 	// callback for advancing to the next page
@@ -3696,6 +4294,13 @@ func (p *networkInterfaceTapConfigurationListResultPager) NextPage(ctx context.C
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -3724,6 +4329,8 @@ type NetworkProfileListResultPager interface {
 
 type networkProfileListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type networkProfileListResultHandleError func(*azcore.Response) error
+
 type networkProfileListResultHandleResponse func(*azcore.Response) (*NetworkProfileListResultResponse, error)
 
 type networkProfileListResultAdvancePage func(context.Context, *NetworkProfileListResultResponse) (*azcore.Request, error)
@@ -3733,6 +4340,8 @@ type networkProfileListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester networkProfileListResultCreateRequest
+	// callback for handling response errors
+	errorer networkProfileListResultHandleError
 	// callback for handling the HTTP response
 	responder networkProfileListResultHandleResponse
 	// callback for advancing to the next page
@@ -3763,6 +4372,13 @@ func (p *networkProfileListResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -3791,6 +4407,8 @@ type NetworkSecurityGroupListResultPager interface {
 
 type networkSecurityGroupListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type networkSecurityGroupListResultHandleError func(*azcore.Response) error
+
 type networkSecurityGroupListResultHandleResponse func(*azcore.Response) (*NetworkSecurityGroupListResultResponse, error)
 
 type networkSecurityGroupListResultAdvancePage func(context.Context, *NetworkSecurityGroupListResultResponse) (*azcore.Request, error)
@@ -3800,6 +4418,8 @@ type networkSecurityGroupListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester networkSecurityGroupListResultCreateRequest
+	// callback for handling response errors
+	errorer networkSecurityGroupListResultHandleError
 	// callback for handling the HTTP response
 	responder networkSecurityGroupListResultHandleResponse
 	// callback for advancing to the next page
@@ -3830,6 +4450,13 @@ func (p *networkSecurityGroupListResultPager) NextPage(ctx context.Context) bool
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -3858,6 +4485,8 @@ type NetworkVirtualApplianceListResultPager interface {
 
 type networkVirtualApplianceListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type networkVirtualApplianceListResultHandleError func(*azcore.Response) error
+
 type networkVirtualApplianceListResultHandleResponse func(*azcore.Response) (*NetworkVirtualApplianceListResultResponse, error)
 
 type networkVirtualApplianceListResultAdvancePage func(context.Context, *NetworkVirtualApplianceListResultResponse) (*azcore.Request, error)
@@ -3867,6 +4496,8 @@ type networkVirtualApplianceListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester networkVirtualApplianceListResultCreateRequest
+	// callback for handling response errors
+	errorer networkVirtualApplianceListResultHandleError
 	// callback for handling the HTTP response
 	responder networkVirtualApplianceListResultHandleResponse
 	// callback for advancing to the next page
@@ -3897,6 +4528,13 @@ func (p *networkVirtualApplianceListResultPager) NextPage(ctx context.Context) b
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -3925,6 +4563,8 @@ type OperationListResultPager interface {
 
 type operationListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type operationListResultHandleError func(*azcore.Response) error
+
 type operationListResultHandleResponse func(*azcore.Response) (*OperationListResultResponse, error)
 
 type operationListResultAdvancePage func(context.Context, *OperationListResultResponse) (*azcore.Request, error)
@@ -3934,6 +4574,8 @@ type operationListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester operationListResultCreateRequest
+	// callback for handling response errors
+	errorer operationListResultHandleError
 	// callback for handling the HTTP response
 	responder operationListResultHandleResponse
 	// callback for advancing to the next page
@@ -3964,6 +4606,13 @@ func (p *operationListResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -3992,6 +4641,8 @@ type PeerExpressRouteCircuitConnectionListResultPager interface {
 
 type peerExpressRouteCircuitConnectionListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type peerExpressRouteCircuitConnectionListResultHandleError func(*azcore.Response) error
+
 type peerExpressRouteCircuitConnectionListResultHandleResponse func(*azcore.Response) (*PeerExpressRouteCircuitConnectionListResultResponse, error)
 
 type peerExpressRouteCircuitConnectionListResultAdvancePage func(context.Context, *PeerExpressRouteCircuitConnectionListResultResponse) (*azcore.Request, error)
@@ -4001,6 +4652,8 @@ type peerExpressRouteCircuitConnectionListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester peerExpressRouteCircuitConnectionListResultCreateRequest
+	// callback for handling response errors
+	errorer peerExpressRouteCircuitConnectionListResultHandleError
 	// callback for handling the HTTP response
 	responder peerExpressRouteCircuitConnectionListResultHandleResponse
 	// callback for advancing to the next page
@@ -4031,6 +4684,13 @@ func (p *peerExpressRouteCircuitConnectionListResultPager) NextPage(ctx context.
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -4059,6 +4719,8 @@ type PrivateDNSZoneGroupListResultPager interface {
 
 type privateDnsZoneGroupListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type privateDnsZoneGroupListResultHandleError func(*azcore.Response) error
+
 type privateDnsZoneGroupListResultHandleResponse func(*azcore.Response) (*PrivateDNSZoneGroupListResultResponse, error)
 
 type privateDnsZoneGroupListResultAdvancePage func(context.Context, *PrivateDNSZoneGroupListResultResponse) (*azcore.Request, error)
@@ -4068,6 +4730,8 @@ type privateDnsZoneGroupListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester privateDnsZoneGroupListResultCreateRequest
+	// callback for handling response errors
+	errorer privateDnsZoneGroupListResultHandleError
 	// callback for handling the HTTP response
 	responder privateDnsZoneGroupListResultHandleResponse
 	// callback for advancing to the next page
@@ -4098,6 +4762,13 @@ func (p *privateDnsZoneGroupListResultPager) NextPage(ctx context.Context) bool 
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -4126,6 +4797,8 @@ type PrivateEndpointConnectionListResultPager interface {
 
 type privateEndpointConnectionListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type privateEndpointConnectionListResultHandleError func(*azcore.Response) error
+
 type privateEndpointConnectionListResultHandleResponse func(*azcore.Response) (*PrivateEndpointConnectionListResultResponse, error)
 
 type privateEndpointConnectionListResultAdvancePage func(context.Context, *PrivateEndpointConnectionListResultResponse) (*azcore.Request, error)
@@ -4135,6 +4808,8 @@ type privateEndpointConnectionListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester privateEndpointConnectionListResultCreateRequest
+	// callback for handling response errors
+	errorer privateEndpointConnectionListResultHandleError
 	// callback for handling the HTTP response
 	responder privateEndpointConnectionListResultHandleResponse
 	// callback for advancing to the next page
@@ -4165,6 +4840,13 @@ func (p *privateEndpointConnectionListResultPager) NextPage(ctx context.Context)
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -4193,6 +4875,8 @@ type PrivateEndpointListResultPager interface {
 
 type privateEndpointListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type privateEndpointListResultHandleError func(*azcore.Response) error
+
 type privateEndpointListResultHandleResponse func(*azcore.Response) (*PrivateEndpointListResultResponse, error)
 
 type privateEndpointListResultAdvancePage func(context.Context, *PrivateEndpointListResultResponse) (*azcore.Request, error)
@@ -4202,6 +4886,8 @@ type privateEndpointListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester privateEndpointListResultCreateRequest
+	// callback for handling response errors
+	errorer privateEndpointListResultHandleError
 	// callback for handling the HTTP response
 	responder privateEndpointListResultHandleResponse
 	// callback for advancing to the next page
@@ -4232,6 +4918,13 @@ func (p *privateEndpointListResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -4260,6 +4953,8 @@ type PrivateLinkServiceListResultPager interface {
 
 type privateLinkServiceListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type privateLinkServiceListResultHandleError func(*azcore.Response) error
+
 type privateLinkServiceListResultHandleResponse func(*azcore.Response) (*PrivateLinkServiceListResultResponse, error)
 
 type privateLinkServiceListResultAdvancePage func(context.Context, *PrivateLinkServiceListResultResponse) (*azcore.Request, error)
@@ -4269,6 +4964,8 @@ type privateLinkServiceListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester privateLinkServiceListResultCreateRequest
+	// callback for handling response errors
+	errorer privateLinkServiceListResultHandleError
 	// callback for handling the HTTP response
 	responder privateLinkServiceListResultHandleResponse
 	// callback for advancing to the next page
@@ -4299,6 +4996,13 @@ func (p *privateLinkServiceListResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -4327,6 +5031,8 @@ type PublicIPAddressListResultPager interface {
 
 type publicIPAddressListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type publicIPAddressListResultHandleError func(*azcore.Response) error
+
 type publicIPAddressListResultHandleResponse func(*azcore.Response) (*PublicIPAddressListResultResponse, error)
 
 type publicIPAddressListResultAdvancePage func(context.Context, *PublicIPAddressListResultResponse) (*azcore.Request, error)
@@ -4336,6 +5042,8 @@ type publicIPAddressListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester publicIPAddressListResultCreateRequest
+	// callback for handling response errors
+	errorer publicIPAddressListResultHandleError
 	// callback for handling the HTTP response
 	responder publicIPAddressListResultHandleResponse
 	// callback for advancing to the next page
@@ -4366,6 +5074,13 @@ func (p *publicIPAddressListResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -4394,6 +5109,8 @@ type PublicIPPrefixListResultPager interface {
 
 type publicIPPrefixListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type publicIPPrefixListResultHandleError func(*azcore.Response) error
+
 type publicIPPrefixListResultHandleResponse func(*azcore.Response) (*PublicIPPrefixListResultResponse, error)
 
 type publicIPPrefixListResultAdvancePage func(context.Context, *PublicIPPrefixListResultResponse) (*azcore.Request, error)
@@ -4403,6 +5120,8 @@ type publicIPPrefixListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester publicIPPrefixListResultCreateRequest
+	// callback for handling response errors
+	errorer publicIPPrefixListResultHandleError
 	// callback for handling the HTTP response
 	responder publicIPPrefixListResultHandleResponse
 	// callback for advancing to the next page
@@ -4433,6 +5152,13 @@ func (p *publicIPPrefixListResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -4461,6 +5187,8 @@ type RouteFilterListResultPager interface {
 
 type routeFilterListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type routeFilterListResultHandleError func(*azcore.Response) error
+
 type routeFilterListResultHandleResponse func(*azcore.Response) (*RouteFilterListResultResponse, error)
 
 type routeFilterListResultAdvancePage func(context.Context, *RouteFilterListResultResponse) (*azcore.Request, error)
@@ -4470,6 +5198,8 @@ type routeFilterListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester routeFilterListResultCreateRequest
+	// callback for handling response errors
+	errorer routeFilterListResultHandleError
 	// callback for handling the HTTP response
 	responder routeFilterListResultHandleResponse
 	// callback for advancing to the next page
@@ -4500,6 +5230,13 @@ func (p *routeFilterListResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -4528,6 +5265,8 @@ type RouteFilterRuleListResultPager interface {
 
 type routeFilterRuleListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type routeFilterRuleListResultHandleError func(*azcore.Response) error
+
 type routeFilterRuleListResultHandleResponse func(*azcore.Response) (*RouteFilterRuleListResultResponse, error)
 
 type routeFilterRuleListResultAdvancePage func(context.Context, *RouteFilterRuleListResultResponse) (*azcore.Request, error)
@@ -4537,6 +5276,8 @@ type routeFilterRuleListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester routeFilterRuleListResultCreateRequest
+	// callback for handling response errors
+	errorer routeFilterRuleListResultHandleError
 	// callback for handling the HTTP response
 	responder routeFilterRuleListResultHandleResponse
 	// callback for advancing to the next page
@@ -4567,6 +5308,13 @@ func (p *routeFilterRuleListResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -4595,6 +5343,8 @@ type RouteListResultPager interface {
 
 type routeListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type routeListResultHandleError func(*azcore.Response) error
+
 type routeListResultHandleResponse func(*azcore.Response) (*RouteListResultResponse, error)
 
 type routeListResultAdvancePage func(context.Context, *RouteListResultResponse) (*azcore.Request, error)
@@ -4604,6 +5354,8 @@ type routeListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester routeListResultCreateRequest
+	// callback for handling response errors
+	errorer routeListResultHandleError
 	// callback for handling the HTTP response
 	responder routeListResultHandleResponse
 	// callback for advancing to the next page
@@ -4634,6 +5386,13 @@ func (p *routeListResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -4662,6 +5421,8 @@ type RouteTableListResultPager interface {
 
 type routeTableListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type routeTableListResultHandleError func(*azcore.Response) error
+
 type routeTableListResultHandleResponse func(*azcore.Response) (*RouteTableListResultResponse, error)
 
 type routeTableListResultAdvancePage func(context.Context, *RouteTableListResultResponse) (*azcore.Request, error)
@@ -4671,6 +5432,8 @@ type routeTableListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester routeTableListResultCreateRequest
+	// callback for handling response errors
+	errorer routeTableListResultHandleError
 	// callback for handling the HTTP response
 	responder routeTableListResultHandleResponse
 	// callback for advancing to the next page
@@ -4701,6 +5464,13 @@ func (p *routeTableListResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -4729,6 +5499,8 @@ type SecurityPartnerProviderListResultPager interface {
 
 type securityPartnerProviderListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type securityPartnerProviderListResultHandleError func(*azcore.Response) error
+
 type securityPartnerProviderListResultHandleResponse func(*azcore.Response) (*SecurityPartnerProviderListResultResponse, error)
 
 type securityPartnerProviderListResultAdvancePage func(context.Context, *SecurityPartnerProviderListResultResponse) (*azcore.Request, error)
@@ -4738,6 +5510,8 @@ type securityPartnerProviderListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester securityPartnerProviderListResultCreateRequest
+	// callback for handling response errors
+	errorer securityPartnerProviderListResultHandleError
 	// callback for handling the HTTP response
 	responder securityPartnerProviderListResultHandleResponse
 	// callback for advancing to the next page
@@ -4768,6 +5542,13 @@ func (p *securityPartnerProviderListResultPager) NextPage(ctx context.Context) b
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -4796,6 +5577,8 @@ type SecurityRuleListResultPager interface {
 
 type securityRuleListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type securityRuleListResultHandleError func(*azcore.Response) error
+
 type securityRuleListResultHandleResponse func(*azcore.Response) (*SecurityRuleListResultResponse, error)
 
 type securityRuleListResultAdvancePage func(context.Context, *SecurityRuleListResultResponse) (*azcore.Request, error)
@@ -4805,6 +5588,8 @@ type securityRuleListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester securityRuleListResultCreateRequest
+	// callback for handling response errors
+	errorer securityRuleListResultHandleError
 	// callback for handling the HTTP response
 	responder securityRuleListResultHandleResponse
 	// callback for advancing to the next page
@@ -4835,6 +5620,13 @@ func (p *securityRuleListResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -4863,6 +5655,8 @@ type ServiceEndpointPolicyDefinitionListResultPager interface {
 
 type serviceEndpointPolicyDefinitionListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type serviceEndpointPolicyDefinitionListResultHandleError func(*azcore.Response) error
+
 type serviceEndpointPolicyDefinitionListResultHandleResponse func(*azcore.Response) (*ServiceEndpointPolicyDefinitionListResultResponse, error)
 
 type serviceEndpointPolicyDefinitionListResultAdvancePage func(context.Context, *ServiceEndpointPolicyDefinitionListResultResponse) (*azcore.Request, error)
@@ -4872,6 +5666,8 @@ type serviceEndpointPolicyDefinitionListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester serviceEndpointPolicyDefinitionListResultCreateRequest
+	// callback for handling response errors
+	errorer serviceEndpointPolicyDefinitionListResultHandleError
 	// callback for handling the HTTP response
 	responder serviceEndpointPolicyDefinitionListResultHandleResponse
 	// callback for advancing to the next page
@@ -4902,6 +5698,13 @@ func (p *serviceEndpointPolicyDefinitionListResultPager) NextPage(ctx context.Co
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -4930,6 +5733,8 @@ type ServiceEndpointPolicyListResultPager interface {
 
 type serviceEndpointPolicyListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type serviceEndpointPolicyListResultHandleError func(*azcore.Response) error
+
 type serviceEndpointPolicyListResultHandleResponse func(*azcore.Response) (*ServiceEndpointPolicyListResultResponse, error)
 
 type serviceEndpointPolicyListResultAdvancePage func(context.Context, *ServiceEndpointPolicyListResultResponse) (*azcore.Request, error)
@@ -4939,6 +5744,8 @@ type serviceEndpointPolicyListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester serviceEndpointPolicyListResultCreateRequest
+	// callback for handling response errors
+	errorer serviceEndpointPolicyListResultHandleError
 	// callback for handling the HTTP response
 	responder serviceEndpointPolicyListResultHandleResponse
 	// callback for advancing to the next page
@@ -4969,6 +5776,13 @@ func (p *serviceEndpointPolicyListResultPager) NextPage(ctx context.Context) boo
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -4997,6 +5811,8 @@ type SubnetListResultPager interface {
 
 type subnetListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type subnetListResultHandleError func(*azcore.Response) error
+
 type subnetListResultHandleResponse func(*azcore.Response) (*SubnetListResultResponse, error)
 
 type subnetListResultAdvancePage func(context.Context, *SubnetListResultResponse) (*azcore.Request, error)
@@ -5006,6 +5822,8 @@ type subnetListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester subnetListResultCreateRequest
+	// callback for handling response errors
+	errorer subnetListResultHandleError
 	// callback for handling the HTTP response
 	responder subnetListResultHandleResponse
 	// callback for advancing to the next page
@@ -5036,6 +5854,13 @@ func (p *subnetListResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -5064,6 +5889,8 @@ type UsagesListResultPager interface {
 
 type usagesListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type usagesListResultHandleError func(*azcore.Response) error
+
 type usagesListResultHandleResponse func(*azcore.Response) (*UsagesListResultResponse, error)
 
 type usagesListResultAdvancePage func(context.Context, *UsagesListResultResponse) (*azcore.Request, error)
@@ -5073,6 +5900,8 @@ type usagesListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester usagesListResultCreateRequest
+	// callback for handling response errors
+	errorer usagesListResultHandleError
 	// callback for handling the HTTP response
 	responder usagesListResultHandleResponse
 	// callback for advancing to the next page
@@ -5103,6 +5932,13 @@ func (p *usagesListResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -5131,6 +5967,8 @@ type VirtualNetworkGatewayConnectionListResultPager interface {
 
 type virtualNetworkGatewayConnectionListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type virtualNetworkGatewayConnectionListResultHandleError func(*azcore.Response) error
+
 type virtualNetworkGatewayConnectionListResultHandleResponse func(*azcore.Response) (*VirtualNetworkGatewayConnectionListResultResponse, error)
 
 type virtualNetworkGatewayConnectionListResultAdvancePage func(context.Context, *VirtualNetworkGatewayConnectionListResultResponse) (*azcore.Request, error)
@@ -5140,6 +5978,8 @@ type virtualNetworkGatewayConnectionListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester virtualNetworkGatewayConnectionListResultCreateRequest
+	// callback for handling response errors
+	errorer virtualNetworkGatewayConnectionListResultHandleError
 	// callback for handling the HTTP response
 	responder virtualNetworkGatewayConnectionListResultHandleResponse
 	// callback for advancing to the next page
@@ -5170,6 +6010,13 @@ func (p *virtualNetworkGatewayConnectionListResultPager) NextPage(ctx context.Co
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -5198,6 +6045,8 @@ type VirtualNetworkGatewayListConnectionsResultPager interface {
 
 type virtualNetworkGatewayListConnectionsResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type virtualNetworkGatewayListConnectionsResultHandleError func(*azcore.Response) error
+
 type virtualNetworkGatewayListConnectionsResultHandleResponse func(*azcore.Response) (*VirtualNetworkGatewayListConnectionsResultResponse, error)
 
 type virtualNetworkGatewayListConnectionsResultAdvancePage func(context.Context, *VirtualNetworkGatewayListConnectionsResultResponse) (*azcore.Request, error)
@@ -5207,6 +6056,8 @@ type virtualNetworkGatewayListConnectionsResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester virtualNetworkGatewayListConnectionsResultCreateRequest
+	// callback for handling response errors
+	errorer virtualNetworkGatewayListConnectionsResultHandleError
 	// callback for handling the HTTP response
 	responder virtualNetworkGatewayListConnectionsResultHandleResponse
 	// callback for advancing to the next page
@@ -5237,6 +6088,13 @@ func (p *virtualNetworkGatewayListConnectionsResultPager) NextPage(ctx context.C
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -5265,6 +6123,8 @@ type VirtualNetworkGatewayListResultPager interface {
 
 type virtualNetworkGatewayListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type virtualNetworkGatewayListResultHandleError func(*azcore.Response) error
+
 type virtualNetworkGatewayListResultHandleResponse func(*azcore.Response) (*VirtualNetworkGatewayListResultResponse, error)
 
 type virtualNetworkGatewayListResultAdvancePage func(context.Context, *VirtualNetworkGatewayListResultResponse) (*azcore.Request, error)
@@ -5274,6 +6134,8 @@ type virtualNetworkGatewayListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester virtualNetworkGatewayListResultCreateRequest
+	// callback for handling response errors
+	errorer virtualNetworkGatewayListResultHandleError
 	// callback for handling the HTTP response
 	responder virtualNetworkGatewayListResultHandleResponse
 	// callback for advancing to the next page
@@ -5304,6 +6166,13 @@ func (p *virtualNetworkGatewayListResultPager) NextPage(ctx context.Context) boo
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -5332,6 +6201,8 @@ type VirtualNetworkListResultPager interface {
 
 type virtualNetworkListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type virtualNetworkListResultHandleError func(*azcore.Response) error
+
 type virtualNetworkListResultHandleResponse func(*azcore.Response) (*VirtualNetworkListResultResponse, error)
 
 type virtualNetworkListResultAdvancePage func(context.Context, *VirtualNetworkListResultResponse) (*azcore.Request, error)
@@ -5341,6 +6212,8 @@ type virtualNetworkListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester virtualNetworkListResultCreateRequest
+	// callback for handling response errors
+	errorer virtualNetworkListResultHandleError
 	// callback for handling the HTTP response
 	responder virtualNetworkListResultHandleResponse
 	// callback for advancing to the next page
@@ -5371,6 +6244,13 @@ func (p *virtualNetworkListResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -5399,6 +6279,8 @@ type VirtualNetworkListUsageResultPager interface {
 
 type virtualNetworkListUsageResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type virtualNetworkListUsageResultHandleError func(*azcore.Response) error
+
 type virtualNetworkListUsageResultHandleResponse func(*azcore.Response) (*VirtualNetworkListUsageResultResponse, error)
 
 type virtualNetworkListUsageResultAdvancePage func(context.Context, *VirtualNetworkListUsageResultResponse) (*azcore.Request, error)
@@ -5408,6 +6290,8 @@ type virtualNetworkListUsageResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester virtualNetworkListUsageResultCreateRequest
+	// callback for handling response errors
+	errorer virtualNetworkListUsageResultHandleError
 	// callback for handling the HTTP response
 	responder virtualNetworkListUsageResultHandleResponse
 	// callback for advancing to the next page
@@ -5438,6 +6322,13 @@ func (p *virtualNetworkListUsageResultPager) NextPage(ctx context.Context) bool 
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -5466,6 +6357,8 @@ type VirtualNetworkPeeringListResultPager interface {
 
 type virtualNetworkPeeringListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type virtualNetworkPeeringListResultHandleError func(*azcore.Response) error
+
 type virtualNetworkPeeringListResultHandleResponse func(*azcore.Response) (*VirtualNetworkPeeringListResultResponse, error)
 
 type virtualNetworkPeeringListResultAdvancePage func(context.Context, *VirtualNetworkPeeringListResultResponse) (*azcore.Request, error)
@@ -5475,6 +6368,8 @@ type virtualNetworkPeeringListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester virtualNetworkPeeringListResultCreateRequest
+	// callback for handling response errors
+	errorer virtualNetworkPeeringListResultHandleError
 	// callback for handling the HTTP response
 	responder virtualNetworkPeeringListResultHandleResponse
 	// callback for advancing to the next page
@@ -5505,6 +6400,13 @@ func (p *virtualNetworkPeeringListResultPager) NextPage(ctx context.Context) boo
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -5533,6 +6435,8 @@ type VirtualNetworkTapListResultPager interface {
 
 type virtualNetworkTapListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type virtualNetworkTapListResultHandleError func(*azcore.Response) error
+
 type virtualNetworkTapListResultHandleResponse func(*azcore.Response) (*VirtualNetworkTapListResultResponse, error)
 
 type virtualNetworkTapListResultAdvancePage func(context.Context, *VirtualNetworkTapListResultResponse) (*azcore.Request, error)
@@ -5542,6 +6446,8 @@ type virtualNetworkTapListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester virtualNetworkTapListResultCreateRequest
+	// callback for handling response errors
+	errorer virtualNetworkTapListResultHandleError
 	// callback for handling the HTTP response
 	responder virtualNetworkTapListResultHandleResponse
 	// callback for advancing to the next page
@@ -5572,6 +6478,13 @@ func (p *virtualNetworkTapListResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -5600,6 +6513,8 @@ type VirtualRouterListResultPager interface {
 
 type virtualRouterListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type virtualRouterListResultHandleError func(*azcore.Response) error
+
 type virtualRouterListResultHandleResponse func(*azcore.Response) (*VirtualRouterListResultResponse, error)
 
 type virtualRouterListResultAdvancePage func(context.Context, *VirtualRouterListResultResponse) (*azcore.Request, error)
@@ -5609,6 +6524,8 @@ type virtualRouterListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester virtualRouterListResultCreateRequest
+	// callback for handling response errors
+	errorer virtualRouterListResultHandleError
 	// callback for handling the HTTP response
 	responder virtualRouterListResultHandleResponse
 	// callback for advancing to the next page
@@ -5639,6 +6556,13 @@ func (p *virtualRouterListResultPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -5667,6 +6591,8 @@ type VirtualRouterPeeringListResultPager interface {
 
 type virtualRouterPeeringListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type virtualRouterPeeringListResultHandleError func(*azcore.Response) error
+
 type virtualRouterPeeringListResultHandleResponse func(*azcore.Response) (*VirtualRouterPeeringListResultResponse, error)
 
 type virtualRouterPeeringListResultAdvancePage func(context.Context, *VirtualRouterPeeringListResultResponse) (*azcore.Request, error)
@@ -5676,6 +6602,8 @@ type virtualRouterPeeringListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester virtualRouterPeeringListResultCreateRequest
+	// callback for handling response errors
+	errorer virtualRouterPeeringListResultHandleError
 	// callback for handling the HTTP response
 	responder virtualRouterPeeringListResultHandleResponse
 	// callback for advancing to the next page
@@ -5706,6 +6634,13 @@ func (p *virtualRouterPeeringListResultPager) NextPage(ctx context.Context) bool
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -5734,6 +6669,8 @@ type WebApplicationFirewallPolicyListResultPager interface {
 
 type webApplicationFirewallPolicyListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
+type webApplicationFirewallPolicyListResultHandleError func(*azcore.Response) error
+
 type webApplicationFirewallPolicyListResultHandleResponse func(*azcore.Response) (*WebApplicationFirewallPolicyListResultResponse, error)
 
 type webApplicationFirewallPolicyListResultAdvancePage func(context.Context, *WebApplicationFirewallPolicyListResultResponse) (*azcore.Request, error)
@@ -5743,6 +6680,8 @@ type webApplicationFirewallPolicyListResultPager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester webApplicationFirewallPolicyListResultCreateRequest
+	// callback for handling response errors
+	errorer webApplicationFirewallPolicyListResultHandleError
 	// callback for handling the HTTP response
 	responder webApplicationFirewallPolicyListResultHandleResponse
 	// callback for advancing to the next page
@@ -5773,6 +6712,13 @@ func (p *webApplicationFirewallPolicyListResultPager) NextPage(ctx context.Conte
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err

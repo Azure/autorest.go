@@ -46,6 +46,9 @@ func (client *ServiceAssociationLinksClient) List(ctx context.Context, resourceG
 	if err != nil {
 		return nil, err
 	}
+	if err := client.ListHandleError(resp); err != nil {
+		return nil, err
+	}
 	result, err := client.ListHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -73,15 +76,15 @@ func (client *ServiceAssociationLinksClient) ListCreateRequest(ctx context.Conte
 
 // ListHandleResponse handles the List response.
 func (client *ServiceAssociationLinksClient) ListHandleResponse(resp *azcore.Response) (*ServiceAssociationLinksListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := ServiceAssociationLinksListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ServiceAssociationLinksListResult)
 }
 
 // ListHandleError handles the List error response.
 func (client *ServiceAssociationLinksClient) ListHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

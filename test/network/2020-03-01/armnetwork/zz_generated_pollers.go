@@ -374,6 +374,7 @@ type BastionActiveSessionListResultPagerPoller interface {
 type bastionActiveSessionListResultPagerPoller struct {
 	// the client for making the request
 	pipeline    azcore.Pipeline
+	errHandler  bastionActiveSessionListResultHandleError
 	respHandler bastionActiveSessionListResultHandleResponse
 	pt          armcore.Poller
 }
@@ -416,6 +417,7 @@ func (p *bastionActiveSessionListResultPagerPoller) handleResponse(resp *azcore.
 	return &bastionActiveSessionListResultPager{
 		pipeline:  p.pipeline,
 		resp:      resp,
+		errorer:   p.errHandler,
 		responder: p.respHandler,
 		advancer: func(ctx context.Context, resp *BastionActiveSessionListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.BastionActiveSessionListResult.NextLink)
@@ -484,6 +486,7 @@ type BastionShareableLinkListResultPagerPoller interface {
 type bastionShareableLinkListResultPagerPoller struct {
 	// the client for making the request
 	pipeline    azcore.Pipeline
+	errHandler  bastionShareableLinkListResultHandleError
 	respHandler bastionShareableLinkListResultHandleResponse
 	pt          armcore.Poller
 }
@@ -526,6 +529,7 @@ func (p *bastionShareableLinkListResultPagerPoller) handleResponse(resp *azcore.
 	return &bastionShareableLinkListResultPager{
 		pipeline:  p.pipeline,
 		resp:      resp,
+		errorer:   p.errHandler,
 		responder: p.respHandler,
 		advancer: func(ctx context.Context, resp *BastionShareableLinkListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.BastionShareableLinkListResult.NextLink)

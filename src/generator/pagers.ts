@@ -53,6 +53,7 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
       resultTypeName = schemaResponse.schema.serialization.xml.name;
     }
     const requesterType = `${camelCase(resultType)}CreateRequest`;
+    const errorerType = `${camelCase(resultType)}HandleError`;
     const responderType = `${camelCase(resultType)}HandleResponse`;
     const advanceType = `${camelCase(resultType)}AdvancePage`;
     text += `// ${pager.name} provides iteration over ${resultType} pages.
@@ -70,6 +71,8 @@ type ${pager.name} interface {
 
 type ${requesterType} func(context.Context) (*azcore.Request, error)
 
+type ${errorerType} func(*azcore.Response) error
+
 type ${responderType} func(*azcore.Response) (*${responseType}, error)
 
 type ${advanceType} func(context.Context, *${responseType}) (*azcore.Request, error)
@@ -79,6 +82,8 @@ type ${pagerType} struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester ${requesterType}
+	// callback for handling response errors
+	errorer ${errorerType}
 	// callback for handling the HTTP response
 	responder ${responderType}
 	// callback for advancing to the next page
@@ -109,6 +114,13 @@ func (p *${pagerType}) NextPage(ctx context.Context) bool {
 		return false
 	}
   ${respFieldCheck}
+	if err != nil {
+		p.err = err
+		return false
+  }
+	if p.err = p.errorer(resp); p.err != nil {
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err

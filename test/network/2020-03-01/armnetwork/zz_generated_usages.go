@@ -44,6 +44,7 @@ func (client *UsagesClient) List(location string) UsagesListResultPager {
 			return client.ListCreateRequest(ctx, location)
 		},
 		responder: client.ListHandleResponse,
+		errorer:   client.ListHandleError,
 		advancer: func(ctx context.Context, resp *UsagesListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.UsagesListResult.NextLink)
 		},
@@ -68,15 +69,15 @@ func (client *UsagesClient) ListCreateRequest(ctx context.Context, location stri
 
 // ListHandleResponse handles the List response.
 func (client *UsagesClient) ListHandleResponse(resp *azcore.Response) (*UsagesListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := UsagesListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.UsagesListResult)
 }
 
 // ListHandleError handles the List error response.
 func (client *UsagesClient) ListHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

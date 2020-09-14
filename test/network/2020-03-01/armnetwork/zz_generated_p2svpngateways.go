@@ -79,6 +79,9 @@ func (client *P2SVpnGatewaysClient) BeginCreateOrUpdate(ctx context.Context, res
 	if err != nil {
 		return nil, err
 	}
+	if err := client.CreateOrUpdateHandleError(resp); err != nil {
+		return nil, err
+	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -128,14 +131,14 @@ func (client *P2SVpnGatewaysClient) CreateOrUpdateCreateRequest(ctx context.Cont
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *P2SVpnGatewaysClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*P2SVpnGatewayPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
 	return &P2SVpnGatewayPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *P2SVpnGatewaysClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -152,6 +155,9 @@ func (client *P2SVpnGatewaysClient) BeginDelete(ctx context.Context, resourceGro
 	// send the first request to initialize the poller
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.DeleteHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
@@ -203,14 +209,14 @@ func (client *P2SVpnGatewaysClient) DeleteCreateRequest(ctx context.Context, res
 
 // DeleteHandleResponse handles the Delete response.
 func (client *P2SVpnGatewaysClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteHandleError handles the Delete error response.
 func (client *P2SVpnGatewaysClient) DeleteHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -227,6 +233,9 @@ func (client *P2SVpnGatewaysClient) BeginDisconnectP2SVpnConnections(ctx context
 	// send the first request to initialize the poller
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.DisconnectP2SVpnConnectionsHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.DisconnectP2SVpnConnectionsHandleResponse(resp)
@@ -278,14 +287,14 @@ func (client *P2SVpnGatewaysClient) DisconnectP2SVpnConnectionsCreateRequest(ctx
 
 // DisconnectP2SVpnConnectionsHandleResponse handles the DisconnectP2SVpnConnections response.
 func (client *P2SVpnGatewaysClient) DisconnectP2SVpnConnectionsHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DisconnectP2SVpnConnectionsHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DisconnectP2SVpnConnectionsHandleError handles the DisconnectP2SVpnConnections error response.
 func (client *P2SVpnGatewaysClient) DisconnectP2SVpnConnectionsHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -302,6 +311,9 @@ func (client *P2SVpnGatewaysClient) BeginGenerateVpnProfile(ctx context.Context,
 	// send the first request to initialize the poller
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.GenerateVpnProfileHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.GenerateVpnProfileHandleResponse(resp)
@@ -353,14 +365,14 @@ func (client *P2SVpnGatewaysClient) GenerateVpnProfileCreateRequest(ctx context.
 
 // GenerateVpnProfileHandleResponse handles the GenerateVpnProfile response.
 func (client *P2SVpnGatewaysClient) GenerateVpnProfileHandleResponse(resp *azcore.Response) (*VpnProfileResponsePollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.GenerateVpnProfileHandleError(resp)
-	}
 	return &VpnProfileResponsePollerResponse{RawResponse: resp.Response}, nil
 }
 
 // GenerateVpnProfileHandleError handles the GenerateVpnProfile error response.
 func (client *P2SVpnGatewaysClient) GenerateVpnProfileHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -376,6 +388,9 @@ func (client *P2SVpnGatewaysClient) Get(ctx context.Context, resourceGroupName s
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.GetHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.GetHandleResponse(resp)
@@ -404,15 +419,15 @@ func (client *P2SVpnGatewaysClient) GetCreateRequest(ctx context.Context, resour
 
 // GetHandleResponse handles the Get response.
 func (client *P2SVpnGatewaysClient) GetHandleResponse(resp *azcore.Response) (*P2SVpnGatewayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
-	}
 	result := P2SVpnGatewayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.P2SVpnGateway)
 }
 
 // GetHandleError handles the Get error response.
 func (client *P2SVpnGatewaysClient) GetHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -429,6 +444,9 @@ func (client *P2SVpnGatewaysClient) BeginGetP2SVpnConnectionHealth(ctx context.C
 	// send the first request to initialize the poller
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.GetP2SVpnConnectionHealthHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.GetP2SVpnConnectionHealthHandleResponse(resp)
@@ -480,14 +498,14 @@ func (client *P2SVpnGatewaysClient) GetP2SVpnConnectionHealthCreateRequest(ctx c
 
 // GetP2SVpnConnectionHealthHandleResponse handles the GetP2SVpnConnectionHealth response.
 func (client *P2SVpnGatewaysClient) GetP2SVpnConnectionHealthHandleResponse(resp *azcore.Response) (*P2SVpnGatewayPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.GetP2SVpnConnectionHealthHandleError(resp)
-	}
 	return &P2SVpnGatewayPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // GetP2SVpnConnectionHealthHandleError handles the GetP2SVpnConnectionHealth error response.
 func (client *P2SVpnGatewaysClient) GetP2SVpnConnectionHealthHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -504,6 +522,9 @@ func (client *P2SVpnGatewaysClient) BeginGetP2SVpnConnectionHealthDetailed(ctx c
 	// send the first request to initialize the poller
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.GetP2SVpnConnectionHealthDetailedHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.GetP2SVpnConnectionHealthDetailedHandleResponse(resp)
@@ -555,14 +576,14 @@ func (client *P2SVpnGatewaysClient) GetP2SVpnConnectionHealthDetailedCreateReque
 
 // GetP2SVpnConnectionHealthDetailedHandleResponse handles the GetP2SVpnConnectionHealthDetailed response.
 func (client *P2SVpnGatewaysClient) GetP2SVpnConnectionHealthDetailedHandleResponse(resp *azcore.Response) (*P2SVpnConnectionHealthPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.GetP2SVpnConnectionHealthDetailedHandleError(resp)
-	}
 	return &P2SVpnConnectionHealthPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // GetP2SVpnConnectionHealthDetailedHandleError handles the GetP2SVpnConnectionHealthDetailed error response.
 func (client *P2SVpnGatewaysClient) GetP2SVpnConnectionHealthDetailedHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -578,6 +599,7 @@ func (client *P2SVpnGatewaysClient) List() ListP2SVpnGatewaysResultPager {
 			return client.ListCreateRequest(ctx)
 		},
 		responder: client.ListHandleResponse,
+		errorer:   client.ListHandleError,
 		advancer: func(ctx context.Context, resp *ListP2SVpnGatewaysResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ListP2SVpnGatewaysResult.NextLink)
 		},
@@ -601,15 +623,15 @@ func (client *P2SVpnGatewaysClient) ListCreateRequest(ctx context.Context) (*azc
 
 // ListHandleResponse handles the List response.
 func (client *P2SVpnGatewaysClient) ListHandleResponse(resp *azcore.Response) (*ListP2SVpnGatewaysResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := ListP2SVpnGatewaysResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ListP2SVpnGatewaysResult)
 }
 
 // ListHandleError handles the List error response.
 func (client *P2SVpnGatewaysClient) ListHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -625,6 +647,7 @@ func (client *P2SVpnGatewaysClient) ListByResourceGroup(resourceGroupName string
 			return client.ListByResourceGroupCreateRequest(ctx, resourceGroupName)
 		},
 		responder: client.ListByResourceGroupHandleResponse,
+		errorer:   client.ListByResourceGroupHandleError,
 		advancer: func(ctx context.Context, resp *ListP2SVpnGatewaysResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ListP2SVpnGatewaysResult.NextLink)
 		},
@@ -649,15 +672,15 @@ func (client *P2SVpnGatewaysClient) ListByResourceGroupCreateRequest(ctx context
 
 // ListByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client *P2SVpnGatewaysClient) ListByResourceGroupHandleResponse(resp *azcore.Response) (*ListP2SVpnGatewaysResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListByResourceGroupHandleError(resp)
-	}
 	result := ListP2SVpnGatewaysResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ListP2SVpnGatewaysResult)
 }
 
 // ListByResourceGroupHandleError handles the ListByResourceGroup error response.
 func (client *P2SVpnGatewaysClient) ListByResourceGroupHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -673,6 +696,9 @@ func (client *P2SVpnGatewaysClient) UpdateTags(ctx context.Context, resourceGrou
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.UpdateTagsHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.UpdateTagsHandleResponse(resp)
@@ -701,15 +727,15 @@ func (client *P2SVpnGatewaysClient) UpdateTagsCreateRequest(ctx context.Context,
 
 // UpdateTagsHandleResponse handles the UpdateTags response.
 func (client *P2SVpnGatewaysClient) UpdateTagsHandleResponse(resp *azcore.Response) (*P2SVpnGatewayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.UpdateTagsHandleError(resp)
-	}
 	result := P2SVpnGatewayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.P2SVpnGateway)
 }
 
 // UpdateTagsHandleError handles the UpdateTags error response.
 func (client *P2SVpnGatewaysClient) UpdateTagsHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

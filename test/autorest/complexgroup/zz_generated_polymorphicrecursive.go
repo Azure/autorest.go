@@ -45,6 +45,9 @@ func (client *PolymorphicrecursiveClient) GetValid(ctx context.Context) (*FishRe
 	if err != nil {
 		return nil, err
 	}
+	if err := client.GetValidHandleError(resp); err != nil {
+		return nil, err
+	}
 	result, err := client.GetValidHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -65,15 +68,15 @@ func (client *PolymorphicrecursiveClient) GetValidCreateRequest(ctx context.Cont
 
 // GetValidHandleResponse handles the GetValid response.
 func (client *PolymorphicrecursiveClient) GetValidHandleResponse(resp *azcore.Response) (*FishResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetValidHandleError(resp)
-	}
 	result := FishResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result)
 }
 
 // GetValidHandleError handles the GetValid error response.
 func (client *PolymorphicrecursiveClient) GetValidHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -91,11 +94,10 @@ func (client *PolymorphicrecursiveClient) PutValid(ctx context.Context, complexB
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutValidHandleResponse(resp)
-	if err != nil {
+	if err := client.PutValidHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PutValidCreateRequest creates the PutValid request.
@@ -109,16 +111,11 @@ func (client *PolymorphicrecursiveClient) PutValidCreateRequest(ctx context.Cont
 	return req, req.MarshalAsJSON(complexBody)
 }
 
-// PutValidHandleResponse handles the PutValid response.
-func (client *PolymorphicrecursiveClient) PutValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutValidHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // PutValidHandleError handles the PutValid error response.
 func (client *PolymorphicrecursiveClient) PutValidHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

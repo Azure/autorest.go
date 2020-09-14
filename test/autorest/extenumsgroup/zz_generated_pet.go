@@ -50,6 +50,9 @@ func (client *PetClient) AddPet(ctx context.Context, petAddPetOptions *PetAddPet
 	if err != nil {
 		return nil, err
 	}
+	if err := client.AddPetHandleError(resp); err != nil {
+		return nil, err
+	}
 	result, err := client.AddPetHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -73,15 +76,15 @@ func (client *PetClient) AddPetCreateRequest(ctx context.Context, petAddPetOptio
 
 // AddPetHandleResponse handles the AddPet response.
 func (client *PetClient) AddPetHandleResponse(resp *azcore.Response) (*PetResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.AddPetHandleError(resp)
-	}
 	result := PetResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Pet)
 }
 
 // AddPetHandleError handles the AddPet error response.
 func (client *PetClient) AddPetHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -100,6 +103,9 @@ func (client *PetClient) GetByPetID(ctx context.Context, petId string) (*PetResp
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.GetByPetIDHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.GetByPetIDHandleResponse(resp)
@@ -123,15 +129,15 @@ func (client *PetClient) GetByPetIDCreateRequest(ctx context.Context, petId stri
 
 // GetByPetIDHandleResponse handles the GetByPetID response.
 func (client *PetClient) GetByPetIDHandleResponse(resp *azcore.Response) (*PetResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetByPetIDHandleError(resp)
-	}
 	result := PetResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Pet)
 }
 
 // GetByPetIDHandleError handles the GetByPetID error response.
 func (client *PetClient) GetByPetIDHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)

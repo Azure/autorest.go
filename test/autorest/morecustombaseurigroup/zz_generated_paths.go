@@ -46,11 +46,10 @@ func (client *PathsClient) GetEmpty(ctx context.Context, vault string, secret st
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetEmptyHandleResponse(resp)
-	if err != nil {
+	if err := client.GetEmptyHandleError(resp); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // GetEmptyCreateRequest creates the GetEmpty request.
@@ -75,16 +74,11 @@ func (client *PathsClient) GetEmptyCreateRequest(ctx context.Context, vault stri
 	return req, nil
 }
 
-// GetEmptyHandleResponse handles the GetEmpty response.
-func (client *PathsClient) GetEmptyHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetEmptyHandleError(resp)
-	}
-	return resp.Response, nil
-}
-
 // GetEmptyHandleError handles the GetEmpty error response.
 func (client *PathsClient) GetEmptyHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

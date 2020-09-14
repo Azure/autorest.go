@@ -81,6 +81,9 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginCreateOrUpdate(ctx co
 	if err != nil {
 		return nil, err
 	}
+	if err := client.CreateOrUpdateHandleError(resp); err != nil {
+		return nil, err
+	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -130,14 +133,14 @@ func (client *VirtualNetworkGatewayConnectionsClient) CreateOrUpdateCreateReques
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *VirtualNetworkGatewayConnectionsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*VirtualNetworkGatewayConnectionPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
 	return &VirtualNetworkGatewayConnectionPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *VirtualNetworkGatewayConnectionsClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -154,6 +157,9 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginDelete(ctx context.Co
 	// send the first request to initialize the poller
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.DeleteHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
@@ -205,14 +211,14 @@ func (client *VirtualNetworkGatewayConnectionsClient) DeleteCreateRequest(ctx co
 
 // DeleteHandleResponse handles the Delete response.
 func (client *VirtualNetworkGatewayConnectionsClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteHandleError handles the Delete error response.
 func (client *VirtualNetworkGatewayConnectionsClient) DeleteHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -228,6 +234,9 @@ func (client *VirtualNetworkGatewayConnectionsClient) Get(ctx context.Context, r
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.GetHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.GetHandleResponse(resp)
@@ -256,15 +265,15 @@ func (client *VirtualNetworkGatewayConnectionsClient) GetCreateRequest(ctx conte
 
 // GetHandleResponse handles the Get response.
 func (client *VirtualNetworkGatewayConnectionsClient) GetHandleResponse(resp *azcore.Response) (*VirtualNetworkGatewayConnectionResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
-	}
 	result := VirtualNetworkGatewayConnectionResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualNetworkGatewayConnection)
 }
 
 // GetHandleError handles the Get error response.
 func (client *VirtualNetworkGatewayConnectionsClient) GetHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -280,6 +289,9 @@ func (client *VirtualNetworkGatewayConnectionsClient) GetSharedKey(ctx context.C
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.GetSharedKeyHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.GetSharedKeyHandleResponse(resp)
@@ -308,15 +320,15 @@ func (client *VirtualNetworkGatewayConnectionsClient) GetSharedKeyCreateRequest(
 
 // GetSharedKeyHandleResponse handles the GetSharedKey response.
 func (client *VirtualNetworkGatewayConnectionsClient) GetSharedKeyHandleResponse(resp *azcore.Response) (*ConnectionSharedKeyResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetSharedKeyHandleError(resp)
-	}
 	result := ConnectionSharedKeyResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ConnectionSharedKey)
 }
 
 // GetSharedKeyHandleError handles the GetSharedKey error response.
 func (client *VirtualNetworkGatewayConnectionsClient) GetSharedKeyHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -332,6 +344,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) List(resourceGroupName str
 			return client.ListCreateRequest(ctx, resourceGroupName)
 		},
 		responder: client.ListHandleResponse,
+		errorer:   client.ListHandleError,
 		advancer: func(ctx context.Context, resp *VirtualNetworkGatewayConnectionListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.VirtualNetworkGatewayConnectionListResult.NextLink)
 		},
@@ -356,15 +369,15 @@ func (client *VirtualNetworkGatewayConnectionsClient) ListCreateRequest(ctx cont
 
 // ListHandleResponse handles the List response.
 func (client *VirtualNetworkGatewayConnectionsClient) ListHandleResponse(resp *azcore.Response) (*VirtualNetworkGatewayConnectionListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := VirtualNetworkGatewayConnectionListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualNetworkGatewayConnectionListResult)
 }
 
 // ListHandleError handles the List error response.
 func (client *VirtualNetworkGatewayConnectionsClient) ListHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -381,6 +394,9 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginResetSharedKey(ctx co
 	// send the first request to initialize the poller
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.ResetSharedKeyHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.ResetSharedKeyHandleResponse(resp)
@@ -432,14 +448,14 @@ func (client *VirtualNetworkGatewayConnectionsClient) ResetSharedKeyCreateReques
 
 // ResetSharedKeyHandleResponse handles the ResetSharedKey response.
 func (client *VirtualNetworkGatewayConnectionsClient) ResetSharedKeyHandleResponse(resp *azcore.Response) (*ConnectionResetSharedKeyPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.ResetSharedKeyHandleError(resp)
-	}
 	return &ConnectionResetSharedKeyPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // ResetSharedKeyHandleError handles the ResetSharedKey error response.
 func (client *VirtualNetworkGatewayConnectionsClient) ResetSharedKeyHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -456,6 +472,9 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginSetSharedKey(ctx cont
 	// send the first request to initialize the poller
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.SetSharedKeyHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.SetSharedKeyHandleResponse(resp)
@@ -507,14 +526,14 @@ func (client *VirtualNetworkGatewayConnectionsClient) SetSharedKeyCreateRequest(
 
 // SetSharedKeyHandleResponse handles the SetSharedKey response.
 func (client *VirtualNetworkGatewayConnectionsClient) SetSharedKeyHandleResponse(resp *azcore.Response) (*ConnectionSharedKeyPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.SetSharedKeyHandleError(resp)
-	}
 	return &ConnectionSharedKeyPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // SetSharedKeyHandleError handles the SetSharedKey error response.
 func (client *VirtualNetworkGatewayConnectionsClient) SetSharedKeyHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -531,6 +550,9 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginStartPacketCapture(ct
 	// send the first request to initialize the poller
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.StartPacketCaptureHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.StartPacketCaptureHandleResponse(resp)
@@ -585,14 +607,14 @@ func (client *VirtualNetworkGatewayConnectionsClient) StartPacketCaptureCreateRe
 
 // StartPacketCaptureHandleResponse handles the StartPacketCapture response.
 func (client *VirtualNetworkGatewayConnectionsClient) StartPacketCaptureHandleResponse(resp *azcore.Response) (*StringPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.StartPacketCaptureHandleError(resp)
-	}
 	return &StringPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // StartPacketCaptureHandleError handles the StartPacketCapture error response.
 func (client *VirtualNetworkGatewayConnectionsClient) StartPacketCaptureHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -609,6 +631,9 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginStopPacketCapture(ctx
 	// send the first request to initialize the poller
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.StopPacketCaptureHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.StopPacketCaptureHandleResponse(resp)
@@ -660,14 +685,14 @@ func (client *VirtualNetworkGatewayConnectionsClient) StopPacketCaptureCreateReq
 
 // StopPacketCaptureHandleResponse handles the StopPacketCapture response.
 func (client *VirtualNetworkGatewayConnectionsClient) StopPacketCaptureHandleResponse(resp *azcore.Response) (*StringPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.StopPacketCaptureHandleError(resp)
-	}
 	return &StringPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // StopPacketCaptureHandleError handles the StopPacketCapture error response.
 func (client *VirtualNetworkGatewayConnectionsClient) StopPacketCaptureHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil
+	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -684,6 +709,9 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginUpdateTags(ctx contex
 	// send the first request to initialize the poller
 	resp, err := client.Do(req)
 	if err != nil {
+		return nil, err
+	}
+	if err := client.UpdateTagsHandleError(resp); err != nil {
 		return nil, err
 	}
 	result, err := client.UpdateTagsHandleResponse(resp)
@@ -735,14 +763,14 @@ func (client *VirtualNetworkGatewayConnectionsClient) UpdateTagsCreateRequest(ct
 
 // UpdateTagsHandleResponse handles the UpdateTags response.
 func (client *VirtualNetworkGatewayConnectionsClient) UpdateTagsHandleResponse(resp *azcore.Response) (*VirtualNetworkGatewayConnectionPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.UpdateTagsHandleError(resp)
-	}
 	return &VirtualNetworkGatewayConnectionPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // UpdateTagsHandleError handles the UpdateTags error response.
 func (client *VirtualNetworkGatewayConnectionsClient) UpdateTagsHandleError(resp *azcore.Response) error {
+	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil
+	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
