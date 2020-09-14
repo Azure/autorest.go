@@ -77,9 +77,6 @@ func (client *AvailablePrivateEndpointTypesClient) ListHandleResponse(resp *azco
 
 // ListHandleError handles the List error response.
 func (client *AvailablePrivateEndpointTypesClient) ListHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -127,9 +124,6 @@ func (client *AvailablePrivateEndpointTypesClient) ListByResourceGroupHandleResp
 
 // ListByResourceGroupHandleError handles the ListByResourceGroup error response.
 func (client *AvailablePrivateEndpointTypesClient) ListByResourceGroupHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

@@ -63,8 +63,8 @@ func (client *NetworkSecurityGroupsClient) BeginCreateOrUpdate(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	if err := client.CreateOrUpdateHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -120,9 +120,6 @@ func (client *NetworkSecurityGroupsClient) CreateOrUpdateHandleResponse(resp *az
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *NetworkSecurityGroupsClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -141,8 +138,8 @@ func (client *NetworkSecurityGroupsClient) BeginDelete(ctx context.Context, reso
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DeleteHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -198,9 +195,6 @@ func (client *NetworkSecurityGroupsClient) DeleteHandleResponse(resp *azcore.Res
 
 // DeleteHandleError handles the Delete error response.
 func (client *NetworkSecurityGroupsClient) DeleteHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -218,8 +212,8 @@ func (client *NetworkSecurityGroupsClient) Get(ctx context.Context, resourceGrou
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -256,9 +250,6 @@ func (client *NetworkSecurityGroupsClient) GetHandleResponse(resp *azcore.Respon
 
 // GetHandleError handles the Get error response.
 func (client *NetworkSecurityGroupsClient) GetHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -305,9 +296,6 @@ func (client *NetworkSecurityGroupsClient) ListHandleResponse(resp *azcore.Respo
 
 // ListHandleError handles the List error response.
 func (client *NetworkSecurityGroupsClient) ListHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -353,9 +341,6 @@ func (client *NetworkSecurityGroupsClient) ListAllHandleResponse(resp *azcore.Re
 
 // ListAllHandleError handles the ListAll error response.
 func (client *NetworkSecurityGroupsClient) ListAllHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -373,8 +358,8 @@ func (client *NetworkSecurityGroupsClient) UpdateTags(ctx context.Context, resou
 	if err != nil {
 		return nil, err
 	}
-	if err := client.UpdateTagsHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.UpdateTagsHandleError(resp)
 	}
 	result, err := client.UpdateTagsHandleResponse(resp)
 	if err != nil {
@@ -408,9 +393,6 @@ func (client *NetworkSecurityGroupsClient) UpdateTagsHandleResponse(resp *azcore
 
 // UpdateTagsHandleError handles the UpdateTags error response.
 func (client *NetworkSecurityGroupsClient) UpdateTagsHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

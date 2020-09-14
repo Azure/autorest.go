@@ -100,7 +100,7 @@ export async function generateARMPollers(session: Session<CodeModel>): Promise<s
                 if err != nil {
                   return nil, err
                 }
-                return p.handleResponse(&azcore.Response{resp})`;
+                return p.handleResponse(&azcore.Response{Response: resp})`;
       }
       responseType = poller.op.language.go!.pageableType.name;
       pollUntilDoneResponse = `(${responseType}, error)`;

@@ -47,8 +47,8 @@ func (client *FilesClient) GetEmptyFile(ctx context.Context) (*http.Response, er
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetEmptyFileHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetEmptyFileHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -67,9 +67,6 @@ func (client *FilesClient) GetEmptyFileCreateRequest(ctx context.Context) (*azco
 
 // GetEmptyFileHandleError handles the GetEmptyFile error response.
 func (client *FilesClient) GetEmptyFileHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -87,8 +84,8 @@ func (client *FilesClient) GetFile(ctx context.Context) (*http.Response, error) 
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetFileHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetFileHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -107,9 +104,6 @@ func (client *FilesClient) GetFileCreateRequest(ctx context.Context) (*azcore.Re
 
 // GetFileHandleError handles the GetFile error response.
 func (client *FilesClient) GetFileHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -127,8 +121,8 @@ func (client *FilesClient) GetFileLarge(ctx context.Context) (*http.Response, er
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetFileLargeHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetFileLargeHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -147,9 +141,6 @@ func (client *FilesClient) GetFileLargeCreateRequest(ctx context.Context) (*azco
 
 // GetFileLargeHandleError handles the GetFileLarge error response.
 func (client *FilesClient) GetFileLargeHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

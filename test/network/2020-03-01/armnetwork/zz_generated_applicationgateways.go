@@ -93,8 +93,8 @@ func (client *ApplicationGatewaysClient) BeginBackendHealth(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	if err := client.BackendHealthHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.BackendHealthHandleError(resp)
 	}
 	result, err := client.BackendHealthHandleResponse(resp)
 	if err != nil {
@@ -153,9 +153,6 @@ func (client *ApplicationGatewaysClient) BackendHealthHandleResponse(resp *azcor
 
 // BackendHealthHandleError handles the BackendHealth error response.
 func (client *ApplicationGatewaysClient) BackendHealthHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -174,8 +171,8 @@ func (client *ApplicationGatewaysClient) BeginBackendHealthOnDemand(ctx context.
 	if err != nil {
 		return nil, err
 	}
-	if err := client.BackendHealthOnDemandHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.BackendHealthOnDemandHandleError(resp)
 	}
 	result, err := client.BackendHealthOnDemandHandleResponse(resp)
 	if err != nil {
@@ -234,9 +231,6 @@ func (client *ApplicationGatewaysClient) BackendHealthOnDemandHandleResponse(res
 
 // BackendHealthOnDemandHandleError handles the BackendHealthOnDemand error response.
 func (client *ApplicationGatewaysClient) BackendHealthOnDemandHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -255,8 +249,8 @@ func (client *ApplicationGatewaysClient) BeginCreateOrUpdate(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	if err := client.CreateOrUpdateHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -312,9 +306,6 @@ func (client *ApplicationGatewaysClient) CreateOrUpdateHandleResponse(resp *azco
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *ApplicationGatewaysClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -333,8 +324,8 @@ func (client *ApplicationGatewaysClient) BeginDelete(ctx context.Context, resour
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DeleteHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -390,9 +381,6 @@ func (client *ApplicationGatewaysClient) DeleteHandleResponse(resp *azcore.Respo
 
 // DeleteHandleError handles the Delete error response.
 func (client *ApplicationGatewaysClient) DeleteHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -410,8 +398,8 @@ func (client *ApplicationGatewaysClient) Get(ctx context.Context, resourceGroupN
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -445,9 +433,6 @@ func (client *ApplicationGatewaysClient) GetHandleResponse(resp *azcore.Response
 
 // GetHandleError handles the Get error response.
 func (client *ApplicationGatewaysClient) GetHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -465,8 +450,8 @@ func (client *ApplicationGatewaysClient) GetSslPredefinedPolicy(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetSslPredefinedPolicyHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetSslPredefinedPolicyHandleError(resp)
 	}
 	result, err := client.GetSslPredefinedPolicyHandleResponse(resp)
 	if err != nil {
@@ -499,9 +484,6 @@ func (client *ApplicationGatewaysClient) GetSslPredefinedPolicyHandleResponse(re
 
 // GetSslPredefinedPolicyHandleError handles the GetSslPredefinedPolicy error response.
 func (client *ApplicationGatewaysClient) GetSslPredefinedPolicyHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -548,9 +530,6 @@ func (client *ApplicationGatewaysClient) ListHandleResponse(resp *azcore.Respons
 
 // ListHandleError handles the List error response.
 func (client *ApplicationGatewaysClient) ListHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -596,9 +575,6 @@ func (client *ApplicationGatewaysClient) ListAllHandleResponse(resp *azcore.Resp
 
 // ListAllHandleError handles the ListAll error response.
 func (client *ApplicationGatewaysClient) ListAllHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -616,8 +592,8 @@ func (client *ApplicationGatewaysClient) ListAvailableRequestHeaders(ctx context
 	if err != nil {
 		return nil, err
 	}
-	if err := client.ListAvailableRequestHeadersHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ListAvailableRequestHeadersHandleError(resp)
 	}
 	result, err := client.ListAvailableRequestHeadersHandleResponse(resp)
 	if err != nil {
@@ -649,9 +625,6 @@ func (client *ApplicationGatewaysClient) ListAvailableRequestHeadersHandleRespon
 
 // ListAvailableRequestHeadersHandleError handles the ListAvailableRequestHeaders error response.
 func (client *ApplicationGatewaysClient) ListAvailableRequestHeadersHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -669,8 +642,8 @@ func (client *ApplicationGatewaysClient) ListAvailableResponseHeaders(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	if err := client.ListAvailableResponseHeadersHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ListAvailableResponseHeadersHandleError(resp)
 	}
 	result, err := client.ListAvailableResponseHeadersHandleResponse(resp)
 	if err != nil {
@@ -702,9 +675,6 @@ func (client *ApplicationGatewaysClient) ListAvailableResponseHeadersHandleRespo
 
 // ListAvailableResponseHeadersHandleError handles the ListAvailableResponseHeaders error response.
 func (client *ApplicationGatewaysClient) ListAvailableResponseHeadersHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -722,8 +692,8 @@ func (client *ApplicationGatewaysClient) ListAvailableServerVariables(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	if err := client.ListAvailableServerVariablesHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ListAvailableServerVariablesHandleError(resp)
 	}
 	result, err := client.ListAvailableServerVariablesHandleResponse(resp)
 	if err != nil {
@@ -755,9 +725,6 @@ func (client *ApplicationGatewaysClient) ListAvailableServerVariablesHandleRespo
 
 // ListAvailableServerVariablesHandleError handles the ListAvailableServerVariables error response.
 func (client *ApplicationGatewaysClient) ListAvailableServerVariablesHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -775,8 +742,8 @@ func (client *ApplicationGatewaysClient) ListAvailableSslOptions(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	if err := client.ListAvailableSslOptionsHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ListAvailableSslOptionsHandleError(resp)
 	}
 	result, err := client.ListAvailableSslOptionsHandleResponse(resp)
 	if err != nil {
@@ -808,9 +775,6 @@ func (client *ApplicationGatewaysClient) ListAvailableSslOptionsHandleResponse(r
 
 // ListAvailableSslOptionsHandleError handles the ListAvailableSslOptions error response.
 func (client *ApplicationGatewaysClient) ListAvailableSslOptionsHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -856,9 +820,6 @@ func (client *ApplicationGatewaysClient) ListAvailableSslPredefinedPoliciesHandl
 
 // ListAvailableSslPredefinedPoliciesHandleError handles the ListAvailableSslPredefinedPolicies error response.
 func (client *ApplicationGatewaysClient) ListAvailableSslPredefinedPoliciesHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -876,8 +837,8 @@ func (client *ApplicationGatewaysClient) ListAvailableWafRuleSets(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	if err := client.ListAvailableWafRuleSetsHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ListAvailableWafRuleSetsHandleError(resp)
 	}
 	result, err := client.ListAvailableWafRuleSetsHandleResponse(resp)
 	if err != nil {
@@ -909,9 +870,6 @@ func (client *ApplicationGatewaysClient) ListAvailableWafRuleSetsHandleResponse(
 
 // ListAvailableWafRuleSetsHandleError handles the ListAvailableWafRuleSets error response.
 func (client *ApplicationGatewaysClient) ListAvailableWafRuleSetsHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -930,8 +888,8 @@ func (client *ApplicationGatewaysClient) BeginStart(ctx context.Context, resourc
 	if err != nil {
 		return nil, err
 	}
-	if err := client.StartHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.StartHandleError(resp)
 	}
 	result, err := client.StartHandleResponse(resp)
 	if err != nil {
@@ -987,9 +945,6 @@ func (client *ApplicationGatewaysClient) StartHandleResponse(resp *azcore.Respon
 
 // StartHandleError handles the Start error response.
 func (client *ApplicationGatewaysClient) StartHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1008,8 +963,8 @@ func (client *ApplicationGatewaysClient) BeginStop(ctx context.Context, resource
 	if err != nil {
 		return nil, err
 	}
-	if err := client.StopHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.StopHandleError(resp)
 	}
 	result, err := client.StopHandleResponse(resp)
 	if err != nil {
@@ -1065,9 +1020,6 @@ func (client *ApplicationGatewaysClient) StopHandleResponse(resp *azcore.Respons
 
 // StopHandleError handles the Stop error response.
 func (client *ApplicationGatewaysClient) StopHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1085,8 +1037,8 @@ func (client *ApplicationGatewaysClient) UpdateTags(ctx context.Context, resourc
 	if err != nil {
 		return nil, err
 	}
-	if err := client.UpdateTagsHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.UpdateTagsHandleError(resp)
 	}
 	result, err := client.UpdateTagsHandleResponse(resp)
 	if err != nil {
@@ -1120,9 +1072,6 @@ func (client *ApplicationGatewaysClient) UpdateTagsHandleResponse(resp *azcore.R
 
 // UpdateTagsHandleError handles the UpdateTags error response.
 func (client *ApplicationGatewaysClient) UpdateTagsHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

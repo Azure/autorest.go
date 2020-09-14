@@ -49,8 +49,8 @@ func (client *APIVersionLocalClient) GetMethodLocalNull(ctx context.Context, api
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetMethodLocalNullHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetMethodLocalNullHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -73,9 +73,6 @@ func (client *APIVersionLocalClient) GetMethodLocalNullCreateRequest(ctx context
 
 // GetMethodLocalNullHandleError handles the GetMethodLocalNull error response.
 func (client *APIVersionLocalClient) GetMethodLocalNullHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -93,8 +90,8 @@ func (client *APIVersionLocalClient) GetMethodLocalValid(ctx context.Context) (*
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetMethodLocalValidHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetMethodLocalValidHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -115,9 +112,6 @@ func (client *APIVersionLocalClient) GetMethodLocalValidCreateRequest(ctx contex
 
 // GetMethodLocalValidHandleError handles the GetMethodLocalValid error response.
 func (client *APIVersionLocalClient) GetMethodLocalValidHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -135,8 +129,8 @@ func (client *APIVersionLocalClient) GetPathLocalValid(ctx context.Context) (*ht
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetPathLocalValidHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetPathLocalValidHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -157,9 +151,6 @@ func (client *APIVersionLocalClient) GetPathLocalValidCreateRequest(ctx context.
 
 // GetPathLocalValidHandleError handles the GetPathLocalValid error response.
 func (client *APIVersionLocalClient) GetPathLocalValidHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -177,8 +168,8 @@ func (client *APIVersionLocalClient) GetSwaggerLocalValid(ctx context.Context) (
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetSwaggerLocalValidHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetSwaggerLocalValidHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -199,9 +190,6 @@ func (client *APIVersionLocalClient) GetSwaggerLocalValidCreateRequest(ctx conte
 
 // GetSwaggerLocalValidHandleError handles the GetSwaggerLocalValid error response.
 func (client *APIVersionLocalClient) GetSwaggerLocalValidHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

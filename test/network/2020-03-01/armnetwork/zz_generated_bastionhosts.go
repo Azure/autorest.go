@@ -61,8 +61,8 @@ func (client *BastionHostsClient) BeginCreateOrUpdate(ctx context.Context, resou
 	if err != nil {
 		return nil, err
 	}
-	if err := client.CreateOrUpdateHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -118,9 +118,6 @@ func (client *BastionHostsClient) CreateOrUpdateHandleResponse(resp *azcore.Resp
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *BastionHostsClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -139,8 +136,8 @@ func (client *BastionHostsClient) BeginDelete(ctx context.Context, resourceGroup
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DeleteHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -196,9 +193,6 @@ func (client *BastionHostsClient) DeleteHandleResponse(resp *azcore.Response) (*
 
 // DeleteHandleError handles the Delete error response.
 func (client *BastionHostsClient) DeleteHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -216,8 +210,8 @@ func (client *BastionHostsClient) Get(ctx context.Context, resourceGroupName str
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -251,9 +245,6 @@ func (client *BastionHostsClient) GetHandleResponse(resp *azcore.Response) (*Bas
 
 // GetHandleError handles the Get error response.
 func (client *BastionHostsClient) GetHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -299,9 +290,6 @@ func (client *BastionHostsClient) ListHandleResponse(resp *azcore.Response) (*Ba
 
 // ListHandleError handles the List error response.
 func (client *BastionHostsClient) ListHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -348,9 +336,6 @@ func (client *BastionHostsClient) ListByResourceGroupHandleResponse(resp *azcore
 
 // ListByResourceGroupHandleError handles the ListByResourceGroup error response.
 func (client *BastionHostsClient) ListByResourceGroupHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

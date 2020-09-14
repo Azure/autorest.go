@@ -85,8 +85,8 @@ func (client *PrimitiveClient) GetBool(ctx context.Context) (*BooleanWrapperResp
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetBoolHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetBoolHandleError(resp)
 	}
 	result, err := client.GetBoolHandleResponse(resp)
 	if err != nil {
@@ -114,9 +114,6 @@ func (client *PrimitiveClient) GetBoolHandleResponse(resp *azcore.Response) (*Bo
 
 // GetBoolHandleError handles the GetBool error response.
 func (client *PrimitiveClient) GetBoolHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -134,8 +131,8 @@ func (client *PrimitiveClient) GetByte(ctx context.Context) (*ByteWrapperRespons
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetByteHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetByteHandleError(resp)
 	}
 	result, err := client.GetByteHandleResponse(resp)
 	if err != nil {
@@ -163,9 +160,6 @@ func (client *PrimitiveClient) GetByteHandleResponse(resp *azcore.Response) (*By
 
 // GetByteHandleError handles the GetByte error response.
 func (client *PrimitiveClient) GetByteHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -183,8 +177,8 @@ func (client *PrimitiveClient) GetDate(ctx context.Context) (*DateWrapperRespons
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetDateHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetDateHandleError(resp)
 	}
 	result, err := client.GetDateHandleResponse(resp)
 	if err != nil {
@@ -212,9 +206,6 @@ func (client *PrimitiveClient) GetDateHandleResponse(resp *azcore.Response) (*Da
 
 // GetDateHandleError handles the GetDate error response.
 func (client *PrimitiveClient) GetDateHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -232,8 +223,8 @@ func (client *PrimitiveClient) GetDateTime(ctx context.Context) (*DatetimeWrappe
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetDateTimeHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetDateTimeHandleError(resp)
 	}
 	result, err := client.GetDateTimeHandleResponse(resp)
 	if err != nil {
@@ -261,9 +252,6 @@ func (client *PrimitiveClient) GetDateTimeHandleResponse(resp *azcore.Response) 
 
 // GetDateTimeHandleError handles the GetDateTime error response.
 func (client *PrimitiveClient) GetDateTimeHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -281,8 +269,8 @@ func (client *PrimitiveClient) GetDateTimeRFC1123(ctx context.Context) (*Datetim
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetDateTimeRFC1123HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetDateTimeRFC1123HandleError(resp)
 	}
 	result, err := client.GetDateTimeRFC1123HandleResponse(resp)
 	if err != nil {
@@ -310,9 +298,6 @@ func (client *PrimitiveClient) GetDateTimeRFC1123HandleResponse(resp *azcore.Res
 
 // GetDateTimeRFC1123HandleError handles the GetDateTimeRFC1123 error response.
 func (client *PrimitiveClient) GetDateTimeRFC1123HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -330,8 +315,8 @@ func (client *PrimitiveClient) GetDouble(ctx context.Context) (*DoubleWrapperRes
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetDoubleHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetDoubleHandleError(resp)
 	}
 	result, err := client.GetDoubleHandleResponse(resp)
 	if err != nil {
@@ -359,9 +344,6 @@ func (client *PrimitiveClient) GetDoubleHandleResponse(resp *azcore.Response) (*
 
 // GetDoubleHandleError handles the GetDouble error response.
 func (client *PrimitiveClient) GetDoubleHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -379,8 +361,8 @@ func (client *PrimitiveClient) GetDuration(ctx context.Context) (*DurationWrappe
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetDurationHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetDurationHandleError(resp)
 	}
 	result, err := client.GetDurationHandleResponse(resp)
 	if err != nil {
@@ -408,9 +390,6 @@ func (client *PrimitiveClient) GetDurationHandleResponse(resp *azcore.Response) 
 
 // GetDurationHandleError handles the GetDuration error response.
 func (client *PrimitiveClient) GetDurationHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -428,8 +407,8 @@ func (client *PrimitiveClient) GetFloat(ctx context.Context) (*FloatWrapperRespo
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetFloatHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetFloatHandleError(resp)
 	}
 	result, err := client.GetFloatHandleResponse(resp)
 	if err != nil {
@@ -457,9 +436,6 @@ func (client *PrimitiveClient) GetFloatHandleResponse(resp *azcore.Response) (*F
 
 // GetFloatHandleError handles the GetFloat error response.
 func (client *PrimitiveClient) GetFloatHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -477,8 +453,8 @@ func (client *PrimitiveClient) GetInt(ctx context.Context) (*IntWrapperResponse,
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetIntHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetIntHandleError(resp)
 	}
 	result, err := client.GetIntHandleResponse(resp)
 	if err != nil {
@@ -506,9 +482,6 @@ func (client *PrimitiveClient) GetIntHandleResponse(resp *azcore.Response) (*Int
 
 // GetIntHandleError handles the GetInt error response.
 func (client *PrimitiveClient) GetIntHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -526,8 +499,8 @@ func (client *PrimitiveClient) GetLong(ctx context.Context) (*LongWrapperRespons
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetLongHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetLongHandleError(resp)
 	}
 	result, err := client.GetLongHandleResponse(resp)
 	if err != nil {
@@ -555,9 +528,6 @@ func (client *PrimitiveClient) GetLongHandleResponse(resp *azcore.Response) (*Lo
 
 // GetLongHandleError handles the GetLong error response.
 func (client *PrimitiveClient) GetLongHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -575,8 +545,8 @@ func (client *PrimitiveClient) GetString(ctx context.Context) (*StringWrapperRes
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetStringHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetStringHandleError(resp)
 	}
 	result, err := client.GetStringHandleResponse(resp)
 	if err != nil {
@@ -604,9 +574,6 @@ func (client *PrimitiveClient) GetStringHandleResponse(resp *azcore.Response) (*
 
 // GetStringHandleError handles the GetString error response.
 func (client *PrimitiveClient) GetStringHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -624,8 +591,8 @@ func (client *PrimitiveClient) PutBool(ctx context.Context, complexBody BooleanW
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutBoolHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutBoolHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -643,9 +610,6 @@ func (client *PrimitiveClient) PutBoolCreateRequest(ctx context.Context, complex
 
 // PutBoolHandleError handles the PutBool error response.
 func (client *PrimitiveClient) PutBoolHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -663,8 +627,8 @@ func (client *PrimitiveClient) PutByte(ctx context.Context, complexBody ByteWrap
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutByteHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutByteHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -682,9 +646,6 @@ func (client *PrimitiveClient) PutByteCreateRequest(ctx context.Context, complex
 
 // PutByteHandleError handles the PutByte error response.
 func (client *PrimitiveClient) PutByteHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -702,8 +663,8 @@ func (client *PrimitiveClient) PutDate(ctx context.Context, complexBody DateWrap
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutDateHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutDateHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -721,9 +682,6 @@ func (client *PrimitiveClient) PutDateCreateRequest(ctx context.Context, complex
 
 // PutDateHandleError handles the PutDate error response.
 func (client *PrimitiveClient) PutDateHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -741,8 +699,8 @@ func (client *PrimitiveClient) PutDateTime(ctx context.Context, complexBody Date
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutDateTimeHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutDateTimeHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -760,9 +718,6 @@ func (client *PrimitiveClient) PutDateTimeCreateRequest(ctx context.Context, com
 
 // PutDateTimeHandleError handles the PutDateTime error response.
 func (client *PrimitiveClient) PutDateTimeHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -780,8 +735,8 @@ func (client *PrimitiveClient) PutDateTimeRFC1123(ctx context.Context, complexBo
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutDateTimeRFC1123HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutDateTimeRFC1123HandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -799,9 +754,6 @@ func (client *PrimitiveClient) PutDateTimeRFC1123CreateRequest(ctx context.Conte
 
 // PutDateTimeRFC1123HandleError handles the PutDateTimeRFC1123 error response.
 func (client *PrimitiveClient) PutDateTimeRFC1123HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -819,8 +771,8 @@ func (client *PrimitiveClient) PutDouble(ctx context.Context, complexBody Double
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutDoubleHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutDoubleHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -838,9 +790,6 @@ func (client *PrimitiveClient) PutDoubleCreateRequest(ctx context.Context, compl
 
 // PutDoubleHandleError handles the PutDouble error response.
 func (client *PrimitiveClient) PutDoubleHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -858,8 +807,8 @@ func (client *PrimitiveClient) PutDuration(ctx context.Context, complexBody Dura
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutDurationHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutDurationHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -877,9 +826,6 @@ func (client *PrimitiveClient) PutDurationCreateRequest(ctx context.Context, com
 
 // PutDurationHandleError handles the PutDuration error response.
 func (client *PrimitiveClient) PutDurationHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -897,8 +843,8 @@ func (client *PrimitiveClient) PutFloat(ctx context.Context, complexBody FloatWr
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutFloatHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutFloatHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -916,9 +862,6 @@ func (client *PrimitiveClient) PutFloatCreateRequest(ctx context.Context, comple
 
 // PutFloatHandleError handles the PutFloat error response.
 func (client *PrimitiveClient) PutFloatHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -936,8 +879,8 @@ func (client *PrimitiveClient) PutInt(ctx context.Context, complexBody IntWrappe
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutIntHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutIntHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -955,9 +898,6 @@ func (client *PrimitiveClient) PutIntCreateRequest(ctx context.Context, complexB
 
 // PutIntHandleError handles the PutInt error response.
 func (client *PrimitiveClient) PutIntHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -975,8 +915,8 @@ func (client *PrimitiveClient) PutLong(ctx context.Context, complexBody LongWrap
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutLongHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutLongHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -994,9 +934,6 @@ func (client *PrimitiveClient) PutLongCreateRequest(ctx context.Context, complex
 
 // PutLongHandleError handles the PutLong error response.
 func (client *PrimitiveClient) PutLongHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1014,8 +951,8 @@ func (client *PrimitiveClient) PutString(ctx context.Context, complexBody String
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutStringHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutStringHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -1033,9 +970,6 @@ func (client *PrimitiveClient) PutStringCreateRequest(ctx context.Context, compl
 
 // PutStringHandleError handles the PutString error response.
 func (client *PrimitiveClient) PutStringHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

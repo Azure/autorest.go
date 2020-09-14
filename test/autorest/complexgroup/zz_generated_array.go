@@ -51,8 +51,8 @@ func (client *ArrayClient) GetEmpty(ctx context.Context) (*ArrayWrapperResponse,
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetEmptyHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetEmptyHandleError(resp)
 	}
 	result, err := client.GetEmptyHandleResponse(resp)
 	if err != nil {
@@ -80,9 +80,6 @@ func (client *ArrayClient) GetEmptyHandleResponse(resp *azcore.Response) (*Array
 
 // GetEmptyHandleError handles the GetEmpty error response.
 func (client *ArrayClient) GetEmptyHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -100,8 +97,8 @@ func (client *ArrayClient) GetNotProvided(ctx context.Context) (*ArrayWrapperRes
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetNotProvidedHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetNotProvidedHandleError(resp)
 	}
 	result, err := client.GetNotProvidedHandleResponse(resp)
 	if err != nil {
@@ -129,9 +126,6 @@ func (client *ArrayClient) GetNotProvidedHandleResponse(resp *azcore.Response) (
 
 // GetNotProvidedHandleError handles the GetNotProvided error response.
 func (client *ArrayClient) GetNotProvidedHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -149,8 +143,8 @@ func (client *ArrayClient) GetValid(ctx context.Context) (*ArrayWrapperResponse,
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetValidHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetValidHandleError(resp)
 	}
 	result, err := client.GetValidHandleResponse(resp)
 	if err != nil {
@@ -178,9 +172,6 @@ func (client *ArrayClient) GetValidHandleResponse(resp *azcore.Response) (*Array
 
 // GetValidHandleError handles the GetValid error response.
 func (client *ArrayClient) GetValidHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -198,8 +189,8 @@ func (client *ArrayClient) PutEmpty(ctx context.Context, complexBody ArrayWrappe
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutEmptyHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutEmptyHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -217,9 +208,6 @@ func (client *ArrayClient) PutEmptyCreateRequest(ctx context.Context, complexBod
 
 // PutEmptyHandleError handles the PutEmpty error response.
 func (client *ArrayClient) PutEmptyHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -237,8 +225,8 @@ func (client *ArrayClient) PutValid(ctx context.Context, complexBody ArrayWrappe
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutValidHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutValidHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -256,9 +244,6 @@ func (client *ArrayClient) PutValidCreateRequest(ctx context.Context, complexBod
 
 // PutValidHandleError handles the PutValid error response.
 func (client *ArrayClient) PutValidHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

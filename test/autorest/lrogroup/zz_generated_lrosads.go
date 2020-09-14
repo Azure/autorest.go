@@ -148,8 +148,8 @@ func (client *LrosaDsClient) BeginDelete202NonRetry400(ctx context.Context) (*HT
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Delete202NonRetry400HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.Delete202NonRetry400HandleError(resp)
 	}
 	result, err := client.Delete202NonRetry400HandleResponse(resp)
 	if err != nil {
@@ -199,9 +199,6 @@ func (client *LrosaDsClient) Delete202NonRetry400HandleResponse(resp *azcore.Res
 
 // Delete202NonRetry400HandleError handles the Delete202NonRetry400 error response.
 func (client *LrosaDsClient) Delete202NonRetry400HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -220,8 +217,8 @@ func (client *LrosaDsClient) BeginDelete202RetryInvalidHeader(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Delete202RetryInvalidHeaderHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.Delete202RetryInvalidHeaderHandleError(resp)
 	}
 	result, err := client.Delete202RetryInvalidHeaderHandleResponse(resp)
 	if err != nil {
@@ -271,9 +268,6 @@ func (client *LrosaDsClient) Delete202RetryInvalidHeaderHandleResponse(resp *azc
 
 // Delete202RetryInvalidHeaderHandleError handles the Delete202RetryInvalidHeader error response.
 func (client *LrosaDsClient) Delete202RetryInvalidHeaderHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -292,8 +286,8 @@ func (client *LrosaDsClient) BeginDelete204Succeeded(ctx context.Context) (*HTTP
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Delete204SucceededHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusNoContent) {
+		return nil, client.Delete204SucceededHandleError(resp)
 	}
 	result, err := client.Delete204SucceededHandleResponse(resp)
 	if err != nil {
@@ -343,9 +337,6 @@ func (client *LrosaDsClient) Delete204SucceededHandleResponse(resp *azcore.Respo
 
 // Delete204SucceededHandleError handles the Delete204Succeeded error response.
 func (client *LrosaDsClient) Delete204SucceededHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -364,8 +355,8 @@ func (client *LrosaDsClient) BeginDeleteAsyncRelativeRetry400(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DeleteAsyncRelativeRetry400HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.DeleteAsyncRelativeRetry400HandleError(resp)
 	}
 	result, err := client.DeleteAsyncRelativeRetry400HandleResponse(resp)
 	if err != nil {
@@ -415,9 +406,6 @@ func (client *LrosaDsClient) DeleteAsyncRelativeRetry400HandleResponse(resp *azc
 
 // DeleteAsyncRelativeRetry400HandleError handles the DeleteAsyncRelativeRetry400 error response.
 func (client *LrosaDsClient) DeleteAsyncRelativeRetry400HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -436,8 +424,8 @@ func (client *LrosaDsClient) BeginDeleteAsyncRelativeRetryInvalidHeader(ctx cont
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DeleteAsyncRelativeRetryInvalidHeaderHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.DeleteAsyncRelativeRetryInvalidHeaderHandleError(resp)
 	}
 	result, err := client.DeleteAsyncRelativeRetryInvalidHeaderHandleResponse(resp)
 	if err != nil {
@@ -487,9 +475,6 @@ func (client *LrosaDsClient) DeleteAsyncRelativeRetryInvalidHeaderHandleResponse
 
 // DeleteAsyncRelativeRetryInvalidHeaderHandleError handles the DeleteAsyncRelativeRetryInvalidHeader error response.
 func (client *LrosaDsClient) DeleteAsyncRelativeRetryInvalidHeaderHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -508,8 +493,8 @@ func (client *LrosaDsClient) BeginDeleteAsyncRelativeRetryInvalidJSONPolling(ctx
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DeleteAsyncRelativeRetryInvalidJSONPollingHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.DeleteAsyncRelativeRetryInvalidJSONPollingHandleError(resp)
 	}
 	result, err := client.DeleteAsyncRelativeRetryInvalidJSONPollingHandleResponse(resp)
 	if err != nil {
@@ -559,9 +544,6 @@ func (client *LrosaDsClient) DeleteAsyncRelativeRetryInvalidJSONPollingHandleRes
 
 // DeleteAsyncRelativeRetryInvalidJSONPollingHandleError handles the DeleteAsyncRelativeRetryInvalidJSONPolling error response.
 func (client *LrosaDsClient) DeleteAsyncRelativeRetryInvalidJSONPollingHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -580,8 +562,8 @@ func (client *LrosaDsClient) BeginDeleteAsyncRelativeRetryNoStatus(ctx context.C
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DeleteAsyncRelativeRetryNoStatusHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.DeleteAsyncRelativeRetryNoStatusHandleError(resp)
 	}
 	result, err := client.DeleteAsyncRelativeRetryNoStatusHandleResponse(resp)
 	if err != nil {
@@ -631,9 +613,6 @@ func (client *LrosaDsClient) DeleteAsyncRelativeRetryNoStatusHandleResponse(resp
 
 // DeleteAsyncRelativeRetryNoStatusHandleError handles the DeleteAsyncRelativeRetryNoStatus error response.
 func (client *LrosaDsClient) DeleteAsyncRelativeRetryNoStatusHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -652,8 +631,8 @@ func (client *LrosaDsClient) BeginDeleteNonRetry400(ctx context.Context) (*HTTPP
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DeleteNonRetry400HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.DeleteNonRetry400HandleError(resp)
 	}
 	result, err := client.DeleteNonRetry400HandleResponse(resp)
 	if err != nil {
@@ -703,9 +682,6 @@ func (client *LrosaDsClient) DeleteNonRetry400HandleResponse(resp *azcore.Respon
 
 // DeleteNonRetry400HandleError handles the DeleteNonRetry400 error response.
 func (client *LrosaDsClient) DeleteNonRetry400HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -724,8 +700,8 @@ func (client *LrosaDsClient) BeginPost202NoLocation(ctx context.Context, lrosaDs
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Post202NoLocationHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.Post202NoLocationHandleError(resp)
 	}
 	result, err := client.Post202NoLocationHandleResponse(resp)
 	if err != nil {
@@ -778,9 +754,6 @@ func (client *LrosaDsClient) Post202NoLocationHandleResponse(resp *azcore.Respon
 
 // Post202NoLocationHandleError handles the Post202NoLocation error response.
 func (client *LrosaDsClient) Post202NoLocationHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -799,8 +772,8 @@ func (client *LrosaDsClient) BeginPost202NonRetry400(ctx context.Context, lrosaD
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Post202NonRetry400HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.Post202NonRetry400HandleError(resp)
 	}
 	result, err := client.Post202NonRetry400HandleResponse(resp)
 	if err != nil {
@@ -853,9 +826,6 @@ func (client *LrosaDsClient) Post202NonRetry400HandleResponse(resp *azcore.Respo
 
 // Post202NonRetry400HandleError handles the Post202NonRetry400 error response.
 func (client *LrosaDsClient) Post202NonRetry400HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -874,8 +844,8 @@ func (client *LrosaDsClient) BeginPost202RetryInvalidHeader(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Post202RetryInvalidHeaderHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.Post202RetryInvalidHeaderHandleError(resp)
 	}
 	result, err := client.Post202RetryInvalidHeaderHandleResponse(resp)
 	if err != nil {
@@ -928,9 +898,6 @@ func (client *LrosaDsClient) Post202RetryInvalidHeaderHandleResponse(resp *azcor
 
 // Post202RetryInvalidHeaderHandleError handles the Post202RetryInvalidHeader error response.
 func (client *LrosaDsClient) Post202RetryInvalidHeaderHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -949,8 +916,8 @@ func (client *LrosaDsClient) BeginPostAsyncRelativeRetry400(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostAsyncRelativeRetry400HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.PostAsyncRelativeRetry400HandleError(resp)
 	}
 	result, err := client.PostAsyncRelativeRetry400HandleResponse(resp)
 	if err != nil {
@@ -1003,9 +970,6 @@ func (client *LrosaDsClient) PostAsyncRelativeRetry400HandleResponse(resp *azcor
 
 // PostAsyncRelativeRetry400HandleError handles the PostAsyncRelativeRetry400 error response.
 func (client *LrosaDsClient) PostAsyncRelativeRetry400HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1024,8 +988,8 @@ func (client *LrosaDsClient) BeginPostAsyncRelativeRetryInvalidHeader(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostAsyncRelativeRetryInvalidHeaderHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.PostAsyncRelativeRetryInvalidHeaderHandleError(resp)
 	}
 	result, err := client.PostAsyncRelativeRetryInvalidHeaderHandleResponse(resp)
 	if err != nil {
@@ -1078,9 +1042,6 @@ func (client *LrosaDsClient) PostAsyncRelativeRetryInvalidHeaderHandleResponse(r
 
 // PostAsyncRelativeRetryInvalidHeaderHandleError handles the PostAsyncRelativeRetryInvalidHeader error response.
 func (client *LrosaDsClient) PostAsyncRelativeRetryInvalidHeaderHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1099,8 +1060,8 @@ func (client *LrosaDsClient) BeginPostAsyncRelativeRetryInvalidJSONPolling(ctx c
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostAsyncRelativeRetryInvalidJSONPollingHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.PostAsyncRelativeRetryInvalidJSONPollingHandleError(resp)
 	}
 	result, err := client.PostAsyncRelativeRetryInvalidJSONPollingHandleResponse(resp)
 	if err != nil {
@@ -1153,9 +1114,6 @@ func (client *LrosaDsClient) PostAsyncRelativeRetryInvalidJSONPollingHandleRespo
 
 // PostAsyncRelativeRetryInvalidJSONPollingHandleError handles the PostAsyncRelativeRetryInvalidJSONPolling error response.
 func (client *LrosaDsClient) PostAsyncRelativeRetryInvalidJSONPollingHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1174,8 +1132,8 @@ func (client *LrosaDsClient) BeginPostAsyncRelativeRetryNoPayload(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostAsyncRelativeRetryNoPayloadHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.PostAsyncRelativeRetryNoPayloadHandleError(resp)
 	}
 	result, err := client.PostAsyncRelativeRetryNoPayloadHandleResponse(resp)
 	if err != nil {
@@ -1228,9 +1186,6 @@ func (client *LrosaDsClient) PostAsyncRelativeRetryNoPayloadHandleResponse(resp 
 
 // PostAsyncRelativeRetryNoPayloadHandleError handles the PostAsyncRelativeRetryNoPayload error response.
 func (client *LrosaDsClient) PostAsyncRelativeRetryNoPayloadHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1249,8 +1204,8 @@ func (client *LrosaDsClient) BeginPostNonRetry400(ctx context.Context, lrosaDsPo
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostNonRetry400HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.PostNonRetry400HandleError(resp)
 	}
 	result, err := client.PostNonRetry400HandleResponse(resp)
 	if err != nil {
@@ -1303,9 +1258,6 @@ func (client *LrosaDsClient) PostNonRetry400HandleResponse(resp *azcore.Response
 
 // PostNonRetry400HandleError handles the PostNonRetry400 error response.
 func (client *LrosaDsClient) PostNonRetry400HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1324,8 +1276,8 @@ func (client *LrosaDsClient) BeginPut200InvalidJSON(ctx context.Context, lrosaDs
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Put200InvalidJSONHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusNoContent) {
+		return nil, client.Put200InvalidJSONHandleError(resp)
 	}
 	result, err := client.Put200InvalidJSONHandleResponse(resp)
 	if err != nil {
@@ -1378,9 +1330,6 @@ func (client *LrosaDsClient) Put200InvalidJSONHandleResponse(resp *azcore.Respon
 
 // Put200InvalidJSONHandleError handles the Put200InvalidJSON error response.
 func (client *LrosaDsClient) Put200InvalidJSONHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1399,8 +1348,8 @@ func (client *LrosaDsClient) BeginPutAsyncRelativeRetry400(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutAsyncRelativeRetry400HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutAsyncRelativeRetry400HandleError(resp)
 	}
 	result, err := client.PutAsyncRelativeRetry400HandleResponse(resp)
 	if err != nil {
@@ -1453,9 +1402,6 @@ func (client *LrosaDsClient) PutAsyncRelativeRetry400HandleResponse(resp *azcore
 
 // PutAsyncRelativeRetry400HandleError handles the PutAsyncRelativeRetry400 error response.
 func (client *LrosaDsClient) PutAsyncRelativeRetry400HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1474,8 +1420,8 @@ func (client *LrosaDsClient) BeginPutAsyncRelativeRetryInvalidHeader(ctx context
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutAsyncRelativeRetryInvalidHeaderHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutAsyncRelativeRetryInvalidHeaderHandleError(resp)
 	}
 	result, err := client.PutAsyncRelativeRetryInvalidHeaderHandleResponse(resp)
 	if err != nil {
@@ -1528,9 +1474,6 @@ func (client *LrosaDsClient) PutAsyncRelativeRetryInvalidHeaderHandleResponse(re
 
 // PutAsyncRelativeRetryInvalidHeaderHandleError handles the PutAsyncRelativeRetryInvalidHeader error response.
 func (client *LrosaDsClient) PutAsyncRelativeRetryInvalidHeaderHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1549,8 +1492,8 @@ func (client *LrosaDsClient) BeginPutAsyncRelativeRetryInvalidJSONPolling(ctx co
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutAsyncRelativeRetryInvalidJSONPollingHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutAsyncRelativeRetryInvalidJSONPollingHandleError(resp)
 	}
 	result, err := client.PutAsyncRelativeRetryInvalidJSONPollingHandleResponse(resp)
 	if err != nil {
@@ -1603,9 +1546,6 @@ func (client *LrosaDsClient) PutAsyncRelativeRetryInvalidJSONPollingHandleRespon
 
 // PutAsyncRelativeRetryInvalidJSONPollingHandleError handles the PutAsyncRelativeRetryInvalidJSONPolling error response.
 func (client *LrosaDsClient) PutAsyncRelativeRetryInvalidJSONPollingHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1624,8 +1564,8 @@ func (client *LrosaDsClient) BeginPutAsyncRelativeRetryNoStatus(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutAsyncRelativeRetryNoStatusHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutAsyncRelativeRetryNoStatusHandleError(resp)
 	}
 	result, err := client.PutAsyncRelativeRetryNoStatusHandleResponse(resp)
 	if err != nil {
@@ -1678,9 +1618,6 @@ func (client *LrosaDsClient) PutAsyncRelativeRetryNoStatusHandleResponse(resp *a
 
 // PutAsyncRelativeRetryNoStatusHandleError handles the PutAsyncRelativeRetryNoStatus error response.
 func (client *LrosaDsClient) PutAsyncRelativeRetryNoStatusHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1699,8 +1636,8 @@ func (client *LrosaDsClient) BeginPutAsyncRelativeRetryNoStatusPayload(ctx conte
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutAsyncRelativeRetryNoStatusPayloadHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutAsyncRelativeRetryNoStatusPayloadHandleError(resp)
 	}
 	result, err := client.PutAsyncRelativeRetryNoStatusPayloadHandleResponse(resp)
 	if err != nil {
@@ -1753,9 +1690,6 @@ func (client *LrosaDsClient) PutAsyncRelativeRetryNoStatusPayloadHandleResponse(
 
 // PutAsyncRelativeRetryNoStatusPayloadHandleError handles the PutAsyncRelativeRetryNoStatusPayload error response.
 func (client *LrosaDsClient) PutAsyncRelativeRetryNoStatusPayloadHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1774,8 +1708,8 @@ func (client *LrosaDsClient) BeginPutError201NoProvisioningStatePayload(ctx cont
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutError201NoProvisioningStatePayloadHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.PutError201NoProvisioningStatePayloadHandleError(resp)
 	}
 	result, err := client.PutError201NoProvisioningStatePayloadHandleResponse(resp)
 	if err != nil {
@@ -1828,9 +1762,6 @@ func (client *LrosaDsClient) PutError201NoProvisioningStatePayloadHandleResponse
 
 // PutError201NoProvisioningStatePayloadHandleError handles the PutError201NoProvisioningStatePayload error response.
 func (client *LrosaDsClient) PutError201NoProvisioningStatePayloadHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1849,8 +1780,8 @@ func (client *LrosaDsClient) BeginPutNonRetry201Creating400(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutNonRetry201Creating400HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.PutNonRetry201Creating400HandleError(resp)
 	}
 	result, err := client.PutNonRetry201Creating400HandleResponse(resp)
 	if err != nil {
@@ -1903,9 +1834,6 @@ func (client *LrosaDsClient) PutNonRetry201Creating400HandleResponse(resp *azcor
 
 // PutNonRetry201Creating400HandleError handles the PutNonRetry201Creating400 error response.
 func (client *LrosaDsClient) PutNonRetry201Creating400HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1924,8 +1852,8 @@ func (client *LrosaDsClient) BeginPutNonRetry201Creating400InvalidJSON(ctx conte
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutNonRetry201Creating400InvalidJSONHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.PutNonRetry201Creating400InvalidJSONHandleError(resp)
 	}
 	result, err := client.PutNonRetry201Creating400InvalidJSONHandleResponse(resp)
 	if err != nil {
@@ -1978,9 +1906,6 @@ func (client *LrosaDsClient) PutNonRetry201Creating400InvalidJSONHandleResponse(
 
 // PutNonRetry201Creating400InvalidJSONHandleError handles the PutNonRetry201Creating400InvalidJSON error response.
 func (client *LrosaDsClient) PutNonRetry201Creating400InvalidJSONHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1999,8 +1924,8 @@ func (client *LrosaDsClient) BeginPutNonRetry400(ctx context.Context, lrosaDsPut
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutNonRetry400HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.PutNonRetry400HandleError(resp)
 	}
 	result, err := client.PutNonRetry400HandleResponse(resp)
 	if err != nil {
@@ -2053,9 +1978,6 @@ func (client *LrosaDsClient) PutNonRetry400HandleResponse(resp *azcore.Response)
 
 // PutNonRetry400HandleError handles the PutNonRetry400 error response.
 func (client *LrosaDsClient) PutNonRetry400HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

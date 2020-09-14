@@ -76,9 +76,6 @@ func (client *NetworkInterfaceLoadBalancersClient) ListHandleResponse(resp *azco
 
 // ListHandleError handles the List error response.
 func (client *NetworkInterfaceLoadBalancersClient) ListHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

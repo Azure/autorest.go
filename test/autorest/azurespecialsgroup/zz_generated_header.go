@@ -47,8 +47,8 @@ func (client *HeaderClient) CustomNamedRequestID(ctx context.Context, fooClientR
 	if err != nil {
 		return nil, err
 	}
-	if err := client.CustomNamedRequestIDHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.CustomNamedRequestIDHandleError(resp)
 	}
 	result, err := client.CustomNamedRequestIDHandleResponse(resp)
 	if err != nil {
@@ -80,9 +80,6 @@ func (client *HeaderClient) CustomNamedRequestIDHandleResponse(resp *azcore.Resp
 
 // CustomNamedRequestIDHandleError handles the CustomNamedRequestID error response.
 func (client *HeaderClient) CustomNamedRequestIDHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -100,8 +97,8 @@ func (client *HeaderClient) CustomNamedRequestIDHead(ctx context.Context, fooCli
 	if err != nil {
 		return nil, err
 	}
-	if err := client.CustomNamedRequestIDHeadHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusNotFound) {
+		return nil, client.CustomNamedRequestIDHeadHandleError(resp)
 	}
 	result, err := client.CustomNamedRequestIDHeadHandleResponse(resp)
 	if err != nil {
@@ -133,9 +130,6 @@ func (client *HeaderClient) CustomNamedRequestIDHeadHandleResponse(resp *azcore.
 
 // CustomNamedRequestIDHeadHandleError handles the CustomNamedRequestIDHead error response.
 func (client *HeaderClient) CustomNamedRequestIDHeadHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusNotFound) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -153,8 +147,8 @@ func (client *HeaderClient) CustomNamedRequestIDParamGrouping(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	if err := client.CustomNamedRequestIDParamGroupingHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.CustomNamedRequestIDParamGroupingHandleError(resp)
 	}
 	result, err := client.CustomNamedRequestIDParamGroupingHandleResponse(resp)
 	if err != nil {
@@ -186,9 +180,6 @@ func (client *HeaderClient) CustomNamedRequestIDParamGroupingHandleResponse(resp
 
 // CustomNamedRequestIDParamGroupingHandleError handles the CustomNamedRequestIDParamGrouping error response.
 func (client *HeaderClient) CustomNamedRequestIDParamGroupingHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

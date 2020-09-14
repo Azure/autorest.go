@@ -53,8 +53,8 @@ func (client *DictionaryClient) GetEmpty(ctx context.Context) (*DictionaryWrappe
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetEmptyHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetEmptyHandleError(resp)
 	}
 	result, err := client.GetEmptyHandleResponse(resp)
 	if err != nil {
@@ -82,9 +82,6 @@ func (client *DictionaryClient) GetEmptyHandleResponse(resp *azcore.Response) (*
 
 // GetEmptyHandleError handles the GetEmpty error response.
 func (client *DictionaryClient) GetEmptyHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -102,8 +99,8 @@ func (client *DictionaryClient) GetNotProvided(ctx context.Context) (*Dictionary
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetNotProvidedHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetNotProvidedHandleError(resp)
 	}
 	result, err := client.GetNotProvidedHandleResponse(resp)
 	if err != nil {
@@ -131,9 +128,6 @@ func (client *DictionaryClient) GetNotProvidedHandleResponse(resp *azcore.Respon
 
 // GetNotProvidedHandleError handles the GetNotProvided error response.
 func (client *DictionaryClient) GetNotProvidedHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -151,8 +145,8 @@ func (client *DictionaryClient) GetNull(ctx context.Context) (*DictionaryWrapper
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetNullHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetNullHandleError(resp)
 	}
 	result, err := client.GetNullHandleResponse(resp)
 	if err != nil {
@@ -180,9 +174,6 @@ func (client *DictionaryClient) GetNullHandleResponse(resp *azcore.Response) (*D
 
 // GetNullHandleError handles the GetNull error response.
 func (client *DictionaryClient) GetNullHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -200,8 +191,8 @@ func (client *DictionaryClient) GetValid(ctx context.Context) (*DictionaryWrappe
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetValidHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetValidHandleError(resp)
 	}
 	result, err := client.GetValidHandleResponse(resp)
 	if err != nil {
@@ -229,9 +220,6 @@ func (client *DictionaryClient) GetValidHandleResponse(resp *azcore.Response) (*
 
 // GetValidHandleError handles the GetValid error response.
 func (client *DictionaryClient) GetValidHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -249,8 +237,8 @@ func (client *DictionaryClient) PutEmpty(ctx context.Context, complexBody Dictio
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutEmptyHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutEmptyHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -268,9 +256,6 @@ func (client *DictionaryClient) PutEmptyCreateRequest(ctx context.Context, compl
 
 // PutEmptyHandleError handles the PutEmpty error response.
 func (client *DictionaryClient) PutEmptyHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -288,8 +273,8 @@ func (client *DictionaryClient) PutValid(ctx context.Context, complexBody Dictio
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutValidHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutValidHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -307,9 +292,6 @@ func (client *DictionaryClient) PutValidCreateRequest(ctx context.Context, compl
 
 // PutValidHandleError handles the PutValid error response.
 func (client *DictionaryClient) PutValidHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

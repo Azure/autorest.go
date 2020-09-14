@@ -48,8 +48,8 @@ func (client *LoadBalancerOutboundRulesClient) Get(ctx context.Context, resource
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -84,9 +84,6 @@ func (client *LoadBalancerOutboundRulesClient) GetHandleResponse(resp *azcore.Re
 
 // GetHandleError handles the Get error response.
 func (client *LoadBalancerOutboundRulesClient) GetHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -134,9 +131,6 @@ func (client *LoadBalancerOutboundRulesClient) ListHandleResponse(resp *azcore.R
 
 // ListHandleError handles the List error response.
 func (client *LoadBalancerOutboundRulesClient) ListHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

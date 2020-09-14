@@ -49,8 +49,8 @@ func (client *ComplexModelClient) Create(ctx context.Context, subscriptionId str
 	if err != nil {
 		return nil, err
 	}
-	if err := client.CreateHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.CreateHandleError(resp)
 	}
 	result, err := client.CreateHandleResponse(resp)
 	if err != nil {
@@ -83,9 +83,6 @@ func (client *ComplexModelClient) CreateHandleResponse(resp *azcore.Response) (*
 
 // CreateHandleError handles the Create error response.
 func (client *ComplexModelClient) CreateHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -103,8 +100,8 @@ func (client *ComplexModelClient) List(ctx context.Context, resourceGroupName st
 	if err != nil {
 		return nil, err
 	}
-	if err := client.ListHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ListHandleError(resp)
 	}
 	result, err := client.ListHandleResponse(resp)
 	if err != nil {
@@ -137,9 +134,6 @@ func (client *ComplexModelClient) ListHandleResponse(resp *azcore.Response) (*Ca
 
 // ListHandleError handles the List error response.
 func (client *ComplexModelClient) ListHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -157,8 +151,8 @@ func (client *ComplexModelClient) Update(ctx context.Context, subscriptionId str
 	if err != nil {
 		return nil, err
 	}
-	if err := client.UpdateHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.UpdateHandleError(resp)
 	}
 	result, err := client.UpdateHandleResponse(resp)
 	if err != nil {
@@ -191,9 +185,6 @@ func (client *ComplexModelClient) UpdateHandleResponse(resp *azcore.Response) (*
 
 // UpdateHandleError handles the Update error response.
 func (client *ComplexModelClient) UpdateHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

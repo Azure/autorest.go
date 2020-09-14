@@ -107,8 +107,8 @@ func (client *NetworkWatchersClient) BeginCheckConnectivity(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	if err := client.CheckConnectivityHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.CheckConnectivityHandleError(resp)
 	}
 	result, err := client.CheckConnectivityHandleResponse(resp)
 	if err != nil {
@@ -164,9 +164,6 @@ func (client *NetworkWatchersClient) CheckConnectivityHandleResponse(resp *azcor
 
 // CheckConnectivityHandleError handles the CheckConnectivity error response.
 func (client *NetworkWatchersClient) CheckConnectivityHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -184,8 +181,8 @@ func (client *NetworkWatchersClient) CreateOrUpdate(ctx context.Context, resourc
 	if err != nil {
 		return nil, err
 	}
-	if err := client.CreateOrUpdateHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -219,9 +216,6 @@ func (client *NetworkWatchersClient) CreateOrUpdateHandleResponse(resp *azcore.R
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *NetworkWatchersClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
-		return nil
-	}
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -240,8 +234,8 @@ func (client *NetworkWatchersClient) BeginDelete(ctx context.Context, resourceGr
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DeleteHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -297,9 +291,6 @@ func (client *NetworkWatchersClient) DeleteHandleResponse(resp *azcore.Response)
 
 // DeleteHandleError handles the Delete error response.
 func (client *NetworkWatchersClient) DeleteHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -317,8 +308,8 @@ func (client *NetworkWatchersClient) Get(ctx context.Context, resourceGroupName 
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -352,9 +343,6 @@ func (client *NetworkWatchersClient) GetHandleResponse(resp *azcore.Response) (*
 
 // GetHandleError handles the Get error response.
 func (client *NetworkWatchersClient) GetHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -373,8 +361,8 @@ func (client *NetworkWatchersClient) BeginGetAzureReachabilityReport(ctx context
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetAzureReachabilityReportHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.GetAzureReachabilityReportHandleError(resp)
 	}
 	result, err := client.GetAzureReachabilityReportHandleResponse(resp)
 	if err != nil {
@@ -430,9 +418,6 @@ func (client *NetworkWatchersClient) GetAzureReachabilityReportHandleResponse(re
 
 // GetAzureReachabilityReportHandleError handles the GetAzureReachabilityReport error response.
 func (client *NetworkWatchersClient) GetAzureReachabilityReportHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -451,8 +436,8 @@ func (client *NetworkWatchersClient) BeginGetFlowLogStatus(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetFlowLogStatusHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.GetFlowLogStatusHandleError(resp)
 	}
 	result, err := client.GetFlowLogStatusHandleResponse(resp)
 	if err != nil {
@@ -508,9 +493,6 @@ func (client *NetworkWatchersClient) GetFlowLogStatusHandleResponse(resp *azcore
 
 // GetFlowLogStatusHandleError handles the GetFlowLogStatus error response.
 func (client *NetworkWatchersClient) GetFlowLogStatusHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -529,8 +511,8 @@ func (client *NetworkWatchersClient) BeginGetNetworkConfigurationDiagnostic(ctx 
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetNetworkConfigurationDiagnosticHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.GetNetworkConfigurationDiagnosticHandleError(resp)
 	}
 	result, err := client.GetNetworkConfigurationDiagnosticHandleResponse(resp)
 	if err != nil {
@@ -586,9 +568,6 @@ func (client *NetworkWatchersClient) GetNetworkConfigurationDiagnosticHandleResp
 
 // GetNetworkConfigurationDiagnosticHandleError handles the GetNetworkConfigurationDiagnostic error response.
 func (client *NetworkWatchersClient) GetNetworkConfigurationDiagnosticHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -607,8 +586,8 @@ func (client *NetworkWatchersClient) BeginGetNextHop(ctx context.Context, resour
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetNextHopHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.GetNextHopHandleError(resp)
 	}
 	result, err := client.GetNextHopHandleResponse(resp)
 	if err != nil {
@@ -664,9 +643,6 @@ func (client *NetworkWatchersClient) GetNextHopHandleResponse(resp *azcore.Respo
 
 // GetNextHopHandleError handles the GetNextHop error response.
 func (client *NetworkWatchersClient) GetNextHopHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -684,8 +660,8 @@ func (client *NetworkWatchersClient) GetTopology(ctx context.Context, resourceGr
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetTopologyHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetTopologyHandleError(resp)
 	}
 	result, err := client.GetTopologyHandleResponse(resp)
 	if err != nil {
@@ -719,9 +695,6 @@ func (client *NetworkWatchersClient) GetTopologyHandleResponse(resp *azcore.Resp
 
 // GetTopologyHandleError handles the GetTopology error response.
 func (client *NetworkWatchersClient) GetTopologyHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -740,8 +713,8 @@ func (client *NetworkWatchersClient) BeginGetTroubleshooting(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetTroubleshootingHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.GetTroubleshootingHandleError(resp)
 	}
 	result, err := client.GetTroubleshootingHandleResponse(resp)
 	if err != nil {
@@ -797,9 +770,6 @@ func (client *NetworkWatchersClient) GetTroubleshootingHandleResponse(resp *azco
 
 // GetTroubleshootingHandleError handles the GetTroubleshooting error response.
 func (client *NetworkWatchersClient) GetTroubleshootingHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -818,8 +788,8 @@ func (client *NetworkWatchersClient) BeginGetTroubleshootingResult(ctx context.C
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetTroubleshootingResultHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.GetTroubleshootingResultHandleError(resp)
 	}
 	result, err := client.GetTroubleshootingResultHandleResponse(resp)
 	if err != nil {
@@ -875,9 +845,6 @@ func (client *NetworkWatchersClient) GetTroubleshootingResultHandleResponse(resp
 
 // GetTroubleshootingResultHandleError handles the GetTroubleshootingResult error response.
 func (client *NetworkWatchersClient) GetTroubleshootingResultHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -896,8 +863,8 @@ func (client *NetworkWatchersClient) BeginGetVMSecurityRules(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetVMSecurityRulesHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.GetVMSecurityRulesHandleError(resp)
 	}
 	result, err := client.GetVMSecurityRulesHandleResponse(resp)
 	if err != nil {
@@ -953,9 +920,6 @@ func (client *NetworkWatchersClient) GetVMSecurityRulesHandleResponse(resp *azco
 
 // GetVMSecurityRulesHandleError handles the GetVMSecurityRules error response.
 func (client *NetworkWatchersClient) GetVMSecurityRulesHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -973,8 +937,8 @@ func (client *NetworkWatchersClient) List(ctx context.Context, resourceGroupName
 	if err != nil {
 		return nil, err
 	}
-	if err := client.ListHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ListHandleError(resp)
 	}
 	result, err := client.ListHandleResponse(resp)
 	if err != nil {
@@ -1007,9 +971,6 @@ func (client *NetworkWatchersClient) ListHandleResponse(resp *azcore.Response) (
 
 // ListHandleError handles the List error response.
 func (client *NetworkWatchersClient) ListHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1027,8 +988,8 @@ func (client *NetworkWatchersClient) ListAll(ctx context.Context) (*NetworkWatch
 	if err != nil {
 		return nil, err
 	}
-	if err := client.ListAllHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ListAllHandleError(resp)
 	}
 	result, err := client.ListAllHandleResponse(resp)
 	if err != nil {
@@ -1060,9 +1021,6 @@ func (client *NetworkWatchersClient) ListAllHandleResponse(resp *azcore.Response
 
 // ListAllHandleError handles the ListAll error response.
 func (client *NetworkWatchersClient) ListAllHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1081,8 +1039,8 @@ func (client *NetworkWatchersClient) BeginListAvailableProviders(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	if err := client.ListAvailableProvidersHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.ListAvailableProvidersHandleError(resp)
 	}
 	result, err := client.ListAvailableProvidersHandleResponse(resp)
 	if err != nil {
@@ -1138,9 +1096,6 @@ func (client *NetworkWatchersClient) ListAvailableProvidersHandleResponse(resp *
 
 // ListAvailableProvidersHandleError handles the ListAvailableProviders error response.
 func (client *NetworkWatchersClient) ListAvailableProvidersHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1159,8 +1114,8 @@ func (client *NetworkWatchersClient) BeginSetFlowLogConfiguration(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	if err := client.SetFlowLogConfigurationHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.SetFlowLogConfigurationHandleError(resp)
 	}
 	result, err := client.SetFlowLogConfigurationHandleResponse(resp)
 	if err != nil {
@@ -1216,9 +1171,6 @@ func (client *NetworkWatchersClient) SetFlowLogConfigurationHandleResponse(resp 
 
 // SetFlowLogConfigurationHandleError handles the SetFlowLogConfiguration error response.
 func (client *NetworkWatchersClient) SetFlowLogConfigurationHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1236,8 +1188,8 @@ func (client *NetworkWatchersClient) UpdateTags(ctx context.Context, resourceGro
 	if err != nil {
 		return nil, err
 	}
-	if err := client.UpdateTagsHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.UpdateTagsHandleError(resp)
 	}
 	result, err := client.UpdateTagsHandleResponse(resp)
 	if err != nil {
@@ -1271,9 +1223,6 @@ func (client *NetworkWatchersClient) UpdateTagsHandleResponse(resp *azcore.Respo
 
 // UpdateTagsHandleError handles the UpdateTags error response.
 func (client *NetworkWatchersClient) UpdateTagsHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1292,8 +1241,8 @@ func (client *NetworkWatchersClient) BeginVerifyIPFlow(ctx context.Context, reso
 	if err != nil {
 		return nil, err
 	}
-	if err := client.VerifyIPFlowHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.VerifyIPFlowHandleError(resp)
 	}
 	result, err := client.VerifyIPFlowHandleResponse(resp)
 	if err != nil {
@@ -1349,9 +1298,6 @@ func (client *NetworkWatchersClient) VerifyIPFlowHandleResponse(resp *azcore.Res
 
 // VerifyIPFlowHandleError handles the VerifyIPFlow error response.
 func (client *NetworkWatchersClient) VerifyIPFlowHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

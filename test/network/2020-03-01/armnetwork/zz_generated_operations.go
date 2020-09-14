@@ -70,9 +70,6 @@ func (client *OperationsClient) ListHandleResponse(resp *azcore.Response) (*Oper
 
 // ListHandleError handles the List error response.
 func (client *OperationsClient) ListHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

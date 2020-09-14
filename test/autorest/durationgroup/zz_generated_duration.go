@@ -49,8 +49,8 @@ func (client *DurationClient) GetInvalid(ctx context.Context) (*StringResponse, 
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetInvalidHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetInvalidHandleError(resp)
 	}
 	result, err := client.GetInvalidHandleResponse(resp)
 	if err != nil {
@@ -78,9 +78,6 @@ func (client *DurationClient) GetInvalidHandleResponse(resp *azcore.Response) (*
 
 // GetInvalidHandleError handles the GetInvalid error response.
 func (client *DurationClient) GetInvalidHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -98,8 +95,8 @@ func (client *DurationClient) GetNull(ctx context.Context) (*StringResponse, err
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetNullHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetNullHandleError(resp)
 	}
 	result, err := client.GetNullHandleResponse(resp)
 	if err != nil {
@@ -127,9 +124,6 @@ func (client *DurationClient) GetNullHandleResponse(resp *azcore.Response) (*Str
 
 // GetNullHandleError handles the GetNull error response.
 func (client *DurationClient) GetNullHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -147,8 +141,8 @@ func (client *DurationClient) GetPositiveDuration(ctx context.Context) (*StringR
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetPositiveDurationHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetPositiveDurationHandleError(resp)
 	}
 	result, err := client.GetPositiveDurationHandleResponse(resp)
 	if err != nil {
@@ -176,9 +170,6 @@ func (client *DurationClient) GetPositiveDurationHandleResponse(resp *azcore.Res
 
 // GetPositiveDurationHandleError handles the GetPositiveDuration error response.
 func (client *DurationClient) GetPositiveDurationHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -196,8 +187,8 @@ func (client *DurationClient) PutPositiveDuration(ctx context.Context, durationB
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutPositiveDurationHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutPositiveDurationHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -215,9 +206,6 @@ func (client *DurationClient) PutPositiveDurationCreateRequest(ctx context.Conte
 
 // PutPositiveDurationHandleError handles the PutPositiveDuration error response.
 func (client *DurationClient) PutPositiveDurationHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

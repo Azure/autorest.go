@@ -48,8 +48,8 @@ func (client *LoadBalancerLoadBalancingRulesClient) Get(ctx context.Context, res
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -84,9 +84,6 @@ func (client *LoadBalancerLoadBalancingRulesClient) GetHandleResponse(resp *azco
 
 // GetHandleError handles the Get error response.
 func (client *LoadBalancerLoadBalancingRulesClient) GetHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -134,9 +131,6 @@ func (client *LoadBalancerLoadBalancingRulesClient) ListHandleResponse(resp *azc
 
 // ListHandleError handles the List error response.
 func (client *LoadBalancerLoadBalancingRulesClient) ListHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

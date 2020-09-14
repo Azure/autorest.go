@@ -59,8 +59,8 @@ func (client *VirtualNetworkPeeringsClient) BeginCreateOrUpdate(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	if err := client.CreateOrUpdateHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -117,9 +117,6 @@ func (client *VirtualNetworkPeeringsClient) CreateOrUpdateHandleResponse(resp *a
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *VirtualNetworkPeeringsClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -138,8 +135,8 @@ func (client *VirtualNetworkPeeringsClient) BeginDelete(ctx context.Context, res
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DeleteHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -196,9 +193,6 @@ func (client *VirtualNetworkPeeringsClient) DeleteHandleResponse(resp *azcore.Re
 
 // DeleteHandleError handles the Delete error response.
 func (client *VirtualNetworkPeeringsClient) DeleteHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -216,8 +210,8 @@ func (client *VirtualNetworkPeeringsClient) Get(ctx context.Context, resourceGro
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -252,9 +246,6 @@ func (client *VirtualNetworkPeeringsClient) GetHandleResponse(resp *azcore.Respo
 
 // GetHandleError handles the Get error response.
 func (client *VirtualNetworkPeeringsClient) GetHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -302,9 +293,6 @@ func (client *VirtualNetworkPeeringsClient) ListHandleResponse(resp *azcore.Resp
 
 // ListHandleError handles the List error response.
 func (client *VirtualNetworkPeeringsClient) ListHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

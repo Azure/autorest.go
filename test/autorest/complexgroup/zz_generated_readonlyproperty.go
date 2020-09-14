@@ -45,8 +45,8 @@ func (client *ReadonlypropertyClient) GetValid(ctx context.Context) (*ReadonlyOb
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetValidHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetValidHandleError(resp)
 	}
 	result, err := client.GetValidHandleResponse(resp)
 	if err != nil {
@@ -74,9 +74,6 @@ func (client *ReadonlypropertyClient) GetValidHandleResponse(resp *azcore.Respon
 
 // GetValidHandleError handles the GetValid error response.
 func (client *ReadonlypropertyClient) GetValidHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -94,8 +91,8 @@ func (client *ReadonlypropertyClient) PutValid(ctx context.Context, complexBody 
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutValidHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutValidHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -113,9 +110,6 @@ func (client *ReadonlypropertyClient) PutValidCreateRequest(ctx context.Context,
 
 // PutValidHandleError handles the PutValid error response.
 func (client *ReadonlypropertyClient) PutValidHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

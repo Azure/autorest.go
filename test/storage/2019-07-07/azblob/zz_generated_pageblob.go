@@ -63,8 +63,8 @@ func (client *pageBlobClient) ClearPages(ctx context.Context, contentLength int6
 	if err != nil {
 		return nil, err
 	}
-	if err := client.ClearPagesHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusCreated) {
+		return nil, client.ClearPagesHandleError(resp)
 	}
 	result, err := client.ClearPagesHandleResponse(resp)
 	if err != nil {
@@ -186,9 +186,6 @@ func (client *pageBlobClient) ClearPagesHandleResponse(resp *azcore.Response) (*
 
 // ClearPagesHandleError handles the ClearPages error response.
 func (client *pageBlobClient) ClearPagesHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusCreated) {
-		return nil
-	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -206,8 +203,8 @@ func (client *pageBlobClient) CopyIncremental(ctx context.Context, copySource ur
 	if err != nil {
 		return nil, err
 	}
-	if err := client.CopyIncrementalHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.CopyIncrementalHandleError(resp)
 	}
 	result, err := client.CopyIncrementalHandleResponse(resp)
 	if err != nil {
@@ -289,9 +286,6 @@ func (client *pageBlobClient) CopyIncrementalHandleResponse(resp *azcore.Respons
 
 // CopyIncrementalHandleError handles the CopyIncremental error response.
 func (client *pageBlobClient) CopyIncrementalHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted) {
-		return nil
-	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -309,8 +303,8 @@ func (client *pageBlobClient) Create(ctx context.Context, contentLength int64, b
 	if err != nil {
 		return nil, err
 	}
-	if err := client.CreateHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusCreated) {
+		return nil, client.CreateHandleError(resp)
 	}
 	result, err := client.CreateHandleResponse(resp)
 	if err != nil {
@@ -448,9 +442,6 @@ func (client *pageBlobClient) CreateHandleResponse(resp *azcore.Response) (*Page
 
 // CreateHandleError handles the Create error response.
 func (client *pageBlobClient) CreateHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusCreated) {
-		return nil
-	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -468,8 +459,8 @@ func (client *pageBlobClient) GetPageRanges(ctx context.Context, pageBlobGetPage
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetPageRangesHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetPageRangesHandleError(resp)
 	}
 	result, err := client.GetPageRangesHandleResponse(resp)
 	if err != nil {
@@ -560,9 +551,6 @@ func (client *pageBlobClient) GetPageRangesHandleResponse(resp *azcore.Response)
 
 // GetPageRangesHandleError handles the GetPageRanges error response.
 func (client *pageBlobClient) GetPageRangesHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -580,8 +568,8 @@ func (client *pageBlobClient) GetPageRangesDiff(ctx context.Context, pageBlobGet
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetPageRangesDiffHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetPageRangesDiffHandleError(resp)
 	}
 	result, err := client.GetPageRangesDiffHandleResponse(resp)
 	if err != nil {
@@ -678,9 +666,6 @@ func (client *pageBlobClient) GetPageRangesDiffHandleResponse(resp *azcore.Respo
 
 // GetPageRangesDiffHandleError handles the GetPageRangesDiff error response.
 func (client *pageBlobClient) GetPageRangesDiffHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -698,8 +683,8 @@ func (client *pageBlobClient) Resize(ctx context.Context, blobContentLength int6
 	if err != nil {
 		return nil, err
 	}
-	if err := client.ResizeHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ResizeHandleError(resp)
 	}
 	result, err := client.ResizeHandleResponse(resp)
 	if err != nil {
@@ -794,9 +779,6 @@ func (client *pageBlobClient) ResizeHandleResponse(resp *azcore.Response) (*Page
 
 // ResizeHandleError handles the Resize error response.
 func (client *pageBlobClient) ResizeHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -814,8 +796,8 @@ func (client *pageBlobClient) UpdateSequenceNumber(ctx context.Context, sequence
 	if err != nil {
 		return nil, err
 	}
-	if err := client.UpdateSequenceNumberHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.UpdateSequenceNumberHandleError(resp)
 	}
 	result, err := client.UpdateSequenceNumberHandleResponse(resp)
 	if err != nil {
@@ -904,9 +886,6 @@ func (client *pageBlobClient) UpdateSequenceNumberHandleResponse(resp *azcore.Re
 
 // UpdateSequenceNumberHandleError handles the UpdateSequenceNumber error response.
 func (client *pageBlobClient) UpdateSequenceNumberHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -924,8 +903,8 @@ func (client *pageBlobClient) UploadPages(ctx context.Context, contentLength int
 	if err != nil {
 		return nil, err
 	}
-	if err := client.UploadPagesHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusCreated) {
+		return nil, client.UploadPagesHandleError(resp)
 	}
 	result, err := client.UploadPagesHandleResponse(resp)
 	if err != nil {
@@ -1066,9 +1045,6 @@ func (client *pageBlobClient) UploadPagesHandleResponse(resp *azcore.Response) (
 
 // UploadPagesHandleError handles the UploadPages error response.
 func (client *pageBlobClient) UploadPagesHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusCreated) {
-		return nil
-	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -1086,8 +1062,8 @@ func (client *pageBlobClient) UploadPagesFromURL(ctx context.Context, sourceUrl 
 	if err != nil {
 		return nil, err
 	}
-	if err := client.UploadPagesFromURLHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusCreated) {
+		return nil, client.UploadPagesFromURLHandleError(resp)
 	}
 	result, err := client.UploadPagesFromURLHandleResponse(resp)
 	if err != nil {
@@ -1237,9 +1213,6 @@ func (client *pageBlobClient) UploadPagesFromURLHandleResponse(resp *azcore.Resp
 
 // UploadPagesFromURLHandleError handles the UploadPagesFromURL error response.
 func (client *pageBlobClient) UploadPagesFromURLHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusCreated) {
-		return nil
-	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err

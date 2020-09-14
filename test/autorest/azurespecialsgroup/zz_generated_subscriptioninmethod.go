@@ -51,8 +51,8 @@ func (client *SubscriptionInMethodClient) PostMethodLocalNull(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostMethodLocalNullHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PostMethodLocalNullHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -71,9 +71,6 @@ func (client *SubscriptionInMethodClient) PostMethodLocalNullCreateRequest(ctx c
 
 // PostMethodLocalNullHandleError handles the PostMethodLocalNull error response.
 func (client *SubscriptionInMethodClient) PostMethodLocalNullHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -91,8 +88,8 @@ func (client *SubscriptionInMethodClient) PostMethodLocalValid(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostMethodLocalValidHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PostMethodLocalValidHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -111,9 +108,6 @@ func (client *SubscriptionInMethodClient) PostMethodLocalValidCreateRequest(ctx 
 
 // PostMethodLocalValidHandleError handles the PostMethodLocalValid error response.
 func (client *SubscriptionInMethodClient) PostMethodLocalValidHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -131,8 +125,8 @@ func (client *SubscriptionInMethodClient) PostPathLocalValid(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostPathLocalValidHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PostPathLocalValidHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -151,9 +145,6 @@ func (client *SubscriptionInMethodClient) PostPathLocalValidCreateRequest(ctx co
 
 // PostPathLocalValidHandleError handles the PostPathLocalValid error response.
 func (client *SubscriptionInMethodClient) PostPathLocalValidHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -171,8 +162,8 @@ func (client *SubscriptionInMethodClient) PostSwaggerLocalValid(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostSwaggerLocalValidHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PostSwaggerLocalValidHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -191,9 +182,6 @@ func (client *SubscriptionInMethodClient) PostSwaggerLocalValidCreateRequest(ctx
 
 // PostSwaggerLocalValidHandleError handles the PostSwaggerLocalValid error response.
 func (client *SubscriptionInMethodClient) PostSwaggerLocalValidHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

@@ -57,8 +57,8 @@ func (client *serviceClient) GetAccountInfo(ctx context.Context) (*ServiceGetAcc
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetAccountInfoHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetAccountInfoHandleError(resp)
 	}
 	result, err := client.GetAccountInfoHandleResponse(resp)
 	if err != nil {
@@ -112,9 +112,6 @@ func (client *serviceClient) GetAccountInfoHandleResponse(resp *azcore.Response)
 
 // GetAccountInfoHandleError handles the GetAccountInfo error response.
 func (client *serviceClient) GetAccountInfoHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -132,8 +129,8 @@ func (client *serviceClient) GetProperties(ctx context.Context, serviceGetProper
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetPropertiesHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetPropertiesHandleError(resp)
 	}
 	result, err := client.GetPropertiesHandleResponse(resp)
 	if err != nil {
@@ -180,9 +177,6 @@ func (client *serviceClient) GetPropertiesHandleResponse(resp *azcore.Response) 
 
 // GetPropertiesHandleError handles the GetProperties error response.
 func (client *serviceClient) GetPropertiesHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -200,8 +194,8 @@ func (client *serviceClient) GetStatistics(ctx context.Context, serviceGetStatis
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetStatisticsHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetStatisticsHandleError(resp)
 	}
 	result, err := client.GetStatisticsHandleResponse(resp)
 	if err != nil {
@@ -255,9 +249,6 @@ func (client *serviceClient) GetStatisticsHandleResponse(resp *azcore.Response) 
 
 // GetStatisticsHandleError handles the GetStatistics error response.
 func (client *serviceClient) GetStatisticsHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -275,8 +266,8 @@ func (client *serviceClient) GetUserDelegationKey(ctx context.Context, keyInfo K
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetUserDelegationKeyHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetUserDelegationKeyHandleError(resp)
 	}
 	result, err := client.GetUserDelegationKeyHandleResponse(resp)
 	if err != nil {
@@ -330,9 +321,6 @@ func (client *serviceClient) GetUserDelegationKeyHandleResponse(resp *azcore.Res
 
 // GetUserDelegationKeyHandleError handles the GetUserDelegationKey error response.
 func (client *serviceClient) GetUserDelegationKeyHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -401,9 +389,6 @@ func (client *serviceClient) ListContainersSegmentHandleResponse(resp *azcore.Re
 
 // ListContainersSegmentHandleError handles the ListContainersSegment error response.
 func (client *serviceClient) ListContainersSegmentHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -421,8 +406,8 @@ func (client *serviceClient) SetProperties(ctx context.Context, storageServicePr
 	if err != nil {
 		return nil, err
 	}
-	if err := client.SetPropertiesHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.SetPropertiesHandleError(resp)
 	}
 	result, err := client.SetPropertiesHandleResponse(resp)
 	if err != nil {
@@ -469,9 +454,6 @@ func (client *serviceClient) SetPropertiesHandleResponse(resp *azcore.Response) 
 
 // SetPropertiesHandleError handles the SetProperties error response.
 func (client *serviceClient) SetPropertiesHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted) {
-		return nil
-	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -489,8 +471,8 @@ func (client *serviceClient) SubmitBatch(ctx context.Context, contentLength int6
 	if err != nil {
 		return nil, err
 	}
-	if err := client.SubmitBatchHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.SubmitBatchHandleError(resp)
 	}
 	result, err := client.SubmitBatchHandleResponse(resp)
 	if err != nil {
@@ -539,9 +521,6 @@ func (client *serviceClient) SubmitBatchHandleResponse(resp *azcore.Response) (*
 
 // SubmitBatchHandleError handles the SubmitBatch error response.
 func (client *serviceClient) SubmitBatchHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err

@@ -8,7 +8,7 @@ import { camelCase } from '@azure-tools/codegen';
 import { CodeModel, SchemaResponse } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { PagerInfo } from '../common/helpers';
-import { contentPreamble, sortAscending } from './helpers';
+import { contentPreamble, formatStatusCodes, getStatusCodes, sortAscending } from './helpers';
 import { ImportManager } from './imports';
 
 // Creates the content in pagers.go
@@ -22,6 +22,7 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
   const imports = new ImportManager();
   imports.add('context');
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
+  imports.add('net/http');
   text += imports.text();
 
   const pagers = <Array<PagerInfo>>session.model.language.go!.pageableTypes;
@@ -117,11 +118,14 @@ func (p *${pagerType}) NextPage(ctx context.Context) bool {
 	if err != nil {
 		p.err = err
 		return false
-  }
-	if p.err = p.errorer(resp); p.err != nil {
-		return false
 	}
-	result, err := p.responder(resp)
+`;
+    const statusCodes = getStatusCodes(pager.op);
+    text += `\tif !resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
+    text += `\tp.err = p.errorer(resp)\n`
+    text += `\t\treturn false\n`;
+    text += '\t}\n';
+    text += `	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
 		return false

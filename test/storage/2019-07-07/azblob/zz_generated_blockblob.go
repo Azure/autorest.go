@@ -55,8 +55,8 @@ func (client *blockBlobClient) CommitBlockList(ctx context.Context, blocks Block
 	if err != nil {
 		return nil, err
 	}
-	if err := client.CommitBlockListHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusCreated) {
+		return nil, client.CommitBlockListHandleError(resp)
 	}
 	result, err := client.CommitBlockListHandleResponse(resp)
 	if err != nil {
@@ -202,9 +202,6 @@ func (client *blockBlobClient) CommitBlockListHandleResponse(resp *azcore.Respon
 
 // CommitBlockListHandleError handles the CommitBlockList error response.
 func (client *blockBlobClient) CommitBlockListHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusCreated) {
-		return nil
-	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -222,8 +219,8 @@ func (client *blockBlobClient) GetBlockList(ctx context.Context, listType BlockL
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetBlockListHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetBlockListHandleError(resp)
 	}
 	result, err := client.GetBlockListHandleResponse(resp)
 	if err != nil {
@@ -303,9 +300,6 @@ func (client *blockBlobClient) GetBlockListHandleResponse(resp *azcore.Response)
 
 // GetBlockListHandleError handles the GetBlockList error response.
 func (client *blockBlobClient) GetBlockListHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -323,8 +317,8 @@ func (client *blockBlobClient) StageBlock(ctx context.Context, blockId string, c
 	if err != nil {
 		return nil, err
 	}
-	if err := client.StageBlockHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusCreated) {
+		return nil, client.StageBlockHandleError(resp)
 	}
 	result, err := client.StageBlockHandleResponse(resp)
 	if err != nil {
@@ -424,9 +418,6 @@ func (client *blockBlobClient) StageBlockHandleResponse(resp *azcore.Response) (
 
 // StageBlockHandleError handles the StageBlock error response.
 func (client *blockBlobClient) StageBlockHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusCreated) {
-		return nil
-	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -444,8 +435,8 @@ func (client *blockBlobClient) StageBlockFromURL(ctx context.Context, blockId st
 	if err != nil {
 		return nil, err
 	}
-	if err := client.StageBlockFromURLHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusCreated) {
+		return nil, client.StageBlockFromURLHandleError(resp)
 	}
 	result, err := client.StageBlockFromURLHandleResponse(resp)
 	if err != nil {
@@ -561,9 +552,6 @@ func (client *blockBlobClient) StageBlockFromURLHandleResponse(resp *azcore.Resp
 
 // StageBlockFromURLHandleError handles the StageBlockFromURL error response.
 func (client *blockBlobClient) StageBlockFromURLHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusCreated) {
-		return nil
-	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -581,8 +569,8 @@ func (client *blockBlobClient) Upload(ctx context.Context, contentLength int64, 
 	if err != nil {
 		return nil, err
 	}
-	if err := client.UploadHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusCreated) {
+		return nil, client.UploadHandleError(resp)
 	}
 	result, err := client.UploadHandleResponse(resp)
 	if err != nil {
@@ -719,9 +707,6 @@ func (client *blockBlobClient) UploadHandleResponse(resp *azcore.Response) (*Blo
 
 // UploadHandleError handles the Upload error response.
 func (client *blockBlobClient) UploadHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusCreated) {
-		return nil
-	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err

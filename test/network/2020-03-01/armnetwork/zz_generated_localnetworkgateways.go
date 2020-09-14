@@ -61,8 +61,8 @@ func (client *LocalNetworkGatewaysClient) BeginCreateOrUpdate(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	if err := client.CreateOrUpdateHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -118,9 +118,6 @@ func (client *LocalNetworkGatewaysClient) CreateOrUpdateHandleResponse(resp *azc
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *LocalNetworkGatewaysClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -139,8 +136,8 @@ func (client *LocalNetworkGatewaysClient) BeginDelete(ctx context.Context, resou
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DeleteHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -196,9 +193,6 @@ func (client *LocalNetworkGatewaysClient) DeleteHandleResponse(resp *azcore.Resp
 
 // DeleteHandleError handles the Delete error response.
 func (client *LocalNetworkGatewaysClient) DeleteHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -216,8 +210,8 @@ func (client *LocalNetworkGatewaysClient) Get(ctx context.Context, resourceGroup
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -251,9 +245,6 @@ func (client *LocalNetworkGatewaysClient) GetHandleResponse(resp *azcore.Respons
 
 // GetHandleError handles the Get error response.
 func (client *LocalNetworkGatewaysClient) GetHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -300,9 +291,6 @@ func (client *LocalNetworkGatewaysClient) ListHandleResponse(resp *azcore.Respon
 
 // ListHandleError handles the List error response.
 func (client *LocalNetworkGatewaysClient) ListHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -320,8 +308,8 @@ func (client *LocalNetworkGatewaysClient) UpdateTags(ctx context.Context, resour
 	if err != nil {
 		return nil, err
 	}
-	if err := client.UpdateTagsHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.UpdateTagsHandleError(resp)
 	}
 	result, err := client.UpdateTagsHandleResponse(resp)
 	if err != nil {
@@ -355,9 +343,6 @@ func (client *LocalNetworkGatewaysClient) UpdateTagsHandleResponse(resp *azcore.
 
 // UpdateTagsHandleError handles the UpdateTags error response.
 func (client *LocalNetworkGatewaysClient) UpdateTagsHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

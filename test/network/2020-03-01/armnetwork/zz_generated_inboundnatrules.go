@@ -59,8 +59,8 @@ func (client *InboundNatRulesClient) BeginCreateOrUpdate(ctx context.Context, re
 	if err != nil {
 		return nil, err
 	}
-	if err := client.CreateOrUpdateHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -117,9 +117,6 @@ func (client *InboundNatRulesClient) CreateOrUpdateHandleResponse(resp *azcore.R
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *InboundNatRulesClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -138,8 +135,8 @@ func (client *InboundNatRulesClient) BeginDelete(ctx context.Context, resourceGr
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DeleteHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -196,9 +193,6 @@ func (client *InboundNatRulesClient) DeleteHandleResponse(resp *azcore.Response)
 
 // DeleteHandleError handles the Delete error response.
 func (client *InboundNatRulesClient) DeleteHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -216,8 +210,8 @@ func (client *InboundNatRulesClient) Get(ctx context.Context, resourceGroupName 
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -255,9 +249,6 @@ func (client *InboundNatRulesClient) GetHandleResponse(resp *azcore.Response) (*
 
 // GetHandleError handles the Get error response.
 func (client *InboundNatRulesClient) GetHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -305,9 +296,6 @@ func (client *InboundNatRulesClient) ListHandleResponse(resp *azcore.Response) (
 
 // ListHandleError handles the List error response.
 func (client *InboundNatRulesClient) ListHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

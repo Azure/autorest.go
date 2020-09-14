@@ -75,8 +75,8 @@ func (client *HTTPRedirectsClient) Delete307(ctx context.Context) (*http.Respons
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Delete307HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.Delete307HandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -94,9 +94,6 @@ func (client *HTTPRedirectsClient) Delete307CreateRequest(ctx context.Context) (
 
 // Delete307HandleError handles the Delete307 error response.
 func (client *HTTPRedirectsClient) Delete307HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -115,8 +112,8 @@ func (client *HTTPRedirectsClient) Get300(ctx context.Context) (interface{}, err
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Get300HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusMultipleChoices) {
+		return nil, client.Get300HandleError(resp)
 	}
 	result, err := client.Get300HandleResponse(resp)
 	if err != nil {
@@ -158,9 +155,6 @@ func (client *HTTPRedirectsClient) Get300HandleResponse(resp *azcore.Response) (
 
 // Get300HandleError handles the Get300 error response.
 func (client *HTTPRedirectsClient) Get300HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusMultipleChoices) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -178,8 +172,8 @@ func (client *HTTPRedirectsClient) Get301(ctx context.Context) (*http.Response, 
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Get301HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.Get301HandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -197,9 +191,6 @@ func (client *HTTPRedirectsClient) Get301CreateRequest(ctx context.Context) (*az
 
 // Get301HandleError handles the Get301 error response.
 func (client *HTTPRedirectsClient) Get301HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -217,8 +208,8 @@ func (client *HTTPRedirectsClient) Get302(ctx context.Context) (*http.Response, 
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Get302HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.Get302HandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -236,9 +227,6 @@ func (client *HTTPRedirectsClient) Get302CreateRequest(ctx context.Context) (*az
 
 // Get302HandleError handles the Get302 error response.
 func (client *HTTPRedirectsClient) Get302HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -256,8 +244,8 @@ func (client *HTTPRedirectsClient) Get307(ctx context.Context) (*http.Response, 
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Get307HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.Get307HandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -275,9 +263,6 @@ func (client *HTTPRedirectsClient) Get307CreateRequest(ctx context.Context) (*az
 
 // Get307HandleError handles the Get307 error response.
 func (client *HTTPRedirectsClient) Get307HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -295,8 +280,8 @@ func (client *HTTPRedirectsClient) Head300(ctx context.Context) (*HTTPRedirectsH
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Head300HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusMultipleChoices) {
+		return nil, client.Head300HandleError(resp)
 	}
 	result, err := client.Head300HandleResponse(resp)
 	if err != nil {
@@ -327,9 +312,6 @@ func (client *HTTPRedirectsClient) Head300HandleResponse(resp *azcore.Response) 
 
 // Head300HandleError handles the Head300 error response.
 func (client *HTTPRedirectsClient) Head300HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusMultipleChoices) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -347,8 +329,8 @@ func (client *HTTPRedirectsClient) Head301(ctx context.Context) (*http.Response,
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Head301HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.Head301HandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -366,9 +348,6 @@ func (client *HTTPRedirectsClient) Head301CreateRequest(ctx context.Context) (*a
 
 // Head301HandleError handles the Head301 error response.
 func (client *HTTPRedirectsClient) Head301HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -386,8 +365,8 @@ func (client *HTTPRedirectsClient) Head302(ctx context.Context) (*http.Response,
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Head302HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.Head302HandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -405,9 +384,6 @@ func (client *HTTPRedirectsClient) Head302CreateRequest(ctx context.Context) (*a
 
 // Head302HandleError handles the Head302 error response.
 func (client *HTTPRedirectsClient) Head302HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -425,8 +401,8 @@ func (client *HTTPRedirectsClient) Head307(ctx context.Context) (*http.Response,
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Head307HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.Head307HandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -444,9 +420,6 @@ func (client *HTTPRedirectsClient) Head307CreateRequest(ctx context.Context) (*a
 
 // Head307HandleError handles the Head307 error response.
 func (client *HTTPRedirectsClient) Head307HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -464,8 +437,8 @@ func (client *HTTPRedirectsClient) Options307(ctx context.Context) (*http.Respon
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Options307HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.Options307HandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -483,9 +456,6 @@ func (client *HTTPRedirectsClient) Options307CreateRequest(ctx context.Context) 
 
 // Options307HandleError handles the Options307 error response.
 func (client *HTTPRedirectsClient) Options307HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -503,8 +473,8 @@ func (client *HTTPRedirectsClient) Patch302(ctx context.Context) (*HTTPRedirects
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Patch302HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusFound) {
+		return nil, client.Patch302HandleError(resp)
 	}
 	result, err := client.Patch302HandleResponse(resp)
 	if err != nil {
@@ -535,9 +505,6 @@ func (client *HTTPRedirectsClient) Patch302HandleResponse(resp *azcore.Response)
 
 // Patch302HandleError handles the Patch302 error response.
 func (client *HTTPRedirectsClient) Patch302HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusFound) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -555,8 +522,8 @@ func (client *HTTPRedirectsClient) Patch307(ctx context.Context) (*http.Response
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Patch307HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.Patch307HandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -574,9 +541,6 @@ func (client *HTTPRedirectsClient) Patch307CreateRequest(ctx context.Context) (*
 
 // Patch307HandleError handles the Patch307 error response.
 func (client *HTTPRedirectsClient) Patch307HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -594,8 +558,8 @@ func (client *HTTPRedirectsClient) Post303(ctx context.Context) (*HTTPRedirectsP
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Post303HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusSeeOther) {
+		return nil, client.Post303HandleError(resp)
 	}
 	result, err := client.Post303HandleResponse(resp)
 	if err != nil {
@@ -626,9 +590,6 @@ func (client *HTTPRedirectsClient) Post303HandleResponse(resp *azcore.Response) 
 
 // Post303HandleError handles the Post303 error response.
 func (client *HTTPRedirectsClient) Post303HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusSeeOther) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -646,8 +607,8 @@ func (client *HTTPRedirectsClient) Post307(ctx context.Context) (*http.Response,
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Post307HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.Post307HandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -665,9 +626,6 @@ func (client *HTTPRedirectsClient) Post307CreateRequest(ctx context.Context) (*a
 
 // Post307HandleError handles the Post307 error response.
 func (client *HTTPRedirectsClient) Post307HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -685,8 +643,8 @@ func (client *HTTPRedirectsClient) Put301(ctx context.Context) (*HTTPRedirectsPu
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Put301HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusMovedPermanently) {
+		return nil, client.Put301HandleError(resp)
 	}
 	result, err := client.Put301HandleResponse(resp)
 	if err != nil {
@@ -717,9 +675,6 @@ func (client *HTTPRedirectsClient) Put301HandleResponse(resp *azcore.Response) (
 
 // Put301HandleError handles the Put301 error response.
 func (client *HTTPRedirectsClient) Put301HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusMovedPermanently) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -737,8 +692,8 @@ func (client *HTTPRedirectsClient) Put307(ctx context.Context) (*http.Response, 
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Put307HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.Put307HandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -756,9 +711,6 @@ func (client *HTTPRedirectsClient) Put307CreateRequest(ctx context.Context) (*az
 
 // Put307HandleError handles the Put307 error response.
 func (client *HTTPRedirectsClient) Put307HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

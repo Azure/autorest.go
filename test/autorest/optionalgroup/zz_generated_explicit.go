@@ -87,8 +87,8 @@ func (client *ExplicitClient) PostOptionalArrayHeader(ctx context.Context, expli
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostOptionalArrayHeaderHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PostOptionalArrayHeaderHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -109,9 +109,6 @@ func (client *ExplicitClient) PostOptionalArrayHeaderCreateRequest(ctx context.C
 
 // PostOptionalArrayHeaderHandleError handles the PostOptionalArrayHeader error response.
 func (client *ExplicitClient) PostOptionalArrayHeaderHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -129,8 +126,8 @@ func (client *ExplicitClient) PostOptionalArrayParameter(ctx context.Context, ex
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostOptionalArrayParameterHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PostOptionalArrayParameterHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -151,9 +148,6 @@ func (client *ExplicitClient) PostOptionalArrayParameterCreateRequest(ctx contex
 
 // PostOptionalArrayParameterHandleError handles the PostOptionalArrayParameter error response.
 func (client *ExplicitClient) PostOptionalArrayParameterHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -171,8 +165,8 @@ func (client *ExplicitClient) PostOptionalArrayProperty(ctx context.Context, exp
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostOptionalArrayPropertyHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PostOptionalArrayPropertyHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -193,9 +187,6 @@ func (client *ExplicitClient) PostOptionalArrayPropertyCreateRequest(ctx context
 
 // PostOptionalArrayPropertyHandleError handles the PostOptionalArrayProperty error response.
 func (client *ExplicitClient) PostOptionalArrayPropertyHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -213,8 +204,8 @@ func (client *ExplicitClient) PostOptionalClassParameter(ctx context.Context, ex
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostOptionalClassParameterHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PostOptionalClassParameterHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -235,9 +226,6 @@ func (client *ExplicitClient) PostOptionalClassParameterCreateRequest(ctx contex
 
 // PostOptionalClassParameterHandleError handles the PostOptionalClassParameter error response.
 func (client *ExplicitClient) PostOptionalClassParameterHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -255,8 +243,8 @@ func (client *ExplicitClient) PostOptionalClassProperty(ctx context.Context, exp
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostOptionalClassPropertyHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PostOptionalClassPropertyHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -277,9 +265,6 @@ func (client *ExplicitClient) PostOptionalClassPropertyCreateRequest(ctx context
 
 // PostOptionalClassPropertyHandleError handles the PostOptionalClassProperty error response.
 func (client *ExplicitClient) PostOptionalClassPropertyHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -297,8 +282,8 @@ func (client *ExplicitClient) PostOptionalIntegerHeader(ctx context.Context, exp
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostOptionalIntegerHeaderHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PostOptionalIntegerHeaderHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -319,9 +304,6 @@ func (client *ExplicitClient) PostOptionalIntegerHeaderCreateRequest(ctx context
 
 // PostOptionalIntegerHeaderHandleError handles the PostOptionalIntegerHeader error response.
 func (client *ExplicitClient) PostOptionalIntegerHeaderHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -339,8 +321,8 @@ func (client *ExplicitClient) PostOptionalIntegerParameter(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostOptionalIntegerParameterHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PostOptionalIntegerParameterHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -361,9 +343,6 @@ func (client *ExplicitClient) PostOptionalIntegerParameterCreateRequest(ctx cont
 
 // PostOptionalIntegerParameterHandleError handles the PostOptionalIntegerParameter error response.
 func (client *ExplicitClient) PostOptionalIntegerParameterHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -381,8 +360,8 @@ func (client *ExplicitClient) PostOptionalIntegerProperty(ctx context.Context, e
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostOptionalIntegerPropertyHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PostOptionalIntegerPropertyHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -403,9 +382,6 @@ func (client *ExplicitClient) PostOptionalIntegerPropertyCreateRequest(ctx conte
 
 // PostOptionalIntegerPropertyHandleError handles the PostOptionalIntegerProperty error response.
 func (client *ExplicitClient) PostOptionalIntegerPropertyHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -423,8 +399,8 @@ func (client *ExplicitClient) PostOptionalStringHeader(ctx context.Context, expl
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostOptionalStringHeaderHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PostOptionalStringHeaderHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -445,9 +421,6 @@ func (client *ExplicitClient) PostOptionalStringHeaderCreateRequest(ctx context.
 
 // PostOptionalStringHeaderHandleError handles the PostOptionalStringHeader error response.
 func (client *ExplicitClient) PostOptionalStringHeaderHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -465,8 +438,8 @@ func (client *ExplicitClient) PostOptionalStringParameter(ctx context.Context, e
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostOptionalStringParameterHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PostOptionalStringParameterHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -487,9 +460,6 @@ func (client *ExplicitClient) PostOptionalStringParameterCreateRequest(ctx conte
 
 // PostOptionalStringParameterHandleError handles the PostOptionalStringParameter error response.
 func (client *ExplicitClient) PostOptionalStringParameterHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -507,8 +477,8 @@ func (client *ExplicitClient) PostOptionalStringProperty(ctx context.Context, ex
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostOptionalStringPropertyHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PostOptionalStringPropertyHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -529,9 +499,6 @@ func (client *ExplicitClient) PostOptionalStringPropertyCreateRequest(ctx contex
 
 // PostOptionalStringPropertyHandleError handles the PostOptionalStringProperty error response.
 func (client *ExplicitClient) PostOptionalStringPropertyHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -549,8 +516,8 @@ func (client *ExplicitClient) PostRequiredArrayHeader(ctx context.Context, heade
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostRequiredArrayHeaderHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PostRequiredArrayHeaderHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -569,9 +536,6 @@ func (client *ExplicitClient) PostRequiredArrayHeaderCreateRequest(ctx context.C
 
 // PostRequiredArrayHeaderHandleError handles the PostRequiredArrayHeader error response.
 func (client *ExplicitClient) PostRequiredArrayHeaderHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -589,8 +553,8 @@ func (client *ExplicitClient) PostRequiredArrayParameter(ctx context.Context, bo
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostRequiredArrayParameterHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PostRequiredArrayParameterHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -608,9 +572,6 @@ func (client *ExplicitClient) PostRequiredArrayParameterCreateRequest(ctx contex
 
 // PostRequiredArrayParameterHandleError handles the PostRequiredArrayParameter error response.
 func (client *ExplicitClient) PostRequiredArrayParameterHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -628,8 +589,8 @@ func (client *ExplicitClient) PostRequiredArrayProperty(ctx context.Context, bod
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostRequiredArrayPropertyHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PostRequiredArrayPropertyHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -647,9 +608,6 @@ func (client *ExplicitClient) PostRequiredArrayPropertyCreateRequest(ctx context
 
 // PostRequiredArrayPropertyHandleError handles the PostRequiredArrayProperty error response.
 func (client *ExplicitClient) PostRequiredArrayPropertyHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -667,8 +625,8 @@ func (client *ExplicitClient) PostRequiredClassParameter(ctx context.Context, bo
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostRequiredClassParameterHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PostRequiredClassParameterHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -686,9 +644,6 @@ func (client *ExplicitClient) PostRequiredClassParameterCreateRequest(ctx contex
 
 // PostRequiredClassParameterHandleError handles the PostRequiredClassParameter error response.
 func (client *ExplicitClient) PostRequiredClassParameterHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -706,8 +661,8 @@ func (client *ExplicitClient) PostRequiredClassProperty(ctx context.Context, bod
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostRequiredClassPropertyHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PostRequiredClassPropertyHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -725,9 +680,6 @@ func (client *ExplicitClient) PostRequiredClassPropertyCreateRequest(ctx context
 
 // PostRequiredClassPropertyHandleError handles the PostRequiredClassProperty error response.
 func (client *ExplicitClient) PostRequiredClassPropertyHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -745,8 +697,8 @@ func (client *ExplicitClient) PostRequiredIntegerHeader(ctx context.Context, hea
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostRequiredIntegerHeaderHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PostRequiredIntegerHeaderHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -765,9 +717,6 @@ func (client *ExplicitClient) PostRequiredIntegerHeaderCreateRequest(ctx context
 
 // PostRequiredIntegerHeaderHandleError handles the PostRequiredIntegerHeader error response.
 func (client *ExplicitClient) PostRequiredIntegerHeaderHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -785,8 +734,8 @@ func (client *ExplicitClient) PostRequiredIntegerParameter(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostRequiredIntegerParameterHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PostRequiredIntegerParameterHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -804,9 +753,6 @@ func (client *ExplicitClient) PostRequiredIntegerParameterCreateRequest(ctx cont
 
 // PostRequiredIntegerParameterHandleError handles the PostRequiredIntegerParameter error response.
 func (client *ExplicitClient) PostRequiredIntegerParameterHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -824,8 +770,8 @@ func (client *ExplicitClient) PostRequiredIntegerProperty(ctx context.Context, b
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostRequiredIntegerPropertyHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PostRequiredIntegerPropertyHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -843,9 +789,6 @@ func (client *ExplicitClient) PostRequiredIntegerPropertyCreateRequest(ctx conte
 
 // PostRequiredIntegerPropertyHandleError handles the PostRequiredIntegerProperty error response.
 func (client *ExplicitClient) PostRequiredIntegerPropertyHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -863,8 +806,8 @@ func (client *ExplicitClient) PostRequiredStringHeader(ctx context.Context, head
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostRequiredStringHeaderHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PostRequiredStringHeaderHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -883,9 +826,6 @@ func (client *ExplicitClient) PostRequiredStringHeaderCreateRequest(ctx context.
 
 // PostRequiredStringHeaderHandleError handles the PostRequiredStringHeader error response.
 func (client *ExplicitClient) PostRequiredStringHeaderHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -903,8 +843,8 @@ func (client *ExplicitClient) PostRequiredStringParameter(ctx context.Context, b
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostRequiredStringParameterHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PostRequiredStringParameterHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -922,9 +862,6 @@ func (client *ExplicitClient) PostRequiredStringParameterCreateRequest(ctx conte
 
 // PostRequiredStringParameterHandleError handles the PostRequiredStringParameter error response.
 func (client *ExplicitClient) PostRequiredStringParameterHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -942,8 +879,8 @@ func (client *ExplicitClient) PostRequiredStringProperty(ctx context.Context, bo
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostRequiredStringPropertyHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PostRequiredStringPropertyHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -961,9 +898,6 @@ func (client *ExplicitClient) PostRequiredStringPropertyCreateRequest(ctx contex
 
 // PostRequiredStringPropertyHandleError handles the PostRequiredStringProperty error response.
 func (client *ExplicitClient) PostRequiredStringPropertyHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

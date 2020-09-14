@@ -75,9 +75,6 @@ func (client *AvailableEndpointServicesClient) ListHandleResponse(resp *azcore.R
 
 // ListHandleError handles the List error response.
 func (client *AvailableEndpointServicesClient) ListHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

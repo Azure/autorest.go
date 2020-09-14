@@ -45,8 +45,8 @@ func (client *PolymorphicrecursiveClient) GetValid(ctx context.Context) (*FishRe
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetValidHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetValidHandleError(resp)
 	}
 	result, err := client.GetValidHandleResponse(resp)
 	if err != nil {
@@ -74,9 +74,6 @@ func (client *PolymorphicrecursiveClient) GetValidHandleResponse(resp *azcore.Re
 
 // GetValidHandleError handles the GetValid error response.
 func (client *PolymorphicrecursiveClient) GetValidHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -94,8 +91,8 @@ func (client *PolymorphicrecursiveClient) PutValid(ctx context.Context, complexB
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutValidHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutValidHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -113,9 +110,6 @@ func (client *PolymorphicrecursiveClient) PutValidCreateRequest(ctx context.Cont
 
 // PutValidHandleError handles the PutValid error response.
 func (client *PolymorphicrecursiveClient) PutValidHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

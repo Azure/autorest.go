@@ -44,8 +44,8 @@ func (client *FlattencomplexClient) GetValid(ctx context.Context) (*MyBaseTypeRe
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetValidHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetValidHandleError(resp)
 	}
 	result, err := client.GetValidHandleResponse(resp)
 	if err != nil {
@@ -73,9 +73,6 @@ func (client *FlattencomplexClient) GetValidHandleResponse(resp *azcore.Response
 
 // GetValidHandleError handles the GetValid error response.
 func (client *FlattencomplexClient) GetValidHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)

@@ -99,8 +99,8 @@ func (client *PathsClient) ArrayCSVInPath(ctx context.Context, arrayPath []strin
 	if err != nil {
 		return nil, err
 	}
-	if err := client.ArrayCSVInPathHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ArrayCSVInPathHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -119,9 +119,6 @@ func (client *PathsClient) ArrayCSVInPathCreateRequest(ctx context.Context, arra
 
 // ArrayCSVInPathHandleError handles the ArrayCSVInPath error response.
 func (client *PathsClient) ArrayCSVInPathHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -139,8 +136,8 @@ func (client *PathsClient) Base64URL(ctx context.Context, base64UrlPath []byte) 
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Base64URLHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.Base64URLHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -159,9 +156,6 @@ func (client *PathsClient) Base64URLCreateRequest(ctx context.Context, base64Url
 
 // Base64URLHandleError handles the Base64URL error response.
 func (client *PathsClient) Base64URLHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -179,8 +173,8 @@ func (client *PathsClient) ByteEmpty(ctx context.Context) (*http.Response, error
 	if err != nil {
 		return nil, err
 	}
-	if err := client.ByteEmptyHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ByteEmptyHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -199,9 +193,6 @@ func (client *PathsClient) ByteEmptyCreateRequest(ctx context.Context) (*azcore.
 
 // ByteEmptyHandleError handles the ByteEmpty error response.
 func (client *PathsClient) ByteEmptyHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -219,8 +210,8 @@ func (client *PathsClient) ByteMultiByte(ctx context.Context, bytePath []byte) (
 	if err != nil {
 		return nil, err
 	}
-	if err := client.ByteMultiByteHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ByteMultiByteHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -239,9 +230,6 @@ func (client *PathsClient) ByteMultiByteCreateRequest(ctx context.Context, byteP
 
 // ByteMultiByteHandleError handles the ByteMultiByte error response.
 func (client *PathsClient) ByteMultiByteHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -259,8 +247,8 @@ func (client *PathsClient) ByteNull(ctx context.Context, bytePath []byte) (*http
 	if err != nil {
 		return nil, err
 	}
-	if err := client.ByteNullHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusBadRequest) {
+		return nil, client.ByteNullHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -279,9 +267,6 @@ func (client *PathsClient) ByteNullCreateRequest(ctx context.Context, bytePath [
 
 // ByteNullHandleError handles the ByteNull error response.
 func (client *PathsClient) ByteNullHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusBadRequest) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -299,8 +284,8 @@ func (client *PathsClient) DateNull(ctx context.Context, datePath time.Time) (*h
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DateNullHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusBadRequest) {
+		return nil, client.DateNullHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -319,9 +304,6 @@ func (client *PathsClient) DateNullCreateRequest(ctx context.Context, datePath t
 
 // DateNullHandleError handles the DateNull error response.
 func (client *PathsClient) DateNullHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusBadRequest) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -339,8 +321,8 @@ func (client *PathsClient) DateTimeNull(ctx context.Context, dateTimePath time.T
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DateTimeNullHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusBadRequest) {
+		return nil, client.DateTimeNullHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -359,9 +341,6 @@ func (client *PathsClient) DateTimeNullCreateRequest(ctx context.Context, dateTi
 
 // DateTimeNullHandleError handles the DateTimeNull error response.
 func (client *PathsClient) DateTimeNullHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusBadRequest) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -379,8 +358,8 @@ func (client *PathsClient) DateTimeValid(ctx context.Context) (*http.Response, e
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DateTimeValidHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.DateTimeValidHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -399,9 +378,6 @@ func (client *PathsClient) DateTimeValidCreateRequest(ctx context.Context) (*azc
 
 // DateTimeValidHandleError handles the DateTimeValid error response.
 func (client *PathsClient) DateTimeValidHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -419,8 +395,8 @@ func (client *PathsClient) DateValid(ctx context.Context) (*http.Response, error
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DateValidHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.DateValidHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -439,9 +415,6 @@ func (client *PathsClient) DateValidCreateRequest(ctx context.Context) (*azcore.
 
 // DateValidHandleError handles the DateValid error response.
 func (client *PathsClient) DateValidHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -459,8 +432,8 @@ func (client *PathsClient) DoubleDecimalNegative(ctx context.Context) (*http.Res
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DoubleDecimalNegativeHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.DoubleDecimalNegativeHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -479,9 +452,6 @@ func (client *PathsClient) DoubleDecimalNegativeCreateRequest(ctx context.Contex
 
 // DoubleDecimalNegativeHandleError handles the DoubleDecimalNegative error response.
 func (client *PathsClient) DoubleDecimalNegativeHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -499,8 +469,8 @@ func (client *PathsClient) DoubleDecimalPositive(ctx context.Context) (*http.Res
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DoubleDecimalPositiveHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.DoubleDecimalPositiveHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -519,9 +489,6 @@ func (client *PathsClient) DoubleDecimalPositiveCreateRequest(ctx context.Contex
 
 // DoubleDecimalPositiveHandleError handles the DoubleDecimalPositive error response.
 func (client *PathsClient) DoubleDecimalPositiveHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -539,8 +506,8 @@ func (client *PathsClient) EnumNull(ctx context.Context, enumPath URIColor) (*ht
 	if err != nil {
 		return nil, err
 	}
-	if err := client.EnumNullHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusBadRequest) {
+		return nil, client.EnumNullHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -559,9 +526,6 @@ func (client *PathsClient) EnumNullCreateRequest(ctx context.Context, enumPath U
 
 // EnumNullHandleError handles the EnumNull error response.
 func (client *PathsClient) EnumNullHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusBadRequest) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -579,8 +543,8 @@ func (client *PathsClient) EnumValid(ctx context.Context, enumPath URIColor) (*h
 	if err != nil {
 		return nil, err
 	}
-	if err := client.EnumValidHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.EnumValidHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -599,9 +563,6 @@ func (client *PathsClient) EnumValidCreateRequest(ctx context.Context, enumPath 
 
 // EnumValidHandleError handles the EnumValid error response.
 func (client *PathsClient) EnumValidHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -619,8 +580,8 @@ func (client *PathsClient) FloatScientificNegative(ctx context.Context) (*http.R
 	if err != nil {
 		return nil, err
 	}
-	if err := client.FloatScientificNegativeHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.FloatScientificNegativeHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -639,9 +600,6 @@ func (client *PathsClient) FloatScientificNegativeCreateRequest(ctx context.Cont
 
 // FloatScientificNegativeHandleError handles the FloatScientificNegative error response.
 func (client *PathsClient) FloatScientificNegativeHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -659,8 +617,8 @@ func (client *PathsClient) FloatScientificPositive(ctx context.Context) (*http.R
 	if err != nil {
 		return nil, err
 	}
-	if err := client.FloatScientificPositiveHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.FloatScientificPositiveHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -679,9 +637,6 @@ func (client *PathsClient) FloatScientificPositiveCreateRequest(ctx context.Cont
 
 // FloatScientificPositiveHandleError handles the FloatScientificPositive error response.
 func (client *PathsClient) FloatScientificPositiveHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -699,8 +654,8 @@ func (client *PathsClient) GetBooleanFalse(ctx context.Context) (*http.Response,
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetBooleanFalseHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetBooleanFalseHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -719,9 +674,6 @@ func (client *PathsClient) GetBooleanFalseCreateRequest(ctx context.Context) (*a
 
 // GetBooleanFalseHandleError handles the GetBooleanFalse error response.
 func (client *PathsClient) GetBooleanFalseHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -739,8 +691,8 @@ func (client *PathsClient) GetBooleanTrue(ctx context.Context) (*http.Response, 
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetBooleanTrueHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetBooleanTrueHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -759,9 +711,6 @@ func (client *PathsClient) GetBooleanTrueCreateRequest(ctx context.Context) (*az
 
 // GetBooleanTrueHandleError handles the GetBooleanTrue error response.
 func (client *PathsClient) GetBooleanTrueHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -779,8 +728,8 @@ func (client *PathsClient) GetIntNegativeOneMillion(ctx context.Context) (*http.
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetIntNegativeOneMillionHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetIntNegativeOneMillionHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -799,9 +748,6 @@ func (client *PathsClient) GetIntNegativeOneMillionCreateRequest(ctx context.Con
 
 // GetIntNegativeOneMillionHandleError handles the GetIntNegativeOneMillion error response.
 func (client *PathsClient) GetIntNegativeOneMillionHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -819,8 +765,8 @@ func (client *PathsClient) GetIntOneMillion(ctx context.Context) (*http.Response
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetIntOneMillionHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetIntOneMillionHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -839,9 +785,6 @@ func (client *PathsClient) GetIntOneMillionCreateRequest(ctx context.Context) (*
 
 // GetIntOneMillionHandleError handles the GetIntOneMillion error response.
 func (client *PathsClient) GetIntOneMillionHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -859,8 +802,8 @@ func (client *PathsClient) GetNegativeTenBillion(ctx context.Context) (*http.Res
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetNegativeTenBillionHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetNegativeTenBillionHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -879,9 +822,6 @@ func (client *PathsClient) GetNegativeTenBillionCreateRequest(ctx context.Contex
 
 // GetNegativeTenBillionHandleError handles the GetNegativeTenBillion error response.
 func (client *PathsClient) GetNegativeTenBillionHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -899,8 +839,8 @@ func (client *PathsClient) GetTenBillion(ctx context.Context) (*http.Response, e
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetTenBillionHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetTenBillionHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -919,9 +859,6 @@ func (client *PathsClient) GetTenBillionCreateRequest(ctx context.Context) (*azc
 
 // GetTenBillionHandleError handles the GetTenBillion error response.
 func (client *PathsClient) GetTenBillionHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -939,8 +876,8 @@ func (client *PathsClient) StringEmpty(ctx context.Context) (*http.Response, err
 	if err != nil {
 		return nil, err
 	}
-	if err := client.StringEmptyHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.StringEmptyHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -959,9 +896,6 @@ func (client *PathsClient) StringEmptyCreateRequest(ctx context.Context) (*azcor
 
 // StringEmptyHandleError handles the StringEmpty error response.
 func (client *PathsClient) StringEmptyHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -979,8 +913,8 @@ func (client *PathsClient) StringNull(ctx context.Context, stringPath string) (*
 	if err != nil {
 		return nil, err
 	}
-	if err := client.StringNullHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusBadRequest) {
+		return nil, client.StringNullHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -999,9 +933,6 @@ func (client *PathsClient) StringNullCreateRequest(ctx context.Context, stringPa
 
 // StringNullHandleError handles the StringNull error response.
 func (client *PathsClient) StringNullHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusBadRequest) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1019,8 +950,8 @@ func (client *PathsClient) StringURLEncoded(ctx context.Context) (*http.Response
 	if err != nil {
 		return nil, err
 	}
-	if err := client.StringURLEncodedHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.StringURLEncodedHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -1039,9 +970,6 @@ func (client *PathsClient) StringURLEncodedCreateRequest(ctx context.Context) (*
 
 // StringURLEncodedHandleError handles the StringURLEncoded error response.
 func (client *PathsClient) StringURLEncodedHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1059,8 +987,8 @@ func (client *PathsClient) StringURLNonEncoded(ctx context.Context) (*http.Respo
 	if err != nil {
 		return nil, err
 	}
-	if err := client.StringURLNonEncodedHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.StringURLNonEncodedHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -1079,9 +1007,6 @@ func (client *PathsClient) StringURLNonEncodedCreateRequest(ctx context.Context)
 
 // StringURLNonEncodedHandleError handles the StringURLNonEncoded error response.
 func (client *PathsClient) StringURLNonEncodedHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1099,8 +1024,8 @@ func (client *PathsClient) StringUnicode(ctx context.Context) (*http.Response, e
 	if err != nil {
 		return nil, err
 	}
-	if err := client.StringUnicodeHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.StringUnicodeHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -1119,9 +1044,6 @@ func (client *PathsClient) StringUnicodeCreateRequest(ctx context.Context) (*azc
 
 // StringUnicodeHandleError handles the StringUnicode error response.
 func (client *PathsClient) StringUnicodeHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1139,8 +1061,8 @@ func (client *PathsClient) UnixTimeURL(ctx context.Context, unixTimeUrlPath time
 	if err != nil {
 		return nil, err
 	}
-	if err := client.UnixTimeURLHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.UnixTimeURLHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -1159,9 +1081,6 @@ func (client *PathsClient) UnixTimeURLCreateRequest(ctx context.Context, unixTim
 
 // UnixTimeURLHandleError handles the UnixTimeURL error response.
 func (client *PathsClient) UnixTimeURLHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

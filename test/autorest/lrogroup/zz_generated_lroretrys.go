@@ -72,8 +72,8 @@ func (client *LroRetrysClient) BeginDelete202Retry200(ctx context.Context) (*HTT
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Delete202Retry200HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.Delete202Retry200HandleError(resp)
 	}
 	result, err := client.Delete202Retry200HandleResponse(resp)
 	if err != nil {
@@ -123,9 +123,6 @@ func (client *LroRetrysClient) Delete202Retry200HandleResponse(resp *azcore.Resp
 
 // Delete202Retry200HandleError handles the Delete202Retry200 error response.
 func (client *LroRetrysClient) Delete202Retry200HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -144,8 +141,8 @@ func (client *LroRetrysClient) BeginDeleteAsyncRelativeRetrySucceeded(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DeleteAsyncRelativeRetrySucceededHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.DeleteAsyncRelativeRetrySucceededHandleError(resp)
 	}
 	result, err := client.DeleteAsyncRelativeRetrySucceededHandleResponse(resp)
 	if err != nil {
@@ -195,9 +192,6 @@ func (client *LroRetrysClient) DeleteAsyncRelativeRetrySucceededHandleResponse(r
 
 // DeleteAsyncRelativeRetrySucceededHandleError handles the DeleteAsyncRelativeRetrySucceeded error response.
 func (client *LroRetrysClient) DeleteAsyncRelativeRetrySucceededHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -216,8 +210,8 @@ func (client *LroRetrysClient) BeginDeleteProvisioning202Accepted200Succeeded(ct
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DeleteProvisioning202Accepted200SucceededHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.DeleteProvisioning202Accepted200SucceededHandleError(resp)
 	}
 	result, err := client.DeleteProvisioning202Accepted200SucceededHandleResponse(resp)
 	if err != nil {
@@ -267,9 +261,6 @@ func (client *LroRetrysClient) DeleteProvisioning202Accepted200SucceededHandleRe
 
 // DeleteProvisioning202Accepted200SucceededHandleError handles the DeleteProvisioning202Accepted200Succeeded error response.
 func (client *LroRetrysClient) DeleteProvisioning202Accepted200SucceededHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -288,8 +279,8 @@ func (client *LroRetrysClient) BeginPost202Retry200(ctx context.Context, lroRetr
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Post202Retry200HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.Post202Retry200HandleError(resp)
 	}
 	result, err := client.Post202Retry200HandleResponse(resp)
 	if err != nil {
@@ -342,9 +333,6 @@ func (client *LroRetrysClient) Post202Retry200HandleResponse(resp *azcore.Respon
 
 // Post202Retry200HandleError handles the Post202Retry200 error response.
 func (client *LroRetrysClient) Post202Retry200HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -363,8 +351,8 @@ func (client *LroRetrysClient) BeginPostAsyncRelativeRetrySucceeded(ctx context.
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostAsyncRelativeRetrySucceededHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.PostAsyncRelativeRetrySucceededHandleError(resp)
 	}
 	result, err := client.PostAsyncRelativeRetrySucceededHandleResponse(resp)
 	if err != nil {
@@ -417,9 +405,6 @@ func (client *LroRetrysClient) PostAsyncRelativeRetrySucceededHandleResponse(res
 
 // PostAsyncRelativeRetrySucceededHandleError handles the PostAsyncRelativeRetrySucceeded error response.
 func (client *LroRetrysClient) PostAsyncRelativeRetrySucceededHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -438,8 +423,8 @@ func (client *LroRetrysClient) BeginPut201CreatingSucceeded200(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Put201CreatingSucceeded200HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.Put201CreatingSucceeded200HandleError(resp)
 	}
 	result, err := client.Put201CreatingSucceeded200HandleResponse(resp)
 	if err != nil {
@@ -492,9 +477,6 @@ func (client *LroRetrysClient) Put201CreatingSucceeded200HandleResponse(resp *az
 
 // Put201CreatingSucceeded200HandleError handles the Put201CreatingSucceeded200 error response.
 func (client *LroRetrysClient) Put201CreatingSucceeded200HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -513,8 +495,8 @@ func (client *LroRetrysClient) BeginPutAsyncRelativeRetrySucceeded(ctx context.C
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutAsyncRelativeRetrySucceededHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutAsyncRelativeRetrySucceededHandleError(resp)
 	}
 	result, err := client.PutAsyncRelativeRetrySucceededHandleResponse(resp)
 	if err != nil {
@@ -567,9 +549,6 @@ func (client *LroRetrysClient) PutAsyncRelativeRetrySucceededHandleResponse(resp
 
 // PutAsyncRelativeRetrySucceededHandleError handles the PutAsyncRelativeRetrySucceeded error response.
 func (client *LroRetrysClient) PutAsyncRelativeRetrySucceededHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

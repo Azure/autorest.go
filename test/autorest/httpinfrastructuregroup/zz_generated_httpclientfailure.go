@@ -93,8 +93,8 @@ func (client *HTTPClientFailureClient) Delete400(ctx context.Context) (*http.Res
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Delete400HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode() {
+		return nil, client.Delete400HandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -112,9 +112,6 @@ func (client *HTTPClientFailureClient) Delete400CreateRequest(ctx context.Contex
 
 // Delete400HandleError handles the Delete400 error response.
 func (client *HTTPClientFailureClient) Delete400HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode() {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -132,8 +129,8 @@ func (client *HTTPClientFailureClient) Delete407(ctx context.Context) (*http.Res
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Delete407HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode() {
+		return nil, client.Delete407HandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -151,9 +148,6 @@ func (client *HTTPClientFailureClient) Delete407CreateRequest(ctx context.Contex
 
 // Delete407HandleError handles the Delete407 error response.
 func (client *HTTPClientFailureClient) Delete407HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode() {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -171,8 +165,8 @@ func (client *HTTPClientFailureClient) Delete417(ctx context.Context) (*http.Res
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Delete417HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode() {
+		return nil, client.Delete417HandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -190,9 +184,6 @@ func (client *HTTPClientFailureClient) Delete417CreateRequest(ctx context.Contex
 
 // Delete417HandleError handles the Delete417 error response.
 func (client *HTTPClientFailureClient) Delete417HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode() {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -210,8 +201,8 @@ func (client *HTTPClientFailureClient) Get400(ctx context.Context) (*http.Respon
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Get400HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode() {
+		return nil, client.Get400HandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -229,9 +220,6 @@ func (client *HTTPClientFailureClient) Get400CreateRequest(ctx context.Context) 
 
 // Get400HandleError handles the Get400 error response.
 func (client *HTTPClientFailureClient) Get400HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode() {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -249,8 +237,8 @@ func (client *HTTPClientFailureClient) Get402(ctx context.Context) (*http.Respon
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Get402HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode() {
+		return nil, client.Get402HandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -268,9 +256,6 @@ func (client *HTTPClientFailureClient) Get402CreateRequest(ctx context.Context) 
 
 // Get402HandleError handles the Get402 error response.
 func (client *HTTPClientFailureClient) Get402HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode() {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -288,8 +273,8 @@ func (client *HTTPClientFailureClient) Get403(ctx context.Context) (*http.Respon
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Get403HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode() {
+		return nil, client.Get403HandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -307,9 +292,6 @@ func (client *HTTPClientFailureClient) Get403CreateRequest(ctx context.Context) 
 
 // Get403HandleError handles the Get403 error response.
 func (client *HTTPClientFailureClient) Get403HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode() {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -327,8 +309,8 @@ func (client *HTTPClientFailureClient) Get411(ctx context.Context) (*http.Respon
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Get411HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode() {
+		return nil, client.Get411HandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -346,9 +328,6 @@ func (client *HTTPClientFailureClient) Get411CreateRequest(ctx context.Context) 
 
 // Get411HandleError handles the Get411 error response.
 func (client *HTTPClientFailureClient) Get411HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode() {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -366,8 +345,8 @@ func (client *HTTPClientFailureClient) Get412(ctx context.Context) (*http.Respon
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Get412HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode() {
+		return nil, client.Get412HandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -385,9 +364,6 @@ func (client *HTTPClientFailureClient) Get412CreateRequest(ctx context.Context) 
 
 // Get412HandleError handles the Get412 error response.
 func (client *HTTPClientFailureClient) Get412HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode() {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -405,8 +381,8 @@ func (client *HTTPClientFailureClient) Get416(ctx context.Context) (*http.Respon
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Get416HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode() {
+		return nil, client.Get416HandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -424,9 +400,6 @@ func (client *HTTPClientFailureClient) Get416CreateRequest(ctx context.Context) 
 
 // Get416HandleError handles the Get416 error response.
 func (client *HTTPClientFailureClient) Get416HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode() {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -444,8 +417,8 @@ func (client *HTTPClientFailureClient) Head400(ctx context.Context) (*http.Respo
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Head400HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode() {
+		return nil, client.Head400HandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -463,9 +436,6 @@ func (client *HTTPClientFailureClient) Head400CreateRequest(ctx context.Context)
 
 // Head400HandleError handles the Head400 error response.
 func (client *HTTPClientFailureClient) Head400HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode() {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -483,8 +453,8 @@ func (client *HTTPClientFailureClient) Head401(ctx context.Context) (*http.Respo
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Head401HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode() {
+		return nil, client.Head401HandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -502,9 +472,6 @@ func (client *HTTPClientFailureClient) Head401CreateRequest(ctx context.Context)
 
 // Head401HandleError handles the Head401 error response.
 func (client *HTTPClientFailureClient) Head401HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode() {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -522,8 +489,8 @@ func (client *HTTPClientFailureClient) Head410(ctx context.Context) (*http.Respo
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Head410HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode() {
+		return nil, client.Head410HandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -541,9 +508,6 @@ func (client *HTTPClientFailureClient) Head410CreateRequest(ctx context.Context)
 
 // Head410HandleError handles the Head410 error response.
 func (client *HTTPClientFailureClient) Head410HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode() {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -561,8 +525,8 @@ func (client *HTTPClientFailureClient) Head429(ctx context.Context) (*http.Respo
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Head429HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode() {
+		return nil, client.Head429HandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -580,9 +544,6 @@ func (client *HTTPClientFailureClient) Head429CreateRequest(ctx context.Context)
 
 // Head429HandleError handles the Head429 error response.
 func (client *HTTPClientFailureClient) Head429HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode() {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -600,8 +561,8 @@ func (client *HTTPClientFailureClient) Options400(ctx context.Context) (*http.Re
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Options400HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode() {
+		return nil, client.Options400HandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -619,9 +580,6 @@ func (client *HTTPClientFailureClient) Options400CreateRequest(ctx context.Conte
 
 // Options400HandleError handles the Options400 error response.
 func (client *HTTPClientFailureClient) Options400HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode() {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -639,8 +597,8 @@ func (client *HTTPClientFailureClient) Options403(ctx context.Context) (*http.Re
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Options403HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode() {
+		return nil, client.Options403HandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -658,9 +616,6 @@ func (client *HTTPClientFailureClient) Options403CreateRequest(ctx context.Conte
 
 // Options403HandleError handles the Options403 error response.
 func (client *HTTPClientFailureClient) Options403HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode() {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -678,8 +633,8 @@ func (client *HTTPClientFailureClient) Options412(ctx context.Context) (*http.Re
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Options412HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode() {
+		return nil, client.Options412HandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -697,9 +652,6 @@ func (client *HTTPClientFailureClient) Options412CreateRequest(ctx context.Conte
 
 // Options412HandleError handles the Options412 error response.
 func (client *HTTPClientFailureClient) Options412HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode() {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -717,8 +669,8 @@ func (client *HTTPClientFailureClient) Patch400(ctx context.Context) (*http.Resp
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Patch400HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode() {
+		return nil, client.Patch400HandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -736,9 +688,6 @@ func (client *HTTPClientFailureClient) Patch400CreateRequest(ctx context.Context
 
 // Patch400HandleError handles the Patch400 error response.
 func (client *HTTPClientFailureClient) Patch400HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode() {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -756,8 +705,8 @@ func (client *HTTPClientFailureClient) Patch405(ctx context.Context) (*http.Resp
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Patch405HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode() {
+		return nil, client.Patch405HandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -775,9 +724,6 @@ func (client *HTTPClientFailureClient) Patch405CreateRequest(ctx context.Context
 
 // Patch405HandleError handles the Patch405 error response.
 func (client *HTTPClientFailureClient) Patch405HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode() {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -795,8 +741,8 @@ func (client *HTTPClientFailureClient) Patch414(ctx context.Context) (*http.Resp
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Patch414HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode() {
+		return nil, client.Patch414HandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -814,9 +760,6 @@ func (client *HTTPClientFailureClient) Patch414CreateRequest(ctx context.Context
 
 // Patch414HandleError handles the Patch414 error response.
 func (client *HTTPClientFailureClient) Patch414HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode() {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -834,8 +777,8 @@ func (client *HTTPClientFailureClient) Post400(ctx context.Context) (*http.Respo
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Post400HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode() {
+		return nil, client.Post400HandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -853,9 +796,6 @@ func (client *HTTPClientFailureClient) Post400CreateRequest(ctx context.Context)
 
 // Post400HandleError handles the Post400 error response.
 func (client *HTTPClientFailureClient) Post400HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode() {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -873,8 +813,8 @@ func (client *HTTPClientFailureClient) Post406(ctx context.Context) (*http.Respo
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Post406HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode() {
+		return nil, client.Post406HandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -892,9 +832,6 @@ func (client *HTTPClientFailureClient) Post406CreateRequest(ctx context.Context)
 
 // Post406HandleError handles the Post406 error response.
 func (client *HTTPClientFailureClient) Post406HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode() {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -912,8 +849,8 @@ func (client *HTTPClientFailureClient) Post415(ctx context.Context) (*http.Respo
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Post415HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode() {
+		return nil, client.Post415HandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -931,9 +868,6 @@ func (client *HTTPClientFailureClient) Post415CreateRequest(ctx context.Context)
 
 // Post415HandleError handles the Post415 error response.
 func (client *HTTPClientFailureClient) Post415HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode() {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -951,8 +885,8 @@ func (client *HTTPClientFailureClient) Put400(ctx context.Context) (*http.Respon
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Put400HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode() {
+		return nil, client.Put400HandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -970,9 +904,6 @@ func (client *HTTPClientFailureClient) Put400CreateRequest(ctx context.Context) 
 
 // Put400HandleError handles the Put400 error response.
 func (client *HTTPClientFailureClient) Put400HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode() {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -990,8 +921,8 @@ func (client *HTTPClientFailureClient) Put404(ctx context.Context) (*http.Respon
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Put404HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode() {
+		return nil, client.Put404HandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -1009,9 +940,6 @@ func (client *HTTPClientFailureClient) Put404CreateRequest(ctx context.Context) 
 
 // Put404HandleError handles the Put404 error response.
 func (client *HTTPClientFailureClient) Put404HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode() {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1029,8 +957,8 @@ func (client *HTTPClientFailureClient) Put409(ctx context.Context) (*http.Respon
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Put409HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode() {
+		return nil, client.Put409HandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -1048,9 +976,6 @@ func (client *HTTPClientFailureClient) Put409CreateRequest(ctx context.Context) 
 
 // Put409HandleError handles the Put409 error response.
 func (client *HTTPClientFailureClient) Put409HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode() {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1068,8 +993,8 @@ func (client *HTTPClientFailureClient) Put413(ctx context.Context) (*http.Respon
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Put413HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode() {
+		return nil, client.Put413HandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -1087,9 +1012,6 @@ func (client *HTTPClientFailureClient) Put413CreateRequest(ctx context.Context) 
 
 // Put413HandleError handles the Put413 error response.
 func (client *HTTPClientFailureClient) Put413HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode() {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

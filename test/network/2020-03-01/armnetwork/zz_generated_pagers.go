@@ -8,6 +8,7 @@ package armnetwork
 import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"net/http"
 )
 
 // ApplicationGatewayAvailableSslPredefinedPoliciesPager provides iteration over ApplicationGatewayAvailableSslPredefinedPolicies pages.
@@ -72,7 +73,8 @@ func (p *applicationGatewayAvailableSslPredefinedPoliciesPager) NextPage(ctx con
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -150,7 +152,8 @@ func (p *applicationGatewayListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -228,7 +231,8 @@ func (p *applicationSecurityGroupListResultPager) NextPage(ctx context.Context) 
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -306,7 +310,8 @@ func (p *authorizationListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -384,7 +389,8 @@ func (p *autoApprovedPrivateLinkServicesResultPager) NextPage(ctx context.Contex
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -462,7 +468,8 @@ func (p *availableDelegationsResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -540,7 +547,8 @@ func (p *availablePrivateEndpointTypesResultPager) NextPage(ctx context.Context)
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -618,7 +626,8 @@ func (p *availableServiceAliasesResultPager) NextPage(ctx context.Context) bool 
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -696,7 +705,8 @@ func (p *azureFirewallFqdnTagListResultPager) NextPage(ctx context.Context) bool
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -774,7 +784,8 @@ func (p *azureFirewallListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -859,7 +870,8 @@ func (p *bastionActiveSessionListResultPager) NextPage(ctx context.Context) bool
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -937,7 +949,8 @@ func (p *bastionHostListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -1015,7 +1028,8 @@ func (p *bastionSessionDeleteResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -1100,7 +1114,8 @@ func (p *bastionShareableLinkListResultPager) NextPage(ctx context.Context) bool
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -1178,7 +1193,8 @@ func (p *bgpServiceCommunityListResultPager) NextPage(ctx context.Context) bool 
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -1256,7 +1272,8 @@ func (p *ddosProtectionPlanListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -1334,7 +1351,8 @@ func (p *endpointServicesListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -1412,7 +1430,8 @@ func (p *expressRouteCircuitConnectionListResultPager) NextPage(ctx context.Cont
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -1490,7 +1509,8 @@ func (p *expressRouteCircuitListResultPager) NextPage(ctx context.Context) bool 
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -1568,7 +1588,8 @@ func (p *expressRouteCircuitPeeringListResultPager) NextPage(ctx context.Context
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -1646,7 +1667,8 @@ func (p *expressRouteCrossConnectionListResultPager) NextPage(ctx context.Contex
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -1724,7 +1746,8 @@ func (p *expressRouteCrossConnectionPeeringListPager) NextPage(ctx context.Conte
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -1802,7 +1825,8 @@ func (p *expressRouteLinkListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -1880,7 +1904,8 @@ func (p *expressRoutePortListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -1958,7 +1983,8 @@ func (p *expressRoutePortsLocationListResultPager) NextPage(ctx context.Context)
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -2036,7 +2062,8 @@ func (p *expressRouteServiceProviderListResultPager) NextPage(ctx context.Contex
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -2114,7 +2141,8 @@ func (p *firewallPolicyListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -2192,7 +2220,8 @@ func (p *firewallPolicyRuleGroupListResultPager) NextPage(ctx context.Context) b
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -2270,7 +2299,8 @@ func (p *flowLogListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -2348,7 +2378,8 @@ func (p *ipAllocationListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -2426,7 +2457,8 @@ func (p *ipGroupListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -2504,7 +2536,8 @@ func (p *inboundNatRuleListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -2582,7 +2615,8 @@ func (p *listHubVirtualNetworkConnectionsResultPager) NextPage(ctx context.Conte
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -2660,7 +2694,8 @@ func (p *listP2SVpnGatewaysResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -2738,7 +2773,8 @@ func (p *listVirtualHubRouteTableV2SResultPager) NextPage(ctx context.Context) b
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -2816,7 +2852,8 @@ func (p *listVirtualHubsResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -2894,7 +2931,8 @@ func (p *listVirtualWaNsResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -2972,7 +3010,8 @@ func (p *listVpnConnectionsResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -3050,7 +3089,8 @@ func (p *listVpnGatewaysResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -3128,7 +3168,8 @@ func (p *listVpnServerConfigurationsResultPager) NextPage(ctx context.Context) b
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -3206,7 +3247,8 @@ func (p *listVpnSiteLinkConnectionsResultPager) NextPage(ctx context.Context) bo
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -3284,7 +3326,8 @@ func (p *listVpnSiteLinksResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -3362,7 +3405,8 @@ func (p *listVpnSitesResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -3440,7 +3484,8 @@ func (p *loadBalancerBackendAddressPoolListResultPager) NextPage(ctx context.Con
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -3518,7 +3563,8 @@ func (p *loadBalancerFrontendIPConfigurationListResultPager) NextPage(ctx contex
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -3596,7 +3642,8 @@ func (p *loadBalancerListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -3674,7 +3721,8 @@ func (p *loadBalancerLoadBalancingRuleListResultPager) NextPage(ctx context.Cont
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -3752,7 +3800,8 @@ func (p *loadBalancerOutboundRuleListResultPager) NextPage(ctx context.Context) 
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -3830,7 +3879,8 @@ func (p *loadBalancerProbeListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -3908,7 +3958,8 @@ func (p *localNetworkGatewayListResultPager) NextPage(ctx context.Context) bool 
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -3986,7 +4037,8 @@ func (p *natGatewayListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -4064,7 +4116,8 @@ func (p *networkInterfaceIPConfigurationListResultPager) NextPage(ctx context.Co
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -4142,7 +4195,8 @@ func (p *networkInterfaceListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -4220,7 +4274,8 @@ func (p *networkInterfaceLoadBalancerListResultPager) NextPage(ctx context.Conte
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -4298,7 +4353,8 @@ func (p *networkInterfaceTapConfigurationListResultPager) NextPage(ctx context.C
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -4376,7 +4432,8 @@ func (p *networkProfileListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -4454,7 +4511,8 @@ func (p *networkSecurityGroupListResultPager) NextPage(ctx context.Context) bool
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -4532,7 +4590,8 @@ func (p *networkVirtualApplianceListResultPager) NextPage(ctx context.Context) b
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -4610,7 +4669,8 @@ func (p *operationListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -4688,7 +4748,8 @@ func (p *peerExpressRouteCircuitConnectionListResultPager) NextPage(ctx context.
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -4766,7 +4827,8 @@ func (p *privateDnsZoneGroupListResultPager) NextPage(ctx context.Context) bool 
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -4844,7 +4906,8 @@ func (p *privateEndpointConnectionListResultPager) NextPage(ctx context.Context)
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -4922,7 +4985,8 @@ func (p *privateEndpointListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -5000,7 +5064,8 @@ func (p *privateLinkServiceListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -5078,7 +5143,8 @@ func (p *publicIPAddressListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -5156,7 +5222,8 @@ func (p *publicIPPrefixListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -5234,7 +5301,8 @@ func (p *routeFilterListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -5312,7 +5380,8 @@ func (p *routeFilterRuleListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -5390,7 +5459,8 @@ func (p *routeListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -5468,7 +5538,8 @@ func (p *routeTableListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -5546,7 +5617,8 @@ func (p *securityPartnerProviderListResultPager) NextPage(ctx context.Context) b
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -5624,7 +5696,8 @@ func (p *securityRuleListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -5702,7 +5775,8 @@ func (p *serviceEndpointPolicyDefinitionListResultPager) NextPage(ctx context.Co
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -5780,7 +5854,8 @@ func (p *serviceEndpointPolicyListResultPager) NextPage(ctx context.Context) boo
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -5858,7 +5933,8 @@ func (p *subnetListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -5936,7 +6012,8 @@ func (p *usagesListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -6014,7 +6091,8 @@ func (p *virtualNetworkGatewayConnectionListResultPager) NextPage(ctx context.Co
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -6092,7 +6170,8 @@ func (p *virtualNetworkGatewayListConnectionsResultPager) NextPage(ctx context.C
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -6170,7 +6249,8 @@ func (p *virtualNetworkGatewayListResultPager) NextPage(ctx context.Context) boo
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -6248,7 +6328,8 @@ func (p *virtualNetworkListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -6326,7 +6407,8 @@ func (p *virtualNetworkListUsageResultPager) NextPage(ctx context.Context) bool 
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -6404,7 +6486,8 @@ func (p *virtualNetworkPeeringListResultPager) NextPage(ctx context.Context) boo
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -6482,7 +6565,8 @@ func (p *virtualNetworkTapListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -6560,7 +6644,8 @@ func (p *virtualRouterListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -6638,7 +6723,8 @@ func (p *virtualRouterPeeringListResultPager) NextPage(ctx context.Context) bool
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -6716,7 +6802,8 @@ func (p *webApplicationFirewallPolicyListResultPager) NextPage(ctx context.Conte
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)

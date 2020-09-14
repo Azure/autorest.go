@@ -50,8 +50,8 @@ func (client *PetClient) DoSomething(ctx context.Context, whatAction string) (*P
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DoSomethingHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.DoSomethingHandleError(resp)
 	}
 	result, err := client.DoSomethingHandleResponse(resp)
 	if err != nil {
@@ -80,9 +80,6 @@ func (client *PetClient) DoSomethingHandleResponse(resp *azcore.Response) (*PetA
 
 // DoSomethingHandleError handles the DoSomething error response.
 func (client *PetClient) DoSomethingHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	switch resp.StatusCode {
 	case http.StatusInternalServerError:
 		var err petActionError
@@ -109,8 +106,8 @@ func (client *PetClient) GetPetByID(ctx context.Context, petId string) (*PetResp
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetPetByIDHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.GetPetByIDHandleError(resp)
 	}
 	result, err := client.GetPetByIDHandleResponse(resp)
 	if err != nil {
@@ -139,9 +136,6 @@ func (client *PetClient) GetPetByIDHandleResponse(resp *azcore.Response) (*PetRe
 
 // GetPetByIDHandleError handles the GetPetByID error response.
 func (client *PetClient) GetPetByIDHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
-		return nil
-	}
 	switch resp.StatusCode {
 	case http.StatusBadRequest:
 		var err string

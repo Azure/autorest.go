@@ -44,8 +44,8 @@ func (client *OdataClient) GetWithFilter(ctx context.Context, odataGetWithFilter
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetWithFilterHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetWithFilterHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -74,9 +74,6 @@ func (client *OdataClient) GetWithFilterCreateRequest(ctx context.Context, odata
 
 // GetWithFilterHandleError handles the GetWithFilter error response.
 func (client *OdataClient) GetWithFilterHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

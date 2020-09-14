@@ -70,8 +70,8 @@ func (client *NetworkManagementClient) CheckDNSNameAvailability(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	if err := client.CheckDNSNameAvailabilityHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.CheckDNSNameAvailabilityHandleError(resp)
 	}
 	result, err := client.CheckDNSNameAvailabilityHandleResponse(resp)
 	if err != nil {
@@ -105,9 +105,6 @@ func (client *NetworkManagementClient) CheckDNSNameAvailabilityHandleResponse(re
 
 // CheckDNSNameAvailabilityHandleError handles the CheckDNSNameAvailability error response.
 func (client *NetworkManagementClient) CheckDNSNameAvailabilityHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -126,8 +123,8 @@ func (client *NetworkManagementClient) BeginDeleteBastionShareableLink(ctx conte
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DeleteBastionShareableLinkHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.DeleteBastionShareableLinkHandleError(resp)
 	}
 	result, err := client.DeleteBastionShareableLinkHandleResponse(resp)
 	if err != nil {
@@ -183,9 +180,6 @@ func (client *NetworkManagementClient) DeleteBastionShareableLinkHandleResponse(
 
 // DeleteBastionShareableLinkHandleError handles the DeleteBastionShareableLink error response.
 func (client *NetworkManagementClient) DeleteBastionShareableLinkHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -233,9 +227,6 @@ func (client *NetworkManagementClient) DisconnectActiveSessionsHandleResponse(re
 
 // DisconnectActiveSessionsHandleError handles the DisconnectActiveSessions error response.
 func (client *NetworkManagementClient) DisconnectActiveSessionsHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -254,8 +245,8 @@ func (client *NetworkManagementClient) BeginGeneratevirtualwanvpnserverconfigura
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GeneratevirtualwanvpnserverconfigurationvpnprofileHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.GeneratevirtualwanvpnserverconfigurationvpnprofileHandleError(resp)
 	}
 	result, err := client.GeneratevirtualwanvpnserverconfigurationvpnprofileHandleResponse(resp)
 	if err != nil {
@@ -311,9 +302,6 @@ func (client *NetworkManagementClient) Generatevirtualwanvpnserverconfigurationv
 
 // GeneratevirtualwanvpnserverconfigurationvpnprofileHandleError handles the Generatevirtualwanvpnserverconfigurationvpnprofile error response.
 func (client *NetworkManagementClient) GeneratevirtualwanvpnserverconfigurationvpnprofileHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -332,8 +320,8 @@ func (client *NetworkManagementClient) BeginGetActiveSessions(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetActiveSessionsHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.GetActiveSessionsHandleError(resp)
 	}
 	result, err := client.GetActiveSessionsHandleResponse(resp)
 	if err != nil {
@@ -351,7 +339,7 @@ func (client *NetworkManagementClient) BeginGetActiveSessions(ctx context.Contex
 			}
 			return client.GetActiveSessionsHandleError(resp)
 		},
-		respHandler: func(resp *azcore.Response) (*ProductResultResponse, error) {
+		respHandler: func(resp *azcore.Response) (*BastionActiveSessionListResultResponse, error) {
 			result := BastionActiveSessionListResultResponse{RawResponse: resp.Response}
 			return &result, resp.UnmarshalAsJSON(&result.BastionActiveSessionListResult)
 		},
@@ -399,9 +387,6 @@ func (client *NetworkManagementClient) GetActiveSessionsHandleResponse(resp *azc
 
 // GetActiveSessionsHandleError handles the GetActiveSessions error response.
 func (client *NetworkManagementClient) GetActiveSessionsHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -449,9 +434,6 @@ func (client *NetworkManagementClient) GetBastionShareableLinkHandleResponse(res
 
 // GetBastionShareableLinkHandleError handles the GetBastionShareableLink error response.
 func (client *NetworkManagementClient) GetBastionShareableLinkHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -470,8 +452,8 @@ func (client *NetworkManagementClient) BeginPutBastionShareableLink(ctx context.
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutBastionShareableLinkHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.PutBastionShareableLinkHandleError(resp)
 	}
 	result, err := client.PutBastionShareableLinkHandleResponse(resp)
 	if err != nil {
@@ -489,7 +471,7 @@ func (client *NetworkManagementClient) BeginPutBastionShareableLink(ctx context.
 			}
 			return client.PutBastionShareableLinkHandleError(resp)
 		},
-		respHandler: func(resp *azcore.Response) (*ProductResultResponse, error) {
+		respHandler: func(resp *azcore.Response) (*BastionShareableLinkListResultResponse, error) {
 			result := BastionShareableLinkListResultResponse{RawResponse: resp.Response}
 			return &result, resp.UnmarshalAsJSON(&result.BastionShareableLinkListResult)
 		},
@@ -537,9 +519,6 @@ func (client *NetworkManagementClient) PutBastionShareableLinkHandleResponse(res
 
 // PutBastionShareableLinkHandleError handles the PutBastionShareableLink error response.
 func (client *NetworkManagementClient) PutBastionShareableLinkHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -557,8 +536,8 @@ func (client *NetworkManagementClient) SupportedSecurityProviders(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	if err := client.SupportedSecurityProvidersHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.SupportedSecurityProvidersHandleError(resp)
 	}
 	result, err := client.SupportedSecurityProvidersHandleResponse(resp)
 	if err != nil {
@@ -592,9 +571,6 @@ func (client *NetworkManagementClient) SupportedSecurityProvidersHandleResponse(
 
 // SupportedSecurityProvidersHandleError handles the SupportedSecurityProviders error response.
 func (client *NetworkManagementClient) SupportedSecurityProvidersHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

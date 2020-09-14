@@ -54,8 +54,8 @@ func (client *SubscriptionInCredentialsClient) PostMethodGlobalNotProvidedValid(
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostMethodGlobalNotProvidedValidHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PostMethodGlobalNotProvidedValidHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -77,9 +77,6 @@ func (client *SubscriptionInCredentialsClient) PostMethodGlobalNotProvidedValidC
 
 // PostMethodGlobalNotProvidedValidHandleError handles the PostMethodGlobalNotProvidedValid error response.
 func (client *SubscriptionInCredentialsClient) PostMethodGlobalNotProvidedValidHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -97,8 +94,8 @@ func (client *SubscriptionInCredentialsClient) PostMethodGlobalNull(ctx context.
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostMethodGlobalNullHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PostMethodGlobalNullHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -117,9 +114,6 @@ func (client *SubscriptionInCredentialsClient) PostMethodGlobalNullCreateRequest
 
 // PostMethodGlobalNullHandleError handles the PostMethodGlobalNull error response.
 func (client *SubscriptionInCredentialsClient) PostMethodGlobalNullHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -137,8 +131,8 @@ func (client *SubscriptionInCredentialsClient) PostMethodGlobalValid(ctx context
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostMethodGlobalValidHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PostMethodGlobalValidHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -157,9 +151,6 @@ func (client *SubscriptionInCredentialsClient) PostMethodGlobalValidCreateReques
 
 // PostMethodGlobalValidHandleError handles the PostMethodGlobalValid error response.
 func (client *SubscriptionInCredentialsClient) PostMethodGlobalValidHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -177,8 +168,8 @@ func (client *SubscriptionInCredentialsClient) PostPathGlobalValid(ctx context.C
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostPathGlobalValidHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PostPathGlobalValidHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -197,9 +188,6 @@ func (client *SubscriptionInCredentialsClient) PostPathGlobalValidCreateRequest(
 
 // PostPathGlobalValidHandleError handles the PostPathGlobalValid error response.
 func (client *SubscriptionInCredentialsClient) PostPathGlobalValidHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -217,8 +205,8 @@ func (client *SubscriptionInCredentialsClient) PostSwaggerGlobalValid(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostSwaggerGlobalValidHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PostSwaggerGlobalValidHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -237,9 +225,6 @@ func (client *SubscriptionInCredentialsClient) PostSwaggerGlobalValidCreateReque
 
 // PostSwaggerGlobalValidHandleError handles the PostSwaggerGlobalValid error response.
 func (client *SubscriptionInCredentialsClient) PostSwaggerGlobalValidHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

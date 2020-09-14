@@ -250,3 +250,64 @@ export function hasSchemaResponse(op: Operation): boolean {
   }
   return false;
 }
+
+export function getStatusCodes(op: Operation): string[] {
+  // concat all status codes that return the same schema into one array.
+  // this is to support operations that specify multiple response codes
+  // that return the same schema (or no schema).
+  let statusCodes = new Array<string>();
+  for (const resp of values(op.responses)) {
+    statusCodes = statusCodes.concat(resp.protocol.http?.statusCodes);
+  }
+  /*if (isLROOperation(op) && statusCodes.find(element => element === '204') === undefined) {
+    statusCodes = statusCodes.concat('204');
+  }*/
+  return statusCodes;
+}
+
+export function formatStatusCodes(statusCodes: Array<string>): string {
+  const asHTTPStatus = new Array<string>();
+  for (const rawCode of values(statusCodes)) {
+    asHTTPStatus.push(formatStatusCode(rawCode));
+  }
+  return asHTTPStatus.join(', ');
+}
+
+export function formatStatusCode(statusCode: string): string {
+  switch (statusCode) {
+    case '200':
+      return 'http.StatusOK';
+    case '201':
+      return 'http.StatusCreated';
+    case '202':
+      return 'http.StatusAccepted';
+    case '204':
+      return 'http.StatusNoContent';
+    case '206':
+      return 'http.StatusPartialContent';
+    case '300':
+      return 'http.StatusMultipleChoices';
+    case '301':
+      return 'http.StatusMovedPermanently';
+    case '302':
+      return 'http.StatusFound';
+    case '303':
+      return 'http.StatusSeeOther';
+    case '304':
+      return 'http.StatusNotModified';
+    case '307':
+      return 'http.StatusTemporaryRedirect';
+    case '400':
+      return 'http.StatusBadRequest';
+    case '404':
+      return 'http.StatusNotFound';
+    case '409':
+      return 'http.StatusConflict';
+    case '500':
+      return 'http.StatusInternalServerError';
+    case '501':
+      return 'http.StatusNotImplemented';
+    default:
+      throw console.error(`unhandled status code ${statusCode}`);
+  }
+}

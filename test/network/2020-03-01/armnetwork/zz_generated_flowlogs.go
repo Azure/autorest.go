@@ -59,8 +59,8 @@ func (client *FlowLogsClient) BeginCreateOrUpdate(ctx context.Context, resourceG
 	if err != nil {
 		return nil, err
 	}
-	if err := client.CreateOrUpdateHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -117,9 +117,6 @@ func (client *FlowLogsClient) CreateOrUpdateHandleResponse(resp *azcore.Response
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *FlowLogsClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil
-	}
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -138,8 +135,8 @@ func (client *FlowLogsClient) BeginDelete(ctx context.Context, resourceGroupName
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DeleteHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -196,9 +193,6 @@ func (client *FlowLogsClient) DeleteHandleResponse(resp *azcore.Response) (*HTTP
 
 // DeleteHandleError handles the Delete error response.
 func (client *FlowLogsClient) DeleteHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -216,8 +210,8 @@ func (client *FlowLogsClient) Get(ctx context.Context, resourceGroupName string,
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -252,9 +246,6 @@ func (client *FlowLogsClient) GetHandleResponse(resp *azcore.Response) (*FlowLog
 
 // GetHandleError handles the Get error response.
 func (client *FlowLogsClient) GetHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -302,9 +293,6 @@ func (client *FlowLogsClient) ListHandleResponse(resp *azcore.Response) (*FlowLo
 
 // ListHandleError handles the List error response.
 func (client *FlowLogsClient) ListHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

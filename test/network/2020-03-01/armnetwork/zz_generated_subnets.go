@@ -67,8 +67,8 @@ func (client *SubnetsClient) BeginCreateOrUpdate(ctx context.Context, resourceGr
 	if err != nil {
 		return nil, err
 	}
-	if err := client.CreateOrUpdateHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -125,9 +125,6 @@ func (client *SubnetsClient) CreateOrUpdateHandleResponse(resp *azcore.Response)
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *SubnetsClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -146,8 +143,8 @@ func (client *SubnetsClient) BeginDelete(ctx context.Context, resourceGroupName 
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DeleteHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -204,9 +201,6 @@ func (client *SubnetsClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPP
 
 // DeleteHandleError handles the Delete error response.
 func (client *SubnetsClient) DeleteHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -224,8 +218,8 @@ func (client *SubnetsClient) Get(ctx context.Context, resourceGroupName string, 
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -263,9 +257,6 @@ func (client *SubnetsClient) GetHandleResponse(resp *azcore.Response) (*SubnetRe
 
 // GetHandleError handles the Get error response.
 func (client *SubnetsClient) GetHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -313,9 +304,6 @@ func (client *SubnetsClient) ListHandleResponse(resp *azcore.Response) (*SubnetL
 
 // ListHandleError handles the List error response.
 func (client *SubnetsClient) ListHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -334,8 +322,8 @@ func (client *SubnetsClient) BeginPrepareNetworkPolicies(ctx context.Context, re
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PrepareNetworkPoliciesHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.PrepareNetworkPoliciesHandleError(resp)
 	}
 	result, err := client.PrepareNetworkPoliciesHandleResponse(resp)
 	if err != nil {
@@ -392,9 +380,6 @@ func (client *SubnetsClient) PrepareNetworkPoliciesHandleResponse(resp *azcore.R
 
 // PrepareNetworkPoliciesHandleError handles the PrepareNetworkPolicies error response.
 func (client *SubnetsClient) PrepareNetworkPoliciesHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -413,8 +398,8 @@ func (client *SubnetsClient) BeginUnprepareNetworkPolicies(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	if err := client.UnprepareNetworkPoliciesHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.UnprepareNetworkPoliciesHandleError(resp)
 	}
 	result, err := client.UnprepareNetworkPoliciesHandleResponse(resp)
 	if err != nil {
@@ -471,9 +456,6 @@ func (client *SubnetsClient) UnprepareNetworkPoliciesHandleResponse(resp *azcore
 
 // UnprepareNetworkPoliciesHandleError handles the UnprepareNetworkPolicies error response.
 func (client *SubnetsClient) UnprepareNetworkPoliciesHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

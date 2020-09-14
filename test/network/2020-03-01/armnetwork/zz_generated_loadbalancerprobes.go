@@ -48,8 +48,8 @@ func (client *LoadBalancerProbesClient) Get(ctx context.Context, resourceGroupNa
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -84,9 +84,6 @@ func (client *LoadBalancerProbesClient) GetHandleResponse(resp *azcore.Response)
 
 // GetHandleError handles the Get error response.
 func (client *LoadBalancerProbesClient) GetHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -134,9 +131,6 @@ func (client *LoadBalancerProbesClient) ListHandleResponse(resp *azcore.Response
 
 // ListHandleError handles the List error response.
 func (client *LoadBalancerProbesClient) ListHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

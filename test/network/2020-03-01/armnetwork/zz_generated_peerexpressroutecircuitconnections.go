@@ -48,8 +48,8 @@ func (client *PeerExpressRouteCircuitConnectionsClient) Get(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -85,9 +85,6 @@ func (client *PeerExpressRouteCircuitConnectionsClient) GetHandleResponse(resp *
 
 // GetHandleError handles the Get error response.
 func (client *PeerExpressRouteCircuitConnectionsClient) GetHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -136,9 +133,6 @@ func (client *PeerExpressRouteCircuitConnectionsClient) ListHandleResponse(resp 
 
 // ListHandleError handles the List error response.
 func (client *PeerExpressRouteCircuitConnectionsClient) ListHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

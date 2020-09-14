@@ -54,8 +54,8 @@ func (client *directoryClient) Create(ctx context.Context, directoryCreateOption
 	if err != nil {
 		return nil, err
 	}
-	if err := client.CreateHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusCreated) {
+		return nil, client.CreateHandleError(resp)
 	}
 	result, err := client.CreateHandleResponse(resp)
 	if err != nil {
@@ -164,9 +164,6 @@ func (client *directoryClient) CreateHandleResponse(resp *azcore.Response) (*Dir
 
 // CreateHandleError handles the Create error response.
 func (client *directoryClient) CreateHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusCreated) {
-		return nil
-	}
 	var err DataLakeStorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -184,8 +181,8 @@ func (client *directoryClient) Delete(ctx context.Context, recursiveDirectoryDel
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DeleteHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -259,9 +256,6 @@ func (client *directoryClient) DeleteHandleResponse(resp *azcore.Response) (*Dir
 
 // DeleteHandleError handles the Delete error response.
 func (client *directoryClient) DeleteHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err DataLakeStorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -279,8 +273,8 @@ func (client *directoryClient) GetAccessControl(ctx context.Context, directoryGe
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetAccessControlHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetAccessControlHandleError(resp)
 	}
 	result, err := client.GetAccessControlHandleResponse(resp)
 	if err != nil {
@@ -370,9 +364,6 @@ func (client *directoryClient) GetAccessControlHandleResponse(resp *azcore.Respo
 
 // GetAccessControlHandleError handles the GetAccessControl error response.
 func (client *directoryClient) GetAccessControlHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err DataLakeStorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -390,8 +381,8 @@ func (client *directoryClient) Rename(ctx context.Context, renameSource string, 
 	if err != nil {
 		return nil, err
 	}
-	if err := client.RenameHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusCreated) {
+		return nil, client.RenameHandleError(resp)
 	}
 	result, err := client.RenameHandleResponse(resp)
 	if err != nil {
@@ -524,9 +515,6 @@ func (client *directoryClient) RenameHandleResponse(resp *azcore.Response) (*Dir
 
 // RenameHandleError handles the Rename error response.
 func (client *directoryClient) RenameHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusCreated) {
-		return nil
-	}
 	var err DataLakeStorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -544,8 +532,8 @@ func (client *directoryClient) SetAccessControl(ctx context.Context, directorySe
 	if err != nil {
 		return nil, err
 	}
-	if err := client.SetAccessControlHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.SetAccessControlHandleError(resp)
 	}
 	result, err := client.SetAccessControlHandleResponse(resp)
 	if err != nil {
@@ -632,9 +620,6 @@ func (client *directoryClient) SetAccessControlHandleResponse(resp *azcore.Respo
 
 // SetAccessControlHandleError handles the SetAccessControl error response.
 func (client *directoryClient) SetAccessControlHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err DataLakeStorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err

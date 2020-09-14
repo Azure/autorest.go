@@ -71,8 +71,8 @@ func (client *ExpressRouteCrossConnectionsClient) BeginCreateOrUpdate(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	if err := client.CreateOrUpdateHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.CreateOrUpdateHandleError(resp)
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -128,9 +128,6 @@ func (client *ExpressRouteCrossConnectionsClient) CreateOrUpdateHandleResponse(r
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *ExpressRouteCrossConnectionsClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -148,8 +145,8 @@ func (client *ExpressRouteCrossConnectionsClient) Get(ctx context.Context, resou
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -183,9 +180,6 @@ func (client *ExpressRouteCrossConnectionsClient) GetHandleResponse(resp *azcore
 
 // GetHandleError handles the Get error response.
 func (client *ExpressRouteCrossConnectionsClient) GetHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -231,9 +225,6 @@ func (client *ExpressRouteCrossConnectionsClient) ListHandleResponse(resp *azcor
 
 // ListHandleError handles the List error response.
 func (client *ExpressRouteCrossConnectionsClient) ListHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -252,8 +243,8 @@ func (client *ExpressRouteCrossConnectionsClient) BeginListArpTable(ctx context.
 	if err != nil {
 		return nil, err
 	}
-	if err := client.ListArpTableHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.ListArpTableHandleError(resp)
 	}
 	result, err := client.ListArpTableHandleResponse(resp)
 	if err != nil {
@@ -311,9 +302,6 @@ func (client *ExpressRouteCrossConnectionsClient) ListArpTableHandleResponse(res
 
 // ListArpTableHandleError handles the ListArpTable error response.
 func (client *ExpressRouteCrossConnectionsClient) ListArpTableHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -360,9 +348,6 @@ func (client *ExpressRouteCrossConnectionsClient) ListByResourceGroupHandleRespo
 
 // ListByResourceGroupHandleError handles the ListByResourceGroup error response.
 func (client *ExpressRouteCrossConnectionsClient) ListByResourceGroupHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -381,8 +366,8 @@ func (client *ExpressRouteCrossConnectionsClient) BeginListRoutesTable(ctx conte
 	if err != nil {
 		return nil, err
 	}
-	if err := client.ListRoutesTableHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.ListRoutesTableHandleError(resp)
 	}
 	result, err := client.ListRoutesTableHandleResponse(resp)
 	if err != nil {
@@ -440,9 +425,6 @@ func (client *ExpressRouteCrossConnectionsClient) ListRoutesTableHandleResponse(
 
 // ListRoutesTableHandleError handles the ListRoutesTable error response.
 func (client *ExpressRouteCrossConnectionsClient) ListRoutesTableHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -461,8 +443,8 @@ func (client *ExpressRouteCrossConnectionsClient) BeginListRoutesTableSummary(ct
 	if err != nil {
 		return nil, err
 	}
-	if err := client.ListRoutesTableSummaryHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.ListRoutesTableSummaryHandleError(resp)
 	}
 	result, err := client.ListRoutesTableSummaryHandleResponse(resp)
 	if err != nil {
@@ -520,9 +502,6 @@ func (client *ExpressRouteCrossConnectionsClient) ListRoutesTableSummaryHandleRe
 
 // ListRoutesTableSummaryHandleError handles the ListRoutesTableSummary error response.
 func (client *ExpressRouteCrossConnectionsClient) ListRoutesTableSummaryHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -540,8 +519,8 @@ func (client *ExpressRouteCrossConnectionsClient) UpdateTags(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	if err := client.UpdateTagsHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.UpdateTagsHandleError(resp)
 	}
 	result, err := client.UpdateTagsHandleResponse(resp)
 	if err != nil {
@@ -575,9 +554,6 @@ func (client *ExpressRouteCrossConnectionsClient) UpdateTagsHandleResponse(resp 
 
 // UpdateTagsHandleError handles the UpdateTags error response.
 func (client *ExpressRouteCrossConnectionsClient) UpdateTagsHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

@@ -49,8 +49,8 @@ func (client *HTTPServerFailureClient) Delete505(ctx context.Context) (*http.Res
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Delete505HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode() {
+		return nil, client.Delete505HandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -68,9 +68,6 @@ func (client *HTTPServerFailureClient) Delete505CreateRequest(ctx context.Contex
 
 // Delete505HandleError handles the Delete505 error response.
 func (client *HTTPServerFailureClient) Delete505HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode() {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -88,8 +85,8 @@ func (client *HTTPServerFailureClient) Get501(ctx context.Context) (*http.Respon
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Get501HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode() {
+		return nil, client.Get501HandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -107,9 +104,6 @@ func (client *HTTPServerFailureClient) Get501CreateRequest(ctx context.Context) 
 
 // Get501HandleError handles the Get501 error response.
 func (client *HTTPServerFailureClient) Get501HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode() {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -127,8 +121,8 @@ func (client *HTTPServerFailureClient) Head501(ctx context.Context) (*http.Respo
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Head501HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode() {
+		return nil, client.Head501HandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -146,9 +140,6 @@ func (client *HTTPServerFailureClient) Head501CreateRequest(ctx context.Context)
 
 // Head501HandleError handles the Head501 error response.
 func (client *HTTPServerFailureClient) Head501HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode() {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -166,8 +157,8 @@ func (client *HTTPServerFailureClient) Post505(ctx context.Context) (*http.Respo
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Post505HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode() {
+		return nil, client.Post505HandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -185,9 +176,6 @@ func (client *HTTPServerFailureClient) Post505CreateRequest(ctx context.Context)
 
 // Post505HandleError handles the Post505 error response.
 func (client *HTTPServerFailureClient) Post505HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode() {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

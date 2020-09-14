@@ -61,8 +61,8 @@ func (client *PrivateEndpointsClient) BeginCreateOrUpdate(ctx context.Context, r
 	if err != nil {
 		return nil, err
 	}
-	if err := client.CreateOrUpdateHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -118,9 +118,6 @@ func (client *PrivateEndpointsClient) CreateOrUpdateHandleResponse(resp *azcore.
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *PrivateEndpointsClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -139,8 +136,8 @@ func (client *PrivateEndpointsClient) BeginDelete(ctx context.Context, resourceG
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DeleteHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -196,9 +193,6 @@ func (client *PrivateEndpointsClient) DeleteHandleResponse(resp *azcore.Response
 
 // DeleteHandleError handles the Delete error response.
 func (client *PrivateEndpointsClient) DeleteHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -216,8 +210,8 @@ func (client *PrivateEndpointsClient) Get(ctx context.Context, resourceGroupName
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -254,9 +248,6 @@ func (client *PrivateEndpointsClient) GetHandleResponse(resp *azcore.Response) (
 
 // GetHandleError handles the Get error response.
 func (client *PrivateEndpointsClient) GetHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -303,9 +294,6 @@ func (client *PrivateEndpointsClient) ListHandleResponse(resp *azcore.Response) 
 
 // ListHandleError handles the List error response.
 func (client *PrivateEndpointsClient) ListHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -351,9 +339,6 @@ func (client *PrivateEndpointsClient) ListBySubscriptionHandleResponse(resp *azc
 
 // ListBySubscriptionHandleError handles the ListBySubscription error response.
 func (client *PrivateEndpointsClient) ListBySubscriptionHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

@@ -49,8 +49,8 @@ func (client *APIVersionDefaultClient) GetMethodGlobalNotProvidedValid(ctx conte
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetMethodGlobalNotProvidedValidHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetMethodGlobalNotProvidedValidHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -71,9 +71,6 @@ func (client *APIVersionDefaultClient) GetMethodGlobalNotProvidedValidCreateRequ
 
 // GetMethodGlobalNotProvidedValidHandleError handles the GetMethodGlobalNotProvidedValid error response.
 func (client *APIVersionDefaultClient) GetMethodGlobalNotProvidedValidHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -91,8 +88,8 @@ func (client *APIVersionDefaultClient) GetMethodGlobalValid(ctx context.Context)
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetMethodGlobalValidHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetMethodGlobalValidHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -113,9 +110,6 @@ func (client *APIVersionDefaultClient) GetMethodGlobalValidCreateRequest(ctx con
 
 // GetMethodGlobalValidHandleError handles the GetMethodGlobalValid error response.
 func (client *APIVersionDefaultClient) GetMethodGlobalValidHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -133,8 +127,8 @@ func (client *APIVersionDefaultClient) GetPathGlobalValid(ctx context.Context) (
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetPathGlobalValidHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetPathGlobalValidHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -155,9 +149,6 @@ func (client *APIVersionDefaultClient) GetPathGlobalValidCreateRequest(ctx conte
 
 // GetPathGlobalValidHandleError handles the GetPathGlobalValid error response.
 func (client *APIVersionDefaultClient) GetPathGlobalValidHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -175,8 +166,8 @@ func (client *APIVersionDefaultClient) GetSwaggerGlobalValid(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetSwaggerGlobalValidHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetSwaggerGlobalValidHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -197,9 +188,6 @@ func (client *APIVersionDefaultClient) GetSwaggerGlobalValidCreateRequest(ctx co
 
 // GetSwaggerGlobalValidHandleError handles the GetSwaggerGlobalValid error response.
 func (client *APIVersionDefaultClient) GetSwaggerGlobalValidHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

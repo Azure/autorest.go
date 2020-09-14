@@ -63,8 +63,8 @@ func (client *IPGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceG
 	if err != nil {
 		return nil, err
 	}
-	if err := client.CreateOrUpdateHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -120,9 +120,6 @@ func (client *IPGroupsClient) CreateOrUpdateHandleResponse(resp *azcore.Response
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *IPGroupsClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -141,8 +138,8 @@ func (client *IPGroupsClient) BeginDelete(ctx context.Context, resourceGroupName
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DeleteHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -198,9 +195,6 @@ func (client *IPGroupsClient) DeleteHandleResponse(resp *azcore.Response) (*HTTP
 
 // DeleteHandleError handles the Delete error response.
 func (client *IPGroupsClient) DeleteHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -218,8 +212,8 @@ func (client *IPGroupsClient) Get(ctx context.Context, resourceGroupName string,
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -256,9 +250,6 @@ func (client *IPGroupsClient) GetHandleResponse(resp *azcore.Response) (*IPGroup
 
 // GetHandleError handles the Get error response.
 func (client *IPGroupsClient) GetHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -304,9 +295,6 @@ func (client *IPGroupsClient) ListHandleResponse(resp *azcore.Response) (*IPGrou
 
 // ListHandleError handles the List error response.
 func (client *IPGroupsClient) ListHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -353,9 +341,6 @@ func (client *IPGroupsClient) ListByResourceGroupHandleResponse(resp *azcore.Res
 
 // ListByResourceGroupHandleError handles the ListByResourceGroup error response.
 func (client *IPGroupsClient) ListByResourceGroupHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -373,8 +358,8 @@ func (client *IPGroupsClient) UpdateGroups(ctx context.Context, resourceGroupNam
 	if err != nil {
 		return nil, err
 	}
-	if err := client.UpdateGroupsHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.UpdateGroupsHandleError(resp)
 	}
 	result, err := client.UpdateGroupsHandleResponse(resp)
 	if err != nil {
@@ -408,9 +393,6 @@ func (client *IPGroupsClient) UpdateGroupsHandleResponse(resp *azcore.Response) 
 
 // UpdateGroupsHandleError handles the UpdateGroups error response.
 func (client *IPGroupsClient) UpdateGroupsHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

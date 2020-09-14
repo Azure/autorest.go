@@ -63,8 +63,8 @@ func (client *RouteFiltersClient) BeginCreateOrUpdate(ctx context.Context, resou
 	if err != nil {
 		return nil, err
 	}
-	if err := client.CreateOrUpdateHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -120,9 +120,6 @@ func (client *RouteFiltersClient) CreateOrUpdateHandleResponse(resp *azcore.Resp
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *RouteFiltersClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -141,8 +138,8 @@ func (client *RouteFiltersClient) BeginDelete(ctx context.Context, resourceGroup
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DeleteHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -198,9 +195,6 @@ func (client *RouteFiltersClient) DeleteHandleResponse(resp *azcore.Response) (*
 
 // DeleteHandleError handles the Delete error response.
 func (client *RouteFiltersClient) DeleteHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -218,8 +212,8 @@ func (client *RouteFiltersClient) Get(ctx context.Context, resourceGroupName str
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -256,9 +250,6 @@ func (client *RouteFiltersClient) GetHandleResponse(resp *azcore.Response) (*Rou
 
 // GetHandleError handles the Get error response.
 func (client *RouteFiltersClient) GetHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -304,9 +295,6 @@ func (client *RouteFiltersClient) ListHandleResponse(resp *azcore.Response) (*Ro
 
 // ListHandleError handles the List error response.
 func (client *RouteFiltersClient) ListHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -353,9 +341,6 @@ func (client *RouteFiltersClient) ListByResourceGroupHandleResponse(resp *azcore
 
 // ListByResourceGroupHandleError handles the ListByResourceGroup error response.
 func (client *RouteFiltersClient) ListByResourceGroupHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -373,8 +358,8 @@ func (client *RouteFiltersClient) UpdateTags(ctx context.Context, resourceGroupN
 	if err != nil {
 		return nil, err
 	}
-	if err := client.UpdateTagsHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.UpdateTagsHandleError(resp)
 	}
 	result, err := client.UpdateTagsHandleResponse(resp)
 	if err != nil {
@@ -408,9 +393,6 @@ func (client *RouteFiltersClient) UpdateTagsHandleResponse(resp *azcore.Response
 
 // UpdateTagsHandleError handles the UpdateTags error response.
 func (client *RouteFiltersClient) UpdateTagsHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

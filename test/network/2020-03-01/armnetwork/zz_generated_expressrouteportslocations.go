@@ -48,8 +48,8 @@ func (client *ExpressRoutePortsLocationsClient) Get(ctx context.Context, locatio
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -82,9 +82,6 @@ func (client *ExpressRoutePortsLocationsClient) GetHandleResponse(resp *azcore.R
 
 // GetHandleError handles the Get error response.
 func (client *ExpressRoutePortsLocationsClient) GetHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -130,9 +127,6 @@ func (client *ExpressRoutePortsLocationsClient) ListHandleResponse(resp *azcore.
 
 // ListHandleError handles the List error response.
 func (client *ExpressRoutePortsLocationsClient) ListHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

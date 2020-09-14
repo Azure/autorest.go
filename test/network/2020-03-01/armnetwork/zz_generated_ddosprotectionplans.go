@@ -63,8 +63,8 @@ func (client *DdosProtectionPlansClient) BeginCreateOrUpdate(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	if err := client.CreateOrUpdateHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -120,9 +120,6 @@ func (client *DdosProtectionPlansClient) CreateOrUpdateHandleResponse(resp *azco
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *DdosProtectionPlansClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -141,8 +138,8 @@ func (client *DdosProtectionPlansClient) BeginDelete(ctx context.Context, resour
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DeleteHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -198,9 +195,6 @@ func (client *DdosProtectionPlansClient) DeleteHandleResponse(resp *azcore.Respo
 
 // DeleteHandleError handles the Delete error response.
 func (client *DdosProtectionPlansClient) DeleteHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -218,8 +212,8 @@ func (client *DdosProtectionPlansClient) Get(ctx context.Context, resourceGroupN
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -253,9 +247,6 @@ func (client *DdosProtectionPlansClient) GetHandleResponse(resp *azcore.Response
 
 // GetHandleError handles the Get error response.
 func (client *DdosProtectionPlansClient) GetHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -301,9 +292,6 @@ func (client *DdosProtectionPlansClient) ListHandleResponse(resp *azcore.Respons
 
 // ListHandleError handles the List error response.
 func (client *DdosProtectionPlansClient) ListHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -350,9 +338,6 @@ func (client *DdosProtectionPlansClient) ListByResourceGroupHandleResponse(resp 
 
 // ListByResourceGroupHandleError handles the ListByResourceGroup error response.
 func (client *DdosProtectionPlansClient) ListByResourceGroupHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -370,8 +355,8 @@ func (client *DdosProtectionPlansClient) UpdateTags(ctx context.Context, resourc
 	if err != nil {
 		return nil, err
 	}
-	if err := client.UpdateTagsHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.UpdateTagsHandleError(resp)
 	}
 	result, err := client.UpdateTagsHandleResponse(resp)
 	if err != nil {
@@ -405,9 +390,6 @@ func (client *DdosProtectionPlansClient) UpdateTagsHandleResponse(resp *azcore.R
 
 // UpdateTagsHandleError handles the UpdateTags error response.
 func (client *DdosProtectionPlansClient) UpdateTagsHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

@@ -74,8 +74,8 @@ func (client *containerClient) AcquireLease(ctx context.Context, containerAcquir
 	if err != nil {
 		return nil, err
 	}
-	if err := client.AcquireLeaseHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusCreated) {
+		return nil, client.AcquireLeaseHandleError(resp)
 	}
 	result, err := client.AcquireLeaseHandleResponse(resp)
 	if err != nil {
@@ -155,9 +155,6 @@ func (client *containerClient) AcquireLeaseHandleResponse(resp *azcore.Response)
 
 // AcquireLeaseHandleError handles the AcquireLease error response.
 func (client *containerClient) AcquireLeaseHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusCreated) {
-		return nil
-	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -175,8 +172,8 @@ func (client *containerClient) BreakLease(ctx context.Context, containerBreakLea
 	if err != nil {
 		return nil, err
 	}
-	if err := client.BreakLeaseHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.BreakLeaseHandleError(resp)
 	}
 	result, err := client.BreakLeaseHandleResponse(resp)
 	if err != nil {
@@ -258,9 +255,6 @@ func (client *containerClient) BreakLeaseHandleResponse(resp *azcore.Response) (
 
 // BreakLeaseHandleError handles the BreakLease error response.
 func (client *containerClient) BreakLeaseHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted) {
-		return nil
-	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -278,8 +272,8 @@ func (client *containerClient) ChangeLease(ctx context.Context, leaseId string, 
 	if err != nil {
 		return nil, err
 	}
-	if err := client.ChangeLeaseHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ChangeLeaseHandleError(resp)
 	}
 	result, err := client.ChangeLeaseHandleResponse(resp)
 	if err != nil {
@@ -355,9 +349,6 @@ func (client *containerClient) ChangeLeaseHandleResponse(resp *azcore.Response) 
 
 // ChangeLeaseHandleError handles the ChangeLease error response.
 func (client *containerClient) ChangeLeaseHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -375,8 +366,8 @@ func (client *containerClient) Create(ctx context.Context, containerCreateOption
 	if err != nil {
 		return nil, err
 	}
-	if err := client.CreateHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusCreated) {
+		return nil, client.CreateHandleError(resp)
 	}
 	result, err := client.CreateHandleResponse(resp)
 	if err != nil {
@@ -453,9 +444,6 @@ func (client *containerClient) CreateHandleResponse(resp *azcore.Response) (*Con
 
 // CreateHandleError handles the Create error response.
 func (client *containerClient) CreateHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusCreated) {
-		return nil
-	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -473,8 +461,8 @@ func (client *containerClient) Delete(ctx context.Context, containerDeleteOption
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DeleteHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -536,9 +524,6 @@ func (client *containerClient) DeleteHandleResponse(resp *azcore.Response) (*Con
 
 // DeleteHandleError handles the Delete error response.
 func (client *containerClient) DeleteHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted) {
-		return nil
-	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -556,8 +541,8 @@ func (client *containerClient) GetAccessPolicy(ctx context.Context, containerGet
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetAccessPolicyHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetAccessPolicyHandleError(resp)
 	}
 	result, err := client.GetAccessPolicyHandleResponse(resp)
 	if err != nil {
@@ -627,9 +612,6 @@ func (client *containerClient) GetAccessPolicyHandleResponse(resp *azcore.Respon
 
 // GetAccessPolicyHandleError handles the GetAccessPolicy error response.
 func (client *containerClient) GetAccessPolicyHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -647,8 +629,8 @@ func (client *containerClient) GetAccountInfo(ctx context.Context) (*ContainerGe
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetAccountInfoHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetAccountInfoHandleError(resp)
 	}
 	result, err := client.GetAccountInfoHandleResponse(resp)
 	if err != nil {
@@ -702,9 +684,6 @@ func (client *containerClient) GetAccountInfoHandleResponse(resp *azcore.Respons
 
 // GetAccountInfoHandleError handles the GetAccountInfo error response.
 func (client *containerClient) GetAccountInfoHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -722,8 +701,8 @@ func (client *containerClient) GetProperties(ctx context.Context, containerGetPr
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetPropertiesHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetPropertiesHandleError(resp)
 	}
 	result, err := client.GetPropertiesHandleResponse(resp)
 	if err != nil {
@@ -833,9 +812,6 @@ func (client *containerClient) GetPropertiesHandleResponse(resp *azcore.Response
 
 // GetPropertiesHandleError handles the GetProperties error response.
 func (client *containerClient) GetPropertiesHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -918,9 +894,6 @@ func (client *containerClient) ListBlobFlatSegmentHandleResponse(resp *azcore.Re
 
 // ListBlobFlatSegmentHandleError handles the ListBlobFlatSegment error response.
 func (client *containerClient) ListBlobFlatSegmentHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -1004,9 +977,6 @@ func (client *containerClient) ListBlobHierarchySegmentHandleResponse(resp *azco
 
 // ListBlobHierarchySegmentHandleError handles the ListBlobHierarchySegment error response.
 func (client *containerClient) ListBlobHierarchySegmentHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -1024,8 +994,8 @@ func (client *containerClient) ReleaseLease(ctx context.Context, leaseId string,
 	if err != nil {
 		return nil, err
 	}
-	if err := client.ReleaseLeaseHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ReleaseLeaseHandleError(resp)
 	}
 	result, err := client.ReleaseLeaseHandleResponse(resp)
 	if err != nil {
@@ -1097,9 +1067,6 @@ func (client *containerClient) ReleaseLeaseHandleResponse(resp *azcore.Response)
 
 // ReleaseLeaseHandleError handles the ReleaseLease error response.
 func (client *containerClient) ReleaseLeaseHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -1117,8 +1084,8 @@ func (client *containerClient) RenewLease(ctx context.Context, leaseId string, c
 	if err != nil {
 		return nil, err
 	}
-	if err := client.RenewLeaseHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.RenewLeaseHandleError(resp)
 	}
 	result, err := client.RenewLeaseHandleResponse(resp)
 	if err != nil {
@@ -1193,9 +1160,6 @@ func (client *containerClient) RenewLeaseHandleResponse(resp *azcore.Response) (
 
 // RenewLeaseHandleError handles the RenewLease error response.
 func (client *containerClient) RenewLeaseHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -1213,8 +1177,8 @@ func (client *containerClient) SetAccessPolicy(ctx context.Context, containerSet
 	if err != nil {
 		return nil, err
 	}
-	if err := client.SetAccessPolicyHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.SetAccessPolicyHandleError(resp)
 	}
 	result, err := client.SetAccessPolicyHandleResponse(resp)
 	if err != nil {
@@ -1297,9 +1261,6 @@ func (client *containerClient) SetAccessPolicyHandleResponse(resp *azcore.Respon
 
 // SetAccessPolicyHandleError handles the SetAccessPolicy error response.
 func (client *containerClient) SetAccessPolicyHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -1317,8 +1278,8 @@ func (client *containerClient) SetMetadata(ctx context.Context, containerSetMeta
 	if err != nil {
 		return nil, err
 	}
-	if err := client.SetMetadataHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.SetMetadataHandleError(resp)
 	}
 	result, err := client.SetMetadataHandleResponse(resp)
 	if err != nil {
@@ -1393,9 +1354,6 @@ func (client *containerClient) SetMetadataHandleResponse(resp *azcore.Response) 
 
 // SetMetadataHandleError handles the SetMetadata error response.
 func (client *containerClient) SetMetadataHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err

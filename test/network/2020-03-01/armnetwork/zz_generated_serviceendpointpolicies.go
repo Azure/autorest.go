@@ -63,8 +63,8 @@ func (client *ServiceEndpointPoliciesClient) BeginCreateOrUpdate(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	if err := client.CreateOrUpdateHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -120,9 +120,6 @@ func (client *ServiceEndpointPoliciesClient) CreateOrUpdateHandleResponse(resp *
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *ServiceEndpointPoliciesClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -141,8 +138,8 @@ func (client *ServiceEndpointPoliciesClient) BeginDelete(ctx context.Context, re
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DeleteHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -198,9 +195,6 @@ func (client *ServiceEndpointPoliciesClient) DeleteHandleResponse(resp *azcore.R
 
 // DeleteHandleError handles the Delete error response.
 func (client *ServiceEndpointPoliciesClient) DeleteHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -218,8 +212,8 @@ func (client *ServiceEndpointPoliciesClient) Get(ctx context.Context, resourceGr
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -256,9 +250,6 @@ func (client *ServiceEndpointPoliciesClient) GetHandleResponse(resp *azcore.Resp
 
 // GetHandleError handles the Get error response.
 func (client *ServiceEndpointPoliciesClient) GetHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -304,9 +295,6 @@ func (client *ServiceEndpointPoliciesClient) ListHandleResponse(resp *azcore.Res
 
 // ListHandleError handles the List error response.
 func (client *ServiceEndpointPoliciesClient) ListHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -353,9 +341,6 @@ func (client *ServiceEndpointPoliciesClient) ListByResourceGroupHandleResponse(r
 
 // ListByResourceGroupHandleError handles the ListByResourceGroup error response.
 func (client *ServiceEndpointPoliciesClient) ListByResourceGroupHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -373,8 +358,8 @@ func (client *ServiceEndpointPoliciesClient) UpdateTags(ctx context.Context, res
 	if err != nil {
 		return nil, err
 	}
-	if err := client.UpdateTagsHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.UpdateTagsHandleError(resp)
 	}
 	result, err := client.UpdateTagsHandleResponse(resp)
 	if err != nil {
@@ -408,9 +393,6 @@ func (client *ServiceEndpointPoliciesClient) UpdateTagsHandleResponse(resp *azco
 
 // UpdateTagsHandleError handles the UpdateTags error response.
 func (client *ServiceEndpointPoliciesClient) UpdateTagsHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

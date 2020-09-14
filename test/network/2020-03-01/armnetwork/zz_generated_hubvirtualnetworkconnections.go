@@ -48,8 +48,8 @@ func (client *HubVirtualNetworkConnectionsClient) Get(ctx context.Context, resou
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -84,9 +84,6 @@ func (client *HubVirtualNetworkConnectionsClient) GetHandleResponse(resp *azcore
 
 // GetHandleError handles the Get error response.
 func (client *HubVirtualNetworkConnectionsClient) GetHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -134,9 +131,6 @@ func (client *HubVirtualNetworkConnectionsClient) ListHandleResponse(resp *azcor
 
 // ListHandleError handles the List error response.
 func (client *HubVirtualNetworkConnectionsClient) ListHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

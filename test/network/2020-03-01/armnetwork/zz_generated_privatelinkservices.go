@@ -83,8 +83,8 @@ func (client *PrivateLinkServicesClient) BeginCheckPrivateLinkServiceVisibility(
 	if err != nil {
 		return nil, err
 	}
-	if err := client.CheckPrivateLinkServiceVisibilityHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.CheckPrivateLinkServiceVisibilityHandleError(resp)
 	}
 	result, err := client.CheckPrivateLinkServiceVisibilityHandleResponse(resp)
 	if err != nil {
@@ -139,9 +139,6 @@ func (client *PrivateLinkServicesClient) CheckPrivateLinkServiceVisibilityHandle
 
 // CheckPrivateLinkServiceVisibilityHandleError handles the CheckPrivateLinkServiceVisibility error response.
 func (client *PrivateLinkServicesClient) CheckPrivateLinkServiceVisibilityHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -160,8 +157,8 @@ func (client *PrivateLinkServicesClient) BeginCheckPrivateLinkServiceVisibilityB
 	if err != nil {
 		return nil, err
 	}
-	if err := client.CheckPrivateLinkServiceVisibilityByResourceGroupHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.CheckPrivateLinkServiceVisibilityByResourceGroupHandleError(resp)
 	}
 	result, err := client.CheckPrivateLinkServiceVisibilityByResourceGroupHandleResponse(resp)
 	if err != nil {
@@ -217,9 +214,6 @@ func (client *PrivateLinkServicesClient) CheckPrivateLinkServiceVisibilityByReso
 
 // CheckPrivateLinkServiceVisibilityByResourceGroupHandleError handles the CheckPrivateLinkServiceVisibilityByResourceGroup error response.
 func (client *PrivateLinkServicesClient) CheckPrivateLinkServiceVisibilityByResourceGroupHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -238,8 +232,8 @@ func (client *PrivateLinkServicesClient) BeginCreateOrUpdate(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	if err := client.CreateOrUpdateHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -295,9 +289,6 @@ func (client *PrivateLinkServicesClient) CreateOrUpdateHandleResponse(resp *azco
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *PrivateLinkServicesClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -316,8 +307,8 @@ func (client *PrivateLinkServicesClient) BeginDelete(ctx context.Context, resour
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DeleteHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -373,9 +364,6 @@ func (client *PrivateLinkServicesClient) DeleteHandleResponse(resp *azcore.Respo
 
 // DeleteHandleError handles the Delete error response.
 func (client *PrivateLinkServicesClient) DeleteHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -394,8 +382,8 @@ func (client *PrivateLinkServicesClient) BeginDeletePrivateEndpointConnection(ct
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DeletePrivateEndpointConnectionHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeletePrivateEndpointConnectionHandleError(resp)
 	}
 	result, err := client.DeletePrivateEndpointConnectionHandleResponse(resp)
 	if err != nil {
@@ -452,9 +440,6 @@ func (client *PrivateLinkServicesClient) DeletePrivateEndpointConnectionHandleRe
 
 // DeletePrivateEndpointConnectionHandleError handles the DeletePrivateEndpointConnection error response.
 func (client *PrivateLinkServicesClient) DeletePrivateEndpointConnectionHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -472,8 +457,8 @@ func (client *PrivateLinkServicesClient) Get(ctx context.Context, resourceGroupN
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -510,9 +495,6 @@ func (client *PrivateLinkServicesClient) GetHandleResponse(resp *azcore.Response
 
 // GetHandleError handles the Get error response.
 func (client *PrivateLinkServicesClient) GetHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -530,8 +512,8 @@ func (client *PrivateLinkServicesClient) GetPrivateEndpointConnection(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetPrivateEndpointConnectionHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetPrivateEndpointConnectionHandleError(resp)
 	}
 	result, err := client.GetPrivateEndpointConnectionHandleResponse(resp)
 	if err != nil {
@@ -569,9 +551,6 @@ func (client *PrivateLinkServicesClient) GetPrivateEndpointConnectionHandleRespo
 
 // GetPrivateEndpointConnectionHandleError handles the GetPrivateEndpointConnection error response.
 func (client *PrivateLinkServicesClient) GetPrivateEndpointConnectionHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -618,9 +597,6 @@ func (client *PrivateLinkServicesClient) ListHandleResponse(resp *azcore.Respons
 
 // ListHandleError handles the List error response.
 func (client *PrivateLinkServicesClient) ListHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -667,9 +643,6 @@ func (client *PrivateLinkServicesClient) ListAutoApprovedPrivateLinkServicesHand
 
 // ListAutoApprovedPrivateLinkServicesHandleError handles the ListAutoApprovedPrivateLinkServices error response.
 func (client *PrivateLinkServicesClient) ListAutoApprovedPrivateLinkServicesHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -717,9 +690,6 @@ func (client *PrivateLinkServicesClient) ListAutoApprovedPrivateLinkServicesByRe
 
 // ListAutoApprovedPrivateLinkServicesByResourceGroupHandleError handles the ListAutoApprovedPrivateLinkServicesByResourceGroup error response.
 func (client *PrivateLinkServicesClient) ListAutoApprovedPrivateLinkServicesByResourceGroupHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -765,9 +735,6 @@ func (client *PrivateLinkServicesClient) ListBySubscriptionHandleResponse(resp *
 
 // ListBySubscriptionHandleError handles the ListBySubscription error response.
 func (client *PrivateLinkServicesClient) ListBySubscriptionHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -815,9 +782,6 @@ func (client *PrivateLinkServicesClient) ListPrivateEndpointConnectionsHandleRes
 
 // ListPrivateEndpointConnectionsHandleError handles the ListPrivateEndpointConnections error response.
 func (client *PrivateLinkServicesClient) ListPrivateEndpointConnectionsHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -835,8 +799,8 @@ func (client *PrivateLinkServicesClient) UpdatePrivateEndpointConnection(ctx con
 	if err != nil {
 		return nil, err
 	}
-	if err := client.UpdatePrivateEndpointConnectionHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.UpdatePrivateEndpointConnectionHandleError(resp)
 	}
 	result, err := client.UpdatePrivateEndpointConnectionHandleResponse(resp)
 	if err != nil {
@@ -871,9 +835,6 @@ func (client *PrivateLinkServicesClient) UpdatePrivateEndpointConnectionHandleRe
 
 // UpdatePrivateEndpointConnectionHandleError handles the UpdatePrivateEndpointConnection error response.
 func (client *PrivateLinkServicesClient) UpdatePrivateEndpointConnectionHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

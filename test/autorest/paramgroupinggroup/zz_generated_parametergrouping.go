@@ -52,8 +52,8 @@ func (client *ParameterGroupingClient) PostMultiParamGroups(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostMultiParamGroupsHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PostMultiParamGroupsHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -85,9 +85,6 @@ func (client *ParameterGroupingClient) PostMultiParamGroupsCreateRequest(ctx con
 
 // PostMultiParamGroupsHandleError handles the PostMultiParamGroups error response.
 func (client *ParameterGroupingClient) PostMultiParamGroupsHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -105,8 +102,8 @@ func (client *ParameterGroupingClient) PostOptional(ctx context.Context, paramet
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostOptionalHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PostOptionalHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -132,9 +129,6 @@ func (client *ParameterGroupingClient) PostOptionalCreateRequest(ctx context.Con
 
 // PostOptionalHandleError handles the PostOptional error response.
 func (client *ParameterGroupingClient) PostOptionalHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -152,8 +146,8 @@ func (client *ParameterGroupingClient) PostRequired(ctx context.Context, paramet
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostRequiredHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PostRequiredHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -180,9 +174,6 @@ func (client *ParameterGroupingClient) PostRequiredCreateRequest(ctx context.Con
 
 // PostRequiredHandleError handles the PostRequired error response.
 func (client *ParameterGroupingClient) PostRequiredHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -200,8 +191,8 @@ func (client *ParameterGroupingClient) PostSharedParameterGroupObject(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostSharedParameterGroupObjectHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PostSharedParameterGroupObjectHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -227,9 +218,6 @@ func (client *ParameterGroupingClient) PostSharedParameterGroupObjectCreateReque
 
 // PostSharedParameterGroupObjectHandleError handles the PostSharedParameterGroupObject error response.
 func (client *ParameterGroupingClient) PostSharedParameterGroupObjectHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

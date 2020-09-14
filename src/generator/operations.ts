@@ -9,7 +9,7 @@ import { ArraySchema, ByteArraySchema, CodeModel, ConstantSchema, DateTimeSchema
 import { values } from '@azure-tools/linq';
 import { aggregateParameters, isArraySchema, isPageableOperation, isSchemaResponse, PagerInfo, isLROOperation } from '../common/helpers';
 import { OperationNaming } from '../transform/namer';
-import { contentPreamble, formatParameterTypeName, hasDescription, hasSchemaResponse, skipURLEncoding, sortAscending, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired } from './helpers';
+import { contentPreamble, formatParameterTypeName, formatStatusCodes, getStatusCodes, hasDescription, hasSchemaResponse, skipURLEncoding, sortAscending, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired } from './helpers';
 import { ImportManager } from './imports';
 
 // represents the generated content for an operation group
@@ -243,14 +243,15 @@ function generateOperation(op: Operation, imports: ImportManager, isDataPlane: b
     text += `\tif err != nil {\n`;
     text += `\t\treturn nil, err\n`;
     text += `\t}\n`;
+    const statusCodes = getStatusCodes(op);
+    text += `\tif !resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
+    text += `\t\treturn nil, client.${info.protocolNaming.errorMethod}(resp)\n`;
+    text += '\t}\n';
     if (!op.responses) {
       text += '\tresult := &HTTPResponse{\n';
       text += '\t\tresult.RawResponse: resp\n';
       text += '\t}\n';
     } else {
-      text += `\tif err := client.${info.protocolNaming.errorMethod}(resp); err != nil {\n`;
-      text += `\t\treturn nil, err\n`;
-      text += '\t}\n';
       text += `\tresult, err := client.${info.protocolNaming.responseMethod}(resp)\n`;
       text += `\tif err != nil {\n`;
       text += `\t\treturn nil, err\n`;
@@ -269,7 +270,6 @@ function generateOperation(op: Operation, imports: ImportManager, isDataPlane: b
     text += `\tpoller := &${camelCase(op.language.go!.pollerType.name)}{\n`;
     text += '\t\tpt: pt,\n';
     if (isPageableOperation(op)) {
-      const statusCodes = getStatusCodes(op);
       if (statusCodes.indexOf('200') < 0) {
         statusCodes.push('200');
       }
@@ -283,7 +283,7 @@ function generateOperation(op: Operation, imports: ImportManager, isDataPlane: b
       text += '\t\t\t}\n';
       text += `\t\t\treturn client.${info.protocolNaming.errorMethod}(resp)\n`;
       text += '\t\t},\n';
-      text += `\t\trespHandler: func(resp *azcore.Response) (*ProductResultResponse, error) {\n`;
+      text += `\t\trespHandler: func(resp *azcore.Response) (*${(<SchemaResponse>op.responses![0]).schema.language.go!.responseType.name}, error) {\n`;
       text += generateResponseUnmarshaller(op.responses![0], false, imports);
       text += '\t\t},\n';
     }
@@ -354,8 +354,9 @@ function generateOperation(op: Operation, imports: ImportManager, isDataPlane: b
   text += `\tif err != nil {\n`;
   text += `\t\treturn nil, err\n`;
   text += `\t}\n`;
-  text += `\tif err := client.${info.protocolNaming.errorMethod}(resp); err != nil {\n`;
-  text += `\t\treturn nil, err\n`;
+  const statusCodes = getStatusCodes(op);
+  text += `\tif !resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
+  text += `\t\treturn nil, client.${info.protocolNaming.errorMethod}(resp)\n`;
   text += '\t}\n';
   if (needsResponseHandler(op)) {
     // also cheating here as at present the only param to the responder is an azcore.Response
@@ -369,20 +370,6 @@ function generateOperation(op: Operation, imports: ImportManager, isDataPlane: b
   }
   text += '}\n\n';
   return text;
-}
-
-function getStatusCodes(op: Operation): string[] {
-  // concat all status codes that return the same schema into one array.
-  // this is to support operations that specify multiple response codes
-  // that return the same schema (or no schema).
-  let statusCodes = new Array<string>();
-  for (const resp of values(op.responses)) {
-    statusCodes = statusCodes.concat(resp.protocol.http?.statusCodes);
-  }
-  if (isLROOperation(op) && statusCodes.find(element => element === '204') === undefined) {
-    statusCodes = statusCodes.concat('204');
-  }
-  return statusCodes;
 }
 
 function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: ImportManager): string {
@@ -777,11 +764,6 @@ function createProtocolErrHandler(op: Operation, imports: ImportManager): string
   const name = info.protocolNaming.errorMethod;
   let text = `${comment(name, '// ')} handles the ${info.name} error response.\n`;
   text += `func (client *${op.language.go!.clientName}) ${name}(resp *azcore.Response) error {\n`;
-  // exit early on successful status codes
-  const statusCodes = getStatusCodes(op);
-  text += `\tif resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
-  text += `\t\treturn nil\n`;
-  text += '\t}\n';
   // define a generic error for when there are no exceptions or no error schema
   const generateGenericError = function () {
     imports.add('errors');
@@ -933,53 +915,6 @@ function formatConstantValue(schema: ConstantSchema) {
     return `"${schema.value.value}"`;
   }
   return schema.value.value;
-}
-
-function formatStatusCodes(statusCodes: Array<string>): string {
-  const asHTTPStatus = new Array<string>();
-  for (const rawCode of values(statusCodes)) {
-    asHTTPStatus.push(formatStatusCode(rawCode));
-  }
-  return asHTTPStatus.join(', ');
-}
-
-function formatStatusCode(statusCode: string): string {
-  switch (statusCode) {
-    case '200':
-      return 'http.StatusOK';
-    case '201':
-      return 'http.StatusCreated';
-    case '202':
-      return 'http.StatusAccepted';
-    case '204':
-      return 'http.StatusNoContent';
-    case '206':
-      return 'http.StatusPartialContent';
-    case '300':
-      return 'http.StatusMultipleChoices';
-    case '301':
-      return 'http.StatusMovedPermanently';
-    case '302':
-      return 'http.StatusFound';
-    case '303':
-      return 'http.StatusSeeOther';
-    case '304':
-      return 'http.StatusNotModified';
-    case '307':
-      return 'http.StatusTemporaryRedirect';
-    case '400':
-      return 'http.StatusBadRequest';
-    case '404':
-      return 'http.StatusNotFound';
-    case '409':
-      return 'http.StatusConflict';
-    case '500':
-      return 'http.StatusInternalServerError';
-    case '501':
-      return 'http.StatusNotImplemented';
-    default:
-      throw console.error(`unhandled status code ${statusCode}`);
-  }
 }
 
 // returns true if any responses are a binary stream

@@ -48,8 +48,8 @@ func (client *DefaultSecurityRulesClient) Get(ctx context.Context, resourceGroup
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -84,9 +84,6 @@ func (client *DefaultSecurityRulesClient) GetHandleResponse(resp *azcore.Respons
 
 // GetHandleError handles the Get error response.
 func (client *DefaultSecurityRulesClient) GetHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -134,9 +131,6 @@ func (client *DefaultSecurityRulesClient) ListHandleResponse(resp *azcore.Respon
 
 // ListHandleError handles the List error response.
 func (client *DefaultSecurityRulesClient) ListHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

@@ -60,8 +60,8 @@ func (client *NetworkProfilesClient) CreateOrUpdate(ctx context.Context, resourc
 	if err != nil {
 		return nil, err
 	}
-	if err := client.CreateOrUpdateHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -95,9 +95,6 @@ func (client *NetworkProfilesClient) CreateOrUpdateHandleResponse(resp *azcore.R
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *NetworkProfilesClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -116,8 +113,8 @@ func (client *NetworkProfilesClient) BeginDelete(ctx context.Context, resourceGr
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DeleteHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -173,9 +170,6 @@ func (client *NetworkProfilesClient) DeleteHandleResponse(resp *azcore.Response)
 
 // DeleteHandleError handles the Delete error response.
 func (client *NetworkProfilesClient) DeleteHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -193,8 +187,8 @@ func (client *NetworkProfilesClient) Get(ctx context.Context, resourceGroupName 
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -231,9 +225,6 @@ func (client *NetworkProfilesClient) GetHandleResponse(resp *azcore.Response) (*
 
 // GetHandleError handles the Get error response.
 func (client *NetworkProfilesClient) GetHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -280,9 +271,6 @@ func (client *NetworkProfilesClient) ListHandleResponse(resp *azcore.Response) (
 
 // ListHandleError handles the List error response.
 func (client *NetworkProfilesClient) ListHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -328,9 +316,6 @@ func (client *NetworkProfilesClient) ListAllHandleResponse(resp *azcore.Response
 
 // ListAllHandleError handles the ListAll error response.
 func (client *NetworkProfilesClient) ListAllHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -348,8 +333,8 @@ func (client *NetworkProfilesClient) UpdateTags(ctx context.Context, resourceGro
 	if err != nil {
 		return nil, err
 	}
-	if err := client.UpdateTagsHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.UpdateTagsHandleError(resp)
 	}
 	result, err := client.UpdateTagsHandleResponse(resp)
 	if err != nil {
@@ -383,9 +368,6 @@ func (client *NetworkProfilesClient) UpdateTagsHandleResponse(resp *azcore.Respo
 
 // UpdateTagsHandleError handles the UpdateTags error response.
 func (client *NetworkProfilesClient) UpdateTagsHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

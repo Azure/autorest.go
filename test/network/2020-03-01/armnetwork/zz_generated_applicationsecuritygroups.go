@@ -63,8 +63,8 @@ func (client *ApplicationSecurityGroupsClient) BeginCreateOrUpdate(ctx context.C
 	if err != nil {
 		return nil, err
 	}
-	if err := client.CreateOrUpdateHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -120,9 +120,6 @@ func (client *ApplicationSecurityGroupsClient) CreateOrUpdateHandleResponse(resp
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *ApplicationSecurityGroupsClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -141,8 +138,8 @@ func (client *ApplicationSecurityGroupsClient) BeginDelete(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DeleteHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -198,9 +195,6 @@ func (client *ApplicationSecurityGroupsClient) DeleteHandleResponse(resp *azcore
 
 // DeleteHandleError handles the Delete error response.
 func (client *ApplicationSecurityGroupsClient) DeleteHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -218,8 +212,8 @@ func (client *ApplicationSecurityGroupsClient) Get(ctx context.Context, resource
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -253,9 +247,6 @@ func (client *ApplicationSecurityGroupsClient) GetHandleResponse(resp *azcore.Re
 
 // GetHandleError handles the Get error response.
 func (client *ApplicationSecurityGroupsClient) GetHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -302,9 +293,6 @@ func (client *ApplicationSecurityGroupsClient) ListHandleResponse(resp *azcore.R
 
 // ListHandleError handles the List error response.
 func (client *ApplicationSecurityGroupsClient) ListHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -350,9 +338,6 @@ func (client *ApplicationSecurityGroupsClient) ListAllHandleResponse(resp *azcor
 
 // ListAllHandleError handles the ListAll error response.
 func (client *ApplicationSecurityGroupsClient) ListAllHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -370,8 +355,8 @@ func (client *ApplicationSecurityGroupsClient) UpdateTags(ctx context.Context, r
 	if err != nil {
 		return nil, err
 	}
-	if err := client.UpdateTagsHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.UpdateTagsHandleError(resp)
 	}
 	result, err := client.UpdateTagsHandleResponse(resp)
 	if err != nil {
@@ -405,9 +390,6 @@ func (client *ApplicationSecurityGroupsClient) UpdateTagsHandleResponse(resp *az
 
 // UpdateTagsHandleError handles the UpdateTags error response.
 func (client *ApplicationSecurityGroupsClient) UpdateTagsHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

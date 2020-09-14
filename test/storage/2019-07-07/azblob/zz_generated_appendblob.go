@@ -51,8 +51,8 @@ func (client *appendBlobClient) AppendBlock(ctx context.Context, contentLength i
 	if err != nil {
 		return nil, err
 	}
-	if err := client.AppendBlockHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusCreated) {
+		return nil, client.AppendBlockHandleError(resp)
 	}
 	result, err := client.AppendBlockHandleResponse(resp)
 	if err != nil {
@@ -190,9 +190,6 @@ func (client *appendBlobClient) AppendBlockHandleResponse(resp *azcore.Response)
 
 // AppendBlockHandleError handles the AppendBlock error response.
 func (client *appendBlobClient) AppendBlockHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusCreated) {
-		return nil
-	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -210,8 +207,8 @@ func (client *appendBlobClient) AppendBlockFromURL(ctx context.Context, sourceUr
 	if err != nil {
 		return nil, err
 	}
-	if err := client.AppendBlockFromURLHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusCreated) {
+		return nil, client.AppendBlockFromURLHandleError(resp)
 	}
 	result, err := client.AppendBlockFromURLHandleResponse(resp)
 	if err != nil {
@@ -365,9 +362,6 @@ func (client *appendBlobClient) AppendBlockFromURLHandleResponse(resp *azcore.Re
 
 // AppendBlockFromURLHandleError handles the AppendBlockFromURL error response.
 func (client *appendBlobClient) AppendBlockFromURLHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusCreated) {
-		return nil
-	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -385,8 +379,8 @@ func (client *appendBlobClient) Create(ctx context.Context, contentLength int64,
 	if err != nil {
 		return nil, err
 	}
-	if err := client.CreateHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusCreated) {
+		return nil, client.CreateHandleError(resp)
 	}
 	result, err := client.CreateHandleResponse(resp)
 	if err != nil {
@@ -517,9 +511,6 @@ func (client *appendBlobClient) CreateHandleResponse(resp *azcore.Response) (*Ap
 
 // CreateHandleError handles the Create error response.
 func (client *appendBlobClient) CreateHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusCreated) {
-		return nil
-	}
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err

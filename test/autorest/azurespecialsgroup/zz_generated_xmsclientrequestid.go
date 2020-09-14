@@ -48,8 +48,8 @@ func (client *XMSClientRequestIDClient) Get(ctx context.Context) (*http.Response
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -66,9 +66,6 @@ func (client *XMSClientRequestIDClient) GetCreateRequest(ctx context.Context) (*
 
 // GetHandleError handles the Get error response.
 func (client *XMSClientRequestIDClient) GetHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -89,8 +86,8 @@ func (client *XMSClientRequestIDClient) ParamGet(ctx context.Context, xMSClientR
 	if err != nil {
 		return nil, err
 	}
-	if err := client.ParamGetHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ParamGetHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -109,9 +106,6 @@ func (client *XMSClientRequestIDClient) ParamGetCreateRequest(ctx context.Contex
 
 // ParamGetHandleError handles the ParamGet error response.
 func (client *XMSClientRequestIDClient) ParamGetHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

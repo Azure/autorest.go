@@ -395,7 +395,7 @@ func (p *bastionActiveSessionListResultPagerPoller) FinalResponse(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	return p.handleResponse(&azcore.Response{resp})
+	return p.handleResponse(&azcore.Response{Response: resp})
 }
 
 // ResumeToken generates the string token that can be used with the ResumeBastionActiveSessionListResultPagerPoller method
@@ -410,7 +410,7 @@ func (p *bastionActiveSessionListResultPagerPoller) pollUntilDone(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	return p.handleResponse(&azcore.Response{resp})
+	return p.handleResponse(&azcore.Response{Response: resp})
 }
 
 func (p *bastionActiveSessionListResultPagerPoller) handleResponse(resp *azcore.Response) (BastionActiveSessionListResultPager, error) {
@@ -507,7 +507,7 @@ func (p *bastionShareableLinkListResultPagerPoller) FinalResponse(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	return p.handleResponse(&azcore.Response{resp})
+	return p.handleResponse(&azcore.Response{Response: resp})
 }
 
 // ResumeToken generates the string token that can be used with the ResumeBastionShareableLinkListResultPagerPoller method
@@ -522,7 +522,7 @@ func (p *bastionShareableLinkListResultPagerPoller) pollUntilDone(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	return p.handleResponse(&azcore.Response{resp})
+	return p.handleResponse(&azcore.Response{Response: resp})
 }
 
 func (p *bastionShareableLinkListResultPagerPoller) handleResponse(resp *azcore.Response) (BastionShareableLinkListResultPager, error) {

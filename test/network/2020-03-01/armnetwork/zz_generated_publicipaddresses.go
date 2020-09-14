@@ -69,8 +69,8 @@ func (client *PublicIPAddressesClient) BeginCreateOrUpdate(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	if err := client.CreateOrUpdateHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -126,9 +126,6 @@ func (client *PublicIPAddressesClient) CreateOrUpdateHandleResponse(resp *azcore
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *PublicIPAddressesClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -147,8 +144,8 @@ func (client *PublicIPAddressesClient) BeginDelete(ctx context.Context, resource
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DeleteHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -204,9 +201,6 @@ func (client *PublicIPAddressesClient) DeleteHandleResponse(resp *azcore.Respons
 
 // DeleteHandleError handles the Delete error response.
 func (client *PublicIPAddressesClient) DeleteHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -224,8 +218,8 @@ func (client *PublicIPAddressesClient) Get(ctx context.Context, resourceGroupNam
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -262,9 +256,6 @@ func (client *PublicIPAddressesClient) GetHandleResponse(resp *azcore.Response) 
 
 // GetHandleError handles the Get error response.
 func (client *PublicIPAddressesClient) GetHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -282,8 +273,8 @@ func (client *PublicIPAddressesClient) GetVirtualMachineScaleSetPublicIPAddress(
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetVirtualMachineScaleSetPublicIPAddressHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetVirtualMachineScaleSetPublicIPAddressHandleError(resp)
 	}
 	result, err := client.GetVirtualMachineScaleSetPublicIPAddressHandleResponse(resp)
 	if err != nil {
@@ -324,9 +315,6 @@ func (client *PublicIPAddressesClient) GetVirtualMachineScaleSetPublicIPAddressH
 
 // GetVirtualMachineScaleSetPublicIPAddressHandleError handles the GetVirtualMachineScaleSetPublicIPAddress error response.
 func (client *PublicIPAddressesClient) GetVirtualMachineScaleSetPublicIPAddressHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -373,9 +361,6 @@ func (client *PublicIPAddressesClient) ListHandleResponse(resp *azcore.Response)
 
 // ListHandleError handles the List error response.
 func (client *PublicIPAddressesClient) ListHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -421,9 +406,6 @@ func (client *PublicIPAddressesClient) ListAllHandleResponse(resp *azcore.Respon
 
 // ListAllHandleError handles the ListAll error response.
 func (client *PublicIPAddressesClient) ListAllHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -471,9 +453,6 @@ func (client *PublicIPAddressesClient) ListVirtualMachineScaleSetPublicIPAddress
 
 // ListVirtualMachineScaleSetPublicIPAddressesHandleError handles the ListVirtualMachineScaleSetPublicIPAddresses error response.
 func (client *PublicIPAddressesClient) ListVirtualMachineScaleSetPublicIPAddressesHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -524,9 +503,6 @@ func (client *PublicIPAddressesClient) ListVirtualMachineScaleSetVMPublicIPaddre
 
 // ListVirtualMachineScaleSetVMPublicIPaddressesHandleError handles the ListVirtualMachineScaleSetVMPublicIPaddresses error response.
 func (client *PublicIPAddressesClient) ListVirtualMachineScaleSetVMPublicIPaddressesHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -544,8 +520,8 @@ func (client *PublicIPAddressesClient) UpdateTags(ctx context.Context, resourceG
 	if err != nil {
 		return nil, err
 	}
-	if err := client.UpdateTagsHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.UpdateTagsHandleError(resp)
 	}
 	result, err := client.UpdateTagsHandleResponse(resp)
 	if err != nil {
@@ -579,9 +555,6 @@ func (client *PublicIPAddressesClient) UpdateTagsHandleResponse(resp *azcore.Res
 
 // UpdateTagsHandleError handles the UpdateTags error response.
 func (client *PublicIPAddressesClient) UpdateTagsHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

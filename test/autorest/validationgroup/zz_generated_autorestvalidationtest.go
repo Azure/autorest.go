@@ -53,8 +53,8 @@ func (client *AutoRestValidationTestClient) GetWithConstantInPath(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetWithConstantInPathHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetWithConstantInPathHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -72,9 +72,6 @@ func (client *AutoRestValidationTestClient) GetWithConstantInPathCreateRequest(c
 
 // GetWithConstantInPathHandleError handles the GetWithConstantInPath error response.
 func (client *AutoRestValidationTestClient) GetWithConstantInPathHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -94,8 +91,8 @@ func (client *AutoRestValidationTestClient) PostWithConstantInBody(ctx context.C
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostWithConstantInBodyHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PostWithConstantInBodyHandleError(resp)
 	}
 	result, err := client.PostWithConstantInBodyHandleResponse(resp)
 	if err != nil {
@@ -127,9 +124,6 @@ func (client *AutoRestValidationTestClient) PostWithConstantInBodyHandleResponse
 
 // PostWithConstantInBodyHandleError handles the PostWithConstantInBody error response.
 func (client *AutoRestValidationTestClient) PostWithConstantInBodyHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -150,8 +144,8 @@ func (client *AutoRestValidationTestClient) ValidationOfBody(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	if err := client.ValidationOfBodyHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ValidationOfBodyHandleError(resp)
 	}
 	result, err := client.ValidationOfBodyHandleResponse(resp)
 	if err != nil {
@@ -188,9 +182,6 @@ func (client *AutoRestValidationTestClient) ValidationOfBodyHandleResponse(resp 
 
 // ValidationOfBodyHandleError handles the ValidationOfBody error response.
 func (client *AutoRestValidationTestClient) ValidationOfBodyHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -208,8 +199,8 @@ func (client *AutoRestValidationTestClient) ValidationOfMethodParameters(ctx con
 	if err != nil {
 		return nil, err
 	}
-	if err := client.ValidationOfMethodParametersHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ValidationOfMethodParametersHandleError(resp)
 	}
 	result, err := client.ValidationOfMethodParametersHandleResponse(resp)
 	if err != nil {
@@ -243,9 +234,6 @@ func (client *AutoRestValidationTestClient) ValidationOfMethodParametersHandleRe
 
 // ValidationOfMethodParametersHandleError handles the ValidationOfMethodParameters error response.
 func (client *AutoRestValidationTestClient) ValidationOfMethodParametersHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

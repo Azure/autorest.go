@@ -208,8 +208,8 @@ func (client *LrOSClient) BeginDelete202NoRetry204(ctx context.Context) (*Produc
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Delete202NoRetry204HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.Delete202NoRetry204HandleError(resp)
 	}
 	result, err := client.Delete202NoRetry204HandleResponse(resp)
 	if err != nil {
@@ -259,9 +259,6 @@ func (client *LrOSClient) Delete202NoRetry204HandleResponse(resp *azcore.Respons
 
 // Delete202NoRetry204HandleError handles the Delete202NoRetry204 error response.
 func (client *LrOSClient) Delete202NoRetry204HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -280,8 +277,8 @@ func (client *LrOSClient) BeginDelete202Retry200(ctx context.Context) (*ProductP
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Delete202Retry200HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.Delete202Retry200HandleError(resp)
 	}
 	result, err := client.Delete202Retry200HandleResponse(resp)
 	if err != nil {
@@ -331,9 +328,6 @@ func (client *LrOSClient) Delete202Retry200HandleResponse(resp *azcore.Response)
 
 // Delete202Retry200HandleError handles the Delete202Retry200 error response.
 func (client *LrOSClient) Delete202Retry200HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -352,8 +346,8 @@ func (client *LrOSClient) BeginDelete204Succeeded(ctx context.Context) (*HTTPPol
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Delete204SucceededHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusNoContent) {
+		return nil, client.Delete204SucceededHandleError(resp)
 	}
 	result, err := client.Delete204SucceededHandleResponse(resp)
 	if err != nil {
@@ -403,9 +397,6 @@ func (client *LrOSClient) Delete204SucceededHandleResponse(resp *azcore.Response
 
 // Delete204SucceededHandleError handles the Delete204Succeeded error response.
 func (client *LrOSClient) Delete204SucceededHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -424,8 +415,8 @@ func (client *LrOSClient) BeginDeleteAsyncNoHeaderInRetry(ctx context.Context) (
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DeleteAsyncNoHeaderInRetryHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteAsyncNoHeaderInRetryHandleError(resp)
 	}
 	result, err := client.DeleteAsyncNoHeaderInRetryHandleResponse(resp)
 	if err != nil {
@@ -475,9 +466,6 @@ func (client *LrOSClient) DeleteAsyncNoHeaderInRetryHandleResponse(resp *azcore.
 
 // DeleteAsyncNoHeaderInRetryHandleError handles the DeleteAsyncNoHeaderInRetry error response.
 func (client *LrOSClient) DeleteAsyncNoHeaderInRetryHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -496,8 +484,8 @@ func (client *LrOSClient) BeginDeleteAsyncNoRetrySucceeded(ctx context.Context) 
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DeleteAsyncNoRetrySucceededHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.DeleteAsyncNoRetrySucceededHandleError(resp)
 	}
 	result, err := client.DeleteAsyncNoRetrySucceededHandleResponse(resp)
 	if err != nil {
@@ -547,9 +535,6 @@ func (client *LrOSClient) DeleteAsyncNoRetrySucceededHandleResponse(resp *azcore
 
 // DeleteAsyncNoRetrySucceededHandleError handles the DeleteAsyncNoRetrySucceeded error response.
 func (client *LrOSClient) DeleteAsyncNoRetrySucceededHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -568,8 +553,8 @@ func (client *LrOSClient) BeginDeleteAsyncRetryFailed(ctx context.Context) (*HTT
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DeleteAsyncRetryFailedHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.DeleteAsyncRetryFailedHandleError(resp)
 	}
 	result, err := client.DeleteAsyncRetryFailedHandleResponse(resp)
 	if err != nil {
@@ -619,9 +604,6 @@ func (client *LrOSClient) DeleteAsyncRetryFailedHandleResponse(resp *azcore.Resp
 
 // DeleteAsyncRetryFailedHandleError handles the DeleteAsyncRetryFailed error response.
 func (client *LrOSClient) DeleteAsyncRetryFailedHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -640,8 +622,8 @@ func (client *LrOSClient) BeginDeleteAsyncRetrySucceeded(ctx context.Context) (*
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DeleteAsyncRetrySucceededHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.DeleteAsyncRetrySucceededHandleError(resp)
 	}
 	result, err := client.DeleteAsyncRetrySucceededHandleResponse(resp)
 	if err != nil {
@@ -691,9 +673,6 @@ func (client *LrOSClient) DeleteAsyncRetrySucceededHandleResponse(resp *azcore.R
 
 // DeleteAsyncRetrySucceededHandleError handles the DeleteAsyncRetrySucceeded error response.
 func (client *LrOSClient) DeleteAsyncRetrySucceededHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -712,8 +691,8 @@ func (client *LrOSClient) BeginDeleteAsyncRetrycanceled(ctx context.Context) (*H
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DeleteAsyncRetrycanceledHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.DeleteAsyncRetrycanceledHandleError(resp)
 	}
 	result, err := client.DeleteAsyncRetrycanceledHandleResponse(resp)
 	if err != nil {
@@ -763,9 +742,6 @@ func (client *LrOSClient) DeleteAsyncRetrycanceledHandleResponse(resp *azcore.Re
 
 // DeleteAsyncRetrycanceledHandleError handles the DeleteAsyncRetrycanceled error response.
 func (client *LrOSClient) DeleteAsyncRetrycanceledHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -784,8 +760,8 @@ func (client *LrOSClient) BeginDeleteNoHeaderInRetry(ctx context.Context) (*HTTP
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DeleteNoHeaderInRetryHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteNoHeaderInRetryHandleError(resp)
 	}
 	result, err := client.DeleteNoHeaderInRetryHandleResponse(resp)
 	if err != nil {
@@ -835,9 +811,6 @@ func (client *LrOSClient) DeleteNoHeaderInRetryHandleResponse(resp *azcore.Respo
 
 // DeleteNoHeaderInRetryHandleError handles the DeleteNoHeaderInRetry error response.
 func (client *LrOSClient) DeleteNoHeaderInRetryHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -856,8 +829,8 @@ func (client *LrOSClient) BeginDeleteProvisioning202Accepted200Succeeded(ctx con
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DeleteProvisioning202Accepted200SucceededHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.DeleteProvisioning202Accepted200SucceededHandleError(resp)
 	}
 	result, err := client.DeleteProvisioning202Accepted200SucceededHandleResponse(resp)
 	if err != nil {
@@ -907,9 +880,6 @@ func (client *LrOSClient) DeleteProvisioning202Accepted200SucceededHandleRespons
 
 // DeleteProvisioning202Accepted200SucceededHandleError handles the DeleteProvisioning202Accepted200Succeeded error response.
 func (client *LrOSClient) DeleteProvisioning202Accepted200SucceededHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -928,8 +898,8 @@ func (client *LrOSClient) BeginDeleteProvisioning202DeletingFailed200(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DeleteProvisioning202DeletingFailed200HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.DeleteProvisioning202DeletingFailed200HandleError(resp)
 	}
 	result, err := client.DeleteProvisioning202DeletingFailed200HandleResponse(resp)
 	if err != nil {
@@ -979,9 +949,6 @@ func (client *LrOSClient) DeleteProvisioning202DeletingFailed200HandleResponse(r
 
 // DeleteProvisioning202DeletingFailed200HandleError handles the DeleteProvisioning202DeletingFailed200 error response.
 func (client *LrOSClient) DeleteProvisioning202DeletingFailed200HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1000,8 +967,8 @@ func (client *LrOSClient) BeginDeleteProvisioning202Deletingcanceled200(ctx cont
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DeleteProvisioning202Deletingcanceled200HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.DeleteProvisioning202Deletingcanceled200HandleError(resp)
 	}
 	result, err := client.DeleteProvisioning202Deletingcanceled200HandleResponse(resp)
 	if err != nil {
@@ -1051,9 +1018,6 @@ func (client *LrOSClient) DeleteProvisioning202Deletingcanceled200HandleResponse
 
 // DeleteProvisioning202Deletingcanceled200HandleError handles the DeleteProvisioning202Deletingcanceled200 error response.
 func (client *LrOSClient) DeleteProvisioning202Deletingcanceled200HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1072,8 +1036,8 @@ func (client *LrOSClient) BeginPost200WithPayload(ctx context.Context) (*SKUPoll
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Post200WithPayloadHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.Post200WithPayloadHandleError(resp)
 	}
 	result, err := client.Post200WithPayloadHandleResponse(resp)
 	if err != nil {
@@ -1123,9 +1087,6 @@ func (client *LrOSClient) Post200WithPayloadHandleResponse(resp *azcore.Response
 
 // Post200WithPayloadHandleError handles the Post200WithPayload error response.
 func (client *LrOSClient) Post200WithPayloadHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1144,8 +1105,8 @@ func (client *LrOSClient) BeginPost202List(ctx context.Context) (*ProductArrayPo
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Post202ListHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.Post202ListHandleError(resp)
 	}
 	result, err := client.Post202ListHandleResponse(resp)
 	if err != nil {
@@ -1195,9 +1156,6 @@ func (client *LrOSClient) Post202ListHandleResponse(resp *azcore.Response) (*Pro
 
 // Post202ListHandleError handles the Post202List error response.
 func (client *LrOSClient) Post202ListHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1216,8 +1174,8 @@ func (client *LrOSClient) BeginPost202NoRetry204(ctx context.Context, lrOSPost20
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Post202NoRetry204HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.Post202NoRetry204HandleError(resp)
 	}
 	result, err := client.Post202NoRetry204HandleResponse(resp)
 	if err != nil {
@@ -1270,9 +1228,6 @@ func (client *LrOSClient) Post202NoRetry204HandleResponse(resp *azcore.Response)
 
 // Post202NoRetry204HandleError handles the Post202NoRetry204 error response.
 func (client *LrOSClient) Post202NoRetry204HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1291,8 +1246,8 @@ func (client *LrOSClient) BeginPost202Retry200(ctx context.Context, lrOSPost202R
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Post202Retry200HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.Post202Retry200HandleError(resp)
 	}
 	result, err := client.Post202Retry200HandleResponse(resp)
 	if err != nil {
@@ -1345,9 +1300,6 @@ func (client *LrOSClient) Post202Retry200HandleResponse(resp *azcore.Response) (
 
 // Post202Retry200HandleError handles the Post202Retry200 error response.
 func (client *LrOSClient) Post202Retry200HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1366,8 +1318,8 @@ func (client *LrOSClient) BeginPostAsyncNoRetrySucceeded(ctx context.Context, lr
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostAsyncNoRetrySucceededHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.PostAsyncNoRetrySucceededHandleError(resp)
 	}
 	result, err := client.PostAsyncNoRetrySucceededHandleResponse(resp)
 	if err != nil {
@@ -1420,9 +1372,6 @@ func (client *LrOSClient) PostAsyncNoRetrySucceededHandleResponse(resp *azcore.R
 
 // PostAsyncNoRetrySucceededHandleError handles the PostAsyncNoRetrySucceeded error response.
 func (client *LrOSClient) PostAsyncNoRetrySucceededHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1441,8 +1390,8 @@ func (client *LrOSClient) BeginPostAsyncRetryFailed(ctx context.Context, lrOSPos
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostAsyncRetryFailedHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.PostAsyncRetryFailedHandleError(resp)
 	}
 	result, err := client.PostAsyncRetryFailedHandleResponse(resp)
 	if err != nil {
@@ -1495,9 +1444,6 @@ func (client *LrOSClient) PostAsyncRetryFailedHandleResponse(resp *azcore.Respon
 
 // PostAsyncRetryFailedHandleError handles the PostAsyncRetryFailed error response.
 func (client *LrOSClient) PostAsyncRetryFailedHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1516,8 +1462,8 @@ func (client *LrOSClient) BeginPostAsyncRetrySucceeded(ctx context.Context, lrOS
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostAsyncRetrySucceededHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.PostAsyncRetrySucceededHandleError(resp)
 	}
 	result, err := client.PostAsyncRetrySucceededHandleResponse(resp)
 	if err != nil {
@@ -1570,9 +1516,6 @@ func (client *LrOSClient) PostAsyncRetrySucceededHandleResponse(resp *azcore.Res
 
 // PostAsyncRetrySucceededHandleError handles the PostAsyncRetrySucceeded error response.
 func (client *LrOSClient) PostAsyncRetrySucceededHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1591,8 +1534,8 @@ func (client *LrOSClient) BeginPostAsyncRetrycanceled(ctx context.Context, lrOSP
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostAsyncRetrycanceledHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.PostAsyncRetrycanceledHandleError(resp)
 	}
 	result, err := client.PostAsyncRetrycanceledHandleResponse(resp)
 	if err != nil {
@@ -1645,9 +1588,6 @@ func (client *LrOSClient) PostAsyncRetrycanceledHandleResponse(resp *azcore.Resp
 
 // PostAsyncRetrycanceledHandleError handles the PostAsyncRetrycanceled error response.
 func (client *LrOSClient) PostAsyncRetrycanceledHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1666,8 +1606,8 @@ func (client *LrOSClient) BeginPostDoubleHeadersFinalAzureHeaderGet(ctx context.
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostDoubleHeadersFinalAzureHeaderGetHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.PostDoubleHeadersFinalAzureHeaderGetHandleError(resp)
 	}
 	result, err := client.PostDoubleHeadersFinalAzureHeaderGetHandleResponse(resp)
 	if err != nil {
@@ -1717,9 +1657,6 @@ func (client *LrOSClient) PostDoubleHeadersFinalAzureHeaderGetHandleResponse(res
 
 // PostDoubleHeadersFinalAzureHeaderGetHandleError handles the PostDoubleHeadersFinalAzureHeaderGet error response.
 func (client *LrOSClient) PostDoubleHeadersFinalAzureHeaderGetHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1738,8 +1675,8 @@ func (client *LrOSClient) BeginPostDoubleHeadersFinalAzureHeaderGetDefault(ctx c
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostDoubleHeadersFinalAzureHeaderGetDefaultHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.PostDoubleHeadersFinalAzureHeaderGetDefaultHandleError(resp)
 	}
 	result, err := client.PostDoubleHeadersFinalAzureHeaderGetDefaultHandleResponse(resp)
 	if err != nil {
@@ -1789,9 +1726,6 @@ func (client *LrOSClient) PostDoubleHeadersFinalAzureHeaderGetDefaultHandleRespo
 
 // PostDoubleHeadersFinalAzureHeaderGetDefaultHandleError handles the PostDoubleHeadersFinalAzureHeaderGetDefault error response.
 func (client *LrOSClient) PostDoubleHeadersFinalAzureHeaderGetDefaultHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1810,8 +1744,8 @@ func (client *LrOSClient) BeginPostDoubleHeadersFinalLocationGet(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PostDoubleHeadersFinalLocationGetHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.PostDoubleHeadersFinalLocationGetHandleError(resp)
 	}
 	result, err := client.PostDoubleHeadersFinalLocationGetHandleResponse(resp)
 	if err != nil {
@@ -1861,9 +1795,6 @@ func (client *LrOSClient) PostDoubleHeadersFinalLocationGetHandleResponse(resp *
 
 // PostDoubleHeadersFinalLocationGetHandleError handles the PostDoubleHeadersFinalLocationGet error response.
 func (client *LrOSClient) PostDoubleHeadersFinalLocationGetHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1882,8 +1813,8 @@ func (client *LrOSClient) BeginPut200Acceptedcanceled200(ctx context.Context, lr
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Put200Acceptedcanceled200HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.Put200Acceptedcanceled200HandleError(resp)
 	}
 	result, err := client.Put200Acceptedcanceled200HandleResponse(resp)
 	if err != nil {
@@ -1936,9 +1867,6 @@ func (client *LrOSClient) Put200Acceptedcanceled200HandleResponse(resp *azcore.R
 
 // Put200Acceptedcanceled200HandleError handles the Put200Acceptedcanceled200 error response.
 func (client *LrOSClient) Put200Acceptedcanceled200HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1957,8 +1885,8 @@ func (client *LrOSClient) BeginPut200Succeeded(ctx context.Context, lrOSPut200Su
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Put200SucceededHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusNoContent) {
+		return nil, client.Put200SucceededHandleError(resp)
 	}
 	result, err := client.Put200SucceededHandleResponse(resp)
 	if err != nil {
@@ -2011,9 +1939,6 @@ func (client *LrOSClient) Put200SucceededHandleResponse(resp *azcore.Response) (
 
 // Put200SucceededHandleError handles the Put200Succeeded error response.
 func (client *LrOSClient) Put200SucceededHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2032,8 +1957,8 @@ func (client *LrOSClient) BeginPut200SucceededNoState(ctx context.Context, lrOSP
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Put200SucceededNoStateHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.Put200SucceededNoStateHandleError(resp)
 	}
 	result, err := client.Put200SucceededNoStateHandleResponse(resp)
 	if err != nil {
@@ -2086,9 +2011,6 @@ func (client *LrOSClient) Put200SucceededNoStateHandleResponse(resp *azcore.Resp
 
 // Put200SucceededNoStateHandleError handles the Put200SucceededNoState error response.
 func (client *LrOSClient) Put200SucceededNoStateHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2107,8 +2029,8 @@ func (client *LrOSClient) BeginPut200UpdatingSucceeded204(ctx context.Context, l
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Put200UpdatingSucceeded204HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.Put200UpdatingSucceeded204HandleError(resp)
 	}
 	result, err := client.Put200UpdatingSucceeded204HandleResponse(resp)
 	if err != nil {
@@ -2161,9 +2083,6 @@ func (client *LrOSClient) Put200UpdatingSucceeded204HandleResponse(resp *azcore.
 
 // Put200UpdatingSucceeded204HandleError handles the Put200UpdatingSucceeded204 error response.
 func (client *LrOSClient) Put200UpdatingSucceeded204HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2182,8 +2101,8 @@ func (client *LrOSClient) BeginPut201CreatingFailed200(ctx context.Context, lrOS
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Put201CreatingFailed200HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.Put201CreatingFailed200HandleError(resp)
 	}
 	result, err := client.Put201CreatingFailed200HandleResponse(resp)
 	if err != nil {
@@ -2236,9 +2155,6 @@ func (client *LrOSClient) Put201CreatingFailed200HandleResponse(resp *azcore.Res
 
 // Put201CreatingFailed200HandleError handles the Put201CreatingFailed200 error response.
 func (client *LrOSClient) Put201CreatingFailed200HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2257,8 +2173,8 @@ func (client *LrOSClient) BeginPut201CreatingSucceeded200(ctx context.Context, l
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Put201CreatingSucceeded200HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.Put201CreatingSucceeded200HandleError(resp)
 	}
 	result, err := client.Put201CreatingSucceeded200HandleResponse(resp)
 	if err != nil {
@@ -2311,9 +2227,6 @@ func (client *LrOSClient) Put201CreatingSucceeded200HandleResponse(resp *azcore.
 
 // Put201CreatingSucceeded200HandleError handles the Put201CreatingSucceeded200 error response.
 func (client *LrOSClient) Put201CreatingSucceeded200HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2332,8 +2245,8 @@ func (client *LrOSClient) BeginPut201Succeeded(ctx context.Context, lrOSPut201Su
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Put201SucceededHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusCreated) {
+		return nil, client.Put201SucceededHandleError(resp)
 	}
 	result, err := client.Put201SucceededHandleResponse(resp)
 	if err != nil {
@@ -2386,9 +2299,6 @@ func (client *LrOSClient) Put201SucceededHandleResponse(resp *azcore.Response) (
 
 // Put201SucceededHandleError handles the Put201Succeeded error response.
 func (client *LrOSClient) Put201SucceededHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusCreated, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2407,8 +2317,8 @@ func (client *LrOSClient) BeginPut202Retry200(ctx context.Context, lrOSPut202Ret
 	if err != nil {
 		return nil, err
 	}
-	if err := client.Put202Retry200HandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.Put202Retry200HandleError(resp)
 	}
 	result, err := client.Put202Retry200HandleResponse(resp)
 	if err != nil {
@@ -2461,9 +2371,6 @@ func (client *LrOSClient) Put202Retry200HandleResponse(resp *azcore.Response) (*
 
 // Put202Retry200HandleError handles the Put202Retry200 error response.
 func (client *LrOSClient) Put202Retry200HandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2482,8 +2389,8 @@ func (client *LrOSClient) BeginPutAsyncNoHeaderInRetry(ctx context.Context, lrOS
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutAsyncNoHeaderInRetryHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusCreated) {
+		return nil, client.PutAsyncNoHeaderInRetryHandleError(resp)
 	}
 	result, err := client.PutAsyncNoHeaderInRetryHandleResponse(resp)
 	if err != nil {
@@ -2536,9 +2443,6 @@ func (client *LrOSClient) PutAsyncNoHeaderInRetryHandleResponse(resp *azcore.Res
 
 // PutAsyncNoHeaderInRetryHandleError handles the PutAsyncNoHeaderInRetry error response.
 func (client *LrOSClient) PutAsyncNoHeaderInRetryHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusCreated, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2557,8 +2461,8 @@ func (client *LrOSClient) BeginPutAsyncNoRetrySucceeded(ctx context.Context, lrO
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutAsyncNoRetrySucceededHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutAsyncNoRetrySucceededHandleError(resp)
 	}
 	result, err := client.PutAsyncNoRetrySucceededHandleResponse(resp)
 	if err != nil {
@@ -2611,9 +2515,6 @@ func (client *LrOSClient) PutAsyncNoRetrySucceededHandleResponse(resp *azcore.Re
 
 // PutAsyncNoRetrySucceededHandleError handles the PutAsyncNoRetrySucceeded error response.
 func (client *LrOSClient) PutAsyncNoRetrySucceededHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2632,8 +2533,8 @@ func (client *LrOSClient) BeginPutAsyncNoRetrycanceled(ctx context.Context, lrOS
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutAsyncNoRetrycanceledHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutAsyncNoRetrycanceledHandleError(resp)
 	}
 	result, err := client.PutAsyncNoRetrycanceledHandleResponse(resp)
 	if err != nil {
@@ -2686,9 +2587,6 @@ func (client *LrOSClient) PutAsyncNoRetrycanceledHandleResponse(resp *azcore.Res
 
 // PutAsyncNoRetrycanceledHandleError handles the PutAsyncNoRetrycanceled error response.
 func (client *LrOSClient) PutAsyncNoRetrycanceledHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2707,8 +2605,8 @@ func (client *LrOSClient) BeginPutAsyncNonResource(ctx context.Context, lrOSPutA
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutAsyncNonResourceHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.PutAsyncNonResourceHandleError(resp)
 	}
 	result, err := client.PutAsyncNonResourceHandleResponse(resp)
 	if err != nil {
@@ -2761,9 +2659,6 @@ func (client *LrOSClient) PutAsyncNonResourceHandleResponse(resp *azcore.Respons
 
 // PutAsyncNonResourceHandleError handles the PutAsyncNonResource error response.
 func (client *LrOSClient) PutAsyncNonResourceHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2782,8 +2677,8 @@ func (client *LrOSClient) BeginPutAsyncRetryFailed(ctx context.Context, lrOSPutA
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutAsyncRetryFailedHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutAsyncRetryFailedHandleError(resp)
 	}
 	result, err := client.PutAsyncRetryFailedHandleResponse(resp)
 	if err != nil {
@@ -2836,9 +2731,6 @@ func (client *LrOSClient) PutAsyncRetryFailedHandleResponse(resp *azcore.Respons
 
 // PutAsyncRetryFailedHandleError handles the PutAsyncRetryFailed error response.
 func (client *LrOSClient) PutAsyncRetryFailedHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2857,8 +2749,8 @@ func (client *LrOSClient) BeginPutAsyncRetrySucceeded(ctx context.Context, lrOSP
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutAsyncRetrySucceededHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutAsyncRetrySucceededHandleError(resp)
 	}
 	result, err := client.PutAsyncRetrySucceededHandleResponse(resp)
 	if err != nil {
@@ -2911,9 +2803,6 @@ func (client *LrOSClient) PutAsyncRetrySucceededHandleResponse(resp *azcore.Resp
 
 // PutAsyncRetrySucceededHandleError handles the PutAsyncRetrySucceeded error response.
 func (client *LrOSClient) PutAsyncRetrySucceededHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2932,8 +2821,8 @@ func (client *LrOSClient) BeginPutAsyncSubResource(ctx context.Context, lrOSPutA
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutAsyncSubResourceHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.PutAsyncSubResourceHandleError(resp)
 	}
 	result, err := client.PutAsyncSubResourceHandleResponse(resp)
 	if err != nil {
@@ -2986,9 +2875,6 @@ func (client *LrOSClient) PutAsyncSubResourceHandleResponse(resp *azcore.Respons
 
 // PutAsyncSubResourceHandleError handles the PutAsyncSubResource error response.
 func (client *LrOSClient) PutAsyncSubResourceHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -3007,8 +2893,8 @@ func (client *LrOSClient) BeginPutNoHeaderInRetry(ctx context.Context, lrOSPutNo
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutNoHeaderInRetryHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.PutNoHeaderInRetryHandleError(resp)
 	}
 	result, err := client.PutNoHeaderInRetryHandleResponse(resp)
 	if err != nil {
@@ -3061,9 +2947,6 @@ func (client *LrOSClient) PutNoHeaderInRetryHandleResponse(resp *azcore.Response
 
 // PutNoHeaderInRetryHandleError handles the PutNoHeaderInRetry error response.
 func (client *LrOSClient) PutNoHeaderInRetryHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -3082,8 +2965,8 @@ func (client *LrOSClient) BeginPutNonResource(ctx context.Context, lrOSPutNonRes
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutNonResourceHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.PutNonResourceHandleError(resp)
 	}
 	result, err := client.PutNonResourceHandleResponse(resp)
 	if err != nil {
@@ -3136,9 +3019,6 @@ func (client *LrOSClient) PutNonResourceHandleResponse(resp *azcore.Response) (*
 
 // PutNonResourceHandleError handles the PutNonResource error response.
 func (client *LrOSClient) PutNonResourceHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -3157,8 +3037,8 @@ func (client *LrOSClient) BeginPutSubResource(ctx context.Context, lrOSPutSubRes
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutSubResourceHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.PutSubResourceHandleError(resp)
 	}
 	result, err := client.PutSubResourceHandleResponse(resp)
 	if err != nil {
@@ -3211,9 +3091,6 @@ func (client *LrOSClient) PutSubResourceHandleResponse(resp *azcore.Response) (*
 
 // PutSubResourceHandleError handles the PutSubResource error response.
 func (client *LrOSClient) PutSubResourceHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

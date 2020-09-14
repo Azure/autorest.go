@@ -74,9 +74,6 @@ func (client *AzureFirewallFqdnTagsClient) ListAllHandleResponse(resp *azcore.Re
 
 // ListAllHandleError handles the ListAll error response.
 func (client *AzureFirewallFqdnTagsClient) ListAllHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

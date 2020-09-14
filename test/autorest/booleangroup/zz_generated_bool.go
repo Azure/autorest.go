@@ -53,8 +53,8 @@ func (client *BoolClient) GetFalse(ctx context.Context) (*BoolResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetFalseHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetFalseHandleError(resp)
 	}
 	result, err := client.GetFalseHandleResponse(resp)
 	if err != nil {
@@ -82,9 +82,6 @@ func (client *BoolClient) GetFalseHandleResponse(resp *azcore.Response) (*BoolRe
 
 // GetFalseHandleError handles the GetFalse error response.
 func (client *BoolClient) GetFalseHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -102,8 +99,8 @@ func (client *BoolClient) GetInvalid(ctx context.Context) (*BoolResponse, error)
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetInvalidHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetInvalidHandleError(resp)
 	}
 	result, err := client.GetInvalidHandleResponse(resp)
 	if err != nil {
@@ -131,9 +128,6 @@ func (client *BoolClient) GetInvalidHandleResponse(resp *azcore.Response) (*Bool
 
 // GetInvalidHandleError handles the GetInvalid error response.
 func (client *BoolClient) GetInvalidHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -151,8 +145,8 @@ func (client *BoolClient) GetNull(ctx context.Context) (*BoolResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetNullHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetNullHandleError(resp)
 	}
 	result, err := client.GetNullHandleResponse(resp)
 	if err != nil {
@@ -180,9 +174,6 @@ func (client *BoolClient) GetNullHandleResponse(resp *azcore.Response) (*BoolRes
 
 // GetNullHandleError handles the GetNull error response.
 func (client *BoolClient) GetNullHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -200,8 +191,8 @@ func (client *BoolClient) GetTrue(ctx context.Context) (*BoolResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetTrueHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetTrueHandleError(resp)
 	}
 	result, err := client.GetTrueHandleResponse(resp)
 	if err != nil {
@@ -229,9 +220,6 @@ func (client *BoolClient) GetTrueHandleResponse(resp *azcore.Response) (*BoolRes
 
 // GetTrueHandleError handles the GetTrue error response.
 func (client *BoolClient) GetTrueHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -249,8 +237,8 @@ func (client *BoolClient) PutFalse(ctx context.Context) (*http.Response, error) 
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutFalseHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutFalseHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -268,9 +256,6 @@ func (client *BoolClient) PutFalseCreateRequest(ctx context.Context) (*azcore.Re
 
 // PutFalseHandleError handles the PutFalse error response.
 func (client *BoolClient) PutFalseHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -288,8 +273,8 @@ func (client *BoolClient) PutTrue(ctx context.Context) (*http.Response, error) {
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutTrueHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutTrueHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -307,9 +292,6 @@ func (client *BoolClient) PutTrueCreateRequest(ctx context.Context) (*azcore.Req
 
 // PutTrueHandleError handles the PutTrue error response.
 func (client *BoolClient) PutTrueHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

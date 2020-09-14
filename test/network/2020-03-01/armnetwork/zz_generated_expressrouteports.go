@@ -63,8 +63,8 @@ func (client *ExpressRoutePortsClient) BeginCreateOrUpdate(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	if err := client.CreateOrUpdateHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -120,9 +120,6 @@ func (client *ExpressRoutePortsClient) CreateOrUpdateHandleResponse(resp *azcore
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *ExpressRoutePortsClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -141,8 +138,8 @@ func (client *ExpressRoutePortsClient) BeginDelete(ctx context.Context, resource
 	if err != nil {
 		return nil, err
 	}
-	if err := client.DeleteHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -198,9 +195,6 @@ func (client *ExpressRoutePortsClient) DeleteHandleResponse(resp *azcore.Respons
 
 // DeleteHandleError handles the Delete error response.
 func (client *ExpressRoutePortsClient) DeleteHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -218,8 +212,8 @@ func (client *ExpressRoutePortsClient) Get(ctx context.Context, resourceGroupNam
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -253,9 +247,6 @@ func (client *ExpressRoutePortsClient) GetHandleResponse(resp *azcore.Response) 
 
 // GetHandleError handles the Get error response.
 func (client *ExpressRoutePortsClient) GetHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -301,9 +292,6 @@ func (client *ExpressRoutePortsClient) ListHandleResponse(resp *azcore.Response)
 
 // ListHandleError handles the List error response.
 func (client *ExpressRoutePortsClient) ListHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -350,9 +338,6 @@ func (client *ExpressRoutePortsClient) ListByResourceGroupHandleResponse(resp *a
 
 // ListByResourceGroupHandleError handles the ListByResourceGroup error response.
 func (client *ExpressRoutePortsClient) ListByResourceGroupHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -370,8 +355,8 @@ func (client *ExpressRoutePortsClient) UpdateTags(ctx context.Context, resourceG
 	if err != nil {
 		return nil, err
 	}
-	if err := client.UpdateTagsHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.UpdateTagsHandleError(resp)
 	}
 	result, err := client.UpdateTagsHandleResponse(resp)
 	if err != nil {
@@ -405,9 +390,6 @@ func (client *ExpressRoutePortsClient) UpdateTagsHandleResponse(resp *azcore.Res
 
 // UpdateTagsHandleError handles the UpdateTags error response.
 func (client *ExpressRoutePortsClient) UpdateTagsHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

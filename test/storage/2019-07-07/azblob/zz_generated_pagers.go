@@ -8,6 +8,7 @@ package azblob
 import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"net/http"
 )
 
 // ListBlobsFlatSegmentResponsePager provides iteration over ListBlobsFlatSegmentResponse pages.
@@ -72,7 +73,8 @@ func (p *listBlobsFlatSegmentResponsePager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -150,7 +152,8 @@ func (p *listBlobsHierarchySegmentResponsePager) NextPage(ctx context.Context) b
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -228,7 +231,8 @@ func (p *listContainersSegmentResponsePager) NextPage(ctx context.Context) bool 
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)

@@ -48,8 +48,8 @@ func (client *NetworkInterfaceIPConfigurationsClient) Get(ctx context.Context, r
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -84,9 +84,6 @@ func (client *NetworkInterfaceIPConfigurationsClient) GetHandleResponse(resp *az
 
 // GetHandleError handles the Get error response.
 func (client *NetworkInterfaceIPConfigurationsClient) GetHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -134,9 +131,6 @@ func (client *NetworkInterfaceIPConfigurationsClient) ListHandleResponse(resp *a
 
 // ListHandleError handles the List error response.
 func (client *NetworkInterfaceIPConfigurationsClient) ListHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

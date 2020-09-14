@@ -50,8 +50,8 @@ func (client *HTTPFailureClient) GetEmptyError(ctx context.Context) (*BoolRespon
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetEmptyErrorHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetEmptyErrorHandleError(resp)
 	}
 	result, err := client.GetEmptyErrorHandleResponse(resp)
 	if err != nil {
@@ -79,9 +79,6 @@ func (client *HTTPFailureClient) GetEmptyErrorHandleResponse(resp *azcore.Respon
 
 // GetEmptyErrorHandleError handles the GetEmptyError error response.
 func (client *HTTPFailureClient) GetEmptyErrorHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -99,8 +96,8 @@ func (client *HTTPFailureClient) GetNoModelEmpty(ctx context.Context) (*BoolResp
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetNoModelEmptyHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetNoModelEmptyHandleError(resp)
 	}
 	result, err := client.GetNoModelEmptyHandleResponse(resp)
 	if err != nil {
@@ -128,9 +125,6 @@ func (client *HTTPFailureClient) GetNoModelEmptyHandleResponse(resp *azcore.Resp
 
 // GetNoModelEmptyHandleError handles the GetNoModelEmpty error response.
 func (client *HTTPFailureClient) GetNoModelEmptyHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -151,8 +145,8 @@ func (client *HTTPFailureClient) GetNoModelError(ctx context.Context) (*BoolResp
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetNoModelErrorHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetNoModelErrorHandleError(resp)
 	}
 	result, err := client.GetNoModelErrorHandleResponse(resp)
 	if err != nil {
@@ -180,9 +174,6 @@ func (client *HTTPFailureClient) GetNoModelErrorHandleResponse(resp *azcore.Resp
 
 // GetNoModelErrorHandleError handles the GetNoModelError error response.
 func (client *HTTPFailureClient) GetNoModelErrorHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)

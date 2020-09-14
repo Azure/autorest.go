@@ -61,8 +61,8 @@ func (client *ImplicitClient) GetOptionalGlobalQuery(ctx context.Context) (*http
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetOptionalGlobalQueryHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetOptionalGlobalQueryHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -85,9 +85,6 @@ func (client *ImplicitClient) GetOptionalGlobalQueryCreateRequest(ctx context.Co
 
 // GetOptionalGlobalQueryHandleError handles the GetOptionalGlobalQuery error response.
 func (client *ImplicitClient) GetOptionalGlobalQueryHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -105,8 +102,8 @@ func (client *ImplicitClient) GetRequiredGlobalPath(ctx context.Context) (*http.
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetRequiredGlobalPathHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetRequiredGlobalPathHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -125,9 +122,6 @@ func (client *ImplicitClient) GetRequiredGlobalPathCreateRequest(ctx context.Con
 
 // GetRequiredGlobalPathHandleError handles the GetRequiredGlobalPath error response.
 func (client *ImplicitClient) GetRequiredGlobalPathHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -145,8 +139,8 @@ func (client *ImplicitClient) GetRequiredGlobalQuery(ctx context.Context) (*http
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetRequiredGlobalQueryHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetRequiredGlobalQueryHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -167,9 +161,6 @@ func (client *ImplicitClient) GetRequiredGlobalQueryCreateRequest(ctx context.Co
 
 // GetRequiredGlobalQueryHandleError handles the GetRequiredGlobalQuery error response.
 func (client *ImplicitClient) GetRequiredGlobalQueryHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -187,8 +178,8 @@ func (client *ImplicitClient) GetRequiredPath(ctx context.Context, pathParameter
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetRequiredPathHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetRequiredPathHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -207,9 +198,6 @@ func (client *ImplicitClient) GetRequiredPathCreateRequest(ctx context.Context, 
 
 // GetRequiredPathHandleError handles the GetRequiredPath error response.
 func (client *ImplicitClient) GetRequiredPathHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -227,8 +215,8 @@ func (client *ImplicitClient) PutOptionalBody(ctx context.Context, implicitPutOp
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutOptionalBodyHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutOptionalBodyHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -249,9 +237,6 @@ func (client *ImplicitClient) PutOptionalBodyCreateRequest(ctx context.Context, 
 
 // PutOptionalBodyHandleError handles the PutOptionalBody error response.
 func (client *ImplicitClient) PutOptionalBodyHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -269,8 +254,8 @@ func (client *ImplicitClient) PutOptionalHeader(ctx context.Context, implicitPut
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutOptionalHeaderHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutOptionalHeaderHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -291,9 +276,6 @@ func (client *ImplicitClient) PutOptionalHeaderCreateRequest(ctx context.Context
 
 // PutOptionalHeaderHandleError handles the PutOptionalHeader error response.
 func (client *ImplicitClient) PutOptionalHeaderHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -311,8 +293,8 @@ func (client *ImplicitClient) PutOptionalQuery(ctx context.Context, implicitPutO
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutOptionalQueryHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutOptionalQueryHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -335,9 +317,6 @@ func (client *ImplicitClient) PutOptionalQueryCreateRequest(ctx context.Context,
 
 // PutOptionalQueryHandleError handles the PutOptionalQuery error response.
 func (client *ImplicitClient) PutOptionalQueryHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

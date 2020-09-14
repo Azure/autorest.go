@@ -77,9 +77,6 @@ func (client *AvailableServiceAliasesClient) ListHandleResponse(resp *azcore.Res
 
 // ListHandleError handles the List error response.
 func (client *AvailableServiceAliasesClient) ListHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -127,9 +124,6 @@ func (client *AvailableServiceAliasesClient) ListByResourceGroupHandleResponse(r
 
 // ListByResourceGroupHandleError handles the ListByResourceGroup error response.
 func (client *AvailableServiceAliasesClient) ListByResourceGroupHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

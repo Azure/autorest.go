@@ -48,8 +48,8 @@ func (client *FloatClient) Get(ctx context.Context) (*FloatEnumResponse, error) 
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -77,9 +77,6 @@ func (client *FloatClient) GetHandleResponse(resp *azcore.Response) (*FloatEnumR
 
 // GetHandleError handles the Get error response.
 func (client *FloatClient) GetHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -100,8 +97,8 @@ func (client *FloatClient) Put(ctx context.Context, floatPutOptions *FloatPutOpt
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutHandleError(resp)
 	}
 	result, err := client.PutHandleResponse(resp)
 	if err != nil {
@@ -132,9 +129,6 @@ func (client *FloatClient) PutHandleResponse(resp *azcore.Response) (*StringResp
 
 // PutHandleError handles the Put error response.
 func (client *FloatClient) PutHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)

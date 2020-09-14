@@ -8,6 +8,7 @@ package paginggroup
 import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"net/http"
 )
 
 // OdataProductResultPager provides iteration over OdataProductResult pages.
@@ -72,7 +73,8 @@ func (p *odataProductResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -157,7 +159,8 @@ func (p *productResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -235,7 +238,8 @@ func (p *productResultValuePager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)
@@ -313,7 +317,8 @@ func (p *productResultValueWithXmsClientNamePager) NextPage(ctx context.Context)
 		p.err = err
 		return false
 	}
-	if p.err = p.errorer(resp); p.err != nil {
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
 		return false
 	}
 	result, err := p.responder(resp)

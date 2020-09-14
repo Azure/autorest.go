@@ -45,7 +45,7 @@ func (p *productResultPagerPoller) FinalResponse(ctx context.Context) (ProductRe
 	if err != nil {
 		return nil, err
 	}
-	return p.handleResponse(&azcore.Response{resp})
+	return p.handleResponse(&azcore.Response{Response: resp})
 }
 
 // ResumeToken generates the string token that can be used with the ResumeProductResultPagerPoller method
@@ -60,7 +60,7 @@ func (p *productResultPagerPoller) pollUntilDone(ctx context.Context, frequency 
 	if err != nil {
 		return nil, err
 	}
-	return p.handleResponse(&azcore.Response{resp})
+	return p.handleResponse(&azcore.Response{Response: resp})
 }
 
 func (p *productResultPagerPoller) handleResponse(resp *azcore.Response) (ProductResultPager, error) {

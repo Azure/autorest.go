@@ -60,8 +60,8 @@ func (client *Datetimerfc1123Client) GetInvalid(ctx context.Context) (*TimeRespo
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetInvalidHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetInvalidHandleError(resp)
 	}
 	result, err := client.GetInvalidHandleResponse(resp)
 	if err != nil {
@@ -90,9 +90,6 @@ func (client *Datetimerfc1123Client) GetInvalidHandleResponse(resp *azcore.Respo
 
 // GetInvalidHandleError handles the GetInvalid error response.
 func (client *Datetimerfc1123Client) GetInvalidHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -110,8 +107,8 @@ func (client *Datetimerfc1123Client) GetNull(ctx context.Context) (*TimeResponse
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetNullHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetNullHandleError(resp)
 	}
 	result, err := client.GetNullHandleResponse(resp)
 	if err != nil {
@@ -140,9 +137,6 @@ func (client *Datetimerfc1123Client) GetNullHandleResponse(resp *azcore.Response
 
 // GetNullHandleError handles the GetNull error response.
 func (client *Datetimerfc1123Client) GetNullHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -160,8 +154,8 @@ func (client *Datetimerfc1123Client) GetOverflow(ctx context.Context) (*TimeResp
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetOverflowHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetOverflowHandleError(resp)
 	}
 	result, err := client.GetOverflowHandleResponse(resp)
 	if err != nil {
@@ -190,9 +184,6 @@ func (client *Datetimerfc1123Client) GetOverflowHandleResponse(resp *azcore.Resp
 
 // GetOverflowHandleError handles the GetOverflow error response.
 func (client *Datetimerfc1123Client) GetOverflowHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -210,8 +201,8 @@ func (client *Datetimerfc1123Client) GetUTCLowercaseMaxDateTime(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetUTCLowercaseMaxDateTimeHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetUTCLowercaseMaxDateTimeHandleError(resp)
 	}
 	result, err := client.GetUTCLowercaseMaxDateTimeHandleResponse(resp)
 	if err != nil {
@@ -240,9 +231,6 @@ func (client *Datetimerfc1123Client) GetUTCLowercaseMaxDateTimeHandleResponse(re
 
 // GetUTCLowercaseMaxDateTimeHandleError handles the GetUTCLowercaseMaxDateTime error response.
 func (client *Datetimerfc1123Client) GetUTCLowercaseMaxDateTimeHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -260,8 +248,8 @@ func (client *Datetimerfc1123Client) GetUTCMinDateTime(ctx context.Context) (*Ti
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetUTCMinDateTimeHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetUTCMinDateTimeHandleError(resp)
 	}
 	result, err := client.GetUTCMinDateTimeHandleResponse(resp)
 	if err != nil {
@@ -290,9 +278,6 @@ func (client *Datetimerfc1123Client) GetUTCMinDateTimeHandleResponse(resp *azcor
 
 // GetUTCMinDateTimeHandleError handles the GetUTCMinDateTime error response.
 func (client *Datetimerfc1123Client) GetUTCMinDateTimeHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -310,8 +295,8 @@ func (client *Datetimerfc1123Client) GetUTCUppercaseMaxDateTime(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetUTCUppercaseMaxDateTimeHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetUTCUppercaseMaxDateTimeHandleError(resp)
 	}
 	result, err := client.GetUTCUppercaseMaxDateTimeHandleResponse(resp)
 	if err != nil {
@@ -340,9 +325,6 @@ func (client *Datetimerfc1123Client) GetUTCUppercaseMaxDateTimeHandleResponse(re
 
 // GetUTCUppercaseMaxDateTimeHandleError handles the GetUTCUppercaseMaxDateTime error response.
 func (client *Datetimerfc1123Client) GetUTCUppercaseMaxDateTimeHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -360,8 +342,8 @@ func (client *Datetimerfc1123Client) GetUnderflow(ctx context.Context) (*TimeRes
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetUnderflowHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetUnderflowHandleError(resp)
 	}
 	result, err := client.GetUnderflowHandleResponse(resp)
 	if err != nil {
@@ -390,9 +372,6 @@ func (client *Datetimerfc1123Client) GetUnderflowHandleResponse(resp *azcore.Res
 
 // GetUnderflowHandleError handles the GetUnderflow error response.
 func (client *Datetimerfc1123Client) GetUnderflowHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -410,8 +389,8 @@ func (client *Datetimerfc1123Client) PutUTCMaxDateTime(ctx context.Context, date
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutUTCMaxDateTimeHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutUTCMaxDateTimeHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -430,9 +409,6 @@ func (client *Datetimerfc1123Client) PutUTCMaxDateTimeCreateRequest(ctx context.
 
 // PutUTCMaxDateTimeHandleError handles the PutUTCMaxDateTime error response.
 func (client *Datetimerfc1123Client) PutUTCMaxDateTimeHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -450,8 +426,8 @@ func (client *Datetimerfc1123Client) PutUTCMinDateTime(ctx context.Context, date
 	if err != nil {
 		return nil, err
 	}
-	if err := client.PutUTCMinDateTimeHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutUTCMinDateTimeHandleError(resp)
 	}
 	return resp.Response, nil
 }
@@ -470,9 +446,6 @@ func (client *Datetimerfc1123Client) PutUTCMinDateTimeCreateRequest(ctx context.
 
 // PutUTCMinDateTimeHandleError handles the PutUTCMinDateTime error response.
 func (client *Datetimerfc1123Client) PutUTCMinDateTimeHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

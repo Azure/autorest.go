@@ -50,8 +50,8 @@ func (client *PetClient) AddPet(ctx context.Context, petAddPetOptions *PetAddPet
 	if err != nil {
 		return nil, err
 	}
-	if err := client.AddPetHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.AddPetHandleError(resp)
 	}
 	result, err := client.AddPetHandleResponse(resp)
 	if err != nil {
@@ -82,9 +82,6 @@ func (client *PetClient) AddPetHandleResponse(resp *azcore.Response) (*PetRespon
 
 // AddPetHandleError handles the AddPet error response.
 func (client *PetClient) AddPetHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -105,8 +102,8 @@ func (client *PetClient) GetByPetID(ctx context.Context, petId string) (*PetResp
 	if err != nil {
 		return nil, err
 	}
-	if err := client.GetByPetIDHandleError(resp); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetByPetIDHandleError(resp)
 	}
 	result, err := client.GetByPetIDHandleResponse(resp)
 	if err != nil {
@@ -135,9 +132,6 @@ func (client *PetClient) GetByPetIDHandleResponse(resp *azcore.Response) (*PetRe
 
 // GetByPetIDHandleError handles the GetByPetID error response.
 func (client *PetClient) GetByPetIDHandleError(resp *azcore.Response) error {
-	if resp.HasStatusCode(http.StatusOK) {
-		return nil
-	}
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
