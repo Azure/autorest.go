@@ -619,6 +619,32 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
         const responseSchemas = <Array<Schema>>codeModel.language.go!.responseSchemas;
         responseSchemas.push(response.schema);
       }
+    } else if (headers.size > 0 && !isLROOperation(op)) {
+      // the response envelope has already been created.  it's shared across operations
+      // however we fold all header responses into the same envelope.
+      // find the matching response type entry.
+      const rt = generateResponseTypeName(response.schema);
+      const responseSchemas = <Array<Schema>>codeModel.language.go!.responseSchemas;
+      for (const resp of values(responseSchemas)) {
+        if (resp.language.go!.responseType.name === rt.name) {
+          // check if we need to add any headers
+          const respProps = <Array<Property>>resp.language.go!.properties;
+          for (const header of items(headers)) {
+            let exists = false;
+            for (const prop of values(respProps)) {
+              if (prop.language.go!.name === header.key) {
+                exists = true;
+                break;
+              }
+            }
+            if (!exists) {
+              const prop = newProperty(header.key, header.value.description, header.value.schema);
+              prop.language.go!.fromHeader = header.value.header;
+              respProps.push(prop);
+            }
+          }
+        }
+      }
     }
     // create pageable type info
     if (isPageableOperation(op)) {
