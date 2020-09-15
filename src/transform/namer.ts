@@ -25,7 +25,7 @@ interface protocolNaming {
   errorMethod: string;
 }
 
-class protocolMethods implements protocolNaming {
+export class protocolMethods implements protocolNaming {
   readonly requestMethod: string;
   readonly responseMethod: string;
   readonly errorMethod: string;

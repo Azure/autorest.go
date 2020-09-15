@@ -8,15 +8,17 @@ import { values } from '@azure-tools/linq';
 
 // aggregates the Parameter in op.parameters and the first request
 export function aggregateParameters(op: Operation): Array<Parameter> {
-  if (op.requests!.length > 1) {
-    throw console.error('multiple requests NYI');
-  }
   let params = new Array<Parameter>();
   if (op.parameters) {
     params = params.concat(op.parameters);
   }
-  if (op.requests![0].parameters) {
-    params = params.concat(op.requests![0].parameters);
+  // Loop through each request in an operation to account for all parameters in the initial naming transform.
+  // After the transform stage, operations will only have one request and the loop will always traverse only 
+  // one request per operation.
+  for (const req of values(op.requests)) {
+    if (req.parameters) {
+      params = params.concat(req.parameters);
+    }
   }
   return params;
 }
