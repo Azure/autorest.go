@@ -52,9 +52,12 @@ namespace AutoRest.Go
             {
                 throw new InvalidOperationException($"namespace can only contains lower case letters, numbers and underscore");
             }
-
-            // we always do a preview check here. To disable preview-chk, you need to explicitly assign `--ignore-preview-chk` flag
-            PreviewCheck(folder);
+            // if preview-chk:true is specified verify that preview swagger is output under a preview subdirectory.
+            // this is a bit of a hack until we have proper support for this in the swagger->sdk bot so it's opt-in.
+            if (Settings.Instance.Host.GetValue<bool>("preview-chk").Result)
+            {
+                PreviewCheck(folder);
+            }
 
             var codeModel = cm as CodeModelGo;
             if (codeModel == null)
@@ -165,8 +168,8 @@ namespace AutoRest.Go
 
         private void PreviewCheck(string folder)
         {
-            // skip the preview check when explicitly assigned flag --ignore-preview-chk
-            if (Settings.Instance.Host.GetValue<bool>("ignore-preview-chk").Result)
+            var isProfile = Settings.Instance.Host.GetValue<bool>("is-profile").Result;
+            if (isProfile) // if a tag is designed to serve profile building, we could omit the preview check
             {
                 return;
             }
@@ -188,8 +191,8 @@ namespace AutoRest.Go
 
         private static bool IsPreviewPackage(string[] files)
         {
-            // from the breaking change perspective, we should regard a composite package as a preview package when at least one of the swagger is preview, since preview swagger files may receive breaking changes frequently
-            return files.Any(file => file.IndexOf(previewSubDir) >= 0);
+            // only evaluate composite builds if all swaggers are preview as we don't have a well-defined model for mixed preview/stable swaggers
+            return files.All(file => file.IndexOf(previewSubDir) >= 0);
         }
     }
 }
