@@ -12,8 +12,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"io/ioutil"
 	"net/http"
-	"net/url"
-	"path"
+	"strings"
 )
 
 // MediaTypesClientOperations contains the methods for the MediaTypesClient group.
@@ -38,17 +37,17 @@ func NewMediaTypesClient(c *Client) MediaTypesClientOperations {
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *MediaTypesClient) Do(ctx context.Context, req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(ctx, req)
+func (client *MediaTypesClient) Do(req *azcore.Request) (*azcore.Response, error) {
+	return client.p.Do(req)
 }
 
 // AnalyzeBody - Analyze body, that could be different media types.
 func (client *MediaTypesClient) AnalyzeBody(ctx context.Context, contentType ContentType, input azcore.ReadSeekCloser) (*StringResponse, error) {
-	req, err := client.AnalyzeBodyCreateRequest(contentType, input)
+	req, err := client.AnalyzeBodyCreateRequest(ctx, contentType, input)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -60,19 +59,15 @@ func (client *MediaTypesClient) AnalyzeBody(ctx context.Context, contentType Con
 }
 
 // AnalyzeBodyCreateRequest creates the AnalyzeBody request.
-func (client *MediaTypesClient) AnalyzeBodyCreateRequest(contentType ContentType, input azcore.ReadSeekCloser) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *MediaTypesClient) AnalyzeBodyCreateRequest(ctx context.Context, contentType ContentType, input azcore.ReadSeekCloser) (*azcore.Request, error) {
 	urlPath := "/mediatypes/analyze"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPost, *u)
 	req.Header.Set("Content-Type", string(contentType))
-	return req, req.SetBody(input)
+	req.Header.Set("Accept", "application/json")
+	return req, req.SetBody(input, string(contentType))
 }
 
 // AnalyzeBodyHandleResponse handles the AnalyzeBody response.
@@ -98,11 +93,11 @@ func (client *MediaTypesClient) AnalyzeBodyHandleError(resp *azcore.Response) er
 
 // AnalyzeBodyWithSourcePath - Analyze body, that could be different media types.
 func (client *MediaTypesClient) AnalyzeBodyWithSourcePath(ctx context.Context, mediaTypesClientAnalyzeBodyWithSourcePathOptions *MediaTypesClientAnalyzeBodyWithSourcePathOptions) (*StringResponse, error) {
-	req, err := client.AnalyzeBodyWithSourcePathCreateRequest(mediaTypesClientAnalyzeBodyWithSourcePathOptions)
+	req, err := client.AnalyzeBodyWithSourcePathCreateRequest(ctx, mediaTypesClientAnalyzeBodyWithSourcePathOptions)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -114,17 +109,13 @@ func (client *MediaTypesClient) AnalyzeBodyWithSourcePath(ctx context.Context, m
 }
 
 // AnalyzeBodyWithSourcePathCreateRequest creates the AnalyzeBodyWithSourcePath request.
-func (client *MediaTypesClient) AnalyzeBodyWithSourcePathCreateRequest(mediaTypesClientAnalyzeBodyWithSourcePathOptions *MediaTypesClientAnalyzeBodyWithSourcePathOptions) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *MediaTypesClient) AnalyzeBodyWithSourcePathCreateRequest(ctx context.Context, mediaTypesClientAnalyzeBodyWithSourcePathOptions *MediaTypesClientAnalyzeBodyWithSourcePathOptions) (*azcore.Request, error) {
 	urlPath := "/mediatypes/analyze"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPost, *u)
+	req.Header.Set("Accept", "application/json")
 	if mediaTypesClientAnalyzeBodyWithSourcePathOptions != nil {
 		return req, req.MarshalAsJSON(mediaTypesClientAnalyzeBodyWithSourcePathOptions.Input)
 	}
@@ -154,11 +145,11 @@ func (client *MediaTypesClient) AnalyzeBodyWithSourcePathHandleError(resp *azcor
 
 // ContentTypeWithEncoding - Pass in contentType 'text/plain; encoding=UTF-8' to pass test. Value for input does not matter
 func (client *MediaTypesClient) ContentTypeWithEncoding(ctx context.Context, input string) (*StringResponse, error) {
-	req, err := client.ContentTypeWithEncodingCreateRequest(input)
+	req, err := client.ContentTypeWithEncodingCreateRequest(ctx, input)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(ctx, req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -170,18 +161,16 @@ func (client *MediaTypesClient) ContentTypeWithEncoding(ctx context.Context, inp
 }
 
 // ContentTypeWithEncodingCreateRequest creates the ContentTypeWithEncoding request.
-func (client *MediaTypesClient) ContentTypeWithEncodingCreateRequest(input string) (*azcore.Request, error) {
-	u, err := url.Parse(client.u)
-	if err != nil {
-		return nil, err
-	}
+func (client *MediaTypesClient) ContentTypeWithEncodingCreateRequest(ctx context.Context, input string) (*azcore.Request, error) {
 	urlPath := "/mediatypes/contentTypeWithEncoding"
-	u, err = u.Parse(path.Join(u.Path, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req := azcore.NewRequest(http.MethodPost, *u)
-	return req, nil
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("Content-Type", "text/plain; encoding=UTF-8")
+	body := azcore.NopCloser(strings.NewReader(input))
+	return req, req.SetBody(body, "text/plain; encoding=UTF-8")
 }
 
 // ContentTypeWithEncodingHandleResponse handles the ContentTypeWithEncoding response.

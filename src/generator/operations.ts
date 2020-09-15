@@ -575,9 +575,29 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
       text += '\treturn req, nil\n';
     }
   } else if (mediaType === 'binary') {
-    const contentType = op.requests![0].protocol.http!.mediaTypes[0];
+    let contentType = `"${op.requests![0].protocol.http!.mediaTypes[0]}"`;
+    if (op.requests![0].protocol.http!.mediaTypes.length > 1) {
+      for (const param of values(op.requests![0].parameters)) {
+        // If a request defined more than one possible media type, then the param is expected to be synthesized from modelerfour
+        // and should be a SealedChoice schema type that account for the acceptable media types defined in the swagger. 
+        if (param.origin !== undefined && param.origin === 'modelerfour:synthesized/content-type' && param.schema.type === SchemaType.SealedChoice) {
+          contentType = `string(${param.language.go!.name})`;
+        }
+      }
+    }
     const bodyParam = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http!.in === 'body'; }).first();
-    text += `\treturn req, req.SetBody(${bodyParam?.language.go!.name}, "${contentType}")\n`;
+    text += `\treturn req, req.SetBody(${bodyParam?.language.go!.name}, ${contentType})\n`;
+  } else if (mediaType === 'text') {
+    imports.add('strings');
+    let bodyParam = '';
+    for (const param of values(op.requests![0].parameters)) {
+      if (param.protocol.http!.in !== undefined && param.protocol.http!.in === 'body') {
+        bodyParam = param.language.go!.name;
+      }
+    }
+    text += `\treq.Header.Set("Content-Type", "text/plain; encoding=UTF-8")\n`;
+    text += `\tbody := azcore.NopCloser(strings.NewReader(${bodyParam}))\n`;
+    text += `\treturn req, req.SetBody(body, "text/plain; encoding=UTF-8")\n`;
   } else {
     text += `\treturn req, nil\n`;
   }
@@ -681,7 +701,7 @@ function createProtocolResponse(op: Operation, imports: ImportManager): string {
       }
     }
     const mediaType = getMediaType(response.protocol);
-    if (mediaType === 'none' || mediaType === 'binary') {
+    if (mediaType === 'none' || mediaType === 'binary' || mediaType === 'text') {
       // nothing to unmarshal
       unmarshallerText += '\treturn &result, nil\n';
       return unmarshallerText;
@@ -871,7 +891,7 @@ function createInterfaceDefinition(group: OperationGroup, imports: ImportManager
 }
 
 // returns the media type used by the protocol
-function getMediaType(protocol: Protocols): 'JSON' | 'XML' | 'binary' | 'none' {
+function getMediaType(protocol: Protocols): 'JSON' | 'XML' | 'binary' | 'text' | 'none' {
   // TODO: binary, forms etc
   switch (protocol.http!.knownMediaType) {
     case KnownMediaType.Json:
@@ -880,6 +900,8 @@ function getMediaType(protocol: Protocols): 'JSON' | 'XML' | 'binary' | 'none' {
       return 'XML';
     case KnownMediaType.Binary:
       return 'binary';
+    case KnownMediaType.Text:
+      return 'text';
     default:
       return 'none';
   }

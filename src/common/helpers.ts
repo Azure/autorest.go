@@ -12,6 +12,9 @@ export function aggregateParameters(op: Operation): Array<Parameter> {
   if (op.parameters) {
     params = params.concat(op.parameters);
   }
+  // Loop through each request in an operation to account for all parameters in the initial naming transform.
+  // After the transform stage, operations will only have one request and the loop will always traverse only 
+  // one request per operation.
   for (const req of values(op.requests)) {
     if (req.parameters) {
       params = params.concat(req.parameters);
