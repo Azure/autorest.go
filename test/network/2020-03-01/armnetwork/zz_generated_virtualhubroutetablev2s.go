@@ -59,6 +59,9 @@ func (client *VirtualHubRouteTableV2SClient) BeginCreateOrUpdate(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
+	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -109,9 +112,6 @@ func (client *VirtualHubRouteTableV2SClient) CreateOrUpdateCreateRequest(ctx con
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *VirtualHubRouteTableV2SClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*VirtualHubRouteTableV2PollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
 	return &VirtualHubRouteTableV2PollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -134,6 +134,9 @@ func (client *VirtualHubRouteTableV2SClient) BeginDelete(ctx context.Context, re
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -185,9 +188,6 @@ func (client *VirtualHubRouteTableV2SClient) DeleteCreateRequest(ctx context.Con
 
 // DeleteHandleResponse handles the Delete response.
 func (client *VirtualHubRouteTableV2SClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -209,6 +209,9 @@ func (client *VirtualHubRouteTableV2SClient) Get(ctx context.Context, resourceGr
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -237,9 +240,6 @@ func (client *VirtualHubRouteTableV2SClient) GetCreateRequest(ctx context.Contex
 
 // GetHandleResponse handles the Get response.
 func (client *VirtualHubRouteTableV2SClient) GetHandleResponse(resp *azcore.Response) (*VirtualHubRouteTableV2Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
-	}
 	result := VirtualHubRouteTableV2Response{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualHubRouteTableV2)
 }
@@ -261,6 +261,7 @@ func (client *VirtualHubRouteTableV2SClient) List(resourceGroupName string, virt
 			return client.ListCreateRequest(ctx, resourceGroupName, virtualHubName)
 		},
 		responder: client.ListHandleResponse,
+		errorer:   client.ListHandleError,
 		advancer: func(ctx context.Context, resp *ListVirtualHubRouteTableV2SResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ListVirtualHubRouteTableV2SResult.NextLink)
 		},
@@ -286,9 +287,6 @@ func (client *VirtualHubRouteTableV2SClient) ListCreateRequest(ctx context.Conte
 
 // ListHandleResponse handles the List response.
 func (client *VirtualHubRouteTableV2SClient) ListHandleResponse(resp *azcore.Response) (*ListVirtualHubRouteTableV2SResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := ListVirtualHubRouteTableV2SResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ListVirtualHubRouteTableV2SResult)
 }

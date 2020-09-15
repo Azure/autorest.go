@@ -60,6 +60,9 @@ func (client *NetworkProfilesClient) CreateOrUpdate(ctx context.Context, resourc
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
+	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -86,9 +89,6 @@ func (client *NetworkProfilesClient) CreateOrUpdateCreateRequest(ctx context.Con
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *NetworkProfilesClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*NetworkProfileResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
 	result := NetworkProfileResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.NetworkProfile)
 }
@@ -112,6 +112,9 @@ func (client *NetworkProfilesClient) BeginDelete(ctx context.Context, resourceGr
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -162,9 +165,6 @@ func (client *NetworkProfilesClient) DeleteCreateRequest(ctx context.Context, re
 
 // DeleteHandleResponse handles the Delete response.
 func (client *NetworkProfilesClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -186,6 +186,9 @@ func (client *NetworkProfilesClient) Get(ctx context.Context, resourceGroupName 
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -216,9 +219,6 @@ func (client *NetworkProfilesClient) GetCreateRequest(ctx context.Context, resou
 
 // GetHandleResponse handles the Get response.
 func (client *NetworkProfilesClient) GetHandleResponse(resp *azcore.Response) (*NetworkProfileResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
-	}
 	result := NetworkProfileResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.NetworkProfile)
 }
@@ -240,6 +240,7 @@ func (client *NetworkProfilesClient) List(resourceGroupName string) NetworkProfi
 			return client.ListCreateRequest(ctx, resourceGroupName)
 		},
 		responder: client.ListHandleResponse,
+		errorer:   client.ListHandleError,
 		advancer: func(ctx context.Context, resp *NetworkProfileListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.NetworkProfileListResult.NextLink)
 		},
@@ -264,9 +265,6 @@ func (client *NetworkProfilesClient) ListCreateRequest(ctx context.Context, reso
 
 // ListHandleResponse handles the List response.
 func (client *NetworkProfilesClient) ListHandleResponse(resp *azcore.Response) (*NetworkProfileListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := NetworkProfileListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.NetworkProfileListResult)
 }
@@ -288,6 +286,7 @@ func (client *NetworkProfilesClient) ListAll() NetworkProfileListResultPager {
 			return client.ListAllCreateRequest(ctx)
 		},
 		responder: client.ListAllHandleResponse,
+		errorer:   client.ListAllHandleError,
 		advancer: func(ctx context.Context, resp *NetworkProfileListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.NetworkProfileListResult.NextLink)
 		},
@@ -311,9 +310,6 @@ func (client *NetworkProfilesClient) ListAllCreateRequest(ctx context.Context) (
 
 // ListAllHandleResponse handles the ListAll response.
 func (client *NetworkProfilesClient) ListAllHandleResponse(resp *azcore.Response) (*NetworkProfileListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListAllHandleError(resp)
-	}
 	result := NetworkProfileListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.NetworkProfileListResult)
 }
@@ -336,6 +332,9 @@ func (client *NetworkProfilesClient) UpdateTags(ctx context.Context, resourceGro
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.UpdateTagsHandleError(resp)
 	}
 	result, err := client.UpdateTagsHandleResponse(resp)
 	if err != nil {
@@ -363,9 +362,6 @@ func (client *NetworkProfilesClient) UpdateTagsCreateRequest(ctx context.Context
 
 // UpdateTagsHandleResponse handles the UpdateTags response.
 func (client *NetworkProfilesClient) UpdateTagsHandleResponse(resp *azcore.Response) (*NetworkProfileResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.UpdateTagsHandleError(resp)
-	}
 	result := NetworkProfileResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.NetworkProfile)
 }

@@ -59,6 +59,9 @@ func (client *SecurityRulesClient) BeginCreateOrUpdate(ctx context.Context, reso
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
+	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -109,9 +112,6 @@ func (client *SecurityRulesClient) CreateOrUpdateCreateRequest(ctx context.Conte
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *SecurityRulesClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*SecurityRulePollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
 	return &SecurityRulePollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -134,6 +134,9 @@ func (client *SecurityRulesClient) BeginDelete(ctx context.Context, resourceGrou
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -185,9 +188,6 @@ func (client *SecurityRulesClient) DeleteCreateRequest(ctx context.Context, reso
 
 // DeleteHandleResponse handles the Delete response.
 func (client *SecurityRulesClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -209,6 +209,9 @@ func (client *SecurityRulesClient) Get(ctx context.Context, resourceGroupName st
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -237,9 +240,6 @@ func (client *SecurityRulesClient) GetCreateRequest(ctx context.Context, resourc
 
 // GetHandleResponse handles the Get response.
 func (client *SecurityRulesClient) GetHandleResponse(resp *azcore.Response) (*SecurityRuleResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
-	}
 	result := SecurityRuleResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.SecurityRule)
 }
@@ -261,6 +261,7 @@ func (client *SecurityRulesClient) List(resourceGroupName string, networkSecurit
 			return client.ListCreateRequest(ctx, resourceGroupName, networkSecurityGroupName)
 		},
 		responder: client.ListHandleResponse,
+		errorer:   client.ListHandleError,
 		advancer: func(ctx context.Context, resp *SecurityRuleListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.SecurityRuleListResult.NextLink)
 		},
@@ -286,9 +287,6 @@ func (client *SecurityRulesClient) ListCreateRequest(ctx context.Context, resour
 
 // ListHandleResponse handles the List response.
 func (client *SecurityRulesClient) ListHandleResponse(resp *azcore.Response) (*SecurityRuleListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := SecurityRuleListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.SecurityRuleListResult)
 }

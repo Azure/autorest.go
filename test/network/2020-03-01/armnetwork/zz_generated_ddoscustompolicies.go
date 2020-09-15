@@ -59,6 +59,9 @@ func (client *DdosCustomPoliciesClient) BeginCreateOrUpdate(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
+	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -108,9 +111,6 @@ func (client *DdosCustomPoliciesClient) CreateOrUpdateCreateRequest(ctx context.
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *DdosCustomPoliciesClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*DdosCustomPolicyPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
 	return &DdosCustomPolicyPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -133,6 +133,9 @@ func (client *DdosCustomPoliciesClient) BeginDelete(ctx context.Context, resourc
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -183,9 +186,6 @@ func (client *DdosCustomPoliciesClient) DeleteCreateRequest(ctx context.Context,
 
 // DeleteHandleResponse handles the Delete response.
 func (client *DdosCustomPoliciesClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -207,6 +207,9 @@ func (client *DdosCustomPoliciesClient) Get(ctx context.Context, resourceGroupNa
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -234,9 +237,6 @@ func (client *DdosCustomPoliciesClient) GetCreateRequest(ctx context.Context, re
 
 // GetHandleResponse handles the Get response.
 func (client *DdosCustomPoliciesClient) GetHandleResponse(resp *azcore.Response) (*DdosCustomPolicyResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
-	}
 	result := DdosCustomPolicyResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.DdosCustomPolicy)
 }
@@ -259,6 +259,9 @@ func (client *DdosCustomPoliciesClient) UpdateTags(ctx context.Context, resource
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.UpdateTagsHandleError(resp)
 	}
 	result, err := client.UpdateTagsHandleResponse(resp)
 	if err != nil {
@@ -286,9 +289,6 @@ func (client *DdosCustomPoliciesClient) UpdateTagsCreateRequest(ctx context.Cont
 
 // UpdateTagsHandleResponse handles the UpdateTags response.
 func (client *DdosCustomPoliciesClient) UpdateTagsHandleResponse(resp *azcore.Response) (*DdosCustomPolicyResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.UpdateTagsHandleError(resp)
-	}
 	result := DdosCustomPolicyResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.DdosCustomPolicy)
 }

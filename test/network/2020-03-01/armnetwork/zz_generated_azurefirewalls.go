@@ -65,6 +65,9 @@ func (client *AzureFirewallsClient) BeginCreateOrUpdate(ctx context.Context, res
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
+	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -114,9 +117,6 @@ func (client *AzureFirewallsClient) CreateOrUpdateCreateRequest(ctx context.Cont
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *AzureFirewallsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*AzureFirewallPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
 	return &AzureFirewallPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -139,6 +139,9 @@ func (client *AzureFirewallsClient) BeginDelete(ctx context.Context, resourceGro
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -189,9 +192,6 @@ func (client *AzureFirewallsClient) DeleteCreateRequest(ctx context.Context, res
 
 // DeleteHandleResponse handles the Delete response.
 func (client *AzureFirewallsClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -213,6 +213,9 @@ func (client *AzureFirewallsClient) Get(ctx context.Context, resourceGroupName s
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -240,9 +243,6 @@ func (client *AzureFirewallsClient) GetCreateRequest(ctx context.Context, resour
 
 // GetHandleResponse handles the Get response.
 func (client *AzureFirewallsClient) GetHandleResponse(resp *azcore.Response) (*AzureFirewallResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
-	}
 	result := AzureFirewallResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.AzureFirewall)
 }
@@ -264,6 +264,7 @@ func (client *AzureFirewallsClient) List(resourceGroupName string) AzureFirewall
 			return client.ListCreateRequest(ctx, resourceGroupName)
 		},
 		responder: client.ListHandleResponse,
+		errorer:   client.ListHandleError,
 		advancer: func(ctx context.Context, resp *AzureFirewallListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.AzureFirewallListResult.NextLink)
 		},
@@ -288,9 +289,6 @@ func (client *AzureFirewallsClient) ListCreateRequest(ctx context.Context, resou
 
 // ListHandleResponse handles the List response.
 func (client *AzureFirewallsClient) ListHandleResponse(resp *azcore.Response) (*AzureFirewallListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := AzureFirewallListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.AzureFirewallListResult)
 }
@@ -312,6 +310,7 @@ func (client *AzureFirewallsClient) ListAll() AzureFirewallListResultPager {
 			return client.ListAllCreateRequest(ctx)
 		},
 		responder: client.ListAllHandleResponse,
+		errorer:   client.ListAllHandleError,
 		advancer: func(ctx context.Context, resp *AzureFirewallListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.AzureFirewallListResult.NextLink)
 		},
@@ -335,9 +334,6 @@ func (client *AzureFirewallsClient) ListAllCreateRequest(ctx context.Context) (*
 
 // ListAllHandleResponse handles the ListAll response.
 func (client *AzureFirewallsClient) ListAllHandleResponse(resp *azcore.Response) (*AzureFirewallListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListAllHandleError(resp)
-	}
 	result := AzureFirewallListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.AzureFirewallListResult)
 }
@@ -361,6 +357,9 @@ func (client *AzureFirewallsClient) BeginUpdateTags(ctx context.Context, resourc
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.UpdateTagsHandleError(resp)
 	}
 	result, err := client.UpdateTagsHandleResponse(resp)
 	if err != nil {
@@ -411,9 +410,6 @@ func (client *AzureFirewallsClient) UpdateTagsCreateRequest(ctx context.Context,
 
 // UpdateTagsHandleResponse handles the UpdateTags response.
 func (client *AzureFirewallsClient) UpdateTagsHandleResponse(resp *azcore.Response) (*AzureFirewallPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.UpdateTagsHandleError(resp)
-	}
 	return &AzureFirewallPollerResponse{RawResponse: resp.Response}, nil
 }
 

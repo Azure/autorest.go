@@ -63,6 +63,9 @@ func (client *LoadBalancersClient) BeginCreateOrUpdate(ctx context.Context, reso
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
+	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -112,9 +115,6 @@ func (client *LoadBalancersClient) CreateOrUpdateCreateRequest(ctx context.Conte
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *LoadBalancersClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*LoadBalancerPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
 	return &LoadBalancerPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -137,6 +137,9 @@ func (client *LoadBalancersClient) BeginDelete(ctx context.Context, resourceGrou
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -187,9 +190,6 @@ func (client *LoadBalancersClient) DeleteCreateRequest(ctx context.Context, reso
 
 // DeleteHandleResponse handles the Delete response.
 func (client *LoadBalancersClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -211,6 +211,9 @@ func (client *LoadBalancersClient) Get(ctx context.Context, resourceGroupName st
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -241,9 +244,6 @@ func (client *LoadBalancersClient) GetCreateRequest(ctx context.Context, resourc
 
 // GetHandleResponse handles the Get response.
 func (client *LoadBalancersClient) GetHandleResponse(resp *azcore.Response) (*LoadBalancerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
-	}
 	result := LoadBalancerResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.LoadBalancer)
 }
@@ -265,6 +265,7 @@ func (client *LoadBalancersClient) List(resourceGroupName string) LoadBalancerLi
 			return client.ListCreateRequest(ctx, resourceGroupName)
 		},
 		responder: client.ListHandleResponse,
+		errorer:   client.ListHandleError,
 		advancer: func(ctx context.Context, resp *LoadBalancerListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.LoadBalancerListResult.NextLink)
 		},
@@ -289,9 +290,6 @@ func (client *LoadBalancersClient) ListCreateRequest(ctx context.Context, resour
 
 // ListHandleResponse handles the List response.
 func (client *LoadBalancersClient) ListHandleResponse(resp *azcore.Response) (*LoadBalancerListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := LoadBalancerListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.LoadBalancerListResult)
 }
@@ -313,6 +311,7 @@ func (client *LoadBalancersClient) ListAll() LoadBalancerListResultPager {
 			return client.ListAllCreateRequest(ctx)
 		},
 		responder: client.ListAllHandleResponse,
+		errorer:   client.ListAllHandleError,
 		advancer: func(ctx context.Context, resp *LoadBalancerListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.LoadBalancerListResult.NextLink)
 		},
@@ -336,9 +335,6 @@ func (client *LoadBalancersClient) ListAllCreateRequest(ctx context.Context) (*a
 
 // ListAllHandleResponse handles the ListAll response.
 func (client *LoadBalancersClient) ListAllHandleResponse(resp *azcore.Response) (*LoadBalancerListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListAllHandleError(resp)
-	}
 	result := LoadBalancerListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.LoadBalancerListResult)
 }
@@ -361,6 +357,9 @@ func (client *LoadBalancersClient) UpdateTags(ctx context.Context, resourceGroup
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.UpdateTagsHandleError(resp)
 	}
 	result, err := client.UpdateTagsHandleResponse(resp)
 	if err != nil {
@@ -388,9 +387,6 @@ func (client *LoadBalancersClient) UpdateTagsCreateRequest(ctx context.Context, 
 
 // UpdateTagsHandleResponse handles the UpdateTags response.
 func (client *LoadBalancersClient) UpdateTagsHandleResponse(resp *azcore.Response) (*LoadBalancerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.UpdateTagsHandleError(resp)
-	}
 	result := LoadBalancerResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.LoadBalancer)
 }

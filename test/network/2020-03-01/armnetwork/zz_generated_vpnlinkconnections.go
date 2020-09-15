@@ -44,6 +44,7 @@ func (client *VpnLinkConnectionsClient) ListByVpnConnection(resourceGroupName st
 			return client.ListByVpnConnectionCreateRequest(ctx, resourceGroupName, gatewayName, connectionName)
 		},
 		responder: client.ListByVpnConnectionHandleResponse,
+		errorer:   client.ListByVpnConnectionHandleError,
 		advancer: func(ctx context.Context, resp *ListVpnSiteLinkConnectionsResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ListVpnSiteLinkConnectionsResult.NextLink)
 		},
@@ -70,9 +71,6 @@ func (client *VpnLinkConnectionsClient) ListByVpnConnectionCreateRequest(ctx con
 
 // ListByVpnConnectionHandleResponse handles the ListByVpnConnection response.
 func (client *VpnLinkConnectionsClient) ListByVpnConnectionHandleResponse(resp *azcore.Response) (*ListVpnSiteLinkConnectionsResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListByVpnConnectionHandleError(resp)
-	}
 	result := ListVpnSiteLinkConnectionsResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ListVpnSiteLinkConnectionsResult)
 }

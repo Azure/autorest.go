@@ -48,6 +48,9 @@ func (client *IntClient) Get(ctx context.Context) (*IntEnumResponse, error) {
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
+	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -68,9 +71,6 @@ func (client *IntClient) GetCreateRequest(ctx context.Context) (*azcore.Request,
 
 // GetHandleResponse handles the Get response.
 func (client *IntClient) GetHandleResponse(resp *azcore.Response) (*IntEnumResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
-	}
 	result := IntEnumResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
@@ -97,6 +97,9 @@ func (client *IntClient) Put(ctx context.Context, intPutOptions *IntPutOptions) 
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutHandleError(resp)
+	}
 	result, err := client.PutHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -120,9 +123,6 @@ func (client *IntClient) PutCreateRequest(ctx context.Context, intPutOptions *In
 
 // PutHandleResponse handles the Put response.
 func (client *IntClient) PutHandleResponse(resp *azcore.Response) (*StringResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutHandleError(resp)
-	}
 	result := StringResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }

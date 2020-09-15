@@ -50,6 +50,9 @@ func (client *HTTPFailureClient) GetEmptyError(ctx context.Context) (*BoolRespon
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetEmptyErrorHandleError(resp)
+	}
 	result, err := client.GetEmptyErrorHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -70,9 +73,6 @@ func (client *HTTPFailureClient) GetEmptyErrorCreateRequest(ctx context.Context)
 
 // GetEmptyErrorHandleResponse handles the GetEmptyError response.
 func (client *HTTPFailureClient) GetEmptyErrorHandleResponse(resp *azcore.Response) (*BoolResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetEmptyErrorHandleError(resp)
-	}
 	result := BoolResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
@@ -96,6 +96,9 @@ func (client *HTTPFailureClient) GetNoModelEmpty(ctx context.Context) (*BoolResp
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetNoModelEmptyHandleError(resp)
+	}
 	result, err := client.GetNoModelEmptyHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -116,9 +119,6 @@ func (client *HTTPFailureClient) GetNoModelEmptyCreateRequest(ctx context.Contex
 
 // GetNoModelEmptyHandleResponse handles the GetNoModelEmpty response.
 func (client *HTTPFailureClient) GetNoModelEmptyHandleResponse(resp *azcore.Response) (*BoolResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetNoModelEmptyHandleError(resp)
-	}
 	result := BoolResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
@@ -145,6 +145,9 @@ func (client *HTTPFailureClient) GetNoModelError(ctx context.Context) (*BoolResp
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetNoModelErrorHandleError(resp)
+	}
 	result, err := client.GetNoModelErrorHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -165,9 +168,6 @@ func (client *HTTPFailureClient) GetNoModelErrorCreateRequest(ctx context.Contex
 
 // GetNoModelErrorHandleResponse handles the GetNoModelError response.
 func (client *HTTPFailureClient) GetNoModelErrorHandleResponse(resp *azcore.Response) (*BoolResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetNoModelErrorHandleError(resp)
-	}
 	result := BoolResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }

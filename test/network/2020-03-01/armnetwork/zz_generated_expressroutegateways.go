@@ -61,6 +61,9 @@ func (client *ExpressRouteGatewaysClient) BeginCreateOrUpdate(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
+	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -110,9 +113,6 @@ func (client *ExpressRouteGatewaysClient) CreateOrUpdateCreateRequest(ctx contex
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *ExpressRouteGatewaysClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*ExpressRouteGatewayPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
 	return &ExpressRouteGatewayPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -135,6 +135,9 @@ func (client *ExpressRouteGatewaysClient) BeginDelete(ctx context.Context, resou
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -185,9 +188,6 @@ func (client *ExpressRouteGatewaysClient) DeleteCreateRequest(ctx context.Contex
 
 // DeleteHandleResponse handles the Delete response.
 func (client *ExpressRouteGatewaysClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -209,6 +209,9 @@ func (client *ExpressRouteGatewaysClient) Get(ctx context.Context, resourceGroup
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -236,9 +239,6 @@ func (client *ExpressRouteGatewaysClient) GetCreateRequest(ctx context.Context, 
 
 // GetHandleResponse handles the Get response.
 func (client *ExpressRouteGatewaysClient) GetHandleResponse(resp *azcore.Response) (*ExpressRouteGatewayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
-	}
 	result := ExpressRouteGatewayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ExpressRouteGateway)
 }
@@ -261,6 +261,9 @@ func (client *ExpressRouteGatewaysClient) ListByResourceGroup(ctx context.Contex
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ListByResourceGroupHandleError(resp)
 	}
 	result, err := client.ListByResourceGroupHandleResponse(resp)
 	if err != nil {
@@ -287,9 +290,6 @@ func (client *ExpressRouteGatewaysClient) ListByResourceGroupCreateRequest(ctx c
 
 // ListByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client *ExpressRouteGatewaysClient) ListByResourceGroupHandleResponse(resp *azcore.Response) (*ExpressRouteGatewayListResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListByResourceGroupHandleError(resp)
-	}
 	result := ExpressRouteGatewayListResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ExpressRouteGatewayList)
 }
@@ -312,6 +312,9 @@ func (client *ExpressRouteGatewaysClient) ListBySubscription(ctx context.Context
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ListBySubscriptionHandleError(resp)
 	}
 	result, err := client.ListBySubscriptionHandleResponse(resp)
 	if err != nil {
@@ -337,9 +340,6 @@ func (client *ExpressRouteGatewaysClient) ListBySubscriptionCreateRequest(ctx co
 
 // ListBySubscriptionHandleResponse handles the ListBySubscription response.
 func (client *ExpressRouteGatewaysClient) ListBySubscriptionHandleResponse(resp *azcore.Response) (*ExpressRouteGatewayListResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListBySubscriptionHandleError(resp)
-	}
 	result := ExpressRouteGatewayListResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ExpressRouteGatewayList)
 }

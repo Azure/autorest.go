@@ -63,6 +63,9 @@ func (client *NetworkSecurityGroupsClient) BeginCreateOrUpdate(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
+	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -112,9 +115,6 @@ func (client *NetworkSecurityGroupsClient) CreateOrUpdateCreateRequest(ctx conte
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *NetworkSecurityGroupsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*NetworkSecurityGroupPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
 	return &NetworkSecurityGroupPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -137,6 +137,9 @@ func (client *NetworkSecurityGroupsClient) BeginDelete(ctx context.Context, reso
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -187,9 +190,6 @@ func (client *NetworkSecurityGroupsClient) DeleteCreateRequest(ctx context.Conte
 
 // DeleteHandleResponse handles the Delete response.
 func (client *NetworkSecurityGroupsClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -211,6 +211,9 @@ func (client *NetworkSecurityGroupsClient) Get(ctx context.Context, resourceGrou
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -241,9 +244,6 @@ func (client *NetworkSecurityGroupsClient) GetCreateRequest(ctx context.Context,
 
 // GetHandleResponse handles the Get response.
 func (client *NetworkSecurityGroupsClient) GetHandleResponse(resp *azcore.Response) (*NetworkSecurityGroupResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
-	}
 	result := NetworkSecurityGroupResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.NetworkSecurityGroup)
 }
@@ -265,6 +265,7 @@ func (client *NetworkSecurityGroupsClient) List(resourceGroupName string) Networ
 			return client.ListCreateRequest(ctx, resourceGroupName)
 		},
 		responder: client.ListHandleResponse,
+		errorer:   client.ListHandleError,
 		advancer: func(ctx context.Context, resp *NetworkSecurityGroupListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.NetworkSecurityGroupListResult.NextLink)
 		},
@@ -289,9 +290,6 @@ func (client *NetworkSecurityGroupsClient) ListCreateRequest(ctx context.Context
 
 // ListHandleResponse handles the List response.
 func (client *NetworkSecurityGroupsClient) ListHandleResponse(resp *azcore.Response) (*NetworkSecurityGroupListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := NetworkSecurityGroupListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.NetworkSecurityGroupListResult)
 }
@@ -313,6 +311,7 @@ func (client *NetworkSecurityGroupsClient) ListAll() NetworkSecurityGroupListRes
 			return client.ListAllCreateRequest(ctx)
 		},
 		responder: client.ListAllHandleResponse,
+		errorer:   client.ListAllHandleError,
 		advancer: func(ctx context.Context, resp *NetworkSecurityGroupListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.NetworkSecurityGroupListResult.NextLink)
 		},
@@ -336,9 +335,6 @@ func (client *NetworkSecurityGroupsClient) ListAllCreateRequest(ctx context.Cont
 
 // ListAllHandleResponse handles the ListAll response.
 func (client *NetworkSecurityGroupsClient) ListAllHandleResponse(resp *azcore.Response) (*NetworkSecurityGroupListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListAllHandleError(resp)
-	}
 	result := NetworkSecurityGroupListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.NetworkSecurityGroupListResult)
 }
@@ -361,6 +357,9 @@ func (client *NetworkSecurityGroupsClient) UpdateTags(ctx context.Context, resou
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.UpdateTagsHandleError(resp)
 	}
 	result, err := client.UpdateTagsHandleResponse(resp)
 	if err != nil {
@@ -388,9 +387,6 @@ func (client *NetworkSecurityGroupsClient) UpdateTagsCreateRequest(ctx context.C
 
 // UpdateTagsHandleResponse handles the UpdateTags response.
 func (client *NetworkSecurityGroupsClient) UpdateTagsHandleResponse(resp *azcore.Response) (*NetworkSecurityGroupResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.UpdateTagsHandleError(resp)
-	}
 	result := NetworkSecurityGroupResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.NetworkSecurityGroup)
 }

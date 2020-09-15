@@ -48,6 +48,9 @@ func (client *FloatClient) Get(ctx context.Context) (*FloatEnumResponse, error) 
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
+	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -68,9 +71,6 @@ func (client *FloatClient) GetCreateRequest(ctx context.Context) (*azcore.Reques
 
 // GetHandleResponse handles the Get response.
 func (client *FloatClient) GetHandleResponse(resp *azcore.Response) (*FloatEnumResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
-	}
 	result := FloatEnumResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
@@ -97,6 +97,9 @@ func (client *FloatClient) Put(ctx context.Context, floatPutOptions *FloatPutOpt
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutHandleError(resp)
+	}
 	result, err := client.PutHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -120,9 +123,6 @@ func (client *FloatClient) PutCreateRequest(ctx context.Context, floatPutOptions
 
 // PutHandleResponse handles the Put response.
 func (client *FloatClient) PutHandleResponse(resp *azcore.Response) (*StringResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutHandleError(resp)
-	}
 	result := StringResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }

@@ -8,6 +8,7 @@ package azblob
 import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"net/http"
 )
 
 // ListBlobsFlatSegmentResponsePager provides iteration over ListBlobsFlatSegmentResponse pages.
@@ -25,6 +26,8 @@ type ListBlobsFlatSegmentResponsePager interface {
 
 type listBlobsFlatSegmentResponseCreateRequest func(context.Context) (*azcore.Request, error)
 
+type listBlobsFlatSegmentResponseHandleError func(*azcore.Response) error
+
 type listBlobsFlatSegmentResponseHandleResponse func(*azcore.Response) (*ListBlobsFlatSegmentResponseResponse, error)
 
 type listBlobsFlatSegmentResponseAdvancePage func(context.Context, *ListBlobsFlatSegmentResponseResponse) (*azcore.Request, error)
@@ -34,6 +37,8 @@ type listBlobsFlatSegmentResponsePager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester listBlobsFlatSegmentResponseCreateRequest
+	// callback for handling response errors
+	errorer listBlobsFlatSegmentResponseHandleError
 	// callback for handling the HTTP response
 	responder listBlobsFlatSegmentResponseHandleResponse
 	// callback for advancing to the next page
@@ -64,6 +69,14 @@ func (p *listBlobsFlatSegmentResponsePager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -92,6 +105,8 @@ type ListBlobsHierarchySegmentResponsePager interface {
 
 type listBlobsHierarchySegmentResponseCreateRequest func(context.Context) (*azcore.Request, error)
 
+type listBlobsHierarchySegmentResponseHandleError func(*azcore.Response) error
+
 type listBlobsHierarchySegmentResponseHandleResponse func(*azcore.Response) (*ListBlobsHierarchySegmentResponseResponse, error)
 
 type listBlobsHierarchySegmentResponseAdvancePage func(context.Context, *ListBlobsHierarchySegmentResponseResponse) (*azcore.Request, error)
@@ -101,6 +116,8 @@ type listBlobsHierarchySegmentResponsePager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester listBlobsHierarchySegmentResponseCreateRequest
+	// callback for handling response errors
+	errorer listBlobsHierarchySegmentResponseHandleError
 	// callback for handling the HTTP response
 	responder listBlobsHierarchySegmentResponseHandleResponse
 	// callback for advancing to the next page
@@ -131,6 +148,14 @@ func (p *listBlobsHierarchySegmentResponsePager) NextPage(ctx context.Context) b
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
@@ -159,6 +184,8 @@ type ListContainersSegmentResponsePager interface {
 
 type listContainersSegmentResponseCreateRequest func(context.Context) (*azcore.Request, error)
 
+type listContainersSegmentResponseHandleError func(*azcore.Response) error
+
 type listContainersSegmentResponseHandleResponse func(*azcore.Response) (*ListContainersSegmentResponseResponse, error)
 
 type listContainersSegmentResponseAdvancePage func(context.Context, *ListContainersSegmentResponseResponse) (*azcore.Request, error)
@@ -168,6 +195,8 @@ type listContainersSegmentResponsePager struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester listContainersSegmentResponseCreateRequest
+	// callback for handling response errors
+	errorer listContainersSegmentResponseHandleError
 	// callback for handling the HTTP response
 	responder listContainersSegmentResponseHandleResponse
 	// callback for advancing to the next page
@@ -198,6 +227,14 @@ func (p *listContainersSegmentResponsePager) NextPage(ctx context.Context) bool 
 		return false
 	}
 	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.errorer(resp)
+		return false
+	}
 	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err

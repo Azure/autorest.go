@@ -60,6 +60,9 @@ func (client *LrOSCustomHeaderClient) BeginPost202Retry200(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.Post202Retry200HandleError(resp)
+	}
 	result, err := client.Post202Retry200HandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -106,9 +109,6 @@ func (client *LrOSCustomHeaderClient) Post202Retry200CreateRequest(ctx context.C
 
 // Post202Retry200HandleResponse handles the Post202Retry200 response.
 func (client *LrOSCustomHeaderClient) Post202Retry200HandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.Post202Retry200HandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -131,6 +131,9 @@ func (client *LrOSCustomHeaderClient) BeginPostAsyncRetrySucceeded(ctx context.C
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.PostAsyncRetrySucceededHandleError(resp)
 	}
 	result, err := client.PostAsyncRetrySucceededHandleResponse(resp)
 	if err != nil {
@@ -178,9 +181,6 @@ func (client *LrOSCustomHeaderClient) PostAsyncRetrySucceededCreateRequest(ctx c
 
 // PostAsyncRetrySucceededHandleResponse handles the PostAsyncRetrySucceeded response.
 func (client *LrOSCustomHeaderClient) PostAsyncRetrySucceededHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.PostAsyncRetrySucceededHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -203,6 +203,9 @@ func (client *LrOSCustomHeaderClient) BeginPut201CreatingSucceeded200(ctx contex
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.Put201CreatingSucceeded200HandleError(resp)
 	}
 	result, err := client.Put201CreatingSucceeded200HandleResponse(resp)
 	if err != nil {
@@ -250,9 +253,6 @@ func (client *LrOSCustomHeaderClient) Put201CreatingSucceeded200CreateRequest(ct
 
 // Put201CreatingSucceeded200HandleResponse handles the Put201CreatingSucceeded200 response.
 func (client *LrOSCustomHeaderClient) Put201CreatingSucceeded200HandleResponse(resp *azcore.Response) (*ProductPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.Put201CreatingSucceeded200HandleError(resp)
-	}
 	return &ProductPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -275,6 +275,9 @@ func (client *LrOSCustomHeaderClient) BeginPutAsyncRetrySucceeded(ctx context.Co
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutAsyncRetrySucceededHandleError(resp)
 	}
 	result, err := client.PutAsyncRetrySucceededHandleResponse(resp)
 	if err != nil {
@@ -322,9 +325,6 @@ func (client *LrOSCustomHeaderClient) PutAsyncRetrySucceededCreateRequest(ctx co
 
 // PutAsyncRetrySucceededHandleResponse handles the PutAsyncRetrySucceeded response.
 func (client *LrOSCustomHeaderClient) PutAsyncRetrySucceededHandleResponse(resp *azcore.Response) (*ProductPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusNoContent) {
-		return nil, client.PutAsyncRetrySucceededHandleError(resp)
-	}
 	return &ProductPollerResponse{RawResponse: resp.Response}, nil
 }
 

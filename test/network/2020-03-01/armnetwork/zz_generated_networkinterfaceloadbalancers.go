@@ -44,6 +44,7 @@ func (client *NetworkInterfaceLoadBalancersClient) List(resourceGroupName string
 			return client.ListCreateRequest(ctx, resourceGroupName, networkInterfaceName)
 		},
 		responder: client.ListHandleResponse,
+		errorer:   client.ListHandleError,
 		advancer: func(ctx context.Context, resp *NetworkInterfaceLoadBalancerListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.NetworkInterfaceLoadBalancerListResult.NextLink)
 		},
@@ -69,9 +70,6 @@ func (client *NetworkInterfaceLoadBalancersClient) ListCreateRequest(ctx context
 
 // ListHandleResponse handles the List response.
 func (client *NetworkInterfaceLoadBalancersClient) ListHandleResponse(resp *azcore.Response) (*NetworkInterfaceLoadBalancerListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := NetworkInterfaceLoadBalancerListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.NetworkInterfaceLoadBalancerListResult)
 }

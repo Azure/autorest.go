@@ -374,6 +374,7 @@ type BastionActiveSessionListResultPagerPoller interface {
 type bastionActiveSessionListResultPagerPoller struct {
 	// the client for making the request
 	pipeline    azcore.Pipeline
+	errHandler  bastionActiveSessionListResultHandleError
 	respHandler bastionActiveSessionListResultHandleResponse
 	pt          armcore.Poller
 }
@@ -394,7 +395,7 @@ func (p *bastionActiveSessionListResultPagerPoller) FinalResponse(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	return p.handleResponse(&azcore.Response{resp})
+	return p.handleResponse(&azcore.Response{Response: resp})
 }
 
 // ResumeToken generates the string token that can be used with the ResumeBastionActiveSessionListResultPagerPoller method
@@ -409,13 +410,14 @@ func (p *bastionActiveSessionListResultPagerPoller) pollUntilDone(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	return p.handleResponse(&azcore.Response{resp})
+	return p.handleResponse(&azcore.Response{Response: resp})
 }
 
 func (p *bastionActiveSessionListResultPagerPoller) handleResponse(resp *azcore.Response) (BastionActiveSessionListResultPager, error) {
 	return &bastionActiveSessionListResultPager{
 		pipeline:  p.pipeline,
 		resp:      resp,
+		errorer:   p.errHandler,
 		responder: p.respHandler,
 		advancer: func(ctx context.Context, resp *BastionActiveSessionListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.BastionActiveSessionListResult.NextLink)
@@ -484,6 +486,7 @@ type BastionShareableLinkListResultPagerPoller interface {
 type bastionShareableLinkListResultPagerPoller struct {
 	// the client for making the request
 	pipeline    azcore.Pipeline
+	errHandler  bastionShareableLinkListResultHandleError
 	respHandler bastionShareableLinkListResultHandleResponse
 	pt          armcore.Poller
 }
@@ -504,7 +507,7 @@ func (p *bastionShareableLinkListResultPagerPoller) FinalResponse(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	return p.handleResponse(&azcore.Response{resp})
+	return p.handleResponse(&azcore.Response{Response: resp})
 }
 
 // ResumeToken generates the string token that can be used with the ResumeBastionShareableLinkListResultPagerPoller method
@@ -519,13 +522,14 @@ func (p *bastionShareableLinkListResultPagerPoller) pollUntilDone(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	return p.handleResponse(&azcore.Response{resp})
+	return p.handleResponse(&azcore.Response{Response: resp})
 }
 
 func (p *bastionShareableLinkListResultPagerPoller) handleResponse(resp *azcore.Response) (BastionShareableLinkListResultPager, error) {
 	return &bastionShareableLinkListResultPager{
 		pipeline:  p.pipeline,
 		resp:      resp,
+		errorer:   p.errHandler,
 		responder: p.respHandler,
 		advancer: func(ctx context.Context, resp *BastionShareableLinkListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.BastionShareableLinkListResult.NextLink)

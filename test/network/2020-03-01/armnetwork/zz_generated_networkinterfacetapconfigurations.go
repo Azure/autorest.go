@@ -59,6 +59,9 @@ func (client *NetworkInterfaceTapConfigurationsClient) BeginCreateOrUpdate(ctx c
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
+	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -109,9 +112,6 @@ func (client *NetworkInterfaceTapConfigurationsClient) CreateOrUpdateCreateReque
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *NetworkInterfaceTapConfigurationsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*NetworkInterfaceTapConfigurationPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
 	return &NetworkInterfaceTapConfigurationPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -134,6 +134,9 @@ func (client *NetworkInterfaceTapConfigurationsClient) BeginDelete(ctx context.C
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -185,9 +188,6 @@ func (client *NetworkInterfaceTapConfigurationsClient) DeleteCreateRequest(ctx c
 
 // DeleteHandleResponse handles the Delete response.
 func (client *NetworkInterfaceTapConfigurationsClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -209,6 +209,9 @@ func (client *NetworkInterfaceTapConfigurationsClient) Get(ctx context.Context, 
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -237,9 +240,6 @@ func (client *NetworkInterfaceTapConfigurationsClient) GetCreateRequest(ctx cont
 
 // GetHandleResponse handles the Get response.
 func (client *NetworkInterfaceTapConfigurationsClient) GetHandleResponse(resp *azcore.Response) (*NetworkInterfaceTapConfigurationResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
-	}
 	result := NetworkInterfaceTapConfigurationResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.NetworkInterfaceTapConfiguration)
 }
@@ -261,6 +261,7 @@ func (client *NetworkInterfaceTapConfigurationsClient) List(resourceGroupName st
 			return client.ListCreateRequest(ctx, resourceGroupName, networkInterfaceName)
 		},
 		responder: client.ListHandleResponse,
+		errorer:   client.ListHandleError,
 		advancer: func(ctx context.Context, resp *NetworkInterfaceTapConfigurationListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.NetworkInterfaceTapConfigurationListResult.NextLink)
 		},
@@ -286,9 +287,6 @@ func (client *NetworkInterfaceTapConfigurationsClient) ListCreateRequest(ctx con
 
 // ListHandleResponse handles the List response.
 func (client *NetworkInterfaceTapConfigurationsClient) ListHandleResponse(resp *azcore.Response) (*NetworkInterfaceTapConfigurationListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := NetworkInterfaceTapConfigurationListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.NetworkInterfaceTapConfigurationListResult)
 }

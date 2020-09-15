@@ -44,6 +44,7 @@ func (client *BgpServiceCommunitiesClient) List() BgpServiceCommunityListResultP
 			return client.ListCreateRequest(ctx)
 		},
 		responder: client.ListHandleResponse,
+		errorer:   client.ListHandleError,
 		advancer: func(ctx context.Context, resp *BgpServiceCommunityListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.BgpServiceCommunityListResult.NextLink)
 		},
@@ -67,9 +68,6 @@ func (client *BgpServiceCommunitiesClient) ListCreateRequest(ctx context.Context
 
 // ListHandleResponse handles the List response.
 func (client *BgpServiceCommunitiesClient) ListHandleResponse(resp *azcore.Response) (*BgpServiceCommunityListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := BgpServiceCommunityListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.BgpServiceCommunityListResult)
 }

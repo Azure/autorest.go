@@ -49,11 +49,10 @@ func (client *HTTPServerFailureClient) Delete505(ctx context.Context) (*http.Res
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.Delete505HandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode() {
+		return nil, client.Delete505HandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // Delete505CreateRequest creates the Delete505 request.
@@ -65,11 +64,6 @@ func (client *HTTPServerFailureClient) Delete505CreateRequest(ctx context.Contex
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
-}
-
-// Delete505HandleResponse handles the Delete505 response.
-func (client *HTTPServerFailureClient) Delete505HandleResponse(resp *azcore.Response) (*http.Response, error) {
-	return nil, client.Delete505HandleError(resp)
 }
 
 // Delete505HandleError handles the Delete505 error response.
@@ -91,11 +85,10 @@ func (client *HTTPServerFailureClient) Get501(ctx context.Context) (*http.Respon
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.Get501HandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode() {
+		return nil, client.Get501HandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // Get501CreateRequest creates the Get501 request.
@@ -107,11 +100,6 @@ func (client *HTTPServerFailureClient) Get501CreateRequest(ctx context.Context) 
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// Get501HandleResponse handles the Get501 response.
-func (client *HTTPServerFailureClient) Get501HandleResponse(resp *azcore.Response) (*http.Response, error) {
-	return nil, client.Get501HandleError(resp)
 }
 
 // Get501HandleError handles the Get501 error response.
@@ -133,11 +121,10 @@ func (client *HTTPServerFailureClient) Head501(ctx context.Context) (*http.Respo
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.Head501HandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode() {
+		return nil, client.Head501HandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // Head501CreateRequest creates the Head501 request.
@@ -149,11 +136,6 @@ func (client *HTTPServerFailureClient) Head501CreateRequest(ctx context.Context)
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// Head501HandleResponse handles the Head501 response.
-func (client *HTTPServerFailureClient) Head501HandleResponse(resp *azcore.Response) (*http.Response, error) {
-	return nil, client.Head501HandleError(resp)
 }
 
 // Head501HandleError handles the Head501 error response.
@@ -175,11 +157,10 @@ func (client *HTTPServerFailureClient) Post505(ctx context.Context) (*http.Respo
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.Post505HandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode() {
+		return nil, client.Post505HandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // Post505CreateRequest creates the Post505 request.
@@ -191,11 +172,6 @@ func (client *HTTPServerFailureClient) Post505CreateRequest(ctx context.Context)
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
-}
-
-// Post505HandleResponse handles the Post505 response.
-func (client *HTTPServerFailureClient) Post505HandleResponse(resp *azcore.Response) (*http.Response, error) {
-	return nil, client.Post505HandleError(resp)
 }
 
 // Post505HandleError handles the Post505 error response.

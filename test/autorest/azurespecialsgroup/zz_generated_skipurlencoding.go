@@ -56,11 +56,10 @@ func (client *SkipURLEncodingClient) GetMethodPathValid(ctx context.Context, une
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetMethodPathValidHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetMethodPathValidHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // GetMethodPathValidCreateRequest creates the GetMethodPathValid request.
@@ -73,14 +72,6 @@ func (client *SkipURLEncodingClient) GetMethodPathValidCreateRequest(ctx context
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// GetMethodPathValidHandleResponse handles the GetMethodPathValid response.
-func (client *SkipURLEncodingClient) GetMethodPathValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetMethodPathValidHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // GetMethodPathValidHandleError handles the GetMethodPathValid error response.
@@ -102,11 +93,10 @@ func (client *SkipURLEncodingClient) GetMethodQueryNull(ctx context.Context, ski
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetMethodQueryNullHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetMethodQueryNullHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // GetMethodQueryNullCreateRequest creates the GetMethodQueryNull request.
@@ -123,14 +113,6 @@ func (client *SkipURLEncodingClient) GetMethodQueryNullCreateRequest(ctx context
 	req.URL.RawQuery = strings.Join(unencodedParams, "&")
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// GetMethodQueryNullHandleResponse handles the GetMethodQueryNull response.
-func (client *SkipURLEncodingClient) GetMethodQueryNullHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetMethodQueryNullHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // GetMethodQueryNullHandleError handles the GetMethodQueryNull error response.
@@ -152,11 +134,10 @@ func (client *SkipURLEncodingClient) GetMethodQueryValid(ctx context.Context, q1
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetMethodQueryValidHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetMethodQueryValidHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // GetMethodQueryValidCreateRequest creates the GetMethodQueryValid request.
@@ -171,14 +152,6 @@ func (client *SkipURLEncodingClient) GetMethodQueryValidCreateRequest(ctx contex
 	req.URL.RawQuery = strings.Join(unencodedParams, "&")
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// GetMethodQueryValidHandleResponse handles the GetMethodQueryValid response.
-func (client *SkipURLEncodingClient) GetMethodQueryValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetMethodQueryValidHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // GetMethodQueryValidHandleError handles the GetMethodQueryValid error response.
@@ -200,11 +173,10 @@ func (client *SkipURLEncodingClient) GetPathQueryValid(ctx context.Context, q1 s
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetPathQueryValidHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetPathQueryValidHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // GetPathQueryValidCreateRequest creates the GetPathQueryValid request.
@@ -219,14 +191,6 @@ func (client *SkipURLEncodingClient) GetPathQueryValidCreateRequest(ctx context.
 	req.URL.RawQuery = strings.Join(unencodedParams, "&")
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// GetPathQueryValidHandleResponse handles the GetPathQueryValid response.
-func (client *SkipURLEncodingClient) GetPathQueryValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetPathQueryValidHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // GetPathQueryValidHandleError handles the GetPathQueryValid error response.
@@ -248,11 +212,10 @@ func (client *SkipURLEncodingClient) GetPathValid(ctx context.Context, unencoded
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetPathValidHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetPathValidHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // GetPathValidCreateRequest creates the GetPathValid request.
@@ -265,14 +228,6 @@ func (client *SkipURLEncodingClient) GetPathValidCreateRequest(ctx context.Conte
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// GetPathValidHandleResponse handles the GetPathValid response.
-func (client *SkipURLEncodingClient) GetPathValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetPathValidHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // GetPathValidHandleError handles the GetPathValid error response.
@@ -294,11 +249,10 @@ func (client *SkipURLEncodingClient) GetSwaggerPathValid(ctx context.Context) (*
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetSwaggerPathValidHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetSwaggerPathValidHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // GetSwaggerPathValidCreateRequest creates the GetSwaggerPathValid request.
@@ -311,14 +265,6 @@ func (client *SkipURLEncodingClient) GetSwaggerPathValidCreateRequest(ctx contex
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// GetSwaggerPathValidHandleResponse handles the GetSwaggerPathValid response.
-func (client *SkipURLEncodingClient) GetSwaggerPathValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetSwaggerPathValidHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // GetSwaggerPathValidHandleError handles the GetSwaggerPathValid error response.
@@ -340,11 +286,10 @@ func (client *SkipURLEncodingClient) GetSwaggerQueryValid(ctx context.Context) (
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetSwaggerQueryValidHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetSwaggerQueryValidHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // GetSwaggerQueryValidCreateRequest creates the GetSwaggerQueryValid request.
@@ -359,14 +304,6 @@ func (client *SkipURLEncodingClient) GetSwaggerQueryValidCreateRequest(ctx conte
 	req.URL.RawQuery = strings.Join(unencodedParams, "&")
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// GetSwaggerQueryValidHandleResponse handles the GetSwaggerQueryValid response.
-func (client *SkipURLEncodingClient) GetSwaggerQueryValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetSwaggerQueryValidHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // GetSwaggerQueryValidHandleError handles the GetSwaggerQueryValid error response.

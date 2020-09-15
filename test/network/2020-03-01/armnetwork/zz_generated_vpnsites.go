@@ -63,6 +63,9 @@ func (client *VpnSitesClient) BeginCreateOrUpdate(ctx context.Context, resourceG
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
+	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -112,9 +115,6 @@ func (client *VpnSitesClient) CreateOrUpdateCreateRequest(ctx context.Context, r
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *VpnSitesClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*VpnSitePollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
 	return &VpnSitePollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -137,6 +137,9 @@ func (client *VpnSitesClient) BeginDelete(ctx context.Context, resourceGroupName
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -187,9 +190,6 @@ func (client *VpnSitesClient) DeleteCreateRequest(ctx context.Context, resourceG
 
 // DeleteHandleResponse handles the Delete response.
 func (client *VpnSitesClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -211,6 +211,9 @@ func (client *VpnSitesClient) Get(ctx context.Context, resourceGroupName string,
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -238,9 +241,6 @@ func (client *VpnSitesClient) GetCreateRequest(ctx context.Context, resourceGrou
 
 // GetHandleResponse handles the Get response.
 func (client *VpnSitesClient) GetHandleResponse(resp *azcore.Response) (*VpnSiteResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
-	}
 	result := VpnSiteResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VpnSite)
 }
@@ -262,6 +262,7 @@ func (client *VpnSitesClient) List() ListVpnSitesResultPager {
 			return client.ListCreateRequest(ctx)
 		},
 		responder: client.ListHandleResponse,
+		errorer:   client.ListHandleError,
 		advancer: func(ctx context.Context, resp *ListVpnSitesResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ListVpnSitesResult.NextLink)
 		},
@@ -285,9 +286,6 @@ func (client *VpnSitesClient) ListCreateRequest(ctx context.Context) (*azcore.Re
 
 // ListHandleResponse handles the List response.
 func (client *VpnSitesClient) ListHandleResponse(resp *azcore.Response) (*ListVpnSitesResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := ListVpnSitesResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ListVpnSitesResult)
 }
@@ -309,6 +307,7 @@ func (client *VpnSitesClient) ListByResourceGroup(resourceGroupName string) List
 			return client.ListByResourceGroupCreateRequest(ctx, resourceGroupName)
 		},
 		responder: client.ListByResourceGroupHandleResponse,
+		errorer:   client.ListByResourceGroupHandleError,
 		advancer: func(ctx context.Context, resp *ListVpnSitesResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ListVpnSitesResult.NextLink)
 		},
@@ -333,9 +332,6 @@ func (client *VpnSitesClient) ListByResourceGroupCreateRequest(ctx context.Conte
 
 // ListByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client *VpnSitesClient) ListByResourceGroupHandleResponse(resp *azcore.Response) (*ListVpnSitesResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListByResourceGroupHandleError(resp)
-	}
 	result := ListVpnSitesResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ListVpnSitesResult)
 }
@@ -358,6 +354,9 @@ func (client *VpnSitesClient) UpdateTags(ctx context.Context, resourceGroupName 
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.UpdateTagsHandleError(resp)
 	}
 	result, err := client.UpdateTagsHandleResponse(resp)
 	if err != nil {
@@ -385,9 +384,6 @@ func (client *VpnSitesClient) UpdateTagsCreateRequest(ctx context.Context, resou
 
 // UpdateTagsHandleResponse handles the UpdateTags response.
 func (client *VpnSitesClient) UpdateTagsHandleResponse(resp *azcore.Response) (*VpnSiteResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.UpdateTagsHandleError(resp)
-	}
 	result := VpnSiteResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VpnSite)
 }

@@ -102,11 +102,10 @@ func (client *HeaderClient) CustomRequestID(ctx context.Context) (*http.Response
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.CustomRequestIDHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.CustomRequestIDHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // CustomRequestIDCreateRequest creates the CustomRequestID request.
@@ -118,14 +117,6 @@ func (client *HeaderClient) CustomRequestIDCreateRequest(ctx context.Context) (*
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// CustomRequestIDHandleResponse handles the CustomRequestID response.
-func (client *HeaderClient) CustomRequestIDHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.CustomRequestIDHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // CustomRequestIDHandleError handles the CustomRequestID error response.
@@ -147,11 +138,10 @@ func (client *HeaderClient) ParamBool(ctx context.Context, scenario string, valu
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ParamBoolHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ParamBoolHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // ParamBoolCreateRequest creates the ParamBool request.
@@ -165,14 +155,6 @@ func (client *HeaderClient) ParamBoolCreateRequest(ctx context.Context, scenario
 	req.Header.Set("value", strconv.FormatBool(value))
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// ParamBoolHandleResponse handles the ParamBool response.
-func (client *HeaderClient) ParamBoolHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ParamBoolHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // ParamBoolHandleError handles the ParamBool error response.
@@ -194,11 +176,10 @@ func (client *HeaderClient) ParamByte(ctx context.Context, scenario string, valu
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ParamByteHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ParamByteHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // ParamByteCreateRequest creates the ParamByte request.
@@ -212,14 +193,6 @@ func (client *HeaderClient) ParamByteCreateRequest(ctx context.Context, scenario
 	req.Header.Set("value", base64.StdEncoding.EncodeToString(value))
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// ParamByteHandleResponse handles the ParamByte response.
-func (client *HeaderClient) ParamByteHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ParamByteHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // ParamByteHandleError handles the ParamByte error response.
@@ -241,11 +214,10 @@ func (client *HeaderClient) ParamDate(ctx context.Context, scenario string, valu
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ParamDateHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ParamDateHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // ParamDateCreateRequest creates the ParamDate request.
@@ -259,14 +231,6 @@ func (client *HeaderClient) ParamDateCreateRequest(ctx context.Context, scenario
 	req.Header.Set("value", value.Format("2006-01-02"))
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// ParamDateHandleResponse handles the ParamDate response.
-func (client *HeaderClient) ParamDateHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ParamDateHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // ParamDateHandleError handles the ParamDate error response.
@@ -288,11 +252,10 @@ func (client *HeaderClient) ParamDatetime(ctx context.Context, scenario string, 
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ParamDatetimeHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ParamDatetimeHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // ParamDatetimeCreateRequest creates the ParamDatetime request.
@@ -306,14 +269,6 @@ func (client *HeaderClient) ParamDatetimeCreateRequest(ctx context.Context, scen
 	req.Header.Set("value", value.Format(time.RFC3339Nano))
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// ParamDatetimeHandleResponse handles the ParamDatetime response.
-func (client *HeaderClient) ParamDatetimeHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ParamDatetimeHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // ParamDatetimeHandleError handles the ParamDatetime error response.
@@ -335,11 +290,10 @@ func (client *HeaderClient) ParamDatetimeRFC1123(ctx context.Context, scenario s
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ParamDatetimeRFC1123HandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ParamDatetimeRFC1123HandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // ParamDatetimeRFC1123CreateRequest creates the ParamDatetimeRFC1123 request.
@@ -355,14 +309,6 @@ func (client *HeaderClient) ParamDatetimeRFC1123CreateRequest(ctx context.Contex
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// ParamDatetimeRFC1123HandleResponse handles the ParamDatetimeRFC1123 response.
-func (client *HeaderClient) ParamDatetimeRFC1123HandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ParamDatetimeRFC1123HandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // ParamDatetimeRFC1123HandleError handles the ParamDatetimeRFC1123 error response.
@@ -384,11 +330,10 @@ func (client *HeaderClient) ParamDouble(ctx context.Context, scenario string, va
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ParamDoubleHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ParamDoubleHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // ParamDoubleCreateRequest creates the ParamDouble request.
@@ -402,14 +347,6 @@ func (client *HeaderClient) ParamDoubleCreateRequest(ctx context.Context, scenar
 	req.Header.Set("value", strconv.FormatFloat(value, 'f', -1, 64))
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// ParamDoubleHandleResponse handles the ParamDouble response.
-func (client *HeaderClient) ParamDoubleHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ParamDoubleHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // ParamDoubleHandleError handles the ParamDouble error response.
@@ -431,11 +368,10 @@ func (client *HeaderClient) ParamDuration(ctx context.Context, scenario string, 
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ParamDurationHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ParamDurationHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // ParamDurationCreateRequest creates the ParamDuration request.
@@ -449,14 +385,6 @@ func (client *HeaderClient) ParamDurationCreateRequest(ctx context.Context, scen
 	req.Header.Set("value", value)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// ParamDurationHandleResponse handles the ParamDuration response.
-func (client *HeaderClient) ParamDurationHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ParamDurationHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // ParamDurationHandleError handles the ParamDuration error response.
@@ -478,11 +406,10 @@ func (client *HeaderClient) ParamEnum(ctx context.Context, scenario string, head
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ParamEnumHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ParamEnumHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // ParamEnumCreateRequest creates the ParamEnum request.
@@ -498,14 +425,6 @@ func (client *HeaderClient) ParamEnumCreateRequest(ctx context.Context, scenario
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// ParamEnumHandleResponse handles the ParamEnum response.
-func (client *HeaderClient) ParamEnumHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ParamEnumHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // ParamEnumHandleError handles the ParamEnum error response.
@@ -527,11 +446,10 @@ func (client *HeaderClient) ParamExistingKey(ctx context.Context, userAgent stri
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ParamExistingKeyHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ParamExistingKeyHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // ParamExistingKeyCreateRequest creates the ParamExistingKey request.
@@ -544,14 +462,6 @@ func (client *HeaderClient) ParamExistingKeyCreateRequest(ctx context.Context, u
 	req.Header.Set("User-Agent", userAgent)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// ParamExistingKeyHandleResponse handles the ParamExistingKey response.
-func (client *HeaderClient) ParamExistingKeyHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ParamExistingKeyHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // ParamExistingKeyHandleError handles the ParamExistingKey error response.
@@ -573,11 +483,10 @@ func (client *HeaderClient) ParamFloat(ctx context.Context, scenario string, val
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ParamFloatHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ParamFloatHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // ParamFloatCreateRequest creates the ParamFloat request.
@@ -591,14 +500,6 @@ func (client *HeaderClient) ParamFloatCreateRequest(ctx context.Context, scenari
 	req.Header.Set("value", strconv.FormatFloat(float64(value), 'f', -1, 32))
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// ParamFloatHandleResponse handles the ParamFloat response.
-func (client *HeaderClient) ParamFloatHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ParamFloatHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // ParamFloatHandleError handles the ParamFloat error response.
@@ -620,11 +521,10 @@ func (client *HeaderClient) ParamInteger(ctx context.Context, scenario string, v
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ParamIntegerHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ParamIntegerHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // ParamIntegerCreateRequest creates the ParamInteger request.
@@ -638,14 +538,6 @@ func (client *HeaderClient) ParamIntegerCreateRequest(ctx context.Context, scena
 	req.Header.Set("value", strconv.FormatInt(int64(value), 10))
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// ParamIntegerHandleResponse handles the ParamInteger response.
-func (client *HeaderClient) ParamIntegerHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ParamIntegerHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // ParamIntegerHandleError handles the ParamInteger error response.
@@ -667,11 +559,10 @@ func (client *HeaderClient) ParamLong(ctx context.Context, scenario string, valu
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ParamLongHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ParamLongHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // ParamLongCreateRequest creates the ParamLong request.
@@ -685,14 +576,6 @@ func (client *HeaderClient) ParamLongCreateRequest(ctx context.Context, scenario
 	req.Header.Set("value", strconv.FormatInt(value, 10))
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// ParamLongHandleResponse handles the ParamLong response.
-func (client *HeaderClient) ParamLongHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ParamLongHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // ParamLongHandleError handles the ParamLong error response.
@@ -714,11 +597,10 @@ func (client *HeaderClient) ParamProtectedKey(ctx context.Context, contentType s
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ParamProtectedKeyHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ParamProtectedKeyHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // ParamProtectedKeyCreateRequest creates the ParamProtectedKey request.
@@ -731,14 +613,6 @@ func (client *HeaderClient) ParamProtectedKeyCreateRequest(ctx context.Context, 
 	req.Header.Set("Content-Type", contentType)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// ParamProtectedKeyHandleResponse handles the ParamProtectedKey response.
-func (client *HeaderClient) ParamProtectedKeyHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ParamProtectedKeyHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // ParamProtectedKeyHandleError handles the ParamProtectedKey error response.
@@ -760,11 +634,10 @@ func (client *HeaderClient) ParamString(ctx context.Context, scenario string, he
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ParamStringHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ParamStringHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // ParamStringCreateRequest creates the ParamString request.
@@ -780,14 +653,6 @@ func (client *HeaderClient) ParamStringCreateRequest(ctx context.Context, scenar
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// ParamStringHandleResponse handles the ParamString response.
-func (client *HeaderClient) ParamStringHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ParamStringHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // ParamStringHandleError handles the ParamString error response.
@@ -808,6 +673,9 @@ func (client *HeaderClient) ResponseBool(ctx context.Context, scenario string) (
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ResponseBoolHandleError(resp)
 	}
 	result, err := client.ResponseBoolHandleResponse(resp)
 	if err != nil {
@@ -830,9 +698,6 @@ func (client *HeaderClient) ResponseBoolCreateRequest(ctx context.Context, scena
 
 // ResponseBoolHandleResponse handles the ResponseBool response.
 func (client *HeaderClient) ResponseBoolHandleResponse(resp *azcore.Response) (*HeaderResponseBoolResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ResponseBoolHandleError(resp)
-	}
 	result := HeaderResponseBoolResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("value"); val != "" {
 		value, err := strconv.ParseBool(val)
@@ -863,6 +728,9 @@ func (client *HeaderClient) ResponseByte(ctx context.Context, scenario string) (
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ResponseByteHandleError(resp)
+	}
 	result, err := client.ResponseByteHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -884,9 +752,6 @@ func (client *HeaderClient) ResponseByteCreateRequest(ctx context.Context, scena
 
 // ResponseByteHandleResponse handles the ResponseByte response.
 func (client *HeaderClient) ResponseByteHandleResponse(resp *azcore.Response) (*HeaderResponseByteResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ResponseByteHandleError(resp)
-	}
 	result := HeaderResponseByteResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("value"); val != "" {
 		value, err := base64.StdEncoding.DecodeString(val)
@@ -917,6 +782,9 @@ func (client *HeaderClient) ResponseDate(ctx context.Context, scenario string) (
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ResponseDateHandleError(resp)
+	}
 	result, err := client.ResponseDateHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -938,9 +806,6 @@ func (client *HeaderClient) ResponseDateCreateRequest(ctx context.Context, scena
 
 // ResponseDateHandleResponse handles the ResponseDate response.
 func (client *HeaderClient) ResponseDateHandleResponse(resp *azcore.Response) (*HeaderResponseDateResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ResponseDateHandleError(resp)
-	}
 	result := HeaderResponseDateResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("value"); val != "" {
 		value, err := time.Parse("2006-01-02", val)
@@ -971,6 +836,9 @@ func (client *HeaderClient) ResponseDatetime(ctx context.Context, scenario strin
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ResponseDatetimeHandleError(resp)
+	}
 	result, err := client.ResponseDatetimeHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -992,9 +860,6 @@ func (client *HeaderClient) ResponseDatetimeCreateRequest(ctx context.Context, s
 
 // ResponseDatetimeHandleResponse handles the ResponseDatetime response.
 func (client *HeaderClient) ResponseDatetimeHandleResponse(resp *azcore.Response) (*HeaderResponseDatetimeResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ResponseDatetimeHandleError(resp)
-	}
 	result := HeaderResponseDatetimeResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("value"); val != "" {
 		value, err := time.Parse(time.RFC3339Nano, val)
@@ -1025,6 +890,9 @@ func (client *HeaderClient) ResponseDatetimeRFC1123(ctx context.Context, scenari
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ResponseDatetimeRFC1123HandleError(resp)
+	}
 	result, err := client.ResponseDatetimeRFC1123HandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1046,9 +914,6 @@ func (client *HeaderClient) ResponseDatetimeRFC1123CreateRequest(ctx context.Con
 
 // ResponseDatetimeRFC1123HandleResponse handles the ResponseDatetimeRFC1123 response.
 func (client *HeaderClient) ResponseDatetimeRFC1123HandleResponse(resp *azcore.Response) (*HeaderResponseDatetimeRFC1123Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ResponseDatetimeRFC1123HandleError(resp)
-	}
 	result := HeaderResponseDatetimeRFC1123Response{RawResponse: resp.Response}
 	if val := resp.Header.Get("value"); val != "" {
 		value, err := time.Parse(time.RFC1123, val)
@@ -1079,6 +944,9 @@ func (client *HeaderClient) ResponseDouble(ctx context.Context, scenario string)
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ResponseDoubleHandleError(resp)
+	}
 	result, err := client.ResponseDoubleHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1100,9 +968,6 @@ func (client *HeaderClient) ResponseDoubleCreateRequest(ctx context.Context, sce
 
 // ResponseDoubleHandleResponse handles the ResponseDouble response.
 func (client *HeaderClient) ResponseDoubleHandleResponse(resp *azcore.Response) (*HeaderResponseDoubleResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ResponseDoubleHandleError(resp)
-	}
 	result := HeaderResponseDoubleResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("value"); val != "" {
 		value, err := strconv.ParseFloat(val, 64)
@@ -1133,6 +998,9 @@ func (client *HeaderClient) ResponseDuration(ctx context.Context, scenario strin
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ResponseDurationHandleError(resp)
+	}
 	result, err := client.ResponseDurationHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1154,9 +1022,6 @@ func (client *HeaderClient) ResponseDurationCreateRequest(ctx context.Context, s
 
 // ResponseDurationHandleResponse handles the ResponseDuration response.
 func (client *HeaderClient) ResponseDurationHandleResponse(resp *azcore.Response) (*HeaderResponseDurationResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ResponseDurationHandleError(resp)
-	}
 	result := HeaderResponseDurationResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("value"); val != "" {
 		result.Value = &val
@@ -1183,6 +1048,9 @@ func (client *HeaderClient) ResponseEnum(ctx context.Context, scenario string) (
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ResponseEnumHandleError(resp)
+	}
 	result, err := client.ResponseEnumHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1204,9 +1072,6 @@ func (client *HeaderClient) ResponseEnumCreateRequest(ctx context.Context, scena
 
 // ResponseEnumHandleResponse handles the ResponseEnum response.
 func (client *HeaderClient) ResponseEnumHandleResponse(resp *azcore.Response) (*HeaderResponseEnumResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ResponseEnumHandleError(resp)
-	}
 	result := HeaderResponseEnumResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("value"); val != "" {
 		result.Value = (*GreyscaleColors)(&val)
@@ -1233,6 +1098,9 @@ func (client *HeaderClient) ResponseExistingKey(ctx context.Context) (*HeaderRes
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ResponseExistingKeyHandleError(resp)
+	}
 	result, err := client.ResponseExistingKeyHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1253,9 +1121,6 @@ func (client *HeaderClient) ResponseExistingKeyCreateRequest(ctx context.Context
 
 // ResponseExistingKeyHandleResponse handles the ResponseExistingKey response.
 func (client *HeaderClient) ResponseExistingKeyHandleResponse(resp *azcore.Response) (*HeaderResponseExistingKeyResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ResponseExistingKeyHandleError(resp)
-	}
 	result := HeaderResponseExistingKeyResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("User-Agent"); val != "" {
 		result.UserAgent = &val
@@ -1282,6 +1147,9 @@ func (client *HeaderClient) ResponseFloat(ctx context.Context, scenario string) 
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ResponseFloatHandleError(resp)
+	}
 	result, err := client.ResponseFloatHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1303,9 +1171,6 @@ func (client *HeaderClient) ResponseFloatCreateRequest(ctx context.Context, scen
 
 // ResponseFloatHandleResponse handles the ResponseFloat response.
 func (client *HeaderClient) ResponseFloatHandleResponse(resp *azcore.Response) (*HeaderResponseFloatResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ResponseFloatHandleError(resp)
-	}
 	result := HeaderResponseFloatResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("value"); val != "" {
 		value32, err := strconv.ParseFloat(val, 32)
@@ -1337,6 +1202,9 @@ func (client *HeaderClient) ResponseInteger(ctx context.Context, scenario string
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ResponseIntegerHandleError(resp)
+	}
 	result, err := client.ResponseIntegerHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1358,9 +1226,6 @@ func (client *HeaderClient) ResponseIntegerCreateRequest(ctx context.Context, sc
 
 // ResponseIntegerHandleResponse handles the ResponseInteger response.
 func (client *HeaderClient) ResponseIntegerHandleResponse(resp *azcore.Response) (*HeaderResponseIntegerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ResponseIntegerHandleError(resp)
-	}
 	result := HeaderResponseIntegerResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("value"); val != "" {
 		value32, err := strconv.ParseInt(val, 10, 32)
@@ -1392,6 +1257,9 @@ func (client *HeaderClient) ResponseLong(ctx context.Context, scenario string) (
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ResponseLongHandleError(resp)
+	}
 	result, err := client.ResponseLongHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1413,9 +1281,6 @@ func (client *HeaderClient) ResponseLongCreateRequest(ctx context.Context, scena
 
 // ResponseLongHandleResponse handles the ResponseLong response.
 func (client *HeaderClient) ResponseLongHandleResponse(resp *azcore.Response) (*HeaderResponseLongResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ResponseLongHandleError(resp)
-	}
 	result := HeaderResponseLongResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("value"); val != "" {
 		value, err := strconv.ParseInt(val, 10, 64)
@@ -1446,6 +1311,9 @@ func (client *HeaderClient) ResponseProtectedKey(ctx context.Context) (*HeaderRe
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ResponseProtectedKeyHandleError(resp)
+	}
 	result, err := client.ResponseProtectedKeyHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1466,9 +1334,6 @@ func (client *HeaderClient) ResponseProtectedKeyCreateRequest(ctx context.Contex
 
 // ResponseProtectedKeyHandleResponse handles the ResponseProtectedKey response.
 func (client *HeaderClient) ResponseProtectedKeyHandleResponse(resp *azcore.Response) (*HeaderResponseProtectedKeyResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ResponseProtectedKeyHandleError(resp)
-	}
 	result := HeaderResponseProtectedKeyResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("Content-Type"); val != "" {
 		result.ContentType = &val
@@ -1495,6 +1360,9 @@ func (client *HeaderClient) ResponseString(ctx context.Context, scenario string)
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ResponseStringHandleError(resp)
+	}
 	result, err := client.ResponseStringHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1516,9 +1384,6 @@ func (client *HeaderClient) ResponseStringCreateRequest(ctx context.Context, sce
 
 // ResponseStringHandleResponse handles the ResponseString response.
 func (client *HeaderClient) ResponseStringHandleResponse(resp *azcore.Response) (*HeaderResponseStringResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ResponseStringHandleError(resp)
-	}
 	result := HeaderResponseStringResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("value"); val != "" {
 		result.Value = &val

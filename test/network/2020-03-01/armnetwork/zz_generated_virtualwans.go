@@ -63,6 +63,9 @@ func (client *VirtualWansClient) BeginCreateOrUpdate(ctx context.Context, resour
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
+	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -112,9 +115,6 @@ func (client *VirtualWansClient) CreateOrUpdateCreateRequest(ctx context.Context
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *VirtualWansClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*VirtualWanPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
 	return &VirtualWanPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -137,6 +137,9 @@ func (client *VirtualWansClient) BeginDelete(ctx context.Context, resourceGroupN
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -187,9 +190,6 @@ func (client *VirtualWansClient) DeleteCreateRequest(ctx context.Context, resour
 
 // DeleteHandleResponse handles the Delete response.
 func (client *VirtualWansClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -211,6 +211,9 @@ func (client *VirtualWansClient) Get(ctx context.Context, resourceGroupName stri
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -238,9 +241,6 @@ func (client *VirtualWansClient) GetCreateRequest(ctx context.Context, resourceG
 
 // GetHandleResponse handles the Get response.
 func (client *VirtualWansClient) GetHandleResponse(resp *azcore.Response) (*VirtualWanResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
-	}
 	result := VirtualWanResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualWan)
 }
@@ -262,6 +262,7 @@ func (client *VirtualWansClient) List() ListVirtualWaNsResultPager {
 			return client.ListCreateRequest(ctx)
 		},
 		responder: client.ListHandleResponse,
+		errorer:   client.ListHandleError,
 		advancer: func(ctx context.Context, resp *ListVirtualWaNsResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ListVirtualWaNsResult.NextLink)
 		},
@@ -285,9 +286,6 @@ func (client *VirtualWansClient) ListCreateRequest(ctx context.Context) (*azcore
 
 // ListHandleResponse handles the List response.
 func (client *VirtualWansClient) ListHandleResponse(resp *azcore.Response) (*ListVirtualWaNsResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := ListVirtualWaNsResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ListVirtualWaNsResult)
 }
@@ -309,6 +307,7 @@ func (client *VirtualWansClient) ListByResourceGroup(resourceGroupName string) L
 			return client.ListByResourceGroupCreateRequest(ctx, resourceGroupName)
 		},
 		responder: client.ListByResourceGroupHandleResponse,
+		errorer:   client.ListByResourceGroupHandleError,
 		advancer: func(ctx context.Context, resp *ListVirtualWaNsResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ListVirtualWaNsResult.NextLink)
 		},
@@ -333,9 +332,6 @@ func (client *VirtualWansClient) ListByResourceGroupCreateRequest(ctx context.Co
 
 // ListByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client *VirtualWansClient) ListByResourceGroupHandleResponse(resp *azcore.Response) (*ListVirtualWaNsResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListByResourceGroupHandleError(resp)
-	}
 	result := ListVirtualWaNsResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ListVirtualWaNsResult)
 }
@@ -358,6 +354,9 @@ func (client *VirtualWansClient) UpdateTags(ctx context.Context, resourceGroupNa
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.UpdateTagsHandleError(resp)
 	}
 	result, err := client.UpdateTagsHandleResponse(resp)
 	if err != nil {
@@ -385,9 +384,6 @@ func (client *VirtualWansClient) UpdateTagsCreateRequest(ctx context.Context, re
 
 // UpdateTagsHandleResponse handles the UpdateTags response.
 func (client *VirtualWansClient) UpdateTagsHandleResponse(resp *azcore.Response) (*VirtualWanResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.UpdateTagsHandleError(resp)
-	}
 	result := VirtualWanResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualWan)
 }

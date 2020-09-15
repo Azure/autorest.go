@@ -51,6 +51,9 @@ func (client *VpnServerConfigurationsAssociatedWithVirtualWanClient) BeginList(c
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.ListHandleError(resp)
+	}
 	result, err := client.ListHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -100,9 +103,6 @@ func (client *VpnServerConfigurationsAssociatedWithVirtualWanClient) ListCreateR
 
 // ListHandleResponse handles the List response.
 func (client *VpnServerConfigurationsAssociatedWithVirtualWanClient) ListHandleResponse(resp *azcore.Response) (*VpnServerConfigurationsResponsePollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.ListHandleError(resp)
-	}
 	return &VpnServerConfigurationsResponsePollerResponse{RawResponse: resp.Response}, nil
 }
 

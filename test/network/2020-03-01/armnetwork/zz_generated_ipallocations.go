@@ -63,6 +63,9 @@ func (client *IPAllocationsClient) BeginCreateOrUpdate(ctx context.Context, reso
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
+	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -112,9 +115,6 @@ func (client *IPAllocationsClient) CreateOrUpdateCreateRequest(ctx context.Conte
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *IPAllocationsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*IPAllocationPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
 	return &IPAllocationPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -137,6 +137,9 @@ func (client *IPAllocationsClient) BeginDelete(ctx context.Context, resourceGrou
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -187,9 +190,6 @@ func (client *IPAllocationsClient) DeleteCreateRequest(ctx context.Context, reso
 
 // DeleteHandleResponse handles the Delete response.
 func (client *IPAllocationsClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -211,6 +211,9 @@ func (client *IPAllocationsClient) Get(ctx context.Context, resourceGroupName st
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -241,9 +244,6 @@ func (client *IPAllocationsClient) GetCreateRequest(ctx context.Context, resourc
 
 // GetHandleResponse handles the Get response.
 func (client *IPAllocationsClient) GetHandleResponse(resp *azcore.Response) (*IPAllocationResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
-	}
 	result := IPAllocationResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.IPAllocation)
 }
@@ -265,6 +265,7 @@ func (client *IPAllocationsClient) List() IPAllocationListResultPager {
 			return client.ListCreateRequest(ctx)
 		},
 		responder: client.ListHandleResponse,
+		errorer:   client.ListHandleError,
 		advancer: func(ctx context.Context, resp *IPAllocationListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.IPAllocationListResult.NextLink)
 		},
@@ -288,9 +289,6 @@ func (client *IPAllocationsClient) ListCreateRequest(ctx context.Context) (*azco
 
 // ListHandleResponse handles the List response.
 func (client *IPAllocationsClient) ListHandleResponse(resp *azcore.Response) (*IPAllocationListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := IPAllocationListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.IPAllocationListResult)
 }
@@ -312,6 +310,7 @@ func (client *IPAllocationsClient) ListByResourceGroup(resourceGroupName string)
 			return client.ListByResourceGroupCreateRequest(ctx, resourceGroupName)
 		},
 		responder: client.ListByResourceGroupHandleResponse,
+		errorer:   client.ListByResourceGroupHandleError,
 		advancer: func(ctx context.Context, resp *IPAllocationListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.IPAllocationListResult.NextLink)
 		},
@@ -336,9 +335,6 @@ func (client *IPAllocationsClient) ListByResourceGroupCreateRequest(ctx context.
 
 // ListByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client *IPAllocationsClient) ListByResourceGroupHandleResponse(resp *azcore.Response) (*IPAllocationListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListByResourceGroupHandleError(resp)
-	}
 	result := IPAllocationListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.IPAllocationListResult)
 }
@@ -361,6 +357,9 @@ func (client *IPAllocationsClient) UpdateTags(ctx context.Context, resourceGroup
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.UpdateTagsHandleError(resp)
 	}
 	result, err := client.UpdateTagsHandleResponse(resp)
 	if err != nil {
@@ -388,9 +387,6 @@ func (client *IPAllocationsClient) UpdateTagsCreateRequest(ctx context.Context, 
 
 // UpdateTagsHandleResponse handles the UpdateTags response.
 func (client *IPAllocationsClient) UpdateTagsHandleResponse(resp *azcore.Response) (*IPAllocationResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.UpdateTagsHandleError(resp)
-	}
 	result := IPAllocationResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.IPAllocation)
 }

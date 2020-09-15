@@ -48,6 +48,9 @@ func (client *LoadBalancerOutboundRulesClient) Get(ctx context.Context, resource
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
+	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -75,9 +78,6 @@ func (client *LoadBalancerOutboundRulesClient) GetCreateRequest(ctx context.Cont
 
 // GetHandleResponse handles the Get response.
 func (client *LoadBalancerOutboundRulesClient) GetHandleResponse(resp *azcore.Response) (*OutboundRuleResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
-	}
 	result := OutboundRuleResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.OutboundRule)
 }
@@ -99,6 +99,7 @@ func (client *LoadBalancerOutboundRulesClient) List(resourceGroupName string, lo
 			return client.ListCreateRequest(ctx, resourceGroupName, loadBalancerName)
 		},
 		responder: client.ListHandleResponse,
+		errorer:   client.ListHandleError,
 		advancer: func(ctx context.Context, resp *LoadBalancerOutboundRuleListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.LoadBalancerOutboundRuleListResult.NextLink)
 		},
@@ -124,9 +125,6 @@ func (client *LoadBalancerOutboundRulesClient) ListCreateRequest(ctx context.Con
 
 // ListHandleResponse handles the List response.
 func (client *LoadBalancerOutboundRulesClient) ListHandleResponse(resp *azcore.Response) (*LoadBalancerOutboundRuleListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := LoadBalancerOutboundRuleListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.LoadBalancerOutboundRuleListResult)
 }

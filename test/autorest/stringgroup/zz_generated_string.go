@@ -67,6 +67,9 @@ func (client *StringClient) GetBase64Encoded(ctx context.Context) (*ByteArrayRes
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetBase64EncodedHandleError(resp)
+	}
 	result, err := client.GetBase64EncodedHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -87,9 +90,6 @@ func (client *StringClient) GetBase64EncodedCreateRequest(ctx context.Context) (
 
 // GetBase64EncodedHandleResponse handles the GetBase64Encoded response.
 func (client *StringClient) GetBase64EncodedHandleResponse(resp *azcore.Response) (*ByteArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetBase64EncodedHandleError(resp)
-	}
 	result := ByteArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsByteArray(&result.Value, azcore.Base64StdFormat)
 }
@@ -113,6 +113,9 @@ func (client *StringClient) GetBase64URLEncoded(ctx context.Context) (*ByteArray
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetBase64URLEncodedHandleError(resp)
+	}
 	result, err := client.GetBase64URLEncodedHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -133,9 +136,6 @@ func (client *StringClient) GetBase64URLEncodedCreateRequest(ctx context.Context
 
 // GetBase64URLEncodedHandleResponse handles the GetBase64URLEncoded response.
 func (client *StringClient) GetBase64URLEncodedHandleResponse(resp *azcore.Response) (*ByteArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetBase64URLEncodedHandleError(resp)
-	}
 	result := ByteArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsByteArray(&result.Value, azcore.Base64URLFormat)
 }
@@ -159,6 +159,9 @@ func (client *StringClient) GetEmpty(ctx context.Context) (*StringResponse, erro
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetEmptyHandleError(resp)
+	}
 	result, err := client.GetEmptyHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -179,9 +182,6 @@ func (client *StringClient) GetEmptyCreateRequest(ctx context.Context) (*azcore.
 
 // GetEmptyHandleResponse handles the GetEmpty response.
 func (client *StringClient) GetEmptyHandleResponse(resp *azcore.Response) (*StringResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetEmptyHandleError(resp)
-	}
 	result := StringResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
@@ -205,6 +205,9 @@ func (client *StringClient) GetMBCS(ctx context.Context) (*StringResponse, error
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetMBCSHandleError(resp)
+	}
 	result, err := client.GetMBCSHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -225,9 +228,6 @@ func (client *StringClient) GetMBCSCreateRequest(ctx context.Context) (*azcore.R
 
 // GetMBCSHandleResponse handles the GetMBCS response.
 func (client *StringClient) GetMBCSHandleResponse(resp *azcore.Response) (*StringResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetMBCSHandleError(resp)
-	}
 	result := StringResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
@@ -251,6 +251,9 @@ func (client *StringClient) GetNotProvided(ctx context.Context) (*StringResponse
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetNotProvidedHandleError(resp)
+	}
 	result, err := client.GetNotProvidedHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -271,9 +274,6 @@ func (client *StringClient) GetNotProvidedCreateRequest(ctx context.Context) (*a
 
 // GetNotProvidedHandleResponse handles the GetNotProvided response.
 func (client *StringClient) GetNotProvidedHandleResponse(resp *azcore.Response) (*StringResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetNotProvidedHandleError(resp)
-	}
 	result := StringResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
@@ -297,6 +297,9 @@ func (client *StringClient) GetNull(ctx context.Context) (*StringResponse, error
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetNullHandleError(resp)
+	}
 	result, err := client.GetNullHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -317,9 +320,6 @@ func (client *StringClient) GetNullCreateRequest(ctx context.Context) (*azcore.R
 
 // GetNullHandleResponse handles the GetNull response.
 func (client *StringClient) GetNullHandleResponse(resp *azcore.Response) (*StringResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetNullHandleError(resp)
-	}
 	result := StringResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
@@ -343,6 +343,9 @@ func (client *StringClient) GetNullBase64URLEncoded(ctx context.Context) (*ByteA
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetNullBase64URLEncodedHandleError(resp)
+	}
 	result, err := client.GetNullBase64URLEncodedHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -363,9 +366,6 @@ func (client *StringClient) GetNullBase64URLEncodedCreateRequest(ctx context.Con
 
 // GetNullBase64URLEncodedHandleResponse handles the GetNullBase64URLEncoded response.
 func (client *StringClient) GetNullBase64URLEncodedHandleResponse(resp *azcore.Response) (*ByteArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetNullBase64URLEncodedHandleError(resp)
-	}
 	result := ByteArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsByteArray(&result.Value, azcore.Base64URLFormat)
 }
@@ -389,6 +389,9 @@ func (client *StringClient) GetWhitespace(ctx context.Context) (*StringResponse,
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetWhitespaceHandleError(resp)
+	}
 	result, err := client.GetWhitespaceHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -409,9 +412,6 @@ func (client *StringClient) GetWhitespaceCreateRequest(ctx context.Context) (*az
 
 // GetWhitespaceHandleResponse handles the GetWhitespace response.
 func (client *StringClient) GetWhitespaceHandleResponse(resp *azcore.Response) (*StringResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetWhitespaceHandleError(resp)
-	}
 	result := StringResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
@@ -435,11 +435,10 @@ func (client *StringClient) PutBase64URLEncoded(ctx context.Context, stringBody 
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutBase64URLEncodedHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutBase64URLEncodedHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PutBase64URLEncodedCreateRequest creates the PutBase64URLEncoded request.
@@ -451,14 +450,6 @@ func (client *StringClient) PutBase64URLEncodedCreateRequest(ctx context.Context
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsByteArray(stringBody, azcore.Base64URLFormat)
-}
-
-// PutBase64URLEncodedHandleResponse handles the PutBase64URLEncoded response.
-func (client *StringClient) PutBase64URLEncodedHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutBase64URLEncodedHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // PutBase64URLEncodedHandleError handles the PutBase64URLEncoded error response.
@@ -480,11 +471,10 @@ func (client *StringClient) PutEmpty(ctx context.Context) (*http.Response, error
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutEmptyHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutEmptyHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PutEmptyCreateRequest creates the PutEmpty request.
@@ -496,14 +486,6 @@ func (client *StringClient) PutEmptyCreateRequest(ctx context.Context) (*azcore.
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON("")
-}
-
-// PutEmptyHandleResponse handles the PutEmpty response.
-func (client *StringClient) PutEmptyHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutEmptyHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // PutEmptyHandleError handles the PutEmpty error response.
@@ -525,11 +507,10 @@ func (client *StringClient) PutMBCS(ctx context.Context) (*http.Response, error)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutMBCSHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutMBCSHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PutMBCSCreateRequest creates the PutMBCS request.
@@ -541,14 +522,6 @@ func (client *StringClient) PutMBCSCreateRequest(ctx context.Context) (*azcore.R
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON("啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€")
-}
-
-// PutMBCSHandleResponse handles the PutMBCS response.
-func (client *StringClient) PutMBCSHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutMBCSHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // PutMBCSHandleError handles the PutMBCS error response.
@@ -570,11 +543,10 @@ func (client *StringClient) PutNull(ctx context.Context, stringPutNullOptions *S
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutNullHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutNullHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PutNullCreateRequest creates the PutNull request.
@@ -589,14 +561,6 @@ func (client *StringClient) PutNullCreateRequest(ctx context.Context, stringPutN
 		return req, req.MarshalAsJSON(stringPutNullOptions.StringBody)
 	}
 	return req, nil
-}
-
-// PutNullHandleResponse handles the PutNull response.
-func (client *StringClient) PutNullHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutNullHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // PutNullHandleError handles the PutNull error response.
@@ -618,11 +582,10 @@ func (client *StringClient) PutWhitespace(ctx context.Context) (*http.Response, 
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutWhitespaceHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutWhitespaceHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PutWhitespaceCreateRequest creates the PutWhitespace request.
@@ -634,14 +597,6 @@ func (client *StringClient) PutWhitespaceCreateRequest(ctx context.Context) (*az
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON("    Now is the time for all good men to come to the aid of their country    ")
-}
-
-// PutWhitespaceHandleResponse handles the PutWhitespace response.
-func (client *StringClient) PutWhitespaceHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutWhitespaceHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // PutWhitespaceHandleError handles the PutWhitespace error response.

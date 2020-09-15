@@ -59,6 +59,9 @@ func (client *ExpressRouteCircuitAuthorizationsClient) BeginCreateOrUpdate(ctx c
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
+	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -109,9 +112,6 @@ func (client *ExpressRouteCircuitAuthorizationsClient) CreateOrUpdateCreateReque
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *ExpressRouteCircuitAuthorizationsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitAuthorizationPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
 	return &ExpressRouteCircuitAuthorizationPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -134,6 +134,9 @@ func (client *ExpressRouteCircuitAuthorizationsClient) BeginDelete(ctx context.C
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -185,9 +188,6 @@ func (client *ExpressRouteCircuitAuthorizationsClient) DeleteCreateRequest(ctx c
 
 // DeleteHandleResponse handles the Delete response.
 func (client *ExpressRouteCircuitAuthorizationsClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -209,6 +209,9 @@ func (client *ExpressRouteCircuitAuthorizationsClient) Get(ctx context.Context, 
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -237,9 +240,6 @@ func (client *ExpressRouteCircuitAuthorizationsClient) GetCreateRequest(ctx cont
 
 // GetHandleResponse handles the Get response.
 func (client *ExpressRouteCircuitAuthorizationsClient) GetHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitAuthorizationResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
-	}
 	result := ExpressRouteCircuitAuthorizationResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ExpressRouteCircuitAuthorization)
 }
@@ -261,6 +261,7 @@ func (client *ExpressRouteCircuitAuthorizationsClient) List(resourceGroupName st
 			return client.ListCreateRequest(ctx, resourceGroupName, circuitName)
 		},
 		responder: client.ListHandleResponse,
+		errorer:   client.ListHandleError,
 		advancer: func(ctx context.Context, resp *AuthorizationListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.AuthorizationListResult.NextLink)
 		},
@@ -286,9 +287,6 @@ func (client *ExpressRouteCircuitAuthorizationsClient) ListCreateRequest(ctx con
 
 // ListHandleResponse handles the List response.
 func (client *ExpressRouteCircuitAuthorizationsClient) ListHandleResponse(resp *azcore.Response) (*AuthorizationListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := AuthorizationListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.AuthorizationListResult)
 }

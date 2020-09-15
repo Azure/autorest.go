@@ -69,6 +69,9 @@ func (client *PublicIPAddressesClient) BeginCreateOrUpdate(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
+	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -118,9 +121,6 @@ func (client *PublicIPAddressesClient) CreateOrUpdateCreateRequest(ctx context.C
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *PublicIPAddressesClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*PublicIPAddressPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
 	return &PublicIPAddressPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -143,6 +143,9 @@ func (client *PublicIPAddressesClient) BeginDelete(ctx context.Context, resource
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -193,9 +196,6 @@ func (client *PublicIPAddressesClient) DeleteCreateRequest(ctx context.Context, 
 
 // DeleteHandleResponse handles the Delete response.
 func (client *PublicIPAddressesClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -217,6 +217,9 @@ func (client *PublicIPAddressesClient) Get(ctx context.Context, resourceGroupNam
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -247,9 +250,6 @@ func (client *PublicIPAddressesClient) GetCreateRequest(ctx context.Context, res
 
 // GetHandleResponse handles the Get response.
 func (client *PublicIPAddressesClient) GetHandleResponse(resp *azcore.Response) (*PublicIPAddressResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
-	}
 	result := PublicIPAddressResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.PublicIPAddress)
 }
@@ -272,6 +272,9 @@ func (client *PublicIPAddressesClient) GetVirtualMachineScaleSetPublicIPAddress(
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetVirtualMachineScaleSetPublicIPAddressHandleError(resp)
 	}
 	result, err := client.GetVirtualMachineScaleSetPublicIPAddressHandleResponse(resp)
 	if err != nil {
@@ -306,9 +309,6 @@ func (client *PublicIPAddressesClient) GetVirtualMachineScaleSetPublicIPAddressC
 
 // GetVirtualMachineScaleSetPublicIPAddressHandleResponse handles the GetVirtualMachineScaleSetPublicIPAddress response.
 func (client *PublicIPAddressesClient) GetVirtualMachineScaleSetPublicIPAddressHandleResponse(resp *azcore.Response) (*PublicIPAddressResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetVirtualMachineScaleSetPublicIPAddressHandleError(resp)
-	}
 	result := PublicIPAddressResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.PublicIPAddress)
 }
@@ -330,6 +330,7 @@ func (client *PublicIPAddressesClient) List(resourceGroupName string) PublicIPAd
 			return client.ListCreateRequest(ctx, resourceGroupName)
 		},
 		responder: client.ListHandleResponse,
+		errorer:   client.ListHandleError,
 		advancer: func(ctx context.Context, resp *PublicIPAddressListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.PublicIPAddressListResult.NextLink)
 		},
@@ -354,9 +355,6 @@ func (client *PublicIPAddressesClient) ListCreateRequest(ctx context.Context, re
 
 // ListHandleResponse handles the List response.
 func (client *PublicIPAddressesClient) ListHandleResponse(resp *azcore.Response) (*PublicIPAddressListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := PublicIPAddressListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.PublicIPAddressListResult)
 }
@@ -378,6 +376,7 @@ func (client *PublicIPAddressesClient) ListAll() PublicIPAddressListResultPager 
 			return client.ListAllCreateRequest(ctx)
 		},
 		responder: client.ListAllHandleResponse,
+		errorer:   client.ListAllHandleError,
 		advancer: func(ctx context.Context, resp *PublicIPAddressListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.PublicIPAddressListResult.NextLink)
 		},
@@ -401,9 +400,6 @@ func (client *PublicIPAddressesClient) ListAllCreateRequest(ctx context.Context)
 
 // ListAllHandleResponse handles the ListAll response.
 func (client *PublicIPAddressesClient) ListAllHandleResponse(resp *azcore.Response) (*PublicIPAddressListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListAllHandleError(resp)
-	}
 	result := PublicIPAddressListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.PublicIPAddressListResult)
 }
@@ -425,6 +421,7 @@ func (client *PublicIPAddressesClient) ListVirtualMachineScaleSetPublicIPAddress
 			return client.ListVirtualMachineScaleSetPublicIPAddressesCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName)
 		},
 		responder: client.ListVirtualMachineScaleSetPublicIPAddressesHandleResponse,
+		errorer:   client.ListVirtualMachineScaleSetPublicIPAddressesHandleError,
 		advancer: func(ctx context.Context, resp *PublicIPAddressListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.PublicIPAddressListResult.NextLink)
 		},
@@ -450,9 +447,6 @@ func (client *PublicIPAddressesClient) ListVirtualMachineScaleSetPublicIPAddress
 
 // ListVirtualMachineScaleSetPublicIPAddressesHandleResponse handles the ListVirtualMachineScaleSetPublicIPAddresses response.
 func (client *PublicIPAddressesClient) ListVirtualMachineScaleSetPublicIPAddressesHandleResponse(resp *azcore.Response) (*PublicIPAddressListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListVirtualMachineScaleSetPublicIPAddressesHandleError(resp)
-	}
 	result := PublicIPAddressListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.PublicIPAddressListResult)
 }
@@ -474,6 +468,7 @@ func (client *PublicIPAddressesClient) ListVirtualMachineScaleSetVMPublicIPaddre
 			return client.ListVirtualMachineScaleSetVMPublicIPaddressesCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, ipConfigurationName)
 		},
 		responder: client.ListVirtualMachineScaleSetVMPublicIPaddressesHandleResponse,
+		errorer:   client.ListVirtualMachineScaleSetVMPublicIPaddressesHandleError,
 		advancer: func(ctx context.Context, resp *PublicIPAddressListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.PublicIPAddressListResult.NextLink)
 		},
@@ -502,9 +497,6 @@ func (client *PublicIPAddressesClient) ListVirtualMachineScaleSetVMPublicIPaddre
 
 // ListVirtualMachineScaleSetVMPublicIPaddressesHandleResponse handles the ListVirtualMachineScaleSetVMPublicIPaddresses response.
 func (client *PublicIPAddressesClient) ListVirtualMachineScaleSetVMPublicIPaddressesHandleResponse(resp *azcore.Response) (*PublicIPAddressListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListVirtualMachineScaleSetVMPublicIPaddressesHandleError(resp)
-	}
 	result := PublicIPAddressListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.PublicIPAddressListResult)
 }
@@ -527,6 +519,9 @@ func (client *PublicIPAddressesClient) UpdateTags(ctx context.Context, resourceG
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.UpdateTagsHandleError(resp)
 	}
 	result, err := client.UpdateTagsHandleResponse(resp)
 	if err != nil {
@@ -554,9 +549,6 @@ func (client *PublicIPAddressesClient) UpdateTagsCreateRequest(ctx context.Conte
 
 // UpdateTagsHandleResponse handles the UpdateTags response.
 func (client *PublicIPAddressesClient) UpdateTagsHandleResponse(resp *azcore.Response) (*PublicIPAddressResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.UpdateTagsHandleError(resp)
-	}
 	result := PublicIPAddressResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.PublicIPAddress)
 }

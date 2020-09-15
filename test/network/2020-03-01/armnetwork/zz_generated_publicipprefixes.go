@@ -63,6 +63,9 @@ func (client *PublicIPPrefixesClient) BeginCreateOrUpdate(ctx context.Context, r
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
+	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -112,9 +115,6 @@ func (client *PublicIPPrefixesClient) CreateOrUpdateCreateRequest(ctx context.Co
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *PublicIPPrefixesClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*PublicIPPrefixPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
 	return &PublicIPPrefixPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -137,6 +137,9 @@ func (client *PublicIPPrefixesClient) BeginDelete(ctx context.Context, resourceG
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -187,9 +190,6 @@ func (client *PublicIPPrefixesClient) DeleteCreateRequest(ctx context.Context, r
 
 // DeleteHandleResponse handles the Delete response.
 func (client *PublicIPPrefixesClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -211,6 +211,9 @@ func (client *PublicIPPrefixesClient) Get(ctx context.Context, resourceGroupName
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -241,9 +244,6 @@ func (client *PublicIPPrefixesClient) GetCreateRequest(ctx context.Context, reso
 
 // GetHandleResponse handles the Get response.
 func (client *PublicIPPrefixesClient) GetHandleResponse(resp *azcore.Response) (*PublicIPPrefixResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
-	}
 	result := PublicIPPrefixResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.PublicIPPrefix)
 }
@@ -265,6 +265,7 @@ func (client *PublicIPPrefixesClient) List(resourceGroupName string) PublicIPPre
 			return client.ListCreateRequest(ctx, resourceGroupName)
 		},
 		responder: client.ListHandleResponse,
+		errorer:   client.ListHandleError,
 		advancer: func(ctx context.Context, resp *PublicIPPrefixListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.PublicIPPrefixListResult.NextLink)
 		},
@@ -289,9 +290,6 @@ func (client *PublicIPPrefixesClient) ListCreateRequest(ctx context.Context, res
 
 // ListHandleResponse handles the List response.
 func (client *PublicIPPrefixesClient) ListHandleResponse(resp *azcore.Response) (*PublicIPPrefixListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := PublicIPPrefixListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.PublicIPPrefixListResult)
 }
@@ -313,6 +311,7 @@ func (client *PublicIPPrefixesClient) ListAll() PublicIPPrefixListResultPager {
 			return client.ListAllCreateRequest(ctx)
 		},
 		responder: client.ListAllHandleResponse,
+		errorer:   client.ListAllHandleError,
 		advancer: func(ctx context.Context, resp *PublicIPPrefixListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.PublicIPPrefixListResult.NextLink)
 		},
@@ -336,9 +335,6 @@ func (client *PublicIPPrefixesClient) ListAllCreateRequest(ctx context.Context) 
 
 // ListAllHandleResponse handles the ListAll response.
 func (client *PublicIPPrefixesClient) ListAllHandleResponse(resp *azcore.Response) (*PublicIPPrefixListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListAllHandleError(resp)
-	}
 	result := PublicIPPrefixListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.PublicIPPrefixListResult)
 }
@@ -361,6 +357,9 @@ func (client *PublicIPPrefixesClient) UpdateTags(ctx context.Context, resourceGr
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.UpdateTagsHandleError(resp)
 	}
 	result, err := client.UpdateTagsHandleResponse(resp)
 	if err != nil {
@@ -388,9 +387,6 @@ func (client *PublicIPPrefixesClient) UpdateTagsCreateRequest(ctx context.Contex
 
 // UpdateTagsHandleResponse handles the UpdateTags response.
 func (client *PublicIPPrefixesClient) UpdateTagsHandleResponse(resp *azcore.Response) (*PublicIPPrefixResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.UpdateTagsHandleError(resp)
-	}
 	result := PublicIPPrefixResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.PublicIPPrefix)
 }

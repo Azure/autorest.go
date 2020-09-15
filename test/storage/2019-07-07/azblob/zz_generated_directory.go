@@ -54,6 +54,9 @@ func (client *directoryClient) Create(ctx context.Context, directoryCreateOption
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusCreated) {
+		return nil, client.CreateHandleError(resp)
+	}
 	result, err := client.CreateHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -122,9 +125,6 @@ func (client *directoryClient) CreateCreateRequest(ctx context.Context, director
 
 // CreateHandleResponse handles the Create response.
 func (client *directoryClient) CreateHandleResponse(resp *azcore.Response) (*DirectoryCreateResponse, error) {
-	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.CreateHandleError(resp)
-	}
 	result := DirectoryCreateResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -181,6 +181,9 @@ func (client *directoryClient) Delete(ctx context.Context, recursiveDirectoryDel
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.DeleteHandleError(resp)
+	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -228,9 +231,6 @@ func (client *directoryClient) DeleteCreateRequest(ctx context.Context, recursiv
 
 // DeleteHandleResponse handles the Delete response.
 func (client *directoryClient) DeleteHandleResponse(resp *azcore.Response) (*DirectoryDeleteResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.DeleteHandleError(resp)
-	}
 	result := DirectoryDeleteResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-continuation"); val != "" {
 		result.Marker = &val
@@ -272,6 +272,9 @@ func (client *directoryClient) GetAccessControl(ctx context.Context, directoryGe
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetAccessControlHandleError(resp)
 	}
 	result, err := client.GetAccessControlHandleResponse(resp)
 	if err != nil {
@@ -320,9 +323,6 @@ func (client *directoryClient) GetAccessControlCreateRequest(ctx context.Context
 
 // GetAccessControlHandleResponse handles the GetAccessControl response.
 func (client *directoryClient) GetAccessControlHandleResponse(resp *azcore.Response) (*DirectoryGetAccessControlResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetAccessControlHandleError(resp)
-	}
 	result := DirectoryGetAccessControlResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
@@ -380,6 +380,9 @@ func (client *directoryClient) Rename(ctx context.Context, renameSource string, 
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusCreated) {
+		return nil, client.RenameHandleError(resp)
 	}
 	result, err := client.RenameHandleResponse(resp)
 	if err != nil {
@@ -470,9 +473,6 @@ func (client *directoryClient) RenameCreateRequest(ctx context.Context, renameSo
 
 // RenameHandleResponse handles the Rename response.
 func (client *directoryClient) RenameHandleResponse(resp *azcore.Response) (*DirectoryRenameResponse, error) {
-	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.RenameHandleError(resp)
-	}
 	result := DirectoryRenameResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-continuation"); val != "" {
 		result.Marker = &val
@@ -532,6 +532,9 @@ func (client *directoryClient) SetAccessControl(ctx context.Context, directorySe
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.SetAccessControlHandleError(resp)
+	}
 	result, err := client.SetAccessControlHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -588,9 +591,6 @@ func (client *directoryClient) SetAccessControlCreateRequest(ctx context.Context
 
 // SetAccessControlHandleResponse handles the SetAccessControl response.
 func (client *directoryClient) SetAccessControlHandleResponse(resp *azcore.Response) (*DirectorySetAccessControlResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.SetAccessControlHandleError(resp)
-	}
 	result := DirectorySetAccessControlResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)

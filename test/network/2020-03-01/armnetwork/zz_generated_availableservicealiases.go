@@ -46,6 +46,7 @@ func (client *AvailableServiceAliasesClient) List(location string) AvailableServ
 			return client.ListCreateRequest(ctx, location)
 		},
 		responder: client.ListHandleResponse,
+		errorer:   client.ListHandleError,
 		advancer: func(ctx context.Context, resp *AvailableServiceAliasesResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.AvailableServiceAliasesResult.NextLink)
 		},
@@ -70,9 +71,6 @@ func (client *AvailableServiceAliasesClient) ListCreateRequest(ctx context.Conte
 
 // ListHandleResponse handles the List response.
 func (client *AvailableServiceAliasesClient) ListHandleResponse(resp *azcore.Response) (*AvailableServiceAliasesResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := AvailableServiceAliasesResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.AvailableServiceAliasesResult)
 }
@@ -94,6 +92,7 @@ func (client *AvailableServiceAliasesClient) ListByResourceGroup(resourceGroupNa
 			return client.ListByResourceGroupCreateRequest(ctx, resourceGroupName, location)
 		},
 		responder: client.ListByResourceGroupHandleResponse,
+		errorer:   client.ListByResourceGroupHandleError,
 		advancer: func(ctx context.Context, resp *AvailableServiceAliasesResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.AvailableServiceAliasesResult.NextLink)
 		},
@@ -119,9 +118,6 @@ func (client *AvailableServiceAliasesClient) ListByResourceGroupCreateRequest(ct
 
 // ListByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client *AvailableServiceAliasesClient) ListByResourceGroupHandleResponse(resp *azcore.Response) (*AvailableServiceAliasesResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListByResourceGroupHandleError(resp)
-	}
 	result := AvailableServiceAliasesResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.AvailableServiceAliasesResult)
 }

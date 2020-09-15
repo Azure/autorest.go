@@ -50,6 +50,9 @@ func (client *PetClient) AddPet(ctx context.Context, petAddPetOptions *PetAddPet
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.AddPetHandleError(resp)
+	}
 	result, err := client.AddPetHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -73,9 +76,6 @@ func (client *PetClient) AddPetCreateRequest(ctx context.Context, petAddPetOptio
 
 // AddPetHandleResponse handles the AddPet response.
 func (client *PetClient) AddPetHandleResponse(resp *azcore.Response) (*PetResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.AddPetHandleError(resp)
-	}
 	result := PetResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Pet)
 }
@@ -102,6 +102,9 @@ func (client *PetClient) GetByPetID(ctx context.Context, petId string) (*PetResp
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetByPetIDHandleError(resp)
+	}
 	result, err := client.GetByPetIDHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -123,9 +126,6 @@ func (client *PetClient) GetByPetIDCreateRequest(ctx context.Context, petId stri
 
 // GetByPetIDHandleResponse handles the GetByPetID response.
 func (client *PetClient) GetByPetIDHandleResponse(resp *azcore.Response) (*PetResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetByPetIDHandleError(resp)
-	}
 	result := PetResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Pet)
 }

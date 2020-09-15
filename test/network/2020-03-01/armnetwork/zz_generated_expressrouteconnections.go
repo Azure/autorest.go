@@ -59,6 +59,9 @@ func (client *ExpressRouteConnectionsClient) BeginCreateOrUpdate(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
+	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -109,9 +112,6 @@ func (client *ExpressRouteConnectionsClient) CreateOrUpdateCreateRequest(ctx con
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *ExpressRouteConnectionsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*ExpressRouteConnectionPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
 	return &ExpressRouteConnectionPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -134,6 +134,9 @@ func (client *ExpressRouteConnectionsClient) BeginDelete(ctx context.Context, re
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -185,9 +188,6 @@ func (client *ExpressRouteConnectionsClient) DeleteCreateRequest(ctx context.Con
 
 // DeleteHandleResponse handles the Delete response.
 func (client *ExpressRouteConnectionsClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -209,6 +209,9 @@ func (client *ExpressRouteConnectionsClient) Get(ctx context.Context, resourceGr
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -237,9 +240,6 @@ func (client *ExpressRouteConnectionsClient) GetCreateRequest(ctx context.Contex
 
 // GetHandleResponse handles the Get response.
 func (client *ExpressRouteConnectionsClient) GetHandleResponse(resp *azcore.Response) (*ExpressRouteConnectionResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
-	}
 	result := ExpressRouteConnectionResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ExpressRouteConnection)
 }
@@ -262,6 +262,9 @@ func (client *ExpressRouteConnectionsClient) List(ctx context.Context, resourceG
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ListHandleError(resp)
 	}
 	result, err := client.ListHandleResponse(resp)
 	if err != nil {
@@ -289,9 +292,6 @@ func (client *ExpressRouteConnectionsClient) ListCreateRequest(ctx context.Conte
 
 // ListHandleResponse handles the List response.
 func (client *ExpressRouteConnectionsClient) ListHandleResponse(resp *azcore.Response) (*ExpressRouteConnectionListResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := ExpressRouteConnectionListResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ExpressRouteConnectionList)
 }

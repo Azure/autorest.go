@@ -24,6 +24,7 @@ type ProductResultPagerPoller interface {
 type productResultPagerPoller struct {
 	// the client for making the request
 	pipeline    azcore.Pipeline
+	errHandler  productResultHandleError
 	respHandler productResultHandleResponse
 	pt          armcore.Poller
 }
@@ -44,7 +45,7 @@ func (p *productResultPagerPoller) FinalResponse(ctx context.Context) (ProductRe
 	if err != nil {
 		return nil, err
 	}
-	return p.handleResponse(&azcore.Response{resp})
+	return p.handleResponse(&azcore.Response{Response: resp})
 }
 
 // ResumeToken generates the string token that can be used with the ResumeProductResultPagerPoller method
@@ -59,13 +60,14 @@ func (p *productResultPagerPoller) pollUntilDone(ctx context.Context, frequency 
 	if err != nil {
 		return nil, err
 	}
-	return p.handleResponse(&azcore.Response{resp})
+	return p.handleResponse(&azcore.Response{Response: resp})
 }
 
 func (p *productResultPagerPoller) handleResponse(resp *azcore.Response) (ProductResultPager, error) {
 	return &productResultPager{
 		pipeline:  p.pipeline,
 		resp:      resp,
+		errorer:   p.errHandler,
 		responder: p.respHandler,
 		advancer: func(ctx context.Context, resp *ProductResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ProductResult.NextLink)

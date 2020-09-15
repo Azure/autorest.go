@@ -89,6 +89,9 @@ func (client *NumberClient) GetBigDecimal(ctx context.Context) (*Float64Response
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetBigDecimalHandleError(resp)
+	}
 	result, err := client.GetBigDecimalHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -109,9 +112,6 @@ func (client *NumberClient) GetBigDecimalCreateRequest(ctx context.Context) (*az
 
 // GetBigDecimalHandleResponse handles the GetBigDecimal response.
 func (client *NumberClient) GetBigDecimalHandleResponse(resp *azcore.Response) (*Float64Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetBigDecimalHandleError(resp)
-	}
 	result := Float64Response{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
@@ -135,6 +135,9 @@ func (client *NumberClient) GetBigDecimalNegativeDecimal(ctx context.Context) (*
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetBigDecimalNegativeDecimalHandleError(resp)
+	}
 	result, err := client.GetBigDecimalNegativeDecimalHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -155,9 +158,6 @@ func (client *NumberClient) GetBigDecimalNegativeDecimalCreateRequest(ctx contex
 
 // GetBigDecimalNegativeDecimalHandleResponse handles the GetBigDecimalNegativeDecimal response.
 func (client *NumberClient) GetBigDecimalNegativeDecimalHandleResponse(resp *azcore.Response) (*Float64Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetBigDecimalNegativeDecimalHandleError(resp)
-	}
 	result := Float64Response{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
@@ -181,6 +181,9 @@ func (client *NumberClient) GetBigDecimalPositiveDecimal(ctx context.Context) (*
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetBigDecimalPositiveDecimalHandleError(resp)
+	}
 	result, err := client.GetBigDecimalPositiveDecimalHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -201,9 +204,6 @@ func (client *NumberClient) GetBigDecimalPositiveDecimalCreateRequest(ctx contex
 
 // GetBigDecimalPositiveDecimalHandleResponse handles the GetBigDecimalPositiveDecimal response.
 func (client *NumberClient) GetBigDecimalPositiveDecimalHandleResponse(resp *azcore.Response) (*Float64Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetBigDecimalPositiveDecimalHandleError(resp)
-	}
 	result := Float64Response{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
@@ -227,6 +227,9 @@ func (client *NumberClient) GetBigDouble(ctx context.Context) (*Float64Response,
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetBigDoubleHandleError(resp)
+	}
 	result, err := client.GetBigDoubleHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -247,9 +250,6 @@ func (client *NumberClient) GetBigDoubleCreateRequest(ctx context.Context) (*azc
 
 // GetBigDoubleHandleResponse handles the GetBigDouble response.
 func (client *NumberClient) GetBigDoubleHandleResponse(resp *azcore.Response) (*Float64Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetBigDoubleHandleError(resp)
-	}
 	result := Float64Response{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
@@ -273,6 +273,9 @@ func (client *NumberClient) GetBigDoubleNegativeDecimal(ctx context.Context) (*F
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetBigDoubleNegativeDecimalHandleError(resp)
+	}
 	result, err := client.GetBigDoubleNegativeDecimalHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -293,9 +296,6 @@ func (client *NumberClient) GetBigDoubleNegativeDecimalCreateRequest(ctx context
 
 // GetBigDoubleNegativeDecimalHandleResponse handles the GetBigDoubleNegativeDecimal response.
 func (client *NumberClient) GetBigDoubleNegativeDecimalHandleResponse(resp *azcore.Response) (*Float64Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetBigDoubleNegativeDecimalHandleError(resp)
-	}
 	result := Float64Response{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
@@ -319,6 +319,9 @@ func (client *NumberClient) GetBigDoublePositiveDecimal(ctx context.Context) (*F
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetBigDoublePositiveDecimalHandleError(resp)
+	}
 	result, err := client.GetBigDoublePositiveDecimalHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -339,9 +342,6 @@ func (client *NumberClient) GetBigDoublePositiveDecimalCreateRequest(ctx context
 
 // GetBigDoublePositiveDecimalHandleResponse handles the GetBigDoublePositiveDecimal response.
 func (client *NumberClient) GetBigDoublePositiveDecimalHandleResponse(resp *azcore.Response) (*Float64Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetBigDoublePositiveDecimalHandleError(resp)
-	}
 	result := Float64Response{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
@@ -365,6 +365,9 @@ func (client *NumberClient) GetBigFloat(ctx context.Context) (*Float32Response, 
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetBigFloatHandleError(resp)
+	}
 	result, err := client.GetBigFloatHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -385,9 +388,6 @@ func (client *NumberClient) GetBigFloatCreateRequest(ctx context.Context) (*azco
 
 // GetBigFloatHandleResponse handles the GetBigFloat response.
 func (client *NumberClient) GetBigFloatHandleResponse(resp *azcore.Response) (*Float32Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetBigFloatHandleError(resp)
-	}
 	result := Float32Response{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
@@ -411,6 +411,9 @@ func (client *NumberClient) GetInvalidDecimal(ctx context.Context) (*Float64Resp
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetInvalidDecimalHandleError(resp)
+	}
 	result, err := client.GetInvalidDecimalHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -431,9 +434,6 @@ func (client *NumberClient) GetInvalidDecimalCreateRequest(ctx context.Context) 
 
 // GetInvalidDecimalHandleResponse handles the GetInvalidDecimal response.
 func (client *NumberClient) GetInvalidDecimalHandleResponse(resp *azcore.Response) (*Float64Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetInvalidDecimalHandleError(resp)
-	}
 	result := Float64Response{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
@@ -457,6 +457,9 @@ func (client *NumberClient) GetInvalidDouble(ctx context.Context) (*Float64Respo
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetInvalidDoubleHandleError(resp)
+	}
 	result, err := client.GetInvalidDoubleHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -477,9 +480,6 @@ func (client *NumberClient) GetInvalidDoubleCreateRequest(ctx context.Context) (
 
 // GetInvalidDoubleHandleResponse handles the GetInvalidDouble response.
 func (client *NumberClient) GetInvalidDoubleHandleResponse(resp *azcore.Response) (*Float64Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetInvalidDoubleHandleError(resp)
-	}
 	result := Float64Response{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
@@ -503,6 +503,9 @@ func (client *NumberClient) GetInvalidFloat(ctx context.Context) (*Float32Respon
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetInvalidFloatHandleError(resp)
+	}
 	result, err := client.GetInvalidFloatHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -523,9 +526,6 @@ func (client *NumberClient) GetInvalidFloatCreateRequest(ctx context.Context) (*
 
 // GetInvalidFloatHandleResponse handles the GetInvalidFloat response.
 func (client *NumberClient) GetInvalidFloatHandleResponse(resp *azcore.Response) (*Float32Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetInvalidFloatHandleError(resp)
-	}
 	result := Float32Response{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
@@ -549,6 +549,9 @@ func (client *NumberClient) GetNull(ctx context.Context) (*Float32Response, erro
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetNullHandleError(resp)
+	}
 	result, err := client.GetNullHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -569,9 +572,6 @@ func (client *NumberClient) GetNullCreateRequest(ctx context.Context) (*azcore.R
 
 // GetNullHandleResponse handles the GetNull response.
 func (client *NumberClient) GetNullHandleResponse(resp *azcore.Response) (*Float32Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetNullHandleError(resp)
-	}
 	result := Float32Response{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
@@ -595,6 +595,9 @@ func (client *NumberClient) GetSmallDecimal(ctx context.Context) (*Float64Respon
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetSmallDecimalHandleError(resp)
+	}
 	result, err := client.GetSmallDecimalHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -615,9 +618,6 @@ func (client *NumberClient) GetSmallDecimalCreateRequest(ctx context.Context) (*
 
 // GetSmallDecimalHandleResponse handles the GetSmallDecimal response.
 func (client *NumberClient) GetSmallDecimalHandleResponse(resp *azcore.Response) (*Float64Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetSmallDecimalHandleError(resp)
-	}
 	result := Float64Response{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
@@ -641,6 +641,9 @@ func (client *NumberClient) GetSmallDouble(ctx context.Context) (*Float64Respons
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetSmallDoubleHandleError(resp)
+	}
 	result, err := client.GetSmallDoubleHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -661,9 +664,6 @@ func (client *NumberClient) GetSmallDoubleCreateRequest(ctx context.Context) (*a
 
 // GetSmallDoubleHandleResponse handles the GetSmallDouble response.
 func (client *NumberClient) GetSmallDoubleHandleResponse(resp *azcore.Response) (*Float64Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetSmallDoubleHandleError(resp)
-	}
 	result := Float64Response{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
@@ -687,6 +687,9 @@ func (client *NumberClient) GetSmallFloat(ctx context.Context) (*Float64Response
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetSmallFloatHandleError(resp)
+	}
 	result, err := client.GetSmallFloatHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -707,9 +710,6 @@ func (client *NumberClient) GetSmallFloatCreateRequest(ctx context.Context) (*az
 
 // GetSmallFloatHandleResponse handles the GetSmallFloat response.
 func (client *NumberClient) GetSmallFloatHandleResponse(resp *azcore.Response) (*Float64Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetSmallFloatHandleError(resp)
-	}
 	result := Float64Response{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
@@ -733,11 +733,10 @@ func (client *NumberClient) PutBigDecimal(ctx context.Context, numberBody float6
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutBigDecimalHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutBigDecimalHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PutBigDecimalCreateRequest creates the PutBigDecimal request.
@@ -749,14 +748,6 @@ func (client *NumberClient) PutBigDecimalCreateRequest(ctx context.Context, numb
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(numberBody)
-}
-
-// PutBigDecimalHandleResponse handles the PutBigDecimal response.
-func (client *NumberClient) PutBigDecimalHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutBigDecimalHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // PutBigDecimalHandleError handles the PutBigDecimal error response.
@@ -778,11 +769,10 @@ func (client *NumberClient) PutBigDecimalNegativeDecimal(ctx context.Context) (*
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutBigDecimalNegativeDecimalHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutBigDecimalNegativeDecimalHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PutBigDecimalNegativeDecimalCreateRequest creates the PutBigDecimalNegativeDecimal request.
@@ -794,14 +784,6 @@ func (client *NumberClient) PutBigDecimalNegativeDecimalCreateRequest(ctx contex
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(-99999999.99)
-}
-
-// PutBigDecimalNegativeDecimalHandleResponse handles the PutBigDecimalNegativeDecimal response.
-func (client *NumberClient) PutBigDecimalNegativeDecimalHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutBigDecimalNegativeDecimalHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // PutBigDecimalNegativeDecimalHandleError handles the PutBigDecimalNegativeDecimal error response.
@@ -823,11 +805,10 @@ func (client *NumberClient) PutBigDecimalPositiveDecimal(ctx context.Context) (*
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutBigDecimalPositiveDecimalHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutBigDecimalPositiveDecimalHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PutBigDecimalPositiveDecimalCreateRequest creates the PutBigDecimalPositiveDecimal request.
@@ -839,14 +820,6 @@ func (client *NumberClient) PutBigDecimalPositiveDecimalCreateRequest(ctx contex
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(99999999.99)
-}
-
-// PutBigDecimalPositiveDecimalHandleResponse handles the PutBigDecimalPositiveDecimal response.
-func (client *NumberClient) PutBigDecimalPositiveDecimalHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutBigDecimalPositiveDecimalHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // PutBigDecimalPositiveDecimalHandleError handles the PutBigDecimalPositiveDecimal error response.
@@ -868,11 +841,10 @@ func (client *NumberClient) PutBigDouble(ctx context.Context, numberBody float64
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutBigDoubleHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutBigDoubleHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PutBigDoubleCreateRequest creates the PutBigDouble request.
@@ -884,14 +856,6 @@ func (client *NumberClient) PutBigDoubleCreateRequest(ctx context.Context, numbe
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(numberBody)
-}
-
-// PutBigDoubleHandleResponse handles the PutBigDouble response.
-func (client *NumberClient) PutBigDoubleHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutBigDoubleHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // PutBigDoubleHandleError handles the PutBigDouble error response.
@@ -913,11 +877,10 @@ func (client *NumberClient) PutBigDoubleNegativeDecimal(ctx context.Context) (*h
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutBigDoubleNegativeDecimalHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutBigDoubleNegativeDecimalHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PutBigDoubleNegativeDecimalCreateRequest creates the PutBigDoubleNegativeDecimal request.
@@ -929,14 +892,6 @@ func (client *NumberClient) PutBigDoubleNegativeDecimalCreateRequest(ctx context
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(-99999999.99)
-}
-
-// PutBigDoubleNegativeDecimalHandleResponse handles the PutBigDoubleNegativeDecimal response.
-func (client *NumberClient) PutBigDoubleNegativeDecimalHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutBigDoubleNegativeDecimalHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // PutBigDoubleNegativeDecimalHandleError handles the PutBigDoubleNegativeDecimal error response.
@@ -958,11 +913,10 @@ func (client *NumberClient) PutBigDoublePositiveDecimal(ctx context.Context) (*h
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutBigDoublePositiveDecimalHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutBigDoublePositiveDecimalHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PutBigDoublePositiveDecimalCreateRequest creates the PutBigDoublePositiveDecimal request.
@@ -974,14 +928,6 @@ func (client *NumberClient) PutBigDoublePositiveDecimalCreateRequest(ctx context
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(99999999.99)
-}
-
-// PutBigDoublePositiveDecimalHandleResponse handles the PutBigDoublePositiveDecimal response.
-func (client *NumberClient) PutBigDoublePositiveDecimalHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutBigDoublePositiveDecimalHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // PutBigDoublePositiveDecimalHandleError handles the PutBigDoublePositiveDecimal error response.
@@ -1003,11 +949,10 @@ func (client *NumberClient) PutBigFloat(ctx context.Context, numberBody float32)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutBigFloatHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutBigFloatHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PutBigFloatCreateRequest creates the PutBigFloat request.
@@ -1019,14 +964,6 @@ func (client *NumberClient) PutBigFloatCreateRequest(ctx context.Context, number
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(numberBody)
-}
-
-// PutBigFloatHandleResponse handles the PutBigFloat response.
-func (client *NumberClient) PutBigFloatHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutBigFloatHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // PutBigFloatHandleError handles the PutBigFloat error response.
@@ -1048,11 +985,10 @@ func (client *NumberClient) PutSmallDecimal(ctx context.Context, numberBody floa
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutSmallDecimalHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutSmallDecimalHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PutSmallDecimalCreateRequest creates the PutSmallDecimal request.
@@ -1064,14 +1000,6 @@ func (client *NumberClient) PutSmallDecimalCreateRequest(ctx context.Context, nu
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(numberBody)
-}
-
-// PutSmallDecimalHandleResponse handles the PutSmallDecimal response.
-func (client *NumberClient) PutSmallDecimalHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutSmallDecimalHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // PutSmallDecimalHandleError handles the PutSmallDecimal error response.
@@ -1093,11 +1021,10 @@ func (client *NumberClient) PutSmallDouble(ctx context.Context, numberBody float
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutSmallDoubleHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutSmallDoubleHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PutSmallDoubleCreateRequest creates the PutSmallDouble request.
@@ -1109,14 +1036,6 @@ func (client *NumberClient) PutSmallDoubleCreateRequest(ctx context.Context, num
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(numberBody)
-}
-
-// PutSmallDoubleHandleResponse handles the PutSmallDouble response.
-func (client *NumberClient) PutSmallDoubleHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutSmallDoubleHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // PutSmallDoubleHandleError handles the PutSmallDouble error response.
@@ -1138,11 +1057,10 @@ func (client *NumberClient) PutSmallFloat(ctx context.Context, numberBody float3
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutSmallFloatHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutSmallFloatHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PutSmallFloatCreateRequest creates the PutSmallFloat request.
@@ -1154,14 +1072,6 @@ func (client *NumberClient) PutSmallFloatCreateRequest(ctx context.Context, numb
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(numberBody)
-}
-
-// PutSmallFloatHandleResponse handles the PutSmallFloat response.
-func (client *NumberClient) PutSmallFloatHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutSmallFloatHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // PutSmallFloatHandleError handles the PutSmallFloat error response.

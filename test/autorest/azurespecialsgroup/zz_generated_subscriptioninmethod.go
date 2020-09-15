@@ -51,11 +51,10 @@ func (client *SubscriptionInMethodClient) PostMethodLocalNull(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PostMethodLocalNullHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PostMethodLocalNullHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PostMethodLocalNullCreateRequest creates the PostMethodLocalNull request.
@@ -68,14 +67,6 @@ func (client *SubscriptionInMethodClient) PostMethodLocalNullCreateRequest(ctx c
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// PostMethodLocalNullHandleResponse handles the PostMethodLocalNull response.
-func (client *SubscriptionInMethodClient) PostMethodLocalNullHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PostMethodLocalNullHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // PostMethodLocalNullHandleError handles the PostMethodLocalNull error response.
@@ -97,11 +88,10 @@ func (client *SubscriptionInMethodClient) PostMethodLocalValid(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PostMethodLocalValidHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PostMethodLocalValidHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PostMethodLocalValidCreateRequest creates the PostMethodLocalValid request.
@@ -114,14 +104,6 @@ func (client *SubscriptionInMethodClient) PostMethodLocalValidCreateRequest(ctx 
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// PostMethodLocalValidHandleResponse handles the PostMethodLocalValid response.
-func (client *SubscriptionInMethodClient) PostMethodLocalValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PostMethodLocalValidHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // PostMethodLocalValidHandleError handles the PostMethodLocalValid error response.
@@ -143,11 +125,10 @@ func (client *SubscriptionInMethodClient) PostPathLocalValid(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PostPathLocalValidHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PostPathLocalValidHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PostPathLocalValidCreateRequest creates the PostPathLocalValid request.
@@ -160,14 +141,6 @@ func (client *SubscriptionInMethodClient) PostPathLocalValidCreateRequest(ctx co
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// PostPathLocalValidHandleResponse handles the PostPathLocalValid response.
-func (client *SubscriptionInMethodClient) PostPathLocalValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PostPathLocalValidHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // PostPathLocalValidHandleError handles the PostPathLocalValid error response.
@@ -189,11 +162,10 @@ func (client *SubscriptionInMethodClient) PostSwaggerLocalValid(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PostSwaggerLocalValidHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PostSwaggerLocalValidHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PostSwaggerLocalValidCreateRequest creates the PostSwaggerLocalValid request.
@@ -206,14 +178,6 @@ func (client *SubscriptionInMethodClient) PostSwaggerLocalValidCreateRequest(ctx
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// PostSwaggerLocalValidHandleResponse handles the PostSwaggerLocalValid response.
-func (client *SubscriptionInMethodClient) PostSwaggerLocalValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PostSwaggerLocalValidHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // PostSwaggerLocalValidHandleError handles the PostSwaggerLocalValid error response.

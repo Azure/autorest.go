@@ -47,11 +47,10 @@ func (client *FilesClient) GetEmptyFile(ctx context.Context) (*http.Response, er
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetEmptyFileHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetEmptyFileHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // GetEmptyFileCreateRequest creates the GetEmptyFile request.
@@ -64,14 +63,6 @@ func (client *FilesClient) GetEmptyFileCreateRequest(ctx context.Context) (*azco
 	req.SkipBodyDownload()
 	req.Header.Set("Accept", "image/png, application/json")
 	return req, nil
-}
-
-// GetEmptyFileHandleResponse handles the GetEmptyFile response.
-func (client *FilesClient) GetEmptyFileHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetEmptyFileHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // GetEmptyFileHandleError handles the GetEmptyFile error response.
@@ -93,11 +84,10 @@ func (client *FilesClient) GetFile(ctx context.Context) (*http.Response, error) 
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetFileHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetFileHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // GetFileCreateRequest creates the GetFile request.
@@ -110,14 +100,6 @@ func (client *FilesClient) GetFileCreateRequest(ctx context.Context) (*azcore.Re
 	req.SkipBodyDownload()
 	req.Header.Set("Accept", "image/png, application/json")
 	return req, nil
-}
-
-// GetFileHandleResponse handles the GetFile response.
-func (client *FilesClient) GetFileHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetFileHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // GetFileHandleError handles the GetFile error response.
@@ -139,11 +121,10 @@ func (client *FilesClient) GetFileLarge(ctx context.Context) (*http.Response, er
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetFileLargeHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetFileLargeHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // GetFileLargeCreateRequest creates the GetFileLarge request.
@@ -156,14 +137,6 @@ func (client *FilesClient) GetFileLargeCreateRequest(ctx context.Context) (*azco
 	req.SkipBodyDownload()
 	req.Header.Set("Accept", "image/png, application/json")
 	return req, nil
-}
-
-// GetFileLargeHandleResponse handles the GetFileLarge response.
-func (client *FilesClient) GetFileLargeHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetFileLargeHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // GetFileLargeHandleError handles the GetFileLarge error response.

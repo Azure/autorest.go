@@ -43,6 +43,9 @@ func (client *AutoRestReportServiceForAzureClient) GetReport(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetReportHandleError(resp)
+	}
 	result, err := client.GetReportHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -68,9 +71,6 @@ func (client *AutoRestReportServiceForAzureClient) GetReportCreateRequest(ctx co
 
 // GetReportHandleResponse handles the GetReport response.
 func (client *AutoRestReportServiceForAzureClient) GetReportHandleResponse(resp *azcore.Response) (*MapOfInt32Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetReportHandleError(resp)
-	}
 	result := MapOfInt32Response{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }

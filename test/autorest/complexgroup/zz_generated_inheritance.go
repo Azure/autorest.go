@@ -45,6 +45,9 @@ func (client *InheritanceClient) GetValid(ctx context.Context) (*SiameseResponse
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetValidHandleError(resp)
+	}
 	result, err := client.GetValidHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -65,9 +68,6 @@ func (client *InheritanceClient) GetValidCreateRequest(ctx context.Context) (*az
 
 // GetValidHandleResponse handles the GetValid response.
 func (client *InheritanceClient) GetValidHandleResponse(resp *azcore.Response) (*SiameseResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetValidHandleError(resp)
-	}
 	result := SiameseResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Siamese)
 }
@@ -91,11 +91,10 @@ func (client *InheritanceClient) PutValid(ctx context.Context, complexBody Siame
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutValidHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutValidHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PutValidCreateRequest creates the PutValid request.
@@ -107,14 +106,6 @@ func (client *InheritanceClient) PutValidCreateRequest(ctx context.Context, comp
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(complexBody)
-}
-
-// PutValidHandleResponse handles the PutValid response.
-func (client *InheritanceClient) PutValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutValidHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // PutValidHandleError handles the PutValid error response.

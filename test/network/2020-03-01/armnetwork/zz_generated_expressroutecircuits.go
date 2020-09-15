@@ -79,6 +79,9 @@ func (client *ExpressRouteCircuitsClient) BeginCreateOrUpdate(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
+	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -128,9 +131,6 @@ func (client *ExpressRouteCircuitsClient) CreateOrUpdateCreateRequest(ctx contex
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *ExpressRouteCircuitsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
 	return &ExpressRouteCircuitPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -153,6 +153,9 @@ func (client *ExpressRouteCircuitsClient) BeginDelete(ctx context.Context, resou
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -203,9 +206,6 @@ func (client *ExpressRouteCircuitsClient) DeleteCreateRequest(ctx context.Contex
 
 // DeleteHandleResponse handles the Delete response.
 func (client *ExpressRouteCircuitsClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -227,6 +227,9 @@ func (client *ExpressRouteCircuitsClient) Get(ctx context.Context, resourceGroup
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -254,9 +257,6 @@ func (client *ExpressRouteCircuitsClient) GetCreateRequest(ctx context.Context, 
 
 // GetHandleResponse handles the Get response.
 func (client *ExpressRouteCircuitsClient) GetHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
-	}
 	result := ExpressRouteCircuitResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ExpressRouteCircuit)
 }
@@ -279,6 +279,9 @@ func (client *ExpressRouteCircuitsClient) GetPeeringStats(ctx context.Context, r
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetPeeringStatsHandleError(resp)
 	}
 	result, err := client.GetPeeringStatsHandleResponse(resp)
 	if err != nil {
@@ -307,9 +310,6 @@ func (client *ExpressRouteCircuitsClient) GetPeeringStatsCreateRequest(ctx conte
 
 // GetPeeringStatsHandleResponse handles the GetPeeringStats response.
 func (client *ExpressRouteCircuitsClient) GetPeeringStatsHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitStatsResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetPeeringStatsHandleError(resp)
-	}
 	result := ExpressRouteCircuitStatsResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ExpressRouteCircuitStats)
 }
@@ -332,6 +332,9 @@ func (client *ExpressRouteCircuitsClient) GetStats(ctx context.Context, resource
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetStatsHandleError(resp)
 	}
 	result, err := client.GetStatsHandleResponse(resp)
 	if err != nil {
@@ -359,9 +362,6 @@ func (client *ExpressRouteCircuitsClient) GetStatsCreateRequest(ctx context.Cont
 
 // GetStatsHandleResponse handles the GetStats response.
 func (client *ExpressRouteCircuitsClient) GetStatsHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitStatsResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetStatsHandleError(resp)
-	}
 	result := ExpressRouteCircuitStatsResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ExpressRouteCircuitStats)
 }
@@ -383,6 +383,7 @@ func (client *ExpressRouteCircuitsClient) List(resourceGroupName string) Express
 			return client.ListCreateRequest(ctx, resourceGroupName)
 		},
 		responder: client.ListHandleResponse,
+		errorer:   client.ListHandleError,
 		advancer: func(ctx context.Context, resp *ExpressRouteCircuitListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ExpressRouteCircuitListResult.NextLink)
 		},
@@ -407,9 +408,6 @@ func (client *ExpressRouteCircuitsClient) ListCreateRequest(ctx context.Context,
 
 // ListHandleResponse handles the List response.
 func (client *ExpressRouteCircuitsClient) ListHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := ExpressRouteCircuitListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ExpressRouteCircuitListResult)
 }
@@ -431,6 +429,7 @@ func (client *ExpressRouteCircuitsClient) ListAll() ExpressRouteCircuitListResul
 			return client.ListAllCreateRequest(ctx)
 		},
 		responder: client.ListAllHandleResponse,
+		errorer:   client.ListAllHandleError,
 		advancer: func(ctx context.Context, resp *ExpressRouteCircuitListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ExpressRouteCircuitListResult.NextLink)
 		},
@@ -454,9 +453,6 @@ func (client *ExpressRouteCircuitsClient) ListAllCreateRequest(ctx context.Conte
 
 // ListAllHandleResponse handles the ListAll response.
 func (client *ExpressRouteCircuitsClient) ListAllHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListAllHandleError(resp)
-	}
 	result := ExpressRouteCircuitListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ExpressRouteCircuitListResult)
 }
@@ -480,6 +476,9 @@ func (client *ExpressRouteCircuitsClient) BeginListArpTable(ctx context.Context,
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.ListArpTableHandleError(resp)
 	}
 	result, err := client.ListArpTableHandleResponse(resp)
 	if err != nil {
@@ -532,9 +531,6 @@ func (client *ExpressRouteCircuitsClient) ListArpTableCreateRequest(ctx context.
 
 // ListArpTableHandleResponse handles the ListArpTable response.
 func (client *ExpressRouteCircuitsClient) ListArpTableHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitsArpTableListResultPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.ListArpTableHandleError(resp)
-	}
 	return &ExpressRouteCircuitsArpTableListResultPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -557,6 +553,9 @@ func (client *ExpressRouteCircuitsClient) BeginListRoutesTable(ctx context.Conte
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.ListRoutesTableHandleError(resp)
 	}
 	result, err := client.ListRoutesTableHandleResponse(resp)
 	if err != nil {
@@ -609,9 +608,6 @@ func (client *ExpressRouteCircuitsClient) ListRoutesTableCreateRequest(ctx conte
 
 // ListRoutesTableHandleResponse handles the ListRoutesTable response.
 func (client *ExpressRouteCircuitsClient) ListRoutesTableHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitsRoutesTableListResultPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.ListRoutesTableHandleError(resp)
-	}
 	return &ExpressRouteCircuitsRoutesTableListResultPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -634,6 +630,9 @@ func (client *ExpressRouteCircuitsClient) BeginListRoutesTableSummary(ctx contex
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.ListRoutesTableSummaryHandleError(resp)
 	}
 	result, err := client.ListRoutesTableSummaryHandleResponse(resp)
 	if err != nil {
@@ -686,9 +685,6 @@ func (client *ExpressRouteCircuitsClient) ListRoutesTableSummaryCreateRequest(ct
 
 // ListRoutesTableSummaryHandleResponse handles the ListRoutesTableSummary response.
 func (client *ExpressRouteCircuitsClient) ListRoutesTableSummaryHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitsRoutesTableSummaryListResultPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.ListRoutesTableSummaryHandleError(resp)
-	}
 	return &ExpressRouteCircuitsRoutesTableSummaryListResultPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -710,6 +706,9 @@ func (client *ExpressRouteCircuitsClient) UpdateTags(ctx context.Context, resour
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.UpdateTagsHandleError(resp)
 	}
 	result, err := client.UpdateTagsHandleResponse(resp)
 	if err != nil {
@@ -737,9 +736,6 @@ func (client *ExpressRouteCircuitsClient) UpdateTagsCreateRequest(ctx context.Co
 
 // UpdateTagsHandleResponse handles the UpdateTags response.
 func (client *ExpressRouteCircuitsClient) UpdateTagsHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.UpdateTagsHandleError(resp)
-	}
 	result := ExpressRouteCircuitResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ExpressRouteCircuit)
 }

@@ -55,6 +55,9 @@ func (client *blockBlobClient) CommitBlockList(ctx context.Context, blocks Block
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusCreated) {
+		return nil, client.CommitBlockListHandleError(resp)
+	}
 	result, err := client.CommitBlockListHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -140,9 +143,6 @@ func (client *blockBlobClient) CommitBlockListCreateRequest(ctx context.Context,
 
 // CommitBlockListHandleResponse handles the CommitBlockList response.
 func (client *blockBlobClient) CommitBlockListHandleResponse(resp *azcore.Response) (*BlockBlobCommitBlockListResponse, error) {
-	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.CommitBlockListHandleError(resp)
-	}
 	result := BlockBlobCommitBlockListResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -219,6 +219,9 @@ func (client *blockBlobClient) GetBlockList(ctx context.Context, listType BlockL
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetBlockListHandleError(resp)
+	}
 	result, err := client.GetBlockListHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -255,9 +258,6 @@ func (client *blockBlobClient) GetBlockListCreateRequest(ctx context.Context, li
 
 // GetBlockListHandleResponse handles the GetBlockList response.
 func (client *blockBlobClient) GetBlockListHandleResponse(resp *azcore.Response) (*BlockListResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetBlockListHandleError(resp)
-	}
 	result := BlockListResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
@@ -317,6 +317,9 @@ func (client *blockBlobClient) StageBlock(ctx context.Context, blockId string, c
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusCreated) {
+		return nil, client.StageBlockHandleError(resp)
+	}
 	result, err := client.StageBlockHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -366,9 +369,6 @@ func (client *blockBlobClient) StageBlockCreateRequest(ctx context.Context, bloc
 
 // StageBlockHandleResponse handles the StageBlock response.
 func (client *blockBlobClient) StageBlockHandleResponse(resp *azcore.Response) (*BlockBlobStageBlockResponse, error) {
-	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.StageBlockHandleError(resp)
-	}
 	result := BlockBlobStageBlockResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("Content-MD5"); val != "" {
 		contentMd5, err := base64.StdEncoding.DecodeString(val)
@@ -435,6 +435,9 @@ func (client *blockBlobClient) StageBlockFromURL(ctx context.Context, blockId st
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusCreated) {
+		return nil, client.StageBlockFromURLHandleError(resp)
+	}
 	result, err := client.StageBlockFromURLHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -500,9 +503,6 @@ func (client *blockBlobClient) StageBlockFromURLCreateRequest(ctx context.Contex
 
 // StageBlockFromURLHandleResponse handles the StageBlockFromURL response.
 func (client *blockBlobClient) StageBlockFromURLHandleResponse(resp *azcore.Response) (*BlockBlobStageBlockFromURLResponse, error) {
-	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.StageBlockFromURLHandleError(resp)
-	}
 	result := BlockBlobStageBlockFromURLResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("Content-MD5"); val != "" {
 		contentMd5, err := base64.StdEncoding.DecodeString(val)
@@ -568,6 +568,9 @@ func (client *blockBlobClient) Upload(ctx context.Context, contentLength int64, 
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusCreated) {
+		return nil, client.UploadHandleError(resp)
 	}
 	result, err := client.UploadHandleResponse(resp)
 	if err != nil {
@@ -652,9 +655,6 @@ func (client *blockBlobClient) UploadCreateRequest(ctx context.Context, contentL
 
 // UploadHandleResponse handles the Upload response.
 func (client *blockBlobClient) UploadHandleResponse(resp *azcore.Response) (*BlockBlobUploadResponse, error) {
-	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.UploadHandleError(resp)
-	}
 	result := BlockBlobUploadResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val

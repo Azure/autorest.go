@@ -44,6 +44,7 @@ func (client *AvailableEndpointServicesClient) List(location string) EndpointSer
 			return client.ListCreateRequest(ctx, location)
 		},
 		responder: client.ListHandleResponse,
+		errorer:   client.ListHandleError,
 		advancer: func(ctx context.Context, resp *EndpointServicesListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.EndpointServicesListResult.NextLink)
 		},
@@ -68,9 +69,6 @@ func (client *AvailableEndpointServicesClient) ListCreateRequest(ctx context.Con
 
 // ListHandleResponse handles the List response.
 func (client *AvailableEndpointServicesClient) ListHandleResponse(resp *azcore.Response) (*EndpointServicesListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := EndpointServicesListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.EndpointServicesListResult)
 }

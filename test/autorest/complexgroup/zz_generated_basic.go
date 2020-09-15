@@ -53,6 +53,9 @@ func (client *BasicClient) GetEmpty(ctx context.Context) (*BasicResponse, error)
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetEmptyHandleError(resp)
+	}
 	result, err := client.GetEmptyHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -73,9 +76,6 @@ func (client *BasicClient) GetEmptyCreateRequest(ctx context.Context) (*azcore.R
 
 // GetEmptyHandleResponse handles the GetEmpty response.
 func (client *BasicClient) GetEmptyHandleResponse(resp *azcore.Response) (*BasicResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetEmptyHandleError(resp)
-	}
 	result := BasicResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Basic)
 }
@@ -99,6 +99,9 @@ func (client *BasicClient) GetInvalid(ctx context.Context) (*BasicResponse, erro
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetInvalidHandleError(resp)
+	}
 	result, err := client.GetInvalidHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -119,9 +122,6 @@ func (client *BasicClient) GetInvalidCreateRequest(ctx context.Context) (*azcore
 
 // GetInvalidHandleResponse handles the GetInvalid response.
 func (client *BasicClient) GetInvalidHandleResponse(resp *azcore.Response) (*BasicResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetInvalidHandleError(resp)
-	}
 	result := BasicResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Basic)
 }
@@ -145,6 +145,9 @@ func (client *BasicClient) GetNotProvided(ctx context.Context) (*BasicResponse, 
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetNotProvidedHandleError(resp)
+	}
 	result, err := client.GetNotProvidedHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -165,9 +168,6 @@ func (client *BasicClient) GetNotProvidedCreateRequest(ctx context.Context) (*az
 
 // GetNotProvidedHandleResponse handles the GetNotProvided response.
 func (client *BasicClient) GetNotProvidedHandleResponse(resp *azcore.Response) (*BasicResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetNotProvidedHandleError(resp)
-	}
 	result := BasicResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Basic)
 }
@@ -191,6 +191,9 @@ func (client *BasicClient) GetNull(ctx context.Context) (*BasicResponse, error) 
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetNullHandleError(resp)
+	}
 	result, err := client.GetNullHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -211,9 +214,6 @@ func (client *BasicClient) GetNullCreateRequest(ctx context.Context) (*azcore.Re
 
 // GetNullHandleResponse handles the GetNull response.
 func (client *BasicClient) GetNullHandleResponse(resp *azcore.Response) (*BasicResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetNullHandleError(resp)
-	}
 	result := BasicResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Basic)
 }
@@ -237,6 +237,9 @@ func (client *BasicClient) GetValid(ctx context.Context) (*BasicResponse, error)
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetValidHandleError(resp)
+	}
 	result, err := client.GetValidHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -257,9 +260,6 @@ func (client *BasicClient) GetValidCreateRequest(ctx context.Context) (*azcore.R
 
 // GetValidHandleResponse handles the GetValid response.
 func (client *BasicClient) GetValidHandleResponse(resp *azcore.Response) (*BasicResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetValidHandleError(resp)
-	}
 	result := BasicResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Basic)
 }
@@ -283,11 +283,10 @@ func (client *BasicClient) PutValid(ctx context.Context, complexBody Basic) (*ht
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutValidHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutValidHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PutValidCreateRequest creates the PutValid request.
@@ -302,14 +301,6 @@ func (client *BasicClient) PutValidCreateRequest(ctx context.Context, complexBod
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(complexBody)
-}
-
-// PutValidHandleResponse handles the PutValid response.
-func (client *BasicClient) PutValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutValidHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // PutValidHandleError handles the PutValid error response.

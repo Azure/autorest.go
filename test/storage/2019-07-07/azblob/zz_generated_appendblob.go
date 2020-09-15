@@ -51,6 +51,9 @@ func (client *appendBlobClient) AppendBlock(ctx context.Context, contentLength i
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusCreated) {
+		return nil, client.AppendBlockHandleError(resp)
+	}
 	result, err := client.AppendBlockHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -117,9 +120,6 @@ func (client *appendBlobClient) AppendBlockCreateRequest(ctx context.Context, co
 
 // AppendBlockHandleResponse handles the AppendBlock response.
 func (client *appendBlobClient) AppendBlockHandleResponse(resp *azcore.Response) (*AppendBlobAppendBlockResponse, error) {
-	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.AppendBlockHandleError(resp)
-	}
 	result := AppendBlobAppendBlockResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -207,6 +207,9 @@ func (client *appendBlobClient) AppendBlockFromURL(ctx context.Context, sourceUr
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusCreated) {
+		return nil, client.AppendBlockFromURLHandleError(resp)
+	}
 	result, err := client.AppendBlockFromURLHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -292,9 +295,6 @@ func (client *appendBlobClient) AppendBlockFromURLCreateRequest(ctx context.Cont
 
 // AppendBlockFromURLHandleResponse handles the AppendBlockFromURL response.
 func (client *appendBlobClient) AppendBlockFromURLHandleResponse(resp *azcore.Response) (*AppendBlobAppendBlockFromURLResponse, error) {
-	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.AppendBlockFromURLHandleError(resp)
-	}
 	result := AppendBlobAppendBlockFromURLResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -379,6 +379,9 @@ func (client *appendBlobClient) Create(ctx context.Context, contentLength int64,
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusCreated) {
+		return nil, client.CreateHandleError(resp)
+	}
 	result, err := client.CreateHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -456,9 +459,6 @@ func (client *appendBlobClient) CreateCreateRequest(ctx context.Context, content
 
 // CreateHandleResponse handles the Create response.
 func (client *appendBlobClient) CreateHandleResponse(resp *azcore.Response) (*AppendBlobCreateResponse, error) {
-	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.CreateHandleError(resp)
-	}
 	result := AppendBlobCreateResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val

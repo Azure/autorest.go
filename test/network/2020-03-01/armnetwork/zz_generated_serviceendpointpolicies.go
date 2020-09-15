@@ -63,6 +63,9 @@ func (client *ServiceEndpointPoliciesClient) BeginCreateOrUpdate(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
+	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -112,9 +115,6 @@ func (client *ServiceEndpointPoliciesClient) CreateOrUpdateCreateRequest(ctx con
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *ServiceEndpointPoliciesClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*ServiceEndpointPolicyPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
 	return &ServiceEndpointPolicyPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -137,6 +137,9 @@ func (client *ServiceEndpointPoliciesClient) BeginDelete(ctx context.Context, re
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -187,9 +190,6 @@ func (client *ServiceEndpointPoliciesClient) DeleteCreateRequest(ctx context.Con
 
 // DeleteHandleResponse handles the Delete response.
 func (client *ServiceEndpointPoliciesClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -211,6 +211,9 @@ func (client *ServiceEndpointPoliciesClient) Get(ctx context.Context, resourceGr
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -241,9 +244,6 @@ func (client *ServiceEndpointPoliciesClient) GetCreateRequest(ctx context.Contex
 
 // GetHandleResponse handles the Get response.
 func (client *ServiceEndpointPoliciesClient) GetHandleResponse(resp *azcore.Response) (*ServiceEndpointPolicyResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
-	}
 	result := ServiceEndpointPolicyResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ServiceEndpointPolicy)
 }
@@ -265,6 +265,7 @@ func (client *ServiceEndpointPoliciesClient) List() ServiceEndpointPolicyListRes
 			return client.ListCreateRequest(ctx)
 		},
 		responder: client.ListHandleResponse,
+		errorer:   client.ListHandleError,
 		advancer: func(ctx context.Context, resp *ServiceEndpointPolicyListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ServiceEndpointPolicyListResult.NextLink)
 		},
@@ -288,9 +289,6 @@ func (client *ServiceEndpointPoliciesClient) ListCreateRequest(ctx context.Conte
 
 // ListHandleResponse handles the List response.
 func (client *ServiceEndpointPoliciesClient) ListHandleResponse(resp *azcore.Response) (*ServiceEndpointPolicyListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := ServiceEndpointPolicyListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ServiceEndpointPolicyListResult)
 }
@@ -312,6 +310,7 @@ func (client *ServiceEndpointPoliciesClient) ListByResourceGroup(resourceGroupNa
 			return client.ListByResourceGroupCreateRequest(ctx, resourceGroupName)
 		},
 		responder: client.ListByResourceGroupHandleResponse,
+		errorer:   client.ListByResourceGroupHandleError,
 		advancer: func(ctx context.Context, resp *ServiceEndpointPolicyListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ServiceEndpointPolicyListResult.NextLink)
 		},
@@ -336,9 +335,6 @@ func (client *ServiceEndpointPoliciesClient) ListByResourceGroupCreateRequest(ct
 
 // ListByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client *ServiceEndpointPoliciesClient) ListByResourceGroupHandleResponse(resp *azcore.Response) (*ServiceEndpointPolicyListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListByResourceGroupHandleError(resp)
-	}
 	result := ServiceEndpointPolicyListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ServiceEndpointPolicyListResult)
 }
@@ -361,6 +357,9 @@ func (client *ServiceEndpointPoliciesClient) UpdateTags(ctx context.Context, res
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.UpdateTagsHandleError(resp)
 	}
 	result, err := client.UpdateTagsHandleResponse(resp)
 	if err != nil {
@@ -388,9 +387,6 @@ func (client *ServiceEndpointPoliciesClient) UpdateTagsCreateRequest(ctx context
 
 // UpdateTagsHandleResponse handles the UpdateTags response.
 func (client *ServiceEndpointPoliciesClient) UpdateTagsHandleResponse(resp *azcore.Response) (*ServiceEndpointPolicyResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.UpdateTagsHandleError(resp)
-	}
 	result := ServiceEndpointPolicyResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ServiceEndpointPolicy)
 }

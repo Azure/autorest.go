@@ -63,6 +63,9 @@ func (client *RouteFiltersClient) BeginCreateOrUpdate(ctx context.Context, resou
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
+	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -112,9 +115,6 @@ func (client *RouteFiltersClient) CreateOrUpdateCreateRequest(ctx context.Contex
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *RouteFiltersClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*RouteFilterPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
 	return &RouteFilterPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -137,6 +137,9 @@ func (client *RouteFiltersClient) BeginDelete(ctx context.Context, resourceGroup
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -187,9 +190,6 @@ func (client *RouteFiltersClient) DeleteCreateRequest(ctx context.Context, resou
 
 // DeleteHandleResponse handles the Delete response.
 func (client *RouteFiltersClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -211,6 +211,9 @@ func (client *RouteFiltersClient) Get(ctx context.Context, resourceGroupName str
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -241,9 +244,6 @@ func (client *RouteFiltersClient) GetCreateRequest(ctx context.Context, resource
 
 // GetHandleResponse handles the Get response.
 func (client *RouteFiltersClient) GetHandleResponse(resp *azcore.Response) (*RouteFilterResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
-	}
 	result := RouteFilterResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.RouteFilter)
 }
@@ -265,6 +265,7 @@ func (client *RouteFiltersClient) List() RouteFilterListResultPager {
 			return client.ListCreateRequest(ctx)
 		},
 		responder: client.ListHandleResponse,
+		errorer:   client.ListHandleError,
 		advancer: func(ctx context.Context, resp *RouteFilterListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.RouteFilterListResult.NextLink)
 		},
@@ -288,9 +289,6 @@ func (client *RouteFiltersClient) ListCreateRequest(ctx context.Context) (*azcor
 
 // ListHandleResponse handles the List response.
 func (client *RouteFiltersClient) ListHandleResponse(resp *azcore.Response) (*RouteFilterListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := RouteFilterListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.RouteFilterListResult)
 }
@@ -312,6 +310,7 @@ func (client *RouteFiltersClient) ListByResourceGroup(resourceGroupName string) 
 			return client.ListByResourceGroupCreateRequest(ctx, resourceGroupName)
 		},
 		responder: client.ListByResourceGroupHandleResponse,
+		errorer:   client.ListByResourceGroupHandleError,
 		advancer: func(ctx context.Context, resp *RouteFilterListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.RouteFilterListResult.NextLink)
 		},
@@ -336,9 +335,6 @@ func (client *RouteFiltersClient) ListByResourceGroupCreateRequest(ctx context.C
 
 // ListByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client *RouteFiltersClient) ListByResourceGroupHandleResponse(resp *azcore.Response) (*RouteFilterListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListByResourceGroupHandleError(resp)
-	}
 	result := RouteFilterListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.RouteFilterListResult)
 }
@@ -361,6 +357,9 @@ func (client *RouteFiltersClient) UpdateTags(ctx context.Context, resourceGroupN
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.UpdateTagsHandleError(resp)
 	}
 	result, err := client.UpdateTagsHandleResponse(resp)
 	if err != nil {
@@ -388,9 +387,6 @@ func (client *RouteFiltersClient) UpdateTagsCreateRequest(ctx context.Context, r
 
 // UpdateTagsHandleResponse handles the UpdateTags response.
 func (client *RouteFiltersClient) UpdateTagsHandleResponse(resp *azcore.Response) (*RouteFilterResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.UpdateTagsHandleError(resp)
-	}
 	result := RouteFilterResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.RouteFilter)
 }

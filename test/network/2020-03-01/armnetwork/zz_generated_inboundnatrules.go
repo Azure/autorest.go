@@ -59,6 +59,9 @@ func (client *InboundNatRulesClient) BeginCreateOrUpdate(ctx context.Context, re
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
+	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -109,9 +112,6 @@ func (client *InboundNatRulesClient) CreateOrUpdateCreateRequest(ctx context.Con
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *InboundNatRulesClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*InboundNatRulePollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
 	return &InboundNatRulePollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -134,6 +134,9 @@ func (client *InboundNatRulesClient) BeginDelete(ctx context.Context, resourceGr
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -185,9 +188,6 @@ func (client *InboundNatRulesClient) DeleteCreateRequest(ctx context.Context, re
 
 // DeleteHandleResponse handles the Delete response.
 func (client *InboundNatRulesClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -209,6 +209,9 @@ func (client *InboundNatRulesClient) Get(ctx context.Context, resourceGroupName 
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -240,9 +243,6 @@ func (client *InboundNatRulesClient) GetCreateRequest(ctx context.Context, resou
 
 // GetHandleResponse handles the Get response.
 func (client *InboundNatRulesClient) GetHandleResponse(resp *azcore.Response) (*InboundNatRuleResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
-	}
 	result := InboundNatRuleResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.InboundNatRule)
 }
@@ -264,6 +264,7 @@ func (client *InboundNatRulesClient) List(resourceGroupName string, loadBalancer
 			return client.ListCreateRequest(ctx, resourceGroupName, loadBalancerName)
 		},
 		responder: client.ListHandleResponse,
+		errorer:   client.ListHandleError,
 		advancer: func(ctx context.Context, resp *InboundNatRuleListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.InboundNatRuleListResult.NextLink)
 		},
@@ -289,9 +290,6 @@ func (client *InboundNatRulesClient) ListCreateRequest(ctx context.Context, reso
 
 // ListHandleResponse handles the List response.
 func (client *InboundNatRulesClient) ListHandleResponse(resp *azcore.Response) (*InboundNatRuleListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := InboundNatRuleListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.InboundNatRuleListResult)
 }

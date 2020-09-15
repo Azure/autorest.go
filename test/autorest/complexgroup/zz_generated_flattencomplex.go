@@ -44,6 +44,9 @@ func (client *FlattencomplexClient) GetValid(ctx context.Context) (*MyBaseTypeRe
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetValidHandleError(resp)
+	}
 	result, err := client.GetValidHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -64,9 +67,6 @@ func (client *FlattencomplexClient) GetValidCreateRequest(ctx context.Context) (
 
 // GetValidHandleResponse handles the GetValid response.
 func (client *FlattencomplexClient) GetValidHandleResponse(resp *azcore.Response) (*MyBaseTypeResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetValidHandleError(resp)
-	}
 	result := MyBaseTypeResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result)
 }

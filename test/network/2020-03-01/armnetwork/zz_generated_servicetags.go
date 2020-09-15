@@ -46,6 +46,9 @@ func (client *ServiceTagsClient) List(ctx context.Context, location string) (*Se
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ListHandleError(resp)
+	}
 	result, err := client.ListHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -71,9 +74,6 @@ func (client *ServiceTagsClient) ListCreateRequest(ctx context.Context, location
 
 // ListHandleResponse handles the List response.
 func (client *ServiceTagsClient) ListHandleResponse(resp *azcore.Response) (*ServiceTagsListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := ServiceTagsListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ServiceTagsListResult)
 }

@@ -63,6 +63,9 @@ func (client *pageBlobClient) ClearPages(ctx context.Context, contentLength int6
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusCreated) {
+		return nil, client.ClearPagesHandleError(resp)
+	}
 	result, err := client.ClearPagesHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -130,9 +133,6 @@ func (client *pageBlobClient) ClearPagesCreateRequest(ctx context.Context, conte
 
 // ClearPagesHandleResponse handles the ClearPages response.
 func (client *pageBlobClient) ClearPagesHandleResponse(resp *azcore.Response) (*PageBlobClearPagesResponse, error) {
-	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.ClearPagesHandleError(resp)
-	}
 	result := PageBlobClearPagesResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -203,6 +203,9 @@ func (client *pageBlobClient) CopyIncremental(ctx context.Context, copySource ur
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.CopyIncrementalHandleError(resp)
+	}
 	result, err := client.CopyIncrementalHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -245,9 +248,6 @@ func (client *pageBlobClient) CopyIncrementalCreateRequest(ctx context.Context, 
 
 // CopyIncrementalHandleResponse handles the CopyIncremental response.
 func (client *pageBlobClient) CopyIncrementalHandleResponse(resp *azcore.Response) (*PageBlobCopyIncrementalResponse, error) {
-	if !resp.HasStatusCode(http.StatusAccepted) {
-		return nil, client.CopyIncrementalHandleError(resp)
-	}
 	result := PageBlobCopyIncrementalResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -302,6 +302,9 @@ func (client *pageBlobClient) Create(ctx context.Context, contentLength int64, b
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusCreated) {
+		return nil, client.CreateHandleError(resp)
 	}
 	result, err := client.CreateHandleResponse(resp)
 	if err != nil {
@@ -387,9 +390,6 @@ func (client *pageBlobClient) CreateCreateRequest(ctx context.Context, contentLe
 
 // CreateHandleResponse handles the Create response.
 func (client *pageBlobClient) CreateHandleResponse(resp *azcore.Response) (*PageBlobCreateResponse, error) {
-	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.CreateHandleError(resp)
-	}
 	result := PageBlobCreateResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -459,6 +459,9 @@ func (client *pageBlobClient) GetPageRanges(ctx context.Context, pageBlobGetPage
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetPageRangesHandleError(resp)
+	}
 	result, err := client.GetPageRangesHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -509,9 +512,6 @@ func (client *pageBlobClient) GetPageRangesCreateRequest(ctx context.Context, pa
 
 // GetPageRangesHandleResponse handles the GetPageRanges response.
 func (client *pageBlobClient) GetPageRangesHandleResponse(resp *azcore.Response) (*PageListResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetPageRangesHandleError(resp)
-	}
 	result := PageListResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
@@ -567,6 +567,9 @@ func (client *pageBlobClient) GetPageRangesDiff(ctx context.Context, pageBlobGet
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetPageRangesDiffHandleError(resp)
 	}
 	result, err := client.GetPageRangesDiffHandleResponse(resp)
 	if err != nil {
@@ -624,9 +627,6 @@ func (client *pageBlobClient) GetPageRangesDiffCreateRequest(ctx context.Context
 
 // GetPageRangesDiffHandleResponse handles the GetPageRangesDiff response.
 func (client *pageBlobClient) GetPageRangesDiffHandleResponse(resp *azcore.Response) (*PageListResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetPageRangesDiffHandleError(resp)
-	}
 	result := PageListResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
@@ -683,6 +683,9 @@ func (client *pageBlobClient) Resize(ctx context.Context, blobContentLength int6
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ResizeHandleError(resp)
+	}
 	result, err := client.ResizeHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -737,9 +740,6 @@ func (client *pageBlobClient) ResizeCreateRequest(ctx context.Context, blobConte
 
 // ResizeHandleResponse handles the Resize response.
 func (client *pageBlobClient) ResizeHandleResponse(resp *azcore.Response) (*PageBlobResizeResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ResizeHandleError(resp)
-	}
 	result := PageBlobResizeResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -796,6 +796,9 @@ func (client *pageBlobClient) UpdateSequenceNumber(ctx context.Context, sequence
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.UpdateSequenceNumberHandleError(resp)
+	}
 	result, err := client.UpdateSequenceNumberHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -844,9 +847,6 @@ func (client *pageBlobClient) UpdateSequenceNumberCreateRequest(ctx context.Cont
 
 // UpdateSequenceNumberHandleResponse handles the UpdateSequenceNumber response.
 func (client *pageBlobClient) UpdateSequenceNumberHandleResponse(resp *azcore.Response) (*PageBlobUpdateSequenceNumberResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.UpdateSequenceNumberHandleError(resp)
-	}
 	result := PageBlobUpdateSequenceNumberResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -902,6 +902,9 @@ func (client *pageBlobClient) UploadPages(ctx context.Context, contentLength int
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusCreated) {
+		return nil, client.UploadPagesHandleError(resp)
 	}
 	result, err := client.UploadPagesHandleResponse(resp)
 	if err != nil {
@@ -976,9 +979,6 @@ func (client *pageBlobClient) UploadPagesCreateRequest(ctx context.Context, cont
 
 // UploadPagesHandleResponse handles the UploadPages response.
 func (client *pageBlobClient) UploadPagesHandleResponse(resp *azcore.Response) (*PageBlobUploadPagesResponse, error) {
-	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.UploadPagesHandleError(resp)
-	}
 	result := PageBlobUploadPagesResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -1061,6 +1061,9 @@ func (client *pageBlobClient) UploadPagesFromURL(ctx context.Context, sourceUrl 
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusCreated) {
+		return nil, client.UploadPagesFromURLHandleError(resp)
 	}
 	result, err := client.UploadPagesFromURLHandleResponse(resp)
 	if err != nil {
@@ -1147,9 +1150,6 @@ func (client *pageBlobClient) UploadPagesFromURLCreateRequest(ctx context.Contex
 
 // UploadPagesFromURLHandleResponse handles the UploadPagesFromURL response.
 func (client *pageBlobClient) UploadPagesFromURLHandleResponse(resp *azcore.Response) (*PageBlobUploadPagesFromURLResponse, error) {
-	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.UploadPagesFromURLHandleError(resp)
-	}
 	result := PageBlobUploadPagesFromURLResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val

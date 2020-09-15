@@ -180,6 +180,9 @@ func (client *ArrayClient) GetArrayEmpty(ctx context.Context) (*StringArrayArray
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetArrayEmptyHandleError(resp)
+	}
 	result, err := client.GetArrayEmptyHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -200,9 +203,6 @@ func (client *ArrayClient) GetArrayEmptyCreateRequest(ctx context.Context) (*azc
 
 // GetArrayEmptyHandleResponse handles the GetArrayEmpty response.
 func (client *ArrayClient) GetArrayEmptyHandleResponse(resp *azcore.Response) (*StringArrayArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetArrayEmptyHandleError(resp)
-	}
 	result := StringArrayArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.StringArrayArray)
 }
@@ -226,6 +226,9 @@ func (client *ArrayClient) GetArrayItemEmpty(ctx context.Context) (*StringArrayA
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetArrayItemEmptyHandleError(resp)
+	}
 	result, err := client.GetArrayItemEmptyHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -246,9 +249,6 @@ func (client *ArrayClient) GetArrayItemEmptyCreateRequest(ctx context.Context) (
 
 // GetArrayItemEmptyHandleResponse handles the GetArrayItemEmpty response.
 func (client *ArrayClient) GetArrayItemEmptyHandleResponse(resp *azcore.Response) (*StringArrayArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetArrayItemEmptyHandleError(resp)
-	}
 	result := StringArrayArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.StringArrayArray)
 }
@@ -272,6 +272,9 @@ func (client *ArrayClient) GetArrayItemNull(ctx context.Context) (*StringArrayAr
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetArrayItemNullHandleError(resp)
+	}
 	result, err := client.GetArrayItemNullHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -292,9 +295,6 @@ func (client *ArrayClient) GetArrayItemNullCreateRequest(ctx context.Context) (*
 
 // GetArrayItemNullHandleResponse handles the GetArrayItemNull response.
 func (client *ArrayClient) GetArrayItemNullHandleResponse(resp *azcore.Response) (*StringArrayArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetArrayItemNullHandleError(resp)
-	}
 	result := StringArrayArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.StringArrayArray)
 }
@@ -318,6 +318,9 @@ func (client *ArrayClient) GetArrayNull(ctx context.Context) (*StringArrayArrayR
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetArrayNullHandleError(resp)
+	}
 	result, err := client.GetArrayNullHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -338,9 +341,6 @@ func (client *ArrayClient) GetArrayNullCreateRequest(ctx context.Context) (*azco
 
 // GetArrayNullHandleResponse handles the GetArrayNull response.
 func (client *ArrayClient) GetArrayNullHandleResponse(resp *azcore.Response) (*StringArrayArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetArrayNullHandleError(resp)
-	}
 	result := StringArrayArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.StringArrayArray)
 }
@@ -364,6 +364,9 @@ func (client *ArrayClient) GetArrayValid(ctx context.Context) (*StringArrayArray
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetArrayValidHandleError(resp)
+	}
 	result, err := client.GetArrayValidHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -384,9 +387,6 @@ func (client *ArrayClient) GetArrayValidCreateRequest(ctx context.Context) (*azc
 
 // GetArrayValidHandleResponse handles the GetArrayValid response.
 func (client *ArrayClient) GetArrayValidHandleResponse(resp *azcore.Response) (*StringArrayArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetArrayValidHandleError(resp)
-	}
 	result := StringArrayArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.StringArrayArray)
 }
@@ -410,6 +410,9 @@ func (client *ArrayClient) GetBase64URL(ctx context.Context) (*ByteArrayArrayRes
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetBase64URLHandleError(resp)
+	}
 	result, err := client.GetBase64URLHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -430,9 +433,6 @@ func (client *ArrayClient) GetBase64URLCreateRequest(ctx context.Context) (*azco
 
 // GetBase64URLHandleResponse handles the GetBase64URL response.
 func (client *ArrayClient) GetBase64URLHandleResponse(resp *azcore.Response) (*ByteArrayArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetBase64URLHandleError(resp)
-	}
 	result := ByteArrayArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ByteArrayArray)
 }
@@ -456,6 +456,9 @@ func (client *ArrayClient) GetBooleanInvalidNull(ctx context.Context) (*BoolArra
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetBooleanInvalidNullHandleError(resp)
+	}
 	result, err := client.GetBooleanInvalidNullHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -476,9 +479,6 @@ func (client *ArrayClient) GetBooleanInvalidNullCreateRequest(ctx context.Contex
 
 // GetBooleanInvalidNullHandleResponse handles the GetBooleanInvalidNull response.
 func (client *ArrayClient) GetBooleanInvalidNullHandleResponse(resp *azcore.Response) (*BoolArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetBooleanInvalidNullHandleError(resp)
-	}
 	result := BoolArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.BoolArray)
 }
@@ -502,6 +502,9 @@ func (client *ArrayClient) GetBooleanInvalidString(ctx context.Context) (*BoolAr
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetBooleanInvalidStringHandleError(resp)
+	}
 	result, err := client.GetBooleanInvalidStringHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -522,9 +525,6 @@ func (client *ArrayClient) GetBooleanInvalidStringCreateRequest(ctx context.Cont
 
 // GetBooleanInvalidStringHandleResponse handles the GetBooleanInvalidString response.
 func (client *ArrayClient) GetBooleanInvalidStringHandleResponse(resp *azcore.Response) (*BoolArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetBooleanInvalidStringHandleError(resp)
-	}
 	result := BoolArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.BoolArray)
 }
@@ -548,6 +548,9 @@ func (client *ArrayClient) GetBooleanTfft(ctx context.Context) (*BoolArrayRespon
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetBooleanTfftHandleError(resp)
+	}
 	result, err := client.GetBooleanTfftHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -568,9 +571,6 @@ func (client *ArrayClient) GetBooleanTfftCreateRequest(ctx context.Context) (*az
 
 // GetBooleanTfftHandleResponse handles the GetBooleanTfft response.
 func (client *ArrayClient) GetBooleanTfftHandleResponse(resp *azcore.Response) (*BoolArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetBooleanTfftHandleError(resp)
-	}
 	result := BoolArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.BoolArray)
 }
@@ -594,6 +594,9 @@ func (client *ArrayClient) GetByteInvalidNull(ctx context.Context) (*ByteArrayAr
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetByteInvalidNullHandleError(resp)
+	}
 	result, err := client.GetByteInvalidNullHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -614,9 +617,6 @@ func (client *ArrayClient) GetByteInvalidNullCreateRequest(ctx context.Context) 
 
 // GetByteInvalidNullHandleResponse handles the GetByteInvalidNull response.
 func (client *ArrayClient) GetByteInvalidNullHandleResponse(resp *azcore.Response) (*ByteArrayArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetByteInvalidNullHandleError(resp)
-	}
 	result := ByteArrayArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ByteArrayArray)
 }
@@ -640,6 +640,9 @@ func (client *ArrayClient) GetByteValid(ctx context.Context) (*ByteArrayArrayRes
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetByteValidHandleError(resp)
+	}
 	result, err := client.GetByteValidHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -660,9 +663,6 @@ func (client *ArrayClient) GetByteValidCreateRequest(ctx context.Context) (*azco
 
 // GetByteValidHandleResponse handles the GetByteValid response.
 func (client *ArrayClient) GetByteValidHandleResponse(resp *azcore.Response) (*ByteArrayArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetByteValidHandleError(resp)
-	}
 	result := ByteArrayArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ByteArrayArray)
 }
@@ -686,6 +686,9 @@ func (client *ArrayClient) GetComplexEmpty(ctx context.Context) (*ProductArrayRe
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetComplexEmptyHandleError(resp)
+	}
 	result, err := client.GetComplexEmptyHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -706,9 +709,6 @@ func (client *ArrayClient) GetComplexEmptyCreateRequest(ctx context.Context) (*a
 
 // GetComplexEmptyHandleResponse handles the GetComplexEmpty response.
 func (client *ArrayClient) GetComplexEmptyHandleResponse(resp *azcore.Response) (*ProductArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetComplexEmptyHandleError(resp)
-	}
 	result := ProductArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ProductArray)
 }
@@ -732,6 +732,9 @@ func (client *ArrayClient) GetComplexItemEmpty(ctx context.Context) (*ProductArr
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetComplexItemEmptyHandleError(resp)
+	}
 	result, err := client.GetComplexItemEmptyHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -752,9 +755,6 @@ func (client *ArrayClient) GetComplexItemEmptyCreateRequest(ctx context.Context)
 
 // GetComplexItemEmptyHandleResponse handles the GetComplexItemEmpty response.
 func (client *ArrayClient) GetComplexItemEmptyHandleResponse(resp *azcore.Response) (*ProductArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetComplexItemEmptyHandleError(resp)
-	}
 	result := ProductArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ProductArray)
 }
@@ -778,6 +778,9 @@ func (client *ArrayClient) GetComplexItemNull(ctx context.Context) (*ProductArra
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetComplexItemNullHandleError(resp)
+	}
 	result, err := client.GetComplexItemNullHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -798,9 +801,6 @@ func (client *ArrayClient) GetComplexItemNullCreateRequest(ctx context.Context) 
 
 // GetComplexItemNullHandleResponse handles the GetComplexItemNull response.
 func (client *ArrayClient) GetComplexItemNullHandleResponse(resp *azcore.Response) (*ProductArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetComplexItemNullHandleError(resp)
-	}
 	result := ProductArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ProductArray)
 }
@@ -824,6 +824,9 @@ func (client *ArrayClient) GetComplexNull(ctx context.Context) (*ProductArrayRes
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetComplexNullHandleError(resp)
+	}
 	result, err := client.GetComplexNullHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -844,9 +847,6 @@ func (client *ArrayClient) GetComplexNullCreateRequest(ctx context.Context) (*az
 
 // GetComplexNullHandleResponse handles the GetComplexNull response.
 func (client *ArrayClient) GetComplexNullHandleResponse(resp *azcore.Response) (*ProductArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetComplexNullHandleError(resp)
-	}
 	result := ProductArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ProductArray)
 }
@@ -870,6 +870,9 @@ func (client *ArrayClient) GetComplexValid(ctx context.Context) (*ProductArrayRe
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetComplexValidHandleError(resp)
+	}
 	result, err := client.GetComplexValidHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -890,9 +893,6 @@ func (client *ArrayClient) GetComplexValidCreateRequest(ctx context.Context) (*a
 
 // GetComplexValidHandleResponse handles the GetComplexValid response.
 func (client *ArrayClient) GetComplexValidHandleResponse(resp *azcore.Response) (*ProductArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetComplexValidHandleError(resp)
-	}
 	result := ProductArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ProductArray)
 }
@@ -916,6 +916,9 @@ func (client *ArrayClient) GetDateInvalidChars(ctx context.Context) (*TimeArrayR
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetDateInvalidCharsHandleError(resp)
+	}
 	result, err := client.GetDateInvalidCharsHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -936,9 +939,6 @@ func (client *ArrayClient) GetDateInvalidCharsCreateRequest(ctx context.Context)
 
 // GetDateInvalidCharsHandleResponse handles the GetDateInvalidChars response.
 func (client *ArrayClient) GetDateInvalidCharsHandleResponse(resp *azcore.Response) (*TimeArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetDateInvalidCharsHandleError(resp)
-	}
 	result := TimeArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.TimeArray)
 }
@@ -962,6 +962,9 @@ func (client *ArrayClient) GetDateInvalidNull(ctx context.Context) (*TimeArrayRe
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetDateInvalidNullHandleError(resp)
+	}
 	result, err := client.GetDateInvalidNullHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -982,9 +985,6 @@ func (client *ArrayClient) GetDateInvalidNullCreateRequest(ctx context.Context) 
 
 // GetDateInvalidNullHandleResponse handles the GetDateInvalidNull response.
 func (client *ArrayClient) GetDateInvalidNullHandleResponse(resp *azcore.Response) (*TimeArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetDateInvalidNullHandleError(resp)
-	}
 	result := TimeArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.TimeArray)
 }
@@ -1008,6 +1008,9 @@ func (client *ArrayClient) GetDateTimeInvalidChars(ctx context.Context) (*TimeAr
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetDateTimeInvalidCharsHandleError(resp)
+	}
 	result, err := client.GetDateTimeInvalidCharsHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1028,9 +1031,6 @@ func (client *ArrayClient) GetDateTimeInvalidCharsCreateRequest(ctx context.Cont
 
 // GetDateTimeInvalidCharsHandleResponse handles the GetDateTimeInvalidChars response.
 func (client *ArrayClient) GetDateTimeInvalidCharsHandleResponse(resp *azcore.Response) (*TimeArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetDateTimeInvalidCharsHandleError(resp)
-	}
 	var aux *[]timeRFC3339
 	if err := resp.UnmarshalAsJSON(&aux); err != nil {
 		return nil, err
@@ -1061,6 +1061,9 @@ func (client *ArrayClient) GetDateTimeInvalidNull(ctx context.Context) (*TimeArr
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetDateTimeInvalidNullHandleError(resp)
+	}
 	result, err := client.GetDateTimeInvalidNullHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1081,9 +1084,6 @@ func (client *ArrayClient) GetDateTimeInvalidNullCreateRequest(ctx context.Conte
 
 // GetDateTimeInvalidNullHandleResponse handles the GetDateTimeInvalidNull response.
 func (client *ArrayClient) GetDateTimeInvalidNullHandleResponse(resp *azcore.Response) (*TimeArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetDateTimeInvalidNullHandleError(resp)
-	}
 	var aux *[]timeRFC3339
 	if err := resp.UnmarshalAsJSON(&aux); err != nil {
 		return nil, err
@@ -1114,6 +1114,9 @@ func (client *ArrayClient) GetDateTimeRFC1123Valid(ctx context.Context) (*TimeAr
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetDateTimeRFC1123ValidHandleError(resp)
+	}
 	result, err := client.GetDateTimeRFC1123ValidHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1134,9 +1137,6 @@ func (client *ArrayClient) GetDateTimeRFC1123ValidCreateRequest(ctx context.Cont
 
 // GetDateTimeRFC1123ValidHandleResponse handles the GetDateTimeRFC1123Valid response.
 func (client *ArrayClient) GetDateTimeRFC1123ValidHandleResponse(resp *azcore.Response) (*TimeArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetDateTimeRFC1123ValidHandleError(resp)
-	}
 	var aux *[]timeRFC1123
 	if err := resp.UnmarshalAsJSON(&aux); err != nil {
 		return nil, err
@@ -1167,6 +1167,9 @@ func (client *ArrayClient) GetDateTimeValid(ctx context.Context) (*TimeArrayResp
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetDateTimeValidHandleError(resp)
+	}
 	result, err := client.GetDateTimeValidHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1187,9 +1190,6 @@ func (client *ArrayClient) GetDateTimeValidCreateRequest(ctx context.Context) (*
 
 // GetDateTimeValidHandleResponse handles the GetDateTimeValid response.
 func (client *ArrayClient) GetDateTimeValidHandleResponse(resp *azcore.Response) (*TimeArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetDateTimeValidHandleError(resp)
-	}
 	var aux *[]timeRFC3339
 	if err := resp.UnmarshalAsJSON(&aux); err != nil {
 		return nil, err
@@ -1220,6 +1220,9 @@ func (client *ArrayClient) GetDateValid(ctx context.Context) (*TimeArrayResponse
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetDateValidHandleError(resp)
+	}
 	result, err := client.GetDateValidHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1240,9 +1243,6 @@ func (client *ArrayClient) GetDateValidCreateRequest(ctx context.Context) (*azco
 
 // GetDateValidHandleResponse handles the GetDateValid response.
 func (client *ArrayClient) GetDateValidHandleResponse(resp *azcore.Response) (*TimeArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetDateValidHandleError(resp)
-	}
 	result := TimeArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.TimeArray)
 }
@@ -1266,6 +1266,9 @@ func (client *ArrayClient) GetDictionaryEmpty(ctx context.Context) (*MapOfString
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetDictionaryEmptyHandleError(resp)
+	}
 	result, err := client.GetDictionaryEmptyHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1286,9 +1289,6 @@ func (client *ArrayClient) GetDictionaryEmptyCreateRequest(ctx context.Context) 
 
 // GetDictionaryEmptyHandleResponse handles the GetDictionaryEmpty response.
 func (client *ArrayClient) GetDictionaryEmptyHandleResponse(resp *azcore.Response) (*MapOfStringArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetDictionaryEmptyHandleError(resp)
-	}
 	result := MapOfStringArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.MapOfStringArray)
 }
@@ -1312,6 +1312,9 @@ func (client *ArrayClient) GetDictionaryItemEmpty(ctx context.Context) (*MapOfSt
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetDictionaryItemEmptyHandleError(resp)
+	}
 	result, err := client.GetDictionaryItemEmptyHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1332,9 +1335,6 @@ func (client *ArrayClient) GetDictionaryItemEmptyCreateRequest(ctx context.Conte
 
 // GetDictionaryItemEmptyHandleResponse handles the GetDictionaryItemEmpty response.
 func (client *ArrayClient) GetDictionaryItemEmptyHandleResponse(resp *azcore.Response) (*MapOfStringArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetDictionaryItemEmptyHandleError(resp)
-	}
 	result := MapOfStringArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.MapOfStringArray)
 }
@@ -1358,6 +1358,9 @@ func (client *ArrayClient) GetDictionaryItemNull(ctx context.Context) (*MapOfStr
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetDictionaryItemNullHandleError(resp)
+	}
 	result, err := client.GetDictionaryItemNullHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1378,9 +1381,6 @@ func (client *ArrayClient) GetDictionaryItemNullCreateRequest(ctx context.Contex
 
 // GetDictionaryItemNullHandleResponse handles the GetDictionaryItemNull response.
 func (client *ArrayClient) GetDictionaryItemNullHandleResponse(resp *azcore.Response) (*MapOfStringArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetDictionaryItemNullHandleError(resp)
-	}
 	result := MapOfStringArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.MapOfStringArray)
 }
@@ -1404,6 +1404,9 @@ func (client *ArrayClient) GetDictionaryNull(ctx context.Context) (*MapOfStringA
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetDictionaryNullHandleError(resp)
+	}
 	result, err := client.GetDictionaryNullHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1424,9 +1427,6 @@ func (client *ArrayClient) GetDictionaryNullCreateRequest(ctx context.Context) (
 
 // GetDictionaryNullHandleResponse handles the GetDictionaryNull response.
 func (client *ArrayClient) GetDictionaryNullHandleResponse(resp *azcore.Response) (*MapOfStringArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetDictionaryNullHandleError(resp)
-	}
 	result := MapOfStringArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.MapOfStringArray)
 }
@@ -1450,6 +1450,9 @@ func (client *ArrayClient) GetDictionaryValid(ctx context.Context) (*MapOfString
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetDictionaryValidHandleError(resp)
+	}
 	result, err := client.GetDictionaryValidHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1470,9 +1473,6 @@ func (client *ArrayClient) GetDictionaryValidCreateRequest(ctx context.Context) 
 
 // GetDictionaryValidHandleResponse handles the GetDictionaryValid response.
 func (client *ArrayClient) GetDictionaryValidHandleResponse(resp *azcore.Response) (*MapOfStringArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetDictionaryValidHandleError(resp)
-	}
 	result := MapOfStringArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.MapOfStringArray)
 }
@@ -1496,6 +1496,9 @@ func (client *ArrayClient) GetDoubleInvalidNull(ctx context.Context) (*Float64Ar
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetDoubleInvalidNullHandleError(resp)
+	}
 	result, err := client.GetDoubleInvalidNullHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1516,9 +1519,6 @@ func (client *ArrayClient) GetDoubleInvalidNullCreateRequest(ctx context.Context
 
 // GetDoubleInvalidNullHandleResponse handles the GetDoubleInvalidNull response.
 func (client *ArrayClient) GetDoubleInvalidNullHandleResponse(resp *azcore.Response) (*Float64ArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetDoubleInvalidNullHandleError(resp)
-	}
 	result := Float64ArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Float64Array)
 }
@@ -1542,6 +1542,9 @@ func (client *ArrayClient) GetDoubleInvalidString(ctx context.Context) (*Float64
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetDoubleInvalidStringHandleError(resp)
+	}
 	result, err := client.GetDoubleInvalidStringHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1562,9 +1565,6 @@ func (client *ArrayClient) GetDoubleInvalidStringCreateRequest(ctx context.Conte
 
 // GetDoubleInvalidStringHandleResponse handles the GetDoubleInvalidString response.
 func (client *ArrayClient) GetDoubleInvalidStringHandleResponse(resp *azcore.Response) (*Float64ArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetDoubleInvalidStringHandleError(resp)
-	}
 	result := Float64ArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Float64Array)
 }
@@ -1588,6 +1588,9 @@ func (client *ArrayClient) GetDoubleValid(ctx context.Context) (*Float64ArrayRes
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetDoubleValidHandleError(resp)
+	}
 	result, err := client.GetDoubleValidHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1608,9 +1611,6 @@ func (client *ArrayClient) GetDoubleValidCreateRequest(ctx context.Context) (*az
 
 // GetDoubleValidHandleResponse handles the GetDoubleValid response.
 func (client *ArrayClient) GetDoubleValidHandleResponse(resp *azcore.Response) (*Float64ArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetDoubleValidHandleError(resp)
-	}
 	result := Float64ArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Float64Array)
 }
@@ -1634,6 +1634,9 @@ func (client *ArrayClient) GetDurationValid(ctx context.Context) (*StringArrayRe
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetDurationValidHandleError(resp)
+	}
 	result, err := client.GetDurationValidHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1654,9 +1657,6 @@ func (client *ArrayClient) GetDurationValidCreateRequest(ctx context.Context) (*
 
 // GetDurationValidHandleResponse handles the GetDurationValid response.
 func (client *ArrayClient) GetDurationValidHandleResponse(resp *azcore.Response) (*StringArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetDurationValidHandleError(resp)
-	}
 	result := StringArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.StringArray)
 }
@@ -1680,6 +1680,9 @@ func (client *ArrayClient) GetEmpty(ctx context.Context) (*Int32ArrayResponse, e
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetEmptyHandleError(resp)
+	}
 	result, err := client.GetEmptyHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1700,9 +1703,6 @@ func (client *ArrayClient) GetEmptyCreateRequest(ctx context.Context) (*azcore.R
 
 // GetEmptyHandleResponse handles the GetEmpty response.
 func (client *ArrayClient) GetEmptyHandleResponse(resp *azcore.Response) (*Int32ArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetEmptyHandleError(resp)
-	}
 	result := Int32ArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Int32Array)
 }
@@ -1726,6 +1726,9 @@ func (client *ArrayClient) GetEnumValid(ctx context.Context) (*FooEnumArrayRespo
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetEnumValidHandleError(resp)
+	}
 	result, err := client.GetEnumValidHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1746,9 +1749,6 @@ func (client *ArrayClient) GetEnumValidCreateRequest(ctx context.Context) (*azco
 
 // GetEnumValidHandleResponse handles the GetEnumValid response.
 func (client *ArrayClient) GetEnumValidHandleResponse(resp *azcore.Response) (*FooEnumArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetEnumValidHandleError(resp)
-	}
 	result := FooEnumArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.FooEnumArray)
 }
@@ -1772,6 +1772,9 @@ func (client *ArrayClient) GetFloatInvalidNull(ctx context.Context) (*Float32Arr
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetFloatInvalidNullHandleError(resp)
+	}
 	result, err := client.GetFloatInvalidNullHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1792,9 +1795,6 @@ func (client *ArrayClient) GetFloatInvalidNullCreateRequest(ctx context.Context)
 
 // GetFloatInvalidNullHandleResponse handles the GetFloatInvalidNull response.
 func (client *ArrayClient) GetFloatInvalidNullHandleResponse(resp *azcore.Response) (*Float32ArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetFloatInvalidNullHandleError(resp)
-	}
 	result := Float32ArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Float32Array)
 }
@@ -1818,6 +1818,9 @@ func (client *ArrayClient) GetFloatInvalidString(ctx context.Context) (*Float32A
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetFloatInvalidStringHandleError(resp)
+	}
 	result, err := client.GetFloatInvalidStringHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1838,9 +1841,6 @@ func (client *ArrayClient) GetFloatInvalidStringCreateRequest(ctx context.Contex
 
 // GetFloatInvalidStringHandleResponse handles the GetFloatInvalidString response.
 func (client *ArrayClient) GetFloatInvalidStringHandleResponse(resp *azcore.Response) (*Float32ArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetFloatInvalidStringHandleError(resp)
-	}
 	result := Float32ArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Float32Array)
 }
@@ -1864,6 +1864,9 @@ func (client *ArrayClient) GetFloatValid(ctx context.Context) (*Float32ArrayResp
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetFloatValidHandleError(resp)
+	}
 	result, err := client.GetFloatValidHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1884,9 +1887,6 @@ func (client *ArrayClient) GetFloatValidCreateRequest(ctx context.Context) (*azc
 
 // GetFloatValidHandleResponse handles the GetFloatValid response.
 func (client *ArrayClient) GetFloatValidHandleResponse(resp *azcore.Response) (*Float32ArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetFloatValidHandleError(resp)
-	}
 	result := Float32ArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Float32Array)
 }
@@ -1910,6 +1910,9 @@ func (client *ArrayClient) GetIntInvalidNull(ctx context.Context) (*Int32ArrayRe
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetIntInvalidNullHandleError(resp)
+	}
 	result, err := client.GetIntInvalidNullHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1930,9 +1933,6 @@ func (client *ArrayClient) GetIntInvalidNullCreateRequest(ctx context.Context) (
 
 // GetIntInvalidNullHandleResponse handles the GetIntInvalidNull response.
 func (client *ArrayClient) GetIntInvalidNullHandleResponse(resp *azcore.Response) (*Int32ArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetIntInvalidNullHandleError(resp)
-	}
 	result := Int32ArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Int32Array)
 }
@@ -1956,6 +1956,9 @@ func (client *ArrayClient) GetIntInvalidString(ctx context.Context) (*Int32Array
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetIntInvalidStringHandleError(resp)
+	}
 	result, err := client.GetIntInvalidStringHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1976,9 +1979,6 @@ func (client *ArrayClient) GetIntInvalidStringCreateRequest(ctx context.Context)
 
 // GetIntInvalidStringHandleResponse handles the GetIntInvalidString response.
 func (client *ArrayClient) GetIntInvalidStringHandleResponse(resp *azcore.Response) (*Int32ArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetIntInvalidStringHandleError(resp)
-	}
 	result := Int32ArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Int32Array)
 }
@@ -2002,6 +2002,9 @@ func (client *ArrayClient) GetIntegerValid(ctx context.Context) (*Int32ArrayResp
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetIntegerValidHandleError(resp)
+	}
 	result, err := client.GetIntegerValidHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -2022,9 +2025,6 @@ func (client *ArrayClient) GetIntegerValidCreateRequest(ctx context.Context) (*a
 
 // GetIntegerValidHandleResponse handles the GetIntegerValid response.
 func (client *ArrayClient) GetIntegerValidHandleResponse(resp *azcore.Response) (*Int32ArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetIntegerValidHandleError(resp)
-	}
 	result := Int32ArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Int32Array)
 }
@@ -2048,6 +2048,9 @@ func (client *ArrayClient) GetInvalid(ctx context.Context) (*Int32ArrayResponse,
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetInvalidHandleError(resp)
+	}
 	result, err := client.GetInvalidHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -2068,9 +2071,6 @@ func (client *ArrayClient) GetInvalidCreateRequest(ctx context.Context) (*azcore
 
 // GetInvalidHandleResponse handles the GetInvalid response.
 func (client *ArrayClient) GetInvalidHandleResponse(resp *azcore.Response) (*Int32ArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetInvalidHandleError(resp)
-	}
 	result := Int32ArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Int32Array)
 }
@@ -2094,6 +2094,9 @@ func (client *ArrayClient) GetLongInvalidNull(ctx context.Context) (*Int64ArrayR
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetLongInvalidNullHandleError(resp)
+	}
 	result, err := client.GetLongInvalidNullHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -2114,9 +2117,6 @@ func (client *ArrayClient) GetLongInvalidNullCreateRequest(ctx context.Context) 
 
 // GetLongInvalidNullHandleResponse handles the GetLongInvalidNull response.
 func (client *ArrayClient) GetLongInvalidNullHandleResponse(resp *azcore.Response) (*Int64ArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetLongInvalidNullHandleError(resp)
-	}
 	result := Int64ArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Int64Array)
 }
@@ -2140,6 +2140,9 @@ func (client *ArrayClient) GetLongInvalidString(ctx context.Context) (*Int64Arra
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetLongInvalidStringHandleError(resp)
+	}
 	result, err := client.GetLongInvalidStringHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -2160,9 +2163,6 @@ func (client *ArrayClient) GetLongInvalidStringCreateRequest(ctx context.Context
 
 // GetLongInvalidStringHandleResponse handles the GetLongInvalidString response.
 func (client *ArrayClient) GetLongInvalidStringHandleResponse(resp *azcore.Response) (*Int64ArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetLongInvalidStringHandleError(resp)
-	}
 	result := Int64ArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Int64Array)
 }
@@ -2186,6 +2186,9 @@ func (client *ArrayClient) GetLongValid(ctx context.Context) (*Int64ArrayRespons
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetLongValidHandleError(resp)
+	}
 	result, err := client.GetLongValidHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -2206,9 +2209,6 @@ func (client *ArrayClient) GetLongValidCreateRequest(ctx context.Context) (*azco
 
 // GetLongValidHandleResponse handles the GetLongValid response.
 func (client *ArrayClient) GetLongValidHandleResponse(resp *azcore.Response) (*Int64ArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetLongValidHandleError(resp)
-	}
 	result := Int64ArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Int64Array)
 }
@@ -2232,6 +2232,9 @@ func (client *ArrayClient) GetNull(ctx context.Context) (*Int32ArrayResponse, er
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetNullHandleError(resp)
+	}
 	result, err := client.GetNullHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -2252,9 +2255,6 @@ func (client *ArrayClient) GetNullCreateRequest(ctx context.Context) (*azcore.Re
 
 // GetNullHandleResponse handles the GetNull response.
 func (client *ArrayClient) GetNullHandleResponse(resp *azcore.Response) (*Int32ArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetNullHandleError(resp)
-	}
 	result := Int32ArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Int32Array)
 }
@@ -2278,6 +2278,9 @@ func (client *ArrayClient) GetStringEnumValid(ctx context.Context) (*Enum0ArrayR
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetStringEnumValidHandleError(resp)
+	}
 	result, err := client.GetStringEnumValidHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -2298,9 +2301,6 @@ func (client *ArrayClient) GetStringEnumValidCreateRequest(ctx context.Context) 
 
 // GetStringEnumValidHandleResponse handles the GetStringEnumValid response.
 func (client *ArrayClient) GetStringEnumValidHandleResponse(resp *azcore.Response) (*Enum0ArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetStringEnumValidHandleError(resp)
-	}
 	result := Enum0ArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Enum0Array)
 }
@@ -2324,6 +2324,9 @@ func (client *ArrayClient) GetStringValid(ctx context.Context) (*StringArrayResp
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetStringValidHandleError(resp)
+	}
 	result, err := client.GetStringValidHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -2344,9 +2347,6 @@ func (client *ArrayClient) GetStringValidCreateRequest(ctx context.Context) (*az
 
 // GetStringValidHandleResponse handles the GetStringValid response.
 func (client *ArrayClient) GetStringValidHandleResponse(resp *azcore.Response) (*StringArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetStringValidHandleError(resp)
-	}
 	result := StringArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.StringArray)
 }
@@ -2370,6 +2370,9 @@ func (client *ArrayClient) GetStringWithInvalid(ctx context.Context) (*StringArr
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetStringWithInvalidHandleError(resp)
+	}
 	result, err := client.GetStringWithInvalidHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -2390,9 +2393,6 @@ func (client *ArrayClient) GetStringWithInvalidCreateRequest(ctx context.Context
 
 // GetStringWithInvalidHandleResponse handles the GetStringWithInvalid response.
 func (client *ArrayClient) GetStringWithInvalidHandleResponse(resp *azcore.Response) (*StringArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetStringWithInvalidHandleError(resp)
-	}
 	result := StringArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.StringArray)
 }
@@ -2416,6 +2416,9 @@ func (client *ArrayClient) GetStringWithNull(ctx context.Context) (*StringArrayR
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetStringWithNullHandleError(resp)
+	}
 	result, err := client.GetStringWithNullHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -2436,9 +2439,6 @@ func (client *ArrayClient) GetStringWithNullCreateRequest(ctx context.Context) (
 
 // GetStringWithNullHandleResponse handles the GetStringWithNull response.
 func (client *ArrayClient) GetStringWithNullHandleResponse(resp *azcore.Response) (*StringArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetStringWithNullHandleError(resp)
-	}
 	result := StringArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.StringArray)
 }
@@ -2462,6 +2462,9 @@ func (client *ArrayClient) GetUUIDInvalidChars(ctx context.Context) (*StringArra
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetUUIDInvalidCharsHandleError(resp)
+	}
 	result, err := client.GetUUIDInvalidCharsHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -2482,9 +2485,6 @@ func (client *ArrayClient) GetUUIDInvalidCharsCreateRequest(ctx context.Context)
 
 // GetUUIDInvalidCharsHandleResponse handles the GetUUIDInvalidChars response.
 func (client *ArrayClient) GetUUIDInvalidCharsHandleResponse(resp *azcore.Response) (*StringArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetUUIDInvalidCharsHandleError(resp)
-	}
 	result := StringArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.StringArray)
 }
@@ -2508,6 +2508,9 @@ func (client *ArrayClient) GetUUIDValid(ctx context.Context) (*StringArrayRespon
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetUUIDValidHandleError(resp)
+	}
 	result, err := client.GetUUIDValidHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -2528,9 +2531,6 @@ func (client *ArrayClient) GetUUIDValidCreateRequest(ctx context.Context) (*azco
 
 // GetUUIDValidHandleResponse handles the GetUUIDValid response.
 func (client *ArrayClient) GetUUIDValidHandleResponse(resp *azcore.Response) (*StringArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetUUIDValidHandleError(resp)
-	}
 	result := StringArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.StringArray)
 }
@@ -2554,11 +2554,10 @@ func (client *ArrayClient) PutArrayValid(ctx context.Context, arrayBody [][]stri
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutArrayValidHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutArrayValidHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PutArrayValidCreateRequest creates the PutArrayValid request.
@@ -2570,14 +2569,6 @@ func (client *ArrayClient) PutArrayValidCreateRequest(ctx context.Context, array
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
-}
-
-// PutArrayValidHandleResponse handles the PutArrayValid response.
-func (client *ArrayClient) PutArrayValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutArrayValidHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // PutArrayValidHandleError handles the PutArrayValid error response.
@@ -2599,11 +2590,10 @@ func (client *ArrayClient) PutBooleanTfft(ctx context.Context, arrayBody []bool)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutBooleanTfftHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutBooleanTfftHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PutBooleanTfftCreateRequest creates the PutBooleanTfft request.
@@ -2615,14 +2605,6 @@ func (client *ArrayClient) PutBooleanTfftCreateRequest(ctx context.Context, arra
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
-}
-
-// PutBooleanTfftHandleResponse handles the PutBooleanTfft response.
-func (client *ArrayClient) PutBooleanTfftHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutBooleanTfftHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // PutBooleanTfftHandleError handles the PutBooleanTfft error response.
@@ -2644,11 +2626,10 @@ func (client *ArrayClient) PutByteValid(ctx context.Context, arrayBody [][]byte)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutByteValidHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutByteValidHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PutByteValidCreateRequest creates the PutByteValid request.
@@ -2660,14 +2641,6 @@ func (client *ArrayClient) PutByteValidCreateRequest(ctx context.Context, arrayB
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
-}
-
-// PutByteValidHandleResponse handles the PutByteValid response.
-func (client *ArrayClient) PutByteValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutByteValidHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // PutByteValidHandleError handles the PutByteValid error response.
@@ -2689,11 +2662,10 @@ func (client *ArrayClient) PutComplexValid(ctx context.Context, arrayBody []Prod
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutComplexValidHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutComplexValidHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PutComplexValidCreateRequest creates the PutComplexValid request.
@@ -2705,14 +2677,6 @@ func (client *ArrayClient) PutComplexValidCreateRequest(ctx context.Context, arr
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
-}
-
-// PutComplexValidHandleResponse handles the PutComplexValid response.
-func (client *ArrayClient) PutComplexValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutComplexValidHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // PutComplexValidHandleError handles the PutComplexValid error response.
@@ -2734,11 +2698,10 @@ func (client *ArrayClient) PutDateTimeRFC1123Valid(ctx context.Context, arrayBod
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutDateTimeRFC1123ValidHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutDateTimeRFC1123ValidHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PutDateTimeRFC1123ValidCreateRequest creates the PutDateTimeRFC1123Valid request.
@@ -2754,14 +2717,6 @@ func (client *ArrayClient) PutDateTimeRFC1123ValidCreateRequest(ctx context.Cont
 		aux[i] = timeRFC1123(arrayBody[i])
 	}
 	return req, req.MarshalAsJSON(aux)
-}
-
-// PutDateTimeRFC1123ValidHandleResponse handles the PutDateTimeRFC1123Valid response.
-func (client *ArrayClient) PutDateTimeRFC1123ValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutDateTimeRFC1123ValidHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // PutDateTimeRFC1123ValidHandleError handles the PutDateTimeRFC1123Valid error response.
@@ -2783,11 +2738,10 @@ func (client *ArrayClient) PutDateTimeValid(ctx context.Context, arrayBody []tim
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutDateTimeValidHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutDateTimeValidHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PutDateTimeValidCreateRequest creates the PutDateTimeValid request.
@@ -2799,14 +2753,6 @@ func (client *ArrayClient) PutDateTimeValidCreateRequest(ctx context.Context, ar
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
-}
-
-// PutDateTimeValidHandleResponse handles the PutDateTimeValid response.
-func (client *ArrayClient) PutDateTimeValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutDateTimeValidHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // PutDateTimeValidHandleError handles the PutDateTimeValid error response.
@@ -2828,11 +2774,10 @@ func (client *ArrayClient) PutDateValid(ctx context.Context, arrayBody []time.Ti
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutDateValidHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutDateValidHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PutDateValidCreateRequest creates the PutDateValid request.
@@ -2844,14 +2789,6 @@ func (client *ArrayClient) PutDateValidCreateRequest(ctx context.Context, arrayB
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
-}
-
-// PutDateValidHandleResponse handles the PutDateValid response.
-func (client *ArrayClient) PutDateValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutDateValidHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // PutDateValidHandleError handles the PutDateValid error response.
@@ -2873,11 +2810,10 @@ func (client *ArrayClient) PutDictionaryValid(ctx context.Context, arrayBody []m
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutDictionaryValidHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutDictionaryValidHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PutDictionaryValidCreateRequest creates the PutDictionaryValid request.
@@ -2889,14 +2825,6 @@ func (client *ArrayClient) PutDictionaryValidCreateRequest(ctx context.Context, 
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
-}
-
-// PutDictionaryValidHandleResponse handles the PutDictionaryValid response.
-func (client *ArrayClient) PutDictionaryValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutDictionaryValidHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // PutDictionaryValidHandleError handles the PutDictionaryValid error response.
@@ -2918,11 +2846,10 @@ func (client *ArrayClient) PutDoubleValid(ctx context.Context, arrayBody []float
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutDoubleValidHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutDoubleValidHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PutDoubleValidCreateRequest creates the PutDoubleValid request.
@@ -2934,14 +2861,6 @@ func (client *ArrayClient) PutDoubleValidCreateRequest(ctx context.Context, arra
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
-}
-
-// PutDoubleValidHandleResponse handles the PutDoubleValid response.
-func (client *ArrayClient) PutDoubleValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutDoubleValidHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // PutDoubleValidHandleError handles the PutDoubleValid error response.
@@ -2963,11 +2882,10 @@ func (client *ArrayClient) PutDurationValid(ctx context.Context, arrayBody []str
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutDurationValidHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutDurationValidHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PutDurationValidCreateRequest creates the PutDurationValid request.
@@ -2979,14 +2897,6 @@ func (client *ArrayClient) PutDurationValidCreateRequest(ctx context.Context, ar
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
-}
-
-// PutDurationValidHandleResponse handles the PutDurationValid response.
-func (client *ArrayClient) PutDurationValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutDurationValidHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // PutDurationValidHandleError handles the PutDurationValid error response.
@@ -3008,11 +2918,10 @@ func (client *ArrayClient) PutEmpty(ctx context.Context, arrayBody []string) (*h
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutEmptyHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutEmptyHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PutEmptyCreateRequest creates the PutEmpty request.
@@ -3024,14 +2933,6 @@ func (client *ArrayClient) PutEmptyCreateRequest(ctx context.Context, arrayBody 
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
-}
-
-// PutEmptyHandleResponse handles the PutEmpty response.
-func (client *ArrayClient) PutEmptyHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutEmptyHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // PutEmptyHandleError handles the PutEmpty error response.
@@ -3053,11 +2954,10 @@ func (client *ArrayClient) PutEnumValid(ctx context.Context, arrayBody []FooEnum
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutEnumValidHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutEnumValidHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PutEnumValidCreateRequest creates the PutEnumValid request.
@@ -3069,14 +2969,6 @@ func (client *ArrayClient) PutEnumValidCreateRequest(ctx context.Context, arrayB
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
-}
-
-// PutEnumValidHandleResponse handles the PutEnumValid response.
-func (client *ArrayClient) PutEnumValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutEnumValidHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // PutEnumValidHandleError handles the PutEnumValid error response.
@@ -3098,11 +2990,10 @@ func (client *ArrayClient) PutFloatValid(ctx context.Context, arrayBody []float3
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutFloatValidHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutFloatValidHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PutFloatValidCreateRequest creates the PutFloatValid request.
@@ -3114,14 +3005,6 @@ func (client *ArrayClient) PutFloatValidCreateRequest(ctx context.Context, array
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
-}
-
-// PutFloatValidHandleResponse handles the PutFloatValid response.
-func (client *ArrayClient) PutFloatValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutFloatValidHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // PutFloatValidHandleError handles the PutFloatValid error response.
@@ -3143,11 +3026,10 @@ func (client *ArrayClient) PutIntegerValid(ctx context.Context, arrayBody []int3
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutIntegerValidHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutIntegerValidHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PutIntegerValidCreateRequest creates the PutIntegerValid request.
@@ -3159,14 +3041,6 @@ func (client *ArrayClient) PutIntegerValidCreateRequest(ctx context.Context, arr
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
-}
-
-// PutIntegerValidHandleResponse handles the PutIntegerValid response.
-func (client *ArrayClient) PutIntegerValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutIntegerValidHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // PutIntegerValidHandleError handles the PutIntegerValid error response.
@@ -3188,11 +3062,10 @@ func (client *ArrayClient) PutLongValid(ctx context.Context, arrayBody []int64) 
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutLongValidHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutLongValidHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PutLongValidCreateRequest creates the PutLongValid request.
@@ -3204,14 +3077,6 @@ func (client *ArrayClient) PutLongValidCreateRequest(ctx context.Context, arrayB
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
-}
-
-// PutLongValidHandleResponse handles the PutLongValid response.
-func (client *ArrayClient) PutLongValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutLongValidHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // PutLongValidHandleError handles the PutLongValid error response.
@@ -3233,11 +3098,10 @@ func (client *ArrayClient) PutStringEnumValid(ctx context.Context, arrayBody []E
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutStringEnumValidHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutStringEnumValidHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PutStringEnumValidCreateRequest creates the PutStringEnumValid request.
@@ -3249,14 +3113,6 @@ func (client *ArrayClient) PutStringEnumValidCreateRequest(ctx context.Context, 
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
-}
-
-// PutStringEnumValidHandleResponse handles the PutStringEnumValid response.
-func (client *ArrayClient) PutStringEnumValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutStringEnumValidHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // PutStringEnumValidHandleError handles the PutStringEnumValid error response.
@@ -3278,11 +3134,10 @@ func (client *ArrayClient) PutStringValid(ctx context.Context, arrayBody []strin
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutStringValidHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutStringValidHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PutStringValidCreateRequest creates the PutStringValid request.
@@ -3294,14 +3149,6 @@ func (client *ArrayClient) PutStringValidCreateRequest(ctx context.Context, arra
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
-}
-
-// PutStringValidHandleResponse handles the PutStringValid response.
-func (client *ArrayClient) PutStringValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutStringValidHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // PutStringValidHandleError handles the PutStringValid error response.
@@ -3323,11 +3170,10 @@ func (client *ArrayClient) PutUUIDValid(ctx context.Context, arrayBody []string)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutUUIDValidHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutUUIDValidHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PutUUIDValidCreateRequest creates the PutUUIDValid request.
@@ -3339,14 +3185,6 @@ func (client *ArrayClient) PutUUIDValidCreateRequest(ctx context.Context, arrayB
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
-}
-
-// PutUUIDValidHandleResponse handles the PutUUIDValid response.
-func (client *ArrayClient) PutUUIDValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutUUIDValidHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // PutUUIDValidHandleError handles the PutUUIDValid error response.

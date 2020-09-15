@@ -125,6 +125,9 @@ func (client *VirtualNetworkGatewaysClient) BeginCreateOrUpdate(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
+	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -174,9 +177,6 @@ func (client *VirtualNetworkGatewaysClient) CreateOrUpdateCreateRequest(ctx cont
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *VirtualNetworkGatewaysClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*VirtualNetworkGatewayPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
 	return &VirtualNetworkGatewayPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -199,6 +199,9 @@ func (client *VirtualNetworkGatewaysClient) BeginDelete(ctx context.Context, res
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -249,9 +252,6 @@ func (client *VirtualNetworkGatewaysClient) DeleteCreateRequest(ctx context.Cont
 
 // DeleteHandleResponse handles the Delete response.
 func (client *VirtualNetworkGatewaysClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -274,6 +274,9 @@ func (client *VirtualNetworkGatewaysClient) BeginDisconnectVirtualNetworkGateway
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.DisconnectVirtualNetworkGatewayVpnConnectionsHandleError(resp)
 	}
 	result, err := client.DisconnectVirtualNetworkGatewayVpnConnectionsHandleResponse(resp)
 	if err != nil {
@@ -324,9 +327,6 @@ func (client *VirtualNetworkGatewaysClient) DisconnectVirtualNetworkGatewayVpnCo
 
 // DisconnectVirtualNetworkGatewayVpnConnectionsHandleResponse handles the DisconnectVirtualNetworkGatewayVpnConnections response.
 func (client *VirtualNetworkGatewaysClient) DisconnectVirtualNetworkGatewayVpnConnectionsHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DisconnectVirtualNetworkGatewayVpnConnectionsHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -349,6 +349,9 @@ func (client *VirtualNetworkGatewaysClient) BeginGenerateVpnProfile(ctx context.
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.GenerateVpnProfileHandleError(resp)
 	}
 	result, err := client.GenerateVpnProfileHandleResponse(resp)
 	if err != nil {
@@ -399,9 +402,6 @@ func (client *VirtualNetworkGatewaysClient) GenerateVpnProfileCreateRequest(ctx 
 
 // GenerateVpnProfileHandleResponse handles the GenerateVpnProfile response.
 func (client *VirtualNetworkGatewaysClient) GenerateVpnProfileHandleResponse(resp *azcore.Response) (*StringPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.GenerateVpnProfileHandleError(resp)
-	}
 	return &StringPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -424,6 +424,9 @@ func (client *VirtualNetworkGatewaysClient) BeginGeneratevpnclientpackage(ctx co
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.GeneratevpnclientpackageHandleError(resp)
 	}
 	result, err := client.GeneratevpnclientpackageHandleResponse(resp)
 	if err != nil {
@@ -474,9 +477,6 @@ func (client *VirtualNetworkGatewaysClient) GeneratevpnclientpackageCreateReques
 
 // GeneratevpnclientpackageHandleResponse handles the Generatevpnclientpackage response.
 func (client *VirtualNetworkGatewaysClient) GeneratevpnclientpackageHandleResponse(resp *azcore.Response) (*StringPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.GeneratevpnclientpackageHandleError(resp)
-	}
 	return &StringPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -498,6 +498,9 @@ func (client *VirtualNetworkGatewaysClient) Get(ctx context.Context, resourceGro
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -525,9 +528,6 @@ func (client *VirtualNetworkGatewaysClient) GetCreateRequest(ctx context.Context
 
 // GetHandleResponse handles the Get response.
 func (client *VirtualNetworkGatewaysClient) GetHandleResponse(resp *azcore.Response) (*VirtualNetworkGatewayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
-	}
 	result := VirtualNetworkGatewayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualNetworkGateway)
 }
@@ -551,6 +551,9 @@ func (client *VirtualNetworkGatewaysClient) BeginGetAdvertisedRoutes(ctx context
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.GetAdvertisedRoutesHandleError(resp)
 	}
 	result, err := client.GetAdvertisedRoutesHandleResponse(resp)
 	if err != nil {
@@ -602,9 +605,6 @@ func (client *VirtualNetworkGatewaysClient) GetAdvertisedRoutesCreateRequest(ctx
 
 // GetAdvertisedRoutesHandleResponse handles the GetAdvertisedRoutes response.
 func (client *VirtualNetworkGatewaysClient) GetAdvertisedRoutesHandleResponse(resp *azcore.Response) (*GatewayRouteListResultPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.GetAdvertisedRoutesHandleError(resp)
-	}
 	return &GatewayRouteListResultPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -627,6 +627,9 @@ func (client *VirtualNetworkGatewaysClient) BeginGetBgpPeerStatus(ctx context.Co
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.GetBgpPeerStatusHandleError(resp)
 	}
 	result, err := client.GetBgpPeerStatusHandleResponse(resp)
 	if err != nil {
@@ -680,9 +683,6 @@ func (client *VirtualNetworkGatewaysClient) GetBgpPeerStatusCreateRequest(ctx co
 
 // GetBgpPeerStatusHandleResponse handles the GetBgpPeerStatus response.
 func (client *VirtualNetworkGatewaysClient) GetBgpPeerStatusHandleResponse(resp *azcore.Response) (*BgpPeerStatusListResultPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.GetBgpPeerStatusHandleError(resp)
-	}
 	return &BgpPeerStatusListResultPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -705,6 +705,9 @@ func (client *VirtualNetworkGatewaysClient) BeginGetLearnedRoutes(ctx context.Co
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.GetLearnedRoutesHandleError(resp)
 	}
 	result, err := client.GetLearnedRoutesHandleResponse(resp)
 	if err != nil {
@@ -755,9 +758,6 @@ func (client *VirtualNetworkGatewaysClient) GetLearnedRoutesCreateRequest(ctx co
 
 // GetLearnedRoutesHandleResponse handles the GetLearnedRoutes response.
 func (client *VirtualNetworkGatewaysClient) GetLearnedRoutesHandleResponse(resp *azcore.Response) (*GatewayRouteListResultPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.GetLearnedRoutesHandleError(resp)
-	}
 	return &GatewayRouteListResultPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -780,6 +780,9 @@ func (client *VirtualNetworkGatewaysClient) BeginGetVpnProfilePackageURL(ctx con
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.GetVpnProfilePackageURLHandleError(resp)
 	}
 	result, err := client.GetVpnProfilePackageURLHandleResponse(resp)
 	if err != nil {
@@ -830,9 +833,6 @@ func (client *VirtualNetworkGatewaysClient) GetVpnProfilePackageURLCreateRequest
 
 // GetVpnProfilePackageURLHandleResponse handles the GetVpnProfilePackageURL response.
 func (client *VirtualNetworkGatewaysClient) GetVpnProfilePackageURLHandleResponse(resp *azcore.Response) (*StringPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.GetVpnProfilePackageURLHandleError(resp)
-	}
 	return &StringPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -855,6 +855,9 @@ func (client *VirtualNetworkGatewaysClient) BeginGetVpnclientConnectionHealth(ct
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.GetVpnclientConnectionHealthHandleError(resp)
 	}
 	result, err := client.GetVpnclientConnectionHealthHandleResponse(resp)
 	if err != nil {
@@ -905,9 +908,6 @@ func (client *VirtualNetworkGatewaysClient) GetVpnclientConnectionHealthCreateRe
 
 // GetVpnclientConnectionHealthHandleResponse handles the GetVpnclientConnectionHealth response.
 func (client *VirtualNetworkGatewaysClient) GetVpnclientConnectionHealthHandleResponse(resp *azcore.Response) (*VpnClientConnectionHealthDetailListResultPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.GetVpnclientConnectionHealthHandleError(resp)
-	}
 	return &VpnClientConnectionHealthDetailListResultPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -930,6 +930,9 @@ func (client *VirtualNetworkGatewaysClient) BeginGetVpnclientIPsecParameters(ctx
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetVpnclientIPsecParametersHandleError(resp)
 	}
 	result, err := client.GetVpnclientIPsecParametersHandleResponse(resp)
 	if err != nil {
@@ -980,9 +983,6 @@ func (client *VirtualNetworkGatewaysClient) GetVpnclientIPsecParametersCreateReq
 
 // GetVpnclientIPsecParametersHandleResponse handles the GetVpnclientIPsecParameters response.
 func (client *VirtualNetworkGatewaysClient) GetVpnclientIPsecParametersHandleResponse(resp *azcore.Response) (*VpnClientIPsecParametersPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusNoContent) {
-		return nil, client.GetVpnclientIPsecParametersHandleError(resp)
-	}
 	return &VpnClientIPsecParametersPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -1003,6 +1003,7 @@ func (client *VirtualNetworkGatewaysClient) List(resourceGroupName string) Virtu
 			return client.ListCreateRequest(ctx, resourceGroupName)
 		},
 		responder: client.ListHandleResponse,
+		errorer:   client.ListHandleError,
 		advancer: func(ctx context.Context, resp *VirtualNetworkGatewayListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.VirtualNetworkGatewayListResult.NextLink)
 		},
@@ -1027,9 +1028,6 @@ func (client *VirtualNetworkGatewaysClient) ListCreateRequest(ctx context.Contex
 
 // ListHandleResponse handles the List response.
 func (client *VirtualNetworkGatewaysClient) ListHandleResponse(resp *azcore.Response) (*VirtualNetworkGatewayListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := VirtualNetworkGatewayListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualNetworkGatewayListResult)
 }
@@ -1051,6 +1049,7 @@ func (client *VirtualNetworkGatewaysClient) ListConnections(resourceGroupName st
 			return client.ListConnectionsCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName)
 		},
 		responder: client.ListConnectionsHandleResponse,
+		errorer:   client.ListConnectionsHandleError,
 		advancer: func(ctx context.Context, resp *VirtualNetworkGatewayListConnectionsResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.VirtualNetworkGatewayListConnectionsResult.NextLink)
 		},
@@ -1076,9 +1075,6 @@ func (client *VirtualNetworkGatewaysClient) ListConnectionsCreateRequest(ctx con
 
 // ListConnectionsHandleResponse handles the ListConnections response.
 func (client *VirtualNetworkGatewaysClient) ListConnectionsHandleResponse(resp *azcore.Response) (*VirtualNetworkGatewayListConnectionsResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListConnectionsHandleError(resp)
-	}
 	result := VirtualNetworkGatewayListConnectionsResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualNetworkGatewayListConnectionsResult)
 }
@@ -1102,6 +1098,9 @@ func (client *VirtualNetworkGatewaysClient) BeginReset(ctx context.Context, reso
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.ResetHandleError(resp)
 	}
 	result, err := client.ResetHandleResponse(resp)
 	if err != nil {
@@ -1155,9 +1154,6 @@ func (client *VirtualNetworkGatewaysClient) ResetCreateRequest(ctx context.Conte
 
 // ResetHandleResponse handles the Reset response.
 func (client *VirtualNetworkGatewaysClient) ResetHandleResponse(resp *azcore.Response) (*VirtualNetworkGatewayPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.ResetHandleError(resp)
-	}
 	return &VirtualNetworkGatewayPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -1180,6 +1176,9 @@ func (client *VirtualNetworkGatewaysClient) BeginResetVpnClientSharedKey(ctx con
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.ResetVpnClientSharedKeyHandleError(resp)
 	}
 	result, err := client.ResetVpnClientSharedKeyHandleResponse(resp)
 	if err != nil {
@@ -1230,9 +1229,6 @@ func (client *VirtualNetworkGatewaysClient) ResetVpnClientSharedKeyCreateRequest
 
 // ResetVpnClientSharedKeyHandleResponse handles the ResetVpnClientSharedKey response.
 func (client *VirtualNetworkGatewaysClient) ResetVpnClientSharedKeyHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.ResetVpnClientSharedKeyHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -1255,6 +1251,9 @@ func (client *VirtualNetworkGatewaysClient) BeginSetVpnclientIPsecParameters(ctx
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.SetVpnclientIPsecParametersHandleError(resp)
 	}
 	result, err := client.SetVpnclientIPsecParametersHandleResponse(resp)
 	if err != nil {
@@ -1305,9 +1304,6 @@ func (client *VirtualNetworkGatewaysClient) SetVpnclientIPsecParametersCreateReq
 
 // SetVpnclientIPsecParametersHandleResponse handles the SetVpnclientIPsecParameters response.
 func (client *VirtualNetworkGatewaysClient) SetVpnclientIPsecParametersHandleResponse(resp *azcore.Response) (*VpnClientIPsecParametersPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.SetVpnclientIPsecParametersHandleError(resp)
-	}
 	return &VpnClientIPsecParametersPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -1330,6 +1326,9 @@ func (client *VirtualNetworkGatewaysClient) BeginStartPacketCapture(ctx context.
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.StartPacketCaptureHandleError(resp)
 	}
 	result, err := client.StartPacketCaptureHandleResponse(resp)
 	if err != nil {
@@ -1383,9 +1382,6 @@ func (client *VirtualNetworkGatewaysClient) StartPacketCaptureCreateRequest(ctx 
 
 // StartPacketCaptureHandleResponse handles the StartPacketCapture response.
 func (client *VirtualNetworkGatewaysClient) StartPacketCaptureHandleResponse(resp *azcore.Response) (*StringPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.StartPacketCaptureHandleError(resp)
-	}
 	return &StringPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -1408,6 +1404,9 @@ func (client *VirtualNetworkGatewaysClient) BeginStopPacketCapture(ctx context.C
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.StopPacketCaptureHandleError(resp)
 	}
 	result, err := client.StopPacketCaptureHandleResponse(resp)
 	if err != nil {
@@ -1458,9 +1457,6 @@ func (client *VirtualNetworkGatewaysClient) StopPacketCaptureCreateRequest(ctx c
 
 // StopPacketCaptureHandleResponse handles the StopPacketCapture response.
 func (client *VirtualNetworkGatewaysClient) StopPacketCaptureHandleResponse(resp *azcore.Response) (*StringPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.StopPacketCaptureHandleError(resp)
-	}
 	return &StringPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -1482,6 +1478,9 @@ func (client *VirtualNetworkGatewaysClient) SupportedVpnDevices(ctx context.Cont
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.SupportedVpnDevicesHandleError(resp)
 	}
 	result, err := client.SupportedVpnDevicesHandleResponse(resp)
 	if err != nil {
@@ -1509,9 +1508,6 @@ func (client *VirtualNetworkGatewaysClient) SupportedVpnDevicesCreateRequest(ctx
 
 // SupportedVpnDevicesHandleResponse handles the SupportedVpnDevices response.
 func (client *VirtualNetworkGatewaysClient) SupportedVpnDevicesHandleResponse(resp *azcore.Response) (*StringResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.SupportedVpnDevicesHandleError(resp)
-	}
 	result := StringResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
@@ -1535,6 +1531,9 @@ func (client *VirtualNetworkGatewaysClient) BeginUpdateTags(ctx context.Context,
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.UpdateTagsHandleError(resp)
 	}
 	result, err := client.UpdateTagsHandleResponse(resp)
 	if err != nil {
@@ -1585,9 +1584,6 @@ func (client *VirtualNetworkGatewaysClient) UpdateTagsCreateRequest(ctx context.
 
 // UpdateTagsHandleResponse handles the UpdateTags response.
 func (client *VirtualNetworkGatewaysClient) UpdateTagsHandleResponse(resp *azcore.Response) (*VirtualNetworkGatewayPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.UpdateTagsHandleError(resp)
-	}
 	return &VirtualNetworkGatewayPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -1609,6 +1605,9 @@ func (client *VirtualNetworkGatewaysClient) VpnDeviceConfigurationScript(ctx con
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.VpnDeviceConfigurationScriptHandleError(resp)
 	}
 	result, err := client.VpnDeviceConfigurationScriptHandleResponse(resp)
 	if err != nil {
@@ -1636,9 +1635,6 @@ func (client *VirtualNetworkGatewaysClient) VpnDeviceConfigurationScriptCreateRe
 
 // VpnDeviceConfigurationScriptHandleResponse handles the VpnDeviceConfigurationScript response.
 func (client *VirtualNetworkGatewaysClient) VpnDeviceConfigurationScriptHandleResponse(resp *azcore.Response) (*StringResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.VpnDeviceConfigurationScriptHandleError(resp)
-	}
 	result := StringResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }

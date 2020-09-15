@@ -9,7 +9,7 @@ import { ArraySchema, ByteArraySchema, CodeModel, ConstantSchema, DateTimeSchema
 import { values } from '@azure-tools/linq';
 import { aggregateParameters, isArraySchema, isPageableOperation, isSchemaResponse, PagerInfo, isLROOperation } from '../common/helpers';
 import { OperationNaming } from '../transform/namer';
-import { contentPreamble, formatParameterTypeName, hasDescription, skipURLEncoding, sortAscending, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired } from './helpers';
+import { contentPreamble, formatParameterTypeName, formatStatusCodes, getStatusCodes, hasDescription, hasSchemaResponse, skipURLEncoding, sortAscending, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired } from './helpers';
 import { ImportManager } from './imports';
 
 // represents the generated content for an operation group
@@ -243,6 +243,10 @@ function generateOperation(op: Operation, imports: ImportManager, isDataPlane: b
     text += `\tif err != nil {\n`;
     text += `\t\treturn nil, err\n`;
     text += `\t}\n`;
+    const statusCodes = getStatusCodes(op);
+    text += `\tif !resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
+    text += `\t\treturn nil, client.${info.protocolNaming.errorMethod}(resp)\n`;
+    text += '\t}\n';
     if (!op.responses) {
       text += '\tresult := &HTTPResponse{\n';
       text += '\t\tresult.RawResponse: resp\n';
@@ -264,11 +268,26 @@ function generateOperation(op: Operation, imports: ImportManager, isDataPlane: b
     text += '\t\treturn nil, err\n';
     text += '\t}\n';
     text += `\tpoller := &${camelCase(op.language.go!.pollerType.name)}{\n`;
-    text += '\t\t\tpt: pt,\n';
+    text += '\t\tpt: pt,\n';
     if (isPageableOperation(op)) {
-      text += `\t\t\trespHandler: client.${camelCase(op.language.go!.pageableType.name)}HandleResponse,\n`;
+      if (statusCodes.indexOf('200') < 0) {
+        statusCodes.push('200');
+      }
+      if (statusCodes.indexOf('204') < 0) {
+        statusCodes.push('204');
+      }
+      statusCodes.sort();
+      text += `\t\terrHandler: func(resp *azcore.Response) error {\n`;
+      text += `\t\t\tif resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
+      text += `\t\t\t\treturn nil\n`;
+      text += '\t\t\t}\n';
+      text += `\t\t\treturn client.${info.protocolNaming.errorMethod}(resp)\n`;
+      text += '\t\t},\n';
+      text += `\t\trespHandler: func(resp *azcore.Response) (*${(<SchemaResponse>op.responses![0]).schema.language.go!.responseType.name}, error) {\n`;
+      text += generateResponseUnmarshaller(op.responses![0], false, imports);
+      text += '\t\t},\n';
     }
-    text += '\t\t\tpipeline: client.p,\n';
+    text += '\t\tpipeline: client.p,\n';
     text += '\t}\n';
     text += '\tresult.Poller = poller\n';
     // determine the poller response based on the name and whether is is a pageable operation
@@ -294,6 +313,7 @@ function generateOperation(op: Operation, imports: ImportManager, isDataPlane: b
     text += `\t\t\treturn client.${info.protocolNaming.requestMethod}(${reqParams.join(', ')})\n`;
     text += '\t\t},\n';
     text += `\t\tresponder: client.${info.protocolNaming.responseMethod},\n`;
+    text += `\t\terrorer:   client.${info.protocolNaming.errorMethod},\n`;
     const pager = <PagerInfo>op.language.go!.pageableType;
     const schemaResponse = <SchemaResponse>pager.op.responses![0];
     const nextLink = pager.op.language.go!.paging.nextLinkName;
@@ -334,12 +354,20 @@ function generateOperation(op: Operation, imports: ImportManager, isDataPlane: b
   text += `\tif err != nil {\n`;
   text += `\t\treturn nil, err\n`;
   text += `\t}\n`;
-  // also cheating here as at present the only param to the responder is an azcore.Response
-  text += `\tresult, err := client.${info.protocolNaming.responseMethod}(resp)\n`;
-  text += `\tif err != nil {\n`;
-  text += `\t\treturn nil, err\n`;
-  text += `\t}\n`;
-  text += `\treturn result, nil\n`;
+  const statusCodes = getStatusCodes(op);
+  text += `\tif !resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
+  text += `\t\treturn nil, client.${info.protocolNaming.errorMethod}(resp)\n`;
+  text += '\t}\n';
+  if (needsResponseHandler(op)) {
+    // also cheating here as at present the only param to the responder is an azcore.Response
+    text += `\tresult, err := client.${info.protocolNaming.responseMethod}(resp)\n`;
+    text += `\tif err != nil {\n`;
+    text += `\t\treturn nil, err\n`;
+    text += `\t}\n`;
+    text += `\treturn result, nil\n`;
+  } else {
+    text += '\treturn resp.Response, nil\n';
+  }
   text += '}\n\n';
   return text;
 }
@@ -632,126 +660,99 @@ function isArrayOfTimesForMarshalling(schema: Schema): boolean {
   return (<DateTimeSchema>arrayElem).format === 'date-time-rfc1123';
 }
 
+function needsResponseHandler(op: Operation): boolean {
+  return hasSchemaResponse(op) || isLROOperation(op) || isPageableOperation(op);
+}
+
+function generateResponseUnmarshaller(response: Response, isLRO: boolean, imports: ImportManager): string {
+  let unmarshallerText = '';
+  if (!isSchemaResponse(response)) {
+    if (isLRO) {
+      unmarshallerText += '\treturn &HTTPPollerResponse{RawResponse: resp.Response}, nil\n';
+      return unmarshallerText;
+    }
+    throw console.error('TODO');
+  } else if (response.schema.type === SchemaType.DateTime || response.schema.type === SchemaType.UnixTime) {
+    // use the designated time type for unmarshalling
+    unmarshallerText += `\tvar aux *${response.schema.language.go!.internalTimeType}\n`;
+    unmarshallerText += `\terr := resp.UnmarshalAs${getMediaType(response.protocol)}(&aux)\n`;
+    const resp = `${response.schema.language.go!.responseType.name}{RawResponse: resp.Response, ${response.schema.language.go!.responseType.value}: (*time.Time)(aux)}`;
+    unmarshallerText += `\treturn &${resp}, err\n`;
+    return unmarshallerText;
+  } else if (isArrayOfDateTime(response.schema)) {
+    // unmarshalling arrays of date/time is a little more involved
+    unmarshallerText += `\tvar aux *[]${(<ArraySchema>response.schema).elementType.language.go!.internalTimeType}\n`;
+    unmarshallerText += `\tif err := resp.UnmarshalAs${getMediaType(response.protocol)}(&aux); err != nil {\n`;
+    unmarshallerText += '\t\treturn nil, err\n';
+    unmarshallerText += '\t}\n';
+    unmarshallerText += '\tcp := make([]time.Time, len(*aux), len(*aux))\n';
+    unmarshallerText += '\tfor i := 0; i < len(*aux); i++ {\n';
+    unmarshallerText += '\t\tcp[i] = time.Time((*aux)[i])\n';
+    unmarshallerText += '\t}\n';
+    const resp = `${response.schema.language.go!.responseType.name}{RawResponse: resp.Response, ${response.schema.language.go!.responseType.value}: &cp}`;
+    unmarshallerText += `\treturn &${resp}, nil\n`;
+    return unmarshallerText;
+  } else if (isMapOfDateTime(response.schema)) {
+    unmarshallerText += `\taux := map[string]${(<DictionarySchema>response.schema).elementType.language.go!.internalTimeType}{}\n`;
+    unmarshallerText += `\tif err := resp.UnmarshalAs${getMediaType(response.protocol)}(&aux); err != nil {\n`;
+    unmarshallerText += '\t\treturn nil, err\n';
+    unmarshallerText += '\t}\n';
+    unmarshallerText += `\tcp := map[string]time.Time{}\n`;
+    unmarshallerText += `\tfor k, v := range aux {\n`;
+    unmarshallerText += `\t\tcp[k] = time.Time(v)\n`;
+    unmarshallerText += `\t}\n`;
+    const resp = `${response.schema.language.go!.responseType.name}{RawResponse: resp.Response, ${response.schema.language.go!.responseType.value}: &cp}`;
+    unmarshallerText += `\treturn &${resp}, nil\n`;
+    return unmarshallerText;
+  }
+  const schemaResponse = <SchemaResponse>response;
+  if (isLRO) {
+    unmarshallerText += `\treturn &${schemaResponse.schema.language.go!.lroResponseType.language.go!.name}{RawResponse: resp.Response}, nil\n`;
+    return unmarshallerText;
+  }
+  let respObj = `${schemaResponse.schema.language.go!.responseType.name}{RawResponse: resp.Response}`;
+  unmarshallerText += `\tresult := ${respObj}\n`;
+  // assign any header values
+  for (const prop of values(<Array<Property>>schemaResponse.schema.language.go!.properties)) {
+    if (prop.language.go!.fromHeader) {
+      unmarshallerText += formatHeaderResponseValue(prop.language.go!.name, prop.language.go!.fromHeader, prop.schema, imports, 'result');
+    }
+  }
+  const mediaType = getMediaType(response.protocol);
+  if (mediaType === 'JSON' || mediaType === 'XML') {
+    let target = `result.${schemaResponse.schema.language.go!.responseType.value}`;
+    // when unmarshalling a wrapped XML array or discriminated type, unmarshal into the response type, not the field
+    if ((mediaType === 'XML' && schemaResponse.schema.type === SchemaType.Array) || schemaResponse.schema.language.go!.discriminatorInterface) {
+      target = 'result';
+    }
+    unmarshallerText += `\treturn &result, resp.UnmarshalAs${getMediaFormat(response.schema, mediaType, `&${target}`)}\n`;
+    return unmarshallerText;
+  }
+  // nothing to unmarshal
+  unmarshallerText += '\treturn &result, nil\n';
+  return unmarshallerText;
+}
+
 function createProtocolResponse(op: Operation, imports: ImportManager): string {
+  if (!needsResponseHandler(op)) {
+    return '';
+  }
   const info = <OperationNaming>op.language.go!;
   const name = info.protocolNaming.responseMethod;
   const clientName = op.language.go!.clientName;
   let text = `${comment(name, '// ')} handles the ${info.name} response.\n`;
   text += `func (client *${clientName}) ${name}(resp *azcore.Response) (${generateReturnsInfo(op, true).join(', ')}) {\n`;
-  if (!op.responses) {
-    text += `\treturn nil, client.${info.protocolNaming.errorMethod}(resp)`;
-    text += '}\n\n';
-    return text;
-  }
-  const generateResponseUnmarshaller = function (response: Response, isLRO: boolean): string {
-    let unmarshallerText = '';
-    if (!isSchemaResponse(response)) {
-      if (isLRO) {
-        unmarshallerText += '\treturn &HTTPPollerResponse{RawResponse: resp.Response}, nil\n';
-        return unmarshallerText;
-      }
-      // no response body, return the *http.Response
-      unmarshallerText += `\treturn resp.Response, nil\n`;
-      return unmarshallerText;
-    } else if (response.schema.type === SchemaType.DateTime || response.schema.type === SchemaType.UnixTime) {
-      // use the designated time type for unmarshalling
-      unmarshallerText += `\tvar aux *${response.schema.language.go!.internalTimeType}\n`;
-      unmarshallerText += `\terr := resp.UnmarshalAs${getMediaType(response.protocol)}(&aux)\n`;
-      const resp = `${response.schema.language.go!.responseType.name}{RawResponse: resp.Response, ${response.schema.language.go!.responseType.value}: (*time.Time)(aux)}`;
-      unmarshallerText += `\treturn &${resp}, err\n`;
-      return unmarshallerText;
-    } else if (isArrayOfDateTime(response.schema)) {
-      // unmarshalling arrays of date/time is a little more involved
-      unmarshallerText += `\tvar aux *[]${(<ArraySchema>response.schema).elementType.language.go!.internalTimeType}\n`;
-      unmarshallerText += `\tif err := resp.UnmarshalAs${getMediaType(response.protocol)}(&aux); err != nil {\n`;
-      unmarshallerText += '\t\treturn nil, err\n';
-      unmarshallerText += '\t}\n';
-      unmarshallerText += '\tcp := make([]time.Time, len(*aux), len(*aux))\n';
-      unmarshallerText += '\tfor i := 0; i < len(*aux); i++ {\n';
-      unmarshallerText += '\t\tcp[i] = time.Time((*aux)[i])\n';
-      unmarshallerText += '\t}\n';
-      const resp = `${response.schema.language.go!.responseType.name}{RawResponse: resp.Response, ${response.schema.language.go!.responseType.value}: &cp}`;
-      unmarshallerText += `\treturn &${resp}, nil\n`;
-      return unmarshallerText;
-    } else if (isMapOfDateTime(response.schema)) {
-      unmarshallerText += `\taux := map[string]${(<DictionarySchema>response.schema).elementType.language.go!.internalTimeType}{}\n`;
-      unmarshallerText += `\tif err := resp.UnmarshalAs${getMediaType(response.protocol)}(&aux); err != nil {\n`;
-      unmarshallerText += '\t\treturn nil, err\n';
-      unmarshallerText += '\t}\n';
-      unmarshallerText += `\tcp := map[string]time.Time{}\n`;
-      unmarshallerText += `\tfor k, v := range aux {\n`;
-      unmarshallerText += `\t\tcp[k] = time.Time(v)\n`;
-      unmarshallerText += `\t}\n`;
-      const resp = `${response.schema.language.go!.responseType.name}{RawResponse: resp.Response, ${response.schema.language.go!.responseType.value}: &cp}`;
-      unmarshallerText += `\treturn &${resp}, nil\n`;
-      return unmarshallerText;
-    }
-    const schemaResponse = <SchemaResponse>response;
-    if (isLRO) {
-      unmarshallerText += `\treturn &${schemaResponse.schema.language.go!.lroResponseType.language.go!.name}{RawResponse: resp.Response}, nil\n`;
-      return unmarshallerText;
-    }
-    let respObj = `${schemaResponse.schema.language.go!.responseType.name}{RawResponse: resp.Response}`;
-    unmarshallerText += `\tresult := ${respObj}\n`;
-    // assign any header values
-    for (const prop of values(<Array<Property>>schemaResponse.schema.language.go!.properties)) {
-      if (prop.language.go!.fromHeader) {
-        unmarshallerText += formatHeaderResponseValue(prop.language.go!.name, prop.language.go!.fromHeader, prop.schema, imports, 'result');
-      }
-    }
-    const mediaType = getMediaType(response.protocol);
-    if (mediaType === 'JSON' || mediaType === 'XML') {
-      let target = `result.${schemaResponse.schema.language.go!.responseType.value}`;
-      // when unmarshalling a wrapped XML array or discriminated type, unmarshal into the response type, not the field
-      if ((mediaType === 'XML' && schemaResponse.schema.type === SchemaType.Array) || schemaResponse.schema.language.go!.discriminatorInterface) {
-        target = 'result';
-      }
-      unmarshallerText += `\treturn &result, resp.UnmarshalAs${getMediaFormat(response.schema, mediaType, `&${target}`)}\n`;
-      return unmarshallerText;
-    }
-    // nothing to unmarshal
-    unmarshallerText += '\treturn &result, nil\n';
-    return unmarshallerText;
-  };
   if (!isMultiRespOperation(op)) {
-    // concat all status codes that return the same schema into one array.
-    // this is to support operations that specify multiple response codes
-    // that return the same schema (or no schema).
-    let statusCodes = new Array<string>();
-    for (let i = 0; i < op.responses.length; ++i) {
-      statusCodes = statusCodes.concat(op.responses[i].protocol.http?.statusCodes);
-    }
-    if (isLROOperation(op) && statusCodes.find(element => element === '204') === undefined) {
-      statusCodes = statusCodes.concat('204');
-    }
-    text += `\tif !resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
-    text += `\t\treturn nil, client.${info.protocolNaming.errorMethod}(resp)\n`;
-    text += '\t}\n';
-    if (isLROOperation(op) && isPageableOperation(op)) {
-      text += generateResponseUnmarshaller(op.responses![0], true);
-      text += '}\n\n';
-      text += `${comment(name, '// ')} handles the ${info.name} response.\n`;
-      text += `func (client *${clientName}) ${camelCase(op.language.go!.pageableType.name)}HandleResponse(resp *azcore.Response) (*${(<SchemaResponse>op.responses![0]).schema.language.go!.responseType.value}Response, error) {\n`;
-      const index = statusCodes.indexOf('204');
-      if (index > -1) {
-        statusCodes.splice(index, 1);
-      }
-      statusCodes.push('200');
-      text += `\tif !resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
-      text += `\t\treturn nil, client.${info.protocolNaming.errorMethod}(resp)\n`;
-      text += '\t}\n';
-      text += generateResponseUnmarshaller(op.responses![0], false);
-    } else {
-      text += generateResponseUnmarshaller(op.responses![0], isLROOperation(op));
-    }
+    text += generateResponseUnmarshaller(op.responses![0], isLROOperation(op), imports);
   } else {
+    imports.add('fmt');
     text += '\tswitch resp.StatusCode {\n';
     for (const response of values(op.responses)) {
       text += `\tcase ${formatStatusCodes(response.protocol.http!.statusCodes)}:\n`
-      text += generateResponseUnmarshaller(response, isLROOperation(op));
+      text += generateResponseUnmarshaller(response, isLROOperation(op), imports);
     }
     text += '\tdefault:\n';
-    text += `\t\treturn nil, client.${info.protocolNaming.errorMethod}(resp)\n`;
+    text += `\t\treturn nil, fmt.Errorf("unhandled HTTP status code %d", resp.StatusCode)\n`;
     text += '\t}\n';
   }
   text += '}\n\n';
@@ -763,7 +764,6 @@ function createProtocolErrHandler(op: Operation, imports: ImportManager): string
   const name = info.protocolNaming.errorMethod;
   let text = `${comment(name, '// ')} handles the ${info.name} error response.\n`;
   text += `func (client *${op.language.go!.clientName}) ${name}(resp *azcore.Response) error {\n`;
-
   // define a generic error for when there are no exceptions or no error schema
   const generateGenericError = function () {
     imports.add('errors');
@@ -915,53 +915,6 @@ function formatConstantValue(schema: ConstantSchema) {
     return `"${schema.value.value}"`;
   }
   return schema.value.value;
-}
-
-function formatStatusCodes(statusCodes: Array<string>): string {
-  const asHTTPStatus = new Array<string>();
-  for (const rawCode of values(statusCodes)) {
-    asHTTPStatus.push(formatStatusCode(rawCode));
-  }
-  return asHTTPStatus.join(', ');
-}
-
-function formatStatusCode(statusCode: string): string {
-  switch (statusCode) {
-    case '200':
-      return 'http.StatusOK';
-    case '201':
-      return 'http.StatusCreated';
-    case '202':
-      return 'http.StatusAccepted';
-    case '204':
-      return 'http.StatusNoContent';
-    case '206':
-      return 'http.StatusPartialContent';
-    case '300':
-      return 'http.StatusMultipleChoices';
-    case '301':
-      return 'http.StatusMovedPermanently';
-    case '302':
-      return 'http.StatusFound';
-    case '303':
-      return 'http.StatusSeeOther';
-    case '304':
-      return 'http.StatusNotModified';
-    case '307':
-      return 'http.StatusTemporaryRedirect';
-    case '400':
-      return 'http.StatusBadRequest';
-    case '404':
-      return 'http.StatusNotFound';
-    case '409':
-      return 'http.StatusConflict';
-    case '500':
-      return 'http.StatusInternalServerError';
-    case '501':
-      return 'http.StatusNotImplemented';
-    default:
-      throw console.error(`unhandled status code ${statusCode}`);
-  }
 }
 
 // returns true if any responses are a binary stream

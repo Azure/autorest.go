@@ -99,11 +99,10 @@ func (client *PathsClient) ArrayCSVInPath(ctx context.Context, arrayPath []strin
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ArrayCSVInPathHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ArrayCSVInPathHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // ArrayCSVInPathCreateRequest creates the ArrayCSVInPath request.
@@ -116,14 +115,6 @@ func (client *PathsClient) ArrayCSVInPathCreateRequest(ctx context.Context, arra
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// ArrayCSVInPathHandleResponse handles the ArrayCSVInPath response.
-func (client *PathsClient) ArrayCSVInPathHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ArrayCSVInPathHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // ArrayCSVInPathHandleError handles the ArrayCSVInPath error response.
@@ -145,11 +136,10 @@ func (client *PathsClient) Base64URL(ctx context.Context, base64UrlPath []byte) 
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.Base64URLHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.Base64URLHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // Base64URLCreateRequest creates the Base64URL request.
@@ -162,14 +152,6 @@ func (client *PathsClient) Base64URLCreateRequest(ctx context.Context, base64Url
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// Base64URLHandleResponse handles the Base64URL response.
-func (client *PathsClient) Base64URLHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.Base64URLHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // Base64URLHandleError handles the Base64URL error response.
@@ -191,11 +173,10 @@ func (client *PathsClient) ByteEmpty(ctx context.Context) (*http.Response, error
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ByteEmptyHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ByteEmptyHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // ByteEmptyCreateRequest creates the ByteEmpty request.
@@ -208,14 +189,6 @@ func (client *PathsClient) ByteEmptyCreateRequest(ctx context.Context) (*azcore.
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// ByteEmptyHandleResponse handles the ByteEmpty response.
-func (client *PathsClient) ByteEmptyHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ByteEmptyHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // ByteEmptyHandleError handles the ByteEmpty error response.
@@ -237,11 +210,10 @@ func (client *PathsClient) ByteMultiByte(ctx context.Context, bytePath []byte) (
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ByteMultiByteHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ByteMultiByteHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // ByteMultiByteCreateRequest creates the ByteMultiByte request.
@@ -254,14 +226,6 @@ func (client *PathsClient) ByteMultiByteCreateRequest(ctx context.Context, byteP
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// ByteMultiByteHandleResponse handles the ByteMultiByte response.
-func (client *PathsClient) ByteMultiByteHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ByteMultiByteHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // ByteMultiByteHandleError handles the ByteMultiByte error response.
@@ -283,11 +247,10 @@ func (client *PathsClient) ByteNull(ctx context.Context, bytePath []byte) (*http
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ByteNullHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusBadRequest) {
+		return nil, client.ByteNullHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // ByteNullCreateRequest creates the ByteNull request.
@@ -300,14 +263,6 @@ func (client *PathsClient) ByteNullCreateRequest(ctx context.Context, bytePath [
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// ByteNullHandleResponse handles the ByteNull response.
-func (client *PathsClient) ByteNullHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusBadRequest) {
-		return nil, client.ByteNullHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // ByteNullHandleError handles the ByteNull error response.
@@ -329,11 +284,10 @@ func (client *PathsClient) DateNull(ctx context.Context, datePath time.Time) (*h
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DateNullHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusBadRequest) {
+		return nil, client.DateNullHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // DateNullCreateRequest creates the DateNull request.
@@ -346,14 +300,6 @@ func (client *PathsClient) DateNullCreateRequest(ctx context.Context, datePath t
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DateNullHandleResponse handles the DateNull response.
-func (client *PathsClient) DateNullHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusBadRequest) {
-		return nil, client.DateNullHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // DateNullHandleError handles the DateNull error response.
@@ -375,11 +321,10 @@ func (client *PathsClient) DateTimeNull(ctx context.Context, dateTimePath time.T
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DateTimeNullHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusBadRequest) {
+		return nil, client.DateTimeNullHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // DateTimeNullCreateRequest creates the DateTimeNull request.
@@ -392,14 +337,6 @@ func (client *PathsClient) DateTimeNullCreateRequest(ctx context.Context, dateTi
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DateTimeNullHandleResponse handles the DateTimeNull response.
-func (client *PathsClient) DateTimeNullHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusBadRequest) {
-		return nil, client.DateTimeNullHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // DateTimeNullHandleError handles the DateTimeNull error response.
@@ -421,11 +358,10 @@ func (client *PathsClient) DateTimeValid(ctx context.Context) (*http.Response, e
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DateTimeValidHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.DateTimeValidHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // DateTimeValidCreateRequest creates the DateTimeValid request.
@@ -438,14 +374,6 @@ func (client *PathsClient) DateTimeValidCreateRequest(ctx context.Context) (*azc
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DateTimeValidHandleResponse handles the DateTimeValid response.
-func (client *PathsClient) DateTimeValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.DateTimeValidHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // DateTimeValidHandleError handles the DateTimeValid error response.
@@ -467,11 +395,10 @@ func (client *PathsClient) DateValid(ctx context.Context) (*http.Response, error
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DateValidHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.DateValidHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // DateValidCreateRequest creates the DateValid request.
@@ -484,14 +411,6 @@ func (client *PathsClient) DateValidCreateRequest(ctx context.Context) (*azcore.
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DateValidHandleResponse handles the DateValid response.
-func (client *PathsClient) DateValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.DateValidHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // DateValidHandleError handles the DateValid error response.
@@ -513,11 +432,10 @@ func (client *PathsClient) DoubleDecimalNegative(ctx context.Context) (*http.Res
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DoubleDecimalNegativeHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.DoubleDecimalNegativeHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // DoubleDecimalNegativeCreateRequest creates the DoubleDecimalNegative request.
@@ -530,14 +448,6 @@ func (client *PathsClient) DoubleDecimalNegativeCreateRequest(ctx context.Contex
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DoubleDecimalNegativeHandleResponse handles the DoubleDecimalNegative response.
-func (client *PathsClient) DoubleDecimalNegativeHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.DoubleDecimalNegativeHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // DoubleDecimalNegativeHandleError handles the DoubleDecimalNegative error response.
@@ -559,11 +469,10 @@ func (client *PathsClient) DoubleDecimalPositive(ctx context.Context) (*http.Res
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DoubleDecimalPositiveHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.DoubleDecimalPositiveHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // DoubleDecimalPositiveCreateRequest creates the DoubleDecimalPositive request.
@@ -576,14 +485,6 @@ func (client *PathsClient) DoubleDecimalPositiveCreateRequest(ctx context.Contex
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DoubleDecimalPositiveHandleResponse handles the DoubleDecimalPositive response.
-func (client *PathsClient) DoubleDecimalPositiveHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.DoubleDecimalPositiveHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // DoubleDecimalPositiveHandleError handles the DoubleDecimalPositive error response.
@@ -605,11 +506,10 @@ func (client *PathsClient) EnumNull(ctx context.Context, enumPath URIColor) (*ht
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.EnumNullHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusBadRequest) {
+		return nil, client.EnumNullHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // EnumNullCreateRequest creates the EnumNull request.
@@ -622,14 +522,6 @@ func (client *PathsClient) EnumNullCreateRequest(ctx context.Context, enumPath U
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// EnumNullHandleResponse handles the EnumNull response.
-func (client *PathsClient) EnumNullHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusBadRequest) {
-		return nil, client.EnumNullHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // EnumNullHandleError handles the EnumNull error response.
@@ -651,11 +543,10 @@ func (client *PathsClient) EnumValid(ctx context.Context, enumPath URIColor) (*h
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.EnumValidHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.EnumValidHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // EnumValidCreateRequest creates the EnumValid request.
@@ -668,14 +559,6 @@ func (client *PathsClient) EnumValidCreateRequest(ctx context.Context, enumPath 
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// EnumValidHandleResponse handles the EnumValid response.
-func (client *PathsClient) EnumValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.EnumValidHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // EnumValidHandleError handles the EnumValid error response.
@@ -697,11 +580,10 @@ func (client *PathsClient) FloatScientificNegative(ctx context.Context) (*http.R
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.FloatScientificNegativeHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.FloatScientificNegativeHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // FloatScientificNegativeCreateRequest creates the FloatScientificNegative request.
@@ -714,14 +596,6 @@ func (client *PathsClient) FloatScientificNegativeCreateRequest(ctx context.Cont
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// FloatScientificNegativeHandleResponse handles the FloatScientificNegative response.
-func (client *PathsClient) FloatScientificNegativeHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.FloatScientificNegativeHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // FloatScientificNegativeHandleError handles the FloatScientificNegative error response.
@@ -743,11 +617,10 @@ func (client *PathsClient) FloatScientificPositive(ctx context.Context) (*http.R
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.FloatScientificPositiveHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.FloatScientificPositiveHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // FloatScientificPositiveCreateRequest creates the FloatScientificPositive request.
@@ -760,14 +633,6 @@ func (client *PathsClient) FloatScientificPositiveCreateRequest(ctx context.Cont
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// FloatScientificPositiveHandleResponse handles the FloatScientificPositive response.
-func (client *PathsClient) FloatScientificPositiveHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.FloatScientificPositiveHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // FloatScientificPositiveHandleError handles the FloatScientificPositive error response.
@@ -789,11 +654,10 @@ func (client *PathsClient) GetBooleanFalse(ctx context.Context) (*http.Response,
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetBooleanFalseHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetBooleanFalseHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // GetBooleanFalseCreateRequest creates the GetBooleanFalse request.
@@ -806,14 +670,6 @@ func (client *PathsClient) GetBooleanFalseCreateRequest(ctx context.Context) (*a
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// GetBooleanFalseHandleResponse handles the GetBooleanFalse response.
-func (client *PathsClient) GetBooleanFalseHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetBooleanFalseHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // GetBooleanFalseHandleError handles the GetBooleanFalse error response.
@@ -835,11 +691,10 @@ func (client *PathsClient) GetBooleanTrue(ctx context.Context) (*http.Response, 
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetBooleanTrueHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetBooleanTrueHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // GetBooleanTrueCreateRequest creates the GetBooleanTrue request.
@@ -852,14 +707,6 @@ func (client *PathsClient) GetBooleanTrueCreateRequest(ctx context.Context) (*az
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// GetBooleanTrueHandleResponse handles the GetBooleanTrue response.
-func (client *PathsClient) GetBooleanTrueHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetBooleanTrueHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // GetBooleanTrueHandleError handles the GetBooleanTrue error response.
@@ -881,11 +728,10 @@ func (client *PathsClient) GetIntNegativeOneMillion(ctx context.Context) (*http.
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetIntNegativeOneMillionHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetIntNegativeOneMillionHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // GetIntNegativeOneMillionCreateRequest creates the GetIntNegativeOneMillion request.
@@ -898,14 +744,6 @@ func (client *PathsClient) GetIntNegativeOneMillionCreateRequest(ctx context.Con
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// GetIntNegativeOneMillionHandleResponse handles the GetIntNegativeOneMillion response.
-func (client *PathsClient) GetIntNegativeOneMillionHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetIntNegativeOneMillionHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // GetIntNegativeOneMillionHandleError handles the GetIntNegativeOneMillion error response.
@@ -927,11 +765,10 @@ func (client *PathsClient) GetIntOneMillion(ctx context.Context) (*http.Response
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetIntOneMillionHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetIntOneMillionHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // GetIntOneMillionCreateRequest creates the GetIntOneMillion request.
@@ -944,14 +781,6 @@ func (client *PathsClient) GetIntOneMillionCreateRequest(ctx context.Context) (*
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// GetIntOneMillionHandleResponse handles the GetIntOneMillion response.
-func (client *PathsClient) GetIntOneMillionHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetIntOneMillionHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // GetIntOneMillionHandleError handles the GetIntOneMillion error response.
@@ -973,11 +802,10 @@ func (client *PathsClient) GetNegativeTenBillion(ctx context.Context) (*http.Res
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetNegativeTenBillionHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetNegativeTenBillionHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // GetNegativeTenBillionCreateRequest creates the GetNegativeTenBillion request.
@@ -990,14 +818,6 @@ func (client *PathsClient) GetNegativeTenBillionCreateRequest(ctx context.Contex
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// GetNegativeTenBillionHandleResponse handles the GetNegativeTenBillion response.
-func (client *PathsClient) GetNegativeTenBillionHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetNegativeTenBillionHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // GetNegativeTenBillionHandleError handles the GetNegativeTenBillion error response.
@@ -1019,11 +839,10 @@ func (client *PathsClient) GetTenBillion(ctx context.Context) (*http.Response, e
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetTenBillionHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetTenBillionHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // GetTenBillionCreateRequest creates the GetTenBillion request.
@@ -1036,14 +855,6 @@ func (client *PathsClient) GetTenBillionCreateRequest(ctx context.Context) (*azc
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// GetTenBillionHandleResponse handles the GetTenBillion response.
-func (client *PathsClient) GetTenBillionHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetTenBillionHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // GetTenBillionHandleError handles the GetTenBillion error response.
@@ -1065,11 +876,10 @@ func (client *PathsClient) StringEmpty(ctx context.Context) (*http.Response, err
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.StringEmptyHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.StringEmptyHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // StringEmptyCreateRequest creates the StringEmpty request.
@@ -1082,14 +892,6 @@ func (client *PathsClient) StringEmptyCreateRequest(ctx context.Context) (*azcor
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// StringEmptyHandleResponse handles the StringEmpty response.
-func (client *PathsClient) StringEmptyHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.StringEmptyHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // StringEmptyHandleError handles the StringEmpty error response.
@@ -1111,11 +913,10 @@ func (client *PathsClient) StringNull(ctx context.Context, stringPath string) (*
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.StringNullHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusBadRequest) {
+		return nil, client.StringNullHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // StringNullCreateRequest creates the StringNull request.
@@ -1128,14 +929,6 @@ func (client *PathsClient) StringNullCreateRequest(ctx context.Context, stringPa
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// StringNullHandleResponse handles the StringNull response.
-func (client *PathsClient) StringNullHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusBadRequest) {
-		return nil, client.StringNullHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // StringNullHandleError handles the StringNull error response.
@@ -1157,11 +950,10 @@ func (client *PathsClient) StringURLEncoded(ctx context.Context) (*http.Response
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.StringURLEncodedHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.StringURLEncodedHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // StringURLEncodedCreateRequest creates the StringURLEncoded request.
@@ -1174,14 +966,6 @@ func (client *PathsClient) StringURLEncodedCreateRequest(ctx context.Context) (*
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// StringURLEncodedHandleResponse handles the StringURLEncoded response.
-func (client *PathsClient) StringURLEncodedHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.StringURLEncodedHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // StringURLEncodedHandleError handles the StringURLEncoded error response.
@@ -1203,11 +987,10 @@ func (client *PathsClient) StringURLNonEncoded(ctx context.Context) (*http.Respo
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.StringURLNonEncodedHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.StringURLNonEncodedHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // StringURLNonEncodedCreateRequest creates the StringURLNonEncoded request.
@@ -1220,14 +1003,6 @@ func (client *PathsClient) StringURLNonEncodedCreateRequest(ctx context.Context)
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// StringURLNonEncodedHandleResponse handles the StringURLNonEncoded response.
-func (client *PathsClient) StringURLNonEncodedHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.StringURLNonEncodedHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // StringURLNonEncodedHandleError handles the StringURLNonEncoded error response.
@@ -1249,11 +1024,10 @@ func (client *PathsClient) StringUnicode(ctx context.Context) (*http.Response, e
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.StringUnicodeHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.StringUnicodeHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // StringUnicodeCreateRequest creates the StringUnicode request.
@@ -1266,14 +1040,6 @@ func (client *PathsClient) StringUnicodeCreateRequest(ctx context.Context) (*azc
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// StringUnicodeHandleResponse handles the StringUnicode response.
-func (client *PathsClient) StringUnicodeHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.StringUnicodeHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // StringUnicodeHandleError handles the StringUnicode error response.
@@ -1295,11 +1061,10 @@ func (client *PathsClient) UnixTimeURL(ctx context.Context, unixTimeUrlPath time
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.UnixTimeURLHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.UnixTimeURLHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // UnixTimeURLCreateRequest creates the UnixTimeURL request.
@@ -1312,14 +1077,6 @@ func (client *PathsClient) UnixTimeURLCreateRequest(ctx context.Context, unixTim
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// UnixTimeURLHandleResponse handles the UnixTimeURL response.
-func (client *PathsClient) UnixTimeURLHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.UnixTimeURLHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // UnixTimeURLHandleError handles the UnixTimeURL error response.

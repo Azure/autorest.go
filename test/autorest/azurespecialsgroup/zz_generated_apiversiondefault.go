@@ -49,11 +49,10 @@ func (client *APIVersionDefaultClient) GetMethodGlobalNotProvidedValid(ctx conte
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetMethodGlobalNotProvidedValidHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetMethodGlobalNotProvidedValidHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // GetMethodGlobalNotProvidedValidCreateRequest creates the GetMethodGlobalNotProvidedValid request.
@@ -68,14 +67,6 @@ func (client *APIVersionDefaultClient) GetMethodGlobalNotProvidedValidCreateRequ
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// GetMethodGlobalNotProvidedValidHandleResponse handles the GetMethodGlobalNotProvidedValid response.
-func (client *APIVersionDefaultClient) GetMethodGlobalNotProvidedValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetMethodGlobalNotProvidedValidHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // GetMethodGlobalNotProvidedValidHandleError handles the GetMethodGlobalNotProvidedValid error response.
@@ -97,11 +88,10 @@ func (client *APIVersionDefaultClient) GetMethodGlobalValid(ctx context.Context)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetMethodGlobalValidHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetMethodGlobalValidHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // GetMethodGlobalValidCreateRequest creates the GetMethodGlobalValid request.
@@ -116,14 +106,6 @@ func (client *APIVersionDefaultClient) GetMethodGlobalValidCreateRequest(ctx con
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// GetMethodGlobalValidHandleResponse handles the GetMethodGlobalValid response.
-func (client *APIVersionDefaultClient) GetMethodGlobalValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetMethodGlobalValidHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // GetMethodGlobalValidHandleError handles the GetMethodGlobalValid error response.
@@ -145,11 +127,10 @@ func (client *APIVersionDefaultClient) GetPathGlobalValid(ctx context.Context) (
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetPathGlobalValidHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetPathGlobalValidHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // GetPathGlobalValidCreateRequest creates the GetPathGlobalValid request.
@@ -164,14 +145,6 @@ func (client *APIVersionDefaultClient) GetPathGlobalValidCreateRequest(ctx conte
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// GetPathGlobalValidHandleResponse handles the GetPathGlobalValid response.
-func (client *APIVersionDefaultClient) GetPathGlobalValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetPathGlobalValidHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // GetPathGlobalValidHandleError handles the GetPathGlobalValid error response.
@@ -193,11 +166,10 @@ func (client *APIVersionDefaultClient) GetSwaggerGlobalValid(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetSwaggerGlobalValidHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetSwaggerGlobalValidHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // GetSwaggerGlobalValidCreateRequest creates the GetSwaggerGlobalValid request.
@@ -212,14 +184,6 @@ func (client *APIVersionDefaultClient) GetSwaggerGlobalValidCreateRequest(ctx co
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// GetSwaggerGlobalValidHandleResponse handles the GetSwaggerGlobalValid response.
-func (client *APIVersionDefaultClient) GetSwaggerGlobalValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetSwaggerGlobalValidHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // GetSwaggerGlobalValidHandleError handles the GetSwaggerGlobalValid error response.

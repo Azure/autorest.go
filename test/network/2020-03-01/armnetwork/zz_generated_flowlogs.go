@@ -59,6 +59,9 @@ func (client *FlowLogsClient) BeginCreateOrUpdate(ctx context.Context, resourceG
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
+	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -109,9 +112,6 @@ func (client *FlowLogsClient) CreateOrUpdateCreateRequest(ctx context.Context, r
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *FlowLogsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*FlowLogPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
 	return &FlowLogPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -134,6 +134,9 @@ func (client *FlowLogsClient) BeginDelete(ctx context.Context, resourceGroupName
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -185,9 +188,6 @@ func (client *FlowLogsClient) DeleteCreateRequest(ctx context.Context, resourceG
 
 // DeleteHandleResponse handles the Delete response.
 func (client *FlowLogsClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -209,6 +209,9 @@ func (client *FlowLogsClient) Get(ctx context.Context, resourceGroupName string,
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -237,9 +240,6 @@ func (client *FlowLogsClient) GetCreateRequest(ctx context.Context, resourceGrou
 
 // GetHandleResponse handles the Get response.
 func (client *FlowLogsClient) GetHandleResponse(resp *azcore.Response) (*FlowLogResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
-	}
 	result := FlowLogResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.FlowLog)
 }
@@ -261,6 +261,7 @@ func (client *FlowLogsClient) List(resourceGroupName string, networkWatcherName 
 			return client.ListCreateRequest(ctx, resourceGroupName, networkWatcherName)
 		},
 		responder: client.ListHandleResponse,
+		errorer:   client.ListHandleError,
 		advancer: func(ctx context.Context, resp *FlowLogListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.FlowLogListResult.NextLink)
 		},
@@ -286,9 +287,6 @@ func (client *FlowLogsClient) ListCreateRequest(ctx context.Context, resourceGro
 
 // ListHandleResponse handles the List response.
 func (client *FlowLogsClient) ListHandleResponse(resp *azcore.Response) (*FlowLogListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := FlowLogListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.FlowLogListResult)
 }

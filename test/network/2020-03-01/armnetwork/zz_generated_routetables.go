@@ -63,6 +63,9 @@ func (client *RouteTablesClient) BeginCreateOrUpdate(ctx context.Context, resour
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
+	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -112,9 +115,6 @@ func (client *RouteTablesClient) CreateOrUpdateCreateRequest(ctx context.Context
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *RouteTablesClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*RouteTablePollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
 	return &RouteTablePollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -137,6 +137,9 @@ func (client *RouteTablesClient) BeginDelete(ctx context.Context, resourceGroupN
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -187,9 +190,6 @@ func (client *RouteTablesClient) DeleteCreateRequest(ctx context.Context, resour
 
 // DeleteHandleResponse handles the Delete response.
 func (client *RouteTablesClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -211,6 +211,9 @@ func (client *RouteTablesClient) Get(ctx context.Context, resourceGroupName stri
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -241,9 +244,6 @@ func (client *RouteTablesClient) GetCreateRequest(ctx context.Context, resourceG
 
 // GetHandleResponse handles the Get response.
 func (client *RouteTablesClient) GetHandleResponse(resp *azcore.Response) (*RouteTableResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
-	}
 	result := RouteTableResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.RouteTable)
 }
@@ -265,6 +265,7 @@ func (client *RouteTablesClient) List(resourceGroupName string) RouteTableListRe
 			return client.ListCreateRequest(ctx, resourceGroupName)
 		},
 		responder: client.ListHandleResponse,
+		errorer:   client.ListHandleError,
 		advancer: func(ctx context.Context, resp *RouteTableListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.RouteTableListResult.NextLink)
 		},
@@ -289,9 +290,6 @@ func (client *RouteTablesClient) ListCreateRequest(ctx context.Context, resource
 
 // ListHandleResponse handles the List response.
 func (client *RouteTablesClient) ListHandleResponse(resp *azcore.Response) (*RouteTableListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := RouteTableListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.RouteTableListResult)
 }
@@ -313,6 +311,7 @@ func (client *RouteTablesClient) ListAll() RouteTableListResultPager {
 			return client.ListAllCreateRequest(ctx)
 		},
 		responder: client.ListAllHandleResponse,
+		errorer:   client.ListAllHandleError,
 		advancer: func(ctx context.Context, resp *RouteTableListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.RouteTableListResult.NextLink)
 		},
@@ -336,9 +335,6 @@ func (client *RouteTablesClient) ListAllCreateRequest(ctx context.Context) (*azc
 
 // ListAllHandleResponse handles the ListAll response.
 func (client *RouteTablesClient) ListAllHandleResponse(resp *azcore.Response) (*RouteTableListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListAllHandleError(resp)
-	}
 	result := RouteTableListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.RouteTableListResult)
 }
@@ -361,6 +357,9 @@ func (client *RouteTablesClient) UpdateTags(ctx context.Context, resourceGroupNa
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.UpdateTagsHandleError(resp)
 	}
 	result, err := client.UpdateTagsHandleResponse(resp)
 	if err != nil {
@@ -388,9 +387,6 @@ func (client *RouteTablesClient) UpdateTagsCreateRequest(ctx context.Context, re
 
 // UpdateTagsHandleResponse handles the UpdateTags response.
 func (client *RouteTablesClient) UpdateTagsHandleResponse(resp *azcore.Response) (*RouteTableResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.UpdateTagsHandleError(resp)
-	}
 	result := RouteTableResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.RouteTable)
 }

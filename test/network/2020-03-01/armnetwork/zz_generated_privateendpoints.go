@@ -61,6 +61,9 @@ func (client *PrivateEndpointsClient) BeginCreateOrUpdate(ctx context.Context, r
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
+	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -110,9 +113,6 @@ func (client *PrivateEndpointsClient) CreateOrUpdateCreateRequest(ctx context.Co
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *PrivateEndpointsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*PrivateEndpointPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
 	return &PrivateEndpointPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -135,6 +135,9 @@ func (client *PrivateEndpointsClient) BeginDelete(ctx context.Context, resourceG
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -185,9 +188,6 @@ func (client *PrivateEndpointsClient) DeleteCreateRequest(ctx context.Context, r
 
 // DeleteHandleResponse handles the Delete response.
 func (client *PrivateEndpointsClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -209,6 +209,9 @@ func (client *PrivateEndpointsClient) Get(ctx context.Context, resourceGroupName
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -239,9 +242,6 @@ func (client *PrivateEndpointsClient) GetCreateRequest(ctx context.Context, reso
 
 // GetHandleResponse handles the Get response.
 func (client *PrivateEndpointsClient) GetHandleResponse(resp *azcore.Response) (*PrivateEndpointResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
-	}
 	result := PrivateEndpointResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.PrivateEndpoint)
 }
@@ -263,6 +263,7 @@ func (client *PrivateEndpointsClient) List(resourceGroupName string) PrivateEndp
 			return client.ListCreateRequest(ctx, resourceGroupName)
 		},
 		responder: client.ListHandleResponse,
+		errorer:   client.ListHandleError,
 		advancer: func(ctx context.Context, resp *PrivateEndpointListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.PrivateEndpointListResult.NextLink)
 		},
@@ -287,9 +288,6 @@ func (client *PrivateEndpointsClient) ListCreateRequest(ctx context.Context, res
 
 // ListHandleResponse handles the List response.
 func (client *PrivateEndpointsClient) ListHandleResponse(resp *azcore.Response) (*PrivateEndpointListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := PrivateEndpointListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.PrivateEndpointListResult)
 }
@@ -311,6 +309,7 @@ func (client *PrivateEndpointsClient) ListBySubscription() PrivateEndpointListRe
 			return client.ListBySubscriptionCreateRequest(ctx)
 		},
 		responder: client.ListBySubscriptionHandleResponse,
+		errorer:   client.ListBySubscriptionHandleError,
 		advancer: func(ctx context.Context, resp *PrivateEndpointListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.PrivateEndpointListResult.NextLink)
 		},
@@ -334,9 +333,6 @@ func (client *PrivateEndpointsClient) ListBySubscriptionCreateRequest(ctx contex
 
 // ListBySubscriptionHandleResponse handles the ListBySubscription response.
 func (client *PrivateEndpointsClient) ListBySubscriptionHandleResponse(resp *azcore.Response) (*PrivateEndpointListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListBySubscriptionHandleError(resp)
-	}
 	result := PrivateEndpointListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.PrivateEndpointListResult)
 }

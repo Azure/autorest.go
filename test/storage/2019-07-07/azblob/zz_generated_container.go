@@ -74,6 +74,9 @@ func (client *containerClient) AcquireLease(ctx context.Context, containerAcquir
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusCreated) {
+		return nil, client.AcquireLeaseHandleError(resp)
+	}
 	result, err := client.AcquireLeaseHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -117,9 +120,6 @@ func (client *containerClient) AcquireLeaseCreateRequest(ctx context.Context, co
 
 // AcquireLeaseHandleResponse handles the AcquireLease response.
 func (client *containerClient) AcquireLeaseHandleResponse(resp *azcore.Response) (*ContainerAcquireLeaseResponse, error) {
-	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.AcquireLeaseHandleError(resp)
-	}
 	result := ContainerAcquireLeaseResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -172,6 +172,9 @@ func (client *containerClient) BreakLease(ctx context.Context, containerBreakLea
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.BreakLeaseHandleError(resp)
+	}
 	result, err := client.BreakLeaseHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -212,9 +215,6 @@ func (client *containerClient) BreakLeaseCreateRequest(ctx context.Context, cont
 
 // BreakLeaseHandleResponse handles the BreakLease response.
 func (client *containerClient) BreakLeaseHandleResponse(resp *azcore.Response) (*ContainerBreakLeaseResponse, error) {
-	if !resp.HasStatusCode(http.StatusAccepted) {
-		return nil, client.BreakLeaseHandleError(resp)
-	}
 	result := ContainerBreakLeaseResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -272,6 +272,9 @@ func (client *containerClient) ChangeLease(ctx context.Context, leaseId string, 
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ChangeLeaseHandleError(resp)
+	}
 	result, err := client.ChangeLeaseHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -311,9 +314,6 @@ func (client *containerClient) ChangeLeaseCreateRequest(ctx context.Context, lea
 
 // ChangeLeaseHandleResponse handles the ChangeLease response.
 func (client *containerClient) ChangeLeaseHandleResponse(resp *azcore.Response) (*ContainerChangeLeaseResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ChangeLeaseHandleError(resp)
-	}
 	result := ContainerChangeLeaseResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -366,6 +366,9 @@ func (client *containerClient) Create(ctx context.Context, containerCreateOption
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusCreated) {
+		return nil, client.CreateHandleError(resp)
+	}
 	result, err := client.CreateHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -409,9 +412,6 @@ func (client *containerClient) CreateCreateRequest(ctx context.Context, containe
 
 // CreateHandleResponse handles the Create response.
 func (client *containerClient) CreateHandleResponse(resp *azcore.Response) (*ContainerCreateResponse, error) {
-	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.CreateHandleError(resp)
-	}
 	result := ContainerCreateResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -461,6 +461,9 @@ func (client *containerClient) Delete(ctx context.Context, containerDeleteOption
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.DeleteHandleError(resp)
+	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -499,9 +502,6 @@ func (client *containerClient) DeleteCreateRequest(ctx context.Context, containe
 
 // DeleteHandleResponse handles the Delete response.
 func (client *containerClient) DeleteHandleResponse(resp *azcore.Response) (*ContainerDeleteResponse, error) {
-	if !resp.HasStatusCode(http.StatusAccepted) {
-		return nil, client.DeleteHandleError(resp)
-	}
 	result := ContainerDeleteResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
@@ -541,6 +541,9 @@ func (client *containerClient) GetAccessPolicy(ctx context.Context, containerGet
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetAccessPolicyHandleError(resp)
+	}
 	result, err := client.GetAccessPolicyHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -574,9 +577,6 @@ func (client *containerClient) GetAccessPolicyCreateRequest(ctx context.Context,
 
 // GetAccessPolicyHandleResponse handles the GetAccessPolicy response.
 func (client *containerClient) GetAccessPolicyHandleResponse(resp *azcore.Response) (*SignedIDentifierArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetAccessPolicyHandleError(resp)
-	}
 	result := SignedIDentifierArrayResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-blob-public-access"); val != "" {
 		result.BlobPublicAccess = (*PublicAccessType)(&val)
@@ -629,6 +629,9 @@ func (client *containerClient) GetAccountInfo(ctx context.Context) (*ContainerGe
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetAccountInfoHandleError(resp)
+	}
 	result, err := client.GetAccountInfoHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -653,9 +656,6 @@ func (client *containerClient) GetAccountInfoCreateRequest(ctx context.Context) 
 
 // GetAccountInfoHandleResponse handles the GetAccountInfo response.
 func (client *containerClient) GetAccountInfoHandleResponse(resp *azcore.Response) (*ContainerGetAccountInfoResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetAccountInfoHandleError(resp)
-	}
 	result := ContainerGetAccountInfoResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
@@ -701,6 +701,9 @@ func (client *containerClient) GetProperties(ctx context.Context, containerGetPr
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetPropertiesHandleError(resp)
+	}
 	result, err := client.GetPropertiesHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -733,9 +736,6 @@ func (client *containerClient) GetPropertiesCreateRequest(ctx context.Context, c
 
 // GetPropertiesHandleResponse handles the GetProperties response.
 func (client *containerClient) GetPropertiesHandleResponse(resp *azcore.Response) (*ContainerGetPropertiesResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetPropertiesHandleError(resp)
-	}
 	result := ContainerGetPropertiesResponse{RawResponse: resp.Response}
 	for hh := range resp.Header {
 		if strings.HasPrefix(hh, "x-ms-meta-") {
@@ -827,6 +827,7 @@ func (client *containerClient) ListBlobFlatSegment(containerListBlobFlatSegmentO
 			return client.ListBlobFlatSegmentCreateRequest(ctx, containerListBlobFlatSegmentOptions)
 		},
 		responder: client.ListBlobFlatSegmentHandleResponse,
+		errorer:   client.ListBlobFlatSegmentHandleError,
 		advancer: func(ctx context.Context, resp *ListBlobsFlatSegmentResponseResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.EnumerationResults.NextMarker)
 		},
@@ -868,9 +869,6 @@ func (client *containerClient) ListBlobFlatSegmentCreateRequest(ctx context.Cont
 
 // ListBlobFlatSegmentHandleResponse handles the ListBlobFlatSegment response.
 func (client *containerClient) ListBlobFlatSegmentHandleResponse(resp *azcore.Response) (*ListBlobsFlatSegmentResponseResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListBlobFlatSegmentHandleError(resp)
-	}
 	result := ListBlobsFlatSegmentResponseResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("Content-Type"); val != "" {
 		result.ContentType = &val
@@ -911,6 +909,7 @@ func (client *containerClient) ListBlobHierarchySegment(delimiter string, contai
 			return client.ListBlobHierarchySegmentCreateRequest(ctx, delimiter, containerListBlobHierarchySegmentOptions)
 		},
 		responder: client.ListBlobHierarchySegmentHandleResponse,
+		errorer:   client.ListBlobHierarchySegmentHandleError,
 		advancer: func(ctx context.Context, resp *ListBlobsHierarchySegmentResponseResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.EnumerationResults.NextMarker)
 		},
@@ -953,9 +952,6 @@ func (client *containerClient) ListBlobHierarchySegmentCreateRequest(ctx context
 
 // ListBlobHierarchySegmentHandleResponse handles the ListBlobHierarchySegment response.
 func (client *containerClient) ListBlobHierarchySegmentHandleResponse(resp *azcore.Response) (*ListBlobsHierarchySegmentResponseResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListBlobHierarchySegmentHandleError(resp)
-	}
 	result := ListBlobsHierarchySegmentResponseResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("Content-Type"); val != "" {
 		result.ContentType = &val
@@ -998,6 +994,9 @@ func (client *containerClient) ReleaseLease(ctx context.Context, leaseId string,
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ReleaseLeaseHandleError(resp)
+	}
 	result, err := client.ReleaseLeaseHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1036,9 +1035,6 @@ func (client *containerClient) ReleaseLeaseCreateRequest(ctx context.Context, le
 
 // ReleaseLeaseHandleResponse handles the ReleaseLease response.
 func (client *containerClient) ReleaseLeaseHandleResponse(resp *azcore.Response) (*ContainerReleaseLeaseResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ReleaseLeaseHandleError(resp)
-	}
 	result := ContainerReleaseLeaseResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -1088,6 +1084,9 @@ func (client *containerClient) RenewLease(ctx context.Context, leaseId string, c
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.RenewLeaseHandleError(resp)
+	}
 	result, err := client.RenewLeaseHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1126,9 +1125,6 @@ func (client *containerClient) RenewLeaseCreateRequest(ctx context.Context, leas
 
 // RenewLeaseHandleResponse handles the RenewLease response.
 func (client *containerClient) RenewLeaseHandleResponse(resp *azcore.Response) (*ContainerRenewLeaseResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.RenewLeaseHandleError(resp)
-	}
 	result := ContainerRenewLeaseResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -1181,6 +1177,9 @@ func (client *containerClient) SetAccessPolicy(ctx context.Context, containerSet
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.SetAccessPolicyHandleError(resp)
+	}
 	result, err := client.SetAccessPolicyHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1230,9 +1229,6 @@ func (client *containerClient) SetAccessPolicyCreateRequest(ctx context.Context,
 
 // SetAccessPolicyHandleResponse handles the SetAccessPolicy response.
 func (client *containerClient) SetAccessPolicyHandleResponse(resp *azcore.Response) (*ContainerSetAccessPolicyResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.SetAccessPolicyHandleError(resp)
-	}
 	result := ContainerSetAccessPolicyResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -1282,6 +1278,9 @@ func (client *containerClient) SetMetadata(ctx context.Context, containerSetMeta
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.SetMetadataHandleError(resp)
+	}
 	result, err := client.SetMetadataHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1323,9 +1322,6 @@ func (client *containerClient) SetMetadataCreateRequest(ctx context.Context, con
 
 // SetMetadataHandleResponse handles the SetMetadata response.
 func (client *containerClient) SetMetadataHandleResponse(resp *azcore.Response) (*ContainerSetMetadataResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.SetMetadataHandleError(resp)
-	}
 	result := ContainerSetMetadataResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val

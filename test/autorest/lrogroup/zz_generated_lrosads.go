@@ -148,6 +148,9 @@ func (client *LrosaDsClient) BeginDelete202NonRetry400(ctx context.Context) (*HT
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.Delete202NonRetry400HandleError(resp)
+	}
 	result, err := client.Delete202NonRetry400HandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -191,9 +194,6 @@ func (client *LrosaDsClient) Delete202NonRetry400CreateRequest(ctx context.Conte
 
 // Delete202NonRetry400HandleResponse handles the Delete202NonRetry400 response.
 func (client *LrosaDsClient) Delete202NonRetry400HandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.Delete202NonRetry400HandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -216,6 +216,9 @@ func (client *LrosaDsClient) BeginDelete202RetryInvalidHeader(ctx context.Contex
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.Delete202RetryInvalidHeaderHandleError(resp)
 	}
 	result, err := client.Delete202RetryInvalidHeaderHandleResponse(resp)
 	if err != nil {
@@ -260,9 +263,6 @@ func (client *LrosaDsClient) Delete202RetryInvalidHeaderCreateRequest(ctx contex
 
 // Delete202RetryInvalidHeaderHandleResponse handles the Delete202RetryInvalidHeader response.
 func (client *LrosaDsClient) Delete202RetryInvalidHeaderHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.Delete202RetryInvalidHeaderHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -285,6 +285,9 @@ func (client *LrosaDsClient) BeginDelete204Succeeded(ctx context.Context) (*HTTP
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusNoContent) {
+		return nil, client.Delete204SucceededHandleError(resp)
 	}
 	result, err := client.Delete204SucceededHandleResponse(resp)
 	if err != nil {
@@ -329,9 +332,6 @@ func (client *LrosaDsClient) Delete204SucceededCreateRequest(ctx context.Context
 
 // Delete204SucceededHandleResponse handles the Delete204Succeeded response.
 func (client *LrosaDsClient) Delete204SucceededHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusNoContent) {
-		return nil, client.Delete204SucceededHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -354,6 +354,9 @@ func (client *LrosaDsClient) BeginDeleteAsyncRelativeRetry400(ctx context.Contex
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.DeleteAsyncRelativeRetry400HandleError(resp)
 	}
 	result, err := client.DeleteAsyncRelativeRetry400HandleResponse(resp)
 	if err != nil {
@@ -398,9 +401,6 @@ func (client *LrosaDsClient) DeleteAsyncRelativeRetry400CreateRequest(ctx contex
 
 // DeleteAsyncRelativeRetry400HandleResponse handles the DeleteAsyncRelativeRetry400 response.
 func (client *LrosaDsClient) DeleteAsyncRelativeRetry400HandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteAsyncRelativeRetry400HandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -423,6 +423,9 @@ func (client *LrosaDsClient) BeginDeleteAsyncRelativeRetryInvalidHeader(ctx cont
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.DeleteAsyncRelativeRetryInvalidHeaderHandleError(resp)
 	}
 	result, err := client.DeleteAsyncRelativeRetryInvalidHeaderHandleResponse(resp)
 	if err != nil {
@@ -467,9 +470,6 @@ func (client *LrosaDsClient) DeleteAsyncRelativeRetryInvalidHeaderCreateRequest(
 
 // DeleteAsyncRelativeRetryInvalidHeaderHandleResponse handles the DeleteAsyncRelativeRetryInvalidHeader response.
 func (client *LrosaDsClient) DeleteAsyncRelativeRetryInvalidHeaderHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteAsyncRelativeRetryInvalidHeaderHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -492,6 +492,9 @@ func (client *LrosaDsClient) BeginDeleteAsyncRelativeRetryInvalidJSONPolling(ctx
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.DeleteAsyncRelativeRetryInvalidJSONPollingHandleError(resp)
 	}
 	result, err := client.DeleteAsyncRelativeRetryInvalidJSONPollingHandleResponse(resp)
 	if err != nil {
@@ -536,9 +539,6 @@ func (client *LrosaDsClient) DeleteAsyncRelativeRetryInvalidJSONPollingCreateReq
 
 // DeleteAsyncRelativeRetryInvalidJSONPollingHandleResponse handles the DeleteAsyncRelativeRetryInvalidJSONPolling response.
 func (client *LrosaDsClient) DeleteAsyncRelativeRetryInvalidJSONPollingHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteAsyncRelativeRetryInvalidJSONPollingHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -561,6 +561,9 @@ func (client *LrosaDsClient) BeginDeleteAsyncRelativeRetryNoStatus(ctx context.C
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.DeleteAsyncRelativeRetryNoStatusHandleError(resp)
 	}
 	result, err := client.DeleteAsyncRelativeRetryNoStatusHandleResponse(resp)
 	if err != nil {
@@ -605,9 +608,6 @@ func (client *LrosaDsClient) DeleteAsyncRelativeRetryNoStatusCreateRequest(ctx c
 
 // DeleteAsyncRelativeRetryNoStatusHandleResponse handles the DeleteAsyncRelativeRetryNoStatus response.
 func (client *LrosaDsClient) DeleteAsyncRelativeRetryNoStatusHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteAsyncRelativeRetryNoStatusHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -630,6 +630,9 @@ func (client *LrosaDsClient) BeginDeleteNonRetry400(ctx context.Context) (*HTTPP
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.DeleteNonRetry400HandleError(resp)
 	}
 	result, err := client.DeleteNonRetry400HandleResponse(resp)
 	if err != nil {
@@ -674,9 +677,6 @@ func (client *LrosaDsClient) DeleteNonRetry400CreateRequest(ctx context.Context)
 
 // DeleteNonRetry400HandleResponse handles the DeleteNonRetry400 response.
 func (client *LrosaDsClient) DeleteNonRetry400HandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteNonRetry400HandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -699,6 +699,9 @@ func (client *LrosaDsClient) BeginPost202NoLocation(ctx context.Context, lrosaDs
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.Post202NoLocationHandleError(resp)
 	}
 	result, err := client.Post202NoLocationHandleResponse(resp)
 	if err != nil {
@@ -746,9 +749,6 @@ func (client *LrosaDsClient) Post202NoLocationCreateRequest(ctx context.Context,
 
 // Post202NoLocationHandleResponse handles the Post202NoLocation response.
 func (client *LrosaDsClient) Post202NoLocationHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.Post202NoLocationHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -771,6 +771,9 @@ func (client *LrosaDsClient) BeginPost202NonRetry400(ctx context.Context, lrosaD
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.Post202NonRetry400HandleError(resp)
 	}
 	result, err := client.Post202NonRetry400HandleResponse(resp)
 	if err != nil {
@@ -818,9 +821,6 @@ func (client *LrosaDsClient) Post202NonRetry400CreateRequest(ctx context.Context
 
 // Post202NonRetry400HandleResponse handles the Post202NonRetry400 response.
 func (client *LrosaDsClient) Post202NonRetry400HandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.Post202NonRetry400HandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -843,6 +843,9 @@ func (client *LrosaDsClient) BeginPost202RetryInvalidHeader(ctx context.Context,
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.Post202RetryInvalidHeaderHandleError(resp)
 	}
 	result, err := client.Post202RetryInvalidHeaderHandleResponse(resp)
 	if err != nil {
@@ -890,9 +893,6 @@ func (client *LrosaDsClient) Post202RetryInvalidHeaderCreateRequest(ctx context.
 
 // Post202RetryInvalidHeaderHandleResponse handles the Post202RetryInvalidHeader response.
 func (client *LrosaDsClient) Post202RetryInvalidHeaderHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.Post202RetryInvalidHeaderHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -915,6 +915,9 @@ func (client *LrosaDsClient) BeginPostAsyncRelativeRetry400(ctx context.Context,
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.PostAsyncRelativeRetry400HandleError(resp)
 	}
 	result, err := client.PostAsyncRelativeRetry400HandleResponse(resp)
 	if err != nil {
@@ -962,9 +965,6 @@ func (client *LrosaDsClient) PostAsyncRelativeRetry400CreateRequest(ctx context.
 
 // PostAsyncRelativeRetry400HandleResponse handles the PostAsyncRelativeRetry400 response.
 func (client *LrosaDsClient) PostAsyncRelativeRetry400HandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.PostAsyncRelativeRetry400HandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -987,6 +987,9 @@ func (client *LrosaDsClient) BeginPostAsyncRelativeRetryInvalidHeader(ctx contex
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.PostAsyncRelativeRetryInvalidHeaderHandleError(resp)
 	}
 	result, err := client.PostAsyncRelativeRetryInvalidHeaderHandleResponse(resp)
 	if err != nil {
@@ -1034,9 +1037,6 @@ func (client *LrosaDsClient) PostAsyncRelativeRetryInvalidHeaderCreateRequest(ct
 
 // PostAsyncRelativeRetryInvalidHeaderHandleResponse handles the PostAsyncRelativeRetryInvalidHeader response.
 func (client *LrosaDsClient) PostAsyncRelativeRetryInvalidHeaderHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.PostAsyncRelativeRetryInvalidHeaderHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -1059,6 +1059,9 @@ func (client *LrosaDsClient) BeginPostAsyncRelativeRetryInvalidJSONPolling(ctx c
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.PostAsyncRelativeRetryInvalidJSONPollingHandleError(resp)
 	}
 	result, err := client.PostAsyncRelativeRetryInvalidJSONPollingHandleResponse(resp)
 	if err != nil {
@@ -1106,9 +1109,6 @@ func (client *LrosaDsClient) PostAsyncRelativeRetryInvalidJSONPollingCreateReque
 
 // PostAsyncRelativeRetryInvalidJSONPollingHandleResponse handles the PostAsyncRelativeRetryInvalidJSONPolling response.
 func (client *LrosaDsClient) PostAsyncRelativeRetryInvalidJSONPollingHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.PostAsyncRelativeRetryInvalidJSONPollingHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -1131,6 +1131,9 @@ func (client *LrosaDsClient) BeginPostAsyncRelativeRetryNoPayload(ctx context.Co
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.PostAsyncRelativeRetryNoPayloadHandleError(resp)
 	}
 	result, err := client.PostAsyncRelativeRetryNoPayloadHandleResponse(resp)
 	if err != nil {
@@ -1178,9 +1181,6 @@ func (client *LrosaDsClient) PostAsyncRelativeRetryNoPayloadCreateRequest(ctx co
 
 // PostAsyncRelativeRetryNoPayloadHandleResponse handles the PostAsyncRelativeRetryNoPayload response.
 func (client *LrosaDsClient) PostAsyncRelativeRetryNoPayloadHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.PostAsyncRelativeRetryNoPayloadHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -1203,6 +1203,9 @@ func (client *LrosaDsClient) BeginPostNonRetry400(ctx context.Context, lrosaDsPo
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.PostNonRetry400HandleError(resp)
 	}
 	result, err := client.PostNonRetry400HandleResponse(resp)
 	if err != nil {
@@ -1250,9 +1253,6 @@ func (client *LrosaDsClient) PostNonRetry400CreateRequest(ctx context.Context, l
 
 // PostNonRetry400HandleResponse handles the PostNonRetry400 response.
 func (client *LrosaDsClient) PostNonRetry400HandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.PostNonRetry400HandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -1275,6 +1275,9 @@ func (client *LrosaDsClient) BeginPut200InvalidJSON(ctx context.Context, lrosaDs
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusNoContent) {
+		return nil, client.Put200InvalidJSONHandleError(resp)
 	}
 	result, err := client.Put200InvalidJSONHandleResponse(resp)
 	if err != nil {
@@ -1322,9 +1325,6 @@ func (client *LrosaDsClient) Put200InvalidJSONCreateRequest(ctx context.Context,
 
 // Put200InvalidJSONHandleResponse handles the Put200InvalidJSON response.
 func (client *LrosaDsClient) Put200InvalidJSONHandleResponse(resp *azcore.Response) (*ProductPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusNoContent) {
-		return nil, client.Put200InvalidJSONHandleError(resp)
-	}
 	return &ProductPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -1347,6 +1347,9 @@ func (client *LrosaDsClient) BeginPutAsyncRelativeRetry400(ctx context.Context, 
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutAsyncRelativeRetry400HandleError(resp)
 	}
 	result, err := client.PutAsyncRelativeRetry400HandleResponse(resp)
 	if err != nil {
@@ -1394,9 +1397,6 @@ func (client *LrosaDsClient) PutAsyncRelativeRetry400CreateRequest(ctx context.C
 
 // PutAsyncRelativeRetry400HandleResponse handles the PutAsyncRelativeRetry400 response.
 func (client *LrosaDsClient) PutAsyncRelativeRetry400HandleResponse(resp *azcore.Response) (*ProductPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusNoContent) {
-		return nil, client.PutAsyncRelativeRetry400HandleError(resp)
-	}
 	return &ProductPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -1419,6 +1419,9 @@ func (client *LrosaDsClient) BeginPutAsyncRelativeRetryInvalidHeader(ctx context
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutAsyncRelativeRetryInvalidHeaderHandleError(resp)
 	}
 	result, err := client.PutAsyncRelativeRetryInvalidHeaderHandleResponse(resp)
 	if err != nil {
@@ -1466,9 +1469,6 @@ func (client *LrosaDsClient) PutAsyncRelativeRetryInvalidHeaderCreateRequest(ctx
 
 // PutAsyncRelativeRetryInvalidHeaderHandleResponse handles the PutAsyncRelativeRetryInvalidHeader response.
 func (client *LrosaDsClient) PutAsyncRelativeRetryInvalidHeaderHandleResponse(resp *azcore.Response) (*ProductPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusNoContent) {
-		return nil, client.PutAsyncRelativeRetryInvalidHeaderHandleError(resp)
-	}
 	return &ProductPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -1491,6 +1491,9 @@ func (client *LrosaDsClient) BeginPutAsyncRelativeRetryInvalidJSONPolling(ctx co
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutAsyncRelativeRetryInvalidJSONPollingHandleError(resp)
 	}
 	result, err := client.PutAsyncRelativeRetryInvalidJSONPollingHandleResponse(resp)
 	if err != nil {
@@ -1538,9 +1541,6 @@ func (client *LrosaDsClient) PutAsyncRelativeRetryInvalidJSONPollingCreateReques
 
 // PutAsyncRelativeRetryInvalidJSONPollingHandleResponse handles the PutAsyncRelativeRetryInvalidJSONPolling response.
 func (client *LrosaDsClient) PutAsyncRelativeRetryInvalidJSONPollingHandleResponse(resp *azcore.Response) (*ProductPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusNoContent) {
-		return nil, client.PutAsyncRelativeRetryInvalidJSONPollingHandleError(resp)
-	}
 	return &ProductPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -1563,6 +1563,9 @@ func (client *LrosaDsClient) BeginPutAsyncRelativeRetryNoStatus(ctx context.Cont
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutAsyncRelativeRetryNoStatusHandleError(resp)
 	}
 	result, err := client.PutAsyncRelativeRetryNoStatusHandleResponse(resp)
 	if err != nil {
@@ -1610,9 +1613,6 @@ func (client *LrosaDsClient) PutAsyncRelativeRetryNoStatusCreateRequest(ctx cont
 
 // PutAsyncRelativeRetryNoStatusHandleResponse handles the PutAsyncRelativeRetryNoStatus response.
 func (client *LrosaDsClient) PutAsyncRelativeRetryNoStatusHandleResponse(resp *azcore.Response) (*ProductPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusNoContent) {
-		return nil, client.PutAsyncRelativeRetryNoStatusHandleError(resp)
-	}
 	return &ProductPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -1635,6 +1635,9 @@ func (client *LrosaDsClient) BeginPutAsyncRelativeRetryNoStatusPayload(ctx conte
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutAsyncRelativeRetryNoStatusPayloadHandleError(resp)
 	}
 	result, err := client.PutAsyncRelativeRetryNoStatusPayloadHandleResponse(resp)
 	if err != nil {
@@ -1682,9 +1685,6 @@ func (client *LrosaDsClient) PutAsyncRelativeRetryNoStatusPayloadCreateRequest(c
 
 // PutAsyncRelativeRetryNoStatusPayloadHandleResponse handles the PutAsyncRelativeRetryNoStatusPayload response.
 func (client *LrosaDsClient) PutAsyncRelativeRetryNoStatusPayloadHandleResponse(resp *azcore.Response) (*ProductPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusNoContent) {
-		return nil, client.PutAsyncRelativeRetryNoStatusPayloadHandleError(resp)
-	}
 	return &ProductPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -1707,6 +1707,9 @@ func (client *LrosaDsClient) BeginPutError201NoProvisioningStatePayload(ctx cont
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.PutError201NoProvisioningStatePayloadHandleError(resp)
 	}
 	result, err := client.PutError201NoProvisioningStatePayloadHandleResponse(resp)
 	if err != nil {
@@ -1754,9 +1757,6 @@ func (client *LrosaDsClient) PutError201NoProvisioningStatePayloadCreateRequest(
 
 // PutError201NoProvisioningStatePayloadHandleResponse handles the PutError201NoProvisioningStatePayload response.
 func (client *LrosaDsClient) PutError201NoProvisioningStatePayloadHandleResponse(resp *azcore.Response) (*ProductPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.PutError201NoProvisioningStatePayloadHandleError(resp)
-	}
 	return &ProductPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -1779,6 +1779,9 @@ func (client *LrosaDsClient) BeginPutNonRetry201Creating400(ctx context.Context,
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.PutNonRetry201Creating400HandleError(resp)
 	}
 	result, err := client.PutNonRetry201Creating400HandleResponse(resp)
 	if err != nil {
@@ -1826,9 +1829,6 @@ func (client *LrosaDsClient) PutNonRetry201Creating400CreateRequest(ctx context.
 
 // PutNonRetry201Creating400HandleResponse handles the PutNonRetry201Creating400 response.
 func (client *LrosaDsClient) PutNonRetry201Creating400HandleResponse(resp *azcore.Response) (*ProductPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.PutNonRetry201Creating400HandleError(resp)
-	}
 	return &ProductPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -1851,6 +1851,9 @@ func (client *LrosaDsClient) BeginPutNonRetry201Creating400InvalidJSON(ctx conte
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.PutNonRetry201Creating400InvalidJSONHandleError(resp)
 	}
 	result, err := client.PutNonRetry201Creating400InvalidJSONHandleResponse(resp)
 	if err != nil {
@@ -1898,9 +1901,6 @@ func (client *LrosaDsClient) PutNonRetry201Creating400InvalidJSONCreateRequest(c
 
 // PutNonRetry201Creating400InvalidJSONHandleResponse handles the PutNonRetry201Creating400InvalidJSON response.
 func (client *LrosaDsClient) PutNonRetry201Creating400InvalidJSONHandleResponse(resp *azcore.Response) (*ProductPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.PutNonRetry201Creating400InvalidJSONHandleError(resp)
-	}
 	return &ProductPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -1923,6 +1923,9 @@ func (client *LrosaDsClient) BeginPutNonRetry400(ctx context.Context, lrosaDsPut
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.PutNonRetry400HandleError(resp)
 	}
 	result, err := client.PutNonRetry400HandleResponse(resp)
 	if err != nil {
@@ -1970,9 +1973,6 @@ func (client *LrosaDsClient) PutNonRetry400CreateRequest(ctx context.Context, lr
 
 // PutNonRetry400HandleResponse handles the PutNonRetry400 response.
 func (client *LrosaDsClient) PutNonRetry400HandleResponse(resp *azcore.Response) (*ProductPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.PutNonRetry400HandleError(resp)
-	}
 	return &ProductPollerResponse{RawResponse: resp.Response}, nil
 }
 

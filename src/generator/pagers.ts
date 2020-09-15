@@ -8,7 +8,7 @@ import { camelCase } from '@azure-tools/codegen';
 import { CodeModel, SchemaResponse } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { PagerInfo } from '../common/helpers';
-import { contentPreamble, sortAscending } from './helpers';
+import { contentPreamble, formatStatusCodes, getStatusCodes, sortAscending } from './helpers';
 import { ImportManager } from './imports';
 
 // Creates the content in pagers.go
@@ -22,6 +22,7 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
   const imports = new ImportManager();
   imports.add('context');
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
+  imports.add('net/http');
   text += imports.text();
 
   const pagers = <Array<PagerInfo>>session.model.language.go!.pageableTypes;
@@ -53,6 +54,7 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
       resultTypeName = schemaResponse.schema.serialization.xml.name;
     }
     const requesterType = `${camelCase(resultType)}CreateRequest`;
+    const errorerType = `${camelCase(resultType)}HandleError`;
     const responderType = `${camelCase(resultType)}HandleResponse`;
     const advanceType = `${camelCase(resultType)}AdvancePage`;
     text += `// ${pager.name} provides iteration over ${resultType} pages.
@@ -70,6 +72,8 @@ type ${pager.name} interface {
 
 type ${requesterType} func(context.Context) (*azcore.Request, error)
 
+type ${errorerType} func(*azcore.Response) error
+
 type ${responderType} func(*azcore.Response) (*${responseType}, error)
 
 type ${advanceType} func(context.Context, *${responseType}) (*azcore.Request, error)
@@ -79,6 +83,8 @@ type ${pagerType} struct {
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
 	requester ${requesterType}
+	// callback for handling response errors
+	errorer ${errorerType}
 	// callback for handling the HTTP response
 	responder ${responderType}
 	// callback for advancing to the next page
@@ -109,7 +115,17 @@ func (p *${pagerType}) NextPage(ctx context.Context) bool {
 		return false
 	}
   ${respFieldCheck}
-	result, err := p.responder(resp)
+	if err != nil {
+		p.err = err
+		return false
+	}
+`;
+    const statusCodes = getStatusCodes(pager.op);
+    text += `\tif !resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
+    text += `\tp.err = p.errorer(resp)\n`
+    text += `\t\treturn false\n`;
+    text += '\t}\n';
+    text += `	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
 		return false

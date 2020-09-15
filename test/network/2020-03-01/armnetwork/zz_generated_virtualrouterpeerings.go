@@ -59,6 +59,9 @@ func (client *VirtualRouterPeeringsClient) BeginCreateOrUpdate(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
+	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -109,9 +112,6 @@ func (client *VirtualRouterPeeringsClient) CreateOrUpdateCreateRequest(ctx conte
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *VirtualRouterPeeringsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*VirtualRouterPeeringPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNoContent) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
 	return &VirtualRouterPeeringPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -134,6 +134,9 @@ func (client *VirtualRouterPeeringsClient) BeginDelete(ctx context.Context, reso
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -185,9 +188,6 @@ func (client *VirtualRouterPeeringsClient) DeleteCreateRequest(ctx context.Conte
 
 // DeleteHandleResponse handles the Delete response.
 func (client *VirtualRouterPeeringsClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
 	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
@@ -209,6 +209,9 @@ func (client *VirtualRouterPeeringsClient) Get(ctx context.Context, resourceGrou
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetHandleError(resp)
 	}
 	result, err := client.GetHandleResponse(resp)
 	if err != nil {
@@ -237,9 +240,6 @@ func (client *VirtualRouterPeeringsClient) GetCreateRequest(ctx context.Context,
 
 // GetHandleResponse handles the Get response.
 func (client *VirtualRouterPeeringsClient) GetHandleResponse(resp *azcore.Response) (*VirtualRouterPeeringResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
-	}
 	result := VirtualRouterPeeringResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualRouterPeering)
 }
@@ -261,6 +261,7 @@ func (client *VirtualRouterPeeringsClient) List(resourceGroupName string, virtua
 			return client.ListCreateRequest(ctx, resourceGroupName, virtualRouterName)
 		},
 		responder: client.ListHandleResponse,
+		errorer:   client.ListHandleError,
 		advancer: func(ctx context.Context, resp *VirtualRouterPeeringListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.VirtualRouterPeeringListResult.NextLink)
 		},
@@ -286,9 +287,6 @@ func (client *VirtualRouterPeeringsClient) ListCreateRequest(ctx context.Context
 
 // ListHandleResponse handles the List response.
 func (client *VirtualRouterPeeringsClient) ListHandleResponse(resp *azcore.Response) (*VirtualRouterPeeringListResultResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := VirtualRouterPeeringListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualRouterPeeringListResult)
 }

@@ -49,6 +49,9 @@ func (client *ComplexModelClient) Create(ctx context.Context, subscriptionId str
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.CreateHandleError(resp)
+	}
 	result, err := client.CreateHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -74,9 +77,6 @@ func (client *ComplexModelClient) CreateCreateRequest(ctx context.Context, subsc
 
 // CreateHandleResponse handles the Create response.
 func (client *ComplexModelClient) CreateHandleResponse(resp *azcore.Response) (*CatalogDictionaryResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.CreateHandleError(resp)
-	}
 	result := CatalogDictionaryResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.CatalogDictionary)
 }
@@ -99,6 +99,9 @@ func (client *ComplexModelClient) List(ctx context.Context, resourceGroupName st
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.ListHandleError(resp)
 	}
 	result, err := client.ListHandleResponse(resp)
 	if err != nil {
@@ -125,9 +128,6 @@ func (client *ComplexModelClient) ListCreateRequest(ctx context.Context, resourc
 
 // ListHandleResponse handles the List response.
 func (client *ComplexModelClient) ListHandleResponse(resp *azcore.Response) (*CatalogArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
-	}
 	result := CatalogArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.CatalogArray)
 }
@@ -150,6 +150,9 @@ func (client *ComplexModelClient) Update(ctx context.Context, subscriptionId str
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.UpdateHandleError(resp)
 	}
 	result, err := client.UpdateHandleResponse(resp)
 	if err != nil {
@@ -176,9 +179,6 @@ func (client *ComplexModelClient) UpdateCreateRequest(ctx context.Context, subsc
 
 // UpdateHandleResponse handles the Update response.
 func (client *ComplexModelClient) UpdateHandleResponse(resp *azcore.Response) (*CatalogArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.UpdateHandleError(resp)
-	}
 	result := CatalogArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.CatalogArray)
 }

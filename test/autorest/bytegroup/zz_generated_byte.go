@@ -51,6 +51,9 @@ func (client *ByteClient) GetEmpty(ctx context.Context) (*ByteArrayResponse, err
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetEmptyHandleError(resp)
+	}
 	result, err := client.GetEmptyHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -71,9 +74,6 @@ func (client *ByteClient) GetEmptyCreateRequest(ctx context.Context) (*azcore.Re
 
 // GetEmptyHandleResponse handles the GetEmpty response.
 func (client *ByteClient) GetEmptyHandleResponse(resp *azcore.Response) (*ByteArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetEmptyHandleError(resp)
-	}
 	result := ByteArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsByteArray(&result.Value, azcore.Base64StdFormat)
 }
@@ -97,6 +97,9 @@ func (client *ByteClient) GetInvalid(ctx context.Context) (*ByteArrayResponse, e
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetInvalidHandleError(resp)
+	}
 	result, err := client.GetInvalidHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -117,9 +120,6 @@ func (client *ByteClient) GetInvalidCreateRequest(ctx context.Context) (*azcore.
 
 // GetInvalidHandleResponse handles the GetInvalid response.
 func (client *ByteClient) GetInvalidHandleResponse(resp *azcore.Response) (*ByteArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetInvalidHandleError(resp)
-	}
 	result := ByteArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsByteArray(&result.Value, azcore.Base64StdFormat)
 }
@@ -143,6 +143,9 @@ func (client *ByteClient) GetNonASCII(ctx context.Context) (*ByteArrayResponse, 
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetNonASCIIHandleError(resp)
+	}
 	result, err := client.GetNonASCIIHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -163,9 +166,6 @@ func (client *ByteClient) GetNonASCIICreateRequest(ctx context.Context) (*azcore
 
 // GetNonASCIIHandleResponse handles the GetNonASCII response.
 func (client *ByteClient) GetNonASCIIHandleResponse(resp *azcore.Response) (*ByteArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetNonASCIIHandleError(resp)
-	}
 	result := ByteArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsByteArray(&result.Value, azcore.Base64StdFormat)
 }
@@ -189,6 +189,9 @@ func (client *ByteClient) GetNull(ctx context.Context) (*ByteArrayResponse, erro
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.GetNullHandleError(resp)
+	}
 	result, err := client.GetNullHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -209,9 +212,6 @@ func (client *ByteClient) GetNullCreateRequest(ctx context.Context) (*azcore.Req
 
 // GetNullHandleResponse handles the GetNull response.
 func (client *ByteClient) GetNullHandleResponse(resp *azcore.Response) (*ByteArrayResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetNullHandleError(resp)
-	}
 	result := ByteArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsByteArray(&result.Value, azcore.Base64StdFormat)
 }
@@ -235,11 +235,10 @@ func (client *ByteClient) PutNonASCII(ctx context.Context, byteBody []byte) (*ht
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutNonASCIIHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.PutNonASCIIHandleError(resp)
 	}
-	return result, nil
+	return resp.Response, nil
 }
 
 // PutNonASCIICreateRequest creates the PutNonASCII request.
@@ -251,14 +250,6 @@ func (client *ByteClient) PutNonASCIICreateRequest(ctx context.Context, byteBody
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsByteArray(byteBody, azcore.Base64StdFormat)
-}
-
-// PutNonASCIIHandleResponse handles the PutNonASCII response.
-func (client *ByteClient) PutNonASCIIHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutNonASCIIHandleError(resp)
-	}
-	return resp.Response, nil
 }
 
 // PutNonASCIIHandleError handles the PutNonASCII error response.

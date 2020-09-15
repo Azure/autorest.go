@@ -47,6 +47,9 @@ func (client *HeaderClient) CustomNamedRequestID(ctx context.Context, fooClientR
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.CustomNamedRequestIDHandleError(resp)
+	}
 	result, err := client.CustomNamedRequestIDHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -68,9 +71,6 @@ func (client *HeaderClient) CustomNamedRequestIDCreateRequest(ctx context.Contex
 
 // CustomNamedRequestIDHandleResponse handles the CustomNamedRequestID response.
 func (client *HeaderClient) CustomNamedRequestIDHandleResponse(resp *azcore.Response) (*HeaderCustomNamedRequestIDResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.CustomNamedRequestIDHandleError(resp)
-	}
 	result := HeaderCustomNamedRequestIDResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("foo-request-id"); val != "" {
 		result.FooRequestID = &val
@@ -97,6 +97,9 @@ func (client *HeaderClient) CustomNamedRequestIDHead(ctx context.Context, fooCli
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusNotFound) {
+		return nil, client.CustomNamedRequestIDHeadHandleError(resp)
+	}
 	result, err := client.CustomNamedRequestIDHeadHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -118,9 +121,6 @@ func (client *HeaderClient) CustomNamedRequestIDHeadCreateRequest(ctx context.Co
 
 // CustomNamedRequestIDHeadHandleResponse handles the CustomNamedRequestIDHead response.
 func (client *HeaderClient) CustomNamedRequestIDHeadHandleResponse(resp *azcore.Response) (*HeaderCustomNamedRequestIDHeadResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK, http.StatusNotFound) {
-		return nil, client.CustomNamedRequestIDHeadHandleError(resp)
-	}
 	result := HeaderCustomNamedRequestIDHeadResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("foo-request-id"); val != "" {
 		result.FooRequestID = &val
@@ -147,6 +147,9 @@ func (client *HeaderClient) CustomNamedRequestIDParamGrouping(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.CustomNamedRequestIDParamGroupingHandleError(resp)
+	}
 	result, err := client.CustomNamedRequestIDParamGroupingHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -168,9 +171,6 @@ func (client *HeaderClient) CustomNamedRequestIDParamGroupingCreateRequest(ctx c
 
 // CustomNamedRequestIDParamGroupingHandleResponse handles the CustomNamedRequestIDParamGrouping response.
 func (client *HeaderClient) CustomNamedRequestIDParamGroupingHandleResponse(resp *azcore.Response) (*HeaderCustomNamedRequestIDParamGroupingResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.CustomNamedRequestIDParamGroupingHandleError(resp)
-	}
 	result := HeaderCustomNamedRequestIDParamGroupingResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("foo-request-id"); val != "" {
 		result.FooRequestID = &val
