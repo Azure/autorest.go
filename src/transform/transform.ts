@@ -98,10 +98,6 @@ async function process(session: Session<CodeModel>) {
     choice.choiceType.language.go!.name = schemaTypeToGoType(session.model, choice.choiceType, false);
   }
   for (const choice of values(session.model.schemas.sealedChoices)) {
-    // TODO need to see how to add sealed-choices that have a different schema
-    if (choice.choices.length === 1) {
-      continue;
-    }
     choice.choiceType.language.go!.name = schemaTypeToGoType(session.model, choice.choiceType, false);
   }
 }
@@ -331,10 +327,8 @@ function processOperationRequests(session: Session<CodeModel>) {
           }
           continue;
         }
-        // this is a bit of a weird case and might be due to invalid swagger in the test
-        // server.  how can you have an optional parameter that's also a constant?
-        // TODO once non-required constants are fixed
-        if (param.required !== true && param.schema.type !== SchemaType.Constant && !(param.schema.type === SchemaType.SealedChoice && (<SealedChoiceSchema>param.schema).choices.length === 1)) {
+        // include non-required constants that aren't body params in the optional values struct
+        if (param.required !== true && !(param.schema.type === SchemaType.Constant && param.protocol.http!.in === 'body')) {
           // create a type named <OperationGroup><Operation>Options
           const paramGroupName = `${group.language.go!.name}${op.language.go!.name}Options`;
           // create group entry and add the param to it
@@ -590,7 +584,7 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
     } else if (!responseTypeCreated(codeModel, response.schema)) {
       response.schema.language.go!.responseType = generateResponseTypeName(response.schema);
       response.schema.language.go!.properties = [
-        newProperty('RawResponse', 'RawResponse contains the underlying HTTP response.', newObject('http.Response', 'TODO'))
+        newProperty('RawResponse', 'RawResponse contains the underlying HTTP response.', newObject('http.Response', 'HTTP response'))
       ];
       const marshallingFormat = getMarshallingFormat(response.protocol);
       response.schema.language.go!.responseType.marshallingFormat = marshallingFormat;
@@ -877,13 +871,13 @@ function generateLROResponseType(response: Response, op: Operation, codeModel: C
   }
   // create PollUntilDone
   const pollUntilDone = newProperty('PollUntilDone', 'PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received',
-    newObject(`func(ctx context.Context, frequency time.Duration) (${pollerResponse}, error)`, 'TODO'));
+    newObject(`func(ctx context.Context, frequency time.Duration) (${pollerResponse}, error)`, 'PollUntilDone'));
   pollUntilDone.schema.language.go!.lroPointerException = true;
   // create Poller
-  const poller = newProperty('Poller', 'Poller contains an initialized poller.', newObject(pollerTypeName, 'TODO'));
+  const poller = newProperty('Poller', 'Poller contains an initialized poller.', newObject(pollerTypeName, 'poller'));
   poller.schema.language.go!.lroPointerException = true;
   respTypeObject.language.go!.properties = [
-    newProperty('RawResponse', 'RawResponse contains the underlying HTTP response.', newObject('http.Response', 'TODO')),
+    newProperty('RawResponse', 'RawResponse contains the underlying HTTP response.', newObject('http.Response', 'HTTP response')),
     pollUntilDone,
     poller
   ];

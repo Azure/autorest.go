@@ -643,6 +643,9 @@ func (client *blobClient) CreateSnapshotCreateRequest(ctx context.Context, blobC
 	if cpkInfo != nil && cpkInfo.EncryptionKeySha256 != nil {
 		req.Header.Set("x-ms-encryption-key-sha256", *cpkInfo.EncryptionKeySha256)
 	}
+	if cpkInfo != nil && cpkInfo.EncryptionAlgorithm != nil {
+		req.Header.Set("x-ms-encryption-algorithm", "AES256")
+	}
 	if cpkScopeInfo != nil && cpkScopeInfo.EncryptionScope != nil {
 		req.Header.Set("x-ms-encryption-scope", *cpkScopeInfo.EncryptionScope)
 	}
@@ -863,6 +866,9 @@ func (client *blobClient) DownloadCreateRequest(ctx context.Context, blobDownloa
 	}
 	if cpkInfo != nil && cpkInfo.EncryptionKeySha256 != nil {
 		req.Header.Set("x-ms-encryption-key-sha256", *cpkInfo.EncryptionKeySha256)
+	}
+	if cpkInfo != nil && cpkInfo.EncryptionAlgorithm != nil {
+		req.Header.Set("x-ms-encryption-algorithm", "AES256")
 	}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfModifiedSince != nil {
 		req.Header.Set("If-Modified-Since", modifiedAccessConditions.IfModifiedSince.Format(time.RFC1123))
@@ -1266,6 +1272,9 @@ func (client *blobClient) GetPropertiesCreateRequest(ctx context.Context, blobGe
 	}
 	if cpkInfo != nil && cpkInfo.EncryptionKeySha256 != nil {
 		req.Header.Set("x-ms-encryption-key-sha256", *cpkInfo.EncryptionKeySha256)
+	}
+	if cpkInfo != nil && cpkInfo.EncryptionAlgorithm != nil {
+		req.Header.Set("x-ms-encryption-algorithm", "AES256")
 	}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfModifiedSince != nil {
 		req.Header.Set("If-Modified-Since", modifiedAccessConditions.IfModifiedSince.Format(time.RFC1123))
@@ -2076,6 +2085,9 @@ func (client *blobClient) SetMetadataCreateRequest(ctx context.Context, blobSetM
 	}
 	if cpkInfo != nil && cpkInfo.EncryptionKeySha256 != nil {
 		req.Header.Set("x-ms-encryption-key-sha256", *cpkInfo.EncryptionKeySha256)
+	}
+	if cpkInfo != nil && cpkInfo.EncryptionAlgorithm != nil {
+		req.Header.Set("x-ms-encryption-algorithm", "AES256")
 	}
 	if cpkScopeInfo != nil && cpkScopeInfo.EncryptionScope != nil {
 		req.Header.Set("x-ms-encryption-scope", *cpkScopeInfo.EncryptionScope)

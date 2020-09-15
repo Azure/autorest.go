@@ -115,6 +115,9 @@ func (client *blockBlobClient) CommitBlockListCreateRequest(ctx context.Context,
 	if cpkInfo != nil && cpkInfo.EncryptionKeySha256 != nil {
 		req.Header.Set("x-ms-encryption-key-sha256", *cpkInfo.EncryptionKeySha256)
 	}
+	if cpkInfo != nil && cpkInfo.EncryptionAlgorithm != nil {
+		req.Header.Set("x-ms-encryption-algorithm", "AES256")
+	}
 	if cpkScopeInfo != nil && cpkScopeInfo.EncryptionScope != nil {
 		req.Header.Set("x-ms-encryption-scope", *cpkScopeInfo.EncryptionScope)
 	}
@@ -356,6 +359,9 @@ func (client *blockBlobClient) StageBlockCreateRequest(ctx context.Context, bloc
 	if cpkInfo != nil && cpkInfo.EncryptionKeySha256 != nil {
 		req.Header.Set("x-ms-encryption-key-sha256", *cpkInfo.EncryptionKeySha256)
 	}
+	if cpkInfo != nil && cpkInfo.EncryptionAlgorithm != nil {
+		req.Header.Set("x-ms-encryption-algorithm", "AES256")
+	}
 	if cpkScopeInfo != nil && cpkScopeInfo.EncryptionScope != nil {
 		req.Header.Set("x-ms-encryption-scope", *cpkScopeInfo.EncryptionScope)
 	}
@@ -474,6 +480,9 @@ func (client *blockBlobClient) StageBlockFromURLCreateRequest(ctx context.Contex
 	}
 	if cpkInfo != nil && cpkInfo.EncryptionKeySha256 != nil {
 		req.Header.Set("x-ms-encryption-key-sha256", *cpkInfo.EncryptionKeySha256)
+	}
+	if cpkInfo != nil && cpkInfo.EncryptionAlgorithm != nil {
+		req.Header.Set("x-ms-encryption-algorithm", "AES256")
 	}
 	if cpkScopeInfo != nil && cpkScopeInfo.EncryptionScope != nil {
 		req.Header.Set("x-ms-encryption-scope", *cpkScopeInfo.EncryptionScope)
@@ -626,6 +635,9 @@ func (client *blockBlobClient) UploadCreateRequest(ctx context.Context, contentL
 	}
 	if cpkInfo != nil && cpkInfo.EncryptionKeySha256 != nil {
 		req.Header.Set("x-ms-encryption-key-sha256", *cpkInfo.EncryptionKeySha256)
+	}
+	if cpkInfo != nil && cpkInfo.EncryptionAlgorithm != nil {
+		req.Header.Set("x-ms-encryption-algorithm", "AES256")
 	}
 	if cpkScopeInfo != nil && cpkScopeInfo.EncryptionScope != nil {
 		req.Header.Set("x-ms-encryption-scope", *cpkScopeInfo.EncryptionScope)

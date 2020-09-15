@@ -360,6 +360,9 @@ func (client *serviceClient) ListContainersSegmentCreateRequest(ctx context.Cont
 	if serviceListContainersSegmentOptions != nil && serviceListContainersSegmentOptions.Maxresults != nil {
 		query.Set("maxresults", strconv.FormatInt(int64(*serviceListContainersSegmentOptions.Maxresults), 10))
 	}
+	if serviceListContainersSegmentOptions != nil && serviceListContainersSegmentOptions.Include != nil {
+		query.Set("include", "metadata")
+	}
 	if serviceListContainersSegmentOptions != nil && serviceListContainersSegmentOptions.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*serviceListContainersSegmentOptions.Timeout), 10))
 	}
