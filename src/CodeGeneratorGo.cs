@@ -189,8 +189,8 @@ namespace AutoRest.Go
 
         private static bool IsPreviewPackage(string[] files)
         {
-            // only evaluate composite builds if all swaggers are preview as we don't have a well-defined model for mixed preview/stable swaggers
-            return files.All(file => file.IndexOf(previewSubDir) >= 0);
+            // from the breaking change perspective, we should regard a composite package as a preview package when at least one of the swagger is preview, since preview swagger files may receive breaking changes frequently
+            return files.Any(file => file.IndexOf(previewSubDir) >= 0);
         }
     }
 }
