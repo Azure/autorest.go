@@ -52,6 +52,7 @@ namespace AutoRest.Go
             {
                 throw new InvalidOperationException($"namespace can only contains lower case letters, numbers and underscore");
             }
+
             // if preview-chk:true is specified verify that preview swagger is output under a preview subdirectory.
             // this is a bit of a hack until we have proper support for this in the swagger->sdk bot so it's opt-in.
             if (Settings.Instance.Host.GetValue<bool>("preview-chk").Result)
