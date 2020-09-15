@@ -458,8 +458,6 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
       let qpText = '';
       if (qp.required === true) {
         qpText = `\t${setter}\n`;
-      } else if (qp.schema.type === SchemaType.Constant) {
-        // omit this query param. TODO once non-required constants are fixed
       } else if (qp.implementation === ImplementationLocation.Client) {
         // global optional param
         qpText = `\tif client.${qp.language.go!.name} != nil {\n`;
@@ -529,8 +527,6 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
     }
     if (header.required) {
       text += emitHeaderSet(header, '\t');
-    } else if (header.schema.type === SchemaType.Constant) {
-      // omit this header. TODO once non-required constants are fixed
     } else {
       text += emitParamGroupCheck(<GroupProperty>header.language.go!.paramGroup, header);
       text += emitHeaderSet(header, '\t\t');
@@ -592,8 +588,7 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
       text += '\t}\n';
       body = 'aux';
     }
-    // TODO once non-required constants are fixed
-    if (bodyParam!.required || bodyParam?.schema.type === SchemaType.Constant) {
+    if (bodyParam!.required || bodyParam!.schema.type === SchemaType.Constant) {
       text += `\treturn req, req.MarshalAs${getMediaFormat(bodyParam!.schema, mediaType, body)}\n`;
     } else {
       const paramGroup = <GroupProperty>bodyParam!.language.go!.paramGroup;
