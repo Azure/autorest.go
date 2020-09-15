@@ -168,7 +168,6 @@ func (client *MediaTypesClient) ContentTypeWithEncodingCreateRequest(ctx context
 		return nil, err
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("Content-Type", "text/plain; encoding=UTF-8")
 	body := azcore.NopCloser(strings.NewReader(input))
 	return req, req.SetBody(body, "text/plain; encoding=UTF-8")
 }

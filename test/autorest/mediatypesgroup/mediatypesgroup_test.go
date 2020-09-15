@@ -42,7 +42,7 @@ func TestAnalyzeBodyWithSourcePath(t *testing.T) {
 
 func TestContentTypeWithEncoding(t *testing.T) {
 	client := newMediaTypesClient()
-	result, err := client.ContentTypeWithEncoding(context.Background(), "")
+	result, err := client.ContentTypeWithEncoding(context.Background(), "foo")
 	if err != nil {
 		t.Fatalf("ContentTypeWithEncoding: %v", err)
 	}

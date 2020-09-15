@@ -580,7 +580,7 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
       for (const param of values(op.requests![0].parameters)) {
         // If a request defined more than one possible media type, then the param is expected to be synthesized from modelerfour
         // and should be a SealedChoice schema type that account for the acceptable media types defined in the swagger. 
-        if (param.origin !== undefined && param.origin === 'modelerfour:synthesized/content-type' && param.schema.type === SchemaType.SealedChoice) {
+        if (param.origin === 'modelerfour:synthesized/content-type' && param.schema.type === SchemaType.SealedChoice) {
           contentType = `string(${param.language.go!.name})`;
         }
       }
@@ -591,11 +591,10 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
     imports.add('strings');
     let bodyParam = '';
     for (const param of values(op.requests![0].parameters)) {
-      if (param.protocol.http!.in !== undefined && param.protocol.http!.in === 'body') {
+      if (param.protocol.http!.in === 'body') {
         bodyParam = param.language.go!.name;
       }
     }
-    text += `\treq.Header.Set("Content-Type", "text/plain; encoding=UTF-8")\n`;
     text += `\tbody := azcore.NopCloser(strings.NewReader(${bodyParam}))\n`;
     text += `\treturn req, req.SetBody(body, "text/plain; encoding=UTF-8")\n`;
   } else {
@@ -701,17 +700,17 @@ function createProtocolResponse(op: Operation, imports: ImportManager): string {
       }
     }
     const mediaType = getMediaType(response.protocol);
-    if (mediaType === 'none' || mediaType === 'binary' || mediaType === 'text') {
-      // nothing to unmarshal
-      unmarshallerText += '\treturn &result, nil\n';
+    if (mediaType === 'JSON' || mediaType === 'XML') {
+      let target = `result.${schemaResponse.schema.language.go!.responseType.value}`;
+      // when unmarshalling a wrapped XML array or discriminated type, unmarshal into the response type, not the field
+      if ((mediaType === 'XML' && schemaResponse.schema.type === SchemaType.Array) || schemaResponse.schema.language.go!.discriminatorInterface) {
+        target = 'result';
+      }
+      unmarshallerText += `\treturn &result, resp.UnmarshalAs${getMediaFormat(response.schema, mediaType, `&${target}`)}\n`;
       return unmarshallerText;
     }
-    let target = `result.${schemaResponse.schema.language.go!.responseType.value}`;
-    // when unmarshalling a wrapped XML array or discriminated type, unmarshal into the response type, not the field
-    if ((mediaType === 'XML' && schemaResponse.schema.type === SchemaType.Array) || schemaResponse.schema.language.go!.discriminatorInterface) {
-      target = 'result';
-    }
-    unmarshallerText += `\treturn &result, resp.UnmarshalAs${getMediaFormat(response.schema, mediaType, `&${target}`)}\n`;
+    // nothing to unmarshal
+    unmarshallerText += '\treturn &result, nil\n';
     return unmarshallerText;
   };
   if (!isMultiRespOperation(op)) {
