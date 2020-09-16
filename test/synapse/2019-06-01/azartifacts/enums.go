@@ -58,6 +58,25 @@ func (c AzureFunctionActivityMethod) ToPtr() *AzureFunctionActivityMethod {
 	return &c
 }
 
+// AzureSearchIndexWriteBehaviorType - Specify the write behavior when upserting documents into Azure Search Index.
+type AzureSearchIndexWriteBehaviorType string
+
+const (
+	AzureSearchIndexWriteBehaviorTypeMerge  AzureSearchIndexWriteBehaviorType = "Merge"
+	AzureSearchIndexWriteBehaviorTypeUpload AzureSearchIndexWriteBehaviorType = "Upload"
+)
+
+func PossibleAzureSearchIndexWriteBehaviorTypeValues() []AzureSearchIndexWriteBehaviorType {
+	return []AzureSearchIndexWriteBehaviorType{
+		AzureSearchIndexWriteBehaviorTypeMerge,
+		AzureSearchIndexWriteBehaviorTypeUpload,
+	}
+}
+
+func (c AzureSearchIndexWriteBehaviorType) ToPtr() *AzureSearchIndexWriteBehaviorType {
+	return &c
+}
+
 // BigDataPoolReferenceType - Big data pool reference type.
 type BigDataPoolReferenceType string
 
@@ -72,6 +91,59 @@ func PossibleBigDataPoolReferenceTypeValues() []BigDataPoolReferenceType {
 }
 
 func (c BigDataPoolReferenceType) ToPtr() *BigDataPoolReferenceType {
+	return &c
+}
+
+type BlobEventTypes string
+
+const (
+	BlobEventTypesMicrosoftStorageBlobCreated BlobEventTypes = "Microsoft.Storage.BlobCreated"
+	BlobEventTypesMicrosoftStorageBlobDeleted BlobEventTypes = "Microsoft.Storage.BlobDeleted"
+)
+
+func PossibleBlobEventTypesValues() []BlobEventTypes {
+	return []BlobEventTypes{
+		BlobEventTypesMicrosoftStorageBlobCreated,
+		BlobEventTypesMicrosoftStorageBlobDeleted,
+	}
+}
+
+func (c BlobEventTypes) ToPtr() *BlobEventTypes {
+	return &c
+}
+
+// CassandraSourceReadConsistencyLevels - The consistency level specifies how many Cassandra servers must respond to a read request before returning data to the client application. Cassandra checks the specified number of Cassandra servers for data to satisfy the read request. Must be one of cassandraSourceReadConsistencyLevels. The default value is 'ONE'. It is case-insensitive.
+type CassandraSourceReadConsistencyLevels string
+
+const (
+	CassandraSourceReadConsistencyLevelsAll         CassandraSourceReadConsistencyLevels = "ALL"
+	CassandraSourceReadConsistencyLevelsEachQuorum  CassandraSourceReadConsistencyLevels = "EACH_QUORUM"
+	CassandraSourceReadConsistencyLevelsLocalOne    CassandraSourceReadConsistencyLevels = "LOCAL_ONE"
+	CassandraSourceReadConsistencyLevelsLocalQuorum CassandraSourceReadConsistencyLevels = "LOCAL_QUORUM"
+	CassandraSourceReadConsistencyLevelsLocalSerial CassandraSourceReadConsistencyLevels = "LOCAL_SERIAL"
+	CassandraSourceReadConsistencyLevelsOne         CassandraSourceReadConsistencyLevels = "ONE"
+	CassandraSourceReadConsistencyLevelsQuorum      CassandraSourceReadConsistencyLevels = "QUORUM"
+	CassandraSourceReadConsistencyLevelsSerial      CassandraSourceReadConsistencyLevels = "SERIAL"
+	CassandraSourceReadConsistencyLevelsThree       CassandraSourceReadConsistencyLevels = "THREE"
+	CassandraSourceReadConsistencyLevelsTwo         CassandraSourceReadConsistencyLevels = "TWO"
+)
+
+func PossibleCassandraSourceReadConsistencyLevelsValues() []CassandraSourceReadConsistencyLevels {
+	return []CassandraSourceReadConsistencyLevels{
+		CassandraSourceReadConsistencyLevelsAll,
+		CassandraSourceReadConsistencyLevelsEachQuorum,
+		CassandraSourceReadConsistencyLevelsLocalOne,
+		CassandraSourceReadConsistencyLevelsLocalQuorum,
+		CassandraSourceReadConsistencyLevelsLocalSerial,
+		CassandraSourceReadConsistencyLevelsOne,
+		CassandraSourceReadConsistencyLevelsQuorum,
+		CassandraSourceReadConsistencyLevelsSerial,
+		CassandraSourceReadConsistencyLevelsThree,
+		CassandraSourceReadConsistencyLevelsTwo,
+	}
+}
+
+func (c CassandraSourceReadConsistencyLevels) ToPtr() *CassandraSourceReadConsistencyLevels {
 	return &c
 }
 
@@ -95,6 +167,27 @@ func PossibleCellOutputTypeValues() []CellOutputType {
 }
 
 func (c CellOutputType) ToPtr() *CellOutputType {
+	return &c
+}
+
+// CopyBehaviorType - All available types of copy behavior.
+type CopyBehaviorType string
+
+const (
+	CopyBehaviorTypeFlattenHierarchy  CopyBehaviorType = "FlattenHierarchy"
+	CopyBehaviorTypeMergeFiles        CopyBehaviorType = "MergeFiles"
+	CopyBehaviorTypePreserveHierarchy CopyBehaviorType = "PreserveHierarchy"
+)
+
+func PossibleCopyBehaviorTypeValues() []CopyBehaviorType {
+	return []CopyBehaviorType{
+		CopyBehaviorTypeFlattenHierarchy,
+		CopyBehaviorTypeMergeFiles,
+		CopyBehaviorTypePreserveHierarchy,
+	}
+}
+
+func (c CopyBehaviorType) ToPtr() *CopyBehaviorType {
 	return &c
 }
 
@@ -169,6 +262,34 @@ func PossibleDatasetReferenceTypeValues() []DatasetReferenceType {
 }
 
 func (c DatasetReferenceType) ToPtr() *DatasetReferenceType {
+	return &c
+}
+
+type DayOfWeek string
+
+const (
+	DayOfWeekSunday    DayOfWeek = "Sunday"
+	DayOfWeekMonday    DayOfWeek = "Monday"
+	DayOfWeekTuesday   DayOfWeek = "Tuesday"
+	DayOfWeekWednesday DayOfWeek = "Wednesday"
+	DayOfWeekThursday  DayOfWeek = "Thursday"
+	DayOfWeekFriday    DayOfWeek = "Friday"
+	DayOfWeekSaturday  DayOfWeek = "Saturday"
+)
+
+func PossibleDayOfWeekValues() []DayOfWeek {
+	return []DayOfWeek{
+		DayOfWeekSunday,
+		DayOfWeekMonday,
+		DayOfWeekTuesday,
+		DayOfWeekWednesday,
+		DayOfWeekThursday,
+		DayOfWeekFriday,
+		DayOfWeekSaturday,
+	}
+}
+
+func (c DayOfWeek) ToPtr() *DayOfWeek {
 	return &c
 }
 
@@ -293,6 +414,23 @@ func PossibleDynamicsServicePrincipalCredentialTypeValues() []DynamicsServicePri
 }
 
 func (c DynamicsServicePrincipalCredentialType) ToPtr() *DynamicsServicePrincipalCredentialType {
+	return &c
+}
+
+// DynamicsSinkWriteBehavior - The write behavior for the operation.
+type DynamicsSinkWriteBehavior string
+
+const (
+	DynamicsSinkWriteBehaviorUpsert DynamicsSinkWriteBehavior = "Upsert"
+)
+
+func PossibleDynamicsSinkWriteBehaviorValues() []DynamicsSinkWriteBehavior {
+	return []DynamicsSinkWriteBehavior{
+		DynamicsSinkWriteBehaviorUpsert,
+	}
+}
+
+func (c DynamicsSinkWriteBehavior) ToPtr() *DynamicsSinkWriteBehavior {
 	return &c
 }
 
@@ -567,6 +705,63 @@ func (c ImpalaAuthenticationType) ToPtr() *ImpalaAuthenticationType {
 	return &c
 }
 
+// IntegrationRuntimeEdition - The edition for the SSIS Integration Runtime
+type IntegrationRuntimeEdition string
+
+const (
+	IntegrationRuntimeEditionEnterprise IntegrationRuntimeEdition = "Enterprise"
+	IntegrationRuntimeEditionStandard   IntegrationRuntimeEdition = "Standard"
+)
+
+func PossibleIntegrationRuntimeEditionValues() []IntegrationRuntimeEdition {
+	return []IntegrationRuntimeEdition{
+		IntegrationRuntimeEditionEnterprise,
+		IntegrationRuntimeEditionStandard,
+	}
+}
+
+func (c IntegrationRuntimeEdition) ToPtr() *IntegrationRuntimeEdition {
+	return &c
+}
+
+// IntegrationRuntimeEntityReferenceType - The type of this referenced entity.
+type IntegrationRuntimeEntityReferenceType string
+
+const (
+	IntegrationRuntimeEntityReferenceTypeIntegrationRuntimeReference IntegrationRuntimeEntityReferenceType = "IntegrationRuntimeReference"
+	IntegrationRuntimeEntityReferenceTypeLinkedServiceReference      IntegrationRuntimeEntityReferenceType = "LinkedServiceReference"
+)
+
+func PossibleIntegrationRuntimeEntityReferenceTypeValues() []IntegrationRuntimeEntityReferenceType {
+	return []IntegrationRuntimeEntityReferenceType{
+		IntegrationRuntimeEntityReferenceTypeIntegrationRuntimeReference,
+		IntegrationRuntimeEntityReferenceTypeLinkedServiceReference,
+	}
+}
+
+func (c IntegrationRuntimeEntityReferenceType) ToPtr() *IntegrationRuntimeEntityReferenceType {
+	return &c
+}
+
+// IntegrationRuntimeLicenseType - License type for bringing your own license scenario.
+type IntegrationRuntimeLicenseType string
+
+const (
+	IntegrationRuntimeLicenseTypeBasePrice       IntegrationRuntimeLicenseType = "BasePrice"
+	IntegrationRuntimeLicenseTypeLicenseIncluded IntegrationRuntimeLicenseType = "LicenseIncluded"
+)
+
+func PossibleIntegrationRuntimeLicenseTypeValues() []IntegrationRuntimeLicenseType {
+	return []IntegrationRuntimeLicenseType{
+		IntegrationRuntimeLicenseTypeBasePrice,
+		IntegrationRuntimeLicenseTypeLicenseIncluded,
+	}
+}
+
+func (c IntegrationRuntimeLicenseType) ToPtr() *IntegrationRuntimeLicenseType {
+	return &c
+}
+
 // IntegrationRuntimeReferenceType - Type of integration runtime.
 type IntegrationRuntimeReferenceType string
 
@@ -581,6 +776,121 @@ func PossibleIntegrationRuntimeReferenceTypeValues() []IntegrationRuntimeReferen
 }
 
 func (c IntegrationRuntimeReferenceType) ToPtr() *IntegrationRuntimeReferenceType {
+	return &c
+}
+
+// IntegrationRuntimeSsisCatalogPricingTier - The pricing tier for the catalog database. The valid values could be found in https://azure.microsoft.com/en-us/pricing/details/sql-database/
+type IntegrationRuntimeSsisCatalogPricingTier string
+
+const (
+	IntegrationRuntimeSsisCatalogPricingTierBasic     IntegrationRuntimeSsisCatalogPricingTier = "Basic"
+	IntegrationRuntimeSsisCatalogPricingTierPremium   IntegrationRuntimeSsisCatalogPricingTier = "Premium"
+	IntegrationRuntimeSsisCatalogPricingTierPremiumRs IntegrationRuntimeSsisCatalogPricingTier = "PremiumRS"
+	IntegrationRuntimeSsisCatalogPricingTierStandard  IntegrationRuntimeSsisCatalogPricingTier = "Standard"
+)
+
+func PossibleIntegrationRuntimeSsisCatalogPricingTierValues() []IntegrationRuntimeSsisCatalogPricingTier {
+	return []IntegrationRuntimeSsisCatalogPricingTier{
+		IntegrationRuntimeSsisCatalogPricingTierBasic,
+		IntegrationRuntimeSsisCatalogPricingTierPremium,
+		IntegrationRuntimeSsisCatalogPricingTierPremiumRs,
+		IntegrationRuntimeSsisCatalogPricingTierStandard,
+	}
+}
+
+func (c IntegrationRuntimeSsisCatalogPricingTier) ToPtr() *IntegrationRuntimeSsisCatalogPricingTier {
+	return &c
+}
+
+// IntegrationRuntimeState - The state of integration runtime.
+type IntegrationRuntimeState string
+
+const (
+	IntegrationRuntimeStateAccessDenied     IntegrationRuntimeState = "AccessDenied"
+	IntegrationRuntimeStateInitial          IntegrationRuntimeState = "Initial"
+	IntegrationRuntimeStateLimited          IntegrationRuntimeState = "Limited"
+	IntegrationRuntimeStateNeedRegistration IntegrationRuntimeState = "NeedRegistration"
+	IntegrationRuntimeStateOffline          IntegrationRuntimeState = "Offline"
+	IntegrationRuntimeStateOnline           IntegrationRuntimeState = "Online"
+	IntegrationRuntimeStateStarted          IntegrationRuntimeState = "Started"
+	IntegrationRuntimeStateStarting         IntegrationRuntimeState = "Starting"
+	IntegrationRuntimeStateStopped          IntegrationRuntimeState = "Stopped"
+	IntegrationRuntimeStateStopping         IntegrationRuntimeState = "Stopping"
+)
+
+func PossibleIntegrationRuntimeStateValues() []IntegrationRuntimeState {
+	return []IntegrationRuntimeState{
+		IntegrationRuntimeStateAccessDenied,
+		IntegrationRuntimeStateInitial,
+		IntegrationRuntimeStateLimited,
+		IntegrationRuntimeStateNeedRegistration,
+		IntegrationRuntimeStateOffline,
+		IntegrationRuntimeStateOnline,
+		IntegrationRuntimeStateStarted,
+		IntegrationRuntimeStateStarting,
+		IntegrationRuntimeStateStopped,
+		IntegrationRuntimeStateStopping,
+	}
+}
+
+func (c IntegrationRuntimeState) ToPtr() *IntegrationRuntimeState {
+	return &c
+}
+
+// IntegrationRuntimeType - The type of integration runtime.
+type IntegrationRuntimeType string
+
+const (
+	IntegrationRuntimeTypeManaged    IntegrationRuntimeType = "Managed"
+	IntegrationRuntimeTypeSelfHosted IntegrationRuntimeType = "SelfHosted"
+)
+
+func PossibleIntegrationRuntimeTypeValues() []IntegrationRuntimeType {
+	return []IntegrationRuntimeType{
+		IntegrationRuntimeTypeManaged,
+		IntegrationRuntimeTypeSelfHosted,
+	}
+}
+
+func (c IntegrationRuntimeType) ToPtr() *IntegrationRuntimeType {
+	return &c
+}
+
+// JSONFormatFilePattern - JSON format file pattern. A property of JsonFormat.
+type JSONFormatFilePattern string
+
+const (
+	JSONFormatFilePatternArrayOfObjects JSONFormatFilePattern = "arrayOfObjects"
+	JSONFormatFilePatternSetOfObjects   JSONFormatFilePattern = "setOfObjects"
+)
+
+func PossibleJSONFormatFilePatternValues() []JSONFormatFilePattern {
+	return []JSONFormatFilePattern{
+		JSONFormatFilePatternArrayOfObjects,
+		JSONFormatFilePatternSetOfObjects,
+	}
+}
+
+func (c JSONFormatFilePattern) ToPtr() *JSONFormatFilePattern {
+	return &c
+}
+
+// JSONWriteFilePattern - File pattern of JSON. This setting controls the way a collection of JSON objects will be treated. The default value is 'setOfObjects'. It is case-sensitive.
+type JSONWriteFilePattern string
+
+const (
+	JSONWriteFilePatternArrayOfObjects JSONWriteFilePattern = "arrayOfObjects"
+	JSONWriteFilePatternSetOfObjects   JSONWriteFilePattern = "setOfObjects"
+)
+
+func PossibleJSONWriteFilePatternValues() []JSONWriteFilePattern {
+	return []JSONWriteFilePattern{
+		JSONWriteFilePatternArrayOfObjects,
+		JSONWriteFilePatternSetOfObjects,
+	}
+}
+
+func (c JSONWriteFilePattern) ToPtr() *JSONWriteFilePattern {
 	return &c
 }
 
@@ -600,6 +910,73 @@ func PossibleMongoDbAuthenticationTypeValues() []MongoDbAuthenticationType {
 }
 
 func (c MongoDbAuthenticationType) ToPtr() *MongoDbAuthenticationType {
+	return &c
+}
+
+// NetezzaPartitionOption - The partition mechanism that will be used for Netezza read in parallel.
+type NetezzaPartitionOption string
+
+const (
+	NetezzaPartitionOptionDataSlice    NetezzaPartitionOption = "DataSlice"
+	NetezzaPartitionOptionDynamicRange NetezzaPartitionOption = "DynamicRange"
+	NetezzaPartitionOptionNone         NetezzaPartitionOption = "None"
+)
+
+func PossibleNetezzaPartitionOptionValues() []NetezzaPartitionOption {
+	return []NetezzaPartitionOption{
+		NetezzaPartitionOptionDataSlice,
+		NetezzaPartitionOptionDynamicRange,
+		NetezzaPartitionOptionNone,
+	}
+}
+
+func (c NetezzaPartitionOption) ToPtr() *NetezzaPartitionOption {
+	return &c
+}
+
+// NodeSize - The level of compute power that each node in the Big Data pool has.
+type NodeSize string
+
+const (
+	NodeSizeLarge   NodeSize = "Large"
+	NodeSizeMedium  NodeSize = "Medium"
+	NodeSizeNone    NodeSize = "None"
+	NodeSizeSmall   NodeSize = "Small"
+	NodeSizeXLarge  NodeSize = "XLarge"
+	NodeSizeXxLarge NodeSize = "XXLarge"
+)
+
+func PossibleNodeSizeValues() []NodeSize {
+	return []NodeSize{
+		NodeSizeLarge,
+		NodeSizeMedium,
+		NodeSizeNone,
+		NodeSizeSmall,
+		NodeSizeXLarge,
+		NodeSizeXxLarge,
+	}
+}
+
+func (c NodeSize) ToPtr() *NodeSize {
+	return &c
+}
+
+// NodeSizeFamily - The kind of nodes that the Big Data pool provides.
+type NodeSizeFamily string
+
+const (
+	NodeSizeFamilyMemoryOptimized NodeSizeFamily = "MemoryOptimized"
+	NodeSizeFamilyNone            NodeSizeFamily = "None"
+)
+
+func PossibleNodeSizeFamilyValues() []NodeSizeFamily {
+	return []NodeSizeFamily{
+		NodeSizeFamilyMemoryOptimized,
+		NodeSizeFamilyNone,
+	}
+}
+
+func (c NodeSizeFamily) ToPtr() *NodeSizeFamily {
 	return &c
 }
 
@@ -661,6 +1038,27 @@ func PossibleODataAuthenticationTypeValues() []ODataAuthenticationType {
 }
 
 func (c ODataAuthenticationType) ToPtr() *ODataAuthenticationType {
+	return &c
+}
+
+// OraclePartitionOption - The partition mechanism that will be used for Oracle read in parallel.
+type OraclePartitionOption string
+
+const (
+	OraclePartitionOptionDynamicRange              OraclePartitionOption = "DynamicRange"
+	OraclePartitionOptionNone                      OraclePartitionOption = "None"
+	OraclePartitionOptionPhysicalPartitionsOfTable OraclePartitionOption = "PhysicalPartitionsOfTable"
+)
+
+func PossibleOraclePartitionOptionValues() []OraclePartitionOption {
+	return []OraclePartitionOption{
+		OraclePartitionOptionDynamicRange,
+		OraclePartitionOptionNone,
+		OraclePartitionOptionPhysicalPartitionsOfTable,
+	}
+}
+
+func (c OraclePartitionOption) ToPtr() *OraclePartitionOption {
 	return &c
 }
 
@@ -801,6 +1199,25 @@ func (c PluginCurrentState) ToPtr() *PluginCurrentState {
 	return &c
 }
 
+// PolybaseSettingsRejectType - Indicates whether the RejectValue property is specified as a literal value or a percentage.
+type PolybaseSettingsRejectType string
+
+const (
+	PolybaseSettingsRejectTypePercentage PolybaseSettingsRejectType = "percentage"
+	PolybaseSettingsRejectTypeValue      PolybaseSettingsRejectType = "value"
+)
+
+func PossiblePolybaseSettingsRejectTypeValues() []PolybaseSettingsRejectType {
+	return []PolybaseSettingsRejectType{
+		PolybaseSettingsRejectTypePercentage,
+		PolybaseSettingsRejectTypeValue,
+	}
+}
+
+func (c PolybaseSettingsRejectType) ToPtr() *PolybaseSettingsRejectType {
+	return &c
+}
+
 // PrestoAuthenticationType - The authentication mechanism used to connect to the Presto server.
 type PrestoAuthenticationType string
 
@@ -817,6 +1234,77 @@ func PossiblePrestoAuthenticationTypeValues() []PrestoAuthenticationType {
 }
 
 func (c PrestoAuthenticationType) ToPtr() *PrestoAuthenticationType {
+	return &c
+}
+
+// PrivateLinkServiceConnectionStateStatus - The private link service connection status.
+type PrivateLinkServiceConnectionStateStatus string
+
+const (
+	PrivateLinkServiceConnectionStateStatusApproved     PrivateLinkServiceConnectionStateStatus = "Approved"
+	PrivateLinkServiceConnectionStateStatusDisconnected PrivateLinkServiceConnectionStateStatus = "Disconnected"
+	PrivateLinkServiceConnectionStateStatusPending      PrivateLinkServiceConnectionStateStatus = "Pending"
+	PrivateLinkServiceConnectionStateStatusRejected     PrivateLinkServiceConnectionStateStatus = "Rejected"
+)
+
+func PossiblePrivateLinkServiceConnectionStateStatusValues() []PrivateLinkServiceConnectionStateStatus {
+	return []PrivateLinkServiceConnectionStateStatus{
+		PrivateLinkServiceConnectionStateStatusApproved,
+		PrivateLinkServiceConnectionStateStatusDisconnected,
+		PrivateLinkServiceConnectionStateStatusPending,
+		PrivateLinkServiceConnectionStateStatusRejected,
+	}
+}
+
+func (c PrivateLinkServiceConnectionStateStatus) ToPtr() *PrivateLinkServiceConnectionStateStatus {
+	return &c
+}
+
+// RecurrenceFrequency - Enumerates possible frequency option for the schedule trigger.
+type RecurrenceFrequency string
+
+const (
+	RecurrenceFrequencyDay          RecurrenceFrequency = "Day"
+	RecurrenceFrequencyHour         RecurrenceFrequency = "Hour"
+	RecurrenceFrequencyMinute       RecurrenceFrequency = "Minute"
+	RecurrenceFrequencyMonth        RecurrenceFrequency = "Month"
+	RecurrenceFrequencyNotSpecified RecurrenceFrequency = "NotSpecified"
+	RecurrenceFrequencyWeek         RecurrenceFrequency = "Week"
+	RecurrenceFrequencyYear         RecurrenceFrequency = "Year"
+)
+
+func PossibleRecurrenceFrequencyValues() []RecurrenceFrequency {
+	return []RecurrenceFrequency{
+		RecurrenceFrequencyDay,
+		RecurrenceFrequencyHour,
+		RecurrenceFrequencyMinute,
+		RecurrenceFrequencyMonth,
+		RecurrenceFrequencyNotSpecified,
+		RecurrenceFrequencyWeek,
+		RecurrenceFrequencyYear,
+	}
+}
+
+func (c RecurrenceFrequency) ToPtr() *RecurrenceFrequency {
+	return &c
+}
+
+// ResourceIDentityType - The type of managed identity for the workspace
+type ResourceIDentityType string
+
+const (
+	ResourceIDentityTypeNone           ResourceIDentityType = "None"
+	ResourceIDentityTypeSystemAssigned ResourceIDentityType = "SystemAssigned"
+)
+
+func PossibleResourceIDentityTypeValues() []ResourceIDentityType {
+	return []ResourceIDentityType{
+		ResourceIDentityTypeNone,
+		ResourceIDentityTypeSystemAssigned,
+	}
+}
+
+func (c ResourceIDentityType) ToPtr() *ResourceIDentityType {
 	return &c
 }
 
@@ -1010,6 +1498,63 @@ func (c SQLScriptType) ToPtr() *SQLScriptType {
 	return &c
 }
 
+// SalesforceSinkWriteBehavior - The write behavior for the operation. Default is Insert.
+type SalesforceSinkWriteBehavior string
+
+const (
+	SalesforceSinkWriteBehaviorInsert SalesforceSinkWriteBehavior = "Insert"
+	SalesforceSinkWriteBehaviorUpsert SalesforceSinkWriteBehavior = "Upsert"
+)
+
+func PossibleSalesforceSinkWriteBehaviorValues() []SalesforceSinkWriteBehavior {
+	return []SalesforceSinkWriteBehavior{
+		SalesforceSinkWriteBehaviorInsert,
+		SalesforceSinkWriteBehaviorUpsert,
+	}
+}
+
+func (c SalesforceSinkWriteBehavior) ToPtr() *SalesforceSinkWriteBehavior {
+	return &c
+}
+
+// SalesforceSourceReadBehavior - The read behavior for the operation. Default is Query.
+type SalesforceSourceReadBehavior string
+
+const (
+	SalesforceSourceReadBehaviorQuery    SalesforceSourceReadBehavior = "Query"
+	SalesforceSourceReadBehaviorQueryAll SalesforceSourceReadBehavior = "QueryAll"
+)
+
+func PossibleSalesforceSourceReadBehaviorValues() []SalesforceSourceReadBehavior {
+	return []SalesforceSourceReadBehavior{
+		SalesforceSourceReadBehaviorQuery,
+		SalesforceSourceReadBehaviorQueryAll,
+	}
+}
+
+func (c SalesforceSourceReadBehavior) ToPtr() *SalesforceSourceReadBehavior {
+	return &c
+}
+
+// SapCloudForCustomerSinkWriteBehavior - The write behavior for the operation. Default is 'Insert'.
+type SapCloudForCustomerSinkWriteBehavior string
+
+const (
+	SapCloudForCustomerSinkWriteBehaviorInsert SapCloudForCustomerSinkWriteBehavior = "Insert"
+	SapCloudForCustomerSinkWriteBehaviorUpdate SapCloudForCustomerSinkWriteBehavior = "Update"
+)
+
+func PossibleSapCloudForCustomerSinkWriteBehaviorValues() []SapCloudForCustomerSinkWriteBehavior {
+	return []SapCloudForCustomerSinkWriteBehavior{
+		SapCloudForCustomerSinkWriteBehaviorInsert,
+		SapCloudForCustomerSinkWriteBehaviorUpdate,
+	}
+}
+
+func (c SapCloudForCustomerSinkWriteBehavior) ToPtr() *SapCloudForCustomerSinkWriteBehavior {
+	return &c
+}
+
 // SapHanaAuthenticationType - The authentication type to be used to connect to the SAP HANA server.
 type SapHanaAuthenticationType string
 
@@ -1026,6 +1571,54 @@ func PossibleSapHanaAuthenticationTypeValues() []SapHanaAuthenticationType {
 }
 
 func (c SapHanaAuthenticationType) ToPtr() *SapHanaAuthenticationType {
+	return &c
+}
+
+// SapHanaPartitionOption - The partition mechanism that will be used for SAP HANA read in parallel.
+type SapHanaPartitionOption string
+
+const (
+	SapHanaPartitionOptionNone                      SapHanaPartitionOption = "None"
+	SapHanaPartitionOptionPhysicalPartitionsOfTable SapHanaPartitionOption = "PhysicalPartitionsOfTable"
+	SapHanaPartitionOptionSapHanaDynamicRange       SapHanaPartitionOption = "SapHanaDynamicRange"
+)
+
+func PossibleSapHanaPartitionOptionValues() []SapHanaPartitionOption {
+	return []SapHanaPartitionOption{
+		SapHanaPartitionOptionNone,
+		SapHanaPartitionOptionPhysicalPartitionsOfTable,
+		SapHanaPartitionOptionSapHanaDynamicRange,
+	}
+}
+
+func (c SapHanaPartitionOption) ToPtr() *SapHanaPartitionOption {
+	return &c
+}
+
+// SapTablePartitionOption - The partition mechanism that will be used for SAP table read in parallel.
+type SapTablePartitionOption string
+
+const (
+	SapTablePartitionOptionNone                     SapTablePartitionOption = "None"
+	SapTablePartitionOptionPartitionOnCalendarDate  SapTablePartitionOption = "PartitionOnCalendarDate"
+	SapTablePartitionOptionPartitionOnCalendarMonth SapTablePartitionOption = "PartitionOnCalendarMonth"
+	SapTablePartitionOptionPartitionOnCalendarYear  SapTablePartitionOption = "PartitionOnCalendarYear"
+	SapTablePartitionOptionPartitionOnInt           SapTablePartitionOption = "PartitionOnInt"
+	SapTablePartitionOptionPartitionOnTime          SapTablePartitionOption = "PartitionOnTime"
+)
+
+func PossibleSapTablePartitionOptionValues() []SapTablePartitionOption {
+	return []SapTablePartitionOption{
+		SapTablePartitionOptionNone,
+		SapTablePartitionOptionPartitionOnCalendarDate,
+		SapTablePartitionOptionPartitionOnCalendarMonth,
+		SapTablePartitionOptionPartitionOnCalendarYear,
+		SapTablePartitionOptionPartitionOnInt,
+		SapTablePartitionOptionPartitionOnTime,
+	}
+}
+
+func (c SapTablePartitionOption) ToPtr() *SapTablePartitionOption {
 	return &c
 }
 
@@ -1338,6 +1931,44 @@ func (c TeradataAuthenticationType) ToPtr() *TeradataAuthenticationType {
 	return &c
 }
 
+// TeradataPartitionOption - The partition mechanism that will be used for teradata read in parallel.
+type TeradataPartitionOption string
+
+const (
+	TeradataPartitionOptionDynamicRange TeradataPartitionOption = "DynamicRange"
+	TeradataPartitionOptionHash         TeradataPartitionOption = "Hash"
+	TeradataPartitionOptionNone         TeradataPartitionOption = "None"
+)
+
+func PossibleTeradataPartitionOptionValues() []TeradataPartitionOption {
+	return []TeradataPartitionOption{
+		TeradataPartitionOptionDynamicRange,
+		TeradataPartitionOptionHash,
+		TeradataPartitionOptionNone,
+	}
+}
+
+func (c TeradataPartitionOption) ToPtr() *TeradataPartitionOption {
+	return &c
+}
+
+// TriggerReferenceType - Trigger reference type.
+type TriggerReferenceType string
+
+const (
+	TriggerReferenceTypeTriggerReference TriggerReferenceType = "TriggerReference"
+)
+
+func PossibleTriggerReferenceTypeValues() []TriggerReferenceType {
+	return []TriggerReferenceType{
+		TriggerReferenceTypeTriggerReference,
+	}
+}
+
+func (c TriggerReferenceType) ToPtr() *TriggerReferenceType {
+	return &c
+}
+
 // TriggerRunStatus - Trigger run status.
 type TriggerRunStatus string
 
@@ -1377,6 +2008,25 @@ func PossibleTriggerRuntimeStateValues() []TriggerRuntimeState {
 }
 
 func (c TriggerRuntimeState) ToPtr() *TriggerRuntimeState {
+	return &c
+}
+
+// TumblingWindowFrequency - Enumerates possible frequency option for the tumbling window trigger.
+type TumblingWindowFrequency string
+
+const (
+	TumblingWindowFrequencyHour   TumblingWindowFrequency = "Hour"
+	TumblingWindowFrequencyMinute TumblingWindowFrequency = "Minute"
+)
+
+func PossibleTumblingWindowFrequencyValues() []TumblingWindowFrequency {
+	return []TumblingWindowFrequency{
+		TumblingWindowFrequencyHour,
+		TumblingWindowFrequencyMinute,
+	}
+}
+
+func (c TumblingWindowFrequency) ToPtr() *TumblingWindowFrequency {
 	return &c
 }
 

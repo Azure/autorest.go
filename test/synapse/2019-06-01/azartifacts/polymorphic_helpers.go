@@ -196,6 +196,74 @@ func unmarshalCopySinkClassification(body []byte) (CopySinkClassification, error
 	}
 	var b CopySinkClassification
 	switch m["type"] {
+	case "AvroSink":
+		b = &AvroSink{}
+	case "AzureBlobFSSink":
+		b = &AzureBlobFsSink{}
+	case "AzureDataExplorerSink":
+		b = &AzureDataExplorerSink{}
+	case "AzureDataLakeStoreSink":
+		b = &AzureDataLakeStoreSink{}
+	case "AzureMySqlSink":
+		b = &AzureMySQLSink{}
+	case "AzurePostgreSqlSink":
+		b = &AzurePostgreSQLSink{}
+	case "AzureQueueSink":
+		b = &AzureQueueSink{}
+	case "AzureSearchIndexSink":
+		b = &AzureSearchIndexSink{}
+	case "AzureSqlSink":
+		b = &AzureSQLSink{}
+	case "AzureTableSink":
+		b = &AzureTableSink{}
+	case "BinarySink":
+		b = &BinarySink{}
+	case "BlobSink":
+		b = &BlobSink{}
+	case "CommonDataServiceForAppsSink":
+		b = &CommonDataServiceForAppsSink{}
+	case "CosmosDbMongoDbApiSink":
+		b = &CosmosDbMongoDbAPISink{}
+	case "CosmosDbSqlApiSink":
+		b = &CosmosDbSQLAPISink{}
+	case "DelimitedTextSink":
+		b = &DelimitedTextSink{}
+	case "DocumentDbCollectionSink":
+		b = &DocumentDbCollectionSink{}
+	case "DynamicsCrmSink":
+		b = &DynamicsCrmSink{}
+	case "DynamicsSink":
+		b = &DynamicsSink{}
+	case "FileSystemSink":
+		b = &FileSystemSink{}
+	case "InformixSink":
+		b = &InformixSink{}
+	case "JsonSink":
+		b = &JSONSink{}
+	case "MicrosoftAccessSink":
+		b = &MicrosoftAccessSink{}
+	case "OdbcSink":
+		b = &OdbcSink{}
+	case "OracleSink":
+		b = &OracleSink{}
+	case "OrcSink":
+		b = &OrcSink{}
+	case "ParquetSink":
+		b = &ParquetSink{}
+	case "SalesforceServiceCloudSink":
+		b = &SalesforceServiceCloudSink{}
+	case "SalesforceSink":
+		b = &SalesforceSink{}
+	case "SapCloudForCustomerSink":
+		b = &SapCloudForCustomerSink{}
+	case "SqlDWSink":
+		b = &SQLDwSink{}
+	case "SqlMISink":
+		b = &SQLMiSink{}
+	case "SqlServerSink":
+		b = &SQLServerSink{}
+	case "SqlSink":
+		b = &SQLSink{}
 	default:
 		b = &CopySink{}
 	}
@@ -225,6 +293,180 @@ func unmarshalCopySourceClassification(body []byte) (CopySourceClassification, e
 	}
 	var b CopySourceClassification
 	switch m["type"] {
+	case "AmazonMWSSource":
+		b = &AmazonMwsSource{}
+	case "AmazonRedshiftSource":
+		b = &AmazonRedshiftSource{}
+	case "AvroSource":
+		b = &AvroSource{}
+	case "AzureBlobFSSource":
+		b = &AzureBlobFsSource{}
+	case "AzureDataExplorerSource":
+		b = &AzureDataExplorerSource{}
+	case "AzureDataLakeStoreSource":
+		b = &AzureDataLakeStoreSource{}
+	case "AzureMariaDBSource":
+		b = &AzureMariaDbSource{}
+	case "AzureMySqlSource":
+		b = &AzureMySQLSource{}
+	case "AzurePostgreSqlSource":
+		b = &AzurePostgreSQLSource{}
+	case "AzureSqlSource":
+		b = &AzureSQLSource{}
+	case "AzureTableSource":
+		b = &AzureTableSource{}
+	case "BinarySource":
+		b = &BinarySource{}
+	case "BlobSource":
+		b = &BlobSource{}
+	case "CassandraSource":
+		b = &CassandraSource{}
+	case "CommonDataServiceForAppsSource":
+		b = &CommonDataServiceForAppsSource{}
+	case "ConcurSource":
+		b = &ConcurSource{}
+	case "CosmosDbMongoDbApiSource":
+		b = &CosmosDbMongoDbAPISource{}
+	case "CosmosDbSqlApiSource":
+		b = &CosmosDbSQLAPISource{}
+	case "CouchbaseSource":
+		b = &CouchbaseSource{}
+	case "Db2Source":
+		b = &Db2Source{}
+	case "DelimitedTextSource":
+		b = &DelimitedTextSource{}
+	case "DocumentDbCollectionSource":
+		b = &DocumentDbCollectionSource{}
+	case "DrillSource":
+		b = &DrillSource{}
+	case "DynamicsAXSource":
+		b = &DynamicsAxSource{}
+	case "DynamicsCrmSource":
+		b = &DynamicsCrmSource{}
+	case "DynamicsSource":
+		b = &DynamicsSource{}
+	case "EloquaSource":
+		b = &EloquaSource{}
+	case "FileSystemSource":
+		b = &FileSystemSource{}
+	case "GoogleAdWordsSource":
+		b = &GoogleAdWordsSource{}
+	case "GoogleBigQuerySource":
+		b = &GoogleBigQuerySource{}
+	case "GreenplumSource":
+		b = &GreenplumSource{}
+	case "HBaseSource":
+		b = &HBaseSource{}
+	case "HdfsSource":
+		b = &HdfsSource{}
+	case "HiveSource":
+		b = &HiveSource{}
+	case "HttpSource":
+		b = &HTTPSource{}
+	case "HubspotSource":
+		b = &HubspotSource{}
+	case "ImpalaSource":
+		b = &ImpalaSource{}
+	case "InformixSource":
+		b = &InformixSource{}
+	case "JiraSource":
+		b = &JiraSource{}
+	case "JsonSource":
+		b = &JSONSource{}
+	case "MagentoSource":
+		b = &MagentoSource{}
+	case "MariaDBSource":
+		b = &MariaDbSource{}
+	case "MarketoSource":
+		b = &MarketoSource{}
+	case "MicrosoftAccessSource":
+		b = &MicrosoftAccessSource{}
+	case "MongoDbSource":
+		b = &MongoDbSource{}
+	case "MongoDbV2Source":
+		b = &MongoDbV2Source{}
+	case "MySqlSource":
+		b = &MySQLSource{}
+	case "NetezzaSource":
+		b = &NetezzaSource{}
+	case "ODataSource":
+		b = &ODataSource{}
+	case "OdbcSource":
+		b = &OdbcSource{}
+	case "Office365Source":
+		b = &Office365Source{}
+	case "OracleServiceCloudSource":
+		b = &OracleServiceCloudSource{}
+	case "OracleSource":
+		b = &OracleSource{}
+	case "OrcSource":
+		b = &OrcSource{}
+	case "ParquetSource":
+		b = &ParquetSource{}
+	case "PaypalSource":
+		b = &PaypalSource{}
+	case "PhoenixSource":
+		b = &PhoenixSource{}
+	case "PostgreSqlSource":
+		b = &PostgreSQLSource{}
+	case "PrestoSource":
+		b = &PrestoSource{}
+	case "QuickBooksSource":
+		b = &QuickBooksSource{}
+	case "RelationalSource":
+		b = &RelationalSource{}
+	case "ResponsysSource":
+		b = &ResponsysSource{}
+	case "RestSource":
+		b = &RestSource{}
+	case "SalesforceMarketingCloudSource":
+		b = &SalesforceMarketingCloudSource{}
+	case "SalesforceServiceCloudSource":
+		b = &SalesforceServiceCloudSource{}
+	case "SalesforceSource":
+		b = &SalesforceSource{}
+	case "SapBwSource":
+		b = &SapBwSource{}
+	case "SapCloudForCustomerSource":
+		b = &SapCloudForCustomerSource{}
+	case "SapEccSource":
+		b = &SapEccSource{}
+	case "SapHanaSource":
+		b = &SapHanaSource{}
+	case "SapOpenHubSource":
+		b = &SapOpenHubSource{}
+	case "SapTableSource":
+		b = &SapTableSource{}
+	case "ServiceNowSource":
+		b = &ServiceNowSource{}
+	case "ShopifySource":
+		b = &ShopifySource{}
+	case "SparkSource":
+		b = &SparkSource{}
+	case "SqlDWSource":
+		b = &SQLDwSource{}
+	case "SqlMISource":
+		b = &SQLMiSource{}
+	case "SqlServerSource":
+		b = &SQLServerSource{}
+	case "SqlSource":
+		b = &SQLSource{}
+	case "SquareSource":
+		b = &SquareSource{}
+	case "SybaseSource":
+		b = &SybaseSource{}
+	case "TabularSource":
+		b = &TabularSource{}
+	case "TeradataSource":
+		b = &TeradataSource{}
+	case "VerticaSource":
+		b = &VerticaSource{}
+	case "WebSource":
+		b = &WebSource{}
+	case "XeroSource":
+		b = &XeroSource{}
+	case "ZohoSource":
+		b = &ZohoSource{}
 	default:
 		b = &CopySource{}
 	}
@@ -239,6 +481,209 @@ func unmarshalCopySourceClassificationArray(body []byte) (*[]CopySourceClassific
 	fArray := make([]CopySourceClassification, len(rawMessages))
 	for index, rawMessage := range rawMessages {
 		f, err := unmarshalCopySourceClassification(*rawMessage)
+		if err != nil {
+			return nil, err
+		}
+		fArray[index] = f
+	}
+	return &fArray, nil
+}
+
+func unmarshalTabularSourceClassification(body []byte) (TabularSourceClassification, error) {
+	var m map[string]interface{}
+	if err := json.Unmarshal(body, &m); err != nil {
+		return nil, err
+	}
+	var b TabularSourceClassification
+	switch m["type"] {
+	case "AmazonMWSSource":
+		b = &AmazonMwsSource{}
+	case "AmazonRedshiftSource":
+		b = &AmazonRedshiftSource{}
+	case "AzureMariaDBSource":
+		b = &AzureMariaDbSource{}
+	case "AzureMySqlSource":
+		b = &AzureMySQLSource{}
+	case "AzurePostgreSqlSource":
+		b = &AzurePostgreSQLSource{}
+	case "AzureSqlSource":
+		b = &AzureSQLSource{}
+	case "AzureTableSource":
+		b = &AzureTableSource{}
+	case "CassandraSource":
+		b = &CassandraSource{}
+	case "ConcurSource":
+		b = &ConcurSource{}
+	case "CouchbaseSource":
+		b = &CouchbaseSource{}
+	case "Db2Source":
+		b = &Db2Source{}
+	case "DrillSource":
+		b = &DrillSource{}
+	case "DynamicsAXSource":
+		b = &DynamicsAxSource{}
+	case "EloquaSource":
+		b = &EloquaSource{}
+	case "GoogleAdWordsSource":
+		b = &GoogleAdWordsSource{}
+	case "GoogleBigQuerySource":
+		b = &GoogleBigQuerySource{}
+	case "GreenplumSource":
+		b = &GreenplumSource{}
+	case "HBaseSource":
+		b = &HBaseSource{}
+	case "HiveSource":
+		b = &HiveSource{}
+	case "HubspotSource":
+		b = &HubspotSource{}
+	case "ImpalaSource":
+		b = &ImpalaSource{}
+	case "InformixSource":
+		b = &InformixSource{}
+	case "JiraSource":
+		b = &JiraSource{}
+	case "MagentoSource":
+		b = &MagentoSource{}
+	case "MariaDBSource":
+		b = &MariaDbSource{}
+	case "MarketoSource":
+		b = &MarketoSource{}
+	case "MySqlSource":
+		b = &MySQLSource{}
+	case "NetezzaSource":
+		b = &NetezzaSource{}
+	case "OdbcSource":
+		b = &OdbcSource{}
+	case "OracleServiceCloudSource":
+		b = &OracleServiceCloudSource{}
+	case "PaypalSource":
+		b = &PaypalSource{}
+	case "PhoenixSource":
+		b = &PhoenixSource{}
+	case "PostgreSqlSource":
+		b = &PostgreSQLSource{}
+	case "PrestoSource":
+		b = &PrestoSource{}
+	case "QuickBooksSource":
+		b = &QuickBooksSource{}
+	case "ResponsysSource":
+		b = &ResponsysSource{}
+	case "SalesforceMarketingCloudSource":
+		b = &SalesforceMarketingCloudSource{}
+	case "SalesforceSource":
+		b = &SalesforceSource{}
+	case "SapBwSource":
+		b = &SapBwSource{}
+	case "SapCloudForCustomerSource":
+		b = &SapCloudForCustomerSource{}
+	case "SapEccSource":
+		b = &SapEccSource{}
+	case "SapHanaSource":
+		b = &SapHanaSource{}
+	case "SapOpenHubSource":
+		b = &SapOpenHubSource{}
+	case "SapTableSource":
+		b = &SapTableSource{}
+	case "ServiceNowSource":
+		b = &ServiceNowSource{}
+	case "ShopifySource":
+		b = &ShopifySource{}
+	case "SparkSource":
+		b = &SparkSource{}
+	case "SqlDWSource":
+		b = &SQLDwSource{}
+	case "SqlMISource":
+		b = &SQLMiSource{}
+	case "SqlServerSource":
+		b = &SQLServerSource{}
+	case "SqlSource":
+		b = &SQLSource{}
+	case "SquareSource":
+		b = &SquareSource{}
+	case "SybaseSource":
+		b = &SybaseSource{}
+	case "TeradataSource":
+		b = &TeradataSource{}
+	case "VerticaSource":
+		b = &VerticaSource{}
+	case "XeroSource":
+		b = &XeroSource{}
+	case "ZohoSource":
+		b = &ZohoSource{}
+	default:
+		b = &TabularSource{}
+	}
+	return b, json.Unmarshal(body, &b)
+}
+
+func unmarshalTabularSourceClassificationArray(body []byte) (*[]TabularSourceClassification, error) {
+	var rawMessages []*json.RawMessage
+	if err := json.Unmarshal(body, &rawMessages); err != nil {
+		return nil, err
+	}
+	fArray := make([]TabularSourceClassification, len(rawMessages))
+	for index, rawMessage := range rawMessages {
+		f, err := unmarshalTabularSourceClassification(*rawMessage)
+		if err != nil {
+			return nil, err
+		}
+		fArray[index] = f
+	}
+	return &fArray, nil
+}
+
+func unmarshalCopyTranslatorClassification(body []byte) (CopyTranslatorClassification, error) {
+	var m map[string]interface{}
+	if err := json.Unmarshal(body, &m); err != nil {
+		return nil, err
+	}
+	var b CopyTranslatorClassification
+	switch m["type"] {
+	case "TabularTranslator":
+		b = &TabularTranslator{}
+	default:
+		b = &CopyTranslator{}
+	}
+	return b, json.Unmarshal(body, &b)
+}
+
+func unmarshalCopyTranslatorClassificationArray(body []byte) (*[]CopyTranslatorClassification, error) {
+	var rawMessages []*json.RawMessage
+	if err := json.Unmarshal(body, &rawMessages); err != nil {
+		return nil, err
+	}
+	fArray := make([]CopyTranslatorClassification, len(rawMessages))
+	for index, rawMessage := range rawMessages {
+		f, err := unmarshalCopyTranslatorClassification(*rawMessage)
+		if err != nil {
+			return nil, err
+		}
+		fArray[index] = f
+	}
+	return &fArray, nil
+}
+
+func unmarshalCustomSetupBaseClassification(body []byte) (CustomSetupBaseClassification, error) {
+	var m map[string]interface{}
+	if err := json.Unmarshal(body, &m); err != nil {
+		return nil, err
+	}
+	var b CustomSetupBaseClassification
+	switch m["type"] {
+	default:
+		b = &CustomSetupBase{}
+	}
+	return b, json.Unmarshal(body, &b)
+}
+
+func unmarshalCustomSetupBaseClassificationArray(body []byte) (*[]CustomSetupBaseClassification, error) {
+	var rawMessages []*json.RawMessage
+	if err := json.Unmarshal(body, &rawMessages); err != nil {
+		return nil, err
+	}
+	fArray := make([]CustomSetupBaseClassification, len(rawMessages))
+	for index, rawMessage := range rawMessages {
+		f, err := unmarshalCustomSetupBaseClassification(*rawMessage)
 		if err != nil {
 			return nil, err
 		}
@@ -323,6 +768,8 @@ func unmarshalDatasetClassification(body []byte) (DatasetClassification, error) 
 		b = &CosmosDbSQLAPICollectionDataset{}
 	case "CouchbaseTable":
 		b = &CouchbaseTableDataset{}
+	case "CustomDataset":
+		b = &CustomDataset{}
 	case "Db2Table":
 		b = &Db2TableDataset{}
 	case "DelimitedText":
@@ -511,6 +958,28 @@ func unmarshalDatasetLocationClassification(body []byte) (DatasetLocationClassif
 	}
 	var b DatasetLocationClassification
 	switch m["type"] {
+	case "AmazonS3Location":
+		b = &AmazonS3Location{}
+	case "AzureBlobFSLocation":
+		b = &AzureBlobFsLocation{}
+	case "AzureBlobStorageLocation":
+		b = &AzureBlobStorageLocation{}
+	case "AzureDataLakeStoreLocation":
+		b = &AzureDataLakeStoreLocation{}
+	case "AzureFileStorageLocation":
+		b = &AzureFileStorageLocation{}
+	case "FileServerLocation":
+		b = &FileServerLocation{}
+	case "FtpServerLocation":
+		b = &FtpServerLocation{}
+	case "GoogleCloudStorageLocation":
+		b = &GoogleCloudStorageLocation{}
+	case "HdfsLocation":
+		b = &HdfsLocation{}
+	case "HttpServerLocation":
+		b = &HTTPServerLocation{}
+	case "SftpLocation":
+		b = &SftpLocation{}
 	default:
 		b = &DatasetLocation{}
 	}
@@ -525,6 +994,243 @@ func unmarshalDatasetLocationClassificationArray(body []byte) (*[]DatasetLocatio
 	fArray := make([]DatasetLocationClassification, len(rawMessages))
 	for index, rawMessage := range rawMessages {
 		f, err := unmarshalDatasetLocationClassification(*rawMessage)
+		if err != nil {
+			return nil, err
+		}
+		fArray[index] = f
+	}
+	return &fArray, nil
+}
+
+func unmarshalDatasetStorageFormatClassification(body []byte) (DatasetStorageFormatClassification, error) {
+	var m map[string]interface{}
+	if err := json.Unmarshal(body, &m); err != nil {
+		return nil, err
+	}
+	var b DatasetStorageFormatClassification
+	switch m["type"] {
+	case "AvroFormat":
+		b = &AvroFormat{}
+	case "JsonFormat":
+		b = &JSONFormat{}
+	case "OrcFormat":
+		b = &OrcFormat{}
+	case "ParquetFormat":
+		b = &ParquetFormat{}
+	case "TextFormat":
+		b = &TextFormat{}
+	default:
+		b = &DatasetStorageFormat{}
+	}
+	return b, json.Unmarshal(body, &b)
+}
+
+func unmarshalDatasetStorageFormatClassificationArray(body []byte) (*[]DatasetStorageFormatClassification, error) {
+	var rawMessages []*json.RawMessage
+	if err := json.Unmarshal(body, &rawMessages); err != nil {
+		return nil, err
+	}
+	fArray := make([]DatasetStorageFormatClassification, len(rawMessages))
+	for index, rawMessage := range rawMessages {
+		f, err := unmarshalDatasetStorageFormatClassification(*rawMessage)
+		if err != nil {
+			return nil, err
+		}
+		fArray[index] = f
+	}
+	return &fArray, nil
+}
+
+func unmarshalDependencyReferenceClassification(body []byte) (DependencyReferenceClassification, error) {
+	var m map[string]interface{}
+	if err := json.Unmarshal(body, &m); err != nil {
+		return nil, err
+	}
+	var b DependencyReferenceClassification
+	switch m["type"] {
+	case "SelfDependencyTumblingWindowTriggerReference":
+		b = &SelfDependencyTumblingWindowTriggerReference{}
+	case "TriggerDependencyReference":
+		b = &TriggerDependencyReference{}
+	case "TumblingWindowTriggerDependencyReference":
+		b = &TumblingWindowTriggerDependencyReference{}
+	default:
+		b = &DependencyReference{}
+	}
+	return b, json.Unmarshal(body, &b)
+}
+
+func unmarshalDependencyReferenceClassificationArray(body []byte) (*[]DependencyReferenceClassification, error) {
+	var rawMessages []*json.RawMessage
+	if err := json.Unmarshal(body, &rawMessages); err != nil {
+		return nil, err
+	}
+	fArray := make([]DependencyReferenceClassification, len(rawMessages))
+	for index, rawMessage := range rawMessages {
+		f, err := unmarshalDependencyReferenceClassification(*rawMessage)
+		if err != nil {
+			return nil, err
+		}
+		fArray[index] = f
+	}
+	return &fArray, nil
+}
+
+func unmarshalTriggerDependencyReferenceClassification(body []byte) (TriggerDependencyReferenceClassification, error) {
+	var m map[string]interface{}
+	if err := json.Unmarshal(body, &m); err != nil {
+		return nil, err
+	}
+	var b TriggerDependencyReferenceClassification
+	switch m["type"] {
+	case "TumblingWindowTriggerDependencyReference":
+		b = &TumblingWindowTriggerDependencyReference{}
+	default:
+		b = &TriggerDependencyReference{}
+	}
+	return b, json.Unmarshal(body, &b)
+}
+
+func unmarshalTriggerDependencyReferenceClassificationArray(body []byte) (*[]TriggerDependencyReferenceClassification, error) {
+	var rawMessages []*json.RawMessage
+	if err := json.Unmarshal(body, &rawMessages); err != nil {
+		return nil, err
+	}
+	fArray := make([]TriggerDependencyReferenceClassification, len(rawMessages))
+	for index, rawMessage := range rawMessages {
+		f, err := unmarshalTriggerDependencyReferenceClassification(*rawMessage)
+		if err != nil {
+			return nil, err
+		}
+		fArray[index] = f
+	}
+	return &fArray, nil
+}
+
+func unmarshalFormatReadSettingsClassification(body []byte) (FormatReadSettingsClassification, error) {
+	var m map[string]interface{}
+	if err := json.Unmarshal(body, &m); err != nil {
+		return nil, err
+	}
+	var b FormatReadSettingsClassification
+	switch m["type"] {
+	case "DelimitedTextReadSettings":
+		b = &DelimitedTextReadSettings{}
+	default:
+		b = &FormatReadSettings{}
+	}
+	return b, json.Unmarshal(body, &b)
+}
+
+func unmarshalFormatReadSettingsClassificationArray(body []byte) (*[]FormatReadSettingsClassification, error) {
+	var rawMessages []*json.RawMessage
+	if err := json.Unmarshal(body, &rawMessages); err != nil {
+		return nil, err
+	}
+	fArray := make([]FormatReadSettingsClassification, len(rawMessages))
+	for index, rawMessage := range rawMessages {
+		f, err := unmarshalFormatReadSettingsClassification(*rawMessage)
+		if err != nil {
+			return nil, err
+		}
+		fArray[index] = f
+	}
+	return &fArray, nil
+}
+
+func unmarshalFormatWriteSettingsClassification(body []byte) (FormatWriteSettingsClassification, error) {
+	var m map[string]interface{}
+	if err := json.Unmarshal(body, &m); err != nil {
+		return nil, err
+	}
+	var b FormatWriteSettingsClassification
+	switch m["type"] {
+	case "AvroWriteSettings":
+		b = &AvroWriteSettings{}
+	case "DelimitedTextWriteSettings":
+		b = &DelimitedTextWriteSettings{}
+	case "JsonWriteSettings":
+		b = &JSONWriteSettings{}
+	default:
+		b = &FormatWriteSettings{}
+	}
+	return b, json.Unmarshal(body, &b)
+}
+
+func unmarshalFormatWriteSettingsClassificationArray(body []byte) (*[]FormatWriteSettingsClassification, error) {
+	var rawMessages []*json.RawMessage
+	if err := json.Unmarshal(body, &rawMessages); err != nil {
+		return nil, err
+	}
+	fArray := make([]FormatWriteSettingsClassification, len(rawMessages))
+	for index, rawMessage := range rawMessages {
+		f, err := unmarshalFormatWriteSettingsClassification(*rawMessage)
+		if err != nil {
+			return nil, err
+		}
+		fArray[index] = f
+	}
+	return &fArray, nil
+}
+
+func unmarshalIntegrationRuntimeClassification(body []byte) (IntegrationRuntimeClassification, error) {
+	var m map[string]interface{}
+	if err := json.Unmarshal(body, &m); err != nil {
+		return nil, err
+	}
+	var b IntegrationRuntimeClassification
+	switch m["type"] {
+	case IntegrationRuntimeTypeManaged:
+		b = &ManagedIntegrationRuntime{}
+	case IntegrationRuntimeTypeSelfHosted:
+		b = &SelfHostedIntegrationRuntime{}
+	default:
+		b = &IntegrationRuntime{}
+	}
+	return b, json.Unmarshal(body, &b)
+}
+
+func unmarshalIntegrationRuntimeClassificationArray(body []byte) (*[]IntegrationRuntimeClassification, error) {
+	var rawMessages []*json.RawMessage
+	if err := json.Unmarshal(body, &rawMessages); err != nil {
+		return nil, err
+	}
+	fArray := make([]IntegrationRuntimeClassification, len(rawMessages))
+	for index, rawMessage := range rawMessages {
+		f, err := unmarshalIntegrationRuntimeClassification(*rawMessage)
+		if err != nil {
+			return nil, err
+		}
+		fArray[index] = f
+	}
+	return &fArray, nil
+}
+
+func unmarshalLinkedIntegrationRuntimeTypeClassification(body []byte) (LinkedIntegrationRuntimeTypeClassification, error) {
+	var m map[string]interface{}
+	if err := json.Unmarshal(body, &m); err != nil {
+		return nil, err
+	}
+	var b LinkedIntegrationRuntimeTypeClassification
+	switch m["authorizationType"] {
+	case "Key":
+		b = &LinkedIntegrationRuntimeKeyAuthorization{}
+	case "RBAC":
+		b = &LinkedIntegrationRuntimeRbacAuthorization{}
+	default:
+		b = &LinkedIntegrationRuntimeType{}
+	}
+	return b, json.Unmarshal(body, &b)
+}
+
+func unmarshalLinkedIntegrationRuntimeTypeClassificationArray(body []byte) (*[]LinkedIntegrationRuntimeTypeClassification, error) {
+	var rawMessages []*json.RawMessage
+	if err := json.Unmarshal(body, &rawMessages); err != nil {
+		return nil, err
+	}
+	fArray := make([]LinkedIntegrationRuntimeTypeClassification, len(rawMessages))
+	for index, rawMessage := range rawMessages {
+		f, err := unmarshalLinkedIntegrationRuntimeTypeClassification(*rawMessage)
 		if err != nil {
 			return nil, err
 		}
@@ -783,6 +1489,96 @@ func unmarshalSecretBaseClassificationArray(body []byte) (*[]SecretBaseClassific
 	return &fArray, nil
 }
 
+func unmarshalStoreReadSettingsClassification(body []byte) (StoreReadSettingsClassification, error) {
+	var m map[string]interface{}
+	if err := json.Unmarshal(body, &m); err != nil {
+		return nil, err
+	}
+	var b StoreReadSettingsClassification
+	switch m["type"] {
+	case "AmazonS3ReadSettings":
+		b = &AmazonS3ReadSettings{}
+	case "AzureBlobFSReadSettings":
+		b = &AzureBlobFsReadSettings{}
+	case "AzureBlobStorageReadSettings":
+		b = &AzureBlobStorageReadSettings{}
+	case "AzureDataLakeStoreReadSettings":
+		b = &AzureDataLakeStoreReadSettings{}
+	case "AzureFileStorageReadSettings":
+		b = &AzureFileStorageReadSettings{}
+	case "FileServerReadSettings":
+		b = &FileServerReadSettings{}
+	case "FtpReadSettings":
+		b = &FtpReadSettings{}
+	case "GoogleCloudStorageReadSettings":
+		b = &GoogleCloudStorageReadSettings{}
+	case "HdfsReadSettings":
+		b = &HdfsReadSettings{}
+	case "HttpReadSettings":
+		b = &HTTPReadSettings{}
+	case "SftpReadSettings":
+		b = &SftpReadSettings{}
+	default:
+		b = &StoreReadSettings{}
+	}
+	return b, json.Unmarshal(body, &b)
+}
+
+func unmarshalStoreReadSettingsClassificationArray(body []byte) (*[]StoreReadSettingsClassification, error) {
+	var rawMessages []*json.RawMessage
+	if err := json.Unmarshal(body, &rawMessages); err != nil {
+		return nil, err
+	}
+	fArray := make([]StoreReadSettingsClassification, len(rawMessages))
+	for index, rawMessage := range rawMessages {
+		f, err := unmarshalStoreReadSettingsClassification(*rawMessage)
+		if err != nil {
+			return nil, err
+		}
+		fArray[index] = f
+	}
+	return &fArray, nil
+}
+
+func unmarshalStoreWriteSettingsClassification(body []byte) (StoreWriteSettingsClassification, error) {
+	var m map[string]interface{}
+	if err := json.Unmarshal(body, &m); err != nil {
+		return nil, err
+	}
+	var b StoreWriteSettingsClassification
+	switch m["type"] {
+	case "AzureBlobFSWriteSettings":
+		b = &AzureBlobFsWriteSettings{}
+	case "AzureBlobStorageWriteSettings":
+		b = &AzureBlobStorageWriteSettings{}
+	case "AzureDataLakeStoreWriteSettings":
+		b = &AzureDataLakeStoreWriteSettings{}
+	case "FileServerWriteSettings":
+		b = &FileServerWriteSettings{}
+	case "SftpWriteSettings":
+		b = &SftpWriteSettings{}
+	default:
+		b = &StoreWriteSettings{}
+	}
+	return b, json.Unmarshal(body, &b)
+}
+
+func unmarshalStoreWriteSettingsClassificationArray(body []byte) (*[]StoreWriteSettingsClassification, error) {
+	var rawMessages []*json.RawMessage
+	if err := json.Unmarshal(body, &rawMessages); err != nil {
+		return nil, err
+	}
+	fArray := make([]StoreWriteSettingsClassification, len(rawMessages))
+	for index, rawMessage := range rawMessages {
+		f, err := unmarshalStoreWriteSettingsClassification(*rawMessage)
+		if err != nil {
+			return nil, err
+		}
+		fArray[index] = f
+	}
+	return &fArray, nil
+}
+
 func unmarshalTriggerClassification(body []byte) (TriggerClassification, error) {
 	var m map[string]interface{}
 	if err := json.Unmarshal(body, &m); err != nil {
@@ -790,10 +1586,20 @@ func unmarshalTriggerClassification(body []byte) (TriggerClassification, error) 
 	}
 	var b TriggerClassification
 	switch m["type"] {
+	case "BlobEventsTrigger":
+		b = &BlobEventsTrigger{}
+	case "BlobTrigger":
+		b = &BlobTrigger{}
+	case "ChainingTrigger":
+		b = &ChainingTrigger{}
 	case "MultiplePipelineTrigger":
 		b = &MultiplePipelineTrigger{}
 	case "RerunTumblingWindowTrigger":
 		b = &RerunTumblingWindowTrigger{}
+	case "ScheduleTrigger":
+		b = &ScheduleTrigger{}
+	case "TumblingWindowTrigger":
+		b = &TumblingWindowTrigger{}
 	default:
 		b = &Trigger{}
 	}
@@ -808,6 +1614,41 @@ func unmarshalTriggerClassificationArray(body []byte) (*[]TriggerClassification,
 	fArray := make([]TriggerClassification, len(rawMessages))
 	for index, rawMessage := range rawMessages {
 		f, err := unmarshalTriggerClassification(*rawMessage)
+		if err != nil {
+			return nil, err
+		}
+		fArray[index] = f
+	}
+	return &fArray, nil
+}
+
+func unmarshalMultiplePipelineTriggerClassification(body []byte) (MultiplePipelineTriggerClassification, error) {
+	var m map[string]interface{}
+	if err := json.Unmarshal(body, &m); err != nil {
+		return nil, err
+	}
+	var b MultiplePipelineTriggerClassification
+	switch m["type"] {
+	case "BlobEventsTrigger":
+		b = &BlobEventsTrigger{}
+	case "BlobTrigger":
+		b = &BlobTrigger{}
+	case "ScheduleTrigger":
+		b = &ScheduleTrigger{}
+	default:
+		b = &MultiplePipelineTrigger{}
+	}
+	return b, json.Unmarshal(body, &b)
+}
+
+func unmarshalMultiplePipelineTriggerClassificationArray(body []byte) (*[]MultiplePipelineTriggerClassification, error) {
+	var rawMessages []*json.RawMessage
+	if err := json.Unmarshal(body, &rawMessages); err != nil {
+		return nil, err
+	}
+	fArray := make([]MultiplePipelineTriggerClassification, len(rawMessages))
+	for index, rawMessage := range rawMessages {
+		f, err := unmarshalMultiplePipelineTriggerClassification(*rawMessage)
 		if err != nil {
 			return nil, err
 		}

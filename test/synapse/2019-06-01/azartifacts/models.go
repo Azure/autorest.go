@@ -692,6 +692,44 @@ func (a *AmazonMwsObjectDataset) UnmarshalJSON(data []byte) error {
 	return a.Dataset.unmarshalInternal(rawMsg)
 }
 
+// A copy activity Amazon Marketplace Web Service source.
+type AmazonMwsSource struct {
+	TabularSource
+	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AmazonMwsSource.
+func (a AmazonMwsSource) MarshalJSON() ([]byte, error) {
+	objectMap := a.TabularSource.marshalInternal("AmazonMWSSource")
+	if a.Query != nil {
+		objectMap["query"] = a.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type AmazonMwsSource.
+func (a *AmazonMwsSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return a.TabularSource.unmarshalInternal(rawMsg)
+}
+
 // Linked service for Amazon Redshift.
 type AmazonRedshiftLinkedService struct {
 	LinkedService
@@ -798,6 +836,56 @@ func (a *AmazonRedshiftLinkedServiceTypeProperties) UnmarshalJSON(data []byte) e
 		}
 	}
 	return nil
+}
+
+// A copy activity source for Amazon Redshift Source.
+type AmazonRedshiftSource struct {
+	TabularSource
+	// Database query. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+
+	// The Amazon S3 settings needed for the interim Amazon S3 when copying from Amazon Redshift with unload. With this, data
+	// from Amazon Redshift source will be unloaded into S3 first and then copied into the targeted sink from the interim S3.
+	RedshiftUnloadSettings *RedshiftUnloadSettings `json:"redshiftUnloadSettings,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AmazonRedshiftSource.
+func (a AmazonRedshiftSource) MarshalJSON() ([]byte, error) {
+	objectMap := a.TabularSource.marshalInternal("AmazonRedshiftSource")
+	if a.Query != nil {
+		objectMap["query"] = a.Query
+	}
+	if a.RedshiftUnloadSettings != nil {
+		objectMap["redshiftUnloadSettings"] = a.RedshiftUnloadSettings
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type AmazonRedshiftSource.
+func (a *AmazonRedshiftSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.Query)
+			}
+			delete(rawMsg, key)
+		case "redshiftUnloadSettings":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.RedshiftUnloadSettings)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return a.TabularSource.unmarshalInternal(rawMsg)
 }
 
 // The Amazon Redshift table dataset.
@@ -944,6 +1032,160 @@ func (a *AmazonS3LinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// The location of amazon S3 dataset.
+type AmazonS3Location struct {
+	DatasetLocation
+	// Specify the bucketName of amazon S3. Type: string (or Expression with resultType string)
+	BucketName *interface{} `json:"bucketName,omitempty"`
+
+	// Specify the version of amazon S3. Type: string (or Expression with resultType string).
+	Version *interface{} `json:"version,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AmazonS3Location.
+func (a AmazonS3Location) MarshalJSON() ([]byte, error) {
+	objectMap := a.DatasetLocation.marshalInternal("AmazonS3Location")
+	if a.BucketName != nil {
+		objectMap["bucketName"] = a.BucketName
+	}
+	if a.Version != nil {
+		objectMap["version"] = a.Version
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type AmazonS3Location.
+func (a *AmazonS3Location) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "bucketName":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.BucketName)
+			}
+			delete(rawMsg, key)
+		case "version":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.Version)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return a.DatasetLocation.unmarshalInternal(rawMsg)
+}
+
+// Azure data lake store read settings.
+type AmazonS3ReadSettings struct {
+	StoreReadSettings
+	// Indicates whether to enable partition discovery.
+	EnablePartitionDiscovery *bool `json:"enablePartitionDiscovery,omitempty"`
+
+	// The end of file's modified datetime. Type: string (or Expression with resultType string).
+	ModifiedDatetimeEnd *interface{} `json:"modifiedDatetimeEnd,omitempty"`
+
+	// The start of file's modified datetime. Type: string (or Expression with resultType string).
+	ModifiedDatetimeStart *interface{} `json:"modifiedDatetimeStart,omitempty"`
+
+	// The prefix filter for the S3 object name. Type: string (or Expression with resultType string).
+	Prefix *interface{} `json:"prefix,omitempty"`
+
+	// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType
+	// boolean).
+	Recursive *interface{} `json:"recursive,omitempty"`
+
+	// AmazonS3 wildcardFileName. Type: string (or Expression with resultType string).
+	WildcardFileName *interface{} `json:"wildcardFileName,omitempty"`
+
+	// AmazonS3 wildcardFolderPath. Type: string (or Expression with resultType string).
+	WildcardFolderPath *interface{} `json:"wildcardFolderPath,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AmazonS3ReadSettings.
+func (a AmazonS3ReadSettings) MarshalJSON() ([]byte, error) {
+	objectMap := a.StoreReadSettings.marshalInternal("AmazonS3ReadSettings")
+	if a.EnablePartitionDiscovery != nil {
+		objectMap["enablePartitionDiscovery"] = a.EnablePartitionDiscovery
+	}
+	if a.ModifiedDatetimeEnd != nil {
+		objectMap["modifiedDatetimeEnd"] = a.ModifiedDatetimeEnd
+	}
+	if a.ModifiedDatetimeStart != nil {
+		objectMap["modifiedDatetimeStart"] = a.ModifiedDatetimeStart
+	}
+	if a.Prefix != nil {
+		objectMap["prefix"] = a.Prefix
+	}
+	if a.Recursive != nil {
+		objectMap["recursive"] = a.Recursive
+	}
+	if a.WildcardFileName != nil {
+		objectMap["wildcardFileName"] = a.WildcardFileName
+	}
+	if a.WildcardFolderPath != nil {
+		objectMap["wildcardFolderPath"] = a.WildcardFolderPath
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type AmazonS3ReadSettings.
+func (a *AmazonS3ReadSettings) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "enablePartitionDiscovery":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.EnablePartitionDiscovery)
+			}
+			delete(rawMsg, key)
+		case "modifiedDatetimeEnd":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.ModifiedDatetimeEnd)
+			}
+			delete(rawMsg, key)
+		case "modifiedDatetimeStart":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.ModifiedDatetimeStart)
+			}
+			delete(rawMsg, key)
+		case "prefix":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.Prefix)
+			}
+			delete(rawMsg, key)
+		case "recursive":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.Recursive)
+			}
+			delete(rawMsg, key)
+		case "wildcardFileName":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.WildcardFileName)
+			}
+			delete(rawMsg, key)
+		case "wildcardFolderPath":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.WildcardFolderPath)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return a.StoreReadSettings.unmarshalInternal(rawMsg)
+}
+
 // Append value for a Variable of type Array.
 type AppendVariableActivity struct {
 	Activity
@@ -989,6 +1231,27 @@ type AppendVariableActivityTypeProperties struct {
 
 	// Name of the variable whose value needs to be appended to.
 	VariableName *string `json:"variableName,omitempty"`
+}
+
+// Auto-pausing properties of a Big Data pool powered by Apache Spark
+type AutoPauseProperties struct {
+	// Number of minutes of idle time before the Big Data pool is automatically paused.
+	DelayInMinutes *int32 `json:"delayInMinutes,omitempty"`
+
+	// Whether auto-pausing is enabled for the Big Data pool.
+	Enabled *bool `json:"enabled,omitempty"`
+}
+
+// Auto-scaling properties of a Big Data pool powered by Apache Spark
+type AutoScaleProperties struct {
+	// Whether automatic scaling is enabled for the Big Data pool.
+	Enabled *bool `json:"enabled,omitempty"`
+
+	// The maximum number of nodes the Big Data pool can support.
+	MaxNodeCount *int32 `json:"maxNodeCount,omitempty"`
+
+	// The minimum number of nodes the Big Data pool can support.
+	MinNodeCount *int32 `json:"minNodeCount,omitempty"`
 }
 
 // Avro dataset.
@@ -1068,6 +1331,153 @@ func (a *AvroDatasetTypeProperties) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
+}
+
+// The data stored in Avro format.
+type AvroFormat struct {
+	DatasetStorageFormat
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AvroFormat.
+func (a AvroFormat) MarshalJSON() ([]byte, error) {
+	objectMap := a.DatasetStorageFormat.marshalInternal("AvroFormat")
+	return json.Marshal(objectMap)
+}
+
+// A copy activity Avro sink.
+type AvroSink struct {
+	CopySink
+	// Avro format settings.
+	FormatSettings *AvroWriteSettings `json:"formatSettings,omitempty"`
+
+	// Avro store settings.
+	StoreSettings StoreWriteSettingsClassification `json:"storeSettings,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AvroSink.
+func (a AvroSink) MarshalJSON() ([]byte, error) {
+	objectMap := a.CopySink.marshalInternal("AvroSink")
+	if a.FormatSettings != nil {
+		objectMap["formatSettings"] = a.FormatSettings
+	}
+	if a.StoreSettings != nil {
+		objectMap["storeSettings"] = a.StoreSettings
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type AvroSink.
+func (a *AvroSink) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "formatSettings":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.FormatSettings)
+			}
+			delete(rawMsg, key)
+		case "storeSettings":
+			if val != nil {
+				a.StoreSettings, err = unmarshalStoreWriteSettingsClassification(*val)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return a.CopySink.unmarshalInternal(rawMsg)
+}
+
+// A copy activity Avro source.
+type AvroSource struct {
+	CopySource
+	// Avro store settings.
+	StoreSettings StoreReadSettingsClassification `json:"storeSettings,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AvroSource.
+func (a AvroSource) MarshalJSON() ([]byte, error) {
+	objectMap := a.CopySource.marshalInternal("AvroSource")
+	if a.StoreSettings != nil {
+		objectMap["storeSettings"] = a.StoreSettings
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type AvroSource.
+func (a *AvroSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "storeSettings":
+			if val != nil {
+				a.StoreSettings, err = unmarshalStoreReadSettingsClassification(*val)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return a.CopySource.unmarshalInternal(rawMsg)
+}
+
+// Avro write settings.
+type AvroWriteSettings struct {
+	FormatWriteSettings
+	// Top level record name in write result, which is required in AVRO spec.
+	RecordName *string `json:"recordName,omitempty"`
+
+	// Record namespace in the write result.
+	RecordNamespace *string `json:"recordNamespace,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AvroWriteSettings.
+func (a AvroWriteSettings) MarshalJSON() ([]byte, error) {
+	objectMap := a.FormatWriteSettings.marshalInternal("AvroWriteSettings")
+	if a.RecordName != nil {
+		objectMap["recordName"] = a.RecordName
+	}
+	if a.RecordNamespace != nil {
+		objectMap["recordNamespace"] = a.RecordNamespace
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type AvroWriteSettings.
+func (a *AvroWriteSettings) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "recordName":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.RecordName)
+			}
+			delete(rawMsg, key)
+		case "recordNamespace":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.RecordNamespace)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return a.FormatWriteSettings.unmarshalInternal(rawMsg)
 }
 
 // Azure Batch linked service.
@@ -1238,6 +1648,275 @@ func (a *AzureBlobFsLinkedServiceTypeProperties) UnmarshalJSON(data []byte) erro
 	return nil
 }
 
+// The location of azure blobFS dataset.
+type AzureBlobFsLocation struct {
+	DatasetLocation
+	// Specify the fileSystem of azure blobFS. Type: string (or Expression with resultType string).
+	FileSystem *interface{} `json:"fileSystem,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureBlobFsLocation.
+func (a AzureBlobFsLocation) MarshalJSON() ([]byte, error) {
+	objectMap := a.DatasetLocation.marshalInternal("AzureBlobFSLocation")
+	if a.FileSystem != nil {
+		objectMap["fileSystem"] = a.FileSystem
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureBlobFsLocation.
+func (a *AzureBlobFsLocation) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "fileSystem":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.FileSystem)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return a.DatasetLocation.unmarshalInternal(rawMsg)
+}
+
+// Azure blobFS read settings.
+type AzureBlobFsReadSettings struct {
+	StoreReadSettings
+	// Indicates whether to enable partition discovery.
+	EnablePartitionDiscovery *bool `json:"enablePartitionDiscovery,omitempty"`
+
+	// The end of file's modified datetime. Type: string (or Expression with resultType string).
+	ModifiedDatetimeEnd *interface{} `json:"modifiedDatetimeEnd,omitempty"`
+
+	// The start of file's modified datetime. Type: string (or Expression with resultType string).
+	ModifiedDatetimeStart *interface{} `json:"modifiedDatetimeStart,omitempty"`
+
+	// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType
+	// boolean).
+	Recursive *interface{} `json:"recursive,omitempty"`
+
+	// Azure blobFS wildcardFileName. Type: string (or Expression with resultType string).
+	WildcardFileName *interface{} `json:"wildcardFileName,omitempty"`
+
+	// Azure blobFS wildcardFolderPath. Type: string (or Expression with resultType string).
+	WildcardFolderPath *interface{} `json:"wildcardFolderPath,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureBlobFsReadSettings.
+func (a AzureBlobFsReadSettings) MarshalJSON() ([]byte, error) {
+	objectMap := a.StoreReadSettings.marshalInternal("AzureBlobFSReadSettings")
+	if a.EnablePartitionDiscovery != nil {
+		objectMap["enablePartitionDiscovery"] = a.EnablePartitionDiscovery
+	}
+	if a.ModifiedDatetimeEnd != nil {
+		objectMap["modifiedDatetimeEnd"] = a.ModifiedDatetimeEnd
+	}
+	if a.ModifiedDatetimeStart != nil {
+		objectMap["modifiedDatetimeStart"] = a.ModifiedDatetimeStart
+	}
+	if a.Recursive != nil {
+		objectMap["recursive"] = a.Recursive
+	}
+	if a.WildcardFileName != nil {
+		objectMap["wildcardFileName"] = a.WildcardFileName
+	}
+	if a.WildcardFolderPath != nil {
+		objectMap["wildcardFolderPath"] = a.WildcardFolderPath
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureBlobFsReadSettings.
+func (a *AzureBlobFsReadSettings) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "enablePartitionDiscovery":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.EnablePartitionDiscovery)
+			}
+			delete(rawMsg, key)
+		case "modifiedDatetimeEnd":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.ModifiedDatetimeEnd)
+			}
+			delete(rawMsg, key)
+		case "modifiedDatetimeStart":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.ModifiedDatetimeStart)
+			}
+			delete(rawMsg, key)
+		case "recursive":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.Recursive)
+			}
+			delete(rawMsg, key)
+		case "wildcardFileName":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.WildcardFileName)
+			}
+			delete(rawMsg, key)
+		case "wildcardFolderPath":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.WildcardFolderPath)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return a.StoreReadSettings.unmarshalInternal(rawMsg)
+}
+
+// A copy activity Azure Data Lake Storage Gen2 sink.
+type AzureBlobFsSink struct {
+	CopySink
+	// The type of copy behavior for copy sink.
+	CopyBehavior *interface{} `json:"copyBehavior,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureBlobFsSink.
+func (a AzureBlobFsSink) MarshalJSON() ([]byte, error) {
+	objectMap := a.CopySink.marshalInternal("AzureBlobFSSink")
+	if a.CopyBehavior != nil {
+		objectMap["copyBehavior"] = a.CopyBehavior
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureBlobFsSink.
+func (a *AzureBlobFsSink) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "copyBehavior":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.CopyBehavior)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return a.CopySink.unmarshalInternal(rawMsg)
+}
+
+// A copy activity Azure BlobFS source.
+type AzureBlobFsSource struct {
+	CopySource
+	// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType
+	// boolean).
+	Recursive *interface{} `json:"recursive,omitempty"`
+
+	// Number of header lines to skip from each blob. Type: integer (or Expression with resultType integer).
+	SkipHeaderLineCount *interface{} `json:"skipHeaderLineCount,omitempty"`
+
+	// Treat empty as null. Type: boolean (or Expression with resultType boolean).
+	TreatEmptyAsNull *interface{} `json:"treatEmptyAsNull,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureBlobFsSource.
+func (a AzureBlobFsSource) MarshalJSON() ([]byte, error) {
+	objectMap := a.CopySource.marshalInternal("AzureBlobFSSource")
+	if a.Recursive != nil {
+		objectMap["recursive"] = a.Recursive
+	}
+	if a.SkipHeaderLineCount != nil {
+		objectMap["skipHeaderLineCount"] = a.SkipHeaderLineCount
+	}
+	if a.TreatEmptyAsNull != nil {
+		objectMap["treatEmptyAsNull"] = a.TreatEmptyAsNull
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureBlobFsSource.
+func (a *AzureBlobFsSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "recursive":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.Recursive)
+			}
+			delete(rawMsg, key)
+		case "skipHeaderLineCount":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.SkipHeaderLineCount)
+			}
+			delete(rawMsg, key)
+		case "treatEmptyAsNull":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.TreatEmptyAsNull)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return a.CopySource.unmarshalInternal(rawMsg)
+}
+
+// Azure blobFS write settings.
+type AzureBlobFsWriteSettings struct {
+	StoreWriteSettings
+	// Indicates the block size(MB) when writing data to blob. Type: integer (or Expression with resultType integer).
+	BlockSizeInMb *interface{} `json:"blockSizeInMB,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureBlobFsWriteSettings.
+func (a AzureBlobFsWriteSettings) MarshalJSON() ([]byte, error) {
+	objectMap := a.StoreWriteSettings.marshalInternal("AzureBlobFSWriteSettings")
+	if a.BlockSizeInMb != nil {
+		objectMap["blockSizeInMB"] = a.BlockSizeInMb
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureBlobFsWriteSettings.
+func (a *AzureBlobFsWriteSettings) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "blockSizeInMB":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.BlockSizeInMb)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return a.StoreWriteSettings.unmarshalInternal(rawMsg)
+}
+
 // The azure blob storage linked service.
 type AzureBlobStorageLinkedService struct {
 	LinkedService
@@ -1369,6 +2048,187 @@ func (a *AzureBlobStorageLinkedServiceTypeProperties) UnmarshalJSON(data []byte)
 		}
 	}
 	return nil
+}
+
+// The location of azure blob dataset.
+type AzureBlobStorageLocation struct {
+	DatasetLocation
+	// Specify the container of azure blob. Type: string (or Expression with resultType string).
+	Container *interface{} `json:"container,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureBlobStorageLocation.
+func (a AzureBlobStorageLocation) MarshalJSON() ([]byte, error) {
+	objectMap := a.DatasetLocation.marshalInternal("AzureBlobStorageLocation")
+	if a.Container != nil {
+		objectMap["container"] = a.Container
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureBlobStorageLocation.
+func (a *AzureBlobStorageLocation) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "container":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.Container)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return a.DatasetLocation.unmarshalInternal(rawMsg)
+}
+
+// Azure blob read settings.
+type AzureBlobStorageReadSettings struct {
+	StoreReadSettings
+	// Indicates whether to enable partition discovery.
+	EnablePartitionDiscovery *bool `json:"enablePartitionDiscovery,omitempty"`
+
+	// The end of file's modified datetime. Type: string (or Expression with resultType string).
+	ModifiedDatetimeEnd *interface{} `json:"modifiedDatetimeEnd,omitempty"`
+
+	// The start of file's modified datetime. Type: string (or Expression with resultType string).
+	ModifiedDatetimeStart *interface{} `json:"modifiedDatetimeStart,omitempty"`
+
+	// The prefix filter for the Azure Blob name. Type: string (or Expression with resultType string).
+	Prefix *interface{} `json:"prefix,omitempty"`
+
+	// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType
+	// boolean).
+	Recursive *interface{} `json:"recursive,omitempty"`
+
+	// Azure blob wildcardFileName. Type: string (or Expression with resultType string).
+	WildcardFileName *interface{} `json:"wildcardFileName,omitempty"`
+
+	// Azure blob wildcardFolderPath. Type: string (or Expression with resultType string).
+	WildcardFolderPath *interface{} `json:"wildcardFolderPath,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureBlobStorageReadSettings.
+func (a AzureBlobStorageReadSettings) MarshalJSON() ([]byte, error) {
+	objectMap := a.StoreReadSettings.marshalInternal("AzureBlobStorageReadSettings")
+	if a.EnablePartitionDiscovery != nil {
+		objectMap["enablePartitionDiscovery"] = a.EnablePartitionDiscovery
+	}
+	if a.ModifiedDatetimeEnd != nil {
+		objectMap["modifiedDatetimeEnd"] = a.ModifiedDatetimeEnd
+	}
+	if a.ModifiedDatetimeStart != nil {
+		objectMap["modifiedDatetimeStart"] = a.ModifiedDatetimeStart
+	}
+	if a.Prefix != nil {
+		objectMap["prefix"] = a.Prefix
+	}
+	if a.Recursive != nil {
+		objectMap["recursive"] = a.Recursive
+	}
+	if a.WildcardFileName != nil {
+		objectMap["wildcardFileName"] = a.WildcardFileName
+	}
+	if a.WildcardFolderPath != nil {
+		objectMap["wildcardFolderPath"] = a.WildcardFolderPath
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureBlobStorageReadSettings.
+func (a *AzureBlobStorageReadSettings) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "enablePartitionDiscovery":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.EnablePartitionDiscovery)
+			}
+			delete(rawMsg, key)
+		case "modifiedDatetimeEnd":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.ModifiedDatetimeEnd)
+			}
+			delete(rawMsg, key)
+		case "modifiedDatetimeStart":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.ModifiedDatetimeStart)
+			}
+			delete(rawMsg, key)
+		case "prefix":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.Prefix)
+			}
+			delete(rawMsg, key)
+		case "recursive":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.Recursive)
+			}
+			delete(rawMsg, key)
+		case "wildcardFileName":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.WildcardFileName)
+			}
+			delete(rawMsg, key)
+		case "wildcardFolderPath":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.WildcardFolderPath)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return a.StoreReadSettings.unmarshalInternal(rawMsg)
+}
+
+// Azure blob write settings.
+type AzureBlobStorageWriteSettings struct {
+	StoreWriteSettings
+	// Indicates the block size(MB) when writing data to blob. Type: integer (or Expression with resultType integer).
+	BlockSizeInMb *interface{} `json:"blockSizeInMB,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureBlobStorageWriteSettings.
+func (a AzureBlobStorageWriteSettings) MarshalJSON() ([]byte, error) {
+	objectMap := a.StoreWriteSettings.marshalInternal("AzureBlobStorageWriteSettings")
+	if a.BlockSizeInMb != nil {
+		objectMap["blockSizeInMB"] = a.BlockSizeInMb
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureBlobStorageWriteSettings.
+func (a *AzureBlobStorageWriteSettings) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "blockSizeInMB":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.BlockSizeInMb)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return a.StoreWriteSettings.unmarshalInternal(rawMsg)
 }
 
 // Azure Data Explorer command activity.
@@ -1522,6 +2382,127 @@ func (a *AzureDataExplorerLinkedServiceTypeProperties) UnmarshalJSON(data []byte
 		}
 	}
 	return nil
+}
+
+// A copy activity Azure Data Explorer sink.
+type AzureDataExplorerSink struct {
+	CopySink
+	// If set to true, any aggregation will be skipped. Default is false. Type: boolean.
+	FlushImmediately *interface{} `json:"flushImmediately,omitempty"`
+
+	// An explicit column mapping description provided in a json format. Type: string.
+	IngestionMappingAsJSON *interface{} `json:"ingestionMappingAsJson,omitempty"`
+
+	// A name of a pre-created csv mapping that was defined on the target Kusto table. Type: string.
+	IngestionMappingName *interface{} `json:"ingestionMappingName,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureDataExplorerSink.
+func (a AzureDataExplorerSink) MarshalJSON() ([]byte, error) {
+	objectMap := a.CopySink.marshalInternal("AzureDataExplorerSink")
+	if a.FlushImmediately != nil {
+		objectMap["flushImmediately"] = a.FlushImmediately
+	}
+	if a.IngestionMappingAsJSON != nil {
+		objectMap["ingestionMappingAsJson"] = a.IngestionMappingAsJSON
+	}
+	if a.IngestionMappingName != nil {
+		objectMap["ingestionMappingName"] = a.IngestionMappingName
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureDataExplorerSink.
+func (a *AzureDataExplorerSink) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "flushImmediately":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.FlushImmediately)
+			}
+			delete(rawMsg, key)
+		case "ingestionMappingAsJson":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.IngestionMappingAsJSON)
+			}
+			delete(rawMsg, key)
+		case "ingestionMappingName":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.IngestionMappingName)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return a.CopySink.unmarshalInternal(rawMsg)
+}
+
+// A copy activity Azure Data Explorer (Kusto) source.
+type AzureDataExplorerSource struct {
+	CopySource
+	// The name of the Boolean option that controls whether truncation is applied to result-sets that go beyond a certain row-count
+	// limit.
+	NoTruncation *interface{} `json:"noTruncation,omitempty"`
+
+	// Database query. Should be a Kusto Query Language (KQL) query. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+
+	// Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9]))..
+	QueryTimeout *interface{} `json:"queryTimeout,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureDataExplorerSource.
+func (a AzureDataExplorerSource) MarshalJSON() ([]byte, error) {
+	objectMap := a.CopySource.marshalInternal("AzureDataExplorerSource")
+	if a.NoTruncation != nil {
+		objectMap["noTruncation"] = a.NoTruncation
+	}
+	if a.Query != nil {
+		objectMap["query"] = a.Query
+	}
+	if a.QueryTimeout != nil {
+		objectMap["queryTimeout"] = a.QueryTimeout
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureDataExplorerSource.
+func (a *AzureDataExplorerSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "noTruncation":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.NoTruncation)
+			}
+			delete(rawMsg, key)
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.Query)
+			}
+			delete(rawMsg, key)
+		case "queryTimeout":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.QueryTimeout)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return a.CopySource.unmarshalInternal(rawMsg)
 }
 
 // The Azure Data Explorer (Kusto) dataset.
@@ -1812,6 +2793,210 @@ func (a *AzureDataLakeStoreLinkedServiceTypeProperties) UnmarshalJSON(data []byt
 		}
 	}
 	return nil
+}
+
+// The location of azure data lake store dataset.
+type AzureDataLakeStoreLocation struct {
+	DatasetLocation
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureDataLakeStoreLocation.
+func (a AzureDataLakeStoreLocation) MarshalJSON() ([]byte, error) {
+	objectMap := a.DatasetLocation.marshalInternal("AzureDataLakeStoreLocation")
+	return json.Marshal(objectMap)
+}
+
+// Azure data lake store read settings.
+type AzureDataLakeStoreReadSettings struct {
+	StoreReadSettings
+	// Indicates whether to enable partition discovery.
+	EnablePartitionDiscovery *bool `json:"enablePartitionDiscovery,omitempty"`
+
+	// The end of file's modified datetime. Type: string (or Expression with resultType string).
+	ModifiedDatetimeEnd *interface{} `json:"modifiedDatetimeEnd,omitempty"`
+
+	// The start of file's modified datetime. Type: string (or Expression with resultType string).
+	ModifiedDatetimeStart *interface{} `json:"modifiedDatetimeStart,omitempty"`
+
+	// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType
+	// boolean).
+	Recursive *interface{} `json:"recursive,omitempty"`
+
+	// ADLS wildcardFileName. Type: string (or Expression with resultType string).
+	WildcardFileName *interface{} `json:"wildcardFileName,omitempty"`
+
+	// ADLS wildcardFolderPath. Type: string (or Expression with resultType string).
+	WildcardFolderPath *interface{} `json:"wildcardFolderPath,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureDataLakeStoreReadSettings.
+func (a AzureDataLakeStoreReadSettings) MarshalJSON() ([]byte, error) {
+	objectMap := a.StoreReadSettings.marshalInternal("AzureDataLakeStoreReadSettings")
+	if a.EnablePartitionDiscovery != nil {
+		objectMap["enablePartitionDiscovery"] = a.EnablePartitionDiscovery
+	}
+	if a.ModifiedDatetimeEnd != nil {
+		objectMap["modifiedDatetimeEnd"] = a.ModifiedDatetimeEnd
+	}
+	if a.ModifiedDatetimeStart != nil {
+		objectMap["modifiedDatetimeStart"] = a.ModifiedDatetimeStart
+	}
+	if a.Recursive != nil {
+		objectMap["recursive"] = a.Recursive
+	}
+	if a.WildcardFileName != nil {
+		objectMap["wildcardFileName"] = a.WildcardFileName
+	}
+	if a.WildcardFolderPath != nil {
+		objectMap["wildcardFolderPath"] = a.WildcardFolderPath
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureDataLakeStoreReadSettings.
+func (a *AzureDataLakeStoreReadSettings) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "enablePartitionDiscovery":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.EnablePartitionDiscovery)
+			}
+			delete(rawMsg, key)
+		case "modifiedDatetimeEnd":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.ModifiedDatetimeEnd)
+			}
+			delete(rawMsg, key)
+		case "modifiedDatetimeStart":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.ModifiedDatetimeStart)
+			}
+			delete(rawMsg, key)
+		case "recursive":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.Recursive)
+			}
+			delete(rawMsg, key)
+		case "wildcardFileName":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.WildcardFileName)
+			}
+			delete(rawMsg, key)
+		case "wildcardFolderPath":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.WildcardFolderPath)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return a.StoreReadSettings.unmarshalInternal(rawMsg)
+}
+
+// A copy activity Azure Data Lake Store sink.
+type AzureDataLakeStoreSink struct {
+	CopySink
+	// The type of copy behavior for copy sink.
+	CopyBehavior *interface{} `json:"copyBehavior,omitempty"`
+
+	// Single File Parallel.
+	EnableAdlsSingleFileParallel *interface{} `json:"enableAdlsSingleFileParallel,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureDataLakeStoreSink.
+func (a AzureDataLakeStoreSink) MarshalJSON() ([]byte, error) {
+	objectMap := a.CopySink.marshalInternal("AzureDataLakeStoreSink")
+	if a.CopyBehavior != nil {
+		objectMap["copyBehavior"] = a.CopyBehavior
+	}
+	if a.EnableAdlsSingleFileParallel != nil {
+		objectMap["enableAdlsSingleFileParallel"] = a.EnableAdlsSingleFileParallel
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureDataLakeStoreSink.
+func (a *AzureDataLakeStoreSink) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "copyBehavior":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.CopyBehavior)
+			}
+			delete(rawMsg, key)
+		case "enableAdlsSingleFileParallel":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.EnableAdlsSingleFileParallel)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return a.CopySink.unmarshalInternal(rawMsg)
+}
+
+// A copy activity Azure Data Lake source.
+type AzureDataLakeStoreSource struct {
+	CopySource
+	// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType
+	// boolean).
+	Recursive *interface{} `json:"recursive,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureDataLakeStoreSource.
+func (a AzureDataLakeStoreSource) MarshalJSON() ([]byte, error) {
+	objectMap := a.CopySource.marshalInternal("AzureDataLakeStoreSource")
+	if a.Recursive != nil {
+		objectMap["recursive"] = a.Recursive
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureDataLakeStoreSource.
+func (a *AzureDataLakeStoreSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "recursive":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.Recursive)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return a.CopySource.unmarshalInternal(rawMsg)
+}
+
+// Azure data lake store write settings.
+type AzureDataLakeStoreWriteSettings struct {
+	StoreWriteSettings
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureDataLakeStoreWriteSettings.
+func (a AzureDataLakeStoreWriteSettings) MarshalJSON() ([]byte, error) {
+	objectMap := a.StoreWriteSettings.marshalInternal("AzureDataLakeStoreWriteSettings")
+	return json.Marshal(objectMap)
 }
 
 // Azure Databricks linked service.
@@ -2136,6 +3321,111 @@ func (a *AzureFileStorageLinkedServiceTypeProperties) UnmarshalJSON(data []byte)
 	return nil
 }
 
+// The location of file server dataset.
+type AzureFileStorageLocation struct {
+	DatasetLocation
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureFileStorageLocation.
+func (a AzureFileStorageLocation) MarshalJSON() ([]byte, error) {
+	objectMap := a.DatasetLocation.marshalInternal("AzureFileStorageLocation")
+	return json.Marshal(objectMap)
+}
+
+// Azure File Storage read settings.
+type AzureFileStorageReadSettings struct {
+	StoreReadSettings
+	// Indicates whether to enable partition discovery.
+	EnablePartitionDiscovery *bool `json:"enablePartitionDiscovery,omitempty"`
+
+	// The end of file's modified datetime. Type: string (or Expression with resultType string).
+	ModifiedDatetimeEnd *interface{} `json:"modifiedDatetimeEnd,omitempty"`
+
+	// The start of file's modified datetime. Type: string (or Expression with resultType string).
+	ModifiedDatetimeStart *interface{} `json:"modifiedDatetimeStart,omitempty"`
+
+	// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType
+	// boolean).
+	Recursive *interface{} `json:"recursive,omitempty"`
+
+	// Azure File Storage wildcardFileName. Type: string (or Expression with resultType string).
+	WildcardFileName *interface{} `json:"wildcardFileName,omitempty"`
+
+	// Azure File Storage wildcardFolderPath. Type: string (or Expression with resultType string).
+	WildcardFolderPath *interface{} `json:"wildcardFolderPath,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureFileStorageReadSettings.
+func (a AzureFileStorageReadSettings) MarshalJSON() ([]byte, error) {
+	objectMap := a.StoreReadSettings.marshalInternal("AzureFileStorageReadSettings")
+	if a.EnablePartitionDiscovery != nil {
+		objectMap["enablePartitionDiscovery"] = a.EnablePartitionDiscovery
+	}
+	if a.ModifiedDatetimeEnd != nil {
+		objectMap["modifiedDatetimeEnd"] = a.ModifiedDatetimeEnd
+	}
+	if a.ModifiedDatetimeStart != nil {
+		objectMap["modifiedDatetimeStart"] = a.ModifiedDatetimeStart
+	}
+	if a.Recursive != nil {
+		objectMap["recursive"] = a.Recursive
+	}
+	if a.WildcardFileName != nil {
+		objectMap["wildcardFileName"] = a.WildcardFileName
+	}
+	if a.WildcardFolderPath != nil {
+		objectMap["wildcardFolderPath"] = a.WildcardFolderPath
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureFileStorageReadSettings.
+func (a *AzureFileStorageReadSettings) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "enablePartitionDiscovery":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.EnablePartitionDiscovery)
+			}
+			delete(rawMsg, key)
+		case "modifiedDatetimeEnd":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.ModifiedDatetimeEnd)
+			}
+			delete(rawMsg, key)
+		case "modifiedDatetimeStart":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.ModifiedDatetimeStart)
+			}
+			delete(rawMsg, key)
+		case "recursive":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.Recursive)
+			}
+			delete(rawMsg, key)
+		case "wildcardFileName":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.WildcardFileName)
+			}
+			delete(rawMsg, key)
+		case "wildcardFolderPath":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.WildcardFolderPath)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return a.StoreReadSettings.unmarshalInternal(rawMsg)
+}
+
 // Azure Function activity.
 type AzureFunctionActivity struct {
 	ExecutionActivity
@@ -2428,6 +3718,44 @@ type AzureMariaDbLinkedServiceTypeProperties struct {
 
 	// The Azure key vault secret reference of password in connection string.
 	Pwd *AzureKeyVaultSecretReference `json:"pwd,omitempty"`
+}
+
+// A copy activity Azure MariaDB source.
+type AzureMariaDbSource struct {
+	TabularSource
+	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureMariaDbSource.
+func (a AzureMariaDbSource) MarshalJSON() ([]byte, error) {
+	objectMap := a.TabularSource.marshalInternal("AzureMariaDBSource")
+	if a.Query != nil {
+		objectMap["query"] = a.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureMariaDbSource.
+func (a *AzureMariaDbSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return a.TabularSource.unmarshalInternal(rawMsg)
 }
 
 // Azure Database for MariaDB dataset.
@@ -2932,6 +4260,82 @@ type AzureMySQLLinkedServiceTypeProperties struct {
 	Password *AzureKeyVaultSecretReference `json:"password,omitempty"`
 }
 
+// A copy activity Azure MySql sink.
+type AzureMySQLSink struct {
+	CopySink
+	// A query to execute before starting the copy. Type: string (or Expression with resultType string).
+	PreCopyScript *interface{} `json:"preCopyScript,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureMySQLSink.
+func (a AzureMySQLSink) MarshalJSON() ([]byte, error) {
+	objectMap := a.CopySink.marshalInternal("AzureMySqlSink")
+	if a.PreCopyScript != nil {
+		objectMap["preCopyScript"] = a.PreCopyScript
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureMySQLSink.
+func (a *AzureMySQLSink) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "preCopyScript":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.PreCopyScript)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return a.CopySink.unmarshalInternal(rawMsg)
+}
+
+// A copy activity Azure MySQL source.
+type AzureMySQLSource struct {
+	TabularSource
+	// Database query. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureMySQLSource.
+func (a AzureMySQLSource) MarshalJSON() ([]byte, error) {
+	objectMap := a.TabularSource.marshalInternal("AzureMySqlSource")
+	if a.Query != nil {
+		objectMap["query"] = a.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureMySQLSource.
+func (a *AzureMySQLSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return a.TabularSource.unmarshalInternal(rawMsg)
+}
+
 // The Azure MySQL database dataset.
 type AzureMySQLTableDataset struct {
 	Dataset
@@ -3030,6 +4434,82 @@ type AzurePostgreSQLLinkedServiceTypeProperties struct {
 	Password *AzureKeyVaultSecretReference `json:"password,omitempty"`
 }
 
+// A copy activity Azure PostgreSQL sink.
+type AzurePostgreSQLSink struct {
+	CopySink
+	// A query to execute before starting the copy. Type: string (or Expression with resultType string).
+	PreCopyScript *interface{} `json:"preCopyScript,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzurePostgreSQLSink.
+func (a AzurePostgreSQLSink) MarshalJSON() ([]byte, error) {
+	objectMap := a.CopySink.marshalInternal("AzurePostgreSqlSink")
+	if a.PreCopyScript != nil {
+		objectMap["preCopyScript"] = a.PreCopyScript
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzurePostgreSQLSink.
+func (a *AzurePostgreSQLSink) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "preCopyScript":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.PreCopyScript)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return a.CopySink.unmarshalInternal(rawMsg)
+}
+
+// A copy activity Azure PostgreSQL source.
+type AzurePostgreSQLSource struct {
+	TabularSource
+	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzurePostgreSQLSource.
+func (a AzurePostgreSQLSource) MarshalJSON() ([]byte, error) {
+	objectMap := a.TabularSource.marshalInternal("AzurePostgreSqlSource")
+	if a.Query != nil {
+		objectMap["query"] = a.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzurePostgreSQLSource.
+func (a *AzurePostgreSQLSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return a.TabularSource.unmarshalInternal(rawMsg)
+}
+
 // Azure PostgreSQL dataset.
 type AzurePostgreSQLTableDataset struct {
 	Dataset
@@ -3079,6 +4559,17 @@ type AzurePostgreSQLTableDatasetTypeProperties struct {
 	// The table name of the Azure PostgreSQL database which includes both schema and table. Type: string (or Expression with
 	// resultType string).
 	TableName *interface{} `json:"tableName,omitempty"`
+}
+
+// A copy activity Azure Queue sink.
+type AzureQueueSink struct {
+	CopySink
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureQueueSink.
+func (a AzureQueueSink) MarshalJSON() ([]byte, error) {
+	objectMap := a.CopySink.marshalInternal("AzureQueueSink")
+	return json.Marshal(objectMap)
 }
 
 // Microsoft Azure SQL Database linked service.
@@ -3505,6 +4996,172 @@ type AzureSQLMiTableDatasetTypeProperties struct {
 	TableName *interface{} `json:"tableName,omitempty"`
 }
 
+// A copy activity Azure SQL sink.
+type AzureSQLSink struct {
+	CopySink
+	// SQL pre-copy script. Type: string (or Expression with resultType string).
+	PreCopyScript *interface{} `json:"preCopyScript,omitempty"`
+
+	// SQL writer stored procedure name. Type: string (or Expression with resultType string).
+	SQLWriterStoredProcedureName *interface{} `json:"sqlWriterStoredProcedureName,omitempty"`
+
+	// SQL writer table type. Type: string (or Expression with resultType string).
+	SQLWriterTableType *interface{} `json:"sqlWriterTableType,omitempty"`
+
+	// SQL stored procedure parameters.
+	StoredProcedureParameters *map[string]StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
+
+	// The stored procedure parameter name of the table type. Type: string (or Expression with resultType string).
+	StoredProcedureTableTypeParameterName *interface{} `json:"storedProcedureTableTypeParameterName,omitempty"`
+
+	// The option to handle sink table, such as autoCreate. For now only 'autoCreate' value is supported. Type: string (or Expression
+	// with resultType string).
+	TableOption *interface{} `json:"tableOption,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureSQLSink.
+func (a AzureSQLSink) MarshalJSON() ([]byte, error) {
+	objectMap := a.CopySink.marshalInternal("AzureSqlSink")
+	if a.PreCopyScript != nil {
+		objectMap["preCopyScript"] = a.PreCopyScript
+	}
+	if a.SQLWriterStoredProcedureName != nil {
+		objectMap["sqlWriterStoredProcedureName"] = a.SQLWriterStoredProcedureName
+	}
+	if a.SQLWriterTableType != nil {
+		objectMap["sqlWriterTableType"] = a.SQLWriterTableType
+	}
+	if a.StoredProcedureParameters != nil {
+		objectMap["storedProcedureParameters"] = a.StoredProcedureParameters
+	}
+	if a.StoredProcedureTableTypeParameterName != nil {
+		objectMap["storedProcedureTableTypeParameterName"] = a.StoredProcedureTableTypeParameterName
+	}
+	if a.TableOption != nil {
+		objectMap["tableOption"] = a.TableOption
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureSQLSink.
+func (a *AzureSQLSink) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "preCopyScript":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.PreCopyScript)
+			}
+			delete(rawMsg, key)
+		case "sqlWriterStoredProcedureName":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.SQLWriterStoredProcedureName)
+			}
+			delete(rawMsg, key)
+		case "sqlWriterTableType":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.SQLWriterTableType)
+			}
+			delete(rawMsg, key)
+		case "storedProcedureParameters":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.StoredProcedureParameters)
+			}
+			delete(rawMsg, key)
+		case "storedProcedureTableTypeParameterName":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.StoredProcedureTableTypeParameterName)
+			}
+			delete(rawMsg, key)
+		case "tableOption":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.TableOption)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return a.CopySink.unmarshalInternal(rawMsg)
+}
+
+// A copy activity Azure SQL source.
+type AzureSQLSource struct {
+	TabularSource
+	// Which additional types to produce.
+	ProduceAdditionalTypes *interface{} `json:"produceAdditionalTypes,omitempty"`
+
+	// SQL reader query. Type: string (or Expression with resultType string).
+	SQLReaderQuery *interface{} `json:"sqlReaderQuery,omitempty"`
+
+	// Name of the stored procedure for a SQL Database source. This cannot be used at the same time as SqlReaderQuery. Type: string
+	// (or Expression with resultType string).
+	SQLReaderStoredProcedureName *interface{} `json:"sqlReaderStoredProcedureName,omitempty"`
+
+	// Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}".
+	StoredProcedureParameters *map[string]StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureSQLSource.
+func (a AzureSQLSource) MarshalJSON() ([]byte, error) {
+	objectMap := a.TabularSource.marshalInternal("AzureSqlSource")
+	if a.ProduceAdditionalTypes != nil {
+		objectMap["produceAdditionalTypes"] = a.ProduceAdditionalTypes
+	}
+	if a.SQLReaderQuery != nil {
+		objectMap["sqlReaderQuery"] = a.SQLReaderQuery
+	}
+	if a.SQLReaderStoredProcedureName != nil {
+		objectMap["sqlReaderStoredProcedureName"] = a.SQLReaderStoredProcedureName
+	}
+	if a.StoredProcedureParameters != nil {
+		objectMap["storedProcedureParameters"] = a.StoredProcedureParameters
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureSQLSource.
+func (a *AzureSQLSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "produceAdditionalTypes":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.ProduceAdditionalTypes)
+			}
+			delete(rawMsg, key)
+		case "sqlReaderQuery":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.SQLReaderQuery)
+			}
+			delete(rawMsg, key)
+		case "sqlReaderStoredProcedureName":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.SQLReaderStoredProcedureName)
+			}
+			delete(rawMsg, key)
+		case "storedProcedureParameters":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.StoredProcedureParameters)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return a.TabularSource.unmarshalInternal(rawMsg)
+}
+
 // The Azure SQL Server database dataset.
 type AzureSQLTableDataset struct {
 	Dataset
@@ -3597,6 +5254,44 @@ func (a *AzureSearchIndexDataset) UnmarshalJSON(data []byte) error {
 type AzureSearchIndexDatasetTypeProperties struct {
 	// The name of the Azure Search Index. Type: string (or Expression with resultType string).
 	IndexName *interface{} `json:"indexName,omitempty"`
+}
+
+// A copy activity Azure Search Index sink.
+type AzureSearchIndexSink struct {
+	CopySink
+	// Specify the write behavior when upserting documents into Azure Search Index.
+	WriteBehavior *AzureSearchIndexWriteBehaviorType `json:"writeBehavior,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureSearchIndexSink.
+func (a AzureSearchIndexSink) MarshalJSON() ([]byte, error) {
+	objectMap := a.CopySink.marshalInternal("AzureSearchIndexSink")
+	if a.WriteBehavior != nil {
+		objectMap["writeBehavior"] = a.WriteBehavior
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureSearchIndexSink.
+func (a *AzureSearchIndexSink) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "writeBehavior":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.WriteBehavior)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return a.CopySink.unmarshalInternal(rawMsg)
 }
 
 // Linked service for Windows Azure Search Service.
@@ -3784,6 +5479,126 @@ type AzureTableDatasetTypeProperties struct {
 	TableName *interface{} `json:"tableName,omitempty"`
 }
 
+// A copy activity Azure Table sink.
+type AzureTableSink struct {
+	CopySink
+	// Azure Table default partition key value. Type: string (or Expression with resultType string).
+	AzureTableDefaultPartitionKeyValue *interface{} `json:"azureTableDefaultPartitionKeyValue,omitempty"`
+
+	// Azure Table insert type. Type: string (or Expression with resultType string).
+	AzureTableInsertType *interface{} `json:"azureTableInsertType,omitempty"`
+
+	// Azure Table partition key name. Type: string (or Expression with resultType string).
+	AzureTablePartitionKeyName *interface{} `json:"azureTablePartitionKeyName,omitempty"`
+
+	// Azure Table row key name. Type: string (or Expression with resultType string).
+	AzureTableRowKeyName *interface{} `json:"azureTableRowKeyName,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureTableSink.
+func (a AzureTableSink) MarshalJSON() ([]byte, error) {
+	objectMap := a.CopySink.marshalInternal("AzureTableSink")
+	if a.AzureTableDefaultPartitionKeyValue != nil {
+		objectMap["azureTableDefaultPartitionKeyValue"] = a.AzureTableDefaultPartitionKeyValue
+	}
+	if a.AzureTableInsertType != nil {
+		objectMap["azureTableInsertType"] = a.AzureTableInsertType
+	}
+	if a.AzureTablePartitionKeyName != nil {
+		objectMap["azureTablePartitionKeyName"] = a.AzureTablePartitionKeyName
+	}
+	if a.AzureTableRowKeyName != nil {
+		objectMap["azureTableRowKeyName"] = a.AzureTableRowKeyName
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureTableSink.
+func (a *AzureTableSink) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "azureTableDefaultPartitionKeyValue":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.AzureTableDefaultPartitionKeyValue)
+			}
+			delete(rawMsg, key)
+		case "azureTableInsertType":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.AzureTableInsertType)
+			}
+			delete(rawMsg, key)
+		case "azureTablePartitionKeyName":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.AzureTablePartitionKeyName)
+			}
+			delete(rawMsg, key)
+		case "azureTableRowKeyName":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.AzureTableRowKeyName)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return a.CopySink.unmarshalInternal(rawMsg)
+}
+
+// A copy activity Azure Table source.
+type AzureTableSource struct {
+	TabularSource
+	// Azure Table source ignore table not found. Type: boolean (or Expression with resultType boolean).
+	AzureTableSourceIgnoreTableNotFound *interface{} `json:"azureTableSourceIgnoreTableNotFound,omitempty"`
+
+	// Azure Table source query. Type: string (or Expression with resultType string).
+	AzureTableSourceQuery *interface{} `json:"azureTableSourceQuery,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureTableSource.
+func (a AzureTableSource) MarshalJSON() ([]byte, error) {
+	objectMap := a.TabularSource.marshalInternal("AzureTableSource")
+	if a.AzureTableSourceIgnoreTableNotFound != nil {
+		objectMap["azureTableSourceIgnoreTableNotFound"] = a.AzureTableSourceIgnoreTableNotFound
+	}
+	if a.AzureTableSourceQuery != nil {
+		objectMap["azureTableSourceQuery"] = a.AzureTableSourceQuery
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureTableSource.
+func (a *AzureTableSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "azureTableSourceIgnoreTableNotFound":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.AzureTableSourceIgnoreTableNotFound)
+			}
+			delete(rawMsg, key)
+		case "azureTableSourceQuery":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.AzureTableSourceQuery)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return a.TabularSource.unmarshalInternal(rawMsg)
+}
+
 // The azure table storage linked service.
 type AzureTableStorageLinkedService struct {
 	LinkedService
@@ -3829,6 +5644,201 @@ type BigDataPoolReference struct {
 
 	// Big data pool reference type.
 	Type *BigDataPoolReferenceType `json:"type,omitempty"`
+}
+
+// A Big Data pool
+type BigDataPoolResourceInfo struct {
+	TrackedResource
+	// Big Data pool properties
+	Properties *BigDataPoolResourceProperties `json:"properties,omitempty"`
+}
+
+// Collection of Big Data pool information
+type BigDataPoolResourceInfoListResult struct {
+	// Link to the next page of results
+	NextLink *string `json:"nextLink,omitempty"`
+
+	// List of Big Data pools
+	Value *[]BigDataPoolResourceInfo `json:"value,omitempty"`
+}
+
+// BigDataPoolResourceInfoListResultResponse is the response envelope for operations that return a BigDataPoolResourceInfoListResult
+// type.
+type BigDataPoolResourceInfoListResultResponse struct {
+	// Collection of Big Data pool information
+	BigDataPoolResourceInfoListResult *BigDataPoolResourceInfoListResult
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// BigDataPoolResourceInfoResponse is the response envelope for operations that return a BigDataPoolResourceInfo type.
+type BigDataPoolResourceInfoResponse struct {
+	// A Big Data pool
+	BigDataPoolResourceInfo *BigDataPoolResourceInfo
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// Properties of a Big Data pool powered by Apache Spark
+type BigDataPoolResourceProperties struct {
+	// Auto-pausing properties
+	AutoPause *AutoPauseProperties `json:"autoPause,omitempty"`
+
+	// Auto-scaling properties
+	AutoScale *AutoScaleProperties `json:"autoScale,omitempty"`
+
+	// The time when the Big Data pool was created.
+	CreationDate *time.Time `json:"creationDate,omitempty"`
+
+	// The default folder where Spark logs will be written.
+	DefaultSparkLogFolder *string `json:"defaultSparkLogFolder,omitempty"`
+
+	// Whether compute isolation is required or not.
+	IsComputeIsolationEnabled *bool `json:"isComputeIsolationEnabled,omitempty"`
+
+	// Library version requirements
+	LibraryRequirements *LibraryRequirements `json:"libraryRequirements,omitempty"`
+
+	// The number of nodes in the Big Data pool.
+	NodeCount *int32 `json:"nodeCount,omitempty"`
+
+	// The level of compute power that each node in the Big Data pool has.
+	NodeSize *NodeSize `json:"nodeSize,omitempty"`
+
+	// The kind of nodes that the Big Data pool provides.
+	NodeSizeFamily *NodeSizeFamily `json:"nodeSizeFamily,omitempty"`
+
+	// The state of the Big Data pool.
+	ProvisioningState *string `json:"provisioningState,omitempty"`
+
+	// The Spark events folder
+	SparkEventsFolder *string `json:"sparkEventsFolder,omitempty"`
+
+	// The Apache Spark version.
+	SparkVersion *string `json:"sparkVersion,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type BigDataPoolResourceProperties.
+func (b BigDataPoolResourceProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if b.AutoPause != nil {
+		objectMap["autoPause"] = b.AutoPause
+	}
+	if b.AutoScale != nil {
+		objectMap["autoScale"] = b.AutoScale
+	}
+	if b.CreationDate != nil {
+		objectMap["creationDate"] = (*timeRFC3339)(b.CreationDate)
+	}
+	if b.DefaultSparkLogFolder != nil {
+		objectMap["defaultSparkLogFolder"] = b.DefaultSparkLogFolder
+	}
+	if b.IsComputeIsolationEnabled != nil {
+		objectMap["isComputeIsolationEnabled"] = b.IsComputeIsolationEnabled
+	}
+	if b.LibraryRequirements != nil {
+		objectMap["libraryRequirements"] = b.LibraryRequirements
+	}
+	if b.NodeCount != nil {
+		objectMap["nodeCount"] = b.NodeCount
+	}
+	if b.NodeSize != nil {
+		objectMap["nodeSize"] = b.NodeSize
+	}
+	if b.NodeSizeFamily != nil {
+		objectMap["nodeSizeFamily"] = b.NodeSizeFamily
+	}
+	if b.ProvisioningState != nil {
+		objectMap["provisioningState"] = b.ProvisioningState
+	}
+	if b.SparkEventsFolder != nil {
+		objectMap["sparkEventsFolder"] = b.SparkEventsFolder
+	}
+	if b.SparkVersion != nil {
+		objectMap["sparkVersion"] = b.SparkVersion
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type BigDataPoolResourceProperties.
+func (b *BigDataPoolResourceProperties) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "autoPause":
+			if val != nil {
+				err = json.Unmarshal(*val, &b.AutoPause)
+			}
+			delete(rawMsg, key)
+		case "autoScale":
+			if val != nil {
+				err = json.Unmarshal(*val, &b.AutoScale)
+			}
+			delete(rawMsg, key)
+		case "creationDate":
+			if val != nil {
+				var aux timeRFC3339
+				err = json.Unmarshal(*val, &aux)
+				b.CreationDate = (*time.Time)(&aux)
+			}
+			delete(rawMsg, key)
+		case "defaultSparkLogFolder":
+			if val != nil {
+				err = json.Unmarshal(*val, &b.DefaultSparkLogFolder)
+			}
+			delete(rawMsg, key)
+		case "isComputeIsolationEnabled":
+			if val != nil {
+				err = json.Unmarshal(*val, &b.IsComputeIsolationEnabled)
+			}
+			delete(rawMsg, key)
+		case "libraryRequirements":
+			if val != nil {
+				err = json.Unmarshal(*val, &b.LibraryRequirements)
+			}
+			delete(rawMsg, key)
+		case "nodeCount":
+			if val != nil {
+				err = json.Unmarshal(*val, &b.NodeCount)
+			}
+			delete(rawMsg, key)
+		case "nodeSize":
+			if val != nil {
+				err = json.Unmarshal(*val, &b.NodeSize)
+			}
+			delete(rawMsg, key)
+		case "nodeSizeFamily":
+			if val != nil {
+				err = json.Unmarshal(*val, &b.NodeSizeFamily)
+			}
+			delete(rawMsg, key)
+		case "provisioningState":
+			if val != nil {
+				err = json.Unmarshal(*val, &b.ProvisioningState)
+			}
+			delete(rawMsg, key)
+		case "sparkEventsFolder":
+			if val != nil {
+				err = json.Unmarshal(*val, &b.SparkEventsFolder)
+			}
+			delete(rawMsg, key)
+		case "sparkVersion":
+			if val != nil {
+				err = json.Unmarshal(*val, &b.SparkVersion)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // Binary dataset.
@@ -3903,6 +5913,323 @@ func (b *BinaryDatasetTypeProperties) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
+}
+
+// A copy activity Binary sink.
+type BinarySink struct {
+	CopySink
+	// Binary store settings.
+	StoreSettings StoreWriteSettingsClassification `json:"storeSettings,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type BinarySink.
+func (b BinarySink) MarshalJSON() ([]byte, error) {
+	objectMap := b.CopySink.marshalInternal("BinarySink")
+	if b.StoreSettings != nil {
+		objectMap["storeSettings"] = b.StoreSettings
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type BinarySink.
+func (b *BinarySink) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "storeSettings":
+			if val != nil {
+				b.StoreSettings, err = unmarshalStoreWriteSettingsClassification(*val)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return b.CopySink.unmarshalInternal(rawMsg)
+}
+
+// A copy activity Binary source.
+type BinarySource struct {
+	CopySource
+	// Binary store settings.
+	StoreSettings StoreReadSettingsClassification `json:"storeSettings,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type BinarySource.
+func (b BinarySource) MarshalJSON() ([]byte, error) {
+	objectMap := b.CopySource.marshalInternal("BinarySource")
+	if b.StoreSettings != nil {
+		objectMap["storeSettings"] = b.StoreSettings
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type BinarySource.
+func (b *BinarySource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "storeSettings":
+			if val != nil {
+				b.StoreSettings, err = unmarshalStoreReadSettingsClassification(*val)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return b.CopySource.unmarshalInternal(rawMsg)
+}
+
+// Trigger that runs every time a Blob event occurs.
+type BlobEventsTrigger struct {
+	MultiplePipelineTrigger
+	// Blob Events Trigger properties.
+	TypeProperties *BlobEventsTriggerTypeProperties `json:"typeProperties,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type BlobEventsTrigger.
+func (b BlobEventsTrigger) MarshalJSON() ([]byte, error) {
+	objectMap := b.MultiplePipelineTrigger.marshalInternal("BlobEventsTrigger")
+	if b.TypeProperties != nil {
+		objectMap["typeProperties"] = b.TypeProperties
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type BlobEventsTrigger.
+func (b *BlobEventsTrigger) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "typeProperties":
+			if val != nil {
+				err = json.Unmarshal(*val, &b.TypeProperties)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return b.MultiplePipelineTrigger.unmarshalInternal(rawMsg)
+}
+
+// Blob Events Trigger properties.
+type BlobEventsTriggerTypeProperties struct {
+	// The blob path must begin with the pattern provided for trigger to fire. For example, '/records/blobs/december/' will only
+	// fire the trigger for blobs in the december folder under the records container. At least one of these must be provided:
+	// blobPathBeginsWith, blobPathEndsWith.
+	BlobPathBeginsWith *string `json:"blobPathBeginsWith,omitempty"`
+
+	// The blob path must end with the pattern provided for trigger to fire. For example, 'december/boxes.csv' will only fire
+	// the trigger for blobs named boxes in a december folder. At least one of these must be provided: blobPathBeginsWith, blobPathEndsWith.
+	BlobPathEndsWith *string `json:"blobPathEndsWith,omitempty"`
+
+	// The type of events that cause this trigger to fire.
+	Events *[]BlobEventTypes `json:"events,omitempty"`
+
+	// If set to true, blobs with zero bytes will be ignored.
+	IgnoreEmptyBlobs *bool `json:"ignoreEmptyBlobs,omitempty"`
+
+	// The ARM resource ID of the Storage Account.
+	Scope *string `json:"scope,omitempty"`
+}
+
+// A copy activity Azure Blob sink.
+type BlobSink struct {
+	CopySink
+	// Blob writer add header. Type: boolean (or Expression with resultType boolean).
+	BlobWriterAddHeader *interface{} `json:"blobWriterAddHeader,omitempty"`
+
+	// Blob writer date time format. Type: string (or Expression with resultType string).
+	BlobWriterDateTimeFormat *interface{} `json:"blobWriterDateTimeFormat,omitempty"`
+
+	// Blob writer overwrite files. Type: boolean (or Expression with resultType boolean).
+	BlobWriterOverwriteFiles *interface{} `json:"blobWriterOverwriteFiles,omitempty"`
+
+	// The type of copy behavior for copy sink.
+	CopyBehavior *interface{} `json:"copyBehavior,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type BlobSink.
+func (b BlobSink) MarshalJSON() ([]byte, error) {
+	objectMap := b.CopySink.marshalInternal("BlobSink")
+	if b.BlobWriterAddHeader != nil {
+		objectMap["blobWriterAddHeader"] = b.BlobWriterAddHeader
+	}
+	if b.BlobWriterDateTimeFormat != nil {
+		objectMap["blobWriterDateTimeFormat"] = b.BlobWriterDateTimeFormat
+	}
+	if b.BlobWriterOverwriteFiles != nil {
+		objectMap["blobWriterOverwriteFiles"] = b.BlobWriterOverwriteFiles
+	}
+	if b.CopyBehavior != nil {
+		objectMap["copyBehavior"] = b.CopyBehavior
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type BlobSink.
+func (b *BlobSink) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "blobWriterAddHeader":
+			if val != nil {
+				err = json.Unmarshal(*val, &b.BlobWriterAddHeader)
+			}
+			delete(rawMsg, key)
+		case "blobWriterDateTimeFormat":
+			if val != nil {
+				err = json.Unmarshal(*val, &b.BlobWriterDateTimeFormat)
+			}
+			delete(rawMsg, key)
+		case "blobWriterOverwriteFiles":
+			if val != nil {
+				err = json.Unmarshal(*val, &b.BlobWriterOverwriteFiles)
+			}
+			delete(rawMsg, key)
+		case "copyBehavior":
+			if val != nil {
+				err = json.Unmarshal(*val, &b.CopyBehavior)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return b.CopySink.unmarshalInternal(rawMsg)
+}
+
+// A copy activity Azure Blob source.
+type BlobSource struct {
+	CopySource
+	// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType
+	// boolean).
+	Recursive *interface{} `json:"recursive,omitempty"`
+
+	// Number of header lines to skip from each blob. Type: integer (or Expression with resultType integer).
+	SkipHeaderLineCount *interface{} `json:"skipHeaderLineCount,omitempty"`
+
+	// Treat empty as null. Type: boolean (or Expression with resultType boolean).
+	TreatEmptyAsNull *interface{} `json:"treatEmptyAsNull,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type BlobSource.
+func (b BlobSource) MarshalJSON() ([]byte, error) {
+	objectMap := b.CopySource.marshalInternal("BlobSource")
+	if b.Recursive != nil {
+		objectMap["recursive"] = b.Recursive
+	}
+	if b.SkipHeaderLineCount != nil {
+		objectMap["skipHeaderLineCount"] = b.SkipHeaderLineCount
+	}
+	if b.TreatEmptyAsNull != nil {
+		objectMap["treatEmptyAsNull"] = b.TreatEmptyAsNull
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type BlobSource.
+func (b *BlobSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "recursive":
+			if val != nil {
+				err = json.Unmarshal(*val, &b.Recursive)
+			}
+			delete(rawMsg, key)
+		case "skipHeaderLineCount":
+			if val != nil {
+				err = json.Unmarshal(*val, &b.SkipHeaderLineCount)
+			}
+			delete(rawMsg, key)
+		case "treatEmptyAsNull":
+			if val != nil {
+				err = json.Unmarshal(*val, &b.TreatEmptyAsNull)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return b.CopySource.unmarshalInternal(rawMsg)
+}
+
+// Trigger that runs every time the selected Blob container changes.
+type BlobTrigger struct {
+	MultiplePipelineTrigger
+	// Blob Trigger properties.
+	TypeProperties *BlobTriggerTypeProperties `json:"typeProperties,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type BlobTrigger.
+func (b BlobTrigger) MarshalJSON() ([]byte, error) {
+	objectMap := b.MultiplePipelineTrigger.marshalInternal("BlobTrigger")
+	if b.TypeProperties != nil {
+		objectMap["typeProperties"] = b.TypeProperties
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type BlobTrigger.
+func (b *BlobTrigger) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "typeProperties":
+			if val != nil {
+				err = json.Unmarshal(*val, &b.TypeProperties)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return b.MultiplePipelineTrigger.unmarshalInternal(rawMsg)
+}
+
+// Blob Trigger properties.
+type BlobTriggerTypeProperties struct {
+	// The path of the container/folder that will trigger the pipeline.
+	FolderPath *string `json:"folderPath,omitempty"`
+
+	// The Azure Storage linked service reference.
+	LinkedService *LinkedServiceReference `json:"linkedService,omitempty"`
+
+	// The max number of parallel files to handle when it is triggered.
+	MaxConcurrency *int32 `json:"maxConcurrency,omitempty"`
 }
 
 // Linked service for Cassandra data source.
@@ -4012,6 +6339,58 @@ func (c *CassandraLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error 
 	return nil
 }
 
+// A copy activity source for a Cassandra database.
+type CassandraSource struct {
+	TabularSource
+	// The consistency level specifies how many Cassandra servers must respond to a read request before returning data to the
+	// client application. Cassandra checks the specified number of Cassandra servers for data to satisfy the read request. Must
+	// be one of cassandraSourceReadConsistencyLevels. The default value is 'ONE'. It is case-insensitive.
+	ConsistencyLevel *CassandraSourceReadConsistencyLevels `json:"consistencyLevel,omitempty"`
+
+	// Database query. Should be a SQL-92 query expression or Cassandra Query Language (CQL) command. Type: string (or Expression
+	// with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type CassandraSource.
+func (c CassandraSource) MarshalJSON() ([]byte, error) {
+	objectMap := c.TabularSource.marshalInternal("CassandraSource")
+	if c.ConsistencyLevel != nil {
+		objectMap["consistencyLevel"] = c.ConsistencyLevel
+	}
+	if c.Query != nil {
+		objectMap["query"] = c.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type CassandraSource.
+func (c *CassandraSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "consistencyLevel":
+			if val != nil {
+				err = json.Unmarshal(*val, &c.ConsistencyLevel)
+			}
+			delete(rawMsg, key)
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &c.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return c.TabularSource.unmarshalInternal(rawMsg)
+}
+
 // The Cassandra database dataset.
 type CassandraTableDataset struct {
 	Dataset
@@ -4057,6 +6436,66 @@ type CassandraTableDatasetTypeProperties struct {
 
 	// The table name of the Cassandra database. Type: string (or Expression with resultType string).
 	TableName *interface{} `json:"tableName,omitempty"`
+}
+
+// Trigger that allows the referenced pipeline to depend on other pipeline runs based on runDimension Name/Value pairs. Upstream
+// pipelines should declare the same runDimension Name and their runs should have the values for those runDimensions. The
+// referenced pipeline run would be triggered if the values for the runDimension match for all upstream pipeline runs.
+type ChainingTrigger struct {
+	Trigger
+	// Pipeline for which runs are created when all upstream pipelines complete successfully.
+	Pipeline *TriggerPipelineReference `json:"pipeline,omitempty"`
+
+	// Chaining Trigger properties.
+	TypeProperties *ChainingTriggerTypeProperties `json:"typeProperties,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ChainingTrigger.
+func (c ChainingTrigger) MarshalJSON() ([]byte, error) {
+	objectMap := c.Trigger.marshalInternal("ChainingTrigger")
+	if c.Pipeline != nil {
+		objectMap["pipeline"] = c.Pipeline
+	}
+	if c.TypeProperties != nil {
+		objectMap["typeProperties"] = c.TypeProperties
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type ChainingTrigger.
+func (c *ChainingTrigger) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "pipeline":
+			if val != nil {
+				err = json.Unmarshal(*val, &c.Pipeline)
+			}
+			delete(rawMsg, key)
+		case "typeProperties":
+			if val != nil {
+				err = json.Unmarshal(*val, &c.TypeProperties)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return c.Trigger.unmarshalInternal(rawMsg)
+}
+
+// Chaining Trigger properties.
+type ChainingTriggerTypeProperties struct {
+	// Upstream Pipelines.
+	DependsOn *[]PipelineReference `json:"dependsOn,omitempty"`
+
+	// Run Dimension property that needs to be emitted by upstream pipelines.
+	RunDimension *string `json:"runDimension,omitempty"`
 }
 
 // The object that defines the structure of an Azure Synapse error response.
@@ -4304,6 +6743,107 @@ func (c *CommonDataServiceForAppsLinkedServiceTypeProperties) UnmarshalJSON(data
 	return nil
 }
 
+// A copy activity Common Data Service for Apps sink.
+type CommonDataServiceForAppsSink struct {
+	CopySink
+	// The logical name of the alternate key which will be used when upserting records. Type: string (or Expression with resultType
+	// string).
+	AlternateKeyName *interface{} `json:"alternateKeyName,omitempty"`
+
+	// The flag indicating whether to ignore null values from input dataset (except key fields) during write operation. Default
+	// is false. Type: boolean (or Expression with resultType boolean).
+	IgnoreNullValues *interface{} `json:"ignoreNullValues,omitempty"`
+
+	// The write behavior for the operation.
+	WriteBehavior *DynamicsSinkWriteBehavior `json:"writeBehavior,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type CommonDataServiceForAppsSink.
+func (c CommonDataServiceForAppsSink) MarshalJSON() ([]byte, error) {
+	objectMap := c.CopySink.marshalInternal("CommonDataServiceForAppsSink")
+	if c.AlternateKeyName != nil {
+		objectMap["alternateKeyName"] = c.AlternateKeyName
+	}
+	if c.IgnoreNullValues != nil {
+		objectMap["ignoreNullValues"] = c.IgnoreNullValues
+	}
+	if c.WriteBehavior != nil {
+		objectMap["writeBehavior"] = c.WriteBehavior
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type CommonDataServiceForAppsSink.
+func (c *CommonDataServiceForAppsSink) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "alternateKeyName":
+			if val != nil {
+				err = json.Unmarshal(*val, &c.AlternateKeyName)
+			}
+			delete(rawMsg, key)
+		case "ignoreNullValues":
+			if val != nil {
+				err = json.Unmarshal(*val, &c.IgnoreNullValues)
+			}
+			delete(rawMsg, key)
+		case "writeBehavior":
+			if val != nil {
+				err = json.Unmarshal(*val, &c.WriteBehavior)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return c.CopySink.unmarshalInternal(rawMsg)
+}
+
+// A copy activity Common Data Service for Apps source.
+type CommonDataServiceForAppsSource struct {
+	CopySource
+	// FetchXML is a proprietary query language that is used in Microsoft Common Data Service for Apps (online & on-premises).
+	// Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type CommonDataServiceForAppsSource.
+func (c CommonDataServiceForAppsSource) MarshalJSON() ([]byte, error) {
+	objectMap := c.CopySource.marshalInternal("CommonDataServiceForAppsSource")
+	if c.Query != nil {
+		objectMap["query"] = c.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type CommonDataServiceForAppsSource.
+func (c *CommonDataServiceForAppsSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &c.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return c.CopySource.unmarshalInternal(rawMsg)
+}
+
 // Concur Service linked service.
 type ConcurLinkedService struct {
 	LinkedService
@@ -4456,6 +6996,44 @@ func (c *ConcurObjectDataset) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return c.Dataset.unmarshalInternal(rawMsg)
+}
+
+// A copy activity Concur Service source.
+type ConcurSource struct {
+	TabularSource
+	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ConcurSource.
+func (c ConcurSource) MarshalJSON() ([]byte, error) {
+	objectMap := c.TabularSource.marshalInternal("ConcurSource")
+	if c.Query != nil {
+		objectMap["query"] = c.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type ConcurSource.
+func (c *ConcurSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &c.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return c.TabularSource.unmarshalInternal(rawMsg)
 }
 
 // Base class for all control activities like IfCondition, ForEach , Until.
@@ -4786,6 +7364,71 @@ func (c *CopySource) unmarshalInternal(rawMsg map[string]*json.RawMessage) error
 	return nil
 }
 
+// CopyTranslatorClassification provides polymorphic access to related types.
+type CopyTranslatorClassification interface {
+	GetCopyTranslator() *CopyTranslator
+}
+
+// A copy activity translator.
+type CopyTranslator struct {
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties *map[string]interface{}
+
+	// Copy translator type.
+	Type *string `json:"type,omitempty"`
+}
+
+// GetCopyTranslator implements the CopyTranslatorClassification interface for type CopyTranslator.
+func (c *CopyTranslator) GetCopyTranslator() *CopyTranslator { return c }
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type CopyTranslator.
+func (c *CopyTranslator) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	return c.unmarshalInternal(rawMsg)
+}
+
+func (c CopyTranslator) marshalInternal(discValue string) map[string]interface{} {
+	objectMap := make(map[string]interface{})
+	c.Type = &discValue
+	objectMap["type"] = c.Type
+	if c.AdditionalProperties != nil {
+		for key, val := range *c.AdditionalProperties {
+			objectMap[key] = val
+		}
+	}
+	return objectMap
+}
+
+func (c *CopyTranslator) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "type":
+			if val != nil {
+				err = json.Unmarshal(*val, &c.Type)
+			}
+			delete(rawMsg, key)
+		default:
+			if c.AdditionalProperties == nil {
+				c.AdditionalProperties = &map[string]interface{}{}
+			}
+			if val != nil {
+				var aux interface{}
+				err = json.Unmarshal(*val, &aux)
+				(*c.AdditionalProperties)[key] = aux
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 // Microsoft Azure Cosmos Database (CosmosDB) linked service.
 type CosmosDbLinkedService struct {
 	LinkedService
@@ -4977,6 +7620,119 @@ type CosmosDbMongoDbAPILinkedServiceTypeProperties struct {
 	Database *interface{} `json:"database,omitempty"`
 }
 
+// A copy activity sink for a CosmosDB (MongoDB API) database.
+type CosmosDbMongoDbAPISink struct {
+	CopySink
+	// Specifies whether the document with same key to be overwritten (upsert) rather than throw exception (insert). The default
+	// value is "insert". Type: string (or Expression with resultType string). Type: string (or Expression with resultType string).
+	WriteBehavior *interface{} `json:"writeBehavior,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type CosmosDbMongoDbAPISink.
+func (c CosmosDbMongoDbAPISink) MarshalJSON() ([]byte, error) {
+	objectMap := c.CopySink.marshalInternal("CosmosDbMongoDbApiSink")
+	if c.WriteBehavior != nil {
+		objectMap["writeBehavior"] = c.WriteBehavior
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type CosmosDbMongoDbAPISink.
+func (c *CosmosDbMongoDbAPISink) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "writeBehavior":
+			if val != nil {
+				err = json.Unmarshal(*val, &c.WriteBehavior)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return c.CopySink.unmarshalInternal(rawMsg)
+}
+
+// A copy activity source for a CosmosDB (MongoDB API) database.
+type CosmosDbMongoDbAPISource struct {
+	CopySource
+	// Specifies the number of documents to return in each batch of the response from MongoDB instance. In most cases, modifying
+	// the batch size will not affect the user or the application. This property's main purpose is to avoid hit the limitation
+	// of response size. Type: integer (or Expression with resultType integer).
+	BatchSize *interface{} `json:"batchSize,omitempty"`
+
+	// Cursor methods for Mongodb query.
+	CursorMethods *MongoDbCursorMethodsProperties `json:"cursorMethods,omitempty"`
+
+	// Specifies selection filter using query operators. To return all documents in a collection, omit this parameter or pass
+	// an empty document ({}). Type: string (or Expression with resultType string).
+	Filter *interface{} `json:"filter,omitempty"`
+
+	// Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+	QueryTimeout *interface{} `json:"queryTimeout,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type CosmosDbMongoDbAPISource.
+func (c CosmosDbMongoDbAPISource) MarshalJSON() ([]byte, error) {
+	objectMap := c.CopySource.marshalInternal("CosmosDbMongoDbApiSource")
+	if c.BatchSize != nil {
+		objectMap["batchSize"] = c.BatchSize
+	}
+	if c.CursorMethods != nil {
+		objectMap["cursorMethods"] = c.CursorMethods
+	}
+	if c.Filter != nil {
+		objectMap["filter"] = c.Filter
+	}
+	if c.QueryTimeout != nil {
+		objectMap["queryTimeout"] = c.QueryTimeout
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type CosmosDbMongoDbAPISource.
+func (c *CosmosDbMongoDbAPISource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "batchSize":
+			if val != nil {
+				err = json.Unmarshal(*val, &c.BatchSize)
+			}
+			delete(rawMsg, key)
+		case "cursorMethods":
+			if val != nil {
+				err = json.Unmarshal(*val, &c.CursorMethods)
+			}
+			delete(rawMsg, key)
+		case "filter":
+			if val != nil {
+				err = json.Unmarshal(*val, &c.Filter)
+			}
+			delete(rawMsg, key)
+		case "queryTimeout":
+			if val != nil {
+				err = json.Unmarshal(*val, &c.QueryTimeout)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return c.CopySource.unmarshalInternal(rawMsg)
+}
+
 // Microsoft Azure CosmosDB (SQL API) Collection dataset.
 type CosmosDbSQLAPICollectionDataset struct {
 	Dataset
@@ -5019,6 +7775,105 @@ func (c *CosmosDbSQLAPICollectionDataset) UnmarshalJSON(data []byte) error {
 type CosmosDbSQLAPICollectionDatasetTypeProperties struct {
 	// CosmosDB (SQL API) collection name. Type: string (or Expression with resultType string).
 	CollectionName *interface{} `json:"collectionName,omitempty"`
+}
+
+// A copy activity Azure CosmosDB (SQL API) Collection sink.
+type CosmosDbSQLAPISink struct {
+	CopySink
+	// Describes how to write data to Azure Cosmos DB. Type: string (or Expression with resultType string). Allowed values: insert
+	// and upsert.
+	WriteBehavior *interface{} `json:"writeBehavior,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type CosmosDbSQLAPISink.
+func (c CosmosDbSQLAPISink) MarshalJSON() ([]byte, error) {
+	objectMap := c.CopySink.marshalInternal("CosmosDbSqlApiSink")
+	if c.WriteBehavior != nil {
+		objectMap["writeBehavior"] = c.WriteBehavior
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type CosmosDbSQLAPISink.
+func (c *CosmosDbSQLAPISink) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "writeBehavior":
+			if val != nil {
+				err = json.Unmarshal(*val, &c.WriteBehavior)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return c.CopySink.unmarshalInternal(rawMsg)
+}
+
+// A copy activity Azure CosmosDB (SQL API) Collection source.
+type CosmosDbSQLAPISource struct {
+	CopySource
+	// Page size of the result. Type: integer (or Expression with resultType integer).
+	PageSize *interface{} `json:"pageSize,omitempty"`
+
+	// Preferred regions. Type: array of strings (or Expression with resultType array of strings).
+	PreferredRegions *interface{} `json:"preferredRegions,omitempty"`
+
+	// SQL API query. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type CosmosDbSQLAPISource.
+func (c CosmosDbSQLAPISource) MarshalJSON() ([]byte, error) {
+	objectMap := c.CopySource.marshalInternal("CosmosDbSqlApiSource")
+	if c.PageSize != nil {
+		objectMap["pageSize"] = c.PageSize
+	}
+	if c.PreferredRegions != nil {
+		objectMap["preferredRegions"] = c.PreferredRegions
+	}
+	if c.Query != nil {
+		objectMap["query"] = c.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type CosmosDbSQLAPISource.
+func (c *CosmosDbSQLAPISource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "pageSize":
+			if val != nil {
+				err = json.Unmarshal(*val, &c.PageSize)
+			}
+			delete(rawMsg, key)
+		case "preferredRegions":
+			if val != nil {
+				err = json.Unmarshal(*val, &c.PreferredRegions)
+			}
+			delete(rawMsg, key)
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &c.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return c.CopySource.unmarshalInternal(rawMsg)
 }
 
 // Couchbase server linked service.
@@ -5070,6 +7925,44 @@ type CouchbaseLinkedServiceTypeProperties struct {
 	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager.
 	// Type: string (or Expression with resultType string).
 	EncryptedCredential *interface{} `json:"encryptedCredential,omitempty"`
+}
+
+// A copy activity Couchbase server source.
+type CouchbaseSource struct {
+	TabularSource
+	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type CouchbaseSource.
+func (c CouchbaseSource) MarshalJSON() ([]byte, error) {
+	objectMap := c.TabularSource.marshalInternal("CouchbaseSource")
+	if c.Query != nil {
+		objectMap["query"] = c.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type CouchbaseSource.
+func (c *CouchbaseSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &c.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return c.TabularSource.unmarshalInternal(rawMsg)
 }
 
 // Couchbase server dataset.
@@ -5280,6 +8173,91 @@ func (c *CustomDataSourceLinkedService) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return c.LinkedService.unmarshalInternal(rawMsg)
+}
+
+// The custom dataset.
+type CustomDataset struct {
+	Dataset
+	// Custom dataset properties.
+	TypeProperties *interface{} `json:"typeProperties,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type CustomDataset.
+func (c CustomDataset) MarshalJSON() ([]byte, error) {
+	objectMap := c.Dataset.marshalInternal("CustomDataset")
+	if c.TypeProperties != nil {
+		objectMap["typeProperties"] = c.TypeProperties
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type CustomDataset.
+func (c *CustomDataset) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "typeProperties":
+			if val != nil {
+				err = json.Unmarshal(*val, &c.TypeProperties)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return c.Dataset.unmarshalInternal(rawMsg)
+}
+
+// CustomSetupBaseClassification provides polymorphic access to related types.
+type CustomSetupBaseClassification interface {
+	GetCustomSetupBase() *CustomSetupBase
+}
+
+// The base definition of the custom setup.
+type CustomSetupBase struct {
+	// The type of custom setup.
+	Type *string `json:"type,omitempty"`
+}
+
+// GetCustomSetupBase implements the CustomSetupBaseClassification interface for type CustomSetupBase.
+func (c *CustomSetupBase) GetCustomSetupBase() *CustomSetupBase { return c }
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type CustomSetupBase.
+func (c *CustomSetupBase) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	return c.unmarshalInternal(rawMsg)
+}
+
+func (c CustomSetupBase) marshalInternal(discValue string) map[string]interface{} {
+	objectMap := make(map[string]interface{})
+	c.Type = &discValue
+	objectMap["type"] = c.Type
+	return objectMap
+}
+
+func (c *CustomSetupBase) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "type":
+			if val != nil {
+				err = json.Unmarshal(*val, &c.Type)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // DataFlowClassification provides polymorphic access to related types.
@@ -6023,6 +9001,15 @@ type DataLakeAnalyticsUsqlActivityTypeProperties struct {
 	ScriptPath *interface{} `json:"scriptPath,omitempty"`
 }
 
+// Details of the data lake storage account associated with the workspace
+type DataLakeStorageAccountDetails struct {
+	// Account URL
+	AccountURL *string `json:"accountUrl,omitempty"`
+
+	// Filesystem name
+	Filesystem *string `json:"filesystem,omitempty"`
+}
+
 // DatabricksNotebook activity.
 type DatabricksNotebookActivity struct {
 	ExecutionActivity
@@ -6403,6 +9390,15 @@ type DatasetCreateOrUpdateDatasetOptions struct {
 	IfMatch *string
 }
 
+// Columns that define the structure of the dataset.
+type DatasetDataElement struct {
+	// Name of the column. Type: string (or Expression with resultType string).
+	Name *interface{} `json:"name,omitempty"`
+
+	// Type of the column. Type: string (or Expression with resultType string).
+	Type *interface{} `json:"type,omitempty"`
+}
+
 // Dataset debug resource.
 type DatasetDebugResource struct {
 	SubResourceDebugResource
@@ -6644,6 +9640,159 @@ type DatasetResourceResponse struct {
 	RawResponse *http.Response
 }
 
+// Columns that define the physical type schema of the dataset.
+type DatasetSchemaDataElement struct {
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties *map[string]interface{}
+
+	// Name of the schema column. Type: string (or Expression with resultType string).
+	Name *interface{} `json:"name,omitempty"`
+
+	// Type of the schema column. Type: string (or Expression with resultType string).
+	Type *interface{} `json:"type,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type DatasetSchemaDataElement.
+func (d DatasetSchemaDataElement) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if d.Name != nil {
+		objectMap["name"] = d.Name
+	}
+	if d.Type != nil {
+		objectMap["type"] = d.Type
+	}
+	if d.AdditionalProperties != nil {
+		for key, val := range *d.AdditionalProperties {
+			objectMap[key] = val
+		}
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type DatasetSchemaDataElement.
+func (d *DatasetSchemaDataElement) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "name":
+			if val != nil {
+				err = json.Unmarshal(*val, &d.Name)
+			}
+			delete(rawMsg, key)
+		case "type":
+			if val != nil {
+				err = json.Unmarshal(*val, &d.Type)
+			}
+			delete(rawMsg, key)
+		default:
+			if d.AdditionalProperties == nil {
+				d.AdditionalProperties = &map[string]interface{}{}
+			}
+			if val != nil {
+				var aux interface{}
+				err = json.Unmarshal(*val, &aux)
+				(*d.AdditionalProperties)[key] = aux
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// DatasetStorageFormatClassification provides polymorphic access to related types.
+type DatasetStorageFormatClassification interface {
+	GetDatasetStorageFormat() *DatasetStorageFormat
+}
+
+// The format definition of a storage.
+type DatasetStorageFormat struct {
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties *map[string]interface{}
+
+	// Deserializer. Type: string (or Expression with resultType string).
+	Deserializer *interface{} `json:"deserializer,omitempty"`
+
+	// Serializer. Type: string (or Expression with resultType string).
+	Serializer *interface{} `json:"serializer,omitempty"`
+
+	// Type of dataset storage format.
+	Type *string `json:"type,omitempty"`
+}
+
+// GetDatasetStorageFormat implements the DatasetStorageFormatClassification interface for type DatasetStorageFormat.
+func (d *DatasetStorageFormat) GetDatasetStorageFormat() *DatasetStorageFormat { return d }
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type DatasetStorageFormat.
+func (d *DatasetStorageFormat) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	return d.unmarshalInternal(rawMsg)
+}
+
+func (d DatasetStorageFormat) marshalInternal(discValue string) map[string]interface{} {
+	objectMap := make(map[string]interface{})
+	if d.Deserializer != nil {
+		objectMap["deserializer"] = d.Deserializer
+	}
+	if d.Serializer != nil {
+		objectMap["serializer"] = d.Serializer
+	}
+	d.Type = &discValue
+	objectMap["type"] = d.Type
+	if d.AdditionalProperties != nil {
+		for key, val := range *d.AdditionalProperties {
+			objectMap[key] = val
+		}
+	}
+	return objectMap
+}
+
+func (d *DatasetStorageFormat) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "deserializer":
+			if val != nil {
+				err = json.Unmarshal(*val, &d.Deserializer)
+			}
+			delete(rawMsg, key)
+		case "serializer":
+			if val != nil {
+				err = json.Unmarshal(*val, &d.Serializer)
+			}
+			delete(rawMsg, key)
+		case "type":
+			if val != nil {
+				err = json.Unmarshal(*val, &d.Type)
+			}
+			delete(rawMsg, key)
+		default:
+			if d.AdditionalProperties == nil {
+				d.AdditionalProperties = &map[string]interface{}{}
+			}
+			if val != nil {
+				var aux interface{}
+				err = json.Unmarshal(*val, &aux)
+				(*d.AdditionalProperties)[key] = aux
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 // The ZipDeflate compression method used on a dataset.
 type DatasetZipDeflateCompression struct {
 	DatasetCompression
@@ -6803,6 +9952,44 @@ func (d *Db2LinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
+}
+
+// A copy activity source for Db2 databases.
+type Db2Source struct {
+	TabularSource
+	// Database query. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type Db2Source.
+func (d Db2Source) MarshalJSON() ([]byte, error) {
+	objectMap := d.TabularSource.marshalInternal("Db2Source")
+	if d.Query != nil {
+		objectMap["query"] = d.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type Db2Source.
+func (d *Db2Source) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &d.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return d.TabularSource.unmarshalInternal(rawMsg)
 }
 
 // The Db2 table dataset.
@@ -7061,6 +10248,252 @@ func (d *DelimitedTextDatasetTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// Delimited text read settings.
+type DelimitedTextReadSettings struct {
+	FormatReadSettings
+	// Indicates the number of non-empty rows to skip when reading data from input files. Type: integer (or Expression with resultType
+	// integer).
+	SkipLineCount *interface{} `json:"skipLineCount,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type DelimitedTextReadSettings.
+func (d DelimitedTextReadSettings) MarshalJSON() ([]byte, error) {
+	objectMap := d.FormatReadSettings.marshalInternal("DelimitedTextReadSettings")
+	if d.SkipLineCount != nil {
+		objectMap["skipLineCount"] = d.SkipLineCount
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type DelimitedTextReadSettings.
+func (d *DelimitedTextReadSettings) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "skipLineCount":
+			if val != nil {
+				err = json.Unmarshal(*val, &d.SkipLineCount)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return d.FormatReadSettings.unmarshalInternal(rawMsg)
+}
+
+// A copy activity DelimitedText sink.
+type DelimitedTextSink struct {
+	CopySink
+	// DelimitedText format settings.
+	FormatSettings *DelimitedTextWriteSettings `json:"formatSettings,omitempty"`
+
+	// DelimitedText store settings.
+	StoreSettings StoreWriteSettingsClassification `json:"storeSettings,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type DelimitedTextSink.
+func (d DelimitedTextSink) MarshalJSON() ([]byte, error) {
+	objectMap := d.CopySink.marshalInternal("DelimitedTextSink")
+	if d.FormatSettings != nil {
+		objectMap["formatSettings"] = d.FormatSettings
+	}
+	if d.StoreSettings != nil {
+		objectMap["storeSettings"] = d.StoreSettings
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type DelimitedTextSink.
+func (d *DelimitedTextSink) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "formatSettings":
+			if val != nil {
+				err = json.Unmarshal(*val, &d.FormatSettings)
+			}
+			delete(rawMsg, key)
+		case "storeSettings":
+			if val != nil {
+				d.StoreSettings, err = unmarshalStoreWriteSettingsClassification(*val)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return d.CopySink.unmarshalInternal(rawMsg)
+}
+
+// A copy activity DelimitedText source.
+type DelimitedTextSource struct {
+	CopySource
+	// DelimitedText format settings.
+	FormatSettings *DelimitedTextReadSettings `json:"formatSettings,omitempty"`
+
+	// DelimitedText store settings.
+	StoreSettings StoreReadSettingsClassification `json:"storeSettings,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type DelimitedTextSource.
+func (d DelimitedTextSource) MarshalJSON() ([]byte, error) {
+	objectMap := d.CopySource.marshalInternal("DelimitedTextSource")
+	if d.FormatSettings != nil {
+		objectMap["formatSettings"] = d.FormatSettings
+	}
+	if d.StoreSettings != nil {
+		objectMap["storeSettings"] = d.StoreSettings
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type DelimitedTextSource.
+func (d *DelimitedTextSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "formatSettings":
+			if val != nil {
+				err = json.Unmarshal(*val, &d.FormatSettings)
+			}
+			delete(rawMsg, key)
+		case "storeSettings":
+			if val != nil {
+				d.StoreSettings, err = unmarshalStoreReadSettingsClassification(*val)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return d.CopySource.unmarshalInternal(rawMsg)
+}
+
+// Delimited text write settings.
+type DelimitedTextWriteSettings struct {
+	FormatWriteSettings
+	// The file extension used to create the files. Type: string (or Expression with resultType string).
+	FileExtension *interface{} `json:"fileExtension,omitempty"`
+
+	// Indicates whether string values should always be enclosed with quotes. Type: boolean (or Expression with resultType boolean).
+	QuoteAllText *interface{} `json:"quoteAllText,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type DelimitedTextWriteSettings.
+func (d DelimitedTextWriteSettings) MarshalJSON() ([]byte, error) {
+	objectMap := d.FormatWriteSettings.marshalInternal("DelimitedTextWriteSettings")
+	if d.FileExtension != nil {
+		objectMap["fileExtension"] = d.FileExtension
+	}
+	if d.QuoteAllText != nil {
+		objectMap["quoteAllText"] = d.QuoteAllText
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type DelimitedTextWriteSettings.
+func (d *DelimitedTextWriteSettings) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "fileExtension":
+			if val != nil {
+				err = json.Unmarshal(*val, &d.FileExtension)
+			}
+			delete(rawMsg, key)
+		case "quoteAllText":
+			if val != nil {
+				err = json.Unmarshal(*val, &d.QuoteAllText)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return d.FormatWriteSettings.unmarshalInternal(rawMsg)
+}
+
+// DependencyReferenceClassification provides polymorphic access to related types.
+type DependencyReferenceClassification interface {
+	GetDependencyReference() *DependencyReference
+}
+
+// Referenced dependency.
+type DependencyReference struct {
+	// The type of dependency reference.
+	Type *string `json:"type,omitempty"`
+}
+
+// GetDependencyReference implements the DependencyReferenceClassification interface for type DependencyReference.
+func (d *DependencyReference) GetDependencyReference() *DependencyReference { return d }
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type DependencyReference.
+func (d *DependencyReference) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	return d.unmarshalInternal(rawMsg)
+}
+
+func (d DependencyReference) marshalInternal(discValue string) map[string]interface{} {
+	objectMap := make(map[string]interface{})
+	d.Type = &discValue
+	objectMap["type"] = d.Type
+	return objectMap
+}
+
+func (d *DependencyReference) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "type":
+			if val != nil {
+				err = json.Unmarshal(*val, &d.Type)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// Distcp settings.
+type DistcpSettings struct {
+	// Specifies the Distcp options. Type: string (or Expression with resultType string).
+	DistcpOptions *interface{} `json:"distcpOptions,omitempty"`
+
+	// Specifies the Yarn ResourceManager endpoint. Type: string (or Expression with resultType string).
+	ResourceManagerEndpoint *interface{} `json:"resourceManagerEndpoint,omitempty"`
+
+	// Specifies an existing folder path which will be used to store temp Distcp command script. The script file is generated
+	// by ADF and will be removed after Copy job finished. Type: string (or Expression with resultType string).
+	TempScriptPath *interface{} `json:"tempScriptPath,omitempty"`
+}
+
 // Microsoft Azure Document Database Collection dataset.
 type DocumentDbCollectionDataset struct {
 	Dataset
@@ -7103,6 +10536,116 @@ func (d *DocumentDbCollectionDataset) UnmarshalJSON(data []byte) error {
 type DocumentDbCollectionDatasetTypeProperties struct {
 	// Document Database collection name. Type: string (or Expression with resultType string).
 	CollectionName *interface{} `json:"collectionName,omitempty"`
+}
+
+// A copy activity Document Database Collection sink.
+type DocumentDbCollectionSink struct {
+	CopySink
+	// Nested properties separator. Default is . (dot). Type: string (or Expression with resultType string).
+	NestingSeparator *interface{} `json:"nestingSeparator,omitempty"`
+
+	// Describes how to write data to Azure Cosmos DB. Type: string (or Expression with resultType string). Allowed values: insert
+	// and upsert.
+	WriteBehavior *interface{} `json:"writeBehavior,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type DocumentDbCollectionSink.
+func (d DocumentDbCollectionSink) MarshalJSON() ([]byte, error) {
+	objectMap := d.CopySink.marshalInternal("DocumentDbCollectionSink")
+	if d.NestingSeparator != nil {
+		objectMap["nestingSeparator"] = d.NestingSeparator
+	}
+	if d.WriteBehavior != nil {
+		objectMap["writeBehavior"] = d.WriteBehavior
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type DocumentDbCollectionSink.
+func (d *DocumentDbCollectionSink) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "nestingSeparator":
+			if val != nil {
+				err = json.Unmarshal(*val, &d.NestingSeparator)
+			}
+			delete(rawMsg, key)
+		case "writeBehavior":
+			if val != nil {
+				err = json.Unmarshal(*val, &d.WriteBehavior)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return d.CopySink.unmarshalInternal(rawMsg)
+}
+
+// A copy activity Document Database Collection source.
+type DocumentDbCollectionSource struct {
+	CopySource
+	// Nested properties separator. Type: string (or Expression with resultType string).
+	NestingSeparator *interface{} `json:"nestingSeparator,omitempty"`
+
+	// Documents query. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+
+	// Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+	QueryTimeout *interface{} `json:"queryTimeout,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type DocumentDbCollectionSource.
+func (d DocumentDbCollectionSource) MarshalJSON() ([]byte, error) {
+	objectMap := d.CopySource.marshalInternal("DocumentDbCollectionSource")
+	if d.NestingSeparator != nil {
+		objectMap["nestingSeparator"] = d.NestingSeparator
+	}
+	if d.Query != nil {
+		objectMap["query"] = d.Query
+	}
+	if d.QueryTimeout != nil {
+		objectMap["queryTimeout"] = d.QueryTimeout
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type DocumentDbCollectionSource.
+func (d *DocumentDbCollectionSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "nestingSeparator":
+			if val != nil {
+				err = json.Unmarshal(*val, &d.NestingSeparator)
+			}
+			delete(rawMsg, key)
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &d.Query)
+			}
+			delete(rawMsg, key)
+		case "queryTimeout":
+			if val != nil {
+				err = json.Unmarshal(*val, &d.QueryTimeout)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return d.CopySource.unmarshalInternal(rawMsg)
 }
 
 // Drill Dataset Properties
@@ -7168,6 +10711,44 @@ type DrillLinkedServiceTypeProperties struct {
 	Pwd *AzureKeyVaultSecretReference `json:"pwd,omitempty"`
 }
 
+// A copy activity Drill server source.
+type DrillSource struct {
+	TabularSource
+	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type DrillSource.
+func (d DrillSource) MarshalJSON() ([]byte, error) {
+	objectMap := d.TabularSource.marshalInternal("DrillSource")
+	if d.Query != nil {
+		objectMap["query"] = d.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type DrillSource.
+func (d *DrillSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &d.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return d.TabularSource.unmarshalInternal(rawMsg)
+}
+
 // Drill server dataset.
 type DrillTableDataset struct {
 	Dataset
@@ -7204,6 +10785,27 @@ func (d *DrillTableDataset) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return d.Dataset.unmarshalInternal(rawMsg)
+}
+
+// Default value.
+type DwCopyCommandDefaultValue struct {
+	// Column name. Type: object (or Expression with resultType string).
+	ColumnName *interface{} `json:"columnName,omitempty"`
+
+	// The default value of the column. Type: object (or Expression with resultType string).
+	DefaultValue *interface{} `json:"defaultValue,omitempty"`
+}
+
+// DW Copy Command settings.
+type DwCopyCommandSettings struct {
+	// Additional options directly passed to SQL DW in Copy Command. Type: key value pairs (value should be string type) (or Expression
+	// with resultType object). Example: "additionalOptions": { "MAXERRORS": "1000", "DATEFORMAT": "'ymd'" }
+	AdditionalOptions *map[string]string `json:"additionalOptions,omitempty"`
+
+	// Specifies the default values for each target column in SQL DW. The default values in the property overwrite the DEFAULT
+	// constraint set in the DB, and identity column cannot have a default value. Type: array of objects (or Expression with resultType
+	// array of objects).
+	DefaultValues *[]DwCopyCommandDefaultValue `json:"defaultValues,omitempty"`
 }
 
 // Dynamics AX linked service.
@@ -7357,6 +10959,44 @@ func (d *DynamicsAxResourceDataset) UnmarshalJSON(data []byte) error {
 type DynamicsAxResourceDatasetTypeProperties struct {
 	// The path of the Dynamics AX OData entity. Type: string (or Expression with resultType string).
 	Path *interface{} `json:"path,omitempty"`
+}
+
+// A copy activity Dynamics AX source.
+type DynamicsAxSource struct {
+	TabularSource
+	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type DynamicsAxSource.
+func (d DynamicsAxSource) MarshalJSON() ([]byte, error) {
+	objectMap := d.TabularSource.marshalInternal("DynamicsAXSource")
+	if d.Query != nil {
+		objectMap["query"] = d.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type DynamicsAxSource.
+func (d *DynamicsAxSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &d.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return d.TabularSource.unmarshalInternal(rawMsg)
 }
 
 // The Dynamics CRM entity dataset.
@@ -7569,6 +11209,107 @@ func (d *DynamicsCrmLinkedServiceTypeProperties) UnmarshalJSON(data []byte) erro
 	return nil
 }
 
+// A copy activity Dynamics CRM sink.
+type DynamicsCrmSink struct {
+	CopySink
+	// The logical name of the alternate key which will be used when upserting records. Type: string (or Expression with resultType
+	// string).
+	AlternateKeyName *interface{} `json:"alternateKeyName,omitempty"`
+
+	// The flag indicating whether to ignore null values from input dataset (except key fields) during write operation. Default
+	// is false. Type: boolean (or Expression with resultType boolean).
+	IgnoreNullValues *interface{} `json:"ignoreNullValues,omitempty"`
+
+	// The write behavior for the operation.
+	WriteBehavior *DynamicsSinkWriteBehavior `json:"writeBehavior,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type DynamicsCrmSink.
+func (d DynamicsCrmSink) MarshalJSON() ([]byte, error) {
+	objectMap := d.CopySink.marshalInternal("DynamicsCrmSink")
+	if d.AlternateKeyName != nil {
+		objectMap["alternateKeyName"] = d.AlternateKeyName
+	}
+	if d.IgnoreNullValues != nil {
+		objectMap["ignoreNullValues"] = d.IgnoreNullValues
+	}
+	if d.WriteBehavior != nil {
+		objectMap["writeBehavior"] = d.WriteBehavior
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type DynamicsCrmSink.
+func (d *DynamicsCrmSink) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "alternateKeyName":
+			if val != nil {
+				err = json.Unmarshal(*val, &d.AlternateKeyName)
+			}
+			delete(rawMsg, key)
+		case "ignoreNullValues":
+			if val != nil {
+				err = json.Unmarshal(*val, &d.IgnoreNullValues)
+			}
+			delete(rawMsg, key)
+		case "writeBehavior":
+			if val != nil {
+				err = json.Unmarshal(*val, &d.WriteBehavior)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return d.CopySink.unmarshalInternal(rawMsg)
+}
+
+// A copy activity Dynamics CRM source.
+type DynamicsCrmSource struct {
+	CopySource
+	// FetchXML is a proprietary query language that is used in Microsoft Dynamics CRM (online & on-premises). Type: string (or
+	// Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type DynamicsCrmSource.
+func (d DynamicsCrmSource) MarshalJSON() ([]byte, error) {
+	objectMap := d.CopySource.marshalInternal("DynamicsCrmSource")
+	if d.Query != nil {
+		objectMap["query"] = d.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type DynamicsCrmSource.
+func (d *DynamicsCrmSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &d.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return d.CopySource.unmarshalInternal(rawMsg)
+}
+
 // The Dynamics entity dataset.
 type DynamicsEntityDataset struct {
 	Dataset
@@ -7779,6 +11520,107 @@ func (d *DynamicsLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// A copy activity Dynamics sink.
+type DynamicsSink struct {
+	CopySink
+	// The logical name of the alternate key which will be used when upserting records. Type: string (or Expression with resultType
+	// string).
+	AlternateKeyName *interface{} `json:"alternateKeyName,omitempty"`
+
+	// The flag indicating whether ignore null values from input dataset (except key fields) during write operation. Default is
+	// false. Type: boolean (or Expression with resultType boolean).
+	IgnoreNullValues *interface{} `json:"ignoreNullValues,omitempty"`
+
+	// The write behavior for the operation.
+	WriteBehavior *DynamicsSinkWriteBehavior `json:"writeBehavior,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type DynamicsSink.
+func (d DynamicsSink) MarshalJSON() ([]byte, error) {
+	objectMap := d.CopySink.marshalInternal("DynamicsSink")
+	if d.AlternateKeyName != nil {
+		objectMap["alternateKeyName"] = d.AlternateKeyName
+	}
+	if d.IgnoreNullValues != nil {
+		objectMap["ignoreNullValues"] = d.IgnoreNullValues
+	}
+	if d.WriteBehavior != nil {
+		objectMap["writeBehavior"] = d.WriteBehavior
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type DynamicsSink.
+func (d *DynamicsSink) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "alternateKeyName":
+			if val != nil {
+				err = json.Unmarshal(*val, &d.AlternateKeyName)
+			}
+			delete(rawMsg, key)
+		case "ignoreNullValues":
+			if val != nil {
+				err = json.Unmarshal(*val, &d.IgnoreNullValues)
+			}
+			delete(rawMsg, key)
+		case "writeBehavior":
+			if val != nil {
+				err = json.Unmarshal(*val, &d.WriteBehavior)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return d.CopySink.unmarshalInternal(rawMsg)
+}
+
+// A copy activity Dynamics source.
+type DynamicsSource struct {
+	CopySource
+	// FetchXML is a proprietary query language that is used in Microsoft Dynamics (online & on-premises). Type: string (or Expression
+	// with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type DynamicsSource.
+func (d DynamicsSource) MarshalJSON() ([]byte, error) {
+	objectMap := d.CopySource.marshalInternal("DynamicsSource")
+	if d.Query != nil {
+		objectMap["query"] = d.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type DynamicsSource.
+func (d *DynamicsSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &d.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return d.CopySource.unmarshalInternal(rawMsg)
+}
+
 // Eloqua server linked service.
 type EloquaLinkedService struct {
 	LinkedService
@@ -7931,6 +11773,98 @@ func (e *EloquaObjectDataset) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return e.Dataset.unmarshalInternal(rawMsg)
+}
+
+// A copy activity Eloqua server source.
+type EloquaSource struct {
+	TabularSource
+	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type EloquaSource.
+func (e EloquaSource) MarshalJSON() ([]byte, error) {
+	objectMap := e.TabularSource.marshalInternal("EloquaSource")
+	if e.Query != nil {
+		objectMap["query"] = e.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type EloquaSource.
+func (e *EloquaSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &e.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return e.TabularSource.unmarshalInternal(rawMsg)
+}
+
+// The entity reference.
+type EntityReference struct {
+	// The name of this referenced entity.
+	ReferenceName *string `json:"referenceName,omitempty"`
+
+	// The type of this referenced entity.
+	Type *IntegrationRuntimeEntityReferenceType `json:"type,omitempty"`
+}
+
+// The resource management error additional info.
+type ErrorAdditionalInfo struct {
+	// The additional info.
+	Info *interface{} `json:"info,omitempty" azure:"ro"`
+
+	// The additional info type.
+	Type *string `json:"type,omitempty" azure:"ro"`
+}
+
+// Contains details when the response code indicates an error.
+type ErrorContract struct {
+	// The error details.
+	InnerError *ErrorResponse `json:"error,omitempty"`
+}
+
+// Error implements the error interface for type ErrorContract.
+func (e ErrorContract) Error() string {
+	msg := ""
+	if e.InnerError != nil {
+		msg += fmt.Sprintf("InnerError: %v\n", *e.InnerError)
+	}
+	if msg == "" {
+		msg = "missing error info"
+	}
+	return msg
+}
+
+// The resource management error response.
+type ErrorResponse struct {
+	// The error additional info.
+	AdditionalInfo *[]ErrorAdditionalInfo `json:"additionalInfo,omitempty" azure:"ro"`
+
+	// The error code.
+	Code *string `json:"code,omitempty" azure:"ro"`
+
+	// The error details.
+	Details *[]ErrorResponse `json:"details,omitempty" azure:"ro"`
+
+	// The error message.
+	Message *string `json:"message,omitempty" azure:"ro"`
+
+	// The error target.
+	Target *string `json:"target,omitempty" azure:"ro"`
 }
 
 // Request body structure for data flow expression preview.
@@ -8326,6 +12260,199 @@ func (f *FileServerLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error
 	return nil
 }
 
+// The location of file server dataset.
+type FileServerLocation struct {
+	DatasetLocation
+}
+
+// MarshalJSON implements the json.Marshaller interface for type FileServerLocation.
+func (f FileServerLocation) MarshalJSON() ([]byte, error) {
+	objectMap := f.DatasetLocation.marshalInternal("FileServerLocation")
+	return json.Marshal(objectMap)
+}
+
+// File server read settings.
+type FileServerReadSettings struct {
+	StoreReadSettings
+	// Indicates whether to enable partition discovery.
+	EnablePartitionDiscovery *bool `json:"enablePartitionDiscovery,omitempty"`
+
+	// The end of file's modified datetime. Type: string (or Expression with resultType string).
+	ModifiedDatetimeEnd *interface{} `json:"modifiedDatetimeEnd,omitempty"`
+
+	// The start of file's modified datetime. Type: string (or Expression with resultType string).
+	ModifiedDatetimeStart *interface{} `json:"modifiedDatetimeStart,omitempty"`
+
+	// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType
+	// boolean).
+	Recursive *interface{} `json:"recursive,omitempty"`
+
+	// FileServer wildcardFileName. Type: string (or Expression with resultType string).
+	WildcardFileName *interface{} `json:"wildcardFileName,omitempty"`
+
+	// FileServer wildcardFolderPath. Type: string (or Expression with resultType string).
+	WildcardFolderPath *interface{} `json:"wildcardFolderPath,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type FileServerReadSettings.
+func (f FileServerReadSettings) MarshalJSON() ([]byte, error) {
+	objectMap := f.StoreReadSettings.marshalInternal("FileServerReadSettings")
+	if f.EnablePartitionDiscovery != nil {
+		objectMap["enablePartitionDiscovery"] = f.EnablePartitionDiscovery
+	}
+	if f.ModifiedDatetimeEnd != nil {
+		objectMap["modifiedDatetimeEnd"] = f.ModifiedDatetimeEnd
+	}
+	if f.ModifiedDatetimeStart != nil {
+		objectMap["modifiedDatetimeStart"] = f.ModifiedDatetimeStart
+	}
+	if f.Recursive != nil {
+		objectMap["recursive"] = f.Recursive
+	}
+	if f.WildcardFileName != nil {
+		objectMap["wildcardFileName"] = f.WildcardFileName
+	}
+	if f.WildcardFolderPath != nil {
+		objectMap["wildcardFolderPath"] = f.WildcardFolderPath
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type FileServerReadSettings.
+func (f *FileServerReadSettings) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "enablePartitionDiscovery":
+			if val != nil {
+				err = json.Unmarshal(*val, &f.EnablePartitionDiscovery)
+			}
+			delete(rawMsg, key)
+		case "modifiedDatetimeEnd":
+			if val != nil {
+				err = json.Unmarshal(*val, &f.ModifiedDatetimeEnd)
+			}
+			delete(rawMsg, key)
+		case "modifiedDatetimeStart":
+			if val != nil {
+				err = json.Unmarshal(*val, &f.ModifiedDatetimeStart)
+			}
+			delete(rawMsg, key)
+		case "recursive":
+			if val != nil {
+				err = json.Unmarshal(*val, &f.Recursive)
+			}
+			delete(rawMsg, key)
+		case "wildcardFileName":
+			if val != nil {
+				err = json.Unmarshal(*val, &f.WildcardFileName)
+			}
+			delete(rawMsg, key)
+		case "wildcardFolderPath":
+			if val != nil {
+				err = json.Unmarshal(*val, &f.WildcardFolderPath)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return f.StoreReadSettings.unmarshalInternal(rawMsg)
+}
+
+// File server write settings.
+type FileServerWriteSettings struct {
+	StoreWriteSettings
+}
+
+// MarshalJSON implements the json.Marshaller interface for type FileServerWriteSettings.
+func (f FileServerWriteSettings) MarshalJSON() ([]byte, error) {
+	objectMap := f.StoreWriteSettings.marshalInternal("FileServerWriteSettings")
+	return json.Marshal(objectMap)
+}
+
+// A copy activity file system sink.
+type FileSystemSink struct {
+	CopySink
+	// The type of copy behavior for copy sink.
+	CopyBehavior *interface{} `json:"copyBehavior,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type FileSystemSink.
+func (f FileSystemSink) MarshalJSON() ([]byte, error) {
+	objectMap := f.CopySink.marshalInternal("FileSystemSink")
+	if f.CopyBehavior != nil {
+		objectMap["copyBehavior"] = f.CopyBehavior
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type FileSystemSink.
+func (f *FileSystemSink) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "copyBehavior":
+			if val != nil {
+				err = json.Unmarshal(*val, &f.CopyBehavior)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return f.CopySink.unmarshalInternal(rawMsg)
+}
+
+// A copy activity file system source.
+type FileSystemSource struct {
+	CopySource
+	// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType
+	// boolean).
+	Recursive *interface{} `json:"recursive,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type FileSystemSource.
+func (f FileSystemSource) MarshalJSON() ([]byte, error) {
+	objectMap := f.CopySource.marshalInternal("FileSystemSource")
+	if f.Recursive != nil {
+		objectMap["recursive"] = f.Recursive
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type FileSystemSource.
+func (f *FileSystemSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "recursive":
+			if val != nil {
+				err = json.Unmarshal(*val, &f.Recursive)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return f.CopySource.unmarshalInternal(rawMsg)
+}
+
 // Filter and return results from input array based on the conditions.
 type FilterActivity struct {
 	Activity
@@ -8463,6 +12590,208 @@ func (f *ForEachActivityTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// FormatReadSettingsClassification provides polymorphic access to related types.
+type FormatReadSettingsClassification interface {
+	GetFormatReadSettings() *FormatReadSettings
+}
+
+// Format read settings.
+type FormatReadSettings struct {
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties *map[string]interface{}
+
+	// The read setting type.
+	Type *string `json:"type,omitempty"`
+}
+
+// GetFormatReadSettings implements the FormatReadSettingsClassification interface for type FormatReadSettings.
+func (f *FormatReadSettings) GetFormatReadSettings() *FormatReadSettings { return f }
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type FormatReadSettings.
+func (f *FormatReadSettings) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	return f.unmarshalInternal(rawMsg)
+}
+
+func (f FormatReadSettings) marshalInternal(discValue string) map[string]interface{} {
+	objectMap := make(map[string]interface{})
+	f.Type = &discValue
+	objectMap["type"] = f.Type
+	if f.AdditionalProperties != nil {
+		for key, val := range *f.AdditionalProperties {
+			objectMap[key] = val
+		}
+	}
+	return objectMap
+}
+
+func (f *FormatReadSettings) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "type":
+			if val != nil {
+				err = json.Unmarshal(*val, &f.Type)
+			}
+			delete(rawMsg, key)
+		default:
+			if f.AdditionalProperties == nil {
+				f.AdditionalProperties = &map[string]interface{}{}
+			}
+			if val != nil {
+				var aux interface{}
+				err = json.Unmarshal(*val, &aux)
+				(*f.AdditionalProperties)[key] = aux
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// FormatWriteSettingsClassification provides polymorphic access to related types.
+type FormatWriteSettingsClassification interface {
+	GetFormatWriteSettings() *FormatWriteSettings
+}
+
+// Format write settings.
+type FormatWriteSettings struct {
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties *map[string]interface{}
+
+	// The write setting type.
+	Type *string `json:"type,omitempty"`
+}
+
+// GetFormatWriteSettings implements the FormatWriteSettingsClassification interface for type FormatWriteSettings.
+func (f *FormatWriteSettings) GetFormatWriteSettings() *FormatWriteSettings { return f }
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type FormatWriteSettings.
+func (f *FormatWriteSettings) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	return f.unmarshalInternal(rawMsg)
+}
+
+func (f FormatWriteSettings) marshalInternal(discValue string) map[string]interface{} {
+	objectMap := make(map[string]interface{})
+	f.Type = &discValue
+	objectMap["type"] = f.Type
+	if f.AdditionalProperties != nil {
+		for key, val := range *f.AdditionalProperties {
+			objectMap[key] = val
+		}
+	}
+	return objectMap
+}
+
+func (f *FormatWriteSettings) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "type":
+			if val != nil {
+				err = json.Unmarshal(*val, &f.Type)
+			}
+			delete(rawMsg, key)
+		default:
+			if f.AdditionalProperties == nil {
+				f.AdditionalProperties = &map[string]interface{}{}
+			}
+			if val != nil {
+				var aux interface{}
+				err = json.Unmarshal(*val, &aux)
+				(*f.AdditionalProperties)[key] = aux
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// Ftp read settings.
+type FtpReadSettings struct {
+	StoreReadSettings
+	// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType
+	// boolean).
+	Recursive *interface{} `json:"recursive,omitempty"`
+
+	// Specify whether to use binary transfer mode for FTP stores.
+	UseBinaryTransfer *bool `json:"useBinaryTransfer,omitempty"`
+
+	// Ftp wildcardFileName. Type: string (or Expression with resultType string).
+	WildcardFileName *interface{} `json:"wildcardFileName,omitempty"`
+
+	// Ftp wildcardFolderPath. Type: string (or Expression with resultType string).
+	WildcardFolderPath *interface{} `json:"wildcardFolderPath,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type FtpReadSettings.
+func (f FtpReadSettings) MarshalJSON() ([]byte, error) {
+	objectMap := f.StoreReadSettings.marshalInternal("FtpReadSettings")
+	if f.Recursive != nil {
+		objectMap["recursive"] = f.Recursive
+	}
+	if f.UseBinaryTransfer != nil {
+		objectMap["useBinaryTransfer"] = f.UseBinaryTransfer
+	}
+	if f.WildcardFileName != nil {
+		objectMap["wildcardFileName"] = f.WildcardFileName
+	}
+	if f.WildcardFolderPath != nil {
+		objectMap["wildcardFolderPath"] = f.WildcardFolderPath
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type FtpReadSettings.
+func (f *FtpReadSettings) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "recursive":
+			if val != nil {
+				err = json.Unmarshal(*val, &f.Recursive)
+			}
+			delete(rawMsg, key)
+		case "useBinaryTransfer":
+			if val != nil {
+				err = json.Unmarshal(*val, &f.UseBinaryTransfer)
+			}
+			delete(rawMsg, key)
+		case "wildcardFileName":
+			if val != nil {
+				err = json.Unmarshal(*val, &f.WildcardFileName)
+			}
+			delete(rawMsg, key)
+		case "wildcardFolderPath":
+			if val != nil {
+				err = json.Unmarshal(*val, &f.WildcardFolderPath)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return f.StoreReadSettings.unmarshalInternal(rawMsg)
+}
+
 // A FTP server Linked Service.
 type FtpServerLinkedService struct {
 	LinkedService
@@ -8587,6 +12916,17 @@ func (f *FtpServerLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error 
 		}
 	}
 	return nil
+}
+
+// The location of ftp server dataset.
+type FtpServerLocation struct {
+	DatasetLocation
+}
+
+// MarshalJSON implements the json.Marshaller interface for type FtpServerLocation.
+func (f FtpServerLocation) MarshalJSON() ([]byte, error) {
+	objectMap := f.DatasetLocation.marshalInternal("FtpServerLocation")
+	return json.Marshal(objectMap)
 }
 
 // Properties specific to this dataset type.
@@ -8838,6 +13178,44 @@ func (g *GoogleAdWordsObjectDataset) UnmarshalJSON(data []byte) error {
 	return g.Dataset.unmarshalInternal(rawMsg)
 }
 
+// A copy activity Google AdWords service source.
+type GoogleAdWordsSource struct {
+	TabularSource
+	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type GoogleAdWordsSource.
+func (g GoogleAdWordsSource) MarshalJSON() ([]byte, error) {
+	objectMap := g.TabularSource.marshalInternal("GoogleAdWordsSource")
+	if g.Query != nil {
+		objectMap["query"] = g.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type GoogleAdWordsSource.
+func (g *GoogleAdWordsSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &g.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return g.TabularSource.unmarshalInternal(rawMsg)
+}
+
 // Google BigQuery Dataset Properties
 type GoogleBigQueryDatasetTypeProperties struct {
 	// The database name of the Google BigQuery. Type: string (or Expression with resultType string).
@@ -9049,6 +13427,44 @@ func (g *GoogleBigQueryObjectDataset) UnmarshalJSON(data []byte) error {
 	return g.Dataset.unmarshalInternal(rawMsg)
 }
 
+// A copy activity Google BigQuery service source.
+type GoogleBigQuerySource struct {
+	TabularSource
+	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type GoogleBigQuerySource.
+func (g GoogleBigQuerySource) MarshalJSON() ([]byte, error) {
+	objectMap := g.TabularSource.marshalInternal("GoogleBigQuerySource")
+	if g.Query != nil {
+		objectMap["query"] = g.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type GoogleBigQuerySource.
+func (g *GoogleBigQuerySource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &g.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return g.TabularSource.unmarshalInternal(rawMsg)
+}
+
 // Linked service for Google Cloud Storage.
 type GoogleCloudStorageLinkedService struct {
 	LinkedService
@@ -9143,6 +13559,160 @@ func (g *GoogleCloudStorageLinkedServiceTypeProperties) UnmarshalJSON(data []byt
 	return nil
 }
 
+// The location of Google Cloud Storage dataset.
+type GoogleCloudStorageLocation struct {
+	DatasetLocation
+	// Specify the bucketName of Google Cloud Storage. Type: string (or Expression with resultType string)
+	BucketName *interface{} `json:"bucketName,omitempty"`
+
+	// Specify the version of Google Cloud Storage. Type: string (or Expression with resultType string).
+	Version *interface{} `json:"version,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type GoogleCloudStorageLocation.
+func (g GoogleCloudStorageLocation) MarshalJSON() ([]byte, error) {
+	objectMap := g.DatasetLocation.marshalInternal("GoogleCloudStorageLocation")
+	if g.BucketName != nil {
+		objectMap["bucketName"] = g.BucketName
+	}
+	if g.Version != nil {
+		objectMap["version"] = g.Version
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type GoogleCloudStorageLocation.
+func (g *GoogleCloudStorageLocation) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "bucketName":
+			if val != nil {
+				err = json.Unmarshal(*val, &g.BucketName)
+			}
+			delete(rawMsg, key)
+		case "version":
+			if val != nil {
+				err = json.Unmarshal(*val, &g.Version)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return g.DatasetLocation.unmarshalInternal(rawMsg)
+}
+
+// Google Cloud Storage read settings.
+type GoogleCloudStorageReadSettings struct {
+	StoreReadSettings
+	// Indicates whether to enable partition discovery.
+	EnablePartitionDiscovery *bool `json:"enablePartitionDiscovery,omitempty"`
+
+	// The end of file's modified datetime. Type: string (or Expression with resultType string).
+	ModifiedDatetimeEnd *interface{} `json:"modifiedDatetimeEnd,omitempty"`
+
+	// The start of file's modified datetime. Type: string (or Expression with resultType string).
+	ModifiedDatetimeStart *interface{} `json:"modifiedDatetimeStart,omitempty"`
+
+	// The prefix filter for the Google Cloud Storage object name. Type: string (or Expression with resultType string).
+	Prefix *interface{} `json:"prefix,omitempty"`
+
+	// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType
+	// boolean).
+	Recursive *interface{} `json:"recursive,omitempty"`
+
+	// Google Cloud Storage wildcardFileName. Type: string (or Expression with resultType string).
+	WildcardFileName *interface{} `json:"wildcardFileName,omitempty"`
+
+	// Google Cloud Storage wildcardFolderPath. Type: string (or Expression with resultType string).
+	WildcardFolderPath *interface{} `json:"wildcardFolderPath,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type GoogleCloudStorageReadSettings.
+func (g GoogleCloudStorageReadSettings) MarshalJSON() ([]byte, error) {
+	objectMap := g.StoreReadSettings.marshalInternal("GoogleCloudStorageReadSettings")
+	if g.EnablePartitionDiscovery != nil {
+		objectMap["enablePartitionDiscovery"] = g.EnablePartitionDiscovery
+	}
+	if g.ModifiedDatetimeEnd != nil {
+		objectMap["modifiedDatetimeEnd"] = g.ModifiedDatetimeEnd
+	}
+	if g.ModifiedDatetimeStart != nil {
+		objectMap["modifiedDatetimeStart"] = g.ModifiedDatetimeStart
+	}
+	if g.Prefix != nil {
+		objectMap["prefix"] = g.Prefix
+	}
+	if g.Recursive != nil {
+		objectMap["recursive"] = g.Recursive
+	}
+	if g.WildcardFileName != nil {
+		objectMap["wildcardFileName"] = g.WildcardFileName
+	}
+	if g.WildcardFolderPath != nil {
+		objectMap["wildcardFolderPath"] = g.WildcardFolderPath
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type GoogleCloudStorageReadSettings.
+func (g *GoogleCloudStorageReadSettings) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "enablePartitionDiscovery":
+			if val != nil {
+				err = json.Unmarshal(*val, &g.EnablePartitionDiscovery)
+			}
+			delete(rawMsg, key)
+		case "modifiedDatetimeEnd":
+			if val != nil {
+				err = json.Unmarshal(*val, &g.ModifiedDatetimeEnd)
+			}
+			delete(rawMsg, key)
+		case "modifiedDatetimeStart":
+			if val != nil {
+				err = json.Unmarshal(*val, &g.ModifiedDatetimeStart)
+			}
+			delete(rawMsg, key)
+		case "prefix":
+			if val != nil {
+				err = json.Unmarshal(*val, &g.Prefix)
+			}
+			delete(rawMsg, key)
+		case "recursive":
+			if val != nil {
+				err = json.Unmarshal(*val, &g.Recursive)
+			}
+			delete(rawMsg, key)
+		case "wildcardFileName":
+			if val != nil {
+				err = json.Unmarshal(*val, &g.WildcardFileName)
+			}
+			delete(rawMsg, key)
+		case "wildcardFolderPath":
+			if val != nil {
+				err = json.Unmarshal(*val, &g.WildcardFolderPath)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return g.StoreReadSettings.unmarshalInternal(rawMsg)
+}
+
 // Greenplum Dataset Properties
 type GreenplumDatasetTypeProperties struct {
 	// The schema name of Greenplum. Type: string (or Expression with resultType string).
@@ -9204,6 +13774,44 @@ type GreenplumLinkedServiceTypeProperties struct {
 
 	// The Azure key vault secret reference of password in connection string.
 	Pwd *AzureKeyVaultSecretReference `json:"pwd,omitempty"`
+}
+
+// A copy activity Greenplum Database source.
+type GreenplumSource struct {
+	TabularSource
+	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type GreenplumSource.
+func (g GreenplumSource) MarshalJSON() ([]byte, error) {
+	objectMap := g.TabularSource.marshalInternal("GreenplumSource")
+	if g.Query != nil {
+		objectMap["query"] = g.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type GreenplumSource.
+func (g *GreenplumSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &g.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return g.TabularSource.unmarshalInternal(rawMsg)
 }
 
 // Greenplum Database dataset.
@@ -9432,6 +14040,44 @@ func (h *HBaseObjectDataset) UnmarshalJSON(data []byte) error {
 	return h.Dataset.unmarshalInternal(rawMsg)
 }
 
+// A copy activity HBase server source.
+type HBaseSource struct {
+	TabularSource
+	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type HBaseSource.
+func (h HBaseSource) MarshalJSON() ([]byte, error) {
+	objectMap := h.TabularSource.marshalInternal("HBaseSource")
+	if h.Query != nil {
+		objectMap["query"] = h.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type HBaseSource.
+func (h *HBaseSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &h.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return h.TabularSource.unmarshalInternal(rawMsg)
+}
+
 // Linked service for an HTTP source.
 type HTTPLinkedService struct {
 	LinkedService
@@ -9569,6 +14215,154 @@ type HTTPPollerResponse struct {
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// Sftp read settings.
+type HTTPReadSettings struct {
+	StoreReadSettings
+	// The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string).
+	AdditionalHeaders *interface{} `json:"additionalHeaders,omitempty"`
+
+	// The HTTP request body to the RESTful API if requestMethod is POST. Type: string (or Expression with resultType string).
+	RequestBody *interface{} `json:"requestBody,omitempty"`
+
+	// The HTTP method used to call the RESTful API. The default is GET. Type: string (or Expression with resultType string).
+	RequestMethod *interface{} `json:"requestMethod,omitempty"`
+
+	// Specifies the timeout for a HTTP client to get HTTP response from HTTP server.
+	RequestTimeout *interface{} `json:"requestTimeout,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type HTTPReadSettings.
+func (h HTTPReadSettings) MarshalJSON() ([]byte, error) {
+	objectMap := h.StoreReadSettings.marshalInternal("HttpReadSettings")
+	if h.AdditionalHeaders != nil {
+		objectMap["additionalHeaders"] = h.AdditionalHeaders
+	}
+	if h.RequestBody != nil {
+		objectMap["requestBody"] = h.RequestBody
+	}
+	if h.RequestMethod != nil {
+		objectMap["requestMethod"] = h.RequestMethod
+	}
+	if h.RequestTimeout != nil {
+		objectMap["requestTimeout"] = h.RequestTimeout
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type HTTPReadSettings.
+func (h *HTTPReadSettings) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "additionalHeaders":
+			if val != nil {
+				err = json.Unmarshal(*val, &h.AdditionalHeaders)
+			}
+			delete(rawMsg, key)
+		case "requestBody":
+			if val != nil {
+				err = json.Unmarshal(*val, &h.RequestBody)
+			}
+			delete(rawMsg, key)
+		case "requestMethod":
+			if val != nil {
+				err = json.Unmarshal(*val, &h.RequestMethod)
+			}
+			delete(rawMsg, key)
+		case "requestTimeout":
+			if val != nil {
+				err = json.Unmarshal(*val, &h.RequestTimeout)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return h.StoreReadSettings.unmarshalInternal(rawMsg)
+}
+
+// The location of http server.
+type HTTPServerLocation struct {
+	DatasetLocation
+	// Specify the relativeUrl of http server. Type: string (or Expression with resultType string)
+	RelativeURL *interface{} `json:"relativeUrl,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type HTTPServerLocation.
+func (h HTTPServerLocation) MarshalJSON() ([]byte, error) {
+	objectMap := h.DatasetLocation.marshalInternal("HttpServerLocation")
+	if h.RelativeURL != nil {
+		objectMap["relativeUrl"] = h.RelativeURL
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type HTTPServerLocation.
+func (h *HTTPServerLocation) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "relativeUrl":
+			if val != nil {
+				err = json.Unmarshal(*val, &h.RelativeURL)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return h.DatasetLocation.unmarshalInternal(rawMsg)
+}
+
+// A copy activity source for an HTTP file.
+type HTTPSource struct {
+	CopySource
+	// Specifies the timeout for a HTTP client to get HTTP response from HTTP server. The default value is equivalent to System.Net.HttpWebRequest.Timeout.
+	// Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+	HTTPRequestTimeout *interface{} `json:"httpRequestTimeout,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type HTTPSource.
+func (h HTTPSource) MarshalJSON() ([]byte, error) {
+	objectMap := h.CopySource.marshalInternal("HttpSource")
+	if h.HTTPRequestTimeout != nil {
+		objectMap["httpRequestTimeout"] = h.HTTPRequestTimeout
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type HTTPSource.
+func (h *HTTPSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "httpRequestTimeout":
+			if val != nil {
+				err = json.Unmarshal(*val, &h.HTTPRequestTimeout)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return h.CopySource.unmarshalInternal(rawMsg)
 }
 
 // HDInsight Hive activity type.
@@ -10217,6 +15011,172 @@ func (h *HdfsLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// The location of HDFS.
+type HdfsLocation struct {
+	DatasetLocation
+}
+
+// MarshalJSON implements the json.Marshaller interface for type HdfsLocation.
+func (h HdfsLocation) MarshalJSON() ([]byte, error) {
+	objectMap := h.DatasetLocation.marshalInternal("HdfsLocation")
+	return json.Marshal(objectMap)
+}
+
+// HDFS read settings.
+type HdfsReadSettings struct {
+	StoreReadSettings
+	// Specifies Distcp-related settings.
+	DistcpSettings *DistcpSettings `json:"distcpSettings,omitempty"`
+
+	// Indicates whether to enable partition discovery.
+	EnablePartitionDiscovery *bool `json:"enablePartitionDiscovery,omitempty"`
+
+	// The end of file's modified datetime. Type: string (or Expression with resultType string).
+	ModifiedDatetimeEnd *interface{} `json:"modifiedDatetimeEnd,omitempty"`
+
+	// The start of file's modified datetime. Type: string (or Expression with resultType string).
+	ModifiedDatetimeStart *interface{} `json:"modifiedDatetimeStart,omitempty"`
+
+	// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType
+	// boolean).
+	Recursive *interface{} `json:"recursive,omitempty"`
+
+	// HDFS wildcardFileName. Type: string (or Expression with resultType string).
+	WildcardFileName *interface{} `json:"wildcardFileName,omitempty"`
+
+	// HDFS wildcardFolderPath. Type: string (or Expression with resultType string).
+	WildcardFolderPath *interface{} `json:"wildcardFolderPath,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type HdfsReadSettings.
+func (h HdfsReadSettings) MarshalJSON() ([]byte, error) {
+	objectMap := h.StoreReadSettings.marshalInternal("HdfsReadSettings")
+	if h.DistcpSettings != nil {
+		objectMap["distcpSettings"] = h.DistcpSettings
+	}
+	if h.EnablePartitionDiscovery != nil {
+		objectMap["enablePartitionDiscovery"] = h.EnablePartitionDiscovery
+	}
+	if h.ModifiedDatetimeEnd != nil {
+		objectMap["modifiedDatetimeEnd"] = h.ModifiedDatetimeEnd
+	}
+	if h.ModifiedDatetimeStart != nil {
+		objectMap["modifiedDatetimeStart"] = h.ModifiedDatetimeStart
+	}
+	if h.Recursive != nil {
+		objectMap["recursive"] = h.Recursive
+	}
+	if h.WildcardFileName != nil {
+		objectMap["wildcardFileName"] = h.WildcardFileName
+	}
+	if h.WildcardFolderPath != nil {
+		objectMap["wildcardFolderPath"] = h.WildcardFolderPath
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type HdfsReadSettings.
+func (h *HdfsReadSettings) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "distcpSettings":
+			if val != nil {
+				err = json.Unmarshal(*val, &h.DistcpSettings)
+			}
+			delete(rawMsg, key)
+		case "enablePartitionDiscovery":
+			if val != nil {
+				err = json.Unmarshal(*val, &h.EnablePartitionDiscovery)
+			}
+			delete(rawMsg, key)
+		case "modifiedDatetimeEnd":
+			if val != nil {
+				err = json.Unmarshal(*val, &h.ModifiedDatetimeEnd)
+			}
+			delete(rawMsg, key)
+		case "modifiedDatetimeStart":
+			if val != nil {
+				err = json.Unmarshal(*val, &h.ModifiedDatetimeStart)
+			}
+			delete(rawMsg, key)
+		case "recursive":
+			if val != nil {
+				err = json.Unmarshal(*val, &h.Recursive)
+			}
+			delete(rawMsg, key)
+		case "wildcardFileName":
+			if val != nil {
+				err = json.Unmarshal(*val, &h.WildcardFileName)
+			}
+			delete(rawMsg, key)
+		case "wildcardFolderPath":
+			if val != nil {
+				err = json.Unmarshal(*val, &h.WildcardFolderPath)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return h.StoreReadSettings.unmarshalInternal(rawMsg)
+}
+
+// A copy activity HDFS source.
+type HdfsSource struct {
+	CopySource
+	// Specifies Distcp-related settings.
+	DistcpSettings *DistcpSettings `json:"distcpSettings,omitempty"`
+
+	// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType
+	// boolean).
+	Recursive *interface{} `json:"recursive,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type HdfsSource.
+func (h HdfsSource) MarshalJSON() ([]byte, error) {
+	objectMap := h.CopySource.marshalInternal("HdfsSource")
+	if h.DistcpSettings != nil {
+		objectMap["distcpSettings"] = h.DistcpSettings
+	}
+	if h.Recursive != nil {
+		objectMap["recursive"] = h.Recursive
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type HdfsSource.
+func (h *HdfsSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "distcpSettings":
+			if val != nil {
+				err = json.Unmarshal(*val, &h.DistcpSettings)
+			}
+			delete(rawMsg, key)
+		case "recursive":
+			if val != nil {
+				err = json.Unmarshal(*val, &h.Recursive)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return h.CopySource.unmarshalInternal(rawMsg)
+}
+
 // Hive Properties
 type HiveDatasetTypeProperties struct {
 	// The schema name of the Hive. Type: string (or Expression with resultType string).
@@ -10466,6 +15426,44 @@ func (h *HiveObjectDataset) UnmarshalJSON(data []byte) error {
 	return h.Dataset.unmarshalInternal(rawMsg)
 }
 
+// A copy activity Hive Server source.
+type HiveSource struct {
+	TabularSource
+	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type HiveSource.
+func (h HiveSource) MarshalJSON() ([]byte, error) {
+	objectMap := h.TabularSource.marshalInternal("HiveSource")
+	if h.Query != nil {
+		objectMap["query"] = h.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type HiveSource.
+func (h *HiveSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &h.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return h.TabularSource.unmarshalInternal(rawMsg)
+}
+
 // Hubspot Service linked service.
 type HubspotLinkedService struct {
 	LinkedService
@@ -10626,6 +15624,44 @@ func (h *HubspotObjectDataset) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return h.Dataset.unmarshalInternal(rawMsg)
+}
+
+// A copy activity Hubspot Service source.
+type HubspotSource struct {
+	TabularSource
+	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type HubspotSource.
+func (h HubspotSource) MarshalJSON() ([]byte, error) {
+	objectMap := h.TabularSource.marshalInternal("HubspotSource")
+	if h.Query != nil {
+		objectMap["query"] = h.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type HubspotSource.
+func (h *HubspotSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &h.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return h.TabularSource.unmarshalInternal(rawMsg)
 }
 
 // This activity evaluates a boolean expression and executes either the activities under the ifTrueActivities property or
@@ -10915,6 +15951,44 @@ func (i *ImpalaObjectDataset) UnmarshalJSON(data []byte) error {
 	return i.Dataset.unmarshalInternal(rawMsg)
 }
 
+// A copy activity Impala server source.
+type ImpalaSource struct {
+	TabularSource
+	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ImpalaSource.
+func (i ImpalaSource) MarshalJSON() ([]byte, error) {
+	objectMap := i.TabularSource.marshalInternal("ImpalaSource")
+	if i.Query != nil {
+		objectMap["query"] = i.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type ImpalaSource.
+func (i *ImpalaSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &i.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return i.TabularSource.unmarshalInternal(rawMsg)
+}
+
 // Informix linked service.
 type InformixLinkedService struct {
 	LinkedService
@@ -11024,6 +16098,82 @@ func (i *InformixLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// A copy activity Informix sink.
+type InformixSink struct {
+	CopySink
+	// A query to execute before starting the copy. Type: string (or Expression with resultType string).
+	PreCopyScript *interface{} `json:"preCopyScript,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type InformixSink.
+func (i InformixSink) MarshalJSON() ([]byte, error) {
+	objectMap := i.CopySink.marshalInternal("InformixSink")
+	if i.PreCopyScript != nil {
+		objectMap["preCopyScript"] = i.PreCopyScript
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type InformixSink.
+func (i *InformixSink) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "preCopyScript":
+			if val != nil {
+				err = json.Unmarshal(*val, &i.PreCopyScript)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return i.CopySink.unmarshalInternal(rawMsg)
+}
+
+// A copy activity source for Informix.
+type InformixSource struct {
+	TabularSource
+	// Database query. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type InformixSource.
+func (i InformixSource) MarshalJSON() ([]byte, error) {
+	objectMap := i.TabularSource.marshalInternal("InformixSource")
+	if i.Query != nil {
+		objectMap["query"] = i.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type InformixSource.
+func (i *InformixSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &i.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return i.TabularSource.unmarshalInternal(rawMsg)
+}
+
 // The Informix table dataset.
 type InformixTableDataset struct {
 	Dataset
@@ -11068,6 +16218,309 @@ type InformixTableDatasetTypeProperties struct {
 	TableName *interface{} `json:"tableName,omitempty"`
 }
 
+// IntegrationRuntimeClassification provides polymorphic access to related types.
+type IntegrationRuntimeClassification interface {
+	GetIntegrationRuntime() *IntegrationRuntime
+}
+
+// Azure Synapse nested object which serves as a compute resource for activities.
+type IntegrationRuntime struct {
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties *map[string]interface{}
+
+	// Integration runtime description.
+	Description *string `json:"description,omitempty"`
+
+	// Type of integration runtime.
+	Type *IntegrationRuntimeType `json:"type,omitempty"`
+}
+
+// GetIntegrationRuntime implements the IntegrationRuntimeClassification interface for type IntegrationRuntime.
+func (i *IntegrationRuntime) GetIntegrationRuntime() *IntegrationRuntime { return i }
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type IntegrationRuntime.
+func (i *IntegrationRuntime) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	return i.unmarshalInternal(rawMsg)
+}
+
+func (i IntegrationRuntime) marshalInternal(discValue IntegrationRuntimeType) map[string]interface{} {
+	objectMap := make(map[string]interface{})
+	if i.Description != nil {
+		objectMap["description"] = i.Description
+	}
+	i.Type = &discValue
+	objectMap["type"] = i.Type
+	if i.AdditionalProperties != nil {
+		for key, val := range *i.AdditionalProperties {
+			objectMap[key] = val
+		}
+	}
+	return objectMap
+}
+
+func (i *IntegrationRuntime) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "description":
+			if val != nil {
+				err = json.Unmarshal(*val, &i.Description)
+			}
+			delete(rawMsg, key)
+		case "type":
+			if val != nil {
+				err = json.Unmarshal(*val, &i.Type)
+			}
+			delete(rawMsg, key)
+		default:
+			if i.AdditionalProperties == nil {
+				i.AdditionalProperties = &map[string]interface{}{}
+			}
+			if val != nil {
+				var aux interface{}
+				err = json.Unmarshal(*val, &aux)
+				(*i.AdditionalProperties)[key] = aux
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// The compute resource properties for managed integration runtime.
+type IntegrationRuntimeComputeProperties struct {
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties *map[string]interface{}
+
+	// Data flow properties for managed integration runtime.
+	DataFlowProperties *IntegrationRuntimeDataFlowProperties `json:"dataFlowProperties,omitempty"`
+
+	// The location for managed integration runtime. The supported regions could be found on https://docs.microsoft.com/en-us/azure/data-factory/data-factory-data-movement-activities
+	Location *string `json:"location,omitempty"`
+
+	// Maximum parallel executions count per node for managed integration runtime.
+	MaxParallelExecutionsPerNode *int32 `json:"maxParallelExecutionsPerNode,omitempty"`
+
+	// The node size requirement to managed integration runtime.
+	NodeSize *string `json:"nodeSize,omitempty"`
+
+	// The required number of nodes for managed integration runtime.
+	NumberOfNodes *int32 `json:"numberOfNodes,omitempty"`
+
+	// VNet properties for managed integration runtime.
+	VNetProperties *IntegrationRuntimeVNetProperties `json:"vNetProperties,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type IntegrationRuntimeComputeProperties.
+func (i IntegrationRuntimeComputeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if i.DataFlowProperties != nil {
+		objectMap["dataFlowProperties"] = i.DataFlowProperties
+	}
+	if i.Location != nil {
+		objectMap["location"] = i.Location
+	}
+	if i.MaxParallelExecutionsPerNode != nil {
+		objectMap["maxParallelExecutionsPerNode"] = i.MaxParallelExecutionsPerNode
+	}
+	if i.NodeSize != nil {
+		objectMap["nodeSize"] = i.NodeSize
+	}
+	if i.NumberOfNodes != nil {
+		objectMap["numberOfNodes"] = i.NumberOfNodes
+	}
+	if i.VNetProperties != nil {
+		objectMap["vNetProperties"] = i.VNetProperties
+	}
+	if i.AdditionalProperties != nil {
+		for key, val := range *i.AdditionalProperties {
+			objectMap[key] = val
+		}
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type IntegrationRuntimeComputeProperties.
+func (i *IntegrationRuntimeComputeProperties) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "dataFlowProperties":
+			if val != nil {
+				err = json.Unmarshal(*val, &i.DataFlowProperties)
+			}
+			delete(rawMsg, key)
+		case "location":
+			if val != nil {
+				err = json.Unmarshal(*val, &i.Location)
+			}
+			delete(rawMsg, key)
+		case "maxParallelExecutionsPerNode":
+			if val != nil {
+				err = json.Unmarshal(*val, &i.MaxParallelExecutionsPerNode)
+			}
+			delete(rawMsg, key)
+		case "nodeSize":
+			if val != nil {
+				err = json.Unmarshal(*val, &i.NodeSize)
+			}
+			delete(rawMsg, key)
+		case "numberOfNodes":
+			if val != nil {
+				err = json.Unmarshal(*val, &i.NumberOfNodes)
+			}
+			delete(rawMsg, key)
+		case "vNetProperties":
+			if val != nil {
+				err = json.Unmarshal(*val, &i.VNetProperties)
+			}
+			delete(rawMsg, key)
+		default:
+			if i.AdditionalProperties == nil {
+				i.AdditionalProperties = &map[string]interface{}{}
+			}
+			if val != nil {
+				var aux interface{}
+				err = json.Unmarshal(*val, &aux)
+				(*i.AdditionalProperties)[key] = aux
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// Custom setup script properties for a managed dedicated integration runtime.
+type IntegrationRuntimeCustomSetupScriptProperties struct {
+	// The URI of the Azure blob container that contains the custom setup script.
+	BlobContainerURI *string `json:"blobContainerUri,omitempty"`
+
+	// The SAS token of the Azure blob container.
+	SasToken *SecureString `json:"sasToken,omitempty"`
+}
+
+// Data flow properties for managed integration runtime.
+type IntegrationRuntimeDataFlowProperties struct {
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties *map[string]interface{}
+
+	// Compute type of the cluster which will execute data flow job.
+	ComputeType *DataFlowComputeType `json:"computeType,omitempty"`
+
+	// Core count of the cluster which will execute data flow job. Supported values are: 8, 16, 32, 48, 80, 144 and 272.
+	CoreCount *int32 `json:"coreCount,omitempty"`
+
+	// Time to live (in minutes) setting of the cluster which will execute data flow job.
+	TimeToLive *int32 `json:"timeToLive,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type IntegrationRuntimeDataFlowProperties.
+func (i IntegrationRuntimeDataFlowProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if i.ComputeType != nil {
+		objectMap["computeType"] = i.ComputeType
+	}
+	if i.CoreCount != nil {
+		objectMap["coreCount"] = i.CoreCount
+	}
+	if i.TimeToLive != nil {
+		objectMap["timeToLive"] = i.TimeToLive
+	}
+	if i.AdditionalProperties != nil {
+		for key, val := range *i.AdditionalProperties {
+			objectMap[key] = val
+		}
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type IntegrationRuntimeDataFlowProperties.
+func (i *IntegrationRuntimeDataFlowProperties) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "computeType":
+			if val != nil {
+				err = json.Unmarshal(*val, &i.ComputeType)
+			}
+			delete(rawMsg, key)
+		case "coreCount":
+			if val != nil {
+				err = json.Unmarshal(*val, &i.CoreCount)
+			}
+			delete(rawMsg, key)
+		case "timeToLive":
+			if val != nil {
+				err = json.Unmarshal(*val, &i.TimeToLive)
+			}
+			delete(rawMsg, key)
+		default:
+			if i.AdditionalProperties == nil {
+				i.AdditionalProperties = &map[string]interface{}{}
+			}
+			if val != nil {
+				var aux interface{}
+				err = json.Unmarshal(*val, &aux)
+				(*i.AdditionalProperties)[key] = aux
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// Data proxy properties for a managed dedicated integration runtime.
+type IntegrationRuntimeDataProxyProperties struct {
+	// The self-hosted integration runtime reference.
+	ConnectVia *EntityReference `json:"connectVia,omitempty"`
+
+	// The path to contain the staged data in the Blob storage.
+	Path *string `json:"path,omitempty"`
+
+	// The staging linked service reference.
+	StagingLinkedService *EntityReference `json:"stagingLinkedService,omitempty"`
+}
+
+// A list of integration runtime resources.
+type IntegrationRuntimeListResponse struct {
+	// The link to the next page of results, if any remaining results exist.
+	NextLink *string `json:"nextLink,omitempty"`
+
+	// List of integration runtimes.
+	Value *[]IntegrationRuntimeResource `json:"value,omitempty"`
+}
+
+// IntegrationRuntimeListResponseResponse is the response envelope for operations that return a IntegrationRuntimeListResponse
+// type.
+type IntegrationRuntimeListResponseResponse struct {
+	// A list of integration runtime resources.
+	IntegrationRuntimeListResponse *IntegrationRuntimeListResponse
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
 // Integration runtime reference type.
 type IntegrationRuntimeReference struct {
 	// Arguments for integration runtime.
@@ -11078,6 +16531,297 @@ type IntegrationRuntimeReference struct {
 
 	// Type of integration runtime.
 	Type *IntegrationRuntimeReferenceType `json:"type,omitempty"`
+}
+
+// Integration runtime resource type.
+type IntegrationRuntimeResource struct {
+	AzureEntityResource
+	// Integration runtime properties.
+	Properties IntegrationRuntimeClassification `json:"properties,omitempty"`
+}
+
+// IntegrationRuntimeResourceResponse is the response envelope for operations that return a IntegrationRuntimeResource type.
+type IntegrationRuntimeResourceResponse struct {
+	// Integration runtime resource type.
+	IntegrationRuntimeResource *IntegrationRuntimeResource
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// Catalog information for managed dedicated integration runtime.
+type IntegrationRuntimeSsisCatalogInfo struct {
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties *map[string]interface{}
+
+	// The password of the administrator user account of the catalog database.
+	CatalogAdminPassword *SecureString `json:"catalogAdminPassword,omitempty"`
+
+	// The administrator user name of catalog database.
+	CatalogAdminUserName *string `json:"catalogAdminUserName,omitempty"`
+
+	// The pricing tier for the catalog database. The valid values could be found in https://azure.microsoft.com/en-us/pricing/details/sql-database/
+	CatalogPricingTier *IntegrationRuntimeSsisCatalogPricingTier `json:"catalogPricingTier,omitempty"`
+
+	// The catalog database server URL.
+	CatalogServerEndpoint *string `json:"catalogServerEndpoint,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type IntegrationRuntimeSsisCatalogInfo.
+func (i IntegrationRuntimeSsisCatalogInfo) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if i.CatalogAdminPassword != nil {
+		objectMap["catalogAdminPassword"] = i.CatalogAdminPassword
+	}
+	if i.CatalogAdminUserName != nil {
+		objectMap["catalogAdminUserName"] = i.CatalogAdminUserName
+	}
+	if i.CatalogPricingTier != nil {
+		objectMap["catalogPricingTier"] = i.CatalogPricingTier
+	}
+	if i.CatalogServerEndpoint != nil {
+		objectMap["catalogServerEndpoint"] = i.CatalogServerEndpoint
+	}
+	if i.AdditionalProperties != nil {
+		for key, val := range *i.AdditionalProperties {
+			objectMap[key] = val
+		}
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type IntegrationRuntimeSsisCatalogInfo.
+func (i *IntegrationRuntimeSsisCatalogInfo) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "catalogAdminPassword":
+			if val != nil {
+				err = json.Unmarshal(*val, &i.CatalogAdminPassword)
+			}
+			delete(rawMsg, key)
+		case "catalogAdminUserName":
+			if val != nil {
+				err = json.Unmarshal(*val, &i.CatalogAdminUserName)
+			}
+			delete(rawMsg, key)
+		case "catalogPricingTier":
+			if val != nil {
+				err = json.Unmarshal(*val, &i.CatalogPricingTier)
+			}
+			delete(rawMsg, key)
+		case "catalogServerEndpoint":
+			if val != nil {
+				err = json.Unmarshal(*val, &i.CatalogServerEndpoint)
+			}
+			delete(rawMsg, key)
+		default:
+			if i.AdditionalProperties == nil {
+				i.AdditionalProperties = &map[string]interface{}{}
+			}
+			if val != nil {
+				var aux interface{}
+				err = json.Unmarshal(*val, &aux)
+				(*i.AdditionalProperties)[key] = aux
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// SSIS properties for managed integration runtime.
+type IntegrationRuntimeSsisProperties struct {
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties *map[string]interface{}
+
+	// Catalog information for managed dedicated integration runtime.
+	CatalogInfo *IntegrationRuntimeSsisCatalogInfo `json:"catalogInfo,omitempty"`
+
+	// Custom setup script properties for a managed dedicated integration runtime.
+	CustomSetupScriptProperties *IntegrationRuntimeCustomSetupScriptProperties `json:"customSetupScriptProperties,omitempty"`
+
+	// Data proxy properties for a managed dedicated integration runtime.
+	DataProxyProperties *IntegrationRuntimeDataProxyProperties `json:"dataProxyProperties,omitempty"`
+
+	// The edition for the SSIS Integration Runtime
+	Edition *IntegrationRuntimeEdition `json:"edition,omitempty"`
+
+	// Custom setup without script properties for a SSIS integration runtime.
+	ExpressCustomSetupProperties *[]CustomSetupBaseClassification `json:"expressCustomSetupProperties,omitempty"`
+
+	// License type for bringing your own license scenario.
+	LicenseType *IntegrationRuntimeLicenseType `json:"licenseType,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type IntegrationRuntimeSsisProperties.
+func (i IntegrationRuntimeSsisProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if i.CatalogInfo != nil {
+		objectMap["catalogInfo"] = i.CatalogInfo
+	}
+	if i.CustomSetupScriptProperties != nil {
+		objectMap["customSetupScriptProperties"] = i.CustomSetupScriptProperties
+	}
+	if i.DataProxyProperties != nil {
+		objectMap["dataProxyProperties"] = i.DataProxyProperties
+	}
+	if i.Edition != nil {
+		objectMap["edition"] = i.Edition
+	}
+	if i.ExpressCustomSetupProperties != nil {
+		objectMap["expressCustomSetupProperties"] = i.ExpressCustomSetupProperties
+	}
+	if i.LicenseType != nil {
+		objectMap["licenseType"] = i.LicenseType
+	}
+	if i.AdditionalProperties != nil {
+		for key, val := range *i.AdditionalProperties {
+			objectMap[key] = val
+		}
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type IntegrationRuntimeSsisProperties.
+func (i *IntegrationRuntimeSsisProperties) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "catalogInfo":
+			if val != nil {
+				err = json.Unmarshal(*val, &i.CatalogInfo)
+			}
+			delete(rawMsg, key)
+		case "customSetupScriptProperties":
+			if val != nil {
+				err = json.Unmarshal(*val, &i.CustomSetupScriptProperties)
+			}
+			delete(rawMsg, key)
+		case "dataProxyProperties":
+			if val != nil {
+				err = json.Unmarshal(*val, &i.DataProxyProperties)
+			}
+			delete(rawMsg, key)
+		case "edition":
+			if val != nil {
+				err = json.Unmarshal(*val, &i.Edition)
+			}
+			delete(rawMsg, key)
+		case "expressCustomSetupProperties":
+			if val != nil {
+				i.ExpressCustomSetupProperties, err = unmarshalCustomSetupBaseClassificationArray(*val)
+			}
+			delete(rawMsg, key)
+		case "licenseType":
+			if val != nil {
+				err = json.Unmarshal(*val, &i.LicenseType)
+			}
+			delete(rawMsg, key)
+		default:
+			if i.AdditionalProperties == nil {
+				i.AdditionalProperties = &map[string]interface{}{}
+			}
+			if val != nil {
+				var aux interface{}
+				err = json.Unmarshal(*val, &aux)
+				(*i.AdditionalProperties)[key] = aux
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// VNet properties for managed integration runtime.
+type IntegrationRuntimeVNetProperties struct {
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties *map[string]interface{}
+
+	// Resource IDs of the public IP addresses that this integration runtime will use.
+	PublicIPs *[]string `json:"publicIPs,omitempty"`
+
+	// The name of the subnet this integration runtime will join.
+	Subnet *string `json:"subnet,omitempty"`
+
+	// The ID of the VNet that this integration runtime will join.
+	VNetID *string `json:"vNetId,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type IntegrationRuntimeVNetProperties.
+func (i IntegrationRuntimeVNetProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if i.PublicIPs != nil {
+		objectMap["publicIPs"] = i.PublicIPs
+	}
+	if i.Subnet != nil {
+		objectMap["subnet"] = i.Subnet
+	}
+	if i.VNetID != nil {
+		objectMap["vNetId"] = i.VNetID
+	}
+	if i.AdditionalProperties != nil {
+		for key, val := range *i.AdditionalProperties {
+			objectMap[key] = val
+		}
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type IntegrationRuntimeVNetProperties.
+func (i *IntegrationRuntimeVNetProperties) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "publicIPs":
+			if val != nil {
+				err = json.Unmarshal(*val, &i.PublicIPs)
+			}
+			delete(rawMsg, key)
+		case "subnet":
+			if val != nil {
+				err = json.Unmarshal(*val, &i.Subnet)
+			}
+			delete(rawMsg, key)
+		case "vNetId":
+			if val != nil {
+				err = json.Unmarshal(*val, &i.VNetID)
+			}
+			delete(rawMsg, key)
+		default:
+			if i.AdditionalProperties == nil {
+				i.AdditionalProperties = &map[string]interface{}{}
+			}
+			if val != nil {
+				var aux interface{}
+				err = json.Unmarshal(*val, &aux)
+				(*i.AdditionalProperties)[key] = aux
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // Json dataset.
@@ -11162,6 +16906,223 @@ func (j *JSONDatasetTypeProperties) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
+}
+
+// The data stored in JSON format.
+type JSONFormat struct {
+	DatasetStorageFormat
+	// The code page name of the preferred encoding. If not provided, the default value is 'utf-8', unless the byte order mark
+	// (BOM) denotes another Unicode encoding. The full list of supported values can be found in the 'Name' column of the table
+	// of encodings in the following reference: https://go.microsoft.com/fwlink/?linkid=861078. Type: string (or Expression with
+	// resultType string).
+	EncodingName *interface{} `json:"encodingName,omitempty"`
+
+	// File pattern of JSON. To be more specific, the way of separating a collection of JSON objects. The default value is 'setOfObjects'.
+	// It is case-sensitive.
+	FilePattern *JSONFormatFilePattern `json:"filePattern,omitempty"`
+
+	// The JSONPath of the JSON array element to be flattened. Example: "$.ArrayPath". Type: string (or Expression with resultType
+	// string).
+	JSONNodeReference *interface{} `json:"jsonNodeReference,omitempty"`
+
+	// The JSONPath definition for each column mapping with a customized column name to extract data from JSON file. For fields
+	// under root object, start with "$"; for fields inside the array chosen by jsonNodeReference property, start from the array
+	// element. Example: {"Column1": "$.Column1Path", "Column2": "Column2PathInArray"}. Type: object (or Expression with resultType
+	// object).
+	JSONPathDefinition *interface{} `json:"jsonPathDefinition,omitempty"`
+
+	// The character used to separate nesting levels. Default value is '.' (dot). Type: string (or Expression with resultType
+	// string).
+	NestingSeparator *interface{} `json:"nestingSeparator,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type JSONFormat.
+func (j JSONFormat) MarshalJSON() ([]byte, error) {
+	objectMap := j.DatasetStorageFormat.marshalInternal("JsonFormat")
+	if j.EncodingName != nil {
+		objectMap["encodingName"] = j.EncodingName
+	}
+	if j.FilePattern != nil {
+		objectMap["filePattern"] = j.FilePattern
+	}
+	if j.JSONNodeReference != nil {
+		objectMap["jsonNodeReference"] = j.JSONNodeReference
+	}
+	if j.JSONPathDefinition != nil {
+		objectMap["jsonPathDefinition"] = j.JSONPathDefinition
+	}
+	if j.NestingSeparator != nil {
+		objectMap["nestingSeparator"] = j.NestingSeparator
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type JSONFormat.
+func (j *JSONFormat) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "encodingName":
+			if val != nil {
+				err = json.Unmarshal(*val, &j.EncodingName)
+			}
+			delete(rawMsg, key)
+		case "filePattern":
+			if val != nil {
+				err = json.Unmarshal(*val, &j.FilePattern)
+			}
+			delete(rawMsg, key)
+		case "jsonNodeReference":
+			if val != nil {
+				err = json.Unmarshal(*val, &j.JSONNodeReference)
+			}
+			delete(rawMsg, key)
+		case "jsonPathDefinition":
+			if val != nil {
+				err = json.Unmarshal(*val, &j.JSONPathDefinition)
+			}
+			delete(rawMsg, key)
+		case "nestingSeparator":
+			if val != nil {
+				err = json.Unmarshal(*val, &j.NestingSeparator)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return j.DatasetStorageFormat.unmarshalInternal(rawMsg)
+}
+
+// A copy activity Json sink.
+type JSONSink struct {
+	CopySink
+	// Json format settings.
+	FormatSettings *JSONWriteSettings `json:"formatSettings,omitempty"`
+
+	// Json store settings.
+	StoreSettings StoreWriteSettingsClassification `json:"storeSettings,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type JSONSink.
+func (j JSONSink) MarshalJSON() ([]byte, error) {
+	objectMap := j.CopySink.marshalInternal("JsonSink")
+	if j.FormatSettings != nil {
+		objectMap["formatSettings"] = j.FormatSettings
+	}
+	if j.StoreSettings != nil {
+		objectMap["storeSettings"] = j.StoreSettings
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type JSONSink.
+func (j *JSONSink) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "formatSettings":
+			if val != nil {
+				err = json.Unmarshal(*val, &j.FormatSettings)
+			}
+			delete(rawMsg, key)
+		case "storeSettings":
+			if val != nil {
+				j.StoreSettings, err = unmarshalStoreWriteSettingsClassification(*val)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return j.CopySink.unmarshalInternal(rawMsg)
+}
+
+// A copy activity Json source.
+type JSONSource struct {
+	CopySource
+	// Json store settings.
+	StoreSettings StoreReadSettingsClassification `json:"storeSettings,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type JSONSource.
+func (j JSONSource) MarshalJSON() ([]byte, error) {
+	objectMap := j.CopySource.marshalInternal("JsonSource")
+	if j.StoreSettings != nil {
+		objectMap["storeSettings"] = j.StoreSettings
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type JSONSource.
+func (j *JSONSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "storeSettings":
+			if val != nil {
+				j.StoreSettings, err = unmarshalStoreReadSettingsClassification(*val)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return j.CopySource.unmarshalInternal(rawMsg)
+}
+
+// Json write settings.
+type JSONWriteSettings struct {
+	FormatWriteSettings
+	// File pattern of JSON. This setting controls the way a collection of JSON objects will be treated. The default value is
+	// 'setOfObjects'. It is case-sensitive.
+	FilePattern *JSONWriteFilePattern `json:"filePattern,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type JSONWriteSettings.
+func (j JSONWriteSettings) MarshalJSON() ([]byte, error) {
+	objectMap := j.FormatWriteSettings.marshalInternal("JsonWriteSettings")
+	if j.FilePattern != nil {
+		objectMap["filePattern"] = j.FilePattern
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type JSONWriteSettings.
+func (j *JSONWriteSettings) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "filePattern":
+			if val != nil {
+				err = json.Unmarshal(*val, &j.FilePattern)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return j.FormatWriteSettings.unmarshalInternal(rawMsg)
 }
 
 // Jira Service linked service.
@@ -11325,6 +17286,230 @@ func (j *JiraObjectDataset) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return j.Dataset.unmarshalInternal(rawMsg)
+}
+
+// A copy activity Jira Service source.
+type JiraSource struct {
+	TabularSource
+	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type JiraSource.
+func (j JiraSource) MarshalJSON() ([]byte, error) {
+	objectMap := j.TabularSource.marshalInternal("JiraSource")
+	if j.Query != nil {
+		objectMap["query"] = j.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type JiraSource.
+func (j *JiraSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &j.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return j.TabularSource.unmarshalInternal(rawMsg)
+}
+
+// Library requirements for a Big Data pool powered by Apache Spark
+type LibraryRequirements struct {
+	// The library requirements.
+	Content *string `json:"content,omitempty"`
+
+	// The filename of the library requirements file.
+	Filename *string `json:"filename,omitempty"`
+
+	// The last update time of the library requirements file.
+	Time *time.Time `json:"time,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type LibraryRequirements.
+func (l LibraryRequirements) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if l.Content != nil {
+		objectMap["content"] = l.Content
+	}
+	if l.Filename != nil {
+		objectMap["filename"] = l.Filename
+	}
+	if l.Time != nil {
+		objectMap["time"] = (*timeRFC3339)(l.Time)
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type LibraryRequirements.
+func (l *LibraryRequirements) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "content":
+			if val != nil {
+				err = json.Unmarshal(*val, &l.Content)
+			}
+			delete(rawMsg, key)
+		case "filename":
+			if val != nil {
+				err = json.Unmarshal(*val, &l.Filename)
+			}
+			delete(rawMsg, key)
+		case "time":
+			if val != nil {
+				var aux timeRFC3339
+				err = json.Unmarshal(*val, &aux)
+				l.Time = (*time.Time)(&aux)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// The key authorization type integration runtime.
+type LinkedIntegrationRuntimeKeyAuthorization struct {
+	LinkedIntegrationRuntimeType
+	// The key used for authorization.
+	Key *SecureString `json:"key,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type LinkedIntegrationRuntimeKeyAuthorization.
+func (l LinkedIntegrationRuntimeKeyAuthorization) MarshalJSON() ([]byte, error) {
+	objectMap := l.LinkedIntegrationRuntimeType.marshalInternal("Key")
+	if l.Key != nil {
+		objectMap["key"] = l.Key
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type LinkedIntegrationRuntimeKeyAuthorization.
+func (l *LinkedIntegrationRuntimeKeyAuthorization) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "key":
+			if val != nil {
+				err = json.Unmarshal(*val, &l.Key)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return l.LinkedIntegrationRuntimeType.unmarshalInternal(rawMsg)
+}
+
+// The role based access control (RBAC) authorization type integration runtime.
+type LinkedIntegrationRuntimeRbacAuthorization struct {
+	LinkedIntegrationRuntimeType
+	// The resource identifier of the integration runtime to be shared.
+	ResourceID *string `json:"resourceId,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type LinkedIntegrationRuntimeRbacAuthorization.
+func (l LinkedIntegrationRuntimeRbacAuthorization) MarshalJSON() ([]byte, error) {
+	objectMap := l.LinkedIntegrationRuntimeType.marshalInternal("RBAC")
+	if l.ResourceID != nil {
+		objectMap["resourceId"] = l.ResourceID
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type LinkedIntegrationRuntimeRbacAuthorization.
+func (l *LinkedIntegrationRuntimeRbacAuthorization) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "resourceId":
+			if val != nil {
+				err = json.Unmarshal(*val, &l.ResourceID)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return l.LinkedIntegrationRuntimeType.unmarshalInternal(rawMsg)
+}
+
+// LinkedIntegrationRuntimeTypeClassification provides polymorphic access to related types.
+type LinkedIntegrationRuntimeTypeClassification interface {
+	GetLinkedIntegrationRuntimeType() *LinkedIntegrationRuntimeType
+}
+
+// The base definition of a linked integration runtime.
+type LinkedIntegrationRuntimeType struct {
+	// The authorization type for integration runtime sharing.
+	AuthorizationType *string `json:"authorizationType,omitempty"`
+}
+
+// GetLinkedIntegrationRuntimeType implements the LinkedIntegrationRuntimeTypeClassification interface for type LinkedIntegrationRuntimeType.
+func (l *LinkedIntegrationRuntimeType) GetLinkedIntegrationRuntimeType() *LinkedIntegrationRuntimeType {
+	return l
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type LinkedIntegrationRuntimeType.
+func (l *LinkedIntegrationRuntimeType) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	return l.unmarshalInternal(rawMsg)
+}
+
+func (l LinkedIntegrationRuntimeType) marshalInternal(discValue string) map[string]interface{} {
+	objectMap := make(map[string]interface{})
+	l.AuthorizationType = &discValue
+	objectMap["authorizationType"] = l.AuthorizationType
+	return objectMap
+}
+
+func (l *LinkedIntegrationRuntimeType) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "authorizationType":
+			if val != nil {
+				err = json.Unmarshal(*val, &l.AuthorizationType)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // LinkedServiceClassification provides polymorphic access to related types.
@@ -11780,6 +17965,114 @@ func (m *MagentoObjectDataset) UnmarshalJSON(data []byte) error {
 	return m.Dataset.unmarshalInternal(rawMsg)
 }
 
+// A copy activity Magento server source.
+type MagentoSource struct {
+	TabularSource
+	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type MagentoSource.
+func (m MagentoSource) MarshalJSON() ([]byte, error) {
+	objectMap := m.TabularSource.marshalInternal("MagentoSource")
+	if m.Query != nil {
+		objectMap["query"] = m.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type MagentoSource.
+func (m *MagentoSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &m.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return m.TabularSource.unmarshalInternal(rawMsg)
+}
+
+// The workspace managed identity
+type ManagedIDentity struct {
+	// The principal ID of the workspace managed identity
+	PrincipalID *string `json:"principalId,omitempty" azure:"ro"`
+
+	// The tenant ID of the workspace managed identity
+	TenantID *string `json:"tenantId,omitempty" azure:"ro"`
+
+	// The type of managed identity for the workspace
+	Type *ResourceIDentityType `json:"type,omitempty"`
+}
+
+// Managed integration runtime, including managed elastic and managed dedicated integration runtimes.
+type ManagedIntegrationRuntime struct {
+	IntegrationRuntime
+	// Integration runtime state, only valid for managed dedicated integration runtime.
+	State *IntegrationRuntimeState `json:"state,omitempty" azure:"ro"`
+
+	// Managed integration runtime properties.
+	TypeProperties *ManagedIntegrationRuntimeTypeProperties `json:"typeProperties,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ManagedIntegrationRuntime.
+func (m ManagedIntegrationRuntime) MarshalJSON() ([]byte, error) {
+	objectMap := m.IntegrationRuntime.marshalInternal(IntegrationRuntimeTypeManaged)
+	if m.State != nil {
+		objectMap["state"] = m.State
+	}
+	if m.TypeProperties != nil {
+		objectMap["typeProperties"] = m.TypeProperties
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type ManagedIntegrationRuntime.
+func (m *ManagedIntegrationRuntime) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "state":
+			if val != nil {
+				err = json.Unmarshal(*val, &m.State)
+			}
+			delete(rawMsg, key)
+		case "typeProperties":
+			if val != nil {
+				err = json.Unmarshal(*val, &m.TypeProperties)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return m.IntegrationRuntime.unmarshalInternal(rawMsg)
+}
+
+// Managed integration runtime type properties.
+type ManagedIntegrationRuntimeTypeProperties struct {
+	// The compute resource for managed integration runtime.
+	ComputeProperties *IntegrationRuntimeComputeProperties `json:"computeProperties,omitempty"`
+
+	// SSIS properties for managed integration runtime.
+	SsisProperties *IntegrationRuntimeSsisProperties `json:"ssisProperties,omitempty"`
+}
+
 // Mapping data flow.
 type MappingDataFlow struct {
 	DataFlow
@@ -11882,6 +18175,44 @@ type MariaDbLinkedServiceTypeProperties struct {
 
 	// The Azure key vault secret reference of password in connection string.
 	Pwd *AzureKeyVaultSecretReference `json:"pwd,omitempty"`
+}
+
+// A copy activity MariaDB server source.
+type MariaDbSource struct {
+	TabularSource
+	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type MariaDbSource.
+func (m MariaDbSource) MarshalJSON() ([]byte, error) {
+	objectMap := m.TabularSource.marshalInternal("MariaDBSource")
+	if m.Query != nil {
+		objectMap["query"] = m.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type MariaDbSource.
+func (m *MariaDbSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &m.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return m.TabularSource.unmarshalInternal(rawMsg)
 }
 
 // MariaDB server dataset.
@@ -12076,6 +18407,44 @@ func (m *MarketoObjectDataset) UnmarshalJSON(data []byte) error {
 	return m.Dataset.unmarshalInternal(rawMsg)
 }
 
+// A copy activity Marketo server source.
+type MarketoSource struct {
+	TabularSource
+	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type MarketoSource.
+func (m MarketoSource) MarshalJSON() ([]byte, error) {
+	objectMap := m.TabularSource.marshalInternal("MarketoSource")
+	if m.Query != nil {
+		objectMap["query"] = m.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type MarketoSource.
+func (m *MarketoSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &m.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return m.TabularSource.unmarshalInternal(rawMsg)
+}
+
 // Microsoft Access linked service.
 type MicrosoftAccessLinkedService struct {
 	LinkedService
@@ -12185,6 +18554,82 @@ func (m *MicrosoftAccessLinkedServiceTypeProperties) UnmarshalJSON(data []byte) 
 	return nil
 }
 
+// A copy activity Microsoft Access sink.
+type MicrosoftAccessSink struct {
+	CopySink
+	// A query to execute before starting the copy. Type: string (or Expression with resultType string).
+	PreCopyScript *interface{} `json:"preCopyScript,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type MicrosoftAccessSink.
+func (m MicrosoftAccessSink) MarshalJSON() ([]byte, error) {
+	objectMap := m.CopySink.marshalInternal("MicrosoftAccessSink")
+	if m.PreCopyScript != nil {
+		objectMap["preCopyScript"] = m.PreCopyScript
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type MicrosoftAccessSink.
+func (m *MicrosoftAccessSink) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "preCopyScript":
+			if val != nil {
+				err = json.Unmarshal(*val, &m.PreCopyScript)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return m.CopySink.unmarshalInternal(rawMsg)
+}
+
+// A copy activity source for Microsoft Access.
+type MicrosoftAccessSource struct {
+	CopySource
+	// Database query. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type MicrosoftAccessSource.
+func (m MicrosoftAccessSource) MarshalJSON() ([]byte, error) {
+	objectMap := m.CopySource.marshalInternal("MicrosoftAccessSource")
+	if m.Query != nil {
+		objectMap["query"] = m.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type MicrosoftAccessSource.
+func (m *MicrosoftAccessSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &m.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return m.CopySource.unmarshalInternal(rawMsg)
+}
+
 // The Microsoft Access table dataset.
 type MicrosoftAccessTableDataset struct {
 	Dataset
@@ -12271,6 +18716,98 @@ func (m *MongoDbCollectionDataset) UnmarshalJSON(data []byte) error {
 type MongoDbCollectionDatasetTypeProperties struct {
 	// The table name of the MongoDB database. Type: string (or Expression with resultType string).
 	CollectionName *interface{} `json:"collectionName,omitempty"`
+}
+
+// Cursor methods for Mongodb query
+type MongoDbCursorMethodsProperties struct {
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties *map[string]interface{}
+
+	// Specifies the maximum number of documents the server returns. limit() is analogous to the LIMIT statement in a SQL database.
+	// Type: integer (or Expression with resultType integer).
+	Limit *interface{} `json:"limit,omitempty"`
+
+	// Specifies the fields to return in the documents that match the query filter. To return all fields in the matching documents,
+	// omit this parameter. Type: string (or Expression with resultType string).
+	Project *interface{} `json:"project,omitempty"`
+
+	// Specifies the how many documents skipped and where MongoDB begins returning results. This approach may be useful in implementing
+	// paginated results. Type: integer (or Expression with resultType integer).
+	Skip *interface{} `json:"skip,omitempty"`
+
+	// Specifies the order in which the query returns matching documents. Type: string (or Expression with resultType string).
+	// Type: string (or Expression with resultType string).
+	Sort *interface{} `json:"sort,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type MongoDbCursorMethodsProperties.
+func (m MongoDbCursorMethodsProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if m.Limit != nil {
+		objectMap["limit"] = m.Limit
+	}
+	if m.Project != nil {
+		objectMap["project"] = m.Project
+	}
+	if m.Skip != nil {
+		objectMap["skip"] = m.Skip
+	}
+	if m.Sort != nil {
+		objectMap["sort"] = m.Sort
+	}
+	if m.AdditionalProperties != nil {
+		for key, val := range *m.AdditionalProperties {
+			objectMap[key] = val
+		}
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type MongoDbCursorMethodsProperties.
+func (m *MongoDbCursorMethodsProperties) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "limit":
+			if val != nil {
+				err = json.Unmarshal(*val, &m.Limit)
+			}
+			delete(rawMsg, key)
+		case "project":
+			if val != nil {
+				err = json.Unmarshal(*val, &m.Project)
+			}
+			delete(rawMsg, key)
+		case "skip":
+			if val != nil {
+				err = json.Unmarshal(*val, &m.Skip)
+			}
+			delete(rawMsg, key)
+		case "sort":
+			if val != nil {
+				err = json.Unmarshal(*val, &m.Sort)
+			}
+			delete(rawMsg, key)
+		default:
+			if m.AdditionalProperties == nil {
+				m.AdditionalProperties = &map[string]interface{}{}
+			}
+			if val != nil {
+				var aux interface{}
+				err = json.Unmarshal(*val, &aux)
+				(*m.AdditionalProperties)[key] = aux
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // Linked service for MongoDb data source.
@@ -12415,6 +18952,44 @@ func (m *MongoDbLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// A copy activity source for a MongoDB database.
+type MongoDbSource struct {
+	CopySource
+	// Database query. Should be a SQL-92 query expression. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type MongoDbSource.
+func (m MongoDbSource) MarshalJSON() ([]byte, error) {
+	objectMap := m.CopySource.marshalInternal("MongoDbSource")
+	if m.Query != nil {
+		objectMap["query"] = m.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type MongoDbSource.
+func (m *MongoDbSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &m.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return m.CopySource.unmarshalInternal(rawMsg)
+}
+
 // The MongoDB database dataset.
 type MongoDbV2CollectionDataset struct {
 	Dataset
@@ -12507,6 +19082,86 @@ type MongoDbV2LinkedServiceTypeProperties struct {
 	Database *interface{} `json:"database,omitempty"`
 }
 
+// A copy activity source for a MongoDB database.
+type MongoDbV2Source struct {
+	CopySource
+	// Specifies the number of documents to return in each batch of the response from MongoDB instance. In most cases, modifying
+	// the batch size will not affect the user or the application. This property's main purpose is to avoid hit the limitation
+	// of response size. Type: integer (or Expression with resultType integer).
+	BatchSize *interface{} `json:"batchSize,omitempty"`
+
+	// Cursor methods for Mongodb query
+	CursorMethods *MongoDbCursorMethodsProperties `json:"cursorMethods,omitempty"`
+
+	// Specifies selection filter using query operators. To return all documents in a collection, omit this parameter or pass
+	// an empty document ({}). Type: string (or Expression with resultType string).
+	Filter *interface{} `json:"filter,omitempty"`
+
+	// Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+	QueryTimeout *interface{} `json:"queryTimeout,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type MongoDbV2Source.
+func (m MongoDbV2Source) MarshalJSON() ([]byte, error) {
+	objectMap := m.CopySource.marshalInternal("MongoDbV2Source")
+	if m.BatchSize != nil {
+		objectMap["batchSize"] = m.BatchSize
+	}
+	if m.CursorMethods != nil {
+		objectMap["cursorMethods"] = m.CursorMethods
+	}
+	if m.Filter != nil {
+		objectMap["filter"] = m.Filter
+	}
+	if m.QueryTimeout != nil {
+		objectMap["queryTimeout"] = m.QueryTimeout
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type MongoDbV2Source.
+func (m *MongoDbV2Source) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "batchSize":
+			if val != nil {
+				err = json.Unmarshal(*val, &m.BatchSize)
+			}
+			delete(rawMsg, key)
+		case "cursorMethods":
+			if val != nil {
+				err = json.Unmarshal(*val, &m.CursorMethods)
+			}
+			delete(rawMsg, key)
+		case "filter":
+			if val != nil {
+				err = json.Unmarshal(*val, &m.Filter)
+			}
+			delete(rawMsg, key)
+		case "queryTimeout":
+			if val != nil {
+				err = json.Unmarshal(*val, &m.QueryTimeout)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return m.CopySource.unmarshalInternal(rawMsg)
+}
+
+// MultiplePipelineTriggerClassification provides polymorphic access to related types.
+type MultiplePipelineTriggerClassification interface {
+	TriggerClassification
+	GetMultiplePipelineTrigger() *MultiplePipelineTrigger
+}
+
 // Base class for all triggers that support one to many model for trigger to pipeline.
 type MultiplePipelineTrigger struct {
 	Trigger
@@ -12514,12 +19169,12 @@ type MultiplePipelineTrigger struct {
 	Pipelines *[]TriggerPipelineReference `json:"pipelines,omitempty"`
 }
 
+// GetMultiplePipelineTrigger implements the MultiplePipelineTriggerClassification interface for type MultiplePipelineTrigger.
+func (m *MultiplePipelineTrigger) GetMultiplePipelineTrigger() *MultiplePipelineTrigger { return m }
+
 // MarshalJSON implements the json.Marshaller interface for type MultiplePipelineTrigger.
 func (m MultiplePipelineTrigger) MarshalJSON() ([]byte, error) {
-	objectMap := m.Trigger.marshalInternal("MultiplePipelineTrigger")
-	if m.Pipelines != nil {
-		objectMap["pipelines"] = m.Pipelines
-	}
+	objectMap := m.marshalInternal("MultiplePipelineTrigger")
 	return json.Marshal(objectMap)
 }
 
@@ -12529,6 +19184,18 @@ func (m *MultiplePipelineTrigger) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
+	return m.unmarshalInternal(rawMsg)
+}
+
+func (m MultiplePipelineTrigger) marshalInternal(discValue string) map[string]interface{} {
+	objectMap := m.Trigger.marshalInternal(discValue)
+	if m.Pipelines != nil {
+		objectMap["pipelines"] = m.Pipelines
+	}
+	return objectMap
+}
+
+func (m *MultiplePipelineTrigger) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -12594,6 +19261,44 @@ type MySQLLinkedServiceTypeProperties struct {
 
 	// The Azure key vault secret reference of password in connection string.
 	Password *AzureKeyVaultSecretReference `json:"password,omitempty"`
+}
+
+// A copy activity source for MySQL databases.
+type MySQLSource struct {
+	TabularSource
+	// Database query. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type MySQLSource.
+func (m MySQLSource) MarshalJSON() ([]byte, error) {
+	objectMap := m.TabularSource.marshalInternal("MySqlSource")
+	if m.Query != nil {
+		objectMap["query"] = m.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type MySQLSource.
+func (m *MySQLSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &m.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return m.TabularSource.unmarshalInternal(rawMsg)
 }
 
 // The MySQL table dataset.
@@ -12689,6 +19394,81 @@ type NetezzaLinkedServiceTypeProperties struct {
 
 	// The Azure key vault secret reference of password in connection string.
 	Pwd *AzureKeyVaultSecretReference `json:"pwd,omitempty"`
+}
+
+// The settings that will be leveraged for Netezza source partitioning.
+type NetezzaPartitionSettings struct {
+	// The name of the column in integer type that will be used for proceeding range partitioning. Type: string (or Expression
+	// with resultType string).
+	PartitionColumnName *interface{} `json:"partitionColumnName,omitempty"`
+
+	// The minimum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type:
+	// string (or Expression with resultType string).
+	PartitionLowerBound *interface{} `json:"partitionLowerBound,omitempty"`
+
+	// The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type:
+	// string (or Expression with resultType string).
+	PartitionUpperBound *interface{} `json:"partitionUpperBound,omitempty"`
+}
+
+// A copy activity Netezza source.
+type NetezzaSource struct {
+	TabularSource
+	// The partition mechanism that will be used for Netezza read in parallel.
+	PartitionOption *NetezzaPartitionOption `json:"partitionOption,omitempty"`
+
+	// The settings that will be leveraged for Netezza source partitioning.
+	PartitionSettings *NetezzaPartitionSettings `json:"partitionSettings,omitempty"`
+
+	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type NetezzaSource.
+func (n NetezzaSource) MarshalJSON() ([]byte, error) {
+	objectMap := n.TabularSource.marshalInternal("NetezzaSource")
+	if n.PartitionOption != nil {
+		objectMap["partitionOption"] = n.PartitionOption
+	}
+	if n.PartitionSettings != nil {
+		objectMap["partitionSettings"] = n.PartitionSettings
+	}
+	if n.Query != nil {
+		objectMap["query"] = n.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type NetezzaSource.
+func (n *NetezzaSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "partitionOption":
+			if val != nil {
+				err = json.Unmarshal(*val, &n.PartitionOption)
+			}
+			delete(rawMsg, key)
+		case "partitionSettings":
+			if val != nil {
+				err = json.Unmarshal(*val, &n.PartitionSettings)
+			}
+			delete(rawMsg, key)
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &n.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return n.TabularSource.unmarshalInternal(rawMsg)
 }
 
 // Netezza dataset.
@@ -13462,6 +20242,44 @@ type ODataResourceDatasetTypeProperties struct {
 	Path *interface{} `json:"path,omitempty"`
 }
 
+// A copy activity source for OData source.
+type ODataSource struct {
+	CopySource
+	// OData query. For example, "$top=1". Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ODataSource.
+func (o ODataSource) MarshalJSON() ([]byte, error) {
+	objectMap := o.CopySource.marshalInternal("ODataSource")
+	if o.Query != nil {
+		objectMap["query"] = o.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type ODataSource.
+func (o *ODataSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &o.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return o.CopySource.unmarshalInternal(rawMsg)
+}
+
 // Open Database Connectivity (ODBC) linked service.
 type OdbcLinkedService struct {
 	LinkedService
@@ -13569,6 +20387,82 @@ func (o *OdbcLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
+}
+
+// A copy activity ODBC sink.
+type OdbcSink struct {
+	CopySink
+	// A query to execute before starting the copy. Type: string (or Expression with resultType string).
+	PreCopyScript *interface{} `json:"preCopyScript,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type OdbcSink.
+func (o OdbcSink) MarshalJSON() ([]byte, error) {
+	objectMap := o.CopySink.marshalInternal("OdbcSink")
+	if o.PreCopyScript != nil {
+		objectMap["preCopyScript"] = o.PreCopyScript
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type OdbcSink.
+func (o *OdbcSink) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "preCopyScript":
+			if val != nil {
+				err = json.Unmarshal(*val, &o.PreCopyScript)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return o.CopySink.unmarshalInternal(rawMsg)
+}
+
+// A copy activity source for ODBC databases.
+type OdbcSource struct {
+	TabularSource
+	// Database query. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type OdbcSource.
+func (o OdbcSource) MarshalJSON() ([]byte, error) {
+	objectMap := o.TabularSource.marshalInternal("OdbcSource")
+	if o.Query != nil {
+		objectMap["query"] = o.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type OdbcSource.
+func (o *OdbcSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &o.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return o.TabularSource.unmarshalInternal(rawMsg)
 }
 
 // The ODBC table dataset.
@@ -13763,6 +20657,101 @@ func (o *Office365LinkedServiceTypeProperties) UnmarshalJSON(data []byte) error 
 	return nil
 }
 
+// A copy activity source for an Office 365 service.
+type Office365Source struct {
+	CopySource
+	// The groups containing all the users. Type: array of strings (or Expression with resultType array of strings).
+	AllowedGroups *interface{} `json:"allowedGroups,omitempty"`
+
+	// The Column to apply the <paramref name="StartTime"/> and <paramref name="EndTime"/>. Type: string (or Expression with resultType
+	// string).
+	DateFilterColumn *interface{} `json:"dateFilterColumn,omitempty"`
+
+	// End time of the requested range for this dataset. Type: string (or Expression with resultType string).
+	EndTime *interface{} `json:"endTime,omitempty"`
+
+	// The columns to be read out from the Office 365 table. Type: array of objects (or Expression with resultType array of objects).
+	// Example: [ { "name": "Id" }, { "name": "CreatedDateTime" } ]
+	OutputColumns *interface{} `json:"outputColumns,omitempty"`
+
+	// Start time of the requested range for this dataset. Type: string (or Expression with resultType string).
+	StartTime *interface{} `json:"startTime,omitempty"`
+
+	// The user scope uri. Type: string (or Expression with resultType string).
+	UserScopeFilterURI *interface{} `json:"userScopeFilterUri,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type Office365Source.
+func (o Office365Source) MarshalJSON() ([]byte, error) {
+	objectMap := o.CopySource.marshalInternal("Office365Source")
+	if o.AllowedGroups != nil {
+		objectMap["allowedGroups"] = o.AllowedGroups
+	}
+	if o.DateFilterColumn != nil {
+		objectMap["dateFilterColumn"] = o.DateFilterColumn
+	}
+	if o.EndTime != nil {
+		objectMap["endTime"] = o.EndTime
+	}
+	if o.OutputColumns != nil {
+		objectMap["outputColumns"] = o.OutputColumns
+	}
+	if o.StartTime != nil {
+		objectMap["startTime"] = o.StartTime
+	}
+	if o.UserScopeFilterURI != nil {
+		objectMap["userScopeFilterUri"] = o.UserScopeFilterURI
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type Office365Source.
+func (o *Office365Source) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "allowedGroups":
+			if val != nil {
+				err = json.Unmarshal(*val, &o.AllowedGroups)
+			}
+			delete(rawMsg, key)
+		case "dateFilterColumn":
+			if val != nil {
+				err = json.Unmarshal(*val, &o.DateFilterColumn)
+			}
+			delete(rawMsg, key)
+		case "endTime":
+			if val != nil {
+				err = json.Unmarshal(*val, &o.EndTime)
+			}
+			delete(rawMsg, key)
+		case "outputColumns":
+			if val != nil {
+				err = json.Unmarshal(*val, &o.OutputColumns)
+			}
+			delete(rawMsg, key)
+		case "startTime":
+			if val != nil {
+				err = json.Unmarshal(*val, &o.StartTime)
+			}
+			delete(rawMsg, key)
+		case "userScopeFilterUri":
+			if val != nil {
+				err = json.Unmarshal(*val, &o.UserScopeFilterURI)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return o.CopySource.unmarshalInternal(rawMsg)
+}
+
 // Oracle database.
 type OracleLinkedService struct {
 	LinkedService
@@ -13812,6 +20801,24 @@ type OracleLinkedServiceTypeProperties struct {
 
 	// The Azure key vault secret reference of password in connection string.
 	Password *AzureKeyVaultSecretReference `json:"password,omitempty"`
+}
+
+// The settings that will be leveraged for Oracle source partitioning.
+type OraclePartitionSettings struct {
+	// The name of the column in integer type that will be used for proceeding range partitioning. Type: string (or Expression
+	// with resultType string).
+	PartitionColumnName *interface{} `json:"partitionColumnName,omitempty"`
+
+	// The minimum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type:
+	// string (or Expression with resultType string).
+	PartitionLowerBound *interface{} `json:"partitionLowerBound,omitempty"`
+
+	// Names of the physical partitions of Oracle table.
+	PartitionNames *interface{} `json:"partitionNames,omitempty"`
+
+	// The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type:
+	// string (or Expression with resultType string).
+	PartitionUpperBound *interface{} `json:"partitionUpperBound,omitempty"`
 }
 
 // Oracle Service Cloud linked service.
@@ -13970,6 +20977,153 @@ func (o *OracleServiceCloudObjectDataset) UnmarshalJSON(data []byte) error {
 	return o.Dataset.unmarshalInternal(rawMsg)
 }
 
+// A copy activity Oracle Service Cloud source.
+type OracleServiceCloudSource struct {
+	TabularSource
+	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type OracleServiceCloudSource.
+func (o OracleServiceCloudSource) MarshalJSON() ([]byte, error) {
+	objectMap := o.TabularSource.marshalInternal("OracleServiceCloudSource")
+	if o.Query != nil {
+		objectMap["query"] = o.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type OracleServiceCloudSource.
+func (o *OracleServiceCloudSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &o.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return o.TabularSource.unmarshalInternal(rawMsg)
+}
+
+// A copy activity Oracle sink.
+type OracleSink struct {
+	CopySink
+	// SQL pre-copy script. Type: string (or Expression with resultType string).
+	PreCopyScript *interface{} `json:"preCopyScript,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type OracleSink.
+func (o OracleSink) MarshalJSON() ([]byte, error) {
+	objectMap := o.CopySink.marshalInternal("OracleSink")
+	if o.PreCopyScript != nil {
+		objectMap["preCopyScript"] = o.PreCopyScript
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type OracleSink.
+func (o *OracleSink) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "preCopyScript":
+			if val != nil {
+				err = json.Unmarshal(*val, &o.PreCopyScript)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return o.CopySink.unmarshalInternal(rawMsg)
+}
+
+// A copy activity Oracle source.
+type OracleSource struct {
+	CopySource
+	// Oracle reader query. Type: string (or Expression with resultType string).
+	OracleReaderQuery *interface{} `json:"oracleReaderQuery,omitempty"`
+
+	// The partition mechanism that will be used for Oracle read in parallel.
+	PartitionOption *OraclePartitionOption `json:"partitionOption,omitempty"`
+
+	// The settings that will be leveraged for Oracle source partitioning.
+	PartitionSettings *OraclePartitionSettings `json:"partitionSettings,omitempty"`
+
+	// Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+	QueryTimeout *interface{} `json:"queryTimeout,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type OracleSource.
+func (o OracleSource) MarshalJSON() ([]byte, error) {
+	objectMap := o.CopySource.marshalInternal("OracleSource")
+	if o.OracleReaderQuery != nil {
+		objectMap["oracleReaderQuery"] = o.OracleReaderQuery
+	}
+	if o.PartitionOption != nil {
+		objectMap["partitionOption"] = o.PartitionOption
+	}
+	if o.PartitionSettings != nil {
+		objectMap["partitionSettings"] = o.PartitionSettings
+	}
+	if o.QueryTimeout != nil {
+		objectMap["queryTimeout"] = o.QueryTimeout
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type OracleSource.
+func (o *OracleSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "oracleReaderQuery":
+			if val != nil {
+				err = json.Unmarshal(*val, &o.OracleReaderQuery)
+			}
+			delete(rawMsg, key)
+		case "partitionOption":
+			if val != nil {
+				err = json.Unmarshal(*val, &o.PartitionOption)
+			}
+			delete(rawMsg, key)
+		case "partitionSettings":
+			if val != nil {
+				err = json.Unmarshal(*val, &o.PartitionSettings)
+			}
+			delete(rawMsg, key)
+		case "queryTimeout":
+			if val != nil {
+				err = json.Unmarshal(*val, &o.QueryTimeout)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return o.CopySource.unmarshalInternal(rawMsg)
+}
+
 // The on-premises Oracle database dataset.
 type OracleTableDataset struct {
 	Dataset
@@ -14092,6 +21246,93 @@ func (o *OrcDatasetTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// The data stored in Optimized Row Columnar (ORC) format.
+type OrcFormat struct {
+	DatasetStorageFormat
+}
+
+// MarshalJSON implements the json.Marshaller interface for type OrcFormat.
+func (o OrcFormat) MarshalJSON() ([]byte, error) {
+	objectMap := o.DatasetStorageFormat.marshalInternal("OrcFormat")
+	return json.Marshal(objectMap)
+}
+
+// A copy activity ORC sink.
+type OrcSink struct {
+	CopySink
+	// ORC store settings.
+	StoreSettings StoreWriteSettingsClassification `json:"storeSettings,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type OrcSink.
+func (o OrcSink) MarshalJSON() ([]byte, error) {
+	objectMap := o.CopySink.marshalInternal("OrcSink")
+	if o.StoreSettings != nil {
+		objectMap["storeSettings"] = o.StoreSettings
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type OrcSink.
+func (o *OrcSink) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "storeSettings":
+			if val != nil {
+				o.StoreSettings, err = unmarshalStoreWriteSettingsClassification(*val)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return o.CopySink.unmarshalInternal(rawMsg)
+}
+
+// A copy activity ORC source.
+type OrcSource struct {
+	CopySource
+	// ORC store settings.
+	StoreSettings StoreReadSettingsClassification `json:"storeSettings,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type OrcSource.
+func (o OrcSource) MarshalJSON() ([]byte, error) {
+	objectMap := o.CopySource.marshalInternal("OrcSource")
+	if o.StoreSettings != nil {
+		objectMap["storeSettings"] = o.StoreSettings
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type OrcSource.
+func (o *OrcSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "storeSettings":
+			if val != nil {
+				o.StoreSettings, err = unmarshalStoreReadSettingsClassification(*val)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return o.CopySource.unmarshalInternal(rawMsg)
+}
+
 // Definition of a single parameter for an entity.
 type ParameterSpecification struct {
 	// Default value of parameter.
@@ -14172,6 +21413,93 @@ func (p *ParquetDatasetTypeProperties) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
+}
+
+// The data stored in Parquet format.
+type ParquetFormat struct {
+	DatasetStorageFormat
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ParquetFormat.
+func (p ParquetFormat) MarshalJSON() ([]byte, error) {
+	objectMap := p.DatasetStorageFormat.marshalInternal("ParquetFormat")
+	return json.Marshal(objectMap)
+}
+
+// A copy activity Parquet sink.
+type ParquetSink struct {
+	CopySink
+	// Parquet store settings.
+	StoreSettings StoreWriteSettingsClassification `json:"storeSettings,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ParquetSink.
+func (p ParquetSink) MarshalJSON() ([]byte, error) {
+	objectMap := p.CopySink.marshalInternal("ParquetSink")
+	if p.StoreSettings != nil {
+		objectMap["storeSettings"] = p.StoreSettings
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type ParquetSink.
+func (p *ParquetSink) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "storeSettings":
+			if val != nil {
+				p.StoreSettings, err = unmarshalStoreWriteSettingsClassification(*val)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return p.CopySink.unmarshalInternal(rawMsg)
+}
+
+// A copy activity Parquet source.
+type ParquetSource struct {
+	CopySource
+	// Parquet store settings.
+	StoreSettings StoreReadSettingsClassification `json:"storeSettings,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ParquetSource.
+func (p ParquetSource) MarshalJSON() ([]byte, error) {
+	objectMap := p.CopySource.marshalInternal("ParquetSource")
+	if p.StoreSettings != nil {
+		objectMap["storeSettings"] = p.StoreSettings
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type ParquetSource.
+func (p *ParquetSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "storeSettings":
+			if val != nil {
+				p.StoreSettings, err = unmarshalStoreReadSettingsClassification(*val)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return p.CopySource.unmarshalInternal(rawMsg)
 }
 
 // Paypal Service linked service.
@@ -14326,6 +21654,44 @@ func (p *PaypalObjectDataset) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return p.Dataset.unmarshalInternal(rawMsg)
+}
+
+// A copy activity Paypal Service source.
+type PaypalSource struct {
+	TabularSource
+	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type PaypalSource.
+func (p PaypalSource) MarshalJSON() ([]byte, error) {
+	objectMap := p.TabularSource.marshalInternal("PaypalSource")
+	if p.Query != nil {
+		objectMap["query"] = p.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type PaypalSource.
+func (p *PaypalSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &p.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return p.TabularSource.unmarshalInternal(rawMsg)
 }
 
 // Phoenix Dataset Properties
@@ -14536,6 +21902,44 @@ func (p *PhoenixObjectDataset) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return p.Dataset.unmarshalInternal(rawMsg)
+}
+
+// A copy activity Phoenix server source.
+type PhoenixSource struct {
+	TabularSource
+	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type PhoenixSource.
+func (p PhoenixSource) MarshalJSON() ([]byte, error) {
+	objectMap := p.TabularSource.marshalInternal("PhoenixSource")
+	if p.Query != nil {
+		objectMap["query"] = p.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type PhoenixSource.
+func (p *PhoenixSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &p.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return p.TabularSource.unmarshalInternal(rawMsg)
 }
 
 // A workspace pipeline.
@@ -14940,6 +22344,97 @@ type PipelineRunsQueryResponseResponse struct {
 	RawResponse *http.Response
 }
 
+// PolyBase settings.
+type PolybaseSettings struct {
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties *map[string]interface{}
+
+	// Determines the number of rows to attempt to retrieve before the PolyBase recalculates the percentage of rejected rows.
+	// Type: integer (or Expression with resultType integer), minimum: 0.
+	RejectSampleValue *interface{} `json:"rejectSampleValue,omitempty"`
+
+	// Reject type.
+	RejectType *PolybaseSettingsRejectType `json:"rejectType,omitempty"`
+
+	// Specifies the value or the percentage of rows that can be rejected before the query fails. Type: number (or Expression
+	// with resultType number), minimum: 0.
+	RejectValue *interface{} `json:"rejectValue,omitempty"`
+
+	// Specifies how to handle missing values in delimited text files when PolyBase retrieves data from the text file. Type: boolean
+	// (or Expression with resultType boolean).
+	UseTypeDefault *interface{} `json:"useTypeDefault,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type PolybaseSettings.
+func (p PolybaseSettings) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if p.RejectSampleValue != nil {
+		objectMap["rejectSampleValue"] = p.RejectSampleValue
+	}
+	if p.RejectType != nil {
+		objectMap["rejectType"] = p.RejectType
+	}
+	if p.RejectValue != nil {
+		objectMap["rejectValue"] = p.RejectValue
+	}
+	if p.UseTypeDefault != nil {
+		objectMap["useTypeDefault"] = p.UseTypeDefault
+	}
+	if p.AdditionalProperties != nil {
+		for key, val := range *p.AdditionalProperties {
+			objectMap[key] = val
+		}
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type PolybaseSettings.
+func (p *PolybaseSettings) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "rejectSampleValue":
+			if val != nil {
+				err = json.Unmarshal(*val, &p.RejectSampleValue)
+			}
+			delete(rawMsg, key)
+		case "rejectType":
+			if val != nil {
+				err = json.Unmarshal(*val, &p.RejectType)
+			}
+			delete(rawMsg, key)
+		case "rejectValue":
+			if val != nil {
+				err = json.Unmarshal(*val, &p.RejectValue)
+			}
+			delete(rawMsg, key)
+		case "useTypeDefault":
+			if val != nil {
+				err = json.Unmarshal(*val, &p.UseTypeDefault)
+			}
+			delete(rawMsg, key)
+		default:
+			if p.AdditionalProperties == nil {
+				p.AdditionalProperties = &map[string]interface{}{}
+			}
+			if val != nil {
+				var aux interface{}
+				err = json.Unmarshal(*val, &aux)
+				(*p.AdditionalProperties)[key] = aux
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 // Linked service for PostgreSQL data source.
 type PostgreSQLLinkedService struct {
 	LinkedService
@@ -14989,6 +22484,44 @@ type PostgreSQLLinkedServiceTypeProperties struct {
 
 	// The Azure key vault secret reference of password in connection string.
 	Password *AzureKeyVaultSecretReference `json:"password,omitempty"`
+}
+
+// A copy activity source for PostgreSQL databases.
+type PostgreSQLSource struct {
+	TabularSource
+	// Database query. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type PostgreSQLSource.
+func (p PostgreSQLSource) MarshalJSON() ([]byte, error) {
+	objectMap := p.TabularSource.marshalInternal("PostgreSqlSource")
+	if p.Query != nil {
+		objectMap["query"] = p.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type PostgreSQLSource.
+func (p *PostgreSQLSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &p.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return p.TabularSource.unmarshalInternal(rawMsg)
 }
 
 // The PostgreSQL table dataset.
@@ -15267,6 +22800,86 @@ func (p *PrestoObjectDataset) UnmarshalJSON(data []byte) error {
 	return p.Dataset.unmarshalInternal(rawMsg)
 }
 
+// A copy activity Presto server source.
+type PrestoSource struct {
+	TabularSource
+	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type PrestoSource.
+func (p PrestoSource) MarshalJSON() ([]byte, error) {
+	objectMap := p.TabularSource.marshalInternal("PrestoSource")
+	if p.Query != nil {
+		objectMap["query"] = p.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type PrestoSource.
+func (p *PrestoSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &p.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return p.TabularSource.unmarshalInternal(rawMsg)
+}
+
+// Private endpoint details
+type PrivateEndpoint struct {
+	// Resource id of the private endpoint.
+	ID *string `json:"id,omitempty" azure:"ro"`
+}
+
+// A private endpoint connection
+type PrivateEndpointConnection struct {
+	Resource
+	// Private endpoint connection properties.
+	Properties *PrivateEndpointConnectionProperties `json:"properties,omitempty"`
+}
+
+// Properties of a private endpoint connection.
+type PrivateEndpointConnectionProperties struct {
+	// The private endpoint which the connection belongs to.
+	PrivateEndpoint *PrivateEndpoint `json:"privateEndpoint,omitempty"`
+
+	// Connection state of the private endpoint connection.
+	PrivateLinkServiceConnectionState *PrivateLinkServiceConnectionState `json:"privateLinkServiceConnectionState,omitempty"`
+
+	// Provisioning state of the private endpoint connection.
+	ProvisioningState *string `json:"provisioningState,omitempty" azure:"ro"`
+}
+
+// Connection state details of the private endpoint
+type PrivateLinkServiceConnectionState struct {
+	// The actions required for private link service connection.
+	ActionsRequired *string `json:"actionsRequired,omitempty" azure:"ro"`
+
+	// The private link service connection description.
+	Description *string `json:"description,omitempty"`
+
+	// The private link service connection status.
+	Status *PrivateLinkServiceConnectionStateStatus `json:"status,omitempty"`
+}
+
+// The resource model definition for a ARM proxy resource. It will have everything other than required location and tags
+type ProxyResource struct {
+	Resource
+}
+
 // A list of active debug sessions.
 type QueryDataFlowDebugSessionsResponse struct {
 	// The link to the next page of results, if any remaining results exist.
@@ -15447,6 +23060,209 @@ func (q *QuickBooksObjectDataset) UnmarshalJSON(data []byte) error {
 	return q.Dataset.unmarshalInternal(rawMsg)
 }
 
+// A copy activity QuickBooks server source.
+type QuickBooksSource struct {
+	TabularSource
+	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type QuickBooksSource.
+func (q QuickBooksSource) MarshalJSON() ([]byte, error) {
+	objectMap := q.TabularSource.marshalInternal("QuickBooksSource")
+	if q.Query != nil {
+		objectMap["query"] = q.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type QuickBooksSource.
+func (q *QuickBooksSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &q.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return q.TabularSource.unmarshalInternal(rawMsg)
+}
+
+// The recurrence schedule.
+type RecurrenceSchedule struct {
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties *map[string]interface{}
+
+	// The hours.
+	Hours *[]int32 `json:"hours,omitempty"`
+
+	// The minutes.
+	Minutes *[]int32 `json:"minutes,omitempty"`
+
+	// The month days.
+	MonthDays *[]int32 `json:"monthDays,omitempty"`
+
+	// The monthly occurrences.
+	MonthlyOccurrences *[]RecurrenceScheduleOccurrence `json:"monthlyOccurrences,omitempty"`
+
+	// The days of the week.
+	WeekDays *[]DayOfWeek `json:"weekDays,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type RecurrenceSchedule.
+func (r RecurrenceSchedule) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if r.Hours != nil {
+		objectMap["hours"] = r.Hours
+	}
+	if r.Minutes != nil {
+		objectMap["minutes"] = r.Minutes
+	}
+	if r.MonthDays != nil {
+		objectMap["monthDays"] = r.MonthDays
+	}
+	if r.MonthlyOccurrences != nil {
+		objectMap["monthlyOccurrences"] = r.MonthlyOccurrences
+	}
+	if r.WeekDays != nil {
+		objectMap["weekDays"] = r.WeekDays
+	}
+	if r.AdditionalProperties != nil {
+		for key, val := range *r.AdditionalProperties {
+			objectMap[key] = val
+		}
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type RecurrenceSchedule.
+func (r *RecurrenceSchedule) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "hours":
+			if val != nil {
+				err = json.Unmarshal(*val, &r.Hours)
+			}
+			delete(rawMsg, key)
+		case "minutes":
+			if val != nil {
+				err = json.Unmarshal(*val, &r.Minutes)
+			}
+			delete(rawMsg, key)
+		case "monthDays":
+			if val != nil {
+				err = json.Unmarshal(*val, &r.MonthDays)
+			}
+			delete(rawMsg, key)
+		case "monthlyOccurrences":
+			if val != nil {
+				err = json.Unmarshal(*val, &r.MonthlyOccurrences)
+			}
+			delete(rawMsg, key)
+		case "weekDays":
+			if val != nil {
+				err = json.Unmarshal(*val, &r.WeekDays)
+			}
+			delete(rawMsg, key)
+		default:
+			if r.AdditionalProperties == nil {
+				r.AdditionalProperties = &map[string]interface{}{}
+			}
+			if val != nil {
+				var aux interface{}
+				err = json.Unmarshal(*val, &aux)
+				(*r.AdditionalProperties)[key] = aux
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// The recurrence schedule occurrence.
+type RecurrenceScheduleOccurrence struct {
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties *map[string]interface{}
+
+	// The day of the week.
+	Day *DayOfWeek `json:"day,omitempty"`
+
+	// The occurrence.
+	Occurrence *int32 `json:"occurrence,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type RecurrenceScheduleOccurrence.
+func (r RecurrenceScheduleOccurrence) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if r.Day != nil {
+		objectMap["day"] = r.Day
+	}
+	if r.Occurrence != nil {
+		objectMap["occurrence"] = r.Occurrence
+	}
+	if r.AdditionalProperties != nil {
+		for key, val := range *r.AdditionalProperties {
+			objectMap[key] = val
+		}
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type RecurrenceScheduleOccurrence.
+func (r *RecurrenceScheduleOccurrence) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "day":
+			if val != nil {
+				err = json.Unmarshal(*val, &r.Day)
+			}
+			delete(rawMsg, key)
+		case "occurrence":
+			if val != nil {
+				err = json.Unmarshal(*val, &r.Occurrence)
+			}
+			delete(rawMsg, key)
+		default:
+			if r.AdditionalProperties == nil {
+				r.AdditionalProperties = &map[string]interface{}{}
+			}
+			if val != nil {
+				var aux interface{}
+				err = json.Unmarshal(*val, &aux)
+				(*r.AdditionalProperties)[key] = aux
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 // Redirect incompatible row settings
 type RedirectIncompatibleRowSettings struct {
 	// Contains additional key/value pairs not defined in the schema.
@@ -15512,6 +23328,56 @@ func (r *RedirectIncompatibleRowSettings) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
+}
+
+// The Amazon S3 settings needed for the interim Amazon S3 when copying from Amazon Redshift with unload. With this, data
+// from Amazon Redshift source will be unloaded into S3 first and then copied into the targeted sink from the interim S3.
+type RedshiftUnloadSettings struct {
+	// The bucket of the interim Amazon S3 which will be used to store the unloaded data from Amazon Redshift source. The bucket
+	// must be in the same region as the Amazon Redshift source. Type: string (or Expression with resultType string).
+	BucketName *interface{} `json:"bucketName,omitempty"`
+
+	// The name of the Amazon S3 linked service which will be used for the unload operation when copying from the Amazon Redshift
+	// source.
+	S3LinkedServiceName *LinkedServiceReference `json:"s3LinkedServiceName,omitempty"`
+}
+
+// A copy activity source for various relational databases.
+type RelationalSource struct {
+	CopySource
+	// Database query. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type RelationalSource.
+func (r RelationalSource) MarshalJSON() ([]byte, error) {
+	objectMap := r.CopySource.marshalInternal("RelationalSource")
+	if r.Query != nil {
+		objectMap["query"] = r.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type RelationalSource.
+func (r *RelationalSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &r.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return r.CopySource.unmarshalInternal(rawMsg)
 }
 
 // The relational table dataset.
@@ -15958,6 +23824,44 @@ func (r *ResponsysObjectDataset) UnmarshalJSON(data []byte) error {
 	return r.Dataset.unmarshalInternal(rawMsg)
 }
 
+// A copy activity Responsys source.
+type ResponsysSource struct {
+	TabularSource
+	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ResponsysSource.
+func (r ResponsysSource) MarshalJSON() ([]byte, error) {
+	objectMap := r.TabularSource.marshalInternal("ResponsysSource")
+	if r.Query != nil {
+		objectMap["query"] = r.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type ResponsysSource.
+func (r *ResponsysSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &r.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return r.TabularSource.unmarshalInternal(rawMsg)
+}
+
 // A Rest service dataset.
 type RestResourceDataset struct {
 	Dataset
@@ -16155,6 +24059,109 @@ func (r *RestServiceLinkedServiceTypeProperties) UnmarshalJSON(data []byte) erro
 	return nil
 }
 
+// A copy activity Rest service source.
+type RestSource struct {
+	CopySource
+	// The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string).
+	AdditionalHeaders *interface{} `json:"additionalHeaders,omitempty"`
+
+	// The timeout (TimeSpan) to get an HTTP response. It is the timeout to get a response, not the timeout to read response data.
+	// Default value: 00:01:40. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+	HTTPRequestTimeout *interface{} `json:"httpRequestTimeout,omitempty"`
+
+	// The pagination rules to compose next page requests. Type: string (or Expression with resultType string).
+	PaginationRules *interface{} `json:"paginationRules,omitempty"`
+
+	// The HTTP request body to the RESTful API if requestMethod is POST. Type: string (or Expression with resultType string).
+	RequestBody *interface{} `json:"requestBody,omitempty"`
+
+	// The time to await before sending next page request.
+	RequestInterval *interface{} `json:"requestInterval,omitempty"`
+
+	// The HTTP method used to call the RESTful API. The default is GET. Type: string (or Expression with resultType string).
+	RequestMethod *interface{} `json:"requestMethod,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type RestSource.
+func (r RestSource) MarshalJSON() ([]byte, error) {
+	objectMap := r.CopySource.marshalInternal("RestSource")
+	if r.AdditionalHeaders != nil {
+		objectMap["additionalHeaders"] = r.AdditionalHeaders
+	}
+	if r.HTTPRequestTimeout != nil {
+		objectMap["httpRequestTimeout"] = r.HTTPRequestTimeout
+	}
+	if r.PaginationRules != nil {
+		objectMap["paginationRules"] = r.PaginationRules
+	}
+	if r.RequestBody != nil {
+		objectMap["requestBody"] = r.RequestBody
+	}
+	if r.RequestInterval != nil {
+		objectMap["requestInterval"] = r.RequestInterval
+	}
+	if r.RequestMethod != nil {
+		objectMap["requestMethod"] = r.RequestMethod
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type RestSource.
+func (r *RestSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "additionalHeaders":
+			if val != nil {
+				err = json.Unmarshal(*val, &r.AdditionalHeaders)
+			}
+			delete(rawMsg, key)
+		case "httpRequestTimeout":
+			if val != nil {
+				err = json.Unmarshal(*val, &r.HTTPRequestTimeout)
+			}
+			delete(rawMsg, key)
+		case "paginationRules":
+			if val != nil {
+				err = json.Unmarshal(*val, &r.PaginationRules)
+			}
+			delete(rawMsg, key)
+		case "requestBody":
+			if val != nil {
+				err = json.Unmarshal(*val, &r.RequestBody)
+			}
+			delete(rawMsg, key)
+		case "requestInterval":
+			if val != nil {
+				err = json.Unmarshal(*val, &r.RequestInterval)
+			}
+			delete(rawMsg, key)
+		case "requestMethod":
+			if val != nil {
+				err = json.Unmarshal(*val, &r.RequestMethod)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return r.CopySource.unmarshalInternal(rawMsg)
+}
+
+// Execution policy for an activity.
+type RetryPolicy struct {
+	// Maximum ordinary retry attempts. Default is 0. Type: integer (or Expression with resultType integer), minimum: 0.
+	Count *interface{} `json:"count,omitempty"`
+
+	// Interval between retries in seconds. Default is 30.
+	IntervalInSeconds *int32 `json:"intervalInSeconds,omitempty"`
+}
+
 // Query parameters for listing runs.
 type RunFilterParameters struct {
 	// The continuation token for getting the next page of results. Null for first page.
@@ -16265,6 +24272,19 @@ type RunQueryOrderBy struct {
 	OrderBy *RunQueryOrderByField `json:"orderBy,omitempty"`
 }
 
+// SQL pool SKU
+type SKU struct {
+	// If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the
+	// resource this may be omitted.
+	Capacity *int32 `json:"capacity,omitempty"`
+
+	// The SKU name
+	Name *string `json:"name,omitempty"`
+
+	// The service tier
+	Tier *string `json:"tier,omitempty"`
+}
+
 // The connection used to execute the SQL script.
 type SQLConnection struct {
 	// Contains additional key/value pairs not defined in the schema.
@@ -16331,6 +24351,357 @@ func (s *SQLConnection) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// A copy activity SQL Data Warehouse sink.
+type SQLDwSink struct {
+	CopySink
+	// Indicates to use Copy Command to copy data into SQL Data Warehouse. Type: boolean (or Expression with resultType boolean).
+	AllowCopyCommand *interface{} `json:"allowCopyCommand,omitempty"`
+
+	// Indicates to use PolyBase to copy data into SQL Data Warehouse when applicable. Type: boolean (or Expression with resultType
+	// boolean).
+	AllowPolyBase *interface{} `json:"allowPolyBase,omitempty"`
+
+	// Specifies Copy Command related settings when allowCopyCommand is true.
+	CopyCommandSettings *DwCopyCommandSettings `json:"copyCommandSettings,omitempty"`
+
+	// Specifies PolyBase-related settings when allowPolyBase is true.
+	PolyBaseSettings *PolybaseSettings `json:"polyBaseSettings,omitempty"`
+
+	// SQL pre-copy script. Type: string (or Expression with resultType string).
+	PreCopyScript *interface{} `json:"preCopyScript,omitempty"`
+
+	// The option to handle sink table, such as autoCreate. For now only 'autoCreate' value is supported. Type: string (or Expression
+	// with resultType string).
+	TableOption *interface{} `json:"tableOption,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SQLDwSink.
+func (s SQLDwSink) MarshalJSON() ([]byte, error) {
+	objectMap := s.CopySink.marshalInternal("SqlDWSink")
+	if s.AllowCopyCommand != nil {
+		objectMap["allowCopyCommand"] = s.AllowCopyCommand
+	}
+	if s.AllowPolyBase != nil {
+		objectMap["allowPolyBase"] = s.AllowPolyBase
+	}
+	if s.CopyCommandSettings != nil {
+		objectMap["copyCommandSettings"] = s.CopyCommandSettings
+	}
+	if s.PolyBaseSettings != nil {
+		objectMap["polyBaseSettings"] = s.PolyBaseSettings
+	}
+	if s.PreCopyScript != nil {
+		objectMap["preCopyScript"] = s.PreCopyScript
+	}
+	if s.TableOption != nil {
+		objectMap["tableOption"] = s.TableOption
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type SQLDwSink.
+func (s *SQLDwSink) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "allowCopyCommand":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.AllowCopyCommand)
+			}
+			delete(rawMsg, key)
+		case "allowPolyBase":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.AllowPolyBase)
+			}
+			delete(rawMsg, key)
+		case "copyCommandSettings":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.CopyCommandSettings)
+			}
+			delete(rawMsg, key)
+		case "polyBaseSettings":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.PolyBaseSettings)
+			}
+			delete(rawMsg, key)
+		case "preCopyScript":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.PreCopyScript)
+			}
+			delete(rawMsg, key)
+		case "tableOption":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.TableOption)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return s.CopySink.unmarshalInternal(rawMsg)
+}
+
+// A copy activity SQL Data Warehouse source.
+type SQLDwSource struct {
+	TabularSource
+	// SQL Data Warehouse reader query. Type: string (or Expression with resultType string).
+	SQLReaderQuery *interface{} `json:"sqlReaderQuery,omitempty"`
+
+	// Name of the stored procedure for a SQL Data Warehouse source. This cannot be used at the same time as SqlReaderQuery. Type:
+	// string (or Expression with resultType string).
+	SQLReaderStoredProcedureName *interface{} `json:"sqlReaderStoredProcedureName,omitempty"`
+
+	// Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}". Type: object
+	// (or Expression with resultType object), itemType: StoredProcedureParameter.
+	StoredProcedureParameters *interface{} `json:"storedProcedureParameters,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SQLDwSource.
+func (s SQLDwSource) MarshalJSON() ([]byte, error) {
+	objectMap := s.TabularSource.marshalInternal("SqlDWSource")
+	if s.SQLReaderQuery != nil {
+		objectMap["sqlReaderQuery"] = s.SQLReaderQuery
+	}
+	if s.SQLReaderStoredProcedureName != nil {
+		objectMap["sqlReaderStoredProcedureName"] = s.SQLReaderStoredProcedureName
+	}
+	if s.StoredProcedureParameters != nil {
+		objectMap["storedProcedureParameters"] = s.StoredProcedureParameters
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type SQLDwSource.
+func (s *SQLDwSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "sqlReaderQuery":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.SQLReaderQuery)
+			}
+			delete(rawMsg, key)
+		case "sqlReaderStoredProcedureName":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.SQLReaderStoredProcedureName)
+			}
+			delete(rawMsg, key)
+		case "storedProcedureParameters":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.StoredProcedureParameters)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return s.TabularSource.unmarshalInternal(rawMsg)
+}
+
+// A copy activity Azure SQL Managed Instance sink.
+type SQLMiSink struct {
+	CopySink
+	// SQL pre-copy script. Type: string (or Expression with resultType string).
+	PreCopyScript *interface{} `json:"preCopyScript,omitempty"`
+
+	// SQL writer stored procedure name. Type: string (or Expression with resultType string).
+	SQLWriterStoredProcedureName *interface{} `json:"sqlWriterStoredProcedureName,omitempty"`
+
+	// SQL writer table type. Type: string (or Expression with resultType string).
+	SQLWriterTableType *interface{} `json:"sqlWriterTableType,omitempty"`
+
+	// SQL stored procedure parameters.
+	StoredProcedureParameters *map[string]StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
+
+	// The stored procedure parameter name of the table type. Type: string (or Expression with resultType string).
+	StoredProcedureTableTypeParameterName *interface{} `json:"storedProcedureTableTypeParameterName,omitempty"`
+
+	// The option to handle sink table, such as autoCreate. For now only 'autoCreate' value is supported. Type: string (or Expression
+	// with resultType string).
+	TableOption *interface{} `json:"tableOption,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SQLMiSink.
+func (s SQLMiSink) MarshalJSON() ([]byte, error) {
+	objectMap := s.CopySink.marshalInternal("SqlMISink")
+	if s.PreCopyScript != nil {
+		objectMap["preCopyScript"] = s.PreCopyScript
+	}
+	if s.SQLWriterStoredProcedureName != nil {
+		objectMap["sqlWriterStoredProcedureName"] = s.SQLWriterStoredProcedureName
+	}
+	if s.SQLWriterTableType != nil {
+		objectMap["sqlWriterTableType"] = s.SQLWriterTableType
+	}
+	if s.StoredProcedureParameters != nil {
+		objectMap["storedProcedureParameters"] = s.StoredProcedureParameters
+	}
+	if s.StoredProcedureTableTypeParameterName != nil {
+		objectMap["storedProcedureTableTypeParameterName"] = s.StoredProcedureTableTypeParameterName
+	}
+	if s.TableOption != nil {
+		objectMap["tableOption"] = s.TableOption
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type SQLMiSink.
+func (s *SQLMiSink) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "preCopyScript":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.PreCopyScript)
+			}
+			delete(rawMsg, key)
+		case "sqlWriterStoredProcedureName":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.SQLWriterStoredProcedureName)
+			}
+			delete(rawMsg, key)
+		case "sqlWriterTableType":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.SQLWriterTableType)
+			}
+			delete(rawMsg, key)
+		case "storedProcedureParameters":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.StoredProcedureParameters)
+			}
+			delete(rawMsg, key)
+		case "storedProcedureTableTypeParameterName":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.StoredProcedureTableTypeParameterName)
+			}
+			delete(rawMsg, key)
+		case "tableOption":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.TableOption)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return s.CopySink.unmarshalInternal(rawMsg)
+}
+
+// A copy activity Azure SQL Managed Instance source.
+type SQLMiSource struct {
+	TabularSource
+	// Which additional types to produce.
+	ProduceAdditionalTypes *interface{} `json:"produceAdditionalTypes,omitempty"`
+
+	// SQL reader query. Type: string (or Expression with resultType string).
+	SQLReaderQuery *interface{} `json:"sqlReaderQuery,omitempty"`
+
+	// Name of the stored procedure for a Azure SQL Managed Instance source. This cannot be used at the same time as SqlReaderQuery.
+	// Type: string (or Expression with resultType string).
+	SQLReaderStoredProcedureName *interface{} `json:"sqlReaderStoredProcedureName,omitempty"`
+
+	// Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}".
+	StoredProcedureParameters *map[string]StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SQLMiSource.
+func (s SQLMiSource) MarshalJSON() ([]byte, error) {
+	objectMap := s.TabularSource.marshalInternal("SqlMISource")
+	if s.ProduceAdditionalTypes != nil {
+		objectMap["produceAdditionalTypes"] = s.ProduceAdditionalTypes
+	}
+	if s.SQLReaderQuery != nil {
+		objectMap["sqlReaderQuery"] = s.SQLReaderQuery
+	}
+	if s.SQLReaderStoredProcedureName != nil {
+		objectMap["sqlReaderStoredProcedureName"] = s.SQLReaderStoredProcedureName
+	}
+	if s.StoredProcedureParameters != nil {
+		objectMap["storedProcedureParameters"] = s.StoredProcedureParameters
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type SQLMiSource.
+func (s *SQLMiSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "produceAdditionalTypes":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.ProduceAdditionalTypes)
+			}
+			delete(rawMsg, key)
+		case "sqlReaderQuery":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.SQLReaderQuery)
+			}
+			delete(rawMsg, key)
+		case "sqlReaderStoredProcedureName":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.SQLReaderStoredProcedureName)
+			}
+			delete(rawMsg, key)
+		case "storedProcedureParameters":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.StoredProcedureParameters)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return s.TabularSource.unmarshalInternal(rawMsg)
+}
+
+// A SQL Analytics pool
+type SQLPool struct {
+	TrackedResource
+	// SQL pool properties
+	Properties *SQLPoolResourceProperties `json:"properties,omitempty"`
+
+	// SQL pool SKU
+	SKU *SKU `json:"sku,omitempty"`
+}
+
+// List of SQL pools
+type SQLPoolInfoListResult struct {
+	// Link to the next page of results
+	NextLink *string `json:"nextLink,omitempty"`
+
+	// List of SQL pools
+	Value *[]SQLPool `json:"value,omitempty"`
+}
+
+// SQLPoolInfoListResultResponse is the response envelope for operations that return a SQLPoolInfoListResult type.
+type SQLPoolInfoListResultResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// List of SQL pools
+	SQLPoolInfoListResult *SQLPoolInfoListResult
+}
+
 // SQL pool reference type.
 type SQLPoolReference struct {
 	// Reference SQL pool name.
@@ -16338,6 +24709,144 @@ type SQLPoolReference struct {
 
 	// SQL pool reference type.
 	Type *SQLPoolReferenceType `json:"type,omitempty"`
+}
+
+// Properties of a SQL Analytics pool
+type SQLPoolResourceProperties struct {
+	// Collation mode
+	Collation *string `json:"collation,omitempty"`
+
+	// What is this?
+	CreateMode *string `json:"createMode,omitempty"`
+
+	// Date the SQL pool was created
+	CreationDate *time.Time `json:"creationDate,omitempty"`
+
+	// Maximum size in bytes
+	MaxSizeBytes *int64 `json:"maxSizeBytes,omitempty"`
+
+	// Resource state
+	ProvisioningState *string `json:"provisioningState,omitempty"`
+
+	// Backup database to restore from
+	RecoverableDatabaseID *string `json:"recoverableDatabaseId,omitempty"`
+
+	// Snapshot time to restore
+	RestorePointInTime *time.Time `json:"restorePointInTime,omitempty"`
+
+	// Source database to create from
+	SourceDatabaseID *string `json:"sourceDatabaseId,omitempty"`
+
+	// Resource status
+	Status *string `json:"status,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SQLPoolResourceProperties.
+func (s SQLPoolResourceProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if s.Collation != nil {
+		objectMap["collation"] = s.Collation
+	}
+	if s.CreateMode != nil {
+		objectMap["createMode"] = s.CreateMode
+	}
+	if s.CreationDate != nil {
+		objectMap["creationDate"] = (*timeRFC3339)(s.CreationDate)
+	}
+	if s.MaxSizeBytes != nil {
+		objectMap["maxSizeBytes"] = s.MaxSizeBytes
+	}
+	if s.ProvisioningState != nil {
+		objectMap["provisioningState"] = s.ProvisioningState
+	}
+	if s.RecoverableDatabaseID != nil {
+		objectMap["recoverableDatabaseId"] = s.RecoverableDatabaseID
+	}
+	if s.RestorePointInTime != nil {
+		objectMap["restorePointInTime"] = (*timeRFC3339)(s.RestorePointInTime)
+	}
+	if s.SourceDatabaseID != nil {
+		objectMap["sourceDatabaseId"] = s.SourceDatabaseID
+	}
+	if s.Status != nil {
+		objectMap["status"] = s.Status
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type SQLPoolResourceProperties.
+func (s *SQLPoolResourceProperties) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "collation":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.Collation)
+			}
+			delete(rawMsg, key)
+		case "createMode":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.CreateMode)
+			}
+			delete(rawMsg, key)
+		case "creationDate":
+			if val != nil {
+				var aux timeRFC3339
+				err = json.Unmarshal(*val, &aux)
+				s.CreationDate = (*time.Time)(&aux)
+			}
+			delete(rawMsg, key)
+		case "maxSizeBytes":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.MaxSizeBytes)
+			}
+			delete(rawMsg, key)
+		case "provisioningState":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.ProvisioningState)
+			}
+			delete(rawMsg, key)
+		case "recoverableDatabaseId":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.RecoverableDatabaseID)
+			}
+			delete(rawMsg, key)
+		case "restorePointInTime":
+			if val != nil {
+				var aux timeRFC3339
+				err = json.Unmarshal(*val, &aux)
+				s.RestorePointInTime = (*time.Time)(&aux)
+			}
+			delete(rawMsg, key)
+		case "sourceDatabaseId":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.SourceDatabaseID)
+			}
+			delete(rawMsg, key)
+		case "status":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.Status)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// SQLPoolResponse is the response envelope for operations that return a SQLPool type.
+type SQLPoolResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// A SQL Analytics pool
+	SQLPool *SQLPool
 }
 
 // Execute SQL pool stored procedure activity.
@@ -16746,6 +25255,172 @@ func (s *SQLServerLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error 
 	return nil
 }
 
+// A copy activity SQL server sink.
+type SQLServerSink struct {
+	CopySink
+	// SQL pre-copy script. Type: string (or Expression with resultType string).
+	PreCopyScript *interface{} `json:"preCopyScript,omitempty"`
+
+	// SQL writer stored procedure name. Type: string (or Expression with resultType string).
+	SQLWriterStoredProcedureName *interface{} `json:"sqlWriterStoredProcedureName,omitempty"`
+
+	// SQL writer table type. Type: string (or Expression with resultType string).
+	SQLWriterTableType *interface{} `json:"sqlWriterTableType,omitempty"`
+
+	// SQL stored procedure parameters.
+	StoredProcedureParameters *map[string]StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
+
+	// The stored procedure parameter name of the table type. Type: string (or Expression with resultType string).
+	StoredProcedureTableTypeParameterName *interface{} `json:"storedProcedureTableTypeParameterName,omitempty"`
+
+	// The option to handle sink table, such as autoCreate. For now only 'autoCreate' value is supported. Type: string (or Expression
+	// with resultType string).
+	TableOption *interface{} `json:"tableOption,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SQLServerSink.
+func (s SQLServerSink) MarshalJSON() ([]byte, error) {
+	objectMap := s.CopySink.marshalInternal("SqlServerSink")
+	if s.PreCopyScript != nil {
+		objectMap["preCopyScript"] = s.PreCopyScript
+	}
+	if s.SQLWriterStoredProcedureName != nil {
+		objectMap["sqlWriterStoredProcedureName"] = s.SQLWriterStoredProcedureName
+	}
+	if s.SQLWriterTableType != nil {
+		objectMap["sqlWriterTableType"] = s.SQLWriterTableType
+	}
+	if s.StoredProcedureParameters != nil {
+		objectMap["storedProcedureParameters"] = s.StoredProcedureParameters
+	}
+	if s.StoredProcedureTableTypeParameterName != nil {
+		objectMap["storedProcedureTableTypeParameterName"] = s.StoredProcedureTableTypeParameterName
+	}
+	if s.TableOption != nil {
+		objectMap["tableOption"] = s.TableOption
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type SQLServerSink.
+func (s *SQLServerSink) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "preCopyScript":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.PreCopyScript)
+			}
+			delete(rawMsg, key)
+		case "sqlWriterStoredProcedureName":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.SQLWriterStoredProcedureName)
+			}
+			delete(rawMsg, key)
+		case "sqlWriterTableType":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.SQLWriterTableType)
+			}
+			delete(rawMsg, key)
+		case "storedProcedureParameters":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.StoredProcedureParameters)
+			}
+			delete(rawMsg, key)
+		case "storedProcedureTableTypeParameterName":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.StoredProcedureTableTypeParameterName)
+			}
+			delete(rawMsg, key)
+		case "tableOption":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.TableOption)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return s.CopySink.unmarshalInternal(rawMsg)
+}
+
+// A copy activity SQL server source.
+type SQLServerSource struct {
+	TabularSource
+	// Which additional types to produce.
+	ProduceAdditionalTypes *interface{} `json:"produceAdditionalTypes,omitempty"`
+
+	// SQL reader query. Type: string (or Expression with resultType string).
+	SQLReaderQuery *interface{} `json:"sqlReaderQuery,omitempty"`
+
+	// Name of the stored procedure for a SQL Database source. This cannot be used at the same time as SqlReaderQuery. Type: string
+	// (or Expression with resultType string).
+	SQLReaderStoredProcedureName *interface{} `json:"sqlReaderStoredProcedureName,omitempty"`
+
+	// Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}".
+	StoredProcedureParameters *map[string]StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SQLServerSource.
+func (s SQLServerSource) MarshalJSON() ([]byte, error) {
+	objectMap := s.TabularSource.marshalInternal("SqlServerSource")
+	if s.ProduceAdditionalTypes != nil {
+		objectMap["produceAdditionalTypes"] = s.ProduceAdditionalTypes
+	}
+	if s.SQLReaderQuery != nil {
+		objectMap["sqlReaderQuery"] = s.SQLReaderQuery
+	}
+	if s.SQLReaderStoredProcedureName != nil {
+		objectMap["sqlReaderStoredProcedureName"] = s.SQLReaderStoredProcedureName
+	}
+	if s.StoredProcedureParameters != nil {
+		objectMap["storedProcedureParameters"] = s.StoredProcedureParameters
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type SQLServerSource.
+func (s *SQLServerSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "produceAdditionalTypes":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.ProduceAdditionalTypes)
+			}
+			delete(rawMsg, key)
+		case "sqlReaderQuery":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.SQLReaderQuery)
+			}
+			delete(rawMsg, key)
+		case "sqlReaderStoredProcedureName":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.SQLReaderStoredProcedureName)
+			}
+			delete(rawMsg, key)
+		case "storedProcedureParameters":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.StoredProcedureParameters)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return s.TabularSource.unmarshalInternal(rawMsg)
+}
+
 // SQL stored procedure activity type.
 type SQLServerStoredProcedureActivity struct {
 	ExecutionActivity
@@ -16841,6 +25516,161 @@ type SQLServerTableDatasetTypeProperties struct {
 
 	// This property will be retired. Please consider using schema + table properties instead.
 	TableName *interface{} `json:"tableName,omitempty"`
+}
+
+// A copy activity SQL sink.
+type SQLSink struct {
+	CopySink
+	// SQL pre-copy script. Type: string (or Expression with resultType string).
+	PreCopyScript *interface{} `json:"preCopyScript,omitempty"`
+
+	// SQL writer stored procedure name. Type: string (or Expression with resultType string).
+	SQLWriterStoredProcedureName *interface{} `json:"sqlWriterStoredProcedureName,omitempty"`
+
+	// SQL writer table type. Type: string (or Expression with resultType string).
+	SQLWriterTableType *interface{} `json:"sqlWriterTableType,omitempty"`
+
+	// SQL stored procedure parameters.
+	StoredProcedureParameters *map[string]StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
+
+	// The stored procedure parameter name of the table type. Type: string (or Expression with resultType string).
+	StoredProcedureTableTypeParameterName *interface{} `json:"storedProcedureTableTypeParameterName,omitempty"`
+
+	// The option to handle sink table, such as autoCreate. For now only 'autoCreate' value is supported. Type: string (or Expression
+	// with resultType string).
+	TableOption *interface{} `json:"tableOption,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SQLSink.
+func (s SQLSink) MarshalJSON() ([]byte, error) {
+	objectMap := s.CopySink.marshalInternal("SqlSink")
+	if s.PreCopyScript != nil {
+		objectMap["preCopyScript"] = s.PreCopyScript
+	}
+	if s.SQLWriterStoredProcedureName != nil {
+		objectMap["sqlWriterStoredProcedureName"] = s.SQLWriterStoredProcedureName
+	}
+	if s.SQLWriterTableType != nil {
+		objectMap["sqlWriterTableType"] = s.SQLWriterTableType
+	}
+	if s.StoredProcedureParameters != nil {
+		objectMap["storedProcedureParameters"] = s.StoredProcedureParameters
+	}
+	if s.StoredProcedureTableTypeParameterName != nil {
+		objectMap["storedProcedureTableTypeParameterName"] = s.StoredProcedureTableTypeParameterName
+	}
+	if s.TableOption != nil {
+		objectMap["tableOption"] = s.TableOption
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type SQLSink.
+func (s *SQLSink) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "preCopyScript":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.PreCopyScript)
+			}
+			delete(rawMsg, key)
+		case "sqlWriterStoredProcedureName":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.SQLWriterStoredProcedureName)
+			}
+			delete(rawMsg, key)
+		case "sqlWriterTableType":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.SQLWriterTableType)
+			}
+			delete(rawMsg, key)
+		case "storedProcedureParameters":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.StoredProcedureParameters)
+			}
+			delete(rawMsg, key)
+		case "storedProcedureTableTypeParameterName":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.StoredProcedureTableTypeParameterName)
+			}
+			delete(rawMsg, key)
+		case "tableOption":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.TableOption)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return s.CopySink.unmarshalInternal(rawMsg)
+}
+
+// A copy activity SQL source.
+type SQLSource struct {
+	TabularSource
+	// SQL reader query. Type: string (or Expression with resultType string).
+	SQLReaderQuery *interface{} `json:"sqlReaderQuery,omitempty"`
+
+	// Name of the stored procedure for a SQL Database source. This cannot be used at the same time as SqlReaderQuery. Type: string
+	// (or Expression with resultType string).
+	SQLReaderStoredProcedureName *interface{} `json:"sqlReaderStoredProcedureName,omitempty"`
+
+	// Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}".
+	StoredProcedureParameters *map[string]StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SQLSource.
+func (s SQLSource) MarshalJSON() ([]byte, error) {
+	objectMap := s.TabularSource.marshalInternal("SqlSource")
+	if s.SQLReaderQuery != nil {
+		objectMap["sqlReaderQuery"] = s.SQLReaderQuery
+	}
+	if s.SQLReaderStoredProcedureName != nil {
+		objectMap["sqlReaderStoredProcedureName"] = s.SQLReaderStoredProcedureName
+	}
+	if s.StoredProcedureParameters != nil {
+		objectMap["storedProcedureParameters"] = s.StoredProcedureParameters
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type SQLSource.
+func (s *SQLSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "sqlReaderQuery":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.SQLReaderQuery)
+			}
+			delete(rawMsg, key)
+		case "sqlReaderStoredProcedureName":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.SQLReaderStoredProcedureName)
+			}
+			delete(rawMsg, key)
+		case "storedProcedureParameters":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.StoredProcedureParameters)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return s.TabularSource.unmarshalInternal(rawMsg)
 }
 
 // Linked service for Salesforce.
@@ -17093,6 +25923,44 @@ func (s *SalesforceMarketingCloudObjectDataset) UnmarshalJSON(data []byte) error
 	return s.Dataset.unmarshalInternal(rawMsg)
 }
 
+// A copy activity Salesforce Marketing Cloud source.
+type SalesforceMarketingCloudSource struct {
+	TabularSource
+	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SalesforceMarketingCloudSource.
+func (s SalesforceMarketingCloudSource) MarshalJSON() ([]byte, error) {
+	objectMap := s.TabularSource.marshalInternal("SalesforceMarketingCloudSource")
+	if s.Query != nil {
+		objectMap["query"] = s.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type SalesforceMarketingCloudSource.
+func (s *SalesforceMarketingCloudSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return s.TabularSource.unmarshalInternal(rawMsg)
+}
+
 // The Salesforce object dataset.
 type SalesforceObjectDataset struct {
 	Dataset
@@ -17290,6 +26158,234 @@ type SalesforceServiceCloudObjectDatasetTypeProperties struct {
 	ObjectAPIName *interface{} `json:"objectApiName,omitempty"`
 }
 
+// A copy activity Salesforce Service Cloud sink.
+type SalesforceServiceCloudSink struct {
+	CopySink
+	// The name of the external ID field for upsert operation. Default value is 'Id' column. Type: string (or Expression with
+	// resultType string).
+	ExternalIDFieldName *interface{} `json:"externalIdFieldName,omitempty"`
+
+	// The flag indicating whether or not to ignore null values from input dataset (except key fields) during write operation.
+	// Default value is false. If set it to true, it means ADF will leave the data in the destination object unchanged when doing
+	// upsert/update operation and insert defined default value when doing insert operation, versus ADF will update the data in
+	// the destination object to NULL when doing upsert/update operation and insert NULL value when doing insert operation. Type:
+	// boolean (or Expression with resultType boolean).
+	IgnoreNullValues *interface{} `json:"ignoreNullValues,omitempty"`
+
+	// The write behavior for the operation. Default is Insert.
+	WriteBehavior *SalesforceSinkWriteBehavior `json:"writeBehavior,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SalesforceServiceCloudSink.
+func (s SalesforceServiceCloudSink) MarshalJSON() ([]byte, error) {
+	objectMap := s.CopySink.marshalInternal("SalesforceServiceCloudSink")
+	if s.ExternalIDFieldName != nil {
+		objectMap["externalIdFieldName"] = s.ExternalIDFieldName
+	}
+	if s.IgnoreNullValues != nil {
+		objectMap["ignoreNullValues"] = s.IgnoreNullValues
+	}
+	if s.WriteBehavior != nil {
+		objectMap["writeBehavior"] = s.WriteBehavior
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type SalesforceServiceCloudSink.
+func (s *SalesforceServiceCloudSink) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "externalIdFieldName":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.ExternalIDFieldName)
+			}
+			delete(rawMsg, key)
+		case "ignoreNullValues":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.IgnoreNullValues)
+			}
+			delete(rawMsg, key)
+		case "writeBehavior":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.WriteBehavior)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return s.CopySink.unmarshalInternal(rawMsg)
+}
+
+// A copy activity Salesforce Service Cloud source.
+type SalesforceServiceCloudSource struct {
+	CopySource
+	// Database query. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+
+	// The read behavior for the operation. Default is Query.
+	ReadBehavior *SalesforceSourceReadBehavior `json:"readBehavior,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SalesforceServiceCloudSource.
+func (s SalesforceServiceCloudSource) MarshalJSON() ([]byte, error) {
+	objectMap := s.CopySource.marshalInternal("SalesforceServiceCloudSource")
+	if s.Query != nil {
+		objectMap["query"] = s.Query
+	}
+	if s.ReadBehavior != nil {
+		objectMap["readBehavior"] = s.ReadBehavior
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type SalesforceServiceCloudSource.
+func (s *SalesforceServiceCloudSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.Query)
+			}
+			delete(rawMsg, key)
+		case "readBehavior":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.ReadBehavior)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return s.CopySource.unmarshalInternal(rawMsg)
+}
+
+// A copy activity Salesforce sink.
+type SalesforceSink struct {
+	CopySink
+	// The name of the external ID field for upsert operation. Default value is 'Id' column. Type: string (or Expression with
+	// resultType string).
+	ExternalIDFieldName *interface{} `json:"externalIdFieldName,omitempty"`
+
+	// The flag indicating whether or not to ignore null values from input dataset (except key fields) during write operation.
+	// Default value is false. If set it to true, it means ADF will leave the data in the destination object unchanged when doing
+	// upsert/update operation and insert defined default value when doing insert operation, versus ADF will update the data in
+	// the destination object to NULL when doing upsert/update operation and insert NULL value when doing insert operation. Type:
+	// boolean (or Expression with resultType boolean).
+	IgnoreNullValues *interface{} `json:"ignoreNullValues,omitempty"`
+
+	// The write behavior for the operation. Default is Insert.
+	WriteBehavior *SalesforceSinkWriteBehavior `json:"writeBehavior,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SalesforceSink.
+func (s SalesforceSink) MarshalJSON() ([]byte, error) {
+	objectMap := s.CopySink.marshalInternal("SalesforceSink")
+	if s.ExternalIDFieldName != nil {
+		objectMap["externalIdFieldName"] = s.ExternalIDFieldName
+	}
+	if s.IgnoreNullValues != nil {
+		objectMap["ignoreNullValues"] = s.IgnoreNullValues
+	}
+	if s.WriteBehavior != nil {
+		objectMap["writeBehavior"] = s.WriteBehavior
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type SalesforceSink.
+func (s *SalesforceSink) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "externalIdFieldName":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.ExternalIDFieldName)
+			}
+			delete(rawMsg, key)
+		case "ignoreNullValues":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.IgnoreNullValues)
+			}
+			delete(rawMsg, key)
+		case "writeBehavior":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.WriteBehavior)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return s.CopySink.unmarshalInternal(rawMsg)
+}
+
+// A copy activity Salesforce source.
+type SalesforceSource struct {
+	TabularSource
+	// Database query. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+
+	// The read behavior for the operation. Default is Query.
+	ReadBehavior *SalesforceSourceReadBehavior `json:"readBehavior,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SalesforceSource.
+func (s SalesforceSource) MarshalJSON() ([]byte, error) {
+	objectMap := s.TabularSource.marshalInternal("SalesforceSource")
+	if s.Query != nil {
+		objectMap["query"] = s.Query
+	}
+	if s.ReadBehavior != nil {
+		objectMap["readBehavior"] = s.ReadBehavior
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type SalesforceSource.
+func (s *SalesforceSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.Query)
+			}
+			delete(rawMsg, key)
+		case "readBehavior":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.ReadBehavior)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return s.TabularSource.unmarshalInternal(rawMsg)
+}
+
 // The SAP BW cube dataset.
 type SapBwCubeDataset struct {
 	Dataset
@@ -17408,6 +26504,44 @@ func (s *SapBwLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
+}
+
+// A copy activity source for SapBW server via MDX.
+type SapBwSource struct {
+	TabularSource
+	// MDX query. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SapBwSource.
+func (s SapBwSource) MarshalJSON() ([]byte, error) {
+	objectMap := s.TabularSource.marshalInternal("SapBwSource")
+	if s.Query != nil {
+		objectMap["query"] = s.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type SapBwSource.
+func (s *SapBwSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return s.TabularSource.unmarshalInternal(rawMsg)
 }
 
 // Linked service for SAP Cloud for Customer.
@@ -17546,6 +26680,82 @@ type SapCloudForCustomerResourceDatasetTypeProperties struct {
 	Path *interface{} `json:"path,omitempty"`
 }
 
+// A copy activity SAP Cloud for Customer sink.
+type SapCloudForCustomerSink struct {
+	CopySink
+	// The write behavior for the operation. Default is 'Insert'.
+	WriteBehavior *SapCloudForCustomerSinkWriteBehavior `json:"writeBehavior,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SapCloudForCustomerSink.
+func (s SapCloudForCustomerSink) MarshalJSON() ([]byte, error) {
+	objectMap := s.CopySink.marshalInternal("SapCloudForCustomerSink")
+	if s.WriteBehavior != nil {
+		objectMap["writeBehavior"] = s.WriteBehavior
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type SapCloudForCustomerSink.
+func (s *SapCloudForCustomerSink) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "writeBehavior":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.WriteBehavior)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return s.CopySink.unmarshalInternal(rawMsg)
+}
+
+// A copy activity source for SAP Cloud for Customer source.
+type SapCloudForCustomerSource struct {
+	TabularSource
+	// SAP Cloud for Customer OData query. For example, "$top=1". Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SapCloudForCustomerSource.
+func (s SapCloudForCustomerSource) MarshalJSON() ([]byte, error) {
+	objectMap := s.TabularSource.marshalInternal("SapCloudForCustomerSource")
+	if s.Query != nil {
+		objectMap["query"] = s.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type SapCloudForCustomerSource.
+func (s *SapCloudForCustomerSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return s.TabularSource.unmarshalInternal(rawMsg)
+}
+
 // Linked service for SAP ERP Central Component(SAP ECC).
 type SapEccLinkedService struct {
 	LinkedService
@@ -17682,6 +26892,44 @@ type SapEccResourceDatasetTypeProperties struct {
 	Path *interface{} `json:"path,omitempty"`
 }
 
+// A copy activity source for SAP ECC source.
+type SapEccSource struct {
+	TabularSource
+	// SAP ECC OData query. For example, "$top=1". Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SapEccSource.
+func (s SapEccSource) MarshalJSON() ([]byte, error) {
+	objectMap := s.TabularSource.marshalInternal("SapEccSource")
+	if s.Query != nil {
+		objectMap["query"] = s.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type SapEccSource.
+func (s *SapEccSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return s.TabularSource.unmarshalInternal(rawMsg)
+}
+
 // SAP HANA Linked Service.
 type SapHanaLinkedService struct {
 	LinkedService
@@ -17787,6 +27035,84 @@ func (s *SapHanaLinkedServiceProperties) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
+}
+
+// The settings that will be leveraged for SAP HANA source partitioning.
+type SapHanaPartitionSettings struct {
+	// The name of the column that will be used for proceeding range partitioning. Type: string (or Expression with resultType
+	// string).
+	PartitionColumnName *interface{} `json:"partitionColumnName,omitempty"`
+}
+
+// A copy activity source for SAP HANA source.
+type SapHanaSource struct {
+	TabularSource
+	// The packet size of data read from SAP HANA. Type: integer(or Expression with resultType integer).
+	PacketSize *interface{} `json:"packetSize,omitempty"`
+
+	// The partition mechanism that will be used for SAP HANA read in parallel.
+	PartitionOption *SapHanaPartitionOption `json:"partitionOption,omitempty"`
+
+	// The settings that will be leveraged for SAP HANA source partitioning.
+	PartitionSettings *SapHanaPartitionSettings `json:"partitionSettings,omitempty"`
+
+	// SAP HANA Sql query. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SapHanaSource.
+func (s SapHanaSource) MarshalJSON() ([]byte, error) {
+	objectMap := s.TabularSource.marshalInternal("SapHanaSource")
+	if s.PacketSize != nil {
+		objectMap["packetSize"] = s.PacketSize
+	}
+	if s.PartitionOption != nil {
+		objectMap["partitionOption"] = s.PartitionOption
+	}
+	if s.PartitionSettings != nil {
+		objectMap["partitionSettings"] = s.PartitionSettings
+	}
+	if s.Query != nil {
+		objectMap["query"] = s.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type SapHanaSource.
+func (s *SapHanaSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "packetSize":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.PacketSize)
+			}
+			delete(rawMsg, key)
+		case "partitionOption":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.PartitionOption)
+			}
+			delete(rawMsg, key)
+		case "partitionSettings":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.PartitionSettings)
+			}
+			delete(rawMsg, key)
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return s.TabularSource.unmarshalInternal(rawMsg)
 }
 
 // SAP HANA Table properties.
@@ -17954,6 +27280,57 @@ func (s *SapOpenHubLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error
 		}
 	}
 	return nil
+}
+
+// A copy activity source for SAP Business Warehouse Open Hub Destination source.
+type SapOpenHubSource struct {
+	TabularSource
+	// The ID of request for delta loading. Once it is set, only data with requestId larger than the value of this property will
+	// be retrieved. The default value is 0. Type: integer (or Expression with resultType integer ).
+	BaseRequestID *interface{} `json:"baseRequestId,omitempty"`
+
+	// Whether to exclude the records of the last request. The default value is true. Type: boolean (or Expression with resultType
+	// boolean).
+	ExcludeLastRequest *interface{} `json:"excludeLastRequest,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SapOpenHubSource.
+func (s SapOpenHubSource) MarshalJSON() ([]byte, error) {
+	objectMap := s.TabularSource.marshalInternal("SapOpenHubSource")
+	if s.BaseRequestID != nil {
+		objectMap["baseRequestId"] = s.BaseRequestID
+	}
+	if s.ExcludeLastRequest != nil {
+		objectMap["excludeLastRequest"] = s.ExcludeLastRequest
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type SapOpenHubSource.
+func (s *SapOpenHubSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "baseRequestId":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.BaseRequestID)
+			}
+			delete(rawMsg, key)
+		case "excludeLastRequest":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.ExcludeLastRequest)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return s.TabularSource.unmarshalInternal(rawMsg)
 }
 
 // Sap Business Warehouse Open Hub Destination Table properties.
@@ -18202,6 +27579,24 @@ func (s *SapTableLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// The settings that will be leveraged for SAP table source partitioning.
+type SapTablePartitionSettings struct {
+	// The maximum value of partitions the table will be split into. Type: integer (or Expression with resultType string).
+	MaxPartitionsNumber *interface{} `json:"maxPartitionsNumber,omitempty"`
+
+	// The name of the column that will be used for proceeding range partitioning. Type: string (or Expression with resultType
+	// string).
+	PartitionColumnName *interface{} `json:"partitionColumnName,omitempty"`
+
+	// The minimum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type:
+	// string (or Expression with resultType string).
+	PartitionLowerBound *interface{} `json:"partitionLowerBound,omitempty"`
+
+	// The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type:
+	// string (or Expression with resultType string).
+	PartitionUpperBound *interface{} `json:"partitionUpperBound,omitempty"`
+}
+
 // SAP Table Resource properties.
 type SapTableResourceDataset struct {
 	Dataset
@@ -18244,6 +27639,283 @@ func (s *SapTableResourceDataset) UnmarshalJSON(data []byte) error {
 type SapTableResourceDatasetTypeProperties struct {
 	// The name of the SAP Table. Type: string (or Expression with resultType string).
 	TableName *interface{} `json:"tableName,omitempty"`
+}
+
+// A copy activity source for SAP Table source.
+type SapTableSource struct {
+	TabularSource
+	// Specifies the maximum number of rows that will be retrieved at a time when retrieving data from SAP Table. Type: integer
+	// (or Expression with resultType integer).
+	BatchSize *interface{} `json:"batchSize,omitempty"`
+
+	// Specifies the custom RFC function module that will be used to read data from SAP Table. Type: string (or Expression with
+	// resultType string).
+	CustomRFCReadTableFunctionModule *interface{} `json:"customRfcReadTableFunctionModule,omitempty"`
+
+	// The partition mechanism that will be used for SAP table read in parallel.
+	PartitionOption *SapTablePartitionOption `json:"partitionOption,omitempty"`
+
+	// The settings that will be leveraged for SAP table source partitioning.
+	PartitionSettings *SapTablePartitionSettings `json:"partitionSettings,omitempty"`
+
+	// The fields of the SAP table that will be retrieved. For example, column0, column1. Type: string (or Expression with resultType
+	// string).
+	RFCTableFields *interface{} `json:"rfcTableFields,omitempty"`
+
+	// The options for the filtering of the SAP Table. For example, COLUMN0 EQ SOME VALUE. Type: string (or Expression with resultType
+	// string).
+	RFCTableOptions *interface{} `json:"rfcTableOptions,omitempty"`
+
+	// The number of rows to be retrieved. Type: integer(or Expression with resultType integer).
+	RowCount *interface{} `json:"rowCount,omitempty"`
+
+	// The number of rows that will be skipped. Type: integer (or Expression with resultType integer).
+	RowSkips *interface{} `json:"rowSkips,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SapTableSource.
+func (s SapTableSource) MarshalJSON() ([]byte, error) {
+	objectMap := s.TabularSource.marshalInternal("SapTableSource")
+	if s.BatchSize != nil {
+		objectMap["batchSize"] = s.BatchSize
+	}
+	if s.CustomRFCReadTableFunctionModule != nil {
+		objectMap["customRfcReadTableFunctionModule"] = s.CustomRFCReadTableFunctionModule
+	}
+	if s.PartitionOption != nil {
+		objectMap["partitionOption"] = s.PartitionOption
+	}
+	if s.PartitionSettings != nil {
+		objectMap["partitionSettings"] = s.PartitionSettings
+	}
+	if s.RFCTableFields != nil {
+		objectMap["rfcTableFields"] = s.RFCTableFields
+	}
+	if s.RFCTableOptions != nil {
+		objectMap["rfcTableOptions"] = s.RFCTableOptions
+	}
+	if s.RowCount != nil {
+		objectMap["rowCount"] = s.RowCount
+	}
+	if s.RowSkips != nil {
+		objectMap["rowSkips"] = s.RowSkips
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type SapTableSource.
+func (s *SapTableSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "batchSize":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.BatchSize)
+			}
+			delete(rawMsg, key)
+		case "customRfcReadTableFunctionModule":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.CustomRFCReadTableFunctionModule)
+			}
+			delete(rawMsg, key)
+		case "partitionOption":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.PartitionOption)
+			}
+			delete(rawMsg, key)
+		case "partitionSettings":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.PartitionSettings)
+			}
+			delete(rawMsg, key)
+		case "rfcTableFields":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.RFCTableFields)
+			}
+			delete(rawMsg, key)
+		case "rfcTableOptions":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.RFCTableOptions)
+			}
+			delete(rawMsg, key)
+		case "rowCount":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.RowCount)
+			}
+			delete(rawMsg, key)
+		case "rowSkips":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.RowSkips)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return s.TabularSource.unmarshalInternal(rawMsg)
+}
+
+// Trigger that creates pipeline runs periodically, on schedule.
+type ScheduleTrigger struct {
+	MultiplePipelineTrigger
+	// Schedule Trigger properties.
+	TypeProperties *ScheduleTriggerTypeProperties `json:"typeProperties,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ScheduleTrigger.
+func (s ScheduleTrigger) MarshalJSON() ([]byte, error) {
+	objectMap := s.MultiplePipelineTrigger.marshalInternal("ScheduleTrigger")
+	if s.TypeProperties != nil {
+		objectMap["typeProperties"] = s.TypeProperties
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type ScheduleTrigger.
+func (s *ScheduleTrigger) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "typeProperties":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.TypeProperties)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return s.MultiplePipelineTrigger.unmarshalInternal(rawMsg)
+}
+
+// The workflow trigger recurrence.
+type ScheduleTriggerRecurrence struct {
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties *map[string]interface{}
+
+	// The end time.
+	EndTime *time.Time `json:"endTime,omitempty"`
+
+	// The frequency.
+	Frequency *RecurrenceFrequency `json:"frequency,omitempty"`
+
+	// The interval.
+	Interval *int32 `json:"interval,omitempty"`
+
+	// The recurrence schedule.
+	Schedule *RecurrenceSchedule `json:"schedule,omitempty"`
+
+	// The start time.
+	StartTime *time.Time `json:"startTime,omitempty"`
+
+	// The time zone.
+	TimeZone *string `json:"timeZone,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ScheduleTriggerRecurrence.
+func (s ScheduleTriggerRecurrence) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if s.EndTime != nil {
+		objectMap["endTime"] = (*timeRFC3339)(s.EndTime)
+	}
+	if s.Frequency != nil {
+		objectMap["frequency"] = s.Frequency
+	}
+	if s.Interval != nil {
+		objectMap["interval"] = s.Interval
+	}
+	if s.Schedule != nil {
+		objectMap["schedule"] = s.Schedule
+	}
+	if s.StartTime != nil {
+		objectMap["startTime"] = (*timeRFC3339)(s.StartTime)
+	}
+	if s.TimeZone != nil {
+		objectMap["timeZone"] = s.TimeZone
+	}
+	if s.AdditionalProperties != nil {
+		for key, val := range *s.AdditionalProperties {
+			objectMap[key] = val
+		}
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type ScheduleTriggerRecurrence.
+func (s *ScheduleTriggerRecurrence) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "endTime":
+			if val != nil {
+				var aux timeRFC3339
+				err = json.Unmarshal(*val, &aux)
+				s.EndTime = (*time.Time)(&aux)
+			}
+			delete(rawMsg, key)
+		case "frequency":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.Frequency)
+			}
+			delete(rawMsg, key)
+		case "interval":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.Interval)
+			}
+			delete(rawMsg, key)
+		case "schedule":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.Schedule)
+			}
+			delete(rawMsg, key)
+		case "startTime":
+			if val != nil {
+				var aux timeRFC3339
+				err = json.Unmarshal(*val, &aux)
+				s.StartTime = (*time.Time)(&aux)
+			}
+			delete(rawMsg, key)
+		case "timeZone":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.TimeZone)
+			}
+			delete(rawMsg, key)
+		default:
+			if s.AdditionalProperties == nil {
+				s.AdditionalProperties = &map[string]interface{}{}
+			}
+			if val != nil {
+				var aux interface{}
+				err = json.Unmarshal(*val, &aux)
+				(*s.AdditionalProperties)[key] = aux
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// Schedule Trigger properties.
+type ScheduleTriggerTypeProperties struct {
+	// Recurrence schedule configuration.
+	Recurrence *ScheduleTriggerRecurrence `json:"recurrence,omitempty"`
 }
 
 // Custom script action to run on HDI ondemand cluster once it's up.
@@ -18344,6 +28016,122 @@ func (s *SecureString) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return s.SecretBase.unmarshalInternal(rawMsg)
+}
+
+// Self referenced tumbling window trigger dependency.
+type SelfDependencyTumblingWindowTriggerReference struct {
+	DependencyReference
+	// Timespan applied to the start time of a tumbling window when evaluating dependency.
+	Offset *string `json:"offset,omitempty"`
+
+	// The size of the window when evaluating the dependency. If undefined the frequency of the tumbling window will be used.
+	Size *string `json:"size,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SelfDependencyTumblingWindowTriggerReference.
+func (s SelfDependencyTumblingWindowTriggerReference) MarshalJSON() ([]byte, error) {
+	objectMap := s.DependencyReference.marshalInternal("SelfDependencyTumblingWindowTriggerReference")
+	if s.Offset != nil {
+		objectMap["offset"] = s.Offset
+	}
+	if s.Size != nil {
+		objectMap["size"] = s.Size
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type SelfDependencyTumblingWindowTriggerReference.
+func (s *SelfDependencyTumblingWindowTriggerReference) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "offset":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.Offset)
+			}
+			delete(rawMsg, key)
+		case "size":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.Size)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return s.DependencyReference.unmarshalInternal(rawMsg)
+}
+
+// Self-hosted integration runtime.
+type SelfHostedIntegrationRuntime struct {
+	IntegrationRuntime
+	// When this property is not null, means this is a linked integration runtime. The property is used to access original integration
+	// runtime.
+	TypeProperties *SelfHostedIntegrationRuntimeTypeProperties `json:"typeProperties,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SelfHostedIntegrationRuntime.
+func (s SelfHostedIntegrationRuntime) MarshalJSON() ([]byte, error) {
+	objectMap := s.IntegrationRuntime.marshalInternal(IntegrationRuntimeTypeSelfHosted)
+	if s.TypeProperties != nil {
+		objectMap["typeProperties"] = s.TypeProperties
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type SelfHostedIntegrationRuntime.
+func (s *SelfHostedIntegrationRuntime) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "typeProperties":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.TypeProperties)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return s.IntegrationRuntime.unmarshalInternal(rawMsg)
+}
+
+// The self-hosted integration runtime properties.
+type SelfHostedIntegrationRuntimeTypeProperties struct {
+	// The base definition of a linked integration runtime.
+	LinkedInfo LinkedIntegrationRuntimeTypeClassification `json:"linkedInfo,omitempty"`
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type SelfHostedIntegrationRuntimeTypeProperties.
+func (s *SelfHostedIntegrationRuntimeTypeProperties) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "linkedInfo":
+			if val != nil {
+				s.LinkedInfo, err = unmarshalLinkedIntegrationRuntimeTypeClassification(*val)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // ServiceNow server linked service.
@@ -18524,6 +28312,44 @@ func (s *ServiceNowObjectDataset) UnmarshalJSON(data []byte) error {
 	return s.Dataset.unmarshalInternal(rawMsg)
 }
 
+// A copy activity ServiceNow server source.
+type ServiceNowSource struct {
+	TabularSource
+	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ServiceNowSource.
+func (s ServiceNowSource) MarshalJSON() ([]byte, error) {
+	objectMap := s.TabularSource.marshalInternal("ServiceNowSource")
+	if s.Query != nil {
+		objectMap["query"] = s.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type ServiceNowSource.
+func (s *ServiceNowSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return s.TabularSource.unmarshalInternal(rawMsg)
+}
+
 // Set value for a Variable.
 type SetVariableActivity struct {
 	Activity
@@ -18569,6 +28395,100 @@ type SetVariableActivityTypeProperties struct {
 
 	// Name of the variable whose value needs to be set.
 	VariableName *string `json:"variableName,omitempty"`
+}
+
+// The location of SFTP dataset.
+type SftpLocation struct {
+	DatasetLocation
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SftpLocation.
+func (s SftpLocation) MarshalJSON() ([]byte, error) {
+	objectMap := s.DatasetLocation.marshalInternal("SftpLocation")
+	return json.Marshal(objectMap)
+}
+
+// Sftp read settings.
+type SftpReadSettings struct {
+	StoreReadSettings
+	// The end of file's modified datetime. Type: string (or Expression with resultType string).
+	ModifiedDatetimeEnd *interface{} `json:"modifiedDatetimeEnd,omitempty"`
+
+	// The start of file's modified datetime. Type: string (or Expression with resultType string).
+	ModifiedDatetimeStart *interface{} `json:"modifiedDatetimeStart,omitempty"`
+
+	// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType
+	// boolean).
+	Recursive *interface{} `json:"recursive,omitempty"`
+
+	// Sftp wildcardFileName. Type: string (or Expression with resultType string).
+	WildcardFileName *interface{} `json:"wildcardFileName,omitempty"`
+
+	// Sftp wildcardFolderPath. Type: string (or Expression with resultType string).
+	WildcardFolderPath *interface{} `json:"wildcardFolderPath,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SftpReadSettings.
+func (s SftpReadSettings) MarshalJSON() ([]byte, error) {
+	objectMap := s.StoreReadSettings.marshalInternal("SftpReadSettings")
+	if s.ModifiedDatetimeEnd != nil {
+		objectMap["modifiedDatetimeEnd"] = s.ModifiedDatetimeEnd
+	}
+	if s.ModifiedDatetimeStart != nil {
+		objectMap["modifiedDatetimeStart"] = s.ModifiedDatetimeStart
+	}
+	if s.Recursive != nil {
+		objectMap["recursive"] = s.Recursive
+	}
+	if s.WildcardFileName != nil {
+		objectMap["wildcardFileName"] = s.WildcardFileName
+	}
+	if s.WildcardFolderPath != nil {
+		objectMap["wildcardFolderPath"] = s.WildcardFolderPath
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type SftpReadSettings.
+func (s *SftpReadSettings) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "modifiedDatetimeEnd":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.ModifiedDatetimeEnd)
+			}
+			delete(rawMsg, key)
+		case "modifiedDatetimeStart":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.ModifiedDatetimeStart)
+			}
+			delete(rawMsg, key)
+		case "recursive":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.Recursive)
+			}
+			delete(rawMsg, key)
+		case "wildcardFileName":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.WildcardFileName)
+			}
+			delete(rawMsg, key)
+		case "wildcardFolderPath":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.WildcardFolderPath)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return s.StoreReadSettings.unmarshalInternal(rawMsg)
 }
 
 // A linked service for an SSH File Transfer Protocol (SFTP) server.
@@ -18723,6 +28643,45 @@ func (s *SftpServerLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error
 	return nil
 }
 
+// Sftp write settings.
+type SftpWriteSettings struct {
+	StoreWriteSettings
+	// Specifies the timeout for writing each chunk to SFTP server. Default value: 01:00:00 (one hour). Type: string (or Expression
+	// with resultType string).
+	OperationTimeout *interface{} `json:"operationTimeout,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SftpWriteSettings.
+func (s SftpWriteSettings) MarshalJSON() ([]byte, error) {
+	objectMap := s.StoreWriteSettings.marshalInternal("SftpWriteSettings")
+	if s.OperationTimeout != nil {
+		objectMap["operationTimeout"] = s.OperationTimeout
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type SftpWriteSettings.
+func (s *SftpWriteSettings) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "operationTimeout":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.OperationTimeout)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return s.StoreWriteSettings.unmarshalInternal(rawMsg)
+}
+
 // Shopify Service linked service.
 type ShopifyLinkedService struct {
 	LinkedService
@@ -18867,6 +28826,44 @@ func (s *ShopifyObjectDataset) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return s.Dataset.unmarshalInternal(rawMsg)
+}
+
+// A copy activity Shopify Service source.
+type ShopifySource struct {
+	TabularSource
+	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ShopifySource.
+func (s ShopifySource) MarshalJSON() ([]byte, error) {
+	objectMap := s.TabularSource.marshalInternal("ShopifySource")
+	if s.Query != nil {
+		objectMap["query"] = s.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type ShopifySource.
+func (s *ShopifySource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return s.TabularSource.unmarshalInternal(rawMsg)
 }
 
 type SparkBatchJob struct {
@@ -19834,6 +29831,44 @@ func (s *SparkServicePlugin) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// A copy activity Spark Server source.
+type SparkSource struct {
+	TabularSource
+	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SparkSource.
+func (s SparkSource) MarshalJSON() ([]byte, error) {
+	objectMap := s.TabularSource.marshalInternal("SparkSource")
+	if s.Query != nil {
+		objectMap["query"] = s.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type SparkSource.
+func (s *SparkSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return s.TabularSource.unmarshalInternal(rawMsg)
+}
+
 // Square Service linked service.
 type SquareLinkedService struct {
 	LinkedService
@@ -19994,6 +30029,44 @@ func (s *SquareObjectDataset) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return s.Dataset.unmarshalInternal(rawMsg)
+}
+
+// A copy activity Square Service source.
+type SquareSource struct {
+	TabularSource
+	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SquareSource.
+func (s SquareSource) MarshalJSON() ([]byte, error) {
+	objectMap := s.TabularSource.marshalInternal("SquareSource")
+	if s.Query != nil {
+		objectMap["query"] = s.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type SquareSource.
+func (s *SquareSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return s.TabularSource.unmarshalInternal(rawMsg)
 }
 
 // SSIS access credential.
@@ -20261,6 +30334,169 @@ type StartDataFlowDebugSessionRequest struct {
 type StartDataFlowDebugSessionResponse struct {
 	// The ID of data flow debug job version.
 	JobVersion *string `json:"jobVersion,omitempty"`
+}
+
+// StoreReadSettingsClassification provides polymorphic access to related types.
+type StoreReadSettingsClassification interface {
+	GetStoreReadSettings() *StoreReadSettings
+}
+
+// Connector read setting.
+type StoreReadSettings struct {
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties *map[string]interface{}
+
+	// The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
+	MaxConcurrentConnections *interface{} `json:"maxConcurrentConnections,omitempty"`
+
+	// The read setting type.
+	Type *string `json:"type,omitempty"`
+}
+
+// GetStoreReadSettings implements the StoreReadSettingsClassification interface for type StoreReadSettings.
+func (s *StoreReadSettings) GetStoreReadSettings() *StoreReadSettings { return s }
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type StoreReadSettings.
+func (s *StoreReadSettings) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	return s.unmarshalInternal(rawMsg)
+}
+
+func (s StoreReadSettings) marshalInternal(discValue string) map[string]interface{} {
+	objectMap := make(map[string]interface{})
+	if s.MaxConcurrentConnections != nil {
+		objectMap["maxConcurrentConnections"] = s.MaxConcurrentConnections
+	}
+	s.Type = &discValue
+	objectMap["type"] = s.Type
+	if s.AdditionalProperties != nil {
+		for key, val := range *s.AdditionalProperties {
+			objectMap[key] = val
+		}
+	}
+	return objectMap
+}
+
+func (s *StoreReadSettings) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "maxConcurrentConnections":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.MaxConcurrentConnections)
+			}
+			delete(rawMsg, key)
+		case "type":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.Type)
+			}
+			delete(rawMsg, key)
+		default:
+			if s.AdditionalProperties == nil {
+				s.AdditionalProperties = &map[string]interface{}{}
+			}
+			if val != nil {
+				var aux interface{}
+				err = json.Unmarshal(*val, &aux)
+				(*s.AdditionalProperties)[key] = aux
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// StoreWriteSettingsClassification provides polymorphic access to related types.
+type StoreWriteSettingsClassification interface {
+	GetStoreWriteSettings() *StoreWriteSettings
+}
+
+// Connector write settings.
+type StoreWriteSettings struct {
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties *map[string]interface{}
+
+	// The type of copy behavior for copy sink.
+	CopyBehavior *interface{} `json:"copyBehavior,omitempty"`
+
+	// The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
+	MaxConcurrentConnections *interface{} `json:"maxConcurrentConnections,omitempty"`
+
+	// The write setting type.
+	Type *string `json:"type,omitempty"`
+}
+
+// GetStoreWriteSettings implements the StoreWriteSettingsClassification interface for type StoreWriteSettings.
+func (s *StoreWriteSettings) GetStoreWriteSettings() *StoreWriteSettings { return s }
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type StoreWriteSettings.
+func (s *StoreWriteSettings) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	return s.unmarshalInternal(rawMsg)
+}
+
+func (s StoreWriteSettings) marshalInternal(discValue string) map[string]interface{} {
+	objectMap := make(map[string]interface{})
+	if s.CopyBehavior != nil {
+		objectMap["copyBehavior"] = s.CopyBehavior
+	}
+	if s.MaxConcurrentConnections != nil {
+		objectMap["maxConcurrentConnections"] = s.MaxConcurrentConnections
+	}
+	s.Type = &discValue
+	objectMap["type"] = s.Type
+	if s.AdditionalProperties != nil {
+		for key, val := range *s.AdditionalProperties {
+			objectMap[key] = val
+		}
+	}
+	return objectMap
+}
+
+func (s *StoreWriteSettings) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "copyBehavior":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.CopyBehavior)
+			}
+			delete(rawMsg, key)
+		case "maxConcurrentConnections":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.MaxConcurrentConnections)
+			}
+			delete(rawMsg, key)
+		case "type":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.Type)
+			}
+			delete(rawMsg, key)
+		default:
+			if s.AdditionalProperties == nil {
+				s.AdditionalProperties = &map[string]interface{}{}
+			}
+			if val != nil {
+				var aux interface{}
+				err = json.Unmarshal(*val, &aux)
+				(*s.AdditionalProperties)[key] = aux
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // SQL stored procedure parameter.
@@ -20545,6 +30781,44 @@ func (s *SybaseLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// A copy activity source for Sybase databases.
+type SybaseSource struct {
+	TabularSource
+	// Database query. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SybaseSource.
+func (s SybaseSource) MarshalJSON() ([]byte, error) {
+	objectMap := s.TabularSource.marshalInternal("SybaseSource")
+	if s.Query != nil {
+		objectMap["query"] = s.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type SybaseSource.
+func (s *SybaseSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return s.TabularSource.unmarshalInternal(rawMsg)
+}
+
 // The Sybase table dataset.
 type SybaseTableDataset struct {
 	Dataset
@@ -20698,6 +30972,150 @@ type SynapseSparkJobReference struct {
 	Type *SparkJobReferenceType `json:"type,omitempty"`
 }
 
+// TabularSourceClassification provides polymorphic access to related types.
+type TabularSourceClassification interface {
+	CopySourceClassification
+	GetTabularSource() *TabularSource
+}
+
+// Copy activity sources of tabular type.
+type TabularSource struct {
+	CopySource
+	// Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+	QueryTimeout *interface{} `json:"queryTimeout,omitempty"`
+}
+
+// GetTabularSource implements the TabularSourceClassification interface for type TabularSource.
+func (t *TabularSource) GetTabularSource() *TabularSource { return t }
+
+// MarshalJSON implements the json.Marshaller interface for type TabularSource.
+func (t TabularSource) MarshalJSON() ([]byte, error) {
+	objectMap := t.marshalInternal("TabularSource")
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type TabularSource.
+func (t *TabularSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	return t.unmarshalInternal(rawMsg)
+}
+
+func (t TabularSource) marshalInternal(discValue string) map[string]interface{} {
+	objectMap := t.CopySource.marshalInternal(discValue)
+	if t.QueryTimeout != nil {
+		objectMap["queryTimeout"] = t.QueryTimeout
+	}
+	return objectMap
+}
+
+func (t *TabularSource) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "queryTimeout":
+			if val != nil {
+				err = json.Unmarshal(*val, &t.QueryTimeout)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return t.CopySource.unmarshalInternal(rawMsg)
+}
+
+// A copy activity tabular translator.
+type TabularTranslator struct {
+	CopyTranslator
+	// The JSON Path of the Nested Array that is going to do cross-apply. Type: object (or Expression with resultType object).
+	CollectionReference *interface{} `json:"collectionReference,omitempty"`
+
+	// Column mappings. Example: "UserId: MyUserId, Group: MyGroup, Name: MyName" Type: string (or Expression with resultType
+	// string). This property will be retired. Please use mappings property.
+	ColumnMappings *interface{} `json:"columnMappings,omitempty"`
+
+	// Whether to map complex (array and object) values to simple strings in json format. Type: boolean (or Expression with resultType
+	// boolean).
+	MapComplexValuesToString *interface{} `json:"mapComplexValuesToString,omitempty"`
+
+	// Column mappings with logical types. Tabular->tabular example: [{"source":{"name":"CustomerName","type":"String"},"sink":{"name":"ClientName","type":"String"}},{"source":{"name":"CustomerAddress","type":"String"},"sink":{"name":"ClientAddress","type":"String"}}].
+	// Hierarchical->tabular example: [{"source":{"path":"$.CustomerName","type":"String"},"sink":{"name":"ClientName","type":"String"}},{"source":{"path":"$.CustomerAddress","type":"String"},"sink":{"name":"ClientAddress","type":"String"}}].
+	// Type: object (or Expression with resultType object).
+	Mappings *interface{} `json:"mappings,omitempty"`
+
+	// The schema mapping to map between tabular data and hierarchical data. Example: {"Column1": "$.Column1", "Column2": "$.Column2.Property1",
+	// "Column3": "$.Column2.Property2"}. Type: object (or Expression with resultType object). This property will be retired.
+	// Please use mappings property.
+	SchemaMapping *interface{} `json:"schemaMapping,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type TabularTranslator.
+func (t TabularTranslator) MarshalJSON() ([]byte, error) {
+	objectMap := t.CopyTranslator.marshalInternal("TabularTranslator")
+	if t.CollectionReference != nil {
+		objectMap["collectionReference"] = t.CollectionReference
+	}
+	if t.ColumnMappings != nil {
+		objectMap["columnMappings"] = t.ColumnMappings
+	}
+	if t.MapComplexValuesToString != nil {
+		objectMap["mapComplexValuesToString"] = t.MapComplexValuesToString
+	}
+	if t.Mappings != nil {
+		objectMap["mappings"] = t.Mappings
+	}
+	if t.SchemaMapping != nil {
+		objectMap["schemaMapping"] = t.SchemaMapping
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type TabularTranslator.
+func (t *TabularTranslator) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "collectionReference":
+			if val != nil {
+				err = json.Unmarshal(*val, &t.CollectionReference)
+			}
+			delete(rawMsg, key)
+		case "columnMappings":
+			if val != nil {
+				err = json.Unmarshal(*val, &t.ColumnMappings)
+			}
+			delete(rawMsg, key)
+		case "mapComplexValuesToString":
+			if val != nil {
+				err = json.Unmarshal(*val, &t.MapComplexValuesToString)
+			}
+			delete(rawMsg, key)
+		case "mappings":
+			if val != nil {
+				err = json.Unmarshal(*val, &t.Mappings)
+			}
+			delete(rawMsg, key)
+		case "schemaMapping":
+			if val != nil {
+				err = json.Unmarshal(*val, &t.SchemaMapping)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return t.CopyTranslator.unmarshalInternal(rawMsg)
+}
+
 // Linked service for Teradata data source.
 type TeradataLinkedService struct {
 	LinkedService
@@ -20805,6 +31223,81 @@ func (t *TeradataLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// The settings that will be leveraged for teradata source partitioning.
+type TeradataPartitionSettings struct {
+	// The name of the column that will be used for proceeding range or hash partitioning. Type: string (or Expression with resultType
+	// string).
+	PartitionColumnName *interface{} `json:"partitionColumnName,omitempty"`
+
+	// The minimum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type:
+	// string (or Expression with resultType string).
+	PartitionLowerBound *interface{} `json:"partitionLowerBound,omitempty"`
+
+	// The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type:
+	// string (or Expression with resultType string).
+	PartitionUpperBound *interface{} `json:"partitionUpperBound,omitempty"`
+}
+
+// A copy activity Teradata source.
+type TeradataSource struct {
+	TabularSource
+	// The partition mechanism that will be used for teradata read in parallel.
+	PartitionOption *TeradataPartitionOption `json:"partitionOption,omitempty"`
+
+	// The settings that will be leveraged for teradata source partitioning.
+	PartitionSettings *TeradataPartitionSettings `json:"partitionSettings,omitempty"`
+
+	// Teradata query. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type TeradataSource.
+func (t TeradataSource) MarshalJSON() ([]byte, error) {
+	objectMap := t.TabularSource.marshalInternal("TeradataSource")
+	if t.PartitionOption != nil {
+		objectMap["partitionOption"] = t.PartitionOption
+	}
+	if t.PartitionSettings != nil {
+		objectMap["partitionSettings"] = t.PartitionSettings
+	}
+	if t.Query != nil {
+		objectMap["query"] = t.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type TeradataSource.
+func (t *TeradataSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "partitionOption":
+			if val != nil {
+				err = json.Unmarshal(*val, &t.PartitionOption)
+			}
+			delete(rawMsg, key)
+		case "partitionSettings":
+			if val != nil {
+				err = json.Unmarshal(*val, &t.PartitionSettings)
+			}
+			delete(rawMsg, key)
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &t.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return t.TabularSource.unmarshalInternal(rawMsg)
+}
+
 // The Teradata database dataset.
 type TeradataTableDataset struct {
 	Dataset
@@ -20850,6 +31343,147 @@ type TeradataTableDatasetTypeProperties struct {
 
 	// The table name of Teradata. Type: string (or Expression with resultType string).
 	Table *interface{} `json:"table,omitempty"`
+}
+
+// The data stored in text format.
+type TextFormat struct {
+	DatasetStorageFormat
+	// The column delimiter. Type: string (or Expression with resultType string).
+	ColumnDelimiter *interface{} `json:"columnDelimiter,omitempty"`
+
+	// The code page name of the preferred encoding. If miss, the default value is ΓÇ£utf-8ΓÇ¥, unless BOM denotes another Unicode
+	// encoding. Refer to the ΓÇ£NameΓÇ¥ column of the table in the following link to set supported values: https://msdn.microsoft.com/library/system.text.encoding.aspx.
+	// Type: string (or Expression with resultType string).
+	EncodingName *interface{} `json:"encodingName,omitempty"`
+
+	// The escape character. Type: string (or Expression with resultType string).
+	EscapeChar *interface{} `json:"escapeChar,omitempty"`
+
+	// When used as input, treat the first row of data as headers. When used as output,write the headers into the output as the
+	// first row of data. The default value is false. Type: boolean (or Expression with resultType boolean).
+	FirstRowAsHeader *interface{} `json:"firstRowAsHeader,omitempty"`
+
+	// The null value string. Type: string (or Expression with resultType string).
+	NullValue *interface{} `json:"nullValue,omitempty"`
+
+	// The quote character. Type: string (or Expression with resultType string).
+	QuoteChar *interface{} `json:"quoteChar,omitempty"`
+
+	// The row delimiter. Type: string (or Expression with resultType string).
+	RowDelimiter *interface{} `json:"rowDelimiter,omitempty"`
+
+	// The number of lines/rows to be skipped when parsing text files. The default value is 0. Type: integer (or Expression with
+	// resultType integer).
+	SkipLineCount *interface{} `json:"skipLineCount,omitempty"`
+
+	// Treat empty column values in the text file as null. The default value is true. Type: boolean (or Expression with resultType
+	// boolean).
+	TreatEmptyAsNull *interface{} `json:"treatEmptyAsNull,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type TextFormat.
+func (t TextFormat) MarshalJSON() ([]byte, error) {
+	objectMap := t.DatasetStorageFormat.marshalInternal("TextFormat")
+	if t.ColumnDelimiter != nil {
+		objectMap["columnDelimiter"] = t.ColumnDelimiter
+	}
+	if t.EncodingName != nil {
+		objectMap["encodingName"] = t.EncodingName
+	}
+	if t.EscapeChar != nil {
+		objectMap["escapeChar"] = t.EscapeChar
+	}
+	if t.FirstRowAsHeader != nil {
+		objectMap["firstRowAsHeader"] = t.FirstRowAsHeader
+	}
+	if t.NullValue != nil {
+		objectMap["nullValue"] = t.NullValue
+	}
+	if t.QuoteChar != nil {
+		objectMap["quoteChar"] = t.QuoteChar
+	}
+	if t.RowDelimiter != nil {
+		objectMap["rowDelimiter"] = t.RowDelimiter
+	}
+	if t.SkipLineCount != nil {
+		objectMap["skipLineCount"] = t.SkipLineCount
+	}
+	if t.TreatEmptyAsNull != nil {
+		objectMap["treatEmptyAsNull"] = t.TreatEmptyAsNull
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type TextFormat.
+func (t *TextFormat) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "columnDelimiter":
+			if val != nil {
+				err = json.Unmarshal(*val, &t.ColumnDelimiter)
+			}
+			delete(rawMsg, key)
+		case "encodingName":
+			if val != nil {
+				err = json.Unmarshal(*val, &t.EncodingName)
+			}
+			delete(rawMsg, key)
+		case "escapeChar":
+			if val != nil {
+				err = json.Unmarshal(*val, &t.EscapeChar)
+			}
+			delete(rawMsg, key)
+		case "firstRowAsHeader":
+			if val != nil {
+				err = json.Unmarshal(*val, &t.FirstRowAsHeader)
+			}
+			delete(rawMsg, key)
+		case "nullValue":
+			if val != nil {
+				err = json.Unmarshal(*val, &t.NullValue)
+			}
+			delete(rawMsg, key)
+		case "quoteChar":
+			if val != nil {
+				err = json.Unmarshal(*val, &t.QuoteChar)
+			}
+			delete(rawMsg, key)
+		case "rowDelimiter":
+			if val != nil {
+				err = json.Unmarshal(*val, &t.RowDelimiter)
+			}
+			delete(rawMsg, key)
+		case "skipLineCount":
+			if val != nil {
+				err = json.Unmarshal(*val, &t.SkipLineCount)
+			}
+			delete(rawMsg, key)
+		case "treatEmptyAsNull":
+			if val != nil {
+				err = json.Unmarshal(*val, &t.TreatEmptyAsNull)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return t.DatasetStorageFormat.unmarshalInternal(rawMsg)
+}
+
+// The resource model definition for a ARM tracked top level resource
+type TrackedResource struct {
+	Resource
+	// The geo-location where the resource lives
+	Location *string `json:"location,omitempty"`
+
+	// Resource tags.
+	Tags *map[string]string `json:"tags,omitempty"`
 }
 
 // A data flow transformation.
@@ -20975,6 +31609,64 @@ type TriggerDependencyProvisioningStatus struct {
 	TriggerName *string `json:"triggerName,omitempty"`
 }
 
+// TriggerDependencyReferenceClassification provides polymorphic access to related types.
+type TriggerDependencyReferenceClassification interface {
+	DependencyReferenceClassification
+	GetTriggerDependencyReference() *TriggerDependencyReference
+}
+
+// Trigger referenced dependency.
+type TriggerDependencyReference struct {
+	DependencyReference
+	// Referenced trigger.
+	ReferenceTrigger *TriggerReference `json:"referenceTrigger,omitempty"`
+}
+
+// GetTriggerDependencyReference implements the TriggerDependencyReferenceClassification interface for type TriggerDependencyReference.
+func (t *TriggerDependencyReference) GetTriggerDependencyReference() *TriggerDependencyReference {
+	return t
+}
+
+// MarshalJSON implements the json.Marshaller interface for type TriggerDependencyReference.
+func (t TriggerDependencyReference) MarshalJSON() ([]byte, error) {
+	objectMap := t.marshalInternal("TriggerDependencyReference")
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type TriggerDependencyReference.
+func (t *TriggerDependencyReference) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	return t.unmarshalInternal(rawMsg)
+}
+
+func (t TriggerDependencyReference) marshalInternal(discValue string) map[string]interface{} {
+	objectMap := t.DependencyReference.marshalInternal(discValue)
+	if t.ReferenceTrigger != nil {
+		objectMap["referenceTrigger"] = t.ReferenceTrigger
+	}
+	return objectMap
+}
+
+func (t *TriggerDependencyReference) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "referenceTrigger":
+			if val != nil {
+				err = json.Unmarshal(*val, &t.ReferenceTrigger)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return t.DependencyReference.unmarshalInternal(rawMsg)
+}
+
 // TriggerGetTriggerOptions contains the optional parameters for the Trigger.GetTrigger method.
 type TriggerGetTriggerOptions struct {
 	// ETag of the trigger entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was
@@ -21007,6 +31699,15 @@ type TriggerPipelineReference struct {
 
 	// Pipeline reference.
 	PipelineReference *PipelineReference `json:"pipelineReference,omitempty"`
+}
+
+// Trigger reference type.
+type TriggerReference struct {
+	// Reference trigger name.
+	ReferenceName *string `json:"referenceName,omitempty"`
+
+	// Trigger reference type.
+	Type *TriggerReferenceType `json:"type,omitempty"`
 }
 
 // Trigger resource type.
@@ -21219,6 +31920,226 @@ type TriggerSubscriptionOperationStatusResponse struct {
 
 	// Defines the response of a trigger subscription operation.
 	TriggerSubscriptionOperationStatus *TriggerSubscriptionOperationStatus
+}
+
+// Trigger that schedules pipeline runs for all fixed time interval windows from a start time without gaps and also supports
+// backfill scenarios (when start time is in the past).
+type TumblingWindowTrigger struct {
+	Trigger
+	// Pipeline for which runs are created when an event is fired for trigger window that is ready.
+	Pipeline *TriggerPipelineReference `json:"pipeline,omitempty"`
+
+	// Tumbling Window Trigger properties.
+	TypeProperties *TumblingWindowTriggerTypeProperties `json:"typeProperties,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type TumblingWindowTrigger.
+func (t TumblingWindowTrigger) MarshalJSON() ([]byte, error) {
+	objectMap := t.Trigger.marshalInternal("TumblingWindowTrigger")
+	if t.Pipeline != nil {
+		objectMap["pipeline"] = t.Pipeline
+	}
+	if t.TypeProperties != nil {
+		objectMap["typeProperties"] = t.TypeProperties
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type TumblingWindowTrigger.
+func (t *TumblingWindowTrigger) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "pipeline":
+			if val != nil {
+				err = json.Unmarshal(*val, &t.Pipeline)
+			}
+			delete(rawMsg, key)
+		case "typeProperties":
+			if val != nil {
+				err = json.Unmarshal(*val, &t.TypeProperties)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return t.Trigger.unmarshalInternal(rawMsg)
+}
+
+// Referenced tumbling window trigger dependency.
+type TumblingWindowTriggerDependencyReference struct {
+	TriggerDependencyReference
+	// Timespan applied to the start time of a tumbling window when evaluating dependency.
+	Offset *string `json:"offset,omitempty"`
+
+	// The size of the window when evaluating the dependency. If undefined the frequency of the tumbling window will be used.
+	Size *string `json:"size,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type TumblingWindowTriggerDependencyReference.
+func (t TumblingWindowTriggerDependencyReference) MarshalJSON() ([]byte, error) {
+	objectMap := t.TriggerDependencyReference.marshalInternal("TumblingWindowTriggerDependencyReference")
+	if t.Offset != nil {
+		objectMap["offset"] = t.Offset
+	}
+	if t.Size != nil {
+		objectMap["size"] = t.Size
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type TumblingWindowTriggerDependencyReference.
+func (t *TumblingWindowTriggerDependencyReference) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "offset":
+			if val != nil {
+				err = json.Unmarshal(*val, &t.Offset)
+			}
+			delete(rawMsg, key)
+		case "size":
+			if val != nil {
+				err = json.Unmarshal(*val, &t.Size)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return t.TriggerDependencyReference.unmarshalInternal(rawMsg)
+}
+
+// Tumbling Window Trigger properties.
+type TumblingWindowTriggerTypeProperties struct {
+	// Specifies how long the trigger waits past due time before triggering new run. It doesn't alter window start and end time.
+	// The default is 0. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+	Delay *interface{} `json:"delay,omitempty"`
+
+	// Triggers that this trigger depends on. Only tumbling window triggers are supported.
+	DependsOn *[]DependencyReferenceClassification `json:"dependsOn,omitempty"`
+
+	// The end time for the time period for the trigger during which events are fired for windows that are ready. Only UTC time
+	// is currently supported.
+	EndTime *time.Time `json:"endTime,omitempty"`
+
+	// The frequency of the time windows.
+	Frequency *TumblingWindowFrequency `json:"frequency,omitempty"`
+
+	// The interval of the time windows. The minimum interval allowed is 15 Minutes.
+	Interval *int32 `json:"interval,omitempty"`
+
+	// The max number of parallel time windows (ready for execution) for which a new run is triggered.
+	MaxConcurrency *int32 `json:"maxConcurrency,omitempty"`
+
+	// Retry policy that will be applied for failed pipeline runs.
+	RetryPolicy *RetryPolicy `json:"retryPolicy,omitempty"`
+
+	// The start time for the time period for the trigger during which events are fired for windows that are ready. Only UTC time
+	// is currently supported.
+	StartTime *time.Time `json:"startTime,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type TumblingWindowTriggerTypeProperties.
+func (t TumblingWindowTriggerTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if t.Delay != nil {
+		objectMap["delay"] = t.Delay
+	}
+	if t.DependsOn != nil {
+		objectMap["dependsOn"] = t.DependsOn
+	}
+	if t.EndTime != nil {
+		objectMap["endTime"] = (*timeRFC3339)(t.EndTime)
+	}
+	if t.Frequency != nil {
+		objectMap["frequency"] = t.Frequency
+	}
+	if t.Interval != nil {
+		objectMap["interval"] = t.Interval
+	}
+	if t.MaxConcurrency != nil {
+		objectMap["maxConcurrency"] = t.MaxConcurrency
+	}
+	if t.RetryPolicy != nil {
+		objectMap["retryPolicy"] = t.RetryPolicy
+	}
+	if t.StartTime != nil {
+		objectMap["startTime"] = (*timeRFC3339)(t.StartTime)
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type TumblingWindowTriggerTypeProperties.
+func (t *TumblingWindowTriggerTypeProperties) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "delay":
+			if val != nil {
+				err = json.Unmarshal(*val, &t.Delay)
+			}
+			delete(rawMsg, key)
+		case "dependsOn":
+			if val != nil {
+				t.DependsOn, err = unmarshalDependencyReferenceClassificationArray(*val)
+			}
+			delete(rawMsg, key)
+		case "endTime":
+			if val != nil {
+				var aux timeRFC3339
+				err = json.Unmarshal(*val, &aux)
+				t.EndTime = (*time.Time)(&aux)
+			}
+			delete(rawMsg, key)
+		case "frequency":
+			if val != nil {
+				err = json.Unmarshal(*val, &t.Frequency)
+			}
+			delete(rawMsg, key)
+		case "interval":
+			if val != nil {
+				err = json.Unmarshal(*val, &t.Interval)
+			}
+			delete(rawMsg, key)
+		case "maxConcurrency":
+			if val != nil {
+				err = json.Unmarshal(*val, &t.MaxConcurrency)
+			}
+			delete(rawMsg, key)
+		case "retryPolicy":
+			if val != nil {
+				err = json.Unmarshal(*val, &t.RetryPolicy)
+			}
+			delete(rawMsg, key)
+		case "startTime":
+			if val != nil {
+				var aux timeRFC3339
+				err = json.Unmarshal(*val, &aux)
+				t.StartTime = (*time.Time)(&aux)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // This activity executes inner activities until the specified boolean expression results to true or timeout is reached, whichever
@@ -21447,6 +32368,44 @@ type VerticaLinkedServiceTypeProperties struct {
 	Pwd *AzureKeyVaultSecretReference `json:"pwd,omitempty"`
 }
 
+// A copy activity Vertica source.
+type VerticaSource struct {
+	TabularSource
+	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type VerticaSource.
+func (v VerticaSource) MarshalJSON() ([]byte, error) {
+	objectMap := v.TabularSource.marshalInternal("VerticaSource")
+	if v.Query != nil {
+		objectMap["query"] = v.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type VerticaSource.
+func (v *VerticaSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &v.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return v.TabularSource.unmarshalInternal(rawMsg)
+}
+
 // Vertica dataset.
 type VerticaTableDataset struct {
 	Dataset
@@ -21483,6 +32442,12 @@ func (v *VerticaTableDataset) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return v.Dataset.unmarshalInternal(rawMsg)
+}
+
+// Virtual Network Profile
+type VirtualNetworkProfile struct {
+	// Subnet ID used for computes in workspace
+	ComputeSubnetID *string `json:"computeSubnetId,omitempty"`
 }
 
 // This activity suspends pipeline execution for the specified interval.
@@ -21932,6 +32897,17 @@ func (w *WebLinkedServiceTypeProperties) unmarshalInternal(rawMsg map[string]*js
 	return nil
 }
 
+// A copy activity source for web page table.
+type WebSource struct {
+	CopySource
+}
+
+// MarshalJSON implements the json.Marshaller interface for type WebSource.
+func (w WebSource) MarshalJSON() ([]byte, error) {
+	objectMap := w.CopySource.marshalInternal("WebSource")
+	return json.Marshal(objectMap)
+}
+
 // The dataset points to a HTML table in the web page.
 type WebTableDataset struct {
 	Dataset
@@ -21979,6 +32955,16 @@ type WebTableDatasetTypeProperties struct {
 	Path *interface{} `json:"path,omitempty"`
 }
 
+// A workspace
+type Workspace struct {
+	TrackedResource
+	// Identity of the workspace
+	IDentity *ManagedIDentity `json:"identity,omitempty"`
+
+	// Workspace resource properties
+	Properties *WorkspaceProperties `json:"properties,omitempty"`
+}
+
 // Identity properties of the workspace resource.
 type WorkspaceIDentity struct {
 	// The principal id of the identity.
@@ -21989,6 +32975,51 @@ type WorkspaceIDentity struct {
 
 	// The identity type. Currently the only supported type is 'SystemAssigned'.
 	Type *string `json:"type,omitempty"`
+}
+
+// Workspace properties
+type WorkspaceProperties struct {
+	// Connectivity endpoints
+	ConnectivityEndpoints *map[string]string `json:"connectivityEndpoints,omitempty"`
+
+	// Workspace default data lake storage account details
+	DefaultDataLakeStorage *DataLakeStorageAccountDetails `json:"defaultDataLakeStorage,omitempty"`
+
+	// Workspace level configs and feature flags
+	ExtraProperties *map[string]interface{} `json:"extraProperties,omitempty" azure:"ro"`
+
+	// Workspace managed resource group. The resource group name uniquely identifies the resource group within the user subscriptionId.
+	// The resource group name must be no longer than 90 characters long, and must be alphanumeric characters (Char.IsLetterOrDigit())
+	// and '-', '_', '(', ')' and'.'. Note that the name cannot end with '.'
+	ManagedResourceGroupName *string `json:"managedResourceGroupName,omitempty"`
+
+	// Setting this to 'default' will ensure that all compute for this workspace is in a virtual network managed on behalf of
+	// the user.
+	ManagedVirtualNetwork *string `json:"managedVirtualNetwork,omitempty"`
+
+	// Private endpoint connections to the workspace
+	PrivateEndpointConnections *[]PrivateEndpointConnection `json:"privateEndpointConnections,omitempty"`
+
+	// Resource provisioning state
+	ProvisioningState *string `json:"provisioningState,omitempty" azure:"ro"`
+
+	// Login for workspace SQL active directory administrator
+	SQLAdministratorLogin *string `json:"sqlAdministratorLogin,omitempty"`
+
+	// SQL administrator login password
+	SQLAdministratorLoginPassword *string `json:"sqlAdministratorLoginPassword,omitempty"`
+
+	// Virtual Network profile
+	VirtualNetworkProfile *VirtualNetworkProfile `json:"virtualNetworkProfile,omitempty"`
+}
+
+// WorkspaceResponse is the response envelope for operations that return a Workspace type.
+type WorkspaceResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// A workspace
+	Workspace *Workspace
 }
 
 // Parameters for updating a workspace resource.
@@ -22156,6 +33187,44 @@ func (x *XeroObjectDataset) UnmarshalJSON(data []byte) error {
 	return x.Dataset.unmarshalInternal(rawMsg)
 }
 
+// A copy activity Xero Service source.
+type XeroSource struct {
+	TabularSource
+	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type XeroSource.
+func (x XeroSource) MarshalJSON() ([]byte, error) {
+	objectMap := x.TabularSource.marshalInternal("XeroSource")
+	if x.Query != nil {
+		objectMap["query"] = x.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type XeroSource.
+func (x *XeroSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &x.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return x.TabularSource.unmarshalInternal(rawMsg)
+}
+
 // Zoho server linked service.
 type ZohoLinkedService struct {
 	LinkedService
@@ -22300,4 +33369,42 @@ func (z *ZohoObjectDataset) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return z.Dataset.unmarshalInternal(rawMsg)
+}
+
+// A copy activity Zoho server source.
+type ZohoSource struct {
+	TabularSource
+	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	Query *interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ZohoSource.
+func (z ZohoSource) MarshalJSON() ([]byte, error) {
+	objectMap := z.TabularSource.marshalInternal("ZohoSource")
+	if z.Query != nil {
+		objectMap["query"] = z.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type ZohoSource.
+func (z *ZohoSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &z.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return z.TabularSource.unmarshalInternal(rawMsg)
 }
