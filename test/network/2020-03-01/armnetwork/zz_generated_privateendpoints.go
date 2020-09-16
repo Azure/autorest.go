@@ -51,7 +51,7 @@ func (client *PrivateEndpointsClient) Do(req *azcore.Request) (*azcore.Response,
 }
 
 // CreateOrUpdate - Creates or updates an private endpoint in the specified resource group.
-func (client *PrivateEndpointsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, privateEndpointName string, parameters PrivateEndpoint) (*PrivateEndpointPollerResponse, error) {
+func (client *PrivateEndpointsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, privateEndpointName string, parameters PrivateEndpoint) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, privateEndpointName, parameters)
 	if err != nil {
 		return nil, err
@@ -63,6 +63,14 @@ func (client *PrivateEndpointsClient) BeginCreateOrUpdate(ctx context.Context, r
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *PrivateEndpointsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, privateEndpointName string, parameters PrivateEndpoint) (*PrivateEndpointPollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, privateEndpointName, parameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -126,7 +134,7 @@ func (client *PrivateEndpointsClient) CreateOrUpdateHandleError(resp *azcore.Res
 }
 
 // Delete - Deletes the specified private endpoint.
-func (client *PrivateEndpointsClient) BeginDelete(ctx context.Context, resourceGroupName string, privateEndpointName string) (*HTTPPollerResponse, error) {
+func (client *PrivateEndpointsClient) Delete(ctx context.Context, resourceGroupName string, privateEndpointName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, privateEndpointName)
 	if err != nil {
 		return nil, err
@@ -138,6 +146,14 @@ func (client *PrivateEndpointsClient) BeginDelete(ctx context.Context, resourceG
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *PrivateEndpointsClient) BeginDelete(ctx context.Context, resourceGroupName string, privateEndpointName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, privateEndpointName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {

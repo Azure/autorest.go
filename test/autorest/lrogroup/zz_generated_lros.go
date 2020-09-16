@@ -198,7 +198,7 @@ func (client *LrOSClient) Do(req *azcore.Request) (*azcore.Response, error) {
 }
 
 // Delete202NoRetry204 - Long running delete request, service returns a 202 to the initial request. Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
-func (client *LrOSClient) BeginDelete202NoRetry204(ctx context.Context) (*ProductPollerResponse, error) {
+func (client *LrOSClient) Delete202NoRetry204(ctx context.Context) (*azcore.Response, error) {
 	req, err := client.Delete202NoRetry204CreateRequest(ctx)
 	if err != nil {
 		return nil, err
@@ -210,6 +210,14 @@ func (client *LrOSClient) BeginDelete202NoRetry204(ctx context.Context) (*Produc
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.Delete202NoRetry204HandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LrOSClient) BeginDelete202NoRetry204(ctx context.Context) (*ProductPollerResponse, error) {
+	resp, err := client.Delete202NoRetry204(ctx)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.Delete202NoRetry204HandleResponse(resp)
 	if err != nil {
@@ -267,7 +275,7 @@ func (client *LrOSClient) Delete202NoRetry204HandleError(resp *azcore.Response) 
 }
 
 // Delete202Retry200 - Long running delete request, service returns a 202 to the initial request. Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
-func (client *LrOSClient) BeginDelete202Retry200(ctx context.Context) (*ProductPollerResponse, error) {
+func (client *LrOSClient) Delete202Retry200(ctx context.Context) (*azcore.Response, error) {
 	req, err := client.Delete202Retry200CreateRequest(ctx)
 	if err != nil {
 		return nil, err
@@ -279,6 +287,14 @@ func (client *LrOSClient) BeginDelete202Retry200(ctx context.Context) (*ProductP
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.Delete202Retry200HandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LrOSClient) BeginDelete202Retry200(ctx context.Context) (*ProductPollerResponse, error) {
+	resp, err := client.Delete202Retry200(ctx)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.Delete202Retry200HandleResponse(resp)
 	if err != nil {
@@ -336,7 +352,7 @@ func (client *LrOSClient) Delete202Retry200HandleError(resp *azcore.Response) er
 }
 
 // Delete204Succeeded - Long running delete succeeds and returns right away
-func (client *LrOSClient) BeginDelete204Succeeded(ctx context.Context) (*HTTPPollerResponse, error) {
+func (client *LrOSClient) Delete204Succeeded(ctx context.Context) (*azcore.Response, error) {
 	req, err := client.Delete204SucceededCreateRequest(ctx)
 	if err != nil {
 		return nil, err
@@ -348,6 +364,14 @@ func (client *LrOSClient) BeginDelete204Succeeded(ctx context.Context) (*HTTPPol
 	}
 	if !resp.HasStatusCode(http.StatusNoContent) {
 		return nil, client.Delete204SucceededHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LrOSClient) BeginDelete204Succeeded(ctx context.Context) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete204Succeeded(ctx)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.Delete204SucceededHandleResponse(resp)
 	if err != nil {
@@ -405,7 +429,7 @@ func (client *LrOSClient) Delete204SucceededHandleError(resp *azcore.Response) e
 }
 
 // DeleteAsyncNoHeaderInRetry - Long running delete request, service returns an Azure-AsyncOperation header in the initial request. Subsequent calls to operation status do not contain Azure-AsyncOperation header.
-func (client *LrOSClient) BeginDeleteAsyncNoHeaderInRetry(ctx context.Context) (*HTTPPollerResponse, error) {
+func (client *LrOSClient) DeleteAsyncNoHeaderInRetry(ctx context.Context) (*azcore.Response, error) {
 	req, err := client.DeleteAsyncNoHeaderInRetryCreateRequest(ctx)
 	if err != nil {
 		return nil, err
@@ -417,6 +441,14 @@ func (client *LrOSClient) BeginDeleteAsyncNoHeaderInRetry(ctx context.Context) (
 	}
 	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteAsyncNoHeaderInRetryHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LrOSClient) BeginDeleteAsyncNoHeaderInRetry(ctx context.Context) (*HTTPPollerResponse, error) {
+	resp, err := client.DeleteAsyncNoHeaderInRetry(ctx)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteAsyncNoHeaderInRetryHandleResponse(resp)
 	if err != nil {
@@ -474,7 +506,7 @@ func (client *LrOSClient) DeleteAsyncNoHeaderInRetryHandleError(resp *azcore.Res
 }
 
 // DeleteAsyncNoRetrySucceeded - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-func (client *LrOSClient) BeginDeleteAsyncNoRetrySucceeded(ctx context.Context) (*HTTPPollerResponse, error) {
+func (client *LrOSClient) DeleteAsyncNoRetrySucceeded(ctx context.Context) (*azcore.Response, error) {
 	req, err := client.DeleteAsyncNoRetrySucceededCreateRequest(ctx)
 	if err != nil {
 		return nil, err
@@ -486,6 +518,14 @@ func (client *LrOSClient) BeginDeleteAsyncNoRetrySucceeded(ctx context.Context) 
 	}
 	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.DeleteAsyncNoRetrySucceededHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LrOSClient) BeginDeleteAsyncNoRetrySucceeded(ctx context.Context) (*HTTPPollerResponse, error) {
+	resp, err := client.DeleteAsyncNoRetrySucceeded(ctx)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteAsyncNoRetrySucceededHandleResponse(resp)
 	if err != nil {
@@ -543,7 +583,7 @@ func (client *LrOSClient) DeleteAsyncNoRetrySucceededHandleError(resp *azcore.Re
 }
 
 // DeleteAsyncRetryFailed - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-func (client *LrOSClient) BeginDeleteAsyncRetryFailed(ctx context.Context) (*HTTPPollerResponse, error) {
+func (client *LrOSClient) DeleteAsyncRetryFailed(ctx context.Context) (*azcore.Response, error) {
 	req, err := client.DeleteAsyncRetryFailedCreateRequest(ctx)
 	if err != nil {
 		return nil, err
@@ -555,6 +595,14 @@ func (client *LrOSClient) BeginDeleteAsyncRetryFailed(ctx context.Context) (*HTT
 	}
 	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.DeleteAsyncRetryFailedHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LrOSClient) BeginDeleteAsyncRetryFailed(ctx context.Context) (*HTTPPollerResponse, error) {
+	resp, err := client.DeleteAsyncRetryFailed(ctx)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteAsyncRetryFailedHandleResponse(resp)
 	if err != nil {
@@ -612,7 +660,7 @@ func (client *LrOSClient) DeleteAsyncRetryFailedHandleError(resp *azcore.Respons
 }
 
 // DeleteAsyncRetrySucceeded - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-func (client *LrOSClient) BeginDeleteAsyncRetrySucceeded(ctx context.Context) (*HTTPPollerResponse, error) {
+func (client *LrOSClient) DeleteAsyncRetrySucceeded(ctx context.Context) (*azcore.Response, error) {
 	req, err := client.DeleteAsyncRetrySucceededCreateRequest(ctx)
 	if err != nil {
 		return nil, err
@@ -624,6 +672,14 @@ func (client *LrOSClient) BeginDeleteAsyncRetrySucceeded(ctx context.Context) (*
 	}
 	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.DeleteAsyncRetrySucceededHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LrOSClient) BeginDeleteAsyncRetrySucceeded(ctx context.Context) (*HTTPPollerResponse, error) {
+	resp, err := client.DeleteAsyncRetrySucceeded(ctx)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteAsyncRetrySucceededHandleResponse(resp)
 	if err != nil {
@@ -681,7 +737,7 @@ func (client *LrOSClient) DeleteAsyncRetrySucceededHandleError(resp *azcore.Resp
 }
 
 // DeleteAsyncRetrycanceled - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-func (client *LrOSClient) BeginDeleteAsyncRetrycanceled(ctx context.Context) (*HTTPPollerResponse, error) {
+func (client *LrOSClient) DeleteAsyncRetrycanceled(ctx context.Context) (*azcore.Response, error) {
 	req, err := client.DeleteAsyncRetrycanceledCreateRequest(ctx)
 	if err != nil {
 		return nil, err
@@ -693,6 +749,14 @@ func (client *LrOSClient) BeginDeleteAsyncRetrycanceled(ctx context.Context) (*H
 	}
 	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.DeleteAsyncRetrycanceledHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LrOSClient) BeginDeleteAsyncRetrycanceled(ctx context.Context) (*HTTPPollerResponse, error) {
+	resp, err := client.DeleteAsyncRetrycanceled(ctx)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteAsyncRetrycanceledHandleResponse(resp)
 	if err != nil {
@@ -750,7 +814,7 @@ func (client *LrOSClient) DeleteAsyncRetrycanceledHandleError(resp *azcore.Respo
 }
 
 // DeleteNoHeaderInRetry - Long running delete request, service returns a location header in the initial request. Subsequent calls to operation status do not contain location header.
-func (client *LrOSClient) BeginDeleteNoHeaderInRetry(ctx context.Context) (*HTTPPollerResponse, error) {
+func (client *LrOSClient) DeleteNoHeaderInRetry(ctx context.Context) (*azcore.Response, error) {
 	req, err := client.DeleteNoHeaderInRetryCreateRequest(ctx)
 	if err != nil {
 		return nil, err
@@ -762,6 +826,14 @@ func (client *LrOSClient) BeginDeleteNoHeaderInRetry(ctx context.Context) (*HTTP
 	}
 	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteNoHeaderInRetryHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LrOSClient) BeginDeleteNoHeaderInRetry(ctx context.Context) (*HTTPPollerResponse, error) {
+	resp, err := client.DeleteNoHeaderInRetry(ctx)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteNoHeaderInRetryHandleResponse(resp)
 	if err != nil {
@@ -819,7 +891,7 @@ func (client *LrOSClient) DeleteNoHeaderInRetryHandleError(resp *azcore.Response
 }
 
 // DeleteProvisioning202Accepted200Succeeded - Long running delete request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Accepted’.  Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
-func (client *LrOSClient) BeginDeleteProvisioning202Accepted200Succeeded(ctx context.Context) (*ProductPollerResponse, error) {
+func (client *LrOSClient) DeleteProvisioning202Accepted200Succeeded(ctx context.Context) (*azcore.Response, error) {
 	req, err := client.DeleteProvisioning202Accepted200SucceededCreateRequest(ctx)
 	if err != nil {
 		return nil, err
@@ -831,6 +903,14 @@ func (client *LrOSClient) BeginDeleteProvisioning202Accepted200Succeeded(ctx con
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.DeleteProvisioning202Accepted200SucceededHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LrOSClient) BeginDeleteProvisioning202Accepted200Succeeded(ctx context.Context) (*ProductPollerResponse, error) {
+	resp, err := client.DeleteProvisioning202Accepted200Succeeded(ctx)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteProvisioning202Accepted200SucceededHandleResponse(resp)
 	if err != nil {
@@ -888,7 +968,7 @@ func (client *LrOSClient) DeleteProvisioning202Accepted200SucceededHandleError(r
 }
 
 // DeleteProvisioning202DeletingFailed200 - Long running delete request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’.  Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Failed’
-func (client *LrOSClient) BeginDeleteProvisioning202DeletingFailed200(ctx context.Context) (*ProductPollerResponse, error) {
+func (client *LrOSClient) DeleteProvisioning202DeletingFailed200(ctx context.Context) (*azcore.Response, error) {
 	req, err := client.DeleteProvisioning202DeletingFailed200CreateRequest(ctx)
 	if err != nil {
 		return nil, err
@@ -900,6 +980,14 @@ func (client *LrOSClient) BeginDeleteProvisioning202DeletingFailed200(ctx contex
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.DeleteProvisioning202DeletingFailed200HandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LrOSClient) BeginDeleteProvisioning202DeletingFailed200(ctx context.Context) (*ProductPollerResponse, error) {
+	resp, err := client.DeleteProvisioning202DeletingFailed200(ctx)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteProvisioning202DeletingFailed200HandleResponse(resp)
 	if err != nil {
@@ -957,7 +1045,7 @@ func (client *LrOSClient) DeleteProvisioning202DeletingFailed200HandleError(resp
 }
 
 // DeleteProvisioning202Deletingcanceled200 - Long running delete request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’.  Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Canceled’
-func (client *LrOSClient) BeginDeleteProvisioning202Deletingcanceled200(ctx context.Context) (*ProductPollerResponse, error) {
+func (client *LrOSClient) DeleteProvisioning202Deletingcanceled200(ctx context.Context) (*azcore.Response, error) {
 	req, err := client.DeleteProvisioning202Deletingcanceled200CreateRequest(ctx)
 	if err != nil {
 		return nil, err
@@ -969,6 +1057,14 @@ func (client *LrOSClient) BeginDeleteProvisioning202Deletingcanceled200(ctx cont
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.DeleteProvisioning202Deletingcanceled200HandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LrOSClient) BeginDeleteProvisioning202Deletingcanceled200(ctx context.Context) (*ProductPollerResponse, error) {
+	resp, err := client.DeleteProvisioning202Deletingcanceled200(ctx)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteProvisioning202Deletingcanceled200HandleResponse(resp)
 	if err != nil {
@@ -1026,7 +1122,7 @@ func (client *LrOSClient) DeleteProvisioning202Deletingcanceled200HandleError(re
 }
 
 // Post200WithPayload - Long running post request, service returns a 202 to the initial request, with 'Location' header. Poll returns a 200 with a response body after success.
-func (client *LrOSClient) BeginPost200WithPayload(ctx context.Context) (*SKUPollerResponse, error) {
+func (client *LrOSClient) Post200WithPayload(ctx context.Context) (*azcore.Response, error) {
 	req, err := client.Post200WithPayloadCreateRequest(ctx)
 	if err != nil {
 		return nil, err
@@ -1038,6 +1134,14 @@ func (client *LrOSClient) BeginPost200WithPayload(ctx context.Context) (*SKUPoll
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.Post200WithPayloadHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LrOSClient) BeginPost200WithPayload(ctx context.Context) (*SKUPollerResponse, error) {
+	resp, err := client.Post200WithPayload(ctx)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.Post200WithPayloadHandleResponse(resp)
 	if err != nil {
@@ -1095,7 +1199,7 @@ func (client *LrOSClient) Post200WithPayloadHandleError(resp *azcore.Response) e
 }
 
 // Post202List - Long running put request, service returns a 202 with empty body to first request, returns a 200 with body [{ 'id': '100', 'name': 'foo' }].
-func (client *LrOSClient) BeginPost202List(ctx context.Context) (*ProductArrayPollerResponse, error) {
+func (client *LrOSClient) Post202List(ctx context.Context) (*azcore.Response, error) {
 	req, err := client.Post202ListCreateRequest(ctx)
 	if err != nil {
 		return nil, err
@@ -1107,6 +1211,14 @@ func (client *LrOSClient) BeginPost202List(ctx context.Context) (*ProductArrayPo
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.Post202ListHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LrOSClient) BeginPost202List(ctx context.Context) (*ProductArrayPollerResponse, error) {
+	resp, err := client.Post202List(ctx)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.Post202ListHandleResponse(resp)
 	if err != nil {
@@ -1164,7 +1276,7 @@ func (client *LrOSClient) Post202ListHandleError(resp *azcore.Response) error {
 }
 
 // Post202NoRetry204 - Long running post request, service returns a 202 to the initial request, with 'Location' header, 204 with noresponse body after success
-func (client *LrOSClient) BeginPost202NoRetry204(ctx context.Context, lrOSPost202NoRetry204Options *LrOSPost202NoRetry204Options) (*ProductPollerResponse, error) {
+func (client *LrOSClient) Post202NoRetry204(ctx context.Context, lrOSPost202NoRetry204Options *LrOSPost202NoRetry204Options) (*azcore.Response, error) {
 	req, err := client.Post202NoRetry204CreateRequest(ctx, lrOSPost202NoRetry204Options)
 	if err != nil {
 		return nil, err
@@ -1176,6 +1288,14 @@ func (client *LrOSClient) BeginPost202NoRetry204(ctx context.Context, lrOSPost20
 	}
 	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.Post202NoRetry204HandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LrOSClient) BeginPost202NoRetry204(ctx context.Context, lrOSPost202NoRetry204Options *LrOSPost202NoRetry204Options) (*ProductPollerResponse, error) {
+	resp, err := client.Post202NoRetry204(ctx, lrOSPost202NoRetry204Options)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.Post202NoRetry204HandleResponse(resp)
 	if err != nil {
@@ -1236,7 +1356,7 @@ func (client *LrOSClient) Post202NoRetry204HandleError(resp *azcore.Response) er
 }
 
 // Post202Retry200 - Long running post request, service returns a 202 to the initial request, with 'Location' and 'Retry-After' headers, Polls return a 200 with a response body after success
-func (client *LrOSClient) BeginPost202Retry200(ctx context.Context, lrOSPost202Retry200Options *LrOSPost202Retry200Options) (*HTTPPollerResponse, error) {
+func (client *LrOSClient) Post202Retry200(ctx context.Context, lrOSPost202Retry200Options *LrOSPost202Retry200Options) (*azcore.Response, error) {
 	req, err := client.Post202Retry200CreateRequest(ctx, lrOSPost202Retry200Options)
 	if err != nil {
 		return nil, err
@@ -1248,6 +1368,14 @@ func (client *LrOSClient) BeginPost202Retry200(ctx context.Context, lrOSPost202R
 	}
 	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.Post202Retry200HandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LrOSClient) BeginPost202Retry200(ctx context.Context, lrOSPost202Retry200Options *LrOSPost202Retry200Options) (*HTTPPollerResponse, error) {
+	resp, err := client.Post202Retry200(ctx, lrOSPost202Retry200Options)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.Post202Retry200HandleResponse(resp)
 	if err != nil {
@@ -1308,7 +1436,7 @@ func (client *LrOSClient) Post202Retry200HandleError(resp *azcore.Response) erro
 }
 
 // PostAsyncNoRetrySucceeded - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-func (client *LrOSClient) BeginPostAsyncNoRetrySucceeded(ctx context.Context, lrOSPostAsyncNoRetrySucceededOptions *LrOSPostAsyncNoRetrySucceededOptions) (*ProductPollerResponse, error) {
+func (client *LrOSClient) PostAsyncNoRetrySucceeded(ctx context.Context, lrOSPostAsyncNoRetrySucceededOptions *LrOSPostAsyncNoRetrySucceededOptions) (*azcore.Response, error) {
 	req, err := client.PostAsyncNoRetrySucceededCreateRequest(ctx, lrOSPostAsyncNoRetrySucceededOptions)
 	if err != nil {
 		return nil, err
@@ -1320,6 +1448,14 @@ func (client *LrOSClient) BeginPostAsyncNoRetrySucceeded(ctx context.Context, lr
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.PostAsyncNoRetrySucceededHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LrOSClient) BeginPostAsyncNoRetrySucceeded(ctx context.Context, lrOSPostAsyncNoRetrySucceededOptions *LrOSPostAsyncNoRetrySucceededOptions) (*ProductPollerResponse, error) {
+	resp, err := client.PostAsyncNoRetrySucceeded(ctx, lrOSPostAsyncNoRetrySucceededOptions)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.PostAsyncNoRetrySucceededHandleResponse(resp)
 	if err != nil {
@@ -1380,7 +1516,7 @@ func (client *LrOSClient) PostAsyncNoRetrySucceededHandleError(resp *azcore.Resp
 }
 
 // PostAsyncRetryFailed - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-func (client *LrOSClient) BeginPostAsyncRetryFailed(ctx context.Context, lrOSPostAsyncRetryFailedOptions *LrOSPostAsyncRetryFailedOptions) (*HTTPPollerResponse, error) {
+func (client *LrOSClient) PostAsyncRetryFailed(ctx context.Context, lrOSPostAsyncRetryFailedOptions *LrOSPostAsyncRetryFailedOptions) (*azcore.Response, error) {
 	req, err := client.PostAsyncRetryFailedCreateRequest(ctx, lrOSPostAsyncRetryFailedOptions)
 	if err != nil {
 		return nil, err
@@ -1392,6 +1528,14 @@ func (client *LrOSClient) BeginPostAsyncRetryFailed(ctx context.Context, lrOSPos
 	}
 	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.PostAsyncRetryFailedHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LrOSClient) BeginPostAsyncRetryFailed(ctx context.Context, lrOSPostAsyncRetryFailedOptions *LrOSPostAsyncRetryFailedOptions) (*HTTPPollerResponse, error) {
+	resp, err := client.PostAsyncRetryFailed(ctx, lrOSPostAsyncRetryFailedOptions)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.PostAsyncRetryFailedHandleResponse(resp)
 	if err != nil {
@@ -1452,7 +1596,7 @@ func (client *LrOSClient) PostAsyncRetryFailedHandleError(resp *azcore.Response)
 }
 
 // PostAsyncRetrySucceeded - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-func (client *LrOSClient) BeginPostAsyncRetrySucceeded(ctx context.Context, lrOSPostAsyncRetrySucceededOptions *LrOSPostAsyncRetrySucceededOptions) (*ProductPollerResponse, error) {
+func (client *LrOSClient) PostAsyncRetrySucceeded(ctx context.Context, lrOSPostAsyncRetrySucceededOptions *LrOSPostAsyncRetrySucceededOptions) (*azcore.Response, error) {
 	req, err := client.PostAsyncRetrySucceededCreateRequest(ctx, lrOSPostAsyncRetrySucceededOptions)
 	if err != nil {
 		return nil, err
@@ -1464,6 +1608,14 @@ func (client *LrOSClient) BeginPostAsyncRetrySucceeded(ctx context.Context, lrOS
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.PostAsyncRetrySucceededHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LrOSClient) BeginPostAsyncRetrySucceeded(ctx context.Context, lrOSPostAsyncRetrySucceededOptions *LrOSPostAsyncRetrySucceededOptions) (*ProductPollerResponse, error) {
+	resp, err := client.PostAsyncRetrySucceeded(ctx, lrOSPostAsyncRetrySucceededOptions)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.PostAsyncRetrySucceededHandleResponse(resp)
 	if err != nil {
@@ -1524,7 +1676,7 @@ func (client *LrOSClient) PostAsyncRetrySucceededHandleError(resp *azcore.Respon
 }
 
 // PostAsyncRetrycanceled - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-func (client *LrOSClient) BeginPostAsyncRetrycanceled(ctx context.Context, lrOSPostAsyncRetrycanceledOptions *LrOSPostAsyncRetrycanceledOptions) (*HTTPPollerResponse, error) {
+func (client *LrOSClient) PostAsyncRetrycanceled(ctx context.Context, lrOSPostAsyncRetrycanceledOptions *LrOSPostAsyncRetrycanceledOptions) (*azcore.Response, error) {
 	req, err := client.PostAsyncRetrycanceledCreateRequest(ctx, lrOSPostAsyncRetrycanceledOptions)
 	if err != nil {
 		return nil, err
@@ -1536,6 +1688,14 @@ func (client *LrOSClient) BeginPostAsyncRetrycanceled(ctx context.Context, lrOSP
 	}
 	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.PostAsyncRetrycanceledHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LrOSClient) BeginPostAsyncRetrycanceled(ctx context.Context, lrOSPostAsyncRetrycanceledOptions *LrOSPostAsyncRetrycanceledOptions) (*HTTPPollerResponse, error) {
+	resp, err := client.PostAsyncRetrycanceled(ctx, lrOSPostAsyncRetrycanceledOptions)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.PostAsyncRetrycanceledHandleResponse(resp)
 	if err != nil {
@@ -1596,7 +1756,7 @@ func (client *LrOSClient) PostAsyncRetrycanceledHandleError(resp *azcore.Respons
 }
 
 // PostDoubleHeadersFinalAzureHeaderGet - Long running post request, service returns a 202 to the initial request with both Location and Azure-Async header. Poll Azure-Async and it's success. Should NOT poll Location to get the final object
-func (client *LrOSClient) BeginPostDoubleHeadersFinalAzureHeaderGet(ctx context.Context) (*ProductPollerResponse, error) {
+func (client *LrOSClient) PostDoubleHeadersFinalAzureHeaderGet(ctx context.Context) (*azcore.Response, error) {
 	req, err := client.PostDoubleHeadersFinalAzureHeaderGetCreateRequest(ctx)
 	if err != nil {
 		return nil, err
@@ -1608,6 +1768,14 @@ func (client *LrOSClient) BeginPostDoubleHeadersFinalAzureHeaderGet(ctx context.
 	}
 	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.PostDoubleHeadersFinalAzureHeaderGetHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LrOSClient) BeginPostDoubleHeadersFinalAzureHeaderGet(ctx context.Context) (*ProductPollerResponse, error) {
+	resp, err := client.PostDoubleHeadersFinalAzureHeaderGet(ctx)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.PostDoubleHeadersFinalAzureHeaderGetHandleResponse(resp)
 	if err != nil {
@@ -1665,7 +1833,7 @@ func (client *LrOSClient) PostDoubleHeadersFinalAzureHeaderGetHandleError(resp *
 }
 
 // PostDoubleHeadersFinalAzureHeaderGetDefault - Long running post request, service returns a 202 to the initial request with both Location and Azure-Async header. Poll Azure-Async and it's success. Should NOT poll Location to get the final object if you support initial Autorest behavior.
-func (client *LrOSClient) BeginPostDoubleHeadersFinalAzureHeaderGetDefault(ctx context.Context) (*ProductPollerResponse, error) {
+func (client *LrOSClient) PostDoubleHeadersFinalAzureHeaderGetDefault(ctx context.Context) (*azcore.Response, error) {
 	req, err := client.PostDoubleHeadersFinalAzureHeaderGetDefaultCreateRequest(ctx)
 	if err != nil {
 		return nil, err
@@ -1677,6 +1845,14 @@ func (client *LrOSClient) BeginPostDoubleHeadersFinalAzureHeaderGetDefault(ctx c
 	}
 	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.PostDoubleHeadersFinalAzureHeaderGetDefaultHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LrOSClient) BeginPostDoubleHeadersFinalAzureHeaderGetDefault(ctx context.Context) (*ProductPollerResponse, error) {
+	resp, err := client.PostDoubleHeadersFinalAzureHeaderGetDefault(ctx)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.PostDoubleHeadersFinalAzureHeaderGetDefaultHandleResponse(resp)
 	if err != nil {
@@ -1734,7 +1910,7 @@ func (client *LrOSClient) PostDoubleHeadersFinalAzureHeaderGetDefaultHandleError
 }
 
 // PostDoubleHeadersFinalLocationGet - Long running post request, service returns a 202 to the initial request with both Location and Azure-Async header. Poll Azure-Async and it's success. Should poll Location to get the final object
-func (client *LrOSClient) BeginPostDoubleHeadersFinalLocationGet(ctx context.Context) (*ProductPollerResponse, error) {
+func (client *LrOSClient) PostDoubleHeadersFinalLocationGet(ctx context.Context) (*azcore.Response, error) {
 	req, err := client.PostDoubleHeadersFinalLocationGetCreateRequest(ctx)
 	if err != nil {
 		return nil, err
@@ -1746,6 +1922,14 @@ func (client *LrOSClient) BeginPostDoubleHeadersFinalLocationGet(ctx context.Con
 	}
 	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.PostDoubleHeadersFinalLocationGetHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LrOSClient) BeginPostDoubleHeadersFinalLocationGet(ctx context.Context) (*ProductPollerResponse, error) {
+	resp, err := client.PostDoubleHeadersFinalLocationGet(ctx)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.PostDoubleHeadersFinalLocationGetHandleResponse(resp)
 	if err != nil {
@@ -1803,7 +1987,7 @@ func (client *LrOSClient) PostDoubleHeadersFinalLocationGetHandleError(resp *azc
 }
 
 // Put200Acceptedcanceled200 - Long running put request, service returns a 201 to the initial request, with an entity that contains ProvisioningState=’Creating’.  Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Canceled’
-func (client *LrOSClient) BeginPut200Acceptedcanceled200(ctx context.Context, lrOSPut200Acceptedcanceled200Options *LrOSPut200Acceptedcanceled200Options) (*ProductPollerResponse, error) {
+func (client *LrOSClient) Put200Acceptedcanceled200(ctx context.Context, lrOSPut200Acceptedcanceled200Options *LrOSPut200Acceptedcanceled200Options) (*azcore.Response, error) {
 	req, err := client.Put200Acceptedcanceled200CreateRequest(ctx, lrOSPut200Acceptedcanceled200Options)
 	if err != nil {
 		return nil, err
@@ -1815,6 +1999,14 @@ func (client *LrOSClient) BeginPut200Acceptedcanceled200(ctx context.Context, lr
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.Put200Acceptedcanceled200HandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LrOSClient) BeginPut200Acceptedcanceled200(ctx context.Context, lrOSPut200Acceptedcanceled200Options *LrOSPut200Acceptedcanceled200Options) (*ProductPollerResponse, error) {
+	resp, err := client.Put200Acceptedcanceled200(ctx, lrOSPut200Acceptedcanceled200Options)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.Put200Acceptedcanceled200HandleResponse(resp)
 	if err != nil {
@@ -1875,7 +2067,7 @@ func (client *LrOSClient) Put200Acceptedcanceled200HandleError(resp *azcore.Resp
 }
 
 // Put200Succeeded - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Succeeded’.
-func (client *LrOSClient) BeginPut200Succeeded(ctx context.Context, lrOSPut200SucceededOptions *LrOSPut200SucceededOptions) (*ProductPollerResponse, error) {
+func (client *LrOSClient) Put200Succeeded(ctx context.Context, lrOSPut200SucceededOptions *LrOSPut200SucceededOptions) (*azcore.Response, error) {
 	req, err := client.Put200SucceededCreateRequest(ctx, lrOSPut200SucceededOptions)
 	if err != nil {
 		return nil, err
@@ -1887,6 +2079,14 @@ func (client *LrOSClient) BeginPut200Succeeded(ctx context.Context, lrOSPut200Su
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusNoContent) {
 		return nil, client.Put200SucceededHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LrOSClient) BeginPut200Succeeded(ctx context.Context, lrOSPut200SucceededOptions *LrOSPut200SucceededOptions) (*ProductPollerResponse, error) {
+	resp, err := client.Put200Succeeded(ctx, lrOSPut200SucceededOptions)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.Put200SucceededHandleResponse(resp)
 	if err != nil {
@@ -1947,7 +2147,7 @@ func (client *LrOSClient) Put200SucceededHandleError(resp *azcore.Response) erro
 }
 
 // Put200SucceededNoState - Long running put request, service returns a 200 to the initial request, with an entity that does not contain ProvisioningState=’Succeeded’.
-func (client *LrOSClient) BeginPut200SucceededNoState(ctx context.Context, lrOSPut200SucceededNoStateOptions *LrOSPut200SucceededNoStateOptions) (*ProductPollerResponse, error) {
+func (client *LrOSClient) Put200SucceededNoState(ctx context.Context, lrOSPut200SucceededNoStateOptions *LrOSPut200SucceededNoStateOptions) (*azcore.Response, error) {
 	req, err := client.Put200SucceededNoStateCreateRequest(ctx, lrOSPut200SucceededNoStateOptions)
 	if err != nil {
 		return nil, err
@@ -1959,6 +2159,14 @@ func (client *LrOSClient) BeginPut200SucceededNoState(ctx context.Context, lrOSP
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.Put200SucceededNoStateHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LrOSClient) BeginPut200SucceededNoState(ctx context.Context, lrOSPut200SucceededNoStateOptions *LrOSPut200SucceededNoStateOptions) (*ProductPollerResponse, error) {
+	resp, err := client.Put200SucceededNoState(ctx, lrOSPut200SucceededNoStateOptions)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.Put200SucceededNoStateHandleResponse(resp)
 	if err != nil {
@@ -2019,7 +2227,7 @@ func (client *LrOSClient) Put200SucceededNoStateHandleError(resp *azcore.Respons
 }
 
 // Put200UpdatingSucceeded204 - Long running put request, service returns a 201 to the initial request, with an entity that contains ProvisioningState=’Updating’.  Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
-func (client *LrOSClient) BeginPut200UpdatingSucceeded204(ctx context.Context, lrOSPut200UpdatingSucceeded204Options *LrOSPut200UpdatingSucceeded204Options) (*ProductPollerResponse, error) {
+func (client *LrOSClient) Put200UpdatingSucceeded204(ctx context.Context, lrOSPut200UpdatingSucceeded204Options *LrOSPut200UpdatingSucceeded204Options) (*azcore.Response, error) {
 	req, err := client.Put200UpdatingSucceeded204CreateRequest(ctx, lrOSPut200UpdatingSucceeded204Options)
 	if err != nil {
 		return nil, err
@@ -2031,6 +2239,14 @@ func (client *LrOSClient) BeginPut200UpdatingSucceeded204(ctx context.Context, l
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.Put200UpdatingSucceeded204HandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LrOSClient) BeginPut200UpdatingSucceeded204(ctx context.Context, lrOSPut200UpdatingSucceeded204Options *LrOSPut200UpdatingSucceeded204Options) (*ProductPollerResponse, error) {
+	resp, err := client.Put200UpdatingSucceeded204(ctx, lrOSPut200UpdatingSucceeded204Options)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.Put200UpdatingSucceeded204HandleResponse(resp)
 	if err != nil {
@@ -2091,7 +2307,7 @@ func (client *LrOSClient) Put200UpdatingSucceeded204HandleError(resp *azcore.Res
 }
 
 // Put201CreatingFailed200 - Long running put request, service returns a 201 to the initial request, with an entity that contains ProvisioningState=’Created’.  Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Failed’
-func (client *LrOSClient) BeginPut201CreatingFailed200(ctx context.Context, lrOSPut201CreatingFailed200Options *LrOSPut201CreatingFailed200Options) (*ProductPollerResponse, error) {
+func (client *LrOSClient) Put201CreatingFailed200(ctx context.Context, lrOSPut201CreatingFailed200Options *LrOSPut201CreatingFailed200Options) (*azcore.Response, error) {
 	req, err := client.Put201CreatingFailed200CreateRequest(ctx, lrOSPut201CreatingFailed200Options)
 	if err != nil {
 		return nil, err
@@ -2103,6 +2319,14 @@ func (client *LrOSClient) BeginPut201CreatingFailed200(ctx context.Context, lrOS
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.Put201CreatingFailed200HandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LrOSClient) BeginPut201CreatingFailed200(ctx context.Context, lrOSPut201CreatingFailed200Options *LrOSPut201CreatingFailed200Options) (*ProductPollerResponse, error) {
+	resp, err := client.Put201CreatingFailed200(ctx, lrOSPut201CreatingFailed200Options)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.Put201CreatingFailed200HandleResponse(resp)
 	if err != nil {
@@ -2163,7 +2387,7 @@ func (client *LrOSClient) Put201CreatingFailed200HandleError(resp *azcore.Respon
 }
 
 // Put201CreatingSucceeded200 - Long running put request, service returns a 201 to the initial request, with an entity that contains ProvisioningState=’Creating’.  Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
-func (client *LrOSClient) BeginPut201CreatingSucceeded200(ctx context.Context, lrOSPut201CreatingSucceeded200Options *LrOSPut201CreatingSucceeded200Options) (*ProductPollerResponse, error) {
+func (client *LrOSClient) Put201CreatingSucceeded200(ctx context.Context, lrOSPut201CreatingSucceeded200Options *LrOSPut201CreatingSucceeded200Options) (*azcore.Response, error) {
 	req, err := client.Put201CreatingSucceeded200CreateRequest(ctx, lrOSPut201CreatingSucceeded200Options)
 	if err != nil {
 		return nil, err
@@ -2175,6 +2399,14 @@ func (client *LrOSClient) BeginPut201CreatingSucceeded200(ctx context.Context, l
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.Put201CreatingSucceeded200HandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LrOSClient) BeginPut201CreatingSucceeded200(ctx context.Context, lrOSPut201CreatingSucceeded200Options *LrOSPut201CreatingSucceeded200Options) (*ProductPollerResponse, error) {
+	resp, err := client.Put201CreatingSucceeded200(ctx, lrOSPut201CreatingSucceeded200Options)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.Put201CreatingSucceeded200HandleResponse(resp)
 	if err != nil {
@@ -2235,7 +2467,7 @@ func (client *LrOSClient) Put201CreatingSucceeded200HandleError(resp *azcore.Res
 }
 
 // Put201Succeeded - Long running put request, service returns a 201 to the initial request, with an entity that contains ProvisioningState=’Succeeded’.
-func (client *LrOSClient) BeginPut201Succeeded(ctx context.Context, lrOSPut201SucceededOptions *LrOSPut201SucceededOptions) (*ProductPollerResponse, error) {
+func (client *LrOSClient) Put201Succeeded(ctx context.Context, lrOSPut201SucceededOptions *LrOSPut201SucceededOptions) (*azcore.Response, error) {
 	req, err := client.Put201SucceededCreateRequest(ctx, lrOSPut201SucceededOptions)
 	if err != nil {
 		return nil, err
@@ -2247,6 +2479,14 @@ func (client *LrOSClient) BeginPut201Succeeded(ctx context.Context, lrOSPut201Su
 	}
 	if !resp.HasStatusCode(http.StatusCreated) {
 		return nil, client.Put201SucceededHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LrOSClient) BeginPut201Succeeded(ctx context.Context, lrOSPut201SucceededOptions *LrOSPut201SucceededOptions) (*ProductPollerResponse, error) {
+	resp, err := client.Put201Succeeded(ctx, lrOSPut201SucceededOptions)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.Put201SucceededHandleResponse(resp)
 	if err != nil {
@@ -2307,7 +2547,7 @@ func (client *LrOSClient) Put201SucceededHandleError(resp *azcore.Response) erro
 }
 
 // Put202Retry200 - Long running put request, service returns a 202 to the initial request, with a location header that points to a polling URL that returns a 200 and an entity that doesn't contains ProvisioningState
-func (client *LrOSClient) BeginPut202Retry200(ctx context.Context, lrOSPut202Retry200Options *LrOSPut202Retry200Options) (*ProductPollerResponse, error) {
+func (client *LrOSClient) Put202Retry200(ctx context.Context, lrOSPut202Retry200Options *LrOSPut202Retry200Options) (*azcore.Response, error) {
 	req, err := client.Put202Retry200CreateRequest(ctx, lrOSPut202Retry200Options)
 	if err != nil {
 		return nil, err
@@ -2319,6 +2559,14 @@ func (client *LrOSClient) BeginPut202Retry200(ctx context.Context, lrOSPut202Ret
 	}
 	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.Put202Retry200HandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LrOSClient) BeginPut202Retry200(ctx context.Context, lrOSPut202Retry200Options *LrOSPut202Retry200Options) (*ProductPollerResponse, error) {
+	resp, err := client.Put202Retry200(ctx, lrOSPut202Retry200Options)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.Put202Retry200HandleResponse(resp)
 	if err != nil {
@@ -2379,7 +2627,7 @@ func (client *LrOSClient) Put202Retry200HandleError(resp *azcore.Response) error
 }
 
 // PutAsyncNoHeaderInRetry - Long running put request, service returns a 202 to the initial request with Azure-AsyncOperation header. Subsequent calls to operation status do not contain Azure-AsyncOperation header.
-func (client *LrOSClient) BeginPutAsyncNoHeaderInRetry(ctx context.Context, lrOSPutAsyncNoHeaderInRetryOptions *LrOSPutAsyncNoHeaderInRetryOptions) (*ProductPollerResponse, error) {
+func (client *LrOSClient) PutAsyncNoHeaderInRetry(ctx context.Context, lrOSPutAsyncNoHeaderInRetryOptions *LrOSPutAsyncNoHeaderInRetryOptions) (*azcore.Response, error) {
 	req, err := client.PutAsyncNoHeaderInRetryCreateRequest(ctx, lrOSPutAsyncNoHeaderInRetryOptions)
 	if err != nil {
 		return nil, err
@@ -2391,6 +2639,14 @@ func (client *LrOSClient) BeginPutAsyncNoHeaderInRetry(ctx context.Context, lrOS
 	}
 	if !resp.HasStatusCode(http.StatusCreated) {
 		return nil, client.PutAsyncNoHeaderInRetryHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LrOSClient) BeginPutAsyncNoHeaderInRetry(ctx context.Context, lrOSPutAsyncNoHeaderInRetryOptions *LrOSPutAsyncNoHeaderInRetryOptions) (*ProductPollerResponse, error) {
+	resp, err := client.PutAsyncNoHeaderInRetry(ctx, lrOSPutAsyncNoHeaderInRetryOptions)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.PutAsyncNoHeaderInRetryHandleResponse(resp)
 	if err != nil {
@@ -2451,7 +2707,7 @@ func (client *LrOSClient) PutAsyncNoHeaderInRetryHandleError(resp *azcore.Respon
 }
 
 // PutAsyncNoRetrySucceeded - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-func (client *LrOSClient) BeginPutAsyncNoRetrySucceeded(ctx context.Context, lrOSPutAsyncNoRetrySucceededOptions *LrOSPutAsyncNoRetrySucceededOptions) (*ProductPollerResponse, error) {
+func (client *LrOSClient) PutAsyncNoRetrySucceeded(ctx context.Context, lrOSPutAsyncNoRetrySucceededOptions *LrOSPutAsyncNoRetrySucceededOptions) (*azcore.Response, error) {
 	req, err := client.PutAsyncNoRetrySucceededCreateRequest(ctx, lrOSPutAsyncNoRetrySucceededOptions)
 	if err != nil {
 		return nil, err
@@ -2463,6 +2719,14 @@ func (client *LrOSClient) BeginPutAsyncNoRetrySucceeded(ctx context.Context, lrO
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.PutAsyncNoRetrySucceededHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LrOSClient) BeginPutAsyncNoRetrySucceeded(ctx context.Context, lrOSPutAsyncNoRetrySucceededOptions *LrOSPutAsyncNoRetrySucceededOptions) (*ProductPollerResponse, error) {
+	resp, err := client.PutAsyncNoRetrySucceeded(ctx, lrOSPutAsyncNoRetrySucceededOptions)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.PutAsyncNoRetrySucceededHandleResponse(resp)
 	if err != nil {
@@ -2523,7 +2787,7 @@ func (client *LrOSClient) PutAsyncNoRetrySucceededHandleError(resp *azcore.Respo
 }
 
 // PutAsyncNoRetrycanceled - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-func (client *LrOSClient) BeginPutAsyncNoRetrycanceled(ctx context.Context, lrOSPutAsyncNoRetrycanceledOptions *LrOSPutAsyncNoRetrycanceledOptions) (*ProductPollerResponse, error) {
+func (client *LrOSClient) PutAsyncNoRetrycanceled(ctx context.Context, lrOSPutAsyncNoRetrycanceledOptions *LrOSPutAsyncNoRetrycanceledOptions) (*azcore.Response, error) {
 	req, err := client.PutAsyncNoRetrycanceledCreateRequest(ctx, lrOSPutAsyncNoRetrycanceledOptions)
 	if err != nil {
 		return nil, err
@@ -2535,6 +2799,14 @@ func (client *LrOSClient) BeginPutAsyncNoRetrycanceled(ctx context.Context, lrOS
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.PutAsyncNoRetrycanceledHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LrOSClient) BeginPutAsyncNoRetrycanceled(ctx context.Context, lrOSPutAsyncNoRetrycanceledOptions *LrOSPutAsyncNoRetrycanceledOptions) (*ProductPollerResponse, error) {
+	resp, err := client.PutAsyncNoRetrycanceled(ctx, lrOSPutAsyncNoRetrycanceledOptions)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.PutAsyncNoRetrycanceledHandleResponse(resp)
 	if err != nil {
@@ -2595,7 +2867,7 @@ func (client *LrOSClient) PutAsyncNoRetrycanceledHandleError(resp *azcore.Respon
 }
 
 // PutAsyncNonResource - Long running put request with non resource.
-func (client *LrOSClient) BeginPutAsyncNonResource(ctx context.Context, lrOSPutAsyncNonResourceOptions *LrOSPutAsyncNonResourceOptions) (*SKUPollerResponse, error) {
+func (client *LrOSClient) PutAsyncNonResource(ctx context.Context, lrOSPutAsyncNonResourceOptions *LrOSPutAsyncNonResourceOptions) (*azcore.Response, error) {
 	req, err := client.PutAsyncNonResourceCreateRequest(ctx, lrOSPutAsyncNonResourceOptions)
 	if err != nil {
 		return nil, err
@@ -2607,6 +2879,14 @@ func (client *LrOSClient) BeginPutAsyncNonResource(ctx context.Context, lrOSPutA
 	}
 	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.PutAsyncNonResourceHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LrOSClient) BeginPutAsyncNonResource(ctx context.Context, lrOSPutAsyncNonResourceOptions *LrOSPutAsyncNonResourceOptions) (*SKUPollerResponse, error) {
+	resp, err := client.PutAsyncNonResource(ctx, lrOSPutAsyncNonResourceOptions)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.PutAsyncNonResourceHandleResponse(resp)
 	if err != nil {
@@ -2667,7 +2947,7 @@ func (client *LrOSClient) PutAsyncNonResourceHandleError(resp *azcore.Response) 
 }
 
 // PutAsyncRetryFailed - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-func (client *LrOSClient) BeginPutAsyncRetryFailed(ctx context.Context, lrOSPutAsyncRetryFailedOptions *LrOSPutAsyncRetryFailedOptions) (*ProductPollerResponse, error) {
+func (client *LrOSClient) PutAsyncRetryFailed(ctx context.Context, lrOSPutAsyncRetryFailedOptions *LrOSPutAsyncRetryFailedOptions) (*azcore.Response, error) {
 	req, err := client.PutAsyncRetryFailedCreateRequest(ctx, lrOSPutAsyncRetryFailedOptions)
 	if err != nil {
 		return nil, err
@@ -2679,6 +2959,14 @@ func (client *LrOSClient) BeginPutAsyncRetryFailed(ctx context.Context, lrOSPutA
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.PutAsyncRetryFailedHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LrOSClient) BeginPutAsyncRetryFailed(ctx context.Context, lrOSPutAsyncRetryFailedOptions *LrOSPutAsyncRetryFailedOptions) (*ProductPollerResponse, error) {
+	resp, err := client.PutAsyncRetryFailed(ctx, lrOSPutAsyncRetryFailedOptions)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.PutAsyncRetryFailedHandleResponse(resp)
 	if err != nil {
@@ -2739,7 +3027,7 @@ func (client *LrOSClient) PutAsyncRetryFailedHandleError(resp *azcore.Response) 
 }
 
 // PutAsyncRetrySucceeded - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-func (client *LrOSClient) BeginPutAsyncRetrySucceeded(ctx context.Context, lrOSPutAsyncRetrySucceededOptions *LrOSPutAsyncRetrySucceededOptions) (*ProductPollerResponse, error) {
+func (client *LrOSClient) PutAsyncRetrySucceeded(ctx context.Context, lrOSPutAsyncRetrySucceededOptions *LrOSPutAsyncRetrySucceededOptions) (*azcore.Response, error) {
 	req, err := client.PutAsyncRetrySucceededCreateRequest(ctx, lrOSPutAsyncRetrySucceededOptions)
 	if err != nil {
 		return nil, err
@@ -2751,6 +3039,14 @@ func (client *LrOSClient) BeginPutAsyncRetrySucceeded(ctx context.Context, lrOSP
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.PutAsyncRetrySucceededHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LrOSClient) BeginPutAsyncRetrySucceeded(ctx context.Context, lrOSPutAsyncRetrySucceededOptions *LrOSPutAsyncRetrySucceededOptions) (*ProductPollerResponse, error) {
+	resp, err := client.PutAsyncRetrySucceeded(ctx, lrOSPutAsyncRetrySucceededOptions)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.PutAsyncRetrySucceededHandleResponse(resp)
 	if err != nil {
@@ -2811,7 +3107,7 @@ func (client *LrOSClient) PutAsyncRetrySucceededHandleError(resp *azcore.Respons
 }
 
 // PutAsyncSubResource - Long running put request with sub resource.
-func (client *LrOSClient) BeginPutAsyncSubResource(ctx context.Context, lrOSPutAsyncSubResourceOptions *LrOSPutAsyncSubResourceOptions) (*SubProductPollerResponse, error) {
+func (client *LrOSClient) PutAsyncSubResource(ctx context.Context, lrOSPutAsyncSubResourceOptions *LrOSPutAsyncSubResourceOptions) (*azcore.Response, error) {
 	req, err := client.PutAsyncSubResourceCreateRequest(ctx, lrOSPutAsyncSubResourceOptions)
 	if err != nil {
 		return nil, err
@@ -2823,6 +3119,14 @@ func (client *LrOSClient) BeginPutAsyncSubResource(ctx context.Context, lrOSPutA
 	}
 	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.PutAsyncSubResourceHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LrOSClient) BeginPutAsyncSubResource(ctx context.Context, lrOSPutAsyncSubResourceOptions *LrOSPutAsyncSubResourceOptions) (*SubProductPollerResponse, error) {
+	resp, err := client.PutAsyncSubResource(ctx, lrOSPutAsyncSubResourceOptions)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.PutAsyncSubResourceHandleResponse(resp)
 	if err != nil {
@@ -2883,7 +3187,7 @@ func (client *LrOSClient) PutAsyncSubResourceHandleError(resp *azcore.Response) 
 }
 
 // PutNoHeaderInRetry - Long running put request, service returns a 202 to the initial request with location header. Subsequent calls to operation status do not contain location header.
-func (client *LrOSClient) BeginPutNoHeaderInRetry(ctx context.Context, lrOSPutNoHeaderInRetryOptions *LrOSPutNoHeaderInRetryOptions) (*ProductPollerResponse, error) {
+func (client *LrOSClient) PutNoHeaderInRetry(ctx context.Context, lrOSPutNoHeaderInRetryOptions *LrOSPutNoHeaderInRetryOptions) (*azcore.Response, error) {
 	req, err := client.PutNoHeaderInRetryCreateRequest(ctx, lrOSPutNoHeaderInRetryOptions)
 	if err != nil {
 		return nil, err
@@ -2895,6 +3199,14 @@ func (client *LrOSClient) BeginPutNoHeaderInRetry(ctx context.Context, lrOSPutNo
 	}
 	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.PutNoHeaderInRetryHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LrOSClient) BeginPutNoHeaderInRetry(ctx context.Context, lrOSPutNoHeaderInRetryOptions *LrOSPutNoHeaderInRetryOptions) (*ProductPollerResponse, error) {
+	resp, err := client.PutNoHeaderInRetry(ctx, lrOSPutNoHeaderInRetryOptions)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.PutNoHeaderInRetryHandleResponse(resp)
 	if err != nil {
@@ -2955,7 +3267,7 @@ func (client *LrOSClient) PutNoHeaderInRetryHandleError(resp *azcore.Response) e
 }
 
 // PutNonResource - Long running put request with non resource.
-func (client *LrOSClient) BeginPutNonResource(ctx context.Context, lrOSPutNonResourceOptions *LrOSPutNonResourceOptions) (*SKUPollerResponse, error) {
+func (client *LrOSClient) PutNonResource(ctx context.Context, lrOSPutNonResourceOptions *LrOSPutNonResourceOptions) (*azcore.Response, error) {
 	req, err := client.PutNonResourceCreateRequest(ctx, lrOSPutNonResourceOptions)
 	if err != nil {
 		return nil, err
@@ -2967,6 +3279,14 @@ func (client *LrOSClient) BeginPutNonResource(ctx context.Context, lrOSPutNonRes
 	}
 	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.PutNonResourceHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LrOSClient) BeginPutNonResource(ctx context.Context, lrOSPutNonResourceOptions *LrOSPutNonResourceOptions) (*SKUPollerResponse, error) {
+	resp, err := client.PutNonResource(ctx, lrOSPutNonResourceOptions)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.PutNonResourceHandleResponse(resp)
 	if err != nil {
@@ -3027,7 +3347,7 @@ func (client *LrOSClient) PutNonResourceHandleError(resp *azcore.Response) error
 }
 
 // PutSubResource - Long running put request with sub resource.
-func (client *LrOSClient) BeginPutSubResource(ctx context.Context, lrOSPutSubResourceOptions *LrOSPutSubResourceOptions) (*SubProductPollerResponse, error) {
+func (client *LrOSClient) PutSubResource(ctx context.Context, lrOSPutSubResourceOptions *LrOSPutSubResourceOptions) (*azcore.Response, error) {
 	req, err := client.PutSubResourceCreateRequest(ctx, lrOSPutSubResourceOptions)
 	if err != nil {
 		return nil, err
@@ -3039,6 +3359,14 @@ func (client *LrOSClient) BeginPutSubResource(ctx context.Context, lrOSPutSubRes
 	}
 	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.PutSubResourceHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LrOSClient) BeginPutSubResource(ctx context.Context, lrOSPutSubResourceOptions *LrOSPutSubResourceOptions) (*SubProductPollerResponse, error) {
+	resp, err := client.PutSubResource(ctx, lrOSPutSubResourceOptions)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.PutSubResourceHandleResponse(resp)
 	if err != nil {

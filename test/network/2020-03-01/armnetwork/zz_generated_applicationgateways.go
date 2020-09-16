@@ -83,7 +83,7 @@ func (client *ApplicationGatewaysClient) Do(req *azcore.Request) (*azcore.Respon
 }
 
 // BackendHealth - Gets the backend health of the specified application gateway in a resource group.
-func (client *ApplicationGatewaysClient) BeginBackendHealth(ctx context.Context, resourceGroupName string, applicationGatewayName string, applicationGatewaysBackendHealthOptions *ApplicationGatewaysBackendHealthOptions) (*ApplicationGatewayBackendHealthPollerResponse, error) {
+func (client *ApplicationGatewaysClient) BackendHealth(ctx context.Context, resourceGroupName string, applicationGatewayName string, applicationGatewaysBackendHealthOptions *ApplicationGatewaysBackendHealthOptions) (*azcore.Response, error) {
 	req, err := client.BackendHealthCreateRequest(ctx, resourceGroupName, applicationGatewayName, applicationGatewaysBackendHealthOptions)
 	if err != nil {
 		return nil, err
@@ -95,6 +95,14 @@ func (client *ApplicationGatewaysClient) BeginBackendHealth(ctx context.Context,
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.BackendHealthHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *ApplicationGatewaysClient) BeginBackendHealth(ctx context.Context, resourceGroupName string, applicationGatewayName string, applicationGatewaysBackendHealthOptions *ApplicationGatewaysBackendHealthOptions) (*ApplicationGatewayBackendHealthPollerResponse, error) {
+	resp, err := client.BackendHealth(ctx, resourceGroupName, applicationGatewayName, applicationGatewaysBackendHealthOptions)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.BackendHealthHandleResponse(resp)
 	if err != nil {
@@ -161,7 +169,7 @@ func (client *ApplicationGatewaysClient) BackendHealthHandleError(resp *azcore.R
 }
 
 // BackendHealthOnDemand - Gets the backend health for given combination of backend pool and http setting of the specified application gateway in a resource group.
-func (client *ApplicationGatewaysClient) BeginBackendHealthOnDemand(ctx context.Context, resourceGroupName string, applicationGatewayName string, probeRequest ApplicationGatewayOnDemandProbe, applicationGatewaysBackendHealthOnDemandOptions *ApplicationGatewaysBackendHealthOnDemandOptions) (*ApplicationGatewayBackendHealthOnDemandPollerResponse, error) {
+func (client *ApplicationGatewaysClient) BackendHealthOnDemand(ctx context.Context, resourceGroupName string, applicationGatewayName string, probeRequest ApplicationGatewayOnDemandProbe, applicationGatewaysBackendHealthOnDemandOptions *ApplicationGatewaysBackendHealthOnDemandOptions) (*azcore.Response, error) {
 	req, err := client.BackendHealthOnDemandCreateRequest(ctx, resourceGroupName, applicationGatewayName, probeRequest, applicationGatewaysBackendHealthOnDemandOptions)
 	if err != nil {
 		return nil, err
@@ -173,6 +181,14 @@ func (client *ApplicationGatewaysClient) BeginBackendHealthOnDemand(ctx context.
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.BackendHealthOnDemandHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *ApplicationGatewaysClient) BeginBackendHealthOnDemand(ctx context.Context, resourceGroupName string, applicationGatewayName string, probeRequest ApplicationGatewayOnDemandProbe, applicationGatewaysBackendHealthOnDemandOptions *ApplicationGatewaysBackendHealthOnDemandOptions) (*ApplicationGatewayBackendHealthOnDemandPollerResponse, error) {
+	resp, err := client.BackendHealthOnDemand(ctx, resourceGroupName, applicationGatewayName, probeRequest, applicationGatewaysBackendHealthOnDemandOptions)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.BackendHealthOnDemandHandleResponse(resp)
 	if err != nil {
@@ -239,7 +255,7 @@ func (client *ApplicationGatewaysClient) BackendHealthOnDemandHandleError(resp *
 }
 
 // CreateOrUpdate - Creates or updates the specified application gateway.
-func (client *ApplicationGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, applicationGatewayName string, parameters ApplicationGateway) (*ApplicationGatewayPollerResponse, error) {
+func (client *ApplicationGatewaysClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, applicationGatewayName string, parameters ApplicationGateway) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, applicationGatewayName, parameters)
 	if err != nil {
 		return nil, err
@@ -251,6 +267,14 @@ func (client *ApplicationGatewaysClient) BeginCreateOrUpdate(ctx context.Context
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *ApplicationGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, applicationGatewayName string, parameters ApplicationGateway) (*ApplicationGatewayPollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, applicationGatewayName, parameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -314,7 +338,7 @@ func (client *ApplicationGatewaysClient) CreateOrUpdateHandleError(resp *azcore.
 }
 
 // Delete - Deletes the specified application gateway.
-func (client *ApplicationGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, applicationGatewayName string) (*HTTPPollerResponse, error) {
+func (client *ApplicationGatewaysClient) Delete(ctx context.Context, resourceGroupName string, applicationGatewayName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, applicationGatewayName)
 	if err != nil {
 		return nil, err
@@ -326,6 +350,14 @@ func (client *ApplicationGatewaysClient) BeginDelete(ctx context.Context, resour
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *ApplicationGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, applicationGatewayName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, applicationGatewayName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -878,7 +910,7 @@ func (client *ApplicationGatewaysClient) ListAvailableWafRuleSetsHandleError(res
 }
 
 // Start - Starts the specified application gateway.
-func (client *ApplicationGatewaysClient) BeginStart(ctx context.Context, resourceGroupName string, applicationGatewayName string) (*HTTPPollerResponse, error) {
+func (client *ApplicationGatewaysClient) Start(ctx context.Context, resourceGroupName string, applicationGatewayName string) (*azcore.Response, error) {
 	req, err := client.StartCreateRequest(ctx, resourceGroupName, applicationGatewayName)
 	if err != nil {
 		return nil, err
@@ -890,6 +922,14 @@ func (client *ApplicationGatewaysClient) BeginStart(ctx context.Context, resourc
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.StartHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *ApplicationGatewaysClient) BeginStart(ctx context.Context, resourceGroupName string, applicationGatewayName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Start(ctx, resourceGroupName, applicationGatewayName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.StartHandleResponse(resp)
 	if err != nil {
@@ -953,7 +993,7 @@ func (client *ApplicationGatewaysClient) StartHandleError(resp *azcore.Response)
 }
 
 // Stop - Stops the specified application gateway in a resource group.
-func (client *ApplicationGatewaysClient) BeginStop(ctx context.Context, resourceGroupName string, applicationGatewayName string) (*HTTPPollerResponse, error) {
+func (client *ApplicationGatewaysClient) Stop(ctx context.Context, resourceGroupName string, applicationGatewayName string) (*azcore.Response, error) {
 	req, err := client.StopCreateRequest(ctx, resourceGroupName, applicationGatewayName)
 	if err != nil {
 		return nil, err
@@ -965,6 +1005,14 @@ func (client *ApplicationGatewaysClient) BeginStop(ctx context.Context, resource
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.StopHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *ApplicationGatewaysClient) BeginStop(ctx context.Context, resourceGroupName string, applicationGatewayName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Stop(ctx, resourceGroupName, applicationGatewayName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.StopHandleResponse(resp)
 	if err != nil {

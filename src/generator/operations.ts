@@ -212,8 +212,15 @@ function generateOperation(op: Operation, imports: ImportManager, isDataPlane: b
   if (isMultiRespOperation(op)) {
     text += generateMultiRespComment(op);
   }
+  // value used to store the output text for the LRO operation
+  let lroOp = '';
   if (op.language.go!.methodPrefix) {
-    text += `func (client *${clientName}) ${op.language.go!.methodPrefix}${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;
+    if (isLROOperation(op) && !isDataPlane) {
+      lroOp += `func (client *${clientName}) ${op.language.go!.methodPrefix}${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;
+      text += `func (client *${clientName}) ${op.language.go!.name}(${params}) (*azcore.Response, error) {\n`;
+    } else {
+      text += `func (client *${clientName}) ${op.language.go!.methodPrefix}${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;
+    }
   } else {
     text += `func (client *${clientName}) ${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;
   }
@@ -224,16 +231,6 @@ function generateOperation(op: Operation, imports: ImportManager, isDataPlane: b
     reqParams[i] = reqParams[i].trim().split(' ')[0];
   }
   if (isLROOperation(op)) {
-    if (isDataPlane) {
-      imports.add('errors');
-      text += `\treturn nil, errors.New("NYI")\n`;
-      // closing braces
-      text += '}\n\n';
-      text += addResumePollerMethod(op, clientName, isDataPlane);
-      return text;
-    }
-    imports.add('github.com/Azure/azure-sdk-for-go/sdk/armcore');
-    imports.add('time');
     text += `\treq, err := client.${info.protocolNaming.requestMethod}(${reqParams.join(', ')})\n`;
     text += `\tif err != nil {\n`;
     text += `\t\treturn nil, err\n`;
@@ -247,63 +244,75 @@ function generateOperation(op: Operation, imports: ImportManager, isDataPlane: b
     text += `\tif !resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
     text += `\t\treturn nil, client.${info.protocolNaming.errorMethod}(resp)\n`;
     text += '\t}\n';
-    if (!op.responses) {
-      text += '\tresult := &HTTPResponse{\n';
-      text += '\t\tresult.RawResponse: resp\n';
-      text += '\t}\n';
-    } else {
-      text += `\tresult, err := client.${info.protocolNaming.responseMethod}(resp)\n`;
-      text += `\tif err != nil {\n`;
-      text += `\t\treturn nil, err\n`;
-      text += `\t}\n`;
-    }
-    // LRO operation might have a special configuration set in x-ms-long-running-operation-options
-    // which indicates a specific url to perform the final Get operation on
-    let finalState = '';
-    if (op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via']) {
-      finalState = op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via'];
-    }
-    text += `\tpt, err := armcore.NewPoller("${clientName}.${op.language.go!.name}", "${finalState}", resp, client.${info.protocolNaming.errorMethod})\n`;
-    text += '\tif err != nil {\n';
-    text += '\t\treturn nil, err\n';
-    text += '\t}\n';
-    text += `\tpoller := &${camelCase(op.language.go!.pollerType.name)}{\n`;
-    text += '\t\tpt: pt,\n';
-    if (isPageableOperation(op)) {
-      if (statusCodes.indexOf('200') < 0) {
-        statusCodes.push('200');
-      }
-      if (statusCodes.indexOf('204') < 0) {
-        statusCodes.push('204');
-      }
-      statusCodes.sort();
-      text += `\t\terrHandler: func(resp *azcore.Response) error {\n`;
-      text += `\t\t\tif resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
-      text += `\t\t\t\treturn nil\n`;
-      text += '\t\t\t}\n';
-      text += `\t\t\treturn client.${info.protocolNaming.errorMethod}(resp)\n`;
-      text += '\t\t},\n';
-      text += `\t\trespHandler: func(resp *azcore.Response) (*${(<SchemaResponse>op.responses![0]).schema.language.go!.responseType.name}, error) {\n`;
-      text += generateResponseUnmarshaller(op.responses![0], false, imports);
-      text += '\t\t},\n';
-    }
-    text += '\t\tpipeline: client.p,\n';
-    text += '\t}\n';
-    text += '\tresult.Poller = poller\n';
-    // determine the poller response based on the name and whether is is a pageable operation
-    let pollerResponse = '*http.Response';
-    if (isPageableOperation(op)) {
-      pollerResponse = op.language.go!.pageableType.name;
-    } else if (isSchemaResponse(op.responses![0])) {
-      pollerResponse = '*' + (<SchemaResponse>op.responses![0]).schema.language.go!.responseType.name;
-    }
-    text += `\tresult.PollUntilDone = func(ctx context.Context, frequency time.Duration) (${pollerResponse}, error) {\n`;
-    text += `\t\treturn poller.pollUntilDone(ctx, frequency)\n`;
-    text += `\t}\n`;
-    text += `\treturn result, nil\n`;
+    text += '\treturn resp, nil\n';
     // closing braces
     text += '}\n\n';
-    text += addResumePollerMethod(op, clientName, isDataPlane);
+    if (!isDataPlane) {
+      imports.add('github.com/Azure/azure-sdk-for-go/sdk/armcore');
+      imports.add('time');
+      lroOp += `\tresp, err := client.${op.language.go!.name}(${reqParams.join(', ')})\n`;
+      lroOp += `\tif err != nil {\n`;
+      lroOp += `\t\treturn nil, err\n`;
+      lroOp += `\t}\n`;
+      if (!op.responses) {
+        lroOp += '\tresult := &HTTPResponse{\n';
+        lroOp += '\t\tresult.RawResponse: resp\n';
+        lroOp += '\t}\n';
+      } else {
+        lroOp += `\tresult, err := client.${info.protocolNaming.responseMethod}(resp)\n`;
+        lroOp += `\tif err != nil {\n`;
+        lroOp += `\t\treturn nil, err\n`;
+        lroOp += `\t}\n`;
+      }
+      // LRO operation might have a special configuration set in x-ms-long-running-operation-options
+      // which indicates a specific url to perform the final Get operation on
+      let finalState = '';
+      if (op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via']) {
+        finalState = op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via'];
+      }
+      lroOp += `\tpt, err := armcore.NewPoller("${clientName}.${op.language.go!.name}", "${finalState}", resp, client.${info.protocolNaming.errorMethod})\n`;
+      lroOp += '\tif err != nil {\n';
+      lroOp += '\t\treturn nil, err\n';
+      lroOp += '\t}\n';
+      lroOp += `\tpoller := &${camelCase(op.language.go!.pollerType.name)}{\n`;
+      lroOp += '\t\tpt: pt,\n';
+      if (isPageableOperation(op)) {
+        if (statusCodes.indexOf('200') < 0) {
+          statusCodes.push('200');
+        }
+        if (statusCodes.indexOf('204') < 0) {
+          statusCodes.push('204');
+        }
+        statusCodes.sort();
+        lroOp += `\t\terrHandler: func(resp *azcore.Response) error {\n`;
+        lroOp += `\t\t\tif resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
+        lroOp += `\t\t\t\treturn nil\n`;
+        lroOp += '\t\t\t}\n';
+        lroOp += `\t\t\treturn client.${info.protocolNaming.errorMethod}(resp)\n`;
+        lroOp += '\t\t},\n';
+        lroOp += `\t\trespHandler: func(resp *azcore.Response) (*${(<SchemaResponse>op.responses![0]).schema.language.go!.responseType.name}, error) {\n`;
+        lroOp += generateResponseUnmarshaller(op.responses![0], false, imports);
+        lroOp += '\t\t},\n';
+      }
+      lroOp += '\t\tpipeline: client.p,\n';
+      lroOp += '\t}\n';
+      lroOp += '\tresult.Poller = poller\n';
+      // determine the poller response based on the name and whether is is a pageable operation
+      let pollerResponse = '*http.Response';
+      if (isPageableOperation(op)) {
+        pollerResponse = op.language.go!.pageableType.name;
+      } else if (isSchemaResponse(op.responses![0])) {
+        pollerResponse = '*' + (<SchemaResponse>op.responses![0]).schema.language.go!.responseType.name;
+      }
+      lroOp += `\tresult.PollUntilDone = func(ctx context.Context, frequency time.Duration) (${pollerResponse}, error) {\n`;
+      lroOp += `\t\treturn poller.pollUntilDone(ctx, frequency)\n`;
+      lroOp += `\t}\n`;
+      lroOp += `\treturn result, nil\n`;
+      // closing braces
+      lroOp += '}\n\n';
+      lroOp += addResumePollerMethod(op, clientName, isDataPlane);
+    }
+    text += lroOp;
     return text;
   } else if (isPageableOperation(op)) {
     imports.add('context');

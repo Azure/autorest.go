@@ -57,7 +57,7 @@ func (client *SubnetsClient) Do(req *azcore.Request) (*azcore.Response, error) {
 }
 
 // CreateOrUpdate - Creates or updates a subnet in the specified virtual network.
-func (client *SubnetsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, subnetParameters Subnet) (*SubnetPollerResponse, error) {
+func (client *SubnetsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, subnetParameters Subnet) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, virtualNetworkName, subnetName, subnetParameters)
 	if err != nil {
 		return nil, err
@@ -69,6 +69,14 @@ func (client *SubnetsClient) BeginCreateOrUpdate(ctx context.Context, resourceGr
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *SubnetsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, subnetParameters Subnet) (*SubnetPollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, virtualNetworkName, subnetName, subnetParameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -133,7 +141,7 @@ func (client *SubnetsClient) CreateOrUpdateHandleError(resp *azcore.Response) er
 }
 
 // Delete - Deletes the specified subnet.
-func (client *SubnetsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string) (*HTTPPollerResponse, error) {
+func (client *SubnetsClient) Delete(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, virtualNetworkName, subnetName)
 	if err != nil {
 		return nil, err
@@ -145,6 +153,14 @@ func (client *SubnetsClient) BeginDelete(ctx context.Context, resourceGroupName 
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *SubnetsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, virtualNetworkName, subnetName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -312,7 +328,7 @@ func (client *SubnetsClient) ListHandleError(resp *azcore.Response) error {
 }
 
 // PrepareNetworkPolicies - Prepares a subnet by applying network intent policies.
-func (client *SubnetsClient) BeginPrepareNetworkPolicies(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, prepareNetworkPoliciesRequestParameters PrepareNetworkPoliciesRequest) (*HTTPPollerResponse, error) {
+func (client *SubnetsClient) PrepareNetworkPolicies(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, prepareNetworkPoliciesRequestParameters PrepareNetworkPoliciesRequest) (*azcore.Response, error) {
 	req, err := client.PrepareNetworkPoliciesCreateRequest(ctx, resourceGroupName, virtualNetworkName, subnetName, prepareNetworkPoliciesRequestParameters)
 	if err != nil {
 		return nil, err
@@ -324,6 +340,14 @@ func (client *SubnetsClient) BeginPrepareNetworkPolicies(ctx context.Context, re
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.PrepareNetworkPoliciesHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *SubnetsClient) BeginPrepareNetworkPolicies(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, prepareNetworkPoliciesRequestParameters PrepareNetworkPoliciesRequest) (*HTTPPollerResponse, error) {
+	resp, err := client.PrepareNetworkPolicies(ctx, resourceGroupName, virtualNetworkName, subnetName, prepareNetworkPoliciesRequestParameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.PrepareNetworkPoliciesHandleResponse(resp)
 	if err != nil {
@@ -388,7 +412,7 @@ func (client *SubnetsClient) PrepareNetworkPoliciesHandleError(resp *azcore.Resp
 }
 
 // UnprepareNetworkPolicies - Unprepares a subnet by removing network intent policies.
-func (client *SubnetsClient) BeginUnprepareNetworkPolicies(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, unprepareNetworkPoliciesRequestParameters UnprepareNetworkPoliciesRequest) (*HTTPPollerResponse, error) {
+func (client *SubnetsClient) UnprepareNetworkPolicies(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, unprepareNetworkPoliciesRequestParameters UnprepareNetworkPoliciesRequest) (*azcore.Response, error) {
 	req, err := client.UnprepareNetworkPoliciesCreateRequest(ctx, resourceGroupName, virtualNetworkName, subnetName, unprepareNetworkPoliciesRequestParameters)
 	if err != nil {
 		return nil, err
@@ -400,6 +424,14 @@ func (client *SubnetsClient) BeginUnprepareNetworkPolicies(ctx context.Context, 
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.UnprepareNetworkPoliciesHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *SubnetsClient) BeginUnprepareNetworkPolicies(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, unprepareNetworkPoliciesRequestParameters UnprepareNetworkPoliciesRequest) (*HTTPPollerResponse, error) {
+	resp, err := client.UnprepareNetworkPolicies(ctx, resourceGroupName, virtualNetworkName, subnetName, unprepareNetworkPoliciesRequestParameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.UnprepareNetworkPoliciesHandleResponse(resp)
 	if err != nil {

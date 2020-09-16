@@ -103,7 +103,7 @@ func (client *NetworkProfilesClient) CreateOrUpdateHandleError(resp *azcore.Resp
 }
 
 // Delete - Deletes the specified network profile.
-func (client *NetworkProfilesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkProfileName string) (*HTTPPollerResponse, error) {
+func (client *NetworkProfilesClient) Delete(ctx context.Context, resourceGroupName string, networkProfileName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, networkProfileName)
 	if err != nil {
 		return nil, err
@@ -115,6 +115,14 @@ func (client *NetworkProfilesClient) BeginDelete(ctx context.Context, resourceGr
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *NetworkProfilesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkProfileName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, networkProfileName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {

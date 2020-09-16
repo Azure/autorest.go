@@ -51,7 +51,7 @@ func (client *ExpressRouteGatewaysClient) Do(req *azcore.Request) (*azcore.Respo
 }
 
 // CreateOrUpdate - Creates or updates a ExpressRoute gateway in a specified resource group.
-func (client *ExpressRouteGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, putExpressRouteGatewayParameters ExpressRouteGateway) (*ExpressRouteGatewayPollerResponse, error) {
+func (client *ExpressRouteGatewaysClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, putExpressRouteGatewayParameters ExpressRouteGateway) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, expressRouteGatewayName, putExpressRouteGatewayParameters)
 	if err != nil {
 		return nil, err
@@ -63,6 +63,14 @@ func (client *ExpressRouteGatewaysClient) BeginCreateOrUpdate(ctx context.Contex
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *ExpressRouteGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, putExpressRouteGatewayParameters ExpressRouteGateway) (*ExpressRouteGatewayPollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, expressRouteGatewayName, putExpressRouteGatewayParameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -126,7 +134,7 @@ func (client *ExpressRouteGatewaysClient) CreateOrUpdateHandleError(resp *azcore
 }
 
 // Delete - Deletes the specified ExpressRoute gateway in a resource group. An ExpressRoute gateway resource can only be deleted when there are no connection subresources.
-func (client *ExpressRouteGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, expressRouteGatewayName string) (*HTTPPollerResponse, error) {
+func (client *ExpressRouteGatewaysClient) Delete(ctx context.Context, resourceGroupName string, expressRouteGatewayName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, expressRouteGatewayName)
 	if err != nil {
 		return nil, err
@@ -138,6 +146,14 @@ func (client *ExpressRouteGatewaysClient) BeginDelete(ctx context.Context, resou
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *ExpressRouteGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, expressRouteGatewayName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, expressRouteGatewayName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {

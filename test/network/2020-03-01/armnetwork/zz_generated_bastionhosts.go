@@ -51,7 +51,7 @@ func (client *BastionHostsClient) Do(req *azcore.Request) (*azcore.Response, err
 }
 
 // CreateOrUpdate - Creates or updates the specified Bastion Host.
-func (client *BastionHostsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, bastionHostName string, parameters BastionHost) (*BastionHostPollerResponse, error) {
+func (client *BastionHostsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, bastionHostName string, parameters BastionHost) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, bastionHostName, parameters)
 	if err != nil {
 		return nil, err
@@ -63,6 +63,14 @@ func (client *BastionHostsClient) BeginCreateOrUpdate(ctx context.Context, resou
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *BastionHostsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, bastionHostName string, parameters BastionHost) (*BastionHostPollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, bastionHostName, parameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -126,7 +134,7 @@ func (client *BastionHostsClient) CreateOrUpdateHandleError(resp *azcore.Respons
 }
 
 // Delete - Deletes the specified Bastion Host.
-func (client *BastionHostsClient) BeginDelete(ctx context.Context, resourceGroupName string, bastionHostName string) (*HTTPPollerResponse, error) {
+func (client *BastionHostsClient) Delete(ctx context.Context, resourceGroupName string, bastionHostName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, bastionHostName)
 	if err != nil {
 		return nil, err
@@ -138,6 +146,14 @@ func (client *BastionHostsClient) BeginDelete(ctx context.Context, resourceGroup
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *BastionHostsClient) BeginDelete(ctx context.Context, resourceGroupName string, bastionHostName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, bastionHostName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {

@@ -49,7 +49,7 @@ func (client *SecurityRulesClient) Do(req *azcore.Request) (*azcore.Response, er
 }
 
 // CreateOrUpdate - Creates or updates a security rule in the specified network security group.
-func (client *SecurityRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, securityRuleParameters SecurityRule) (*SecurityRulePollerResponse, error) {
+func (client *SecurityRulesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, securityRuleParameters SecurityRule) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, securityRuleName, securityRuleParameters)
 	if err != nil {
 		return nil, err
@@ -61,6 +61,14 @@ func (client *SecurityRulesClient) BeginCreateOrUpdate(ctx context.Context, reso
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *SecurityRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, securityRuleParameters SecurityRule) (*SecurityRulePollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, networkSecurityGroupName, securityRuleName, securityRuleParameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -125,7 +133,7 @@ func (client *SecurityRulesClient) CreateOrUpdateHandleError(resp *azcore.Respon
 }
 
 // Delete - Deletes the specified network security rule.
-func (client *SecurityRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string) (*HTTPPollerResponse, error) {
+func (client *SecurityRulesClient) Delete(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, securityRuleName)
 	if err != nil {
 		return nil, err
@@ -137,6 +145,14 @@ func (client *SecurityRulesClient) BeginDelete(ctx context.Context, resourceGrou
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *SecurityRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, networkSecurityGroupName, securityRuleName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {

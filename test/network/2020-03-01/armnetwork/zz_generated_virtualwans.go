@@ -53,7 +53,7 @@ func (client *VirtualWansClient) Do(req *azcore.Request) (*azcore.Response, erro
 }
 
 // CreateOrUpdate - Creates a VirtualWAN resource if it doesn't exist else updates the existing VirtualWAN.
-func (client *VirtualWansClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualWanName string, wanParameters VirtualWan) (*VirtualWanPollerResponse, error) {
+func (client *VirtualWansClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, virtualWanName string, wanParameters VirtualWan) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, virtualWanName, wanParameters)
 	if err != nil {
 		return nil, err
@@ -65,6 +65,14 @@ func (client *VirtualWansClient) BeginCreateOrUpdate(ctx context.Context, resour
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *VirtualWansClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualWanName string, wanParameters VirtualWan) (*VirtualWanPollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, virtualWanName, wanParameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -128,7 +136,7 @@ func (client *VirtualWansClient) CreateOrUpdateHandleError(resp *azcore.Response
 }
 
 // Delete - Deletes a VirtualWAN.
-func (client *VirtualWansClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualWanName string) (*HTTPPollerResponse, error) {
+func (client *VirtualWansClient) Delete(ctx context.Context, resourceGroupName string, virtualWanName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, virtualWanName)
 	if err != nil {
 		return nil, err
@@ -140,6 +148,14 @@ func (client *VirtualWansClient) BeginDelete(ctx context.Context, resourceGroupN
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *VirtualWansClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualWanName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, virtualWanName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {

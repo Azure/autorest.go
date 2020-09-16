@@ -53,7 +53,7 @@ func (client *ExpressRoutePortsClient) Do(req *azcore.Request) (*azcore.Response
 }
 
 // CreateOrUpdate - Creates or updates the specified ExpressRoutePort resource.
-func (client *ExpressRoutePortsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, expressRoutePortName string, parameters ExpressRoutePort) (*ExpressRoutePortPollerResponse, error) {
+func (client *ExpressRoutePortsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, expressRoutePortName string, parameters ExpressRoutePort) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, expressRoutePortName, parameters)
 	if err != nil {
 		return nil, err
@@ -65,6 +65,14 @@ func (client *ExpressRoutePortsClient) BeginCreateOrUpdate(ctx context.Context, 
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *ExpressRoutePortsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, expressRoutePortName string, parameters ExpressRoutePort) (*ExpressRoutePortPollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, expressRoutePortName, parameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -128,7 +136,7 @@ func (client *ExpressRoutePortsClient) CreateOrUpdateHandleError(resp *azcore.Re
 }
 
 // Delete - Deletes the specified ExpressRoutePort resource.
-func (client *ExpressRoutePortsClient) BeginDelete(ctx context.Context, resourceGroupName string, expressRoutePortName string) (*HTTPPollerResponse, error) {
+func (client *ExpressRoutePortsClient) Delete(ctx context.Context, resourceGroupName string, expressRoutePortName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, expressRoutePortName)
 	if err != nil {
 		return nil, err
@@ -140,6 +148,14 @@ func (client *ExpressRoutePortsClient) BeginDelete(ctx context.Context, resource
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *ExpressRoutePortsClient) BeginDelete(ctx context.Context, resourceGroupName string, expressRoutePortName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, expressRoutePortName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {

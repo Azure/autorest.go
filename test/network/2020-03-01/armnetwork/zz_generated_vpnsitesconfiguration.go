@@ -41,7 +41,7 @@ func (client *VpnSitesConfigurationClient) Do(req *azcore.Request) (*azcore.Resp
 }
 
 // Download - Gives the sas-url to download the configurations for vpn-sites in a resource group.
-func (client *VpnSitesConfigurationClient) BeginDownload(ctx context.Context, resourceGroupName string, virtualWanName string, request GetVpnSitesConfigurationRequest) (*HTTPPollerResponse, error) {
+func (client *VpnSitesConfigurationClient) Download(ctx context.Context, resourceGroupName string, virtualWanName string, request GetVpnSitesConfigurationRequest) (*azcore.Response, error) {
 	req, err := client.DownloadCreateRequest(ctx, resourceGroupName, virtualWanName, request)
 	if err != nil {
 		return nil, err
@@ -53,6 +53,14 @@ func (client *VpnSitesConfigurationClient) BeginDownload(ctx context.Context, re
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.DownloadHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *VpnSitesConfigurationClient) BeginDownload(ctx context.Context, resourceGroupName string, virtualWanName string, request GetVpnSitesConfigurationRequest) (*HTTPPollerResponse, error) {
+	resp, err := client.Download(ctx, resourceGroupName, virtualWanName, request)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DownloadHandleResponse(resp)
 	if err != nil {

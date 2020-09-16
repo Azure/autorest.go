@@ -53,7 +53,7 @@ func (client *NatGatewaysClient) Do(req *azcore.Request) (*azcore.Response, erro
 }
 
 // CreateOrUpdate - Creates or updates a nat gateway.
-func (client *NatGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, natGatewayName string, parameters NatGateway) (*NatGatewayPollerResponse, error) {
+func (client *NatGatewaysClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, natGatewayName string, parameters NatGateway) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, natGatewayName, parameters)
 	if err != nil {
 		return nil, err
@@ -65,6 +65,14 @@ func (client *NatGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resour
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusAccepted) {
 		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *NatGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, natGatewayName string, parameters NatGateway) (*NatGatewayPollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, natGatewayName, parameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -128,7 +136,7 @@ func (client *NatGatewaysClient) CreateOrUpdateHandleError(resp *azcore.Response
 }
 
 // Delete - Deletes the specified nat gateway.
-func (client *NatGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, natGatewayName string) (*HTTPPollerResponse, error) {
+func (client *NatGatewaysClient) Delete(ctx context.Context, resourceGroupName string, natGatewayName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, natGatewayName)
 	if err != nil {
 		return nil, err
@@ -140,6 +148,14 @@ func (client *NatGatewaysClient) BeginDelete(ctx context.Context, resourceGroupN
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *NatGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, natGatewayName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, natGatewayName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {

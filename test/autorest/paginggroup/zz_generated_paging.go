@@ -311,7 +311,7 @@ func (client *PagingClient) GetMultiplePagesFragmentWithGroupingNextLinkHandleEr
 }
 
 // GetMultiplePagesLro - A long-running paging operation that includes a nextLink that has 10 pages
-func (client *PagingClient) BeginGetMultiplePagesLro(ctx context.Context, pagingGetMultiplePagesLroOptions *PagingGetMultiplePagesLroOptions) (*ProductResultPagerPollerResponse, error) {
+func (client *PagingClient) GetMultiplePagesLro(ctx context.Context, pagingGetMultiplePagesLroOptions *PagingGetMultiplePagesLroOptions) (*azcore.Response, error) {
 	req, err := client.GetMultiplePagesLroCreateRequest(ctx, pagingGetMultiplePagesLroOptions)
 	if err != nil {
 		return nil, err
@@ -323,6 +323,14 @@ func (client *PagingClient) BeginGetMultiplePagesLro(ctx context.Context, paging
 	}
 	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.GetMultiplePagesLroHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *PagingClient) BeginGetMultiplePagesLro(ctx context.Context, pagingGetMultiplePagesLroOptions *PagingGetMultiplePagesLroOptions) (*ProductResultPagerPollerResponse, error) {
+	resp, err := client.GetMultiplePagesLro(ctx, pagingGetMultiplePagesLroOptions)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.GetMultiplePagesLroHandleResponse(resp)
 	if err != nil {

@@ -49,7 +49,7 @@ func (client *InboundNatRulesClient) Do(req *azcore.Request) (*azcore.Response, 
 }
 
 // CreateOrUpdate - Creates or updates a load balancer inbound nat rule.
-func (client *InboundNatRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, inboundNatRuleParameters InboundNatRule) (*InboundNatRulePollerResponse, error) {
+func (client *InboundNatRulesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, inboundNatRuleParameters InboundNatRule) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, loadBalancerName, inboundNatRuleName, inboundNatRuleParameters)
 	if err != nil {
 		return nil, err
@@ -61,6 +61,14 @@ func (client *InboundNatRulesClient) BeginCreateOrUpdate(ctx context.Context, re
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *InboundNatRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, inboundNatRuleParameters InboundNatRule) (*InboundNatRulePollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, loadBalancerName, inboundNatRuleName, inboundNatRuleParameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -125,7 +133,7 @@ func (client *InboundNatRulesClient) CreateOrUpdateHandleError(resp *azcore.Resp
 }
 
 // Delete - Deletes the specified load balancer inbound nat rule.
-func (client *InboundNatRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string) (*HTTPPollerResponse, error) {
+func (client *InboundNatRulesClient) Delete(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, loadBalancerName, inboundNatRuleName)
 	if err != nil {
 		return nil, err
@@ -137,6 +145,14 @@ func (client *InboundNatRulesClient) BeginDelete(ctx context.Context, resourceGr
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *InboundNatRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, loadBalancerName, inboundNatRuleName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {

@@ -53,7 +53,7 @@ func (client *LoadBalancersClient) Do(req *azcore.Request) (*azcore.Response, er
 }
 
 // CreateOrUpdate - Creates or updates a load balancer.
-func (client *LoadBalancersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, loadBalancerName string, parameters LoadBalancer) (*LoadBalancerPollerResponse, error) {
+func (client *LoadBalancersClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, loadBalancerName string, parameters LoadBalancer) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, loadBalancerName, parameters)
 	if err != nil {
 		return nil, err
@@ -65,6 +65,14 @@ func (client *LoadBalancersClient) BeginCreateOrUpdate(ctx context.Context, reso
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LoadBalancersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, loadBalancerName string, parameters LoadBalancer) (*LoadBalancerPollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, loadBalancerName, parameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -128,7 +136,7 @@ func (client *LoadBalancersClient) CreateOrUpdateHandleError(resp *azcore.Respon
 }
 
 // Delete - Deletes the specified load balancer.
-func (client *LoadBalancersClient) BeginDelete(ctx context.Context, resourceGroupName string, loadBalancerName string) (*HTTPPollerResponse, error) {
+func (client *LoadBalancersClient) Delete(ctx context.Context, resourceGroupName string, loadBalancerName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, loadBalancerName)
 	if err != nil {
 		return nil, err
@@ -140,6 +148,14 @@ func (client *LoadBalancersClient) BeginDelete(ctx context.Context, resourceGrou
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *LoadBalancersClient) BeginDelete(ctx context.Context, resourceGroupName string, loadBalancerName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, loadBalancerName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {

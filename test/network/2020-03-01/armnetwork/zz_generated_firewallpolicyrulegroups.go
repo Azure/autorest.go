@@ -49,7 +49,7 @@ func (client *FirewallPolicyRuleGroupsClient) Do(req *azcore.Request) (*azcore.R
 }
 
 // CreateOrUpdate - Creates or updates the specified FirewallPolicyRuleGroup.
-func (client *FirewallPolicyRuleGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, firewallPolicyName string, ruleGroupName string, parameters FirewallPolicyRuleGroup) (*FirewallPolicyRuleGroupPollerResponse, error) {
+func (client *FirewallPolicyRuleGroupsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, firewallPolicyName string, ruleGroupName string, parameters FirewallPolicyRuleGroup) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, firewallPolicyName, ruleGroupName, parameters)
 	if err != nil {
 		return nil, err
@@ -61,6 +61,14 @@ func (client *FirewallPolicyRuleGroupsClient) BeginCreateOrUpdate(ctx context.Co
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *FirewallPolicyRuleGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, firewallPolicyName string, ruleGroupName string, parameters FirewallPolicyRuleGroup) (*FirewallPolicyRuleGroupPollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, firewallPolicyName, ruleGroupName, parameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -125,7 +133,7 @@ func (client *FirewallPolicyRuleGroupsClient) CreateOrUpdateHandleError(resp *az
 }
 
 // Delete - Deletes the specified FirewallPolicyRuleGroup.
-func (client *FirewallPolicyRuleGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, firewallPolicyName string, ruleGroupName string) (*HTTPPollerResponse, error) {
+func (client *FirewallPolicyRuleGroupsClient) Delete(ctx context.Context, resourceGroupName string, firewallPolicyName string, ruleGroupName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, firewallPolicyName, ruleGroupName)
 	if err != nil {
 		return nil, err
@@ -137,6 +145,14 @@ func (client *FirewallPolicyRuleGroupsClient) BeginDelete(ctx context.Context, r
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *FirewallPolicyRuleGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, firewallPolicyName string, ruleGroupName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, firewallPolicyName, ruleGroupName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {

@@ -61,7 +61,7 @@ func (client *ExpressRouteCrossConnectionsClient) Do(req *azcore.Request) (*azco
 }
 
 // CreateOrUpdate - Update the specified ExpressRouteCrossConnection.
-func (client *ExpressRouteCrossConnectionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, crossConnectionName string, parameters ExpressRouteCrossConnection) (*ExpressRouteCrossConnectionPollerResponse, error) {
+func (client *ExpressRouteCrossConnectionsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, crossConnectionName string, parameters ExpressRouteCrossConnection) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, crossConnectionName, parameters)
 	if err != nil {
 		return nil, err
@@ -73,6 +73,14 @@ func (client *ExpressRouteCrossConnectionsClient) BeginCreateOrUpdate(ctx contex
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *ExpressRouteCrossConnectionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, crossConnectionName string, parameters ExpressRouteCrossConnection) (*ExpressRouteCrossConnectionPollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, crossConnectionName, parameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -233,7 +241,7 @@ func (client *ExpressRouteCrossConnectionsClient) ListHandleError(resp *azcore.R
 }
 
 // ListArpTable - Gets the currently advertised ARP table associated with the express route cross connection in a resource group.
-func (client *ExpressRouteCrossConnectionsClient) BeginListArpTable(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, devicePath string) (*ExpressRouteCircuitsArpTableListResultPollerResponse, error) {
+func (client *ExpressRouteCrossConnectionsClient) ListArpTable(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, devicePath string) (*azcore.Response, error) {
 	req, err := client.ListArpTableCreateRequest(ctx, resourceGroupName, crossConnectionName, peeringName, devicePath)
 	if err != nil {
 		return nil, err
@@ -245,6 +253,14 @@ func (client *ExpressRouteCrossConnectionsClient) BeginListArpTable(ctx context.
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.ListArpTableHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *ExpressRouteCrossConnectionsClient) BeginListArpTable(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, devicePath string) (*ExpressRouteCircuitsArpTableListResultPollerResponse, error) {
+	resp, err := client.ListArpTable(ctx, resourceGroupName, crossConnectionName, peeringName, devicePath)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.ListArpTableHandleResponse(resp)
 	if err != nil {
@@ -356,7 +372,7 @@ func (client *ExpressRouteCrossConnectionsClient) ListByResourceGroupHandleError
 }
 
 // ListRoutesTable - Gets the currently advertised routes table associated with the express route cross connection in a resource group.
-func (client *ExpressRouteCrossConnectionsClient) BeginListRoutesTable(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, devicePath string) (*ExpressRouteCircuitsRoutesTableListResultPollerResponse, error) {
+func (client *ExpressRouteCrossConnectionsClient) ListRoutesTable(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, devicePath string) (*azcore.Response, error) {
 	req, err := client.ListRoutesTableCreateRequest(ctx, resourceGroupName, crossConnectionName, peeringName, devicePath)
 	if err != nil {
 		return nil, err
@@ -368,6 +384,14 @@ func (client *ExpressRouteCrossConnectionsClient) BeginListRoutesTable(ctx conte
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.ListRoutesTableHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *ExpressRouteCrossConnectionsClient) BeginListRoutesTable(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, devicePath string) (*ExpressRouteCircuitsRoutesTableListResultPollerResponse, error) {
+	resp, err := client.ListRoutesTable(ctx, resourceGroupName, crossConnectionName, peeringName, devicePath)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.ListRoutesTableHandleResponse(resp)
 	if err != nil {
@@ -433,7 +457,7 @@ func (client *ExpressRouteCrossConnectionsClient) ListRoutesTableHandleError(res
 }
 
 // ListRoutesTableSummary - Gets the route table summary associated with the express route cross connection in a resource group.
-func (client *ExpressRouteCrossConnectionsClient) BeginListRoutesTableSummary(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, devicePath string) (*ExpressRouteCrossConnectionsRoutesTableSummaryListResultPollerResponse, error) {
+func (client *ExpressRouteCrossConnectionsClient) ListRoutesTableSummary(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, devicePath string) (*azcore.Response, error) {
 	req, err := client.ListRoutesTableSummaryCreateRequest(ctx, resourceGroupName, crossConnectionName, peeringName, devicePath)
 	if err != nil {
 		return nil, err
@@ -445,6 +469,14 @@ func (client *ExpressRouteCrossConnectionsClient) BeginListRoutesTableSummary(ct
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.ListRoutesTableSummaryHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *ExpressRouteCrossConnectionsClient) BeginListRoutesTableSummary(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, devicePath string) (*ExpressRouteCrossConnectionsRoutesTableSummaryListResultPollerResponse, error) {
+	resp, err := client.ListRoutesTableSummary(ctx, resourceGroupName, crossConnectionName, peeringName, devicePath)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.ListRoutesTableSummaryHandleResponse(resp)
 	if err != nil {

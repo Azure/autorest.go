@@ -53,7 +53,7 @@ func (client *IPGroupsClient) Do(req *azcore.Request) (*azcore.Response, error) 
 }
 
 // CreateOrUpdate - Creates or updates an ipGroups in a specified resource group.
-func (client *IPGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ipGroupsName string, parameters IPGroup) (*IPGroupPollerResponse, error) {
+func (client *IPGroupsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, ipGroupsName string, parameters IPGroup) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, ipGroupsName, parameters)
 	if err != nil {
 		return nil, err
@@ -65,6 +65,14 @@ func (client *IPGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceG
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *IPGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ipGroupsName string, parameters IPGroup) (*IPGroupPollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, ipGroupsName, parameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -128,7 +136,7 @@ func (client *IPGroupsClient) CreateOrUpdateHandleError(resp *azcore.Response) e
 }
 
 // Delete - Deletes the specified ipGroups.
-func (client *IPGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, ipGroupsName string) (*HTTPPollerResponse, error) {
+func (client *IPGroupsClient) Delete(ctx context.Context, resourceGroupName string, ipGroupsName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, ipGroupsName)
 	if err != nil {
 		return nil, err
@@ -140,6 +148,14 @@ func (client *IPGroupsClient) BeginDelete(ctx context.Context, resourceGroupName
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *IPGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, ipGroupsName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, ipGroupsName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {

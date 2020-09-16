@@ -71,7 +71,7 @@ func (client *NetworkInterfacesClient) Do(req *azcore.Request) (*azcore.Response
 }
 
 // CreateOrUpdate - Creates or updates a network interface.
-func (client *NetworkInterfacesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, parameters NetworkInterface) (*NetworkInterfacePollerResponse, error) {
+func (client *NetworkInterfacesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, parameters NetworkInterface) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, networkInterfaceName, parameters)
 	if err != nil {
 		return nil, err
@@ -83,6 +83,14 @@ func (client *NetworkInterfacesClient) BeginCreateOrUpdate(ctx context.Context, 
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *NetworkInterfacesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, parameters NetworkInterface) (*NetworkInterfacePollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, networkInterfaceName, parameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -146,7 +154,7 @@ func (client *NetworkInterfacesClient) CreateOrUpdateHandleError(resp *azcore.Re
 }
 
 // Delete - Deletes the specified network interface.
-func (client *NetworkInterfacesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkInterfaceName string) (*HTTPPollerResponse, error) {
+func (client *NetworkInterfacesClient) Delete(ctx context.Context, resourceGroupName string, networkInterfaceName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, networkInterfaceName)
 	if err != nil {
 		return nil, err
@@ -158,6 +166,14 @@ func (client *NetworkInterfacesClient) BeginDelete(ctx context.Context, resource
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *NetworkInterfacesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkInterfaceName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, networkInterfaceName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -276,7 +292,7 @@ func (client *NetworkInterfacesClient) GetHandleError(resp *azcore.Response) err
 }
 
 // GetEffectiveRouteTable - Gets all route tables applied to a network interface.
-func (client *NetworkInterfacesClient) BeginGetEffectiveRouteTable(ctx context.Context, resourceGroupName string, networkInterfaceName string) (*EffectiveRouteListResultPollerResponse, error) {
+func (client *NetworkInterfacesClient) GetEffectiveRouteTable(ctx context.Context, resourceGroupName string, networkInterfaceName string) (*azcore.Response, error) {
 	req, err := client.GetEffectiveRouteTableCreateRequest(ctx, resourceGroupName, networkInterfaceName)
 	if err != nil {
 		return nil, err
@@ -288,6 +304,14 @@ func (client *NetworkInterfacesClient) BeginGetEffectiveRouteTable(ctx context.C
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.GetEffectiveRouteTableHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *NetworkInterfacesClient) BeginGetEffectiveRouteTable(ctx context.Context, resourceGroupName string, networkInterfaceName string) (*EffectiveRouteListResultPollerResponse, error) {
+	resp, err := client.GetEffectiveRouteTable(ctx, resourceGroupName, networkInterfaceName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.GetEffectiveRouteTableHandleResponse(resp)
 	if err != nil {
@@ -557,7 +581,7 @@ func (client *NetworkInterfacesClient) ListAllHandleError(resp *azcore.Response)
 }
 
 // ListEffectiveNetworkSecurityGroups - Gets all network security groups applied to a network interface.
-func (client *NetworkInterfacesClient) BeginListEffectiveNetworkSecurityGroups(ctx context.Context, resourceGroupName string, networkInterfaceName string) (*EffectiveNetworkSecurityGroupListResultPollerResponse, error) {
+func (client *NetworkInterfacesClient) ListEffectiveNetworkSecurityGroups(ctx context.Context, resourceGroupName string, networkInterfaceName string) (*azcore.Response, error) {
 	req, err := client.ListEffectiveNetworkSecurityGroupsCreateRequest(ctx, resourceGroupName, networkInterfaceName)
 	if err != nil {
 		return nil, err
@@ -569,6 +593,14 @@ func (client *NetworkInterfacesClient) BeginListEffectiveNetworkSecurityGroups(c
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.ListEffectiveNetworkSecurityGroupsHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *NetworkInterfacesClient) BeginListEffectiveNetworkSecurityGroups(ctx context.Context, resourceGroupName string, networkInterfaceName string) (*EffectiveNetworkSecurityGroupListResultPollerResponse, error) {
+	resp, err := client.ListEffectiveNetworkSecurityGroups(ctx, resourceGroupName, networkInterfaceName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.ListEffectiveNetworkSecurityGroupsHandleResponse(resp)
 	if err != nil {

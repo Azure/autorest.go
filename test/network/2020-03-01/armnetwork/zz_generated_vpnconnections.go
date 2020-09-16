@@ -49,7 +49,7 @@ func (client *VpnConnectionsClient) Do(req *azcore.Request) (*azcore.Response, e
 }
 
 // CreateOrUpdate - Creates a vpn connection to a scalable vpn gateway if it doesn't exist else updates the existing connection.
-func (client *VpnConnectionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, vpnConnectionParameters VpnConnection) (*VpnConnectionPollerResponse, error) {
+func (client *VpnConnectionsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, vpnConnectionParameters VpnConnection) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, gatewayName, connectionName, vpnConnectionParameters)
 	if err != nil {
 		return nil, err
@@ -61,6 +61,14 @@ func (client *VpnConnectionsClient) BeginCreateOrUpdate(ctx context.Context, res
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *VpnConnectionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, vpnConnectionParameters VpnConnection) (*VpnConnectionPollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, gatewayName, connectionName, vpnConnectionParameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -125,7 +133,7 @@ func (client *VpnConnectionsClient) CreateOrUpdateHandleError(resp *azcore.Respo
 }
 
 // Delete - Deletes a vpn connection.
-func (client *VpnConnectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string) (*HTTPPollerResponse, error) {
+func (client *VpnConnectionsClient) Delete(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, gatewayName, connectionName)
 	if err != nil {
 		return nil, err
@@ -137,6 +145,14 @@ func (client *VpnConnectionsClient) BeginDelete(ctx context.Context, resourceGro
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *VpnConnectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, gatewayName, connectionName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {

@@ -49,7 +49,7 @@ func (client *DdosCustomPoliciesClient) Do(req *azcore.Request) (*azcore.Respons
 }
 
 // CreateOrUpdate - Creates or updates a DDoS custom policy.
-func (client *DdosCustomPoliciesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string, parameters DdosCustomPolicy) (*DdosCustomPolicyPollerResponse, error) {
+func (client *DdosCustomPoliciesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string, parameters DdosCustomPolicy) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, ddosCustomPolicyName, parameters)
 	if err != nil {
 		return nil, err
@@ -61,6 +61,14 @@ func (client *DdosCustomPoliciesClient) BeginCreateOrUpdate(ctx context.Context,
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *DdosCustomPoliciesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string, parameters DdosCustomPolicy) (*DdosCustomPolicyPollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, ddosCustomPolicyName, parameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -124,7 +132,7 @@ func (client *DdosCustomPoliciesClient) CreateOrUpdateHandleError(resp *azcore.R
 }
 
 // Delete - Deletes the specified DDoS custom policy.
-func (client *DdosCustomPoliciesClient) BeginDelete(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string) (*HTTPPollerResponse, error) {
+func (client *DdosCustomPoliciesClient) Delete(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, ddosCustomPolicyName)
 	if err != nil {
 		return nil, err
@@ -136,6 +144,14 @@ func (client *DdosCustomPoliciesClient) BeginDelete(ctx context.Context, resourc
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *DdosCustomPoliciesClient) BeginDelete(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, ddosCustomPolicyName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {

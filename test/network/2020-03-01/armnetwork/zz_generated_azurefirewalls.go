@@ -55,7 +55,7 @@ func (client *AzureFirewallsClient) Do(req *azcore.Request) (*azcore.Response, e
 }
 
 // CreateOrUpdate - Creates or updates the specified Azure Firewall.
-func (client *AzureFirewallsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, azureFirewallName string, parameters AzureFirewall) (*AzureFirewallPollerResponse, error) {
+func (client *AzureFirewallsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, azureFirewallName string, parameters AzureFirewall) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, azureFirewallName, parameters)
 	if err != nil {
 		return nil, err
@@ -67,6 +67,14 @@ func (client *AzureFirewallsClient) BeginCreateOrUpdate(ctx context.Context, res
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *AzureFirewallsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, azureFirewallName string, parameters AzureFirewall) (*AzureFirewallPollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, azureFirewallName, parameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -130,7 +138,7 @@ func (client *AzureFirewallsClient) CreateOrUpdateHandleError(resp *azcore.Respo
 }
 
 // Delete - Deletes the specified Azure Firewall.
-func (client *AzureFirewallsClient) BeginDelete(ctx context.Context, resourceGroupName string, azureFirewallName string) (*HTTPPollerResponse, error) {
+func (client *AzureFirewallsClient) Delete(ctx context.Context, resourceGroupName string, azureFirewallName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, azureFirewallName)
 	if err != nil {
 		return nil, err
@@ -142,6 +150,14 @@ func (client *AzureFirewallsClient) BeginDelete(ctx context.Context, resourceGro
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *AzureFirewallsClient) BeginDelete(ctx context.Context, resourceGroupName string, azureFirewallName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, azureFirewallName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -348,7 +364,7 @@ func (client *AzureFirewallsClient) ListAllHandleError(resp *azcore.Response) er
 }
 
 // UpdateTags - Updates tags of an Azure Firewall resource.
-func (client *AzureFirewallsClient) BeginUpdateTags(ctx context.Context, resourceGroupName string, azureFirewallName string, parameters TagsObject) (*AzureFirewallPollerResponse, error) {
+func (client *AzureFirewallsClient) UpdateTags(ctx context.Context, resourceGroupName string, azureFirewallName string, parameters TagsObject) (*azcore.Response, error) {
 	req, err := client.UpdateTagsCreateRequest(ctx, resourceGroupName, azureFirewallName, parameters)
 	if err != nil {
 		return nil, err
@@ -360,6 +376,14 @@ func (client *AzureFirewallsClient) BeginUpdateTags(ctx context.Context, resourc
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.UpdateTagsHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *AzureFirewallsClient) BeginUpdateTags(ctx context.Context, resourceGroupName string, azureFirewallName string, parameters TagsObject) (*AzureFirewallPollerResponse, error) {
+	resp, err := client.UpdateTags(ctx, resourceGroupName, azureFirewallName, parameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.UpdateTagsHandleResponse(resp)
 	if err != nil {

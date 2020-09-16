@@ -49,7 +49,7 @@ func (client *RoutesClient) Do(req *azcore.Request) (*azcore.Response, error) {
 }
 
 // CreateOrUpdate - Creates or updates a route in the specified route table.
-func (client *RoutesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, routeParameters Route) (*RoutePollerResponse, error) {
+func (client *RoutesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, routeParameters Route) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, routeTableName, routeName, routeParameters)
 	if err != nil {
 		return nil, err
@@ -61,6 +61,14 @@ func (client *RoutesClient) BeginCreateOrUpdate(ctx context.Context, resourceGro
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *RoutesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, routeParameters Route) (*RoutePollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, routeTableName, routeName, routeParameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -125,7 +133,7 @@ func (client *RoutesClient) CreateOrUpdateHandleError(resp *azcore.Response) err
 }
 
 // Delete - Deletes the specified route from a route table.
-func (client *RoutesClient) BeginDelete(ctx context.Context, resourceGroupName string, routeTableName string, routeName string) (*HTTPPollerResponse, error) {
+func (client *RoutesClient) Delete(ctx context.Context, resourceGroupName string, routeTableName string, routeName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, routeTableName, routeName)
 	if err != nil {
 		return nil, err
@@ -137,6 +145,14 @@ func (client *RoutesClient) BeginDelete(ctx context.Context, resourceGroupName s
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *RoutesClient) BeginDelete(ctx context.Context, resourceGroupName string, routeTableName string, routeName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, routeTableName, routeName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {

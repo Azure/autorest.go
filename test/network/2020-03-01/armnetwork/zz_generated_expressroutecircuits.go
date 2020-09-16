@@ -69,7 +69,7 @@ func (client *ExpressRouteCircuitsClient) Do(req *azcore.Request) (*azcore.Respo
 }
 
 // CreateOrUpdate - Creates or updates an express route circuit.
-func (client *ExpressRouteCircuitsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, parameters ExpressRouteCircuit) (*ExpressRouteCircuitPollerResponse, error) {
+func (client *ExpressRouteCircuitsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, parameters ExpressRouteCircuit) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, circuitName, parameters)
 	if err != nil {
 		return nil, err
@@ -81,6 +81,14 @@ func (client *ExpressRouteCircuitsClient) BeginCreateOrUpdate(ctx context.Contex
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *ExpressRouteCircuitsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, parameters ExpressRouteCircuit) (*ExpressRouteCircuitPollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, circuitName, parameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -144,7 +152,7 @@ func (client *ExpressRouteCircuitsClient) CreateOrUpdateHandleError(resp *azcore
 }
 
 // Delete - Deletes the specified express route circuit.
-func (client *ExpressRouteCircuitsClient) BeginDelete(ctx context.Context, resourceGroupName string, circuitName string) (*HTTPPollerResponse, error) {
+func (client *ExpressRouteCircuitsClient) Delete(ctx context.Context, resourceGroupName string, circuitName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, circuitName)
 	if err != nil {
 		return nil, err
@@ -156,6 +164,14 @@ func (client *ExpressRouteCircuitsClient) BeginDelete(ctx context.Context, resou
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *ExpressRouteCircuitsClient) BeginDelete(ctx context.Context, resourceGroupName string, circuitName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, circuitName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -467,7 +483,7 @@ func (client *ExpressRouteCircuitsClient) ListAllHandleError(resp *azcore.Respon
 }
 
 // ListArpTable - Gets the currently advertised ARP table associated with the express route circuit in a resource group.
-func (client *ExpressRouteCircuitsClient) BeginListArpTable(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string) (*ExpressRouteCircuitsArpTableListResultPollerResponse, error) {
+func (client *ExpressRouteCircuitsClient) ListArpTable(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string) (*azcore.Response, error) {
 	req, err := client.ListArpTableCreateRequest(ctx, resourceGroupName, circuitName, peeringName, devicePath)
 	if err != nil {
 		return nil, err
@@ -479,6 +495,14 @@ func (client *ExpressRouteCircuitsClient) BeginListArpTable(ctx context.Context,
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.ListArpTableHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *ExpressRouteCircuitsClient) BeginListArpTable(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string) (*ExpressRouteCircuitsArpTableListResultPollerResponse, error) {
+	resp, err := client.ListArpTable(ctx, resourceGroupName, circuitName, peeringName, devicePath)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.ListArpTableHandleResponse(resp)
 	if err != nil {
@@ -544,7 +568,7 @@ func (client *ExpressRouteCircuitsClient) ListArpTableHandleError(resp *azcore.R
 }
 
 // ListRoutesTable - Gets the currently advertised routes table associated with the express route circuit in a resource group.
-func (client *ExpressRouteCircuitsClient) BeginListRoutesTable(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string) (*ExpressRouteCircuitsRoutesTableListResultPollerResponse, error) {
+func (client *ExpressRouteCircuitsClient) ListRoutesTable(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string) (*azcore.Response, error) {
 	req, err := client.ListRoutesTableCreateRequest(ctx, resourceGroupName, circuitName, peeringName, devicePath)
 	if err != nil {
 		return nil, err
@@ -556,6 +580,14 @@ func (client *ExpressRouteCircuitsClient) BeginListRoutesTable(ctx context.Conte
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.ListRoutesTableHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *ExpressRouteCircuitsClient) BeginListRoutesTable(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string) (*ExpressRouteCircuitsRoutesTableListResultPollerResponse, error) {
+	resp, err := client.ListRoutesTable(ctx, resourceGroupName, circuitName, peeringName, devicePath)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.ListRoutesTableHandleResponse(resp)
 	if err != nil {
@@ -621,7 +653,7 @@ func (client *ExpressRouteCircuitsClient) ListRoutesTableHandleError(resp *azcor
 }
 
 // ListRoutesTableSummary - Gets the currently advertised routes table summary associated with the express route circuit in a resource group.
-func (client *ExpressRouteCircuitsClient) BeginListRoutesTableSummary(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string) (*ExpressRouteCircuitsRoutesTableSummaryListResultPollerResponse, error) {
+func (client *ExpressRouteCircuitsClient) ListRoutesTableSummary(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string) (*azcore.Response, error) {
 	req, err := client.ListRoutesTableSummaryCreateRequest(ctx, resourceGroupName, circuitName, peeringName, devicePath)
 	if err != nil {
 		return nil, err
@@ -633,6 +665,14 @@ func (client *ExpressRouteCircuitsClient) BeginListRoutesTableSummary(ctx contex
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.ListRoutesTableSummaryHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *ExpressRouteCircuitsClient) BeginListRoutesTableSummary(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string) (*ExpressRouteCircuitsRoutesTableSummaryListResultPollerResponse, error) {
+	resp, err := client.ListRoutesTableSummary(ctx, resourceGroupName, circuitName, peeringName, devicePath)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.ListRoutesTableSummaryHandleResponse(resp)
 	if err != nil {

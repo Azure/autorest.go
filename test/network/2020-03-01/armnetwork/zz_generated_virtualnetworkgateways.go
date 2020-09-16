@@ -115,7 +115,7 @@ func (client *VirtualNetworkGatewaysClient) Do(req *azcore.Request) (*azcore.Res
 }
 
 // CreateOrUpdate - Creates or updates a virtual network gateway in the specified resource group.
-func (client *VirtualNetworkGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VirtualNetworkGateway) (*VirtualNetworkGatewayPollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VirtualNetworkGateway) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, parameters)
 	if err != nil {
 		return nil, err
@@ -127,6 +127,14 @@ func (client *VirtualNetworkGatewaysClient) BeginCreateOrUpdate(ctx context.Cont
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *VirtualNetworkGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VirtualNetworkGateway) (*VirtualNetworkGatewayPollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, virtualNetworkGatewayName, parameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -190,7 +198,7 @@ func (client *VirtualNetworkGatewaysClient) CreateOrUpdateHandleError(resp *azco
 }
 
 // Delete - Deletes the specified virtual network gateway.
-func (client *VirtualNetworkGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string) (*HTTPPollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) Delete(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName)
 	if err != nil {
 		return nil, err
@@ -202,6 +210,14 @@ func (client *VirtualNetworkGatewaysClient) BeginDelete(ctx context.Context, res
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *VirtualNetworkGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, virtualNetworkGatewayName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
@@ -265,7 +281,7 @@ func (client *VirtualNetworkGatewaysClient) DeleteHandleError(resp *azcore.Respo
 }
 
 // DisconnectVirtualNetworkGatewayVpnConnections - Disconnect vpn connections of virtual network gateway in the specified resource group.
-func (client *VirtualNetworkGatewaysClient) BeginDisconnectVirtualNetworkGatewayVpnConnections(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, request P2SVpnConnectionRequest) (*HTTPPollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) DisconnectVirtualNetworkGatewayVpnConnections(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, request P2SVpnConnectionRequest) (*azcore.Response, error) {
 	req, err := client.DisconnectVirtualNetworkGatewayVpnConnectionsCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, request)
 	if err != nil {
 		return nil, err
@@ -277,6 +293,14 @@ func (client *VirtualNetworkGatewaysClient) BeginDisconnectVirtualNetworkGateway
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.DisconnectVirtualNetworkGatewayVpnConnectionsHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *VirtualNetworkGatewaysClient) BeginDisconnectVirtualNetworkGatewayVpnConnections(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, request P2SVpnConnectionRequest) (*HTTPPollerResponse, error) {
+	resp, err := client.DisconnectVirtualNetworkGatewayVpnConnections(ctx, resourceGroupName, virtualNetworkGatewayName, request)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DisconnectVirtualNetworkGatewayVpnConnectionsHandleResponse(resp)
 	if err != nil {
@@ -340,7 +364,7 @@ func (client *VirtualNetworkGatewaysClient) DisconnectVirtualNetworkGatewayVpnCo
 }
 
 // GenerateVpnProfile - Generates VPN profile for P2S client of the virtual network gateway in the specified resource group. Used for IKEV2 and radius based authentication.
-func (client *VirtualNetworkGatewaysClient) BeginGenerateVpnProfile(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VpnClientParameters) (*StringPollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) GenerateVpnProfile(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VpnClientParameters) (*azcore.Response, error) {
 	req, err := client.GenerateVpnProfileCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, parameters)
 	if err != nil {
 		return nil, err
@@ -352,6 +376,14 @@ func (client *VirtualNetworkGatewaysClient) BeginGenerateVpnProfile(ctx context.
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.GenerateVpnProfileHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *VirtualNetworkGatewaysClient) BeginGenerateVpnProfile(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VpnClientParameters) (*StringPollerResponse, error) {
+	resp, err := client.GenerateVpnProfile(ctx, resourceGroupName, virtualNetworkGatewayName, parameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.GenerateVpnProfileHandleResponse(resp)
 	if err != nil {
@@ -415,7 +447,7 @@ func (client *VirtualNetworkGatewaysClient) GenerateVpnProfileHandleError(resp *
 }
 
 // Generatevpnclientpackage - Generates VPN client package for P2S client of the virtual network gateway in the specified resource group.
-func (client *VirtualNetworkGatewaysClient) BeginGeneratevpnclientpackage(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VpnClientParameters) (*StringPollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) Generatevpnclientpackage(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VpnClientParameters) (*azcore.Response, error) {
 	req, err := client.GeneratevpnclientpackageCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, parameters)
 	if err != nil {
 		return nil, err
@@ -427,6 +459,14 @@ func (client *VirtualNetworkGatewaysClient) BeginGeneratevpnclientpackage(ctx co
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.GeneratevpnclientpackageHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *VirtualNetworkGatewaysClient) BeginGeneratevpnclientpackage(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VpnClientParameters) (*StringPollerResponse, error) {
+	resp, err := client.Generatevpnclientpackage(ctx, resourceGroupName, virtualNetworkGatewayName, parameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.GeneratevpnclientpackageHandleResponse(resp)
 	if err != nil {
@@ -542,7 +582,7 @@ func (client *VirtualNetworkGatewaysClient) GetHandleError(resp *azcore.Response
 }
 
 // GetAdvertisedRoutes - This operation retrieves a list of routes the virtual network gateway is advertising to the specified peer.
-func (client *VirtualNetworkGatewaysClient) BeginGetAdvertisedRoutes(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, peer string) (*GatewayRouteListResultPollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) GetAdvertisedRoutes(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, peer string) (*azcore.Response, error) {
 	req, err := client.GetAdvertisedRoutesCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, peer)
 	if err != nil {
 		return nil, err
@@ -554,6 +594,14 @@ func (client *VirtualNetworkGatewaysClient) BeginGetAdvertisedRoutes(ctx context
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.GetAdvertisedRoutesHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *VirtualNetworkGatewaysClient) BeginGetAdvertisedRoutes(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, peer string) (*GatewayRouteListResultPollerResponse, error) {
+	resp, err := client.GetAdvertisedRoutes(ctx, resourceGroupName, virtualNetworkGatewayName, peer)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.GetAdvertisedRoutesHandleResponse(resp)
 	if err != nil {
@@ -618,7 +666,7 @@ func (client *VirtualNetworkGatewaysClient) GetAdvertisedRoutesHandleError(resp 
 }
 
 // GetBgpPeerStatus - The GetBgpPeerStatus operation retrieves the status of all BGP peers.
-func (client *VirtualNetworkGatewaysClient) BeginGetBgpPeerStatus(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, virtualNetworkGatewaysGetBgpPeerStatusOptions *VirtualNetworkGatewaysGetBgpPeerStatusOptions) (*BgpPeerStatusListResultPollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) GetBgpPeerStatus(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, virtualNetworkGatewaysGetBgpPeerStatusOptions *VirtualNetworkGatewaysGetBgpPeerStatusOptions) (*azcore.Response, error) {
 	req, err := client.GetBgpPeerStatusCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, virtualNetworkGatewaysGetBgpPeerStatusOptions)
 	if err != nil {
 		return nil, err
@@ -630,6 +678,14 @@ func (client *VirtualNetworkGatewaysClient) BeginGetBgpPeerStatus(ctx context.Co
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.GetBgpPeerStatusHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *VirtualNetworkGatewaysClient) BeginGetBgpPeerStatus(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, virtualNetworkGatewaysGetBgpPeerStatusOptions *VirtualNetworkGatewaysGetBgpPeerStatusOptions) (*BgpPeerStatusListResultPollerResponse, error) {
+	resp, err := client.GetBgpPeerStatus(ctx, resourceGroupName, virtualNetworkGatewayName, virtualNetworkGatewaysGetBgpPeerStatusOptions)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.GetBgpPeerStatusHandleResponse(resp)
 	if err != nil {
@@ -696,7 +752,7 @@ func (client *VirtualNetworkGatewaysClient) GetBgpPeerStatusHandleError(resp *az
 }
 
 // GetLearnedRoutes - This operation retrieves a list of routes the virtual network gateway has learned, including routes learned from BGP peers.
-func (client *VirtualNetworkGatewaysClient) BeginGetLearnedRoutes(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string) (*GatewayRouteListResultPollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) GetLearnedRoutes(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string) (*azcore.Response, error) {
 	req, err := client.GetLearnedRoutesCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName)
 	if err != nil {
 		return nil, err
@@ -708,6 +764,14 @@ func (client *VirtualNetworkGatewaysClient) BeginGetLearnedRoutes(ctx context.Co
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.GetLearnedRoutesHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *VirtualNetworkGatewaysClient) BeginGetLearnedRoutes(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string) (*GatewayRouteListResultPollerResponse, error) {
+	resp, err := client.GetLearnedRoutes(ctx, resourceGroupName, virtualNetworkGatewayName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.GetLearnedRoutesHandleResponse(resp)
 	if err != nil {
@@ -771,7 +835,7 @@ func (client *VirtualNetworkGatewaysClient) GetLearnedRoutesHandleError(resp *az
 }
 
 // GetVpnProfilePackageURL - Gets pre-generated VPN profile for P2S client of the virtual network gateway in the specified resource group. The profile needs to be generated first using generateVpnProfile.
-func (client *VirtualNetworkGatewaysClient) BeginGetVpnProfilePackageURL(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string) (*StringPollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) GetVpnProfilePackageURL(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string) (*azcore.Response, error) {
 	req, err := client.GetVpnProfilePackageURLCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName)
 	if err != nil {
 		return nil, err
@@ -783,6 +847,14 @@ func (client *VirtualNetworkGatewaysClient) BeginGetVpnProfilePackageURL(ctx con
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.GetVpnProfilePackageURLHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *VirtualNetworkGatewaysClient) BeginGetVpnProfilePackageURL(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string) (*StringPollerResponse, error) {
+	resp, err := client.GetVpnProfilePackageURL(ctx, resourceGroupName, virtualNetworkGatewayName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.GetVpnProfilePackageURLHandleResponse(resp)
 	if err != nil {
@@ -846,7 +918,7 @@ func (client *VirtualNetworkGatewaysClient) GetVpnProfilePackageURLHandleError(r
 }
 
 // GetVpnclientConnectionHealth - Get VPN client connection health detail per P2S client connection of the virtual network gateway in the specified resource group.
-func (client *VirtualNetworkGatewaysClient) BeginGetVpnclientConnectionHealth(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string) (*VpnClientConnectionHealthDetailListResultPollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) GetVpnclientConnectionHealth(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string) (*azcore.Response, error) {
 	req, err := client.GetVpnclientConnectionHealthCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName)
 	if err != nil {
 		return nil, err
@@ -858,6 +930,14 @@ func (client *VirtualNetworkGatewaysClient) BeginGetVpnclientConnectionHealth(ct
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.GetVpnclientConnectionHealthHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *VirtualNetworkGatewaysClient) BeginGetVpnclientConnectionHealth(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string) (*VpnClientConnectionHealthDetailListResultPollerResponse, error) {
+	resp, err := client.GetVpnclientConnectionHealth(ctx, resourceGroupName, virtualNetworkGatewayName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.GetVpnclientConnectionHealthHandleResponse(resp)
 	if err != nil {
@@ -921,7 +1001,7 @@ func (client *VirtualNetworkGatewaysClient) GetVpnclientConnectionHealthHandleEr
 }
 
 // GetVpnclientIPsecParameters - The Get VpnclientIpsecParameters operation retrieves information about the vpnclient ipsec policy for P2S client of virtual network gateway in the specified resource group through Network resource provider.
-func (client *VirtualNetworkGatewaysClient) BeginGetVpnclientIPsecParameters(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string) (*VpnClientIPsecParametersPollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) GetVpnclientIPsecParameters(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string) (*azcore.Response, error) {
 	req, err := client.GetVpnclientIPsecParametersCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName)
 	if err != nil {
 		return nil, err
@@ -933,6 +1013,14 @@ func (client *VirtualNetworkGatewaysClient) BeginGetVpnclientIPsecParameters(ctx
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.GetVpnclientIPsecParametersHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *VirtualNetworkGatewaysClient) BeginGetVpnclientIPsecParameters(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string) (*VpnClientIPsecParametersPollerResponse, error) {
+	resp, err := client.GetVpnclientIPsecParameters(ctx, resourceGroupName, virtualNetworkGatewayName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.GetVpnclientIPsecParametersHandleResponse(resp)
 	if err != nil {
@@ -1089,7 +1177,7 @@ func (client *VirtualNetworkGatewaysClient) ListConnectionsHandleError(resp *azc
 }
 
 // Reset - Resets the primary of the virtual network gateway in the specified resource group.
-func (client *VirtualNetworkGatewaysClient) BeginReset(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, virtualNetworkGatewaysResetOptions *VirtualNetworkGatewaysResetOptions) (*VirtualNetworkGatewayPollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) Reset(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, virtualNetworkGatewaysResetOptions *VirtualNetworkGatewaysResetOptions) (*azcore.Response, error) {
 	req, err := client.ResetCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, virtualNetworkGatewaysResetOptions)
 	if err != nil {
 		return nil, err
@@ -1101,6 +1189,14 @@ func (client *VirtualNetworkGatewaysClient) BeginReset(ctx context.Context, reso
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.ResetHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *VirtualNetworkGatewaysClient) BeginReset(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, virtualNetworkGatewaysResetOptions *VirtualNetworkGatewaysResetOptions) (*VirtualNetworkGatewayPollerResponse, error) {
+	resp, err := client.Reset(ctx, resourceGroupName, virtualNetworkGatewayName, virtualNetworkGatewaysResetOptions)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.ResetHandleResponse(resp)
 	if err != nil {
@@ -1167,7 +1263,7 @@ func (client *VirtualNetworkGatewaysClient) ResetHandleError(resp *azcore.Respon
 }
 
 // ResetVpnClientSharedKey - Resets the VPN client shared key of the virtual network gateway in the specified resource group.
-func (client *VirtualNetworkGatewaysClient) BeginResetVpnClientSharedKey(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string) (*HTTPPollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) ResetVpnClientSharedKey(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string) (*azcore.Response, error) {
 	req, err := client.ResetVpnClientSharedKeyCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName)
 	if err != nil {
 		return nil, err
@@ -1179,6 +1275,14 @@ func (client *VirtualNetworkGatewaysClient) BeginResetVpnClientSharedKey(ctx con
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.ResetVpnClientSharedKeyHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *VirtualNetworkGatewaysClient) BeginResetVpnClientSharedKey(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string) (*HTTPPollerResponse, error) {
+	resp, err := client.ResetVpnClientSharedKey(ctx, resourceGroupName, virtualNetworkGatewayName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.ResetVpnClientSharedKeyHandleResponse(resp)
 	if err != nil {
@@ -1242,7 +1346,7 @@ func (client *VirtualNetworkGatewaysClient) ResetVpnClientSharedKeyHandleError(r
 }
 
 // SetVpnclientIPsecParameters - The Set VpnclientIpsecParameters operation sets the vpnclient ipsec policy for P2S client of virtual network gateway in the specified resource group through Network resource provider.
-func (client *VirtualNetworkGatewaysClient) BeginSetVpnclientIPsecParameters(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, vpnclientIpsecParams VpnClientIPsecParameters) (*VpnClientIPsecParametersPollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) SetVpnclientIPsecParameters(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, vpnclientIpsecParams VpnClientIPsecParameters) (*azcore.Response, error) {
 	req, err := client.SetVpnclientIPsecParametersCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, vpnclientIpsecParams)
 	if err != nil {
 		return nil, err
@@ -1254,6 +1358,14 @@ func (client *VirtualNetworkGatewaysClient) BeginSetVpnclientIPsecParameters(ctx
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.SetVpnclientIPsecParametersHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *VirtualNetworkGatewaysClient) BeginSetVpnclientIPsecParameters(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, vpnclientIpsecParams VpnClientIPsecParameters) (*VpnClientIPsecParametersPollerResponse, error) {
+	resp, err := client.SetVpnclientIPsecParameters(ctx, resourceGroupName, virtualNetworkGatewayName, vpnclientIpsecParams)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.SetVpnclientIPsecParametersHandleResponse(resp)
 	if err != nil {
@@ -1317,7 +1429,7 @@ func (client *VirtualNetworkGatewaysClient) SetVpnclientIPsecParametersHandleErr
 }
 
 // StartPacketCapture - Starts packet capture on virtual network gateway in the specified resource group.
-func (client *VirtualNetworkGatewaysClient) BeginStartPacketCapture(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, virtualNetworkGatewaysStartPacketCaptureOptions *VirtualNetworkGatewaysStartPacketCaptureOptions) (*StringPollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) StartPacketCapture(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, virtualNetworkGatewaysStartPacketCaptureOptions *VirtualNetworkGatewaysStartPacketCaptureOptions) (*azcore.Response, error) {
 	req, err := client.StartPacketCaptureCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, virtualNetworkGatewaysStartPacketCaptureOptions)
 	if err != nil {
 		return nil, err
@@ -1329,6 +1441,14 @@ func (client *VirtualNetworkGatewaysClient) BeginStartPacketCapture(ctx context.
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.StartPacketCaptureHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *VirtualNetworkGatewaysClient) BeginStartPacketCapture(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, virtualNetworkGatewaysStartPacketCaptureOptions *VirtualNetworkGatewaysStartPacketCaptureOptions) (*StringPollerResponse, error) {
+	resp, err := client.StartPacketCapture(ctx, resourceGroupName, virtualNetworkGatewayName, virtualNetworkGatewaysStartPacketCaptureOptions)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.StartPacketCaptureHandleResponse(resp)
 	if err != nil {
@@ -1395,7 +1515,7 @@ func (client *VirtualNetworkGatewaysClient) StartPacketCaptureHandleError(resp *
 }
 
 // StopPacketCapture - Stops packet capture on virtual network gateway in the specified resource group.
-func (client *VirtualNetworkGatewaysClient) BeginStopPacketCapture(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VpnPacketCaptureStopParameters) (*StringPollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) StopPacketCapture(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VpnPacketCaptureStopParameters) (*azcore.Response, error) {
 	req, err := client.StopPacketCaptureCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, parameters)
 	if err != nil {
 		return nil, err
@@ -1407,6 +1527,14 @@ func (client *VirtualNetworkGatewaysClient) BeginStopPacketCapture(ctx context.C
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.StopPacketCaptureHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *VirtualNetworkGatewaysClient) BeginStopPacketCapture(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VpnPacketCaptureStopParameters) (*StringPollerResponse, error) {
+	resp, err := client.StopPacketCapture(ctx, resourceGroupName, virtualNetworkGatewayName, parameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.StopPacketCaptureHandleResponse(resp)
 	if err != nil {
@@ -1522,7 +1650,7 @@ func (client *VirtualNetworkGatewaysClient) SupportedVpnDevicesHandleError(resp 
 }
 
 // UpdateTags - Updates a virtual network gateway tags.
-func (client *VirtualNetworkGatewaysClient) BeginUpdateTags(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters TagsObject) (*VirtualNetworkGatewayPollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) UpdateTags(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters TagsObject) (*azcore.Response, error) {
 	req, err := client.UpdateTagsCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, parameters)
 	if err != nil {
 		return nil, err
@@ -1534,6 +1662,14 @@ func (client *VirtualNetworkGatewaysClient) BeginUpdateTags(ctx context.Context,
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.UpdateTagsHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *VirtualNetworkGatewaysClient) BeginUpdateTags(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters TagsObject) (*VirtualNetworkGatewayPollerResponse, error) {
+	resp, err := client.UpdateTags(ctx, resourceGroupName, virtualNetworkGatewayName, parameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.UpdateTagsHandleResponse(resp)
 	if err != nil {

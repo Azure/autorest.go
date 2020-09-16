@@ -53,7 +53,7 @@ func (client *ServiceEndpointPoliciesClient) Do(req *azcore.Request) (*azcore.Re
 }
 
 // CreateOrUpdate - Creates or updates a service Endpoint Policies.
-func (client *ServiceEndpointPoliciesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, parameters ServiceEndpointPolicy) (*ServiceEndpointPolicyPollerResponse, error) {
+func (client *ServiceEndpointPoliciesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, parameters ServiceEndpointPolicy) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, serviceEndpointPolicyName, parameters)
 	if err != nil {
 		return nil, err
@@ -65,6 +65,14 @@ func (client *ServiceEndpointPoliciesClient) BeginCreateOrUpdate(ctx context.Con
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *ServiceEndpointPoliciesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, parameters ServiceEndpointPolicy) (*ServiceEndpointPolicyPollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, serviceEndpointPolicyName, parameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -128,7 +136,7 @@ func (client *ServiceEndpointPoliciesClient) CreateOrUpdateHandleError(resp *azc
 }
 
 // Delete - Deletes the specified service endpoint policy.
-func (client *ServiceEndpointPoliciesClient) BeginDelete(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string) (*HTTPPollerResponse, error) {
+func (client *ServiceEndpointPoliciesClient) Delete(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, serviceEndpointPolicyName)
 	if err != nil {
 		return nil, err
@@ -140,6 +148,14 @@ func (client *ServiceEndpointPoliciesClient) BeginDelete(ctx context.Context, re
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *ServiceEndpointPoliciesClient) BeginDelete(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, serviceEndpointPolicyName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {

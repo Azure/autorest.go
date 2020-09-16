@@ -51,7 +51,7 @@ func (client *VirtualRoutersClient) Do(req *azcore.Request) (*azcore.Response, e
 }
 
 // CreateOrUpdate - Creates or updates the specified Virtual Router.
-func (client *VirtualRoutersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualRouterName string, parameters VirtualRouter) (*VirtualRouterPollerResponse, error) {
+func (client *VirtualRoutersClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, virtualRouterName string, parameters VirtualRouter) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, virtualRouterName, parameters)
 	if err != nil {
 		return nil, err
@@ -63,6 +63,14 @@ func (client *VirtualRoutersClient) BeginCreateOrUpdate(ctx context.Context, res
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *VirtualRoutersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualRouterName string, parameters VirtualRouter) (*VirtualRouterPollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, virtualRouterName, parameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -126,7 +134,7 @@ func (client *VirtualRoutersClient) CreateOrUpdateHandleError(resp *azcore.Respo
 }
 
 // Delete - Deletes the specified Virtual Router.
-func (client *VirtualRoutersClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualRouterName string) (*HTTPPollerResponse, error) {
+func (client *VirtualRoutersClient) Delete(ctx context.Context, resourceGroupName string, virtualRouterName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, virtualRouterName)
 	if err != nil {
 		return nil, err
@@ -138,6 +146,14 @@ func (client *VirtualRoutersClient) BeginDelete(ctx context.Context, resourceGro
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *VirtualRoutersClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualRouterName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, virtualRouterName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {

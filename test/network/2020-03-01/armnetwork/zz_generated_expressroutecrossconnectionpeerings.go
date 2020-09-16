@@ -49,7 +49,7 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) Do(req *azcore.Request)
 }
 
 // CreateOrUpdate - Creates or updates a peering in the specified ExpressRouteCrossConnection.
-func (client *ExpressRouteCrossConnectionPeeringsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, peeringParameters ExpressRouteCrossConnectionPeering) (*ExpressRouteCrossConnectionPeeringPollerResponse, error) {
+func (client *ExpressRouteCrossConnectionPeeringsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, peeringParameters ExpressRouteCrossConnectionPeering) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, crossConnectionName, peeringName, peeringParameters)
 	if err != nil {
 		return nil, err
@@ -61,6 +61,14 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) BeginCreateOrUpdate(ctx
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *ExpressRouteCrossConnectionPeeringsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, peeringParameters ExpressRouteCrossConnectionPeering) (*ExpressRouteCrossConnectionPeeringPollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, crossConnectionName, peeringName, peeringParameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -125,7 +133,7 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) CreateOrUpdateHandleErr
 }
 
 // Delete - Deletes the specified peering from the ExpressRouteCrossConnection.
-func (client *ExpressRouteCrossConnectionPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string) (*HTTPPollerResponse, error) {
+func (client *ExpressRouteCrossConnectionPeeringsClient) Delete(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, crossConnectionName, peeringName)
 	if err != nil {
 		return nil, err
@@ -137,6 +145,14 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) BeginDelete(ctx context
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *ExpressRouteCrossConnectionPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, crossConnectionName, peeringName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {

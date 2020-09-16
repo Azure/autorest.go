@@ -49,7 +49,7 @@ func (client *FlowLogsClient) Do(req *azcore.Request) (*azcore.Response, error) 
 }
 
 // CreateOrUpdate - Create or update a flow log for the specified network security group.
-func (client *FlowLogsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, parameters FlowLog) (*FlowLogPollerResponse, error) {
+func (client *FlowLogsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, parameters FlowLog) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, networkWatcherName, flowLogName, parameters)
 	if err != nil {
 		return nil, err
@@ -61,6 +61,14 @@ func (client *FlowLogsClient) BeginCreateOrUpdate(ctx context.Context, resourceG
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *FlowLogsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, parameters FlowLog) (*FlowLogPollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, networkWatcherName, flowLogName, parameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -125,7 +133,7 @@ func (client *FlowLogsClient) CreateOrUpdateHandleError(resp *azcore.Response) e
 }
 
 // Delete - Deletes the specified flow log resource.
-func (client *FlowLogsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string) (*HTTPPollerResponse, error) {
+func (client *FlowLogsClient) Delete(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, networkWatcherName, flowLogName)
 	if err != nil {
 		return nil, err
@@ -137,6 +145,14 @@ func (client *FlowLogsClient) BeginDelete(ctx context.Context, resourceGroupName
 	}
 	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *FlowLogsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, networkWatcherName, flowLogName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {

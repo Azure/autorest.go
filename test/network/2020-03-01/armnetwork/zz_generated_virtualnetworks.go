@@ -110,7 +110,7 @@ func (client *VirtualNetworksClient) CheckIPAddressAvailabilityHandleError(resp 
 }
 
 // CreateOrUpdate - Creates or updates a virtual network in the specified resource group.
-func (client *VirtualNetworksClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, parameters VirtualNetwork) (*VirtualNetworkPollerResponse, error) {
+func (client *VirtualNetworksClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, parameters VirtualNetwork) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, virtualNetworkName, parameters)
 	if err != nil {
 		return nil, err
@@ -122,6 +122,14 @@ func (client *VirtualNetworksClient) BeginCreateOrUpdate(ctx context.Context, re
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *VirtualNetworksClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, parameters VirtualNetwork) (*VirtualNetworkPollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, virtualNetworkName, parameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -185,7 +193,7 @@ func (client *VirtualNetworksClient) CreateOrUpdateHandleError(resp *azcore.Resp
 }
 
 // Delete - Deletes the specified virtual network.
-func (client *VirtualNetworksClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkName string) (*HTTPPollerResponse, error) {
+func (client *VirtualNetworksClient) Delete(ctx context.Context, resourceGroupName string, virtualNetworkName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, virtualNetworkName)
 	if err != nil {
 		return nil, err
@@ -197,6 +205,14 @@ func (client *VirtualNetworksClient) BeginDelete(ctx context.Context, resourceGr
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *VirtualNetworksClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, virtualNetworkName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {

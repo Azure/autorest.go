@@ -53,7 +53,7 @@ func (client *VpnServerConfigurationsClient) Do(req *azcore.Request) (*azcore.Re
 }
 
 // CreateOrUpdate - Creates a VpnServerConfiguration resource if it doesn't exist else updates the existing VpnServerConfiguration.
-func (client *VpnServerConfigurationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vpnServerConfigurationName string, vpnServerConfigurationParameters VpnServerConfiguration) (*VpnServerConfigurationPollerResponse, error) {
+func (client *VpnServerConfigurationsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, vpnServerConfigurationName string, vpnServerConfigurationParameters VpnServerConfiguration) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, vpnServerConfigurationName, vpnServerConfigurationParameters)
 	if err != nil {
 		return nil, err
@@ -65,6 +65,14 @@ func (client *VpnServerConfigurationsClient) BeginCreateOrUpdate(ctx context.Con
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *VpnServerConfigurationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vpnServerConfigurationName string, vpnServerConfigurationParameters VpnServerConfiguration) (*VpnServerConfigurationPollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, vpnServerConfigurationName, vpnServerConfigurationParameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -128,7 +136,7 @@ func (client *VpnServerConfigurationsClient) CreateOrUpdateHandleError(resp *azc
 }
 
 // Delete - Deletes a VpnServerConfiguration.
-func (client *VpnServerConfigurationsClient) BeginDelete(ctx context.Context, resourceGroupName string, vpnServerConfigurationName string) (*HTTPPollerResponse, error) {
+func (client *VpnServerConfigurationsClient) Delete(ctx context.Context, resourceGroupName string, vpnServerConfigurationName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, vpnServerConfigurationName)
 	if err != nil {
 		return nil, err
@@ -140,6 +148,14 @@ func (client *VpnServerConfigurationsClient) BeginDelete(ctx context.Context, re
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *VpnServerConfigurationsClient) BeginDelete(ctx context.Context, resourceGroupName string, vpnServerConfigurationName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, vpnServerConfigurationName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {

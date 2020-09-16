@@ -53,7 +53,7 @@ func (client *DdosProtectionPlansClient) Do(req *azcore.Request) (*azcore.Respon
 }
 
 // CreateOrUpdate - Creates or updates a DDoS protection plan.
-func (client *DdosProtectionPlansClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters DdosProtectionPlan) (*DdosProtectionPlanPollerResponse, error) {
+func (client *DdosProtectionPlansClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters DdosProtectionPlan) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, ddosProtectionPlanName, parameters)
 	if err != nil {
 		return nil, err
@@ -65,6 +65,14 @@ func (client *DdosProtectionPlansClient) BeginCreateOrUpdate(ctx context.Context
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *DdosProtectionPlansClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters DdosProtectionPlan) (*DdosProtectionPlanPollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, ddosProtectionPlanName, parameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -128,7 +136,7 @@ func (client *DdosProtectionPlansClient) CreateOrUpdateHandleError(resp *azcore.
 }
 
 // Delete - Deletes the specified DDoS protection plan.
-func (client *DdosProtectionPlansClient) BeginDelete(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string) (*HTTPPollerResponse, error) {
+func (client *DdosProtectionPlansClient) Delete(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, ddosProtectionPlanName)
 	if err != nil {
 		return nil, err
@@ -140,6 +148,14 @@ func (client *DdosProtectionPlansClient) BeginDelete(ctx context.Context, resour
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *DdosProtectionPlansClient) BeginDelete(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, ddosProtectionPlanName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {

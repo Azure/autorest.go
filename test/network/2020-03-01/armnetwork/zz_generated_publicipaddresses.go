@@ -59,7 +59,7 @@ func (client *PublicIPAddressesClient) Do(req *azcore.Request) (*azcore.Response
 }
 
 // CreateOrUpdate - Creates or updates a static or dynamic public IP address.
-func (client *PublicIPAddressesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, publicIPAddressName string, parameters PublicIPAddress) (*PublicIPAddressPollerResponse, error) {
+func (client *PublicIPAddressesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, publicIPAddressName string, parameters PublicIPAddress) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, publicIPAddressName, parameters)
 	if err != nil {
 		return nil, err
@@ -71,6 +71,14 @@ func (client *PublicIPAddressesClient) BeginCreateOrUpdate(ctx context.Context, 
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *PublicIPAddressesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, publicIPAddressName string, parameters PublicIPAddress) (*PublicIPAddressPollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, publicIPAddressName, parameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -134,7 +142,7 @@ func (client *PublicIPAddressesClient) CreateOrUpdateHandleError(resp *azcore.Re
 }
 
 // Delete - Deletes the specified public IP address.
-func (client *PublicIPAddressesClient) BeginDelete(ctx context.Context, resourceGroupName string, publicIPAddressName string) (*HTTPPollerResponse, error) {
+func (client *PublicIPAddressesClient) Delete(ctx context.Context, resourceGroupName string, publicIPAddressName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, publicIPAddressName)
 	if err != nil {
 		return nil, err
@@ -146,6 +154,14 @@ func (client *PublicIPAddressesClient) BeginDelete(ctx context.Context, resource
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *PublicIPAddressesClient) BeginDelete(ctx context.Context, resourceGroupName string, publicIPAddressName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, publicIPAddressName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {

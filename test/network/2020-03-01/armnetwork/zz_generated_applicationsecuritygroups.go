@@ -53,7 +53,7 @@ func (client *ApplicationSecurityGroupsClient) Do(req *azcore.Request) (*azcore.
 }
 
 // CreateOrUpdate - Creates or updates an application security group.
-func (client *ApplicationSecurityGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, parameters ApplicationSecurityGroup) (*ApplicationSecurityGroupPollerResponse, error) {
+func (client *ApplicationSecurityGroupsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, parameters ApplicationSecurityGroup) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, applicationSecurityGroupName, parameters)
 	if err != nil {
 		return nil, err
@@ -65,6 +65,14 @@ func (client *ApplicationSecurityGroupsClient) BeginCreateOrUpdate(ctx context.C
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *ApplicationSecurityGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, parameters ApplicationSecurityGroup) (*ApplicationSecurityGroupPollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, applicationSecurityGroupName, parameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -128,7 +136,7 @@ func (client *ApplicationSecurityGroupsClient) CreateOrUpdateHandleError(resp *a
 }
 
 // Delete - Deletes the specified application security group.
-func (client *ApplicationSecurityGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string) (*HTTPPollerResponse, error) {
+func (client *ApplicationSecurityGroupsClient) Delete(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, applicationSecurityGroupName)
 	if err != nil {
 		return nil, err
@@ -140,6 +148,14 @@ func (client *ApplicationSecurityGroupsClient) BeginDelete(ctx context.Context, 
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *ApplicationSecurityGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, applicationSecurityGroupName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {

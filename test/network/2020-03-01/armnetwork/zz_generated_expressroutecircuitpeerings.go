@@ -49,7 +49,7 @@ func (client *ExpressRouteCircuitPeeringsClient) Do(req *azcore.Request) (*azcor
 }
 
 // CreateOrUpdate - Creates or updates a peering in the specified express route circuits.
-func (client *ExpressRouteCircuitPeeringsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, peeringParameters ExpressRouteCircuitPeering) (*ExpressRouteCircuitPeeringPollerResponse, error) {
+func (client *ExpressRouteCircuitPeeringsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, peeringParameters ExpressRouteCircuitPeering) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, circuitName, peeringName, peeringParameters)
 	if err != nil {
 		return nil, err
@@ -61,6 +61,14 @@ func (client *ExpressRouteCircuitPeeringsClient) BeginCreateOrUpdate(ctx context
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *ExpressRouteCircuitPeeringsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, peeringParameters ExpressRouteCircuitPeering) (*ExpressRouteCircuitPeeringPollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, circuitName, peeringName, peeringParameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -125,7 +133,7 @@ func (client *ExpressRouteCircuitPeeringsClient) CreateOrUpdateHandleError(resp 
 }
 
 // Delete - Deletes the specified peering from the specified express route circuit.
-func (client *ExpressRouteCircuitPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, circuitName string, peeringName string) (*HTTPPollerResponse, error) {
+func (client *ExpressRouteCircuitPeeringsClient) Delete(ctx context.Context, resourceGroupName string, circuitName string, peeringName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, circuitName, peeringName)
 	if err != nil {
 		return nil, err
@@ -137,6 +145,14 @@ func (client *ExpressRouteCircuitPeeringsClient) BeginDelete(ctx context.Context
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *ExpressRouteCircuitPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, circuitName string, peeringName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, circuitName, peeringName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {

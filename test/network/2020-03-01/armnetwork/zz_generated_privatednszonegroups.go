@@ -49,7 +49,7 @@ func (client *PrivateDNSZoneGroupsClient) Do(req *azcore.Request) (*azcore.Respo
 }
 
 // CreateOrUpdate - Creates or updates a private dns zone group in the specified private endpoint.
-func (client *PrivateDNSZoneGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, privateEndpointName string, privateDnsZoneGroupName string, parameters PrivateDNSZoneGroup) (*PrivateDNSZoneGroupPollerResponse, error) {
+func (client *PrivateDNSZoneGroupsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, privateEndpointName string, privateDnsZoneGroupName string, parameters PrivateDNSZoneGroup) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, privateEndpointName, privateDnsZoneGroupName, parameters)
 	if err != nil {
 		return nil, err
@@ -61,6 +61,14 @@ func (client *PrivateDNSZoneGroupsClient) BeginCreateOrUpdate(ctx context.Contex
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *PrivateDNSZoneGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, privateEndpointName string, privateDnsZoneGroupName string, parameters PrivateDNSZoneGroup) (*PrivateDNSZoneGroupPollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, privateEndpointName, privateDnsZoneGroupName, parameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -125,7 +133,7 @@ func (client *PrivateDNSZoneGroupsClient) CreateOrUpdateHandleError(resp *azcore
 }
 
 // Delete - Deletes the specified private dns zone group.
-func (client *PrivateDNSZoneGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, privateEndpointName string, privateDnsZoneGroupName string) (*HTTPPollerResponse, error) {
+func (client *PrivateDNSZoneGroupsClient) Delete(ctx context.Context, resourceGroupName string, privateEndpointName string, privateDnsZoneGroupName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, privateEndpointName, privateDnsZoneGroupName)
 	if err != nil {
 		return nil, err
@@ -137,6 +145,14 @@ func (client *PrivateDNSZoneGroupsClient) BeginDelete(ctx context.Context, resou
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *PrivateDNSZoneGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, privateEndpointName string, privateDnsZoneGroupName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, privateEndpointName, privateDnsZoneGroupName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {

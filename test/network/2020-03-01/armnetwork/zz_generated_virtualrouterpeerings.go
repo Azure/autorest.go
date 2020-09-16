@@ -49,7 +49,7 @@ func (client *VirtualRouterPeeringsClient) Do(req *azcore.Request) (*azcore.Resp
 }
 
 // CreateOrUpdate - Creates or updates the specified Virtual Router Peering.
-func (client *VirtualRouterPeeringsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string, parameters VirtualRouterPeering) (*VirtualRouterPeeringPollerResponse, error) {
+func (client *VirtualRouterPeeringsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string, parameters VirtualRouterPeering) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, virtualRouterName, peeringName, parameters)
 	if err != nil {
 		return nil, err
@@ -61,6 +61,14 @@ func (client *VirtualRouterPeeringsClient) BeginCreateOrUpdate(ctx context.Conte
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *VirtualRouterPeeringsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string, parameters VirtualRouterPeering) (*VirtualRouterPeeringPollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, virtualRouterName, peeringName, parameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -125,7 +133,7 @@ func (client *VirtualRouterPeeringsClient) CreateOrUpdateHandleError(resp *azcor
 }
 
 // Delete - Deletes the specified peering from a Virtual Router.
-func (client *VirtualRouterPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string) (*HTTPPollerResponse, error) {
+func (client *VirtualRouterPeeringsClient) Delete(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, virtualRouterName, peeringName)
 	if err != nil {
 		return nil, err
@@ -137,6 +145,14 @@ func (client *VirtualRouterPeeringsClient) BeginDelete(ctx context.Context, reso
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *VirtualRouterPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, virtualRouterName, peeringName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {

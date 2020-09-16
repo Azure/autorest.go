@@ -53,7 +53,7 @@ func (client *SecurityPartnerProvidersClient) Do(req *azcore.Request) (*azcore.R
 }
 
 // CreateOrUpdate - Creates or updates the specified Security Partner Provider.
-func (client *SecurityPartnerProvidersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, parameters SecurityPartnerProvider) (*SecurityPartnerProviderPollerResponse, error) {
+func (client *SecurityPartnerProvidersClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, parameters SecurityPartnerProvider) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, securityPartnerProviderName, parameters)
 	if err != nil {
 		return nil, err
@@ -65,6 +65,14 @@ func (client *SecurityPartnerProvidersClient) BeginCreateOrUpdate(ctx context.Co
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *SecurityPartnerProvidersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, parameters SecurityPartnerProvider) (*SecurityPartnerProviderPollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, securityPartnerProviderName, parameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -128,7 +136,7 @@ func (client *SecurityPartnerProvidersClient) CreateOrUpdateHandleError(resp *az
 }
 
 // Delete - Deletes the specified Security Partner Provider.
-func (client *SecurityPartnerProvidersClient) BeginDelete(ctx context.Context, resourceGroupName string, securityPartnerProviderName string) (*HTTPPollerResponse, error) {
+func (client *SecurityPartnerProvidersClient) Delete(ctx context.Context, resourceGroupName string, securityPartnerProviderName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, securityPartnerProviderName)
 	if err != nil {
 		return nil, err
@@ -140,6 +148,14 @@ func (client *SecurityPartnerProvidersClient) BeginDelete(ctx context.Context, r
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *SecurityPartnerProvidersClient) BeginDelete(ctx context.Context, resourceGroupName string, securityPartnerProviderName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, securityPartnerProviderName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {

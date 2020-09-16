@@ -53,7 +53,7 @@ func (client *VirtualNetworkTapsClient) Do(req *azcore.Request) (*azcore.Respons
 }
 
 // CreateOrUpdate - Creates or updates a Virtual Network Tap.
-func (client *VirtualNetworkTapsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, tapName string, parameters VirtualNetworkTap) (*VirtualNetworkTapPollerResponse, error) {
+func (client *VirtualNetworkTapsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, tapName string, parameters VirtualNetworkTap) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, tapName, parameters)
 	if err != nil {
 		return nil, err
@@ -65,6 +65,14 @@ func (client *VirtualNetworkTapsClient) BeginCreateOrUpdate(ctx context.Context,
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *VirtualNetworkTapsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, tapName string, parameters VirtualNetworkTap) (*VirtualNetworkTapPollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, tapName, parameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -128,7 +136,7 @@ func (client *VirtualNetworkTapsClient) CreateOrUpdateHandleError(resp *azcore.R
 }
 
 // Delete - Deletes the specified virtual network tap.
-func (client *VirtualNetworkTapsClient) BeginDelete(ctx context.Context, resourceGroupName string, tapName string) (*HTTPPollerResponse, error) {
+func (client *VirtualNetworkTapsClient) Delete(ctx context.Context, resourceGroupName string, tapName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, tapName)
 	if err != nil {
 		return nil, err
@@ -140,6 +148,14 @@ func (client *VirtualNetworkTapsClient) BeginDelete(ctx context.Context, resourc
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *VirtualNetworkTapsClient) BeginDelete(ctx context.Context, resourceGroupName string, tapName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, tapName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {

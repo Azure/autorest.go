@@ -53,7 +53,7 @@ func (client *RouteFiltersClient) Do(req *azcore.Request) (*azcore.Response, err
 }
 
 // CreateOrUpdate - Creates or updates a route filter in a specified resource group.
-func (client *RouteFiltersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, routeFilterName string, routeFilterParameters RouteFilter) (*RouteFilterPollerResponse, error) {
+func (client *RouteFiltersClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, routeFilterName string, routeFilterParameters RouteFilter) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, routeFilterName, routeFilterParameters)
 	if err != nil {
 		return nil, err
@@ -65,6 +65,14 @@ func (client *RouteFiltersClient) BeginCreateOrUpdate(ctx context.Context, resou
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *RouteFiltersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, routeFilterName string, routeFilterParameters RouteFilter) (*RouteFilterPollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, routeFilterName, routeFilterParameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -128,7 +136,7 @@ func (client *RouteFiltersClient) CreateOrUpdateHandleError(resp *azcore.Respons
 }
 
 // Delete - Deletes the specified route filter.
-func (client *RouteFiltersClient) BeginDelete(ctx context.Context, resourceGroupName string, routeFilterName string) (*HTTPPollerResponse, error) {
+func (client *RouteFiltersClient) Delete(ctx context.Context, resourceGroupName string, routeFilterName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, routeFilterName)
 	if err != nil {
 		return nil, err
@@ -140,6 +148,14 @@ func (client *RouteFiltersClient) BeginDelete(ctx context.Context, resourceGroup
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *RouteFiltersClient) BeginDelete(ctx context.Context, resourceGroupName string, routeFilterName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, routeFilterName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {

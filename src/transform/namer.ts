@@ -50,7 +50,11 @@ export async function namer(session: Session<CodeModel>) {
 
   // copy all the .language.default data into .language.go
   cloneLanguageInfo(model);
-
+  let openapiType = await session.getValue('openapi-type', '');
+  let isDataPlane = false;
+  if (openapiType === 'data-plane') {
+    isDataPlane = true;
+  }
   // default namespce to the output folder
   const outputFolder = await session.getValue<string>('output-folder');
   model.language.go!.packageName = outputFolder.substr(outputFolder.lastIndexOf('/') + 1);
@@ -103,7 +107,7 @@ export async function namer(session: Session<CodeModel>) {
       details.name = getEscapedReservedName(capitalizeAcronyms(pascalCase(details.name)), 'Method');
       // add the client name to the operation as it's needed all over the place
       details.clientName = groupDetails.clientName;
-      if (isLROOperation(op)) {
+      if (isLROOperation(op) && !isDataPlane) {
         op.language.go!.methodPrefix = 'Begin';
       }
       for (const param of values(aggregateParameters(op))) {

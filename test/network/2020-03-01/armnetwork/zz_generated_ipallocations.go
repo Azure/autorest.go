@@ -53,7 +53,7 @@ func (client *IPAllocationsClient) Do(req *azcore.Request) (*azcore.Response, er
 }
 
 // CreateOrUpdate - Creates or updates an IpAllocation in the specified resource group.
-func (client *IPAllocationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ipAllocationName string, parameters IPAllocation) (*IPAllocationPollerResponse, error) {
+func (client *IPAllocationsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, ipAllocationName string, parameters IPAllocation) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, ipAllocationName, parameters)
 	if err != nil {
 		return nil, err
@@ -65,6 +65,14 @@ func (client *IPAllocationsClient) BeginCreateOrUpdate(ctx context.Context, reso
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *IPAllocationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ipAllocationName string, parameters IPAllocation) (*IPAllocationPollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, ipAllocationName, parameters)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.CreateOrUpdateHandleResponse(resp)
 	if err != nil {
@@ -128,7 +136,7 @@ func (client *IPAllocationsClient) CreateOrUpdateHandleError(resp *azcore.Respon
 }
 
 // Delete - Deletes the specified IpAllocation.
-func (client *IPAllocationsClient) BeginDelete(ctx context.Context, resourceGroupName string, ipAllocationName string) (*HTTPPollerResponse, error) {
+func (client *IPAllocationsClient) Delete(ctx context.Context, resourceGroupName string, ipAllocationName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, ipAllocationName)
 	if err != nil {
 		return nil, err
@@ -140,6 +148,14 @@ func (client *IPAllocationsClient) BeginDelete(ctx context.Context, resourceGrou
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
+}
+
+func (client *IPAllocationsClient) BeginDelete(ctx context.Context, resourceGroupName string, ipAllocationName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, ipAllocationName)
+	if err != nil {
+		return nil, err
 	}
 	result, err := client.DeleteHandleResponse(resp)
 	if err != nil {
