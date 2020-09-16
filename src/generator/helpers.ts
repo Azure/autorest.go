@@ -102,14 +102,16 @@ export function getMethodParameters(op: Operation): Parameter[] {
     if (param.implementation === ImplementationLocation.Client) {
       // client params are passed via the receiver
       continue;
-    } else if (param.schema.type === SchemaType.Constant) {
-      // don't generate a parameter for a constant
-      continue;
     } else if (param.language.go!.paramGroup) {
       // param groups will be added after individual params
       if (!paramGroups.includes(param.language.go!.paramGroup)) {
         paramGroups.push(param.language.go!.paramGroup);
       }
+      continue;
+    } else if (param.schema.type === SchemaType.Constant) {
+      // don't generate a parameter for a constant
+      // NOTE: this check must come last as non-required optional constants
+      // in header/query params get dumped into the optional params group
       continue;
     }
     params.push(param);
