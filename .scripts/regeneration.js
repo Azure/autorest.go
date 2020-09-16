@@ -61,15 +61,21 @@ generate(blobStorage, 'test/storage/2019-07-07/azblob', '--credential-scope="htt
 const network = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/network/resource-manager/readme.md';
 generateFromReadme(network, 'package-2020-03', 'test/network/2020-03-01/armnetwork', '--credential-scope="https://management.azure.com//.default" --module=armnetwork --file-prefix="zz_generated_"');
 
-// const synapseArtifacts = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/synapse/data-plane/Microsoft.Synapse/preview/2019-06-01-preview/artifacts.json';
-// generate(synapseArtifacts, 'test/synapse/2019-06-01/azartifacts', '--module="azartifacts" --openapi-type="data-plane"');
+const compute = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/compute/resource-manager/readme.md';
+generateFromReadme(compute, 'package-2019-12-01', 'test/compute/2019-12-01/armcompute', '--credential-scope="https://management.azure.com//.default" --module=armcompute --file-prefix="zz_generated_"');
+
+const synapseArtifacts = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/synapse/data-plane/readme.md';
+generateFromReadme(synapseArtifacts, 'package-artifacts-2019-06-01-preview', 'test/synapse/2019-06-01/azartifacts', '--credential-scope="https://dev.azuresynapse.net/.default" --module="azartifacts" --openapi-type="data-plane"');
+
+const synapseSpark = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/synapse/data-plane/readme.md';
+generateFromReadme(synapseSpark, 'package-spark-2019-11-01-preview', 'test/synapse/2019-06-01/azspark', '--credential-scope="https://dev.azuresynapse.net/.default" --module="azspark" --openapi-type="data-plane"');
 
 // helper to log the package being generated before invocation
 function generate(inputFile, outputDir, additionalArgs) {
     sem.take(function() {
         console.log('generating ' + inputFile);
         cleanGeneratedFiles(outputDir);
-        exec('autorest --use=. --license-header=MICROSOFT_MIT_NO_VERSION --input-file=' + inputFile + ' --output-folder=' + outputDir + ' ' + additionalArgs, autorestCallback(outputDir, inputFile));
+        exec('autorest --use=. --modelerfour.lenient-model-deduplication --license-header=MICROSOFT_MIT_NO_VERSION --input-file=' + inputFile + ' --output-folder=' + outputDir + ' ' + additionalArgs, autorestCallback(outputDir, inputFile));
     });
 }
 
@@ -77,7 +83,7 @@ function generateFromReadme(readme, tag, outputDir, additionalArgs) {
     sem.take(function() {
         console.log('generating ' + readme);
         cleanGeneratedFiles(outputDir);
-        exec('autorest --use=. ' + readme + ' --tag=' + tag + ' --clear-output-folder --license-header=MICROSOFT_MIT_NO_VERSION --output-folder=' + outputDir + ' ' + additionalArgs, autorestCallback(outputDir, readme));
+        exec('autorest --use=. ' + readme + ' --tag=' + tag + ' --modelerfour.lenient-model-deduplication --license-header=MICROSOFT_MIT_NO_VERSION --output-folder=' + outputDir + ' ' + additionalArgs, autorestCallback(outputDir, readme));
     });
 }
 
