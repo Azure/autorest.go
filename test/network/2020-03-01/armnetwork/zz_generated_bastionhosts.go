@@ -72,9 +72,8 @@ func (client *BastionHostsClient) BeginCreateOrUpdate(ctx context.Context, resou
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.CreateOrUpdateHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &BastionHostPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("BastionHostsClient.CreateOrUpdate", "azure-async-operation", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
@@ -121,7 +120,8 @@ func (client *BastionHostsClient) CreateOrUpdateCreateRequest(ctx context.Contex
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *BastionHostsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*BastionHostPollerResponse, error) {
-	return &BastionHostPollerResponse{RawResponse: resp.Response}, nil
+	result := BastionHostResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.BastionHost)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -155,9 +155,8 @@ func (client *BastionHostsClient) BeginDelete(ctx context.Context, resourceGroup
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DeleteHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("BastionHostsClient.Delete", "location", resp, client.DeleteHandleError)
 	if err != nil {
@@ -200,11 +199,6 @@ func (client *BastionHostsClient) DeleteCreateRequest(ctx context.Context, resou
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DeleteHandleResponse handles the Delete response.
-func (client *BastionHostsClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteHandleError handles the Delete error response.

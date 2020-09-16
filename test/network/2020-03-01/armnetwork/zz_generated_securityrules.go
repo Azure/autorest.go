@@ -70,9 +70,8 @@ func (client *SecurityRulesClient) BeginCreateOrUpdate(ctx context.Context, reso
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.CreateOrUpdateHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &SecurityRulePollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("SecurityRulesClient.CreateOrUpdate", "azure-async-operation", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
@@ -120,7 +119,8 @@ func (client *SecurityRulesClient) CreateOrUpdateCreateRequest(ctx context.Conte
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *SecurityRulesClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*SecurityRulePollerResponse, error) {
-	return &SecurityRulePollerResponse{RawResponse: resp.Response}, nil
+	result := SecurityRuleResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.SecurityRule)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -154,9 +154,8 @@ func (client *SecurityRulesClient) BeginDelete(ctx context.Context, resourceGrou
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DeleteHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("SecurityRulesClient.Delete", "location", resp, client.DeleteHandleError)
 	if err != nil {
@@ -200,11 +199,6 @@ func (client *SecurityRulesClient) DeleteCreateRequest(ctx context.Context, reso
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DeleteHandleResponse handles the Delete response.
-func (client *SecurityRulesClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteHandleError handles the Delete error response.

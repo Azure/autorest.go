@@ -70,9 +70,8 @@ func (client *InboundNatRulesClient) BeginCreateOrUpdate(ctx context.Context, re
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.CreateOrUpdateHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &InboundNatRulePollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("InboundNatRulesClient.CreateOrUpdate", "azure-async-operation", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
@@ -120,7 +119,8 @@ func (client *InboundNatRulesClient) CreateOrUpdateCreateRequest(ctx context.Con
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *InboundNatRulesClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*InboundNatRulePollerResponse, error) {
-	return &InboundNatRulePollerResponse{RawResponse: resp.Response}, nil
+	result := InboundNatRuleResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.InboundNatRule)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -154,9 +154,8 @@ func (client *InboundNatRulesClient) BeginDelete(ctx context.Context, resourceGr
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DeleteHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("InboundNatRulesClient.Delete", "location", resp, client.DeleteHandleError)
 	if err != nil {
@@ -200,11 +199,6 @@ func (client *InboundNatRulesClient) DeleteCreateRequest(ctx context.Context, re
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DeleteHandleResponse handles the Delete response.
-func (client *InboundNatRulesClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteHandleError handles the Delete error response.

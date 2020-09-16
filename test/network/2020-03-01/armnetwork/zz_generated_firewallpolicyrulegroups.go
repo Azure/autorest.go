@@ -70,9 +70,8 @@ func (client *FirewallPolicyRuleGroupsClient) BeginCreateOrUpdate(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.CreateOrUpdateHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &FirewallPolicyRuleGroupPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("FirewallPolicyRuleGroupsClient.CreateOrUpdate", "azure-async-operation", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
@@ -120,7 +119,8 @@ func (client *FirewallPolicyRuleGroupsClient) CreateOrUpdateCreateRequest(ctx co
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *FirewallPolicyRuleGroupsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*FirewallPolicyRuleGroupPollerResponse, error) {
-	return &FirewallPolicyRuleGroupPollerResponse{RawResponse: resp.Response}, nil
+	result := FirewallPolicyRuleGroupResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.FirewallPolicyRuleGroup)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -154,9 +154,8 @@ func (client *FirewallPolicyRuleGroupsClient) BeginDelete(ctx context.Context, r
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DeleteHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("FirewallPolicyRuleGroupsClient.Delete", "location", resp, client.DeleteHandleError)
 	if err != nil {
@@ -200,11 +199,6 @@ func (client *FirewallPolicyRuleGroupsClient) DeleteCreateRequest(ctx context.Co
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DeleteHandleResponse handles the Delete response.
-func (client *FirewallPolicyRuleGroupsClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteHandleError handles the Delete error response.

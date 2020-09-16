@@ -74,9 +74,8 @@ func (client *ExpressRoutePortsClient) BeginCreateOrUpdate(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.CreateOrUpdateHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ExpressRoutePortPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("ExpressRoutePortsClient.CreateOrUpdate", "azure-async-operation", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
@@ -123,7 +122,8 @@ func (client *ExpressRoutePortsClient) CreateOrUpdateCreateRequest(ctx context.C
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *ExpressRoutePortsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*ExpressRoutePortPollerResponse, error) {
-	return &ExpressRoutePortPollerResponse{RawResponse: resp.Response}, nil
+	result := ExpressRoutePortResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.ExpressRoutePort)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -157,9 +157,8 @@ func (client *ExpressRoutePortsClient) BeginDelete(ctx context.Context, resource
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DeleteHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("ExpressRoutePortsClient.Delete", "location", resp, client.DeleteHandleError)
 	if err != nil {
@@ -202,11 +201,6 @@ func (client *ExpressRoutePortsClient) DeleteCreateRequest(ctx context.Context, 
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DeleteHandleResponse handles the Delete response.
-func (client *ExpressRoutePortsClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteHandleError handles the Delete error response.

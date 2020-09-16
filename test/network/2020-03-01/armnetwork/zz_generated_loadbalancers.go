@@ -74,9 +74,8 @@ func (client *LoadBalancersClient) BeginCreateOrUpdate(ctx context.Context, reso
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.CreateOrUpdateHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &LoadBalancerPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LoadBalancersClient.CreateOrUpdate", "azure-async-operation", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
@@ -123,7 +122,8 @@ func (client *LoadBalancersClient) CreateOrUpdateCreateRequest(ctx context.Conte
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *LoadBalancersClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*LoadBalancerPollerResponse, error) {
-	return &LoadBalancerPollerResponse{RawResponse: resp.Response}, nil
+	result := LoadBalancerResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.LoadBalancer)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -157,9 +157,8 @@ func (client *LoadBalancersClient) BeginDelete(ctx context.Context, resourceGrou
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DeleteHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LoadBalancersClient.Delete", "location", resp, client.DeleteHandleError)
 	if err != nil {
@@ -202,11 +201,6 @@ func (client *LoadBalancersClient) DeleteCreateRequest(ctx context.Context, reso
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DeleteHandleResponse handles the Delete response.
-func (client *LoadBalancersClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteHandleError handles the Delete error response.

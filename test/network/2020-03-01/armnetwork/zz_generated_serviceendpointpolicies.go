@@ -74,9 +74,8 @@ func (client *ServiceEndpointPoliciesClient) BeginCreateOrUpdate(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.CreateOrUpdateHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ServiceEndpointPolicyPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("ServiceEndpointPoliciesClient.CreateOrUpdate", "azure-async-operation", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
@@ -123,7 +122,8 @@ func (client *ServiceEndpointPoliciesClient) CreateOrUpdateCreateRequest(ctx con
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *ServiceEndpointPoliciesClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*ServiceEndpointPolicyPollerResponse, error) {
-	return &ServiceEndpointPolicyPollerResponse{RawResponse: resp.Response}, nil
+	result := ServiceEndpointPolicyResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.ServiceEndpointPolicy)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -157,9 +157,8 @@ func (client *ServiceEndpointPoliciesClient) BeginDelete(ctx context.Context, re
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DeleteHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("ServiceEndpointPoliciesClient.Delete", "location", resp, client.DeleteHandleError)
 	if err != nil {
@@ -202,11 +201,6 @@ func (client *ServiceEndpointPoliciesClient) DeleteCreateRequest(ctx context.Con
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DeleteHandleResponse handles the Delete response.
-func (client *ServiceEndpointPoliciesClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteHandleError handles the Delete error response.

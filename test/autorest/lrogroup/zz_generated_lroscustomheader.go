@@ -71,9 +71,8 @@ func (client *LrOSCustomHeaderClient) BeginPost202Retry200(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.Post202Retry200HandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSCustomHeaderClient.Post202Retry200", "", resp, client.Post202Retry200HandleError)
 	if err != nil {
@@ -115,11 +114,6 @@ func (client *LrOSCustomHeaderClient) Post202Retry200CreateRequest(ctx context.C
 	return req, nil
 }
 
-// Post202Retry200HandleResponse handles the Post202Retry200 response.
-func (client *LrOSCustomHeaderClient) Post202Retry200HandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
-}
-
 // Post202Retry200HandleError handles the Post202Retry200 error response.
 func (client *LrOSCustomHeaderClient) Post202Retry200HandleError(resp *azcore.Response) error {
 	var err CloudError
@@ -151,9 +145,8 @@ func (client *LrOSCustomHeaderClient) BeginPostAsyncRetrySucceeded(ctx context.C
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PostAsyncRetrySucceededHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSCustomHeaderClient.PostAsyncRetrySucceeded", "", resp, client.PostAsyncRetrySucceededHandleError)
 	if err != nil {
@@ -195,11 +188,6 @@ func (client *LrOSCustomHeaderClient) PostAsyncRetrySucceededCreateRequest(ctx c
 	return req, nil
 }
 
-// PostAsyncRetrySucceededHandleResponse handles the PostAsyncRetrySucceeded response.
-func (client *LrOSCustomHeaderClient) PostAsyncRetrySucceededHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
-}
-
 // PostAsyncRetrySucceededHandleError handles the PostAsyncRetrySucceeded error response.
 func (client *LrOSCustomHeaderClient) PostAsyncRetrySucceededHandleError(resp *azcore.Response) error {
 	var err CloudError
@@ -231,9 +219,8 @@ func (client *LrOSCustomHeaderClient) BeginPut201CreatingSucceeded200(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.Put201CreatingSucceeded200HandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ProductPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSCustomHeaderClient.Put201CreatingSucceeded200", "", resp, client.Put201CreatingSucceeded200HandleError)
 	if err != nil {
@@ -277,7 +264,8 @@ func (client *LrOSCustomHeaderClient) Put201CreatingSucceeded200CreateRequest(ct
 
 // Put201CreatingSucceeded200HandleResponse handles the Put201CreatingSucceeded200 response.
 func (client *LrOSCustomHeaderClient) Put201CreatingSucceeded200HandleResponse(resp *azcore.Response) (*ProductPollerResponse, error) {
-	return &ProductPollerResponse{RawResponse: resp.Response}, nil
+	result := ProductResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
 
 // Put201CreatingSucceeded200HandleError handles the Put201CreatingSucceeded200 error response.
@@ -311,9 +299,8 @@ func (client *LrOSCustomHeaderClient) BeginPutAsyncRetrySucceeded(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutAsyncRetrySucceededHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ProductPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSCustomHeaderClient.PutAsyncRetrySucceeded", "", resp, client.PutAsyncRetrySucceededHandleError)
 	if err != nil {
@@ -357,7 +344,8 @@ func (client *LrOSCustomHeaderClient) PutAsyncRetrySucceededCreateRequest(ctx co
 
 // PutAsyncRetrySucceededHandleResponse handles the PutAsyncRetrySucceeded response.
 func (client *LrOSCustomHeaderClient) PutAsyncRetrySucceededHandleResponse(resp *azcore.Response) (*ProductPollerResponse, error) {
-	return &ProductPollerResponse{RawResponse: resp.Response}, nil
+	result := ProductResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
 
 // PutAsyncRetrySucceededHandleError handles the PutAsyncRetrySucceeded error response.

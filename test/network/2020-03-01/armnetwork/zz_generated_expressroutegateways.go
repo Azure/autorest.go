@@ -72,9 +72,8 @@ func (client *ExpressRouteGatewaysClient) BeginCreateOrUpdate(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.CreateOrUpdateHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ExpressRouteGatewayPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("ExpressRouteGatewaysClient.CreateOrUpdate", "azure-async-operation", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
@@ -121,7 +120,8 @@ func (client *ExpressRouteGatewaysClient) CreateOrUpdateCreateRequest(ctx contex
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *ExpressRouteGatewaysClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*ExpressRouteGatewayPollerResponse, error) {
-	return &ExpressRouteGatewayPollerResponse{RawResponse: resp.Response}, nil
+	result := ExpressRouteGatewayResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.ExpressRouteGateway)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -155,9 +155,8 @@ func (client *ExpressRouteGatewaysClient) BeginDelete(ctx context.Context, resou
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DeleteHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("ExpressRouteGatewaysClient.Delete", "location", resp, client.DeleteHandleError)
 	if err != nil {
@@ -200,11 +199,6 @@ func (client *ExpressRouteGatewaysClient) DeleteCreateRequest(ctx context.Contex
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DeleteHandleResponse handles the Delete response.
-func (client *ExpressRouteGatewaysClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteHandleError handles the Delete error response.

@@ -70,9 +70,8 @@ func (client *VpnConnectionsClient) BeginCreateOrUpdate(ctx context.Context, res
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.CreateOrUpdateHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &VpnConnectionPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("VpnConnectionsClient.CreateOrUpdate", "azure-async-operation", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
@@ -120,7 +119,8 @@ func (client *VpnConnectionsClient) CreateOrUpdateCreateRequest(ctx context.Cont
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *VpnConnectionsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*VpnConnectionPollerResponse, error) {
-	return &VpnConnectionPollerResponse{RawResponse: resp.Response}, nil
+	result := VpnConnectionResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.VpnConnection)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -154,9 +154,8 @@ func (client *VpnConnectionsClient) BeginDelete(ctx context.Context, resourceGro
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DeleteHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("VpnConnectionsClient.Delete", "location", resp, client.DeleteHandleError)
 	if err != nil {
@@ -200,11 +199,6 @@ func (client *VpnConnectionsClient) DeleteCreateRequest(ctx context.Context, res
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DeleteHandleResponse handles the Delete response.
-func (client *VpnConnectionsClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteHandleError handles the Delete error response.

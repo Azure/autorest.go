@@ -74,9 +74,8 @@ func (client *VirtualWansClient) BeginCreateOrUpdate(ctx context.Context, resour
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.CreateOrUpdateHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &VirtualWanPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("VirtualWansClient.CreateOrUpdate", "azure-async-operation", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
@@ -123,7 +122,8 @@ func (client *VirtualWansClient) CreateOrUpdateCreateRequest(ctx context.Context
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *VirtualWansClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*VirtualWanPollerResponse, error) {
-	return &VirtualWanPollerResponse{RawResponse: resp.Response}, nil
+	result := VirtualWanResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.VirtualWan)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -157,9 +157,8 @@ func (client *VirtualWansClient) BeginDelete(ctx context.Context, resourceGroupN
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DeleteHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("VirtualWansClient.Delete", "location", resp, client.DeleteHandleError)
 	if err != nil {
@@ -202,11 +201,6 @@ func (client *VirtualWansClient) DeleteCreateRequest(ctx context.Context, resour
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DeleteHandleResponse handles the Delete response.
-func (client *VirtualWansClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteHandleError handles the Delete error response.

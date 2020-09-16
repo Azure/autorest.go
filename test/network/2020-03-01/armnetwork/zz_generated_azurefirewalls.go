@@ -76,9 +76,8 @@ func (client *AzureFirewallsClient) BeginCreateOrUpdate(ctx context.Context, res
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.CreateOrUpdateHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &AzureFirewallPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("AzureFirewallsClient.CreateOrUpdate", "azure-async-operation", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
@@ -125,7 +124,8 @@ func (client *AzureFirewallsClient) CreateOrUpdateCreateRequest(ctx context.Cont
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *AzureFirewallsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*AzureFirewallPollerResponse, error) {
-	return &AzureFirewallPollerResponse{RawResponse: resp.Response}, nil
+	result := AzureFirewallResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.AzureFirewall)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -159,9 +159,8 @@ func (client *AzureFirewallsClient) BeginDelete(ctx context.Context, resourceGro
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DeleteHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("AzureFirewallsClient.Delete", "location", resp, client.DeleteHandleError)
 	if err != nil {
@@ -204,11 +203,6 @@ func (client *AzureFirewallsClient) DeleteCreateRequest(ctx context.Context, res
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DeleteHandleResponse handles the Delete response.
-func (client *AzureFirewallsClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteHandleError handles the Delete error response.
@@ -385,9 +379,8 @@ func (client *AzureFirewallsClient) BeginUpdateTags(ctx context.Context, resourc
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.UpdateTagsHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &AzureFirewallPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("AzureFirewallsClient.UpdateTags", "azure-async-operation", resp, client.UpdateTagsHandleError)
 	if err != nil {
@@ -434,7 +427,8 @@ func (client *AzureFirewallsClient) UpdateTagsCreateRequest(ctx context.Context,
 
 // UpdateTagsHandleResponse handles the UpdateTags response.
 func (client *AzureFirewallsClient) UpdateTagsHandleResponse(resp *azcore.Response) (*AzureFirewallPollerResponse, error) {
-	return &AzureFirewallPollerResponse{RawResponse: resp.Response}, nil
+	result := AzureFirewallResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.AzureFirewall)
 }
 
 // UpdateTagsHandleError handles the UpdateTags error response.

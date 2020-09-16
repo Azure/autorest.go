@@ -92,9 +92,8 @@ func (client *NetworkInterfacesClient) BeginCreateOrUpdate(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.CreateOrUpdateHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &NetworkInterfacePollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("NetworkInterfacesClient.CreateOrUpdate", "azure-async-operation", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
@@ -141,7 +140,8 @@ func (client *NetworkInterfacesClient) CreateOrUpdateCreateRequest(ctx context.C
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *NetworkInterfacesClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*NetworkInterfacePollerResponse, error) {
-	return &NetworkInterfacePollerResponse{RawResponse: resp.Response}, nil
+	result := NetworkInterfaceResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.NetworkInterface)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -175,9 +175,8 @@ func (client *NetworkInterfacesClient) BeginDelete(ctx context.Context, resource
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DeleteHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("NetworkInterfacesClient.Delete", "location", resp, client.DeleteHandleError)
 	if err != nil {
@@ -220,11 +219,6 @@ func (client *NetworkInterfacesClient) DeleteCreateRequest(ctx context.Context, 
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DeleteHandleResponse handles the Delete response.
-func (client *NetworkInterfacesClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteHandleError handles the Delete error response.
@@ -313,9 +307,8 @@ func (client *NetworkInterfacesClient) BeginGetEffectiveRouteTable(ctx context.C
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetEffectiveRouteTableHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &EffectiveRouteListResultPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("NetworkInterfacesClient.GetEffectiveRouteTable", "location", resp, client.GetEffectiveRouteTableHandleError)
 	if err != nil {
@@ -362,7 +355,8 @@ func (client *NetworkInterfacesClient) GetEffectiveRouteTableCreateRequest(ctx c
 
 // GetEffectiveRouteTableHandleResponse handles the GetEffectiveRouteTable response.
 func (client *NetworkInterfacesClient) GetEffectiveRouteTableHandleResponse(resp *azcore.Response) (*EffectiveRouteListResultPollerResponse, error) {
-	return &EffectiveRouteListResultPollerResponse{RawResponse: resp.Response}, nil
+	result := EffectiveRouteListResultResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.EffectiveRouteListResult)
 }
 
 // GetEffectiveRouteTableHandleError handles the GetEffectiveRouteTable error response.
@@ -602,9 +596,8 @@ func (client *NetworkInterfacesClient) BeginListEffectiveNetworkSecurityGroups(c
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ListEffectiveNetworkSecurityGroupsHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &EffectiveNetworkSecurityGroupListResultPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("NetworkInterfacesClient.ListEffectiveNetworkSecurityGroups", "location", resp, client.ListEffectiveNetworkSecurityGroupsHandleError)
 	if err != nil {
@@ -651,7 +644,8 @@ func (client *NetworkInterfacesClient) ListEffectiveNetworkSecurityGroupsCreateR
 
 // ListEffectiveNetworkSecurityGroupsHandleResponse handles the ListEffectiveNetworkSecurityGroups response.
 func (client *NetworkInterfacesClient) ListEffectiveNetworkSecurityGroupsHandleResponse(resp *azcore.Response) (*EffectiveNetworkSecurityGroupListResultPollerResponse, error) {
-	return &EffectiveNetworkSecurityGroupListResultPollerResponse{RawResponse: resp.Response}, nil
+	result := EffectiveNetworkSecurityGroupListResultResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.EffectiveNetworkSecurityGroupListResult)
 }
 
 // ListEffectiveNetworkSecurityGroupsHandleError handles the ListEffectiveNetworkSecurityGroups error response.

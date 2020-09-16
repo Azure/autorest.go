@@ -74,9 +74,8 @@ func (client *NetworkSecurityGroupsClient) BeginCreateOrUpdate(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.CreateOrUpdateHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &NetworkSecurityGroupPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("NetworkSecurityGroupsClient.CreateOrUpdate", "azure-async-operation", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
@@ -123,7 +122,8 @@ func (client *NetworkSecurityGroupsClient) CreateOrUpdateCreateRequest(ctx conte
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *NetworkSecurityGroupsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*NetworkSecurityGroupPollerResponse, error) {
-	return &NetworkSecurityGroupPollerResponse{RawResponse: resp.Response}, nil
+	result := NetworkSecurityGroupResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.NetworkSecurityGroup)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -157,9 +157,8 @@ func (client *NetworkSecurityGroupsClient) BeginDelete(ctx context.Context, reso
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DeleteHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("NetworkSecurityGroupsClient.Delete", "location", resp, client.DeleteHandleError)
 	if err != nil {
@@ -202,11 +201,6 @@ func (client *NetworkSecurityGroupsClient) DeleteCreateRequest(ctx context.Conte
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DeleteHandleResponse handles the Delete response.
-func (client *NetworkSecurityGroupsClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteHandleError handles the Delete error response.

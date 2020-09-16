@@ -90,9 +90,8 @@ func (client *ExpressRouteCircuitsClient) BeginCreateOrUpdate(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.CreateOrUpdateHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ExpressRouteCircuitPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("ExpressRouteCircuitsClient.CreateOrUpdate", "azure-async-operation", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
@@ -139,7 +138,8 @@ func (client *ExpressRouteCircuitsClient) CreateOrUpdateCreateRequest(ctx contex
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *ExpressRouteCircuitsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitPollerResponse, error) {
-	return &ExpressRouteCircuitPollerResponse{RawResponse: resp.Response}, nil
+	result := ExpressRouteCircuitResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.ExpressRouteCircuit)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -173,9 +173,8 @@ func (client *ExpressRouteCircuitsClient) BeginDelete(ctx context.Context, resou
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DeleteHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("ExpressRouteCircuitsClient.Delete", "location", resp, client.DeleteHandleError)
 	if err != nil {
@@ -218,11 +217,6 @@ func (client *ExpressRouteCircuitsClient) DeleteCreateRequest(ctx context.Contex
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DeleteHandleResponse handles the Delete response.
-func (client *ExpressRouteCircuitsClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteHandleError handles the Delete error response.
@@ -504,9 +498,8 @@ func (client *ExpressRouteCircuitsClient) BeginListArpTable(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ListArpTableHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ExpressRouteCircuitsArpTableListResultPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("ExpressRouteCircuitsClient.ListArpTable", "location", resp, client.ListArpTableHandleError)
 	if err != nil {
@@ -555,7 +548,8 @@ func (client *ExpressRouteCircuitsClient) ListArpTableCreateRequest(ctx context.
 
 // ListArpTableHandleResponse handles the ListArpTable response.
 func (client *ExpressRouteCircuitsClient) ListArpTableHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitsArpTableListResultPollerResponse, error) {
-	return &ExpressRouteCircuitsArpTableListResultPollerResponse{RawResponse: resp.Response}, nil
+	result := ExpressRouteCircuitsArpTableListResultResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.ExpressRouteCircuitsArpTableListResult)
 }
 
 // ListArpTableHandleError handles the ListArpTable error response.
@@ -589,9 +583,8 @@ func (client *ExpressRouteCircuitsClient) BeginListRoutesTable(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ListRoutesTableHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ExpressRouteCircuitsRoutesTableListResultPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("ExpressRouteCircuitsClient.ListRoutesTable", "location", resp, client.ListRoutesTableHandleError)
 	if err != nil {
@@ -640,7 +633,8 @@ func (client *ExpressRouteCircuitsClient) ListRoutesTableCreateRequest(ctx conte
 
 // ListRoutesTableHandleResponse handles the ListRoutesTable response.
 func (client *ExpressRouteCircuitsClient) ListRoutesTableHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitsRoutesTableListResultPollerResponse, error) {
-	return &ExpressRouteCircuitsRoutesTableListResultPollerResponse{RawResponse: resp.Response}, nil
+	result := ExpressRouteCircuitsRoutesTableListResultResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.ExpressRouteCircuitsRoutesTableListResult)
 }
 
 // ListRoutesTableHandleError handles the ListRoutesTable error response.
@@ -674,9 +668,8 @@ func (client *ExpressRouteCircuitsClient) BeginListRoutesTableSummary(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ListRoutesTableSummaryHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ExpressRouteCircuitsRoutesTableSummaryListResultPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("ExpressRouteCircuitsClient.ListRoutesTableSummary", "location", resp, client.ListRoutesTableSummaryHandleError)
 	if err != nil {
@@ -725,7 +718,8 @@ func (client *ExpressRouteCircuitsClient) ListRoutesTableSummaryCreateRequest(ct
 
 // ListRoutesTableSummaryHandleResponse handles the ListRoutesTableSummary response.
 func (client *ExpressRouteCircuitsClient) ListRoutesTableSummaryHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitsRoutesTableSummaryListResultPollerResponse, error) {
-	return &ExpressRouteCircuitsRoutesTableSummaryListResultPollerResponse{RawResponse: resp.Response}, nil
+	result := ExpressRouteCircuitsRoutesTableSummaryListResultResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.ExpressRouteCircuitsRoutesTableSummaryListResult)
 }
 
 // ListRoutesTableSummaryHandleError handles the ListRoutesTableSummary error response.

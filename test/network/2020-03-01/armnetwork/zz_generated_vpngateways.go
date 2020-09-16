@@ -78,9 +78,8 @@ func (client *VpnGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resour
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.CreateOrUpdateHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &VpnGatewayPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("VpnGatewaysClient.CreateOrUpdate", "azure-async-operation", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
@@ -127,7 +126,8 @@ func (client *VpnGatewaysClient) CreateOrUpdateCreateRequest(ctx context.Context
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *VpnGatewaysClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*VpnGatewayPollerResponse, error) {
-	return &VpnGatewayPollerResponse{RawResponse: resp.Response}, nil
+	result := VpnGatewayResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.VpnGateway)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -161,9 +161,8 @@ func (client *VpnGatewaysClient) BeginDelete(ctx context.Context, resourceGroupN
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DeleteHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("VpnGatewaysClient.Delete", "location", resp, client.DeleteHandleError)
 	if err != nil {
@@ -206,11 +205,6 @@ func (client *VpnGatewaysClient) DeleteCreateRequest(ctx context.Context, resour
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DeleteHandleResponse handles the Delete response.
-func (client *VpnGatewaysClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteHandleError handles the Delete error response.
@@ -387,9 +381,8 @@ func (client *VpnGatewaysClient) BeginReset(ctx context.Context, resourceGroupNa
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ResetHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &VpnGatewayPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("VpnGatewaysClient.Reset", "location", resp, client.ResetHandleError)
 	if err != nil {
@@ -436,7 +429,8 @@ func (client *VpnGatewaysClient) ResetCreateRequest(ctx context.Context, resourc
 
 // ResetHandleResponse handles the Reset response.
 func (client *VpnGatewaysClient) ResetHandleResponse(resp *azcore.Response) (*VpnGatewayPollerResponse, error) {
-	return &VpnGatewayPollerResponse{RawResponse: resp.Response}, nil
+	result := VpnGatewayResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.VpnGateway)
 }
 
 // ResetHandleError handles the Reset error response.

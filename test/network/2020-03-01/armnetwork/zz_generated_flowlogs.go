@@ -70,9 +70,8 @@ func (client *FlowLogsClient) BeginCreateOrUpdate(ctx context.Context, resourceG
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.CreateOrUpdateHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &FlowLogPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("FlowLogsClient.CreateOrUpdate", "azure-async-operation", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
@@ -120,7 +119,8 @@ func (client *FlowLogsClient) CreateOrUpdateCreateRequest(ctx context.Context, r
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *FlowLogsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*FlowLogPollerResponse, error) {
-	return &FlowLogPollerResponse{RawResponse: resp.Response}, nil
+	result := FlowLogResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.FlowLog)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -154,9 +154,8 @@ func (client *FlowLogsClient) BeginDelete(ctx context.Context, resourceGroupName
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DeleteHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("FlowLogsClient.Delete", "location", resp, client.DeleteHandleError)
 	if err != nil {
@@ -200,11 +199,6 @@ func (client *FlowLogsClient) DeleteCreateRequest(ctx context.Context, resourceG
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DeleteHandleResponse handles the Delete response.
-func (client *FlowLogsClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteHandleError handles the Delete error response.

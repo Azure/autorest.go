@@ -70,9 +70,8 @@ func (client *VirtualRouterPeeringsClient) BeginCreateOrUpdate(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.CreateOrUpdateHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &VirtualRouterPeeringPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("VirtualRouterPeeringsClient.CreateOrUpdate", "azure-async-operation", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
@@ -120,7 +119,8 @@ func (client *VirtualRouterPeeringsClient) CreateOrUpdateCreateRequest(ctx conte
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *VirtualRouterPeeringsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*VirtualRouterPeeringPollerResponse, error) {
-	return &VirtualRouterPeeringPollerResponse{RawResponse: resp.Response}, nil
+	result := VirtualRouterPeeringResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.VirtualRouterPeering)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -154,9 +154,8 @@ func (client *VirtualRouterPeeringsClient) BeginDelete(ctx context.Context, reso
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DeleteHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("VirtualRouterPeeringsClient.Delete", "location", resp, client.DeleteHandleError)
 	if err != nil {
@@ -200,11 +199,6 @@ func (client *VirtualRouterPeeringsClient) DeleteCreateRequest(ctx context.Conte
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DeleteHandleResponse handles the Delete response.
-func (client *VirtualRouterPeeringsClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteHandleError handles the Delete error response.

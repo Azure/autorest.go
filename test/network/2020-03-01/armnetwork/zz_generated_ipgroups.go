@@ -74,9 +74,8 @@ func (client *IPGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceG
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.CreateOrUpdateHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &IPGroupPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("IPGroupsClient.CreateOrUpdate", "azure-async-operation", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
@@ -123,7 +122,8 @@ func (client *IPGroupsClient) CreateOrUpdateCreateRequest(ctx context.Context, r
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *IPGroupsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*IPGroupPollerResponse, error) {
-	return &IPGroupPollerResponse{RawResponse: resp.Response}, nil
+	result := IPGroupResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.IPGroup)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -157,9 +157,8 @@ func (client *IPGroupsClient) BeginDelete(ctx context.Context, resourceGroupName
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DeleteHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("IPGroupsClient.Delete", "location", resp, client.DeleteHandleError)
 	if err != nil {
@@ -202,11 +201,6 @@ func (client *IPGroupsClient) DeleteCreateRequest(ctx context.Context, resourceG
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DeleteHandleResponse handles the Delete response.
-func (client *IPGroupsClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteHandleError handles the Delete error response.

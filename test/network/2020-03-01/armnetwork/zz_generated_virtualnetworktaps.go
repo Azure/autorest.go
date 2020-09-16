@@ -74,9 +74,8 @@ func (client *VirtualNetworkTapsClient) BeginCreateOrUpdate(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.CreateOrUpdateHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &VirtualNetworkTapPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("VirtualNetworkTapsClient.CreateOrUpdate", "azure-async-operation", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
@@ -123,7 +122,8 @@ func (client *VirtualNetworkTapsClient) CreateOrUpdateCreateRequest(ctx context.
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *VirtualNetworkTapsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*VirtualNetworkTapPollerResponse, error) {
-	return &VirtualNetworkTapPollerResponse{RawResponse: resp.Response}, nil
+	result := VirtualNetworkTapResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.VirtualNetworkTap)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -157,9 +157,8 @@ func (client *VirtualNetworkTapsClient) BeginDelete(ctx context.Context, resourc
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DeleteHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("VirtualNetworkTapsClient.Delete", "location", resp, client.DeleteHandleError)
 	if err != nil {
@@ -202,11 +201,6 @@ func (client *VirtualNetworkTapsClient) DeleteCreateRequest(ctx context.Context,
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DeleteHandleResponse handles the Delete response.
-func (client *VirtualNetworkTapsClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteHandleError handles the Delete error response.

@@ -84,9 +84,8 @@ func (client *ConnectionMonitorsClient) BeginCreateOrUpdate(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.CreateOrUpdateHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ConnectionMonitorResultPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("ConnectionMonitorsClient.CreateOrUpdate", "azure-async-operation", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
@@ -134,7 +133,8 @@ func (client *ConnectionMonitorsClient) CreateOrUpdateCreateRequest(ctx context.
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *ConnectionMonitorsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*ConnectionMonitorResultPollerResponse, error) {
-	return &ConnectionMonitorResultPollerResponse{RawResponse: resp.Response}, nil
+	result := ConnectionMonitorResultResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.ConnectionMonitorResult)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -168,9 +168,8 @@ func (client *ConnectionMonitorsClient) BeginDelete(ctx context.Context, resourc
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DeleteHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("ConnectionMonitorsClient.Delete", "location", resp, client.DeleteHandleError)
 	if err != nil {
@@ -214,11 +213,6 @@ func (client *ConnectionMonitorsClient) DeleteCreateRequest(ctx context.Context,
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DeleteHandleResponse handles the Delete response.
-func (client *ConnectionMonitorsClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteHandleError handles the Delete error response.
@@ -357,9 +351,8 @@ func (client *ConnectionMonitorsClient) BeginQuery(ctx context.Context, resource
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.QueryHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ConnectionMonitorQueryResultPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("ConnectionMonitorsClient.Query", "location", resp, client.QueryHandleError)
 	if err != nil {
@@ -407,7 +400,8 @@ func (client *ConnectionMonitorsClient) QueryCreateRequest(ctx context.Context, 
 
 // QueryHandleResponse handles the Query response.
 func (client *ConnectionMonitorsClient) QueryHandleResponse(resp *azcore.Response) (*ConnectionMonitorQueryResultPollerResponse, error) {
-	return &ConnectionMonitorQueryResultPollerResponse{RawResponse: resp.Response}, nil
+	result := ConnectionMonitorQueryResultResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.ConnectionMonitorQueryResult)
 }
 
 // QueryHandleError handles the Query error response.
@@ -441,9 +435,8 @@ func (client *ConnectionMonitorsClient) BeginStart(ctx context.Context, resource
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.StartHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("ConnectionMonitorsClient.Start", "location", resp, client.StartHandleError)
 	if err != nil {
@@ -489,11 +482,6 @@ func (client *ConnectionMonitorsClient) StartCreateRequest(ctx context.Context, 
 	return req, nil
 }
 
-// StartHandleResponse handles the Start response.
-func (client *ConnectionMonitorsClient) StartHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
-}
-
 // StartHandleError handles the Start error response.
 func (client *ConnectionMonitorsClient) StartHandleError(resp *azcore.Response) error {
 	var err ErrorResponse
@@ -525,9 +513,8 @@ func (client *ConnectionMonitorsClient) BeginStop(ctx context.Context, resourceG
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.StopHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("ConnectionMonitorsClient.Stop", "location", resp, client.StopHandleError)
 	if err != nil {
@@ -571,11 +558,6 @@ func (client *ConnectionMonitorsClient) StopCreateRequest(ctx context.Context, r
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// StopHandleResponse handles the Stop response.
-func (client *ConnectionMonitorsClient) StopHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // StopHandleError handles the Stop error response.

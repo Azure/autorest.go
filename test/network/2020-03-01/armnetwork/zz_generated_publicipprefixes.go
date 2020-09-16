@@ -74,9 +74,8 @@ func (client *PublicIPPrefixesClient) BeginCreateOrUpdate(ctx context.Context, r
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.CreateOrUpdateHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &PublicIPPrefixPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("PublicIPPrefixesClient.CreateOrUpdate", "location", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
@@ -123,7 +122,8 @@ func (client *PublicIPPrefixesClient) CreateOrUpdateCreateRequest(ctx context.Co
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *PublicIPPrefixesClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*PublicIPPrefixPollerResponse, error) {
-	return &PublicIPPrefixPollerResponse{RawResponse: resp.Response}, nil
+	result := PublicIPPrefixResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.PublicIPPrefix)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -157,9 +157,8 @@ func (client *PublicIPPrefixesClient) BeginDelete(ctx context.Context, resourceG
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DeleteHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("PublicIPPrefixesClient.Delete", "location", resp, client.DeleteHandleError)
 	if err != nil {
@@ -202,11 +201,6 @@ func (client *PublicIPPrefixesClient) DeleteCreateRequest(ctx context.Context, r
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DeleteHandleResponse handles the Delete response.
-func (client *PublicIPPrefixesClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteHandleError handles the Delete error response.

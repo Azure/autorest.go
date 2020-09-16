@@ -62,9 +62,8 @@ func (client *VpnServerConfigurationsAssociatedWithVirtualWanClient) BeginList(c
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ListHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &VpnServerConfigurationsResponsePollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("VpnServerConfigurationsAssociatedWithVirtualWanClient.List", "location", resp, client.ListHandleError)
 	if err != nil {
@@ -111,7 +110,8 @@ func (client *VpnServerConfigurationsAssociatedWithVirtualWanClient) ListCreateR
 
 // ListHandleResponse handles the List response.
 func (client *VpnServerConfigurationsAssociatedWithVirtualWanClient) ListHandleResponse(resp *azcore.Response) (*VpnServerConfigurationsResponsePollerResponse, error) {
-	return &VpnServerConfigurationsResponsePollerResponse{RawResponse: resp.Response}, nil
+	result := VpnServerConfigurationsResponseResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.VpnServerConfigurationsResponse)
 }
 
 // ListHandleError handles the List error response.

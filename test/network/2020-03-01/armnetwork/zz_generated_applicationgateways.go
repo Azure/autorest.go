@@ -104,9 +104,8 @@ func (client *ApplicationGatewaysClient) BeginBackendHealth(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.BackendHealthHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ApplicationGatewayBackendHealthPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("ApplicationGatewaysClient.BackendHealth", "location", resp, client.BackendHealthHandleError)
 	if err != nil {
@@ -156,7 +155,8 @@ func (client *ApplicationGatewaysClient) BackendHealthCreateRequest(ctx context.
 
 // BackendHealthHandleResponse handles the BackendHealth response.
 func (client *ApplicationGatewaysClient) BackendHealthHandleResponse(resp *azcore.Response) (*ApplicationGatewayBackendHealthPollerResponse, error) {
-	return &ApplicationGatewayBackendHealthPollerResponse{RawResponse: resp.Response}, nil
+	result := ApplicationGatewayBackendHealthResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.ApplicationGatewayBackendHealth)
 }
 
 // BackendHealthHandleError handles the BackendHealth error response.
@@ -190,9 +190,8 @@ func (client *ApplicationGatewaysClient) BeginBackendHealthOnDemand(ctx context.
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.BackendHealthOnDemandHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ApplicationGatewayBackendHealthOnDemandPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("ApplicationGatewaysClient.BackendHealthOnDemand", "location", resp, client.BackendHealthOnDemandHandleError)
 	if err != nil {
@@ -242,7 +241,8 @@ func (client *ApplicationGatewaysClient) BackendHealthOnDemandCreateRequest(ctx 
 
 // BackendHealthOnDemandHandleResponse handles the BackendHealthOnDemand response.
 func (client *ApplicationGatewaysClient) BackendHealthOnDemandHandleResponse(resp *azcore.Response) (*ApplicationGatewayBackendHealthOnDemandPollerResponse, error) {
-	return &ApplicationGatewayBackendHealthOnDemandPollerResponse{RawResponse: resp.Response}, nil
+	result := ApplicationGatewayBackendHealthOnDemandResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.ApplicationGatewayBackendHealthOnDemand)
 }
 
 // BackendHealthOnDemandHandleError handles the BackendHealthOnDemand error response.
@@ -276,9 +276,8 @@ func (client *ApplicationGatewaysClient) BeginCreateOrUpdate(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.CreateOrUpdateHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ApplicationGatewayPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("ApplicationGatewaysClient.CreateOrUpdate", "azure-async-operation", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
@@ -325,7 +324,8 @@ func (client *ApplicationGatewaysClient) CreateOrUpdateCreateRequest(ctx context
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *ApplicationGatewaysClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*ApplicationGatewayPollerResponse, error) {
-	return &ApplicationGatewayPollerResponse{RawResponse: resp.Response}, nil
+	result := ApplicationGatewayResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.ApplicationGateway)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -359,9 +359,8 @@ func (client *ApplicationGatewaysClient) BeginDelete(ctx context.Context, resour
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DeleteHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("ApplicationGatewaysClient.Delete", "location", resp, client.DeleteHandleError)
 	if err != nil {
@@ -404,11 +403,6 @@ func (client *ApplicationGatewaysClient) DeleteCreateRequest(ctx context.Context
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DeleteHandleResponse handles the Delete response.
-func (client *ApplicationGatewaysClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteHandleError handles the Delete error response.
@@ -931,9 +925,8 @@ func (client *ApplicationGatewaysClient) BeginStart(ctx context.Context, resourc
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.StartHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("ApplicationGatewaysClient.Start", "location", resp, client.StartHandleError)
 	if err != nil {
@@ -978,11 +971,6 @@ func (client *ApplicationGatewaysClient) StartCreateRequest(ctx context.Context,
 	return req, nil
 }
 
-// StartHandleResponse handles the Start response.
-func (client *ApplicationGatewaysClient) StartHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
-}
-
 // StartHandleError handles the Start error response.
 func (client *ApplicationGatewaysClient) StartHandleError(resp *azcore.Response) error {
 	var err CloudError
@@ -1014,9 +1002,8 @@ func (client *ApplicationGatewaysClient) BeginStop(ctx context.Context, resource
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.StopHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("ApplicationGatewaysClient.Stop", "location", resp, client.StopHandleError)
 	if err != nil {
@@ -1059,11 +1046,6 @@ func (client *ApplicationGatewaysClient) StopCreateRequest(ctx context.Context, 
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// StopHandleResponse handles the Stop response.
-func (client *ApplicationGatewaysClient) StopHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // StopHandleError handles the Stop error response.

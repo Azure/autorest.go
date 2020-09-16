@@ -332,9 +332,8 @@ func (client *PagingClient) BeginGetMultiplePagesLro(ctx context.Context, paging
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetMultiplePagesLroHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ProductResultPagerPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("PagingClient.GetMultiplePagesLro", "", resp, client.GetMultiplePagesLroHandleError)
 	if err != nil {
@@ -394,7 +393,8 @@ func (client *PagingClient) GetMultiplePagesLroCreateRequest(ctx context.Context
 
 // GetMultiplePagesLroHandleResponse handles the GetMultiplePagesLro response.
 func (client *PagingClient) GetMultiplePagesLroHandleResponse(resp *azcore.Response) (*ProductResultPagerPollerResponse, error) {
-	return &ProductResultPagerPollerResponse{RawResponse: resp.Response}, nil
+	result := ProductResultResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.ProductResult)
 }
 
 // GetMultiplePagesLroHandleError handles the GetMultiplePagesLro error response.

@@ -78,9 +78,8 @@ func (client *SubnetsClient) BeginCreateOrUpdate(ctx context.Context, resourceGr
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.CreateOrUpdateHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &SubnetPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("SubnetsClient.CreateOrUpdate", "azure-async-operation", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
@@ -128,7 +127,8 @@ func (client *SubnetsClient) CreateOrUpdateCreateRequest(ctx context.Context, re
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *SubnetsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*SubnetPollerResponse, error) {
-	return &SubnetPollerResponse{RawResponse: resp.Response}, nil
+	result := SubnetResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Subnet)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -162,9 +162,8 @@ func (client *SubnetsClient) BeginDelete(ctx context.Context, resourceGroupName 
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DeleteHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("SubnetsClient.Delete", "location", resp, client.DeleteHandleError)
 	if err != nil {
@@ -208,11 +207,6 @@ func (client *SubnetsClient) DeleteCreateRequest(ctx context.Context, resourceGr
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DeleteHandleResponse handles the Delete response.
-func (client *SubnetsClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteHandleError handles the Delete error response.
@@ -349,9 +343,8 @@ func (client *SubnetsClient) BeginPrepareNetworkPolicies(ctx context.Context, re
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PrepareNetworkPoliciesHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("SubnetsClient.PrepareNetworkPolicies", "location", resp, client.PrepareNetworkPoliciesHandleError)
 	if err != nil {
@@ -397,11 +390,6 @@ func (client *SubnetsClient) PrepareNetworkPoliciesCreateRequest(ctx context.Con
 	return req, req.MarshalAsJSON(prepareNetworkPoliciesRequestParameters)
 }
 
-// PrepareNetworkPoliciesHandleResponse handles the PrepareNetworkPolicies response.
-func (client *SubnetsClient) PrepareNetworkPoliciesHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
-}
-
 // PrepareNetworkPoliciesHandleError handles the PrepareNetworkPolicies error response.
 func (client *SubnetsClient) PrepareNetworkPoliciesHandleError(resp *azcore.Response) error {
 	var err CloudError
@@ -433,9 +421,8 @@ func (client *SubnetsClient) BeginUnprepareNetworkPolicies(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.UnprepareNetworkPoliciesHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("SubnetsClient.UnprepareNetworkPolicies", "location", resp, client.UnprepareNetworkPoliciesHandleError)
 	if err != nil {
@@ -479,11 +466,6 @@ func (client *SubnetsClient) UnprepareNetworkPoliciesCreateRequest(ctx context.C
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(unprepareNetworkPoliciesRequestParameters)
-}
-
-// UnprepareNetworkPoliciesHandleResponse handles the UnprepareNetworkPolicies response.
-func (client *SubnetsClient) UnprepareNetworkPoliciesHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // UnprepareNetworkPoliciesHandleError handles the UnprepareNetworkPolicies error response.

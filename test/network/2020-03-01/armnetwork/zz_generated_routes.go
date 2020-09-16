@@ -70,9 +70,8 @@ func (client *RoutesClient) BeginCreateOrUpdate(ctx context.Context, resourceGro
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.CreateOrUpdateHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &RoutePollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("RoutesClient.CreateOrUpdate", "azure-async-operation", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
@@ -120,7 +119,8 @@ func (client *RoutesClient) CreateOrUpdateCreateRequest(ctx context.Context, res
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *RoutesClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*RoutePollerResponse, error) {
-	return &RoutePollerResponse{RawResponse: resp.Response}, nil
+	result := RouteResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Route)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -154,9 +154,8 @@ func (client *RoutesClient) BeginDelete(ctx context.Context, resourceGroupName s
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DeleteHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("RoutesClient.Delete", "location", resp, client.DeleteHandleError)
 	if err != nil {
@@ -200,11 +199,6 @@ func (client *RoutesClient) DeleteCreateRequest(ctx context.Context, resourceGro
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DeleteHandleResponse handles the Delete response.
-func (client *RoutesClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteHandleError handles the Delete error response.

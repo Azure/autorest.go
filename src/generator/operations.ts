@@ -214,13 +214,11 @@ function generateOperation(op: Operation, imports: ImportManager, isDataPlane: b
   }
   // value used to store the output text for the LRO operation
   let lroOp = '';
-  if (op.language.go!.methodPrefix) {
-    if (isLROOperation(op) && !isDataPlane) {
-      lroOp += `func (client *${clientName}) ${op.language.go!.methodPrefix}${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;
-      text += `func (client *${clientName}) ${op.language.go!.name}(${params}) (*azcore.Response, error) {\n`;
-    } else {
-      text += `func (client *${clientName}) ${op.language.go!.methodPrefix}${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;
-    }
+  if (isLROOperation(op) && !isDataPlane) {
+    lroOp += `func (client *${clientName}) Begin${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;
+    text += `func (client *${clientName}) ${op.language.go!.name}(${params}) (*azcore.Response, error) {\n`;
+  } else if (op.language.go!.methodPrefix) {
+    text += `func (client *${clientName}) ${op.language.go!.methodPrefix}${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;
   } else {
     text += `func (client *${clientName}) ${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;
   }
@@ -254,16 +252,13 @@ function generateOperation(op: Operation, imports: ImportManager, isDataPlane: b
       lroOp += `\tif err != nil {\n`;
       lroOp += `\t\treturn nil, err\n`;
       lroOp += `\t}\n`;
-      if (!op.responses) {
-        lroOp += '\tresult := &HTTPResponse{\n';
-        lroOp += '\t\tresult.RawResponse: resp\n';
-        lroOp += '\t}\n';
+      if (!op.responses || !isSchemaResponse(op.responses![0])) {
+        lroOp += '\tresult := &HTTPPollerResponse{\n';
       } else {
-        lroOp += `\tresult, err := client.${info.protocolNaming.responseMethod}(resp)\n`;
-        lroOp += `\tif err != nil {\n`;
-        lroOp += `\t\treturn nil, err\n`;
-        lroOp += `\t}\n`;
+        lroOp += `\tresult := &${(<SchemaResponse>op.responses![0]).schema.language.go!.lroResponseType.language.go!.name}{\n`;
       }
+      lroOp += '\t\tRawResponse: resp.Response,\n';
+      lroOp += '\t}\n';
       // LRO operation might have a special configuration set in x-ms-long-running-operation-options
       // which indicates a specific url to perform the final Get operation on
       let finalState = '';
@@ -291,7 +286,7 @@ function generateOperation(op: Operation, imports: ImportManager, isDataPlane: b
         lroOp += `\t\t\treturn client.${info.protocolNaming.errorMethod}(resp)\n`;
         lroOp += '\t\t},\n';
         lroOp += `\t\trespHandler: func(resp *azcore.Response) (*${(<SchemaResponse>op.responses![0]).schema.language.go!.responseType.name}, error) {\n`;
-        lroOp += generateResponseUnmarshaller(op.responses![0], false, imports);
+        lroOp += generateResponseUnmarshaller(op.responses![0], imports);
         lroOp += '\t\t},\n';
       }
       lroOp += '\t\tpipeline: client.p,\n';
@@ -665,16 +660,12 @@ function isArrayOfTimesForMarshalling(schema: Schema): boolean {
 }
 
 function needsResponseHandler(op: Operation): boolean {
-  return hasSchemaResponse(op) || isLROOperation(op) || isPageableOperation(op);
+  return hasSchemaResponse(op) || (isLROOperation(op) && hasSchemaResponse(op)) || isPageableOperation(op);
 }
 
-function generateResponseUnmarshaller(response: Response, isLRO: boolean, imports: ImportManager): string {
+function generateResponseUnmarshaller(response: Response, imports: ImportManager): string {
   let unmarshallerText = '';
   if (!isSchemaResponse(response)) {
-    if (isLRO) {
-      unmarshallerText += '\treturn &HTTPPollerResponse{RawResponse: resp.Response}, nil\n';
-      return unmarshallerText;
-    }
     throw console.error('TODO');
   } else if (response.schema.type === SchemaType.DateTime || response.schema.type === SchemaType.UnixTime) {
     // use the designated time type for unmarshalling
@@ -710,10 +701,6 @@ function generateResponseUnmarshaller(response: Response, isLRO: boolean, import
     return unmarshallerText;
   }
   const schemaResponse = <SchemaResponse>response;
-  if (isLRO) {
-    unmarshallerText += `\treturn &${schemaResponse.schema.language.go!.lroResponseType.language.go!.name}{RawResponse: resp.Response}, nil\n`;
-    return unmarshallerText;
-  }
   let respObj = `${schemaResponse.schema.language.go!.responseType.name}{RawResponse: resp.Response}`;
   unmarshallerText += `\tresult := ${respObj}\n`;
   // assign any header values
@@ -747,13 +734,13 @@ function createProtocolResponse(op: Operation, imports: ImportManager): string {
   let text = `${comment(name, '// ')} handles the ${info.name} response.\n`;
   text += `func (client *${clientName}) ${name}(resp *azcore.Response) (${generateReturnsInfo(op, true).join(', ')}) {\n`;
   if (!isMultiRespOperation(op)) {
-    text += generateResponseUnmarshaller(op.responses![0], isLROOperation(op), imports);
+    text += generateResponseUnmarshaller(op.responses![0], imports);
   } else {
     imports.add('fmt');
     text += '\tswitch resp.StatusCode {\n';
     for (const response of values(op.responses)) {
       text += `\tcase ${formatStatusCodes(response.protocol.http!.statusCodes)}:\n`
-      text += generateResponseUnmarshaller(response, isLROOperation(op), imports);
+      text += generateResponseUnmarshaller(response, imports);
     }
     text += '\tdefault:\n';
     text += `\t\treturn nil, fmt.Errorf("unhandled HTTP status code %d", resp.StatusCode)\n`;
@@ -869,6 +856,9 @@ function createInterfaceDefinition(group: OperationGroup, imports: ImportManager
     if (op.language.go!.methodPrefix) {
       opName = `${op.language.go!.methodPrefix}${opName}`;
     }
+    if (isLROOperation(op)) {
+      opName = `Begin${opName}`;
+    }
     for (const param of values(aggregateParameters(op))) {
       if (param.implementation !== ImplementationLocation.Method || param.required !== true) {
         continue;
@@ -964,7 +954,7 @@ function generateReturnsInfo(op: Operation, forHandler: boolean): string[] {
       return [op.language.go!.pageableType.name];
     } else if (isSchemaResponse(firstResp)) {
       returnType = '*' + firstResp.schema.language.go!.responseType.name;
-      if (isLROOperation(op)) {
+      if (isLROOperation(op) && !forHandler) {
         returnType = '*' + firstResp.schema.language.go!.lroResponseType.language.go!.name;
       }
     } else if (isLROOperation(op)) {

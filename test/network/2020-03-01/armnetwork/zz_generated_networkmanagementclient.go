@@ -134,9 +134,8 @@ func (client *NetworkManagementClient) BeginDeleteBastionShareableLink(ctx conte
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DeleteBastionShareableLinkHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("NetworkManagementClient.DeleteBastionShareableLink", "location", resp, client.DeleteBastionShareableLinkHandleError)
 	if err != nil {
@@ -179,11 +178,6 @@ func (client *NetworkManagementClient) DeleteBastionShareableLinkCreateRequest(c
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(bslRequest)
-}
-
-// DeleteBastionShareableLinkHandleResponse handles the DeleteBastionShareableLink response.
-func (client *NetworkManagementClient) DeleteBastionShareableLinkHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteBastionShareableLinkHandleError handles the DeleteBastionShareableLink error response.
@@ -264,9 +258,8 @@ func (client *NetworkManagementClient) BeginGeneratevirtualwanvpnserverconfigura
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GeneratevirtualwanvpnserverconfigurationvpnprofileHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &VpnProfileResponsePollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("NetworkManagementClient.Generatevirtualwanvpnserverconfigurationvpnprofile", "location", resp, client.GeneratevirtualwanvpnserverconfigurationvpnprofileHandleError)
 	if err != nil {
@@ -313,7 +306,8 @@ func (client *NetworkManagementClient) Generatevirtualwanvpnserverconfigurationv
 
 // GeneratevirtualwanvpnserverconfigurationvpnprofileHandleResponse handles the Generatevirtualwanvpnserverconfigurationvpnprofile response.
 func (client *NetworkManagementClient) GeneratevirtualwanvpnserverconfigurationvpnprofileHandleResponse(resp *azcore.Response) (*VpnProfileResponsePollerResponse, error) {
-	return &VpnProfileResponsePollerResponse{RawResponse: resp.Response}, nil
+	result := VpnProfileResponseResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.VpnProfileResponse)
 }
 
 // GeneratevirtualwanvpnserverconfigurationvpnprofileHandleError handles the Generatevirtualwanvpnserverconfigurationvpnprofile error response.
@@ -347,9 +341,8 @@ func (client *NetworkManagementClient) BeginGetActiveSessions(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetActiveSessionsHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &BastionActiveSessionListResultPagerPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("NetworkManagementClient.GetActiveSessions", "location", resp, client.GetActiveSessionsHandleError)
 	if err != nil {
@@ -406,7 +399,8 @@ func (client *NetworkManagementClient) GetActiveSessionsCreateRequest(ctx contex
 
 // GetActiveSessionsHandleResponse handles the GetActiveSessions response.
 func (client *NetworkManagementClient) GetActiveSessionsHandleResponse(resp *azcore.Response) (*BastionActiveSessionListResultPagerPollerResponse, error) {
-	return &BastionActiveSessionListResultPagerPollerResponse{RawResponse: resp.Response}, nil
+	result := BastionActiveSessionListResultResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.BastionActiveSessionListResult)
 }
 
 // GetActiveSessionsHandleError handles the GetActiveSessions error response.
@@ -487,9 +481,8 @@ func (client *NetworkManagementClient) BeginPutBastionShareableLink(ctx context.
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutBastionShareableLinkHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &BastionShareableLinkListResultPagerPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("NetworkManagementClient.PutBastionShareableLink", "location", resp, client.PutBastionShareableLinkHandleError)
 	if err != nil {
@@ -546,7 +539,8 @@ func (client *NetworkManagementClient) PutBastionShareableLinkCreateRequest(ctx 
 
 // PutBastionShareableLinkHandleResponse handles the PutBastionShareableLink response.
 func (client *NetworkManagementClient) PutBastionShareableLinkHandleResponse(resp *azcore.Response) (*BastionShareableLinkListResultPagerPollerResponse, error) {
-	return &BastionShareableLinkListResultPagerPollerResponse{RawResponse: resp.Response}, nil
+	result := BastionShareableLinkListResultResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.BastionShareableLinkListResult)
 }
 
 // PutBastionShareableLinkHandleError handles the PutBastionShareableLink error response.

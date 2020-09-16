@@ -74,9 +74,8 @@ func (client *DdosProtectionPlansClient) BeginCreateOrUpdate(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.CreateOrUpdateHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &DdosProtectionPlanPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("DdosProtectionPlansClient.CreateOrUpdate", "azure-async-operation", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
@@ -123,7 +122,8 @@ func (client *DdosProtectionPlansClient) CreateOrUpdateCreateRequest(ctx context
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *DdosProtectionPlansClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*DdosProtectionPlanPollerResponse, error) {
-	return &DdosProtectionPlanPollerResponse{RawResponse: resp.Response}, nil
+	result := DdosProtectionPlanResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.DdosProtectionPlan)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -157,9 +157,8 @@ func (client *DdosProtectionPlansClient) BeginDelete(ctx context.Context, resour
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DeleteHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("DdosProtectionPlansClient.Delete", "location", resp, client.DeleteHandleError)
 	if err != nil {
@@ -202,11 +201,6 @@ func (client *DdosProtectionPlansClient) DeleteCreateRequest(ctx context.Context
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DeleteHandleResponse handles the Delete response.
-func (client *DdosProtectionPlansClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteHandleError handles the Delete error response.

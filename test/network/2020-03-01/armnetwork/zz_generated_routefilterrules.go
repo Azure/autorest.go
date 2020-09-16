@@ -70,9 +70,8 @@ func (client *RouteFilterRulesClient) BeginCreateOrUpdate(ctx context.Context, r
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.CreateOrUpdateHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &RouteFilterRulePollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("RouteFilterRulesClient.CreateOrUpdate", "azure-async-operation", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
@@ -120,7 +119,8 @@ func (client *RouteFilterRulesClient) CreateOrUpdateCreateRequest(ctx context.Co
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *RouteFilterRulesClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*RouteFilterRulePollerResponse, error) {
-	return &RouteFilterRulePollerResponse{RawResponse: resp.Response}, nil
+	result := RouteFilterRuleResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.RouteFilterRule)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -154,9 +154,8 @@ func (client *RouteFilterRulesClient) BeginDelete(ctx context.Context, resourceG
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DeleteHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("RouteFilterRulesClient.Delete", "location", resp, client.DeleteHandleError)
 	if err != nil {
@@ -200,11 +199,6 @@ func (client *RouteFilterRulesClient) DeleteCreateRequest(ctx context.Context, r
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DeleteHandleResponse handles the Delete response.
-func (client *RouteFilterRulesClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteHandleError handles the Delete error response.

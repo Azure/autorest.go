@@ -72,9 +72,8 @@ func (client *PrivateEndpointsClient) BeginCreateOrUpdate(ctx context.Context, r
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.CreateOrUpdateHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &PrivateEndpointPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("PrivateEndpointsClient.CreateOrUpdate", "azure-async-operation", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
@@ -121,7 +120,8 @@ func (client *PrivateEndpointsClient) CreateOrUpdateCreateRequest(ctx context.Co
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *PrivateEndpointsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*PrivateEndpointPollerResponse, error) {
-	return &PrivateEndpointPollerResponse{RawResponse: resp.Response}, nil
+	result := PrivateEndpointResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.PrivateEndpoint)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -155,9 +155,8 @@ func (client *PrivateEndpointsClient) BeginDelete(ctx context.Context, resourceG
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DeleteHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("PrivateEndpointsClient.Delete", "location", resp, client.DeleteHandleError)
 	if err != nil {
@@ -200,11 +199,6 @@ func (client *PrivateEndpointsClient) DeleteCreateRequest(ctx context.Context, r
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DeleteHandleResponse handles the Delete response.
-func (client *PrivateEndpointsClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteHandleError handles the Delete error response.

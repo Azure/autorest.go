@@ -92,9 +92,8 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginCreateOrUpdate(ctx co
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.CreateOrUpdateHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &VirtualNetworkGatewayConnectionPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("VirtualNetworkGatewayConnectionsClient.CreateOrUpdate", "azure-async-operation", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
@@ -141,7 +140,8 @@ func (client *VirtualNetworkGatewayConnectionsClient) CreateOrUpdateCreateReques
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *VirtualNetworkGatewayConnectionsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*VirtualNetworkGatewayConnectionPollerResponse, error) {
-	return &VirtualNetworkGatewayConnectionPollerResponse{RawResponse: resp.Response}, nil
+	result := VirtualNetworkGatewayConnectionResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.VirtualNetworkGatewayConnection)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -175,9 +175,8 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginDelete(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DeleteHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("VirtualNetworkGatewayConnectionsClient.Delete", "location", resp, client.DeleteHandleError)
 	if err != nil {
@@ -220,11 +219,6 @@ func (client *VirtualNetworkGatewayConnectionsClient) DeleteCreateRequest(ctx co
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DeleteHandleResponse handles the Delete response.
-func (client *VirtualNetworkGatewayConnectionsClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteHandleError handles the Delete error response.
@@ -408,9 +402,8 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginResetSharedKey(ctx co
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ResetSharedKeyHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ConnectionResetSharedKeyPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("VirtualNetworkGatewayConnectionsClient.ResetSharedKey", "location", resp, client.ResetSharedKeyHandleError)
 	if err != nil {
@@ -457,7 +450,8 @@ func (client *VirtualNetworkGatewayConnectionsClient) ResetSharedKeyCreateReques
 
 // ResetSharedKeyHandleResponse handles the ResetSharedKey response.
 func (client *VirtualNetworkGatewayConnectionsClient) ResetSharedKeyHandleResponse(resp *azcore.Response) (*ConnectionResetSharedKeyPollerResponse, error) {
-	return &ConnectionResetSharedKeyPollerResponse{RawResponse: resp.Response}, nil
+	result := ConnectionResetSharedKeyResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.ConnectionResetSharedKey)
 }
 
 // ResetSharedKeyHandleError handles the ResetSharedKey error response.
@@ -491,9 +485,8 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginSetSharedKey(ctx cont
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.SetSharedKeyHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ConnectionSharedKeyPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("VirtualNetworkGatewayConnectionsClient.SetSharedKey", "azure-async-operation", resp, client.SetSharedKeyHandleError)
 	if err != nil {
@@ -540,7 +533,8 @@ func (client *VirtualNetworkGatewayConnectionsClient) SetSharedKeyCreateRequest(
 
 // SetSharedKeyHandleResponse handles the SetSharedKey response.
 func (client *VirtualNetworkGatewayConnectionsClient) SetSharedKeyHandleResponse(resp *azcore.Response) (*ConnectionSharedKeyPollerResponse, error) {
-	return &ConnectionSharedKeyPollerResponse{RawResponse: resp.Response}, nil
+	result := ConnectionSharedKeyResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.ConnectionSharedKey)
 }
 
 // SetSharedKeyHandleError handles the SetSharedKey error response.
@@ -574,9 +568,8 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginStartPacketCapture(ct
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.StartPacketCaptureHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &StringPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("VirtualNetworkGatewayConnectionsClient.StartPacketCapture", "location", resp, client.StartPacketCaptureHandleError)
 	if err != nil {
@@ -626,7 +619,8 @@ func (client *VirtualNetworkGatewayConnectionsClient) StartPacketCaptureCreateRe
 
 // StartPacketCaptureHandleResponse handles the StartPacketCapture response.
 func (client *VirtualNetworkGatewayConnectionsClient) StartPacketCaptureHandleResponse(resp *azcore.Response) (*StringPollerResponse, error) {
-	return &StringPollerResponse{RawResponse: resp.Response}, nil
+	result := StringResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // StartPacketCaptureHandleError handles the StartPacketCapture error response.
@@ -660,9 +654,8 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginStopPacketCapture(ctx
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.StopPacketCaptureHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &StringPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("VirtualNetworkGatewayConnectionsClient.StopPacketCapture", "location", resp, client.StopPacketCaptureHandleError)
 	if err != nil {
@@ -709,7 +702,8 @@ func (client *VirtualNetworkGatewayConnectionsClient) StopPacketCaptureCreateReq
 
 // StopPacketCaptureHandleResponse handles the StopPacketCapture response.
 func (client *VirtualNetworkGatewayConnectionsClient) StopPacketCaptureHandleResponse(resp *azcore.Response) (*StringPollerResponse, error) {
-	return &StringPollerResponse{RawResponse: resp.Response}, nil
+	result := StringResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // StopPacketCaptureHandleError handles the StopPacketCapture error response.
@@ -743,9 +737,8 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginUpdateTags(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.UpdateTagsHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &VirtualNetworkGatewayConnectionPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("VirtualNetworkGatewayConnectionsClient.UpdateTags", "azure-async-operation", resp, client.UpdateTagsHandleError)
 	if err != nil {
@@ -792,7 +785,8 @@ func (client *VirtualNetworkGatewayConnectionsClient) UpdateTagsCreateRequest(ct
 
 // UpdateTagsHandleResponse handles the UpdateTags response.
 func (client *VirtualNetworkGatewayConnectionsClient) UpdateTagsHandleResponse(resp *azcore.Response) (*VirtualNetworkGatewayConnectionPollerResponse, error) {
-	return &VirtualNetworkGatewayConnectionPollerResponse{RawResponse: resp.Response}, nil
+	result := VirtualNetworkGatewayConnectionResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.VirtualNetworkGatewayConnection)
 }
 
 // UpdateTagsHandleError handles the UpdateTags error response.

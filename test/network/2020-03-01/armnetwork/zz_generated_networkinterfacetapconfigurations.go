@@ -70,9 +70,8 @@ func (client *NetworkInterfaceTapConfigurationsClient) BeginCreateOrUpdate(ctx c
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.CreateOrUpdateHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &NetworkInterfaceTapConfigurationPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("NetworkInterfaceTapConfigurationsClient.CreateOrUpdate", "azure-async-operation", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
@@ -120,7 +119,8 @@ func (client *NetworkInterfaceTapConfigurationsClient) CreateOrUpdateCreateReque
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *NetworkInterfaceTapConfigurationsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*NetworkInterfaceTapConfigurationPollerResponse, error) {
-	return &NetworkInterfaceTapConfigurationPollerResponse{RawResponse: resp.Response}, nil
+	result := NetworkInterfaceTapConfigurationResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.NetworkInterfaceTapConfiguration)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -154,9 +154,8 @@ func (client *NetworkInterfaceTapConfigurationsClient) BeginDelete(ctx context.C
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DeleteHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("NetworkInterfaceTapConfigurationsClient.Delete", "location", resp, client.DeleteHandleError)
 	if err != nil {
@@ -200,11 +199,6 @@ func (client *NetworkInterfaceTapConfigurationsClient) DeleteCreateRequest(ctx c
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DeleteHandleResponse handles the Delete response.
-func (client *NetworkInterfaceTapConfigurationsClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteHandleError handles the Delete error response.

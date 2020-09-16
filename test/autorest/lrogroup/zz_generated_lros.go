@@ -219,9 +219,8 @@ func (client *LrOSClient) BeginDelete202NoRetry204(ctx context.Context) (*Produc
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.Delete202NoRetry204HandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ProductPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSClient.Delete202NoRetry204", "", resp, client.Delete202NoRetry204HandleError)
 	if err != nil {
@@ -262,7 +261,8 @@ func (client *LrOSClient) Delete202NoRetry204CreateRequest(ctx context.Context) 
 
 // Delete202NoRetry204HandleResponse handles the Delete202NoRetry204 response.
 func (client *LrOSClient) Delete202NoRetry204HandleResponse(resp *azcore.Response) (*ProductPollerResponse, error) {
-	return &ProductPollerResponse{RawResponse: resp.Response}, nil
+	result := ProductResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
 
 // Delete202NoRetry204HandleError handles the Delete202NoRetry204 error response.
@@ -296,9 +296,8 @@ func (client *LrOSClient) BeginDelete202Retry200(ctx context.Context) (*ProductP
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.Delete202Retry200HandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ProductPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSClient.Delete202Retry200", "", resp, client.Delete202Retry200HandleError)
 	if err != nil {
@@ -339,7 +338,8 @@ func (client *LrOSClient) Delete202Retry200CreateRequest(ctx context.Context) (*
 
 // Delete202Retry200HandleResponse handles the Delete202Retry200 response.
 func (client *LrOSClient) Delete202Retry200HandleResponse(resp *azcore.Response) (*ProductPollerResponse, error) {
-	return &ProductPollerResponse{RawResponse: resp.Response}, nil
+	result := ProductResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
 
 // Delete202Retry200HandleError handles the Delete202Retry200 error response.
@@ -373,9 +373,8 @@ func (client *LrOSClient) BeginDelete204Succeeded(ctx context.Context) (*HTTPPol
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.Delete204SucceededHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSClient.Delete204Succeeded", "", resp, client.Delete204SucceededHandleError)
 	if err != nil {
@@ -414,11 +413,6 @@ func (client *LrOSClient) Delete204SucceededCreateRequest(ctx context.Context) (
 	return req, nil
 }
 
-// Delete204SucceededHandleResponse handles the Delete204Succeeded response.
-func (client *LrOSClient) Delete204SucceededHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
-}
-
 // Delete204SucceededHandleError handles the Delete204Succeeded error response.
 func (client *LrOSClient) Delete204SucceededHandleError(resp *azcore.Response) error {
 	var err CloudError
@@ -450,9 +444,8 @@ func (client *LrOSClient) BeginDeleteAsyncNoHeaderInRetry(ctx context.Context) (
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DeleteAsyncNoHeaderInRetryHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSClient.DeleteAsyncNoHeaderInRetry", "", resp, client.DeleteAsyncNoHeaderInRetryHandleError)
 	if err != nil {
@@ -491,11 +484,6 @@ func (client *LrOSClient) DeleteAsyncNoHeaderInRetryCreateRequest(ctx context.Co
 	return req, nil
 }
 
-// DeleteAsyncNoHeaderInRetryHandleResponse handles the DeleteAsyncNoHeaderInRetry response.
-func (client *LrOSClient) DeleteAsyncNoHeaderInRetryHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
-}
-
 // DeleteAsyncNoHeaderInRetryHandleError handles the DeleteAsyncNoHeaderInRetry error response.
 func (client *LrOSClient) DeleteAsyncNoHeaderInRetryHandleError(resp *azcore.Response) error {
 	var err CloudError
@@ -527,9 +515,8 @@ func (client *LrOSClient) BeginDeleteAsyncNoRetrySucceeded(ctx context.Context) 
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DeleteAsyncNoRetrySucceededHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSClient.DeleteAsyncNoRetrySucceeded", "", resp, client.DeleteAsyncNoRetrySucceededHandleError)
 	if err != nil {
@@ -568,11 +555,6 @@ func (client *LrOSClient) DeleteAsyncNoRetrySucceededCreateRequest(ctx context.C
 	return req, nil
 }
 
-// DeleteAsyncNoRetrySucceededHandleResponse handles the DeleteAsyncNoRetrySucceeded response.
-func (client *LrOSClient) DeleteAsyncNoRetrySucceededHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
-}
-
 // DeleteAsyncNoRetrySucceededHandleError handles the DeleteAsyncNoRetrySucceeded error response.
 func (client *LrOSClient) DeleteAsyncNoRetrySucceededHandleError(resp *azcore.Response) error {
 	var err CloudError
@@ -604,9 +586,8 @@ func (client *LrOSClient) BeginDeleteAsyncRetryFailed(ctx context.Context) (*HTT
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DeleteAsyncRetryFailedHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSClient.DeleteAsyncRetryFailed", "", resp, client.DeleteAsyncRetryFailedHandleError)
 	if err != nil {
@@ -645,11 +626,6 @@ func (client *LrOSClient) DeleteAsyncRetryFailedCreateRequest(ctx context.Contex
 	return req, nil
 }
 
-// DeleteAsyncRetryFailedHandleResponse handles the DeleteAsyncRetryFailed response.
-func (client *LrOSClient) DeleteAsyncRetryFailedHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
-}
-
 // DeleteAsyncRetryFailedHandleError handles the DeleteAsyncRetryFailed error response.
 func (client *LrOSClient) DeleteAsyncRetryFailedHandleError(resp *azcore.Response) error {
 	var err CloudError
@@ -681,9 +657,8 @@ func (client *LrOSClient) BeginDeleteAsyncRetrySucceeded(ctx context.Context) (*
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DeleteAsyncRetrySucceededHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSClient.DeleteAsyncRetrySucceeded", "", resp, client.DeleteAsyncRetrySucceededHandleError)
 	if err != nil {
@@ -722,11 +697,6 @@ func (client *LrOSClient) DeleteAsyncRetrySucceededCreateRequest(ctx context.Con
 	return req, nil
 }
 
-// DeleteAsyncRetrySucceededHandleResponse handles the DeleteAsyncRetrySucceeded response.
-func (client *LrOSClient) DeleteAsyncRetrySucceededHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
-}
-
 // DeleteAsyncRetrySucceededHandleError handles the DeleteAsyncRetrySucceeded error response.
 func (client *LrOSClient) DeleteAsyncRetrySucceededHandleError(resp *azcore.Response) error {
 	var err CloudError
@@ -758,9 +728,8 @@ func (client *LrOSClient) BeginDeleteAsyncRetrycanceled(ctx context.Context) (*H
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DeleteAsyncRetrycanceledHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSClient.DeleteAsyncRetrycanceled", "", resp, client.DeleteAsyncRetrycanceledHandleError)
 	if err != nil {
@@ -799,11 +768,6 @@ func (client *LrOSClient) DeleteAsyncRetrycanceledCreateRequest(ctx context.Cont
 	return req, nil
 }
 
-// DeleteAsyncRetrycanceledHandleResponse handles the DeleteAsyncRetrycanceled response.
-func (client *LrOSClient) DeleteAsyncRetrycanceledHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
-}
-
 // DeleteAsyncRetrycanceledHandleError handles the DeleteAsyncRetrycanceled error response.
 func (client *LrOSClient) DeleteAsyncRetrycanceledHandleError(resp *azcore.Response) error {
 	var err CloudError
@@ -835,9 +799,8 @@ func (client *LrOSClient) BeginDeleteNoHeaderInRetry(ctx context.Context) (*HTTP
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DeleteNoHeaderInRetryHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSClient.DeleteNoHeaderInRetry", "", resp, client.DeleteNoHeaderInRetryHandleError)
 	if err != nil {
@@ -876,11 +839,6 @@ func (client *LrOSClient) DeleteNoHeaderInRetryCreateRequest(ctx context.Context
 	return req, nil
 }
 
-// DeleteNoHeaderInRetryHandleResponse handles the DeleteNoHeaderInRetry response.
-func (client *LrOSClient) DeleteNoHeaderInRetryHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
-}
-
 // DeleteNoHeaderInRetryHandleError handles the DeleteNoHeaderInRetry error response.
 func (client *LrOSClient) DeleteNoHeaderInRetryHandleError(resp *azcore.Response) error {
 	var err CloudError
@@ -912,9 +870,8 @@ func (client *LrOSClient) BeginDeleteProvisioning202Accepted200Succeeded(ctx con
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DeleteProvisioning202Accepted200SucceededHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ProductPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSClient.DeleteProvisioning202Accepted200Succeeded", "", resp, client.DeleteProvisioning202Accepted200SucceededHandleError)
 	if err != nil {
@@ -955,7 +912,8 @@ func (client *LrOSClient) DeleteProvisioning202Accepted200SucceededCreateRequest
 
 // DeleteProvisioning202Accepted200SucceededHandleResponse handles the DeleteProvisioning202Accepted200Succeeded response.
 func (client *LrOSClient) DeleteProvisioning202Accepted200SucceededHandleResponse(resp *azcore.Response) (*ProductPollerResponse, error) {
-	return &ProductPollerResponse{RawResponse: resp.Response}, nil
+	result := ProductResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
 
 // DeleteProvisioning202Accepted200SucceededHandleError handles the DeleteProvisioning202Accepted200Succeeded error response.
@@ -989,9 +947,8 @@ func (client *LrOSClient) BeginDeleteProvisioning202DeletingFailed200(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DeleteProvisioning202DeletingFailed200HandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ProductPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSClient.DeleteProvisioning202DeletingFailed200", "", resp, client.DeleteProvisioning202DeletingFailed200HandleError)
 	if err != nil {
@@ -1032,7 +989,8 @@ func (client *LrOSClient) DeleteProvisioning202DeletingFailed200CreateRequest(ct
 
 // DeleteProvisioning202DeletingFailed200HandleResponse handles the DeleteProvisioning202DeletingFailed200 response.
 func (client *LrOSClient) DeleteProvisioning202DeletingFailed200HandleResponse(resp *azcore.Response) (*ProductPollerResponse, error) {
-	return &ProductPollerResponse{RawResponse: resp.Response}, nil
+	result := ProductResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
 
 // DeleteProvisioning202DeletingFailed200HandleError handles the DeleteProvisioning202DeletingFailed200 error response.
@@ -1066,9 +1024,8 @@ func (client *LrOSClient) BeginDeleteProvisioning202Deletingcanceled200(ctx cont
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.DeleteProvisioning202Deletingcanceled200HandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ProductPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSClient.DeleteProvisioning202Deletingcanceled200", "", resp, client.DeleteProvisioning202Deletingcanceled200HandleError)
 	if err != nil {
@@ -1109,7 +1066,8 @@ func (client *LrOSClient) DeleteProvisioning202Deletingcanceled200CreateRequest(
 
 // DeleteProvisioning202Deletingcanceled200HandleResponse handles the DeleteProvisioning202Deletingcanceled200 response.
 func (client *LrOSClient) DeleteProvisioning202Deletingcanceled200HandleResponse(resp *azcore.Response) (*ProductPollerResponse, error) {
-	return &ProductPollerResponse{RawResponse: resp.Response}, nil
+	result := ProductResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
 
 // DeleteProvisioning202Deletingcanceled200HandleError handles the DeleteProvisioning202Deletingcanceled200 error response.
@@ -1143,9 +1101,8 @@ func (client *LrOSClient) BeginPost200WithPayload(ctx context.Context) (*SKUPoll
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.Post200WithPayloadHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &SKUPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSClient.Post200WithPayload", "", resp, client.Post200WithPayloadHandleError)
 	if err != nil {
@@ -1186,7 +1143,8 @@ func (client *LrOSClient) Post200WithPayloadCreateRequest(ctx context.Context) (
 
 // Post200WithPayloadHandleResponse handles the Post200WithPayload response.
 func (client *LrOSClient) Post200WithPayloadHandleResponse(resp *azcore.Response) (*SKUPollerResponse, error) {
-	return &SKUPollerResponse{RawResponse: resp.Response}, nil
+	result := SKUResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.SKU)
 }
 
 // Post200WithPayloadHandleError handles the Post200WithPayload error response.
@@ -1220,9 +1178,8 @@ func (client *LrOSClient) BeginPost202List(ctx context.Context) (*ProductArrayPo
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.Post202ListHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ProductArrayPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSClient.Post202List", "", resp, client.Post202ListHandleError)
 	if err != nil {
@@ -1263,7 +1220,8 @@ func (client *LrOSClient) Post202ListCreateRequest(ctx context.Context) (*azcore
 
 // Post202ListHandleResponse handles the Post202List response.
 func (client *LrOSClient) Post202ListHandleResponse(resp *azcore.Response) (*ProductArrayPollerResponse, error) {
-	return &ProductArrayPollerResponse{RawResponse: resp.Response}, nil
+	result := ProductArrayResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.ProductArray)
 }
 
 // Post202ListHandleError handles the Post202List error response.
@@ -1297,9 +1255,8 @@ func (client *LrOSClient) BeginPost202NoRetry204(ctx context.Context, lrOSPost20
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.Post202NoRetry204HandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ProductPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSClient.Post202NoRetry204", "", resp, client.Post202NoRetry204HandleError)
 	if err != nil {
@@ -1343,7 +1300,8 @@ func (client *LrOSClient) Post202NoRetry204CreateRequest(ctx context.Context, lr
 
 // Post202NoRetry204HandleResponse handles the Post202NoRetry204 response.
 func (client *LrOSClient) Post202NoRetry204HandleResponse(resp *azcore.Response) (*ProductPollerResponse, error) {
-	return &ProductPollerResponse{RawResponse: resp.Response}, nil
+	result := ProductResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
 
 // Post202NoRetry204HandleError handles the Post202NoRetry204 error response.
@@ -1377,9 +1335,8 @@ func (client *LrOSClient) BeginPost202Retry200(ctx context.Context, lrOSPost202R
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.Post202Retry200HandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSClient.Post202Retry200", "", resp, client.Post202Retry200HandleError)
 	if err != nil {
@@ -1421,11 +1378,6 @@ func (client *LrOSClient) Post202Retry200CreateRequest(ctx context.Context, lrOS
 	return req, nil
 }
 
-// Post202Retry200HandleResponse handles the Post202Retry200 response.
-func (client *LrOSClient) Post202Retry200HandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
-}
-
 // Post202Retry200HandleError handles the Post202Retry200 error response.
 func (client *LrOSClient) Post202Retry200HandleError(resp *azcore.Response) error {
 	var err CloudError
@@ -1457,9 +1409,8 @@ func (client *LrOSClient) BeginPostAsyncNoRetrySucceeded(ctx context.Context, lr
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PostAsyncNoRetrySucceededHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ProductPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSClient.PostAsyncNoRetrySucceeded", "", resp, client.PostAsyncNoRetrySucceededHandleError)
 	if err != nil {
@@ -1503,7 +1454,8 @@ func (client *LrOSClient) PostAsyncNoRetrySucceededCreateRequest(ctx context.Con
 
 // PostAsyncNoRetrySucceededHandleResponse handles the PostAsyncNoRetrySucceeded response.
 func (client *LrOSClient) PostAsyncNoRetrySucceededHandleResponse(resp *azcore.Response) (*ProductPollerResponse, error) {
-	return &ProductPollerResponse{RawResponse: resp.Response}, nil
+	result := ProductResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
 
 // PostAsyncNoRetrySucceededHandleError handles the PostAsyncNoRetrySucceeded error response.
@@ -1537,9 +1489,8 @@ func (client *LrOSClient) BeginPostAsyncRetryFailed(ctx context.Context, lrOSPos
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PostAsyncRetryFailedHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSClient.PostAsyncRetryFailed", "", resp, client.PostAsyncRetryFailedHandleError)
 	if err != nil {
@@ -1581,11 +1532,6 @@ func (client *LrOSClient) PostAsyncRetryFailedCreateRequest(ctx context.Context,
 	return req, nil
 }
 
-// PostAsyncRetryFailedHandleResponse handles the PostAsyncRetryFailed response.
-func (client *LrOSClient) PostAsyncRetryFailedHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
-}
-
 // PostAsyncRetryFailedHandleError handles the PostAsyncRetryFailed error response.
 func (client *LrOSClient) PostAsyncRetryFailedHandleError(resp *azcore.Response) error {
 	var err CloudError
@@ -1617,9 +1563,8 @@ func (client *LrOSClient) BeginPostAsyncRetrySucceeded(ctx context.Context, lrOS
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PostAsyncRetrySucceededHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ProductPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSClient.PostAsyncRetrySucceeded", "", resp, client.PostAsyncRetrySucceededHandleError)
 	if err != nil {
@@ -1663,7 +1608,8 @@ func (client *LrOSClient) PostAsyncRetrySucceededCreateRequest(ctx context.Conte
 
 // PostAsyncRetrySucceededHandleResponse handles the PostAsyncRetrySucceeded response.
 func (client *LrOSClient) PostAsyncRetrySucceededHandleResponse(resp *azcore.Response) (*ProductPollerResponse, error) {
-	return &ProductPollerResponse{RawResponse: resp.Response}, nil
+	result := ProductResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
 
 // PostAsyncRetrySucceededHandleError handles the PostAsyncRetrySucceeded error response.
@@ -1697,9 +1643,8 @@ func (client *LrOSClient) BeginPostAsyncRetrycanceled(ctx context.Context, lrOSP
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PostAsyncRetrycanceledHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSClient.PostAsyncRetrycanceled", "", resp, client.PostAsyncRetrycanceledHandleError)
 	if err != nil {
@@ -1741,11 +1686,6 @@ func (client *LrOSClient) PostAsyncRetrycanceledCreateRequest(ctx context.Contex
 	return req, nil
 }
 
-// PostAsyncRetrycanceledHandleResponse handles the PostAsyncRetrycanceled response.
-func (client *LrOSClient) PostAsyncRetrycanceledHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
-}
-
 // PostAsyncRetrycanceledHandleError handles the PostAsyncRetrycanceled error response.
 func (client *LrOSClient) PostAsyncRetrycanceledHandleError(resp *azcore.Response) error {
 	var err CloudError
@@ -1777,9 +1717,8 @@ func (client *LrOSClient) BeginPostDoubleHeadersFinalAzureHeaderGet(ctx context.
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PostDoubleHeadersFinalAzureHeaderGetHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ProductPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSClient.PostDoubleHeadersFinalAzureHeaderGet", "azure-async-operation", resp, client.PostDoubleHeadersFinalAzureHeaderGetHandleError)
 	if err != nil {
@@ -1820,7 +1759,8 @@ func (client *LrOSClient) PostDoubleHeadersFinalAzureHeaderGetCreateRequest(ctx 
 
 // PostDoubleHeadersFinalAzureHeaderGetHandleResponse handles the PostDoubleHeadersFinalAzureHeaderGet response.
 func (client *LrOSClient) PostDoubleHeadersFinalAzureHeaderGetHandleResponse(resp *azcore.Response) (*ProductPollerResponse, error) {
-	return &ProductPollerResponse{RawResponse: resp.Response}, nil
+	result := ProductResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
 
 // PostDoubleHeadersFinalAzureHeaderGetHandleError handles the PostDoubleHeadersFinalAzureHeaderGet error response.
@@ -1854,9 +1794,8 @@ func (client *LrOSClient) BeginPostDoubleHeadersFinalAzureHeaderGetDefault(ctx c
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PostDoubleHeadersFinalAzureHeaderGetDefaultHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ProductPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSClient.PostDoubleHeadersFinalAzureHeaderGetDefault", "", resp, client.PostDoubleHeadersFinalAzureHeaderGetDefaultHandleError)
 	if err != nil {
@@ -1897,7 +1836,8 @@ func (client *LrOSClient) PostDoubleHeadersFinalAzureHeaderGetDefaultCreateReque
 
 // PostDoubleHeadersFinalAzureHeaderGetDefaultHandleResponse handles the PostDoubleHeadersFinalAzureHeaderGetDefault response.
 func (client *LrOSClient) PostDoubleHeadersFinalAzureHeaderGetDefaultHandleResponse(resp *azcore.Response) (*ProductPollerResponse, error) {
-	return &ProductPollerResponse{RawResponse: resp.Response}, nil
+	result := ProductResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
 
 // PostDoubleHeadersFinalAzureHeaderGetDefaultHandleError handles the PostDoubleHeadersFinalAzureHeaderGetDefault error response.
@@ -1931,9 +1871,8 @@ func (client *LrOSClient) BeginPostDoubleHeadersFinalLocationGet(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PostDoubleHeadersFinalLocationGetHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ProductPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSClient.PostDoubleHeadersFinalLocationGet", "location", resp, client.PostDoubleHeadersFinalLocationGetHandleError)
 	if err != nil {
@@ -1974,7 +1913,8 @@ func (client *LrOSClient) PostDoubleHeadersFinalLocationGetCreateRequest(ctx con
 
 // PostDoubleHeadersFinalLocationGetHandleResponse handles the PostDoubleHeadersFinalLocationGet response.
 func (client *LrOSClient) PostDoubleHeadersFinalLocationGetHandleResponse(resp *azcore.Response) (*ProductPollerResponse, error) {
-	return &ProductPollerResponse{RawResponse: resp.Response}, nil
+	result := ProductResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
 
 // PostDoubleHeadersFinalLocationGetHandleError handles the PostDoubleHeadersFinalLocationGet error response.
@@ -2008,9 +1948,8 @@ func (client *LrOSClient) BeginPut200Acceptedcanceled200(ctx context.Context, lr
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.Put200Acceptedcanceled200HandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ProductPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSClient.Put200Acceptedcanceled200", "", resp, client.Put200Acceptedcanceled200HandleError)
 	if err != nil {
@@ -2054,7 +1993,8 @@ func (client *LrOSClient) Put200Acceptedcanceled200CreateRequest(ctx context.Con
 
 // Put200Acceptedcanceled200HandleResponse handles the Put200Acceptedcanceled200 response.
 func (client *LrOSClient) Put200Acceptedcanceled200HandleResponse(resp *azcore.Response) (*ProductPollerResponse, error) {
-	return &ProductPollerResponse{RawResponse: resp.Response}, nil
+	result := ProductResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
 
 // Put200Acceptedcanceled200HandleError handles the Put200Acceptedcanceled200 error response.
@@ -2088,9 +2028,8 @@ func (client *LrOSClient) BeginPut200Succeeded(ctx context.Context, lrOSPut200Su
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.Put200SucceededHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ProductPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSClient.Put200Succeeded", "", resp, client.Put200SucceededHandleError)
 	if err != nil {
@@ -2134,7 +2073,8 @@ func (client *LrOSClient) Put200SucceededCreateRequest(ctx context.Context, lrOS
 
 // Put200SucceededHandleResponse handles the Put200Succeeded response.
 func (client *LrOSClient) Put200SucceededHandleResponse(resp *azcore.Response) (*ProductPollerResponse, error) {
-	return &ProductPollerResponse{RawResponse: resp.Response}, nil
+	result := ProductResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
 
 // Put200SucceededHandleError handles the Put200Succeeded error response.
@@ -2168,9 +2108,8 @@ func (client *LrOSClient) BeginPut200SucceededNoState(ctx context.Context, lrOSP
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.Put200SucceededNoStateHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ProductPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSClient.Put200SucceededNoState", "", resp, client.Put200SucceededNoStateHandleError)
 	if err != nil {
@@ -2214,7 +2153,8 @@ func (client *LrOSClient) Put200SucceededNoStateCreateRequest(ctx context.Contex
 
 // Put200SucceededNoStateHandleResponse handles the Put200SucceededNoState response.
 func (client *LrOSClient) Put200SucceededNoStateHandleResponse(resp *azcore.Response) (*ProductPollerResponse, error) {
-	return &ProductPollerResponse{RawResponse: resp.Response}, nil
+	result := ProductResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
 
 // Put200SucceededNoStateHandleError handles the Put200SucceededNoState error response.
@@ -2248,9 +2188,8 @@ func (client *LrOSClient) BeginPut200UpdatingSucceeded204(ctx context.Context, l
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.Put200UpdatingSucceeded204HandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ProductPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSClient.Put200UpdatingSucceeded204", "", resp, client.Put200UpdatingSucceeded204HandleError)
 	if err != nil {
@@ -2294,7 +2233,8 @@ func (client *LrOSClient) Put200UpdatingSucceeded204CreateRequest(ctx context.Co
 
 // Put200UpdatingSucceeded204HandleResponse handles the Put200UpdatingSucceeded204 response.
 func (client *LrOSClient) Put200UpdatingSucceeded204HandleResponse(resp *azcore.Response) (*ProductPollerResponse, error) {
-	return &ProductPollerResponse{RawResponse: resp.Response}, nil
+	result := ProductResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
 
 // Put200UpdatingSucceeded204HandleError handles the Put200UpdatingSucceeded204 error response.
@@ -2328,9 +2268,8 @@ func (client *LrOSClient) BeginPut201CreatingFailed200(ctx context.Context, lrOS
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.Put201CreatingFailed200HandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ProductPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSClient.Put201CreatingFailed200", "", resp, client.Put201CreatingFailed200HandleError)
 	if err != nil {
@@ -2374,7 +2313,8 @@ func (client *LrOSClient) Put201CreatingFailed200CreateRequest(ctx context.Conte
 
 // Put201CreatingFailed200HandleResponse handles the Put201CreatingFailed200 response.
 func (client *LrOSClient) Put201CreatingFailed200HandleResponse(resp *azcore.Response) (*ProductPollerResponse, error) {
-	return &ProductPollerResponse{RawResponse: resp.Response}, nil
+	result := ProductResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
 
 // Put201CreatingFailed200HandleError handles the Put201CreatingFailed200 error response.
@@ -2408,9 +2348,8 @@ func (client *LrOSClient) BeginPut201CreatingSucceeded200(ctx context.Context, l
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.Put201CreatingSucceeded200HandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ProductPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSClient.Put201CreatingSucceeded200", "", resp, client.Put201CreatingSucceeded200HandleError)
 	if err != nil {
@@ -2454,7 +2393,8 @@ func (client *LrOSClient) Put201CreatingSucceeded200CreateRequest(ctx context.Co
 
 // Put201CreatingSucceeded200HandleResponse handles the Put201CreatingSucceeded200 response.
 func (client *LrOSClient) Put201CreatingSucceeded200HandleResponse(resp *azcore.Response) (*ProductPollerResponse, error) {
-	return &ProductPollerResponse{RawResponse: resp.Response}, nil
+	result := ProductResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
 
 // Put201CreatingSucceeded200HandleError handles the Put201CreatingSucceeded200 error response.
@@ -2488,9 +2428,8 @@ func (client *LrOSClient) BeginPut201Succeeded(ctx context.Context, lrOSPut201Su
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.Put201SucceededHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ProductPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSClient.Put201Succeeded", "", resp, client.Put201SucceededHandleError)
 	if err != nil {
@@ -2534,7 +2473,8 @@ func (client *LrOSClient) Put201SucceededCreateRequest(ctx context.Context, lrOS
 
 // Put201SucceededHandleResponse handles the Put201Succeeded response.
 func (client *LrOSClient) Put201SucceededHandleResponse(resp *azcore.Response) (*ProductPollerResponse, error) {
-	return &ProductPollerResponse{RawResponse: resp.Response}, nil
+	result := ProductResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
 
 // Put201SucceededHandleError handles the Put201Succeeded error response.
@@ -2568,9 +2508,8 @@ func (client *LrOSClient) BeginPut202Retry200(ctx context.Context, lrOSPut202Ret
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.Put202Retry200HandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ProductPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSClient.Put202Retry200", "", resp, client.Put202Retry200HandleError)
 	if err != nil {
@@ -2614,7 +2553,8 @@ func (client *LrOSClient) Put202Retry200CreateRequest(ctx context.Context, lrOSP
 
 // Put202Retry200HandleResponse handles the Put202Retry200 response.
 func (client *LrOSClient) Put202Retry200HandleResponse(resp *azcore.Response) (*ProductPollerResponse, error) {
-	return &ProductPollerResponse{RawResponse: resp.Response}, nil
+	result := ProductResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
 
 // Put202Retry200HandleError handles the Put202Retry200 error response.
@@ -2648,9 +2588,8 @@ func (client *LrOSClient) BeginPutAsyncNoHeaderInRetry(ctx context.Context, lrOS
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutAsyncNoHeaderInRetryHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ProductPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSClient.PutAsyncNoHeaderInRetry", "", resp, client.PutAsyncNoHeaderInRetryHandleError)
 	if err != nil {
@@ -2694,7 +2633,8 @@ func (client *LrOSClient) PutAsyncNoHeaderInRetryCreateRequest(ctx context.Conte
 
 // PutAsyncNoHeaderInRetryHandleResponse handles the PutAsyncNoHeaderInRetry response.
 func (client *LrOSClient) PutAsyncNoHeaderInRetryHandleResponse(resp *azcore.Response) (*ProductPollerResponse, error) {
-	return &ProductPollerResponse{RawResponse: resp.Response}, nil
+	result := ProductResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
 
 // PutAsyncNoHeaderInRetryHandleError handles the PutAsyncNoHeaderInRetry error response.
@@ -2728,9 +2668,8 @@ func (client *LrOSClient) BeginPutAsyncNoRetrySucceeded(ctx context.Context, lrO
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutAsyncNoRetrySucceededHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ProductPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSClient.PutAsyncNoRetrySucceeded", "", resp, client.PutAsyncNoRetrySucceededHandleError)
 	if err != nil {
@@ -2774,7 +2713,8 @@ func (client *LrOSClient) PutAsyncNoRetrySucceededCreateRequest(ctx context.Cont
 
 // PutAsyncNoRetrySucceededHandleResponse handles the PutAsyncNoRetrySucceeded response.
 func (client *LrOSClient) PutAsyncNoRetrySucceededHandleResponse(resp *azcore.Response) (*ProductPollerResponse, error) {
-	return &ProductPollerResponse{RawResponse: resp.Response}, nil
+	result := ProductResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
 
 // PutAsyncNoRetrySucceededHandleError handles the PutAsyncNoRetrySucceeded error response.
@@ -2808,9 +2748,8 @@ func (client *LrOSClient) BeginPutAsyncNoRetrycanceled(ctx context.Context, lrOS
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutAsyncNoRetrycanceledHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ProductPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSClient.PutAsyncNoRetrycanceled", "", resp, client.PutAsyncNoRetrycanceledHandleError)
 	if err != nil {
@@ -2854,7 +2793,8 @@ func (client *LrOSClient) PutAsyncNoRetrycanceledCreateRequest(ctx context.Conte
 
 // PutAsyncNoRetrycanceledHandleResponse handles the PutAsyncNoRetrycanceled response.
 func (client *LrOSClient) PutAsyncNoRetrycanceledHandleResponse(resp *azcore.Response) (*ProductPollerResponse, error) {
-	return &ProductPollerResponse{RawResponse: resp.Response}, nil
+	result := ProductResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
 
 // PutAsyncNoRetrycanceledHandleError handles the PutAsyncNoRetrycanceled error response.
@@ -2888,9 +2828,8 @@ func (client *LrOSClient) BeginPutAsyncNonResource(ctx context.Context, lrOSPutA
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutAsyncNonResourceHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &SKUPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSClient.PutAsyncNonResource", "", resp, client.PutAsyncNonResourceHandleError)
 	if err != nil {
@@ -2934,7 +2873,8 @@ func (client *LrOSClient) PutAsyncNonResourceCreateRequest(ctx context.Context, 
 
 // PutAsyncNonResourceHandleResponse handles the PutAsyncNonResource response.
 func (client *LrOSClient) PutAsyncNonResourceHandleResponse(resp *azcore.Response) (*SKUPollerResponse, error) {
-	return &SKUPollerResponse{RawResponse: resp.Response}, nil
+	result := SKUResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.SKU)
 }
 
 // PutAsyncNonResourceHandleError handles the PutAsyncNonResource error response.
@@ -2968,9 +2908,8 @@ func (client *LrOSClient) BeginPutAsyncRetryFailed(ctx context.Context, lrOSPutA
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutAsyncRetryFailedHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ProductPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSClient.PutAsyncRetryFailed", "", resp, client.PutAsyncRetryFailedHandleError)
 	if err != nil {
@@ -3014,7 +2953,8 @@ func (client *LrOSClient) PutAsyncRetryFailedCreateRequest(ctx context.Context, 
 
 // PutAsyncRetryFailedHandleResponse handles the PutAsyncRetryFailed response.
 func (client *LrOSClient) PutAsyncRetryFailedHandleResponse(resp *azcore.Response) (*ProductPollerResponse, error) {
-	return &ProductPollerResponse{RawResponse: resp.Response}, nil
+	result := ProductResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
 
 // PutAsyncRetryFailedHandleError handles the PutAsyncRetryFailed error response.
@@ -3048,9 +2988,8 @@ func (client *LrOSClient) BeginPutAsyncRetrySucceeded(ctx context.Context, lrOSP
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutAsyncRetrySucceededHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ProductPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSClient.PutAsyncRetrySucceeded", "", resp, client.PutAsyncRetrySucceededHandleError)
 	if err != nil {
@@ -3094,7 +3033,8 @@ func (client *LrOSClient) PutAsyncRetrySucceededCreateRequest(ctx context.Contex
 
 // PutAsyncRetrySucceededHandleResponse handles the PutAsyncRetrySucceeded response.
 func (client *LrOSClient) PutAsyncRetrySucceededHandleResponse(resp *azcore.Response) (*ProductPollerResponse, error) {
-	return &ProductPollerResponse{RawResponse: resp.Response}, nil
+	result := ProductResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
 
 // PutAsyncRetrySucceededHandleError handles the PutAsyncRetrySucceeded error response.
@@ -3128,9 +3068,8 @@ func (client *LrOSClient) BeginPutAsyncSubResource(ctx context.Context, lrOSPutA
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutAsyncSubResourceHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &SubProductPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSClient.PutAsyncSubResource", "", resp, client.PutAsyncSubResourceHandleError)
 	if err != nil {
@@ -3174,7 +3113,8 @@ func (client *LrOSClient) PutAsyncSubResourceCreateRequest(ctx context.Context, 
 
 // PutAsyncSubResourceHandleResponse handles the PutAsyncSubResource response.
 func (client *LrOSClient) PutAsyncSubResourceHandleResponse(resp *azcore.Response) (*SubProductPollerResponse, error) {
-	return &SubProductPollerResponse{RawResponse: resp.Response}, nil
+	result := SubProductResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.SubProduct)
 }
 
 // PutAsyncSubResourceHandleError handles the PutAsyncSubResource error response.
@@ -3208,9 +3148,8 @@ func (client *LrOSClient) BeginPutNoHeaderInRetry(ctx context.Context, lrOSPutNo
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutNoHeaderInRetryHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ProductPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSClient.PutNoHeaderInRetry", "", resp, client.PutNoHeaderInRetryHandleError)
 	if err != nil {
@@ -3254,7 +3193,8 @@ func (client *LrOSClient) PutNoHeaderInRetryCreateRequest(ctx context.Context, l
 
 // PutNoHeaderInRetryHandleResponse handles the PutNoHeaderInRetry response.
 func (client *LrOSClient) PutNoHeaderInRetryHandleResponse(resp *azcore.Response) (*ProductPollerResponse, error) {
-	return &ProductPollerResponse{RawResponse: resp.Response}, nil
+	result := ProductResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
 
 // PutNoHeaderInRetryHandleError handles the PutNoHeaderInRetry error response.
@@ -3288,9 +3228,8 @@ func (client *LrOSClient) BeginPutNonResource(ctx context.Context, lrOSPutNonRes
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutNonResourceHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &SKUPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSClient.PutNonResource", "", resp, client.PutNonResourceHandleError)
 	if err != nil {
@@ -3334,7 +3273,8 @@ func (client *LrOSClient) PutNonResourceCreateRequest(ctx context.Context, lrOSP
 
 // PutNonResourceHandleResponse handles the PutNonResource response.
 func (client *LrOSClient) PutNonResourceHandleResponse(resp *azcore.Response) (*SKUPollerResponse, error) {
-	return &SKUPollerResponse{RawResponse: resp.Response}, nil
+	result := SKUResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.SKU)
 }
 
 // PutNonResourceHandleError handles the PutNonResource error response.
@@ -3368,9 +3308,8 @@ func (client *LrOSClient) BeginPutSubResource(ctx context.Context, lrOSPutSubRes
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutSubResourceHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &SubProductPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LrOSClient.PutSubResource", "", resp, client.PutSubResourceHandleError)
 	if err != nil {
@@ -3414,7 +3353,8 @@ func (client *LrOSClient) PutSubResourceCreateRequest(ctx context.Context, lrOSP
 
 // PutSubResourceHandleResponse handles the PutSubResource response.
 func (client *LrOSClient) PutSubResourceHandleResponse(resp *azcore.Response) (*SubProductPollerResponse, error) {
-	return &SubProductPollerResponse{RawResponse: resp.Response}, nil
+	result := SubProductResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.SubProduct)
 }
 
 // PutSubResourceHandleError handles the PutSubResource error response.
