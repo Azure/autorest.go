@@ -121,7 +121,7 @@ func (client *SecurityPartnerProvidersClient) CreateOrUpdateCreateRequest(ctx co
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *SecurityPartnerProvidersClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*SecurityPartnerProviderPollerResponse, error) {
+func (client *SecurityPartnerProvidersClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*SecurityPartnerProviderResponse, error) {
 	result := SecurityPartnerProviderResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.SecurityPartnerProvider)
 }

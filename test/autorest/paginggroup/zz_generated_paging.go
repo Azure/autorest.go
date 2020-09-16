@@ -392,7 +392,7 @@ func (client *PagingClient) GetMultiplePagesLroCreateRequest(ctx context.Context
 }
 
 // GetMultiplePagesLroHandleResponse handles the GetMultiplePagesLro response.
-func (client *PagingClient) GetMultiplePagesLroHandleResponse(resp *azcore.Response) (*ProductResultPagerPollerResponse, error) {
+func (client *PagingClient) GetMultiplePagesLroHandleResponse(resp *azcore.Response) (*ProductResultResponse, error) {
 	result := ProductResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ProductResult)
 }

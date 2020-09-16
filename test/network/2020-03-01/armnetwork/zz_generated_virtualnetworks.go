@@ -178,7 +178,7 @@ func (client *VirtualNetworksClient) CreateOrUpdateCreateRequest(ctx context.Con
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *VirtualNetworksClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*VirtualNetworkPollerResponse, error) {
+func (client *VirtualNetworksClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*VirtualNetworkResponse, error) {
 	result := VirtualNetworkResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualNetwork)
 }

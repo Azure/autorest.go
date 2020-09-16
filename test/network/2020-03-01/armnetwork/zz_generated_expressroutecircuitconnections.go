@@ -119,7 +119,7 @@ func (client *ExpressRouteCircuitConnectionsClient) CreateOrUpdateCreateRequest(
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *ExpressRouteCircuitConnectionsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitConnectionPollerResponse, error) {
+func (client *ExpressRouteCircuitConnectionsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitConnectionResponse, error) {
 	result := ExpressRouteCircuitConnectionResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ExpressRouteCircuitConnection)
 }

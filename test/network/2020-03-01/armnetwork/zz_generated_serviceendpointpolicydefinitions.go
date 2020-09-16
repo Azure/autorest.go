@@ -118,7 +118,7 @@ func (client *ServiceEndpointPolicyDefinitionsClient) CreateOrUpdateCreateReques
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *ServiceEndpointPolicyDefinitionsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*ServiceEndpointPolicyDefinitionPollerResponse, error) {
+func (client *ServiceEndpointPolicyDefinitionsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*ServiceEndpointPolicyDefinitionResponse, error) {
 	result := ServiceEndpointPolicyDefinitionResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ServiceEndpointPolicyDefinition)
 }

@@ -121,7 +121,7 @@ func (client *IPAllocationsClient) CreateOrUpdateCreateRequest(ctx context.Conte
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *IPAllocationsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*IPAllocationPollerResponse, error) {
+func (client *IPAllocationsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*IPAllocationResponse, error) {
 	result := IPAllocationResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.IPAllocation)
 }

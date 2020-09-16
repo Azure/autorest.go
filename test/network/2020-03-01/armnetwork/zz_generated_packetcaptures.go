@@ -126,7 +126,7 @@ func (client *PacketCapturesClient) CreateCreateRequest(ctx context.Context, res
 }
 
 // CreateHandleResponse handles the Create response.
-func (client *PacketCapturesClient) CreateHandleResponse(resp *azcore.Response) (*PacketCaptureResultPollerResponse, error) {
+func (client *PacketCapturesClient) CreateHandleResponse(resp *azcore.Response) (*PacketCaptureResultResponse, error) {
 	result := PacketCaptureResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.PacketCaptureResult)
 }
@@ -341,7 +341,7 @@ func (client *PacketCapturesClient) GetStatusCreateRequest(ctx context.Context, 
 }
 
 // GetStatusHandleResponse handles the GetStatus response.
-func (client *PacketCapturesClient) GetStatusHandleResponse(resp *azcore.Response) (*PacketCaptureQueryStatusResultPollerResponse, error) {
+func (client *PacketCapturesClient) GetStatusHandleResponse(resp *azcore.Response) (*PacketCaptureQueryStatusResultResponse, error) {
 	result := PacketCaptureQueryStatusResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.PacketCaptureQueryStatusResult)
 }

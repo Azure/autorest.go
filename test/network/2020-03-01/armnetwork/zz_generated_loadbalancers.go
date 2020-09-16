@@ -121,7 +121,7 @@ func (client *LoadBalancersClient) CreateOrUpdateCreateRequest(ctx context.Conte
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *LoadBalancersClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*LoadBalancerPollerResponse, error) {
+func (client *LoadBalancersClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*LoadBalancerResponse, error) {
 	result := LoadBalancerResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.LoadBalancer)
 }

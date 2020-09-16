@@ -118,7 +118,7 @@ func (client *ExpressRouteConnectionsClient) CreateOrUpdateCreateRequest(ctx con
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *ExpressRouteConnectionsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*ExpressRouteConnectionPollerResponse, error) {
+func (client *ExpressRouteConnectionsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*ExpressRouteConnectionResponse, error) {
 	result := ExpressRouteConnectionResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ExpressRouteConnection)
 }

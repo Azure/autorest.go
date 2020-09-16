@@ -7,7 +7,6 @@ package azartifacts
 
 import (
 	"context"
-	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -50,12 +49,20 @@ func (client *PipelineClient) Do(req *azcore.Request) (*azcore.Response, error) 
 }
 
 // CreateOrUpdatePipeline - Creates or updates a pipeline.
-func (client *PipelineClient) BeginCreateOrUpdatePipeline(ctx context.Context, pipelineName string, pipeline PipelineResource, pipelineCreateOrUpdatePipelineOptions *PipelineCreateOrUpdatePipelineOptions) (*PipelineResourcePollerResponse, error) {
-	return nil, errors.New("NYI")
-}
-
-func (client *PipelineClient) ResumeCreateOrUpdatePipeline(token string) (PipelineResourcePoller, error) {
-	return nil, nil
+func (client *PipelineClient) CreateOrUpdatePipeline(ctx context.Context, pipelineName string, pipeline PipelineResource, pipelineCreateOrUpdatePipelineOptions *PipelineCreateOrUpdatePipelineOptions) (*PipelineResourcePollerResponse, error) {
+	req, err := client.CreateOrUpdatePipelineCreateRequest(ctx, pipelineName, pipeline, pipelineCreateOrUpdatePipelineOptions)
+	if err != nil {
+		return nil, err
+	}
+	// send the first request to initialize the poller
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.CreateOrUpdatePipelineHandleError(resp)
+	}
+	return resp, nil
 }
 
 // CreateOrUpdatePipelineCreateRequest creates the CreateOrUpdatePipeline request.
@@ -77,8 +84,9 @@ func (client *PipelineClient) CreateOrUpdatePipelineCreateRequest(ctx context.Co
 }
 
 // CreateOrUpdatePipelineHandleResponse handles the CreateOrUpdatePipeline response.
-func (client *PipelineClient) CreateOrUpdatePipelineHandleResponse(resp *azcore.Response) (*PipelineResourcePollerResponse, error) {
-	return &PipelineResourcePollerResponse{RawResponse: resp.Response}, nil
+func (client *PipelineClient) CreateOrUpdatePipelineHandleResponse(resp *azcore.Response) (*PipelineResourceResponse, error) {
+	result := PipelineResourceResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.PipelineResource)
 }
 
 // CreateOrUpdatePipelineHandleError handles the CreateOrUpdatePipeline error response.
@@ -153,12 +161,20 @@ func (client *PipelineClient) CreatePipelineRunHandleError(resp *azcore.Response
 }
 
 // DeletePipeline - Deletes a pipeline.
-func (client *PipelineClient) BeginDeletePipeline(ctx context.Context, pipelineName string) (*HTTPPollerResponse, error) {
-	return nil, errors.New("NYI")
-}
-
-func (client *PipelineClient) ResumeDeletePipeline(token string) (HTTPPoller, error) {
-	return nil, nil
+func (client *PipelineClient) DeletePipeline(ctx context.Context, pipelineName string) (*HTTPPollerResponse, error) {
+	req, err := client.DeletePipelineCreateRequest(ctx, pipelineName)
+	if err != nil {
+		return nil, err
+	}
+	// send the first request to initialize the poller
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeletePipelineHandleError(resp)
+	}
+	return resp, nil
 }
 
 // DeletePipelineCreateRequest creates the DeletePipeline request.
@@ -174,11 +190,6 @@ func (client *PipelineClient) DeletePipelineCreateRequest(ctx context.Context, p
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DeletePipelineHandleResponse handles the DeletePipeline response.
-func (client *PipelineClient) DeletePipelineHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeletePipelineHandleError handles the DeletePipeline error response.

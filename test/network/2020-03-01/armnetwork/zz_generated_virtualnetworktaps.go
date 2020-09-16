@@ -121,7 +121,7 @@ func (client *VirtualNetworkTapsClient) CreateOrUpdateCreateRequest(ctx context.
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *VirtualNetworkTapsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*VirtualNetworkTapPollerResponse, error) {
+func (client *VirtualNetworkTapsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*VirtualNetworkTapResponse, error) {
 	result := VirtualNetworkTapResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualNetworkTap)
 }

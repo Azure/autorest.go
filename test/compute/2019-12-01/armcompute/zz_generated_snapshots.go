@@ -66,7 +66,7 @@ func (client *SnapshotsClient) Do(req *azcore.Request) (*azcore.Response, error)
 }
 
 // CreateOrUpdate - Creates or updates a snapshot.
-func (client *SnapshotsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, snapshotName string, snapshot Snapshot) (*SnapshotPollerResponse, error) {
+func (client *SnapshotsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, snapshotName string, snapshot Snapshot) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, snapshotName, snapshot)
 	if err != nil {
 		return nil, err
@@ -79,9 +79,16 @@ func (client *SnapshotsClient) BeginCreateOrUpdate(ctx context.Context, resource
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.CreateOrUpdateHandleError(resp)
 	}
-	result, err := client.CreateOrUpdateHandleResponse(resp)
+	return resp, nil
+}
+
+func (client *SnapshotsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, snapshotName string, snapshot Snapshot) (*SnapshotPollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, snapshotName, snapshot)
 	if err != nil {
 		return nil, err
+	}
+	result := &SnapshotPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("SnapshotsClient.CreateOrUpdate", "", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
@@ -127,8 +134,9 @@ func (client *SnapshotsClient) CreateOrUpdateCreateRequest(ctx context.Context, 
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *SnapshotsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*SnapshotPollerResponse, error) {
-	return &SnapshotPollerResponse{RawResponse: resp.Response}, nil
+func (client *SnapshotsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*SnapshotResponse, error) {
+	result := SnapshotResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Snapshot)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -144,7 +152,7 @@ func (client *SnapshotsClient) CreateOrUpdateHandleError(resp *azcore.Response) 
 }
 
 // Delete - Deletes a snapshot.
-func (client *SnapshotsClient) BeginDelete(ctx context.Context, resourceGroupName string, snapshotName string) (*HTTPPollerResponse, error) {
+func (client *SnapshotsClient) Delete(ctx context.Context, resourceGroupName string, snapshotName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, snapshotName)
 	if err != nil {
 		return nil, err
@@ -157,9 +165,16 @@ func (client *SnapshotsClient) BeginDelete(ctx context.Context, resourceGroupNam
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
 	}
-	result, err := client.DeleteHandleResponse(resp)
+	return resp, nil
+}
+
+func (client *SnapshotsClient) BeginDelete(ctx context.Context, resourceGroupName string, snapshotName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, snapshotName)
 	if err != nil {
 		return nil, err
+	}
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("SnapshotsClient.Delete", "", resp, client.DeleteHandleError)
 	if err != nil {
@@ -201,11 +216,6 @@ func (client *SnapshotsClient) DeleteCreateRequest(ctx context.Context, resource
 	query.Set("api-version", "2019-11-01")
 	req.URL.RawQuery = query.Encode()
 	return req, nil
-}
-
-// DeleteHandleResponse handles the Delete response.
-func (client *SnapshotsClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteHandleError handles the Delete error response.
@@ -276,7 +286,7 @@ func (client *SnapshotsClient) GetHandleError(resp *azcore.Response) error {
 }
 
 // GrantAccess - Grants access to a snapshot.
-func (client *SnapshotsClient) BeginGrantAccess(ctx context.Context, resourceGroupName string, snapshotName string, grantAccessData GrantAccessData) (*AccessURIPollerResponse, error) {
+func (client *SnapshotsClient) GrantAccess(ctx context.Context, resourceGroupName string, snapshotName string, grantAccessData GrantAccessData) (*azcore.Response, error) {
 	req, err := client.GrantAccessCreateRequest(ctx, resourceGroupName, snapshotName, grantAccessData)
 	if err != nil {
 		return nil, err
@@ -289,9 +299,16 @@ func (client *SnapshotsClient) BeginGrantAccess(ctx context.Context, resourceGro
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.GrantAccessHandleError(resp)
 	}
-	result, err := client.GrantAccessHandleResponse(resp)
+	return resp, nil
+}
+
+func (client *SnapshotsClient) BeginGrantAccess(ctx context.Context, resourceGroupName string, snapshotName string, grantAccessData GrantAccessData) (*AccessURIPollerResponse, error) {
+	resp, err := client.GrantAccess(ctx, resourceGroupName, snapshotName, grantAccessData)
 	if err != nil {
 		return nil, err
+	}
+	result := &AccessURIPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("SnapshotsClient.GrantAccess", "location", resp, client.GrantAccessHandleError)
 	if err != nil {
@@ -337,8 +354,9 @@ func (client *SnapshotsClient) GrantAccessCreateRequest(ctx context.Context, res
 }
 
 // GrantAccessHandleResponse handles the GrantAccess response.
-func (client *SnapshotsClient) GrantAccessHandleResponse(resp *azcore.Response) (*AccessURIPollerResponse, error) {
-	return &AccessURIPollerResponse{RawResponse: resp.Response}, nil
+func (client *SnapshotsClient) GrantAccessHandleResponse(resp *azcore.Response) (*AccessURIResponse, error) {
+	result := AccessURIResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.AccessURI)
 }
 
 // GrantAccessHandleError handles the GrantAccess error response.
@@ -451,7 +469,7 @@ func (client *SnapshotsClient) ListByResourceGroupHandleError(resp *azcore.Respo
 }
 
 // RevokeAccess - Revokes access to a snapshot.
-func (client *SnapshotsClient) BeginRevokeAccess(ctx context.Context, resourceGroupName string, snapshotName string) (*HTTPPollerResponse, error) {
+func (client *SnapshotsClient) RevokeAccess(ctx context.Context, resourceGroupName string, snapshotName string) (*azcore.Response, error) {
 	req, err := client.RevokeAccessCreateRequest(ctx, resourceGroupName, snapshotName)
 	if err != nil {
 		return nil, err
@@ -464,9 +482,16 @@ func (client *SnapshotsClient) BeginRevokeAccess(ctx context.Context, resourceGr
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.RevokeAccessHandleError(resp)
 	}
-	result, err := client.RevokeAccessHandleResponse(resp)
+	return resp, nil
+}
+
+func (client *SnapshotsClient) BeginRevokeAccess(ctx context.Context, resourceGroupName string, snapshotName string) (*HTTPPollerResponse, error) {
+	resp, err := client.RevokeAccess(ctx, resourceGroupName, snapshotName)
 	if err != nil {
 		return nil, err
+	}
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("SnapshotsClient.RevokeAccess", "location", resp, client.RevokeAccessHandleError)
 	if err != nil {
@@ -510,11 +535,6 @@ func (client *SnapshotsClient) RevokeAccessCreateRequest(ctx context.Context, re
 	return req, nil
 }
 
-// RevokeAccessHandleResponse handles the RevokeAccess response.
-func (client *SnapshotsClient) RevokeAccessHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
-}
-
 // RevokeAccessHandleError handles the RevokeAccess error response.
 func (client *SnapshotsClient) RevokeAccessHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
@@ -528,7 +548,7 @@ func (client *SnapshotsClient) RevokeAccessHandleError(resp *azcore.Response) er
 }
 
 // Update - Updates (patches) a snapshot.
-func (client *SnapshotsClient) BeginUpdate(ctx context.Context, resourceGroupName string, snapshotName string, snapshot SnapshotUpdate) (*SnapshotPollerResponse, error) {
+func (client *SnapshotsClient) Update(ctx context.Context, resourceGroupName string, snapshotName string, snapshot SnapshotUpdate) (*azcore.Response, error) {
 	req, err := client.UpdateCreateRequest(ctx, resourceGroupName, snapshotName, snapshot)
 	if err != nil {
 		return nil, err
@@ -541,9 +561,16 @@ func (client *SnapshotsClient) BeginUpdate(ctx context.Context, resourceGroupNam
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.UpdateHandleError(resp)
 	}
-	result, err := client.UpdateHandleResponse(resp)
+	return resp, nil
+}
+
+func (client *SnapshotsClient) BeginUpdate(ctx context.Context, resourceGroupName string, snapshotName string, snapshot SnapshotUpdate) (*SnapshotPollerResponse, error) {
+	resp, err := client.Update(ctx, resourceGroupName, snapshotName, snapshot)
 	if err != nil {
 		return nil, err
+	}
+	result := &SnapshotPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("SnapshotsClient.Update", "", resp, client.UpdateHandleError)
 	if err != nil {
@@ -589,8 +616,9 @@ func (client *SnapshotsClient) UpdateCreateRequest(ctx context.Context, resource
 }
 
 // UpdateHandleResponse handles the Update response.
-func (client *SnapshotsClient) UpdateHandleResponse(resp *azcore.Response) (*SnapshotPollerResponse, error) {
-	return &SnapshotPollerResponse{RawResponse: resp.Response}, nil
+func (client *SnapshotsClient) UpdateHandleResponse(resp *azcore.Response) (*SnapshotResponse, error) {
+	result := SnapshotResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Snapshot)
 }
 
 // UpdateHandleError handles the Update error response.

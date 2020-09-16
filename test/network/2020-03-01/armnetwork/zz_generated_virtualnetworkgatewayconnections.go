@@ -139,7 +139,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) CreateOrUpdateCreateReques
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *VirtualNetworkGatewayConnectionsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*VirtualNetworkGatewayConnectionPollerResponse, error) {
+func (client *VirtualNetworkGatewayConnectionsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*VirtualNetworkGatewayConnectionResponse, error) {
 	result := VirtualNetworkGatewayConnectionResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualNetworkGatewayConnection)
 }
@@ -449,7 +449,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) ResetSharedKeyCreateReques
 }
 
 // ResetSharedKeyHandleResponse handles the ResetSharedKey response.
-func (client *VirtualNetworkGatewayConnectionsClient) ResetSharedKeyHandleResponse(resp *azcore.Response) (*ConnectionResetSharedKeyPollerResponse, error) {
+func (client *VirtualNetworkGatewayConnectionsClient) ResetSharedKeyHandleResponse(resp *azcore.Response) (*ConnectionResetSharedKeyResponse, error) {
 	result := ConnectionResetSharedKeyResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ConnectionResetSharedKey)
 }
@@ -532,7 +532,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) SetSharedKeyCreateRequest(
 }
 
 // SetSharedKeyHandleResponse handles the SetSharedKey response.
-func (client *VirtualNetworkGatewayConnectionsClient) SetSharedKeyHandleResponse(resp *azcore.Response) (*ConnectionSharedKeyPollerResponse, error) {
+func (client *VirtualNetworkGatewayConnectionsClient) SetSharedKeyHandleResponse(resp *azcore.Response) (*ConnectionSharedKeyResponse, error) {
 	result := ConnectionSharedKeyResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ConnectionSharedKey)
 }
@@ -618,7 +618,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) StartPacketCaptureCreateRe
 }
 
 // StartPacketCaptureHandleResponse handles the StartPacketCapture response.
-func (client *VirtualNetworkGatewayConnectionsClient) StartPacketCaptureHandleResponse(resp *azcore.Response) (*StringPollerResponse, error) {
+func (client *VirtualNetworkGatewayConnectionsClient) StartPacketCaptureHandleResponse(resp *azcore.Response) (*StringResponse, error) {
 	result := StringResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
@@ -701,7 +701,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) StopPacketCaptureCreateReq
 }
 
 // StopPacketCaptureHandleResponse handles the StopPacketCapture response.
-func (client *VirtualNetworkGatewayConnectionsClient) StopPacketCaptureHandleResponse(resp *azcore.Response) (*StringPollerResponse, error) {
+func (client *VirtualNetworkGatewayConnectionsClient) StopPacketCaptureHandleResponse(resp *azcore.Response) (*StringResponse, error) {
 	result := StringResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
@@ -784,7 +784,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) UpdateTagsCreateRequest(ct
 }
 
 // UpdateTagsHandleResponse handles the UpdateTags response.
-func (client *VirtualNetworkGatewayConnectionsClient) UpdateTagsHandleResponse(resp *azcore.Response) (*VirtualNetworkGatewayConnectionPollerResponse, error) {
+func (client *VirtualNetworkGatewayConnectionsClient) UpdateTagsHandleResponse(resp *azcore.Response) (*VirtualNetworkGatewayConnectionResponse, error) {
 	result := VirtualNetworkGatewayConnectionResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualNetworkGatewayConnection)
 }

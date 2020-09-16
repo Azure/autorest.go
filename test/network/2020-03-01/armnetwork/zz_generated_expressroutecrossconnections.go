@@ -129,7 +129,7 @@ func (client *ExpressRouteCrossConnectionsClient) CreateOrUpdateCreateRequest(ct
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *ExpressRouteCrossConnectionsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*ExpressRouteCrossConnectionPollerResponse, error) {
+func (client *ExpressRouteCrossConnectionsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*ExpressRouteCrossConnectionResponse, error) {
 	result := ExpressRouteCrossConnectionResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ExpressRouteCrossConnection)
 }
@@ -311,7 +311,7 @@ func (client *ExpressRouteCrossConnectionsClient) ListArpTableCreateRequest(ctx 
 }
 
 // ListArpTableHandleResponse handles the ListArpTable response.
-func (client *ExpressRouteCrossConnectionsClient) ListArpTableHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitsArpTableListResultPollerResponse, error) {
+func (client *ExpressRouteCrossConnectionsClient) ListArpTableHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitsArpTableListResultResponse, error) {
 	result := ExpressRouteCircuitsArpTableListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ExpressRouteCircuitsArpTableListResult)
 }
@@ -442,7 +442,7 @@ func (client *ExpressRouteCrossConnectionsClient) ListRoutesTableCreateRequest(c
 }
 
 // ListRoutesTableHandleResponse handles the ListRoutesTable response.
-func (client *ExpressRouteCrossConnectionsClient) ListRoutesTableHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitsRoutesTableListResultPollerResponse, error) {
+func (client *ExpressRouteCrossConnectionsClient) ListRoutesTableHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitsRoutesTableListResultResponse, error) {
 	result := ExpressRouteCircuitsRoutesTableListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ExpressRouteCircuitsRoutesTableListResult)
 }
@@ -527,7 +527,7 @@ func (client *ExpressRouteCrossConnectionsClient) ListRoutesTableSummaryCreateRe
 }
 
 // ListRoutesTableSummaryHandleResponse handles the ListRoutesTableSummary response.
-func (client *ExpressRouteCrossConnectionsClient) ListRoutesTableSummaryHandleResponse(resp *azcore.Response) (*ExpressRouteCrossConnectionsRoutesTableSummaryListResultPollerResponse, error) {
+func (client *ExpressRouteCrossConnectionsClient) ListRoutesTableSummaryHandleResponse(resp *azcore.Response) (*ExpressRouteCrossConnectionsRoutesTableSummaryListResultResponse, error) {
 	result := ExpressRouteCrossConnectionsRoutesTableSummaryListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ExpressRouteCrossConnectionsRoutesTableSummaryListResult)
 }

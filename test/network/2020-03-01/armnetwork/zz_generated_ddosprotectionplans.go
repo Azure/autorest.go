@@ -121,7 +121,7 @@ func (client *DdosProtectionPlansClient) CreateOrUpdateCreateRequest(ctx context
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *DdosProtectionPlansClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*DdosProtectionPlanPollerResponse, error) {
+func (client *DdosProtectionPlansClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*DdosProtectionPlanResponse, error) {
 	result := DdosProtectionPlanResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.DdosProtectionPlan)
 }

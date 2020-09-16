@@ -109,7 +109,7 @@ func (client *VpnServerConfigurationsAssociatedWithVirtualWanClient) ListCreateR
 }
 
 // ListHandleResponse handles the List response.
-func (client *VpnServerConfigurationsAssociatedWithVirtualWanClient) ListHandleResponse(resp *azcore.Response) (*VpnServerConfigurationsResponsePollerResponse, error) {
+func (client *VpnServerConfigurationsAssociatedWithVirtualWanClient) ListHandleResponse(resp *azcore.Response) (*VpnServerConfigurationsResponseResponse, error) {
 	result := VpnServerConfigurationsResponseResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VpnServerConfigurationsResponse)
 }

@@ -121,7 +121,7 @@ func (client *VirtualWansClient) CreateOrUpdateCreateRequest(ctx context.Context
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *VirtualWansClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*VirtualWanPollerResponse, error) {
+func (client *VirtualWansClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*VirtualWanResponse, error) {
 	result := VirtualWanResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualWan)
 }

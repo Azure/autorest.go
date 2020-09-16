@@ -7,7 +7,6 @@ package azartifacts
 
 import (
 	"context"
-	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -49,12 +48,20 @@ func (client *NotebookClient) Do(req *azcore.Request) (*azcore.Response, error) 
 }
 
 // CreateOrUpdateNotebook - Creates or updates a Note Book.
-func (client *NotebookClient) BeginCreateOrUpdateNotebook(ctx context.Context, notebookName string, notebook NotebookResource, notebookCreateOrUpdateNotebookOptions *NotebookCreateOrUpdateNotebookOptions) (*NotebookResourcePollerResponse, error) {
-	return nil, errors.New("NYI")
-}
-
-func (client *NotebookClient) ResumeCreateOrUpdateNotebook(token string) (NotebookResourcePoller, error) {
-	return nil, nil
+func (client *NotebookClient) CreateOrUpdateNotebook(ctx context.Context, notebookName string, notebook NotebookResource, notebookCreateOrUpdateNotebookOptions *NotebookCreateOrUpdateNotebookOptions) (*NotebookResourcePollerResponse, error) {
+	req, err := client.CreateOrUpdateNotebookCreateRequest(ctx, notebookName, notebook, notebookCreateOrUpdateNotebookOptions)
+	if err != nil {
+		return nil, err
+	}
+	// send the first request to initialize the poller
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.CreateOrUpdateNotebookHandleError(resp)
+	}
+	return resp, nil
 }
 
 // CreateOrUpdateNotebookCreateRequest creates the CreateOrUpdateNotebook request.
@@ -76,8 +83,9 @@ func (client *NotebookClient) CreateOrUpdateNotebookCreateRequest(ctx context.Co
 }
 
 // CreateOrUpdateNotebookHandleResponse handles the CreateOrUpdateNotebook response.
-func (client *NotebookClient) CreateOrUpdateNotebookHandleResponse(resp *azcore.Response) (*NotebookResourcePollerResponse, error) {
-	return &NotebookResourcePollerResponse{RawResponse: resp.Response}, nil
+func (client *NotebookClient) CreateOrUpdateNotebookHandleResponse(resp *azcore.Response) (*NotebookResourceResponse, error) {
+	result := NotebookResourceResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.NotebookResource)
 }
 
 // CreateOrUpdateNotebookHandleError handles the CreateOrUpdateNotebook error response.
@@ -90,12 +98,20 @@ func (client *NotebookClient) CreateOrUpdateNotebookHandleError(resp *azcore.Res
 }
 
 // DeleteNotebook - Deletes a Note book.
-func (client *NotebookClient) BeginDeleteNotebook(ctx context.Context, notebookName string) (*HTTPPollerResponse, error) {
-	return nil, errors.New("NYI")
-}
-
-func (client *NotebookClient) ResumeDeleteNotebook(token string) (HTTPPoller, error) {
-	return nil, nil
+func (client *NotebookClient) DeleteNotebook(ctx context.Context, notebookName string) (*HTTPPollerResponse, error) {
+	req, err := client.DeleteNotebookCreateRequest(ctx, notebookName)
+	if err != nil {
+		return nil, err
+	}
+	// send the first request to initialize the poller
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteNotebookHandleError(resp)
+	}
+	return resp, nil
 }
 
 // DeleteNotebookCreateRequest creates the DeleteNotebook request.
@@ -111,11 +127,6 @@ func (client *NotebookClient) DeleteNotebookCreateRequest(ctx context.Context, n
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DeleteNotebookHandleResponse handles the DeleteNotebook response.
-func (client *NotebookClient) DeleteNotebookHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteNotebookHandleError handles the DeleteNotebook error response.

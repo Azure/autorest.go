@@ -132,7 +132,7 @@ func (client *ConnectionMonitorsClient) CreateOrUpdateCreateRequest(ctx context.
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *ConnectionMonitorsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*ConnectionMonitorResultPollerResponse, error) {
+func (client *ConnectionMonitorsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*ConnectionMonitorResultResponse, error) {
 	result := ConnectionMonitorResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ConnectionMonitorResult)
 }
@@ -399,7 +399,7 @@ func (client *ConnectionMonitorsClient) QueryCreateRequest(ctx context.Context, 
 }
 
 // QueryHandleResponse handles the Query response.
-func (client *ConnectionMonitorsClient) QueryHandleResponse(resp *azcore.Response) (*ConnectionMonitorQueryResultPollerResponse, error) {
+func (client *ConnectionMonitorsClient) QueryHandleResponse(resp *azcore.Response) (*ConnectionMonitorQueryResultResponse, error) {
 	result := ConnectionMonitorQueryResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ConnectionMonitorQueryResult)
 }

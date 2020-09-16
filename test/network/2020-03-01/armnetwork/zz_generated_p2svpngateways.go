@@ -137,7 +137,7 @@ func (client *P2SVpnGatewaysClient) CreateOrUpdateCreateRequest(ctx context.Cont
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *P2SVpnGatewaysClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*P2SVpnGatewayPollerResponse, error) {
+func (client *P2SVpnGatewaysClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*P2SVpnGatewayResponse, error) {
 	result := P2SVpnGatewayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.P2SVpnGateway)
 }
@@ -374,7 +374,7 @@ func (client *P2SVpnGatewaysClient) GenerateVpnProfileCreateRequest(ctx context.
 }
 
 // GenerateVpnProfileHandleResponse handles the GenerateVpnProfile response.
-func (client *P2SVpnGatewaysClient) GenerateVpnProfileHandleResponse(resp *azcore.Response) (*VpnProfileResponsePollerResponse, error) {
+func (client *P2SVpnGatewaysClient) GenerateVpnProfileHandleResponse(resp *azcore.Response) (*VpnProfileResponseResponse, error) {
 	result := VpnProfileResponseResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VpnProfileResponse)
 }
@@ -509,7 +509,7 @@ func (client *P2SVpnGatewaysClient) GetP2SVpnConnectionHealthCreateRequest(ctx c
 }
 
 // GetP2SVpnConnectionHealthHandleResponse handles the GetP2SVpnConnectionHealth response.
-func (client *P2SVpnGatewaysClient) GetP2SVpnConnectionHealthHandleResponse(resp *azcore.Response) (*P2SVpnGatewayPollerResponse, error) {
+func (client *P2SVpnGatewaysClient) GetP2SVpnConnectionHealthHandleResponse(resp *azcore.Response) (*P2SVpnGatewayResponse, error) {
 	result := P2SVpnGatewayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.P2SVpnGateway)
 }
@@ -592,7 +592,7 @@ func (client *P2SVpnGatewaysClient) GetP2SVpnConnectionHealthDetailedCreateReque
 }
 
 // GetP2SVpnConnectionHealthDetailedHandleResponse handles the GetP2SVpnConnectionHealthDetailed response.
-func (client *P2SVpnGatewaysClient) GetP2SVpnConnectionHealthDetailedHandleResponse(resp *azcore.Response) (*P2SVpnConnectionHealthPollerResponse, error) {
+func (client *P2SVpnGatewaysClient) GetP2SVpnConnectionHealthDetailedHandleResponse(resp *azcore.Response) (*P2SVpnConnectionHealthResponse, error) {
 	result := P2SVpnConnectionHealthResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.P2SVpnConnectionHealth)
 }

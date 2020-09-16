@@ -118,7 +118,7 @@ func (client *RouteFilterRulesClient) CreateOrUpdateCreateRequest(ctx context.Co
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *RouteFilterRulesClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*RouteFilterRulePollerResponse, error) {
+func (client *RouteFilterRulesClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*RouteFilterRuleResponse, error) {
 	result := RouteFilterRuleResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.RouteFilterRule)
 }

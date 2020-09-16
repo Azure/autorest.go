@@ -7,7 +7,6 @@ package azartifacts
 
 import (
 	"context"
-	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -65,12 +64,20 @@ func (client *TriggerClient) Do(req *azcore.Request) (*azcore.Response, error) {
 }
 
 // CreateOrUpdateTrigger - Creates or updates a trigger.
-func (client *TriggerClient) BeginCreateOrUpdateTrigger(ctx context.Context, triggerName string, trigger TriggerResource, triggerCreateOrUpdateTriggerOptions *TriggerCreateOrUpdateTriggerOptions) (*TriggerResourcePollerResponse, error) {
-	return nil, errors.New("NYI")
-}
-
-func (client *TriggerClient) ResumeCreateOrUpdateTrigger(token string) (TriggerResourcePoller, error) {
-	return nil, nil
+func (client *TriggerClient) CreateOrUpdateTrigger(ctx context.Context, triggerName string, trigger TriggerResource, triggerCreateOrUpdateTriggerOptions *TriggerCreateOrUpdateTriggerOptions) (*TriggerResourcePollerResponse, error) {
+	req, err := client.CreateOrUpdateTriggerCreateRequest(ctx, triggerName, trigger, triggerCreateOrUpdateTriggerOptions)
+	if err != nil {
+		return nil, err
+	}
+	// send the first request to initialize the poller
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.CreateOrUpdateTriggerHandleError(resp)
+	}
+	return resp, nil
 }
 
 // CreateOrUpdateTriggerCreateRequest creates the CreateOrUpdateTrigger request.
@@ -92,8 +99,9 @@ func (client *TriggerClient) CreateOrUpdateTriggerCreateRequest(ctx context.Cont
 }
 
 // CreateOrUpdateTriggerHandleResponse handles the CreateOrUpdateTrigger response.
-func (client *TriggerClient) CreateOrUpdateTriggerHandleResponse(resp *azcore.Response) (*TriggerResourcePollerResponse, error) {
-	return &TriggerResourcePollerResponse{RawResponse: resp.Response}, nil
+func (client *TriggerClient) CreateOrUpdateTriggerHandleResponse(resp *azcore.Response) (*TriggerResourceResponse, error) {
+	result := TriggerResourceResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.TriggerResource)
 }
 
 // CreateOrUpdateTriggerHandleError handles the CreateOrUpdateTrigger error response.
@@ -106,12 +114,20 @@ func (client *TriggerClient) CreateOrUpdateTriggerHandleError(resp *azcore.Respo
 }
 
 // DeleteTrigger - Deletes a trigger.
-func (client *TriggerClient) BeginDeleteTrigger(ctx context.Context, triggerName string) (*HTTPPollerResponse, error) {
-	return nil, errors.New("NYI")
-}
-
-func (client *TriggerClient) ResumeDeleteTrigger(token string) (HTTPPoller, error) {
-	return nil, nil
+func (client *TriggerClient) DeleteTrigger(ctx context.Context, triggerName string) (*HTTPPollerResponse, error) {
+	req, err := client.DeleteTriggerCreateRequest(ctx, triggerName)
+	if err != nil {
+		return nil, err
+	}
+	// send the first request to initialize the poller
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteTriggerHandleError(resp)
+	}
+	return resp, nil
 }
 
 // DeleteTriggerCreateRequest creates the DeleteTrigger request.
@@ -127,11 +143,6 @@ func (client *TriggerClient) DeleteTriggerCreateRequest(ctx context.Context, tri
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DeleteTriggerHandleResponse handles the DeleteTrigger response.
-func (client *TriggerClient) DeleteTriggerHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteTriggerHandleError handles the DeleteTrigger error response.
@@ -291,12 +302,20 @@ func (client *TriggerClient) GetTriggersByWorkspaceHandleError(resp *azcore.Resp
 }
 
 // StartTrigger - Starts a trigger.
-func (client *TriggerClient) BeginStartTrigger(ctx context.Context, triggerName string) (*HTTPPollerResponse, error) {
-	return nil, errors.New("NYI")
-}
-
-func (client *TriggerClient) ResumeStartTrigger(token string) (HTTPPoller, error) {
-	return nil, nil
+func (client *TriggerClient) StartTrigger(ctx context.Context, triggerName string) (*HTTPPollerResponse, error) {
+	req, err := client.StartTriggerCreateRequest(ctx, triggerName)
+	if err != nil {
+		return nil, err
+	}
+	// send the first request to initialize the poller
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.StartTriggerHandleError(resp)
+	}
+	return resp, nil
 }
 
 // StartTriggerCreateRequest creates the StartTrigger request.
@@ -314,11 +333,6 @@ func (client *TriggerClient) StartTriggerCreateRequest(ctx context.Context, trig
 	return req, nil
 }
 
-// StartTriggerHandleResponse handles the StartTrigger response.
-func (client *TriggerClient) StartTriggerHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
-}
-
 // StartTriggerHandleError handles the StartTrigger error response.
 func (client *TriggerClient) StartTriggerHandleError(resp *azcore.Response) error {
 	var err CloudError
@@ -329,12 +343,20 @@ func (client *TriggerClient) StartTriggerHandleError(resp *azcore.Response) erro
 }
 
 // StopTrigger - Stops a trigger.
-func (client *TriggerClient) BeginStopTrigger(ctx context.Context, triggerName string) (*HTTPPollerResponse, error) {
-	return nil, errors.New("NYI")
-}
-
-func (client *TriggerClient) ResumeStopTrigger(token string) (HTTPPoller, error) {
-	return nil, nil
+func (client *TriggerClient) StopTrigger(ctx context.Context, triggerName string) (*HTTPPollerResponse, error) {
+	req, err := client.StopTriggerCreateRequest(ctx, triggerName)
+	if err != nil {
+		return nil, err
+	}
+	// send the first request to initialize the poller
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.StopTriggerHandleError(resp)
+	}
+	return resp, nil
 }
 
 // StopTriggerCreateRequest creates the StopTrigger request.
@@ -352,11 +374,6 @@ func (client *TriggerClient) StopTriggerCreateRequest(ctx context.Context, trigg
 	return req, nil
 }
 
-// StopTriggerHandleResponse handles the StopTrigger response.
-func (client *TriggerClient) StopTriggerHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
-}
-
 // StopTriggerHandleError handles the StopTrigger error response.
 func (client *TriggerClient) StopTriggerHandleError(resp *azcore.Response) error {
 	var err CloudError
@@ -367,12 +384,20 @@ func (client *TriggerClient) StopTriggerHandleError(resp *azcore.Response) error
 }
 
 // SubscribeTriggerToEvents - Subscribe event trigger to events.
-func (client *TriggerClient) BeginSubscribeTriggerToEvents(ctx context.Context, triggerName string) (*TriggerSubscriptionOperationStatusPollerResponse, error) {
-	return nil, errors.New("NYI")
-}
-
-func (client *TriggerClient) ResumeSubscribeTriggerToEvents(token string) (TriggerSubscriptionOperationStatusPoller, error) {
-	return nil, nil
+func (client *TriggerClient) SubscribeTriggerToEvents(ctx context.Context, triggerName string) (*TriggerSubscriptionOperationStatusPollerResponse, error) {
+	req, err := client.SubscribeTriggerToEventsCreateRequest(ctx, triggerName)
+	if err != nil {
+		return nil, err
+	}
+	// send the first request to initialize the poller
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.SubscribeTriggerToEventsHandleError(resp)
+	}
+	return resp, nil
 }
 
 // SubscribeTriggerToEventsCreateRequest creates the SubscribeTriggerToEvents request.
@@ -391,8 +416,9 @@ func (client *TriggerClient) SubscribeTriggerToEventsCreateRequest(ctx context.C
 }
 
 // SubscribeTriggerToEventsHandleResponse handles the SubscribeTriggerToEvents response.
-func (client *TriggerClient) SubscribeTriggerToEventsHandleResponse(resp *azcore.Response) (*TriggerSubscriptionOperationStatusPollerResponse, error) {
-	return &TriggerSubscriptionOperationStatusPollerResponse{RawResponse: resp.Response}, nil
+func (client *TriggerClient) SubscribeTriggerToEventsHandleResponse(resp *azcore.Response) (*TriggerSubscriptionOperationStatusResponse, error) {
+	result := TriggerSubscriptionOperationStatusResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.TriggerSubscriptionOperationStatus)
 }
 
 // SubscribeTriggerToEventsHandleError handles the SubscribeTriggerToEvents error response.
@@ -405,12 +431,20 @@ func (client *TriggerClient) SubscribeTriggerToEventsHandleError(resp *azcore.Re
 }
 
 // UnsubscribeTriggerFromEvents - Unsubscribe event trigger from events.
-func (client *TriggerClient) BeginUnsubscribeTriggerFromEvents(ctx context.Context, triggerName string) (*TriggerSubscriptionOperationStatusPollerResponse, error) {
-	return nil, errors.New("NYI")
-}
-
-func (client *TriggerClient) ResumeUnsubscribeTriggerFromEvents(token string) (TriggerSubscriptionOperationStatusPoller, error) {
-	return nil, nil
+func (client *TriggerClient) UnsubscribeTriggerFromEvents(ctx context.Context, triggerName string) (*TriggerSubscriptionOperationStatusPollerResponse, error) {
+	req, err := client.UnsubscribeTriggerFromEventsCreateRequest(ctx, triggerName)
+	if err != nil {
+		return nil, err
+	}
+	// send the first request to initialize the poller
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.UnsubscribeTriggerFromEventsHandleError(resp)
+	}
+	return resp, nil
 }
 
 // UnsubscribeTriggerFromEventsCreateRequest creates the UnsubscribeTriggerFromEvents request.
@@ -429,8 +463,9 @@ func (client *TriggerClient) UnsubscribeTriggerFromEventsCreateRequest(ctx conte
 }
 
 // UnsubscribeTriggerFromEventsHandleResponse handles the UnsubscribeTriggerFromEvents response.
-func (client *TriggerClient) UnsubscribeTriggerFromEventsHandleResponse(resp *azcore.Response) (*TriggerSubscriptionOperationStatusPollerResponse, error) {
-	return &TriggerSubscriptionOperationStatusPollerResponse{RawResponse: resp.Response}, nil
+func (client *TriggerClient) UnsubscribeTriggerFromEventsHandleResponse(resp *azcore.Response) (*TriggerSubscriptionOperationStatusResponse, error) {
+	result := TriggerSubscriptionOperationStatusResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.TriggerSubscriptionOperationStatus)
 }
 
 // UnsubscribeTriggerFromEventsHandleError handles the UnsubscribeTriggerFromEvents error response.

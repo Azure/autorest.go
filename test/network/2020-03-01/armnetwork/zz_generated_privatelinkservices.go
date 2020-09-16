@@ -140,7 +140,7 @@ func (client *PrivateLinkServicesClient) CheckPrivateLinkServiceVisibilityCreate
 }
 
 // CheckPrivateLinkServiceVisibilityHandleResponse handles the CheckPrivateLinkServiceVisibility response.
-func (client *PrivateLinkServicesClient) CheckPrivateLinkServiceVisibilityHandleResponse(resp *azcore.Response) (*PrivateLinkServiceVisibilityPollerResponse, error) {
+func (client *PrivateLinkServicesClient) CheckPrivateLinkServiceVisibilityHandleResponse(resp *azcore.Response) (*PrivateLinkServiceVisibilityResponse, error) {
 	result := PrivateLinkServiceVisibilityResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.PrivateLinkServiceVisibility)
 }
@@ -223,7 +223,7 @@ func (client *PrivateLinkServicesClient) CheckPrivateLinkServiceVisibilityByReso
 }
 
 // CheckPrivateLinkServiceVisibilityByResourceGroupHandleResponse handles the CheckPrivateLinkServiceVisibilityByResourceGroup response.
-func (client *PrivateLinkServicesClient) CheckPrivateLinkServiceVisibilityByResourceGroupHandleResponse(resp *azcore.Response) (*PrivateLinkServiceVisibilityPollerResponse, error) {
+func (client *PrivateLinkServicesClient) CheckPrivateLinkServiceVisibilityByResourceGroupHandleResponse(resp *azcore.Response) (*PrivateLinkServiceVisibilityResponse, error) {
 	result := PrivateLinkServiceVisibilityResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.PrivateLinkServiceVisibility)
 }
@@ -306,7 +306,7 @@ func (client *PrivateLinkServicesClient) CreateOrUpdateCreateRequest(ctx context
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *PrivateLinkServicesClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*PrivateLinkServicePollerResponse, error) {
+func (client *PrivateLinkServicesClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*PrivateLinkServiceResponse, error) {
 	result := PrivateLinkServiceResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.PrivateLinkService)
 }

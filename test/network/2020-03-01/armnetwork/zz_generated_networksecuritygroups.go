@@ -121,7 +121,7 @@ func (client *NetworkSecurityGroupsClient) CreateOrUpdateCreateRequest(ctx conte
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *NetworkSecurityGroupsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*NetworkSecurityGroupPollerResponse, error) {
+func (client *NetworkSecurityGroupsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*NetworkSecurityGroupResponse, error) {
 	result := NetworkSecurityGroupResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.NetworkSecurityGroup)
 }

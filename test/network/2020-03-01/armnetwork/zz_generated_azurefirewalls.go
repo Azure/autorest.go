@@ -123,7 +123,7 @@ func (client *AzureFirewallsClient) CreateOrUpdateCreateRequest(ctx context.Cont
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *AzureFirewallsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*AzureFirewallPollerResponse, error) {
+func (client *AzureFirewallsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*AzureFirewallResponse, error) {
 	result := AzureFirewallResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.AzureFirewall)
 }
@@ -426,7 +426,7 @@ func (client *AzureFirewallsClient) UpdateTagsCreateRequest(ctx context.Context,
 }
 
 // UpdateTagsHandleResponse handles the UpdateTags response.
-func (client *AzureFirewallsClient) UpdateTagsHandleResponse(resp *azcore.Response) (*AzureFirewallPollerResponse, error) {
+func (client *AzureFirewallsClient) UpdateTagsHandleResponse(resp *azcore.Response) (*AzureFirewallResponse, error) {
 	result := AzureFirewallResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.AzureFirewall)
 }

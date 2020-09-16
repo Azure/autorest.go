@@ -119,7 +119,7 @@ func (client *LocalNetworkGatewaysClient) CreateOrUpdateCreateRequest(ctx contex
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *LocalNetworkGatewaysClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*LocalNetworkGatewayPollerResponse, error) {
+func (client *LocalNetworkGatewaysClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*LocalNetworkGatewayResponse, error) {
 	result := LocalNetworkGatewayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.LocalNetworkGateway)
 }

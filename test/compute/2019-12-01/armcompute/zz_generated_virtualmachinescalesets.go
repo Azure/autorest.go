@@ -157,7 +157,7 @@ func (client *VirtualMachineScaleSetsClient) ConvertToSinglePlacementGroupHandle
 }
 
 // CreateOrUpdate - Create or update a VM scale set.
-func (client *VirtualMachineScaleSetsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters VirtualMachineScaleSet) (*VirtualMachineScaleSetPollerResponse, error) {
+func (client *VirtualMachineScaleSetsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters VirtualMachineScaleSet) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, vmScaleSetName, parameters)
 	if err != nil {
 		return nil, err
@@ -170,9 +170,16 @@ func (client *VirtualMachineScaleSetsClient) BeginCreateOrUpdate(ctx context.Con
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.CreateOrUpdateHandleError(resp)
 	}
-	result, err := client.CreateOrUpdateHandleResponse(resp)
+	return resp, nil
+}
+
+func (client *VirtualMachineScaleSetsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters VirtualMachineScaleSet) (*VirtualMachineScaleSetPollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, vmScaleSetName, parameters)
 	if err != nil {
 		return nil, err
+	}
+	result := &VirtualMachineScaleSetPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("VirtualMachineScaleSetsClient.CreateOrUpdate", "", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
@@ -218,8 +225,9 @@ func (client *VirtualMachineScaleSetsClient) CreateOrUpdateCreateRequest(ctx con
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *VirtualMachineScaleSetsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*VirtualMachineScaleSetPollerResponse, error) {
-	return &VirtualMachineScaleSetPollerResponse{RawResponse: resp.Response}, nil
+func (client *VirtualMachineScaleSetsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*VirtualMachineScaleSetResponse, error) {
+	result := VirtualMachineScaleSetResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.VirtualMachineScaleSet)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -235,7 +243,7 @@ func (client *VirtualMachineScaleSetsClient) CreateOrUpdateHandleError(resp *azc
 }
 
 // Deallocate - Deallocates specific virtual machines in a VM scale set. Shuts down the virtual machines and releases the compute resources. You are not billed for the compute resources that this virtual machine scale set deallocates.
-func (client *VirtualMachineScaleSetsClient) BeginDeallocate(ctx context.Context, resourceGroupName string, vmScaleSetName string, virtualMachineScaleSetsDeallocateOptions *VirtualMachineScaleSetsDeallocateOptions) (*HTTPPollerResponse, error) {
+func (client *VirtualMachineScaleSetsClient) Deallocate(ctx context.Context, resourceGroupName string, vmScaleSetName string, virtualMachineScaleSetsDeallocateOptions *VirtualMachineScaleSetsDeallocateOptions) (*azcore.Response, error) {
 	req, err := client.DeallocateCreateRequest(ctx, resourceGroupName, vmScaleSetName, virtualMachineScaleSetsDeallocateOptions)
 	if err != nil {
 		return nil, err
@@ -248,9 +256,16 @@ func (client *VirtualMachineScaleSetsClient) BeginDeallocate(ctx context.Context
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.DeallocateHandleError(resp)
 	}
-	result, err := client.DeallocateHandleResponse(resp)
+	return resp, nil
+}
+
+func (client *VirtualMachineScaleSetsClient) BeginDeallocate(ctx context.Context, resourceGroupName string, vmScaleSetName string, virtualMachineScaleSetsDeallocateOptions *VirtualMachineScaleSetsDeallocateOptions) (*HTTPPollerResponse, error) {
+	resp, err := client.Deallocate(ctx, resourceGroupName, vmScaleSetName, virtualMachineScaleSetsDeallocateOptions)
 	if err != nil {
 		return nil, err
+	}
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("VirtualMachineScaleSetsClient.Deallocate", "", resp, client.DeallocateHandleError)
 	if err != nil {
@@ -297,11 +312,6 @@ func (client *VirtualMachineScaleSetsClient) DeallocateCreateRequest(ctx context
 	return req, nil
 }
 
-// DeallocateHandleResponse handles the Deallocate response.
-func (client *VirtualMachineScaleSetsClient) DeallocateHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
-}
-
 // DeallocateHandleError handles the Deallocate error response.
 func (client *VirtualMachineScaleSetsClient) DeallocateHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
@@ -315,7 +325,7 @@ func (client *VirtualMachineScaleSetsClient) DeallocateHandleError(resp *azcore.
 }
 
 // Delete - Deletes a VM scale set.
-func (client *VirtualMachineScaleSetsClient) BeginDelete(ctx context.Context, resourceGroupName string, vmScaleSetName string) (*HTTPPollerResponse, error) {
+func (client *VirtualMachineScaleSetsClient) Delete(ctx context.Context, resourceGroupName string, vmScaleSetName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, vmScaleSetName)
 	if err != nil {
 		return nil, err
@@ -328,9 +338,16 @@ func (client *VirtualMachineScaleSetsClient) BeginDelete(ctx context.Context, re
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
 	}
-	result, err := client.DeleteHandleResponse(resp)
+	return resp, nil
+}
+
+func (client *VirtualMachineScaleSetsClient) BeginDelete(ctx context.Context, resourceGroupName string, vmScaleSetName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, vmScaleSetName)
 	if err != nil {
 		return nil, err
+	}
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("VirtualMachineScaleSetsClient.Delete", "", resp, client.DeleteHandleError)
 	if err != nil {
@@ -374,11 +391,6 @@ func (client *VirtualMachineScaleSetsClient) DeleteCreateRequest(ctx context.Con
 	return req, nil
 }
 
-// DeleteHandleResponse handles the Delete response.
-func (client *VirtualMachineScaleSetsClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
-}
-
 // DeleteHandleError handles the Delete error response.
 func (client *VirtualMachineScaleSetsClient) DeleteHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
@@ -392,7 +404,7 @@ func (client *VirtualMachineScaleSetsClient) DeleteHandleError(resp *azcore.Resp
 }
 
 // DeleteInstances - Deletes virtual machines in a VM scale set.
-func (client *VirtualMachineScaleSetsClient) BeginDeleteInstances(ctx context.Context, resourceGroupName string, vmScaleSetName string, vmInstanceIDs VirtualMachineScaleSetVMInstanceRequiredIDs) (*HTTPPollerResponse, error) {
+func (client *VirtualMachineScaleSetsClient) DeleteInstances(ctx context.Context, resourceGroupName string, vmScaleSetName string, vmInstanceIDs VirtualMachineScaleSetVMInstanceRequiredIDs) (*azcore.Response, error) {
 	req, err := client.DeleteInstancesCreateRequest(ctx, resourceGroupName, vmScaleSetName, vmInstanceIDs)
 	if err != nil {
 		return nil, err
@@ -405,9 +417,16 @@ func (client *VirtualMachineScaleSetsClient) BeginDeleteInstances(ctx context.Co
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.DeleteInstancesHandleError(resp)
 	}
-	result, err := client.DeleteInstancesHandleResponse(resp)
+	return resp, nil
+}
+
+func (client *VirtualMachineScaleSetsClient) BeginDeleteInstances(ctx context.Context, resourceGroupName string, vmScaleSetName string, vmInstanceIDs VirtualMachineScaleSetVMInstanceRequiredIDs) (*HTTPPollerResponse, error) {
+	resp, err := client.DeleteInstances(ctx, resourceGroupName, vmScaleSetName, vmInstanceIDs)
 	if err != nil {
 		return nil, err
+	}
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("VirtualMachineScaleSetsClient.DeleteInstances", "", resp, client.DeleteInstancesHandleError)
 	if err != nil {
@@ -449,11 +468,6 @@ func (client *VirtualMachineScaleSetsClient) DeleteInstancesCreateRequest(ctx co
 	query.Set("api-version", "2019-12-01")
 	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(vmInstanceIDs)
-}
-
-// DeleteInstancesHandleResponse handles the DeleteInstances response.
-func (client *VirtualMachineScaleSetsClient) DeleteInstancesHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteInstancesHandleError handles the DeleteInstances error response.
@@ -832,7 +846,7 @@ func (client *VirtualMachineScaleSetsClient) ListSKUsHandleError(resp *azcore.Re
 }
 
 // PerformMaintenance - Perform maintenance on one or more virtual machines in a VM scale set. Operation on instances which are not eligible for perform maintenance will be failed. Please refer to best practices for more details: https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-maintenance-notifications
-func (client *VirtualMachineScaleSetsClient) BeginPerformMaintenance(ctx context.Context, resourceGroupName string, vmScaleSetName string, virtualMachineScaleSetsPerformMaintenanceOptions *VirtualMachineScaleSetsPerformMaintenanceOptions) (*HTTPPollerResponse, error) {
+func (client *VirtualMachineScaleSetsClient) PerformMaintenance(ctx context.Context, resourceGroupName string, vmScaleSetName string, virtualMachineScaleSetsPerformMaintenanceOptions *VirtualMachineScaleSetsPerformMaintenanceOptions) (*azcore.Response, error) {
 	req, err := client.PerformMaintenanceCreateRequest(ctx, resourceGroupName, vmScaleSetName, virtualMachineScaleSetsPerformMaintenanceOptions)
 	if err != nil {
 		return nil, err
@@ -845,9 +859,16 @@ func (client *VirtualMachineScaleSetsClient) BeginPerformMaintenance(ctx context
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.PerformMaintenanceHandleError(resp)
 	}
-	result, err := client.PerformMaintenanceHandleResponse(resp)
+	return resp, nil
+}
+
+func (client *VirtualMachineScaleSetsClient) BeginPerformMaintenance(ctx context.Context, resourceGroupName string, vmScaleSetName string, virtualMachineScaleSetsPerformMaintenanceOptions *VirtualMachineScaleSetsPerformMaintenanceOptions) (*HTTPPollerResponse, error) {
+	resp, err := client.PerformMaintenance(ctx, resourceGroupName, vmScaleSetName, virtualMachineScaleSetsPerformMaintenanceOptions)
 	if err != nil {
 		return nil, err
+	}
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("VirtualMachineScaleSetsClient.PerformMaintenance", "", resp, client.PerformMaintenanceHandleError)
 	if err != nil {
@@ -894,11 +915,6 @@ func (client *VirtualMachineScaleSetsClient) PerformMaintenanceCreateRequest(ctx
 	return req, nil
 }
 
-// PerformMaintenanceHandleResponse handles the PerformMaintenance response.
-func (client *VirtualMachineScaleSetsClient) PerformMaintenanceHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
-}
-
 // PerformMaintenanceHandleError handles the PerformMaintenance error response.
 func (client *VirtualMachineScaleSetsClient) PerformMaintenanceHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
@@ -912,7 +928,7 @@ func (client *VirtualMachineScaleSetsClient) PerformMaintenanceHandleError(resp 
 }
 
 // PowerOff - Power off (stop) one or more virtual machines in a VM scale set. Note that resources are still attached and you are getting charged for the resources. Instead, use deallocate to release resources and avoid charges.
-func (client *VirtualMachineScaleSetsClient) BeginPowerOff(ctx context.Context, resourceGroupName string, vmScaleSetName string, virtualMachineScaleSetsPowerOffOptions *VirtualMachineScaleSetsPowerOffOptions) (*HTTPPollerResponse, error) {
+func (client *VirtualMachineScaleSetsClient) PowerOff(ctx context.Context, resourceGroupName string, vmScaleSetName string, virtualMachineScaleSetsPowerOffOptions *VirtualMachineScaleSetsPowerOffOptions) (*azcore.Response, error) {
 	req, err := client.PowerOffCreateRequest(ctx, resourceGroupName, vmScaleSetName, virtualMachineScaleSetsPowerOffOptions)
 	if err != nil {
 		return nil, err
@@ -925,9 +941,16 @@ func (client *VirtualMachineScaleSetsClient) BeginPowerOff(ctx context.Context, 
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.PowerOffHandleError(resp)
 	}
-	result, err := client.PowerOffHandleResponse(resp)
+	return resp, nil
+}
+
+func (client *VirtualMachineScaleSetsClient) BeginPowerOff(ctx context.Context, resourceGroupName string, vmScaleSetName string, virtualMachineScaleSetsPowerOffOptions *VirtualMachineScaleSetsPowerOffOptions) (*HTTPPollerResponse, error) {
+	resp, err := client.PowerOff(ctx, resourceGroupName, vmScaleSetName, virtualMachineScaleSetsPowerOffOptions)
 	if err != nil {
 		return nil, err
+	}
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("VirtualMachineScaleSetsClient.PowerOff", "", resp, client.PowerOffHandleError)
 	if err != nil {
@@ -977,11 +1000,6 @@ func (client *VirtualMachineScaleSetsClient) PowerOffCreateRequest(ctx context.C
 	return req, nil
 }
 
-// PowerOffHandleResponse handles the PowerOff response.
-func (client *VirtualMachineScaleSetsClient) PowerOffHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
-}
-
 // PowerOffHandleError handles the PowerOff error response.
 func (client *VirtualMachineScaleSetsClient) PowerOffHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
@@ -995,7 +1013,7 @@ func (client *VirtualMachineScaleSetsClient) PowerOffHandleError(resp *azcore.Re
 }
 
 // Redeploy - Shuts down all the virtual machines in the virtual machine scale set, moves them to a new node, and powers them back on.
-func (client *VirtualMachineScaleSetsClient) BeginRedeploy(ctx context.Context, resourceGroupName string, vmScaleSetName string, virtualMachineScaleSetsRedeployOptions *VirtualMachineScaleSetsRedeployOptions) (*HTTPPollerResponse, error) {
+func (client *VirtualMachineScaleSetsClient) Redeploy(ctx context.Context, resourceGroupName string, vmScaleSetName string, virtualMachineScaleSetsRedeployOptions *VirtualMachineScaleSetsRedeployOptions) (*azcore.Response, error) {
 	req, err := client.RedeployCreateRequest(ctx, resourceGroupName, vmScaleSetName, virtualMachineScaleSetsRedeployOptions)
 	if err != nil {
 		return nil, err
@@ -1008,9 +1026,16 @@ func (client *VirtualMachineScaleSetsClient) BeginRedeploy(ctx context.Context, 
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.RedeployHandleError(resp)
 	}
-	result, err := client.RedeployHandleResponse(resp)
+	return resp, nil
+}
+
+func (client *VirtualMachineScaleSetsClient) BeginRedeploy(ctx context.Context, resourceGroupName string, vmScaleSetName string, virtualMachineScaleSetsRedeployOptions *VirtualMachineScaleSetsRedeployOptions) (*HTTPPollerResponse, error) {
+	resp, err := client.Redeploy(ctx, resourceGroupName, vmScaleSetName, virtualMachineScaleSetsRedeployOptions)
 	if err != nil {
 		return nil, err
+	}
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("VirtualMachineScaleSetsClient.Redeploy", "", resp, client.RedeployHandleError)
 	if err != nil {
@@ -1057,11 +1082,6 @@ func (client *VirtualMachineScaleSetsClient) RedeployCreateRequest(ctx context.C
 	return req, nil
 }
 
-// RedeployHandleResponse handles the Redeploy response.
-func (client *VirtualMachineScaleSetsClient) RedeployHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
-}
-
 // RedeployHandleError handles the Redeploy error response.
 func (client *VirtualMachineScaleSetsClient) RedeployHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
@@ -1075,7 +1095,7 @@ func (client *VirtualMachineScaleSetsClient) RedeployHandleError(resp *azcore.Re
 }
 
 // Reimage - Reimages (upgrade the operating system) one or more virtual machines in a VM scale set which don't have a ephemeral OS disk, for virtual machines who have a ephemeral OS disk the virtual machine is reset to initial state.
-func (client *VirtualMachineScaleSetsClient) BeginReimage(ctx context.Context, resourceGroupName string, vmScaleSetName string, virtualMachineScaleSetsReimageOptions *VirtualMachineScaleSetsReimageOptions) (*HTTPPollerResponse, error) {
+func (client *VirtualMachineScaleSetsClient) Reimage(ctx context.Context, resourceGroupName string, vmScaleSetName string, virtualMachineScaleSetsReimageOptions *VirtualMachineScaleSetsReimageOptions) (*azcore.Response, error) {
 	req, err := client.ReimageCreateRequest(ctx, resourceGroupName, vmScaleSetName, virtualMachineScaleSetsReimageOptions)
 	if err != nil {
 		return nil, err
@@ -1088,9 +1108,16 @@ func (client *VirtualMachineScaleSetsClient) BeginReimage(ctx context.Context, r
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.ReimageHandleError(resp)
 	}
-	result, err := client.ReimageHandleResponse(resp)
+	return resp, nil
+}
+
+func (client *VirtualMachineScaleSetsClient) BeginReimage(ctx context.Context, resourceGroupName string, vmScaleSetName string, virtualMachineScaleSetsReimageOptions *VirtualMachineScaleSetsReimageOptions) (*HTTPPollerResponse, error) {
+	resp, err := client.Reimage(ctx, resourceGroupName, vmScaleSetName, virtualMachineScaleSetsReimageOptions)
 	if err != nil {
 		return nil, err
+	}
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("VirtualMachineScaleSetsClient.Reimage", "", resp, client.ReimageHandleError)
 	if err != nil {
@@ -1137,11 +1164,6 @@ func (client *VirtualMachineScaleSetsClient) ReimageCreateRequest(ctx context.Co
 	return req, nil
 }
 
-// ReimageHandleResponse handles the Reimage response.
-func (client *VirtualMachineScaleSetsClient) ReimageHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
-}
-
 // ReimageHandleError handles the Reimage error response.
 func (client *VirtualMachineScaleSetsClient) ReimageHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
@@ -1155,7 +1177,7 @@ func (client *VirtualMachineScaleSetsClient) ReimageHandleError(resp *azcore.Res
 }
 
 // ReimageAll - Reimages all the disks ( including data disks ) in the virtual machines in a VM scale set. This operation is only supported for managed disks.
-func (client *VirtualMachineScaleSetsClient) BeginReimageAll(ctx context.Context, resourceGroupName string, vmScaleSetName string, virtualMachineScaleSetsReimageAllOptions *VirtualMachineScaleSetsReimageAllOptions) (*HTTPPollerResponse, error) {
+func (client *VirtualMachineScaleSetsClient) ReimageAll(ctx context.Context, resourceGroupName string, vmScaleSetName string, virtualMachineScaleSetsReimageAllOptions *VirtualMachineScaleSetsReimageAllOptions) (*azcore.Response, error) {
 	req, err := client.ReimageAllCreateRequest(ctx, resourceGroupName, vmScaleSetName, virtualMachineScaleSetsReimageAllOptions)
 	if err != nil {
 		return nil, err
@@ -1168,9 +1190,16 @@ func (client *VirtualMachineScaleSetsClient) BeginReimageAll(ctx context.Context
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.ReimageAllHandleError(resp)
 	}
-	result, err := client.ReimageAllHandleResponse(resp)
+	return resp, nil
+}
+
+func (client *VirtualMachineScaleSetsClient) BeginReimageAll(ctx context.Context, resourceGroupName string, vmScaleSetName string, virtualMachineScaleSetsReimageAllOptions *VirtualMachineScaleSetsReimageAllOptions) (*HTTPPollerResponse, error) {
+	resp, err := client.ReimageAll(ctx, resourceGroupName, vmScaleSetName, virtualMachineScaleSetsReimageAllOptions)
 	if err != nil {
 		return nil, err
+	}
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("VirtualMachineScaleSetsClient.ReimageAll", "", resp, client.ReimageAllHandleError)
 	if err != nil {
@@ -1217,11 +1246,6 @@ func (client *VirtualMachineScaleSetsClient) ReimageAllCreateRequest(ctx context
 	return req, nil
 }
 
-// ReimageAllHandleResponse handles the ReimageAll response.
-func (client *VirtualMachineScaleSetsClient) ReimageAllHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
-}
-
 // ReimageAllHandleError handles the ReimageAll error response.
 func (client *VirtualMachineScaleSetsClient) ReimageAllHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
@@ -1235,7 +1259,7 @@ func (client *VirtualMachineScaleSetsClient) ReimageAllHandleError(resp *azcore.
 }
 
 // Restart - Restarts one or more virtual machines in a VM scale set.
-func (client *VirtualMachineScaleSetsClient) BeginRestart(ctx context.Context, resourceGroupName string, vmScaleSetName string, virtualMachineScaleSetsRestartOptions *VirtualMachineScaleSetsRestartOptions) (*HTTPPollerResponse, error) {
+func (client *VirtualMachineScaleSetsClient) Restart(ctx context.Context, resourceGroupName string, vmScaleSetName string, virtualMachineScaleSetsRestartOptions *VirtualMachineScaleSetsRestartOptions) (*azcore.Response, error) {
 	req, err := client.RestartCreateRequest(ctx, resourceGroupName, vmScaleSetName, virtualMachineScaleSetsRestartOptions)
 	if err != nil {
 		return nil, err
@@ -1248,9 +1272,16 @@ func (client *VirtualMachineScaleSetsClient) BeginRestart(ctx context.Context, r
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.RestartHandleError(resp)
 	}
-	result, err := client.RestartHandleResponse(resp)
+	return resp, nil
+}
+
+func (client *VirtualMachineScaleSetsClient) BeginRestart(ctx context.Context, resourceGroupName string, vmScaleSetName string, virtualMachineScaleSetsRestartOptions *VirtualMachineScaleSetsRestartOptions) (*HTTPPollerResponse, error) {
+	resp, err := client.Restart(ctx, resourceGroupName, vmScaleSetName, virtualMachineScaleSetsRestartOptions)
 	if err != nil {
 		return nil, err
+	}
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("VirtualMachineScaleSetsClient.Restart", "", resp, client.RestartHandleError)
 	if err != nil {
@@ -1297,11 +1328,6 @@ func (client *VirtualMachineScaleSetsClient) RestartCreateRequest(ctx context.Co
 	return req, nil
 }
 
-// RestartHandleResponse handles the Restart response.
-func (client *VirtualMachineScaleSetsClient) RestartHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
-}
-
 // RestartHandleError handles the Restart error response.
 func (client *VirtualMachineScaleSetsClient) RestartHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
@@ -1315,7 +1341,7 @@ func (client *VirtualMachineScaleSetsClient) RestartHandleError(resp *azcore.Res
 }
 
 // SetOrchestrationServiceState - Changes ServiceState property for a given service
-func (client *VirtualMachineScaleSetsClient) BeginSetOrchestrationServiceState(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters OrchestrationServiceStateInput) (*HTTPPollerResponse, error) {
+func (client *VirtualMachineScaleSetsClient) SetOrchestrationServiceState(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters OrchestrationServiceStateInput) (*azcore.Response, error) {
 	req, err := client.SetOrchestrationServiceStateCreateRequest(ctx, resourceGroupName, vmScaleSetName, parameters)
 	if err != nil {
 		return nil, err
@@ -1328,9 +1354,16 @@ func (client *VirtualMachineScaleSetsClient) BeginSetOrchestrationServiceState(c
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.SetOrchestrationServiceStateHandleError(resp)
 	}
-	result, err := client.SetOrchestrationServiceStateHandleResponse(resp)
+	return resp, nil
+}
+
+func (client *VirtualMachineScaleSetsClient) BeginSetOrchestrationServiceState(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters OrchestrationServiceStateInput) (*HTTPPollerResponse, error) {
+	resp, err := client.SetOrchestrationServiceState(ctx, resourceGroupName, vmScaleSetName, parameters)
 	if err != nil {
 		return nil, err
+	}
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("VirtualMachineScaleSetsClient.SetOrchestrationServiceState", "", resp, client.SetOrchestrationServiceStateHandleError)
 	if err != nil {
@@ -1374,11 +1407,6 @@ func (client *VirtualMachineScaleSetsClient) SetOrchestrationServiceStateCreateR
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// SetOrchestrationServiceStateHandleResponse handles the SetOrchestrationServiceState response.
-func (client *VirtualMachineScaleSetsClient) SetOrchestrationServiceStateHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
-}
-
 // SetOrchestrationServiceStateHandleError handles the SetOrchestrationServiceState error response.
 func (client *VirtualMachineScaleSetsClient) SetOrchestrationServiceStateHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
@@ -1392,7 +1420,7 @@ func (client *VirtualMachineScaleSetsClient) SetOrchestrationServiceStateHandleE
 }
 
 // Start - Starts one or more virtual machines in a VM scale set.
-func (client *VirtualMachineScaleSetsClient) BeginStart(ctx context.Context, resourceGroupName string, vmScaleSetName string, virtualMachineScaleSetsStartOptions *VirtualMachineScaleSetsStartOptions) (*HTTPPollerResponse, error) {
+func (client *VirtualMachineScaleSetsClient) Start(ctx context.Context, resourceGroupName string, vmScaleSetName string, virtualMachineScaleSetsStartOptions *VirtualMachineScaleSetsStartOptions) (*azcore.Response, error) {
 	req, err := client.StartCreateRequest(ctx, resourceGroupName, vmScaleSetName, virtualMachineScaleSetsStartOptions)
 	if err != nil {
 		return nil, err
@@ -1405,9 +1433,16 @@ func (client *VirtualMachineScaleSetsClient) BeginStart(ctx context.Context, res
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.StartHandleError(resp)
 	}
-	result, err := client.StartHandleResponse(resp)
+	return resp, nil
+}
+
+func (client *VirtualMachineScaleSetsClient) BeginStart(ctx context.Context, resourceGroupName string, vmScaleSetName string, virtualMachineScaleSetsStartOptions *VirtualMachineScaleSetsStartOptions) (*HTTPPollerResponse, error) {
+	resp, err := client.Start(ctx, resourceGroupName, vmScaleSetName, virtualMachineScaleSetsStartOptions)
 	if err != nil {
 		return nil, err
+	}
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("VirtualMachineScaleSetsClient.Start", "", resp, client.StartHandleError)
 	if err != nil {
@@ -1454,11 +1489,6 @@ func (client *VirtualMachineScaleSetsClient) StartCreateRequest(ctx context.Cont
 	return req, nil
 }
 
-// StartHandleResponse handles the Start response.
-func (client *VirtualMachineScaleSetsClient) StartHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
-}
-
 // StartHandleError handles the Start error response.
 func (client *VirtualMachineScaleSetsClient) StartHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
@@ -1472,7 +1502,7 @@ func (client *VirtualMachineScaleSetsClient) StartHandleError(resp *azcore.Respo
 }
 
 // Update - Update a VM scale set.
-func (client *VirtualMachineScaleSetsClient) BeginUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters VirtualMachineScaleSetUpdate) (*VirtualMachineScaleSetPollerResponse, error) {
+func (client *VirtualMachineScaleSetsClient) Update(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters VirtualMachineScaleSetUpdate) (*azcore.Response, error) {
 	req, err := client.UpdateCreateRequest(ctx, resourceGroupName, vmScaleSetName, parameters)
 	if err != nil {
 		return nil, err
@@ -1485,9 +1515,16 @@ func (client *VirtualMachineScaleSetsClient) BeginUpdate(ctx context.Context, re
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.UpdateHandleError(resp)
 	}
-	result, err := client.UpdateHandleResponse(resp)
+	return resp, nil
+}
+
+func (client *VirtualMachineScaleSetsClient) BeginUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters VirtualMachineScaleSetUpdate) (*VirtualMachineScaleSetPollerResponse, error) {
+	resp, err := client.Update(ctx, resourceGroupName, vmScaleSetName, parameters)
 	if err != nil {
 		return nil, err
+	}
+	result := &VirtualMachineScaleSetPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("VirtualMachineScaleSetsClient.Update", "", resp, client.UpdateHandleError)
 	if err != nil {
@@ -1533,8 +1570,9 @@ func (client *VirtualMachineScaleSetsClient) UpdateCreateRequest(ctx context.Con
 }
 
 // UpdateHandleResponse handles the Update response.
-func (client *VirtualMachineScaleSetsClient) UpdateHandleResponse(resp *azcore.Response) (*VirtualMachineScaleSetPollerResponse, error) {
-	return &VirtualMachineScaleSetPollerResponse{RawResponse: resp.Response}, nil
+func (client *VirtualMachineScaleSetsClient) UpdateHandleResponse(resp *azcore.Response) (*VirtualMachineScaleSetResponse, error) {
+	result := VirtualMachineScaleSetResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.VirtualMachineScaleSet)
 }
 
 // UpdateHandleError handles the Update error response.
@@ -1550,7 +1588,7 @@ func (client *VirtualMachineScaleSetsClient) UpdateHandleError(resp *azcore.Resp
 }
 
 // UpdateInstances - Upgrades one or more virtual machines to the latest SKU set in the VM scale set model.
-func (client *VirtualMachineScaleSetsClient) BeginUpdateInstances(ctx context.Context, resourceGroupName string, vmScaleSetName string, vmInstanceIDs VirtualMachineScaleSetVMInstanceRequiredIDs) (*HTTPPollerResponse, error) {
+func (client *VirtualMachineScaleSetsClient) UpdateInstances(ctx context.Context, resourceGroupName string, vmScaleSetName string, vmInstanceIDs VirtualMachineScaleSetVMInstanceRequiredIDs) (*azcore.Response, error) {
 	req, err := client.UpdateInstancesCreateRequest(ctx, resourceGroupName, vmScaleSetName, vmInstanceIDs)
 	if err != nil {
 		return nil, err
@@ -1563,9 +1601,16 @@ func (client *VirtualMachineScaleSetsClient) BeginUpdateInstances(ctx context.Co
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.UpdateInstancesHandleError(resp)
 	}
-	result, err := client.UpdateInstancesHandleResponse(resp)
+	return resp, nil
+}
+
+func (client *VirtualMachineScaleSetsClient) BeginUpdateInstances(ctx context.Context, resourceGroupName string, vmScaleSetName string, vmInstanceIDs VirtualMachineScaleSetVMInstanceRequiredIDs) (*HTTPPollerResponse, error) {
+	resp, err := client.UpdateInstances(ctx, resourceGroupName, vmScaleSetName, vmInstanceIDs)
 	if err != nil {
 		return nil, err
+	}
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("VirtualMachineScaleSetsClient.UpdateInstances", "", resp, client.UpdateInstancesHandleError)
 	if err != nil {
@@ -1607,11 +1652,6 @@ func (client *VirtualMachineScaleSetsClient) UpdateInstancesCreateRequest(ctx co
 	query.Set("api-version", "2019-12-01")
 	req.URL.RawQuery = query.Encode()
 	return req, req.MarshalAsJSON(vmInstanceIDs)
-}
-
-// UpdateInstancesHandleResponse handles the UpdateInstances response.
-func (client *VirtualMachineScaleSetsClient) UpdateInstancesHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // UpdateInstancesHandleError handles the UpdateInstances error response.

@@ -118,7 +118,7 @@ func (client *ExpressRouteCircuitPeeringsClient) CreateOrUpdateCreateRequest(ctx
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *ExpressRouteCircuitPeeringsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitPeeringPollerResponse, error) {
+func (client *ExpressRouteCircuitPeeringsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitPeeringResponse, error) {
 	result := ExpressRouteCircuitPeeringResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ExpressRouteCircuitPeering)
 }

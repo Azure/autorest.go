@@ -7,7 +7,6 @@ package azartifacts
 
 import (
 	"context"
-	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -104,12 +103,20 @@ func (client *SparkJobDefinitionClient) CreateOrUpdateSparkJobDefinitionHandleEr
 }
 
 // DebugSparkJobDefinition - Debug the spark job definition.
-func (client *SparkJobDefinitionClient) BeginDebugSparkJobDefinition(ctx context.Context, sparkJobDefinitionAzureResource SparkJobDefinitionResource) (*SparkBatchJobPollerResponse, error) {
-	return nil, errors.New("NYI")
-}
-
-func (client *SparkJobDefinitionClient) ResumeDebugSparkJobDefinition(token string) (SparkBatchJobPoller, error) {
-	return nil, nil
+func (client *SparkJobDefinitionClient) DebugSparkJobDefinition(ctx context.Context, sparkJobDefinitionAzureResource SparkJobDefinitionResource) (*SparkBatchJobPollerResponse, error) {
+	req, err := client.DebugSparkJobDefinitionCreateRequest(ctx, sparkJobDefinitionAzureResource)
+	if err != nil {
+		return nil, err
+	}
+	// send the first request to initialize the poller
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.DebugSparkJobDefinitionHandleError(resp)
+	}
+	return resp, nil
 }
 
 // DebugSparkJobDefinitionCreateRequest creates the DebugSparkJobDefinition request.
@@ -127,8 +134,9 @@ func (client *SparkJobDefinitionClient) DebugSparkJobDefinitionCreateRequest(ctx
 }
 
 // DebugSparkJobDefinitionHandleResponse handles the DebugSparkJobDefinition response.
-func (client *SparkJobDefinitionClient) DebugSparkJobDefinitionHandleResponse(resp *azcore.Response) (*SparkBatchJobPollerResponse, error) {
-	return &SparkBatchJobPollerResponse{RawResponse: resp.Response}, nil
+func (client *SparkJobDefinitionClient) DebugSparkJobDefinitionHandleResponse(resp *azcore.Response) (*SparkBatchJobResponse, error) {
+	result := SparkBatchJobResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.SparkBatchJob)
 }
 
 // DebugSparkJobDefinitionHandleError handles the DebugSparkJobDefinition error response.
@@ -181,12 +189,20 @@ func (client *SparkJobDefinitionClient) DeleteSparkJobDefinitionHandleError(resp
 }
 
 // ExecuteSparkJobDefinition - Executes the spark job definition.
-func (client *SparkJobDefinitionClient) BeginExecuteSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string) (*SparkBatchJobPollerResponse, error) {
-	return nil, errors.New("NYI")
-}
-
-func (client *SparkJobDefinitionClient) ResumeExecuteSparkJobDefinition(token string) (SparkBatchJobPoller, error) {
-	return nil, nil
+func (client *SparkJobDefinitionClient) ExecuteSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string) (*SparkBatchJobPollerResponse, error) {
+	req, err := client.ExecuteSparkJobDefinitionCreateRequest(ctx, sparkJobDefinitionName)
+	if err != nil {
+		return nil, err
+	}
+	// send the first request to initialize the poller
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.ExecuteSparkJobDefinitionHandleError(resp)
+	}
+	return resp, nil
 }
 
 // ExecuteSparkJobDefinitionCreateRequest creates the ExecuteSparkJobDefinition request.
@@ -205,8 +221,9 @@ func (client *SparkJobDefinitionClient) ExecuteSparkJobDefinitionCreateRequest(c
 }
 
 // ExecuteSparkJobDefinitionHandleResponse handles the ExecuteSparkJobDefinition response.
-func (client *SparkJobDefinitionClient) ExecuteSparkJobDefinitionHandleResponse(resp *azcore.Response) (*SparkBatchJobPollerResponse, error) {
-	return &SparkBatchJobPollerResponse{RawResponse: resp.Response}, nil
+func (client *SparkJobDefinitionClient) ExecuteSparkJobDefinitionHandleResponse(resp *azcore.Response) (*SparkBatchJobResponse, error) {
+	result := SparkBatchJobResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.SparkBatchJob)
 }
 
 // ExecuteSparkJobDefinitionHandleError handles the ExecuteSparkJobDefinition error response.

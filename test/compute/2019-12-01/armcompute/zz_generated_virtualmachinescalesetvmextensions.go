@@ -53,7 +53,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) Do(req *azcore.Request) 
 }
 
 // CreateOrUpdate - The operation to create or update the VMSS VM extension.
-func (client *VirtualMachineScaleSetVMExtensionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, vmExtensionName string, extensionParameters VirtualMachineExtension) (*VirtualMachineExtensionPollerResponse, error) {
+func (client *VirtualMachineScaleSetVMExtensionsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, vmExtensionName string, extensionParameters VirtualMachineExtension) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceId, vmExtensionName, extensionParameters)
 	if err != nil {
 		return nil, err
@@ -66,9 +66,16 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) BeginCreateOrUpdate(ctx 
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.CreateOrUpdateHandleError(resp)
 	}
-	result, err := client.CreateOrUpdateHandleResponse(resp)
+	return resp, nil
+}
+
+func (client *VirtualMachineScaleSetVMExtensionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, vmExtensionName string, extensionParameters VirtualMachineExtension) (*VirtualMachineExtensionPollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, vmScaleSetName, instanceId, vmExtensionName, extensionParameters)
 	if err != nil {
 		return nil, err
+	}
+	result := &VirtualMachineExtensionPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("VirtualMachineScaleSetVMExtensionsClient.CreateOrUpdate", "", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
@@ -116,8 +123,9 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) CreateOrUpdateCreateRequ
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *VirtualMachineScaleSetVMExtensionsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*VirtualMachineExtensionPollerResponse, error) {
-	return &VirtualMachineExtensionPollerResponse{RawResponse: resp.Response}, nil
+func (client *VirtualMachineScaleSetVMExtensionsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*VirtualMachineExtensionResponse, error) {
+	result := VirtualMachineExtensionResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.VirtualMachineExtension)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -130,7 +138,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) CreateOrUpdateHandleErro
 }
 
 // Delete - The operation to delete the VMSS VM extension.
-func (client *VirtualMachineScaleSetVMExtensionsClient) BeginDelete(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, vmExtensionName string) (*HTTPPollerResponse, error) {
+func (client *VirtualMachineScaleSetVMExtensionsClient) Delete(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, vmExtensionName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceId, vmExtensionName)
 	if err != nil {
 		return nil, err
@@ -143,9 +151,16 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) BeginDelete(ctx context.
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
 	}
-	result, err := client.DeleteHandleResponse(resp)
+	return resp, nil
+}
+
+func (client *VirtualMachineScaleSetVMExtensionsClient) BeginDelete(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, vmExtensionName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, vmScaleSetName, instanceId, vmExtensionName)
 	if err != nil {
 		return nil, err
+	}
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("VirtualMachineScaleSetVMExtensionsClient.Delete", "", resp, client.DeleteHandleError)
 	if err != nil {
@@ -190,11 +205,6 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) DeleteCreateRequest(ctx 
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DeleteHandleResponse handles the Delete response.
-func (client *VirtualMachineScaleSetVMExtensionsClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteHandleError handles the Delete error response.
@@ -320,7 +330,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) ListHandleError(resp *az
 }
 
 // Update - The operation to update the VMSS VM extension.
-func (client *VirtualMachineScaleSetVMExtensionsClient) BeginUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, vmExtensionName string, extensionParameters VirtualMachineExtensionUpdate) (*VirtualMachineExtensionPollerResponse, error) {
+func (client *VirtualMachineScaleSetVMExtensionsClient) Update(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, vmExtensionName string, extensionParameters VirtualMachineExtensionUpdate) (*azcore.Response, error) {
 	req, err := client.UpdateCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceId, vmExtensionName, extensionParameters)
 	if err != nil {
 		return nil, err
@@ -333,9 +343,16 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) BeginUpdate(ctx context.
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.UpdateHandleError(resp)
 	}
-	result, err := client.UpdateHandleResponse(resp)
+	return resp, nil
+}
+
+func (client *VirtualMachineScaleSetVMExtensionsClient) BeginUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, vmExtensionName string, extensionParameters VirtualMachineExtensionUpdate) (*VirtualMachineExtensionPollerResponse, error) {
+	resp, err := client.Update(ctx, resourceGroupName, vmScaleSetName, instanceId, vmExtensionName, extensionParameters)
 	if err != nil {
 		return nil, err
+	}
+	result := &VirtualMachineExtensionPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("VirtualMachineScaleSetVMExtensionsClient.Update", "", resp, client.UpdateHandleError)
 	if err != nil {
@@ -383,8 +400,9 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) UpdateCreateRequest(ctx 
 }
 
 // UpdateHandleResponse handles the Update response.
-func (client *VirtualMachineScaleSetVMExtensionsClient) UpdateHandleResponse(resp *azcore.Response) (*VirtualMachineExtensionPollerResponse, error) {
-	return &VirtualMachineExtensionPollerResponse{RawResponse: resp.Response}, nil
+func (client *VirtualMachineScaleSetVMExtensionsClient) UpdateHandleResponse(resp *azcore.Response) (*VirtualMachineExtensionResponse, error) {
+	result := VirtualMachineExtensionResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.VirtualMachineExtension)
 }
 
 // UpdateHandleError handles the Update error response.

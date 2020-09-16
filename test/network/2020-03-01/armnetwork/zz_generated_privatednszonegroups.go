@@ -118,7 +118,7 @@ func (client *PrivateDNSZoneGroupsClient) CreateOrUpdateCreateRequest(ctx contex
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *PrivateDNSZoneGroupsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*PrivateDNSZoneGroupPollerResponse, error) {
+func (client *PrivateDNSZoneGroupsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*PrivateDNSZoneGroupResponse, error) {
 	result := PrivateDNSZoneGroupResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.PrivateDNSZoneGroup)
 }

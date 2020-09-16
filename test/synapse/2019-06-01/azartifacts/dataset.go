@@ -7,7 +7,6 @@ package azartifacts
 
 import (
 	"context"
-	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -47,12 +46,20 @@ func (client *DatasetClient) Do(req *azcore.Request) (*azcore.Response, error) {
 }
 
 // CreateOrUpdateDataset - Creates or updates a dataset.
-func (client *DatasetClient) BeginCreateOrUpdateDataset(ctx context.Context, datasetName string, dataset DatasetResource, datasetCreateOrUpdateDatasetOptions *DatasetCreateOrUpdateDatasetOptions) (*DatasetResourcePollerResponse, error) {
-	return nil, errors.New("NYI")
-}
-
-func (client *DatasetClient) ResumeCreateOrUpdateDataset(token string) (DatasetResourcePoller, error) {
-	return nil, nil
+func (client *DatasetClient) CreateOrUpdateDataset(ctx context.Context, datasetName string, dataset DatasetResource, datasetCreateOrUpdateDatasetOptions *DatasetCreateOrUpdateDatasetOptions) (*DatasetResourcePollerResponse, error) {
+	req, err := client.CreateOrUpdateDatasetCreateRequest(ctx, datasetName, dataset, datasetCreateOrUpdateDatasetOptions)
+	if err != nil {
+		return nil, err
+	}
+	// send the first request to initialize the poller
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.CreateOrUpdateDatasetHandleError(resp)
+	}
+	return resp, nil
 }
 
 // CreateOrUpdateDatasetCreateRequest creates the CreateOrUpdateDataset request.
@@ -74,8 +81,9 @@ func (client *DatasetClient) CreateOrUpdateDatasetCreateRequest(ctx context.Cont
 }
 
 // CreateOrUpdateDatasetHandleResponse handles the CreateOrUpdateDataset response.
-func (client *DatasetClient) CreateOrUpdateDatasetHandleResponse(resp *azcore.Response) (*DatasetResourcePollerResponse, error) {
-	return &DatasetResourcePollerResponse{RawResponse: resp.Response}, nil
+func (client *DatasetClient) CreateOrUpdateDatasetHandleResponse(resp *azcore.Response) (*DatasetResourceResponse, error) {
+	result := DatasetResourceResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.DatasetResource)
 }
 
 // CreateOrUpdateDatasetHandleError handles the CreateOrUpdateDataset error response.
@@ -88,12 +96,20 @@ func (client *DatasetClient) CreateOrUpdateDatasetHandleError(resp *azcore.Respo
 }
 
 // DeleteDataset - Deletes a dataset.
-func (client *DatasetClient) BeginDeleteDataset(ctx context.Context, datasetName string) (*HTTPPollerResponse, error) {
-	return nil, errors.New("NYI")
-}
-
-func (client *DatasetClient) ResumeDeleteDataset(token string) (HTTPPoller, error) {
-	return nil, nil
+func (client *DatasetClient) DeleteDataset(ctx context.Context, datasetName string) (*HTTPPollerResponse, error) {
+	req, err := client.DeleteDatasetCreateRequest(ctx, datasetName)
+	if err != nil {
+		return nil, err
+	}
+	// send the first request to initialize the poller
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteDatasetHandleError(resp)
+	}
+	return resp, nil
 }
 
 // DeleteDatasetCreateRequest creates the DeleteDataset request.
@@ -109,11 +125,6 @@ func (client *DatasetClient) DeleteDatasetCreateRequest(ctx context.Context, dat
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DeleteDatasetHandleResponse handles the DeleteDataset response.
-func (client *DatasetClient) DeleteDatasetHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteDatasetHandleError handles the DeleteDataset error response.

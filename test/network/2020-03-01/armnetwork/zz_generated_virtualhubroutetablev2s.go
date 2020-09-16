@@ -118,7 +118,7 @@ func (client *VirtualHubRouteTableV2SClient) CreateOrUpdateCreateRequest(ctx con
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *VirtualHubRouteTableV2SClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*VirtualHubRouteTableV2PollerResponse, error) {
+func (client *VirtualHubRouteTableV2SClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*VirtualHubRouteTableV2Response, error) {
 	result := VirtualHubRouteTableV2Response{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualHubRouteTableV2)
 }

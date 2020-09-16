@@ -118,7 +118,7 @@ func (client *FlowLogsClient) CreateOrUpdateCreateRequest(ctx context.Context, r
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *FlowLogsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*FlowLogPollerResponse, error) {
+func (client *FlowLogsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*FlowLogResponse, error) {
 	result := FlowLogResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.FlowLog)
 }

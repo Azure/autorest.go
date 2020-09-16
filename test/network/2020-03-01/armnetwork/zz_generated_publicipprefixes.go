@@ -121,7 +121,7 @@ func (client *PublicIPPrefixesClient) CreateOrUpdateCreateRequest(ctx context.Co
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *PublicIPPrefixesClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*PublicIPPrefixPollerResponse, error) {
+func (client *PublicIPPrefixesClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*PublicIPPrefixResponse, error) {
 	result := PublicIPPrefixResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.PublicIPPrefix)
 }

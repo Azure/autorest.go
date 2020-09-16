@@ -305,7 +305,7 @@ func (client *NetworkManagementClient) Generatevirtualwanvpnserverconfigurationv
 }
 
 // GeneratevirtualwanvpnserverconfigurationvpnprofileHandleResponse handles the Generatevirtualwanvpnserverconfigurationvpnprofile response.
-func (client *NetworkManagementClient) GeneratevirtualwanvpnserverconfigurationvpnprofileHandleResponse(resp *azcore.Response) (*VpnProfileResponsePollerResponse, error) {
+func (client *NetworkManagementClient) GeneratevirtualwanvpnserverconfigurationvpnprofileHandleResponse(resp *azcore.Response) (*VpnProfileResponseResponse, error) {
 	result := VpnProfileResponseResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VpnProfileResponse)
 }
@@ -398,7 +398,7 @@ func (client *NetworkManagementClient) GetActiveSessionsCreateRequest(ctx contex
 }
 
 // GetActiveSessionsHandleResponse handles the GetActiveSessions response.
-func (client *NetworkManagementClient) GetActiveSessionsHandleResponse(resp *azcore.Response) (*BastionActiveSessionListResultPagerPollerResponse, error) {
+func (client *NetworkManagementClient) GetActiveSessionsHandleResponse(resp *azcore.Response) (*BastionActiveSessionListResultResponse, error) {
 	result := BastionActiveSessionListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.BastionActiveSessionListResult)
 }
@@ -538,7 +538,7 @@ func (client *NetworkManagementClient) PutBastionShareableLinkCreateRequest(ctx 
 }
 
 // PutBastionShareableLinkHandleResponse handles the PutBastionShareableLink response.
-func (client *NetworkManagementClient) PutBastionShareableLinkHandleResponse(resp *azcore.Response) (*BastionShareableLinkListResultPagerPollerResponse, error) {
+func (client *NetworkManagementClient) PutBastionShareableLinkHandleResponse(resp *azcore.Response) (*BastionShareableLinkListResultResponse, error) {
 	result := BastionShareableLinkListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.BastionShareableLinkListResult)
 }

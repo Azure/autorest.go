@@ -126,7 +126,7 @@ func (client *SubnetsClient) CreateOrUpdateCreateRequest(ctx context.Context, re
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *SubnetsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*SubnetPollerResponse, error) {
+func (client *SubnetsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*SubnetResponse, error) {
 	result := SubnetResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Subnet)
 }

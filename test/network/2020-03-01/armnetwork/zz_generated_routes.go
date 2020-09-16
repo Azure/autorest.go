@@ -118,7 +118,7 @@ func (client *RoutesClient) CreateOrUpdateCreateRequest(ctx context.Context, res
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *RoutesClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*RoutePollerResponse, error) {
+func (client *RoutesClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*RouteResponse, error) {
 	result := RouteResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Route)
 }

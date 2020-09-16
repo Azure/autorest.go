@@ -56,7 +56,7 @@ func (client *DedicatedHostsClient) Do(req *azcore.Request) (*azcore.Response, e
 }
 
 // CreateOrUpdate - Create or update a dedicated host .
-func (client *DedicatedHostsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHost) (*DedicatedHostPollerResponse, error) {
+func (client *DedicatedHostsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHost) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, hostGroupName, hostName, parameters)
 	if err != nil {
 		return nil, err
@@ -69,9 +69,16 @@ func (client *DedicatedHostsClient) BeginCreateOrUpdate(ctx context.Context, res
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.CreateOrUpdateHandleError(resp)
 	}
-	result, err := client.CreateOrUpdateHandleResponse(resp)
+	return resp, nil
+}
+
+func (client *DedicatedHostsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHost) (*DedicatedHostPollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, hostGroupName, hostName, parameters)
 	if err != nil {
 		return nil, err
+	}
+	result := &DedicatedHostPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("DedicatedHostsClient.CreateOrUpdate", "", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
@@ -118,8 +125,9 @@ func (client *DedicatedHostsClient) CreateOrUpdateCreateRequest(ctx context.Cont
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *DedicatedHostsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*DedicatedHostPollerResponse, error) {
-	return &DedicatedHostPollerResponse{RawResponse: resp.Response}, nil
+func (client *DedicatedHostsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*DedicatedHostResponse, error) {
+	result := DedicatedHostResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.DedicatedHost)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -135,7 +143,7 @@ func (client *DedicatedHostsClient) CreateOrUpdateHandleError(resp *azcore.Respo
 }
 
 // Delete - Delete a dedicated host.
-func (client *DedicatedHostsClient) BeginDelete(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string) (*HTTPPollerResponse, error) {
+func (client *DedicatedHostsClient) Delete(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, hostGroupName, hostName)
 	if err != nil {
 		return nil, err
@@ -148,9 +156,16 @@ func (client *DedicatedHostsClient) BeginDelete(ctx context.Context, resourceGro
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
 	}
-	result, err := client.DeleteHandleResponse(resp)
+	return resp, nil
+}
+
+func (client *DedicatedHostsClient) BeginDelete(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, hostGroupName, hostName)
 	if err != nil {
 		return nil, err
+	}
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("DedicatedHostsClient.Delete", "", resp, client.DeleteHandleError)
 	if err != nil {
@@ -193,11 +208,6 @@ func (client *DedicatedHostsClient) DeleteCreateRequest(ctx context.Context, res
 	query.Set("api-version", "2019-12-01")
 	req.URL.RawQuery = query.Encode()
 	return req, nil
-}
-
-// DeleteHandleResponse handles the Delete response.
-func (client *DedicatedHostsClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteHandleError handles the Delete error response.
@@ -322,7 +332,7 @@ func (client *DedicatedHostsClient) ListByHostGroupHandleError(resp *azcore.Resp
 }
 
 // Update - Update an dedicated host .
-func (client *DedicatedHostsClient) BeginUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHostUpdate) (*DedicatedHostPollerResponse, error) {
+func (client *DedicatedHostsClient) Update(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHostUpdate) (*azcore.Response, error) {
 	req, err := client.UpdateCreateRequest(ctx, resourceGroupName, hostGroupName, hostName, parameters)
 	if err != nil {
 		return nil, err
@@ -335,9 +345,16 @@ func (client *DedicatedHostsClient) BeginUpdate(ctx context.Context, resourceGro
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.UpdateHandleError(resp)
 	}
-	result, err := client.UpdateHandleResponse(resp)
+	return resp, nil
+}
+
+func (client *DedicatedHostsClient) BeginUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHostUpdate) (*DedicatedHostPollerResponse, error) {
+	resp, err := client.Update(ctx, resourceGroupName, hostGroupName, hostName, parameters)
 	if err != nil {
 		return nil, err
+	}
+	result := &DedicatedHostPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("DedicatedHostsClient.Update", "", resp, client.UpdateHandleError)
 	if err != nil {
@@ -384,8 +401,9 @@ func (client *DedicatedHostsClient) UpdateCreateRequest(ctx context.Context, res
 }
 
 // UpdateHandleResponse handles the Update response.
-func (client *DedicatedHostsClient) UpdateHandleResponse(resp *azcore.Response) (*DedicatedHostPollerResponse, error) {
-	return &DedicatedHostPollerResponse{RawResponse: resp.Response}, nil
+func (client *DedicatedHostsClient) UpdateHandleResponse(resp *azcore.Response) (*DedicatedHostResponse, error) {
+	result := DedicatedHostResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.DedicatedHost)
 }
 
 // UpdateHandleError handles the Update error response.

@@ -118,7 +118,7 @@ func (client *NetworkInterfaceTapConfigurationsClient) CreateOrUpdateCreateReque
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *NetworkInterfaceTapConfigurationsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*NetworkInterfaceTapConfigurationPollerResponse, error) {
+func (client *NetworkInterfaceTapConfigurationsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*NetworkInterfaceTapConfigurationResponse, error) {
 	result := NetworkInterfaceTapConfigurationResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.NetworkInterfaceTapConfiguration)
 }

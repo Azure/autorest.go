@@ -121,7 +121,7 @@ func (client *ExpressRoutePortsClient) CreateOrUpdateCreateRequest(ctx context.C
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *ExpressRoutePortsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*ExpressRoutePortPollerResponse, error) {
+func (client *ExpressRoutePortsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*ExpressRoutePortResponse, error) {
 	result := ExpressRoutePortResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ExpressRoutePort)
 }

@@ -53,7 +53,7 @@ func (client *GalleryApplicationsClient) Do(req *azcore.Request) (*azcore.Respon
 }
 
 // CreateOrUpdate - Create or update a gallery Application Definition.
-func (client *GalleryApplicationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplication GalleryApplication) (*GalleryApplicationPollerResponse, error) {
+func (client *GalleryApplicationsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplication GalleryApplication) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplication)
 	if err != nil {
 		return nil, err
@@ -66,9 +66,16 @@ func (client *GalleryApplicationsClient) BeginCreateOrUpdate(ctx context.Context
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusAccepted) {
 		return nil, client.CreateOrUpdateHandleError(resp)
 	}
-	result, err := client.CreateOrUpdateHandleResponse(resp)
+	return resp, nil
+}
+
+func (client *GalleryApplicationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplication GalleryApplication) (*GalleryApplicationPollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplication)
 	if err != nil {
 		return nil, err
+	}
+	result := &GalleryApplicationPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("GalleryApplicationsClient.CreateOrUpdate", "", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
@@ -115,8 +122,9 @@ func (client *GalleryApplicationsClient) CreateOrUpdateCreateRequest(ctx context
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *GalleryApplicationsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*GalleryApplicationPollerResponse, error) {
-	return &GalleryApplicationPollerResponse{RawResponse: resp.Response}, nil
+func (client *GalleryApplicationsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*GalleryApplicationResponse, error) {
+	result := GalleryApplicationResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.GalleryApplication)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -129,7 +137,7 @@ func (client *GalleryApplicationsClient) CreateOrUpdateHandleError(resp *azcore.
 }
 
 // Delete - Delete a gallery Application.
-func (client *GalleryApplicationsClient) BeginDelete(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string) (*HTTPPollerResponse, error) {
+func (client *GalleryApplicationsClient) Delete(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, galleryName, galleryApplicationName)
 	if err != nil {
 		return nil, err
@@ -142,9 +150,16 @@ func (client *GalleryApplicationsClient) BeginDelete(ctx context.Context, resour
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
 	}
-	result, err := client.DeleteHandleResponse(resp)
+	return resp, nil
+}
+
+func (client *GalleryApplicationsClient) BeginDelete(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, galleryName, galleryApplicationName)
 	if err != nil {
 		return nil, err
+	}
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("GalleryApplicationsClient.Delete", "", resp, client.DeleteHandleError)
 	if err != nil {
@@ -188,11 +203,6 @@ func (client *GalleryApplicationsClient) DeleteCreateRequest(ctx context.Context
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DeleteHandleResponse handles the Delete response.
-func (client *GalleryApplicationsClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteHandleError handles the Delete error response.
@@ -305,7 +315,7 @@ func (client *GalleryApplicationsClient) ListByGalleryHandleError(resp *azcore.R
 }
 
 // Update - Update a gallery Application Definition.
-func (client *GalleryApplicationsClient) BeginUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplication GalleryApplicationUpdate) (*GalleryApplicationPollerResponse, error) {
+func (client *GalleryApplicationsClient) Update(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplication GalleryApplicationUpdate) (*azcore.Response, error) {
 	req, err := client.UpdateCreateRequest(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplication)
 	if err != nil {
 		return nil, err
@@ -318,9 +328,16 @@ func (client *GalleryApplicationsClient) BeginUpdate(ctx context.Context, resour
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.UpdateHandleError(resp)
 	}
-	result, err := client.UpdateHandleResponse(resp)
+	return resp, nil
+}
+
+func (client *GalleryApplicationsClient) BeginUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplication GalleryApplicationUpdate) (*GalleryApplicationPollerResponse, error) {
+	resp, err := client.Update(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplication)
 	if err != nil {
 		return nil, err
+	}
+	result := &GalleryApplicationPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("GalleryApplicationsClient.Update", "", resp, client.UpdateHandleError)
 	if err != nil {
@@ -367,8 +384,9 @@ func (client *GalleryApplicationsClient) UpdateCreateRequest(ctx context.Context
 }
 
 // UpdateHandleResponse handles the Update response.
-func (client *GalleryApplicationsClient) UpdateHandleResponse(resp *azcore.Response) (*GalleryApplicationPollerResponse, error) {
-	return &GalleryApplicationPollerResponse{RawResponse: resp.Response}, nil
+func (client *GalleryApplicationsClient) UpdateHandleResponse(resp *azcore.Response) (*GalleryApplicationResponse, error) {
+	result := GalleryApplicationResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.GalleryApplication)
 }
 
 // UpdateHandleError handles the Update error response.

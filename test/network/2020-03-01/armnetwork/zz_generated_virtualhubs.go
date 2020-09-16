@@ -121,7 +121,7 @@ func (client *VirtualHubsClient) CreateOrUpdateCreateRequest(ctx context.Context
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *VirtualHubsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*VirtualHubPollerResponse, error) {
+func (client *VirtualHubsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*VirtualHubResponse, error) {
 	result := VirtualHubResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualHub)
 }

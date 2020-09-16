@@ -121,7 +121,7 @@ func (client *NatGatewaysClient) CreateOrUpdateCreateRequest(ctx context.Context
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *NatGatewaysClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*NatGatewayPollerResponse, error) {
+func (client *NatGatewaysClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*NatGatewayResponse, error) {
 	result := NatGatewayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.NatGateway)
 }

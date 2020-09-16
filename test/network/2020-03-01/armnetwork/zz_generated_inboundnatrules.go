@@ -118,7 +118,7 @@ func (client *InboundNatRulesClient) CreateOrUpdateCreateRequest(ctx context.Con
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *InboundNatRulesClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*InboundNatRulePollerResponse, error) {
+func (client *InboundNatRulesClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*InboundNatRuleResponse, error) {
 	result := InboundNatRuleResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.InboundNatRule)
 }

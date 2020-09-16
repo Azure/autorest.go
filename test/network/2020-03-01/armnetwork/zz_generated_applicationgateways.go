@@ -154,7 +154,7 @@ func (client *ApplicationGatewaysClient) BackendHealthCreateRequest(ctx context.
 }
 
 // BackendHealthHandleResponse handles the BackendHealth response.
-func (client *ApplicationGatewaysClient) BackendHealthHandleResponse(resp *azcore.Response) (*ApplicationGatewayBackendHealthPollerResponse, error) {
+func (client *ApplicationGatewaysClient) BackendHealthHandleResponse(resp *azcore.Response) (*ApplicationGatewayBackendHealthResponse, error) {
 	result := ApplicationGatewayBackendHealthResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ApplicationGatewayBackendHealth)
 }
@@ -240,7 +240,7 @@ func (client *ApplicationGatewaysClient) BackendHealthOnDemandCreateRequest(ctx 
 }
 
 // BackendHealthOnDemandHandleResponse handles the BackendHealthOnDemand response.
-func (client *ApplicationGatewaysClient) BackendHealthOnDemandHandleResponse(resp *azcore.Response) (*ApplicationGatewayBackendHealthOnDemandPollerResponse, error) {
+func (client *ApplicationGatewaysClient) BackendHealthOnDemandHandleResponse(resp *azcore.Response) (*ApplicationGatewayBackendHealthOnDemandResponse, error) {
 	result := ApplicationGatewayBackendHealthOnDemandResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ApplicationGatewayBackendHealthOnDemand)
 }
@@ -323,7 +323,7 @@ func (client *ApplicationGatewaysClient) CreateOrUpdateCreateRequest(ctx context
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *ApplicationGatewaysClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*ApplicationGatewayPollerResponse, error) {
+func (client *ApplicationGatewaysClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*ApplicationGatewayResponse, error) {
 	result := ApplicationGatewayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ApplicationGateway)
 }

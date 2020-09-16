@@ -121,7 +121,7 @@ func (client *VpnServerConfigurationsClient) CreateOrUpdateCreateRequest(ctx con
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *VpnServerConfigurationsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*VpnServerConfigurationPollerResponse, error) {
+func (client *VpnServerConfigurationsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*VpnServerConfigurationResponse, error) {
 	result := VpnServerConfigurationResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VpnServerConfiguration)
 }

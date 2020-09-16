@@ -7,7 +7,6 @@ package azartifacts
 
 import (
 	"context"
-	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 )
@@ -96,12 +95,20 @@ func (client *DataFlowDebugSessionClient) AddDataFlowHandleError(resp *azcore.Re
 }
 
 // CreateDataFlowDebugSession - Creates a data flow debug session.
-func (client *DataFlowDebugSessionClient) BeginCreateDataFlowDebugSession(ctx context.Context, request CreateDataFlowDebugSessionRequest) (*CreateDataFlowDebugSessionResponsePollerResponse, error) {
-	return nil, errors.New("NYI")
-}
-
-func (client *DataFlowDebugSessionClient) ResumeCreateDataFlowDebugSession(token string) (CreateDataFlowDebugSessionResponsePoller, error) {
-	return nil, nil
+func (client *DataFlowDebugSessionClient) CreateDataFlowDebugSession(ctx context.Context, request CreateDataFlowDebugSessionRequest) (*CreateDataFlowDebugSessionResponsePollerResponse, error) {
+	req, err := client.CreateDataFlowDebugSessionCreateRequest(ctx, request)
+	if err != nil {
+		return nil, err
+	}
+	// send the first request to initialize the poller
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.CreateDataFlowDebugSessionHandleError(resp)
+	}
+	return resp, nil
 }
 
 // CreateDataFlowDebugSessionCreateRequest creates the CreateDataFlowDebugSession request.
@@ -119,8 +126,9 @@ func (client *DataFlowDebugSessionClient) CreateDataFlowDebugSessionCreateReques
 }
 
 // CreateDataFlowDebugSessionHandleResponse handles the CreateDataFlowDebugSession response.
-func (client *DataFlowDebugSessionClient) CreateDataFlowDebugSessionHandleResponse(resp *azcore.Response) (*CreateDataFlowDebugSessionResponsePollerResponse, error) {
-	return &CreateDataFlowDebugSessionResponsePollerResponse{RawResponse: resp.Response}, nil
+func (client *DataFlowDebugSessionClient) CreateDataFlowDebugSessionHandleResponse(resp *azcore.Response) (*CreateDataFlowDebugSessionResponseResponse, error) {
+	result := CreateDataFlowDebugSessionResponseResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.CreateDataFlowDebugSessionResponse)
 }
 
 // CreateDataFlowDebugSessionHandleError handles the CreateDataFlowDebugSession error response.
@@ -172,12 +180,20 @@ func (client *DataFlowDebugSessionClient) DeleteDataFlowDebugSessionHandleError(
 }
 
 // ExecuteCommand - Execute a data flow debug command.
-func (client *DataFlowDebugSessionClient) BeginExecuteCommand(ctx context.Context, request DataFlowDebugCommandRequest) (*DataFlowDebugCommandResponsePollerResponse, error) {
-	return nil, errors.New("NYI")
-}
-
-func (client *DataFlowDebugSessionClient) ResumeExecuteCommand(token string) (DataFlowDebugCommandResponsePoller, error) {
-	return nil, nil
+func (client *DataFlowDebugSessionClient) ExecuteCommand(ctx context.Context, request DataFlowDebugCommandRequest) (*DataFlowDebugCommandResponsePollerResponse, error) {
+	req, err := client.ExecuteCommandCreateRequest(ctx, request)
+	if err != nil {
+		return nil, err
+	}
+	// send the first request to initialize the poller
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.ExecuteCommandHandleError(resp)
+	}
+	return resp, nil
 }
 
 // ExecuteCommandCreateRequest creates the ExecuteCommand request.
@@ -195,8 +211,9 @@ func (client *DataFlowDebugSessionClient) ExecuteCommandCreateRequest(ctx contex
 }
 
 // ExecuteCommandHandleResponse handles the ExecuteCommand response.
-func (client *DataFlowDebugSessionClient) ExecuteCommandHandleResponse(resp *azcore.Response) (*DataFlowDebugCommandResponsePollerResponse, error) {
-	return &DataFlowDebugCommandResponsePollerResponse{RawResponse: resp.Response}, nil
+func (client *DataFlowDebugSessionClient) ExecuteCommandHandleResponse(resp *azcore.Response) (*DataFlowDebugCommandResponseResponse, error) {
+	result := DataFlowDebugCommandResponseResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.DataFlowDebugCommandResponse)
 }
 
 // ExecuteCommandHandleError handles the ExecuteCommand error response.

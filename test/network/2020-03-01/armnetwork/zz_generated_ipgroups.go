@@ -121,7 +121,7 @@ func (client *IPGroupsClient) CreateOrUpdateCreateRequest(ctx context.Context, r
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *IPGroupsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*IPGroupPollerResponse, error) {
+func (client *IPGroupsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*IPGroupResponse, error) {
 	result := IPGroupResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.IPGroup)
 }

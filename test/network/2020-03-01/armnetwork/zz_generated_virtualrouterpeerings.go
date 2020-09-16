@@ -118,7 +118,7 @@ func (client *VirtualRouterPeeringsClient) CreateOrUpdateCreateRequest(ctx conte
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *VirtualRouterPeeringsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*VirtualRouterPeeringPollerResponse, error) {
+func (client *VirtualRouterPeeringsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*VirtualRouterPeeringResponse, error) {
 	result := VirtualRouterPeeringResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualRouterPeering)
 }

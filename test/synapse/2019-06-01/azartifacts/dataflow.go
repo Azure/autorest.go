@@ -7,7 +7,6 @@ package azartifacts
 
 import (
 	"context"
-	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -47,12 +46,20 @@ func (client *DataFlowClient) Do(req *azcore.Request) (*azcore.Response, error) 
 }
 
 // CreateOrUpdateDataFlow - Creates or updates a data flow.
-func (client *DataFlowClient) BeginCreateOrUpdateDataFlow(ctx context.Context, dataFlowName string, dataFlow DataFlowResource, dataFlowCreateOrUpdateDataFlowOptions *DataFlowCreateOrUpdateDataFlowOptions) (*DataFlowResourcePollerResponse, error) {
-	return nil, errors.New("NYI")
-}
-
-func (client *DataFlowClient) ResumeCreateOrUpdateDataFlow(token string) (DataFlowResourcePoller, error) {
-	return nil, nil
+func (client *DataFlowClient) CreateOrUpdateDataFlow(ctx context.Context, dataFlowName string, dataFlow DataFlowResource, dataFlowCreateOrUpdateDataFlowOptions *DataFlowCreateOrUpdateDataFlowOptions) (*DataFlowResourcePollerResponse, error) {
+	req, err := client.CreateOrUpdateDataFlowCreateRequest(ctx, dataFlowName, dataFlow, dataFlowCreateOrUpdateDataFlowOptions)
+	if err != nil {
+		return nil, err
+	}
+	// send the first request to initialize the poller
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.CreateOrUpdateDataFlowHandleError(resp)
+	}
+	return resp, nil
 }
 
 // CreateOrUpdateDataFlowCreateRequest creates the CreateOrUpdateDataFlow request.
@@ -74,8 +81,9 @@ func (client *DataFlowClient) CreateOrUpdateDataFlowCreateRequest(ctx context.Co
 }
 
 // CreateOrUpdateDataFlowHandleResponse handles the CreateOrUpdateDataFlow response.
-func (client *DataFlowClient) CreateOrUpdateDataFlowHandleResponse(resp *azcore.Response) (*DataFlowResourcePollerResponse, error) {
-	return &DataFlowResourcePollerResponse{RawResponse: resp.Response}, nil
+func (client *DataFlowClient) CreateOrUpdateDataFlowHandleResponse(resp *azcore.Response) (*DataFlowResourceResponse, error) {
+	result := DataFlowResourceResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.DataFlowResource)
 }
 
 // CreateOrUpdateDataFlowHandleError handles the CreateOrUpdateDataFlow error response.
@@ -88,12 +96,20 @@ func (client *DataFlowClient) CreateOrUpdateDataFlowHandleError(resp *azcore.Res
 }
 
 // DeleteDataFlow - Deletes a data flow.
-func (client *DataFlowClient) BeginDeleteDataFlow(ctx context.Context, dataFlowName string) (*HTTPPollerResponse, error) {
-	return nil, errors.New("NYI")
-}
-
-func (client *DataFlowClient) ResumeDeleteDataFlow(token string) (HTTPPoller, error) {
-	return nil, nil
+func (client *DataFlowClient) DeleteDataFlow(ctx context.Context, dataFlowName string) (*HTTPPollerResponse, error) {
+	req, err := client.DeleteDataFlowCreateRequest(ctx, dataFlowName)
+	if err != nil {
+		return nil, err
+	}
+	// send the first request to initialize the poller
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteDataFlowHandleError(resp)
+	}
+	return resp, nil
 }
 
 // DeleteDataFlowCreateRequest creates the DeleteDataFlow request.
@@ -109,11 +125,6 @@ func (client *DataFlowClient) DeleteDataFlowCreateRequest(ctx context.Context, d
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DeleteDataFlowHandleResponse handles the DeleteDataFlow response.
-func (client *DataFlowClient) DeleteDataFlowHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteDataFlowHandleError handles the DeleteDataFlow error response.

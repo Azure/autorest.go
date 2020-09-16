@@ -119,7 +119,7 @@ func (client *BastionHostsClient) CreateOrUpdateCreateRequest(ctx context.Contex
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *BastionHostsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*BastionHostPollerResponse, error) {
+func (client *BastionHostsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*BastionHostResponse, error) {
 	result := BastionHostResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.BastionHost)
 }

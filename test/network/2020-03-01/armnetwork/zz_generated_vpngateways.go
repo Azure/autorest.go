@@ -125,7 +125,7 @@ func (client *VpnGatewaysClient) CreateOrUpdateCreateRequest(ctx context.Context
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *VpnGatewaysClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*VpnGatewayPollerResponse, error) {
+func (client *VpnGatewaysClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*VpnGatewayResponse, error) {
 	result := VpnGatewayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VpnGateway)
 }
@@ -428,7 +428,7 @@ func (client *VpnGatewaysClient) ResetCreateRequest(ctx context.Context, resourc
 }
 
 // ResetHandleResponse handles the Reset response.
-func (client *VpnGatewaysClient) ResetHandleResponse(resp *azcore.Response) (*VpnGatewayPollerResponse, error) {
+func (client *VpnGatewaysClient) ResetHandleResponse(resp *azcore.Response) (*VpnGatewayResponse, error) {
 	result := VpnGatewayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VpnGateway)
 }

@@ -7,7 +7,6 @@ package azartifacts
 
 import (
 	"context"
-	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -47,12 +46,20 @@ func (client *LinkedServiceClient) Do(req *azcore.Request) (*azcore.Response, er
 }
 
 // CreateOrUpdateLinkedService - Creates or updates a linked service.
-func (client *LinkedServiceClient) BeginCreateOrUpdateLinkedService(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, linkedServiceCreateOrUpdateLinkedServiceOptions *LinkedServiceCreateOrUpdateLinkedServiceOptions) (*LinkedServiceResourcePollerResponse, error) {
-	return nil, errors.New("NYI")
-}
-
-func (client *LinkedServiceClient) ResumeCreateOrUpdateLinkedService(token string) (LinkedServiceResourcePoller, error) {
-	return nil, nil
+func (client *LinkedServiceClient) CreateOrUpdateLinkedService(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, linkedServiceCreateOrUpdateLinkedServiceOptions *LinkedServiceCreateOrUpdateLinkedServiceOptions) (*LinkedServiceResourcePollerResponse, error) {
+	req, err := client.CreateOrUpdateLinkedServiceCreateRequest(ctx, linkedServiceName, linkedService, linkedServiceCreateOrUpdateLinkedServiceOptions)
+	if err != nil {
+		return nil, err
+	}
+	// send the first request to initialize the poller
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.CreateOrUpdateLinkedServiceHandleError(resp)
+	}
+	return resp, nil
 }
 
 // CreateOrUpdateLinkedServiceCreateRequest creates the CreateOrUpdateLinkedService request.
@@ -74,8 +81,9 @@ func (client *LinkedServiceClient) CreateOrUpdateLinkedServiceCreateRequest(ctx 
 }
 
 // CreateOrUpdateLinkedServiceHandleResponse handles the CreateOrUpdateLinkedService response.
-func (client *LinkedServiceClient) CreateOrUpdateLinkedServiceHandleResponse(resp *azcore.Response) (*LinkedServiceResourcePollerResponse, error) {
-	return &LinkedServiceResourcePollerResponse{RawResponse: resp.Response}, nil
+func (client *LinkedServiceClient) CreateOrUpdateLinkedServiceHandleResponse(resp *azcore.Response) (*LinkedServiceResourceResponse, error) {
+	result := LinkedServiceResourceResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.LinkedServiceResource)
 }
 
 // CreateOrUpdateLinkedServiceHandleError handles the CreateOrUpdateLinkedService error response.
@@ -88,12 +96,20 @@ func (client *LinkedServiceClient) CreateOrUpdateLinkedServiceHandleError(resp *
 }
 
 // DeleteLinkedService - Deletes a linked service.
-func (client *LinkedServiceClient) BeginDeleteLinkedService(ctx context.Context, linkedServiceName string) (*HTTPPollerResponse, error) {
-	return nil, errors.New("NYI")
-}
-
-func (client *LinkedServiceClient) ResumeDeleteLinkedService(token string) (HTTPPoller, error) {
-	return nil, nil
+func (client *LinkedServiceClient) DeleteLinkedService(ctx context.Context, linkedServiceName string) (*HTTPPollerResponse, error) {
+	req, err := client.DeleteLinkedServiceCreateRequest(ctx, linkedServiceName)
+	if err != nil {
+		return nil, err
+	}
+	// send the first request to initialize the poller
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteLinkedServiceHandleError(resp)
+	}
+	return resp, nil
 }
 
 // DeleteLinkedServiceCreateRequest creates the DeleteLinkedService request.
@@ -109,11 +125,6 @@ func (client *LinkedServiceClient) DeleteLinkedServiceCreateRequest(ctx context.
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DeleteLinkedServiceHandleResponse handles the DeleteLinkedService response.
-func (client *LinkedServiceClient) DeleteLinkedServiceHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteLinkedServiceHandleError handles the DeleteLinkedService error response.

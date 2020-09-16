@@ -55,7 +55,7 @@ func (client *DiskEncryptionSetsClient) Do(req *azcore.Request) (*azcore.Respons
 }
 
 // CreateOrUpdate - Creates or updates a disk encryption set
-func (client *DiskEncryptionSetsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSet) (*DiskEncryptionSetPollerResponse, error) {
+func (client *DiskEncryptionSetsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSet) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, diskEncryptionSetName, diskEncryptionSet)
 	if err != nil {
 		return nil, err
@@ -68,9 +68,16 @@ func (client *DiskEncryptionSetsClient) BeginCreateOrUpdate(ctx context.Context,
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.CreateOrUpdateHandleError(resp)
 	}
-	result, err := client.CreateOrUpdateHandleResponse(resp)
+	return resp, nil
+}
+
+func (client *DiskEncryptionSetsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSet) (*DiskEncryptionSetPollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, diskEncryptionSetName, diskEncryptionSet)
 	if err != nil {
 		return nil, err
+	}
+	result := &DiskEncryptionSetPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("DiskEncryptionSetsClient.CreateOrUpdate", "", resp, client.CreateOrUpdateHandleError)
 	if err != nil {
@@ -116,8 +123,9 @@ func (client *DiskEncryptionSetsClient) CreateOrUpdateCreateRequest(ctx context.
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *DiskEncryptionSetsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*DiskEncryptionSetPollerResponse, error) {
-	return &DiskEncryptionSetPollerResponse{RawResponse: resp.Response}, nil
+func (client *DiskEncryptionSetsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*DiskEncryptionSetResponse, error) {
+	result := DiskEncryptionSetResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.DiskEncryptionSet)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -130,7 +138,7 @@ func (client *DiskEncryptionSetsClient) CreateOrUpdateHandleError(resp *azcore.R
 }
 
 // Delete - Deletes a disk encryption set.
-func (client *DiskEncryptionSetsClient) BeginDelete(ctx context.Context, resourceGroupName string, diskEncryptionSetName string) (*HTTPPollerResponse, error) {
+func (client *DiskEncryptionSetsClient) Delete(ctx context.Context, resourceGroupName string, diskEncryptionSetName string) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, diskEncryptionSetName)
 	if err != nil {
 		return nil, err
@@ -143,9 +151,16 @@ func (client *DiskEncryptionSetsClient) BeginDelete(ctx context.Context, resourc
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.DeleteHandleError(resp)
 	}
-	result, err := client.DeleteHandleResponse(resp)
+	return resp, nil
+}
+
+func (client *DiskEncryptionSetsClient) BeginDelete(ctx context.Context, resourceGroupName string, diskEncryptionSetName string) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, diskEncryptionSetName)
 	if err != nil {
 		return nil, err
+	}
+	result := &HTTPPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("DiskEncryptionSetsClient.Delete", "", resp, client.DeleteHandleError)
 	if err != nil {
@@ -188,11 +203,6 @@ func (client *DiskEncryptionSetsClient) DeleteCreateRequest(ctx context.Context,
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// DeleteHandleResponse handles the Delete response.
-func (client *DiskEncryptionSetsClient) DeleteHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
 }
 
 // DeleteHandleError handles the Delete error response.
@@ -348,7 +358,7 @@ func (client *DiskEncryptionSetsClient) ListByResourceGroupHandleError(resp *azc
 }
 
 // Update - Updates (patches) a disk encryption set.
-func (client *DiskEncryptionSetsClient) BeginUpdate(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSetUpdate) (*DiskEncryptionSetPollerResponse, error) {
+func (client *DiskEncryptionSetsClient) Update(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSetUpdate) (*azcore.Response, error) {
 	req, err := client.UpdateCreateRequest(ctx, resourceGroupName, diskEncryptionSetName, diskEncryptionSet)
 	if err != nil {
 		return nil, err
@@ -361,9 +371,16 @@ func (client *DiskEncryptionSetsClient) BeginUpdate(ctx context.Context, resourc
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.UpdateHandleError(resp)
 	}
-	result, err := client.UpdateHandleResponse(resp)
+	return resp, nil
+}
+
+func (client *DiskEncryptionSetsClient) BeginUpdate(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSetUpdate) (*DiskEncryptionSetPollerResponse, error) {
+	resp, err := client.Update(ctx, resourceGroupName, diskEncryptionSetName, diskEncryptionSet)
 	if err != nil {
 		return nil, err
+	}
+	result := &DiskEncryptionSetPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("DiskEncryptionSetsClient.Update", "", resp, client.UpdateHandleError)
 	if err != nil {
@@ -409,8 +426,9 @@ func (client *DiskEncryptionSetsClient) UpdateCreateRequest(ctx context.Context,
 }
 
 // UpdateHandleResponse handles the Update response.
-func (client *DiskEncryptionSetsClient) UpdateHandleResponse(resp *azcore.Response) (*DiskEncryptionSetPollerResponse, error) {
-	return &DiskEncryptionSetPollerResponse{RawResponse: resp.Response}, nil
+func (client *DiskEncryptionSetsClient) UpdateHandleResponse(resp *azcore.Response) (*DiskEncryptionSetResponse, error) {
+	result := DiskEncryptionSetResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.DiskEncryptionSet)
 }
 
 // UpdateHandleError handles the Update error response.

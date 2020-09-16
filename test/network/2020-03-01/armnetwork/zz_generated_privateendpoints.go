@@ -119,7 +119,7 @@ func (client *PrivateEndpointsClient) CreateOrUpdateCreateRequest(ctx context.Co
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *PrivateEndpointsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*PrivateEndpointPollerResponse, error) {
+func (client *PrivateEndpointsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*PrivateEndpointResponse, error) {
 	result := PrivateEndpointResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.PrivateEndpoint)
 }

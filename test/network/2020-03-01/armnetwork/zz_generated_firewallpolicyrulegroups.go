@@ -118,7 +118,7 @@ func (client *FirewallPolicyRuleGroupsClient) CreateOrUpdateCreateRequest(ctx co
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *FirewallPolicyRuleGroupsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*FirewallPolicyRuleGroupPollerResponse, error) {
+func (client *FirewallPolicyRuleGroupsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*FirewallPolicyRuleGroupResponse, error) {
 	result := FirewallPolicyRuleGroupResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.FirewallPolicyRuleGroup)
 }

@@ -165,7 +165,7 @@ func (client *NetworkWatchersClient) CheckConnectivityCreateRequest(ctx context.
 }
 
 // CheckConnectivityHandleResponse handles the CheckConnectivity response.
-func (client *NetworkWatchersClient) CheckConnectivityHandleResponse(resp *azcore.Response) (*ConnectivityInformationPollerResponse, error) {
+func (client *NetworkWatchersClient) CheckConnectivityHandleResponse(resp *azcore.Response) (*ConnectivityInformationResponse, error) {
 	result := ConnectivityInformationResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ConnectivityInformation)
 }
@@ -429,7 +429,7 @@ func (client *NetworkWatchersClient) GetAzureReachabilityReportCreateRequest(ctx
 }
 
 // GetAzureReachabilityReportHandleResponse handles the GetAzureReachabilityReport response.
-func (client *NetworkWatchersClient) GetAzureReachabilityReportHandleResponse(resp *azcore.Response) (*AzureReachabilityReportPollerResponse, error) {
+func (client *NetworkWatchersClient) GetAzureReachabilityReportHandleResponse(resp *azcore.Response) (*AzureReachabilityReportResponse, error) {
 	result := AzureReachabilityReportResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.AzureReachabilityReport)
 }
@@ -512,7 +512,7 @@ func (client *NetworkWatchersClient) GetFlowLogStatusCreateRequest(ctx context.C
 }
 
 // GetFlowLogStatusHandleResponse handles the GetFlowLogStatus response.
-func (client *NetworkWatchersClient) GetFlowLogStatusHandleResponse(resp *azcore.Response) (*FlowLogInformationPollerResponse, error) {
+func (client *NetworkWatchersClient) GetFlowLogStatusHandleResponse(resp *azcore.Response) (*FlowLogInformationResponse, error) {
 	result := FlowLogInformationResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.FlowLogInformation)
 }
@@ -595,7 +595,7 @@ func (client *NetworkWatchersClient) GetNetworkConfigurationDiagnosticCreateRequ
 }
 
 // GetNetworkConfigurationDiagnosticHandleResponse handles the GetNetworkConfigurationDiagnostic response.
-func (client *NetworkWatchersClient) GetNetworkConfigurationDiagnosticHandleResponse(resp *azcore.Response) (*NetworkConfigurationDiagnosticResponsePollerResponse, error) {
+func (client *NetworkWatchersClient) GetNetworkConfigurationDiagnosticHandleResponse(resp *azcore.Response) (*NetworkConfigurationDiagnosticResponseResponse, error) {
 	result := NetworkConfigurationDiagnosticResponseResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.NetworkConfigurationDiagnosticResponse)
 }
@@ -678,7 +678,7 @@ func (client *NetworkWatchersClient) GetNextHopCreateRequest(ctx context.Context
 }
 
 // GetNextHopHandleResponse handles the GetNextHop response.
-func (client *NetworkWatchersClient) GetNextHopHandleResponse(resp *azcore.Response) (*NextHopResultPollerResponse, error) {
+func (client *NetworkWatchersClient) GetNextHopHandleResponse(resp *azcore.Response) (*NextHopResultResponse, error) {
 	result := NextHopResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.NextHopResult)
 }
@@ -813,7 +813,7 @@ func (client *NetworkWatchersClient) GetTroubleshootingCreateRequest(ctx context
 }
 
 // GetTroubleshootingHandleResponse handles the GetTroubleshooting response.
-func (client *NetworkWatchersClient) GetTroubleshootingHandleResponse(resp *azcore.Response) (*TroubleshootingResultPollerResponse, error) {
+func (client *NetworkWatchersClient) GetTroubleshootingHandleResponse(resp *azcore.Response) (*TroubleshootingResultResponse, error) {
 	result := TroubleshootingResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.TroubleshootingResult)
 }
@@ -896,7 +896,7 @@ func (client *NetworkWatchersClient) GetTroubleshootingResultCreateRequest(ctx c
 }
 
 // GetTroubleshootingResultHandleResponse handles the GetTroubleshootingResult response.
-func (client *NetworkWatchersClient) GetTroubleshootingResultHandleResponse(resp *azcore.Response) (*TroubleshootingResultPollerResponse, error) {
+func (client *NetworkWatchersClient) GetTroubleshootingResultHandleResponse(resp *azcore.Response) (*TroubleshootingResultResponse, error) {
 	result := TroubleshootingResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.TroubleshootingResult)
 }
@@ -979,7 +979,7 @@ func (client *NetworkWatchersClient) GetVMSecurityRulesCreateRequest(ctx context
 }
 
 // GetVMSecurityRulesHandleResponse handles the GetVMSecurityRules response.
-func (client *NetworkWatchersClient) GetVMSecurityRulesHandleResponse(resp *azcore.Response) (*SecurityGroupViewResultPollerResponse, error) {
+func (client *NetworkWatchersClient) GetVMSecurityRulesHandleResponse(resp *azcore.Response) (*SecurityGroupViewResultResponse, error) {
 	result := SecurityGroupViewResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.SecurityGroupViewResult)
 }
@@ -1163,7 +1163,7 @@ func (client *NetworkWatchersClient) ListAvailableProvidersCreateRequest(ctx con
 }
 
 // ListAvailableProvidersHandleResponse handles the ListAvailableProviders response.
-func (client *NetworkWatchersClient) ListAvailableProvidersHandleResponse(resp *azcore.Response) (*AvailableProvidersListPollerResponse, error) {
+func (client *NetworkWatchersClient) ListAvailableProvidersHandleResponse(resp *azcore.Response) (*AvailableProvidersListResponse, error) {
 	result := AvailableProvidersListResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.AvailableProvidersList)
 }
@@ -1246,7 +1246,7 @@ func (client *NetworkWatchersClient) SetFlowLogConfigurationCreateRequest(ctx co
 }
 
 // SetFlowLogConfigurationHandleResponse handles the SetFlowLogConfiguration response.
-func (client *NetworkWatchersClient) SetFlowLogConfigurationHandleResponse(resp *azcore.Response) (*FlowLogInformationPollerResponse, error) {
+func (client *NetworkWatchersClient) SetFlowLogConfigurationHandleResponse(resp *azcore.Response) (*FlowLogInformationResponse, error) {
 	result := FlowLogInformationResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.FlowLogInformation)
 }
@@ -1381,7 +1381,7 @@ func (client *NetworkWatchersClient) VerifyIPFlowCreateRequest(ctx context.Conte
 }
 
 // VerifyIPFlowHandleResponse handles the VerifyIPFlow response.
-func (client *NetworkWatchersClient) VerifyIPFlowHandleResponse(resp *azcore.Response) (*VerificationIPFlowResultPollerResponse, error) {
+func (client *NetworkWatchersClient) VerifyIPFlowHandleResponse(resp *azcore.Response) (*VerificationIPFlowResultResponse, error) {
 	result := VerificationIPFlowResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VerificationIPFlowResult)
 }

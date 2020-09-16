@@ -118,7 +118,7 @@ func (client *ExpressRouteCircuitAuthorizationsClient) CreateOrUpdateCreateReque
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *ExpressRouteCircuitAuthorizationsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitAuthorizationPollerResponse, error) {
+func (client *ExpressRouteCircuitAuthorizationsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*ExpressRouteCircuitAuthorizationResponse, error) {
 	result := ExpressRouteCircuitAuthorizationResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ExpressRouteCircuitAuthorization)
 }

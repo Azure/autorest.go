@@ -121,7 +121,7 @@ func (client *NetworkVirtualAppliancesClient) CreateOrUpdateCreateRequest(ctx co
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *NetworkVirtualAppliancesClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*NetworkVirtualAppliancePollerResponse, error) {
+func (client *NetworkVirtualAppliancesClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*NetworkVirtualApplianceResponse, error) {
 	result := NetworkVirtualApplianceResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.NetworkVirtualAppliance)
 }

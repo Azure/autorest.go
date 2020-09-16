@@ -139,7 +139,7 @@ func (client *NetworkInterfacesClient) CreateOrUpdateCreateRequest(ctx context.C
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *NetworkInterfacesClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*NetworkInterfacePollerResponse, error) {
+func (client *NetworkInterfacesClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*NetworkInterfaceResponse, error) {
 	result := NetworkInterfaceResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.NetworkInterface)
 }
@@ -354,7 +354,7 @@ func (client *NetworkInterfacesClient) GetEffectiveRouteTableCreateRequest(ctx c
 }
 
 // GetEffectiveRouteTableHandleResponse handles the GetEffectiveRouteTable response.
-func (client *NetworkInterfacesClient) GetEffectiveRouteTableHandleResponse(resp *azcore.Response) (*EffectiveRouteListResultPollerResponse, error) {
+func (client *NetworkInterfacesClient) GetEffectiveRouteTableHandleResponse(resp *azcore.Response) (*EffectiveRouteListResultResponse, error) {
 	result := EffectiveRouteListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.EffectiveRouteListResult)
 }
@@ -643,7 +643,7 @@ func (client *NetworkInterfacesClient) ListEffectiveNetworkSecurityGroupsCreateR
 }
 
 // ListEffectiveNetworkSecurityGroupsHandleResponse handles the ListEffectiveNetworkSecurityGroups response.
-func (client *NetworkInterfacesClient) ListEffectiveNetworkSecurityGroupsHandleResponse(resp *azcore.Response) (*EffectiveNetworkSecurityGroupListResultPollerResponse, error) {
+func (client *NetworkInterfacesClient) ListEffectiveNetworkSecurityGroupsHandleResponse(resp *azcore.Response) (*EffectiveNetworkSecurityGroupListResultResponse, error) {
 	result := EffectiveNetworkSecurityGroupListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.EffectiveNetworkSecurityGroupListResult)
 }

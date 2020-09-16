@@ -183,7 +183,7 @@ func (client *VirtualNetworkGatewaysClient) CreateOrUpdateCreateRequest(ctx cont
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *VirtualNetworkGatewaysClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*VirtualNetworkGatewayPollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*VirtualNetworkGatewayResponse, error) {
 	result := VirtualNetworkGatewayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualNetworkGateway)
 }
@@ -420,7 +420,7 @@ func (client *VirtualNetworkGatewaysClient) GenerateVpnProfileCreateRequest(ctx 
 }
 
 // GenerateVpnProfileHandleResponse handles the GenerateVpnProfile response.
-func (client *VirtualNetworkGatewaysClient) GenerateVpnProfileHandleResponse(resp *azcore.Response) (*StringPollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) GenerateVpnProfileHandleResponse(resp *azcore.Response) (*StringResponse, error) {
 	result := StringResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
@@ -503,7 +503,7 @@ func (client *VirtualNetworkGatewaysClient) GeneratevpnclientpackageCreateReques
 }
 
 // GeneratevpnclientpackageHandleResponse handles the Generatevpnclientpackage response.
-func (client *VirtualNetworkGatewaysClient) GeneratevpnclientpackageHandleResponse(resp *azcore.Response) (*StringPollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) GeneratevpnclientpackageHandleResponse(resp *azcore.Response) (*StringResponse, error) {
 	result := StringResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
@@ -639,7 +639,7 @@ func (client *VirtualNetworkGatewaysClient) GetAdvertisedRoutesCreateRequest(ctx
 }
 
 // GetAdvertisedRoutesHandleResponse handles the GetAdvertisedRoutes response.
-func (client *VirtualNetworkGatewaysClient) GetAdvertisedRoutesHandleResponse(resp *azcore.Response) (*GatewayRouteListResultPollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) GetAdvertisedRoutesHandleResponse(resp *azcore.Response) (*GatewayRouteListResultResponse, error) {
 	result := GatewayRouteListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.GatewayRouteListResult)
 }
@@ -725,7 +725,7 @@ func (client *VirtualNetworkGatewaysClient) GetBgpPeerStatusCreateRequest(ctx co
 }
 
 // GetBgpPeerStatusHandleResponse handles the GetBgpPeerStatus response.
-func (client *VirtualNetworkGatewaysClient) GetBgpPeerStatusHandleResponse(resp *azcore.Response) (*BgpPeerStatusListResultPollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) GetBgpPeerStatusHandleResponse(resp *azcore.Response) (*BgpPeerStatusListResultResponse, error) {
 	result := BgpPeerStatusListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.BgpPeerStatusListResult)
 }
@@ -808,7 +808,7 @@ func (client *VirtualNetworkGatewaysClient) GetLearnedRoutesCreateRequest(ctx co
 }
 
 // GetLearnedRoutesHandleResponse handles the GetLearnedRoutes response.
-func (client *VirtualNetworkGatewaysClient) GetLearnedRoutesHandleResponse(resp *azcore.Response) (*GatewayRouteListResultPollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) GetLearnedRoutesHandleResponse(resp *azcore.Response) (*GatewayRouteListResultResponse, error) {
 	result := GatewayRouteListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.GatewayRouteListResult)
 }
@@ -891,7 +891,7 @@ func (client *VirtualNetworkGatewaysClient) GetVpnProfilePackageURLCreateRequest
 }
 
 // GetVpnProfilePackageURLHandleResponse handles the GetVpnProfilePackageURL response.
-func (client *VirtualNetworkGatewaysClient) GetVpnProfilePackageURLHandleResponse(resp *azcore.Response) (*StringPollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) GetVpnProfilePackageURLHandleResponse(resp *azcore.Response) (*StringResponse, error) {
 	result := StringResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
@@ -974,7 +974,7 @@ func (client *VirtualNetworkGatewaysClient) GetVpnclientConnectionHealthCreateRe
 }
 
 // GetVpnclientConnectionHealthHandleResponse handles the GetVpnclientConnectionHealth response.
-func (client *VirtualNetworkGatewaysClient) GetVpnclientConnectionHealthHandleResponse(resp *azcore.Response) (*VpnClientConnectionHealthDetailListResultPollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) GetVpnclientConnectionHealthHandleResponse(resp *azcore.Response) (*VpnClientConnectionHealthDetailListResultResponse, error) {
 	result := VpnClientConnectionHealthDetailListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VpnClientConnectionHealthDetailListResult)
 }
@@ -1057,7 +1057,7 @@ func (client *VirtualNetworkGatewaysClient) GetVpnclientIPsecParametersCreateReq
 }
 
 // GetVpnclientIPsecParametersHandleResponse handles the GetVpnclientIPsecParameters response.
-func (client *VirtualNetworkGatewaysClient) GetVpnclientIPsecParametersHandleResponse(resp *azcore.Response) (*VpnClientIPsecParametersPollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) GetVpnclientIPsecParametersHandleResponse(resp *azcore.Response) (*VpnClientIPsecParametersResponse, error) {
 	result := VpnClientIPsecParametersResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VpnClientIPsecParameters)
 }
@@ -1236,7 +1236,7 @@ func (client *VirtualNetworkGatewaysClient) ResetCreateRequest(ctx context.Conte
 }
 
 // ResetHandleResponse handles the Reset response.
-func (client *VirtualNetworkGatewaysClient) ResetHandleResponse(resp *azcore.Response) (*VirtualNetworkGatewayPollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) ResetHandleResponse(resp *azcore.Response) (*VirtualNetworkGatewayResponse, error) {
 	result := VirtualNetworkGatewayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualNetworkGateway)
 }
@@ -1396,7 +1396,7 @@ func (client *VirtualNetworkGatewaysClient) SetVpnclientIPsecParametersCreateReq
 }
 
 // SetVpnclientIPsecParametersHandleResponse handles the SetVpnclientIPsecParameters response.
-func (client *VirtualNetworkGatewaysClient) SetVpnclientIPsecParametersHandleResponse(resp *azcore.Response) (*VpnClientIPsecParametersPollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) SetVpnclientIPsecParametersHandleResponse(resp *azcore.Response) (*VpnClientIPsecParametersResponse, error) {
 	result := VpnClientIPsecParametersResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VpnClientIPsecParameters)
 }
@@ -1482,7 +1482,7 @@ func (client *VirtualNetworkGatewaysClient) StartPacketCaptureCreateRequest(ctx 
 }
 
 // StartPacketCaptureHandleResponse handles the StartPacketCapture response.
-func (client *VirtualNetworkGatewaysClient) StartPacketCaptureHandleResponse(resp *azcore.Response) (*StringPollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) StartPacketCaptureHandleResponse(resp *azcore.Response) (*StringResponse, error) {
 	result := StringResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
@@ -1565,7 +1565,7 @@ func (client *VirtualNetworkGatewaysClient) StopPacketCaptureCreateRequest(ctx c
 }
 
 // StopPacketCaptureHandleResponse handles the StopPacketCapture response.
-func (client *VirtualNetworkGatewaysClient) StopPacketCaptureHandleResponse(resp *azcore.Response) (*StringPollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) StopPacketCaptureHandleResponse(resp *azcore.Response) (*StringResponse, error) {
 	result := StringResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
@@ -1700,7 +1700,7 @@ func (client *VirtualNetworkGatewaysClient) UpdateTagsCreateRequest(ctx context.
 }
 
 // UpdateTagsHandleResponse handles the UpdateTags response.
-func (client *VirtualNetworkGatewaysClient) UpdateTagsHandleResponse(resp *azcore.Response) (*VirtualNetworkGatewayPollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) UpdateTagsHandleResponse(resp *azcore.Response) (*VirtualNetworkGatewayResponse, error) {
 	result := VirtualNetworkGatewayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualNetworkGateway)
 }
