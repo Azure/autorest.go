@@ -3,7 +3,8 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { ArraySchema, DictionarySchema, ObjectSchema, Operation, Parameter, Response, Schema, SchemaResponse, SchemaType } from '@azure-tools/codemodel';
+import { Session } from '@azure-tools/autorest-extension-base';
+import { ArraySchema, CodeModel, DictionarySchema, ObjectSchema, Operation, Parameter, Response, Schema, SchemaResponse, SchemaType } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 
 // aggregates the Parameter in op.parameters and the first request
@@ -107,4 +108,10 @@ export function getRelationship(obj: ObjectSchema): 'none' | 'root' | 'parent' |
   } else {
     return 'parent';
   }
+}
+
+// returns true if client types should be exported
+export async function exportClients(session: Session<CodeModel>): Promise<boolean> {
+  const specType = await session.getValue('openapi-type', 'not_specified');
+  return specType === 'arm';
 }

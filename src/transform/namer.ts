@@ -8,7 +8,7 @@ import { Session } from '@azure-tools/autorest-extension-base';
 import { CodeModel, HttpHeader, Language } from '@azure-tools/codemodel';
 import { visitor, clone, values } from '@azure-tools/linq';
 import { CommonAcronyms, ReservedWords } from './mappings';
-import { aggregateParameters, hasAdditionalProperties, isLROOperation } from '../common/helpers';
+import { aggregateParameters, exportClients, hasAdditionalProperties } from '../common/helpers';
 
 const requestMethodSuffix = 'CreateRequest';
 const responseMethodSuffix = 'HandleResponse';
@@ -73,7 +73,7 @@ export async function namer(session: Session<CodeModel>) {
     }
   }
 
-  const exportClient = await session.getValue('export-client', true);
+  const exportClient = await exportClients(session);
   // pascal-case and capitzalize acronym operation groups and their operations
   for (const group of values(model.operationGroups)) {
     const groupDetails = <Language>group.language.go;

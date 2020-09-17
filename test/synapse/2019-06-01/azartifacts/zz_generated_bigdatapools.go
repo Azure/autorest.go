@@ -13,17 +13,17 @@ import (
 	"strings"
 )
 
-type BigDataPoolsClient struct {
-	*Client
+type bigDataPoolsClient struct {
+	*client
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *BigDataPoolsClient) Do(req *azcore.Request) (*azcore.Response, error) {
+func (client *bigDataPoolsClient) Do(req *azcore.Request) (*azcore.Response, error) {
 	return client.p.Do(req)
 }
 
 // Get - Get Big Data Pool
-func (client *BigDataPoolsClient) Get(ctx context.Context, bigDataPoolName string) (*BigDataPoolResourceInfoResponse, error) {
+func (client *bigDataPoolsClient) Get(ctx context.Context, bigDataPoolName string) (*BigDataPoolResourceInfoResponse, error) {
 	req, err := client.GetCreateRequest(ctx, bigDataPoolName)
 	if err != nil {
 		return nil, err
@@ -43,7 +43,7 @@ func (client *BigDataPoolsClient) Get(ctx context.Context, bigDataPoolName strin
 }
 
 // GetCreateRequest creates the Get request.
-func (client *BigDataPoolsClient) GetCreateRequest(ctx context.Context, bigDataPoolName string) (*azcore.Request, error) {
+func (client *bigDataPoolsClient) GetCreateRequest(ctx context.Context, bigDataPoolName string) (*azcore.Request, error) {
 	urlPath := "/bigDataPools/{bigDataPoolName}"
 	urlPath = strings.ReplaceAll(urlPath, "{bigDataPoolName}", url.PathEscape(bigDataPoolName))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
@@ -58,13 +58,13 @@ func (client *BigDataPoolsClient) GetCreateRequest(ctx context.Context, bigDataP
 }
 
 // GetHandleResponse handles the Get response.
-func (client *BigDataPoolsClient) GetHandleResponse(resp *azcore.Response) (*BigDataPoolResourceInfoResponse, error) {
+func (client *bigDataPoolsClient) GetHandleResponse(resp *azcore.Response) (*BigDataPoolResourceInfoResponse, error) {
 	result := BigDataPoolResourceInfoResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.BigDataPoolResourceInfo)
 }
 
 // GetHandleError handles the Get error response.
-func (client *BigDataPoolsClient) GetHandleError(resp *azcore.Response) error {
+func (client *bigDataPoolsClient) GetHandleError(resp *azcore.Response) error {
 	var err ErrorContract
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -73,7 +73,7 @@ func (client *BigDataPoolsClient) GetHandleError(resp *azcore.Response) error {
 }
 
 // List - List Big Data Pools
-func (client *BigDataPoolsClient) List(ctx context.Context) (*BigDataPoolResourceInfoListResultResponse, error) {
+func (client *bigDataPoolsClient) List(ctx context.Context) (*BigDataPoolResourceInfoListResultResponse, error) {
 	req, err := client.ListCreateRequest(ctx)
 	if err != nil {
 		return nil, err
@@ -93,7 +93,7 @@ func (client *BigDataPoolsClient) List(ctx context.Context) (*BigDataPoolResourc
 }
 
 // ListCreateRequest creates the List request.
-func (client *BigDataPoolsClient) ListCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *bigDataPoolsClient) ListCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/bigDataPools"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -107,13 +107,13 @@ func (client *BigDataPoolsClient) ListCreateRequest(ctx context.Context) (*azcor
 }
 
 // ListHandleResponse handles the List response.
-func (client *BigDataPoolsClient) ListHandleResponse(resp *azcore.Response) (*BigDataPoolResourceInfoListResultResponse, error) {
+func (client *bigDataPoolsClient) ListHandleResponse(resp *azcore.Response) (*BigDataPoolResourceInfoListResultResponse, error) {
 	result := BigDataPoolResourceInfoListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.BigDataPoolResourceInfoListResult)
 }
 
 // ListHandleError handles the List error response.
-func (client *BigDataPoolsClient) ListHandleError(resp *azcore.Response) error {
+func (client *bigDataPoolsClient) ListHandleError(resp *azcore.Response) error {
 	var err ErrorContract
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

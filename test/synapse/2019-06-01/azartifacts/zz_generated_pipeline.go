@@ -14,17 +14,17 @@ import (
 	"strings"
 )
 
-type PipelineClient struct {
-	*Client
+type pipelineClient struct {
+	*client
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *PipelineClient) Do(req *azcore.Request) (*azcore.Response, error) {
+func (client *pipelineClient) Do(req *azcore.Request) (*azcore.Response, error) {
 	return client.p.Do(req)
 }
 
 // CreateOrUpdatePipeline - Creates or updates a pipeline.
-func (client *PipelineClient) CreateOrUpdatePipeline(ctx context.Context, pipelineName string, pipeline PipelineResource, pipelineCreateOrUpdatePipelineOptions *PipelineCreateOrUpdatePipelineOptions) (*azcore.Response, error) {
+func (client *pipelineClient) CreateOrUpdatePipeline(ctx context.Context, pipelineName string, pipeline PipelineResource, pipelineCreateOrUpdatePipelineOptions *PipelineCreateOrUpdatePipelineOptions) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdatePipelineCreateRequest(ctx, pipelineName, pipeline, pipelineCreateOrUpdatePipelineOptions)
 	if err != nil {
 		return nil, err
@@ -40,7 +40,7 @@ func (client *PipelineClient) CreateOrUpdatePipeline(ctx context.Context, pipeli
 }
 
 // CreateOrUpdatePipelineCreateRequest creates the CreateOrUpdatePipeline request.
-func (client *PipelineClient) CreateOrUpdatePipelineCreateRequest(ctx context.Context, pipelineName string, pipeline PipelineResource, pipelineCreateOrUpdatePipelineOptions *PipelineCreateOrUpdatePipelineOptions) (*azcore.Request, error) {
+func (client *pipelineClient) CreateOrUpdatePipelineCreateRequest(ctx context.Context, pipelineName string, pipeline PipelineResource, pipelineCreateOrUpdatePipelineOptions *PipelineCreateOrUpdatePipelineOptions) (*azcore.Request, error) {
 	urlPath := "/pipelines/{pipelineName}"
 	urlPath = strings.ReplaceAll(urlPath, "{pipelineName}", url.PathEscape(pipelineName))
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
@@ -58,13 +58,13 @@ func (client *PipelineClient) CreateOrUpdatePipelineCreateRequest(ctx context.Co
 }
 
 // CreateOrUpdatePipelineHandleResponse handles the CreateOrUpdatePipeline response.
-func (client *PipelineClient) CreateOrUpdatePipelineHandleResponse(resp *azcore.Response) (*PipelineResourceResponse, error) {
+func (client *pipelineClient) CreateOrUpdatePipelineHandleResponse(resp *azcore.Response) (*PipelineResourceResponse, error) {
 	result := PipelineResourceResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.PipelineResource)
 }
 
 // CreateOrUpdatePipelineHandleError handles the CreateOrUpdatePipeline error response.
-func (client *PipelineClient) CreateOrUpdatePipelineHandleError(resp *azcore.Response) error {
+func (client *pipelineClient) CreateOrUpdatePipelineHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -73,7 +73,7 @@ func (client *PipelineClient) CreateOrUpdatePipelineHandleError(resp *azcore.Res
 }
 
 // CreatePipelineRun - Creates a run of a pipeline.
-func (client *PipelineClient) CreatePipelineRun(ctx context.Context, pipelineName string, pipelineCreatePipelineRunOptions *PipelineCreatePipelineRunOptions) (*CreateRunResponseResponse, error) {
+func (client *pipelineClient) CreatePipelineRun(ctx context.Context, pipelineName string, pipelineCreatePipelineRunOptions *PipelineCreatePipelineRunOptions) (*CreateRunResponseResponse, error) {
 	req, err := client.CreatePipelineRunCreateRequest(ctx, pipelineName, pipelineCreatePipelineRunOptions)
 	if err != nil {
 		return nil, err
@@ -93,7 +93,7 @@ func (client *PipelineClient) CreatePipelineRun(ctx context.Context, pipelineNam
 }
 
 // CreatePipelineRunCreateRequest creates the CreatePipelineRun request.
-func (client *PipelineClient) CreatePipelineRunCreateRequest(ctx context.Context, pipelineName string, pipelineCreatePipelineRunOptions *PipelineCreatePipelineRunOptions) (*azcore.Request, error) {
+func (client *pipelineClient) CreatePipelineRunCreateRequest(ctx context.Context, pipelineName string, pipelineCreatePipelineRunOptions *PipelineCreatePipelineRunOptions) (*azcore.Request, error) {
 	urlPath := "/pipelines/{pipelineName}/createRun"
 	urlPath = strings.ReplaceAll(urlPath, "{pipelineName}", url.PathEscape(pipelineName))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
@@ -120,13 +120,13 @@ func (client *PipelineClient) CreatePipelineRunCreateRequest(ctx context.Context
 }
 
 // CreatePipelineRunHandleResponse handles the CreatePipelineRun response.
-func (client *PipelineClient) CreatePipelineRunHandleResponse(resp *azcore.Response) (*CreateRunResponseResponse, error) {
+func (client *pipelineClient) CreatePipelineRunHandleResponse(resp *azcore.Response) (*CreateRunResponseResponse, error) {
 	result := CreateRunResponseResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.CreateRunResponse)
 }
 
 // CreatePipelineRunHandleError handles the CreatePipelineRun error response.
-func (client *PipelineClient) CreatePipelineRunHandleError(resp *azcore.Response) error {
+func (client *pipelineClient) CreatePipelineRunHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -135,7 +135,7 @@ func (client *PipelineClient) CreatePipelineRunHandleError(resp *azcore.Response
 }
 
 // DeletePipeline - Deletes a pipeline.
-func (client *PipelineClient) DeletePipeline(ctx context.Context, pipelineName string) (*azcore.Response, error) {
+func (client *pipelineClient) DeletePipeline(ctx context.Context, pipelineName string) (*azcore.Response, error) {
 	req, err := client.DeletePipelineCreateRequest(ctx, pipelineName)
 	if err != nil {
 		return nil, err
@@ -151,7 +151,7 @@ func (client *PipelineClient) DeletePipeline(ctx context.Context, pipelineName s
 }
 
 // DeletePipelineCreateRequest creates the DeletePipeline request.
-func (client *PipelineClient) DeletePipelineCreateRequest(ctx context.Context, pipelineName string) (*azcore.Request, error) {
+func (client *pipelineClient) DeletePipelineCreateRequest(ctx context.Context, pipelineName string) (*azcore.Request, error) {
 	urlPath := "/pipelines/{pipelineName}"
 	urlPath = strings.ReplaceAll(urlPath, "{pipelineName}", url.PathEscape(pipelineName))
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
@@ -166,7 +166,7 @@ func (client *PipelineClient) DeletePipelineCreateRequest(ctx context.Context, p
 }
 
 // DeletePipelineHandleError handles the DeletePipeline error response.
-func (client *PipelineClient) DeletePipelineHandleError(resp *azcore.Response) error {
+func (client *pipelineClient) DeletePipelineHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -175,7 +175,7 @@ func (client *PipelineClient) DeletePipelineHandleError(resp *azcore.Response) e
 }
 
 // GetPipeline - Gets a pipeline.
-func (client *PipelineClient) GetPipeline(ctx context.Context, pipelineName string, pipelineGetPipelineOptions *PipelineGetPipelineOptions) (*PipelineResourceResponse, error) {
+func (client *pipelineClient) GetPipeline(ctx context.Context, pipelineName string, pipelineGetPipelineOptions *PipelineGetPipelineOptions) (*PipelineResourceResponse, error) {
 	req, err := client.GetPipelineCreateRequest(ctx, pipelineName, pipelineGetPipelineOptions)
 	if err != nil {
 		return nil, err
@@ -195,7 +195,7 @@ func (client *PipelineClient) GetPipeline(ctx context.Context, pipelineName stri
 }
 
 // GetPipelineCreateRequest creates the GetPipeline request.
-func (client *PipelineClient) GetPipelineCreateRequest(ctx context.Context, pipelineName string, pipelineGetPipelineOptions *PipelineGetPipelineOptions) (*azcore.Request, error) {
+func (client *pipelineClient) GetPipelineCreateRequest(ctx context.Context, pipelineName string, pipelineGetPipelineOptions *PipelineGetPipelineOptions) (*azcore.Request, error) {
 	urlPath := "/pipelines/{pipelineName}"
 	urlPath = strings.ReplaceAll(urlPath, "{pipelineName}", url.PathEscape(pipelineName))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
@@ -213,13 +213,13 @@ func (client *PipelineClient) GetPipelineCreateRequest(ctx context.Context, pipe
 }
 
 // GetPipelineHandleResponse handles the GetPipeline response.
-func (client *PipelineClient) GetPipelineHandleResponse(resp *azcore.Response) (*PipelineResourceResponse, error) {
+func (client *pipelineClient) GetPipelineHandleResponse(resp *azcore.Response) (*PipelineResourceResponse, error) {
 	result := PipelineResourceResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.PipelineResource)
 }
 
 // GetPipelineHandleError handles the GetPipeline error response.
-func (client *PipelineClient) GetPipelineHandleError(resp *azcore.Response) error {
+func (client *pipelineClient) GetPipelineHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -228,7 +228,7 @@ func (client *PipelineClient) GetPipelineHandleError(resp *azcore.Response) erro
 }
 
 // GetPipelinesByWorkspace - Lists pipelines.
-func (client *PipelineClient) GetPipelinesByWorkspace() PipelineListResponsePager {
+func (client *pipelineClient) GetPipelinesByWorkspace() PipelineListResponsePager {
 	return &pipelineListResponsePager{
 		pipeline: client.p,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -243,7 +243,7 @@ func (client *PipelineClient) GetPipelinesByWorkspace() PipelineListResponsePage
 }
 
 // GetPipelinesByWorkspaceCreateRequest creates the GetPipelinesByWorkspace request.
-func (client *PipelineClient) GetPipelinesByWorkspaceCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *pipelineClient) GetPipelinesByWorkspaceCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/pipelines"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -257,13 +257,13 @@ func (client *PipelineClient) GetPipelinesByWorkspaceCreateRequest(ctx context.C
 }
 
 // GetPipelinesByWorkspaceHandleResponse handles the GetPipelinesByWorkspace response.
-func (client *PipelineClient) GetPipelinesByWorkspaceHandleResponse(resp *azcore.Response) (*PipelineListResponseResponse, error) {
+func (client *pipelineClient) GetPipelinesByWorkspaceHandleResponse(resp *azcore.Response) (*PipelineListResponseResponse, error) {
 	result := PipelineListResponseResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.PipelineListResponse)
 }
 
 // GetPipelinesByWorkspaceHandleError handles the GetPipelinesByWorkspace error response.
-func (client *PipelineClient) GetPipelinesByWorkspaceHandleError(resp *azcore.Response) error {
+func (client *pipelineClient) GetPipelinesByWorkspaceHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

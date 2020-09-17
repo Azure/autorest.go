@@ -17,17 +17,17 @@ import (
 	"strings"
 )
 
-type SparkSessionClient struct {
-	*Client
+type sparkSessionClient struct {
+	*client
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *SparkSessionClient) Do(req *azcore.Request) (*azcore.Response, error) {
+func (client *sparkSessionClient) Do(req *azcore.Request) (*azcore.Response, error) {
 	return client.p.Do(req)
 }
 
 // CancelSparkSession - Cancels a running spark session.
-func (client *SparkSessionClient) CancelSparkSession(ctx context.Context, sessionId int32) (*http.Response, error) {
+func (client *sparkSessionClient) CancelSparkSession(ctx context.Context, sessionId int32) (*http.Response, error) {
 	req, err := client.CancelSparkSessionCreateRequest(ctx, sessionId)
 	if err != nil {
 		return nil, err
@@ -43,7 +43,7 @@ func (client *SparkSessionClient) CancelSparkSession(ctx context.Context, sessio
 }
 
 // CancelSparkSessionCreateRequest creates the CancelSparkSession request.
-func (client *SparkSessionClient) CancelSparkSessionCreateRequest(ctx context.Context, sessionId int32) (*azcore.Request, error) {
+func (client *sparkSessionClient) CancelSparkSessionCreateRequest(ctx context.Context, sessionId int32) (*azcore.Request, error) {
 	urlPath := "/sessions/{sessionId}"
 	urlPath = strings.ReplaceAll(urlPath, "{sessionId}", url.PathEscape(strconv.FormatInt(int64(sessionId), 10)))
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
@@ -54,7 +54,7 @@ func (client *SparkSessionClient) CancelSparkSessionCreateRequest(ctx context.Co
 }
 
 // CancelSparkSessionHandleError handles the CancelSparkSession error response.
-func (client *SparkSessionClient) CancelSparkSessionHandleError(resp *azcore.Response) error {
+func (client *sparkSessionClient) CancelSparkSessionHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -66,7 +66,7 @@ func (client *SparkSessionClient) CancelSparkSessionHandleError(resp *azcore.Res
 }
 
 // CancelSparkStatement - Kill a statement within a session.
-func (client *SparkSessionClient) CancelSparkStatement(ctx context.Context, sessionId int32, statementId int32) (*SparkStatementCancellationResultResponse, error) {
+func (client *sparkSessionClient) CancelSparkStatement(ctx context.Context, sessionId int32, statementId int32) (*SparkStatementCancellationResultResponse, error) {
 	req, err := client.CancelSparkStatementCreateRequest(ctx, sessionId, statementId)
 	if err != nil {
 		return nil, err
@@ -86,7 +86,7 @@ func (client *SparkSessionClient) CancelSparkStatement(ctx context.Context, sess
 }
 
 // CancelSparkStatementCreateRequest creates the CancelSparkStatement request.
-func (client *SparkSessionClient) CancelSparkStatementCreateRequest(ctx context.Context, sessionId int32, statementId int32) (*azcore.Request, error) {
+func (client *sparkSessionClient) CancelSparkStatementCreateRequest(ctx context.Context, sessionId int32, statementId int32) (*azcore.Request, error) {
 	urlPath := "/sessions/{sessionId}/statements/{statementId}/cancel"
 	urlPath = strings.ReplaceAll(urlPath, "{sessionId}", url.PathEscape(strconv.FormatInt(int64(sessionId), 10)))
 	urlPath = strings.ReplaceAll(urlPath, "{statementId}", url.PathEscape(strconv.FormatInt(int64(statementId), 10)))
@@ -99,13 +99,13 @@ func (client *SparkSessionClient) CancelSparkStatementCreateRequest(ctx context.
 }
 
 // CancelSparkStatementHandleResponse handles the CancelSparkStatement response.
-func (client *SparkSessionClient) CancelSparkStatementHandleResponse(resp *azcore.Response) (*SparkStatementCancellationResultResponse, error) {
+func (client *sparkSessionClient) CancelSparkStatementHandleResponse(resp *azcore.Response) (*SparkStatementCancellationResultResponse, error) {
 	result := SparkStatementCancellationResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.SparkStatementCancellationResult)
 }
 
 // CancelSparkStatementHandleError handles the CancelSparkStatement error response.
-func (client *SparkSessionClient) CancelSparkStatementHandleError(resp *azcore.Response) error {
+func (client *sparkSessionClient) CancelSparkStatementHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -117,7 +117,7 @@ func (client *SparkSessionClient) CancelSparkStatementHandleError(resp *azcore.R
 }
 
 // CreateSparkSession - Create new spark session.
-func (client *SparkSessionClient) CreateSparkSession(ctx context.Context, sparkSessionOptions SparkSessionOptions, sparkSessionCreateSparkSessionOptions *SparkSessionCreateSparkSessionOptions) (*SparkSessionResponse, error) {
+func (client *sparkSessionClient) CreateSparkSession(ctx context.Context, sparkSessionOptions SparkSessionOptions, sparkSessionCreateSparkSessionOptions *SparkSessionCreateSparkSessionOptions) (*SparkSessionResponse, error) {
 	req, err := client.CreateSparkSessionCreateRequest(ctx, sparkSessionOptions, sparkSessionCreateSparkSessionOptions)
 	if err != nil {
 		return nil, err
@@ -137,7 +137,7 @@ func (client *SparkSessionClient) CreateSparkSession(ctx context.Context, sparkS
 }
 
 // CreateSparkSessionCreateRequest creates the CreateSparkSession request.
-func (client *SparkSessionClient) CreateSparkSessionCreateRequest(ctx context.Context, sparkSessionOptions SparkSessionOptions, sparkSessionCreateSparkSessionOptions *SparkSessionCreateSparkSessionOptions) (*azcore.Request, error) {
+func (client *sparkSessionClient) CreateSparkSessionCreateRequest(ctx context.Context, sparkSessionOptions SparkSessionOptions, sparkSessionCreateSparkSessionOptions *SparkSessionCreateSparkSessionOptions) (*azcore.Request, error) {
 	urlPath := "/sessions"
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -153,13 +153,13 @@ func (client *SparkSessionClient) CreateSparkSessionCreateRequest(ctx context.Co
 }
 
 // CreateSparkSessionHandleResponse handles the CreateSparkSession response.
-func (client *SparkSessionClient) CreateSparkSessionHandleResponse(resp *azcore.Response) (*SparkSessionResponse, error) {
+func (client *sparkSessionClient) CreateSparkSessionHandleResponse(resp *azcore.Response) (*SparkSessionResponse, error) {
 	result := SparkSessionResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.SparkSession)
 }
 
 // CreateSparkSessionHandleError handles the CreateSparkSession error response.
-func (client *SparkSessionClient) CreateSparkSessionHandleError(resp *azcore.Response) error {
+func (client *sparkSessionClient) CreateSparkSessionHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -171,7 +171,7 @@ func (client *SparkSessionClient) CreateSparkSessionHandleError(resp *azcore.Res
 }
 
 // CreateSparkStatement - Create statement within a spark session.
-func (client *SparkSessionClient) CreateSparkStatement(ctx context.Context, sessionId int32, sparkStatementOptions SparkStatementOptions) (*SparkStatementResponse, error) {
+func (client *sparkSessionClient) CreateSparkStatement(ctx context.Context, sessionId int32, sparkStatementOptions SparkStatementOptions) (*SparkStatementResponse, error) {
 	req, err := client.CreateSparkStatementCreateRequest(ctx, sessionId, sparkStatementOptions)
 	if err != nil {
 		return nil, err
@@ -191,7 +191,7 @@ func (client *SparkSessionClient) CreateSparkStatement(ctx context.Context, sess
 }
 
 // CreateSparkStatementCreateRequest creates the CreateSparkStatement request.
-func (client *SparkSessionClient) CreateSparkStatementCreateRequest(ctx context.Context, sessionId int32, sparkStatementOptions SparkStatementOptions) (*azcore.Request, error) {
+func (client *sparkSessionClient) CreateSparkStatementCreateRequest(ctx context.Context, sessionId int32, sparkStatementOptions SparkStatementOptions) (*azcore.Request, error) {
 	urlPath := "/sessions/{sessionId}/statements"
 	urlPath = strings.ReplaceAll(urlPath, "{sessionId}", url.PathEscape(strconv.FormatInt(int64(sessionId), 10)))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
@@ -203,13 +203,13 @@ func (client *SparkSessionClient) CreateSparkStatementCreateRequest(ctx context.
 }
 
 // CreateSparkStatementHandleResponse handles the CreateSparkStatement response.
-func (client *SparkSessionClient) CreateSparkStatementHandleResponse(resp *azcore.Response) (*SparkStatementResponse, error) {
+func (client *sparkSessionClient) CreateSparkStatementHandleResponse(resp *azcore.Response) (*SparkStatementResponse, error) {
 	result := SparkStatementResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.SparkStatement)
 }
 
 // CreateSparkStatementHandleError handles the CreateSparkStatement error response.
-func (client *SparkSessionClient) CreateSparkStatementHandleError(resp *azcore.Response) error {
+func (client *sparkSessionClient) CreateSparkStatementHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -221,7 +221,7 @@ func (client *SparkSessionClient) CreateSparkStatementHandleError(resp *azcore.R
 }
 
 // GetSparkSession - Gets a single spark session.
-func (client *SparkSessionClient) GetSparkSession(ctx context.Context, sessionId int32, sparkSessionGetSparkSessionOptions *SparkSessionGetSparkSessionOptions) (*SparkSessionResponse, error) {
+func (client *sparkSessionClient) GetSparkSession(ctx context.Context, sessionId int32, sparkSessionGetSparkSessionOptions *SparkSessionGetSparkSessionOptions) (*SparkSessionResponse, error) {
 	req, err := client.GetSparkSessionCreateRequest(ctx, sessionId, sparkSessionGetSparkSessionOptions)
 	if err != nil {
 		return nil, err
@@ -241,7 +241,7 @@ func (client *SparkSessionClient) GetSparkSession(ctx context.Context, sessionId
 }
 
 // GetSparkSessionCreateRequest creates the GetSparkSession request.
-func (client *SparkSessionClient) GetSparkSessionCreateRequest(ctx context.Context, sessionId int32, sparkSessionGetSparkSessionOptions *SparkSessionGetSparkSessionOptions) (*azcore.Request, error) {
+func (client *sparkSessionClient) GetSparkSessionCreateRequest(ctx context.Context, sessionId int32, sparkSessionGetSparkSessionOptions *SparkSessionGetSparkSessionOptions) (*azcore.Request, error) {
 	urlPath := "/sessions/{sessionId}"
 	urlPath = strings.ReplaceAll(urlPath, "{sessionId}", url.PathEscape(strconv.FormatInt(int64(sessionId), 10)))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
@@ -258,13 +258,13 @@ func (client *SparkSessionClient) GetSparkSessionCreateRequest(ctx context.Conte
 }
 
 // GetSparkSessionHandleResponse handles the GetSparkSession response.
-func (client *SparkSessionClient) GetSparkSessionHandleResponse(resp *azcore.Response) (*SparkSessionResponse, error) {
+func (client *sparkSessionClient) GetSparkSessionHandleResponse(resp *azcore.Response) (*SparkSessionResponse, error) {
 	result := SparkSessionResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.SparkSession)
 }
 
 // GetSparkSessionHandleError handles the GetSparkSession error response.
-func (client *SparkSessionClient) GetSparkSessionHandleError(resp *azcore.Response) error {
+func (client *sparkSessionClient) GetSparkSessionHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -276,7 +276,7 @@ func (client *SparkSessionClient) GetSparkSessionHandleError(resp *azcore.Respon
 }
 
 // GetSparkSessions - List all spark sessions which are running under a particular spark pool.
-func (client *SparkSessionClient) GetSparkSessions(ctx context.Context, sparkSessionGetSparkSessionsOptions *SparkSessionGetSparkSessionsOptions) (*SparkSessionCollectionResponse, error) {
+func (client *sparkSessionClient) GetSparkSessions(ctx context.Context, sparkSessionGetSparkSessionsOptions *SparkSessionGetSparkSessionsOptions) (*SparkSessionCollectionResponse, error) {
 	req, err := client.GetSparkSessionsCreateRequest(ctx, sparkSessionGetSparkSessionsOptions)
 	if err != nil {
 		return nil, err
@@ -296,7 +296,7 @@ func (client *SparkSessionClient) GetSparkSessions(ctx context.Context, sparkSes
 }
 
 // GetSparkSessionsCreateRequest creates the GetSparkSessions request.
-func (client *SparkSessionClient) GetSparkSessionsCreateRequest(ctx context.Context, sparkSessionGetSparkSessionsOptions *SparkSessionGetSparkSessionsOptions) (*azcore.Request, error) {
+func (client *sparkSessionClient) GetSparkSessionsCreateRequest(ctx context.Context, sparkSessionGetSparkSessionsOptions *SparkSessionGetSparkSessionsOptions) (*azcore.Request, error) {
 	urlPath := "/sessions"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -318,13 +318,13 @@ func (client *SparkSessionClient) GetSparkSessionsCreateRequest(ctx context.Cont
 }
 
 // GetSparkSessionsHandleResponse handles the GetSparkSessions response.
-func (client *SparkSessionClient) GetSparkSessionsHandleResponse(resp *azcore.Response) (*SparkSessionCollectionResponse, error) {
+func (client *sparkSessionClient) GetSparkSessionsHandleResponse(resp *azcore.Response) (*SparkSessionCollectionResponse, error) {
 	result := SparkSessionCollectionResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.SparkSessionCollection)
 }
 
 // GetSparkSessionsHandleError handles the GetSparkSessions error response.
-func (client *SparkSessionClient) GetSparkSessionsHandleError(resp *azcore.Response) error {
+func (client *sparkSessionClient) GetSparkSessionsHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -336,7 +336,7 @@ func (client *SparkSessionClient) GetSparkSessionsHandleError(resp *azcore.Respo
 }
 
 // GetSparkStatement - Gets a single statement within a spark session.
-func (client *SparkSessionClient) GetSparkStatement(ctx context.Context, sessionId int32, statementId int32) (*SparkStatementResponse, error) {
+func (client *sparkSessionClient) GetSparkStatement(ctx context.Context, sessionId int32, statementId int32) (*SparkStatementResponse, error) {
 	req, err := client.GetSparkStatementCreateRequest(ctx, sessionId, statementId)
 	if err != nil {
 		return nil, err
@@ -356,7 +356,7 @@ func (client *SparkSessionClient) GetSparkStatement(ctx context.Context, session
 }
 
 // GetSparkStatementCreateRequest creates the GetSparkStatement request.
-func (client *SparkSessionClient) GetSparkStatementCreateRequest(ctx context.Context, sessionId int32, statementId int32) (*azcore.Request, error) {
+func (client *sparkSessionClient) GetSparkStatementCreateRequest(ctx context.Context, sessionId int32, statementId int32) (*azcore.Request, error) {
 	urlPath := "/sessions/{sessionId}/statements/{statementId}"
 	urlPath = strings.ReplaceAll(urlPath, "{sessionId}", url.PathEscape(strconv.FormatInt(int64(sessionId), 10)))
 	urlPath = strings.ReplaceAll(urlPath, "{statementId}", url.PathEscape(strconv.FormatInt(int64(statementId), 10)))
@@ -369,13 +369,13 @@ func (client *SparkSessionClient) GetSparkStatementCreateRequest(ctx context.Con
 }
 
 // GetSparkStatementHandleResponse handles the GetSparkStatement response.
-func (client *SparkSessionClient) GetSparkStatementHandleResponse(resp *azcore.Response) (*SparkStatementResponse, error) {
+func (client *sparkSessionClient) GetSparkStatementHandleResponse(resp *azcore.Response) (*SparkStatementResponse, error) {
 	result := SparkStatementResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.SparkStatement)
 }
 
 // GetSparkStatementHandleError handles the GetSparkStatement error response.
-func (client *SparkSessionClient) GetSparkStatementHandleError(resp *azcore.Response) error {
+func (client *sparkSessionClient) GetSparkStatementHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -387,7 +387,7 @@ func (client *SparkSessionClient) GetSparkStatementHandleError(resp *azcore.Resp
 }
 
 // GetSparkStatements - Gets a list of statements within a spark session.
-func (client *SparkSessionClient) GetSparkStatements(ctx context.Context, sessionId int32) (*SparkStatementCollectionResponse, error) {
+func (client *sparkSessionClient) GetSparkStatements(ctx context.Context, sessionId int32) (*SparkStatementCollectionResponse, error) {
 	req, err := client.GetSparkStatementsCreateRequest(ctx, sessionId)
 	if err != nil {
 		return nil, err
@@ -407,7 +407,7 @@ func (client *SparkSessionClient) GetSparkStatements(ctx context.Context, sessio
 }
 
 // GetSparkStatementsCreateRequest creates the GetSparkStatements request.
-func (client *SparkSessionClient) GetSparkStatementsCreateRequest(ctx context.Context, sessionId int32) (*azcore.Request, error) {
+func (client *sparkSessionClient) GetSparkStatementsCreateRequest(ctx context.Context, sessionId int32) (*azcore.Request, error) {
 	urlPath := "/sessions/{sessionId}/statements"
 	urlPath = strings.ReplaceAll(urlPath, "{sessionId}", url.PathEscape(strconv.FormatInt(int64(sessionId), 10)))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
@@ -419,13 +419,13 @@ func (client *SparkSessionClient) GetSparkStatementsCreateRequest(ctx context.Co
 }
 
 // GetSparkStatementsHandleResponse handles the GetSparkStatements response.
-func (client *SparkSessionClient) GetSparkStatementsHandleResponse(resp *azcore.Response) (*SparkStatementCollectionResponse, error) {
+func (client *sparkSessionClient) GetSparkStatementsHandleResponse(resp *azcore.Response) (*SparkStatementCollectionResponse, error) {
 	result := SparkStatementCollectionResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.SparkStatementCollection)
 }
 
 // GetSparkStatementsHandleError handles the GetSparkStatements error response.
-func (client *SparkSessionClient) GetSparkStatementsHandleError(resp *azcore.Response) error {
+func (client *sparkSessionClient) GetSparkStatementsHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -437,7 +437,7 @@ func (client *SparkSessionClient) GetSparkStatementsHandleError(resp *azcore.Res
 }
 
 // ResetSparkSessionTimeout - Sends a keep alive call to the current session to reset the session timeout.
-func (client *SparkSessionClient) ResetSparkSessionTimeout(ctx context.Context, sessionId int32) (*http.Response, error) {
+func (client *sparkSessionClient) ResetSparkSessionTimeout(ctx context.Context, sessionId int32) (*http.Response, error) {
 	req, err := client.ResetSparkSessionTimeoutCreateRequest(ctx, sessionId)
 	if err != nil {
 		return nil, err
@@ -453,7 +453,7 @@ func (client *SparkSessionClient) ResetSparkSessionTimeout(ctx context.Context, 
 }
 
 // ResetSparkSessionTimeoutCreateRequest creates the ResetSparkSessionTimeout request.
-func (client *SparkSessionClient) ResetSparkSessionTimeoutCreateRequest(ctx context.Context, sessionId int32) (*azcore.Request, error) {
+func (client *sparkSessionClient) ResetSparkSessionTimeoutCreateRequest(ctx context.Context, sessionId int32) (*azcore.Request, error) {
 	urlPath := "/sessions/{sessionId}/reset-timeout"
 	urlPath = strings.ReplaceAll(urlPath, "{sessionId}", url.PathEscape(strconv.FormatInt(int64(sessionId), 10)))
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
@@ -464,7 +464,7 @@ func (client *SparkSessionClient) ResetSparkSessionTimeoutCreateRequest(ctx cont
 }
 
 // ResetSparkSessionTimeoutHandleError handles the ResetSparkSessionTimeout error response.
-func (client *SparkSessionClient) ResetSparkSessionTimeoutHandleError(resp *azcore.Response) error {
+func (client *sparkSessionClient) ResetSparkSessionTimeoutHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)

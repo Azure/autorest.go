@@ -13,17 +13,17 @@ import (
 	"strings"
 )
 
-type LinkedServiceClient struct {
-	*Client
+type linkedServiceClient struct {
+	*client
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *LinkedServiceClient) Do(req *azcore.Request) (*azcore.Response, error) {
+func (client *linkedServiceClient) Do(req *azcore.Request) (*azcore.Response, error) {
 	return client.p.Do(req)
 }
 
 // CreateOrUpdateLinkedService - Creates or updates a linked service.
-func (client *LinkedServiceClient) CreateOrUpdateLinkedService(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, linkedServiceCreateOrUpdateLinkedServiceOptions *LinkedServiceCreateOrUpdateLinkedServiceOptions) (*azcore.Response, error) {
+func (client *linkedServiceClient) CreateOrUpdateLinkedService(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, linkedServiceCreateOrUpdateLinkedServiceOptions *LinkedServiceCreateOrUpdateLinkedServiceOptions) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateLinkedServiceCreateRequest(ctx, linkedServiceName, linkedService, linkedServiceCreateOrUpdateLinkedServiceOptions)
 	if err != nil {
 		return nil, err
@@ -39,7 +39,7 @@ func (client *LinkedServiceClient) CreateOrUpdateLinkedService(ctx context.Conte
 }
 
 // CreateOrUpdateLinkedServiceCreateRequest creates the CreateOrUpdateLinkedService request.
-func (client *LinkedServiceClient) CreateOrUpdateLinkedServiceCreateRequest(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, linkedServiceCreateOrUpdateLinkedServiceOptions *LinkedServiceCreateOrUpdateLinkedServiceOptions) (*azcore.Request, error) {
+func (client *linkedServiceClient) CreateOrUpdateLinkedServiceCreateRequest(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, linkedServiceCreateOrUpdateLinkedServiceOptions *LinkedServiceCreateOrUpdateLinkedServiceOptions) (*azcore.Request, error) {
 	urlPath := "/linkedservices/{linkedServiceName}"
 	urlPath = strings.ReplaceAll(urlPath, "{linkedServiceName}", url.PathEscape(linkedServiceName))
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
@@ -57,13 +57,13 @@ func (client *LinkedServiceClient) CreateOrUpdateLinkedServiceCreateRequest(ctx 
 }
 
 // CreateOrUpdateLinkedServiceHandleResponse handles the CreateOrUpdateLinkedService response.
-func (client *LinkedServiceClient) CreateOrUpdateLinkedServiceHandleResponse(resp *azcore.Response) (*LinkedServiceResourceResponse, error) {
+func (client *linkedServiceClient) CreateOrUpdateLinkedServiceHandleResponse(resp *azcore.Response) (*LinkedServiceResourceResponse, error) {
 	result := LinkedServiceResourceResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.LinkedServiceResource)
 }
 
 // CreateOrUpdateLinkedServiceHandleError handles the CreateOrUpdateLinkedService error response.
-func (client *LinkedServiceClient) CreateOrUpdateLinkedServiceHandleError(resp *azcore.Response) error {
+func (client *linkedServiceClient) CreateOrUpdateLinkedServiceHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -72,7 +72,7 @@ func (client *LinkedServiceClient) CreateOrUpdateLinkedServiceHandleError(resp *
 }
 
 // DeleteLinkedService - Deletes a linked service.
-func (client *LinkedServiceClient) DeleteLinkedService(ctx context.Context, linkedServiceName string) (*azcore.Response, error) {
+func (client *linkedServiceClient) DeleteLinkedService(ctx context.Context, linkedServiceName string) (*azcore.Response, error) {
 	req, err := client.DeleteLinkedServiceCreateRequest(ctx, linkedServiceName)
 	if err != nil {
 		return nil, err
@@ -88,7 +88,7 @@ func (client *LinkedServiceClient) DeleteLinkedService(ctx context.Context, link
 }
 
 // DeleteLinkedServiceCreateRequest creates the DeleteLinkedService request.
-func (client *LinkedServiceClient) DeleteLinkedServiceCreateRequest(ctx context.Context, linkedServiceName string) (*azcore.Request, error) {
+func (client *linkedServiceClient) DeleteLinkedServiceCreateRequest(ctx context.Context, linkedServiceName string) (*azcore.Request, error) {
 	urlPath := "/linkedservices/{linkedServiceName}"
 	urlPath = strings.ReplaceAll(urlPath, "{linkedServiceName}", url.PathEscape(linkedServiceName))
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
@@ -103,7 +103,7 @@ func (client *LinkedServiceClient) DeleteLinkedServiceCreateRequest(ctx context.
 }
 
 // DeleteLinkedServiceHandleError handles the DeleteLinkedService error response.
-func (client *LinkedServiceClient) DeleteLinkedServiceHandleError(resp *azcore.Response) error {
+func (client *linkedServiceClient) DeleteLinkedServiceHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -112,7 +112,7 @@ func (client *LinkedServiceClient) DeleteLinkedServiceHandleError(resp *azcore.R
 }
 
 // GetLinkedService - Gets a linked service.
-func (client *LinkedServiceClient) GetLinkedService(ctx context.Context, linkedServiceName string, linkedServiceGetLinkedServiceOptions *LinkedServiceGetLinkedServiceOptions) (*LinkedServiceResourceResponse, error) {
+func (client *linkedServiceClient) GetLinkedService(ctx context.Context, linkedServiceName string, linkedServiceGetLinkedServiceOptions *LinkedServiceGetLinkedServiceOptions) (*LinkedServiceResourceResponse, error) {
 	req, err := client.GetLinkedServiceCreateRequest(ctx, linkedServiceName, linkedServiceGetLinkedServiceOptions)
 	if err != nil {
 		return nil, err
@@ -132,7 +132,7 @@ func (client *LinkedServiceClient) GetLinkedService(ctx context.Context, linkedS
 }
 
 // GetLinkedServiceCreateRequest creates the GetLinkedService request.
-func (client *LinkedServiceClient) GetLinkedServiceCreateRequest(ctx context.Context, linkedServiceName string, linkedServiceGetLinkedServiceOptions *LinkedServiceGetLinkedServiceOptions) (*azcore.Request, error) {
+func (client *linkedServiceClient) GetLinkedServiceCreateRequest(ctx context.Context, linkedServiceName string, linkedServiceGetLinkedServiceOptions *LinkedServiceGetLinkedServiceOptions) (*azcore.Request, error) {
 	urlPath := "/linkedservices/{linkedServiceName}"
 	urlPath = strings.ReplaceAll(urlPath, "{linkedServiceName}", url.PathEscape(linkedServiceName))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
@@ -150,13 +150,13 @@ func (client *LinkedServiceClient) GetLinkedServiceCreateRequest(ctx context.Con
 }
 
 // GetLinkedServiceHandleResponse handles the GetLinkedService response.
-func (client *LinkedServiceClient) GetLinkedServiceHandleResponse(resp *azcore.Response) (*LinkedServiceResourceResponse, error) {
+func (client *linkedServiceClient) GetLinkedServiceHandleResponse(resp *azcore.Response) (*LinkedServiceResourceResponse, error) {
 	result := LinkedServiceResourceResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.LinkedServiceResource)
 }
 
 // GetLinkedServiceHandleError handles the GetLinkedService error response.
-func (client *LinkedServiceClient) GetLinkedServiceHandleError(resp *azcore.Response) error {
+func (client *linkedServiceClient) GetLinkedServiceHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -165,7 +165,7 @@ func (client *LinkedServiceClient) GetLinkedServiceHandleError(resp *azcore.Resp
 }
 
 // GetLinkedServicesByWorkspace - Lists linked services.
-func (client *LinkedServiceClient) GetLinkedServicesByWorkspace() LinkedServiceListResponsePager {
+func (client *linkedServiceClient) GetLinkedServicesByWorkspace() LinkedServiceListResponsePager {
 	return &linkedServiceListResponsePager{
 		pipeline: client.p,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -180,7 +180,7 @@ func (client *LinkedServiceClient) GetLinkedServicesByWorkspace() LinkedServiceL
 }
 
 // GetLinkedServicesByWorkspaceCreateRequest creates the GetLinkedServicesByWorkspace request.
-func (client *LinkedServiceClient) GetLinkedServicesByWorkspaceCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *linkedServiceClient) GetLinkedServicesByWorkspaceCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/linkedservices"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -194,13 +194,13 @@ func (client *LinkedServiceClient) GetLinkedServicesByWorkspaceCreateRequest(ctx
 }
 
 // GetLinkedServicesByWorkspaceHandleResponse handles the GetLinkedServicesByWorkspace response.
-func (client *LinkedServiceClient) GetLinkedServicesByWorkspaceHandleResponse(resp *azcore.Response) (*LinkedServiceListResponseResponse, error) {
+func (client *linkedServiceClient) GetLinkedServicesByWorkspaceHandleResponse(resp *azcore.Response) (*LinkedServiceListResponseResponse, error) {
 	result := LinkedServiceListResponseResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.LinkedServiceListResponse)
 }
 
 // GetLinkedServicesByWorkspaceHandleError handles the GetLinkedServicesByWorkspace error response.
-func (client *LinkedServiceClient) GetLinkedServicesByWorkspaceHandleError(resp *azcore.Response) error {
+func (client *linkedServiceClient) GetLinkedServicesByWorkspaceHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
