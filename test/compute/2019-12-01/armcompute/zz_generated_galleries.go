@@ -54,23 +54,6 @@ func (client *GalleriesClient) Do(req *azcore.Request) (*azcore.Response, error)
 	return client.p.Do(req)
 }
 
-// CreateOrUpdate - Create or update a Shared Image Gallery.
-func (client *GalleriesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, gallery Gallery) (*azcore.Response, error) {
-	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, galleryName, gallery)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusAccepted) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
-	return resp, nil
-}
-
 func (client *GalleriesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, gallery Gallery) (*GalleryPollerResponse, error) {
 	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, galleryName, gallery)
 	if err != nil {
@@ -105,6 +88,22 @@ func (client *GalleriesClient) ResumeCreateOrUpdate(token string) (GalleryPoller
 	}, nil
 }
 
+// CreateOrUpdate - Create or update a Shared Image Gallery.
+func (client *GalleriesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, gallery Gallery) (*azcore.Response, error) {
+	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, galleryName, gallery)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusAccepted) {
+		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
 func (client *GalleriesClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, galleryName string, gallery Gallery) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}"
@@ -135,23 +134,6 @@ func (client *GalleriesClient) CreateOrUpdateHandleError(resp *azcore.Response) 
 		return err
 	}
 	return err
-}
-
-// Delete - Delete a Shared Image Gallery.
-func (client *GalleriesClient) Delete(ctx context.Context, resourceGroupName string, galleryName string) (*azcore.Response, error) {
-	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, galleryName)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
-	return resp, nil
 }
 
 func (client *GalleriesClient) BeginDelete(ctx context.Context, resourceGroupName string, galleryName string) (*HTTPPollerResponse, error) {
@@ -186,6 +168,22 @@ func (client *GalleriesClient) ResumeDelete(token string) (HTTPPoller, error) {
 		pipeline: client.p,
 		pt:       pt,
 	}, nil
+}
+
+// Delete - Delete a Shared Image Gallery.
+func (client *GalleriesClient) Delete(ctx context.Context, resourceGroupName string, galleryName string) (*azcore.Response, error) {
+	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, galleryName)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
 }
 
 // DeleteCreateRequest creates the Delete request.
@@ -357,23 +355,6 @@ func (client *GalleriesClient) ListByResourceGroupHandleError(resp *azcore.Respo
 	return err
 }
 
-// Update - Update a Shared Image Gallery.
-func (client *GalleriesClient) Update(ctx context.Context, resourceGroupName string, galleryName string, gallery GalleryUpdate) (*azcore.Response, error) {
-	req, err := client.UpdateCreateRequest(ctx, resourceGroupName, galleryName, gallery)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.UpdateHandleError(resp)
-	}
-	return resp, nil
-}
-
 func (client *GalleriesClient) BeginUpdate(ctx context.Context, resourceGroupName string, galleryName string, gallery GalleryUpdate) (*GalleryPollerResponse, error) {
 	resp, err := client.Update(ctx, resourceGroupName, galleryName, gallery)
 	if err != nil {
@@ -406,6 +387,22 @@ func (client *GalleriesClient) ResumeUpdate(token string) (GalleryPoller, error)
 		pipeline: client.p,
 		pt:       pt,
 	}, nil
+}
+
+// Update - Update a Shared Image Gallery.
+func (client *GalleriesClient) Update(ctx context.Context, resourceGroupName string, galleryName string, gallery GalleryUpdate) (*azcore.Response, error) {
+	req, err := client.UpdateCreateRequest(ctx, resourceGroupName, galleryName, gallery)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.UpdateHandleError(resp)
+	}
+	return resp, nil
 }
 
 // UpdateCreateRequest creates the Update request.

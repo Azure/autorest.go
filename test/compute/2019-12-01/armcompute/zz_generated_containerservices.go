@@ -53,23 +53,6 @@ func (client *ContainerServicesClient) Do(req *azcore.Request) (*azcore.Response
 	return client.p.Do(req)
 }
 
-// CreateOrUpdate - Creates or updates a container service with the specified configuration of orchestrator, masters, and agents.
-func (client *ContainerServicesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, containerServiceName string, parameters ContainerService) (*azcore.Response, error) {
-	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, containerServiceName, parameters)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusAccepted) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
-	return resp, nil
-}
-
 func (client *ContainerServicesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, containerServiceName string, parameters ContainerService) (*ContainerServicePollerResponse, error) {
 	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, containerServiceName, parameters)
 	if err != nil {
@@ -102,6 +85,22 @@ func (client *ContainerServicesClient) ResumeCreateOrUpdate(token string) (Conta
 		pipeline: client.p,
 		pt:       pt,
 	}, nil
+}
+
+// CreateOrUpdate - Creates or updates a container service with the specified configuration of orchestrator, masters, and agents.
+func (client *ContainerServicesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, containerServiceName string, parameters ContainerService) (*azcore.Response, error) {
+	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, containerServiceName, parameters)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusAccepted) {
+		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
 }
 
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -139,23 +138,6 @@ func (client *ContainerServicesClient) CreateOrUpdateHandleError(resp *azcore.Re
 	return errors.New(string(body))
 }
 
-// Delete - Deletes the specified container service in the specified subscription and resource group. The operation does not delete other resources created as part of creating a container service, including storage accounts, VMs, and availability sets. All the other resources created with the container service are part of the same resource group and can be deleted individually.
-func (client *ContainerServicesClient) Delete(ctx context.Context, resourceGroupName string, containerServiceName string) (*azcore.Response, error) {
-	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, containerServiceName)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
-	return resp, nil
-}
-
 func (client *ContainerServicesClient) BeginDelete(ctx context.Context, resourceGroupName string, containerServiceName string) (*HTTPPollerResponse, error) {
 	resp, err := client.Delete(ctx, resourceGroupName, containerServiceName)
 	if err != nil {
@@ -188,6 +170,22 @@ func (client *ContainerServicesClient) ResumeDelete(token string) (HTTPPoller, e
 		pipeline: client.p,
 		pt:       pt,
 	}, nil
+}
+
+// Delete - Deletes the specified container service in the specified subscription and resource group. The operation does not delete other resources created as part of creating a container service, including storage accounts, VMs, and availability sets. All the other resources created with the container service are part of the same resource group and can be deleted individually.
+func (client *ContainerServicesClient) Delete(ctx context.Context, resourceGroupName string, containerServiceName string) (*azcore.Response, error) {
+	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, containerServiceName)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
 }
 
 // DeleteCreateRequest creates the Delete request.

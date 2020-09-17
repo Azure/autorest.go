@@ -52,23 +52,6 @@ func (client *LoadBalancersClient) Do(req *azcore.Request) (*azcore.Response, er
 	return client.p.Do(req)
 }
 
-// CreateOrUpdate - Creates or updates a load balancer.
-func (client *LoadBalancersClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, loadBalancerName string, parameters LoadBalancer) (*azcore.Response, error) {
-	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, loadBalancerName, parameters)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
-	return resp, nil
-}
-
 func (client *LoadBalancersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, loadBalancerName string, parameters LoadBalancer) (*LoadBalancerPollerResponse, error) {
 	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, loadBalancerName, parameters)
 	if err != nil {
@@ -103,6 +86,22 @@ func (client *LoadBalancersClient) ResumeCreateOrUpdate(token string) (LoadBalan
 	}, nil
 }
 
+// CreateOrUpdate - Creates or updates a load balancer.
+func (client *LoadBalancersClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, loadBalancerName string, parameters LoadBalancer) (*azcore.Response, error) {
+	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, loadBalancerName, parameters)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
 func (client *LoadBalancersClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, parameters LoadBalancer) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}"
@@ -133,23 +132,6 @@ func (client *LoadBalancersClient) CreateOrUpdateHandleError(resp *azcore.Respon
 		return err
 	}
 	return err
-}
-
-// Delete - Deletes the specified load balancer.
-func (client *LoadBalancersClient) Delete(ctx context.Context, resourceGroupName string, loadBalancerName string) (*azcore.Response, error) {
-	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, loadBalancerName)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
-	return resp, nil
 }
 
 func (client *LoadBalancersClient) BeginDelete(ctx context.Context, resourceGroupName string, loadBalancerName string) (*HTTPPollerResponse, error) {
@@ -184,6 +166,22 @@ func (client *LoadBalancersClient) ResumeDelete(token string) (HTTPPoller, error
 		pipeline: client.p,
 		pt:       pt,
 	}, nil
+}
+
+// Delete - Deletes the specified load balancer.
+func (client *LoadBalancersClient) Delete(ctx context.Context, resourceGroupName string, loadBalancerName string) (*azcore.Response, error) {
+	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, loadBalancerName)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
 }
 
 // DeleteCreateRequest creates the Delete request.

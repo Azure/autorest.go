@@ -68,23 +68,6 @@ func (client *P2SVpnGatewaysClient) Do(req *azcore.Request) (*azcore.Response, e
 	return client.p.Do(req)
 }
 
-// CreateOrUpdate - Creates a virtual wan p2s vpn gateway if it doesn't exist else updates the existing gateway.
-func (client *P2SVpnGatewaysClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, p2SVpnGatewayParameters P2SVpnGateway) (*azcore.Response, error) {
-	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, gatewayName, p2SVpnGatewayParameters)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
-	return resp, nil
-}
-
 func (client *P2SVpnGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, p2SVpnGatewayParameters P2SVpnGateway) (*P2SVpnGatewayPollerResponse, error) {
 	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, gatewayName, p2SVpnGatewayParameters)
 	if err != nil {
@@ -119,6 +102,22 @@ func (client *P2SVpnGatewaysClient) ResumeCreateOrUpdate(token string) (P2SVpnGa
 	}, nil
 }
 
+// CreateOrUpdate - Creates a virtual wan p2s vpn gateway if it doesn't exist else updates the existing gateway.
+func (client *P2SVpnGatewaysClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, p2SVpnGatewayParameters P2SVpnGateway) (*azcore.Response, error) {
+	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, gatewayName, p2SVpnGatewayParameters)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
 func (client *P2SVpnGatewaysClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, gatewayName string, p2SVpnGatewayParameters P2SVpnGateway) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}"
@@ -149,23 +148,6 @@ func (client *P2SVpnGatewaysClient) CreateOrUpdateHandleError(resp *azcore.Respo
 		return err
 	}
 	return err
-}
-
-// Delete - Deletes a virtual wan p2s vpn gateway.
-func (client *P2SVpnGatewaysClient) Delete(ctx context.Context, resourceGroupName string, gatewayName string) (*azcore.Response, error) {
-	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, gatewayName)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
-	return resp, nil
 }
 
 func (client *P2SVpnGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, gatewayName string) (*HTTPPollerResponse, error) {
@@ -202,6 +184,22 @@ func (client *P2SVpnGatewaysClient) ResumeDelete(token string) (HTTPPoller, erro
 	}, nil
 }
 
+// Delete - Deletes a virtual wan p2s vpn gateway.
+func (client *P2SVpnGatewaysClient) Delete(ctx context.Context, resourceGroupName string, gatewayName string) (*azcore.Response, error) {
+	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, gatewayName)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
+}
+
 // DeleteCreateRequest creates the Delete request.
 func (client *P2SVpnGatewaysClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, gatewayName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}"
@@ -226,23 +224,6 @@ func (client *P2SVpnGatewaysClient) DeleteHandleError(resp *azcore.Response) err
 		return err
 	}
 	return err
-}
-
-// DisconnectP2SVpnConnections - Disconnect P2S vpn connections of the virtual wan P2SVpnGateway in the specified resource group.
-func (client *P2SVpnGatewaysClient) DisconnectP2SVpnConnections(ctx context.Context, resourceGroupName string, p2SVpnGatewayName string, request P2SVpnConnectionRequest) (*azcore.Response, error) {
-	req, err := client.DisconnectP2SVpnConnectionsCreateRequest(ctx, resourceGroupName, p2SVpnGatewayName, request)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
-		return nil, client.DisconnectP2SVpnConnectionsHandleError(resp)
-	}
-	return resp, nil
 }
 
 func (client *P2SVpnGatewaysClient) BeginDisconnectP2SVpnConnections(ctx context.Context, resourceGroupName string, p2SVpnGatewayName string, request P2SVpnConnectionRequest) (*HTTPPollerResponse, error) {
@@ -279,6 +260,22 @@ func (client *P2SVpnGatewaysClient) ResumeDisconnectP2SVpnConnections(token stri
 	}, nil
 }
 
+// DisconnectP2SVpnConnections - Disconnect P2S vpn connections of the virtual wan P2SVpnGateway in the specified resource group.
+func (client *P2SVpnGatewaysClient) DisconnectP2SVpnConnections(ctx context.Context, resourceGroupName string, p2SVpnGatewayName string, request P2SVpnConnectionRequest) (*azcore.Response, error) {
+	req, err := client.DisconnectP2SVpnConnectionsCreateRequest(ctx, resourceGroupName, p2SVpnGatewayName, request)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.DisconnectP2SVpnConnectionsHandleError(resp)
+	}
+	return resp, nil
+}
+
 // DisconnectP2SVpnConnectionsCreateRequest creates the DisconnectP2SVpnConnections request.
 func (client *P2SVpnGatewaysClient) DisconnectP2SVpnConnectionsCreateRequest(ctx context.Context, resourceGroupName string, p2SVpnGatewayName string, request P2SVpnConnectionRequest) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{p2sVpnGatewayName}/disconnectP2sVpnConnections"
@@ -303,23 +300,6 @@ func (client *P2SVpnGatewaysClient) DisconnectP2SVpnConnectionsHandleError(resp 
 		return err
 	}
 	return err
-}
-
-// GenerateVpnProfile - Generates VPN profile for P2S client of the P2SVpnGateway in the specified resource group.
-func (client *P2SVpnGatewaysClient) GenerateVpnProfile(ctx context.Context, resourceGroupName string, gatewayName string, parameters P2SVpnProfileParameters) (*azcore.Response, error) {
-	req, err := client.GenerateVpnProfileCreateRequest(ctx, resourceGroupName, gatewayName, parameters)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
-		return nil, client.GenerateVpnProfileHandleError(resp)
-	}
-	return resp, nil
 }
 
 func (client *P2SVpnGatewaysClient) BeginGenerateVpnProfile(ctx context.Context, resourceGroupName string, gatewayName string, parameters P2SVpnProfileParameters) (*VpnProfileResponsePollerResponse, error) {
@@ -354,6 +334,22 @@ func (client *P2SVpnGatewaysClient) ResumeGenerateVpnProfile(token string) (VpnP
 		pipeline: client.p,
 		pt:       pt,
 	}, nil
+}
+
+// GenerateVpnProfile - Generates VPN profile for P2S client of the P2SVpnGateway in the specified resource group.
+func (client *P2SVpnGatewaysClient) GenerateVpnProfile(ctx context.Context, resourceGroupName string, gatewayName string, parameters P2SVpnProfileParameters) (*azcore.Response, error) {
+	req, err := client.GenerateVpnProfileCreateRequest(ctx, resourceGroupName, gatewayName, parameters)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.GenerateVpnProfileHandleError(resp)
+	}
+	return resp, nil
 }
 
 // GenerateVpnProfileCreateRequest creates the GenerateVpnProfile request.
@@ -440,23 +436,6 @@ func (client *P2SVpnGatewaysClient) GetHandleError(resp *azcore.Response) error 
 	return err
 }
 
-// GetP2SVpnConnectionHealth - Gets the connection health of P2S clients of the virtual wan P2SVpnGateway in the specified resource group.
-func (client *P2SVpnGatewaysClient) GetP2SVpnConnectionHealth(ctx context.Context, resourceGroupName string, gatewayName string) (*azcore.Response, error) {
-	req, err := client.GetP2SVpnConnectionHealthCreateRequest(ctx, resourceGroupName, gatewayName)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
-		return nil, client.GetP2SVpnConnectionHealthHandleError(resp)
-	}
-	return resp, nil
-}
-
 func (client *P2SVpnGatewaysClient) BeginGetP2SVpnConnectionHealth(ctx context.Context, resourceGroupName string, gatewayName string) (*P2SVpnGatewayPollerResponse, error) {
 	resp, err := client.GetP2SVpnConnectionHealth(ctx, resourceGroupName, gatewayName)
 	if err != nil {
@@ -491,6 +470,22 @@ func (client *P2SVpnGatewaysClient) ResumeGetP2SVpnConnectionHealth(token string
 	}, nil
 }
 
+// GetP2SVpnConnectionHealth - Gets the connection health of P2S clients of the virtual wan P2SVpnGateway in the specified resource group.
+func (client *P2SVpnGatewaysClient) GetP2SVpnConnectionHealth(ctx context.Context, resourceGroupName string, gatewayName string) (*azcore.Response, error) {
+	req, err := client.GetP2SVpnConnectionHealthCreateRequest(ctx, resourceGroupName, gatewayName)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.GetP2SVpnConnectionHealthHandleError(resp)
+	}
+	return resp, nil
+}
+
 // GetP2SVpnConnectionHealthCreateRequest creates the GetP2SVpnConnectionHealth request.
 func (client *P2SVpnGatewaysClient) GetP2SVpnConnectionHealthCreateRequest(ctx context.Context, resourceGroupName string, gatewayName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}/getP2sVpnConnectionHealth"
@@ -521,23 +516,6 @@ func (client *P2SVpnGatewaysClient) GetP2SVpnConnectionHealthHandleError(resp *a
 		return err
 	}
 	return err
-}
-
-// GetP2SVpnConnectionHealthDetailed - Gets the sas url to get the connection health detail of P2S clients of the virtual wan P2SVpnGateway in the specified resource group.
-func (client *P2SVpnGatewaysClient) GetP2SVpnConnectionHealthDetailed(ctx context.Context, resourceGroupName string, gatewayName string, request P2SVpnConnectionHealthRequest) (*azcore.Response, error) {
-	req, err := client.GetP2SVpnConnectionHealthDetailedCreateRequest(ctx, resourceGroupName, gatewayName, request)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
-		return nil, client.GetP2SVpnConnectionHealthDetailedHandleError(resp)
-	}
-	return resp, nil
 }
 
 func (client *P2SVpnGatewaysClient) BeginGetP2SVpnConnectionHealthDetailed(ctx context.Context, resourceGroupName string, gatewayName string, request P2SVpnConnectionHealthRequest) (*P2SVpnConnectionHealthPollerResponse, error) {
@@ -572,6 +550,22 @@ func (client *P2SVpnGatewaysClient) ResumeGetP2SVpnConnectionHealthDetailed(toke
 		pipeline: client.p,
 		pt:       pt,
 	}, nil
+}
+
+// GetP2SVpnConnectionHealthDetailed - Gets the sas url to get the connection health detail of P2S clients of the virtual wan P2SVpnGateway in the specified resource group.
+func (client *P2SVpnGatewaysClient) GetP2SVpnConnectionHealthDetailed(ctx context.Context, resourceGroupName string, gatewayName string, request P2SVpnConnectionHealthRequest) (*azcore.Response, error) {
+	req, err := client.GetP2SVpnConnectionHealthDetailedCreateRequest(ctx, resourceGroupName, gatewayName, request)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.GetP2SVpnConnectionHealthDetailedHandleError(resp)
+	}
+	return resp, nil
 }
 
 // GetP2SVpnConnectionHealthDetailedCreateRequest creates the GetP2SVpnConnectionHealthDetailed request.

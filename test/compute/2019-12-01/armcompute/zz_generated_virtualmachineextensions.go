@@ -55,23 +55,6 @@ func (client *VirtualMachineExtensionsClient) Do(req *azcore.Request) (*azcore.R
 	return client.p.Do(req)
 }
 
-// CreateOrUpdate - The operation to create or update the extension.
-func (client *VirtualMachineExtensionsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, extensionParameters VirtualMachineExtension) (*azcore.Response, error) {
-	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, vmName, vmExtensionName, extensionParameters)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
-	return resp, nil
-}
-
 func (client *VirtualMachineExtensionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, extensionParameters VirtualMachineExtension) (*VirtualMachineExtensionPollerResponse, error) {
 	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, vmName, vmExtensionName, extensionParameters)
 	if err != nil {
@@ -104,6 +87,22 @@ func (client *VirtualMachineExtensionsClient) ResumeCreateOrUpdate(token string)
 		pipeline: client.p,
 		pt:       pt,
 	}, nil
+}
+
+// CreateOrUpdate - The operation to create or update the extension.
+func (client *VirtualMachineExtensionsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, extensionParameters VirtualMachineExtension) (*azcore.Response, error) {
+	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, vmName, vmExtensionName, extensionParameters)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
 }
 
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -142,23 +141,6 @@ func (client *VirtualMachineExtensionsClient) CreateOrUpdateHandleError(resp *az
 	return errors.New(string(body))
 }
 
-// Delete - The operation to delete the extension.
-func (client *VirtualMachineExtensionsClient) Delete(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string) (*azcore.Response, error) {
-	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, vmName, vmExtensionName)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
-	return resp, nil
-}
-
 func (client *VirtualMachineExtensionsClient) BeginDelete(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string) (*HTTPPollerResponse, error) {
 	resp, err := client.Delete(ctx, resourceGroupName, vmName, vmExtensionName)
 	if err != nil {
@@ -191,6 +173,22 @@ func (client *VirtualMachineExtensionsClient) ResumeDelete(token string) (HTTPPo
 		pipeline: client.p,
 		pt:       pt,
 	}, nil
+}
+
+// Delete - The operation to delete the extension.
+func (client *VirtualMachineExtensionsClient) Delete(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string) (*azcore.Response, error) {
+	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, vmName, vmExtensionName)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
 }
 
 // DeleteCreateRequest creates the Delete request.
@@ -339,23 +337,6 @@ func (client *VirtualMachineExtensionsClient) ListHandleError(resp *azcore.Respo
 	return errors.New(string(body))
 }
 
-// Update - The operation to update the extension.
-func (client *VirtualMachineExtensionsClient) Update(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, extensionParameters VirtualMachineExtensionUpdate) (*azcore.Response, error) {
-	req, err := client.UpdateCreateRequest(ctx, resourceGroupName, vmName, vmExtensionName, extensionParameters)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.UpdateHandleError(resp)
-	}
-	return resp, nil
-}
-
 func (client *VirtualMachineExtensionsClient) BeginUpdate(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, extensionParameters VirtualMachineExtensionUpdate) (*VirtualMachineExtensionPollerResponse, error) {
 	resp, err := client.Update(ctx, resourceGroupName, vmName, vmExtensionName, extensionParameters)
 	if err != nil {
@@ -388,6 +369,22 @@ func (client *VirtualMachineExtensionsClient) ResumeUpdate(token string) (Virtua
 		pipeline: client.p,
 		pt:       pt,
 	}, nil
+}
+
+// Update - The operation to update the extension.
+func (client *VirtualMachineExtensionsClient) Update(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, extensionParameters VirtualMachineExtensionUpdate) (*azcore.Response, error) {
+	req, err := client.UpdateCreateRequest(ctx, resourceGroupName, vmName, vmExtensionName, extensionParameters)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.UpdateHandleError(resp)
+	}
+	return resp, nil
 }
 
 // UpdateCreateRequest creates the Update request.

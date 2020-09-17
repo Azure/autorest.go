@@ -52,23 +52,6 @@ func (client *NetworkVirtualAppliancesClient) Do(req *azcore.Request) (*azcore.R
 	return client.p.Do(req)
 }
 
-// CreateOrUpdate - Creates or updates the specified Network Virtual Appliance.
-func (client *NetworkVirtualAppliancesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, parameters NetworkVirtualAppliance) (*azcore.Response, error) {
-	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, networkVirtualApplianceName, parameters)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
-	return resp, nil
-}
-
 func (client *NetworkVirtualAppliancesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, parameters NetworkVirtualAppliance) (*NetworkVirtualAppliancePollerResponse, error) {
 	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, networkVirtualApplianceName, parameters)
 	if err != nil {
@@ -103,6 +86,22 @@ func (client *NetworkVirtualAppliancesClient) ResumeCreateOrUpdate(token string)
 	}, nil
 }
 
+// CreateOrUpdate - Creates or updates the specified Network Virtual Appliance.
+func (client *NetworkVirtualAppliancesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, parameters NetworkVirtualAppliance) (*azcore.Response, error) {
+	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, networkVirtualApplianceName, parameters)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
 func (client *NetworkVirtualAppliancesClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, parameters NetworkVirtualAppliance) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}"
@@ -133,23 +132,6 @@ func (client *NetworkVirtualAppliancesClient) CreateOrUpdateHandleError(resp *az
 		return err
 	}
 	return err
-}
-
-// Delete - Deletes the specified Network Virtual Appliance.
-func (client *NetworkVirtualAppliancesClient) Delete(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string) (*azcore.Response, error) {
-	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, networkVirtualApplianceName)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
-	return resp, nil
 }
 
 func (client *NetworkVirtualAppliancesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string) (*HTTPPollerResponse, error) {
@@ -184,6 +166,22 @@ func (client *NetworkVirtualAppliancesClient) ResumeDelete(token string) (HTTPPo
 		pipeline: client.p,
 		pt:       pt,
 	}, nil
+}
+
+// Delete - Deletes the specified Network Virtual Appliance.
+func (client *NetworkVirtualAppliancesClient) Delete(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string) (*azcore.Response, error) {
+	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, networkVirtualApplianceName)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
 }
 
 // DeleteCreateRequest creates the Delete request.

@@ -52,23 +52,6 @@ func (client *RouteTablesClient) Do(req *azcore.Request) (*azcore.Response, erro
 	return client.p.Do(req)
 }
 
-// CreateOrUpdate - Create or updates a route table in a specified resource group.
-func (client *RouteTablesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, routeTableName string, parameters RouteTable) (*azcore.Response, error) {
-	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, routeTableName, parameters)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
-	return resp, nil
-}
-
 func (client *RouteTablesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, routeTableName string, parameters RouteTable) (*RouteTablePollerResponse, error) {
 	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, routeTableName, parameters)
 	if err != nil {
@@ -103,6 +86,22 @@ func (client *RouteTablesClient) ResumeCreateOrUpdate(token string) (RouteTableP
 	}, nil
 }
 
+// CreateOrUpdate - Create or updates a route table in a specified resource group.
+func (client *RouteTablesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, routeTableName string, parameters RouteTable) (*azcore.Response, error) {
+	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, routeTableName, parameters)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
 func (client *RouteTablesClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, routeTableName string, parameters RouteTable) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeTables/{routeTableName}"
@@ -133,23 +132,6 @@ func (client *RouteTablesClient) CreateOrUpdateHandleError(resp *azcore.Response
 		return err
 	}
 	return err
-}
-
-// Delete - Deletes the specified route table.
-func (client *RouteTablesClient) Delete(ctx context.Context, resourceGroupName string, routeTableName string) (*azcore.Response, error) {
-	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, routeTableName)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
-	return resp, nil
 }
 
 func (client *RouteTablesClient) BeginDelete(ctx context.Context, resourceGroupName string, routeTableName string) (*HTTPPollerResponse, error) {
@@ -184,6 +166,22 @@ func (client *RouteTablesClient) ResumeDelete(token string) (HTTPPoller, error) 
 		pipeline: client.p,
 		pt:       pt,
 	}, nil
+}
+
+// Delete - Deletes the specified route table.
+func (client *RouteTablesClient) Delete(ctx context.Context, resourceGroupName string, routeTableName string) (*azcore.Response, error) {
+	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, routeTableName)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
 }
 
 // DeleteCreateRequest creates the Delete request.

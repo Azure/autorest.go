@@ -112,23 +112,6 @@ func (client *VirtualMachinesClient) Do(req *azcore.Request) (*azcore.Response, 
 	return client.p.Do(req)
 }
 
-// Capture - Captures the VM by copying virtual hard disks of the VM and outputs a template that can be used to create similar VMs.
-func (client *VirtualMachinesClient) Capture(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineCaptureParameters) (*azcore.Response, error) {
-	req, err := client.CaptureCreateRequest(ctx, resourceGroupName, vmName, parameters)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
-		return nil, client.CaptureHandleError(resp)
-	}
-	return resp, nil
-}
-
 func (client *VirtualMachinesClient) BeginCapture(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineCaptureParameters) (*VirtualMachineCaptureResultPollerResponse, error) {
 	resp, err := client.Capture(ctx, resourceGroupName, vmName, parameters)
 	if err != nil {
@@ -161,6 +144,22 @@ func (client *VirtualMachinesClient) ResumeCapture(token string) (VirtualMachine
 		pipeline: client.p,
 		pt:       pt,
 	}, nil
+}
+
+// Capture - Captures the VM by copying virtual hard disks of the VM and outputs a template that can be used to create similar VMs.
+func (client *VirtualMachinesClient) Capture(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineCaptureParameters) (*azcore.Response, error) {
+	req, err := client.CaptureCreateRequest(ctx, resourceGroupName, vmName, parameters)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.CaptureHandleError(resp)
+	}
+	return resp, nil
 }
 
 // CaptureCreateRequest creates the Capture request.
@@ -198,23 +197,6 @@ func (client *VirtualMachinesClient) CaptureHandleError(resp *azcore.Response) e
 	return errors.New(string(body))
 }
 
-// ConvertToManagedDisks - Converts virtual machine disks from blob-based to managed disks. Virtual machine must be stop-deallocated before invoking this operation.
-func (client *VirtualMachinesClient) ConvertToManagedDisks(ctx context.Context, resourceGroupName string, vmName string) (*azcore.Response, error) {
-	req, err := client.ConvertToManagedDisksCreateRequest(ctx, resourceGroupName, vmName)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
-		return nil, client.ConvertToManagedDisksHandleError(resp)
-	}
-	return resp, nil
-}
-
 func (client *VirtualMachinesClient) BeginConvertToManagedDisks(ctx context.Context, resourceGroupName string, vmName string) (*HTTPPollerResponse, error) {
 	resp, err := client.ConvertToManagedDisks(ctx, resourceGroupName, vmName)
 	if err != nil {
@@ -249,6 +231,22 @@ func (client *VirtualMachinesClient) ResumeConvertToManagedDisks(token string) (
 	}, nil
 }
 
+// ConvertToManagedDisks - Converts virtual machine disks from blob-based to managed disks. Virtual machine must be stop-deallocated before invoking this operation.
+func (client *VirtualMachinesClient) ConvertToManagedDisks(ctx context.Context, resourceGroupName string, vmName string) (*azcore.Response, error) {
+	req, err := client.ConvertToManagedDisksCreateRequest(ctx, resourceGroupName, vmName)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.ConvertToManagedDisksHandleError(resp)
+	}
+	return resp, nil
+}
+
 // ConvertToManagedDisksCreateRequest creates the ConvertToManagedDisks request.
 func (client *VirtualMachinesClient) ConvertToManagedDisksCreateRequest(ctx context.Context, resourceGroupName string, vmName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/convertToManagedDisks"
@@ -275,23 +273,6 @@ func (client *VirtualMachinesClient) ConvertToManagedDisksHandleError(resp *azco
 		return errors.New(resp.Status)
 	}
 	return errors.New(string(body))
-}
-
-// CreateOrUpdate - The operation to create or update a virtual machine. Please note some properties can be set only during virtual machine creation.
-func (client *VirtualMachinesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachine) (*azcore.Response, error) {
-	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, vmName, parameters)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
-	return resp, nil
 }
 
 func (client *VirtualMachinesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachine) (*VirtualMachinePollerResponse, error) {
@@ -326,6 +307,22 @@ func (client *VirtualMachinesClient) ResumeCreateOrUpdate(token string) (Virtual
 		pipeline: client.p,
 		pt:       pt,
 	}, nil
+}
+
+// CreateOrUpdate - The operation to create or update a virtual machine. Please note some properties can be set only during virtual machine creation.
+func (client *VirtualMachinesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachine) (*azcore.Response, error) {
+	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, vmName, parameters)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
 }
 
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -363,23 +360,6 @@ func (client *VirtualMachinesClient) CreateOrUpdateHandleError(resp *azcore.Resp
 	return errors.New(string(body))
 }
 
-// Deallocate - Shuts down the virtual machine and releases the compute resources. You are not billed for the compute resources that this virtual machine uses.
-func (client *VirtualMachinesClient) Deallocate(ctx context.Context, resourceGroupName string, vmName string) (*azcore.Response, error) {
-	req, err := client.DeallocateCreateRequest(ctx, resourceGroupName, vmName)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
-		return nil, client.DeallocateHandleError(resp)
-	}
-	return resp, nil
-}
-
 func (client *VirtualMachinesClient) BeginDeallocate(ctx context.Context, resourceGroupName string, vmName string) (*HTTPPollerResponse, error) {
 	resp, err := client.Deallocate(ctx, resourceGroupName, vmName)
 	if err != nil {
@@ -414,6 +394,22 @@ func (client *VirtualMachinesClient) ResumeDeallocate(token string) (HTTPPoller,
 	}, nil
 }
 
+// Deallocate - Shuts down the virtual machine and releases the compute resources. You are not billed for the compute resources that this virtual machine uses.
+func (client *VirtualMachinesClient) Deallocate(ctx context.Context, resourceGroupName string, vmName string) (*azcore.Response, error) {
+	req, err := client.DeallocateCreateRequest(ctx, resourceGroupName, vmName)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.DeallocateHandleError(resp)
+	}
+	return resp, nil
+}
+
 // DeallocateCreateRequest creates the Deallocate request.
 func (client *VirtualMachinesClient) DeallocateCreateRequest(ctx context.Context, resourceGroupName string, vmName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/deallocate"
@@ -440,23 +436,6 @@ func (client *VirtualMachinesClient) DeallocateHandleError(resp *azcore.Response
 		return errors.New(resp.Status)
 	}
 	return errors.New(string(body))
-}
-
-// Delete - The operation to delete a virtual machine.
-func (client *VirtualMachinesClient) Delete(ctx context.Context, resourceGroupName string, vmName string) (*azcore.Response, error) {
-	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, vmName)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
-	return resp, nil
 }
 
 func (client *VirtualMachinesClient) BeginDelete(ctx context.Context, resourceGroupName string, vmName string) (*HTTPPollerResponse, error) {
@@ -491,6 +470,22 @@ func (client *VirtualMachinesClient) ResumeDelete(token string) (HTTPPoller, err
 		pipeline: client.p,
 		pt:       pt,
 	}, nil
+}
+
+// Delete - The operation to delete a virtual machine.
+func (client *VirtualMachinesClient) Delete(ctx context.Context, resourceGroupName string, vmName string) (*azcore.Response, error) {
+	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, vmName)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
 }
 
 // DeleteCreateRequest creates the Delete request.
@@ -882,23 +877,6 @@ func (client *VirtualMachinesClient) ListByLocationHandleError(resp *azcore.Resp
 	return errors.New(string(body))
 }
 
-// PerformMaintenance - The operation to perform maintenance on a virtual machine.
-func (client *VirtualMachinesClient) PerformMaintenance(ctx context.Context, resourceGroupName string, vmName string) (*azcore.Response, error) {
-	req, err := client.PerformMaintenanceCreateRequest(ctx, resourceGroupName, vmName)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
-		return nil, client.PerformMaintenanceHandleError(resp)
-	}
-	return resp, nil
-}
-
 func (client *VirtualMachinesClient) BeginPerformMaintenance(ctx context.Context, resourceGroupName string, vmName string) (*HTTPPollerResponse, error) {
 	resp, err := client.PerformMaintenance(ctx, resourceGroupName, vmName)
 	if err != nil {
@@ -933,6 +911,22 @@ func (client *VirtualMachinesClient) ResumePerformMaintenance(token string) (HTT
 	}, nil
 }
 
+// PerformMaintenance - The operation to perform maintenance on a virtual machine.
+func (client *VirtualMachinesClient) PerformMaintenance(ctx context.Context, resourceGroupName string, vmName string) (*azcore.Response, error) {
+	req, err := client.PerformMaintenanceCreateRequest(ctx, resourceGroupName, vmName)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.PerformMaintenanceHandleError(resp)
+	}
+	return resp, nil
+}
+
 // PerformMaintenanceCreateRequest creates the PerformMaintenance request.
 func (client *VirtualMachinesClient) PerformMaintenanceCreateRequest(ctx context.Context, resourceGroupName string, vmName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/performMaintenance"
@@ -959,23 +953,6 @@ func (client *VirtualMachinesClient) PerformMaintenanceHandleError(resp *azcore.
 		return errors.New(resp.Status)
 	}
 	return errors.New(string(body))
-}
-
-// PowerOff - The operation to power off (stop) a virtual machine. The virtual machine can be restarted with the same provisioned resources. You are still charged for this virtual machine.
-func (client *VirtualMachinesClient) PowerOff(ctx context.Context, resourceGroupName string, vmName string, virtualMachinesPowerOffOptions *VirtualMachinesPowerOffOptions) (*azcore.Response, error) {
-	req, err := client.PowerOffCreateRequest(ctx, resourceGroupName, vmName, virtualMachinesPowerOffOptions)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
-		return nil, client.PowerOffHandleError(resp)
-	}
-	return resp, nil
 }
 
 func (client *VirtualMachinesClient) BeginPowerOff(ctx context.Context, resourceGroupName string, vmName string, virtualMachinesPowerOffOptions *VirtualMachinesPowerOffOptions) (*HTTPPollerResponse, error) {
@@ -1012,6 +989,22 @@ func (client *VirtualMachinesClient) ResumePowerOff(token string) (HTTPPoller, e
 	}, nil
 }
 
+// PowerOff - The operation to power off (stop) a virtual machine. The virtual machine can be restarted with the same provisioned resources. You are still charged for this virtual machine.
+func (client *VirtualMachinesClient) PowerOff(ctx context.Context, resourceGroupName string, vmName string, virtualMachinesPowerOffOptions *VirtualMachinesPowerOffOptions) (*azcore.Response, error) {
+	req, err := client.PowerOffCreateRequest(ctx, resourceGroupName, vmName, virtualMachinesPowerOffOptions)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.PowerOffHandleError(resp)
+	}
+	return resp, nil
+}
+
 // PowerOffCreateRequest creates the PowerOff request.
 func (client *VirtualMachinesClient) PowerOffCreateRequest(ctx context.Context, resourceGroupName string, vmName string, virtualMachinesPowerOffOptions *VirtualMachinesPowerOffOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/powerOff"
@@ -1041,23 +1034,6 @@ func (client *VirtualMachinesClient) PowerOffHandleError(resp *azcore.Response) 
 		return errors.New(resp.Status)
 	}
 	return errors.New(string(body))
-}
-
-// Reapply - The operation to reapply a virtual machine's state.
-func (client *VirtualMachinesClient) Reapply(ctx context.Context, resourceGroupName string, vmName string) (*azcore.Response, error) {
-	req, err := client.ReapplyCreateRequest(ctx, resourceGroupName, vmName)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
-		return nil, client.ReapplyHandleError(resp)
-	}
-	return resp, nil
 }
 
 func (client *VirtualMachinesClient) BeginReapply(ctx context.Context, resourceGroupName string, vmName string) (*HTTPPollerResponse, error) {
@@ -1094,6 +1070,22 @@ func (client *VirtualMachinesClient) ResumeReapply(token string) (HTTPPoller, er
 	}, nil
 }
 
+// Reapply - The operation to reapply a virtual machine's state.
+func (client *VirtualMachinesClient) Reapply(ctx context.Context, resourceGroupName string, vmName string) (*azcore.Response, error) {
+	req, err := client.ReapplyCreateRequest(ctx, resourceGroupName, vmName)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.ReapplyHandleError(resp)
+	}
+	return resp, nil
+}
+
 // ReapplyCreateRequest creates the Reapply request.
 func (client *VirtualMachinesClient) ReapplyCreateRequest(ctx context.Context, resourceGroupName string, vmName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/reapply"
@@ -1118,23 +1110,6 @@ func (client *VirtualMachinesClient) ReapplyHandleError(resp *azcore.Response) e
 		return err
 	}
 	return err
-}
-
-// Redeploy - Shuts down the virtual machine, moves it to a new node, and powers it back on.
-func (client *VirtualMachinesClient) Redeploy(ctx context.Context, resourceGroupName string, vmName string) (*azcore.Response, error) {
-	req, err := client.RedeployCreateRequest(ctx, resourceGroupName, vmName)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
-		return nil, client.RedeployHandleError(resp)
-	}
-	return resp, nil
 }
 
 func (client *VirtualMachinesClient) BeginRedeploy(ctx context.Context, resourceGroupName string, vmName string) (*HTTPPollerResponse, error) {
@@ -1171,6 +1146,22 @@ func (client *VirtualMachinesClient) ResumeRedeploy(token string) (HTTPPoller, e
 	}, nil
 }
 
+// Redeploy - Shuts down the virtual machine, moves it to a new node, and powers it back on.
+func (client *VirtualMachinesClient) Redeploy(ctx context.Context, resourceGroupName string, vmName string) (*azcore.Response, error) {
+	req, err := client.RedeployCreateRequest(ctx, resourceGroupName, vmName)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.RedeployHandleError(resp)
+	}
+	return resp, nil
+}
+
 // RedeployCreateRequest creates the Redeploy request.
 func (client *VirtualMachinesClient) RedeployCreateRequest(ctx context.Context, resourceGroupName string, vmName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/redeploy"
@@ -1197,23 +1188,6 @@ func (client *VirtualMachinesClient) RedeployHandleError(resp *azcore.Response) 
 		return errors.New(resp.Status)
 	}
 	return errors.New(string(body))
-}
-
-// Reimage - Reimages the virtual machine which has an ephemeral OS disk back to its initial state.
-func (client *VirtualMachinesClient) Reimage(ctx context.Context, resourceGroupName string, vmName string, virtualMachinesReimageOptions *VirtualMachinesReimageOptions) (*azcore.Response, error) {
-	req, err := client.ReimageCreateRequest(ctx, resourceGroupName, vmName, virtualMachinesReimageOptions)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
-		return nil, client.ReimageHandleError(resp)
-	}
-	return resp, nil
 }
 
 func (client *VirtualMachinesClient) BeginReimage(ctx context.Context, resourceGroupName string, vmName string, virtualMachinesReimageOptions *VirtualMachinesReimageOptions) (*HTTPPollerResponse, error) {
@@ -1250,6 +1224,22 @@ func (client *VirtualMachinesClient) ResumeReimage(token string) (HTTPPoller, er
 	}, nil
 }
 
+// Reimage - Reimages the virtual machine which has an ephemeral OS disk back to its initial state.
+func (client *VirtualMachinesClient) Reimage(ctx context.Context, resourceGroupName string, vmName string, virtualMachinesReimageOptions *VirtualMachinesReimageOptions) (*azcore.Response, error) {
+	req, err := client.ReimageCreateRequest(ctx, resourceGroupName, vmName, virtualMachinesReimageOptions)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.ReimageHandleError(resp)
+	}
+	return resp, nil
+}
+
 // ReimageCreateRequest creates the Reimage request.
 func (client *VirtualMachinesClient) ReimageCreateRequest(ctx context.Context, resourceGroupName string, vmName string, virtualMachinesReimageOptions *VirtualMachinesReimageOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/reimage"
@@ -1279,23 +1269,6 @@ func (client *VirtualMachinesClient) ReimageHandleError(resp *azcore.Response) e
 		return errors.New(resp.Status)
 	}
 	return errors.New(string(body))
-}
-
-// Restart - The operation to restart a virtual machine.
-func (client *VirtualMachinesClient) Restart(ctx context.Context, resourceGroupName string, vmName string) (*azcore.Response, error) {
-	req, err := client.RestartCreateRequest(ctx, resourceGroupName, vmName)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
-		return nil, client.RestartHandleError(resp)
-	}
-	return resp, nil
 }
 
 func (client *VirtualMachinesClient) BeginRestart(ctx context.Context, resourceGroupName string, vmName string) (*HTTPPollerResponse, error) {
@@ -1332,6 +1305,22 @@ func (client *VirtualMachinesClient) ResumeRestart(token string) (HTTPPoller, er
 	}, nil
 }
 
+// Restart - The operation to restart a virtual machine.
+func (client *VirtualMachinesClient) Restart(ctx context.Context, resourceGroupName string, vmName string) (*azcore.Response, error) {
+	req, err := client.RestartCreateRequest(ctx, resourceGroupName, vmName)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.RestartHandleError(resp)
+	}
+	return resp, nil
+}
+
 // RestartCreateRequest creates the Restart request.
 func (client *VirtualMachinesClient) RestartCreateRequest(ctx context.Context, resourceGroupName string, vmName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/restart"
@@ -1358,23 +1347,6 @@ func (client *VirtualMachinesClient) RestartHandleError(resp *azcore.Response) e
 		return errors.New(resp.Status)
 	}
 	return errors.New(string(body))
-}
-
-// RunCommand - Run command on the VM.
-func (client *VirtualMachinesClient) RunCommand(ctx context.Context, resourceGroupName string, vmName string, parameters RunCommandInput) (*azcore.Response, error) {
-	req, err := client.RunCommandCreateRequest(ctx, resourceGroupName, vmName, parameters)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
-		return nil, client.RunCommandHandleError(resp)
-	}
-	return resp, nil
 }
 
 func (client *VirtualMachinesClient) BeginRunCommand(ctx context.Context, resourceGroupName string, vmName string, parameters RunCommandInput) (*RunCommandResultPollerResponse, error) {
@@ -1409,6 +1381,22 @@ func (client *VirtualMachinesClient) ResumeRunCommand(token string) (RunCommandR
 		pipeline: client.p,
 		pt:       pt,
 	}, nil
+}
+
+// RunCommand - Run command on the VM.
+func (client *VirtualMachinesClient) RunCommand(ctx context.Context, resourceGroupName string, vmName string, parameters RunCommandInput) (*azcore.Response, error) {
+	req, err := client.RunCommandCreateRequest(ctx, resourceGroupName, vmName, parameters)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.RunCommandHandleError(resp)
+	}
+	return resp, nil
 }
 
 // RunCommandCreateRequest creates the RunCommand request.
@@ -1490,23 +1478,6 @@ func (client *VirtualMachinesClient) SimulateEvictionHandleError(resp *azcore.Re
 	return errors.New(string(body))
 }
 
-// Start - The operation to start a virtual machine.
-func (client *VirtualMachinesClient) Start(ctx context.Context, resourceGroupName string, vmName string) (*azcore.Response, error) {
-	req, err := client.StartCreateRequest(ctx, resourceGroupName, vmName)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
-		return nil, client.StartHandleError(resp)
-	}
-	return resp, nil
-}
-
 func (client *VirtualMachinesClient) BeginStart(ctx context.Context, resourceGroupName string, vmName string) (*HTTPPollerResponse, error) {
 	resp, err := client.Start(ctx, resourceGroupName, vmName)
 	if err != nil {
@@ -1541,6 +1512,22 @@ func (client *VirtualMachinesClient) ResumeStart(token string) (HTTPPoller, erro
 	}, nil
 }
 
+// Start - The operation to start a virtual machine.
+func (client *VirtualMachinesClient) Start(ctx context.Context, resourceGroupName string, vmName string) (*azcore.Response, error) {
+	req, err := client.StartCreateRequest(ctx, resourceGroupName, vmName)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.StartHandleError(resp)
+	}
+	return resp, nil
+}
+
 // StartCreateRequest creates the Start request.
 func (client *VirtualMachinesClient) StartCreateRequest(ctx context.Context, resourceGroupName string, vmName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/start"
@@ -1567,23 +1554,6 @@ func (client *VirtualMachinesClient) StartHandleError(resp *azcore.Response) err
 		return errors.New(resp.Status)
 	}
 	return errors.New(string(body))
-}
-
-// Update - The operation to update a virtual machine.
-func (client *VirtualMachinesClient) Update(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineUpdate) (*azcore.Response, error) {
-	req, err := client.UpdateCreateRequest(ctx, resourceGroupName, vmName, parameters)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
-		return nil, client.UpdateHandleError(resp)
-	}
-	return resp, nil
 }
 
 func (client *VirtualMachinesClient) BeginUpdate(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineUpdate) (*VirtualMachinePollerResponse, error) {
@@ -1618,6 +1588,22 @@ func (client *VirtualMachinesClient) ResumeUpdate(token string) (VirtualMachineP
 		pipeline: client.p,
 		pt:       pt,
 	}, nil
+}
+
+// Update - The operation to update a virtual machine.
+func (client *VirtualMachinesClient) Update(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineUpdate) (*azcore.Response, error) {
+	req, err := client.UpdateCreateRequest(ctx, resourceGroupName, vmName, parameters)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.UpdateHandleError(resp)
+	}
+	return resp, nil
 }
 
 // UpdateCreateRequest creates the Update request.

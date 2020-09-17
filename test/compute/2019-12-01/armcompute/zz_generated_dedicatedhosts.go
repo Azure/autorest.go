@@ -55,23 +55,6 @@ func (client *DedicatedHostsClient) Do(req *azcore.Request) (*azcore.Response, e
 	return client.p.Do(req)
 }
 
-// CreateOrUpdate - Create or update a dedicated host .
-func (client *DedicatedHostsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHost) (*azcore.Response, error) {
-	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, hostGroupName, hostName, parameters)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
-	return resp, nil
-}
-
 func (client *DedicatedHostsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHost) (*DedicatedHostPollerResponse, error) {
 	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, hostGroupName, hostName, parameters)
 	if err != nil {
@@ -104,6 +87,22 @@ func (client *DedicatedHostsClient) ResumeCreateOrUpdate(token string) (Dedicate
 		pipeline: client.p,
 		pt:       pt,
 	}, nil
+}
+
+// CreateOrUpdate - Create or update a dedicated host .
+func (client *DedicatedHostsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHost) (*azcore.Response, error) {
+	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, hostGroupName, hostName, parameters)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
 }
 
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -142,23 +141,6 @@ func (client *DedicatedHostsClient) CreateOrUpdateHandleError(resp *azcore.Respo
 	return errors.New(string(body))
 }
 
-// Delete - Delete a dedicated host.
-func (client *DedicatedHostsClient) Delete(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string) (*azcore.Response, error) {
-	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, hostGroupName, hostName)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
-	return resp, nil
-}
-
 func (client *DedicatedHostsClient) BeginDelete(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string) (*HTTPPollerResponse, error) {
 	resp, err := client.Delete(ctx, resourceGroupName, hostGroupName, hostName)
 	if err != nil {
@@ -191,6 +173,22 @@ func (client *DedicatedHostsClient) ResumeDelete(token string) (HTTPPoller, erro
 		pipeline: client.p,
 		pt:       pt,
 	}, nil
+}
+
+// Delete - Delete a dedicated host.
+func (client *DedicatedHostsClient) Delete(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string) (*azcore.Response, error) {
+	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, hostGroupName, hostName)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
 }
 
 // DeleteCreateRequest creates the Delete request.
@@ -331,23 +329,6 @@ func (client *DedicatedHostsClient) ListByHostGroupHandleError(resp *azcore.Resp
 	return errors.New(string(body))
 }
 
-// Update - Update an dedicated host .
-func (client *DedicatedHostsClient) Update(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHostUpdate) (*azcore.Response, error) {
-	req, err := client.UpdateCreateRequest(ctx, resourceGroupName, hostGroupName, hostName, parameters)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.UpdateHandleError(resp)
-	}
-	return resp, nil
-}
-
 func (client *DedicatedHostsClient) BeginUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHostUpdate) (*DedicatedHostPollerResponse, error) {
 	resp, err := client.Update(ctx, resourceGroupName, hostGroupName, hostName, parameters)
 	if err != nil {
@@ -380,6 +361,22 @@ func (client *DedicatedHostsClient) ResumeUpdate(token string) (DedicatedHostPol
 		pipeline: client.p,
 		pt:       pt,
 	}, nil
+}
+
+// Update - Update an dedicated host .
+func (client *DedicatedHostsClient) Update(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHostUpdate) (*azcore.Response, error) {
+	req, err := client.UpdateCreateRequest(ctx, resourceGroupName, hostGroupName, hostName, parameters)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.UpdateHandleError(resp)
+	}
+	return resp, nil
 }
 
 // UpdateCreateRequest creates the Update request.

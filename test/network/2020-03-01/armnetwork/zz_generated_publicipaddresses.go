@@ -58,23 +58,6 @@ func (client *PublicIPAddressesClient) Do(req *azcore.Request) (*azcore.Response
 	return client.p.Do(req)
 }
 
-// CreateOrUpdate - Creates or updates a static or dynamic public IP address.
-func (client *PublicIPAddressesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, publicIPAddressName string, parameters PublicIPAddress) (*azcore.Response, error) {
-	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, publicIPAddressName, parameters)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
-	return resp, nil
-}
-
 func (client *PublicIPAddressesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, publicIPAddressName string, parameters PublicIPAddress) (*PublicIPAddressPollerResponse, error) {
 	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, publicIPAddressName, parameters)
 	if err != nil {
@@ -109,6 +92,22 @@ func (client *PublicIPAddressesClient) ResumeCreateOrUpdate(token string) (Publi
 	}, nil
 }
 
+// CreateOrUpdate - Creates or updates a static or dynamic public IP address.
+func (client *PublicIPAddressesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, publicIPAddressName string, parameters PublicIPAddress) (*azcore.Response, error) {
+	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, publicIPAddressName, parameters)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
 func (client *PublicIPAddressesClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, publicIPAddressName string, parameters PublicIPAddress) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}"
@@ -139,23 +138,6 @@ func (client *PublicIPAddressesClient) CreateOrUpdateHandleError(resp *azcore.Re
 		return err
 	}
 	return err
-}
-
-// Delete - Deletes the specified public IP address.
-func (client *PublicIPAddressesClient) Delete(ctx context.Context, resourceGroupName string, publicIPAddressName string) (*azcore.Response, error) {
-	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, publicIPAddressName)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
-	return resp, nil
 }
 
 func (client *PublicIPAddressesClient) BeginDelete(ctx context.Context, resourceGroupName string, publicIPAddressName string) (*HTTPPollerResponse, error) {
@@ -190,6 +172,22 @@ func (client *PublicIPAddressesClient) ResumeDelete(token string) (HTTPPoller, e
 		pipeline: client.p,
 		pt:       pt,
 	}, nil
+}
+
+// Delete - Deletes the specified public IP address.
+func (client *PublicIPAddressesClient) Delete(ctx context.Context, resourceGroupName string, publicIPAddressName string) (*azcore.Response, error) {
+	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, publicIPAddressName)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
 }
 
 // DeleteCreateRequest creates the Delete request.

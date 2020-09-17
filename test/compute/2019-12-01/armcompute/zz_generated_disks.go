@@ -65,23 +65,6 @@ func (client *DisksClient) Do(req *azcore.Request) (*azcore.Response, error) {
 	return client.p.Do(req)
 }
 
-// CreateOrUpdate - Creates or updates a disk.
-func (client *DisksClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, diskName string, disk Disk) (*azcore.Response, error) {
-	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, diskName, disk)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
-	return resp, nil
-}
-
 func (client *DisksClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, diskName string, disk Disk) (*DiskPollerResponse, error) {
 	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, diskName, disk)
 	if err != nil {
@@ -114,6 +97,22 @@ func (client *DisksClient) ResumeCreateOrUpdate(token string) (DiskPoller, error
 		pipeline: client.p,
 		pt:       pt,
 	}, nil
+}
+
+// CreateOrUpdate - Creates or updates a disk.
+func (client *DisksClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, diskName string, disk Disk) (*azcore.Response, error) {
+	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, diskName, disk)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
 }
 
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -151,23 +150,6 @@ func (client *DisksClient) CreateOrUpdateHandleError(resp *azcore.Response) erro
 	return errors.New(string(body))
 }
 
-// Delete - Deletes a disk.
-func (client *DisksClient) Delete(ctx context.Context, resourceGroupName string, diskName string) (*azcore.Response, error) {
-	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, diskName)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
-	return resp, nil
-}
-
 func (client *DisksClient) BeginDelete(ctx context.Context, resourceGroupName string, diskName string) (*HTTPPollerResponse, error) {
 	resp, err := client.Delete(ctx, resourceGroupName, diskName)
 	if err != nil {
@@ -200,6 +182,22 @@ func (client *DisksClient) ResumeDelete(token string) (HTTPPoller, error) {
 		pipeline: client.p,
 		pt:       pt,
 	}, nil
+}
+
+// Delete - Deletes a disk.
+func (client *DisksClient) Delete(ctx context.Context, resourceGroupName string, diskName string) (*azcore.Response, error) {
+	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, diskName)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
 }
 
 // DeleteCreateRequest creates the Delete request.
@@ -285,23 +283,6 @@ func (client *DisksClient) GetHandleError(resp *azcore.Response) error {
 	return errors.New(string(body))
 }
 
-// GrantAccess - Grants access to a disk.
-func (client *DisksClient) GrantAccess(ctx context.Context, resourceGroupName string, diskName string, grantAccessData GrantAccessData) (*azcore.Response, error) {
-	req, err := client.GrantAccessCreateRequest(ctx, resourceGroupName, diskName, grantAccessData)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
-		return nil, client.GrantAccessHandleError(resp)
-	}
-	return resp, nil
-}
-
 func (client *DisksClient) BeginGrantAccess(ctx context.Context, resourceGroupName string, diskName string, grantAccessData GrantAccessData) (*AccessURIPollerResponse, error) {
 	resp, err := client.GrantAccess(ctx, resourceGroupName, diskName, grantAccessData)
 	if err != nil {
@@ -334,6 +315,22 @@ func (client *DisksClient) ResumeGrantAccess(token string) (AccessURIPoller, err
 		pipeline: client.p,
 		pt:       pt,
 	}, nil
+}
+
+// GrantAccess - Grants access to a disk.
+func (client *DisksClient) GrantAccess(ctx context.Context, resourceGroupName string, diskName string, grantAccessData GrantAccessData) (*azcore.Response, error) {
+	req, err := client.GrantAccessCreateRequest(ctx, resourceGroupName, diskName, grantAccessData)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.GrantAccessHandleError(resp)
+	}
+	return resp, nil
 }
 
 // GrantAccessCreateRequest creates the GrantAccess request.
@@ -468,23 +465,6 @@ func (client *DisksClient) ListByResourceGroupHandleError(resp *azcore.Response)
 	return errors.New(string(body))
 }
 
-// RevokeAccess - Revokes access to a disk.
-func (client *DisksClient) RevokeAccess(ctx context.Context, resourceGroupName string, diskName string) (*azcore.Response, error) {
-	req, err := client.RevokeAccessCreateRequest(ctx, resourceGroupName, diskName)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
-		return nil, client.RevokeAccessHandleError(resp)
-	}
-	return resp, nil
-}
-
 func (client *DisksClient) BeginRevokeAccess(ctx context.Context, resourceGroupName string, diskName string) (*HTTPPollerResponse, error) {
 	resp, err := client.RevokeAccess(ctx, resourceGroupName, diskName)
 	if err != nil {
@@ -519,6 +499,22 @@ func (client *DisksClient) ResumeRevokeAccess(token string) (HTTPPoller, error) 
 	}, nil
 }
 
+// RevokeAccess - Revokes access to a disk.
+func (client *DisksClient) RevokeAccess(ctx context.Context, resourceGroupName string, diskName string) (*azcore.Response, error) {
+	req, err := client.RevokeAccessCreateRequest(ctx, resourceGroupName, diskName)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.RevokeAccessHandleError(resp)
+	}
+	return resp, nil
+}
+
 // RevokeAccessCreateRequest creates the RevokeAccess request.
 func (client *DisksClient) RevokeAccessCreateRequest(ctx context.Context, resourceGroupName string, diskName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/disks/{diskName}/endGetAccess"
@@ -545,23 +541,6 @@ func (client *DisksClient) RevokeAccessHandleError(resp *azcore.Response) error 
 		return errors.New(resp.Status)
 	}
 	return errors.New(string(body))
-}
-
-// Update - Updates (patches) a disk.
-func (client *DisksClient) Update(ctx context.Context, resourceGroupName string, diskName string, disk DiskUpdate) (*azcore.Response, error) {
-	req, err := client.UpdateCreateRequest(ctx, resourceGroupName, diskName, disk)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
-		return nil, client.UpdateHandleError(resp)
-	}
-	return resp, nil
 }
 
 func (client *DisksClient) BeginUpdate(ctx context.Context, resourceGroupName string, diskName string, disk DiskUpdate) (*DiskPollerResponse, error) {
@@ -596,6 +575,22 @@ func (client *DisksClient) ResumeUpdate(token string) (DiskPoller, error) {
 		pipeline: client.p,
 		pt:       pt,
 	}, nil
+}
+
+// Update - Updates (patches) a disk.
+func (client *DisksClient) Update(ctx context.Context, resourceGroupName string, diskName string, disk DiskUpdate) (*azcore.Response, error) {
+	req, err := client.UpdateCreateRequest(ctx, resourceGroupName, diskName, disk)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.UpdateHandleError(resp)
+	}
+	return resp, nil
 }
 
 // UpdateCreateRequest creates the Update request.

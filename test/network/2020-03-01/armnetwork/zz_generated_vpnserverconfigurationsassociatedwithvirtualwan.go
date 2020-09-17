@@ -40,23 +40,6 @@ func (client *VpnServerConfigurationsAssociatedWithVirtualWanClient) Do(req *azc
 	return client.p.Do(req)
 }
 
-// List - Gives the list of VpnServerConfigurations associated with Virtual Wan in a resource group.
-func (client *VpnServerConfigurationsAssociatedWithVirtualWanClient) List(ctx context.Context, resourceGroupName string, virtualWanName string) (*azcore.Response, error) {
-	req, err := client.ListCreateRequest(ctx, resourceGroupName, virtualWanName)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
-		return nil, client.ListHandleError(resp)
-	}
-	return resp, nil
-}
-
 func (client *VpnServerConfigurationsAssociatedWithVirtualWanClient) BeginList(ctx context.Context, resourceGroupName string, virtualWanName string) (*VpnServerConfigurationsResponsePollerResponse, error) {
 	resp, err := client.List(ctx, resourceGroupName, virtualWanName)
 	if err != nil {
@@ -89,6 +72,22 @@ func (client *VpnServerConfigurationsAssociatedWithVirtualWanClient) ResumeList(
 		pipeline: client.p,
 		pt:       pt,
 	}, nil
+}
+
+// List - Gives the list of VpnServerConfigurations associated with Virtual Wan in a resource group.
+func (client *VpnServerConfigurationsAssociatedWithVirtualWanClient) List(ctx context.Context, resourceGroupName string, virtualWanName string) (*azcore.Response, error) {
+	req, err := client.ListCreateRequest(ctx, resourceGroupName, virtualWanName)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.ListHandleError(resp)
+	}
+	return resp, nil
 }
 
 // ListCreateRequest creates the List request.

@@ -40,23 +40,6 @@ func (client *VpnSitesConfigurationClient) Do(req *azcore.Request) (*azcore.Resp
 	return client.p.Do(req)
 }
 
-// Download - Gives the sas-url to download the configurations for vpn-sites in a resource group.
-func (client *VpnSitesConfigurationClient) Download(ctx context.Context, resourceGroupName string, virtualWanName string, request GetVpnSitesConfigurationRequest) (*azcore.Response, error) {
-	req, err := client.DownloadCreateRequest(ctx, resourceGroupName, virtualWanName, request)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
-		return nil, client.DownloadHandleError(resp)
-	}
-	return resp, nil
-}
-
 func (client *VpnSitesConfigurationClient) BeginDownload(ctx context.Context, resourceGroupName string, virtualWanName string, request GetVpnSitesConfigurationRequest) (*HTTPPollerResponse, error) {
 	resp, err := client.Download(ctx, resourceGroupName, virtualWanName, request)
 	if err != nil {
@@ -89,6 +72,22 @@ func (client *VpnSitesConfigurationClient) ResumeDownload(token string) (HTTPPol
 		pipeline: client.p,
 		pt:       pt,
 	}, nil
+}
+
+// Download - Gives the sas-url to download the configurations for vpn-sites in a resource group.
+func (client *VpnSitesConfigurationClient) Download(ctx context.Context, resourceGroupName string, virtualWanName string, request GetVpnSitesConfigurationRequest) (*azcore.Response, error) {
+	req, err := client.DownloadCreateRequest(ctx, resourceGroupName, virtualWanName, request)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.DownloadHandleError(resp)
+	}
+	return resp, nil
 }
 
 // DownloadCreateRequest creates the Download request.

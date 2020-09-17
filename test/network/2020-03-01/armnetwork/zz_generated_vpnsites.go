@@ -52,23 +52,6 @@ func (client *VpnSitesClient) Do(req *azcore.Request) (*azcore.Response, error) 
 	return client.p.Do(req)
 }
 
-// CreateOrUpdate - Creates a VpnSite resource if it doesn't exist else updates the existing VpnSite.
-func (client *VpnSitesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, vpnSiteName string, vpnSiteParameters VpnSite) (*azcore.Response, error) {
-	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, vpnSiteName, vpnSiteParameters)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
-	return resp, nil
-}
-
 func (client *VpnSitesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vpnSiteName string, vpnSiteParameters VpnSite) (*VpnSitePollerResponse, error) {
 	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, vpnSiteName, vpnSiteParameters)
 	if err != nil {
@@ -103,6 +86,22 @@ func (client *VpnSitesClient) ResumeCreateOrUpdate(token string) (VpnSitePoller,
 	}, nil
 }
 
+// CreateOrUpdate - Creates a VpnSite resource if it doesn't exist else updates the existing VpnSite.
+func (client *VpnSitesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, vpnSiteName string, vpnSiteParameters VpnSite) (*azcore.Response, error) {
+	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, vpnSiteName, vpnSiteParameters)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
 func (client *VpnSitesClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, vpnSiteName string, vpnSiteParameters VpnSite) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnSites/{vpnSiteName}"
@@ -133,23 +132,6 @@ func (client *VpnSitesClient) CreateOrUpdateHandleError(resp *azcore.Response) e
 		return err
 	}
 	return err
-}
-
-// Delete - Deletes a VpnSite.
-func (client *VpnSitesClient) Delete(ctx context.Context, resourceGroupName string, vpnSiteName string) (*azcore.Response, error) {
-	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, vpnSiteName)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
-	return resp, nil
 }
 
 func (client *VpnSitesClient) BeginDelete(ctx context.Context, resourceGroupName string, vpnSiteName string) (*HTTPPollerResponse, error) {
@@ -184,6 +166,22 @@ func (client *VpnSitesClient) ResumeDelete(token string) (HTTPPoller, error) {
 		pipeline: client.p,
 		pt:       pt,
 	}, nil
+}
+
+// Delete - Deletes a VpnSite.
+func (client *VpnSitesClient) Delete(ctx context.Context, resourceGroupName string, vpnSiteName string) (*azcore.Response, error) {
+	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, vpnSiteName)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
 }
 
 // DeleteCreateRequest creates the Delete request.

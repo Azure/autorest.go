@@ -100,23 +100,6 @@ func (client *WebApplicationFirewallPoliciesClient) CreateOrUpdateHandleError(re
 	return err
 }
 
-// Delete - Deletes Policy.
-func (client *WebApplicationFirewallPoliciesClient) Delete(ctx context.Context, resourceGroupName string, policyName string) (*azcore.Response, error) {
-	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, policyName)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
-	return resp, nil
-}
-
 func (client *WebApplicationFirewallPoliciesClient) BeginDelete(ctx context.Context, resourceGroupName string, policyName string) (*HTTPPollerResponse, error) {
 	resp, err := client.Delete(ctx, resourceGroupName, policyName)
 	if err != nil {
@@ -149,6 +132,22 @@ func (client *WebApplicationFirewallPoliciesClient) ResumeDelete(token string) (
 		pipeline: client.p,
 		pt:       pt,
 	}, nil
+}
+
+// Delete - Deletes Policy.
+func (client *WebApplicationFirewallPoliciesClient) Delete(ctx context.Context, resourceGroupName string, policyName string) (*azcore.Response, error) {
+	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, policyName)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
 }
 
 // DeleteCreateRequest creates the Delete request.

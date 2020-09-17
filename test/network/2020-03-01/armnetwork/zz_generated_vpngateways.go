@@ -56,23 +56,6 @@ func (client *VpnGatewaysClient) Do(req *azcore.Request) (*azcore.Response, erro
 	return client.p.Do(req)
 }
 
-// CreateOrUpdate - Creates a virtual wan vpn gateway if it doesn't exist else updates the existing gateway.
-func (client *VpnGatewaysClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, vpnGatewayParameters VpnGateway) (*azcore.Response, error) {
-	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, gatewayName, vpnGatewayParameters)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
-	return resp, nil
-}
-
 func (client *VpnGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, vpnGatewayParameters VpnGateway) (*VpnGatewayPollerResponse, error) {
 	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, gatewayName, vpnGatewayParameters)
 	if err != nil {
@@ -107,6 +90,22 @@ func (client *VpnGatewaysClient) ResumeCreateOrUpdate(token string) (VpnGatewayP
 	}, nil
 }
 
+// CreateOrUpdate - Creates a virtual wan vpn gateway if it doesn't exist else updates the existing gateway.
+func (client *VpnGatewaysClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, vpnGatewayParameters VpnGateway) (*azcore.Response, error) {
+	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, gatewayName, vpnGatewayParameters)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
 func (client *VpnGatewaysClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, gatewayName string, vpnGatewayParameters VpnGateway) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}"
@@ -137,23 +136,6 @@ func (client *VpnGatewaysClient) CreateOrUpdateHandleError(resp *azcore.Response
 		return err
 	}
 	return err
-}
-
-// Delete - Deletes a virtual wan vpn gateway.
-func (client *VpnGatewaysClient) Delete(ctx context.Context, resourceGroupName string, gatewayName string) (*azcore.Response, error) {
-	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, gatewayName)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
-	return resp, nil
 }
 
 func (client *VpnGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, gatewayName string) (*HTTPPollerResponse, error) {
@@ -188,6 +170,22 @@ func (client *VpnGatewaysClient) ResumeDelete(token string) (HTTPPoller, error) 
 		pipeline: client.p,
 		pt:       pt,
 	}, nil
+}
+
+// Delete - Deletes a virtual wan vpn gateway.
+func (client *VpnGatewaysClient) Delete(ctx context.Context, resourceGroupName string, gatewayName string) (*azcore.Response, error) {
+	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, gatewayName)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
 }
 
 // DeleteCreateRequest creates the Delete request.
@@ -359,23 +357,6 @@ func (client *VpnGatewaysClient) ListByResourceGroupHandleError(resp *azcore.Res
 	return err
 }
 
-// Reset - Resets the primary of the vpn gateway in the specified resource group.
-func (client *VpnGatewaysClient) Reset(ctx context.Context, resourceGroupName string, gatewayName string) (*azcore.Response, error) {
-	req, err := client.ResetCreateRequest(ctx, resourceGroupName, gatewayName)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
-		return nil, client.ResetHandleError(resp)
-	}
-	return resp, nil
-}
-
 func (client *VpnGatewaysClient) BeginReset(ctx context.Context, resourceGroupName string, gatewayName string) (*VpnGatewayPollerResponse, error) {
 	resp, err := client.Reset(ctx, resourceGroupName, gatewayName)
 	if err != nil {
@@ -408,6 +389,22 @@ func (client *VpnGatewaysClient) ResumeReset(token string) (VpnGatewayPoller, er
 		pipeline: client.p,
 		pt:       pt,
 	}, nil
+}
+
+// Reset - Resets the primary of the vpn gateway in the specified resource group.
+func (client *VpnGatewaysClient) Reset(ctx context.Context, resourceGroupName string, gatewayName string) (*azcore.Response, error) {
+	req, err := client.ResetCreateRequest(ctx, resourceGroupName, gatewayName)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.ResetHandleError(resp)
+	}
+	return resp, nil
 }
 
 // ResetCreateRequest creates the Reset request.

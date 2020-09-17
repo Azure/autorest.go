@@ -52,23 +52,6 @@ func (client *RouteFiltersClient) Do(req *azcore.Request) (*azcore.Response, err
 	return client.p.Do(req)
 }
 
-// CreateOrUpdate - Creates or updates a route filter in a specified resource group.
-func (client *RouteFiltersClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, routeFilterName string, routeFilterParameters RouteFilter) (*azcore.Response, error) {
-	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, routeFilterName, routeFilterParameters)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
-	return resp, nil
-}
-
 func (client *RouteFiltersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, routeFilterName string, routeFilterParameters RouteFilter) (*RouteFilterPollerResponse, error) {
 	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, routeFilterName, routeFilterParameters)
 	if err != nil {
@@ -103,6 +86,22 @@ func (client *RouteFiltersClient) ResumeCreateOrUpdate(token string) (RouteFilte
 	}, nil
 }
 
+// CreateOrUpdate - Creates or updates a route filter in a specified resource group.
+func (client *RouteFiltersClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, routeFilterName string, routeFilterParameters RouteFilter) (*azcore.Response, error) {
+	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, routeFilterName, routeFilterParameters)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
 func (client *RouteFiltersClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, routeFilterName string, routeFilterParameters RouteFilter) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}"
@@ -133,23 +132,6 @@ func (client *RouteFiltersClient) CreateOrUpdateHandleError(resp *azcore.Respons
 		return err
 	}
 	return err
-}
-
-// Delete - Deletes the specified route filter.
-func (client *RouteFiltersClient) Delete(ctx context.Context, resourceGroupName string, routeFilterName string) (*azcore.Response, error) {
-	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, routeFilterName)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
-	return resp, nil
 }
 
 func (client *RouteFiltersClient) BeginDelete(ctx context.Context, resourceGroupName string, routeFilterName string) (*HTTPPollerResponse, error) {
@@ -184,6 +166,22 @@ func (client *RouteFiltersClient) ResumeDelete(token string) (HTTPPoller, error)
 		pipeline: client.p,
 		pt:       pt,
 	}, nil
+}
+
+// Delete - Deletes the specified route filter.
+func (client *RouteFiltersClient) Delete(ctx context.Context, resourceGroupName string, routeFilterName string) (*azcore.Response, error) {
+	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, routeFilterName)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
 }
 
 // DeleteCreateRequest creates the Delete request.

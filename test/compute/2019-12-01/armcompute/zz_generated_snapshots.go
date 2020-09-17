@@ -65,23 +65,6 @@ func (client *SnapshotsClient) Do(req *azcore.Request) (*azcore.Response, error)
 	return client.p.Do(req)
 }
 
-// CreateOrUpdate - Creates or updates a snapshot.
-func (client *SnapshotsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, snapshotName string, snapshot Snapshot) (*azcore.Response, error) {
-	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, snapshotName, snapshot)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
-	return resp, nil
-}
-
 func (client *SnapshotsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, snapshotName string, snapshot Snapshot) (*SnapshotPollerResponse, error) {
 	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, snapshotName, snapshot)
 	if err != nil {
@@ -114,6 +97,22 @@ func (client *SnapshotsClient) ResumeCreateOrUpdate(token string) (SnapshotPolle
 		pipeline: client.p,
 		pt:       pt,
 	}, nil
+}
+
+// CreateOrUpdate - Creates or updates a snapshot.
+func (client *SnapshotsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, snapshotName string, snapshot Snapshot) (*azcore.Response, error) {
+	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, snapshotName, snapshot)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
 }
 
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -151,23 +150,6 @@ func (client *SnapshotsClient) CreateOrUpdateHandleError(resp *azcore.Response) 
 	return errors.New(string(body))
 }
 
-// Delete - Deletes a snapshot.
-func (client *SnapshotsClient) Delete(ctx context.Context, resourceGroupName string, snapshotName string) (*azcore.Response, error) {
-	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, snapshotName)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
-	return resp, nil
-}
-
 func (client *SnapshotsClient) BeginDelete(ctx context.Context, resourceGroupName string, snapshotName string) (*HTTPPollerResponse, error) {
 	resp, err := client.Delete(ctx, resourceGroupName, snapshotName)
 	if err != nil {
@@ -200,6 +182,22 @@ func (client *SnapshotsClient) ResumeDelete(token string) (HTTPPoller, error) {
 		pipeline: client.p,
 		pt:       pt,
 	}, nil
+}
+
+// Delete - Deletes a snapshot.
+func (client *SnapshotsClient) Delete(ctx context.Context, resourceGroupName string, snapshotName string) (*azcore.Response, error) {
+	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, snapshotName)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
 }
 
 // DeleteCreateRequest creates the Delete request.
@@ -285,23 +283,6 @@ func (client *SnapshotsClient) GetHandleError(resp *azcore.Response) error {
 	return errors.New(string(body))
 }
 
-// GrantAccess - Grants access to a snapshot.
-func (client *SnapshotsClient) GrantAccess(ctx context.Context, resourceGroupName string, snapshotName string, grantAccessData GrantAccessData) (*azcore.Response, error) {
-	req, err := client.GrantAccessCreateRequest(ctx, resourceGroupName, snapshotName, grantAccessData)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
-		return nil, client.GrantAccessHandleError(resp)
-	}
-	return resp, nil
-}
-
 func (client *SnapshotsClient) BeginGrantAccess(ctx context.Context, resourceGroupName string, snapshotName string, grantAccessData GrantAccessData) (*AccessURIPollerResponse, error) {
 	resp, err := client.GrantAccess(ctx, resourceGroupName, snapshotName, grantAccessData)
 	if err != nil {
@@ -334,6 +315,22 @@ func (client *SnapshotsClient) ResumeGrantAccess(token string) (AccessURIPoller,
 		pipeline: client.p,
 		pt:       pt,
 	}, nil
+}
+
+// GrantAccess - Grants access to a snapshot.
+func (client *SnapshotsClient) GrantAccess(ctx context.Context, resourceGroupName string, snapshotName string, grantAccessData GrantAccessData) (*azcore.Response, error) {
+	req, err := client.GrantAccessCreateRequest(ctx, resourceGroupName, snapshotName, grantAccessData)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.GrantAccessHandleError(resp)
+	}
+	return resp, nil
 }
 
 // GrantAccessCreateRequest creates the GrantAccess request.
@@ -468,23 +465,6 @@ func (client *SnapshotsClient) ListByResourceGroupHandleError(resp *azcore.Respo
 	return errors.New(string(body))
 }
 
-// RevokeAccess - Revokes access to a snapshot.
-func (client *SnapshotsClient) RevokeAccess(ctx context.Context, resourceGroupName string, snapshotName string) (*azcore.Response, error) {
-	req, err := client.RevokeAccessCreateRequest(ctx, resourceGroupName, snapshotName)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
-		return nil, client.RevokeAccessHandleError(resp)
-	}
-	return resp, nil
-}
-
 func (client *SnapshotsClient) BeginRevokeAccess(ctx context.Context, resourceGroupName string, snapshotName string) (*HTTPPollerResponse, error) {
 	resp, err := client.RevokeAccess(ctx, resourceGroupName, snapshotName)
 	if err != nil {
@@ -519,6 +499,22 @@ func (client *SnapshotsClient) ResumeRevokeAccess(token string) (HTTPPoller, err
 	}, nil
 }
 
+// RevokeAccess - Revokes access to a snapshot.
+func (client *SnapshotsClient) RevokeAccess(ctx context.Context, resourceGroupName string, snapshotName string) (*azcore.Response, error) {
+	req, err := client.RevokeAccessCreateRequest(ctx, resourceGroupName, snapshotName)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.RevokeAccessHandleError(resp)
+	}
+	return resp, nil
+}
+
 // RevokeAccessCreateRequest creates the RevokeAccess request.
 func (client *SnapshotsClient) RevokeAccessCreateRequest(ctx context.Context, resourceGroupName string, snapshotName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/snapshots/{snapshotName}/endGetAccess"
@@ -545,23 +541,6 @@ func (client *SnapshotsClient) RevokeAccessHandleError(resp *azcore.Response) er
 		return errors.New(resp.Status)
 	}
 	return errors.New(string(body))
-}
-
-// Update - Updates (patches) a snapshot.
-func (client *SnapshotsClient) Update(ctx context.Context, resourceGroupName string, snapshotName string, snapshot SnapshotUpdate) (*azcore.Response, error) {
-	req, err := client.UpdateCreateRequest(ctx, resourceGroupName, snapshotName, snapshot)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
-		return nil, client.UpdateHandleError(resp)
-	}
-	return resp, nil
 }
 
 func (client *SnapshotsClient) BeginUpdate(ctx context.Context, resourceGroupName string, snapshotName string, snapshot SnapshotUpdate) (*SnapshotPollerResponse, error) {
@@ -596,6 +575,22 @@ func (client *SnapshotsClient) ResumeUpdate(token string) (SnapshotPoller, error
 		pipeline: client.p,
 		pt:       pt,
 	}, nil
+}
+
+// Update - Updates (patches) a snapshot.
+func (client *SnapshotsClient) Update(ctx context.Context, resourceGroupName string, snapshotName string, snapshot SnapshotUpdate) (*azcore.Response, error) {
+	req, err := client.UpdateCreateRequest(ctx, resourceGroupName, snapshotName, snapshot)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.UpdateHandleError(resp)
+	}
+	return resp, nil
 }
 
 // UpdateCreateRequest creates the Update request.

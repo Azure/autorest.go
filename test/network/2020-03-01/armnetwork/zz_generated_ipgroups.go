@@ -52,23 +52,6 @@ func (client *IPGroupsClient) Do(req *azcore.Request) (*azcore.Response, error) 
 	return client.p.Do(req)
 }
 
-// CreateOrUpdate - Creates or updates an ipGroups in a specified resource group.
-func (client *IPGroupsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, ipGroupsName string, parameters IPGroup) (*azcore.Response, error) {
-	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, ipGroupsName, parameters)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
-		return nil, client.CreateOrUpdateHandleError(resp)
-	}
-	return resp, nil
-}
-
 func (client *IPGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ipGroupsName string, parameters IPGroup) (*IPGroupPollerResponse, error) {
 	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, ipGroupsName, parameters)
 	if err != nil {
@@ -103,6 +86,22 @@ func (client *IPGroupsClient) ResumeCreateOrUpdate(token string) (IPGroupPoller,
 	}, nil
 }
 
+// CreateOrUpdate - Creates or updates an ipGroups in a specified resource group.
+func (client *IPGroupsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, ipGroupsName string, parameters IPGroup) (*azcore.Response, error) {
+	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, ipGroupsName, parameters)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+		return nil, client.CreateOrUpdateHandleError(resp)
+	}
+	return resp, nil
+}
+
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
 func (client *IPGroupsClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, ipGroupsName string, parameters IPGroup) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}"
@@ -133,23 +132,6 @@ func (client *IPGroupsClient) CreateOrUpdateHandleError(resp *azcore.Response) e
 		return err
 	}
 	return err
-}
-
-// Delete - Deletes the specified ipGroups.
-func (client *IPGroupsClient) Delete(ctx context.Context, resourceGroupName string, ipGroupsName string) (*azcore.Response, error) {
-	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, ipGroupsName)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
-	}
-	return resp, nil
 }
 
 func (client *IPGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, ipGroupsName string) (*HTTPPollerResponse, error) {
@@ -184,6 +166,22 @@ func (client *IPGroupsClient) ResumeDelete(token string) (HTTPPoller, error) {
 		pipeline: client.p,
 		pt:       pt,
 	}, nil
+}
+
+// Delete - Deletes the specified ipGroups.
+func (client *IPGroupsClient) Delete(ctx context.Context, resourceGroupName string, ipGroupsName string) (*azcore.Response, error) {
+	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, ipGroupsName)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteHandleError(resp)
+	}
+	return resp, nil
 }
 
 // DeleteCreateRequest creates the Delete request.
