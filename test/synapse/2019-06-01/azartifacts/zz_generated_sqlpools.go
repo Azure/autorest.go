@@ -13,33 +13,18 @@ import (
 	"strings"
 )
 
-// BigDataPoolsOperations contains the methods for the BigDataPools group.
-type BigDataPoolsOperations interface {
-	// Get - Get Big Data Pool
-	Get(ctx context.Context, bigDataPoolName string) (*BigDataPoolResourceInfoResponse, error)
-	// List - List Big Data Pools
-	List(ctx context.Context) (*BigDataPoolResourceInfoListResultResponse, error)
-}
-
-// BigDataPoolsClient implements the BigDataPoolsOperations interface.
-// Don't use this type directly, use NewBigDataPoolsClient() instead.
-type BigDataPoolsClient struct {
-	*Client
-}
-
-// NewBigDataPoolsClient creates a new instance of BigDataPoolsClient with the specified values.
-func NewBigDataPoolsClient(c *Client) BigDataPoolsOperations {
-	return &BigDataPoolsClient{Client: c}
+type sqlPoolsClient struct {
+	*client
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *BigDataPoolsClient) Do(req *azcore.Request) (*azcore.Response, error) {
+func (client *sqlPoolsClient) Do(req *azcore.Request) (*azcore.Response, error) {
 	return client.p.Do(req)
 }
 
-// Get - Get Big Data Pool
-func (client *BigDataPoolsClient) Get(ctx context.Context, bigDataPoolName string) (*BigDataPoolResourceInfoResponse, error) {
-	req, err := client.GetCreateRequest(ctx, bigDataPoolName)
+// Get - Get Sql Pool
+func (client *sqlPoolsClient) Get(ctx context.Context, sqlPoolName string) (*SQLPoolResponse, error) {
+	req, err := client.GetCreateRequest(ctx, sqlPoolName)
 	if err != nil {
 		return nil, err
 	}
@@ -58,9 +43,9 @@ func (client *BigDataPoolsClient) Get(ctx context.Context, bigDataPoolName strin
 }
 
 // GetCreateRequest creates the Get request.
-func (client *BigDataPoolsClient) GetCreateRequest(ctx context.Context, bigDataPoolName string) (*azcore.Request, error) {
-	urlPath := "/bigDataPools/{bigDataPoolName}"
-	urlPath = strings.ReplaceAll(urlPath, "{bigDataPoolName}", url.PathEscape(bigDataPoolName))
+func (client *sqlPoolsClient) GetCreateRequest(ctx context.Context, sqlPoolName string) (*azcore.Request, error) {
+	urlPath := "/sqlPools/{sqlPoolName}"
+	urlPath = strings.ReplaceAll(urlPath, "{sqlPoolName}", url.PathEscape(sqlPoolName))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
@@ -73,13 +58,13 @@ func (client *BigDataPoolsClient) GetCreateRequest(ctx context.Context, bigDataP
 }
 
 // GetHandleResponse handles the Get response.
-func (client *BigDataPoolsClient) GetHandleResponse(resp *azcore.Response) (*BigDataPoolResourceInfoResponse, error) {
-	result := BigDataPoolResourceInfoResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.BigDataPoolResourceInfo)
+func (client *sqlPoolsClient) GetHandleResponse(resp *azcore.Response) (*SQLPoolResponse, error) {
+	result := SQLPoolResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.SQLPool)
 }
 
 // GetHandleError handles the Get error response.
-func (client *BigDataPoolsClient) GetHandleError(resp *azcore.Response) error {
+func (client *sqlPoolsClient) GetHandleError(resp *azcore.Response) error {
 	var err ErrorContract
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -87,8 +72,8 @@ func (client *BigDataPoolsClient) GetHandleError(resp *azcore.Response) error {
 	return err
 }
 
-// List - List Big Data Pools
-func (client *BigDataPoolsClient) List(ctx context.Context) (*BigDataPoolResourceInfoListResultResponse, error) {
+// List - List Sql Pools
+func (client *sqlPoolsClient) List(ctx context.Context) (*SQLPoolInfoListResultResponse, error) {
 	req, err := client.ListCreateRequest(ctx)
 	if err != nil {
 		return nil, err
@@ -108,8 +93,8 @@ func (client *BigDataPoolsClient) List(ctx context.Context) (*BigDataPoolResourc
 }
 
 // ListCreateRequest creates the List request.
-func (client *BigDataPoolsClient) ListCreateRequest(ctx context.Context) (*azcore.Request, error) {
-	urlPath := "/bigDataPools"
+func (client *sqlPoolsClient) ListCreateRequest(ctx context.Context) (*azcore.Request, error) {
+	urlPath := "/sqlPools"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
@@ -122,13 +107,13 @@ func (client *BigDataPoolsClient) ListCreateRequest(ctx context.Context) (*azcor
 }
 
 // ListHandleResponse handles the List response.
-func (client *BigDataPoolsClient) ListHandleResponse(resp *azcore.Response) (*BigDataPoolResourceInfoListResultResponse, error) {
-	result := BigDataPoolResourceInfoListResultResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.BigDataPoolResourceInfoListResult)
+func (client *sqlPoolsClient) ListHandleResponse(resp *azcore.Response) (*SQLPoolInfoListResultResponse, error) {
+	result := SQLPoolInfoListResultResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.SQLPoolInfoListResult)
 }
 
 // ListHandleError handles the List error response.
-func (client *BigDataPoolsClient) ListHandleError(resp *azcore.Response) error {
+func (client *sqlPoolsClient) ListHandleError(resp *azcore.Response) error {
 	var err ErrorContract
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

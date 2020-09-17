@@ -13,8 +13,8 @@ import (
 
 const telemetryInfo = "azsdk-go-azspark/<version>"
 
-// ClientOptions contains configuration settings for the default client's pipeline.
-type ClientOptions struct {
+// clientOptions contains configuration settings for the default client's pipeline.
+type clientOptions struct {
 	// HTTPClient sets the transport for making HTTP requests.
 	HTTPClient azcore.Transport
 	// LogOptions configures the built-in request logging policy behavior.
@@ -25,15 +25,15 @@ type ClientOptions struct {
 	Telemetry azcore.TelemetryOptions
 }
 
-// DefaultClientOptions creates a ClientOptions type initialized with default values.
-func DefaultClientOptions() ClientOptions {
-	return ClientOptions{
+// defaultClientOptions creates a clientOptions type initialized with default values.
+func defaultClientOptions() clientOptions {
+	return clientOptions{
 		HTTPClient: azcore.DefaultHTTPClientTransport(),
 		Retry:      azcore.DefaultRetryOptions(),
 	}
 }
 
-func (c *ClientOptions) telemetryOptions() azcore.TelemetryOptions {
+func (c *clientOptions) telemetryOptions() azcore.TelemetryOptions {
 	to := c.Telemetry
 	if to.Value == "" {
 		to.Value = telemetryInfo
@@ -43,15 +43,15 @@ func (c *ClientOptions) telemetryOptions() azcore.TelemetryOptions {
 	return to
 }
 
-type Client struct {
+type client struct {
 	u string
 	p azcore.Pipeline
 }
 
-// NewClient creates an instance of the Client type with the specified endpoint.
-func NewClient(endpoint string, livyAPIVersion *string, sparkPoolName string, options *ClientOptions) *Client {
+// newClient creates an instance of the client type with the specified endpoint.
+func newClient(endpoint string, livyAPIVersion *string, sparkPoolName string, options *clientOptions) *client {
 	if options == nil {
-		o := DefaultClientOptions()
+		o := defaultClientOptions()
 		options = &o
 	}
 	p := azcore.NewPipeline(options.HTTPClient,
@@ -59,11 +59,11 @@ func NewClient(endpoint string, livyAPIVersion *string, sparkPoolName string, op
 		azcore.NewUniqueRequestIDPolicy(),
 		azcore.NewRetryPolicy(&options.Retry),
 		azcore.NewRequestLogPolicy(options.LogOptions))
-	return NewClientWithPipeline(endpoint, livyAPIVersion, sparkPoolName, p)
+	return newClientWithPipeline(endpoint, livyAPIVersion, sparkPoolName, p)
 }
 
-// NewClientWithPipeline creates an instance of the Client type with the specified endpoint and pipeline.
-func NewClientWithPipeline(endpoint string, livyAPIVersion *string, sparkPoolName string, p azcore.Pipeline) *Client {
+// newClientWithPipeline creates an instance of the client type with the specified endpoint and pipeline.
+func newClientWithPipeline(endpoint string, livyAPIVersion *string, sparkPoolName string, p azcore.Pipeline) *client {
 	hostURL := "{endpoint}/livyApi/versions/{livyApiVersion}/sparkPools/{sparkPoolName}"
 	hostURL = strings.ReplaceAll(hostURL, "{endpoint}", endpoint)
 	if livyAPIVersion == nil {
@@ -72,5 +72,5 @@ func NewClientWithPipeline(endpoint string, livyAPIVersion *string, sparkPoolNam
 	}
 	hostURL = strings.ReplaceAll(hostURL, "{livyApiVersion}", *livyAPIVersion)
 	hostURL = strings.ReplaceAll(hostURL, "{sparkPoolName}", sparkPoolName)
-	return &Client{u: hostURL, p: p}
+	return &client{u: hostURL, p: p}
 }

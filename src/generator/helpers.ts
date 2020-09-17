@@ -94,6 +94,18 @@ export function getCreateRequestParametersSig(op: Operation): string {
   return params.join(', ');
 }
 
+// returns the parameter names for an operation (excludes the param types).
+// e.g. "i, s"
+export function getCreateRequestParameters(op: Operation): string {
+  // split param list into individual params
+  const reqParams = getCreateRequestParametersSig(op).split(',');
+  // keep the parameter names from the name/type tuples
+  for (let i = 0; i < reqParams.length; ++i) {
+    reqParams[i] = reqParams[i].trim().split(' ')[0];
+  }
+  return reqParams.join(', ');
+}
+
 // returns the complete collection of method parameters
 export function getMethodParameters(op: Operation): Parameter[] {
   const params = new Array<Parameter>();

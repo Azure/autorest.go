@@ -7,56 +7,39 @@ package azartifacts
 
 import (
 	"context"
-	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
 	"strings"
 )
 
-// DatasetOperations contains the methods for the Dataset group.
-type DatasetOperations interface {
-	// BeginCreateOrUpdateDataset - Creates or updates a dataset.
-	BeginCreateOrUpdateDataset(ctx context.Context, datasetName string, dataset DatasetResource, datasetCreateOrUpdateDatasetOptions *DatasetCreateOrUpdateDatasetOptions) (*DatasetResourcePollerResponse, error)
-	// ResumeCreateOrUpdateDataset - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeCreateOrUpdateDataset(token string) (DatasetResourcePoller, error)
-	// BeginDeleteDataset - Deletes a dataset.
-	BeginDeleteDataset(ctx context.Context, datasetName string) (*HTTPPollerResponse, error)
-	// ResumeDeleteDataset - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeDeleteDataset(token string) (HTTPPoller, error)
-	// GetDataset - Gets a dataset.
-	GetDataset(ctx context.Context, datasetName string, datasetGetDatasetOptions *DatasetGetDatasetOptions) (*DatasetResourceResponse, error)
-	// GetDatasetsByWorkspace - Lists datasets.
-	GetDatasetsByWorkspace() DatasetListResponsePager
-}
-
-// DatasetClient implements the DatasetOperations interface.
-// Don't use this type directly, use NewDatasetClient() instead.
-type DatasetClient struct {
-	*Client
-}
-
-// NewDatasetClient creates a new instance of DatasetClient with the specified values.
-func NewDatasetClient(c *Client) DatasetOperations {
-	return &DatasetClient{Client: c}
+type datasetClient struct {
+	*client
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *DatasetClient) Do(req *azcore.Request) (*azcore.Response, error) {
+func (client *datasetClient) Do(req *azcore.Request) (*azcore.Response, error) {
 	return client.p.Do(req)
 }
 
 // CreateOrUpdateDataset - Creates or updates a dataset.
-func (client *DatasetClient) BeginCreateOrUpdateDataset(ctx context.Context, datasetName string, dataset DatasetResource, datasetCreateOrUpdateDatasetOptions *DatasetCreateOrUpdateDatasetOptions) (*DatasetResourcePollerResponse, error) {
-	return nil, errors.New("NYI")
-}
-
-func (client *DatasetClient) ResumeCreateOrUpdateDataset(token string) (DatasetResourcePoller, error) {
-	return nil, nil
+func (client *datasetClient) CreateOrUpdateDataset(ctx context.Context, datasetName string, dataset DatasetResource, datasetCreateOrUpdateDatasetOptions *DatasetCreateOrUpdateDatasetOptions) (*azcore.Response, error) {
+	req, err := client.CreateOrUpdateDatasetCreateRequest(ctx, datasetName, dataset, datasetCreateOrUpdateDatasetOptions)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.CreateOrUpdateDatasetHandleError(resp)
+	}
+	return resp, nil
 }
 
 // CreateOrUpdateDatasetCreateRequest creates the CreateOrUpdateDataset request.
-func (client *DatasetClient) CreateOrUpdateDatasetCreateRequest(ctx context.Context, datasetName string, dataset DatasetResource, datasetCreateOrUpdateDatasetOptions *DatasetCreateOrUpdateDatasetOptions) (*azcore.Request, error) {
+func (client *datasetClient) CreateOrUpdateDatasetCreateRequest(ctx context.Context, datasetName string, dataset DatasetResource, datasetCreateOrUpdateDatasetOptions *DatasetCreateOrUpdateDatasetOptions) (*azcore.Request, error) {
 	urlPath := "/datasets/{datasetName}"
 	urlPath = strings.ReplaceAll(urlPath, "{datasetName}", url.PathEscape(datasetName))
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
@@ -74,12 +57,13 @@ func (client *DatasetClient) CreateOrUpdateDatasetCreateRequest(ctx context.Cont
 }
 
 // CreateOrUpdateDatasetHandleResponse handles the CreateOrUpdateDataset response.
-func (client *DatasetClient) CreateOrUpdateDatasetHandleResponse(resp *azcore.Response) (*DatasetResourcePollerResponse, error) {
-	return &DatasetResourcePollerResponse{RawResponse: resp.Response}, nil
+func (client *datasetClient) CreateOrUpdateDatasetHandleResponse(resp *azcore.Response) (*DatasetResourceResponse, error) {
+	result := DatasetResourceResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.DatasetResource)
 }
 
 // CreateOrUpdateDatasetHandleError handles the CreateOrUpdateDataset error response.
-func (client *DatasetClient) CreateOrUpdateDatasetHandleError(resp *azcore.Response) error {
+func (client *datasetClient) CreateOrUpdateDatasetHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -88,16 +72,23 @@ func (client *DatasetClient) CreateOrUpdateDatasetHandleError(resp *azcore.Respo
 }
 
 // DeleteDataset - Deletes a dataset.
-func (client *DatasetClient) BeginDeleteDataset(ctx context.Context, datasetName string) (*HTTPPollerResponse, error) {
-	return nil, errors.New("NYI")
-}
-
-func (client *DatasetClient) ResumeDeleteDataset(token string) (HTTPPoller, error) {
-	return nil, nil
+func (client *datasetClient) DeleteDataset(ctx context.Context, datasetName string) (*azcore.Response, error) {
+	req, err := client.DeleteDatasetCreateRequest(ctx, datasetName)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteDatasetHandleError(resp)
+	}
+	return resp, nil
 }
 
 // DeleteDatasetCreateRequest creates the DeleteDataset request.
-func (client *DatasetClient) DeleteDatasetCreateRequest(ctx context.Context, datasetName string) (*azcore.Request, error) {
+func (client *datasetClient) DeleteDatasetCreateRequest(ctx context.Context, datasetName string) (*azcore.Request, error) {
 	urlPath := "/datasets/{datasetName}"
 	urlPath = strings.ReplaceAll(urlPath, "{datasetName}", url.PathEscape(datasetName))
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
@@ -111,13 +102,8 @@ func (client *DatasetClient) DeleteDatasetCreateRequest(ctx context.Context, dat
 	return req, nil
 }
 
-// DeleteDatasetHandleResponse handles the DeleteDataset response.
-func (client *DatasetClient) DeleteDatasetHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
-}
-
 // DeleteDatasetHandleError handles the DeleteDataset error response.
-func (client *DatasetClient) DeleteDatasetHandleError(resp *azcore.Response) error {
+func (client *datasetClient) DeleteDatasetHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -126,7 +112,7 @@ func (client *DatasetClient) DeleteDatasetHandleError(resp *azcore.Response) err
 }
 
 // GetDataset - Gets a dataset.
-func (client *DatasetClient) GetDataset(ctx context.Context, datasetName string, datasetGetDatasetOptions *DatasetGetDatasetOptions) (*DatasetResourceResponse, error) {
+func (client *datasetClient) GetDataset(ctx context.Context, datasetName string, datasetGetDatasetOptions *DatasetGetDatasetOptions) (*DatasetResourceResponse, error) {
 	req, err := client.GetDatasetCreateRequest(ctx, datasetName, datasetGetDatasetOptions)
 	if err != nil {
 		return nil, err
@@ -146,7 +132,7 @@ func (client *DatasetClient) GetDataset(ctx context.Context, datasetName string,
 }
 
 // GetDatasetCreateRequest creates the GetDataset request.
-func (client *DatasetClient) GetDatasetCreateRequest(ctx context.Context, datasetName string, datasetGetDatasetOptions *DatasetGetDatasetOptions) (*azcore.Request, error) {
+func (client *datasetClient) GetDatasetCreateRequest(ctx context.Context, datasetName string, datasetGetDatasetOptions *DatasetGetDatasetOptions) (*azcore.Request, error) {
 	urlPath := "/datasets/{datasetName}"
 	urlPath = strings.ReplaceAll(urlPath, "{datasetName}", url.PathEscape(datasetName))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
@@ -164,13 +150,13 @@ func (client *DatasetClient) GetDatasetCreateRequest(ctx context.Context, datase
 }
 
 // GetDatasetHandleResponse handles the GetDataset response.
-func (client *DatasetClient) GetDatasetHandleResponse(resp *azcore.Response) (*DatasetResourceResponse, error) {
+func (client *datasetClient) GetDatasetHandleResponse(resp *azcore.Response) (*DatasetResourceResponse, error) {
 	result := DatasetResourceResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.DatasetResource)
 }
 
 // GetDatasetHandleError handles the GetDataset error response.
-func (client *DatasetClient) GetDatasetHandleError(resp *azcore.Response) error {
+func (client *datasetClient) GetDatasetHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -179,7 +165,7 @@ func (client *DatasetClient) GetDatasetHandleError(resp *azcore.Response) error 
 }
 
 // GetDatasetsByWorkspace - Lists datasets.
-func (client *DatasetClient) GetDatasetsByWorkspace() DatasetListResponsePager {
+func (client *datasetClient) GetDatasetsByWorkspace() DatasetListResponsePager {
 	return &datasetListResponsePager{
 		pipeline: client.p,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -194,7 +180,7 @@ func (client *DatasetClient) GetDatasetsByWorkspace() DatasetListResponsePager {
 }
 
 // GetDatasetsByWorkspaceCreateRequest creates the GetDatasetsByWorkspace request.
-func (client *DatasetClient) GetDatasetsByWorkspaceCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *datasetClient) GetDatasetsByWorkspaceCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/datasets"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -208,13 +194,13 @@ func (client *DatasetClient) GetDatasetsByWorkspaceCreateRequest(ctx context.Con
 }
 
 // GetDatasetsByWorkspaceHandleResponse handles the GetDatasetsByWorkspace response.
-func (client *DatasetClient) GetDatasetsByWorkspaceHandleResponse(resp *azcore.Response) (*DatasetListResponseResponse, error) {
+func (client *datasetClient) GetDatasetsByWorkspaceHandleResponse(resp *azcore.Response) (*DatasetListResponseResponse, error) {
 	result := DatasetListResponseResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.DatasetListResponse)
 }
 
 // GetDatasetsByWorkspaceHandleError handles the GetDatasetsByWorkspace error response.
-func (client *DatasetClient) GetDatasetsByWorkspaceHandleError(resp *azcore.Response) error {
+func (client *datasetClient) GetDatasetsByWorkspaceHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

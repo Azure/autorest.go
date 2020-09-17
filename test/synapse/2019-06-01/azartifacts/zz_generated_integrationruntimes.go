@@ -13,32 +13,17 @@ import (
 	"strings"
 )
 
-// IntegrationRuntimesOperations contains the methods for the IntegrationRuntimes group.
-type IntegrationRuntimesOperations interface {
-	// Get - Get Integration Runtime
-	Get(ctx context.Context, integrationRuntimeName string) (*IntegrationRuntimeResourceResponse, error)
-	// List - List Integration Runtimes
-	List(ctx context.Context) (*IntegrationRuntimeListResponseResponse, error)
-}
-
-// IntegrationRuntimesClient implements the IntegrationRuntimesOperations interface.
-// Don't use this type directly, use NewIntegrationRuntimesClient() instead.
-type IntegrationRuntimesClient struct {
-	*Client
-}
-
-// NewIntegrationRuntimesClient creates a new instance of IntegrationRuntimesClient with the specified values.
-func NewIntegrationRuntimesClient(c *Client) IntegrationRuntimesOperations {
-	return &IntegrationRuntimesClient{Client: c}
+type integrationRuntimesClient struct {
+	*client
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *IntegrationRuntimesClient) Do(req *azcore.Request) (*azcore.Response, error) {
+func (client *integrationRuntimesClient) Do(req *azcore.Request) (*azcore.Response, error) {
 	return client.p.Do(req)
 }
 
 // Get - Get Integration Runtime
-func (client *IntegrationRuntimesClient) Get(ctx context.Context, integrationRuntimeName string) (*IntegrationRuntimeResourceResponse, error) {
+func (client *integrationRuntimesClient) Get(ctx context.Context, integrationRuntimeName string) (*IntegrationRuntimeResourceResponse, error) {
 	req, err := client.GetCreateRequest(ctx, integrationRuntimeName)
 	if err != nil {
 		return nil, err
@@ -58,7 +43,7 @@ func (client *IntegrationRuntimesClient) Get(ctx context.Context, integrationRun
 }
 
 // GetCreateRequest creates the Get request.
-func (client *IntegrationRuntimesClient) GetCreateRequest(ctx context.Context, integrationRuntimeName string) (*azcore.Request, error) {
+func (client *integrationRuntimesClient) GetCreateRequest(ctx context.Context, integrationRuntimeName string) (*azcore.Request, error) {
 	urlPath := "/integrationRuntimes/{integrationRuntimeName}"
 	urlPath = strings.ReplaceAll(urlPath, "{integrationRuntimeName}", url.PathEscape(integrationRuntimeName))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
@@ -73,13 +58,13 @@ func (client *IntegrationRuntimesClient) GetCreateRequest(ctx context.Context, i
 }
 
 // GetHandleResponse handles the Get response.
-func (client *IntegrationRuntimesClient) GetHandleResponse(resp *azcore.Response) (*IntegrationRuntimeResourceResponse, error) {
+func (client *integrationRuntimesClient) GetHandleResponse(resp *azcore.Response) (*IntegrationRuntimeResourceResponse, error) {
 	result := IntegrationRuntimeResourceResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.IntegrationRuntimeResource)
 }
 
 // GetHandleError handles the Get error response.
-func (client *IntegrationRuntimesClient) GetHandleError(resp *azcore.Response) error {
+func (client *integrationRuntimesClient) GetHandleError(resp *azcore.Response) error {
 	var err ErrorContract
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -88,7 +73,7 @@ func (client *IntegrationRuntimesClient) GetHandleError(resp *azcore.Response) e
 }
 
 // List - List Integration Runtimes
-func (client *IntegrationRuntimesClient) List(ctx context.Context) (*IntegrationRuntimeListResponseResponse, error) {
+func (client *integrationRuntimesClient) List(ctx context.Context) (*IntegrationRuntimeListResponseResponse, error) {
 	req, err := client.ListCreateRequest(ctx)
 	if err != nil {
 		return nil, err
@@ -108,7 +93,7 @@ func (client *IntegrationRuntimesClient) List(ctx context.Context) (*Integration
 }
 
 // ListCreateRequest creates the List request.
-func (client *IntegrationRuntimesClient) ListCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *integrationRuntimesClient) ListCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/integrationRuntimes"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -122,13 +107,13 @@ func (client *IntegrationRuntimesClient) ListCreateRequest(ctx context.Context) 
 }
 
 // ListHandleResponse handles the List response.
-func (client *IntegrationRuntimesClient) ListHandleResponse(resp *azcore.Response) (*IntegrationRuntimeListResponseResponse, error) {
+func (client *integrationRuntimesClient) ListHandleResponse(resp *azcore.Response) (*IntegrationRuntimeListResponseResponse, error) {
 	result := IntegrationRuntimeListResponseResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.IntegrationRuntimeListResponse)
 }
 
 // ListHandleError handles the List error response.
-func (client *IntegrationRuntimesClient) ListHandleError(resp *azcore.Response) error {
+func (client *integrationRuntimesClient) ListHandleError(resp *azcore.Response) error {
 	var err ErrorContract
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

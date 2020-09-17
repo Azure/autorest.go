@@ -310,23 +310,13 @@ func (client *PagingClient) GetMultiplePagesFragmentWithGroupingNextLinkHandleEr
 	return errors.New(string(body))
 }
 
-// GetMultiplePagesLro - A long-running paging operation that includes a nextLink that has 10 pages
 func (client *PagingClient) BeginGetMultiplePagesLro(ctx context.Context, pagingGetMultiplePagesLroOptions *PagingGetMultiplePagesLroOptions) (*ProductResultPagerPollerResponse, error) {
-	req, err := client.GetMultiplePagesLroCreateRequest(ctx, pagingGetMultiplePagesLroOptions)
+	resp, err := client.GetMultiplePagesLro(ctx, pagingGetMultiplePagesLroOptions)
 	if err != nil {
 		return nil, err
 	}
-	// send the first request to initialize the poller
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if !resp.HasStatusCode(http.StatusAccepted) {
-		return nil, client.GetMultiplePagesLroHandleError(resp)
-	}
-	result, err := client.GetMultiplePagesLroHandleResponse(resp)
-	if err != nil {
-		return nil, err
+	result := &ProductResultPagerPollerResponse{
+		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("PagingClient.GetMultiplePagesLro", "", resp, client.GetMultiplePagesLroHandleError)
 	if err != nil {
@@ -364,6 +354,22 @@ func (client *PagingClient) ResumeGetMultiplePagesLro(token string) (ProductResu
 	}, nil
 }
 
+// GetMultiplePagesLro - A long-running paging operation that includes a nextLink that has 10 pages
+func (client *PagingClient) GetMultiplePagesLro(ctx context.Context, pagingGetMultiplePagesLroOptions *PagingGetMultiplePagesLroOptions) (*azcore.Response, error) {
+	req, err := client.GetMultiplePagesLroCreateRequest(ctx, pagingGetMultiplePagesLroOptions)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return nil, client.GetMultiplePagesLroHandleError(resp)
+	}
+	return resp, nil
+}
+
 // GetMultiplePagesLroCreateRequest creates the GetMultiplePagesLro request.
 func (client *PagingClient) GetMultiplePagesLroCreateRequest(ctx context.Context, pagingGetMultiplePagesLroOptions *PagingGetMultiplePagesLroOptions) (*azcore.Request, error) {
 	urlPath := "/paging/multiple/lro"
@@ -385,8 +391,9 @@ func (client *PagingClient) GetMultiplePagesLroCreateRequest(ctx context.Context
 }
 
 // GetMultiplePagesLroHandleResponse handles the GetMultiplePagesLro response.
-func (client *PagingClient) GetMultiplePagesLroHandleResponse(resp *azcore.Response) (*ProductResultPagerPollerResponse, error) {
-	return &ProductResultPagerPollerResponse{RawResponse: resp.Response}, nil
+func (client *PagingClient) GetMultiplePagesLroHandleResponse(resp *azcore.Response) (*ProductResultResponse, error) {
+	result := ProductResultResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.ProductResult)
 }
 
 // GetMultiplePagesLroHandleError handles the GetMultiplePagesLro error response.

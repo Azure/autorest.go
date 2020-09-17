@@ -13,8 +13,8 @@ import (
 const scope = "https://dev.azuresynapse.net/.default"
 const telemetryInfo = "azsdk-go-azartifacts/<version>"
 
-// ClientOptions contains configuration settings for the default client's pipeline.
-type ClientOptions struct {
+// clientOptions contains configuration settings for the default client's pipeline.
+type clientOptions struct {
 	// HTTPClient sets the transport for making HTTP requests.
 	HTTPClient azcore.Transport
 	// LogOptions configures the built-in request logging policy behavior.
@@ -25,15 +25,15 @@ type ClientOptions struct {
 	Telemetry azcore.TelemetryOptions
 }
 
-// DefaultClientOptions creates a ClientOptions type initialized with default values.
-func DefaultClientOptions() ClientOptions {
-	return ClientOptions{
+// defaultClientOptions creates a clientOptions type initialized with default values.
+func defaultClientOptions() clientOptions {
+	return clientOptions{
 		HTTPClient: azcore.DefaultHTTPClientTransport(),
 		Retry:      azcore.DefaultRetryOptions(),
 	}
 }
 
-func (c *ClientOptions) telemetryOptions() azcore.TelemetryOptions {
+func (c *clientOptions) telemetryOptions() azcore.TelemetryOptions {
 	to := c.Telemetry
 	if to.Value == "" {
 		to.Value = telemetryInfo
@@ -43,15 +43,15 @@ func (c *ClientOptions) telemetryOptions() azcore.TelemetryOptions {
 	return to
 }
 
-type Client struct {
+type client struct {
 	u string
 	p azcore.Pipeline
 }
 
-// NewClient creates an instance of the Client type with the specified endpoint.
-func NewClient(endpoint string, cred azcore.Credential, options *ClientOptions) *Client {
+// newClient creates an instance of the client type with the specified endpoint.
+func newClient(endpoint string, cred azcore.Credential, options *clientOptions) *client {
 	if options == nil {
-		o := DefaultClientOptions()
+		o := defaultClientOptions()
 		options = &o
 	}
 	p := azcore.NewPipeline(options.HTTPClient,
@@ -60,10 +60,10 @@ func NewClient(endpoint string, cred azcore.Credential, options *ClientOptions) 
 		azcore.NewRetryPolicy(&options.Retry),
 		cred.AuthenticationPolicy(azcore.AuthenticationPolicyOptions{Options: azcore.TokenRequestOptions{Scopes: []string{scope}}}),
 		azcore.NewRequestLogPolicy(options.LogOptions))
-	return NewClientWithPipeline(endpoint, p)
+	return newClientWithPipeline(endpoint, p)
 }
 
-// NewClientWithPipeline creates an instance of the Client type with the specified endpoint and pipeline.
-func NewClientWithPipeline(endpoint string, p azcore.Pipeline) *Client {
-	return &Client{u: endpoint, p: p}
+// newClientWithPipeline creates an instance of the client type with the specified endpoint and pipeline.
+func newClientWithPipeline(endpoint string, p azcore.Pipeline) *client {
+	return &client{u: endpoint, p: p}
 }

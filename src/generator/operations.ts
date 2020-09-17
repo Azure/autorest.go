@@ -7,9 +7,9 @@ import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, KnownMediaType, pascalCase, camelCase } from '@azure-tools/codegen';
 import { ArraySchema, ByteArraySchema, CodeModel, ConstantSchema, DateTimeSchema, DictionarySchema, GroupProperty, ImplementationLocation, NumberSchema, Operation, OperationGroup, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { aggregateParameters, isArraySchema, isPageableOperation, isSchemaResponse, PagerInfo, isLROOperation } from '../common/helpers';
+import { aggregateParameters, isArraySchema, isPageableOperation, isSchemaResponse, PagerInfo, isLROOperation, exportClients } from '../common/helpers';
 import { OperationNaming } from '../transform/namer';
-import { contentPreamble, formatParameterTypeName, formatStatusCodes, getStatusCodes, hasDescription, hasSchemaResponse, skipURLEncoding, sortAscending, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired } from './helpers';
+import { contentPreamble, formatParameterTypeName, formatStatusCodes, getStatusCodes, hasDescription, hasSchemaResponse, skipURLEncoding, sortAscending, getCreateRequestParameters, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired } from './helpers';
 import { ImportManager } from './imports';
 
 // represents the generated content for an operation group
@@ -25,11 +25,7 @@ export class OperationGroupContent {
 
 // Creates the content for all <operation>.go files
 export async function generateOperations(session: Session<CodeModel>): Promise<OperationGroupContent[]> {
-  let openapiType = await session.getValue('openapi-type', '');
-  let isDataPlane = false;
-  if (openapiType === 'data-plane') {
-    isDataPlane = true;
-  }
+  const isARM = session.model.language.go!.openApiType === 'arm';
   // generate protocol operations
   const operations = new Array<OperationGroupContent>();
   for (const group of values(session.model.operationGroups)) {
@@ -44,15 +40,23 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     for (const op of values(group.operations)) {
       // protocol creation can add imports to the list so
       // it must be done before the imports are written out
-      opText += generateOperation(op, imports, isDataPlane);
+      if (isARM && isLROOperation(op)) {
+        // generate Begin and Resume methods
+        opText += generateARMLROBeginMethod(op, imports);
+        opText += generateARMLROResumeMethod(op);
+      }
+      opText += generateOperation(op, imports);
       opText += createProtocolRequest(session.model, op, imports);
       opText += createProtocolResponse(op, imports);
       opText += createProtocolErrHandler(op, imports);
     }
-    const interfaceText = createInterfaceDefinition(group, imports);
+    let interfaceText = '';
+    if (isARM) {
+      interfaceText = createInterfaceDefinition(group, imports);
+    }
     // stitch it all together
     let text = await contentPreamble(session);
-    const exportClient = await session.getValue('export-client', true);
+    const exportClient = await exportClients(session);
     let client = 'Client';
     let clientName = group.language.go!.clientName;
     if (!exportClient) {
@@ -63,8 +67,10 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     text += interfaceText;
     // generate the operation client
     const interfaceName = group.language.go!.interfaceName;
-    text += `// ${clientName} implements the ${interfaceName} interface.\n`;
-    text += `// Don't use this type directly, use ${clientCtor}() instead.\n`;
+    if (isARM) {
+      text += `// ${clientName} implements the ${interfaceName} interface.\n`;
+      text += `// Don't use this type directly, use ${clientCtor}() instead.\n`;
+    }
     text += `type ${clientName} struct {\n`;
     text += `\t*${client}\n`;
     if (group.language.go!.clientParams) {
@@ -74,22 +80,24 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       }
     }
     text += '}\n\n';
-    // operation client constructor
-    const clientLiterals = [`${client}: c`];
-    const methodParams = [`c *${client}`];
-    // add client params to the operation client constructor
-    if (group.language.go!.clientParams) {
-      const clientParams = <Array<Parameter>>group.language.go!.clientParams;
-      clientParams.sort(sortParametersByRequired);
-      for (const clientParam of values(clientParams)) {
-        clientLiterals.push(`${clientParam.language.go!.name}: ${clientParam.language.go!.name}`);
-        methodParams.push(`${clientParam.language.go!.name} ${formatParameterTypeName(clientParam)}`);
+    if (isARM) {
+      // operation client constructor
+      const clientLiterals = [`${client}: c`];
+      const methodParams = [`c *${client}`];
+      // add client params to the operation client constructor
+      if (group.language.go!.clientParams) {
+        const clientParams = <Array<Parameter>>group.language.go!.clientParams;
+        clientParams.sort(sortParametersByRequired);
+        for (const clientParam of values(clientParams)) {
+          clientLiterals.push(`${clientParam.language.go!.name}: ${clientParam.language.go!.name}`);
+          methodParams.push(`${clientParam.language.go!.name} ${formatParameterTypeName(clientParam)}`);
+        }
       }
+      text += `// ${clientCtor} creates a new instance of ${clientName} with the specified values.\n`;
+      text += `func ${clientCtor}(${methodParams.join(', ')}) ${interfaceName} {\n`;
+      text += `\treturn &${clientName}{${clientLiterals.join(', ')}}\n`;
+      text += '}\n\n';
     }
-    text += `// ${clientCtor} creates a new instance of ${clientName} with the specified values.\n`;
-    text += `func ${clientCtor}(${methodParams.join(', ')}) ${interfaceName} {\n`;
-    text += `\treturn &${clientName}{${clientLiterals.join(', ')}}\n`;
-    text += '}\n\n';
     // operation client Do method
     text += '// Do invokes the Do() method on the pipeline associated with this client.\n';
     text += `func (client *${clientName}) Do(req *azcore.Request) (*azcore.Response, error) {\n`;
@@ -196,14 +204,14 @@ function generateMultiRespComment(op: Operation): string {
   return `// Possible return types are ${returnTypes.join(', ')}\n`;
 }
 
-function generateOperation(op: Operation, imports: ImportManager, isDataPlane: boolean): string {
+function generateOperation(op: Operation, imports: ImportManager): string {
   if (op.language.go!.paging && op.language.go!.paging.isNextOp) {
     // don't generate a public API for the methods used to advance pages
     return '';
   }
   const info = <OperationNaming>op.language.go!;
   const params = getAPIParametersSig(op, imports);
-  const returns = generateReturnsInfo(op, false);
+  const returns = generateReturnsInfo(op, 'op');
   const clientName = op.language.go!.clientName;
   let text = '';
   if (hasDescription(op.language.go!)) {
@@ -212,105 +220,14 @@ function generateOperation(op: Operation, imports: ImportManager, isDataPlane: b
   if (isMultiRespOperation(op)) {
     text += generateMultiRespComment(op);
   }
-  if (op.language.go!.methodPrefix) {
-    text += `func (client *${clientName}) ${op.language.go!.methodPrefix}${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;
-  } else {
-    text += `func (client *${clientName}) ${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;
-  }
-  // split param list into individual params
-  const reqParams = getCreateRequestParametersSig(op).split(',');
-  // keep the parameter names from the name/type tuples
-  for (let i = 0; i < reqParams.length; ++i) {
-    reqParams[i] = reqParams[i].trim().split(' ')[0];
-  }
-  if (isLROOperation(op)) {
-    if (isDataPlane) {
-      imports.add('errors');
-      text += `\treturn nil, errors.New("NYI")\n`;
-      // closing braces
-      text += '}\n\n';
-      text += addResumePollerMethod(op, clientName, isDataPlane);
-      return text;
-    }
-    imports.add('github.com/Azure/azure-sdk-for-go/sdk/armcore');
-    imports.add('time');
-    text += `\treq, err := client.${info.protocolNaming.requestMethod}(${reqParams.join(', ')})\n`;
-    text += `\tif err != nil {\n`;
-    text += `\t\treturn nil, err\n`;
-    text += `\t}\n`;
-    text += `\t// send the first request to initialize the poller\n`;
-    text += `\tresp, err := client.Do(req)\n`;
-    text += `\tif err != nil {\n`;
-    text += `\t\treturn nil, err\n`;
-    text += `\t}\n`;
-    const statusCodes = getStatusCodes(op);
-    text += `\tif !resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
-    text += `\t\treturn nil, client.${info.protocolNaming.errorMethod}(resp)\n`;
-    text += '\t}\n';
-    if (!op.responses) {
-      text += '\tresult := &HTTPResponse{\n';
-      text += '\t\tresult.RawResponse: resp\n';
-      text += '\t}\n';
-    } else {
-      text += `\tresult, err := client.${info.protocolNaming.responseMethod}(resp)\n`;
-      text += `\tif err != nil {\n`;
-      text += `\t\treturn nil, err\n`;
-      text += `\t}\n`;
-    }
-    // LRO operation might have a special configuration set in x-ms-long-running-operation-options
-    // which indicates a specific url to perform the final Get operation on
-    let finalState = '';
-    if (op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via']) {
-      finalState = op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via'];
-    }
-    text += `\tpt, err := armcore.NewPoller("${clientName}.${op.language.go!.name}", "${finalState}", resp, client.${info.protocolNaming.errorMethod})\n`;
-    text += '\tif err != nil {\n';
-    text += '\t\treturn nil, err\n';
-    text += '\t}\n';
-    text += `\tpoller := &${camelCase(op.language.go!.pollerType.name)}{\n`;
-    text += '\t\tpt: pt,\n';
-    if (isPageableOperation(op)) {
-      if (statusCodes.indexOf('200') < 0) {
-        statusCodes.push('200');
-      }
-      if (statusCodes.indexOf('204') < 0) {
-        statusCodes.push('204');
-      }
-      statusCodes.sort();
-      text += `\t\terrHandler: func(resp *azcore.Response) error {\n`;
-      text += `\t\t\tif resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
-      text += `\t\t\t\treturn nil\n`;
-      text += '\t\t\t}\n';
-      text += `\t\t\treturn client.${info.protocolNaming.errorMethod}(resp)\n`;
-      text += '\t\t},\n';
-      text += `\t\trespHandler: func(resp *azcore.Response) (*${(<SchemaResponse>op.responses![0]).schema.language.go!.responseType.name}, error) {\n`;
-      text += generateResponseUnmarshaller(op.responses![0], false, imports);
-      text += '\t\t},\n';
-    }
-    text += '\t\tpipeline: client.p,\n';
-    text += '\t}\n';
-    text += '\tresult.Poller = poller\n';
-    // determine the poller response based on the name and whether is is a pageable operation
-    let pollerResponse = '*http.Response';
-    if (isPageableOperation(op)) {
-      pollerResponse = op.language.go!.pageableType.name;
-    } else if (isSchemaResponse(op.responses![0])) {
-      pollerResponse = '*' + (<SchemaResponse>op.responses![0]).schema.language.go!.responseType.name;
-    }
-    text += `\tresult.PollUntilDone = func(ctx context.Context, frequency time.Duration) (${pollerResponse}, error) {\n`;
-    text += `\t\treturn poller.pollUntilDone(ctx, frequency)\n`;
-    text += `\t}\n`;
-    text += `\treturn result, nil\n`;
-    // closing braces
-    text += '}\n\n';
-    text += addResumePollerMethod(op, clientName, isDataPlane);
-    return text;
-  } else if (isPageableOperation(op)) {
+  text += `func (client *${clientName}) ${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;
+  const reqParams = getCreateRequestParameters(op);
+  if (isPageableOperation(op) && !isLROOperation(op)) {
     imports.add('context');
     text += `\treturn &${camelCase(op.language.go!.pageableType.name)}{\n`;
     text += `\t\tpipeline: client.p,\n`;
     text += `\t\trequester: func(ctx context.Context) (*azcore.Request, error) {\n`;
-    text += `\t\t\treturn client.${info.protocolNaming.requestMethod}(${reqParams.join(', ')})\n`;
+    text += `\t\t\treturn client.${info.protocolNaming.requestMethod}(${reqParams})\n`;
     text += '\t\t},\n';
     text += `\t\tresponder: client.${info.protocolNaming.responseMethod},\n`;
     text += `\t\terrorer:   client.${info.protocolNaming.errorMethod},\n`;
@@ -346,7 +263,7 @@ function generateOperation(op: Operation, imports: ImportManager, isDataPlane: b
     text += '}\n\n';
     return text;
   }
-  text += `\treq, err := client.${info.protocolNaming.requestMethod}(${reqParams.join(', ')})\n`;
+  text += `\treq, err := client.${info.protocolNaming.requestMethod}(${reqParams})\n`;
   text += `\tif err != nil {\n`;
   text += `\t\treturn nil, err\n`;
   text += `\t}\n`;
@@ -358,7 +275,9 @@ function generateOperation(op: Operation, imports: ImportManager, isDataPlane: b
   text += `\tif !resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
   text += `\t\treturn nil, client.${info.protocolNaming.errorMethod}(resp)\n`;
   text += '\t}\n';
-  if (needsResponseHandler(op)) {
+  if (isLROOperation(op)) {
+    text += '\t return resp, nil\n';
+  } else if (needsResponseHandler(op)) {
     // also cheating here as at present the only param to the responder is an azcore.Response
     text += `\tresult, err := client.${info.protocolNaming.responseMethod}(resp)\n`;
     text += `\tif err != nil {\n`;
@@ -656,16 +575,12 @@ function isArrayOfTimesForMarshalling(schema: Schema): boolean {
 }
 
 function needsResponseHandler(op: Operation): boolean {
-  return hasSchemaResponse(op) || isLROOperation(op) || isPageableOperation(op);
+  return hasSchemaResponse(op) || (isLROOperation(op) && hasSchemaResponse(op)) || isPageableOperation(op);
 }
 
-function generateResponseUnmarshaller(response: Response, isLRO: boolean, imports: ImportManager): string {
+function generateResponseUnmarshaller(response: Response, imports: ImportManager): string {
   let unmarshallerText = '';
   if (!isSchemaResponse(response)) {
-    if (isLRO) {
-      unmarshallerText += '\treturn &HTTPPollerResponse{RawResponse: resp.Response}, nil\n';
-      return unmarshallerText;
-    }
     throw console.error('TODO');
   } else if (response.schema.type === SchemaType.DateTime || response.schema.type === SchemaType.UnixTime) {
     // use the designated time type for unmarshalling
@@ -701,10 +616,6 @@ function generateResponseUnmarshaller(response: Response, isLRO: boolean, import
     return unmarshallerText;
   }
   const schemaResponse = <SchemaResponse>response;
-  if (isLRO) {
-    unmarshallerText += `\treturn &${schemaResponse.schema.language.go!.lroResponseType.language.go!.name}{RawResponse: resp.Response}, nil\n`;
-    return unmarshallerText;
-  }
   let respObj = `${schemaResponse.schema.language.go!.responseType.name}{RawResponse: resp.Response}`;
   unmarshallerText += `\tresult := ${respObj}\n`;
   // assign any header values
@@ -736,15 +647,15 @@ function createProtocolResponse(op: Operation, imports: ImportManager): string {
   const name = info.protocolNaming.responseMethod;
   const clientName = op.language.go!.clientName;
   let text = `${comment(name, '// ')} handles the ${info.name} response.\n`;
-  text += `func (client *${clientName}) ${name}(resp *azcore.Response) (${generateReturnsInfo(op, true).join(', ')}) {\n`;
+  text += `func (client *${clientName}) ${name}(resp *azcore.Response) (${generateReturnsInfo(op, 'handler').join(', ')}) {\n`;
   if (!isMultiRespOperation(op)) {
-    text += generateResponseUnmarshaller(op.responses![0], isLROOperation(op), imports);
+    text += generateResponseUnmarshaller(op.responses![0], imports);
   } else {
     imports.add('fmt');
     text += '\tswitch resp.StatusCode {\n';
     for (const response of values(op.responses)) {
       text += `\tcase ${formatStatusCodes(response.protocol.http!.statusCodes)}:\n`
-      text += generateResponseUnmarshaller(response, isLROOperation(op), imports);
+      text += generateResponseUnmarshaller(response, imports);
     }
     text += '\tdefault:\n';
     text += `\t\treturn nil, fmt.Errorf("unhandled HTTP status code %d", resp.StatusCode)\n`;
@@ -857,8 +768,8 @@ function createInterfaceDefinition(group: OperationGroup, imports: ImportManager
       // don't generate a public API for the methods used to advance pages
       continue;
     }
-    if (op.language.go!.methodPrefix) {
-      opName = `${op.language.go!.methodPrefix}${opName}`;
+    if (isLROOperation(op)) {
+      opName = `Begin${opName}`;
     }
     for (const param of values(aggregateParameters(op))) {
       if (param.implementation !== ImplementationLocation.Method || param.required !== true) {
@@ -872,7 +783,7 @@ function createInterfaceDefinition(group: OperationGroup, imports: ImportManager
     if (isMultiRespOperation(op)) {
       interfaceText += generateMultiRespComment(op);
     }
-    const returns = generateReturnsInfo(op, false);
+    const returns = generateReturnsInfo(op, 'int');
     interfaceText += `\t${opName}(${getAPIParametersSig(op, imports)}) (${returns.join(', ')})\n`;
     // Add resume LRO poller method for each Begin poller method
     if (isLROOperation(op)) {
@@ -939,40 +850,122 @@ function getAPIParametersSig(op: Operation, imports: ImportManager): string {
 
 // returns the return signature where each entry is the type name
 // e.g. [ '*string', 'error' ]
-function generateReturnsInfo(op: Operation, forHandler: boolean): string[] {
+// apiType describes where the return sig is used.
+//   int - for the interface definition
+//    op - for the operation
+// handler - for the response handler
+function generateReturnsInfo(op: Operation, apiType: 'int' | 'op' | 'handler'): string[] {
   if (!op.responses) {
     return ['*http.Response', 'error'];
   }
   let returnType = '*http.Response';
-  if (isMultiRespOperation(op)) {
-    returnType = 'interface{}';
-  } else {
-    const firstResp = <SchemaResponse>op.responses![0];
-    // must check pageable first as all pageable operations are also schema responses, 
-    // but LRO operations that return a pager are an exception and need to return LRO specific
-    // responses
-    if (!forHandler && isPageableOperation(op) && !isLROOperation(op)) {
-      return [op.language.go!.pageableType.name];
-    } else if (isSchemaResponse(firstResp)) {
-      returnType = '*' + firstResp.schema.language.go!.responseType.name;
-      if (isLROOperation(op)) {
-        returnType = '*' + firstResp.schema.language.go!.lroResponseType.language.go!.name;
-      }
-    } else if (isLROOperation(op)) {
-      returnType = '*HTTPPollerResponse';
+  if (isLROOperation(op)) {
+    switch (apiType) {
+      case 'handler':
+        returnType = '*' + (<SchemaResponse>op.responses![0]).schema.language.go!.responseType.name;
+        break;
+      case 'int':
+        returnType = '*HTTPPollerResponse';
+        if (hasSchemaResponse(op)) {
+          returnType = '*' + (<SchemaResponse>op.responses![0]).schema.language.go!.lroResponseType.language.go!.name;
+        }
+        break;
+      case 'op':
+        returnType = '*azcore.Response';
+        break;
     }
+  } else if (isPageableOperation(op)) {
+    switch (apiType) {
+      case 'handler':
+        returnType = '*' + (<SchemaResponse>op.responses![0]).schema.language.go!.responseType.name;
+        break;
+      case 'int':
+      case 'op':
+        // pager operations don't return an error
+        return [op.language.go!.pageableType.name];
+    }
+  } else if (isMultiRespOperation(op)) {
+    returnType = 'interface{}';
+  } else if (hasSchemaResponse(op)) {
+    // simple schema response
+    returnType = '*' + (<SchemaResponse>op.responses![0]).schema.language.go!.responseType.name;
   }
   return [returnType, 'error'];
 }
 
-function addResumePollerMethod(op: Operation, clientName: string, isDataPlane: boolean): string {
+function generateARMLROBeginMethod(op: Operation, imports: ImportManager): string {
   const info = <OperationNaming>op.language.go!;
-  let text = `func (client *${clientName}) Resume${op.language.go!.name}(token string) (${op.language.go!.pollerType.name}, error) {\n`;
-  if (isDataPlane) {
-    text += '\treturn nil, nil\n';
-    text += '}\n\n';
-    return text;
+  const params = getAPIParametersSig(op, imports);
+  const returns = generateReturnsInfo(op, 'int');
+  const clientName = op.language.go!.clientName;
+  imports.add('github.com/Azure/azure-sdk-for-go/sdk/armcore');
+  imports.add('time');
+  let text = `func (client *${clientName}) Begin${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;
+  text += `\tresp, err := client.${op.language.go!.name}(${getCreateRequestParameters(op)})\n`;
+  text += `\tif err != nil {\n`;
+  text += `\t\treturn nil, err\n`;
+  text += `\t}\n`;
+  if (!op.responses || !isSchemaResponse(op.responses![0])) {
+    text += '\tresult := &HTTPPollerResponse{\n';
+  } else {
+    text += `\tresult := &${(<SchemaResponse>op.responses![0]).schema.language.go!.lroResponseType.language.go!.name}{\n`;
   }
+  text += '\t\tRawResponse: resp.Response,\n';
+  text += '\t}\n';
+  // LRO operation might have a special configuration set in x-ms-long-running-operation-options
+  // which indicates a specific url to perform the final Get operation on
+  let finalState = '';
+  if (op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via']) {
+    finalState = op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via'];
+  }
+  text += `\tpt, err := armcore.NewPoller("${clientName}.${op.language.go!.name}", "${finalState}", resp, client.${info.protocolNaming.errorMethod})\n`;
+  text += '\tif err != nil {\n';
+  text += '\t\treturn nil, err\n';
+  text += '\t}\n';
+  text += `\tpoller := &${camelCase(op.language.go!.pollerType.name)}{\n`;
+  text += '\t\tpt: pt,\n';
+  if (isPageableOperation(op)) {
+    const statusCodes = getStatusCodes(op);
+    if (statusCodes.indexOf('200') < 0) {
+      statusCodes.push('200');
+    }
+    if (statusCodes.indexOf('204') < 0) {
+      statusCodes.push('204');
+    }
+    statusCodes.sort();
+    text += `\t\terrHandler: func(resp *azcore.Response) error {\n`;
+    text += `\t\t\tif resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
+    text += `\t\t\t\treturn nil\n`;
+    text += '\t\t\t}\n';
+    text += `\t\t\treturn client.${info.protocolNaming.errorMethod}(resp)\n`;
+    text += '\t\t},\n';
+    text += `\t\trespHandler: func(resp *azcore.Response) (*${(<SchemaResponse>op.responses![0]).schema.language.go!.responseType.name}, error) {\n`;
+    text += generateResponseUnmarshaller(op.responses![0], imports);
+    text += '\t\t},\n';
+  }
+  text += '\t\tpipeline: client.p,\n';
+  text += '\t}\n';
+  text += '\tresult.Poller = poller\n';
+  // determine the poller response based on the name and whether is is a pageable operation
+  let pollerResponse = '*http.Response';
+  if (isPageableOperation(op)) {
+    pollerResponse = op.language.go!.pageableType.name;
+  } else if (isSchemaResponse(op.responses![0])) {
+    pollerResponse = '*' + (<SchemaResponse>op.responses![0]).schema.language.go!.responseType.name;
+  }
+  text += `\tresult.PollUntilDone = func(ctx context.Context, frequency time.Duration) (${pollerResponse}, error) {\n`;
+  text += `\t\treturn poller.pollUntilDone(ctx, frequency)\n`;
+  text += `\t}\n`;
+  text += `\treturn result, nil\n`;
+  // closing braces
+  text += '}\n\n';
+  return text;
+}
+
+function generateARMLROResumeMethod(op: Operation): string {
+  const info = <OperationNaming>op.language.go!;
+  const clientName = op.language.go!.clientName;
+  let text = `func (client *${clientName}) Resume${op.language.go!.name}(token string) (${op.language.go!.pollerType.name}, error) {\n`;
   text += `\tpt, err := armcore.NewPollerFromResumeToken("${clientName}.${op.language.go!.name}", token, client.${info.protocolNaming.errorMethod})\n`;
   text += '\tif err != nil {\n';
   text += '\t\treturn nil, err\n';

@@ -7,74 +7,39 @@ package azartifacts
 
 import (
 	"context"
-	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
 	"strings"
 )
 
-// TriggerOperations contains the methods for the Trigger group.
-type TriggerOperations interface {
-	// BeginCreateOrUpdateTrigger - Creates or updates a trigger.
-	BeginCreateOrUpdateTrigger(ctx context.Context, triggerName string, trigger TriggerResource, triggerCreateOrUpdateTriggerOptions *TriggerCreateOrUpdateTriggerOptions) (*TriggerResourcePollerResponse, error)
-	// ResumeCreateOrUpdateTrigger - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeCreateOrUpdateTrigger(token string) (TriggerResourcePoller, error)
-	// BeginDeleteTrigger - Deletes a trigger.
-	BeginDeleteTrigger(ctx context.Context, triggerName string) (*HTTPPollerResponse, error)
-	// ResumeDeleteTrigger - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeDeleteTrigger(token string) (HTTPPoller, error)
-	// GetEventSubscriptionStatus - Get a trigger's event subscription status.
-	GetEventSubscriptionStatus(ctx context.Context, triggerName string) (*TriggerSubscriptionOperationStatusResponse, error)
-	// GetTrigger - Gets a trigger.
-	GetTrigger(ctx context.Context, triggerName string, triggerGetTriggerOptions *TriggerGetTriggerOptions) (*TriggerResourceResponse, error)
-	// GetTriggersByWorkspace - Lists triggers.
-	GetTriggersByWorkspace() TriggerListResponsePager
-	// BeginStartTrigger - Starts a trigger.
-	BeginStartTrigger(ctx context.Context, triggerName string) (*HTTPPollerResponse, error)
-	// ResumeStartTrigger - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeStartTrigger(token string) (HTTPPoller, error)
-	// BeginStopTrigger - Stops a trigger.
-	BeginStopTrigger(ctx context.Context, triggerName string) (*HTTPPollerResponse, error)
-	// ResumeStopTrigger - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeStopTrigger(token string) (HTTPPoller, error)
-	// BeginSubscribeTriggerToEvents - Subscribe event trigger to events.
-	BeginSubscribeTriggerToEvents(ctx context.Context, triggerName string) (*TriggerSubscriptionOperationStatusPollerResponse, error)
-	// ResumeSubscribeTriggerToEvents - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeSubscribeTriggerToEvents(token string) (TriggerSubscriptionOperationStatusPoller, error)
-	// BeginUnsubscribeTriggerFromEvents - Unsubscribe event trigger from events.
-	BeginUnsubscribeTriggerFromEvents(ctx context.Context, triggerName string) (*TriggerSubscriptionOperationStatusPollerResponse, error)
-	// ResumeUnsubscribeTriggerFromEvents - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeUnsubscribeTriggerFromEvents(token string) (TriggerSubscriptionOperationStatusPoller, error)
-}
-
-// TriggerClient implements the TriggerOperations interface.
-// Don't use this type directly, use NewTriggerClient() instead.
-type TriggerClient struct {
-	*Client
-}
-
-// NewTriggerClient creates a new instance of TriggerClient with the specified values.
-func NewTriggerClient(c *Client) TriggerOperations {
-	return &TriggerClient{Client: c}
+type triggerClient struct {
+	*client
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
-func (client *TriggerClient) Do(req *azcore.Request) (*azcore.Response, error) {
+func (client *triggerClient) Do(req *azcore.Request) (*azcore.Response, error) {
 	return client.p.Do(req)
 }
 
 // CreateOrUpdateTrigger - Creates or updates a trigger.
-func (client *TriggerClient) BeginCreateOrUpdateTrigger(ctx context.Context, triggerName string, trigger TriggerResource, triggerCreateOrUpdateTriggerOptions *TriggerCreateOrUpdateTriggerOptions) (*TriggerResourcePollerResponse, error) {
-	return nil, errors.New("NYI")
-}
-
-func (client *TriggerClient) ResumeCreateOrUpdateTrigger(token string) (TriggerResourcePoller, error) {
-	return nil, nil
+func (client *triggerClient) CreateOrUpdateTrigger(ctx context.Context, triggerName string, trigger TriggerResource, triggerCreateOrUpdateTriggerOptions *TriggerCreateOrUpdateTriggerOptions) (*azcore.Response, error) {
+	req, err := client.CreateOrUpdateTriggerCreateRequest(ctx, triggerName, trigger, triggerCreateOrUpdateTriggerOptions)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.CreateOrUpdateTriggerHandleError(resp)
+	}
+	return resp, nil
 }
 
 // CreateOrUpdateTriggerCreateRequest creates the CreateOrUpdateTrigger request.
-func (client *TriggerClient) CreateOrUpdateTriggerCreateRequest(ctx context.Context, triggerName string, trigger TriggerResource, triggerCreateOrUpdateTriggerOptions *TriggerCreateOrUpdateTriggerOptions) (*azcore.Request, error) {
+func (client *triggerClient) CreateOrUpdateTriggerCreateRequest(ctx context.Context, triggerName string, trigger TriggerResource, triggerCreateOrUpdateTriggerOptions *TriggerCreateOrUpdateTriggerOptions) (*azcore.Request, error) {
 	urlPath := "/triggers/{triggerName}"
 	urlPath = strings.ReplaceAll(urlPath, "{triggerName}", url.PathEscape(triggerName))
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
@@ -92,12 +57,13 @@ func (client *TriggerClient) CreateOrUpdateTriggerCreateRequest(ctx context.Cont
 }
 
 // CreateOrUpdateTriggerHandleResponse handles the CreateOrUpdateTrigger response.
-func (client *TriggerClient) CreateOrUpdateTriggerHandleResponse(resp *azcore.Response) (*TriggerResourcePollerResponse, error) {
-	return &TriggerResourcePollerResponse{RawResponse: resp.Response}, nil
+func (client *triggerClient) CreateOrUpdateTriggerHandleResponse(resp *azcore.Response) (*TriggerResourceResponse, error) {
+	result := TriggerResourceResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.TriggerResource)
 }
 
 // CreateOrUpdateTriggerHandleError handles the CreateOrUpdateTrigger error response.
-func (client *TriggerClient) CreateOrUpdateTriggerHandleError(resp *azcore.Response) error {
+func (client *triggerClient) CreateOrUpdateTriggerHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -106,16 +72,23 @@ func (client *TriggerClient) CreateOrUpdateTriggerHandleError(resp *azcore.Respo
 }
 
 // DeleteTrigger - Deletes a trigger.
-func (client *TriggerClient) BeginDeleteTrigger(ctx context.Context, triggerName string) (*HTTPPollerResponse, error) {
-	return nil, errors.New("NYI")
-}
-
-func (client *TriggerClient) ResumeDeleteTrigger(token string) (HTTPPoller, error) {
-	return nil, nil
+func (client *triggerClient) DeleteTrigger(ctx context.Context, triggerName string) (*azcore.Response, error) {
+	req, err := client.DeleteTriggerCreateRequest(ctx, triggerName)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.DeleteTriggerHandleError(resp)
+	}
+	return resp, nil
 }
 
 // DeleteTriggerCreateRequest creates the DeleteTrigger request.
-func (client *TriggerClient) DeleteTriggerCreateRequest(ctx context.Context, triggerName string) (*azcore.Request, error) {
+func (client *triggerClient) DeleteTriggerCreateRequest(ctx context.Context, triggerName string) (*azcore.Request, error) {
 	urlPath := "/triggers/{triggerName}"
 	urlPath = strings.ReplaceAll(urlPath, "{triggerName}", url.PathEscape(triggerName))
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
@@ -129,13 +102,8 @@ func (client *TriggerClient) DeleteTriggerCreateRequest(ctx context.Context, tri
 	return req, nil
 }
 
-// DeleteTriggerHandleResponse handles the DeleteTrigger response.
-func (client *TriggerClient) DeleteTriggerHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
-}
-
 // DeleteTriggerHandleError handles the DeleteTrigger error response.
-func (client *TriggerClient) DeleteTriggerHandleError(resp *azcore.Response) error {
+func (client *triggerClient) DeleteTriggerHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -144,7 +112,7 @@ func (client *TriggerClient) DeleteTriggerHandleError(resp *azcore.Response) err
 }
 
 // GetEventSubscriptionStatus - Get a trigger's event subscription status.
-func (client *TriggerClient) GetEventSubscriptionStatus(ctx context.Context, triggerName string) (*TriggerSubscriptionOperationStatusResponse, error) {
+func (client *triggerClient) GetEventSubscriptionStatus(ctx context.Context, triggerName string) (*TriggerSubscriptionOperationStatusResponse, error) {
 	req, err := client.GetEventSubscriptionStatusCreateRequest(ctx, triggerName)
 	if err != nil {
 		return nil, err
@@ -164,7 +132,7 @@ func (client *TriggerClient) GetEventSubscriptionStatus(ctx context.Context, tri
 }
 
 // GetEventSubscriptionStatusCreateRequest creates the GetEventSubscriptionStatus request.
-func (client *TriggerClient) GetEventSubscriptionStatusCreateRequest(ctx context.Context, triggerName string) (*azcore.Request, error) {
+func (client *triggerClient) GetEventSubscriptionStatusCreateRequest(ctx context.Context, triggerName string) (*azcore.Request, error) {
 	urlPath := "/triggers/{triggerName}/getEventSubscriptionStatus"
 	urlPath = strings.ReplaceAll(urlPath, "{triggerName}", url.PathEscape(triggerName))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
@@ -179,13 +147,13 @@ func (client *TriggerClient) GetEventSubscriptionStatusCreateRequest(ctx context
 }
 
 // GetEventSubscriptionStatusHandleResponse handles the GetEventSubscriptionStatus response.
-func (client *TriggerClient) GetEventSubscriptionStatusHandleResponse(resp *azcore.Response) (*TriggerSubscriptionOperationStatusResponse, error) {
+func (client *triggerClient) GetEventSubscriptionStatusHandleResponse(resp *azcore.Response) (*TriggerSubscriptionOperationStatusResponse, error) {
 	result := TriggerSubscriptionOperationStatusResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.TriggerSubscriptionOperationStatus)
 }
 
 // GetEventSubscriptionStatusHandleError handles the GetEventSubscriptionStatus error response.
-func (client *TriggerClient) GetEventSubscriptionStatusHandleError(resp *azcore.Response) error {
+func (client *triggerClient) GetEventSubscriptionStatusHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -194,7 +162,7 @@ func (client *TriggerClient) GetEventSubscriptionStatusHandleError(resp *azcore.
 }
 
 // GetTrigger - Gets a trigger.
-func (client *TriggerClient) GetTrigger(ctx context.Context, triggerName string, triggerGetTriggerOptions *TriggerGetTriggerOptions) (*TriggerResourceResponse, error) {
+func (client *triggerClient) GetTrigger(ctx context.Context, triggerName string, triggerGetTriggerOptions *TriggerGetTriggerOptions) (*TriggerResourceResponse, error) {
 	req, err := client.GetTriggerCreateRequest(ctx, triggerName, triggerGetTriggerOptions)
 	if err != nil {
 		return nil, err
@@ -214,7 +182,7 @@ func (client *TriggerClient) GetTrigger(ctx context.Context, triggerName string,
 }
 
 // GetTriggerCreateRequest creates the GetTrigger request.
-func (client *TriggerClient) GetTriggerCreateRequest(ctx context.Context, triggerName string, triggerGetTriggerOptions *TriggerGetTriggerOptions) (*azcore.Request, error) {
+func (client *triggerClient) GetTriggerCreateRequest(ctx context.Context, triggerName string, triggerGetTriggerOptions *TriggerGetTriggerOptions) (*azcore.Request, error) {
 	urlPath := "/triggers/{triggerName}"
 	urlPath = strings.ReplaceAll(urlPath, "{triggerName}", url.PathEscape(triggerName))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
@@ -232,13 +200,13 @@ func (client *TriggerClient) GetTriggerCreateRequest(ctx context.Context, trigge
 }
 
 // GetTriggerHandleResponse handles the GetTrigger response.
-func (client *TriggerClient) GetTriggerHandleResponse(resp *azcore.Response) (*TriggerResourceResponse, error) {
+func (client *triggerClient) GetTriggerHandleResponse(resp *azcore.Response) (*TriggerResourceResponse, error) {
 	result := TriggerResourceResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.TriggerResource)
 }
 
 // GetTriggerHandleError handles the GetTrigger error response.
-func (client *TriggerClient) GetTriggerHandleError(resp *azcore.Response) error {
+func (client *triggerClient) GetTriggerHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -247,7 +215,7 @@ func (client *TriggerClient) GetTriggerHandleError(resp *azcore.Response) error 
 }
 
 // GetTriggersByWorkspace - Lists triggers.
-func (client *TriggerClient) GetTriggersByWorkspace() TriggerListResponsePager {
+func (client *triggerClient) GetTriggersByWorkspace() TriggerListResponsePager {
 	return &triggerListResponsePager{
 		pipeline: client.p,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -262,7 +230,7 @@ func (client *TriggerClient) GetTriggersByWorkspace() TriggerListResponsePager {
 }
 
 // GetTriggersByWorkspaceCreateRequest creates the GetTriggersByWorkspace request.
-func (client *TriggerClient) GetTriggersByWorkspaceCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *triggerClient) GetTriggersByWorkspaceCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/triggers"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -276,13 +244,13 @@ func (client *TriggerClient) GetTriggersByWorkspaceCreateRequest(ctx context.Con
 }
 
 // GetTriggersByWorkspaceHandleResponse handles the GetTriggersByWorkspace response.
-func (client *TriggerClient) GetTriggersByWorkspaceHandleResponse(resp *azcore.Response) (*TriggerListResponseResponse, error) {
+func (client *triggerClient) GetTriggersByWorkspaceHandleResponse(resp *azcore.Response) (*TriggerListResponseResponse, error) {
 	result := TriggerListResponseResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.TriggerListResponse)
 }
 
 // GetTriggersByWorkspaceHandleError handles the GetTriggersByWorkspace error response.
-func (client *TriggerClient) GetTriggersByWorkspaceHandleError(resp *azcore.Response) error {
+func (client *triggerClient) GetTriggersByWorkspaceHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -291,16 +259,23 @@ func (client *TriggerClient) GetTriggersByWorkspaceHandleError(resp *azcore.Resp
 }
 
 // StartTrigger - Starts a trigger.
-func (client *TriggerClient) BeginStartTrigger(ctx context.Context, triggerName string) (*HTTPPollerResponse, error) {
-	return nil, errors.New("NYI")
-}
-
-func (client *TriggerClient) ResumeStartTrigger(token string) (HTTPPoller, error) {
-	return nil, nil
+func (client *triggerClient) StartTrigger(ctx context.Context, triggerName string) (*azcore.Response, error) {
+	req, err := client.StartTriggerCreateRequest(ctx, triggerName)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.StartTriggerHandleError(resp)
+	}
+	return resp, nil
 }
 
 // StartTriggerCreateRequest creates the StartTrigger request.
-func (client *TriggerClient) StartTriggerCreateRequest(ctx context.Context, triggerName string) (*azcore.Request, error) {
+func (client *triggerClient) StartTriggerCreateRequest(ctx context.Context, triggerName string) (*azcore.Request, error) {
 	urlPath := "/triggers/{triggerName}/start"
 	urlPath = strings.ReplaceAll(urlPath, "{triggerName}", url.PathEscape(triggerName))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
@@ -314,13 +289,8 @@ func (client *TriggerClient) StartTriggerCreateRequest(ctx context.Context, trig
 	return req, nil
 }
 
-// StartTriggerHandleResponse handles the StartTrigger response.
-func (client *TriggerClient) StartTriggerHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
-}
-
 // StartTriggerHandleError handles the StartTrigger error response.
-func (client *TriggerClient) StartTriggerHandleError(resp *azcore.Response) error {
+func (client *triggerClient) StartTriggerHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -329,16 +299,23 @@ func (client *TriggerClient) StartTriggerHandleError(resp *azcore.Response) erro
 }
 
 // StopTrigger - Stops a trigger.
-func (client *TriggerClient) BeginStopTrigger(ctx context.Context, triggerName string) (*HTTPPollerResponse, error) {
-	return nil, errors.New("NYI")
-}
-
-func (client *TriggerClient) ResumeStopTrigger(token string) (HTTPPoller, error) {
-	return nil, nil
+func (client *triggerClient) StopTrigger(ctx context.Context, triggerName string) (*azcore.Response, error) {
+	req, err := client.StopTriggerCreateRequest(ctx, triggerName)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.StopTriggerHandleError(resp)
+	}
+	return resp, nil
 }
 
 // StopTriggerCreateRequest creates the StopTrigger request.
-func (client *TriggerClient) StopTriggerCreateRequest(ctx context.Context, triggerName string) (*azcore.Request, error) {
+func (client *triggerClient) StopTriggerCreateRequest(ctx context.Context, triggerName string) (*azcore.Request, error) {
 	urlPath := "/triggers/{triggerName}/stop"
 	urlPath = strings.ReplaceAll(urlPath, "{triggerName}", url.PathEscape(triggerName))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
@@ -352,13 +329,8 @@ func (client *TriggerClient) StopTriggerCreateRequest(ctx context.Context, trigg
 	return req, nil
 }
 
-// StopTriggerHandleResponse handles the StopTrigger response.
-func (client *TriggerClient) StopTriggerHandleResponse(resp *azcore.Response) (*HTTPPollerResponse, error) {
-	return &HTTPPollerResponse{RawResponse: resp.Response}, nil
-}
-
 // StopTriggerHandleError handles the StopTrigger error response.
-func (client *TriggerClient) StopTriggerHandleError(resp *azcore.Response) error {
+func (client *triggerClient) StopTriggerHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -367,16 +339,23 @@ func (client *TriggerClient) StopTriggerHandleError(resp *azcore.Response) error
 }
 
 // SubscribeTriggerToEvents - Subscribe event trigger to events.
-func (client *TriggerClient) BeginSubscribeTriggerToEvents(ctx context.Context, triggerName string) (*TriggerSubscriptionOperationStatusPollerResponse, error) {
-	return nil, errors.New("NYI")
-}
-
-func (client *TriggerClient) ResumeSubscribeTriggerToEvents(token string) (TriggerSubscriptionOperationStatusPoller, error) {
-	return nil, nil
+func (client *triggerClient) SubscribeTriggerToEvents(ctx context.Context, triggerName string) (*azcore.Response, error) {
+	req, err := client.SubscribeTriggerToEventsCreateRequest(ctx, triggerName)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.SubscribeTriggerToEventsHandleError(resp)
+	}
+	return resp, nil
 }
 
 // SubscribeTriggerToEventsCreateRequest creates the SubscribeTriggerToEvents request.
-func (client *TriggerClient) SubscribeTriggerToEventsCreateRequest(ctx context.Context, triggerName string) (*azcore.Request, error) {
+func (client *triggerClient) SubscribeTriggerToEventsCreateRequest(ctx context.Context, triggerName string) (*azcore.Request, error) {
 	urlPath := "/triggers/{triggerName}/subscribeToEvents"
 	urlPath = strings.ReplaceAll(urlPath, "{triggerName}", url.PathEscape(triggerName))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
@@ -391,12 +370,13 @@ func (client *TriggerClient) SubscribeTriggerToEventsCreateRequest(ctx context.C
 }
 
 // SubscribeTriggerToEventsHandleResponse handles the SubscribeTriggerToEvents response.
-func (client *TriggerClient) SubscribeTriggerToEventsHandleResponse(resp *azcore.Response) (*TriggerSubscriptionOperationStatusPollerResponse, error) {
-	return &TriggerSubscriptionOperationStatusPollerResponse{RawResponse: resp.Response}, nil
+func (client *triggerClient) SubscribeTriggerToEventsHandleResponse(resp *azcore.Response) (*TriggerSubscriptionOperationStatusResponse, error) {
+	result := TriggerSubscriptionOperationStatusResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.TriggerSubscriptionOperationStatus)
 }
 
 // SubscribeTriggerToEventsHandleError handles the SubscribeTriggerToEvents error response.
-func (client *TriggerClient) SubscribeTriggerToEventsHandleError(resp *azcore.Response) error {
+func (client *triggerClient) SubscribeTriggerToEventsHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -405,16 +385,23 @@ func (client *TriggerClient) SubscribeTriggerToEventsHandleError(resp *azcore.Re
 }
 
 // UnsubscribeTriggerFromEvents - Unsubscribe event trigger from events.
-func (client *TriggerClient) BeginUnsubscribeTriggerFromEvents(ctx context.Context, triggerName string) (*TriggerSubscriptionOperationStatusPollerResponse, error) {
-	return nil, errors.New("NYI")
-}
-
-func (client *TriggerClient) ResumeUnsubscribeTriggerFromEvents(token string) (TriggerSubscriptionOperationStatusPoller, error) {
-	return nil, nil
+func (client *triggerClient) UnsubscribeTriggerFromEvents(ctx context.Context, triggerName string) (*azcore.Response, error) {
+	req, err := client.UnsubscribeTriggerFromEventsCreateRequest(ctx, triggerName)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.UnsubscribeTriggerFromEventsHandleError(resp)
+	}
+	return resp, nil
 }
 
 // UnsubscribeTriggerFromEventsCreateRequest creates the UnsubscribeTriggerFromEvents request.
-func (client *TriggerClient) UnsubscribeTriggerFromEventsCreateRequest(ctx context.Context, triggerName string) (*azcore.Request, error) {
+func (client *triggerClient) UnsubscribeTriggerFromEventsCreateRequest(ctx context.Context, triggerName string) (*azcore.Request, error) {
 	urlPath := "/triggers/{triggerName}/unsubscribeFromEvents"
 	urlPath = strings.ReplaceAll(urlPath, "{triggerName}", url.PathEscape(triggerName))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
@@ -429,12 +416,13 @@ func (client *TriggerClient) UnsubscribeTriggerFromEventsCreateRequest(ctx conte
 }
 
 // UnsubscribeTriggerFromEventsHandleResponse handles the UnsubscribeTriggerFromEvents response.
-func (client *TriggerClient) UnsubscribeTriggerFromEventsHandleResponse(resp *azcore.Response) (*TriggerSubscriptionOperationStatusPollerResponse, error) {
-	return &TriggerSubscriptionOperationStatusPollerResponse{RawResponse: resp.Response}, nil
+func (client *triggerClient) UnsubscribeTriggerFromEventsHandleResponse(resp *azcore.Response) (*TriggerSubscriptionOperationStatusResponse, error) {
+	result := TriggerSubscriptionOperationStatusResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.TriggerSubscriptionOperationStatus)
 }
 
 // UnsubscribeTriggerFromEventsHandleError handles the UnsubscribeTriggerFromEvents error response.
-func (client *TriggerClient) UnsubscribeTriggerFromEventsHandleError(resp *azcore.Response) error {
+func (client *triggerClient) UnsubscribeTriggerFromEventsHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

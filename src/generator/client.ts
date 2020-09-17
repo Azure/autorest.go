@@ -4,11 +4,11 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@azure-tools/autorest-extension-base';
-import { camelCase } from '@azure-tools/codegen';
 import { CodeModel, Parameter } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { contentPreamble, formatParameterTypeName, sortParametersByRequired } from './helpers';
+import { contentPreamble, formatParameterTypeName } from './helpers';
 import { ImportManager } from './imports';
+import { exportClients } from '../common/helpers'
 
 // generates content for client.go
 export async function generateClient(session: Session<CodeModel>): Promise<string> {
@@ -17,7 +17,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
 
   let text = await contentPreamble(session);
-  const exportClient = await session.getValue('export-client', true);
+  const exportClient = await exportClients(session);
   // content generation can add to the imports list, so execute it before emitting any text
   const content = generateContent(session, exportClient);
   text += imports.text();
