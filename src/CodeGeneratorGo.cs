@@ -174,16 +174,19 @@ namespace AutoRest.Go
             {
                 return;
             }
+            var tag = Settings.Instance.Host.GetValue<string>("tag").Result;
             var files = Settings.Instance.Host.GetValue<string[]>("input-file").Result;
             if (IsPreviewPackage(files) && folder.IndexOf(previewSubDir) < 0)
             {
-                throw new InvalidOperationException($"output-folder must be under a preview subdirectory for preview swagger set {string.Join(", ", files)}");
+                throw new InvalidOperationException($"output-folder `{folder}` of tag `{tag}` must be under a preview subdirectory for a preview swagger set. Please refer the sample for `readme.go.md` file here `{information}` for more information");
             }
             if (!IsPreviewPackage(files) && folder.IndexOf(previewSubDir) >= 0)
             {
-                throw new InvalidOperationException($"output-folder must not be under a preview subdirectory for stable swagger set {string.Join(", ", files)}");
+                throw new InvalidOperationException($"output-folder `{folder}` of tag `{tag}` must not be under a preview subdirectory for a stable swagger set. Please refer the sample for `readme.go.md` file here `{information}` for more information");
             }
         }
+
+        private const string information = "https://github.com/Azure/azure-rest-api-specs/blob/master/documentation/samplefiles/readme.go.md";
 
         private const string previewSubDir = "/preview/";
 
