@@ -11,21 +11,8 @@ import (
 	"net/http"
 )
 
-// WorkspaceOperations contains the methods for the Workspace group.
-type WorkspaceOperations interface {
-	// Get - Get Workspace
-	Get(ctx context.Context) (*WorkspaceResponse, error)
-}
-
-// WorkspaceClient implements the WorkspaceOperations interface.
-// Don't use this type directly, use NewWorkspaceClient() instead.
 type WorkspaceClient struct {
 	*Client
-}
-
-// NewWorkspaceClient creates a new instance of WorkspaceClient with the specified values.
-func NewWorkspaceClient(c *Client) WorkspaceOperations {
-	return &WorkspaceClient{Client: c}
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.

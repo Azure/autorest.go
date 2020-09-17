@@ -17,37 +17,8 @@ import (
 	"strings"
 )
 
-// SparkSessionOperations contains the methods for the SparkSession group.
-type SparkSessionOperations interface {
-	// CancelSparkSession - Cancels a running spark session.
-	CancelSparkSession(ctx context.Context, sessionId int32) (*http.Response, error)
-	// CancelSparkStatement - Kill a statement within a session.
-	CancelSparkStatement(ctx context.Context, sessionId int32, statementId int32) (*SparkStatementCancellationResultResponse, error)
-	// CreateSparkSession - Create new spark session.
-	CreateSparkSession(ctx context.Context, sparkSessionOptions SparkSessionOptions, sparkSessionCreateSparkSessionOptions *SparkSessionCreateSparkSessionOptions) (*SparkSessionResponse, error)
-	// CreateSparkStatement - Create statement within a spark session.
-	CreateSparkStatement(ctx context.Context, sessionId int32, sparkStatementOptions SparkStatementOptions) (*SparkStatementResponse, error)
-	// GetSparkSession - Gets a single spark session.
-	GetSparkSession(ctx context.Context, sessionId int32, sparkSessionGetSparkSessionOptions *SparkSessionGetSparkSessionOptions) (*SparkSessionResponse, error)
-	// GetSparkSessions - List all spark sessions which are running under a particular spark pool.
-	GetSparkSessions(ctx context.Context, sparkSessionGetSparkSessionsOptions *SparkSessionGetSparkSessionsOptions) (*SparkSessionCollectionResponse, error)
-	// GetSparkStatement - Gets a single statement within a spark session.
-	GetSparkStatement(ctx context.Context, sessionId int32, statementId int32) (*SparkStatementResponse, error)
-	// GetSparkStatements - Gets a list of statements within a spark session.
-	GetSparkStatements(ctx context.Context, sessionId int32) (*SparkStatementCollectionResponse, error)
-	// ResetSparkSessionTimeout - Sends a keep alive call to the current session to reset the session timeout.
-	ResetSparkSessionTimeout(ctx context.Context, sessionId int32) (*http.Response, error)
-}
-
-// SparkSessionClient implements the SparkSessionOperations interface.
-// Don't use this type directly, use NewSparkSessionClient() instead.
 type SparkSessionClient struct {
 	*Client
-}
-
-// NewSparkSessionClient creates a new instance of SparkSessionClient with the specified values.
-func NewSparkSessionClient(c *Client) SparkSessionOperations {
-	return &SparkSessionClient{Client: c}
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.

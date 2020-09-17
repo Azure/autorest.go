@@ -13,23 +13,8 @@ import (
 	"strings"
 )
 
-// SQLPoolsOperations contains the methods for the SQLPools group.
-type SQLPoolsOperations interface {
-	// Get - Get Sql Pool
-	Get(ctx context.Context, sqlPoolName string) (*SQLPoolResponse, error)
-	// List - List Sql Pools
-	List(ctx context.Context) (*SQLPoolInfoListResultResponse, error)
-}
-
-// SQLPoolsClient implements the SQLPoolsOperations interface.
-// Don't use this type directly, use NewSQLPoolsClient() instead.
 type SQLPoolsClient struct {
 	*Client
-}
-
-// NewSQLPoolsClient creates a new instance of SQLPoolsClient with the specified values.
-func NewSQLPoolsClient(c *Client) SQLPoolsOperations {
-	return &SQLPoolsClient{Client: c}
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.

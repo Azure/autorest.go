@@ -11,33 +11,8 @@ import (
 	"net/http"
 )
 
-// DataFlowDebugSessionOperations contains the methods for the DataFlowDebugSession group.
-type DataFlowDebugSessionOperations interface {
-	// AddDataFlow - Add a data flow into debug session.
-	AddDataFlow(ctx context.Context, request DataFlowDebugPackage) (*AddDataFlowToDebugSessionResponseResponse, error)
-	// BeginCreateDataFlowDebugSession - Creates a data flow debug session.
-	BeginCreateDataFlowDebugSession(ctx context.Context, request CreateDataFlowDebugSessionRequest) (*CreateDataFlowDebugSessionResponsePollerResponse, error)
-	// ResumeCreateDataFlowDebugSession - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeCreateDataFlowDebugSession(token string) (CreateDataFlowDebugSessionResponsePoller, error)
-	// DeleteDataFlowDebugSession - Deletes a data flow debug session.
-	DeleteDataFlowDebugSession(ctx context.Context, request DeleteDataFlowDebugSessionRequest) (*http.Response, error)
-	// BeginExecuteCommand - Execute a data flow debug command.
-	BeginExecuteCommand(ctx context.Context, request DataFlowDebugCommandRequest) (*DataFlowDebugCommandResponsePollerResponse, error)
-	// ResumeExecuteCommand - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeExecuteCommand(token string) (DataFlowDebugCommandResponsePoller, error)
-	// QueryDataFlowDebugSessionsByWorkspace - Query all active data flow debug sessions.
-	QueryDataFlowDebugSessionsByWorkspace() QueryDataFlowDebugSessionsResponsePager
-}
-
-// DataFlowDebugSessionClient implements the DataFlowDebugSessionOperations interface.
-// Don't use this type directly, use NewDataFlowDebugSessionClient() instead.
 type DataFlowDebugSessionClient struct {
 	*Client
-}
-
-// NewDataFlowDebugSessionClient creates a new instance of DataFlowDebugSessionClient with the specified values.
-func NewDataFlowDebugSessionClient(c *Client) DataFlowDebugSessionOperations {
-	return &DataFlowDebugSessionClient{Client: c}
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
@@ -95,12 +70,11 @@ func (client *DataFlowDebugSessionClient) AddDataFlowHandleError(resp *azcore.Re
 }
 
 // CreateDataFlowDebugSession - Creates a data flow debug session.
-func (client *DataFlowDebugSessionClient) CreateDataFlowDebugSession(ctx context.Context, request CreateDataFlowDebugSessionRequest) (*CreateDataFlowDebugSessionResponsePollerResponse, error) {
+func (client *DataFlowDebugSessionClient) CreateDataFlowDebugSession(ctx context.Context, request CreateDataFlowDebugSessionRequest) (*azcore.Response, error) {
 	req, err := client.CreateDataFlowDebugSessionCreateRequest(ctx, request)
 	if err != nil {
 		return nil, err
 	}
-	// send the first request to initialize the poller
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
@@ -180,12 +154,11 @@ func (client *DataFlowDebugSessionClient) DeleteDataFlowDebugSessionHandleError(
 }
 
 // ExecuteCommand - Execute a data flow debug command.
-func (client *DataFlowDebugSessionClient) ExecuteCommand(ctx context.Context, request DataFlowDebugCommandRequest) (*DataFlowDebugCommandResponsePollerResponse, error) {
+func (client *DataFlowDebugSessionClient) ExecuteCommand(ctx context.Context, request DataFlowDebugCommandRequest) (*azcore.Response, error) {
 	req, err := client.ExecuteCommandCreateRequest(ctx, request)
 	if err != nil {
 		return nil, err
 	}
-	// send the first request to initialize the poller
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err

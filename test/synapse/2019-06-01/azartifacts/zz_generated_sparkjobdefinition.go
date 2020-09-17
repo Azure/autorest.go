@@ -13,35 +13,8 @@ import (
 	"strings"
 )
 
-// SparkJobDefinitionOperations contains the methods for the SparkJobDefinition group.
-type SparkJobDefinitionOperations interface {
-	// CreateOrUpdateSparkJobDefinition - Creates or updates a Spark Job Definition.
-	CreateOrUpdateSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, sparkJobDefinition SparkJobDefinitionResource, sparkJobDefinitionCreateOrUpdateSparkJobDefinitionOptions *SparkJobDefinitionCreateOrUpdateSparkJobDefinitionOptions) (*SparkJobDefinitionResourceResponse, error)
-	// BeginDebugSparkJobDefinition - Debug the spark job definition.
-	BeginDebugSparkJobDefinition(ctx context.Context, sparkJobDefinitionAzureResource SparkJobDefinitionResource) (*SparkBatchJobPollerResponse, error)
-	// ResumeDebugSparkJobDefinition - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeDebugSparkJobDefinition(token string) (SparkBatchJobPoller, error)
-	// DeleteSparkJobDefinition - Deletes a Spark Job Definition.
-	DeleteSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string) (*http.Response, error)
-	// BeginExecuteSparkJobDefinition - Executes the spark job definition.
-	BeginExecuteSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string) (*SparkBatchJobPollerResponse, error)
-	// ResumeExecuteSparkJobDefinition - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeExecuteSparkJobDefinition(token string) (SparkBatchJobPoller, error)
-	// GetSparkJobDefinition - Gets a Spark Job Definition.
-	GetSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, sparkJobDefinitionGetSparkJobDefinitionOptions *SparkJobDefinitionGetSparkJobDefinitionOptions) (*SparkJobDefinitionResourceResponse, error)
-	// GetSparkJobDefinitionsByWorkspace - Lists spark job definitions.
-	GetSparkJobDefinitionsByWorkspace() SparkJobDefinitionsListResponsePager
-}
-
-// SparkJobDefinitionClient implements the SparkJobDefinitionOperations interface.
-// Don't use this type directly, use NewSparkJobDefinitionClient() instead.
 type SparkJobDefinitionClient struct {
 	*Client
-}
-
-// NewSparkJobDefinitionClient creates a new instance of SparkJobDefinitionClient with the specified values.
-func NewSparkJobDefinitionClient(c *Client) SparkJobDefinitionOperations {
-	return &SparkJobDefinitionClient{Client: c}
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
@@ -103,12 +76,11 @@ func (client *SparkJobDefinitionClient) CreateOrUpdateSparkJobDefinitionHandleEr
 }
 
 // DebugSparkJobDefinition - Debug the spark job definition.
-func (client *SparkJobDefinitionClient) DebugSparkJobDefinition(ctx context.Context, sparkJobDefinitionAzureResource SparkJobDefinitionResource) (*SparkBatchJobPollerResponse, error) {
+func (client *SparkJobDefinitionClient) DebugSparkJobDefinition(ctx context.Context, sparkJobDefinitionAzureResource SparkJobDefinitionResource) (*azcore.Response, error) {
 	req, err := client.DebugSparkJobDefinitionCreateRequest(ctx, sparkJobDefinitionAzureResource)
 	if err != nil {
 		return nil, err
 	}
-	// send the first request to initialize the poller
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
@@ -189,12 +161,11 @@ func (client *SparkJobDefinitionClient) DeleteSparkJobDefinitionHandleError(resp
 }
 
 // ExecuteSparkJobDefinition - Executes the spark job definition.
-func (client *SparkJobDefinitionClient) ExecuteSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string) (*SparkBatchJobPollerResponse, error) {
+func (client *SparkJobDefinitionClient) ExecuteSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string) (*azcore.Response, error) {
 	req, err := client.ExecuteSparkJobDefinitionCreateRequest(ctx, sparkJobDefinitionName)
 	if err != nil {
 		return nil, err
 	}
-	// send the first request to initialize the poller
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err

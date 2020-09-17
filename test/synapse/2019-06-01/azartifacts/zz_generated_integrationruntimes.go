@@ -13,23 +13,8 @@ import (
 	"strings"
 )
 
-// IntegrationRuntimesOperations contains the methods for the IntegrationRuntimes group.
-type IntegrationRuntimesOperations interface {
-	// Get - Get Integration Runtime
-	Get(ctx context.Context, integrationRuntimeName string) (*IntegrationRuntimeResourceResponse, error)
-	// List - List Integration Runtimes
-	List(ctx context.Context) (*IntegrationRuntimeListResponseResponse, error)
-}
-
-// IntegrationRuntimesClient implements the IntegrationRuntimesOperations interface.
-// Don't use this type directly, use NewIntegrationRuntimesClient() instead.
 type IntegrationRuntimesClient struct {
 	*Client
-}
-
-// NewIntegrationRuntimesClient creates a new instance of IntegrationRuntimesClient with the specified values.
-func NewIntegrationRuntimesClient(c *Client) IntegrationRuntimesOperations {
-	return &IntegrationRuntimesClient{Client: c}
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.

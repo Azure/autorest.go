@@ -13,49 +13,8 @@ import (
 	"strings"
 )
 
-// TriggerOperations contains the methods for the Trigger group.
-type TriggerOperations interface {
-	// BeginCreateOrUpdateTrigger - Creates or updates a trigger.
-	BeginCreateOrUpdateTrigger(ctx context.Context, triggerName string, trigger TriggerResource, triggerCreateOrUpdateTriggerOptions *TriggerCreateOrUpdateTriggerOptions) (*TriggerResourcePollerResponse, error)
-	// ResumeCreateOrUpdateTrigger - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeCreateOrUpdateTrigger(token string) (TriggerResourcePoller, error)
-	// BeginDeleteTrigger - Deletes a trigger.
-	BeginDeleteTrigger(ctx context.Context, triggerName string) (*HTTPPollerResponse, error)
-	// ResumeDeleteTrigger - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeDeleteTrigger(token string) (HTTPPoller, error)
-	// GetEventSubscriptionStatus - Get a trigger's event subscription status.
-	GetEventSubscriptionStatus(ctx context.Context, triggerName string) (*TriggerSubscriptionOperationStatusResponse, error)
-	// GetTrigger - Gets a trigger.
-	GetTrigger(ctx context.Context, triggerName string, triggerGetTriggerOptions *TriggerGetTriggerOptions) (*TriggerResourceResponse, error)
-	// GetTriggersByWorkspace - Lists triggers.
-	GetTriggersByWorkspace() TriggerListResponsePager
-	// BeginStartTrigger - Starts a trigger.
-	BeginStartTrigger(ctx context.Context, triggerName string) (*HTTPPollerResponse, error)
-	// ResumeStartTrigger - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeStartTrigger(token string) (HTTPPoller, error)
-	// BeginStopTrigger - Stops a trigger.
-	BeginStopTrigger(ctx context.Context, triggerName string) (*HTTPPollerResponse, error)
-	// ResumeStopTrigger - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeStopTrigger(token string) (HTTPPoller, error)
-	// BeginSubscribeTriggerToEvents - Subscribe event trigger to events.
-	BeginSubscribeTriggerToEvents(ctx context.Context, triggerName string) (*TriggerSubscriptionOperationStatusPollerResponse, error)
-	// ResumeSubscribeTriggerToEvents - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeSubscribeTriggerToEvents(token string) (TriggerSubscriptionOperationStatusPoller, error)
-	// BeginUnsubscribeTriggerFromEvents - Unsubscribe event trigger from events.
-	BeginUnsubscribeTriggerFromEvents(ctx context.Context, triggerName string) (*TriggerSubscriptionOperationStatusPollerResponse, error)
-	// ResumeUnsubscribeTriggerFromEvents - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeUnsubscribeTriggerFromEvents(token string) (TriggerSubscriptionOperationStatusPoller, error)
-}
-
-// TriggerClient implements the TriggerOperations interface.
-// Don't use this type directly, use NewTriggerClient() instead.
 type TriggerClient struct {
 	*Client
-}
-
-// NewTriggerClient creates a new instance of TriggerClient with the specified values.
-func NewTriggerClient(c *Client) TriggerOperations {
-	return &TriggerClient{Client: c}
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
@@ -64,12 +23,11 @@ func (client *TriggerClient) Do(req *azcore.Request) (*azcore.Response, error) {
 }
 
 // CreateOrUpdateTrigger - Creates or updates a trigger.
-func (client *TriggerClient) CreateOrUpdateTrigger(ctx context.Context, triggerName string, trigger TriggerResource, triggerCreateOrUpdateTriggerOptions *TriggerCreateOrUpdateTriggerOptions) (*TriggerResourcePollerResponse, error) {
+func (client *TriggerClient) CreateOrUpdateTrigger(ctx context.Context, triggerName string, trigger TriggerResource, triggerCreateOrUpdateTriggerOptions *TriggerCreateOrUpdateTriggerOptions) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateTriggerCreateRequest(ctx, triggerName, trigger, triggerCreateOrUpdateTriggerOptions)
 	if err != nil {
 		return nil, err
 	}
-	// send the first request to initialize the poller
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
@@ -114,12 +72,11 @@ func (client *TriggerClient) CreateOrUpdateTriggerHandleError(resp *azcore.Respo
 }
 
 // DeleteTrigger - Deletes a trigger.
-func (client *TriggerClient) DeleteTrigger(ctx context.Context, triggerName string) (*HTTPPollerResponse, error) {
+func (client *TriggerClient) DeleteTrigger(ctx context.Context, triggerName string) (*azcore.Response, error) {
 	req, err := client.DeleteTriggerCreateRequest(ctx, triggerName)
 	if err != nil {
 		return nil, err
 	}
-	// send the first request to initialize the poller
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
@@ -302,12 +259,11 @@ func (client *TriggerClient) GetTriggersByWorkspaceHandleError(resp *azcore.Resp
 }
 
 // StartTrigger - Starts a trigger.
-func (client *TriggerClient) StartTrigger(ctx context.Context, triggerName string) (*HTTPPollerResponse, error) {
+func (client *TriggerClient) StartTrigger(ctx context.Context, triggerName string) (*azcore.Response, error) {
 	req, err := client.StartTriggerCreateRequest(ctx, triggerName)
 	if err != nil {
 		return nil, err
 	}
-	// send the first request to initialize the poller
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
@@ -343,12 +299,11 @@ func (client *TriggerClient) StartTriggerHandleError(resp *azcore.Response) erro
 }
 
 // StopTrigger - Stops a trigger.
-func (client *TriggerClient) StopTrigger(ctx context.Context, triggerName string) (*HTTPPollerResponse, error) {
+func (client *TriggerClient) StopTrigger(ctx context.Context, triggerName string) (*azcore.Response, error) {
 	req, err := client.StopTriggerCreateRequest(ctx, triggerName)
 	if err != nil {
 		return nil, err
 	}
-	// send the first request to initialize the poller
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
@@ -384,12 +339,11 @@ func (client *TriggerClient) StopTriggerHandleError(resp *azcore.Response) error
 }
 
 // SubscribeTriggerToEvents - Subscribe event trigger to events.
-func (client *TriggerClient) SubscribeTriggerToEvents(ctx context.Context, triggerName string) (*TriggerSubscriptionOperationStatusPollerResponse, error) {
+func (client *TriggerClient) SubscribeTriggerToEvents(ctx context.Context, triggerName string) (*azcore.Response, error) {
 	req, err := client.SubscribeTriggerToEventsCreateRequest(ctx, triggerName)
 	if err != nil {
 		return nil, err
 	}
-	// send the first request to initialize the poller
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
@@ -431,12 +385,11 @@ func (client *TriggerClient) SubscribeTriggerToEventsHandleError(resp *azcore.Re
 }
 
 // UnsubscribeTriggerFromEvents - Unsubscribe event trigger from events.
-func (client *TriggerClient) UnsubscribeTriggerFromEvents(ctx context.Context, triggerName string) (*TriggerSubscriptionOperationStatusPollerResponse, error) {
+func (client *TriggerClient) UnsubscribeTriggerFromEvents(ctx context.Context, triggerName string) (*azcore.Response, error) {
 	req, err := client.UnsubscribeTriggerFromEventsCreateRequest(ctx, triggerName)
 	if err != nil {
 		return nil, err
 	}
-	// send the first request to initialize the poller
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err

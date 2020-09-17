@@ -13,27 +13,8 @@ import (
 	"strings"
 )
 
-// SQLScriptOperations contains the methods for the SQLScript group.
-type SQLScriptOperations interface {
-	// CreateOrUpdateSQLScript - Creates or updates a Sql Script.
-	CreateOrUpdateSQLScript(ctx context.Context, sqlScriptName string, sqlScript SQLScriptResource, sqlScriptCreateOrUpdateSqlscriptOptions *SQLScriptCreateOrUpdateSQLScriptOptions) (*SQLScriptResourceResponse, error)
-	// DeleteSQLScript - Deletes a Sql Script.
-	DeleteSQLScript(ctx context.Context, sqlScriptName string) (*http.Response, error)
-	// GetSQLScript - Gets a sql script.
-	GetSQLScript(ctx context.Context, sqlScriptName string, sqlScriptGetSqlscriptOptions *SQLScriptGetSQLScriptOptions) (*SQLScriptResourceResponse, error)
-	// GetSQLScriptsByWorkspace - Lists sql scripts.
-	GetSQLScriptsByWorkspace() SQLScriptsListResponsePager
-}
-
-// SQLScriptClient implements the SQLScriptOperations interface.
-// Don't use this type directly, use NewSQLScriptClient() instead.
 type SQLScriptClient struct {
 	*Client
-}
-
-// NewSQLScriptClient creates a new instance of SQLScriptClient with the specified values.
-func NewSQLScriptClient(c *Client) SQLScriptOperations {
-	return &SQLScriptClient{Client: c}
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.

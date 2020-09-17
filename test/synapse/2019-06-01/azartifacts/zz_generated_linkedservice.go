@@ -13,31 +13,8 @@ import (
 	"strings"
 )
 
-// LinkedServiceOperations contains the methods for the LinkedService group.
-type LinkedServiceOperations interface {
-	// BeginCreateOrUpdateLinkedService - Creates or updates a linked service.
-	BeginCreateOrUpdateLinkedService(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, linkedServiceCreateOrUpdateLinkedServiceOptions *LinkedServiceCreateOrUpdateLinkedServiceOptions) (*LinkedServiceResourcePollerResponse, error)
-	// ResumeCreateOrUpdateLinkedService - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeCreateOrUpdateLinkedService(token string) (LinkedServiceResourcePoller, error)
-	// BeginDeleteLinkedService - Deletes a linked service.
-	BeginDeleteLinkedService(ctx context.Context, linkedServiceName string) (*HTTPPollerResponse, error)
-	// ResumeDeleteLinkedService - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeDeleteLinkedService(token string) (HTTPPoller, error)
-	// GetLinkedService - Gets a linked service.
-	GetLinkedService(ctx context.Context, linkedServiceName string, linkedServiceGetLinkedServiceOptions *LinkedServiceGetLinkedServiceOptions) (*LinkedServiceResourceResponse, error)
-	// GetLinkedServicesByWorkspace - Lists linked services.
-	GetLinkedServicesByWorkspace() LinkedServiceListResponsePager
-}
-
-// LinkedServiceClient implements the LinkedServiceOperations interface.
-// Don't use this type directly, use NewLinkedServiceClient() instead.
 type LinkedServiceClient struct {
 	*Client
-}
-
-// NewLinkedServiceClient creates a new instance of LinkedServiceClient with the specified values.
-func NewLinkedServiceClient(c *Client) LinkedServiceOperations {
-	return &LinkedServiceClient{Client: c}
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
@@ -46,12 +23,11 @@ func (client *LinkedServiceClient) Do(req *azcore.Request) (*azcore.Response, er
 }
 
 // CreateOrUpdateLinkedService - Creates or updates a linked service.
-func (client *LinkedServiceClient) CreateOrUpdateLinkedService(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, linkedServiceCreateOrUpdateLinkedServiceOptions *LinkedServiceCreateOrUpdateLinkedServiceOptions) (*LinkedServiceResourcePollerResponse, error) {
+func (client *LinkedServiceClient) CreateOrUpdateLinkedService(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, linkedServiceCreateOrUpdateLinkedServiceOptions *LinkedServiceCreateOrUpdateLinkedServiceOptions) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateLinkedServiceCreateRequest(ctx, linkedServiceName, linkedService, linkedServiceCreateOrUpdateLinkedServiceOptions)
 	if err != nil {
 		return nil, err
 	}
-	// send the first request to initialize the poller
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
@@ -96,12 +72,11 @@ func (client *LinkedServiceClient) CreateOrUpdateLinkedServiceHandleError(resp *
 }
 
 // DeleteLinkedService - Deletes a linked service.
-func (client *LinkedServiceClient) DeleteLinkedService(ctx context.Context, linkedServiceName string) (*HTTPPollerResponse, error) {
+func (client *LinkedServiceClient) DeleteLinkedService(ctx context.Context, linkedServiceName string) (*azcore.Response, error) {
 	req, err := client.DeleteLinkedServiceCreateRequest(ctx, linkedServiceName)
 	if err != nil {
 		return nil, err
 	}
-	// send the first request to initialize the poller
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err

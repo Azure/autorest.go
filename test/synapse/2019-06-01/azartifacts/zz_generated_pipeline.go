@@ -14,33 +14,8 @@ import (
 	"strings"
 )
 
-// PipelineOperations contains the methods for the Pipeline group.
-type PipelineOperations interface {
-	// BeginCreateOrUpdatePipeline - Creates or updates a pipeline.
-	BeginCreateOrUpdatePipeline(ctx context.Context, pipelineName string, pipeline PipelineResource, pipelineCreateOrUpdatePipelineOptions *PipelineCreateOrUpdatePipelineOptions) (*PipelineResourcePollerResponse, error)
-	// ResumeCreateOrUpdatePipeline - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeCreateOrUpdatePipeline(token string) (PipelineResourcePoller, error)
-	// CreatePipelineRun - Creates a run of a pipeline.
-	CreatePipelineRun(ctx context.Context, pipelineName string, pipelineCreatePipelineRunOptions *PipelineCreatePipelineRunOptions) (*CreateRunResponseResponse, error)
-	// BeginDeletePipeline - Deletes a pipeline.
-	BeginDeletePipeline(ctx context.Context, pipelineName string) (*HTTPPollerResponse, error)
-	// ResumeDeletePipeline - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeDeletePipeline(token string) (HTTPPoller, error)
-	// GetPipeline - Gets a pipeline.
-	GetPipeline(ctx context.Context, pipelineName string, pipelineGetPipelineOptions *PipelineGetPipelineOptions) (*PipelineResourceResponse, error)
-	// GetPipelinesByWorkspace - Lists pipelines.
-	GetPipelinesByWorkspace() PipelineListResponsePager
-}
-
-// PipelineClient implements the PipelineOperations interface.
-// Don't use this type directly, use NewPipelineClient() instead.
 type PipelineClient struct {
 	*Client
-}
-
-// NewPipelineClient creates a new instance of PipelineClient with the specified values.
-func NewPipelineClient(c *Client) PipelineOperations {
-	return &PipelineClient{Client: c}
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
@@ -49,12 +24,11 @@ func (client *PipelineClient) Do(req *azcore.Request) (*azcore.Response, error) 
 }
 
 // CreateOrUpdatePipeline - Creates or updates a pipeline.
-func (client *PipelineClient) CreateOrUpdatePipeline(ctx context.Context, pipelineName string, pipeline PipelineResource, pipelineCreateOrUpdatePipelineOptions *PipelineCreateOrUpdatePipelineOptions) (*PipelineResourcePollerResponse, error) {
+func (client *PipelineClient) CreateOrUpdatePipeline(ctx context.Context, pipelineName string, pipeline PipelineResource, pipelineCreateOrUpdatePipelineOptions *PipelineCreateOrUpdatePipelineOptions) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdatePipelineCreateRequest(ctx, pipelineName, pipeline, pipelineCreateOrUpdatePipelineOptions)
 	if err != nil {
 		return nil, err
 	}
-	// send the first request to initialize the poller
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
@@ -161,12 +135,11 @@ func (client *PipelineClient) CreatePipelineRunHandleError(resp *azcore.Response
 }
 
 // DeletePipeline - Deletes a pipeline.
-func (client *PipelineClient) DeletePipeline(ctx context.Context, pipelineName string) (*HTTPPollerResponse, error) {
+func (client *PipelineClient) DeletePipeline(ctx context.Context, pipelineName string) (*azcore.Response, error) {
 	req, err := client.DeletePipelineCreateRequest(ctx, pipelineName)
 	if err != nil {
 		return nil, err
 	}
-	// send the first request to initialize the poller
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err

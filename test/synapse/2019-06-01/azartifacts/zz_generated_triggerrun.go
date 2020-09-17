@@ -13,25 +13,8 @@ import (
 	"strings"
 )
 
-// TriggerRunOperations contains the methods for the TriggerRun group.
-type TriggerRunOperations interface {
-	// CancelTriggerInstance - Cancel single trigger instance by runId.
-	CancelTriggerInstance(ctx context.Context, triggerName string, runId string) (*http.Response, error)
-	// QueryTriggerRunsByWorkspace - Query trigger runs.
-	QueryTriggerRunsByWorkspace(ctx context.Context, filterParameters RunFilterParameters) (*TriggerRunsQueryResponseResponse, error)
-	// RerunTriggerInstance - Rerun single trigger instance by runId.
-	RerunTriggerInstance(ctx context.Context, triggerName string, runId string) (*http.Response, error)
-}
-
-// TriggerRunClient implements the TriggerRunOperations interface.
-// Don't use this type directly, use NewTriggerRunClient() instead.
 type TriggerRunClient struct {
 	*Client
-}
-
-// NewTriggerRunClient creates a new instance of TriggerRunClient with the specified values.
-func NewTriggerRunClient(c *Client) TriggerRunOperations {
-	return &TriggerRunClient{Client: c}
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.

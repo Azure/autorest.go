@@ -13,23 +13,8 @@ import (
 	"strings"
 )
 
-// BigDataPoolsOperations contains the methods for the BigDataPools group.
-type BigDataPoolsOperations interface {
-	// Get - Get Big Data Pool
-	Get(ctx context.Context, bigDataPoolName string) (*BigDataPoolResourceInfoResponse, error)
-	// List - List Big Data Pools
-	List(ctx context.Context) (*BigDataPoolResourceInfoListResultResponse, error)
-}
-
-// BigDataPoolsClient implements the BigDataPoolsOperations interface.
-// Don't use this type directly, use NewBigDataPoolsClient() instead.
 type BigDataPoolsClient struct {
 	*Client
-}
-
-// NewBigDataPoolsClient creates a new instance of BigDataPoolsClient with the specified values.
-func NewBigDataPoolsClient(c *Client) BigDataPoolsOperations {
-	return &BigDataPoolsClient{Client: c}
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.

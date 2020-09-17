@@ -14,27 +14,8 @@ import (
 	"strings"
 )
 
-// PipelineRunOperations contains the methods for the PipelineRun group.
-type PipelineRunOperations interface {
-	// CancelPipelineRun - Cancel a pipeline run by its run ID.
-	CancelPipelineRun(ctx context.Context, runId string, pipelineRunCancelPipelineRunOptions *PipelineRunCancelPipelineRunOptions) (*http.Response, error)
-	// GetPipelineRun - Get a pipeline run by its run ID.
-	GetPipelineRun(ctx context.Context, runId string) (*PipelineRunResponse, error)
-	// QueryActivityRuns - Query activity runs based on input filter conditions.
-	QueryActivityRuns(ctx context.Context, pipelineName string, runId string, filterParameters RunFilterParameters) (*ActivityRunsQueryResponseResponse, error)
-	// QueryPipelineRunsByWorkspace - Query pipeline runs in the workspace based on input filter conditions.
-	QueryPipelineRunsByWorkspace(ctx context.Context, filterParameters RunFilterParameters) (*PipelineRunsQueryResponseResponse, error)
-}
-
-// PipelineRunClient implements the PipelineRunOperations interface.
-// Don't use this type directly, use NewPipelineRunClient() instead.
 type PipelineRunClient struct {
 	*Client
-}
-
-// NewPipelineRunClient creates a new instance of PipelineRunClient with the specified values.
-func NewPipelineRunClient(c *Client) PipelineRunOperations {
-	return &PipelineRunClient{Client: c}
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.

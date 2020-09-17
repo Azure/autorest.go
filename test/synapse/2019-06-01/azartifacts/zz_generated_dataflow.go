@@ -13,31 +13,8 @@ import (
 	"strings"
 )
 
-// DataFlowOperations contains the methods for the DataFlow group.
-type DataFlowOperations interface {
-	// BeginCreateOrUpdateDataFlow - Creates or updates a data flow.
-	BeginCreateOrUpdateDataFlow(ctx context.Context, dataFlowName string, dataFlow DataFlowResource, dataFlowCreateOrUpdateDataFlowOptions *DataFlowCreateOrUpdateDataFlowOptions) (*DataFlowResourcePollerResponse, error)
-	// ResumeCreateOrUpdateDataFlow - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeCreateOrUpdateDataFlow(token string) (DataFlowResourcePoller, error)
-	// BeginDeleteDataFlow - Deletes a data flow.
-	BeginDeleteDataFlow(ctx context.Context, dataFlowName string) (*HTTPPollerResponse, error)
-	// ResumeDeleteDataFlow - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeDeleteDataFlow(token string) (HTTPPoller, error)
-	// GetDataFlow - Gets a data flow.
-	GetDataFlow(ctx context.Context, dataFlowName string, dataFlowGetDataFlowOptions *DataFlowGetDataFlowOptions) (*DataFlowResourceResponse, error)
-	// GetDataFlowsByWorkspace - Lists data flows.
-	GetDataFlowsByWorkspace() DataFlowListResponsePager
-}
-
-// DataFlowClient implements the DataFlowOperations interface.
-// Don't use this type directly, use NewDataFlowClient() instead.
 type DataFlowClient struct {
 	*Client
-}
-
-// NewDataFlowClient creates a new instance of DataFlowClient with the specified values.
-func NewDataFlowClient(c *Client) DataFlowOperations {
-	return &DataFlowClient{Client: c}
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
@@ -46,12 +23,11 @@ func (client *DataFlowClient) Do(req *azcore.Request) (*azcore.Response, error) 
 }
 
 // CreateOrUpdateDataFlow - Creates or updates a data flow.
-func (client *DataFlowClient) CreateOrUpdateDataFlow(ctx context.Context, dataFlowName string, dataFlow DataFlowResource, dataFlowCreateOrUpdateDataFlowOptions *DataFlowCreateOrUpdateDataFlowOptions) (*DataFlowResourcePollerResponse, error) {
+func (client *DataFlowClient) CreateOrUpdateDataFlow(ctx context.Context, dataFlowName string, dataFlow DataFlowResource, dataFlowCreateOrUpdateDataFlowOptions *DataFlowCreateOrUpdateDataFlowOptions) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateDataFlowCreateRequest(ctx, dataFlowName, dataFlow, dataFlowCreateOrUpdateDataFlowOptions)
 	if err != nil {
 		return nil, err
 	}
-	// send the first request to initialize the poller
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
@@ -96,12 +72,11 @@ func (client *DataFlowClient) CreateOrUpdateDataFlowHandleError(resp *azcore.Res
 }
 
 // DeleteDataFlow - Deletes a data flow.
-func (client *DataFlowClient) DeleteDataFlow(ctx context.Context, dataFlowName string) (*HTTPPollerResponse, error) {
+func (client *DataFlowClient) DeleteDataFlow(ctx context.Context, dataFlowName string) (*azcore.Response, error) {
 	req, err := client.DeleteDataFlowCreateRequest(ctx, dataFlowName)
 	if err != nil {
 		return nil, err
 	}
-	// send the first request to initialize the poller
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err

@@ -13,31 +13,8 @@ import (
 	"strings"
 )
 
-// DatasetOperations contains the methods for the Dataset group.
-type DatasetOperations interface {
-	// BeginCreateOrUpdateDataset - Creates or updates a dataset.
-	BeginCreateOrUpdateDataset(ctx context.Context, datasetName string, dataset DatasetResource, datasetCreateOrUpdateDatasetOptions *DatasetCreateOrUpdateDatasetOptions) (*DatasetResourcePollerResponse, error)
-	// ResumeCreateOrUpdateDataset - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeCreateOrUpdateDataset(token string) (DatasetResourcePoller, error)
-	// BeginDeleteDataset - Deletes a dataset.
-	BeginDeleteDataset(ctx context.Context, datasetName string) (*HTTPPollerResponse, error)
-	// ResumeDeleteDataset - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeDeleteDataset(token string) (HTTPPoller, error)
-	// GetDataset - Gets a dataset.
-	GetDataset(ctx context.Context, datasetName string, datasetGetDatasetOptions *DatasetGetDatasetOptions) (*DatasetResourceResponse, error)
-	// GetDatasetsByWorkspace - Lists datasets.
-	GetDatasetsByWorkspace() DatasetListResponsePager
-}
-
-// DatasetClient implements the DatasetOperations interface.
-// Don't use this type directly, use NewDatasetClient() instead.
 type DatasetClient struct {
 	*Client
-}
-
-// NewDatasetClient creates a new instance of DatasetClient with the specified values.
-func NewDatasetClient(c *Client) DatasetOperations {
-	return &DatasetClient{Client: c}
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
@@ -46,12 +23,11 @@ func (client *DatasetClient) Do(req *azcore.Request) (*azcore.Response, error) {
 }
 
 // CreateOrUpdateDataset - Creates or updates a dataset.
-func (client *DatasetClient) CreateOrUpdateDataset(ctx context.Context, datasetName string, dataset DatasetResource, datasetCreateOrUpdateDatasetOptions *DatasetCreateOrUpdateDatasetOptions) (*DatasetResourcePollerResponse, error) {
+func (client *DatasetClient) CreateOrUpdateDataset(ctx context.Context, datasetName string, dataset DatasetResource, datasetCreateOrUpdateDatasetOptions *DatasetCreateOrUpdateDatasetOptions) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateDatasetCreateRequest(ctx, datasetName, dataset, datasetCreateOrUpdateDatasetOptions)
 	if err != nil {
 		return nil, err
 	}
-	// send the first request to initialize the poller
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
@@ -96,12 +72,11 @@ func (client *DatasetClient) CreateOrUpdateDatasetHandleError(resp *azcore.Respo
 }
 
 // DeleteDataset - Deletes a dataset.
-func (client *DatasetClient) DeleteDataset(ctx context.Context, datasetName string) (*HTTPPollerResponse, error) {
+func (client *DatasetClient) DeleteDataset(ctx context.Context, datasetName string) (*azcore.Response, error) {
 	req, err := client.DeleteDatasetCreateRequest(ctx, datasetName)
 	if err != nil {
 		return nil, err
 	}
-	// send the first request to initialize the poller
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err

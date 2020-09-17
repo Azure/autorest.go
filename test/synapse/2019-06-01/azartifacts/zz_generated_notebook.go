@@ -13,33 +13,8 @@ import (
 	"strings"
 )
 
-// NotebookOperations contains the methods for the Notebook group.
-type NotebookOperations interface {
-	// BeginCreateOrUpdateNotebook - Creates or updates a Note Book.
-	BeginCreateOrUpdateNotebook(ctx context.Context, notebookName string, notebook NotebookResource, notebookCreateOrUpdateNotebookOptions *NotebookCreateOrUpdateNotebookOptions) (*NotebookResourcePollerResponse, error)
-	// ResumeCreateOrUpdateNotebook - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeCreateOrUpdateNotebook(token string) (NotebookResourcePoller, error)
-	// BeginDeleteNotebook - Deletes a Note book.
-	BeginDeleteNotebook(ctx context.Context, notebookName string) (*HTTPPollerResponse, error)
-	// ResumeDeleteNotebook - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeDeleteNotebook(token string) (HTTPPoller, error)
-	// GetNotebook - Gets a Note Book.
-	GetNotebook(ctx context.Context, notebookName string, notebookGetNotebookOptions *NotebookGetNotebookOptions) (*NotebookResourceResponse, error)
-	// GetNotebookSummaryByWorkSpace - Lists a summary of Notebooks.
-	GetNotebookSummaryByWorkSpace() NotebookListResponsePager
-	// GetNotebooksByWorkspace - Lists Notebooks.
-	GetNotebooksByWorkspace() NotebookListResponsePager
-}
-
-// NotebookClient implements the NotebookOperations interface.
-// Don't use this type directly, use NewNotebookClient() instead.
 type NotebookClient struct {
 	*Client
-}
-
-// NewNotebookClient creates a new instance of NotebookClient with the specified values.
-func NewNotebookClient(c *Client) NotebookOperations {
-	return &NotebookClient{Client: c}
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.
@@ -48,12 +23,11 @@ func (client *NotebookClient) Do(req *azcore.Request) (*azcore.Response, error) 
 }
 
 // CreateOrUpdateNotebook - Creates or updates a Note Book.
-func (client *NotebookClient) CreateOrUpdateNotebook(ctx context.Context, notebookName string, notebook NotebookResource, notebookCreateOrUpdateNotebookOptions *NotebookCreateOrUpdateNotebookOptions) (*NotebookResourcePollerResponse, error) {
+func (client *NotebookClient) CreateOrUpdateNotebook(ctx context.Context, notebookName string, notebook NotebookResource, notebookCreateOrUpdateNotebookOptions *NotebookCreateOrUpdateNotebookOptions) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateNotebookCreateRequest(ctx, notebookName, notebook, notebookCreateOrUpdateNotebookOptions)
 	if err != nil {
 		return nil, err
 	}
-	// send the first request to initialize the poller
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
@@ -98,12 +72,11 @@ func (client *NotebookClient) CreateOrUpdateNotebookHandleError(resp *azcore.Res
 }
 
 // DeleteNotebook - Deletes a Note book.
-func (client *NotebookClient) DeleteNotebook(ctx context.Context, notebookName string) (*HTTPPollerResponse, error) {
+func (client *NotebookClient) DeleteNotebook(ctx context.Context, notebookName string) (*azcore.Response, error) {
 	req, err := client.DeleteNotebookCreateRequest(ctx, notebookName)
 	if err != nil {
 		return nil, err
 	}
-	// send the first request to initialize the poller
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err

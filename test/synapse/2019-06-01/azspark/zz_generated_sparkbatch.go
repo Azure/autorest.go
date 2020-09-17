@@ -17,27 +17,8 @@ import (
 	"strings"
 )
 
-// SparkBatchOperations contains the methods for the SparkBatch group.
-type SparkBatchOperations interface {
-	// CancelSparkBatchJob - Cancels a running spark batch job.
-	CancelSparkBatchJob(ctx context.Context, batchId int32) (*http.Response, error)
-	// CreateSparkBatchJob - Create new spark batch job.
-	CreateSparkBatchJob(ctx context.Context, sparkBatchJobOptions SparkBatchJobOptions, sparkBatchCreateSparkBatchJobOptions *SparkBatchCreateSparkBatchJobOptions) (*SparkBatchJobResponse, error)
-	// GetSparkBatchJob - Gets a single spark batch job.
-	GetSparkBatchJob(ctx context.Context, batchId int32, sparkBatchGetSparkBatchJobOptions *SparkBatchGetSparkBatchJobOptions) (*SparkBatchJobResponse, error)
-	// GetSparkBatchJobs - List all spark batch jobs which are running under a particular spark pool.
-	GetSparkBatchJobs(ctx context.Context, sparkBatchGetSparkBatchJobsOptions *SparkBatchGetSparkBatchJobsOptions) (*SparkBatchJobCollectionResponse, error)
-}
-
-// SparkBatchClient implements the SparkBatchOperations interface.
-// Don't use this type directly, use NewSparkBatchClient() instead.
 type SparkBatchClient struct {
 	*Client
-}
-
-// NewSparkBatchClient creates a new instance of SparkBatchClient with the specified values.
-func NewSparkBatchClient(c *Client) SparkBatchOperations {
-	return &SparkBatchClient{Client: c}
 }
 
 // Do invokes the Do() method on the pipeline associated with this client.

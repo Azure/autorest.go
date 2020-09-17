@@ -50,7 +50,10 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       opText += createProtocolResponse(op, imports);
       opText += createProtocolErrHandler(op, imports);
     }
-    const interfaceText = createInterfaceDefinition(group, imports);
+    let interfaceText = '';
+    if (isARM) {
+      interfaceText = createInterfaceDefinition(group, imports);
+    }
     // stitch it all together
     let text = await contentPreamble(session);
     const exportClient = await session.getValue('export-client', true);
@@ -64,8 +67,10 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     text += interfaceText;
     // generate the operation client
     const interfaceName = group.language.go!.interfaceName;
-    text += `// ${clientName} implements the ${interfaceName} interface.\n`;
-    text += `// Don't use this type directly, use ${clientCtor}() instead.\n`;
+    if (isARM) {
+      text += `// ${clientName} implements the ${interfaceName} interface.\n`;
+      text += `// Don't use this type directly, use ${clientCtor}() instead.\n`;
+    }
     text += `type ${clientName} struct {\n`;
     text += `\t*${client}\n`;
     if (group.language.go!.clientParams) {
@@ -75,22 +80,24 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       }
     }
     text += '}\n\n';
-    // operation client constructor
-    const clientLiterals = [`${client}: c`];
-    const methodParams = [`c *${client}`];
-    // add client params to the operation client constructor
-    if (group.language.go!.clientParams) {
-      const clientParams = <Array<Parameter>>group.language.go!.clientParams;
-      clientParams.sort(sortParametersByRequired);
-      for (const clientParam of values(clientParams)) {
-        clientLiterals.push(`${clientParam.language.go!.name}: ${clientParam.language.go!.name}`);
-        methodParams.push(`${clientParam.language.go!.name} ${formatParameterTypeName(clientParam)}`);
+    if (isARM) {
+      // operation client constructor
+      const clientLiterals = [`${client}: c`];
+      const methodParams = [`c *${client}`];
+      // add client params to the operation client constructor
+      if (group.language.go!.clientParams) {
+        const clientParams = <Array<Parameter>>group.language.go!.clientParams;
+        clientParams.sort(sortParametersByRequired);
+        for (const clientParam of values(clientParams)) {
+          clientLiterals.push(`${clientParam.language.go!.name}: ${clientParam.language.go!.name}`);
+          methodParams.push(`${clientParam.language.go!.name} ${formatParameterTypeName(clientParam)}`);
+        }
       }
+      text += `// ${clientCtor} creates a new instance of ${clientName} with the specified values.\n`;
+      text += `func ${clientCtor}(${methodParams.join(', ')}) ${interfaceName} {\n`;
+      text += `\treturn &${clientName}{${clientLiterals.join(', ')}}\n`;
+      text += '}\n\n';
     }
-    text += `// ${clientCtor} creates a new instance of ${clientName} with the specified values.\n`;
-    text += `func ${clientCtor}(${methodParams.join(', ')}) ${interfaceName} {\n`;
-    text += `\treturn &${clientName}{${clientLiterals.join(', ')}}\n`;
-    text += '}\n\n';
     // operation client Do method
     text += '// Do invokes the Do() method on the pipeline associated with this client.\n';
     text += `func (client *${clientName}) Do(req *azcore.Request) (*azcore.Response, error) {\n`;
