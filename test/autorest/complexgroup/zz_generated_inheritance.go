@@ -78,7 +78,7 @@ func (client *InheritanceClient) GetValidHandleError(resp *azcore.Response) erro
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PutValid - Put complex types that extend others
@@ -114,5 +114,5 @@ func (client *InheritanceClient) PutValidHandleError(resp *azcore.Response) erro
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

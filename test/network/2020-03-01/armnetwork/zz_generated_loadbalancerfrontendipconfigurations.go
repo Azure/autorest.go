@@ -88,7 +88,7 @@ func (client *LoadBalancerFrontendIPConfigurationsClient) GetHandleError(resp *a
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // List - Gets all the load balancer frontend IP configurations.
@@ -135,5 +135,5 @@ func (client *LoadBalancerFrontendIPConfigurationsClient) ListHandleError(resp *
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

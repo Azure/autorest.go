@@ -84,7 +84,7 @@ func (client *ArrayClient) GetEmptyHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetNotProvided - Get complex types with array property while server doesn't provide a response payload
@@ -130,7 +130,7 @@ func (client *ArrayClient) GetNotProvidedHandleError(resp *azcore.Response) erro
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetValid - Get complex types with array property
@@ -176,7 +176,7 @@ func (client *ArrayClient) GetValidHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PutEmpty - Put complex types with array property which is empty
@@ -212,7 +212,7 @@ func (client *ArrayClient) PutEmptyHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PutValid - Put complex types with array property
@@ -248,5 +248,5 @@ func (client *ArrayClient) PutValidHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

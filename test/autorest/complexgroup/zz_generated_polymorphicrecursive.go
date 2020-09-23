@@ -78,7 +78,7 @@ func (client *PolymorphicrecursiveClient) GetValidHandleError(resp *azcore.Respo
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PutValid - Put complex types that are polymorphic and have recursive references
@@ -114,5 +114,5 @@ func (client *PolymorphicrecursiveClient) PutValidHandleError(resp *azcore.Respo
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

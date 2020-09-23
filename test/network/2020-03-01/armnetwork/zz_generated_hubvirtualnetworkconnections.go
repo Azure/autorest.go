@@ -88,7 +88,7 @@ func (client *HubVirtualNetworkConnectionsClient) GetHandleError(resp *azcore.Re
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // List - Retrieves the details of all HubVirtualNetworkConnections.
@@ -135,5 +135,5 @@ func (client *HubVirtualNetworkConnectionsClient) ListHandleError(resp *azcore.R
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

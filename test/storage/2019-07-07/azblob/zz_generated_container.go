@@ -120,7 +120,7 @@ func (client *containerClient) AcquireLeaseHandleError(resp *azcore.Response) er
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // BreakLease - [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite
@@ -220,7 +220,7 @@ func (client *containerClient) BreakLeaseHandleError(resp *azcore.Response) erro
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // ChangeLease - [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite
@@ -314,7 +314,7 @@ func (client *containerClient) ChangeLeaseHandleError(resp *azcore.Response) err
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Create - creates a new container under the specified account. If the container with the same name already exists, the operation fails
@@ -409,7 +409,7 @@ func (client *containerClient) CreateHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Delete - operation marks the specified container for deletion. The container and any blobs contained within it are later deleted during garbage collection
@@ -489,7 +489,7 @@ func (client *containerClient) DeleteHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetAccessPolicy - gets the permissions for the specified container. The permissions indicate whether container data may be accessed publicly.
@@ -577,7 +577,7 @@ func (client *containerClient) GetAccessPolicyHandleError(resp *azcore.Response)
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetAccountInfo - Returns the sku name and account kind
@@ -649,7 +649,7 @@ func (client *containerClient) GetAccountInfoHandleError(resp *azcore.Response) 
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetProperties - returns all user-defined metadata and system properties for the specified container. The data returned does not include the container's list of blobs
@@ -777,7 +777,7 @@ func (client *containerClient) GetPropertiesHandleError(resp *azcore.Response) e
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // ListBlobFlatSegment - [Update] The List Blobs operation returns a list of the blobs under the specified container
@@ -859,7 +859,7 @@ func (client *containerClient) ListBlobFlatSegmentHandleError(resp *azcore.Respo
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // ListBlobHierarchySegment - [Update] The List Blobs operation returns a list of the blobs under the specified container
@@ -942,7 +942,7 @@ func (client *containerClient) ListBlobHierarchySegmentHandleError(resp *azcore.
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // ReleaseLease - [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite
@@ -1032,7 +1032,7 @@ func (client *containerClient) ReleaseLeaseHandleError(resp *azcore.Response) er
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // RenewLease - [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite
@@ -1125,7 +1125,7 @@ func (client *containerClient) RenewLeaseHandleError(resp *azcore.Response) erro
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // SetAccessPolicy - sets the permissions for the specified container. The permissions indicate whether blobs in a container may be accessed publicly.
@@ -1226,7 +1226,7 @@ func (client *containerClient) SetAccessPolicyHandleError(resp *azcore.Response)
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // SetMetadata - operation sets one or more user-defined name-value pairs for the specified container.
@@ -1319,5 +1319,5 @@ func (client *containerClient) SetMetadataHandleError(resp *azcore.Response) err
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

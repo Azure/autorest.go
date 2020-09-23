@@ -128,7 +128,7 @@ func (client *VirtualRouterPeeringsClient) CreateOrUpdateHandleError(resp *azcor
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *VirtualRouterPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string) (*HTTPPollerResponse, error) {
@@ -205,7 +205,7 @@ func (client *VirtualRouterPeeringsClient) DeleteHandleError(resp *azcore.Respon
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get - Gets the specified Virtual Router Peering.
@@ -258,7 +258,7 @@ func (client *VirtualRouterPeeringsClient) GetHandleError(resp *azcore.Response)
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // List - Lists all Virtual Router Peerings in a Virtual Router resource.
@@ -305,5 +305,5 @@ func (client *VirtualRouterPeeringsClient) ListHandleError(resp *azcore.Response
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

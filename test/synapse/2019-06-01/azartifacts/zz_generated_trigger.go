@@ -68,7 +68,7 @@ func (client *triggerClient) CreateOrUpdateTriggerHandleError(resp *azcore.Respo
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // DeleteTrigger - Deletes a trigger.
@@ -108,7 +108,7 @@ func (client *triggerClient) DeleteTriggerHandleError(resp *azcore.Response) err
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetEventSubscriptionStatus - Get a trigger's event subscription status.
@@ -158,7 +158,7 @@ func (client *triggerClient) GetEventSubscriptionStatusHandleError(resp *azcore.
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetTrigger - Gets a trigger.
@@ -211,7 +211,7 @@ func (client *triggerClient) GetTriggerHandleError(resp *azcore.Response) error 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetTriggersByWorkspace - Lists triggers.
@@ -255,7 +255,7 @@ func (client *triggerClient) GetTriggersByWorkspaceHandleError(resp *azcore.Resp
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // StartTrigger - Starts a trigger.
@@ -295,7 +295,7 @@ func (client *triggerClient) StartTriggerHandleError(resp *azcore.Response) erro
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // StopTrigger - Stops a trigger.
@@ -335,7 +335,7 @@ func (client *triggerClient) StopTriggerHandleError(resp *azcore.Response) error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // SubscribeTriggerToEvents - Subscribe event trigger to events.
@@ -381,7 +381,7 @@ func (client *triggerClient) SubscribeTriggerToEventsHandleError(resp *azcore.Re
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // UnsubscribeTriggerFromEvents - Unsubscribe event trigger from events.
@@ -427,5 +427,5 @@ func (client *triggerClient) UnsubscribeTriggerFromEventsHandleError(resp *azcor
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

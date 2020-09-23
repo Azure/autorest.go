@@ -68,7 +68,7 @@ func (client *datasetClient) CreateOrUpdateDatasetHandleError(resp *azcore.Respo
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // DeleteDataset - Deletes a dataset.
@@ -108,7 +108,7 @@ func (client *datasetClient) DeleteDatasetHandleError(resp *azcore.Response) err
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetDataset - Gets a dataset.
@@ -161,7 +161,7 @@ func (client *datasetClient) GetDatasetHandleError(resp *azcore.Response) error 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetDatasetsByWorkspace - Lists datasets.
@@ -205,5 +205,5 @@ func (client *datasetClient) GetDatasetsByWorkspaceHandleError(resp *azcore.Resp
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

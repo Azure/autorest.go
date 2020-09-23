@@ -88,7 +88,7 @@ func (client *VpnSiteLinksClient) GetHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // ListByVpnSite - Lists all the vpnSiteLinks in a resource group for a vpn site.
@@ -135,5 +135,5 @@ func (client *VpnSiteLinksClient) ListByVpnSiteHandleError(resp *azcore.Response
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

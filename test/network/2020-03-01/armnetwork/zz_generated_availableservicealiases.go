@@ -81,7 +81,7 @@ func (client *AvailableServiceAliasesClient) ListHandleError(resp *azcore.Respon
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // ListByResourceGroup - Gets all available service aliases for this resource group in this region.
@@ -128,5 +128,5 @@ func (client *AvailableServiceAliasesClient) ListByResourceGroupHandleError(resp
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

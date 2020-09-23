@@ -98,7 +98,7 @@ func (client *HTTPRedirectsClient) Delete307HandleError(resp *azcore.Response) e
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get300 - Return 300 status code and redirect to /http/success/200
@@ -159,7 +159,7 @@ func (client *HTTPRedirectsClient) Get300HandleError(resp *azcore.Response) erro
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get301 - Return 301 status code and redirect to /http/success/200
@@ -195,7 +195,7 @@ func (client *HTTPRedirectsClient) Get301HandleError(resp *azcore.Response) erro
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get302 - Return 302 status code and redirect to /http/success/200
@@ -231,7 +231,7 @@ func (client *HTTPRedirectsClient) Get302HandleError(resp *azcore.Response) erro
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get307 - Redirect get with 307, resulting in a 200 success
@@ -267,7 +267,7 @@ func (client *HTTPRedirectsClient) Get307HandleError(resp *azcore.Response) erro
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Head300 - Return 300 status code and redirect to /http/success/200
@@ -316,7 +316,7 @@ func (client *HTTPRedirectsClient) Head300HandleError(resp *azcore.Response) err
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Head301 - Return 301 status code and redirect to /http/success/200
@@ -352,7 +352,7 @@ func (client *HTTPRedirectsClient) Head301HandleError(resp *azcore.Response) err
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Head302 - Return 302 status code and redirect to /http/success/200
@@ -388,7 +388,7 @@ func (client *HTTPRedirectsClient) Head302HandleError(resp *azcore.Response) err
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Head307 - Redirect with 307, resulting in a 200 success
@@ -424,7 +424,7 @@ func (client *HTTPRedirectsClient) Head307HandleError(resp *azcore.Response) err
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Options307 - options redirected with 307, resulting in a 200 after redirect
@@ -460,7 +460,7 @@ func (client *HTTPRedirectsClient) Options307HandleError(resp *azcore.Response) 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Patch302 - Patch true Boolean value in request returns 302.  This request should not be automatically redirected, but should return the received 302 to the caller for evaluation
@@ -509,7 +509,7 @@ func (client *HTTPRedirectsClient) Patch302HandleError(resp *azcore.Response) er
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Patch307 - Patch redirected with 307, resulting in a 200 after redirect
@@ -545,7 +545,7 @@ func (client *HTTPRedirectsClient) Patch307HandleError(resp *azcore.Response) er
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Post303 - Post true Boolean value in request returns 303.  This request should be automatically redirected usign a get, ultimately returning a 200 status code
@@ -594,7 +594,7 @@ func (client *HTTPRedirectsClient) Post303HandleError(resp *azcore.Response) err
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Post307 - Post redirected with 307, resulting in a 200 after redirect
@@ -630,7 +630,7 @@ func (client *HTTPRedirectsClient) Post307HandleError(resp *azcore.Response) err
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Put301 - Put true Boolean value in request returns 301.  This request should not be automatically redirected, but should return the received 301 to the caller for evaluation
@@ -679,7 +679,7 @@ func (client *HTTPRedirectsClient) Put301HandleError(resp *azcore.Response) erro
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Put307 - Put redirected with 307, resulting in a 200 after redirect
@@ -715,5 +715,5 @@ func (client *HTTPRedirectsClient) Put307HandleError(resp *azcore.Response) erro
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

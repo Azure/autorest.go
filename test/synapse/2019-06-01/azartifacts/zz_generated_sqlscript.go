@@ -72,7 +72,7 @@ func (client *sqlScriptClient) CreateOrUpdateSQLScriptHandleError(resp *azcore.R
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // DeleteSQLScript - Deletes a Sql Script.
@@ -112,7 +112,7 @@ func (client *sqlScriptClient) DeleteSQLScriptHandleError(resp *azcore.Response)
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetSQLScript - Gets a sql script.
@@ -165,7 +165,7 @@ func (client *sqlScriptClient) GetSQLScriptHandleError(resp *azcore.Response) er
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetSQLScriptsByWorkspace - Lists sql scripts.
@@ -209,5 +209,5 @@ func (client *sqlScriptClient) GetSQLScriptsByWorkspaceHandleError(resp *azcore.
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

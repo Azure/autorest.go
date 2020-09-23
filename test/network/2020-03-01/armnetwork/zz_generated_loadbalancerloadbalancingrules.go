@@ -88,7 +88,7 @@ func (client *LoadBalancerLoadBalancingRulesClient) GetHandleError(resp *azcore.
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // List - Gets all the load balancing rules in a load balancer.
@@ -135,5 +135,5 @@ func (client *LoadBalancerLoadBalancingRulesClient) ListHandleError(resp *azcore
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

@@ -102,7 +102,7 @@ func (client *HTTPSuccessClient) Delete200HandleError(resp *azcore.Response) err
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Delete202 - Delete true Boolean value in request returns 202 (accepted)
@@ -138,7 +138,7 @@ func (client *HTTPSuccessClient) Delete202HandleError(resp *azcore.Response) err
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Delete204 - Delete true Boolean value in request returns 204 (no content)
@@ -174,7 +174,7 @@ func (client *HTTPSuccessClient) Delete204HandleError(resp *azcore.Response) err
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get200 - Get 200 success
@@ -220,7 +220,7 @@ func (client *HTTPSuccessClient) Get200HandleError(resp *azcore.Response) error 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Head200 - Return 200 status code if successful
@@ -256,7 +256,7 @@ func (client *HTTPSuccessClient) Head200HandleError(resp *azcore.Response) error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Head204 - Return 204 status code if successful
@@ -292,7 +292,7 @@ func (client *HTTPSuccessClient) Head204HandleError(resp *azcore.Response) error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Head404 - Return 404 status code
@@ -328,7 +328,7 @@ func (client *HTTPSuccessClient) Head404HandleError(resp *azcore.Response) error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Options200 - Options 200 success
@@ -374,7 +374,7 @@ func (client *HTTPSuccessClient) Options200HandleError(resp *azcore.Response) er
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Patch200 - Patch true Boolean value in request returning 200
@@ -410,7 +410,7 @@ func (client *HTTPSuccessClient) Patch200HandleError(resp *azcore.Response) erro
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Patch202 - Patch true Boolean value in request returns 202
@@ -446,7 +446,7 @@ func (client *HTTPSuccessClient) Patch202HandleError(resp *azcore.Response) erro
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Patch204 - Patch true Boolean value in request returns 204 (no content)
@@ -482,7 +482,7 @@ func (client *HTTPSuccessClient) Patch204HandleError(resp *azcore.Response) erro
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Post200 - Post bollean value true in request that returns a 200
@@ -518,7 +518,7 @@ func (client *HTTPSuccessClient) Post200HandleError(resp *azcore.Response) error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Post201 - Post true Boolean value in request returns 201 (Created)
@@ -554,7 +554,7 @@ func (client *HTTPSuccessClient) Post201HandleError(resp *azcore.Response) error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Post202 - Post true Boolean value in request returns 202 (Accepted)
@@ -590,7 +590,7 @@ func (client *HTTPSuccessClient) Post202HandleError(resp *azcore.Response) error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Post204 - Post true Boolean value in request returns 204 (no content)
@@ -626,7 +626,7 @@ func (client *HTTPSuccessClient) Post204HandleError(resp *azcore.Response) error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Put200 - Put boolean value true returning 200 success
@@ -662,7 +662,7 @@ func (client *HTTPSuccessClient) Put200HandleError(resp *azcore.Response) error 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Put201 - Put true Boolean value in request returns 201
@@ -698,7 +698,7 @@ func (client *HTTPSuccessClient) Put201HandleError(resp *azcore.Response) error 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Put202 - Put true Boolean value in request returns 202 (Accepted)
@@ -734,7 +734,7 @@ func (client *HTTPSuccessClient) Put202HandleError(resp *azcore.Response) error 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Put204 - Put true Boolean value in request returns 204 (no content)
@@ -770,5 +770,5 @@ func (client *HTTPSuccessClient) Put204HandleError(resp *azcore.Response) error 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

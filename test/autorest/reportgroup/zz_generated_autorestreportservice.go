@@ -83,7 +83,7 @@ func (client *AutoRestReportServiceClient) GetOptionalReportHandleError(resp *az
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetReport - Get test coverage report
@@ -134,5 +134,5 @@ func (client *AutoRestReportServiceClient) GetReportHandleError(resp *azcore.Res
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

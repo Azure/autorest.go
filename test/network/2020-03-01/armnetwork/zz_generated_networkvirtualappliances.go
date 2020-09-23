@@ -131,7 +131,7 @@ func (client *NetworkVirtualAppliancesClient) CreateOrUpdateHandleError(resp *az
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *NetworkVirtualAppliancesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string) (*HTTPPollerResponse, error) {
@@ -207,7 +207,7 @@ func (client *NetworkVirtualAppliancesClient) DeleteHandleError(resp *azcore.Res
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get - Gets the specified Network Virtual Appliance.
@@ -262,7 +262,7 @@ func (client *NetworkVirtualAppliancesClient) GetHandleError(resp *azcore.Respon
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // List - Gets all Network Virtual Appliances in a subscription.
@@ -307,7 +307,7 @@ func (client *NetworkVirtualAppliancesClient) ListHandleError(resp *azcore.Respo
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // ListByResourceGroup - Lists all Network Virtual Appliances in a resource group.
@@ -353,7 +353,7 @@ func (client *NetworkVirtualAppliancesClient) ListByResourceGroupHandleError(res
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // UpdateTags - Updates a Network Virtual Appliance.
@@ -405,5 +405,5 @@ func (client *NetworkVirtualAppliancesClient) UpdateTagsHandleError(resp *azcore
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

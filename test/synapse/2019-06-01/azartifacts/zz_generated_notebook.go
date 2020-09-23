@@ -68,7 +68,7 @@ func (client *notebookClient) CreateOrUpdateNotebookHandleError(resp *azcore.Res
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // DeleteNotebook - Deletes a Note book.
@@ -108,7 +108,7 @@ func (client *notebookClient) DeleteNotebookHandleError(resp *azcore.Response) e
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetNotebook - Gets a Note Book.
@@ -161,7 +161,7 @@ func (client *notebookClient) GetNotebookHandleError(resp *azcore.Response) erro
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetNotebookSummaryByWorkSpace - Lists a summary of Notebooks.
@@ -205,7 +205,7 @@ func (client *notebookClient) GetNotebookSummaryByWorkSpaceHandleError(resp *azc
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetNotebooksByWorkspace - Lists Notebooks.
@@ -249,5 +249,5 @@ func (client *notebookClient) GetNotebooksByWorkspaceHandleError(resp *azcore.Re
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

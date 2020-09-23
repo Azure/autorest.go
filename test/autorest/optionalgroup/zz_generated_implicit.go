@@ -89,7 +89,7 @@ func (client *ImplicitClient) GetOptionalGlobalQueryHandleError(resp *azcore.Res
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetRequiredGlobalPath - Test implicitly required path parameter
@@ -126,7 +126,7 @@ func (client *ImplicitClient) GetRequiredGlobalPathHandleError(resp *azcore.Resp
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetRequiredGlobalQuery - Test implicitly required query parameter
@@ -165,7 +165,7 @@ func (client *ImplicitClient) GetRequiredGlobalQueryHandleError(resp *azcore.Res
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetRequiredPath - Test implicitly required path parameter
@@ -202,7 +202,7 @@ func (client *ImplicitClient) GetRequiredPathHandleError(resp *azcore.Response) 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PutOptionalBody - Test implicitly optional body parameter
@@ -241,7 +241,7 @@ func (client *ImplicitClient) PutOptionalBodyHandleError(resp *azcore.Response) 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PutOptionalHeader - Test implicitly optional header parameter
@@ -280,7 +280,7 @@ func (client *ImplicitClient) PutOptionalHeaderHandleError(resp *azcore.Response
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PutOptionalQuery - Test implicitly optional query parameter
@@ -321,5 +321,5 @@ func (client *ImplicitClient) PutOptionalQueryHandleError(resp *azcore.Response)
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

@@ -113,5 +113,5 @@ func (client *VpnSitesConfigurationClient) DownloadHandleError(resp *azcore.Resp
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

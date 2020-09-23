@@ -97,7 +97,7 @@ func (client *WebApplicationFirewallPoliciesClient) CreateOrUpdateHandleError(re
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *WebApplicationFirewallPoliciesClient) BeginDelete(ctx context.Context, resourceGroupName string, policyName string) (*HTTPPollerResponse, error) {
@@ -173,7 +173,7 @@ func (client *WebApplicationFirewallPoliciesClient) DeleteHandleError(resp *azco
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get - Retrieve protection policy with specified name within a resource group.
@@ -225,7 +225,7 @@ func (client *WebApplicationFirewallPoliciesClient) GetHandleError(resp *azcore.
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // List - Lists all of the protection policies within a resource group.
@@ -271,7 +271,7 @@ func (client *WebApplicationFirewallPoliciesClient) ListHandleError(resp *azcore
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // ListAll - Gets all the WAF policies in a subscription.
@@ -316,5 +316,5 @@ func (client *WebApplicationFirewallPoliciesClient) ListAllHandleError(resp *azc
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

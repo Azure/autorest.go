@@ -17,8 +17,6 @@ const telemetryInfo = "azsdk-go-azartifacts/<version>"
 type clientOptions struct {
 	// HTTPClient sets the transport for making HTTP requests.
 	HTTPClient azcore.Transport
-	// LogOptions configures the built-in request logging policy behavior.
-	LogOptions azcore.RequestLogOptions
 	// Retry configures the built-in retry policy behavior.
 	Retry azcore.RetryOptions
 	// Telemetry configures the built-in telemetry policy behavior.
@@ -59,7 +57,7 @@ func newClient(endpoint string, cred azcore.Credential, options *clientOptions) 
 		azcore.NewUniqueRequestIDPolicy(),
 		azcore.NewRetryPolicy(&options.Retry),
 		cred.AuthenticationPolicy(azcore.AuthenticationPolicyOptions{Options: azcore.TokenRequestOptions{Scopes: []string{scope}}}),
-		azcore.NewRequestLogPolicy(options.LogOptions))
+		azcore.NewRequestLogPolicy(nil))
 	return newClientWithPipeline(endpoint, p)
 }
 

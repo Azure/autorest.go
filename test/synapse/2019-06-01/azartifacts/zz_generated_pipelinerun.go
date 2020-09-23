@@ -63,7 +63,7 @@ func (client *pipelineRunClient) CancelPipelineRunHandleError(resp *azcore.Respo
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetPipelineRun - Get a pipeline run by its run ID.
@@ -113,7 +113,7 @@ func (client *pipelineRunClient) GetPipelineRunHandleError(resp *azcore.Response
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // QueryActivityRuns - Query activity runs based on input filter conditions.
@@ -164,7 +164,7 @@ func (client *pipelineRunClient) QueryActivityRunsHandleError(resp *azcore.Respo
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // QueryPipelineRunsByWorkspace - Query pipeline runs in the workspace based on input filter conditions.
@@ -213,5 +213,5 @@ func (client *pipelineRunClient) QueryPipelineRunsByWorkspaceHandleError(resp *a
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

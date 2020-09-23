@@ -69,7 +69,7 @@ func (client *pipelineClient) CreateOrUpdatePipelineHandleError(resp *azcore.Res
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // CreatePipelineRun - Creates a run of a pipeline.
@@ -131,7 +131,7 @@ func (client *pipelineClient) CreatePipelineRunHandleError(resp *azcore.Response
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // DeletePipeline - Deletes a pipeline.
@@ -171,7 +171,7 @@ func (client *pipelineClient) DeletePipelineHandleError(resp *azcore.Response) e
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetPipeline - Gets a pipeline.
@@ -224,7 +224,7 @@ func (client *pipelineClient) GetPipelineHandleError(resp *azcore.Response) erro
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetPipelinesByWorkspace - Lists pipelines.
@@ -268,5 +268,5 @@ func (client *pipelineClient) GetPipelinesByWorkspaceHandleError(resp *azcore.Re
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

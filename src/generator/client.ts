@@ -42,8 +42,6 @@ function generateContent(session: Session<CodeModel>, exportClient: boolean): st
   text += `type ${clientOptions} struct {\n`;
   text += '\t// HTTPClient sets the transport for making HTTP requests.\n';
   text += '\tHTTPClient azcore.Transport\n';
-  text += '\t// LogOptions configures the built-in request logging policy behavior.\n';
-  text += '\tLogOptions azcore.RequestLogOptions\n';
   text += '\t// Retry configures the built-in retry policy behavior.\n';
   text += '\tRetry azcore.RetryOptions\n';
   text += '\t// Telemetry configures the built-in telemetry policy behavior.\n';
@@ -157,7 +155,7 @@ function generateContent(session: Session<CodeModel>, exportClient: boolean): st
   const reqIDPolicy = 'azcore.NewUniqueRequestIDPolicy()';
   const retryPolicy = 'azcore.NewRetryPolicy(&options.Retry)';
   const credPolicy = 'cred.AuthenticationPolicy(azcore.AuthenticationPolicyOptions{Options: azcore.TokenRequestOptions{Scopes: []string{scope}}})';
-  const logPolicy = 'azcore.NewRequestLogPolicy(options.LogOptions))';
+  const logPolicy = 'azcore.NewRequestLogPolicy(nil))';
   // ARM will optionally inject the RP registration policy into the pipeline
   if (isARM && session.model.security.authenticationRequired) {
     text += '\tpolicies := []azcore.Policy{\n';

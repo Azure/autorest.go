@@ -60,7 +60,7 @@ func (client *triggerRunClient) CancelTriggerInstanceHandleError(resp *azcore.Re
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // QueryTriggerRunsByWorkspace - Query trigger runs.
@@ -109,7 +109,7 @@ func (client *triggerRunClient) QueryTriggerRunsByWorkspaceHandleError(resp *azc
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // RerunTriggerInstance - Rerun single trigger instance by runId.
@@ -150,5 +150,5 @@ func (client *triggerRunClient) RerunTriggerInstanceHandleError(resp *azcore.Res
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

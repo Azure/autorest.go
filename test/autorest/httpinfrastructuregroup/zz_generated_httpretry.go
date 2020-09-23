@@ -82,7 +82,7 @@ func (client *HTTPRetryClient) Delete503HandleError(resp *azcore.Response) error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get502 - Return 502 status code, then 200 after retry
@@ -118,7 +118,7 @@ func (client *HTTPRetryClient) Get502HandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Head408 - Return 408 status code, then 200 after retry
@@ -154,7 +154,7 @@ func (client *HTTPRetryClient) Head408HandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Options502 - Return 502 status code, then 200 after retry
@@ -200,7 +200,7 @@ func (client *HTTPRetryClient) Options502HandleError(resp *azcore.Response) erro
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Patch500 - Return 500 status code, then 200 after retry
@@ -236,7 +236,7 @@ func (client *HTTPRetryClient) Patch500HandleError(resp *azcore.Response) error 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Patch504 - Return 504 status code, then 200 after retry
@@ -272,7 +272,7 @@ func (client *HTTPRetryClient) Patch504HandleError(resp *azcore.Response) error 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Post503 - Return 503 status code, then 200 after retry
@@ -308,7 +308,7 @@ func (client *HTTPRetryClient) Post503HandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Put500 - Return 500 status code, then 200 after retry
@@ -344,7 +344,7 @@ func (client *HTTPRetryClient) Put500HandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Put504 - Return 504 status code, then 200 after retry
@@ -380,5 +380,5 @@ func (client *HTTPRetryClient) Put504HandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

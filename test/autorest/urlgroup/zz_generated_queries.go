@@ -143,7 +143,7 @@ func (client *QueriesClient) ArrayStringCSVEmptyHandleError(resp *azcore.Respons
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // ArrayStringCSVNull - Get a null array of string using the csv-array format
@@ -184,7 +184,7 @@ func (client *QueriesClient) ArrayStringCSVNullHandleError(resp *azcore.Response
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // ArrayStringCSVValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
@@ -225,7 +225,7 @@ func (client *QueriesClient) ArrayStringCSVValidHandleError(resp *azcore.Respons
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // ArrayStringNoCollectionFormatEmpty - Array query has no defined collection format, should default to csv. Pass in ['hello', 'nihao', 'bonjour'] for the 'arrayQuery' parameter to the service
@@ -266,7 +266,7 @@ func (client *QueriesClient) ArrayStringNoCollectionFormatEmptyHandleError(resp 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // ArrayStringPipesValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the pipes-array format
@@ -307,7 +307,7 @@ func (client *QueriesClient) ArrayStringPipesValidHandleError(resp *azcore.Respo
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // ArrayStringSsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the ssv-array format
@@ -348,7 +348,7 @@ func (client *QueriesClient) ArrayStringSsvValidHandleError(resp *azcore.Respons
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // ArrayStringTsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the tsv-array format
@@ -389,7 +389,7 @@ func (client *QueriesClient) ArrayStringTsvValidHandleError(resp *azcore.Respons
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // ByteEmpty - Get '' as byte array
@@ -428,7 +428,7 @@ func (client *QueriesClient) ByteEmptyHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // ByteMultiByte - Get '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
@@ -469,7 +469,7 @@ func (client *QueriesClient) ByteMultiByteHandleError(resp *azcore.Response) err
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // ByteNull - Get null as byte array (no query parameters in uri)
@@ -510,7 +510,7 @@ func (client *QueriesClient) ByteNullHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // DateNull - Get null as date - this should result in no query parameters in uri
@@ -551,7 +551,7 @@ func (client *QueriesClient) DateNullHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // DateTimeNull - Get null as date-time, should result in no query parameters in uri
@@ -592,7 +592,7 @@ func (client *QueriesClient) DateTimeNullHandleError(resp *azcore.Response) erro
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // DateTimeValid - Get '2012-01-01T01:01:01Z' as date-time
@@ -631,7 +631,7 @@ func (client *QueriesClient) DateTimeValidHandleError(resp *azcore.Response) err
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // DateValid - Get '2012-01-01' as date
@@ -670,7 +670,7 @@ func (client *QueriesClient) DateValidHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // DoubleDecimalNegative - Get '-9999999.999' numeric value
@@ -709,7 +709,7 @@ func (client *QueriesClient) DoubleDecimalNegativeHandleError(resp *azcore.Respo
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // DoubleDecimalPositive - Get '9999999.999' numeric value
@@ -748,7 +748,7 @@ func (client *QueriesClient) DoubleDecimalPositiveHandleError(resp *azcore.Respo
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // DoubleNull - Get null numeric value (no query parameter)
@@ -789,7 +789,7 @@ func (client *QueriesClient) DoubleNullHandleError(resp *azcore.Response) error 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // EnumNull - Get null (no query parameter in url)
@@ -830,7 +830,7 @@ func (client *QueriesClient) EnumNullHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // EnumValid - Get using uri with query parameter 'green color'
@@ -871,7 +871,7 @@ func (client *QueriesClient) EnumValidHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // FloatNull - Get null numeric value (no query parameter)
@@ -912,7 +912,7 @@ func (client *QueriesClient) FloatNullHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // FloatScientificNegative - Get '-1.034E-20' numeric value
@@ -951,7 +951,7 @@ func (client *QueriesClient) FloatScientificNegativeHandleError(resp *azcore.Res
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // FloatScientificPositive - Get '1.034E+20' numeric value
@@ -990,7 +990,7 @@ func (client *QueriesClient) FloatScientificPositiveHandleError(resp *azcore.Res
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetBooleanFalse - Get false Boolean value on path
@@ -1029,7 +1029,7 @@ func (client *QueriesClient) GetBooleanFalseHandleError(resp *azcore.Response) e
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetBooleanNull - Get null Boolean value on query (query string should be absent)
@@ -1070,7 +1070,7 @@ func (client *QueriesClient) GetBooleanNullHandleError(resp *azcore.Response) er
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetBooleanTrue - Get true Boolean value on path
@@ -1109,7 +1109,7 @@ func (client *QueriesClient) GetBooleanTrueHandleError(resp *azcore.Response) er
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetIntNegativeOneMillion - Get '-1000000' integer value
@@ -1148,7 +1148,7 @@ func (client *QueriesClient) GetIntNegativeOneMillionHandleError(resp *azcore.Re
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetIntNull - Get null integer value (no query parameter)
@@ -1189,7 +1189,7 @@ func (client *QueriesClient) GetIntNullHandleError(resp *azcore.Response) error 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetIntOneMillion - Get '1000000' integer value
@@ -1228,7 +1228,7 @@ func (client *QueriesClient) GetIntOneMillionHandleError(resp *azcore.Response) 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetLongNull - Get 'null 64 bit integer value (no query param in uri)
@@ -1269,7 +1269,7 @@ func (client *QueriesClient) GetLongNullHandleError(resp *azcore.Response) error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetNegativeTenBillion - Get '-10000000000' 64 bit integer value
@@ -1308,7 +1308,7 @@ func (client *QueriesClient) GetNegativeTenBillionHandleError(resp *azcore.Respo
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetTenBillion - Get '10000000000' 64 bit integer value
@@ -1347,7 +1347,7 @@ func (client *QueriesClient) GetTenBillionHandleError(resp *azcore.Response) err
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // StringEmpty - Get ''
@@ -1386,7 +1386,7 @@ func (client *QueriesClient) StringEmptyHandleError(resp *azcore.Response) error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // StringNull - Get null (no query parameter in url)
@@ -1427,7 +1427,7 @@ func (client *QueriesClient) StringNullHandleError(resp *azcore.Response) error 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // StringURLEncoded - Get 'begin!*'();:@ &=+$,/?#[]end
@@ -1466,7 +1466,7 @@ func (client *QueriesClient) StringURLEncodedHandleError(resp *azcore.Response) 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // StringUnicode - Get '啊齄丂狛狜隣郎隣兀﨩' multi-byte string value
@@ -1505,5 +1505,5 @@ func (client *QueriesClient) StringUnicodeHandleError(resp *azcore.Response) err
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

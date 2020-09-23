@@ -123,7 +123,7 @@ func (client *PathsClient) ArrayCSVInPathHandleError(resp *azcore.Response) erro
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Base64URL - Get 'lorem' encoded value as 'bG9yZW0' (base64url)
@@ -160,7 +160,7 @@ func (client *PathsClient) Base64URLHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // ByteEmpty - Get '' as byte array
@@ -197,7 +197,7 @@ func (client *PathsClient) ByteEmptyHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // ByteMultiByte - Get '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
@@ -234,7 +234,7 @@ func (client *PathsClient) ByteMultiByteHandleError(resp *azcore.Response) error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // ByteNull - Get null as byte array (should throw)
@@ -271,7 +271,7 @@ func (client *PathsClient) ByteNullHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // DateNull - Get null as date - this should throw or be unusable on the client side, depending on date representation
@@ -308,7 +308,7 @@ func (client *PathsClient) DateNullHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // DateTimeNull - Get null as date-time, should be disallowed or throw depending on representation of date-time
@@ -345,7 +345,7 @@ func (client *PathsClient) DateTimeNullHandleError(resp *azcore.Response) error 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // DateTimeValid - Get '2012-01-01T01:01:01Z' as date-time
@@ -382,7 +382,7 @@ func (client *PathsClient) DateTimeValidHandleError(resp *azcore.Response) error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // DateValid - Get '2012-01-01' as date
@@ -419,7 +419,7 @@ func (client *PathsClient) DateValidHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // DoubleDecimalNegative - Get '-9999999.999' numeric value
@@ -456,7 +456,7 @@ func (client *PathsClient) DoubleDecimalNegativeHandleError(resp *azcore.Respons
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // DoubleDecimalPositive - Get '9999999.999' numeric value
@@ -493,7 +493,7 @@ func (client *PathsClient) DoubleDecimalPositiveHandleError(resp *azcore.Respons
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // EnumNull - Get null (should throw on the client before the request is sent on wire)
@@ -530,7 +530,7 @@ func (client *PathsClient) EnumNullHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // EnumValid - Get using uri with 'green color' in path parameter
@@ -567,7 +567,7 @@ func (client *PathsClient) EnumValidHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // FloatScientificNegative - Get '-1.034E-20' numeric value
@@ -604,7 +604,7 @@ func (client *PathsClient) FloatScientificNegativeHandleError(resp *azcore.Respo
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // FloatScientificPositive - Get '1.034E+20' numeric value
@@ -641,7 +641,7 @@ func (client *PathsClient) FloatScientificPositiveHandleError(resp *azcore.Respo
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetBooleanFalse - Get false Boolean value on path
@@ -678,7 +678,7 @@ func (client *PathsClient) GetBooleanFalseHandleError(resp *azcore.Response) err
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetBooleanTrue - Get true Boolean value on path
@@ -715,7 +715,7 @@ func (client *PathsClient) GetBooleanTrueHandleError(resp *azcore.Response) erro
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetIntNegativeOneMillion - Get '-1000000' integer value
@@ -752,7 +752,7 @@ func (client *PathsClient) GetIntNegativeOneMillionHandleError(resp *azcore.Resp
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetIntOneMillion - Get '1000000' integer value
@@ -789,7 +789,7 @@ func (client *PathsClient) GetIntOneMillionHandleError(resp *azcore.Response) er
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetNegativeTenBillion - Get '-10000000000' 64 bit integer value
@@ -826,7 +826,7 @@ func (client *PathsClient) GetNegativeTenBillionHandleError(resp *azcore.Respons
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetTenBillion - Get '10000000000' 64 bit integer value
@@ -863,7 +863,7 @@ func (client *PathsClient) GetTenBillionHandleError(resp *azcore.Response) error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // StringEmpty - Get ''
@@ -900,7 +900,7 @@ func (client *PathsClient) StringEmptyHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // StringNull - Get null (should throw)
@@ -937,7 +937,7 @@ func (client *PathsClient) StringNullHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // StringURLEncoded - Get 'begin!*'();:@ &=+$,/?#[]end
@@ -974,7 +974,7 @@ func (client *PathsClient) StringURLEncodedHandleError(resp *azcore.Response) er
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // StringURLNonEncoded - https://tools.ietf.org/html/rfc3986#appendix-A 'path' accept any 'pchar' not encoded
@@ -1011,7 +1011,7 @@ func (client *PathsClient) StringURLNonEncodedHandleError(resp *azcore.Response)
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // StringUnicode - Get '啊齄丂狛狜隣郎隣兀﨩' multi-byte string value
@@ -1048,7 +1048,7 @@ func (client *PathsClient) StringUnicodeHandleError(resp *azcore.Response) error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // UnixTimeURL - Get the date 2016-04-13 encoded value as '1460505600' (Unix time)
@@ -1085,5 +1085,5 @@ func (client *PathsClient) UnixTimeURLHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

@@ -86,7 +86,7 @@ func (client *BasicClient) GetEmptyHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetInvalid - Get a basic complex type that is invalid for the local strong type
@@ -132,7 +132,7 @@ func (client *BasicClient) GetInvalidHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetNotProvided - Get a basic complex type while the server doesn't provide a response payload
@@ -178,7 +178,7 @@ func (client *BasicClient) GetNotProvidedHandleError(resp *azcore.Response) erro
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetNull - Get a basic complex type whose properties are null
@@ -224,7 +224,7 @@ func (client *BasicClient) GetNullHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetValid - Get complex type {id: 2, name: 'abc', color: 'YELLOW'}
@@ -270,7 +270,7 @@ func (client *BasicClient) GetValidHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PutValid - Please put {id: 2, name: 'abc', color: 'Magenta'}
@@ -309,5 +309,5 @@ func (client *BasicClient) PutValidHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

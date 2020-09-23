@@ -68,7 +68,7 @@ func (client *dataFlowClient) CreateOrUpdateDataFlowHandleError(resp *azcore.Res
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // DeleteDataFlow - Deletes a data flow.
@@ -108,7 +108,7 @@ func (client *dataFlowClient) DeleteDataFlowHandleError(resp *azcore.Response) e
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetDataFlow - Gets a data flow.
@@ -161,7 +161,7 @@ func (client *dataFlowClient) GetDataFlowHandleError(resp *azcore.Response) erro
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetDataFlowsByWorkspace - Lists data flows.
@@ -205,5 +205,5 @@ func (client *dataFlowClient) GetDataFlowsByWorkspaceHandleError(resp *azcore.Re
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

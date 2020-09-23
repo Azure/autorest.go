@@ -88,7 +88,7 @@ func (client *LoadBalancerBackendAddressPoolsClient) GetHandleError(resp *azcore
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // List - Gets all the load balancer backed address pools.
@@ -135,5 +135,5 @@ func (client *LoadBalancerBackendAddressPoolsClient) ListHandleError(resp *azcor
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

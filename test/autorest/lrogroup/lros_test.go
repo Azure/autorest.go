@@ -183,9 +183,15 @@ func TestLROBeginDeleteAsyncRetryFailed(t *testing.T) {
 	if res != nil {
 		t.Fatal("expected a nil response from the polling operation")
 	}
-	var cloudErr CloudError
-	if !errors.Is(err, cloudErr) {
+	var cloudErr *CloudError
+	if !errors.As(err, &cloudErr) {
 		t.Fatal("expected a CloudError but did not receive one")
+	}
+	var httpResp azcore.HTTPResponse
+	if !errors.As(err, &httpResp) {
+		t.Fatal("expected azcore.HTTPResponse error")
+	} else if sc := httpResp.RawResponse().StatusCode; sc != http.StatusOK {
+		t.Fatalf("unexpected status code %d", sc)
 	}
 }
 
@@ -233,9 +239,15 @@ func TestLROBeginDeleteAsyncRetrycanceled(t *testing.T) {
 	if res != nil {
 		t.Fatal("expected a nil response from the polling operation")
 	}
-	var cloudErr CloudError
-	if !errors.Is(err, cloudErr) {
+	var cloudErr *CloudError
+	if !errors.As(err, &cloudErr) {
 		t.Fatal("expected a CloudError but did not receive one")
+	}
+	var httpResp azcore.HTTPResponse
+	if !errors.As(err, &httpResp) {
+		t.Fatal("expected azcore.HTTPResponse error")
+	} else if sc := httpResp.RawResponse().StatusCode; sc != http.StatusOK {
+		t.Fatalf("unexpected status code %d", sc)
 	}
 }
 
@@ -478,9 +490,15 @@ func TestLROBeginPostAsyncRetryFailed(t *testing.T) {
 	if res != nil {
 		t.Fatal("expected a nil response from the polling operation")
 	}
-	var cloudErr CloudError
-	if !errors.Is(err, cloudErr) {
+	var cloudErr *CloudError
+	if !errors.As(err, &cloudErr) {
 		t.Fatal("expected a CloudError but did not receive one")
+	}
+	var httpResp azcore.HTTPResponse
+	if !errors.As(err, &httpResp) {
+		t.Fatal("expected azcore.HTTPResponse error")
+	} else if sc := httpResp.RawResponse().StatusCode; sc != http.StatusOK {
+		t.Fatalf("unexpected status code %d", sc)
 	}
 }
 
@@ -537,9 +555,15 @@ func TestLROBeginPostAsyncRetrycanceled(t *testing.T) {
 	if res != nil {
 		t.Fatal("expected a nil response from the polling operation")
 	}
-	var cloudErr CloudError
-	if !errors.Is(err, cloudErr) {
+	var cloudErr *CloudError
+	if !errors.As(err, &cloudErr) {
 		t.Fatal("expected a CloudError but did not receive one")
+	}
+	var httpResp azcore.HTTPResponse
+	if !errors.As(err, &httpResp) {
+		t.Fatal("expected azcore.HTTPResponse error")
+	} else if sc := httpResp.RawResponse().StatusCode; sc != http.StatusOK {
+		t.Fatalf("unexpected status code %d", sc)
 	}
 }
 
@@ -643,9 +667,15 @@ func TestLROBeginPut200Acceptedcanceled200(t *testing.T) {
 	if res != nil {
 		t.Fatal("expected a nil response from the polling operation")
 	}
-	var cloudErr CloudError
-	if !errors.Is(err, cloudErr) {
+	var cloudErr *CloudError
+	if !errors.As(err, &cloudErr) {
 		t.Fatal("expected a CloudError but did not receive one")
+	}
+	var httpResp azcore.HTTPResponse
+	if !errors.As(err, &httpResp) {
+		t.Fatal("expected azcore.HTTPResponse error")
+	} else if sc := httpResp.RawResponse().StatusCode; sc != http.StatusOK {
+		t.Fatalf("unexpected status code %d", sc)
 	}
 }
 
@@ -754,9 +784,15 @@ func TestLROBeginPut201CreatingFailed200(t *testing.T) {
 	if res != nil {
 		t.Fatal("expected a nil response from the polling operation")
 	}
-	var cloudErr CloudError
-	if !errors.Is(err, cloudErr) {
+	var cloudErr *CloudError
+	if !errors.As(err, &cloudErr) {
 		t.Fatal("expected a CloudError but did not receive one")
+	}
+	var httpResp azcore.HTTPResponse
+	if !errors.As(err, &httpResp) {
+		t.Fatal("expected azcore.HTTPResponse error")
+	} else if sc := httpResp.RawResponse().StatusCode; sc != http.StatusOK {
+		t.Fatalf("unexpected status code %d", sc)
 	}
 }
 
@@ -903,9 +939,15 @@ func TestLROBeginPutAsyncNoRetrycanceled(t *testing.T) {
 	if res != nil {
 		t.Fatal("expected a nil response from the polling operation")
 	}
-	var cloudErr CloudError
-	if !errors.Is(err, cloudErr) {
+	var cloudErr *CloudError
+	if !errors.As(err, &cloudErr) {
 		t.Fatal("expected a CloudError but did not receive one")
+	}
+	var httpResp azcore.HTTPResponse
+	if !errors.As(err, &httpResp) {
+		t.Fatal("expected azcore.HTTPResponse error")
+	} else if sc := httpResp.RawResponse().StatusCode; sc != http.StatusOK {
+		t.Fatalf("unexpected status code %d", sc)
 	}
 }
 
@@ -957,9 +999,15 @@ func TestLROBeginPutAsyncRetryFailed(t *testing.T) {
 	if res != nil {
 		t.Fatal("expected a nil response from the polling operation")
 	}
-	var cloudErr CloudError
-	if !errors.Is(err, cloudErr) {
+	var cloudErr *CloudError
+	if !errors.As(err, &cloudErr) {
 		t.Fatal("expected a CloudError but did not receive one")
+	}
+	var httpResp azcore.HTTPResponse
+	if !errors.As(err, &httpResp) {
+		t.Fatal("expected azcore.HTTPResponse error")
+	} else if sc := httpResp.RawResponse().StatusCode; sc != http.StatusOK {
+		t.Fatalf("unexpected status code %d", sc)
 	}
 }
 

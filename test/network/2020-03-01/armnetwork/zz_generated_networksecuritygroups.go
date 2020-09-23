@@ -131,7 +131,7 @@ func (client *NetworkSecurityGroupsClient) CreateOrUpdateHandleError(resp *azcor
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *NetworkSecurityGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkSecurityGroupName string) (*HTTPPollerResponse, error) {
@@ -207,7 +207,7 @@ func (client *NetworkSecurityGroupsClient) DeleteHandleError(resp *azcore.Respon
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get - Gets the specified network security group.
@@ -262,7 +262,7 @@ func (client *NetworkSecurityGroupsClient) GetHandleError(resp *azcore.Response)
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // List - Gets all network security groups in a resource group.
@@ -308,7 +308,7 @@ func (client *NetworkSecurityGroupsClient) ListHandleError(resp *azcore.Response
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // ListAll - Gets all network security groups in a subscription.
@@ -353,7 +353,7 @@ func (client *NetworkSecurityGroupsClient) ListAllHandleError(resp *azcore.Respo
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // UpdateTags - Updates a network security group tags.
@@ -405,5 +405,5 @@ func (client *NetworkSecurityGroupsClient) UpdateTagsHandleError(resp *azcore.Re
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

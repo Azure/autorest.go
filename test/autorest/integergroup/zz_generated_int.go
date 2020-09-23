@@ -103,7 +103,7 @@ func (client *IntClient) GetInvalidHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetInvalidUnixTime - Get invalid Unix time value
@@ -150,7 +150,7 @@ func (client *IntClient) GetInvalidUnixTimeHandleError(resp *azcore.Response) er
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetNull - Get null Int value
@@ -196,7 +196,7 @@ func (client *IntClient) GetNullHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetNullUnixTime - Get null Unix time value
@@ -243,7 +243,7 @@ func (client *IntClient) GetNullUnixTimeHandleError(resp *azcore.Response) error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetOverflowInt32 - Get overflow Int32 value
@@ -289,7 +289,7 @@ func (client *IntClient) GetOverflowInt32HandleError(resp *azcore.Response) erro
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetOverflowInt64 - Get overflow Int64 value
@@ -335,7 +335,7 @@ func (client *IntClient) GetOverflowInt64HandleError(resp *azcore.Response) erro
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetUnderflowInt32 - Get underflow Int32 value
@@ -381,7 +381,7 @@ func (client *IntClient) GetUnderflowInt32HandleError(resp *azcore.Response) err
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetUnderflowInt64 - Get underflow Int64 value
@@ -427,7 +427,7 @@ func (client *IntClient) GetUnderflowInt64HandleError(resp *azcore.Response) err
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetUnixTime - Get datetime encoded as Unix time value
@@ -474,7 +474,7 @@ func (client *IntClient) GetUnixTimeHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PutMax32 - Put max int32 value
@@ -510,7 +510,7 @@ func (client *IntClient) PutMax32HandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PutMax64 - Put max int64 value
@@ -546,7 +546,7 @@ func (client *IntClient) PutMax64HandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PutMin32 - Put min int32 value
@@ -582,7 +582,7 @@ func (client *IntClient) PutMin32HandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PutMin64 - Put min int64 value
@@ -618,7 +618,7 @@ func (client *IntClient) PutMin64HandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PutUnixTimeDate - Put datetime encoded as Unix time
@@ -655,5 +655,5 @@ func (client *IntClient) PutUnixTimeDateHandleError(resp *azcore.Response) error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

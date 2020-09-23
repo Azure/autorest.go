@@ -131,7 +131,7 @@ func (client *ApplicationSecurityGroupsClient) CreateOrUpdateHandleError(resp *a
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *ApplicationSecurityGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string) (*HTTPPollerResponse, error) {
@@ -207,7 +207,7 @@ func (client *ApplicationSecurityGroupsClient) DeleteHandleError(resp *azcore.Re
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get - Gets information about the specified application security group.
@@ -259,7 +259,7 @@ func (client *ApplicationSecurityGroupsClient) GetHandleError(resp *azcore.Respo
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // List - Gets all the application security groups in a resource group.
@@ -305,7 +305,7 @@ func (client *ApplicationSecurityGroupsClient) ListHandleError(resp *azcore.Resp
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // ListAll - Gets all application security groups in a subscription.
@@ -350,7 +350,7 @@ func (client *ApplicationSecurityGroupsClient) ListAllHandleError(resp *azcore.R
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // UpdateTags - Updates an application security group's tags.
@@ -402,5 +402,5 @@ func (client *ApplicationSecurityGroupsClient) UpdateTagsHandleError(resp *azcor
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

@@ -88,7 +88,7 @@ func (client *NetworkInterfaceIPConfigurationsClient) GetHandleError(resp *azcor
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // List - Get all ip configurations in a network interface.
@@ -135,5 +135,5 @@ func (client *NetworkInterfaceIPConfigurationsClient) ListHandleError(resp *azco
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
