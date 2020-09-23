@@ -138,22 +138,6 @@ type PagingGetWithQueryParamsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PagingNextFragmentOptions contains the optional parameters for the Paging.NextFragment method.
-type PagingNextFragmentOptions struct {
-	// placeholder for future optional parameters
-}
-
-// PagingNextFragmentWithGroupingOptions contains the optional parameters for the Paging.NextFragmentWithGrouping method.
-type PagingNextFragmentWithGroupingOptions struct {
-	// placeholder for future optional parameters
-}
-
-// PagingNextOperationWithQueryParamsOptions contains the optional parameters for the Paging.NextOperationWithQueryParams
-// method.
-type PagingNextOperationWithQueryParamsOptions struct {
-	// placeholder for future optional parameters
-}
-
 type Product struct {
 	Properties *ProductProperties `json:"properties,omitempty"`
 }

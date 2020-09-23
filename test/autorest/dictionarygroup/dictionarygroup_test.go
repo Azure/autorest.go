@@ -20,7 +20,7 @@ func newDictionaryClient() DictionaryOperations {
 // GetArrayEmpty - Get an empty dictionary {}
 func TestGetArrayEmpty(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.GetArrayEmpty(context.Background())
+	resp, err := client.GetArrayEmpty(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -32,7 +32,7 @@ func TestGetArrayEmpty(t *testing.T) {
 // GetArrayItemEmpty - Get an array of array of strings [{"0": ["1", "2", "3"], "1": [], "2": ["7", "8", "9"]}
 func TestGetArrayItemEmpty(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.GetArrayItemEmpty(context.Background())
+	resp, err := client.GetArrayItemEmpty(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -46,7 +46,7 @@ func TestGetArrayItemEmpty(t *testing.T) {
 // GetArrayItemNull - Get an dictionary of array of strings {"0": ["1", "2", "3"], "1": null, "2": ["7", "8", "9"]}
 func TestGetArrayItemNull(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.GetArrayItemNull(context.Background())
+	resp, err := client.GetArrayItemNull(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -61,7 +61,7 @@ func TestGetArrayItemNull(t *testing.T) {
 // GetArrayNull - Get a null array
 func TestGetArrayNull(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.GetArrayNull(context.Background())
+	resp, err := client.GetArrayNull(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -73,7 +73,7 @@ func TestGetArrayNull(t *testing.T) {
 // GetArrayValid - Get an array of array of strings {"0": ["1", "2", "3"], "1": ["4", "5", "6"], "2": ["7", "8", "9"]}
 func TestGetArrayValid(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.GetArrayValid(context.Background())
+	resp, err := client.GetArrayValid(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -93,7 +93,7 @@ func TestGetBase64URL(t *testing.T) {
 func TestGetBooleanInvalidNull(t *testing.T) {
 	t.Skip("no x-nullable, should fail")
 	client := newDictionaryClient()
-	resp, err := client.GetBooleanInvalidNull(context.Background())
+	resp, err := client.GetBooleanInvalidNull(context.Background(), nil)
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
@@ -105,7 +105,7 @@ func TestGetBooleanInvalidNull(t *testing.T) {
 // GetBooleanInvalidString - Get boolean dictionary value '{"0": true, "1": "boolean", "2": false}'
 func TestGetBooleanInvalidString(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.GetBooleanInvalidString(context.Background())
+	resp, err := client.GetBooleanInvalidString(context.Background(), nil)
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
@@ -117,7 +117,7 @@ func TestGetBooleanInvalidString(t *testing.T) {
 // GetBooleanTfft - Get boolean dictionary value {"0": true, "1": false, "2": false, "3": true }
 func TestGetBooleanTfft(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.GetBooleanTfft(context.Background())
+	resp, err := client.GetBooleanTfft(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -133,7 +133,7 @@ func TestGetBooleanTfft(t *testing.T) {
 func TestGetByteInvalidNull(t *testing.T) {
 	t.Skip("no x-nullable, should fail")
 	client := newDictionaryClient()
-	resp, err := client.GetByteInvalidNull(context.Background())
+	resp, err := client.GetByteInvalidNull(context.Background(), nil)
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
@@ -145,7 +145,7 @@ func TestGetByteInvalidNull(t *testing.T) {
 // GetByteValid - Get byte dictionary value {"0": hex(FF FF FF FA), "1": hex(01 02 03), "2": hex (25, 29, 43)} with each item encoded in base64
 func TestGetByteValid(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.GetByteValid(context.Background())
+	resp, err := client.GetByteValid(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -159,7 +159,7 @@ func TestGetByteValid(t *testing.T) {
 // GetComplexEmpty - Get empty dictionary of complex type {}
 func TestGetComplexEmpty(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.GetComplexEmpty(context.Background())
+	resp, err := client.GetComplexEmpty(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -169,7 +169,7 @@ func TestGetComplexEmpty(t *testing.T) {
 // GetComplexItemEmpty - Get dictionary of complex type with empty item {"0": {"integer": 1, "string": "2"}, "1:" {}, "2": {"integer": 5, "string": "6"}}
 func TestGetComplexItemEmpty(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.GetComplexItemEmpty(context.Background())
+	resp, err := client.GetComplexItemEmpty(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -185,7 +185,7 @@ func TestGetComplexItemEmpty(t *testing.T) {
 test is invalid, expects nil value but missing x-nullable
 func TestGetComplexItemNull(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.GetComplexItemNull(context.Background())
+	resp, err := client.GetComplexItemNull(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -199,7 +199,7 @@ func TestGetComplexItemNull(t *testing.T) {
 // GetComplexNull - Get dictionary of complex type null value
 func TestGetComplexNull(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.GetComplexNull(context.Background())
+	resp, err := client.GetComplexNull(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -211,7 +211,7 @@ func TestGetComplexNull(t *testing.T) {
 // GetComplexValid - Get dictionary of complex type with {"0": {"integer": 1, "string": "2"}, "1": {"integer": 3, "string": "4"}, "2": {"integer": 5, "string": "6"}}
 func TestGetComplexValid(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.GetComplexValid(context.Background())
+	resp, err := client.GetComplexValid(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -235,7 +235,7 @@ func TestGetDateInvalidNull(t *testing.T) {
 // GetDateTimeInvalidChars - Get date dictionary value {"0": "2000-12-01t00:00:01z", "1": "date-time"}
 func TestGetDateTimeInvalidChars(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.GetDateTimeInvalidChars(context.Background())
+	resp, err := client.GetDateTimeInvalidChars(context.Background(), nil)
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
@@ -247,7 +247,7 @@ func TestGetDateTimeInvalidChars(t *testing.T) {
 // GetDateTimeInvalidNull - Get date dictionary value {"0": "2000-12-01t00:00:01z", "1": null}
 func TestGetDateTimeInvalidNull(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.GetDateTimeInvalidNull(context.Background())
+	resp, err := client.GetDateTimeInvalidNull(context.Background(), nil)
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
@@ -259,7 +259,7 @@ func TestGetDateTimeInvalidNull(t *testing.T) {
 // GetDateTimeRFC1123Valid - Get date-time-rfc1123 dictionary value {"0": "Fri, 01 Dec 2000 00:00:01 GMT", "1": "Wed, 02 Jan 1980 00:11:35 GMT", "2": "Wed, 12 Oct 1492 10:15:01 GMT"}
 func TestGetDateTimeRFC1123Valid(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.GetDateTimeRFC1123Valid(context.Background())
+	resp, err := client.GetDateTimeRFC1123Valid(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -276,7 +276,7 @@ func TestGetDateTimeRFC1123Valid(t *testing.T) {
 // GetDateTimeValid - Get date-time dictionary value {"0": "2000-12-01t00:00:01z", "1": "1980-01-02T00:11:35+01:00", "2": "1492-10-12T10:15:01-08:00"}
 func TestGetDateTimeValid(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.GetDateTimeValid(context.Background())
+	resp, err := client.GetDateTimeValid(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -298,7 +298,7 @@ func TestGetDateValid(t *testing.T) {
 // GetDictionaryEmpty - Get an dictionaries of dictionaries of type <string, string> with value {}
 func TestGetDictionaryEmpty(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.GetDictionaryEmpty(context.Background())
+	resp, err := client.GetDictionaryEmpty(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -309,7 +309,7 @@ func TestGetDictionaryEmpty(t *testing.T) {
 func TestGetDictionaryItemEmpty(t *testing.T) {
 	t.Skip("needs codegen fix")
 	client := newDictionaryClient()
-	resp, err := client.GetDictionaryItemEmpty(context.Background())
+	resp, err := client.GetDictionaryItemEmpty(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -335,7 +335,7 @@ func TestGetDictionaryValid(t *testing.T) {
 func TestGetDoubleInvalidNull(t *testing.T) {
 	t.Skip("should fail as mising x-nullable")
 	client := newDictionaryClient()
-	resp, err := client.GetDoubleInvalidNull(context.Background())
+	resp, err := client.GetDoubleInvalidNull(context.Background(), nil)
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
@@ -347,7 +347,7 @@ func TestGetDoubleInvalidNull(t *testing.T) {
 // GetDoubleInvalidString - Get boolean dictionary value {"0": 1.0, "1": "number", "2": 0.0}
 func TestGetDoubleInvalidString(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.GetDoubleInvalidString(context.Background())
+	resp, err := client.GetDoubleInvalidString(context.Background(), nil)
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
@@ -359,7 +359,7 @@ func TestGetDoubleInvalidString(t *testing.T) {
 // GetDoubleValid - Get float dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
 func TestGetDoubleValid(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.GetDoubleValid(context.Background())
+	resp, err := client.GetDoubleValid(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -373,7 +373,7 @@ func TestGetDoubleValid(t *testing.T) {
 // GetDurationValid - Get duration dictionary value {"0": "P123DT22H14M12.011S", "1": "P5DT1H0M0S"}
 func TestGetDurationValid(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.GetDurationValid(context.Background())
+	resp, err := client.GetDurationValid(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -386,7 +386,7 @@ func TestGetDurationValid(t *testing.T) {
 // GetEmpty - Get empty dictionary value {}
 func TestGetEmpty(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.GetEmpty(context.Background())
+	resp, err := client.GetEmpty(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -398,7 +398,7 @@ func TestGetEmpty(t *testing.T) {
 // GetEmptyStringKey - Get Dictionary with key as empty string
 func TestGetEmptyStringKey(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.GetEmptyStringKey(context.Background())
+	resp, err := client.GetEmptyStringKey(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -409,7 +409,7 @@ func TestGetEmptyStringKey(t *testing.T) {
 func TestGetFloatInvalidNull(t *testing.T) {
 	t.Skip("should fail, nil but no x-nullable")
 	client := newDictionaryClient()
-	resp, err := client.GetFloatInvalidNull(context.Background())
+	resp, err := client.GetFloatInvalidNull(context.Background(), nil)
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
@@ -421,7 +421,7 @@ func TestGetFloatInvalidNull(t *testing.T) {
 // GetFloatInvalidString - Get boolean dictionary value {"0": 1.0, "1": "number", "2": 0.0}
 func TestGetFloatInvalidString(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.GetFloatInvalidString(context.Background())
+	resp, err := client.GetFloatInvalidString(context.Background(), nil)
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
@@ -433,7 +433,7 @@ func TestGetFloatInvalidString(t *testing.T) {
 // GetFloatValid - Get float dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
 func TestGetFloatValid(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.GetFloatValid(context.Background())
+	resp, err := client.GetFloatValid(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -448,7 +448,7 @@ func TestGetFloatValid(t *testing.T) {
 func TestGetIntInvalidNull(t *testing.T) {
 	t.Skip("should fail, nil but no x-nullable")
 	client := newDictionaryClient()
-	resp, err := client.GetIntInvalidNull(context.Background())
+	resp, err := client.GetIntInvalidNull(context.Background(), nil)
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
@@ -460,7 +460,7 @@ func TestGetIntInvalidNull(t *testing.T) {
 // GetIntInvalidString - Get integer dictionary value {"0": 1, "1": "integer", "2": 0}
 func TestGetIntInvalidString(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.GetIntInvalidString(context.Background())
+	resp, err := client.GetIntInvalidString(context.Background(), nil)
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
@@ -472,7 +472,7 @@ func TestGetIntInvalidString(t *testing.T) {
 // GetIntegerValid - Get integer dictionary value {"0": 1, "1": -1, "2": 3, "3": 300}
 func TestGetIntegerValid(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.GetIntegerValid(context.Background())
+	resp, err := client.GetIntegerValid(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -487,7 +487,7 @@ func TestGetIntegerValid(t *testing.T) {
 // GetInvalid - Get invalid Dictionary value
 func TestGetInvalid(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.GetInvalid(context.Background())
+	resp, err := client.GetInvalid(context.Background(), nil)
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
@@ -500,7 +500,7 @@ func TestGetInvalid(t *testing.T) {
 func TestGetLongInvalidNull(t *testing.T) {
 	t.Skip("should fail, nil but no x-nullable")
 	client := newDictionaryClient()
-	resp, err := client.GetLongInvalidNull(context.Background())
+	resp, err := client.GetLongInvalidNull(context.Background(), nil)
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
@@ -512,7 +512,7 @@ func TestGetLongInvalidNull(t *testing.T) {
 // GetLongInvalidString - Get long dictionary value {"0": 1, "1": "integer", "2": 0}
 func TestGetLongInvalidString(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.GetLongInvalidString(context.Background())
+	resp, err := client.GetLongInvalidString(context.Background(), nil)
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
@@ -524,7 +524,7 @@ func TestGetLongInvalidString(t *testing.T) {
 // GetLongValid - Get integer dictionary value {"0": 1, "1": -1, "2": 3, "3": 300}
 func TestGetLongValid(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.GetLongValid(context.Background())
+	resp, err := client.GetLongValid(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -539,7 +539,7 @@ func TestGetLongValid(t *testing.T) {
 // GetNull - Get null dictionary value
 func TestGetNull(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.GetNull(context.Background())
+	resp, err := client.GetNull(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -551,7 +551,7 @@ func TestGetNull(t *testing.T) {
 // GetNullKey - Get Dictionary with null key
 func TestGetNullKey(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.GetNullKey(context.Background())
+	resp, err := client.GetNullKey(context.Background(), nil)
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
@@ -564,7 +564,7 @@ func TestGetNullKey(t *testing.T) {
 func TestGetNullValue(t *testing.T) {
 	t.Skip("should fail, nil but no x-nullable")
 	client := newDictionaryClient()
-	resp, err := client.GetNullValue(context.Background())
+	resp, err := client.GetNullValue(context.Background(), nil)
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
@@ -576,7 +576,7 @@ func TestGetNullValue(t *testing.T) {
 // GetStringValid - Get string dictionary value {"0": "foo1", "1": "foo2", "2": "foo3"}
 func TestGetStringValid(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.GetStringValid(context.Background())
+	resp, err := client.GetStringValid(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -590,7 +590,7 @@ func TestGetStringValid(t *testing.T) {
 // GetStringWithInvalid - Get string dictionary value {"0": "foo", "1": 123, "2": "foo2"}
 func TestGetStringWithInvalid(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.GetStringWithInvalid(context.Background())
+	resp, err := client.GetStringWithInvalid(context.Background(), nil)
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
@@ -603,7 +603,7 @@ func TestGetStringWithInvalid(t *testing.T) {
 func TestGetStringWithNull(t *testing.T) {
 	t.Skip("should fail, nil but no x-nullable")
 	client := newDictionaryClient()
-	resp, err := client.GetStringWithNull(context.Background())
+	resp, err := client.GetStringWithNull(context.Background(), nil)
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
@@ -619,7 +619,7 @@ func TestPutArrayValid(t *testing.T) {
 		"0": []string{"1", "2", "3"},
 		"1": []string{"4", "5", "6"},
 		"2": []string{"7", "8", "9"},
-	})
+	}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -634,7 +634,7 @@ func TestPutBooleanTfft(t *testing.T) {
 		"1": false,
 		"2": false,
 		"3": true,
-	})
+	}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -648,7 +648,7 @@ func TestPutByteValid(t *testing.T) {
 		"0": {255, 255, 255, 250},
 		"1": {1, 2, 3},
 		"2": {37, 41, 67},
-	})
+	}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -662,7 +662,7 @@ func TestPutComplexValid(t *testing.T) {
 		"0": Widget{Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
 		"1": Widget{Integer: to.Int32Ptr(3), String: to.StringPtr("4")},
 		"2": Widget{Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
-	})
+	}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -679,7 +679,7 @@ func TestPutDateTimeRFC1123Valid(t *testing.T) {
 		"0": dt1,
 		"1": dt2,
 		"2": dt3,
-	})
+	}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -696,7 +696,7 @@ func TestPutDateTimeValid(t *testing.T) {
 		"0": dt1,
 		"1": dt2,
 		"2": dt3,
-	})
+	}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -720,7 +720,7 @@ func TestPutDoubleValid(t *testing.T) {
 		"0": 0,
 		"1": -0.01,
 		"2": -1.2e20,
-	})
+	}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -733,7 +733,7 @@ func TestPutDurationValid(t *testing.T) {
 	resp, err := client.PutDurationValid(context.Background(), map[string]string{
 		"0": "P123DT22H14M12.011S",
 		"1": "P5DT1H",
-	})
+	}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -743,7 +743,7 @@ func TestPutDurationValid(t *testing.T) {
 // PutEmpty - Set dictionary value empty {}
 func TestPutEmpty(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.PutEmpty(context.Background(), map[string]string{})
+	resp, err := client.PutEmpty(context.Background(), map[string]string{}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -757,7 +757,7 @@ func TestPutFloatValid(t *testing.T) {
 		"0": 0,
 		"1": -0.01,
 		"2": -1.2e20,
-	})
+	}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -772,7 +772,7 @@ func TestPutIntegerValid(t *testing.T) {
 		"1": -1,
 		"2": 3,
 		"3": 300,
-	})
+	}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -787,7 +787,7 @@ func TestPutLongValid(t *testing.T) {
 		"1": -1,
 		"2": 3,
 		"3": 300,
-	})
+	}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -801,7 +801,7 @@ func TestPutStringValid(t *testing.T) {
 		"0": "foo1",
 		"1": "foo2",
 		"2": "foo3",
-	})
+	}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}

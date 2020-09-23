@@ -17,7 +17,7 @@ func newSubscriptionInCredentialsClient() SubscriptionInCredentialsOperations {
 // PostMethodGlobalNotProvidedValid - POST method with subscriptionId modeled in credentials.  Set the credential subscriptionId to '1234-5678-9012-3456' to succeed
 func TestPostMethodGlobalNotProvidedValid(t *testing.T) {
 	client := newSubscriptionInCredentialsClient()
-	result, err := client.PostMethodGlobalNotProvidedValid(context.Background())
+	result, err := client.PostMethodGlobalNotProvidedValid(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -32,7 +32,7 @@ func TestPostMethodGlobalNull(t *testing.T) {
 // PostMethodGlobalValid - POST method with subscriptionId modeled in credentials.  Set the credential subscriptionId to '1234-5678-9012-3456' to succeed
 func TestPostMethodGlobalValid(t *testing.T) {
 	client := newSubscriptionInCredentialsClient()
-	result, err := client.PostMethodGlobalValid(context.Background())
+	result, err := client.PostMethodGlobalValid(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -42,7 +42,7 @@ func TestPostMethodGlobalValid(t *testing.T) {
 // PostPathGlobalValid - POST method with subscriptionId modeled in credentials.  Set the credential subscriptionId to '1234-5678-9012-3456' to succeed
 func TestPostPathGlobalValid(t *testing.T) {
 	client := newSubscriptionInCredentialsClient()
-	result, err := client.PostPathGlobalValid(context.Background())
+	result, err := client.PostPathGlobalValid(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -52,7 +52,7 @@ func TestPostPathGlobalValid(t *testing.T) {
 // PostSwaggerGlobalValid - POST method with subscriptionId modeled in credentials.  Set the credential subscriptionId to '1234-5678-9012-3456' to succeed
 func TestPostSwaggerGlobalValid(t *testing.T) {
 	client := newSubscriptionInCredentialsClient()
-	result, err := client.PostSwaggerGlobalValid(context.Background())
+	result, err := client.PostSwaggerGlobalValid(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}

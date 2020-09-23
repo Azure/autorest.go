@@ -32,7 +32,7 @@ func TestAddPet(t *testing.T) {
 
 func TestGetByPetIDExpected(t *testing.T) {
 	client := newPetClient()
-	result, err := client.GetByPetID(context.Background(), "tommy")
+	result, err := client.GetByPetID(context.Background(), "tommy", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -45,7 +45,7 @@ func TestGetByPetIDExpected(t *testing.T) {
 
 func TestGetByPetIDUnexpected(t *testing.T) {
 	client := newPetClient()
-	result, err := client.GetByPetID(context.Background(), "casper")
+	result, err := client.GetByPetID(context.Background(), "casper", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -58,7 +58,7 @@ func TestGetByPetIDUnexpected(t *testing.T) {
 
 func TestGetByPetIDAllowed(t *testing.T) {
 	client := newPetClient()
-	result, err := client.GetByPetID(context.Background(), "scooby")
+	result, err := client.GetByPetID(context.Background(), "scooby", nil)
 	if err != nil {
 		t.Fatal(err)
 	}

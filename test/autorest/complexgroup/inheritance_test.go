@@ -18,7 +18,7 @@ func newInheritanceClient() InheritanceOperations {
 
 func TestInheritanceGetValid(t *testing.T) {
 	client := newInheritanceClient()
-	result, err := client.GetValid(context.Background())
+	result, err := client.GetValid(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetValid: %v", err)
 	}
@@ -77,7 +77,7 @@ func TestInheritancePutValid(t *testing.T) {
 			},
 		},
 		Breed: to.StringPtr("persian"),
-	})
+	}, nil)
 	if err != nil {
 		t.Fatalf("PutValid: %v", err)
 	}

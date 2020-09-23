@@ -17,7 +17,7 @@ func newFilesClient() FilesOperations {
 
 func TestGetEmptyFile(t *testing.T) {
 	client := newFilesClient()
-	result, err := client.GetEmptyFile(context.Background())
+	result, err := client.GetEmptyFile(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -33,7 +33,7 @@ func TestGetEmptyFile(t *testing.T) {
 
 func TestGetFile(t *testing.T) {
 	client := newFilesClient()
-	result, err := client.GetFile(context.Background())
+	result, err := client.GetFile(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -54,7 +54,7 @@ func TestGetFile(t *testing.T) {
 func TestGetFileLarge(t *testing.T) {
 	t.Skip("test is unreliable, can fail when running on a machine with low memory")
 	client := newFilesClient()
-	result, err := client.GetFileLarge(context.Background())
+	result, err := client.GetFileLarge(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}

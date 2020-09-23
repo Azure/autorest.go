@@ -16,7 +16,7 @@ func newNumberClient() NumberOperations {
 
 func TestNumberGetBigDecimal(t *testing.T) {
 	client := newNumberClient()
-	result, err := client.GetBigDecimal(context.Background())
+	result, err := client.GetBigDecimal(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetBigDecimal: %v", err)
 	}
@@ -27,7 +27,7 @@ func TestNumberGetBigDecimal(t *testing.T) {
 
 func TestNumberGetBigDecimalNegativeDecimal(t *testing.T) {
 	client := newNumberClient()
-	result, err := client.GetBigDecimalNegativeDecimal(context.Background())
+	result, err := client.GetBigDecimalNegativeDecimal(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetBigDecimalNegativeDecimal: %v", err)
 	}
@@ -38,7 +38,7 @@ func TestNumberGetBigDecimalNegativeDecimal(t *testing.T) {
 
 func TestNumberGetBigDecimalPositiveDecimal(t *testing.T) {
 	client := newNumberClient()
-	result, err := client.GetBigDecimalPositiveDecimal(context.Background())
+	result, err := client.GetBigDecimalPositiveDecimal(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetBigDecimalPositiveDecimal: %v", err)
 	}
@@ -49,7 +49,7 @@ func TestNumberGetBigDecimalPositiveDecimal(t *testing.T) {
 
 func TestNumberGetBigDouble(t *testing.T) {
 	client := newNumberClient()
-	result, err := client.GetBigDouble(context.Background())
+	result, err := client.GetBigDouble(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetBigDouble: %v", err)
 	}
@@ -60,7 +60,7 @@ func TestNumberGetBigDouble(t *testing.T) {
 
 func TestNumberGetBigDoubleNegativeDecimal(t *testing.T) {
 	client := newNumberClient()
-	result, err := client.GetBigDoubleNegativeDecimal(context.Background())
+	result, err := client.GetBigDoubleNegativeDecimal(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetBigDoubleNegativeDecimal: %v", err)
 	}
@@ -71,7 +71,7 @@ func TestNumberGetBigDoubleNegativeDecimal(t *testing.T) {
 
 func TestNumberGetBigDoublePositiveDecimal(t *testing.T) {
 	client := newNumberClient()
-	result, err := client.GetBigDoublePositiveDecimal(context.Background())
+	result, err := client.GetBigDoublePositiveDecimal(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetBigDoublePositiveDecimal: %v", err)
 	}
@@ -82,7 +82,7 @@ func TestNumberGetBigDoublePositiveDecimal(t *testing.T) {
 
 func TestNumberGetBigFloat(t *testing.T) {
 	client := newNumberClient()
-	result, err := client.GetBigFloat(context.Background())
+	result, err := client.GetBigFloat(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetBigFloat: %v", err)
 	}
@@ -93,7 +93,7 @@ func TestNumberGetBigFloat(t *testing.T) {
 
 func TestNumberGetInvalidDecimal(t *testing.T) {
 	client := newNumberClient()
-	result, err := client.GetInvalidDecimal(context.Background())
+	result, err := client.GetInvalidDecimal(context.Background(), nil)
 	if err == nil {
 		t.Fatalf("unexpected nil error")
 	}
@@ -104,7 +104,7 @@ func TestNumberGetInvalidDecimal(t *testing.T) {
 
 func TestNumberGetInvalidDouble(t *testing.T) {
 	client := newNumberClient()
-	result, err := client.GetInvalidDouble(context.Background())
+	result, err := client.GetInvalidDouble(context.Background(), nil)
 	if err == nil {
 		t.Fatalf("unexpected nil error")
 	}
@@ -115,7 +115,7 @@ func TestNumberGetInvalidDouble(t *testing.T) {
 
 func TestNumberGetInvalidFloat(t *testing.T) {
 	client := newNumberClient()
-	result, err := client.GetInvalidFloat(context.Background())
+	result, err := client.GetInvalidFloat(context.Background(), nil)
 	if err == nil {
 		t.Fatalf("unexpected nil error")
 	}
@@ -126,7 +126,7 @@ func TestNumberGetInvalidFloat(t *testing.T) {
 
 func TestNumberGetNull(t *testing.T) {
 	client := newNumberClient()
-	result, err := client.GetNull(context.Background())
+	result, err := client.GetNull(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetNull: %v", err)
 	}
@@ -136,7 +136,7 @@ func TestNumberGetNull(t *testing.T) {
 
 func TestNumberGetSmallDecimal(t *testing.T) {
 	client := newNumberClient()
-	result, err := client.GetSmallDecimal(context.Background())
+	result, err := client.GetSmallDecimal(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetSmallDecimal: %v", err)
 	}
@@ -147,7 +147,7 @@ func TestNumberGetSmallDecimal(t *testing.T) {
 
 func TestNumberGetSmallDouble(t *testing.T) {
 	client := newNumberClient()
-	result, err := client.GetSmallDouble(context.Background())
+	result, err := client.GetSmallDouble(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetSmallDouble: %v", err)
 	}
@@ -158,7 +158,7 @@ func TestNumberGetSmallDouble(t *testing.T) {
 
 func TestNumberGetSmallFloat(t *testing.T) {
 	client := newNumberClient()
-	result, err := client.GetSmallFloat(context.Background())
+	result, err := client.GetSmallFloat(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetSmallFloat: %v", err)
 	}
@@ -169,7 +169,7 @@ func TestNumberGetSmallFloat(t *testing.T) {
 
 func TestNumberPutBigDecimal(t *testing.T) {
 	client := newNumberClient()
-	result, err := client.PutBigDecimal(context.Background(), 2.5976931e+101)
+	result, err := client.PutBigDecimal(context.Background(), 2.5976931e+101, nil)
 	if err != nil {
 		t.Fatalf("PutBigDecimal: %v", err)
 	}
@@ -178,7 +178,7 @@ func TestNumberPutBigDecimal(t *testing.T) {
 
 func TestNumberPutBigDecimalNegativeDecimal(t *testing.T) {
 	client := newNumberClient()
-	result, err := client.PutBigDecimalNegativeDecimal(context.Background())
+	result, err := client.PutBigDecimalNegativeDecimal(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("PutBigDecimalNegativeDecimal: %v", err)
 	}
@@ -187,7 +187,7 @@ func TestNumberPutBigDecimalNegativeDecimal(t *testing.T) {
 
 func TestNumberPutBigDecimalPositiveDecimal(t *testing.T) {
 	client := newNumberClient()
-	result, err := client.PutBigDecimalPositiveDecimal(context.Background())
+	result, err := client.PutBigDecimalPositiveDecimal(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("PutBigDecimalPositiveDecimal: %v", err)
 	}
@@ -196,7 +196,7 @@ func TestNumberPutBigDecimalPositiveDecimal(t *testing.T) {
 
 func TestNumberPutBigDouble(t *testing.T) {
 	client := newNumberClient()
-	result, err := client.PutBigDouble(context.Background(), 2.5976931e+101)
+	result, err := client.PutBigDouble(context.Background(), 2.5976931e+101, nil)
 	if err != nil {
 		t.Fatalf("PutBigDouble: %v", err)
 	}
@@ -205,7 +205,7 @@ func TestNumberPutBigDouble(t *testing.T) {
 
 func TestNumberPutBigDoubleNegativeDecimal(t *testing.T) {
 	client := newNumberClient()
-	result, err := client.PutBigDoubleNegativeDecimal(context.Background())
+	result, err := client.PutBigDoubleNegativeDecimal(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("PutBigDoubleNegativeDecimal: %v", err)
 	}
@@ -214,7 +214,7 @@ func TestNumberPutBigDoubleNegativeDecimal(t *testing.T) {
 
 func TestNumberPutBigDoublePositiveDecimal(t *testing.T) {
 	client := newNumberClient()
-	result, err := client.PutBigDoublePositiveDecimal(context.Background())
+	result, err := client.PutBigDoublePositiveDecimal(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("PutBigDeoublePositiveDecimal: %v", err)
 	}
@@ -223,7 +223,7 @@ func TestNumberPutBigDoublePositiveDecimal(t *testing.T) {
 
 func TestNumberPutBigFloat(t *testing.T) {
 	client := newNumberClient()
-	result, err := client.PutBigFloat(context.Background(), 3.402823e+20)
+	result, err := client.PutBigFloat(context.Background(), 3.402823e+20, nil)
 	if err != nil {
 		t.Fatalf("PutBigFloat: %v", err)
 	}
@@ -232,7 +232,7 @@ func TestNumberPutBigFloat(t *testing.T) {
 
 func TestNumberPutSmallDecimal(t *testing.T) {
 	client := newNumberClient()
-	result, err := client.PutSmallDecimal(context.Background(), 2.5976931e-101)
+	result, err := client.PutSmallDecimal(context.Background(), 2.5976931e-101, nil)
 	if err != nil {
 		t.Fatalf("PutSmallDecimal: %v", err)
 	}
@@ -241,7 +241,7 @@ func TestNumberPutSmallDecimal(t *testing.T) {
 
 func TestNumberPutSmallDouble(t *testing.T) {
 	client := newNumberClient()
-	result, err := client.PutSmallDouble(context.Background(), 2.5976931e-101)
+	result, err := client.PutSmallDouble(context.Background(), 2.5976931e-101, nil)
 	if err != nil {
 		t.Fatalf("PutSmallDouble: %v", err)
 	}
@@ -250,7 +250,7 @@ func TestNumberPutSmallDouble(t *testing.T) {
 
 func TestNumberPutSmallFloat(t *testing.T) {
 	client := newNumberClient()
-	result, err := client.PutSmallFloat(context.Background(), 3.402823e-20)
+	result, err := client.PutSmallFloat(context.Background(), 3.402823e-20, nil)
 	if err != nil {
 		t.Fatalf("PutSmallFloat: %v", err)
 	}

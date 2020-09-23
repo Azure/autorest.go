@@ -16,7 +16,7 @@ func newBoolClient() BoolOperations {
 
 func TestGetTrue(t *testing.T) {
 	client := newBoolClient()
-	result, err := client.GetTrue(context.Background())
+	result, err := client.GetTrue(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetTrue: %v", err)
 	}
@@ -27,7 +27,7 @@ func TestGetTrue(t *testing.T) {
 
 func TestGetFalse(t *testing.T) {
 	client := newBoolClient()
-	result, err := client.GetFalse(context.Background())
+	result, err := client.GetFalse(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetFalse: %v", err)
 	}
@@ -38,7 +38,7 @@ func TestGetFalse(t *testing.T) {
 
 func TestGetNull(t *testing.T) {
 	client := newBoolClient()
-	result, err := client.GetNull(context.Background())
+	result, err := client.GetNull(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetNull: %v", err)
 	}
@@ -48,7 +48,7 @@ func TestGetNull(t *testing.T) {
 
 func TestGetInvalid(t *testing.T) {
 	client := newBoolClient()
-	result, err := client.GetInvalid(context.Background())
+	result, err := client.GetInvalid(context.Background(), nil)
 	// TODO: verify error response is clear and actionable
 	if err == nil {
 		t.Fatal("unexpected nil error")
@@ -60,7 +60,7 @@ func TestGetInvalid(t *testing.T) {
 
 func TestPutTrue(t *testing.T) {
 	client := newBoolClient()
-	result, err := client.PutTrue(context.Background())
+	result, err := client.PutTrue(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("PutTrue: %v", err)
 	}
@@ -69,7 +69,7 @@ func TestPutTrue(t *testing.T) {
 
 func TestPutFalse(t *testing.T) {
 	client := newBoolClient()
-	result, err := client.PutFalse(context.Background())
+	result, err := client.PutFalse(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("PutFalse: %v", err)
 	}

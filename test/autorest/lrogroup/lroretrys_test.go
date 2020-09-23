@@ -21,7 +21,7 @@ func newLRORetrysClient() LroRetrysOperations {
 
 func TestLRORetrysBeginDelete202Retry200(t *testing.T) {
 	op := newLRORetrysClient()
-	resp, err := op.BeginDelete202Retry200(context.Background())
+	resp, err := op.BeginDelete202Retry200(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -43,7 +43,7 @@ func TestLRORetrysBeginDelete202Retry200(t *testing.T) {
 
 func TestLRORetrysBeginDeleteAsyncRelativeRetrySucceeded(t *testing.T) {
 	op := newLRORetrysClient()
-	resp, err := op.BeginDeleteAsyncRelativeRetrySucceeded(context.Background())
+	resp, err := op.BeginDeleteAsyncRelativeRetrySucceeded(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -65,7 +65,7 @@ func TestLRORetrysBeginDeleteAsyncRelativeRetrySucceeded(t *testing.T) {
 
 func TestLRORetrysBeginDeleteProvisioning202Accepted200Succeeded(t *testing.T) {
 	op := newLRORetrysClient()
-	resp, err := op.BeginDeleteProvisioning202Accepted200Succeeded(context.Background())
+	resp, err := op.BeginDeleteProvisioning202Accepted200Succeeded(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}

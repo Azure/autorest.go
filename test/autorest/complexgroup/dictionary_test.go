@@ -16,7 +16,7 @@ func newDictionaryClient() DictionaryOperations {
 
 func TestDictionaryGetEmpty(t *testing.T) {
 	client := newDictionaryClient()
-	result, err := client.GetEmpty(context.Background())
+	result, err := client.GetEmpty(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetEmpty: %v", err)
 	}
@@ -25,7 +25,7 @@ func TestDictionaryGetEmpty(t *testing.T) {
 
 func TestDictionaryGetNotProvided(t *testing.T) {
 	client := newDictionaryClient()
-	result, err := client.GetNotProvided(context.Background())
+	result, err := client.GetNotProvided(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetNotProvided: %v", err)
 	}
@@ -34,7 +34,7 @@ func TestDictionaryGetNotProvided(t *testing.T) {
 
 func TestDictionaryGetNull(t *testing.T) {
 	client := newDictionaryClient()
-	result, err := client.GetNull(context.Background())
+	result, err := client.GetNull(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetNull: %v", err)
 	}
@@ -45,7 +45,7 @@ func TestDictionaryGetNull(t *testing.T) {
 test is invalid, expects null values but missing x-nullable
 func TestDictionaryGetValid(t *testing.T) {
 	client := newDictionaryClient()
-	result, err := client.GetValid(context.Background())
+	result, err := client.GetValid(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetValid: %v", err)
 	}
@@ -56,7 +56,7 @@ func TestDictionaryGetValid(t *testing.T) {
 
 func TestDictionaryPutEmpty(t *testing.T) {
 	client := newDictionaryClient()
-	result, err := client.PutEmpty(context.Background(), DictionaryWrapper{DefaultProgram: &map[string]string{}})
+	result, err := client.PutEmpty(context.Background(), DictionaryWrapper{DefaultProgram: &map[string]string{}}, nil)
 	if err != nil {
 		t.Fatalf("PutEmpty: %v", err)
 	}

@@ -37,7 +37,7 @@ func httpClientWithCookieJar() azcore.Transport {
 
 func TestLROResumeWrongPoller(t *testing.T) {
 	op := newLROSClient()
-	resp, err := op.BeginDelete202NoRetry204(context.Background())
+	resp, err := op.BeginDelete202NoRetry204(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -57,7 +57,7 @@ func TestLROResumeWrongPoller(t *testing.T) {
 
 func TestLROBeginDelete202NoRetry204(t *testing.T) {
 	op := newLROSClient()
-	resp, err := op.BeginDelete202NoRetry204(context.Background())
+	resp, err := op.BeginDelete202NoRetry204(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -79,7 +79,7 @@ func TestLROBeginDelete202NoRetry204(t *testing.T) {
 
 func TestLROBeginDelete202Retry200(t *testing.T) {
 	op := newLROSClient()
-	resp, err := op.BeginDelete202Retry200(context.Background())
+	resp, err := op.BeginDelete202Retry200(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -101,7 +101,7 @@ func TestLROBeginDelete202Retry200(t *testing.T) {
 
 func TestLROBeginDelete204Succeeded(t *testing.T) {
 	op := newLROSClient()
-	resp, err := op.BeginDelete204Succeeded(context.Background())
+	resp, err := op.BeginDelete204Succeeded(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -119,7 +119,7 @@ func TestLROBeginDelete204Succeeded(t *testing.T) {
 
 func TestLROBeginDeleteAsyncNoHeaderInRetry(t *testing.T) {
 	op := newLROSClient()
-	resp, err := op.BeginDeleteAsyncNoHeaderInRetry(context.Background())
+	resp, err := op.BeginDeleteAsyncNoHeaderInRetry(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -141,7 +141,7 @@ func TestLROBeginDeleteAsyncNoHeaderInRetry(t *testing.T) {
 
 func TestLROBeginDeleteAsyncNoRetrySucceeded(t *testing.T) {
 	op := newLROSClient()
-	resp, err := op.BeginDeleteAsyncNoRetrySucceeded(context.Background())
+	resp, err := op.BeginDeleteAsyncNoRetrySucceeded(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -163,7 +163,7 @@ func TestLROBeginDeleteAsyncNoRetrySucceeded(t *testing.T) {
 
 func TestLROBeginDeleteAsyncRetryFailed(t *testing.T) {
 	op := newLROSClient()
-	resp, err := op.BeginDeleteAsyncRetryFailed(context.Background())
+	resp, err := op.BeginDeleteAsyncRetryFailed(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -197,7 +197,7 @@ func TestLROBeginDeleteAsyncRetryFailed(t *testing.T) {
 
 func TestLROBeginDeleteAsyncRetrySucceeded(t *testing.T) {
 	op := newLROSClient()
-	resp, err := op.BeginDeleteAsyncRetrySucceeded(context.Background())
+	resp, err := op.BeginDeleteAsyncRetrySucceeded(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -219,7 +219,7 @@ func TestLROBeginDeleteAsyncRetrySucceeded(t *testing.T) {
 
 func TestLROBeginDeleteAsyncRetrycanceled(t *testing.T) {
 	op := newLROSClient()
-	resp, err := op.BeginDeleteAsyncRetrycanceled(context.Background())
+	resp, err := op.BeginDeleteAsyncRetrycanceled(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -253,7 +253,7 @@ func TestLROBeginDeleteAsyncRetrycanceled(t *testing.T) {
 
 func TestLROBeginDeleteNoHeaderInRetry(t *testing.T) {
 	op := newLROSClient()
-	resp, err := op.BeginDeleteNoHeaderInRetry(context.Background())
+	resp, err := op.BeginDeleteNoHeaderInRetry(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -275,7 +275,7 @@ func TestLROBeginDeleteNoHeaderInRetry(t *testing.T) {
 
 func TestLROBeginDeleteProvisioning202Accepted200Succeeded(t *testing.T) {
 	op := newLROSClient()
-	resp, err := op.BeginDeleteProvisioning202Accepted200Succeeded(context.Background())
+	resp, err := op.BeginDeleteProvisioning202Accepted200Succeeded(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -297,7 +297,7 @@ func TestLROBeginDeleteProvisioning202Accepted200Succeeded(t *testing.T) {
 
 func TestLROBeginDeleteProvisioning202DeletingFailed200(t *testing.T) {
 	op := newLROSClient()
-	resp, err := op.BeginDeleteProvisioning202DeletingFailed200(context.Background())
+	resp, err := op.BeginDeleteProvisioning202DeletingFailed200(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -318,7 +318,7 @@ func TestLROBeginDeleteProvisioning202DeletingFailed200(t *testing.T) {
 
 func TestLROBeginDeleteProvisioning202Deletingcanceled200(t *testing.T) {
 	op := newLROSClient()
-	resp, err := op.BeginDeleteProvisioning202Deletingcanceled200(context.Background())
+	resp, err := op.BeginDeleteProvisioning202Deletingcanceled200(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -339,7 +339,7 @@ func TestLROBeginDeleteProvisioning202Deletingcanceled200(t *testing.T) {
 
 func TestLROBeginPost200WithPayload(t *testing.T) {
 	op := newLROSClient()
-	resp, err := op.BeginPost200WithPayload(context.Background())
+	resp, err := op.BeginPost200WithPayload(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -365,7 +365,7 @@ func TestLROBeginPost200WithPayload(t *testing.T) {
 
 func TestLROBeginPost202List(t *testing.T) {
 	op := newLROSClient()
-	resp, err := op.BeginPost202List(context.Background())
+	resp, err := op.BeginPost202List(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -569,7 +569,7 @@ func TestLROBeginPostAsyncRetrycanceled(t *testing.T) {
 
 func TestLROBeginPostDoubleHeadersFinalAzureHeaderGet(t *testing.T) {
 	op := newLROSClient()
-	resp, err := op.BeginPostDoubleHeadersFinalAzureHeaderGet(context.Background())
+	resp, err := op.BeginPostDoubleHeadersFinalAzureHeaderGet(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -596,7 +596,7 @@ func TestLROBeginPostDoubleHeadersFinalAzureHeaderGet(t *testing.T) {
 
 func TestLROBeginPostDoubleHeadersFinalAzureHeaderGetDefault(t *testing.T) {
 	op := newLROSClient()
-	resp, err := op.BeginPostDoubleHeadersFinalAzureHeaderGetDefault(context.Background())
+	resp, err := op.BeginPostDoubleHeadersFinalAzureHeaderGetDefault(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -624,7 +624,7 @@ func TestLROBeginPostDoubleHeadersFinalAzureHeaderGetDefault(t *testing.T) {
 
 func TestLROBeginPostDoubleHeadersFinalLocationGet(t *testing.T) {
 	op := newLROSClient()
-	resp, err := op.BeginPostDoubleHeadersFinalLocationGet(context.Background())
+	resp, err := op.BeginPostDoubleHeadersFinalLocationGet(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}

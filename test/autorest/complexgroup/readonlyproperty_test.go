@@ -18,7 +18,7 @@ func newReadonlypropertyClient() ReadonlypropertyOperations {
 
 func TestReadonlypropertyGetValid(t *testing.T) {
 	client := newReadonlypropertyClient()
-	result, err := client.GetValid(context.Background())
+	result, err := client.GetValid(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetValid: %v", err)
 	}
@@ -28,7 +28,7 @@ func TestReadonlypropertyGetValid(t *testing.T) {
 func TestReadonlypropertyPutValid(t *testing.T) {
 	client := newReadonlypropertyClient()
 	id, size := "1234", int32(2)
-	result, err := client.PutValid(context.Background(), ReadonlyObj{ID: &id, Size: &size})
+	result, err := client.PutValid(context.Background(), ReadonlyObj{ID: &id, Size: &size}, nil)
 	if err != nil {
 		t.Fatalf("PutValid: %v", err)
 	}

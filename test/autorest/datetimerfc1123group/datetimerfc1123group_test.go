@@ -17,7 +17,7 @@ func newDatetimerfc1123Client() Datetimerfc1123Operations {
 
 func TestGetInvalid(t *testing.T) {
 	client := newDatetimerfc1123Client()
-	_, err := client.GetInvalid(context.Background())
+	_, err := client.GetInvalid(context.Background(), nil)
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
@@ -25,7 +25,7 @@ func TestGetInvalid(t *testing.T) {
 
 func TestGetNull(t *testing.T) {
 	client := newDatetimerfc1123Client()
-	result, err := client.GetNull(context.Background())
+	result, err := client.GetNull(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -35,7 +35,7 @@ func TestGetNull(t *testing.T) {
 
 func TestGetOverflow(t *testing.T) {
 	client := newDatetimerfc1123Client()
-	_, err := client.GetOverflow(context.Background())
+	_, err := client.GetOverflow(context.Background(), nil)
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
@@ -44,7 +44,7 @@ func TestGetOverflow(t *testing.T) {
 // GetUTCLowercaseMaxDateTime - Get max datetime value fri, 31 dec 9999 23:59:59 gmt
 func TestGetUTCLowercaseMaxDateTime(t *testing.T) {
 	client := newDatetimerfc1123Client()
-	result, err := client.GetUTCLowercaseMaxDateTime(context.Background())
+	result, err := client.GetUTCLowercaseMaxDateTime(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -58,7 +58,7 @@ func TestGetUTCLowercaseMaxDateTime(t *testing.T) {
 // GetUTCMinDateTime - Get min datetime value Mon, 1 Jan 0001 00:00:00 GMT
 func TestGetUTCMinDateTime(t *testing.T) {
 	client := newDatetimerfc1123Client()
-	result, err := client.GetUTCMinDateTime(context.Background())
+	result, err := client.GetUTCMinDateTime(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -72,7 +72,7 @@ func TestGetUTCMinDateTime(t *testing.T) {
 // GetUTCUppercaseMaxDateTime - Get max datetime value FRI, 31 DEC 9999 23:59:59 GMT
 func TestGetUTCUppercaseMaxDateTime(t *testing.T) {
 	client := newDatetimerfc1123Client()
-	result, err := client.GetUTCUppercaseMaxDateTime(context.Background())
+	result, err := client.GetUTCUppercaseMaxDateTime(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -85,7 +85,7 @@ func TestGetUTCUppercaseMaxDateTime(t *testing.T) {
 
 func TestGetUnderflow(t *testing.T) {
 	client := newDatetimerfc1123Client()
-	_, err := client.GetUnderflow(context.Background())
+	_, err := client.GetUnderflow(context.Background(), nil)
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
@@ -98,7 +98,7 @@ func TestPutUTCMaxDateTime(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	result, err := client.PutUTCMaxDateTime(context.Background(), body)
+	result, err := client.PutUTCMaxDateTime(context.Background(), body, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -112,7 +112,7 @@ func TestPutUTCMinDateTime(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	result, err := client.PutUTCMinDateTime(context.Background(), body)
+	result, err := client.PutUTCMinDateTime(context.Background(), body, nil)
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -17,7 +17,7 @@ func newAPIVersionDefaultClient() APIVersionDefaultOperations {
 // GetMethodGlobalNotProvidedValid - GET method with api-version modeled in global settings.
 func TestGetMethodGlobalNotProvidedValid(t *testing.T) {
 	client := newAPIVersionDefaultClient()
-	result, err := client.GetMethodGlobalNotProvidedValid(context.Background())
+	result, err := client.GetMethodGlobalNotProvidedValid(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -27,7 +27,7 @@ func TestGetMethodGlobalNotProvidedValid(t *testing.T) {
 // GetMethodGlobalValid - GET method with api-version modeled in global settings.
 func TestGetMethodGlobalValid(t *testing.T) {
 	client := newAPIVersionDefaultClient()
-	result, err := client.GetMethodGlobalValid(context.Background())
+	result, err := client.GetMethodGlobalValid(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -37,7 +37,7 @@ func TestGetMethodGlobalValid(t *testing.T) {
 // GetPathGlobalValid - GET method with api-version modeled in global settings.
 func TestGetPathGlobalValid(t *testing.T) {
 	client := newAPIVersionDefaultClient()
-	result, err := client.GetPathGlobalValid(context.Background())
+	result, err := client.GetPathGlobalValid(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -47,7 +47,7 @@ func TestGetPathGlobalValid(t *testing.T) {
 // GetSwaggerGlobalValid - GET method with api-version modeled in global settings.
 func TestGetSwaggerGlobalValid(t *testing.T) {
 	client := newAPIVersionDefaultClient()
-	result, err := client.GetSwaggerGlobalValid(context.Background())
+	result, err := client.GetSwaggerGlobalValid(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}

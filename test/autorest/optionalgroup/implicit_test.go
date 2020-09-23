@@ -16,7 +16,7 @@ func newImplicitClient() ImplicitOperations {
 
 func TestImplicitGetOptionalGlobalQuery(t *testing.T) {
 	client := newImplicitClient()
-	result, err := client.GetOptionalGlobalQuery(context.Background())
+	result, err := client.GetOptionalGlobalQuery(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetOptionalGlobalQuery: %v", err)
 	}
@@ -26,7 +26,7 @@ func TestImplicitGetOptionalGlobalQuery(t *testing.T) {
 func TestImplicitGetRequiredGlobalPath(t *testing.T) {
 	t.Skip("Cannot set nil for string parameter so test invalid for Go")
 	client := newImplicitClient()
-	result, err := client.GetRequiredGlobalPath(context.Background())
+	result, err := client.GetRequiredGlobalPath(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetRequiredGlobalPath: %v", err)
 	}
@@ -36,7 +36,7 @@ func TestImplicitGetRequiredGlobalPath(t *testing.T) {
 func TestImplicitGetRequiredGlobalQuery(t *testing.T) {
 	t.Skip("Cannot set nil for string parameter so test invalid for Go")
 	client := newImplicitClient()
-	result, err := client.GetRequiredGlobalQuery(context.Background())
+	result, err := client.GetRequiredGlobalQuery(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetRequiredGlobalQuery: %v", err)
 	}
@@ -46,7 +46,7 @@ func TestImplicitGetRequiredGlobalQuery(t *testing.T) {
 func TestImplicitGetRequiredPath(t *testing.T) {
 	t.Skip("Cannot set nil for string parameter so test invalid for Go")
 	client := newImplicitClient()
-	result, err := client.GetRequiredPath(context.Background(), "")
+	result, err := client.GetRequiredPath(context.Background(), "", nil)
 	if err != nil {
 		t.Fatalf("GetRequiredPath: %v", err)
 	}

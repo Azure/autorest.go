@@ -20,7 +20,7 @@ func newPolymorphismClient() PolymorphismOperations {
 // GetComplicated - Get complex types that are polymorphic, but not at the root of the hierarchy; also have additional properties
 func TestPolymorphismGetComplicated(t *testing.T) {
 	client := newPolymorphismClient()
-	result, err := client.GetComplicated(context.Background())
+	result, err := client.GetComplicated(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -98,7 +98,7 @@ func TestPolymorphismGetComplicated(t *testing.T) {
 // GetComposedWithDiscriminator - Get complex object composing a polymorphic scalar property and array property with polymorphic element type, with discriminator specified. Deserialization must NOT fail and use the discriminator type specified on the wire.
 func TestPolymorphismGetComposedWithDiscriminator(t *testing.T) {
 	client := newPolymorphismClient()
-	result, err := client.GetComposedWithDiscriminator(context.Background())
+	result, err := client.GetComposedWithDiscriminator(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -161,7 +161,7 @@ func TestPolymorphismGetComposedWithDiscriminator(t *testing.T) {
 // GetComposedWithoutDiscriminator - Get complex object composing a polymorphic scalar property and array property with polymorphic element type, without discriminator specified on wire. Deserialization must NOT fail and use the explicit type of the property.
 func TestPolymorphismGetComposedWithoutDiscriminator(t *testing.T) {
 	client := newPolymorphismClient()
-	result, err := client.GetComposedWithoutDiscriminator(context.Background())
+	result, err := client.GetComposedWithoutDiscriminator(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -206,7 +206,7 @@ func TestPolymorphismGetComposedWithoutDiscriminator(t *testing.T) {
 // GetDotSyntax - Get complex types that are polymorphic, JSON key contains a dot
 func TestPolymorphismGetDotSyntax(t *testing.T) {
 	client := newPolymorphismClient()
-	result, err := client.GetDotSyntax(context.Background())
+	result, err := client.GetDotSyntax(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -223,7 +223,7 @@ func TestPolymorphismGetDotSyntax(t *testing.T) {
 // GetValid - Get complex types that are polymorphic
 func TestPolymorphismGetValid(t *testing.T) {
 	client := newPolymorphismClient()
-	result, err := client.GetValid(context.Background())
+	result, err := client.GetValid(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -344,7 +344,7 @@ func TestPolymorphismPutComplicated(t *testing.T) {
 				float64(1), float64(3),
 			},
 		},
-	})
+	}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -397,7 +397,7 @@ func TestPolymorphismPutMissingDiscriminator(t *testing.T) {
 		},
 		Iswild:   to.BoolPtr(true),
 		Location: to.StringPtr("alaska"),
-	})
+	}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -450,7 +450,7 @@ func TestPolymorphismPutValid(t *testing.T) {
 		},
 		Iswild:   to.BoolPtr(true),
 		Location: to.StringPtr("alaska"),
-	})
+	}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}

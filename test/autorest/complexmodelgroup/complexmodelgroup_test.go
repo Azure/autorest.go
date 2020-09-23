@@ -14,7 +14,7 @@ func newComplexModelClient() ComplexModelClientOperations {
 
 func TestCreate(t *testing.T) {
 	client := newComplexModelClient()
-	_, err := client.Create(context.Background(), "sub", "rg", CatalogDictionaryOfArray{})
+	_, err := client.Create(context.Background(), "sub", "rg", CatalogDictionaryOfArray{}, nil)
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
@@ -22,7 +22,7 @@ func TestCreate(t *testing.T) {
 
 func TestList(t *testing.T) {
 	client := newComplexModelClient()
-	_, err := client.List(context.Background(), "")
+	_, err := client.List(context.Background(), "", nil)
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
@@ -30,7 +30,7 @@ func TestList(t *testing.T) {
 
 func TestUpdate(t *testing.T) {
 	client := newComplexModelClient()
-	_, err := client.Update(context.Background(), "", "", CatalogArrayOfDictionary{})
+	_, err := client.Update(context.Background(), "", "", CatalogArrayOfDictionary{}, nil)
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}

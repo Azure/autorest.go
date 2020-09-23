@@ -117,7 +117,7 @@ func TestExplicitPostOptionalStringProperty(t *testing.T) {
 func TestExplicitPostRequiredArrayHeader(t *testing.T) {
 	t.Skip("are not validating parameters in track2")
 	client := newExplicitClient()
-	result, err := client.PostRequiredArrayHeader(context.Background(), nil)
+	result, err := client.PostRequiredArrayHeader(context.Background(), nil, nil)
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
@@ -130,7 +130,7 @@ func TestExplicitPostRequiredArrayHeader(t *testing.T) {
 func TestExplicitPostRequiredArrayParameter(t *testing.T) {
 	t.Skip("are not validating parameters in track2")
 	client := newExplicitClient()
-	result, err := client.PostRequiredArrayParameter(context.Background(), nil)
+	result, err := client.PostRequiredArrayParameter(context.Background(), nil, nil)
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
@@ -142,7 +142,7 @@ func TestExplicitPostRequiredArrayParameter(t *testing.T) {
 func TestExplicitPostRequiredArrayProperty(t *testing.T) {
 	t.Skip("are not validating parameters in track2")
 	client := newExplicitClient()
-	result, err := client.PostRequiredArrayProperty(context.Background(), ArrayWrapper{Value: nil})
+	result, err := client.PostRequiredArrayProperty(context.Background(), ArrayWrapper{Value: nil}, nil)
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
@@ -155,7 +155,7 @@ func TestExplicitPostRequiredArrayProperty(t *testing.T) {
 func TestExplicitPostRequiredClassParameter(t *testing.T) {
 	t.Skip("are not validating parameters in track2")
 	client := newExplicitClient()
-	result, err := client.PostRequiredClassParameter(context.Background(), Product{})
+	result, err := client.PostRequiredClassParameter(context.Background(), Product{}, nil)
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
@@ -167,7 +167,7 @@ func TestExplicitPostRequiredClassParameter(t *testing.T) {
 func TestExplicitPostRequiredClassProperty(t *testing.T) {
 	t.Skip("are not validating parameters in track2")
 	client := newExplicitClient()
-	result, err := client.PostRequiredClassProperty(context.Background(), ClassWrapper{})
+	result, err := client.PostRequiredClassProperty(context.Background(), ClassWrapper{}, nil)
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
@@ -180,7 +180,7 @@ func TestExplicitPostRequiredClassProperty(t *testing.T) {
 func TestExplicitPostRequiredIntegerHeader(t *testing.T) {
 	t.Skip("cannot set nil for int32 in Go")
 	client := newExplicitClient()
-	result, err := client.PostRequiredIntegerHeader(context.Background(), 0)
+	result, err := client.PostRequiredIntegerHeader(context.Background(), 0, nil)
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
@@ -193,7 +193,7 @@ func TestExplicitPostRequiredIntegerHeader(t *testing.T) {
 func TestExplicitPostRequiredIntegerParameter(t *testing.T) {
 	t.Skip("cannot set nil for int32 in Go")
 	client := newExplicitClient()
-	result, err := client.PostRequiredIntegerParameter(context.Background(), 0)
+	result, err := client.PostRequiredIntegerParameter(context.Background(), 0, nil)
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
@@ -206,7 +206,7 @@ func TestExplicitPostRequiredIntegerParameter(t *testing.T) {
 func TestExplicitPostRequiredIntegerProperty(t *testing.T) {
 	t.Skip("are not validating parameters in track2")
 	client := newExplicitClient()
-	result, err := client.PostRequiredIntegerProperty(context.Background(), IntWrapper{})
+	result, err := client.PostRequiredIntegerProperty(context.Background(), IntWrapper{}, nil)
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
@@ -219,7 +219,7 @@ func TestExplicitPostRequiredIntegerProperty(t *testing.T) {
 func TestExplicitPostRequiredStringHeader(t *testing.T) {
 	t.Skip("cannot set nil for string in Go")
 	client := newExplicitClient()
-	result, err := client.PostRequiredStringHeader(context.Background(), "")
+	result, err := client.PostRequiredStringHeader(context.Background(), "", nil)
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
@@ -232,7 +232,7 @@ func TestExplicitPostRequiredStringHeader(t *testing.T) {
 func TestExplicitPostRequiredStringParameter(t *testing.T) {
 	t.Skip("cannot set nil for string in Go")
 	client := newExplicitClient()
-	result, err := client.PostRequiredStringParameter(context.Background(), "")
+	result, err := client.PostRequiredStringParameter(context.Background(), "", nil)
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
@@ -245,7 +245,7 @@ func TestExplicitPostRequiredStringParameter(t *testing.T) {
 func TestExplicitPostRequiredStringProperty(t *testing.T) {
 	t.Skip("are not validating parameters in track2")
 	client := newExplicitClient()
-	result, err := client.PostRequiredStringProperty(context.Background(), StringWrapper{})
+	result, err := client.PostRequiredStringProperty(context.Background(), StringWrapper{}, nil)
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}

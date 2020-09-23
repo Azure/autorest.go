@@ -17,7 +17,7 @@ func newFloatClient() FloatOperations {
 // Get - Get a float enum
 func TestFloatGet(t *testing.T) {
 	client := newFloatClient()
-	result, err := client.Get(context.Background())
+	result, err := client.Get(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}

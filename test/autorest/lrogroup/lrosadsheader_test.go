@@ -19,7 +19,7 @@ func newLrosaDsClient() LrosaDsOperations {
 
 func TestLROSADSBeginDelete202NonRetry400(t *testing.T) {
 	op := newLrosaDsClient()
-	resp, err := op.BeginDelete202NonRetry400(context.Background())
+	resp, err := op.BeginDelete202NonRetry400(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -43,7 +43,7 @@ func TestLROSADSBeginDelete202NonRetry400(t *testing.T) {
 
 func TestLROSADSBeginDelete202RetryInvalidHeader(t *testing.T) {
 	op := newLrosaDsClient()
-	_, err := op.BeginDelete202RetryInvalidHeader(context.Background())
+	_, err := op.BeginDelete202RetryInvalidHeader(context.Background(), nil)
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
@@ -51,7 +51,7 @@ func TestLROSADSBeginDelete202RetryInvalidHeader(t *testing.T) {
 
 func TestLROSADSBeginDelete204Succeeded(t *testing.T) {
 	op := newLrosaDsClient()
-	resp, err := op.BeginDelete204Succeeded(context.Background())
+	resp, err := op.BeginDelete204Succeeded(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -72,7 +72,7 @@ func TestLROSADSBeginDelete204Succeeded(t *testing.T) {
 
 func TestLROSADSBeginDeleteAsyncRelativeRetry400(t *testing.T) {
 	op := newLrosaDsClient()
-	resp, err := op.BeginDeleteAsyncRelativeRetry400(context.Background())
+	resp, err := op.BeginDeleteAsyncRelativeRetry400(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -96,7 +96,7 @@ func TestLROSADSBeginDeleteAsyncRelativeRetry400(t *testing.T) {
 
 func TestLROSADSBeginDeleteAsyncRelativeRetryInvalidHeader(t *testing.T) {
 	op := newLrosaDsClient()
-	_, err := op.BeginDeleteAsyncRelativeRetryInvalidHeader(context.Background())
+	_, err := op.BeginDeleteAsyncRelativeRetryInvalidHeader(context.Background(), nil)
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
@@ -104,7 +104,7 @@ func TestLROSADSBeginDeleteAsyncRelativeRetryInvalidHeader(t *testing.T) {
 
 func TestLROSADSBeginDeleteAsyncRelativeRetryInvalidJSONPolling(t *testing.T) {
 	op := newLrosaDsClient()
-	resp, err := op.BeginDeleteAsyncRelativeRetryInvalidJSONPolling(context.Background())
+	resp, err := op.BeginDeleteAsyncRelativeRetryInvalidJSONPolling(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -128,7 +128,7 @@ func TestLROSADSBeginDeleteAsyncRelativeRetryInvalidJSONPolling(t *testing.T) {
 
 func TestLROSADSBeginDeleteAsyncRelativeRetryNoStatus(t *testing.T) {
 	op := newLrosaDsClient()
-	resp, err := op.BeginDeleteAsyncRelativeRetryNoStatus(context.Background())
+	resp, err := op.BeginDeleteAsyncRelativeRetryNoStatus(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -152,7 +152,7 @@ func TestLROSADSBeginDeleteAsyncRelativeRetryNoStatus(t *testing.T) {
 
 func TestLROSADSBeginDeleteNonRetry400(t *testing.T) {
 	op := newLrosaDsClient()
-	_, err := op.BeginDeleteNonRetry400(context.Background())
+	_, err := op.BeginDeleteNonRetry400(context.Background(), nil)
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}

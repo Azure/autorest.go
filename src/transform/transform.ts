@@ -329,6 +329,10 @@ function processOperationRequests(session: Session<CodeModel>) {
         }
         // create an optional params struct even if the operation contains no optional params.
         // this provides version resiliency in case optional params are added in the future.
+        // don't do this for paging next link operation as this isn't part of the public API
+        if (op.language.go!.paging && op.language.go!.paging.isNextOp) {
+          continue;
+        }
         // create a type named <OperationGroup><Operation>Options
         const paramGroupName = `${group.language.go!.name}${op.language.go!.name}Options`;
         if (!paramGroups.has(paramGroupName)) {

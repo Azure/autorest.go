@@ -24,7 +24,7 @@ func newPetClient() PetOperations {
 // DoSomething - Asks pet to do something
 func TestDoSomethingSuccess(t *testing.T) {
 	client := newPetClient()
-	result, err := client.DoSomething(context.Background(), "stay")
+	result, err := client.DoSomething(context.Background(), "stay", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -34,7 +34,7 @@ func TestDoSomethingSuccess(t *testing.T) {
 
 func TestDoSomethingError1(t *testing.T) {
 	client := newPetClient()
-	result, err := client.DoSomething(context.Background(), "jump")
+	result, err := client.DoSomething(context.Background(), "jump", nil)
 	var sadErr *PetSadError
 	if !errors.As(err, &sadErr) {
 		t.Fatalf("expected PetSadError: %v", err)
@@ -53,7 +53,7 @@ func TestDoSomethingError1(t *testing.T) {
 
 func TestDoSomethingError2(t *testing.T) {
 	client := newPetClient()
-	result, err := client.DoSomething(context.Background(), "fetch")
+	result, err := client.DoSomething(context.Background(), "fetch", nil)
 	var hungrErr *PetHungryOrThirstyError
 	if !errors.As(err, &hungrErr) {
 		t.Fatal("expected PetHungryOrThirstyError")
@@ -75,7 +75,7 @@ func TestDoSomethingError2(t *testing.T) {
 
 func TestDoSomethingError3(t *testing.T) {
 	client := newPetClient()
-	result, err := client.DoSomething(context.Background(), "unknown")
+	result, err := client.DoSomething(context.Background(), "unknown", nil)
 	var actErr *PetActionError
 	if !errors.As(err, &actErr) {
 		t.Fatal("expected PetActionError")
@@ -89,7 +89,7 @@ func TestDoSomethingError3(t *testing.T) {
 // GetPetByID - Gets pets by id.
 func TestGetPetByIDSuccess1(t *testing.T) {
 	client := newPetClient()
-	result, err := client.GetPetByID(context.Background(), "tommy")
+	result, err := client.GetPetByID(context.Background(), "tommy", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -103,7 +103,7 @@ func TestGetPetByIDSuccess1(t *testing.T) {
 
 func TestGetPetByIDSuccess2(t *testing.T) {
 	client := newPetClient()
-	result, err := client.GetPetByID(context.Background(), "django")
+	result, err := client.GetPetByID(context.Background(), "django", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -112,7 +112,7 @@ func TestGetPetByIDSuccess2(t *testing.T) {
 
 func TestGetPetByIDError1(t *testing.T) {
 	client := newPetClient()
-	result, err := client.GetPetByID(context.Background(), "coyoteUgly")
+	result, err := client.GetPetByID(context.Background(), "coyoteUgly", nil)
 	var anfe *AnimalNotFound
 	if !errors.As(err, &anfe) {
 		t.Fatal("expected AnimalNotFoundError")
@@ -134,7 +134,7 @@ func TestGetPetByIDError1(t *testing.T) {
 
 func TestGetPetByIDError2(t *testing.T) {
 	client := newPetClient()
-	result, err := client.GetPetByID(context.Background(), "weirdAlYankovic")
+	result, err := client.GetPetByID(context.Background(), "weirdAlYankovic", nil)
 	var lnfe *LinkNotFound
 	if !errors.As(err, &lnfe) {
 		t.Fatal("expected LinkNotFoundError")
@@ -156,7 +156,7 @@ func TestGetPetByIDError2(t *testing.T) {
 
 func TestGetPetByIDError3(t *testing.T) {
 	client := newPetClient()
-	result, err := client.GetPetByID(context.Background(), "ringo")
+	result, err := client.GetPetByID(context.Background(), "ringo", nil)
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
@@ -171,7 +171,7 @@ func TestGetPetByIDError3(t *testing.T) {
 
 func TestGetPetByIDError4(t *testing.T) {
 	client := newPetClient()
-	result, err := client.GetPetByID(context.Background(), "alien123")
+	result, err := client.GetPetByID(context.Background(), "alien123", nil)
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
@@ -186,7 +186,7 @@ func TestGetPetByIDError4(t *testing.T) {
 
 func TestGetPetByIDError5(t *testing.T) {
 	client := newPetClient()
-	result, err := client.GetPetByID(context.Background(), "unknown")
+	result, err := client.GetPetByID(context.Background(), "unknown", nil)
 	// default generic error (no schema)
 	helpers.DeepEqualOrFatal(t, err.Error(), "That's all folks!!")
 	if result != nil {

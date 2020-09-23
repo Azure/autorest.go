@@ -19,7 +19,7 @@ func newPrimitiveClient() PrimitiveOperations {
 
 func TestPrimitiveGetInt(t *testing.T) {
 	client := newPrimitiveClient()
-	result, err := client.GetInt(context.Background())
+	result, err := client.GetInt(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetInt: %v", err)
 	}
@@ -29,7 +29,7 @@ func TestPrimitiveGetInt(t *testing.T) {
 func TestPrimitivePutInt(t *testing.T) {
 	client := newPrimitiveClient()
 	a, b := int32(-1), int32(2)
-	result, err := client.PutInt(context.Background(), IntWrapper{Field1: &a, Field2: &b})
+	result, err := client.PutInt(context.Background(), IntWrapper{Field1: &a, Field2: &b}, nil)
 	if err != nil {
 		t.Fatalf("PutInt: %v", err)
 	}
@@ -38,7 +38,7 @@ func TestPrimitivePutInt(t *testing.T) {
 
 func TestPrimitiveGetLong(t *testing.T) {
 	client := newPrimitiveClient()
-	result, err := client.GetLong(context.Background())
+	result, err := client.GetLong(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetLong: %v", err)
 	}
@@ -51,7 +51,7 @@ func TestPrimitiveGetLong(t *testing.T) {
 func TestPrimitivePutLong(t *testing.T) {
 	client := newPrimitiveClient()
 	a, b := int64(1099511627775), int64(-999511627788)
-	result, err := client.PutLong(context.Background(), LongWrapper{Field1: &a, Field2: &b})
+	result, err := client.PutLong(context.Background(), LongWrapper{Field1: &a, Field2: &b}, nil)
 	if err != nil {
 		t.Fatalf("PutLong: %v", err)
 	}
@@ -60,7 +60,7 @@ func TestPrimitivePutLong(t *testing.T) {
 
 func TestPrimitiveGetFloat(t *testing.T) {
 	client := newPrimitiveClient()
-	result, err := client.GetFloat(context.Background())
+	result, err := client.GetFloat(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetFloat: %v", err)
 	}
@@ -73,7 +73,7 @@ func TestPrimitiveGetFloat(t *testing.T) {
 func TestPrimitivePutFloat(t *testing.T) {
 	client := newPrimitiveClient()
 	a, b := float32(1.05), float32(-0.003)
-	result, err := client.PutFloat(context.Background(), FloatWrapper{Field1: &a, Field2: &b})
+	result, err := client.PutFloat(context.Background(), FloatWrapper{Field1: &a, Field2: &b}, nil)
 	if err != nil {
 		t.Fatalf("PutFloat: %v", err)
 	}
@@ -82,7 +82,7 @@ func TestPrimitivePutFloat(t *testing.T) {
 
 func TestPrimitiveGetDouble(t *testing.T) {
 	client := newPrimitiveClient()
-	result, err := client.GetDouble(context.Background())
+	result, err := client.GetDouble(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetDouble: %v", err)
 	}
@@ -95,7 +95,7 @@ func TestPrimitiveGetDouble(t *testing.T) {
 func TestPrimitivePutDouble(t *testing.T) {
 	client := newPrimitiveClient()
 	a, b := float64(3e-100), float64(-0.000000000000000000000000000000000000000000000000000000005)
-	result, err := client.PutDouble(context.Background(), DoubleWrapper{Field1: &a, Field56ZerosAfterTheDotAndNegativeZeroBeforeDotAndThisIsALongFieldNameOnPurpose: &b})
+	result, err := client.PutDouble(context.Background(), DoubleWrapper{Field1: &a, Field56ZerosAfterTheDotAndNegativeZeroBeforeDotAndThisIsALongFieldNameOnPurpose: &b}, nil)
 	if err != nil {
 		t.Fatalf("PutDouble: %v", err)
 	}
@@ -104,7 +104,7 @@ func TestPrimitivePutDouble(t *testing.T) {
 
 func TestPrimitiveGetBool(t *testing.T) {
 	client := newPrimitiveClient()
-	result, err := client.GetBool(context.Background())
+	result, err := client.GetBool(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetBool: %v", err)
 	}
@@ -116,7 +116,7 @@ func TestPrimitiveGetBool(t *testing.T) {
 
 func TestPrimitiveGetByte(t *testing.T) {
 	client := newPrimitiveClient()
-	result, err := client.GetByte(context.Background())
+	result, err := client.GetByte(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetByte: %v", err)
 	}
@@ -126,7 +126,7 @@ func TestPrimitiveGetByte(t *testing.T) {
 func TestPrimitivePutBool(t *testing.T) {
 	client := newPrimitiveClient()
 	a, b := true, false
-	result, err := client.PutBool(context.Background(), BooleanWrapper{FieldTrue: &a, FieldFalse: &b})
+	result, err := client.PutBool(context.Background(), BooleanWrapper{FieldTrue: &a, FieldFalse: &b}, nil)
 	if err != nil {
 		t.Fatalf("PutBool: %v", err)
 	}
@@ -136,7 +136,7 @@ func TestPrimitivePutBool(t *testing.T) {
 func TestPrimitivePutByte(t *testing.T) {
 	client := newPrimitiveClient()
 	val := []byte{255, 254, 253, 252, 0, 250, 249, 248, 247, 246}
-	result, err := client.PutByte(context.Background(), ByteWrapper{Field: &val})
+	result, err := client.PutByte(context.Background(), ByteWrapper{Field: &val}, nil)
 	if err != nil {
 		t.Fatalf("PutByte: %v", err)
 	}
@@ -145,7 +145,7 @@ func TestPrimitivePutByte(t *testing.T) {
 
 func TestPrimitiveGetString(t *testing.T) {
 	client := newPrimitiveClient()
-	result, err := client.GetString(context.Background())
+	result, err := client.GetString(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetString: %v", err)
 	}
@@ -159,7 +159,7 @@ func TestPrimitivePutString(t *testing.T) {
 	client := newPrimitiveClient()
 	var c *string
 	a, b, c := "goodrequest", "", nil
-	result, err := client.PutString(context.Background(), StringWrapper{Field: &a, Empty: &b, Null: c})
+	result, err := client.PutString(context.Background(), StringWrapper{Field: &a, Empty: &b, Null: c}, nil)
 	if err != nil {
 		t.Fatalf("PutString: %v", err)
 	}
@@ -168,7 +168,7 @@ func TestPrimitivePutString(t *testing.T) {
 
 // func TestPrimitiveGetDate(t *testing.T) {
 // 	client := newPrimitiveClient()
-// 	result, err := client.GetDate(context.Background())
+// 	result, err := client.GetDate(context.Background(), nil)
 // 	if err != nil {
 // 		t.Fatalf("GetDate: %v", err)
 // 	}
@@ -209,7 +209,7 @@ func TestPrimitivePutString(t *testing.T) {
 
 func TestPrimitiveGetDuration(t *testing.T) {
 	client := newPrimitiveClient()
-	result, err := client.GetDuration(context.Background())
+	result, err := client.GetDuration(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetDuration: %v", err)
 	}
@@ -220,7 +220,7 @@ func TestPrimitiveGetDuration(t *testing.T) {
 
 func TestPrimitivePutDuration(t *testing.T) {
 	client := newPrimitiveClient()
-	result, err := client.PutDuration(context.Background(), DurationWrapper{Field: to.StringPtr("P123DT22H14M12.011S")})
+	result, err := client.PutDuration(context.Background(), DurationWrapper{Field: to.StringPtr("P123DT22H14M12.011S")}, nil)
 	if err != nil {
 		t.Fatalf("PutDuration: %v", err)
 	}
@@ -229,7 +229,7 @@ func TestPrimitivePutDuration(t *testing.T) {
 
 func TestPrimitiveGetDateTime(t *testing.T) {
 	client := newPrimitiveClient()
-	result, err := client.GetDateTime(context.Background())
+	result, err := client.GetDateTime(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetDateTime: %v", err)
 	}
@@ -243,7 +243,7 @@ func TestPrimitiveGetDateTime(t *testing.T) {
 
 func TestPrimitiveGetDateTimeRFC1123(t *testing.T) {
 	client := newPrimitiveClient()
-	result, err := client.GetDateTimeRFC1123(context.Background())
+	result, err := client.GetDateTimeRFC1123(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetDateTimeRFC1123: %v", err)
 	}
@@ -262,7 +262,7 @@ func TestPrimitivePutDateTime(t *testing.T) {
 	result, err := client.PutDateTime(context.Background(), DatetimeWrapper{
 		Field: &f,
 		Now:   &n,
-	})
+	}, nil)
 	if err != nil {
 		t.Fatalf("PutDateTime: %v", err)
 	}
@@ -276,7 +276,7 @@ func TestPrimitivePutDateTimeRFC1123(t *testing.T) {
 	result, err := client.PutDateTimeRFC1123(context.Background(), Datetimerfc1123Wrapper{
 		Field: &f,
 		Now:   &n,
-	})
+	}, nil)
 	if err != nil {
 		t.Fatalf("PutDateTimeRFC1123: %v", err)
 	}

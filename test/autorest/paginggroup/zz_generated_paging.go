@@ -224,7 +224,7 @@ func (client *PagingClient) GetMultiplePagesFragmentNextLink(apiVersion string, 
 		responder: client.GetMultiplePagesFragmentNextLinkHandleResponse,
 		errorer:   client.GetMultiplePagesFragmentNextLinkHandleError,
 		advancer: func(ctx context.Context, resp *OdataProductResultResponse) (*azcore.Request, error) {
-			return client.NextFragmentCreateRequest(ctx, apiVersion, tenant, *resp.OdataProductResult.OdataNextLink, options)
+			return client.NextFragmentCreateRequest(ctx, apiVersion, tenant, *resp.OdataProductResult.OdataNextLink)
 		},
 	}
 }
@@ -838,7 +838,7 @@ func (client *PagingClient) GetWithQueryParams(requiredQueryParameter int32, opt
 		responder: client.GetWithQueryParamsHandleResponse,
 		errorer:   client.GetWithQueryParamsHandleError,
 		advancer: func(ctx context.Context, resp *ProductResultResponse) (*azcore.Request, error) {
-			return client.NextOperationWithQueryParamsCreateRequest(ctx, options)
+			return client.NextOperationWithQueryParamsCreateRequest(ctx)
 		},
 	}
 }
@@ -877,7 +877,7 @@ func (client *PagingClient) GetWithQueryParamsHandleError(resp *azcore.Response)
 }
 
 // NextFragmentCreateRequest creates the NextFragment request.
-func (client *PagingClient) NextFragmentCreateRequest(ctx context.Context, apiVersion string, tenant string, nextLink string, options *PagingNextFragmentOptions) (*azcore.Request, error) {
+func (client *PagingClient) NextFragmentCreateRequest(ctx context.Context, apiVersion string, tenant string, nextLink string) (*azcore.Request, error) {
 	urlPath := "/paging/multiple/fragment/{tenant}/{nextLink}"
 	urlPath = strings.ReplaceAll(urlPath, "{tenant}", url.PathEscape(tenant))
 	urlPath = strings.ReplaceAll(urlPath, "{nextLink}", nextLink)
@@ -945,7 +945,7 @@ func (client *PagingClient) NextFragmentWithGroupingHandleError(resp *azcore.Res
 }
 
 // NextOperationWithQueryParamsCreateRequest creates the NextOperationWithQueryParams request.
-func (client *PagingClient) NextOperationWithQueryParamsCreateRequest(ctx context.Context, options *PagingNextOperationWithQueryParamsOptions) (*azcore.Request, error) {
+func (client *PagingClient) NextOperationWithQueryParamsCreateRequest(ctx context.Context) (*azcore.Request, error) {
 	urlPath := "/paging/multiple/nextOperationWithQueryParams"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {

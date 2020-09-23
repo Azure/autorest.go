@@ -14,7 +14,7 @@ func newHTTPServerFailureClient() HTTPServerFailureOperations {
 
 func TestHTTPServerFailureDelete505(t *testing.T) {
 	client := newHTTPServerFailureClient()
-	result, err := client.Delete505(context.Background())
+	result, err := client.Delete505(context.Background(), nil)
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
@@ -25,7 +25,7 @@ func TestHTTPServerFailureDelete505(t *testing.T) {
 
 func TestHTTPServerFailureGet501(t *testing.T) {
 	client := newHTTPServerFailureClient()
-	result, err := client.Get501(context.Background())
+	result, err := client.Get501(context.Background(), nil)
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
@@ -36,7 +36,7 @@ func TestHTTPServerFailureGet501(t *testing.T) {
 
 func TestHTTPServerFailureHead501(t *testing.T) {
 	client := newHTTPServerFailureClient()
-	result, err := client.Head501(context.Background())
+	result, err := client.Head501(context.Background(), nil)
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
@@ -47,7 +47,7 @@ func TestHTTPServerFailureHead501(t *testing.T) {
 
 func TestHTTPServerFailurePost505(t *testing.T) {
 	client := newHTTPServerFailureClient()
-	result, err := client.Post505(context.Background())
+	result, err := client.Post505(context.Background(), nil)
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}

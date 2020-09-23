@@ -17,7 +17,7 @@ func newIntClient() IntOperations {
 // Get - Get an int enum
 func TestIntGet(t *testing.T) {
 	client := newIntClient()
-	result, err := client.Get(context.Background())
+	result, err := client.Get(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}

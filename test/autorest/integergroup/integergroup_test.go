@@ -18,7 +18,7 @@ func newIntClient() IntOperations {
 
 func TestIntGetInvalid(t *testing.T) {
 	client := newIntClient()
-	result, err := client.GetInvalid(context.Background())
+	result, err := client.GetInvalid(context.Background(), nil)
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
@@ -29,7 +29,7 @@ func TestIntGetInvalid(t *testing.T) {
 
 func TestIntGetInvalidUnixTime(t *testing.T) {
 	client := newIntClient()
-	result, err := client.GetInvalidUnixTime(context.Background())
+	result, err := client.GetInvalidUnixTime(context.Background(), nil)
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
@@ -40,7 +40,7 @@ func TestIntGetInvalidUnixTime(t *testing.T) {
 
 func TestIntGetNull(t *testing.T) {
 	client := newIntClient()
-	result, err := client.GetNull(context.Background())
+	result, err := client.GetNull(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetNull: %v", err)
 	}
@@ -50,7 +50,7 @@ func TestIntGetNull(t *testing.T) {
 
 func TestIntGetNullUnixTime(t *testing.T) {
 	client := newIntClient()
-	result, err := client.GetNullUnixTime(context.Background())
+	result, err := client.GetNullUnixTime(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetNullUnixTime: %v", err)
 	}
@@ -60,7 +60,7 @@ func TestIntGetNullUnixTime(t *testing.T) {
 
 func TestIntGetOverflowInt32(t *testing.T) {
 	client := newIntClient()
-	result, err := client.GetOverflowInt32(context.Background())
+	result, err := client.GetOverflowInt32(context.Background(), nil)
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
@@ -71,7 +71,7 @@ func TestIntGetOverflowInt32(t *testing.T) {
 
 func TestIntGetOverflowInt64(t *testing.T) {
 	client := newIntClient()
-	result, err := client.GetOverflowInt64(context.Background())
+	result, err := client.GetOverflowInt64(context.Background(), nil)
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
@@ -82,7 +82,7 @@ func TestIntGetOverflowInt64(t *testing.T) {
 
 func TestIntGetUnderflowInt32(t *testing.T) {
 	client := newIntClient()
-	result, err := client.GetUnderflowInt32(context.Background())
+	result, err := client.GetUnderflowInt32(context.Background(), nil)
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
@@ -93,7 +93,7 @@ func TestIntGetUnderflowInt32(t *testing.T) {
 
 func TestIntGetUnderflowInt64(t *testing.T) {
 	client := newIntClient()
-	result, err := client.GetUnderflowInt64(context.Background())
+	result, err := client.GetUnderflowInt64(context.Background(), nil)
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
@@ -104,7 +104,7 @@ func TestIntGetUnderflowInt64(t *testing.T) {
 
 func TestIntGetUnixTime(t *testing.T) {
 	client := newIntClient()
-	result, err := client.GetUnixTime(context.Background())
+	result, err := client.GetUnixTime(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetUnixTime: %v", err)
 	}
@@ -115,7 +115,7 @@ func TestIntGetUnixTime(t *testing.T) {
 
 func TestIntPutMax32(t *testing.T) {
 	client := newIntClient()
-	result, err := client.PutMax32(context.Background(), math.MaxInt32)
+	result, err := client.PutMax32(context.Background(), math.MaxInt32, nil)
 	if err != nil {
 		t.Fatalf("PutMax32: %v", err)
 	}
@@ -124,7 +124,7 @@ func TestIntPutMax32(t *testing.T) {
 
 func TestIntPutMax64(t *testing.T) {
 	client := newIntClient()
-	result, err := client.PutMax64(context.Background(), math.MaxInt64)
+	result, err := client.PutMax64(context.Background(), math.MaxInt64, nil)
 	if err != nil {
 		t.Fatalf("PutMax64: %v", err)
 	}
@@ -133,7 +133,7 @@ func TestIntPutMax64(t *testing.T) {
 
 func TestIntPutMin32(t *testing.T) {
 	client := newIntClient()
-	result, err := client.PutMin32(context.Background(), math.MinInt32)
+	result, err := client.PutMin32(context.Background(), math.MinInt32, nil)
 	if err != nil {
 		t.Fatalf("PutMin32: %v", err)
 	}
@@ -142,7 +142,7 @@ func TestIntPutMin32(t *testing.T) {
 
 func TestIntPutMin64(t *testing.T) {
 	client := newIntClient()
-	result, err := client.PutMin64(context.Background(), math.MinInt64)
+	result, err := client.PutMin64(context.Background(), math.MinInt64, nil)
 	if err != nil {
 		t.Fatalf("PutMin64: %v", err)
 	}
@@ -152,7 +152,7 @@ func TestIntPutMin64(t *testing.T) {
 func TestIntPutUnixTimeDate(t *testing.T) {
 	client := newIntClient()
 	t1 := time.Unix(1460505600, 0)
-	result, err := client.PutUnixTimeDate(context.Background(), t1)
+	result, err := client.PutUnixTimeDate(context.Background(), t1, nil)
 	if err != nil {
 		t.Fatalf("PutUnixTimeDate: %v", err)
 	}
