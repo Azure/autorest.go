@@ -66,7 +66,7 @@ func (client *dataFlowDebugSessionClient) AddDataFlowHandleError(resp *azcore.Re
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // CreateDataFlowDebugSession - Creates a data flow debug session.
@@ -111,7 +111,7 @@ func (client *dataFlowDebugSessionClient) CreateDataFlowDebugSessionHandleError(
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // DeleteDataFlowDebugSession - Deletes a data flow debug session.
@@ -150,7 +150,7 @@ func (client *dataFlowDebugSessionClient) DeleteDataFlowDebugSessionHandleError(
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // ExecuteCommand - Execute a data flow debug command.
@@ -195,7 +195,7 @@ func (client *dataFlowDebugSessionClient) ExecuteCommandHandleError(resp *azcore
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // QueryDataFlowDebugSessionsByWorkspace - Query all active data flow debug sessions.
@@ -239,5 +239,5 @@ func (client *dataFlowDebugSessionClient) QueryDataFlowDebugSessionsByWorkspaceH
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

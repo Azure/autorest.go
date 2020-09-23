@@ -131,7 +131,7 @@ func (client *VirtualWansClient) CreateOrUpdateHandleError(resp *azcore.Response
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *VirtualWansClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualWanName string) (*HTTPPollerResponse, error) {
@@ -207,7 +207,7 @@ func (client *VirtualWansClient) DeleteHandleError(resp *azcore.Response) error 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get - Retrieves the details of a VirtualWAN.
@@ -259,7 +259,7 @@ func (client *VirtualWansClient) GetHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // List - Lists all the VirtualWANs in a subscription.
@@ -304,7 +304,7 @@ func (client *VirtualWansClient) ListHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // ListByResourceGroup - Lists all the VirtualWANs in a resource group.
@@ -350,7 +350,7 @@ func (client *VirtualWansClient) ListByResourceGroupHandleError(resp *azcore.Res
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // UpdateTags - Updates a VirtualWAN tags.
@@ -402,5 +402,5 @@ func (client *VirtualWansClient) UpdateTagsHandleError(resp *azcore.Response) er
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

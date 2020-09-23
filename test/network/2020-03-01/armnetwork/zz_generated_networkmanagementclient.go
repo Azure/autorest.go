@@ -109,7 +109,7 @@ func (client *NetworkManagementClient) CheckDNSNameAvailabilityHandleError(resp 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *NetworkManagementClient) BeginDeleteBastionShareableLink(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest) (*HTTPPollerResponse, error) {
@@ -185,7 +185,7 @@ func (client *NetworkManagementClient) DeleteBastionShareableLinkHandleError(res
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // DisconnectActiveSessions - Returns the list of currently active sessions on the Bastion.
@@ -232,7 +232,7 @@ func (client *NetworkManagementClient) DisconnectActiveSessionsHandleError(resp 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *NetworkManagementClient) BeginGeneratevirtualwanvpnserverconfigurationvpnprofile(ctx context.Context, resourceGroupName string, virtualWanName string, vpnClientParams VirtualWanVpnProfileParameters) (*VpnProfileResponsePollerResponse, error) {
@@ -314,7 +314,7 @@ func (client *NetworkManagementClient) Generatevirtualwanvpnserverconfigurationv
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *NetworkManagementClient) BeginGetActiveSessions(ctx context.Context, resourceGroupName string, bastionHostName string) (*BastionActiveSessionListResultPagerPollerResponse, error) {
@@ -406,7 +406,7 @@ func (client *NetworkManagementClient) GetActiveSessionsHandleError(resp *azcore
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetBastionShareableLink - Return the Bastion Shareable Links for all the VMs specified in the request.
@@ -453,7 +453,7 @@ func (client *NetworkManagementClient) GetBastionShareableLinkHandleError(resp *
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *NetworkManagementClient) BeginPutBastionShareableLink(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest) (*BastionShareableLinkListResultPagerPollerResponse, error) {
@@ -545,7 +545,7 @@ func (client *NetworkManagementClient) PutBastionShareableLinkHandleError(resp *
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // SupportedSecurityProviders - Gives the supported security providers for the virtual wan.
@@ -597,5 +597,5 @@ func (client *NetworkManagementClient) SupportedSecurityProvidersHandleError(res
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

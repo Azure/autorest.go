@@ -86,7 +86,7 @@ func (client *BoolClient) GetFalseHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetInvalid - Get invalid Boolean value
@@ -132,7 +132,7 @@ func (client *BoolClient) GetInvalidHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetNull - Get null Boolean value
@@ -178,7 +178,7 @@ func (client *BoolClient) GetNullHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetTrue - Get true Boolean value
@@ -224,7 +224,7 @@ func (client *BoolClient) GetTrueHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PutFalse - Set Boolean value false
@@ -260,7 +260,7 @@ func (client *BoolClient) PutFalseHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PutTrue - Set Boolean value true
@@ -296,5 +296,5 @@ func (client *BoolClient) PutTrueHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

@@ -5,6 +5,7 @@ package httpinfrastructuregroup
 
 import (
 	"context"
+	"errors"
 	"generatortests/helpers"
 	"net/http"
 	"testing"
@@ -56,11 +57,11 @@ func TestGet200Model201ModelDefaultError201Valid(t *testing.T) {
 func TestGet200Model201ModelDefaultError400Valid(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get200Model201ModelDefaultError400Valid(context.Background())
-	r, ok := err.(Error)
-	if !ok {
+	var r *Error
+	if !errors.As(err, &r) {
 		t.Fatal("unexpected error type")
 	}
-	helpers.DeepEqualOrFatal(t, r, Error{
+	helpers.DeepEqualOrFatal(t, r, &Error{
 		Message: to.StringPtr("client error"),
 		Status:  to.Int32Ptr(400),
 	})
@@ -85,11 +86,11 @@ func TestGet200Model204NoModelDefaultError200Valid(t *testing.T) {
 func TestGet200Model204NoModelDefaultError201Invalid(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get200Model204NoModelDefaultError201Invalid(context.Background())
-	r, ok := err.(Error)
-	if !ok {
+	var r *Error
+	if !errors.As(err, &r) {
 		t.Fatal("unexpected error type")
 	}
-	helpers.DeepEqualOrFatal(t, r, Error{})
+	helpers.DeepEqualOrFatal(t, r, &Error{})
 	if result != nil {
 		t.Fatal("expected nil result")
 	}
@@ -99,11 +100,11 @@ func TestGet200Model204NoModelDefaultError201Invalid(t *testing.T) {
 func TestGet200Model204NoModelDefaultError202None(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get200Model204NoModelDefaultError202None(context.Background())
-	r, ok := err.(Error)
-	if !ok {
+	var r *Error
+	if !errors.As(err, &r) {
 		t.Fatal("unexpected error type")
 	}
-	helpers.DeepEqualOrFatal(t, r, Error{})
+	helpers.DeepEqualOrFatal(t, r, &Error{})
 	if result != nil {
 		t.Fatal("expected nil result")
 	}
@@ -126,11 +127,11 @@ func TestGet200Model204NoModelDefaultError204Valid(t *testing.T) {
 func TestGet200Model204NoModelDefaultError400Valid(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get200Model204NoModelDefaultError400Valid(context.Background())
-	r, ok := err.(Error)
-	if !ok {
+	var r *Error
+	if !errors.As(err, &r) {
 		t.Fatal("unexpected error type")
 	}
-	helpers.DeepEqualOrFatal(t, r, Error{
+	helpers.DeepEqualOrFatal(t, r, &Error{
 		Message: to.StringPtr("client error"),
 		Status:  to.Int32Ptr(400),
 	})
@@ -204,11 +205,11 @@ func TestGet200ModelA201ModelC404ModelDDefaultError201Valid(t *testing.T) {
 func TestGet200ModelA201ModelC404ModelDDefaultError400Valid(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get200ModelA201ModelC404ModelDDefaultError400Valid(context.Background())
-	r, ok := err.(Error)
-	if !ok {
+	var r *Error
+	if !errors.As(err, &r) {
 		t.Fatal("unexpected error type")
 	}
-	helpers.DeepEqualOrFatal(t, r, Error{
+	helpers.DeepEqualOrFatal(t, r, &Error{
 		Message: to.StringPtr("client error"),
 		Status:  to.Int32Ptr(400),
 	})

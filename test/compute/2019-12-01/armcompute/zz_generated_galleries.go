@@ -133,7 +133,7 @@ func (client *GalleriesClient) CreateOrUpdateHandleError(resp *azcore.Response) 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *GalleriesClient) BeginDelete(ctx context.Context, resourceGroupName string, galleryName string) (*HTTPPollerResponse, error) {
@@ -209,7 +209,7 @@ func (client *GalleriesClient) DeleteHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get - Retrieves information about a Shared Image Gallery.
@@ -261,7 +261,7 @@ func (client *GalleriesClient) GetHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // List - List galleries under a subscription.
@@ -306,7 +306,7 @@ func (client *GalleriesClient) ListHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // ListByResourceGroup - List galleries under a resource group.
@@ -352,7 +352,7 @@ func (client *GalleriesClient) ListByResourceGroupHandleError(resp *azcore.Respo
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *GalleriesClient) BeginUpdate(ctx context.Context, resourceGroupName string, galleryName string, gallery GalleryUpdate) (*GalleryPollerResponse, error) {
@@ -434,5 +434,5 @@ func (client *GalleriesClient) UpdateHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

@@ -89,7 +89,7 @@ func (client *ParameterGroupingClient) PostMultiParamGroupsHandleError(resp *azc
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PostOptional - Post a bunch of optional parameters grouped
@@ -133,7 +133,7 @@ func (client *ParameterGroupingClient) PostOptionalHandleError(resp *azcore.Resp
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PostRequired - Post a bunch of required parameters grouped
@@ -178,7 +178,7 @@ func (client *ParameterGroupingClient) PostRequiredHandleError(resp *azcore.Resp
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PostSharedParameterGroupObject - Post parameters with a shared parameter group object
@@ -222,5 +222,5 @@ func (client *ParameterGroupingClient) PostSharedParameterGroupObjectHandleError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

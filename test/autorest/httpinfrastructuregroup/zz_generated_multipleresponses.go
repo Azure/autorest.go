@@ -161,7 +161,7 @@ func (client *MultipleResponsesClient) Get200Model201ModelDefaultError200ValidHa
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get200Model201ModelDefaultError201Valid - Send a 201 response with valid payload: {'statusCode': '201', 'textStatusCode': 'Created'}
@@ -216,7 +216,7 @@ func (client *MultipleResponsesClient) Get200Model201ModelDefaultError201ValidHa
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get200Model201ModelDefaultError400Valid - Send a 400 response with valid payload: {'code': '400', 'message': 'client error'}
@@ -271,7 +271,7 @@ func (client *MultipleResponsesClient) Get200Model201ModelDefaultError400ValidHa
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get200Model204NoModelDefaultError200Valid - Send a 200 response with valid payload: {'statusCode': '200'}
@@ -317,7 +317,7 @@ func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError200Valid
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get200Model204NoModelDefaultError201Invalid - Send a 201 response with valid payload: {'statusCode': '201'}
@@ -363,7 +363,7 @@ func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError201Inval
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get200Model204NoModelDefaultError202None - Send a 202 response with no payload:
@@ -409,7 +409,7 @@ func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError202NoneH
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get200Model204NoModelDefaultError204Valid - Send a 204 response with no payload
@@ -455,7 +455,7 @@ func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError204Valid
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get200Model204NoModelDefaultError400Valid - Send a 400 response with valid error payload: {'status': 400, 'message': 'client error'}
@@ -501,7 +501,7 @@ func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError400Valid
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get200ModelA200Invalid - Send a 200 response with invalid payload {'statusCodeInvalid': '200'}
@@ -548,9 +548,9 @@ func (client *MultipleResponsesClient) Get200ModelA200InvalidHandleError(resp *a
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 	}
 	if len(body) == 0 {
-		return errors.New(resp.Status)
+		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
 	}
-	return errors.New(string(body))
+	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
 // Get200ModelA200None - Send a 200 response with no payload, when a payload is expected - client should return a null object of thde type for model A
@@ -597,9 +597,9 @@ func (client *MultipleResponsesClient) Get200ModelA200NoneHandleError(resp *azco
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 	}
 	if len(body) == 0 {
-		return errors.New(resp.Status)
+		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
 	}
-	return errors.New(string(body))
+	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
 // Get200ModelA200Valid - Send a 200 response with payload {'statusCode': '200'}
@@ -646,9 +646,9 @@ func (client *MultipleResponsesClient) Get200ModelA200ValidHandleError(resp *azc
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 	}
 	if len(body) == 0 {
-		return errors.New(resp.Status)
+		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
 	}
-	return errors.New(string(body))
+	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
 // Get200ModelA201ModelC404ModelDDefaultError200Valid - Send a 200 response with valid payload: {'statusCode': '200'}
@@ -706,7 +706,7 @@ func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultErro
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get200ModelA201ModelC404ModelDDefaultError201Valid - Send a 200 response with valid payload: {'httpCode': '201'}
@@ -764,7 +764,7 @@ func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultErro
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get200ModelA201ModelC404ModelDDefaultError400Valid - Send a 400 response with valid payload: {'code': '400', 'message': 'client error'}
@@ -822,7 +822,7 @@ func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultErro
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get200ModelA201ModelC404ModelDDefaultError404Valid - Send a 200 response with valid payload: {'httpStatusCode': '404'}
@@ -880,7 +880,7 @@ func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultErro
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get200ModelA202Valid - Send a 202 response with payload {'statusCode': '202'}
@@ -927,9 +927,9 @@ func (client *MultipleResponsesClient) Get200ModelA202ValidHandleError(resp *azc
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 	}
 	if len(body) == 0 {
-		return errors.New(resp.Status)
+		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
 	}
-	return errors.New(string(body))
+	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
 // Get200ModelA400Invalid - Send a 200 response with invalid payload {'statusCodeInvalid': '400'}
@@ -976,9 +976,9 @@ func (client *MultipleResponsesClient) Get200ModelA400InvalidHandleError(resp *a
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 	}
 	if len(body) == 0 {
-		return errors.New(resp.Status)
+		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
 	}
-	return errors.New(string(body))
+	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
 // Get200ModelA400None - Send a 400 response with no payload client should treat as an http error with no error model
@@ -1025,9 +1025,9 @@ func (client *MultipleResponsesClient) Get200ModelA400NoneHandleError(resp *azco
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 	}
 	if len(body) == 0 {
-		return errors.New(resp.Status)
+		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
 	}
-	return errors.New(string(body))
+	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
 // Get200ModelA400Valid - Send a 200 response with payload {'statusCode': '400'}
@@ -1074,9 +1074,9 @@ func (client *MultipleResponsesClient) Get200ModelA400ValidHandleError(resp *azc
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 	}
 	if len(body) == 0 {
-		return errors.New(resp.Status)
+		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
 	}
-	return errors.New(string(body))
+	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
 // Get202None204NoneDefaultError202None - Send a 202 response with no payload
@@ -1112,7 +1112,7 @@ func (client *MultipleResponsesClient) Get202None204NoneDefaultError202NoneHandl
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get202None204NoneDefaultError204None - Send a 204 response with no payload
@@ -1148,7 +1148,7 @@ func (client *MultipleResponsesClient) Get202None204NoneDefaultError204NoneHandl
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get202None204NoneDefaultError400Valid - Send a 400 response with valid payload: {'code': '400', 'message': 'client error'}
@@ -1184,7 +1184,7 @@ func (client *MultipleResponsesClient) Get202None204NoneDefaultError400ValidHand
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get202None204NoneDefaultNone202Invalid - Send a 202 response with an unexpected payload {'property': 'value'}
@@ -1220,9 +1220,9 @@ func (client *MultipleResponsesClient) Get202None204NoneDefaultNone202InvalidHan
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 	}
 	if len(body) == 0 {
-		return errors.New(resp.Status)
+		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
 	}
-	return errors.New(string(body))
+	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
 // Get202None204NoneDefaultNone204None - Send a 204 response with no payload
@@ -1258,9 +1258,9 @@ func (client *MultipleResponsesClient) Get202None204NoneDefaultNone204NoneHandle
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 	}
 	if len(body) == 0 {
-		return errors.New(resp.Status)
+		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
 	}
-	return errors.New(string(body))
+	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
 // Get202None204NoneDefaultNone400Invalid - Send a 400 response with an unexpected payload {'property': 'value'}
@@ -1296,9 +1296,9 @@ func (client *MultipleResponsesClient) Get202None204NoneDefaultNone400InvalidHan
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 	}
 	if len(body) == 0 {
-		return errors.New(resp.Status)
+		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
 	}
-	return errors.New(string(body))
+	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
 // Get202None204NoneDefaultNone400None - Send a 400 response with no payload
@@ -1334,9 +1334,9 @@ func (client *MultipleResponsesClient) Get202None204NoneDefaultNone400NoneHandle
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 	}
 	if len(body) == 0 {
-		return errors.New(resp.Status)
+		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
 	}
-	return errors.New(string(body))
+	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
 // GetDefaultModelA200None - Send a 200 response with no payload
@@ -1383,9 +1383,9 @@ func (client *MultipleResponsesClient) GetDefaultModelA200NoneHandleError(resp *
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 	}
 	if len(body) == 0 {
-		return errors.New(resp.Status)
+		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
 	}
-	return errors.New(string(body))
+	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
 // GetDefaultModelA200Valid - Send a 200 response with valid payload: {'statusCode': '200'}
@@ -1432,9 +1432,9 @@ func (client *MultipleResponsesClient) GetDefaultModelA200ValidHandleError(resp 
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 	}
 	if len(body) == 0 {
-		return errors.New(resp.Status)
+		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
 	}
-	return errors.New(string(body))
+	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
 // GetDefaultModelA400None - Send a 400 response with no payload
@@ -1470,7 +1470,7 @@ func (client *MultipleResponsesClient) GetDefaultModelA400NoneHandleError(resp *
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetDefaultModelA400Valid - Send a 400 response with valid payload: {'statusCode': '400'}
@@ -1506,7 +1506,7 @@ func (client *MultipleResponsesClient) GetDefaultModelA400ValidHandleError(resp 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetDefaultNone200Invalid - Send a 200 response with invalid payload: {'statusCode': '200'}
@@ -1542,9 +1542,9 @@ func (client *MultipleResponsesClient) GetDefaultNone200InvalidHandleError(resp 
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 	}
 	if len(body) == 0 {
-		return errors.New(resp.Status)
+		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
 	}
-	return errors.New(string(body))
+	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
 // GetDefaultNone200None - Send a 200 response with no payload
@@ -1580,9 +1580,9 @@ func (client *MultipleResponsesClient) GetDefaultNone200NoneHandleError(resp *az
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 	}
 	if len(body) == 0 {
-		return errors.New(resp.Status)
+		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
 	}
-	return errors.New(string(body))
+	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
 // GetDefaultNone400Invalid - Send a 400 response with valid payload: {'statusCode': '400'}
@@ -1618,9 +1618,9 @@ func (client *MultipleResponsesClient) GetDefaultNone400InvalidHandleError(resp 
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 	}
 	if len(body) == 0 {
-		return errors.New(resp.Status)
+		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
 	}
-	return errors.New(string(body))
+	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
 // GetDefaultNone400None - Send a 400 response with no payload
@@ -1656,7 +1656,7 @@ func (client *MultipleResponsesClient) GetDefaultNone400NoneHandleError(resp *az
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 	}
 	if len(body) == 0 {
-		return errors.New(resp.Status)
+		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
 	}
-	return errors.New(string(body))
+	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }

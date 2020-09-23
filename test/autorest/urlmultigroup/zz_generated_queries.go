@@ -77,7 +77,7 @@ func (client *QueriesClient) ArrayStringMultiEmptyHandleError(resp *azcore.Respo
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // ArrayStringMultiNull - Get a null array of string using the multi-array format
@@ -120,7 +120,7 @@ func (client *QueriesClient) ArrayStringMultiNullHandleError(resp *azcore.Respon
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // ArrayStringMultiValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the mult-array format
@@ -163,5 +163,5 @@ func (client *QueriesClient) ArrayStringMultiValidHandleError(resp *azcore.Respo
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

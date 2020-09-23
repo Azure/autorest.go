@@ -128,7 +128,7 @@ func (client *RouteFilterRulesClient) CreateOrUpdateHandleError(resp *azcore.Res
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *RouteFilterRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, routeFilterName string, ruleName string) (*HTTPPollerResponse, error) {
@@ -205,7 +205,7 @@ func (client *RouteFilterRulesClient) DeleteHandleError(resp *azcore.Response) e
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get - Gets the specified rule from a route filter.
@@ -258,7 +258,7 @@ func (client *RouteFilterRulesClient) GetHandleError(resp *azcore.Response) erro
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // ListByRouteFilter - Gets all RouteFilterRules in a route filter.
@@ -305,5 +305,5 @@ func (client *RouteFilterRulesClient) ListByRouteFilterHandleError(resp *azcore.
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

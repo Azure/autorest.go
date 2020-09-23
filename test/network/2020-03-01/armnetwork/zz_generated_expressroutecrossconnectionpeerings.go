@@ -128,7 +128,7 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) CreateOrUpdateHandleErr
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *ExpressRouteCrossConnectionPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string) (*HTTPPollerResponse, error) {
@@ -205,7 +205,7 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) DeleteHandleError(resp 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get - Gets the specified peering for the ExpressRouteCrossConnection.
@@ -258,7 +258,7 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) GetHandleError(resp *az
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // List - Gets all peerings in a specified ExpressRouteCrossConnection.
@@ -305,5 +305,5 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) ListHandleError(resp *a
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

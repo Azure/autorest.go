@@ -128,7 +128,7 @@ func (client *ExpressRouteCircuitAuthorizationsClient) CreateOrUpdateHandleError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *ExpressRouteCircuitAuthorizationsClient) BeginDelete(ctx context.Context, resourceGroupName string, circuitName string, authorizationName string) (*HTTPPollerResponse, error) {
@@ -205,7 +205,7 @@ func (client *ExpressRouteCircuitAuthorizationsClient) DeleteHandleError(resp *a
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get - Gets the specified authorization from the specified express route circuit.
@@ -258,7 +258,7 @@ func (client *ExpressRouteCircuitAuthorizationsClient) GetHandleError(resp *azco
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // List - Gets all authorizations in an express route circuit.
@@ -305,5 +305,5 @@ func (client *ExpressRouteCircuitAuthorizationsClient) ListHandleError(resp *azc
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

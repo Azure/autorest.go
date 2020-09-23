@@ -133,7 +133,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) CreateOrUpdateHandleErro
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *VirtualMachineScaleSetVMExtensionsClient) BeginDelete(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, vmExtensionName string) (*HTTPPollerResponse, error) {
@@ -211,7 +211,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) DeleteHandleError(resp *
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get - The operation to get the VMSS VM extension.
@@ -268,7 +268,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) GetHandleError(resp *azc
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // List - The operation to get all extensions of an instance in Virtual Machine Scaleset.
@@ -324,7 +324,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) ListHandleError(resp *az
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *VirtualMachineScaleSetVMExtensionsClient) BeginUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, vmExtensionName string, extensionParameters VirtualMachineExtensionUpdate) (*VirtualMachineExtensionPollerResponse, error) {
@@ -408,5 +408,5 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) UpdateHandleError(resp *
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

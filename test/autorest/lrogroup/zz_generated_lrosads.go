@@ -204,7 +204,7 @@ func (client *LrosaDsClient) Delete202NonRetry400HandleError(resp *azcore.Respon
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *LrosaDsClient) BeginDelete202RetryInvalidHeader(ctx context.Context) (*HTTPPollerResponse, error) {
@@ -274,7 +274,7 @@ func (client *LrosaDsClient) Delete202RetryInvalidHeaderHandleError(resp *azcore
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *LrosaDsClient) BeginDelete204Succeeded(ctx context.Context) (*HTTPPollerResponse, error) {
@@ -344,7 +344,7 @@ func (client *LrosaDsClient) Delete204SucceededHandleError(resp *azcore.Response
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *LrosaDsClient) BeginDeleteAsyncRelativeRetry400(ctx context.Context) (*HTTPPollerResponse, error) {
@@ -414,7 +414,7 @@ func (client *LrosaDsClient) DeleteAsyncRelativeRetry400HandleError(resp *azcore
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *LrosaDsClient) BeginDeleteAsyncRelativeRetryInvalidHeader(ctx context.Context) (*HTTPPollerResponse, error) {
@@ -484,7 +484,7 @@ func (client *LrosaDsClient) DeleteAsyncRelativeRetryInvalidHeaderHandleError(re
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *LrosaDsClient) BeginDeleteAsyncRelativeRetryInvalidJSONPolling(ctx context.Context) (*HTTPPollerResponse, error) {
@@ -554,7 +554,7 @@ func (client *LrosaDsClient) DeleteAsyncRelativeRetryInvalidJSONPollingHandleErr
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *LrosaDsClient) BeginDeleteAsyncRelativeRetryNoStatus(ctx context.Context) (*HTTPPollerResponse, error) {
@@ -624,7 +624,7 @@ func (client *LrosaDsClient) DeleteAsyncRelativeRetryNoStatusHandleError(resp *a
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *LrosaDsClient) BeginDeleteNonRetry400(ctx context.Context) (*HTTPPollerResponse, error) {
@@ -694,7 +694,7 @@ func (client *LrosaDsClient) DeleteNonRetry400HandleError(resp *azcore.Response)
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *LrosaDsClient) BeginPost202NoLocation(ctx context.Context, lrosaDsPost202NoLocationOptions *LrosaDsPost202NoLocationOptions) (*HTTPPollerResponse, error) {
@@ -767,7 +767,7 @@ func (client *LrosaDsClient) Post202NoLocationHandleError(resp *azcore.Response)
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *LrosaDsClient) BeginPost202NonRetry400(ctx context.Context, lrosaDsPost202NonRetry400Options *LrosaDsPost202NonRetry400Options) (*HTTPPollerResponse, error) {
@@ -840,7 +840,7 @@ func (client *LrosaDsClient) Post202NonRetry400HandleError(resp *azcore.Response
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *LrosaDsClient) BeginPost202RetryInvalidHeader(ctx context.Context, lrosaDsPost202RetryInvalidHeaderOptions *LrosaDsPost202RetryInvalidHeaderOptions) (*HTTPPollerResponse, error) {
@@ -913,7 +913,7 @@ func (client *LrosaDsClient) Post202RetryInvalidHeaderHandleError(resp *azcore.R
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *LrosaDsClient) BeginPostAsyncRelativeRetry400(ctx context.Context, lrosaDsPostAsyncRelativeRetry400Options *LrosaDsPostAsyncRelativeRetry400Options) (*HTTPPollerResponse, error) {
@@ -986,7 +986,7 @@ func (client *LrosaDsClient) PostAsyncRelativeRetry400HandleError(resp *azcore.R
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *LrosaDsClient) BeginPostAsyncRelativeRetryInvalidHeader(ctx context.Context, lrosaDsPostAsyncRelativeRetryInvalidHeaderOptions *LrosaDsPostAsyncRelativeRetryInvalidHeaderOptions) (*HTTPPollerResponse, error) {
@@ -1059,7 +1059,7 @@ func (client *LrosaDsClient) PostAsyncRelativeRetryInvalidHeaderHandleError(resp
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *LrosaDsClient) BeginPostAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, lrosaDsPostAsyncRelativeRetryInvalidJsonPollingOptions *LrosaDsPostAsyncRelativeRetryInvalidJSONPollingOptions) (*HTTPPollerResponse, error) {
@@ -1132,7 +1132,7 @@ func (client *LrosaDsClient) PostAsyncRelativeRetryInvalidJSONPollingHandleError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *LrosaDsClient) BeginPostAsyncRelativeRetryNoPayload(ctx context.Context, lrosaDsPostAsyncRelativeRetryNoPayloadOptions *LrosaDsPostAsyncRelativeRetryNoPayloadOptions) (*HTTPPollerResponse, error) {
@@ -1205,7 +1205,7 @@ func (client *LrosaDsClient) PostAsyncRelativeRetryNoPayloadHandleError(resp *az
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *LrosaDsClient) BeginPostNonRetry400(ctx context.Context, lrosaDsPostNonRetry400Options *LrosaDsPostNonRetry400Options) (*HTTPPollerResponse, error) {
@@ -1278,7 +1278,7 @@ func (client *LrosaDsClient) PostNonRetry400HandleError(resp *azcore.Response) e
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *LrosaDsClient) BeginPut200InvalidJSON(ctx context.Context, lrosaDsPut200InvalidJsonOptions *LrosaDsPut200InvalidJSONOptions) (*ProductPollerResponse, error) {
@@ -1357,7 +1357,7 @@ func (client *LrosaDsClient) Put200InvalidJSONHandleError(resp *azcore.Response)
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *LrosaDsClient) BeginPutAsyncRelativeRetry400(ctx context.Context, lrosaDsPutAsyncRelativeRetry400Options *LrosaDsPutAsyncRelativeRetry400Options) (*ProductPollerResponse, error) {
@@ -1436,7 +1436,7 @@ func (client *LrosaDsClient) PutAsyncRelativeRetry400HandleError(resp *azcore.Re
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *LrosaDsClient) BeginPutAsyncRelativeRetryInvalidHeader(ctx context.Context, lrosaDsPutAsyncRelativeRetryInvalidHeaderOptions *LrosaDsPutAsyncRelativeRetryInvalidHeaderOptions) (*ProductPollerResponse, error) {
@@ -1515,7 +1515,7 @@ func (client *LrosaDsClient) PutAsyncRelativeRetryInvalidHeaderHandleError(resp 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *LrosaDsClient) BeginPutAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, lrosaDsPutAsyncRelativeRetryInvalidJsonPollingOptions *LrosaDsPutAsyncRelativeRetryInvalidJSONPollingOptions) (*ProductPollerResponse, error) {
@@ -1594,7 +1594,7 @@ func (client *LrosaDsClient) PutAsyncRelativeRetryInvalidJSONPollingHandleError(
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *LrosaDsClient) BeginPutAsyncRelativeRetryNoStatus(ctx context.Context, lrosaDsPutAsyncRelativeRetryNoStatusOptions *LrosaDsPutAsyncRelativeRetryNoStatusOptions) (*ProductPollerResponse, error) {
@@ -1673,7 +1673,7 @@ func (client *LrosaDsClient) PutAsyncRelativeRetryNoStatusHandleError(resp *azco
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *LrosaDsClient) BeginPutAsyncRelativeRetryNoStatusPayload(ctx context.Context, lrosaDsPutAsyncRelativeRetryNoStatusPayloadOptions *LrosaDsPutAsyncRelativeRetryNoStatusPayloadOptions) (*ProductPollerResponse, error) {
@@ -1752,7 +1752,7 @@ func (client *LrosaDsClient) PutAsyncRelativeRetryNoStatusPayloadHandleError(res
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *LrosaDsClient) BeginPutError201NoProvisioningStatePayload(ctx context.Context, lrosaDsPutError201NoProvisioningStatePayloadOptions *LrosaDsPutError201NoProvisioningStatePayloadOptions) (*ProductPollerResponse, error) {
@@ -1831,7 +1831,7 @@ func (client *LrosaDsClient) PutError201NoProvisioningStatePayloadHandleError(re
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *LrosaDsClient) BeginPutNonRetry201Creating400(ctx context.Context, lrosaDsPutNonRetry201Creating400Options *LrosaDsPutNonRetry201Creating400Options) (*ProductPollerResponse, error) {
@@ -1910,7 +1910,7 @@ func (client *LrosaDsClient) PutNonRetry201Creating400HandleError(resp *azcore.R
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *LrosaDsClient) BeginPutNonRetry201Creating400InvalidJSON(ctx context.Context, lrosaDsPutNonRetry201Creating400InvalidJsonOptions *LrosaDsPutNonRetry201Creating400InvalidJSONOptions) (*ProductPollerResponse, error) {
@@ -1989,7 +1989,7 @@ func (client *LrosaDsClient) PutNonRetry201Creating400InvalidJSONHandleError(res
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *LrosaDsClient) BeginPutNonRetry400(ctx context.Context, lrosaDsPutNonRetry400Options *LrosaDsPutNonRetry400Options) (*ProductPollerResponse, error) {
@@ -2068,5 +2068,5 @@ func (client *LrosaDsClient) PutNonRetry400HandleError(resp *azcore.Response) er
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

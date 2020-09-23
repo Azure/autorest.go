@@ -78,7 +78,7 @@ func (client *ReadonlypropertyClient) GetValidHandleError(resp *azcore.Response)
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PutValid - Put complex types that have readonly properties
@@ -114,5 +114,5 @@ func (client *ReadonlypropertyClient) PutValidHandleError(resp *azcore.Response)
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

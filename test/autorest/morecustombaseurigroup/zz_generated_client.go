@@ -16,8 +16,6 @@ const telemetryInfo = "azsdk-go-morecustombaseurigroup/<version>"
 type ClientOptions struct {
 	// HTTPClient sets the transport for making HTTP requests.
 	HTTPClient azcore.Transport
-	// LogOptions configures the built-in request logging policy behavior.
-	LogOptions azcore.RequestLogOptions
 	// Retry configures the built-in retry policy behavior.
 	Retry azcore.RetryOptions
 	// Telemetry configures the built-in telemetry policy behavior.
@@ -58,7 +56,7 @@ func NewClient(dnsSuffix *string, options *ClientOptions) *Client {
 		azcore.NewTelemetryPolicy(options.telemetryOptions()),
 		azcore.NewUniqueRequestIDPolicy(),
 		azcore.NewRetryPolicy(&options.Retry),
-		azcore.NewRequestLogPolicy(options.LogOptions))
+		azcore.NewRequestLogPolicy(nil))
 	return NewClientWithPipeline(dnsSuffix, p)
 }
 

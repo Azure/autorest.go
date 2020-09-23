@@ -77,7 +77,7 @@ func (client *APIVersionLocalClient) GetMethodLocalNullHandleError(resp *azcore.
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetMethodLocalValid - Get method with api-version modeled in the method.  pass in api-version = '2.0' to succeed
@@ -116,7 +116,7 @@ func (client *APIVersionLocalClient) GetMethodLocalValidHandleError(resp *azcore
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetPathLocalValid - Get method with api-version modeled in the method.  pass in api-version = '2.0' to succeed
@@ -155,7 +155,7 @@ func (client *APIVersionLocalClient) GetPathLocalValidHandleError(resp *azcore.R
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetSwaggerLocalValid - Get method with api-version modeled in the method.  pass in api-version = '2.0' to succeed
@@ -194,5 +194,5 @@ func (client *APIVersionLocalClient) GetSwaggerLocalValidHandleError(resp *azcor
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

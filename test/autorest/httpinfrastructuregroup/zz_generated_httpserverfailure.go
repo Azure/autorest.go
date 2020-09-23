@@ -72,7 +72,7 @@ func (client *HTTPServerFailureClient) Delete505HandleError(resp *azcore.Respons
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get501 - Return 501 status code - should be represented in the client as an error
@@ -108,7 +108,7 @@ func (client *HTTPServerFailureClient) Get501HandleError(resp *azcore.Response) 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Head501 - Return 501 status code - should be represented in the client as an error
@@ -144,7 +144,7 @@ func (client *HTTPServerFailureClient) Head501HandleError(resp *azcore.Response)
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Post505 - Return 505 status code - should be represented in the client as an error
@@ -180,5 +180,5 @@ func (client *HTTPServerFailureClient) Post505HandleError(resp *azcore.Response)
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

@@ -80,7 +80,7 @@ func (client *SkipURLEncodingClient) GetMethodPathValidHandleError(resp *azcore.
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetMethodQueryNull - Get method with unencoded query parameter with value null
@@ -121,7 +121,7 @@ func (client *SkipURLEncodingClient) GetMethodQueryNullHandleError(resp *azcore.
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetMethodQueryValid - Get method with unencoded query parameter with value 'value1&q2=value2&q3=value3'
@@ -160,7 +160,7 @@ func (client *SkipURLEncodingClient) GetMethodQueryValidHandleError(resp *azcore
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetPathQueryValid - Get method with unencoded query parameter with value 'value1&q2=value2&q3=value3'
@@ -199,7 +199,7 @@ func (client *SkipURLEncodingClient) GetPathQueryValidHandleError(resp *azcore.R
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetPathValid - Get method with unencoded path parameter with value 'path1/path2/path3'
@@ -236,7 +236,7 @@ func (client *SkipURLEncodingClient) GetPathValidHandleError(resp *azcore.Respon
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetSwaggerPathValid - Get method with unencoded path parameter with value 'path1/path2/path3'
@@ -273,7 +273,7 @@ func (client *SkipURLEncodingClient) GetSwaggerPathValidHandleError(resp *azcore
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetSwaggerQueryValid - Get method with unencoded query parameter with value 'value1&q2=value2&q3=value3'
@@ -312,5 +312,5 @@ func (client *SkipURLEncodingClient) GetSwaggerQueryValidHandleError(resp *azcor
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

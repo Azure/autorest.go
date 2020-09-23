@@ -75,7 +75,7 @@ func (client *APIVersionDefaultClient) GetMethodGlobalNotProvidedValidHandleErro
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetMethodGlobalValid - GET method with api-version modeled in global settings.
@@ -114,7 +114,7 @@ func (client *APIVersionDefaultClient) GetMethodGlobalValidHandleError(resp *azc
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetPathGlobalValid - GET method with api-version modeled in global settings.
@@ -153,7 +153,7 @@ func (client *APIVersionDefaultClient) GetPathGlobalValidHandleError(resp *azcor
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetSwaggerGlobalValid - GET method with api-version modeled in global settings.
@@ -192,5 +192,5 @@ func (client *APIVersionDefaultClient) GetSwaggerGlobalValidHandleError(resp *az
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

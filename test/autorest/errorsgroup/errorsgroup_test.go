@@ -5,6 +5,7 @@ package errorsgroup
 
 import (
 	"context"
+	"errors"
 	"generatortests/helpers"
 	"net/http"
 	"testing"
@@ -34,8 +35,8 @@ func TestDoSomethingSuccess(t *testing.T) {
 func TestDoSomethingError1(t *testing.T) {
 	client := newPetClient()
 	result, err := client.DoSomething(context.Background(), "jump")
-	sadErr, ok := err.(*PetSadError)
-	if !ok {
+	var sadErr *PetSadError
+	if !errors.As(err, &sadErr) {
 		t.Fatalf("expected PetSadError: %v", err)
 	}
 	helpers.DeepEqualOrFatal(t, sadErr, &PetSadError{
@@ -53,8 +54,8 @@ func TestDoSomethingError1(t *testing.T) {
 func TestDoSomethingError2(t *testing.T) {
 	client := newPetClient()
 	result, err := client.DoSomething(context.Background(), "fetch")
-	hungrErr, ok := err.(*PetHungryOrThirstyError)
-	if !ok {
+	var hungrErr *PetHungryOrThirstyError
+	if !errors.As(err, &hungrErr) {
 		t.Fatal("expected PetHungryOrThirstyError")
 	}
 	helpers.DeepEqualOrFatal(t, hungrErr, &PetHungryOrThirstyError{
@@ -75,8 +76,8 @@ func TestDoSomethingError2(t *testing.T) {
 func TestDoSomethingError3(t *testing.T) {
 	client := newPetClient()
 	result, err := client.DoSomething(context.Background(), "unknown")
-	actErr, ok := err.(*PetActionError)
-	if !ok {
+	var actErr *PetActionError
+	if !errors.As(err, &actErr) {
 		t.Fatal("expected PetActionError")
 	}
 	helpers.DeepEqualOrFatal(t, actErr, &PetActionError{})
@@ -112,8 +113,8 @@ func TestGetPetByIDSuccess2(t *testing.T) {
 func TestGetPetByIDError1(t *testing.T) {
 	client := newPetClient()
 	result, err := client.GetPetByID(context.Background(), "coyoteUgly")
-	anfe, ok := err.(*AnimalNotFound)
-	if !ok {
+	var anfe *AnimalNotFound
+	if !errors.As(err, &anfe) {
 		t.Fatal("expected AnimalNotFoundError")
 	}
 	helpers.DeepEqualOrFatal(t, anfe, &AnimalNotFound{
@@ -134,8 +135,8 @@ func TestGetPetByIDError1(t *testing.T) {
 func TestGetPetByIDError2(t *testing.T) {
 	client := newPetClient()
 	result, err := client.GetPetByID(context.Background(), "weirdAlYankovic")
-	lnfe, ok := err.(*LinkNotFound)
-	if !ok {
+	var lnfe *LinkNotFound
+	if !errors.As(err, &lnfe) {
 		t.Fatal("expected LinkNotFoundError")
 	}
 	helpers.DeepEqualOrFatal(t, lnfe, &LinkNotFound{

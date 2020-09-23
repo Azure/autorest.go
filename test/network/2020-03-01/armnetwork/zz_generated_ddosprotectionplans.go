@@ -131,7 +131,7 @@ func (client *DdosProtectionPlansClient) CreateOrUpdateHandleError(resp *azcore.
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *DdosProtectionPlansClient) BeginDelete(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string) (*HTTPPollerResponse, error) {
@@ -207,7 +207,7 @@ func (client *DdosProtectionPlansClient) DeleteHandleError(resp *azcore.Response
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get - Gets information about the specified DDoS protection plan.
@@ -259,7 +259,7 @@ func (client *DdosProtectionPlansClient) GetHandleError(resp *azcore.Response) e
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // List - Gets all DDoS protection plans in a subscription.
@@ -304,7 +304,7 @@ func (client *DdosProtectionPlansClient) ListHandleError(resp *azcore.Response) 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // ListByResourceGroup - Gets all the DDoS protection plans in a resource group.
@@ -350,7 +350,7 @@ func (client *DdosProtectionPlansClient) ListByResourceGroupHandleError(resp *az
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // UpdateTags - Update a DDoS protection plan tags.
@@ -402,5 +402,5 @@ func (client *DdosProtectionPlansClient) UpdateTagsHandleError(resp *azcore.Resp
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

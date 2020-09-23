@@ -86,7 +86,7 @@ func (client *DictionaryClient) GetEmptyHandleError(resp *azcore.Response) error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetNotProvided - Get complex types with dictionary property while server doesn't provide a response payload
@@ -132,7 +132,7 @@ func (client *DictionaryClient) GetNotProvidedHandleError(resp *azcore.Response)
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetNull - Get complex types with dictionary property which is null
@@ -178,7 +178,7 @@ func (client *DictionaryClient) GetNullHandleError(resp *azcore.Response) error 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetValid - Get complex types with dictionary property
@@ -224,7 +224,7 @@ func (client *DictionaryClient) GetValidHandleError(resp *azcore.Response) error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PutEmpty - Put complex types with dictionary property which is empty
@@ -260,7 +260,7 @@ func (client *DictionaryClient) PutEmptyHandleError(resp *azcore.Response) error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PutValid - Put complex types with dictionary property
@@ -296,5 +296,5 @@ func (client *DictionaryClient) PutValidHandleError(resp *azcore.Response) error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

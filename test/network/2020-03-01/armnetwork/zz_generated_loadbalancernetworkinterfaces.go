@@ -80,5 +80,5 @@ func (client *LoadBalancerNetworkInterfacesClient) ListHandleError(resp *azcore.
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

@@ -128,7 +128,7 @@ func (client *ExpressRouteCircuitPeeringsClient) CreateOrUpdateHandleError(resp 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *ExpressRouteCircuitPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, circuitName string, peeringName string) (*HTTPPollerResponse, error) {
@@ -205,7 +205,7 @@ func (client *ExpressRouteCircuitPeeringsClient) DeleteHandleError(resp *azcore.
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get - Gets the specified peering for the express route circuit.
@@ -258,7 +258,7 @@ func (client *ExpressRouteCircuitPeeringsClient) GetHandleError(resp *azcore.Res
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // List - Gets all peerings in a specified express route circuit.
@@ -305,5 +305,5 @@ func (client *ExpressRouteCircuitPeeringsClient) ListHandleError(resp *azcore.Re
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

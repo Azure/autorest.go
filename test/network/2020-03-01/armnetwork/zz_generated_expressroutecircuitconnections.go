@@ -129,7 +129,7 @@ func (client *ExpressRouteCircuitConnectionsClient) CreateOrUpdateHandleError(re
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *ExpressRouteCircuitConnectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, connectionName string) (*HTTPPollerResponse, error) {
@@ -207,7 +207,7 @@ func (client *ExpressRouteCircuitConnectionsClient) DeleteHandleError(resp *azco
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get - Gets the specified Express Route Circuit Connection from the specified express route circuit.
@@ -261,7 +261,7 @@ func (client *ExpressRouteCircuitConnectionsClient) GetHandleError(resp *azcore.
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // List - Gets all global reach connections associated with a private peering in an express route circuit.
@@ -309,5 +309,5 @@ func (client *ExpressRouteCircuitConnectionsClient) ListHandleError(resp *azcore
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

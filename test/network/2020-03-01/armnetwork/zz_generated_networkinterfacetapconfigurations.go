@@ -128,7 +128,7 @@ func (client *NetworkInterfaceTapConfigurationsClient) CreateOrUpdateHandleError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *NetworkInterfaceTapConfigurationsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string) (*HTTPPollerResponse, error) {
@@ -205,7 +205,7 @@ func (client *NetworkInterfaceTapConfigurationsClient) DeleteHandleError(resp *a
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get - Get the specified tap configuration on a network interface.
@@ -258,7 +258,7 @@ func (client *NetworkInterfaceTapConfigurationsClient) GetHandleError(resp *azco
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // List - Get all Tap configurations in a network interface.
@@ -305,5 +305,5 @@ func (client *NetworkInterfaceTapConfigurationsClient) ListHandleError(resp *azc
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

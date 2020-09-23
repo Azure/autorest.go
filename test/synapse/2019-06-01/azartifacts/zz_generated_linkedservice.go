@@ -68,7 +68,7 @@ func (client *linkedServiceClient) CreateOrUpdateLinkedServiceHandleError(resp *
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // DeleteLinkedService - Deletes a linked service.
@@ -108,7 +108,7 @@ func (client *linkedServiceClient) DeleteLinkedServiceHandleError(resp *azcore.R
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetLinkedService - Gets a linked service.
@@ -161,7 +161,7 @@ func (client *linkedServiceClient) GetLinkedServiceHandleError(resp *azcore.Resp
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetLinkedServicesByWorkspace - Lists linked services.
@@ -205,5 +205,5 @@ func (client *linkedServiceClient) GetLinkedServicesByWorkspaceHandleError(resp 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

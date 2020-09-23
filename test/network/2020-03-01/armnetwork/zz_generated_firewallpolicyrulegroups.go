@@ -128,7 +128,7 @@ func (client *FirewallPolicyRuleGroupsClient) CreateOrUpdateHandleError(resp *az
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *FirewallPolicyRuleGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, firewallPolicyName string, ruleGroupName string) (*HTTPPollerResponse, error) {
@@ -205,7 +205,7 @@ func (client *FirewallPolicyRuleGroupsClient) DeleteHandleError(resp *azcore.Res
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get - Gets the specified FirewallPolicyRuleGroup.
@@ -258,7 +258,7 @@ func (client *FirewallPolicyRuleGroupsClient) GetHandleError(resp *azcore.Respon
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // List - Lists all FirewallPolicyRuleGroups in a FirewallPolicy resource.
@@ -305,5 +305,5 @@ func (client *FirewallPolicyRuleGroupsClient) ListHandleError(resp *azcore.Respo
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

@@ -89,7 +89,7 @@ func (client *PeerExpressRouteCircuitConnectionsClient) GetHandleError(resp *azc
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // List - Gets all global reach peer connections associated with a private peering in an express route circuit.
@@ -137,5 +137,5 @@ func (client *PeerExpressRouteCircuitConnectionsClient) ListHandleError(resp *az
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

@@ -118,7 +118,7 @@ func (client *PrimitiveClient) GetBoolHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetByte - Get complex types with byte properties
@@ -164,7 +164,7 @@ func (client *PrimitiveClient) GetByteHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetDate - Get complex types with date properties
@@ -210,7 +210,7 @@ func (client *PrimitiveClient) GetDateHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetDateTime - Get complex types with datetime properties
@@ -256,7 +256,7 @@ func (client *PrimitiveClient) GetDateTimeHandleError(resp *azcore.Response) err
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetDateTimeRFC1123 - Get complex types with datetimeRfc1123 properties
@@ -302,7 +302,7 @@ func (client *PrimitiveClient) GetDateTimeRFC1123HandleError(resp *azcore.Respon
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetDouble - Get complex types with double properties
@@ -348,7 +348,7 @@ func (client *PrimitiveClient) GetDoubleHandleError(resp *azcore.Response) error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetDuration - Get complex types with duration properties
@@ -394,7 +394,7 @@ func (client *PrimitiveClient) GetDurationHandleError(resp *azcore.Response) err
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetFloat - Get complex types with float properties
@@ -440,7 +440,7 @@ func (client *PrimitiveClient) GetFloatHandleError(resp *azcore.Response) error 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetInt - Get complex types with integer properties
@@ -486,7 +486,7 @@ func (client *PrimitiveClient) GetIntHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetLong - Get complex types with long properties
@@ -532,7 +532,7 @@ func (client *PrimitiveClient) GetLongHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetString - Get complex types with string properties
@@ -578,7 +578,7 @@ func (client *PrimitiveClient) GetStringHandleError(resp *azcore.Response) error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PutBool - Put complex types with bool properties
@@ -614,7 +614,7 @@ func (client *PrimitiveClient) PutBoolHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PutByte - Put complex types with byte properties
@@ -650,7 +650,7 @@ func (client *PrimitiveClient) PutByteHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PutDate - Put complex types with date properties
@@ -686,7 +686,7 @@ func (client *PrimitiveClient) PutDateHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PutDateTime - Put complex types with datetime properties
@@ -722,7 +722,7 @@ func (client *PrimitiveClient) PutDateTimeHandleError(resp *azcore.Response) err
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PutDateTimeRFC1123 - Put complex types with datetimeRfc1123 properties
@@ -758,7 +758,7 @@ func (client *PrimitiveClient) PutDateTimeRFC1123HandleError(resp *azcore.Respon
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PutDouble - Put complex types with double properties
@@ -794,7 +794,7 @@ func (client *PrimitiveClient) PutDoubleHandleError(resp *azcore.Response) error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PutDuration - Put complex types with duration properties
@@ -830,7 +830,7 @@ func (client *PrimitiveClient) PutDurationHandleError(resp *azcore.Response) err
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PutFloat - Put complex types with float properties
@@ -866,7 +866,7 @@ func (client *PrimitiveClient) PutFloatHandleError(resp *azcore.Response) error 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PutInt - Put complex types with integer properties
@@ -902,7 +902,7 @@ func (client *PrimitiveClient) PutIntHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PutLong - Put complex types with long properties
@@ -938,7 +938,7 @@ func (client *PrimitiveClient) PutLongHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PutString - Put complex types with string properties
@@ -974,5 +974,5 @@ func (client *PrimitiveClient) PutStringHandleError(resp *azcore.Response) error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

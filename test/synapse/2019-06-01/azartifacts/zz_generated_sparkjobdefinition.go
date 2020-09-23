@@ -72,7 +72,7 @@ func (client *sparkJobDefinitionClient) CreateOrUpdateSparkJobDefinitionHandleEr
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // DebugSparkJobDefinition - Debug the spark job definition.
@@ -117,7 +117,7 @@ func (client *sparkJobDefinitionClient) DebugSparkJobDefinitionHandleError(resp 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // DeleteSparkJobDefinition - Deletes a Spark Job Definition.
@@ -157,7 +157,7 @@ func (client *sparkJobDefinitionClient) DeleteSparkJobDefinitionHandleError(resp
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // ExecuteSparkJobDefinition - Executes the spark job definition.
@@ -203,7 +203,7 @@ func (client *sparkJobDefinitionClient) ExecuteSparkJobDefinitionHandleError(res
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetSparkJobDefinition - Gets a Spark Job Definition.
@@ -256,7 +256,7 @@ func (client *sparkJobDefinitionClient) GetSparkJobDefinitionHandleError(resp *a
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetSparkJobDefinitionsByWorkspace - Lists spark job definitions.
@@ -300,5 +300,5 @@ func (client *sparkJobDefinitionClient) GetSparkJobDefinitionsByWorkspaceHandleE
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

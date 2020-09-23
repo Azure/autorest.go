@@ -164,7 +164,7 @@ func (client *ApplicationGatewaysClient) BackendHealthHandleError(resp *azcore.R
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *ApplicationGatewaysClient) BeginBackendHealthOnDemand(ctx context.Context, resourceGroupName string, applicationGatewayName string, probeRequest ApplicationGatewayOnDemandProbe, applicationGatewaysBackendHealthOnDemandOptions *ApplicationGatewaysBackendHealthOnDemandOptions) (*ApplicationGatewayBackendHealthOnDemandPollerResponse, error) {
@@ -249,7 +249,7 @@ func (client *ApplicationGatewaysClient) BackendHealthOnDemandHandleError(resp *
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *ApplicationGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, applicationGatewayName string, parameters ApplicationGateway) (*ApplicationGatewayPollerResponse, error) {
@@ -331,7 +331,7 @@ func (client *ApplicationGatewaysClient) CreateOrUpdateHandleError(resp *azcore.
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *ApplicationGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, applicationGatewayName string) (*HTTPPollerResponse, error) {
@@ -407,7 +407,7 @@ func (client *ApplicationGatewaysClient) DeleteHandleError(resp *azcore.Response
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get - Gets the specified application gateway.
@@ -459,7 +459,7 @@ func (client *ApplicationGatewaysClient) GetHandleError(resp *azcore.Response) e
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetSslPredefinedPolicy - Gets Ssl predefined policy with the specified policy name.
@@ -510,7 +510,7 @@ func (client *ApplicationGatewaysClient) GetSslPredefinedPolicyHandleError(resp 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // List - Lists all application gateways in a resource group.
@@ -556,7 +556,7 @@ func (client *ApplicationGatewaysClient) ListHandleError(resp *azcore.Response) 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // ListAll - Gets all the application gateways in a subscription.
@@ -601,7 +601,7 @@ func (client *ApplicationGatewaysClient) ListAllHandleError(resp *azcore.Respons
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // ListAvailableRequestHeaders - Lists all available request headers.
@@ -651,7 +651,7 @@ func (client *ApplicationGatewaysClient) ListAvailableRequestHeadersHandleError(
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // ListAvailableResponseHeaders - Lists all available response headers.
@@ -701,7 +701,7 @@ func (client *ApplicationGatewaysClient) ListAvailableResponseHeadersHandleError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // ListAvailableServerVariables - Lists all available server variables.
@@ -751,7 +751,7 @@ func (client *ApplicationGatewaysClient) ListAvailableServerVariablesHandleError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // ListAvailableSslOptions - Lists available Ssl options for configuring Ssl policy.
@@ -801,7 +801,7 @@ func (client *ApplicationGatewaysClient) ListAvailableSslOptionsHandleError(resp
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // ListAvailableSslPredefinedPolicies - Lists all SSL predefined policies for configuring Ssl policy.
@@ -846,7 +846,7 @@ func (client *ApplicationGatewaysClient) ListAvailableSslPredefinedPoliciesHandl
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // ListAvailableWafRuleSets - Lists all available web application firewall rule sets.
@@ -896,7 +896,7 @@ func (client *ApplicationGatewaysClient) ListAvailableWafRuleSetsHandleError(res
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *ApplicationGatewaysClient) BeginStart(ctx context.Context, resourceGroupName string, applicationGatewayName string) (*HTTPPollerResponse, error) {
@@ -972,7 +972,7 @@ func (client *ApplicationGatewaysClient) StartHandleError(resp *azcore.Response)
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *ApplicationGatewaysClient) BeginStop(ctx context.Context, resourceGroupName string, applicationGatewayName string) (*HTTPPollerResponse, error) {
@@ -1048,7 +1048,7 @@ func (client *ApplicationGatewaysClient) StopHandleError(resp *azcore.Response) 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // UpdateTags - Updates the specified application gateway tags.
@@ -1100,5 +1100,5 @@ func (client *ApplicationGatewaysClient) UpdateTagsHandleError(resp *azcore.Resp
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

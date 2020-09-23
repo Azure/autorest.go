@@ -116,7 +116,7 @@ func (client *HTTPClientFailureClient) Delete400HandleError(resp *azcore.Respons
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Delete407 - Return 407 status code - should be represented in the client as an error
@@ -152,7 +152,7 @@ func (client *HTTPClientFailureClient) Delete407HandleError(resp *azcore.Respons
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Delete417 - Return 417 status code - should be represented in the client as an error
@@ -188,7 +188,7 @@ func (client *HTTPClientFailureClient) Delete417HandleError(resp *azcore.Respons
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get400 - Return 400 status code - should be represented in the client as an error
@@ -224,7 +224,7 @@ func (client *HTTPClientFailureClient) Get400HandleError(resp *azcore.Response) 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get402 - Return 402 status code - should be represented in the client as an error
@@ -260,7 +260,7 @@ func (client *HTTPClientFailureClient) Get402HandleError(resp *azcore.Response) 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get403 - Return 403 status code - should be represented in the client as an error
@@ -296,7 +296,7 @@ func (client *HTTPClientFailureClient) Get403HandleError(resp *azcore.Response) 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get411 - Return 411 status code - should be represented in the client as an error
@@ -332,7 +332,7 @@ func (client *HTTPClientFailureClient) Get411HandleError(resp *azcore.Response) 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get412 - Return 412 status code - should be represented in the client as an error
@@ -368,7 +368,7 @@ func (client *HTTPClientFailureClient) Get412HandleError(resp *azcore.Response) 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get416 - Return 416 status code - should be represented in the client as an error
@@ -404,7 +404,7 @@ func (client *HTTPClientFailureClient) Get416HandleError(resp *azcore.Response) 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Head400 - Return 400 status code - should be represented in the client as an error
@@ -440,7 +440,7 @@ func (client *HTTPClientFailureClient) Head400HandleError(resp *azcore.Response)
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Head401 - Return 401 status code - should be represented in the client as an error
@@ -476,7 +476,7 @@ func (client *HTTPClientFailureClient) Head401HandleError(resp *azcore.Response)
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Head410 - Return 410 status code - should be represented in the client as an error
@@ -512,7 +512,7 @@ func (client *HTTPClientFailureClient) Head410HandleError(resp *azcore.Response)
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Head429 - Return 429 status code - should be represented in the client as an error
@@ -548,7 +548,7 @@ func (client *HTTPClientFailureClient) Head429HandleError(resp *azcore.Response)
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Options400 - Return 400 status code - should be represented in the client as an error
@@ -584,7 +584,7 @@ func (client *HTTPClientFailureClient) Options400HandleError(resp *azcore.Respon
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Options403 - Return 403 status code - should be represented in the client as an error
@@ -620,7 +620,7 @@ func (client *HTTPClientFailureClient) Options403HandleError(resp *azcore.Respon
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Options412 - Return 412 status code - should be represented in the client as an error
@@ -656,7 +656,7 @@ func (client *HTTPClientFailureClient) Options412HandleError(resp *azcore.Respon
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Patch400 - Return 400 status code - should be represented in the client as an error
@@ -692,7 +692,7 @@ func (client *HTTPClientFailureClient) Patch400HandleError(resp *azcore.Response
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Patch405 - Return 405 status code - should be represented in the client as an error
@@ -728,7 +728,7 @@ func (client *HTTPClientFailureClient) Patch405HandleError(resp *azcore.Response
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Patch414 - Return 414 status code - should be represented in the client as an error
@@ -764,7 +764,7 @@ func (client *HTTPClientFailureClient) Patch414HandleError(resp *azcore.Response
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Post400 - Return 400 status code - should be represented in the client as an error
@@ -800,7 +800,7 @@ func (client *HTTPClientFailureClient) Post400HandleError(resp *azcore.Response)
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Post406 - Return 406 status code - should be represented in the client as an error
@@ -836,7 +836,7 @@ func (client *HTTPClientFailureClient) Post406HandleError(resp *azcore.Response)
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Post415 - Return 415 status code - should be represented in the client as an error
@@ -872,7 +872,7 @@ func (client *HTTPClientFailureClient) Post415HandleError(resp *azcore.Response)
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Put400 - Return 400 status code - should be represented in the client as an error
@@ -908,7 +908,7 @@ func (client *HTTPClientFailureClient) Put400HandleError(resp *azcore.Response) 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Put404 - Return 404 status code - should be represented in the client as an error
@@ -944,7 +944,7 @@ func (client *HTTPClientFailureClient) Put404HandleError(resp *azcore.Response) 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Put409 - Return 409 status code - should be represented in the client as an error
@@ -980,7 +980,7 @@ func (client *HTTPClientFailureClient) Put409HandleError(resp *azcore.Response) 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Put413 - Return 413 status code - should be represented in the client as an error
@@ -1016,5 +1016,5 @@ func (client *HTTPClientFailureClient) Put413HandleError(resp *azcore.Response) 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

@@ -128,7 +128,7 @@ func (client *ServiceEndpointPolicyDefinitionsClient) CreateOrUpdateHandleError(
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *ServiceEndpointPolicyDefinitionsClient) BeginDelete(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, serviceEndpointPolicyDefinitionName string) (*HTTPPollerResponse, error) {
@@ -205,7 +205,7 @@ func (client *ServiceEndpointPolicyDefinitionsClient) DeleteHandleError(resp *az
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get - Get the specified service endpoint policy definitions from service endpoint policy.
@@ -258,7 +258,7 @@ func (client *ServiceEndpointPolicyDefinitionsClient) GetHandleError(resp *azcor
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // ListByResourceGroup - Gets all service endpoint policy definitions in a service end point policy.
@@ -305,5 +305,5 @@ func (client *ServiceEndpointPolicyDefinitionsClient) ListByResourceGroupHandleE
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

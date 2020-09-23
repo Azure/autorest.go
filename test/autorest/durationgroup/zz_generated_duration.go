@@ -82,7 +82,7 @@ func (client *DurationClient) GetInvalidHandleError(resp *azcore.Response) error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetNull - Get null duration value
@@ -128,7 +128,7 @@ func (client *DurationClient) GetNullHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetPositiveDuration - Get a positive duration value
@@ -174,7 +174,7 @@ func (client *DurationClient) GetPositiveDurationHandleError(resp *azcore.Respon
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PutPositiveDuration - Put a positive duration value
@@ -210,5 +210,5 @@ func (client *DurationClient) PutPositiveDurationHandleError(resp *azcore.Respon
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

@@ -77,9 +77,9 @@ func (client *AutoRestValidationTestClient) GetWithConstantInPathHandleError(res
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 	}
 	if len(body) == 0 {
-		return errors.New(resp.Status)
+		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
 	}
-	return errors.New(string(body))
+	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
 func (client *AutoRestValidationTestClient) PostWithConstantInBody(ctx context.Context, autoRestValidationTestPostWithConstantInBodyOptions *AutoRestValidationTestPostWithConstantInBodyOptions) (*ProductResponse, error) {
@@ -129,9 +129,9 @@ func (client *AutoRestValidationTestClient) PostWithConstantInBodyHandleError(re
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 	}
 	if len(body) == 0 {
-		return errors.New(resp.Status)
+		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
 	}
-	return errors.New(string(body))
+	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
 // ValidationOfBody - Validates body parameters on the method. See swagger for details.
@@ -186,7 +186,7 @@ func (client *AutoRestValidationTestClient) ValidationOfBodyHandleError(resp *az
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // ValidationOfMethodParameters - Validates input parameters on the method. See swagger for details.
@@ -238,5 +238,5 @@ func (client *AutoRestValidationTestClient) ValidationOfMethodParametersHandleEr
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

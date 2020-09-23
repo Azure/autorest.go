@@ -86,7 +86,7 @@ func (client *PetsClient) CreateApInPropertiesHandleError(resp *azcore.Response)
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // CreateApInPropertiesWithApstring - Create a Pet which contains more properties than what is defined.
@@ -132,7 +132,7 @@ func (client *PetsClient) CreateApInPropertiesWithApstringHandleError(resp *azco
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // CreateApObject - Create a Pet which contains more properties than what is defined.
@@ -178,7 +178,7 @@ func (client *PetsClient) CreateApObjectHandleError(resp *azcore.Response) error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // CreateApString - Create a Pet which contains more properties than what is defined.
@@ -224,7 +224,7 @@ func (client *PetsClient) CreateApStringHandleError(resp *azcore.Response) error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // CreateApTrue - Create a Pet which contains more properties than what is defined.
@@ -270,7 +270,7 @@ func (client *PetsClient) CreateApTrueHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // CreateCatApTrue - Create a CatAPTrue which contains more properties than what is defined.
@@ -316,5 +316,5 @@ func (client *PetsClient) CreateCatApTrueHandleError(resp *azcore.Response) erro
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

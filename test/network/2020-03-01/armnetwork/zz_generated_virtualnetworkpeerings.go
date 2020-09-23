@@ -128,7 +128,7 @@ func (client *VirtualNetworkPeeringsClient) CreateOrUpdateHandleError(resp *azco
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *VirtualNetworkPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkName string, virtualNetworkPeeringName string) (*HTTPPollerResponse, error) {
@@ -205,7 +205,7 @@ func (client *VirtualNetworkPeeringsClient) DeleteHandleError(resp *azcore.Respo
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get - Gets the specified virtual network peering.
@@ -258,7 +258,7 @@ func (client *VirtualNetworkPeeringsClient) GetHandleError(resp *azcore.Response
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // List - Gets all virtual network peerings in a virtual network.
@@ -305,5 +305,5 @@ func (client *VirtualNetworkPeeringsClient) ListHandleError(resp *azcore.Respons
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

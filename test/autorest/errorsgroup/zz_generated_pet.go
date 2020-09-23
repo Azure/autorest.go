@@ -86,13 +86,13 @@ func (client *PetClient) DoSomethingHandleError(resp *azcore.Response) error {
 		if err := resp.UnmarshalAsJSON(&err); err != nil {
 			return err
 		}
-		return err.wrapped
+		return azcore.NewResponseError(err.wrapped, resp.Response)
 	default:
 		var err petActionError
 		if err := resp.UnmarshalAsJSON(&err); err != nil {
 			return err
 		}
-		return err.wrapped
+		return azcore.NewResponseError(err.wrapped, resp.Response)
 	}
 }
 
@@ -142,27 +142,27 @@ func (client *PetClient) GetPetByIDHandleError(resp *azcore.Response) error {
 		if err := resp.UnmarshalAsJSON(&err); err != nil {
 			return err
 		}
-		return fmt.Errorf("%v", err)
+		return azcore.NewResponseError(fmt.Errorf("%v", err), resp.Response)
 	case http.StatusNotFound:
 		var err notFoundErrorBase
 		if err := resp.UnmarshalAsJSON(&err); err != nil {
 			return err
 		}
-		return err.wrapped
+		return azcore.NewResponseError(err.wrapped, resp.Response)
 	case http.StatusNotImplemented:
 		var err int32
 		if err := resp.UnmarshalAsJSON(&err); err != nil {
 			return err
 		}
-		return fmt.Errorf("%v", err)
+		return azcore.NewResponseError(fmt.Errorf("%v", err), resp.Response)
 	default:
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
 			return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
 		}
 		if len(body) == 0 {
-			return errors.New(resp.Status)
+			return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
 		}
-		return errors.New(string(body))
+		return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 	}
 }

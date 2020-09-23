@@ -122,7 +122,7 @@ func (client *NumberClient) GetBigDecimalHandleError(resp *azcore.Response) erro
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetBigDecimalNegativeDecimal - Get big decimal value -99999999.99
@@ -168,7 +168,7 @@ func (client *NumberClient) GetBigDecimalNegativeDecimalHandleError(resp *azcore
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetBigDecimalPositiveDecimal - Get big decimal value 99999999.99
@@ -214,7 +214,7 @@ func (client *NumberClient) GetBigDecimalPositiveDecimalHandleError(resp *azcore
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetBigDouble - Get big double value 2.5976931e+101
@@ -260,7 +260,7 @@ func (client *NumberClient) GetBigDoubleHandleError(resp *azcore.Response) error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetBigDoubleNegativeDecimal - Get big double value -99999999.99
@@ -306,7 +306,7 @@ func (client *NumberClient) GetBigDoubleNegativeDecimalHandleError(resp *azcore.
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetBigDoublePositiveDecimal - Get big double value 99999999.99
@@ -352,7 +352,7 @@ func (client *NumberClient) GetBigDoublePositiveDecimalHandleError(resp *azcore.
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetBigFloat - Get big float value 3.402823e+20
@@ -398,7 +398,7 @@ func (client *NumberClient) GetBigFloatHandleError(resp *azcore.Response) error 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetInvalidDecimal - Get invalid decimal Number value
@@ -444,7 +444,7 @@ func (client *NumberClient) GetInvalidDecimalHandleError(resp *azcore.Response) 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetInvalidDouble - Get invalid double Number value
@@ -490,7 +490,7 @@ func (client *NumberClient) GetInvalidDoubleHandleError(resp *azcore.Response) e
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetInvalidFloat - Get invalid float Number value
@@ -536,7 +536,7 @@ func (client *NumberClient) GetInvalidFloatHandleError(resp *azcore.Response) er
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetNull - Get null Number value
@@ -582,7 +582,7 @@ func (client *NumberClient) GetNullHandleError(resp *azcore.Response) error {
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetSmallDecimal - Get small decimal value 2.5976931e-101
@@ -628,7 +628,7 @@ func (client *NumberClient) GetSmallDecimalHandleError(resp *azcore.Response) er
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetSmallDouble - Get big double value 2.5976931e-101
@@ -674,7 +674,7 @@ func (client *NumberClient) GetSmallDoubleHandleError(resp *azcore.Response) err
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetSmallFloat - Get big double value 3.402823e-20
@@ -720,7 +720,7 @@ func (client *NumberClient) GetSmallFloatHandleError(resp *azcore.Response) erro
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PutBigDecimal - Put big decimal value 2.5976931e+101
@@ -756,7 +756,7 @@ func (client *NumberClient) PutBigDecimalHandleError(resp *azcore.Response) erro
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PutBigDecimalNegativeDecimal - Put big decimal value -99999999.99
@@ -792,7 +792,7 @@ func (client *NumberClient) PutBigDecimalNegativeDecimalHandleError(resp *azcore
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PutBigDecimalPositiveDecimal - Put big decimal value 99999999.99
@@ -828,7 +828,7 @@ func (client *NumberClient) PutBigDecimalPositiveDecimalHandleError(resp *azcore
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PutBigDouble - Put big double value 2.5976931e+101
@@ -864,7 +864,7 @@ func (client *NumberClient) PutBigDoubleHandleError(resp *azcore.Response) error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PutBigDoubleNegativeDecimal - Put big double value -99999999.99
@@ -900,7 +900,7 @@ func (client *NumberClient) PutBigDoubleNegativeDecimalHandleError(resp *azcore.
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PutBigDoublePositiveDecimal - Put big double value 99999999.99
@@ -936,7 +936,7 @@ func (client *NumberClient) PutBigDoublePositiveDecimalHandleError(resp *azcore.
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PutBigFloat - Put big float value 3.402823e+20
@@ -972,7 +972,7 @@ func (client *NumberClient) PutBigFloatHandleError(resp *azcore.Response) error 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PutSmallDecimal - Put small decimal value 2.5976931e-101
@@ -1008,7 +1008,7 @@ func (client *NumberClient) PutSmallDecimalHandleError(resp *azcore.Response) er
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PutSmallDouble - Put small double value 2.5976931e-101
@@ -1044,7 +1044,7 @@ func (client *NumberClient) PutSmallDoubleHandleError(resp *azcore.Response) err
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // PutSmallFloat - Put small float value 3.402823e-20
@@ -1080,5 +1080,5 @@ func (client *NumberClient) PutSmallFloatHandleError(resp *azcore.Response) erro
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }

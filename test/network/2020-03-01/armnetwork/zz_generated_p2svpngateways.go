@@ -147,7 +147,7 @@ func (client *P2SVpnGatewaysClient) CreateOrUpdateHandleError(resp *azcore.Respo
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *P2SVpnGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, gatewayName string) (*HTTPPollerResponse, error) {
@@ -223,7 +223,7 @@ func (client *P2SVpnGatewaysClient) DeleteHandleError(resp *azcore.Response) err
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *P2SVpnGatewaysClient) BeginDisconnectP2SVpnConnections(ctx context.Context, resourceGroupName string, p2SVpnGatewayName string, request P2SVpnConnectionRequest) (*HTTPPollerResponse, error) {
@@ -299,7 +299,7 @@ func (client *P2SVpnGatewaysClient) DisconnectP2SVpnConnectionsHandleError(resp 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *P2SVpnGatewaysClient) BeginGenerateVpnProfile(ctx context.Context, resourceGroupName string, gatewayName string, parameters P2SVpnProfileParameters) (*VpnProfileResponsePollerResponse, error) {
@@ -381,7 +381,7 @@ func (client *P2SVpnGatewaysClient) GenerateVpnProfileHandleError(resp *azcore.R
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // Get - Retrieves the details of a virtual wan p2s vpn gateway.
@@ -433,7 +433,7 @@ func (client *P2SVpnGatewaysClient) GetHandleError(resp *azcore.Response) error 
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *P2SVpnGatewaysClient) BeginGetP2SVpnConnectionHealth(ctx context.Context, resourceGroupName string, gatewayName string) (*P2SVpnGatewayPollerResponse, error) {
@@ -515,7 +515,7 @@ func (client *P2SVpnGatewaysClient) GetP2SVpnConnectionHealthHandleError(resp *a
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 func (client *P2SVpnGatewaysClient) BeginGetP2SVpnConnectionHealthDetailed(ctx context.Context, resourceGroupName string, gatewayName string, request P2SVpnConnectionHealthRequest) (*P2SVpnConnectionHealthPollerResponse, error) {
@@ -597,7 +597,7 @@ func (client *P2SVpnGatewaysClient) GetP2SVpnConnectionHealthDetailedHandleError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // List - Lists all the P2SVpnGateways in a subscription.
@@ -642,7 +642,7 @@ func (client *P2SVpnGatewaysClient) ListHandleError(resp *azcore.Response) error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // ListByResourceGroup - Lists all the P2SVpnGateways in a resource group.
@@ -688,7 +688,7 @@ func (client *P2SVpnGatewaysClient) ListByResourceGroupHandleError(resp *azcore.
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // UpdateTags - Updates virtual wan p2s vpn gateway tags.
@@ -740,5 +740,5 @@ func (client *P2SVpnGatewaysClient) UpdateTagsHandleError(resp *azcore.Response)
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
-	return err
+	return azcore.NewResponseError(&err, resp.Response)
 }
