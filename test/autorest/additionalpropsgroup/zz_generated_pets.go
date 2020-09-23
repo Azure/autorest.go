@@ -14,17 +14,17 @@ import (
 // PetsOperations contains the methods for the Pets group.
 type PetsOperations interface {
 	// CreateApInProperties - Create a Pet which contains more properties than what is defined.
-	CreateApInProperties(ctx context.Context, createParameters PetApInProperties) (*PetApInPropertiesResponse, error)
+	CreateApInProperties(ctx context.Context, createParameters PetApInProperties, options *PetsCreateApInPropertiesOptions) (*PetApInPropertiesResponse, error)
 	// CreateApInPropertiesWithApstring - Create a Pet which contains more properties than what is defined.
-	CreateApInPropertiesWithApstring(ctx context.Context, createParameters PetApInPropertiesWithApstring) (*PetApInPropertiesWithApstringResponse, error)
+	CreateApInPropertiesWithApstring(ctx context.Context, createParameters PetApInPropertiesWithApstring, options *PetsCreateApInPropertiesWithApstringOptions) (*PetApInPropertiesWithApstringResponse, error)
 	// CreateApObject - Create a Pet which contains more properties than what is defined.
-	CreateApObject(ctx context.Context, createParameters PetApObject) (*PetApObjectResponse, error)
+	CreateApObject(ctx context.Context, createParameters PetApObject, options *PetsCreateApObjectOptions) (*PetApObjectResponse, error)
 	// CreateApString - Create a Pet which contains more properties than what is defined.
-	CreateApString(ctx context.Context, createParameters PetApString) (*PetApStringResponse, error)
+	CreateApString(ctx context.Context, createParameters PetApString, options *PetsCreateApStringOptions) (*PetApStringResponse, error)
 	// CreateApTrue - Create a Pet which contains more properties than what is defined.
-	CreateApTrue(ctx context.Context, createParameters PetApTrue) (*PetApTrueResponse, error)
+	CreateApTrue(ctx context.Context, createParameters PetApTrue, options *PetsCreateApTrueOptions) (*PetApTrueResponse, error)
 	// CreateCatApTrue - Create a CatAPTrue which contains more properties than what is defined.
-	CreateCatApTrue(ctx context.Context, createParameters CatApTrue) (*CatApTrueResponse, error)
+	CreateCatApTrue(ctx context.Context, createParameters CatApTrue, options *PetsCreateCatApTrueOptions) (*CatApTrueResponse, error)
 }
 
 // PetsClient implements the PetsOperations interface.
@@ -44,8 +44,8 @@ func (client *PetsClient) Do(req *azcore.Request) (*azcore.Response, error) {
 }
 
 // CreateApInProperties - Create a Pet which contains more properties than what is defined.
-func (client *PetsClient) CreateApInProperties(ctx context.Context, createParameters PetApInProperties) (*PetApInPropertiesResponse, error) {
-	req, err := client.CreateApInPropertiesCreateRequest(ctx, createParameters)
+func (client *PetsClient) CreateApInProperties(ctx context.Context, createParameters PetApInProperties, options *PetsCreateApInPropertiesOptions) (*PetApInPropertiesResponse, error) {
+	req, err := client.CreateApInPropertiesCreateRequest(ctx, createParameters, options)
 	if err != nil {
 		return nil, err
 	}
@@ -64,7 +64,7 @@ func (client *PetsClient) CreateApInProperties(ctx context.Context, createParame
 }
 
 // CreateApInPropertiesCreateRequest creates the CreateApInProperties request.
-func (client *PetsClient) CreateApInPropertiesCreateRequest(ctx context.Context, createParameters PetApInProperties) (*azcore.Request, error) {
+func (client *PetsClient) CreateApInPropertiesCreateRequest(ctx context.Context, createParameters PetApInProperties, options *PetsCreateApInPropertiesOptions) (*azcore.Request, error) {
 	urlPath := "/additionalProperties/in/properties"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -90,8 +90,8 @@ func (client *PetsClient) CreateApInPropertiesHandleError(resp *azcore.Response)
 }
 
 // CreateApInPropertiesWithApstring - Create a Pet which contains more properties than what is defined.
-func (client *PetsClient) CreateApInPropertiesWithApstring(ctx context.Context, createParameters PetApInPropertiesWithApstring) (*PetApInPropertiesWithApstringResponse, error) {
-	req, err := client.CreateApInPropertiesWithApstringCreateRequest(ctx, createParameters)
+func (client *PetsClient) CreateApInPropertiesWithApstring(ctx context.Context, createParameters PetApInPropertiesWithApstring, options *PetsCreateApInPropertiesWithApstringOptions) (*PetApInPropertiesWithApstringResponse, error) {
+	req, err := client.CreateApInPropertiesWithApstringCreateRequest(ctx, createParameters, options)
 	if err != nil {
 		return nil, err
 	}
@@ -110,7 +110,7 @@ func (client *PetsClient) CreateApInPropertiesWithApstring(ctx context.Context, 
 }
 
 // CreateApInPropertiesWithApstringCreateRequest creates the CreateApInPropertiesWithApstring request.
-func (client *PetsClient) CreateApInPropertiesWithApstringCreateRequest(ctx context.Context, createParameters PetApInPropertiesWithApstring) (*azcore.Request, error) {
+func (client *PetsClient) CreateApInPropertiesWithApstringCreateRequest(ctx context.Context, createParameters PetApInPropertiesWithApstring, options *PetsCreateApInPropertiesWithApstringOptions) (*azcore.Request, error) {
 	urlPath := "/additionalProperties/in/properties/with/additionalProperties/string"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -136,8 +136,8 @@ func (client *PetsClient) CreateApInPropertiesWithApstringHandleError(resp *azco
 }
 
 // CreateApObject - Create a Pet which contains more properties than what is defined.
-func (client *PetsClient) CreateApObject(ctx context.Context, createParameters PetApObject) (*PetApObjectResponse, error) {
-	req, err := client.CreateApObjectCreateRequest(ctx, createParameters)
+func (client *PetsClient) CreateApObject(ctx context.Context, createParameters PetApObject, options *PetsCreateApObjectOptions) (*PetApObjectResponse, error) {
+	req, err := client.CreateApObjectCreateRequest(ctx, createParameters, options)
 	if err != nil {
 		return nil, err
 	}
@@ -156,7 +156,7 @@ func (client *PetsClient) CreateApObject(ctx context.Context, createParameters P
 }
 
 // CreateApObjectCreateRequest creates the CreateApObject request.
-func (client *PetsClient) CreateApObjectCreateRequest(ctx context.Context, createParameters PetApObject) (*azcore.Request, error) {
+func (client *PetsClient) CreateApObjectCreateRequest(ctx context.Context, createParameters PetApObject, options *PetsCreateApObjectOptions) (*azcore.Request, error) {
 	urlPath := "/additionalProperties/type/object"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -182,8 +182,8 @@ func (client *PetsClient) CreateApObjectHandleError(resp *azcore.Response) error
 }
 
 // CreateApString - Create a Pet which contains more properties than what is defined.
-func (client *PetsClient) CreateApString(ctx context.Context, createParameters PetApString) (*PetApStringResponse, error) {
-	req, err := client.CreateApStringCreateRequest(ctx, createParameters)
+func (client *PetsClient) CreateApString(ctx context.Context, createParameters PetApString, options *PetsCreateApStringOptions) (*PetApStringResponse, error) {
+	req, err := client.CreateApStringCreateRequest(ctx, createParameters, options)
 	if err != nil {
 		return nil, err
 	}
@@ -202,7 +202,7 @@ func (client *PetsClient) CreateApString(ctx context.Context, createParameters P
 }
 
 // CreateApStringCreateRequest creates the CreateApString request.
-func (client *PetsClient) CreateApStringCreateRequest(ctx context.Context, createParameters PetApString) (*azcore.Request, error) {
+func (client *PetsClient) CreateApStringCreateRequest(ctx context.Context, createParameters PetApString, options *PetsCreateApStringOptions) (*azcore.Request, error) {
 	urlPath := "/additionalProperties/type/string"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -228,8 +228,8 @@ func (client *PetsClient) CreateApStringHandleError(resp *azcore.Response) error
 }
 
 // CreateApTrue - Create a Pet which contains more properties than what is defined.
-func (client *PetsClient) CreateApTrue(ctx context.Context, createParameters PetApTrue) (*PetApTrueResponse, error) {
-	req, err := client.CreateApTrueCreateRequest(ctx, createParameters)
+func (client *PetsClient) CreateApTrue(ctx context.Context, createParameters PetApTrue, options *PetsCreateApTrueOptions) (*PetApTrueResponse, error) {
+	req, err := client.CreateApTrueCreateRequest(ctx, createParameters, options)
 	if err != nil {
 		return nil, err
 	}
@@ -248,7 +248,7 @@ func (client *PetsClient) CreateApTrue(ctx context.Context, createParameters Pet
 }
 
 // CreateApTrueCreateRequest creates the CreateApTrue request.
-func (client *PetsClient) CreateApTrueCreateRequest(ctx context.Context, createParameters PetApTrue) (*azcore.Request, error) {
+func (client *PetsClient) CreateApTrueCreateRequest(ctx context.Context, createParameters PetApTrue, options *PetsCreateApTrueOptions) (*azcore.Request, error) {
 	urlPath := "/additionalProperties/true"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -274,8 +274,8 @@ func (client *PetsClient) CreateApTrueHandleError(resp *azcore.Response) error {
 }
 
 // CreateCatApTrue - Create a CatAPTrue which contains more properties than what is defined.
-func (client *PetsClient) CreateCatApTrue(ctx context.Context, createParameters CatApTrue) (*CatApTrueResponse, error) {
-	req, err := client.CreateCatApTrueCreateRequest(ctx, createParameters)
+func (client *PetsClient) CreateCatApTrue(ctx context.Context, createParameters CatApTrue, options *PetsCreateCatApTrueOptions) (*CatApTrueResponse, error) {
+	req, err := client.CreateCatApTrueCreateRequest(ctx, createParameters, options)
 	if err != nil {
 		return nil, err
 	}
@@ -294,7 +294,7 @@ func (client *PetsClient) CreateCatApTrue(ctx context.Context, createParameters 
 }
 
 // CreateCatApTrueCreateRequest creates the CreateCatApTrue request.
-func (client *PetsClient) CreateCatApTrueCreateRequest(ctx context.Context, createParameters CatApTrue) (*azcore.Request, error) {
+func (client *PetsClient) CreateCatApTrueCreateRequest(ctx context.Context, createParameters CatApTrue, options *PetsCreateCatApTrueOptions) (*azcore.Request, error) {
 	urlPath := "/additionalProperties/true-subclass"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {

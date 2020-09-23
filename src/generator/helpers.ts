@@ -128,6 +128,11 @@ export function getMethodParameters(op: Operation): Parameter[] {
     }
     params.push(param);
   }
+  // this handles the case where the operation has no optional params
+  // but has the optional params placeholder type.
+  if (paramGroups.length === 0 && op.language.go!.optionalParamGroup) {
+    paramGroups.push(op.language.go!.optionalParamGroup);
+  }
   // move global optional params to the end of the slice
   params.sort(sortParametersByRequired);
   // add any parameter groups.  optional group goes last
@@ -141,9 +146,9 @@ export function getMethodParameters(op: Operation): Parameter[] {
     return 1;
   })
   for (const paramGroup of values(paramGroups)) {
-    let name = camelCase(paramGroup.language.go!.name);
-    if (!paramGroup.required) {
-      name = 'options';
+    // if there's only one optional param group, name the param "options" instead of its (long) type name
+    if (!paramGroup.required && paramGroups.length === 1) {
+      paramGroup.language.go!.name = 'options';
     }
     params.push(paramGroup);
   }

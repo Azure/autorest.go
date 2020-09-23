@@ -26,3 +26,8 @@ func (e Error) Error() string {
 	}
 	return msg
 }
+
+// PathsGetEmptyOptions contains the optional parameters for the Paths.GetEmpty method.
+type PathsGetEmptyOptions struct {
+	// placeholder for future optional parameters
+}

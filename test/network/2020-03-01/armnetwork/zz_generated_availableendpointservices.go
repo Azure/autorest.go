@@ -16,7 +16,7 @@ import (
 // AvailableEndpointServicesOperations contains the methods for the AvailableEndpointServices group.
 type AvailableEndpointServicesOperations interface {
 	// List - List what values of endpoint services are available for use.
-	List(location string) EndpointServicesListResultPager
+	List(location string, options *AvailableEndpointServicesListOptions) EndpointServicesListResultPager
 }
 
 // AvailableEndpointServicesClient implements the AvailableEndpointServicesOperations interface.
@@ -37,11 +37,11 @@ func (client *AvailableEndpointServicesClient) Do(req *azcore.Request) (*azcore.
 }
 
 // List - List what values of endpoint services are available for use.
-func (client *AvailableEndpointServicesClient) List(location string) EndpointServicesListResultPager {
+func (client *AvailableEndpointServicesClient) List(location string, options *AvailableEndpointServicesListOptions) EndpointServicesListResultPager {
 	return &endpointServicesListResultPager{
 		pipeline: client.p,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
-			return client.ListCreateRequest(ctx, location)
+			return client.ListCreateRequest(ctx, location, options)
 		},
 		responder: client.ListHandleResponse,
 		errorer:   client.ListHandleError,
@@ -52,7 +52,7 @@ func (client *AvailableEndpointServicesClient) List(location string) EndpointSer
 }
 
 // ListCreateRequest creates the List request.
-func (client *AvailableEndpointServicesClient) ListCreateRequest(ctx context.Context, location string) (*azcore.Request, error) {
+func (client *AvailableEndpointServicesClient) ListCreateRequest(ctx context.Context, location string, options *AvailableEndpointServicesListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/virtualNetworkAvailableEndpointServices"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))

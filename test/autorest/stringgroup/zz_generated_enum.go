@@ -14,17 +14,17 @@ import (
 // EnumOperations contains the methods for the Enum group.
 type EnumOperations interface {
 	// GetNotExpandable - Get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'.
-	GetNotExpandable(ctx context.Context) (*ColorsResponse, error)
+	GetNotExpandable(ctx context.Context, options *EnumGetNotExpandableOptions) (*ColorsResponse, error)
 	// GetReferenced - Get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'.
-	GetReferenced(ctx context.Context) (*ColorsResponse, error)
+	GetReferenced(ctx context.Context, options *EnumGetReferencedOptions) (*ColorsResponse, error)
 	// GetReferencedConstant - Get value 'green-color' from the constant.
-	GetReferencedConstant(ctx context.Context) (*RefColorConstantResponse, error)
+	GetReferencedConstant(ctx context.Context, options *EnumGetReferencedConstantOptions) (*RefColorConstantResponse, error)
 	// PutNotExpandable - Sends value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'
-	PutNotExpandable(ctx context.Context, stringBody Colors) (*http.Response, error)
+	PutNotExpandable(ctx context.Context, stringBody Colors, options *EnumPutNotExpandableOptions) (*http.Response, error)
 	// PutReferenced - Sends value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'
-	PutReferenced(ctx context.Context, enumStringBody Colors) (*http.Response, error)
+	PutReferenced(ctx context.Context, enumStringBody Colors, options *EnumPutReferencedOptions) (*http.Response, error)
 	// PutReferencedConstant - Sends value 'green-color' from a constant
-	PutReferencedConstant(ctx context.Context, enumStringBody RefColorConstant) (*http.Response, error)
+	PutReferencedConstant(ctx context.Context, enumStringBody RefColorConstant, options *EnumPutReferencedConstantOptions) (*http.Response, error)
 }
 
 // EnumClient implements the EnumOperations interface.
@@ -44,8 +44,8 @@ func (client *EnumClient) Do(req *azcore.Request) (*azcore.Response, error) {
 }
 
 // GetNotExpandable - Get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'.
-func (client *EnumClient) GetNotExpandable(ctx context.Context) (*ColorsResponse, error) {
-	req, err := client.GetNotExpandableCreateRequest(ctx)
+func (client *EnumClient) GetNotExpandable(ctx context.Context, options *EnumGetNotExpandableOptions) (*ColorsResponse, error) {
+	req, err := client.GetNotExpandableCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -64,7 +64,7 @@ func (client *EnumClient) GetNotExpandable(ctx context.Context) (*ColorsResponse
 }
 
 // GetNotExpandableCreateRequest creates the GetNotExpandable request.
-func (client *EnumClient) GetNotExpandableCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *EnumClient) GetNotExpandableCreateRequest(ctx context.Context, options *EnumGetNotExpandableOptions) (*azcore.Request, error) {
 	urlPath := "/string/enum/notExpandable"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -90,8 +90,8 @@ func (client *EnumClient) GetNotExpandableHandleError(resp *azcore.Response) err
 }
 
 // GetReferenced - Get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'.
-func (client *EnumClient) GetReferenced(ctx context.Context) (*ColorsResponse, error) {
-	req, err := client.GetReferencedCreateRequest(ctx)
+func (client *EnumClient) GetReferenced(ctx context.Context, options *EnumGetReferencedOptions) (*ColorsResponse, error) {
+	req, err := client.GetReferencedCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -110,7 +110,7 @@ func (client *EnumClient) GetReferenced(ctx context.Context) (*ColorsResponse, e
 }
 
 // GetReferencedCreateRequest creates the GetReferenced request.
-func (client *EnumClient) GetReferencedCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *EnumClient) GetReferencedCreateRequest(ctx context.Context, options *EnumGetReferencedOptions) (*azcore.Request, error) {
 	urlPath := "/string/enum/Referenced"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -136,8 +136,8 @@ func (client *EnumClient) GetReferencedHandleError(resp *azcore.Response) error 
 }
 
 // GetReferencedConstant - Get value 'green-color' from the constant.
-func (client *EnumClient) GetReferencedConstant(ctx context.Context) (*RefColorConstantResponse, error) {
-	req, err := client.GetReferencedConstantCreateRequest(ctx)
+func (client *EnumClient) GetReferencedConstant(ctx context.Context, options *EnumGetReferencedConstantOptions) (*RefColorConstantResponse, error) {
+	req, err := client.GetReferencedConstantCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -156,7 +156,7 @@ func (client *EnumClient) GetReferencedConstant(ctx context.Context) (*RefColorC
 }
 
 // GetReferencedConstantCreateRequest creates the GetReferencedConstant request.
-func (client *EnumClient) GetReferencedConstantCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *EnumClient) GetReferencedConstantCreateRequest(ctx context.Context, options *EnumGetReferencedConstantOptions) (*azcore.Request, error) {
 	urlPath := "/string/enum/ReferencedConstant"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -182,8 +182,8 @@ func (client *EnumClient) GetReferencedConstantHandleError(resp *azcore.Response
 }
 
 // PutNotExpandable - Sends value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'
-func (client *EnumClient) PutNotExpandable(ctx context.Context, stringBody Colors) (*http.Response, error) {
-	req, err := client.PutNotExpandableCreateRequest(ctx, stringBody)
+func (client *EnumClient) PutNotExpandable(ctx context.Context, stringBody Colors, options *EnumPutNotExpandableOptions) (*http.Response, error) {
+	req, err := client.PutNotExpandableCreateRequest(ctx, stringBody, options)
 	if err != nil {
 		return nil, err
 	}
@@ -198,7 +198,7 @@ func (client *EnumClient) PutNotExpandable(ctx context.Context, stringBody Color
 }
 
 // PutNotExpandableCreateRequest creates the PutNotExpandable request.
-func (client *EnumClient) PutNotExpandableCreateRequest(ctx context.Context, stringBody Colors) (*azcore.Request, error) {
+func (client *EnumClient) PutNotExpandableCreateRequest(ctx context.Context, stringBody Colors, options *EnumPutNotExpandableOptions) (*azcore.Request, error) {
 	urlPath := "/string/enum/notExpandable"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -218,8 +218,8 @@ func (client *EnumClient) PutNotExpandableHandleError(resp *azcore.Response) err
 }
 
 // PutReferenced - Sends value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'
-func (client *EnumClient) PutReferenced(ctx context.Context, enumStringBody Colors) (*http.Response, error) {
-	req, err := client.PutReferencedCreateRequest(ctx, enumStringBody)
+func (client *EnumClient) PutReferenced(ctx context.Context, enumStringBody Colors, options *EnumPutReferencedOptions) (*http.Response, error) {
+	req, err := client.PutReferencedCreateRequest(ctx, enumStringBody, options)
 	if err != nil {
 		return nil, err
 	}
@@ -234,7 +234,7 @@ func (client *EnumClient) PutReferenced(ctx context.Context, enumStringBody Colo
 }
 
 // PutReferencedCreateRequest creates the PutReferenced request.
-func (client *EnumClient) PutReferencedCreateRequest(ctx context.Context, enumStringBody Colors) (*azcore.Request, error) {
+func (client *EnumClient) PutReferencedCreateRequest(ctx context.Context, enumStringBody Colors, options *EnumPutReferencedOptions) (*azcore.Request, error) {
 	urlPath := "/string/enum/Referenced"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -254,8 +254,8 @@ func (client *EnumClient) PutReferencedHandleError(resp *azcore.Response) error 
 }
 
 // PutReferencedConstant - Sends value 'green-color' from a constant
-func (client *EnumClient) PutReferencedConstant(ctx context.Context, enumStringBody RefColorConstant) (*http.Response, error) {
-	req, err := client.PutReferencedConstantCreateRequest(ctx, enumStringBody)
+func (client *EnumClient) PutReferencedConstant(ctx context.Context, enumStringBody RefColorConstant, options *EnumPutReferencedConstantOptions) (*http.Response, error) {
+	req, err := client.PutReferencedConstantCreateRequest(ctx, enumStringBody, options)
 	if err != nil {
 		return nil, err
 	}
@@ -270,7 +270,7 @@ func (client *EnumClient) PutReferencedConstant(ctx context.Context, enumStringB
 }
 
 // PutReferencedConstantCreateRequest creates the PutReferencedConstant request.
-func (client *EnumClient) PutReferencedConstantCreateRequest(ctx context.Context, enumStringBody RefColorConstant) (*azcore.Request, error) {
+func (client *EnumClient) PutReferencedConstantCreateRequest(ctx context.Context, enumStringBody RefColorConstant, options *EnumPutReferencedConstantOptions) (*azcore.Request, error) {
 	urlPath := "/string/enum/ReferencedConstant"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {

@@ -16,7 +16,7 @@ import (
 // UsagesOperations contains the methods for the Usages group.
 type UsagesOperations interface {
 	// List - List network usages for a subscription.
-	List(location string) UsagesListResultPager
+	List(location string, options *UsagesListOptions) UsagesListResultPager
 }
 
 // UsagesClient implements the UsagesOperations interface.
@@ -37,11 +37,11 @@ func (client *UsagesClient) Do(req *azcore.Request) (*azcore.Response, error) {
 }
 
 // List - List network usages for a subscription.
-func (client *UsagesClient) List(location string) UsagesListResultPager {
+func (client *UsagesClient) List(location string, options *UsagesListOptions) UsagesListResultPager {
 	return &usagesListResultPager{
 		pipeline: client.p,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
-			return client.ListCreateRequest(ctx, location)
+			return client.ListCreateRequest(ctx, location, options)
 		},
 		responder: client.ListHandleResponse,
 		errorer:   client.ListHandleError,
@@ -52,7 +52,7 @@ func (client *UsagesClient) List(location string) UsagesListResultPager {
 }
 
 // ListCreateRequest creates the List request.
-func (client *UsagesClient) ListCreateRequest(ctx context.Context, location string) (*azcore.Request, error) {
+func (client *UsagesClient) ListCreateRequest(ctx context.Context, location string, options *UsagesListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/usages"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))

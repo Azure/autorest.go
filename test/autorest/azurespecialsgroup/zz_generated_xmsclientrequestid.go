@@ -17,9 +17,9 @@ import (
 // XMSClientRequestIDOperations contains the methods for the XMSClientRequestID group.
 type XMSClientRequestIDOperations interface {
 	// Get - Get method that overwrites x-ms-client-request header with value 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.
-	Get(ctx context.Context) (*http.Response, error)
+	Get(ctx context.Context, options *XMSClientRequestIDGetOptions) (*http.Response, error)
 	// ParamGet - Get method that overwrites x-ms-client-request header with value 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.
-	ParamGet(ctx context.Context, xMSClientRequestId string) (*http.Response, error)
+	ParamGet(ctx context.Context, xMSClientRequestId string, options *XMSClientRequestIDParamGetOptions) (*http.Response, error)
 }
 
 // XMSClientRequestIDClient implements the XMSClientRequestIDOperations interface.
@@ -39,8 +39,8 @@ func (client *XMSClientRequestIDClient) Do(req *azcore.Request) (*azcore.Respons
 }
 
 // Get - Get method that overwrites x-ms-client-request header with value 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.
-func (client *XMSClientRequestIDClient) Get(ctx context.Context) (*http.Response, error) {
-	req, err := client.GetCreateRequest(ctx)
+func (client *XMSClientRequestIDClient) Get(ctx context.Context, options *XMSClientRequestIDGetOptions) (*http.Response, error) {
+	req, err := client.GetCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -55,7 +55,7 @@ func (client *XMSClientRequestIDClient) Get(ctx context.Context) (*http.Response
 }
 
 // GetCreateRequest creates the Get request.
-func (client *XMSClientRequestIDClient) GetCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *XMSClientRequestIDClient) GetCreateRequest(ctx context.Context, options *XMSClientRequestIDGetOptions) (*azcore.Request, error) {
 	urlPath := "/azurespecials/overwrite/x-ms-client-request-id/method/"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -77,8 +77,8 @@ func (client *XMSClientRequestIDClient) GetHandleError(resp *azcore.Response) er
 }
 
 // ParamGet - Get method that overwrites x-ms-client-request header with value 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.
-func (client *XMSClientRequestIDClient) ParamGet(ctx context.Context, xMSClientRequestId string) (*http.Response, error) {
-	req, err := client.ParamGetCreateRequest(ctx, xMSClientRequestId)
+func (client *XMSClientRequestIDClient) ParamGet(ctx context.Context, xMSClientRequestId string, options *XMSClientRequestIDParamGetOptions) (*http.Response, error) {
+	req, err := client.ParamGetCreateRequest(ctx, xMSClientRequestId, options)
 	if err != nil {
 		return nil, err
 	}
@@ -93,7 +93,7 @@ func (client *XMSClientRequestIDClient) ParamGet(ctx context.Context, xMSClientR
 }
 
 // ParamGetCreateRequest creates the ParamGet request.
-func (client *XMSClientRequestIDClient) ParamGetCreateRequest(ctx context.Context, xMSClientRequestId string) (*azcore.Request, error) {
+func (client *XMSClientRequestIDClient) ParamGetCreateRequest(ctx context.Context, xMSClientRequestId string, options *XMSClientRequestIDParamGetOptions) (*azcore.Request, error) {
 	urlPath := "/azurespecials/overwrite/x-ms-client-request-id/via-param/method/"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {

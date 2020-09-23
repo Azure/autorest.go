@@ -23,8 +23,8 @@ func (client *notebookClient) Do(req *azcore.Request) (*azcore.Response, error) 
 }
 
 // CreateOrUpdateNotebook - Creates or updates a Note Book.
-func (client *notebookClient) CreateOrUpdateNotebook(ctx context.Context, notebookName string, notebook NotebookResource, notebookCreateOrUpdateNotebookOptions *NotebookCreateOrUpdateNotebookOptions) (*azcore.Response, error) {
-	req, err := client.CreateOrUpdateNotebookCreateRequest(ctx, notebookName, notebook, notebookCreateOrUpdateNotebookOptions)
+func (client *notebookClient) CreateOrUpdateNotebook(ctx context.Context, notebookName string, notebook NotebookResource, options *NotebookCreateOrUpdateNotebookOptions) (*azcore.Response, error) {
+	req, err := client.CreateOrUpdateNotebookCreateRequest(ctx, notebookName, notebook, options)
 	if err != nil {
 		return nil, err
 	}
@@ -39,7 +39,7 @@ func (client *notebookClient) CreateOrUpdateNotebook(ctx context.Context, notebo
 }
 
 // CreateOrUpdateNotebookCreateRequest creates the CreateOrUpdateNotebook request.
-func (client *notebookClient) CreateOrUpdateNotebookCreateRequest(ctx context.Context, notebookName string, notebook NotebookResource, notebookCreateOrUpdateNotebookOptions *NotebookCreateOrUpdateNotebookOptions) (*azcore.Request, error) {
+func (client *notebookClient) CreateOrUpdateNotebookCreateRequest(ctx context.Context, notebookName string, notebook NotebookResource, options *NotebookCreateOrUpdateNotebookOptions) (*azcore.Request, error) {
 	urlPath := "/notebooks/{notebookName}"
 	urlPath = strings.ReplaceAll(urlPath, "{notebookName}", url.PathEscape(notebookName))
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
@@ -49,8 +49,8 @@ func (client *notebookClient) CreateOrUpdateNotebookCreateRequest(ctx context.Co
 	query := req.URL.Query()
 	query.Set("api-version", "2019-06-01-preview")
 	req.URL.RawQuery = query.Encode()
-	if notebookCreateOrUpdateNotebookOptions != nil && notebookCreateOrUpdateNotebookOptions.IfMatch != nil {
-		req.Header.Set("If-Match", *notebookCreateOrUpdateNotebookOptions.IfMatch)
+	if options != nil && options.IfMatch != nil {
+		req.Header.Set("If-Match", *options.IfMatch)
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(notebook)
@@ -72,8 +72,8 @@ func (client *notebookClient) CreateOrUpdateNotebookHandleError(resp *azcore.Res
 }
 
 // DeleteNotebook - Deletes a Note book.
-func (client *notebookClient) DeleteNotebook(ctx context.Context, notebookName string) (*azcore.Response, error) {
-	req, err := client.DeleteNotebookCreateRequest(ctx, notebookName)
+func (client *notebookClient) DeleteNotebook(ctx context.Context, notebookName string, options *NotebookDeleteNotebookOptions) (*azcore.Response, error) {
+	req, err := client.DeleteNotebookCreateRequest(ctx, notebookName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -88,7 +88,7 @@ func (client *notebookClient) DeleteNotebook(ctx context.Context, notebookName s
 }
 
 // DeleteNotebookCreateRequest creates the DeleteNotebook request.
-func (client *notebookClient) DeleteNotebookCreateRequest(ctx context.Context, notebookName string) (*azcore.Request, error) {
+func (client *notebookClient) DeleteNotebookCreateRequest(ctx context.Context, notebookName string, options *NotebookDeleteNotebookOptions) (*azcore.Request, error) {
 	urlPath := "/notebooks/{notebookName}"
 	urlPath = strings.ReplaceAll(urlPath, "{notebookName}", url.PathEscape(notebookName))
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
@@ -112,8 +112,8 @@ func (client *notebookClient) DeleteNotebookHandleError(resp *azcore.Response) e
 }
 
 // GetNotebook - Gets a Note Book.
-func (client *notebookClient) GetNotebook(ctx context.Context, notebookName string, notebookGetNotebookOptions *NotebookGetNotebookOptions) (*NotebookResourceResponse, error) {
-	req, err := client.GetNotebookCreateRequest(ctx, notebookName, notebookGetNotebookOptions)
+func (client *notebookClient) GetNotebook(ctx context.Context, notebookName string, options *NotebookGetNotebookOptions) (*NotebookResourceResponse, error) {
+	req, err := client.GetNotebookCreateRequest(ctx, notebookName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -132,7 +132,7 @@ func (client *notebookClient) GetNotebook(ctx context.Context, notebookName stri
 }
 
 // GetNotebookCreateRequest creates the GetNotebook request.
-func (client *notebookClient) GetNotebookCreateRequest(ctx context.Context, notebookName string, notebookGetNotebookOptions *NotebookGetNotebookOptions) (*azcore.Request, error) {
+func (client *notebookClient) GetNotebookCreateRequest(ctx context.Context, notebookName string, options *NotebookGetNotebookOptions) (*azcore.Request, error) {
 	urlPath := "/notebooks/{notebookName}"
 	urlPath = strings.ReplaceAll(urlPath, "{notebookName}", url.PathEscape(notebookName))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
@@ -142,8 +142,8 @@ func (client *notebookClient) GetNotebookCreateRequest(ctx context.Context, note
 	query := req.URL.Query()
 	query.Set("api-version", "2019-06-01-preview")
 	req.URL.RawQuery = query.Encode()
-	if notebookGetNotebookOptions != nil && notebookGetNotebookOptions.IfNoneMatch != nil {
-		req.Header.Set("If-None-Match", *notebookGetNotebookOptions.IfNoneMatch)
+	if options != nil && options.IfNoneMatch != nil {
+		req.Header.Set("If-None-Match", *options.IfNoneMatch)
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
@@ -165,11 +165,11 @@ func (client *notebookClient) GetNotebookHandleError(resp *azcore.Response) erro
 }
 
 // GetNotebookSummaryByWorkSpace - Lists a summary of Notebooks.
-func (client *notebookClient) GetNotebookSummaryByWorkSpace() NotebookListResponsePager {
+func (client *notebookClient) GetNotebookSummaryByWorkSpace(options *NotebookGetNotebookSummaryByWorkSpaceOptions) NotebookListResponsePager {
 	return &notebookListResponsePager{
 		pipeline: client.p,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
-			return client.GetNotebookSummaryByWorkSpaceCreateRequest(ctx)
+			return client.GetNotebookSummaryByWorkSpaceCreateRequest(ctx, options)
 		},
 		responder: client.GetNotebookSummaryByWorkSpaceHandleResponse,
 		errorer:   client.GetNotebookSummaryByWorkSpaceHandleError,
@@ -180,7 +180,7 @@ func (client *notebookClient) GetNotebookSummaryByWorkSpace() NotebookListRespon
 }
 
 // GetNotebookSummaryByWorkSpaceCreateRequest creates the GetNotebookSummaryByWorkSpace request.
-func (client *notebookClient) GetNotebookSummaryByWorkSpaceCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *notebookClient) GetNotebookSummaryByWorkSpaceCreateRequest(ctx context.Context, options *NotebookGetNotebookSummaryByWorkSpaceOptions) (*azcore.Request, error) {
 	urlPath := "/notebooks/summary"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -209,11 +209,11 @@ func (client *notebookClient) GetNotebookSummaryByWorkSpaceHandleError(resp *azc
 }
 
 // GetNotebooksByWorkspace - Lists Notebooks.
-func (client *notebookClient) GetNotebooksByWorkspace() NotebookListResponsePager {
+func (client *notebookClient) GetNotebooksByWorkspace(options *NotebookGetNotebooksByWorkspaceOptions) NotebookListResponsePager {
 	return &notebookListResponsePager{
 		pipeline: client.p,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
-			return client.GetNotebooksByWorkspaceCreateRequest(ctx)
+			return client.GetNotebooksByWorkspaceCreateRequest(ctx, options)
 		},
 		responder: client.GetNotebooksByWorkspaceHandleResponse,
 		errorer:   client.GetNotebooksByWorkspaceHandleError,
@@ -224,7 +224,7 @@ func (client *notebookClient) GetNotebooksByWorkspace() NotebookListResponsePage
 }
 
 // GetNotebooksByWorkspaceCreateRequest creates the GetNotebooksByWorkspace request.
-func (client *notebookClient) GetNotebooksByWorkspaceCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *notebookClient) GetNotebooksByWorkspaceCreateRequest(ctx context.Context, options *NotebookGetNotebooksByWorkspaceOptions) (*azcore.Request, error) {
 	urlPath := "/notebooks"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {

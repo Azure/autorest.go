@@ -14,9 +14,9 @@ import (
 // AutoRestReportServiceOperations contains the methods for the AutoRestReportService group.
 type AutoRestReportServiceOperations interface {
 	// GetOptionalReport - Get optional test coverage report
-	GetOptionalReport(ctx context.Context, autoRestReportServiceGetOptionalReportOptions *AutoRestReportServiceGetOptionalReportOptions) (*MapOfInt32Response, error)
+	GetOptionalReport(ctx context.Context, options *AutoRestReportServiceGetOptionalReportOptions) (*MapOfInt32Response, error)
 	// GetReport - Get test coverage report
-	GetReport(ctx context.Context, autoRestReportServiceGetReportOptions *AutoRestReportServiceGetReportOptions) (*MapOfInt32Response, error)
+	GetReport(ctx context.Context, options *AutoRestReportServiceGetReportOptions) (*MapOfInt32Response, error)
 }
 
 // AutoRestReportServiceClient implements the AutoRestReportServiceOperations interface.
@@ -36,8 +36,8 @@ func (client *AutoRestReportServiceClient) Do(req *azcore.Request) (*azcore.Resp
 }
 
 // GetOptionalReport - Get optional test coverage report
-func (client *AutoRestReportServiceClient) GetOptionalReport(ctx context.Context, autoRestReportServiceGetOptionalReportOptions *AutoRestReportServiceGetOptionalReportOptions) (*MapOfInt32Response, error) {
-	req, err := client.GetOptionalReportCreateRequest(ctx, autoRestReportServiceGetOptionalReportOptions)
+func (client *AutoRestReportServiceClient) GetOptionalReport(ctx context.Context, options *AutoRestReportServiceGetOptionalReportOptions) (*MapOfInt32Response, error) {
+	req, err := client.GetOptionalReportCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -56,15 +56,15 @@ func (client *AutoRestReportServiceClient) GetOptionalReport(ctx context.Context
 }
 
 // GetOptionalReportCreateRequest creates the GetOptionalReport request.
-func (client *AutoRestReportServiceClient) GetOptionalReportCreateRequest(ctx context.Context, autoRestReportServiceGetOptionalReportOptions *AutoRestReportServiceGetOptionalReportOptions) (*azcore.Request, error) {
+func (client *AutoRestReportServiceClient) GetOptionalReportCreateRequest(ctx context.Context, options *AutoRestReportServiceGetOptionalReportOptions) (*azcore.Request, error) {
 	urlPath := "/report/optional"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	query := req.URL.Query()
-	if autoRestReportServiceGetOptionalReportOptions != nil && autoRestReportServiceGetOptionalReportOptions.Qualifier != nil {
-		query.Set("qualifier", *autoRestReportServiceGetOptionalReportOptions.Qualifier)
+	if options != nil && options.Qualifier != nil {
+		query.Set("qualifier", *options.Qualifier)
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
@@ -87,8 +87,8 @@ func (client *AutoRestReportServiceClient) GetOptionalReportHandleError(resp *az
 }
 
 // GetReport - Get test coverage report
-func (client *AutoRestReportServiceClient) GetReport(ctx context.Context, autoRestReportServiceGetReportOptions *AutoRestReportServiceGetReportOptions) (*MapOfInt32Response, error) {
-	req, err := client.GetReportCreateRequest(ctx, autoRestReportServiceGetReportOptions)
+func (client *AutoRestReportServiceClient) GetReport(ctx context.Context, options *AutoRestReportServiceGetReportOptions) (*MapOfInt32Response, error) {
+	req, err := client.GetReportCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -107,15 +107,15 @@ func (client *AutoRestReportServiceClient) GetReport(ctx context.Context, autoRe
 }
 
 // GetReportCreateRequest creates the GetReport request.
-func (client *AutoRestReportServiceClient) GetReportCreateRequest(ctx context.Context, autoRestReportServiceGetReportOptions *AutoRestReportServiceGetReportOptions) (*azcore.Request, error) {
+func (client *AutoRestReportServiceClient) GetReportCreateRequest(ctx context.Context, options *AutoRestReportServiceGetReportOptions) (*azcore.Request, error) {
 	urlPath := "/report"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	query := req.URL.Query()
-	if autoRestReportServiceGetReportOptions != nil && autoRestReportServiceGetReportOptions.Qualifier != nil {
-		query.Set("qualifier", *autoRestReportServiceGetReportOptions.Qualifier)
+	if options != nil && options.Qualifier != nil {
+		query.Set("qualifier", *options.Qualifier)
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")

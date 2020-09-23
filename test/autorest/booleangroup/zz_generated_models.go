@@ -10,6 +10,36 @@ import (
 	"net/http"
 )
 
+// BoolGetFalseOptions contains the optional parameters for the Bool.GetFalse method.
+type BoolGetFalseOptions struct {
+	// placeholder for future optional parameters
+}
+
+// BoolGetInvalidOptions contains the optional parameters for the Bool.GetInvalid method.
+type BoolGetInvalidOptions struct {
+	// placeholder for future optional parameters
+}
+
+// BoolGetNullOptions contains the optional parameters for the Bool.GetNull method.
+type BoolGetNullOptions struct {
+	// placeholder for future optional parameters
+}
+
+// BoolGetTrueOptions contains the optional parameters for the Bool.GetTrue method.
+type BoolGetTrueOptions struct {
+	// placeholder for future optional parameters
+}
+
+// BoolPutFalseOptions contains the optional parameters for the Bool.PutFalse method.
+type BoolPutFalseOptions struct {
+	// placeholder for future optional parameters
+}
+
+// BoolPutTrueOptions contains the optional parameters for the Bool.PutTrue method.
+type BoolPutTrueOptions struct {
+	// placeholder for future optional parameters
+}
+
 // BoolResponse is the response envelope for operations that return a bool type.
 type BoolResponse struct {
 	// RawResponse contains the underlying HTTP response.

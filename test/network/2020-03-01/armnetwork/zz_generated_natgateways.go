@@ -18,21 +18,21 @@ import (
 // NatGatewaysOperations contains the methods for the NatGateways group.
 type NatGatewaysOperations interface {
 	// BeginCreateOrUpdate - Creates or updates a nat gateway.
-	BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, natGatewayName string, parameters NatGateway) (*NatGatewayPollerResponse, error)
+	BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, natGatewayName string, parameters NatGateway, options *NatGatewaysCreateOrUpdateOptions) (*NatGatewayPollerResponse, error)
 	// ResumeCreateOrUpdate - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeCreateOrUpdate(token string) (NatGatewayPoller, error)
 	// BeginDelete - Deletes the specified nat gateway.
-	BeginDelete(ctx context.Context, resourceGroupName string, natGatewayName string) (*HTTPPollerResponse, error)
+	BeginDelete(ctx context.Context, resourceGroupName string, natGatewayName string, options *NatGatewaysDeleteOptions) (*HTTPPollerResponse, error)
 	// ResumeDelete - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeDelete(token string) (HTTPPoller, error)
 	// Get - Gets the specified nat gateway in a specified resource group.
-	Get(ctx context.Context, resourceGroupName string, natGatewayName string, natGatewaysGetOptions *NatGatewaysGetOptions) (*NatGatewayResponse, error)
+	Get(ctx context.Context, resourceGroupName string, natGatewayName string, options *NatGatewaysGetOptions) (*NatGatewayResponse, error)
 	// List - Gets all nat gateways in a resource group.
-	List(resourceGroupName string) NatGatewayListResultPager
+	List(resourceGroupName string, options *NatGatewaysListOptions) NatGatewayListResultPager
 	// ListAll - Gets all the Nat Gateways in a subscription.
-	ListAll() NatGatewayListResultPager
+	ListAll(options *NatGatewaysListAllOptions) NatGatewayListResultPager
 	// UpdateTags - Updates nat gateway tags.
-	UpdateTags(ctx context.Context, resourceGroupName string, natGatewayName string, parameters TagsObject) (*NatGatewayResponse, error)
+	UpdateTags(ctx context.Context, resourceGroupName string, natGatewayName string, parameters TagsObject, options *NatGatewaysUpdateTagsOptions) (*NatGatewayResponse, error)
 }
 
 // NatGatewaysClient implements the NatGatewaysOperations interface.
@@ -52,8 +52,8 @@ func (client *NatGatewaysClient) Do(req *azcore.Request) (*azcore.Response, erro
 	return client.p.Do(req)
 }
 
-func (client *NatGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, natGatewayName string, parameters NatGateway) (*NatGatewayPollerResponse, error) {
-	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, natGatewayName, parameters)
+func (client *NatGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, natGatewayName string, parameters NatGateway, options *NatGatewaysCreateOrUpdateOptions) (*NatGatewayPollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, natGatewayName, parameters, options)
 	if err != nil {
 		return nil, err
 	}
@@ -87,8 +87,8 @@ func (client *NatGatewaysClient) ResumeCreateOrUpdate(token string) (NatGatewayP
 }
 
 // CreateOrUpdate - Creates or updates a nat gateway.
-func (client *NatGatewaysClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, natGatewayName string, parameters NatGateway) (*azcore.Response, error) {
-	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, natGatewayName, parameters)
+func (client *NatGatewaysClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, natGatewayName string, parameters NatGateway, options *NatGatewaysCreateOrUpdateOptions) (*azcore.Response, error) {
+	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, natGatewayName, parameters, options)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (client *NatGatewaysClient) CreateOrUpdate(ctx context.Context, resourceGro
 }
 
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *NatGatewaysClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, natGatewayName string, parameters NatGateway) (*azcore.Request, error) {
+func (client *NatGatewaysClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, natGatewayName string, parameters NatGateway, options *NatGatewaysCreateOrUpdateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/natGateways/{natGatewayName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{natGatewayName}", url.PathEscape(natGatewayName))
@@ -134,8 +134,8 @@ func (client *NatGatewaysClient) CreateOrUpdateHandleError(resp *azcore.Response
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-func (client *NatGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, natGatewayName string) (*HTTPPollerResponse, error) {
-	resp, err := client.Delete(ctx, resourceGroupName, natGatewayName)
+func (client *NatGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, natGatewayName string, options *NatGatewaysDeleteOptions) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, natGatewayName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -169,8 +169,8 @@ func (client *NatGatewaysClient) ResumeDelete(token string) (HTTPPoller, error) 
 }
 
 // Delete - Deletes the specified nat gateway.
-func (client *NatGatewaysClient) Delete(ctx context.Context, resourceGroupName string, natGatewayName string) (*azcore.Response, error) {
-	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, natGatewayName)
+func (client *NatGatewaysClient) Delete(ctx context.Context, resourceGroupName string, natGatewayName string, options *NatGatewaysDeleteOptions) (*azcore.Response, error) {
+	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, natGatewayName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -185,7 +185,7 @@ func (client *NatGatewaysClient) Delete(ctx context.Context, resourceGroupName s
 }
 
 // DeleteCreateRequest creates the Delete request.
-func (client *NatGatewaysClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, natGatewayName string) (*azcore.Request, error) {
+func (client *NatGatewaysClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, natGatewayName string, options *NatGatewaysDeleteOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/natGateways/{natGatewayName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{natGatewayName}", url.PathEscape(natGatewayName))
@@ -211,8 +211,8 @@ func (client *NatGatewaysClient) DeleteHandleError(resp *azcore.Response) error 
 }
 
 // Get - Gets the specified nat gateway in a specified resource group.
-func (client *NatGatewaysClient) Get(ctx context.Context, resourceGroupName string, natGatewayName string, natGatewaysGetOptions *NatGatewaysGetOptions) (*NatGatewayResponse, error) {
-	req, err := client.GetCreateRequest(ctx, resourceGroupName, natGatewayName, natGatewaysGetOptions)
+func (client *NatGatewaysClient) Get(ctx context.Context, resourceGroupName string, natGatewayName string, options *NatGatewaysGetOptions) (*NatGatewayResponse, error) {
+	req, err := client.GetCreateRequest(ctx, resourceGroupName, natGatewayName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -231,7 +231,7 @@ func (client *NatGatewaysClient) Get(ctx context.Context, resourceGroupName stri
 }
 
 // GetCreateRequest creates the Get request.
-func (client *NatGatewaysClient) GetCreateRequest(ctx context.Context, resourceGroupName string, natGatewayName string, natGatewaysGetOptions *NatGatewaysGetOptions) (*azcore.Request, error) {
+func (client *NatGatewaysClient) GetCreateRequest(ctx context.Context, resourceGroupName string, natGatewayName string, options *NatGatewaysGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/natGateways/{natGatewayName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{natGatewayName}", url.PathEscape(natGatewayName))
@@ -242,8 +242,8 @@ func (client *NatGatewaysClient) GetCreateRequest(ctx context.Context, resourceG
 	}
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
-	if natGatewaysGetOptions != nil && natGatewaysGetOptions.Expand != nil {
-		query.Set("$expand", *natGatewaysGetOptions.Expand)
+	if options != nil && options.Expand != nil {
+		query.Set("$expand", *options.Expand)
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
@@ -266,11 +266,11 @@ func (client *NatGatewaysClient) GetHandleError(resp *azcore.Response) error {
 }
 
 // List - Gets all nat gateways in a resource group.
-func (client *NatGatewaysClient) List(resourceGroupName string) NatGatewayListResultPager {
+func (client *NatGatewaysClient) List(resourceGroupName string, options *NatGatewaysListOptions) NatGatewayListResultPager {
 	return &natGatewayListResultPager{
 		pipeline: client.p,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
-			return client.ListCreateRequest(ctx, resourceGroupName)
+			return client.ListCreateRequest(ctx, resourceGroupName, options)
 		},
 		responder: client.ListHandleResponse,
 		errorer:   client.ListHandleError,
@@ -281,7 +281,7 @@ func (client *NatGatewaysClient) List(resourceGroupName string) NatGatewayListRe
 }
 
 // ListCreateRequest creates the List request.
-func (client *NatGatewaysClient) ListCreateRequest(ctx context.Context, resourceGroupName string) (*azcore.Request, error) {
+func (client *NatGatewaysClient) ListCreateRequest(ctx context.Context, resourceGroupName string, options *NatGatewaysListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/natGateways"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
@@ -312,11 +312,11 @@ func (client *NatGatewaysClient) ListHandleError(resp *azcore.Response) error {
 }
 
 // ListAll - Gets all the Nat Gateways in a subscription.
-func (client *NatGatewaysClient) ListAll() NatGatewayListResultPager {
+func (client *NatGatewaysClient) ListAll(options *NatGatewaysListAllOptions) NatGatewayListResultPager {
 	return &natGatewayListResultPager{
 		pipeline: client.p,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
-			return client.ListAllCreateRequest(ctx)
+			return client.ListAllCreateRequest(ctx, options)
 		},
 		responder: client.ListAllHandleResponse,
 		errorer:   client.ListAllHandleError,
@@ -327,7 +327,7 @@ func (client *NatGatewaysClient) ListAll() NatGatewayListResultPager {
 }
 
 // ListAllCreateRequest creates the ListAll request.
-func (client *NatGatewaysClient) ListAllCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *NatGatewaysClient) ListAllCreateRequest(ctx context.Context, options *NatGatewaysListAllOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/natGateways"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
@@ -357,8 +357,8 @@ func (client *NatGatewaysClient) ListAllHandleError(resp *azcore.Response) error
 }
 
 // UpdateTags - Updates nat gateway tags.
-func (client *NatGatewaysClient) UpdateTags(ctx context.Context, resourceGroupName string, natGatewayName string, parameters TagsObject) (*NatGatewayResponse, error) {
-	req, err := client.UpdateTagsCreateRequest(ctx, resourceGroupName, natGatewayName, parameters)
+func (client *NatGatewaysClient) UpdateTags(ctx context.Context, resourceGroupName string, natGatewayName string, parameters TagsObject, options *NatGatewaysUpdateTagsOptions) (*NatGatewayResponse, error) {
+	req, err := client.UpdateTagsCreateRequest(ctx, resourceGroupName, natGatewayName, parameters, options)
 	if err != nil {
 		return nil, err
 	}
@@ -377,7 +377,7 @@ func (client *NatGatewaysClient) UpdateTags(ctx context.Context, resourceGroupNa
 }
 
 // UpdateTagsCreateRequest creates the UpdateTags request.
-func (client *NatGatewaysClient) UpdateTagsCreateRequest(ctx context.Context, resourceGroupName string, natGatewayName string, parameters TagsObject) (*azcore.Request, error) {
+func (client *NatGatewaysClient) UpdateTagsCreateRequest(ctx context.Context, resourceGroupName string, natGatewayName string, parameters TagsObject, options *NatGatewaysUpdateTagsOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/natGateways/{natGatewayName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{natGatewayName}", url.PathEscape(natGatewayName))

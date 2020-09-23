@@ -16,7 +16,7 @@ import (
 // BgpServiceCommunitiesOperations contains the methods for the BgpServiceCommunities group.
 type BgpServiceCommunitiesOperations interface {
 	// List - Gets all the available bgp service communities.
-	List() BgpServiceCommunityListResultPager
+	List(options *BgpServiceCommunitiesListOptions) BgpServiceCommunityListResultPager
 }
 
 // BgpServiceCommunitiesClient implements the BgpServiceCommunitiesOperations interface.
@@ -37,11 +37,11 @@ func (client *BgpServiceCommunitiesClient) Do(req *azcore.Request) (*azcore.Resp
 }
 
 // List - Gets all the available bgp service communities.
-func (client *BgpServiceCommunitiesClient) List() BgpServiceCommunityListResultPager {
+func (client *BgpServiceCommunitiesClient) List(options *BgpServiceCommunitiesListOptions) BgpServiceCommunityListResultPager {
 	return &bgpServiceCommunityListResultPager{
 		pipeline: client.p,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
-			return client.ListCreateRequest(ctx)
+			return client.ListCreateRequest(ctx, options)
 		},
 		responder: client.ListHandleResponse,
 		errorer:   client.ListHandleError,
@@ -52,7 +52,7 @@ func (client *BgpServiceCommunitiesClient) List() BgpServiceCommunityListResultP
 }
 
 // ListCreateRequest creates the List request.
-func (client *BgpServiceCommunitiesClient) ListCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *BgpServiceCommunitiesClient) ListCreateRequest(ctx context.Context, options *BgpServiceCommunitiesListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/bgpServiceCommunities"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))

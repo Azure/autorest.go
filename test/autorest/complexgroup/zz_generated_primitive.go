@@ -14,49 +14,49 @@ import (
 // PrimitiveOperations contains the methods for the Primitive group.
 type PrimitiveOperations interface {
 	// GetBool - Get complex types with bool properties
-	GetBool(ctx context.Context) (*BooleanWrapperResponse, error)
+	GetBool(ctx context.Context, options *PrimitiveGetBoolOptions) (*BooleanWrapperResponse, error)
 	// GetByte - Get complex types with byte properties
-	GetByte(ctx context.Context) (*ByteWrapperResponse, error)
+	GetByte(ctx context.Context, options *PrimitiveGetByteOptions) (*ByteWrapperResponse, error)
 	// GetDate - Get complex types with date properties
-	GetDate(ctx context.Context) (*DateWrapperResponse, error)
+	GetDate(ctx context.Context, options *PrimitiveGetDateOptions) (*DateWrapperResponse, error)
 	// GetDateTime - Get complex types with datetime properties
-	GetDateTime(ctx context.Context) (*DatetimeWrapperResponse, error)
+	GetDateTime(ctx context.Context, options *PrimitiveGetDateTimeOptions) (*DatetimeWrapperResponse, error)
 	// GetDateTimeRFC1123 - Get complex types with datetimeRfc1123 properties
-	GetDateTimeRFC1123(ctx context.Context) (*Datetimerfc1123WrapperResponse, error)
+	GetDateTimeRFC1123(ctx context.Context, options *PrimitiveGetDateTimeRFC1123Options) (*Datetimerfc1123WrapperResponse, error)
 	// GetDouble - Get complex types with double properties
-	GetDouble(ctx context.Context) (*DoubleWrapperResponse, error)
+	GetDouble(ctx context.Context, options *PrimitiveGetDoubleOptions) (*DoubleWrapperResponse, error)
 	// GetDuration - Get complex types with duration properties
-	GetDuration(ctx context.Context) (*DurationWrapperResponse, error)
+	GetDuration(ctx context.Context, options *PrimitiveGetDurationOptions) (*DurationWrapperResponse, error)
 	// GetFloat - Get complex types with float properties
-	GetFloat(ctx context.Context) (*FloatWrapperResponse, error)
+	GetFloat(ctx context.Context, options *PrimitiveGetFloatOptions) (*FloatWrapperResponse, error)
 	// GetInt - Get complex types with integer properties
-	GetInt(ctx context.Context) (*IntWrapperResponse, error)
+	GetInt(ctx context.Context, options *PrimitiveGetIntOptions) (*IntWrapperResponse, error)
 	// GetLong - Get complex types with long properties
-	GetLong(ctx context.Context) (*LongWrapperResponse, error)
+	GetLong(ctx context.Context, options *PrimitiveGetLongOptions) (*LongWrapperResponse, error)
 	// GetString - Get complex types with string properties
-	GetString(ctx context.Context) (*StringWrapperResponse, error)
+	GetString(ctx context.Context, options *PrimitiveGetStringOptions) (*StringWrapperResponse, error)
 	// PutBool - Put complex types with bool properties
-	PutBool(ctx context.Context, complexBody BooleanWrapper) (*http.Response, error)
+	PutBool(ctx context.Context, complexBody BooleanWrapper, options *PrimitivePutBoolOptions) (*http.Response, error)
 	// PutByte - Put complex types with byte properties
-	PutByte(ctx context.Context, complexBody ByteWrapper) (*http.Response, error)
+	PutByte(ctx context.Context, complexBody ByteWrapper, options *PrimitivePutByteOptions) (*http.Response, error)
 	// PutDate - Put complex types with date properties
-	PutDate(ctx context.Context, complexBody DateWrapper) (*http.Response, error)
+	PutDate(ctx context.Context, complexBody DateWrapper, options *PrimitivePutDateOptions) (*http.Response, error)
 	// PutDateTime - Put complex types with datetime properties
-	PutDateTime(ctx context.Context, complexBody DatetimeWrapper) (*http.Response, error)
+	PutDateTime(ctx context.Context, complexBody DatetimeWrapper, options *PrimitivePutDateTimeOptions) (*http.Response, error)
 	// PutDateTimeRFC1123 - Put complex types with datetimeRfc1123 properties
-	PutDateTimeRFC1123(ctx context.Context, complexBody Datetimerfc1123Wrapper) (*http.Response, error)
+	PutDateTimeRFC1123(ctx context.Context, complexBody Datetimerfc1123Wrapper, options *PrimitivePutDateTimeRFC1123Options) (*http.Response, error)
 	// PutDouble - Put complex types with double properties
-	PutDouble(ctx context.Context, complexBody DoubleWrapper) (*http.Response, error)
+	PutDouble(ctx context.Context, complexBody DoubleWrapper, options *PrimitivePutDoubleOptions) (*http.Response, error)
 	// PutDuration - Put complex types with duration properties
-	PutDuration(ctx context.Context, complexBody DurationWrapper) (*http.Response, error)
+	PutDuration(ctx context.Context, complexBody DurationWrapper, options *PrimitivePutDurationOptions) (*http.Response, error)
 	// PutFloat - Put complex types with float properties
-	PutFloat(ctx context.Context, complexBody FloatWrapper) (*http.Response, error)
+	PutFloat(ctx context.Context, complexBody FloatWrapper, options *PrimitivePutFloatOptions) (*http.Response, error)
 	// PutInt - Put complex types with integer properties
-	PutInt(ctx context.Context, complexBody IntWrapper) (*http.Response, error)
+	PutInt(ctx context.Context, complexBody IntWrapper, options *PrimitivePutIntOptions) (*http.Response, error)
 	// PutLong - Put complex types with long properties
-	PutLong(ctx context.Context, complexBody LongWrapper) (*http.Response, error)
+	PutLong(ctx context.Context, complexBody LongWrapper, options *PrimitivePutLongOptions) (*http.Response, error)
 	// PutString - Put complex types with string properties
-	PutString(ctx context.Context, complexBody StringWrapper) (*http.Response, error)
+	PutString(ctx context.Context, complexBody StringWrapper, options *PrimitivePutStringOptions) (*http.Response, error)
 }
 
 // PrimitiveClient implements the PrimitiveOperations interface.
@@ -76,8 +76,8 @@ func (client *PrimitiveClient) Do(req *azcore.Request) (*azcore.Response, error)
 }
 
 // GetBool - Get complex types with bool properties
-func (client *PrimitiveClient) GetBool(ctx context.Context) (*BooleanWrapperResponse, error) {
-	req, err := client.GetBoolCreateRequest(ctx)
+func (client *PrimitiveClient) GetBool(ctx context.Context, options *PrimitiveGetBoolOptions) (*BooleanWrapperResponse, error) {
+	req, err := client.GetBoolCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -96,7 +96,7 @@ func (client *PrimitiveClient) GetBool(ctx context.Context) (*BooleanWrapperResp
 }
 
 // GetBoolCreateRequest creates the GetBool request.
-func (client *PrimitiveClient) GetBoolCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *PrimitiveClient) GetBoolCreateRequest(ctx context.Context, options *PrimitiveGetBoolOptions) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/bool"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -122,8 +122,8 @@ func (client *PrimitiveClient) GetBoolHandleError(resp *azcore.Response) error {
 }
 
 // GetByte - Get complex types with byte properties
-func (client *PrimitiveClient) GetByte(ctx context.Context) (*ByteWrapperResponse, error) {
-	req, err := client.GetByteCreateRequest(ctx)
+func (client *PrimitiveClient) GetByte(ctx context.Context, options *PrimitiveGetByteOptions) (*ByteWrapperResponse, error) {
+	req, err := client.GetByteCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -142,7 +142,7 @@ func (client *PrimitiveClient) GetByte(ctx context.Context) (*ByteWrapperRespons
 }
 
 // GetByteCreateRequest creates the GetByte request.
-func (client *PrimitiveClient) GetByteCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *PrimitiveClient) GetByteCreateRequest(ctx context.Context, options *PrimitiveGetByteOptions) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/byte"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -168,8 +168,8 @@ func (client *PrimitiveClient) GetByteHandleError(resp *azcore.Response) error {
 }
 
 // GetDate - Get complex types with date properties
-func (client *PrimitiveClient) GetDate(ctx context.Context) (*DateWrapperResponse, error) {
-	req, err := client.GetDateCreateRequest(ctx)
+func (client *PrimitiveClient) GetDate(ctx context.Context, options *PrimitiveGetDateOptions) (*DateWrapperResponse, error) {
+	req, err := client.GetDateCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -188,7 +188,7 @@ func (client *PrimitiveClient) GetDate(ctx context.Context) (*DateWrapperRespons
 }
 
 // GetDateCreateRequest creates the GetDate request.
-func (client *PrimitiveClient) GetDateCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *PrimitiveClient) GetDateCreateRequest(ctx context.Context, options *PrimitiveGetDateOptions) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/date"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -214,8 +214,8 @@ func (client *PrimitiveClient) GetDateHandleError(resp *azcore.Response) error {
 }
 
 // GetDateTime - Get complex types with datetime properties
-func (client *PrimitiveClient) GetDateTime(ctx context.Context) (*DatetimeWrapperResponse, error) {
-	req, err := client.GetDateTimeCreateRequest(ctx)
+func (client *PrimitiveClient) GetDateTime(ctx context.Context, options *PrimitiveGetDateTimeOptions) (*DatetimeWrapperResponse, error) {
+	req, err := client.GetDateTimeCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -234,7 +234,7 @@ func (client *PrimitiveClient) GetDateTime(ctx context.Context) (*DatetimeWrappe
 }
 
 // GetDateTimeCreateRequest creates the GetDateTime request.
-func (client *PrimitiveClient) GetDateTimeCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *PrimitiveClient) GetDateTimeCreateRequest(ctx context.Context, options *PrimitiveGetDateTimeOptions) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/datetime"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -260,8 +260,8 @@ func (client *PrimitiveClient) GetDateTimeHandleError(resp *azcore.Response) err
 }
 
 // GetDateTimeRFC1123 - Get complex types with datetimeRfc1123 properties
-func (client *PrimitiveClient) GetDateTimeRFC1123(ctx context.Context) (*Datetimerfc1123WrapperResponse, error) {
-	req, err := client.GetDateTimeRFC1123CreateRequest(ctx)
+func (client *PrimitiveClient) GetDateTimeRFC1123(ctx context.Context, options *PrimitiveGetDateTimeRFC1123Options) (*Datetimerfc1123WrapperResponse, error) {
+	req, err := client.GetDateTimeRFC1123CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -280,7 +280,7 @@ func (client *PrimitiveClient) GetDateTimeRFC1123(ctx context.Context) (*Datetim
 }
 
 // GetDateTimeRFC1123CreateRequest creates the GetDateTimeRFC1123 request.
-func (client *PrimitiveClient) GetDateTimeRFC1123CreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *PrimitiveClient) GetDateTimeRFC1123CreateRequest(ctx context.Context, options *PrimitiveGetDateTimeRFC1123Options) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/datetimerfc1123"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -306,8 +306,8 @@ func (client *PrimitiveClient) GetDateTimeRFC1123HandleError(resp *azcore.Respon
 }
 
 // GetDouble - Get complex types with double properties
-func (client *PrimitiveClient) GetDouble(ctx context.Context) (*DoubleWrapperResponse, error) {
-	req, err := client.GetDoubleCreateRequest(ctx)
+func (client *PrimitiveClient) GetDouble(ctx context.Context, options *PrimitiveGetDoubleOptions) (*DoubleWrapperResponse, error) {
+	req, err := client.GetDoubleCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -326,7 +326,7 @@ func (client *PrimitiveClient) GetDouble(ctx context.Context) (*DoubleWrapperRes
 }
 
 // GetDoubleCreateRequest creates the GetDouble request.
-func (client *PrimitiveClient) GetDoubleCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *PrimitiveClient) GetDoubleCreateRequest(ctx context.Context, options *PrimitiveGetDoubleOptions) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/double"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -352,8 +352,8 @@ func (client *PrimitiveClient) GetDoubleHandleError(resp *azcore.Response) error
 }
 
 // GetDuration - Get complex types with duration properties
-func (client *PrimitiveClient) GetDuration(ctx context.Context) (*DurationWrapperResponse, error) {
-	req, err := client.GetDurationCreateRequest(ctx)
+func (client *PrimitiveClient) GetDuration(ctx context.Context, options *PrimitiveGetDurationOptions) (*DurationWrapperResponse, error) {
+	req, err := client.GetDurationCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -372,7 +372,7 @@ func (client *PrimitiveClient) GetDuration(ctx context.Context) (*DurationWrappe
 }
 
 // GetDurationCreateRequest creates the GetDuration request.
-func (client *PrimitiveClient) GetDurationCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *PrimitiveClient) GetDurationCreateRequest(ctx context.Context, options *PrimitiveGetDurationOptions) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/duration"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -398,8 +398,8 @@ func (client *PrimitiveClient) GetDurationHandleError(resp *azcore.Response) err
 }
 
 // GetFloat - Get complex types with float properties
-func (client *PrimitiveClient) GetFloat(ctx context.Context) (*FloatWrapperResponse, error) {
-	req, err := client.GetFloatCreateRequest(ctx)
+func (client *PrimitiveClient) GetFloat(ctx context.Context, options *PrimitiveGetFloatOptions) (*FloatWrapperResponse, error) {
+	req, err := client.GetFloatCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -418,7 +418,7 @@ func (client *PrimitiveClient) GetFloat(ctx context.Context) (*FloatWrapperRespo
 }
 
 // GetFloatCreateRequest creates the GetFloat request.
-func (client *PrimitiveClient) GetFloatCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *PrimitiveClient) GetFloatCreateRequest(ctx context.Context, options *PrimitiveGetFloatOptions) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/float"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -444,8 +444,8 @@ func (client *PrimitiveClient) GetFloatHandleError(resp *azcore.Response) error 
 }
 
 // GetInt - Get complex types with integer properties
-func (client *PrimitiveClient) GetInt(ctx context.Context) (*IntWrapperResponse, error) {
-	req, err := client.GetIntCreateRequest(ctx)
+func (client *PrimitiveClient) GetInt(ctx context.Context, options *PrimitiveGetIntOptions) (*IntWrapperResponse, error) {
+	req, err := client.GetIntCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -464,7 +464,7 @@ func (client *PrimitiveClient) GetInt(ctx context.Context) (*IntWrapperResponse,
 }
 
 // GetIntCreateRequest creates the GetInt request.
-func (client *PrimitiveClient) GetIntCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *PrimitiveClient) GetIntCreateRequest(ctx context.Context, options *PrimitiveGetIntOptions) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/integer"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -490,8 +490,8 @@ func (client *PrimitiveClient) GetIntHandleError(resp *azcore.Response) error {
 }
 
 // GetLong - Get complex types with long properties
-func (client *PrimitiveClient) GetLong(ctx context.Context) (*LongWrapperResponse, error) {
-	req, err := client.GetLongCreateRequest(ctx)
+func (client *PrimitiveClient) GetLong(ctx context.Context, options *PrimitiveGetLongOptions) (*LongWrapperResponse, error) {
+	req, err := client.GetLongCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -510,7 +510,7 @@ func (client *PrimitiveClient) GetLong(ctx context.Context) (*LongWrapperRespons
 }
 
 // GetLongCreateRequest creates the GetLong request.
-func (client *PrimitiveClient) GetLongCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *PrimitiveClient) GetLongCreateRequest(ctx context.Context, options *PrimitiveGetLongOptions) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/long"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -536,8 +536,8 @@ func (client *PrimitiveClient) GetLongHandleError(resp *azcore.Response) error {
 }
 
 // GetString - Get complex types with string properties
-func (client *PrimitiveClient) GetString(ctx context.Context) (*StringWrapperResponse, error) {
-	req, err := client.GetStringCreateRequest(ctx)
+func (client *PrimitiveClient) GetString(ctx context.Context, options *PrimitiveGetStringOptions) (*StringWrapperResponse, error) {
+	req, err := client.GetStringCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -556,7 +556,7 @@ func (client *PrimitiveClient) GetString(ctx context.Context) (*StringWrapperRes
 }
 
 // GetStringCreateRequest creates the GetString request.
-func (client *PrimitiveClient) GetStringCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *PrimitiveClient) GetStringCreateRequest(ctx context.Context, options *PrimitiveGetStringOptions) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/string"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -582,8 +582,8 @@ func (client *PrimitiveClient) GetStringHandleError(resp *azcore.Response) error
 }
 
 // PutBool - Put complex types with bool properties
-func (client *PrimitiveClient) PutBool(ctx context.Context, complexBody BooleanWrapper) (*http.Response, error) {
-	req, err := client.PutBoolCreateRequest(ctx, complexBody)
+func (client *PrimitiveClient) PutBool(ctx context.Context, complexBody BooleanWrapper, options *PrimitivePutBoolOptions) (*http.Response, error) {
+	req, err := client.PutBoolCreateRequest(ctx, complexBody, options)
 	if err != nil {
 		return nil, err
 	}
@@ -598,7 +598,7 @@ func (client *PrimitiveClient) PutBool(ctx context.Context, complexBody BooleanW
 }
 
 // PutBoolCreateRequest creates the PutBool request.
-func (client *PrimitiveClient) PutBoolCreateRequest(ctx context.Context, complexBody BooleanWrapper) (*azcore.Request, error) {
+func (client *PrimitiveClient) PutBoolCreateRequest(ctx context.Context, complexBody BooleanWrapper, options *PrimitivePutBoolOptions) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/bool"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -618,8 +618,8 @@ func (client *PrimitiveClient) PutBoolHandleError(resp *azcore.Response) error {
 }
 
 // PutByte - Put complex types with byte properties
-func (client *PrimitiveClient) PutByte(ctx context.Context, complexBody ByteWrapper) (*http.Response, error) {
-	req, err := client.PutByteCreateRequest(ctx, complexBody)
+func (client *PrimitiveClient) PutByte(ctx context.Context, complexBody ByteWrapper, options *PrimitivePutByteOptions) (*http.Response, error) {
+	req, err := client.PutByteCreateRequest(ctx, complexBody, options)
 	if err != nil {
 		return nil, err
 	}
@@ -634,7 +634,7 @@ func (client *PrimitiveClient) PutByte(ctx context.Context, complexBody ByteWrap
 }
 
 // PutByteCreateRequest creates the PutByte request.
-func (client *PrimitiveClient) PutByteCreateRequest(ctx context.Context, complexBody ByteWrapper) (*azcore.Request, error) {
+func (client *PrimitiveClient) PutByteCreateRequest(ctx context.Context, complexBody ByteWrapper, options *PrimitivePutByteOptions) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/byte"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -654,8 +654,8 @@ func (client *PrimitiveClient) PutByteHandleError(resp *azcore.Response) error {
 }
 
 // PutDate - Put complex types with date properties
-func (client *PrimitiveClient) PutDate(ctx context.Context, complexBody DateWrapper) (*http.Response, error) {
-	req, err := client.PutDateCreateRequest(ctx, complexBody)
+func (client *PrimitiveClient) PutDate(ctx context.Context, complexBody DateWrapper, options *PrimitivePutDateOptions) (*http.Response, error) {
+	req, err := client.PutDateCreateRequest(ctx, complexBody, options)
 	if err != nil {
 		return nil, err
 	}
@@ -670,7 +670,7 @@ func (client *PrimitiveClient) PutDate(ctx context.Context, complexBody DateWrap
 }
 
 // PutDateCreateRequest creates the PutDate request.
-func (client *PrimitiveClient) PutDateCreateRequest(ctx context.Context, complexBody DateWrapper) (*azcore.Request, error) {
+func (client *PrimitiveClient) PutDateCreateRequest(ctx context.Context, complexBody DateWrapper, options *PrimitivePutDateOptions) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/date"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -690,8 +690,8 @@ func (client *PrimitiveClient) PutDateHandleError(resp *azcore.Response) error {
 }
 
 // PutDateTime - Put complex types with datetime properties
-func (client *PrimitiveClient) PutDateTime(ctx context.Context, complexBody DatetimeWrapper) (*http.Response, error) {
-	req, err := client.PutDateTimeCreateRequest(ctx, complexBody)
+func (client *PrimitiveClient) PutDateTime(ctx context.Context, complexBody DatetimeWrapper, options *PrimitivePutDateTimeOptions) (*http.Response, error) {
+	req, err := client.PutDateTimeCreateRequest(ctx, complexBody, options)
 	if err != nil {
 		return nil, err
 	}
@@ -706,7 +706,7 @@ func (client *PrimitiveClient) PutDateTime(ctx context.Context, complexBody Date
 }
 
 // PutDateTimeCreateRequest creates the PutDateTime request.
-func (client *PrimitiveClient) PutDateTimeCreateRequest(ctx context.Context, complexBody DatetimeWrapper) (*azcore.Request, error) {
+func (client *PrimitiveClient) PutDateTimeCreateRequest(ctx context.Context, complexBody DatetimeWrapper, options *PrimitivePutDateTimeOptions) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/datetime"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -726,8 +726,8 @@ func (client *PrimitiveClient) PutDateTimeHandleError(resp *azcore.Response) err
 }
 
 // PutDateTimeRFC1123 - Put complex types with datetimeRfc1123 properties
-func (client *PrimitiveClient) PutDateTimeRFC1123(ctx context.Context, complexBody Datetimerfc1123Wrapper) (*http.Response, error) {
-	req, err := client.PutDateTimeRFC1123CreateRequest(ctx, complexBody)
+func (client *PrimitiveClient) PutDateTimeRFC1123(ctx context.Context, complexBody Datetimerfc1123Wrapper, options *PrimitivePutDateTimeRFC1123Options) (*http.Response, error) {
+	req, err := client.PutDateTimeRFC1123CreateRequest(ctx, complexBody, options)
 	if err != nil {
 		return nil, err
 	}
@@ -742,7 +742,7 @@ func (client *PrimitiveClient) PutDateTimeRFC1123(ctx context.Context, complexBo
 }
 
 // PutDateTimeRFC1123CreateRequest creates the PutDateTimeRFC1123 request.
-func (client *PrimitiveClient) PutDateTimeRFC1123CreateRequest(ctx context.Context, complexBody Datetimerfc1123Wrapper) (*azcore.Request, error) {
+func (client *PrimitiveClient) PutDateTimeRFC1123CreateRequest(ctx context.Context, complexBody Datetimerfc1123Wrapper, options *PrimitivePutDateTimeRFC1123Options) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/datetimerfc1123"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -762,8 +762,8 @@ func (client *PrimitiveClient) PutDateTimeRFC1123HandleError(resp *azcore.Respon
 }
 
 // PutDouble - Put complex types with double properties
-func (client *PrimitiveClient) PutDouble(ctx context.Context, complexBody DoubleWrapper) (*http.Response, error) {
-	req, err := client.PutDoubleCreateRequest(ctx, complexBody)
+func (client *PrimitiveClient) PutDouble(ctx context.Context, complexBody DoubleWrapper, options *PrimitivePutDoubleOptions) (*http.Response, error) {
+	req, err := client.PutDoubleCreateRequest(ctx, complexBody, options)
 	if err != nil {
 		return nil, err
 	}
@@ -778,7 +778,7 @@ func (client *PrimitiveClient) PutDouble(ctx context.Context, complexBody Double
 }
 
 // PutDoubleCreateRequest creates the PutDouble request.
-func (client *PrimitiveClient) PutDoubleCreateRequest(ctx context.Context, complexBody DoubleWrapper) (*azcore.Request, error) {
+func (client *PrimitiveClient) PutDoubleCreateRequest(ctx context.Context, complexBody DoubleWrapper, options *PrimitivePutDoubleOptions) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/double"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -798,8 +798,8 @@ func (client *PrimitiveClient) PutDoubleHandleError(resp *azcore.Response) error
 }
 
 // PutDuration - Put complex types with duration properties
-func (client *PrimitiveClient) PutDuration(ctx context.Context, complexBody DurationWrapper) (*http.Response, error) {
-	req, err := client.PutDurationCreateRequest(ctx, complexBody)
+func (client *PrimitiveClient) PutDuration(ctx context.Context, complexBody DurationWrapper, options *PrimitivePutDurationOptions) (*http.Response, error) {
+	req, err := client.PutDurationCreateRequest(ctx, complexBody, options)
 	if err != nil {
 		return nil, err
 	}
@@ -814,7 +814,7 @@ func (client *PrimitiveClient) PutDuration(ctx context.Context, complexBody Dura
 }
 
 // PutDurationCreateRequest creates the PutDuration request.
-func (client *PrimitiveClient) PutDurationCreateRequest(ctx context.Context, complexBody DurationWrapper) (*azcore.Request, error) {
+func (client *PrimitiveClient) PutDurationCreateRequest(ctx context.Context, complexBody DurationWrapper, options *PrimitivePutDurationOptions) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/duration"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -834,8 +834,8 @@ func (client *PrimitiveClient) PutDurationHandleError(resp *azcore.Response) err
 }
 
 // PutFloat - Put complex types with float properties
-func (client *PrimitiveClient) PutFloat(ctx context.Context, complexBody FloatWrapper) (*http.Response, error) {
-	req, err := client.PutFloatCreateRequest(ctx, complexBody)
+func (client *PrimitiveClient) PutFloat(ctx context.Context, complexBody FloatWrapper, options *PrimitivePutFloatOptions) (*http.Response, error) {
+	req, err := client.PutFloatCreateRequest(ctx, complexBody, options)
 	if err != nil {
 		return nil, err
 	}
@@ -850,7 +850,7 @@ func (client *PrimitiveClient) PutFloat(ctx context.Context, complexBody FloatWr
 }
 
 // PutFloatCreateRequest creates the PutFloat request.
-func (client *PrimitiveClient) PutFloatCreateRequest(ctx context.Context, complexBody FloatWrapper) (*azcore.Request, error) {
+func (client *PrimitiveClient) PutFloatCreateRequest(ctx context.Context, complexBody FloatWrapper, options *PrimitivePutFloatOptions) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/float"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -870,8 +870,8 @@ func (client *PrimitiveClient) PutFloatHandleError(resp *azcore.Response) error 
 }
 
 // PutInt - Put complex types with integer properties
-func (client *PrimitiveClient) PutInt(ctx context.Context, complexBody IntWrapper) (*http.Response, error) {
-	req, err := client.PutIntCreateRequest(ctx, complexBody)
+func (client *PrimitiveClient) PutInt(ctx context.Context, complexBody IntWrapper, options *PrimitivePutIntOptions) (*http.Response, error) {
+	req, err := client.PutIntCreateRequest(ctx, complexBody, options)
 	if err != nil {
 		return nil, err
 	}
@@ -886,7 +886,7 @@ func (client *PrimitiveClient) PutInt(ctx context.Context, complexBody IntWrappe
 }
 
 // PutIntCreateRequest creates the PutInt request.
-func (client *PrimitiveClient) PutIntCreateRequest(ctx context.Context, complexBody IntWrapper) (*azcore.Request, error) {
+func (client *PrimitiveClient) PutIntCreateRequest(ctx context.Context, complexBody IntWrapper, options *PrimitivePutIntOptions) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/integer"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -906,8 +906,8 @@ func (client *PrimitiveClient) PutIntHandleError(resp *azcore.Response) error {
 }
 
 // PutLong - Put complex types with long properties
-func (client *PrimitiveClient) PutLong(ctx context.Context, complexBody LongWrapper) (*http.Response, error) {
-	req, err := client.PutLongCreateRequest(ctx, complexBody)
+func (client *PrimitiveClient) PutLong(ctx context.Context, complexBody LongWrapper, options *PrimitivePutLongOptions) (*http.Response, error) {
+	req, err := client.PutLongCreateRequest(ctx, complexBody, options)
 	if err != nil {
 		return nil, err
 	}
@@ -922,7 +922,7 @@ func (client *PrimitiveClient) PutLong(ctx context.Context, complexBody LongWrap
 }
 
 // PutLongCreateRequest creates the PutLong request.
-func (client *PrimitiveClient) PutLongCreateRequest(ctx context.Context, complexBody LongWrapper) (*azcore.Request, error) {
+func (client *PrimitiveClient) PutLongCreateRequest(ctx context.Context, complexBody LongWrapper, options *PrimitivePutLongOptions) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/long"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -942,8 +942,8 @@ func (client *PrimitiveClient) PutLongHandleError(resp *azcore.Response) error {
 }
 
 // PutString - Put complex types with string properties
-func (client *PrimitiveClient) PutString(ctx context.Context, complexBody StringWrapper) (*http.Response, error) {
-	req, err := client.PutStringCreateRequest(ctx, complexBody)
+func (client *PrimitiveClient) PutString(ctx context.Context, complexBody StringWrapper, options *PrimitivePutStringOptions) (*http.Response, error) {
+	req, err := client.PutStringCreateRequest(ctx, complexBody, options)
 	if err != nil {
 		return nil, err
 	}
@@ -958,7 +958,7 @@ func (client *PrimitiveClient) PutString(ctx context.Context, complexBody String
 }
 
 // PutStringCreateRequest creates the PutString request.
-func (client *PrimitiveClient) PutStringCreateRequest(ctx context.Context, complexBody StringWrapper) (*azcore.Request, error) {
+func (client *PrimitiveClient) PutStringCreateRequest(ctx context.Context, complexBody StringWrapper, options *PrimitivePutStringOptions) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/string"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {

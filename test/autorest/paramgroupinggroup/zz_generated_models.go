@@ -34,6 +34,12 @@ type FirstParameterGroup struct {
 	QueryOne *int32
 }
 
+// ParameterGroupingPostMultiParamGroupsOptions contains the optional parameters for the ParameterGrouping.PostMultiParamGroups
+// method.
+type ParameterGroupingPostMultiParamGroupsOptions struct {
+	// placeholder for future optional parameters
+}
+
 // ParameterGroupingPostMultiParamGroupsSecondParamGroup contains a group of parameters for the ParameterGrouping.PostMultiParamGroups
 // method.
 type ParameterGroupingPostMultiParamGroupsSecondParamGroup struct {
@@ -42,11 +48,21 @@ type ParameterGroupingPostMultiParamGroupsSecondParamGroup struct {
 	QueryTwo *int32
 }
 
+// ParameterGroupingPostOptionalOptions contains the optional parameters for the ParameterGrouping.PostOptional method.
+type ParameterGroupingPostOptionalOptions struct {
+	// placeholder for future optional parameters
+}
+
 // ParameterGroupingPostOptionalParameters contains a group of parameters for the ParameterGrouping.PostOptional method.
 type ParameterGroupingPostOptionalParameters struct {
 	CustomHeader *string
 	// Query parameter with default
 	Query *int32
+}
+
+// ParameterGroupingPostRequiredOptions contains the optional parameters for the ParameterGrouping.PostRequired method.
+type ParameterGroupingPostRequiredOptions struct {
+	// placeholder for future optional parameters
 }
 
 // ParameterGroupingPostRequiredParameters contains a group of parameters for the ParameterGrouping.PostRequired method.
@@ -57,4 +73,10 @@ type ParameterGroupingPostRequiredParameters struct {
 	PathParameter string
 	// Query parameter with default
 	Query *int32
+}
+
+// ParameterGroupingPostSharedParameterGroupObjectOptions contains the optional parameters for the ParameterGrouping.PostSharedParameterGroupObject
+// method.
+type ParameterGroupingPostSharedParameterGroupObjectOptions struct {
+	// placeholder for future optional parameters
 }

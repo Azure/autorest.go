@@ -104,8 +104,84 @@ type ExplicitPostOptionalStringPropertyOptions struct {
 	BodyParameter *StringOptionalWrapper
 }
 
+// ExplicitPostRequiredArrayHeaderOptions contains the optional parameters for the Explicit.PostRequiredArrayHeader method.
+type ExplicitPostRequiredArrayHeaderOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ExplicitPostRequiredArrayParameterOptions contains the optional parameters for the Explicit.PostRequiredArrayParameter
+// method.
+type ExplicitPostRequiredArrayParameterOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ExplicitPostRequiredArrayPropertyOptions contains the optional parameters for the Explicit.PostRequiredArrayProperty method.
+type ExplicitPostRequiredArrayPropertyOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ExplicitPostRequiredClassParameterOptions contains the optional parameters for the Explicit.PostRequiredClassParameter
+// method.
+type ExplicitPostRequiredClassParameterOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ExplicitPostRequiredClassPropertyOptions contains the optional parameters for the Explicit.PostRequiredClassProperty method.
+type ExplicitPostRequiredClassPropertyOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ExplicitPostRequiredIntegerHeaderOptions contains the optional parameters for the Explicit.PostRequiredIntegerHeader method.
+type ExplicitPostRequiredIntegerHeaderOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ExplicitPostRequiredIntegerParameterOptions contains the optional parameters for the Explicit.PostRequiredIntegerParameter
+// method.
+type ExplicitPostRequiredIntegerParameterOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ExplicitPostRequiredIntegerPropertyOptions contains the optional parameters for the Explicit.PostRequiredIntegerProperty
+// method.
+type ExplicitPostRequiredIntegerPropertyOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ExplicitPostRequiredStringHeaderOptions contains the optional parameters for the Explicit.PostRequiredStringHeader method.
+type ExplicitPostRequiredStringHeaderOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ExplicitPostRequiredStringParameterOptions contains the optional parameters for the Explicit.PostRequiredStringParameter
+// method.
+type ExplicitPostRequiredStringParameterOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ExplicitPostRequiredStringPropertyOptions contains the optional parameters for the Explicit.PostRequiredStringProperty
+// method.
+type ExplicitPostRequiredStringPropertyOptions struct {
+	// placeholder for future optional parameters
+}
+
 // ImplicitGetOptionalGlobalQueryOptions contains the optional parameters for the Implicit.GetOptionalGlobalQuery method.
 type ImplicitGetOptionalGlobalQueryOptions struct {
+}
+
+// ImplicitGetRequiredGlobalPathOptions contains the optional parameters for the Implicit.GetRequiredGlobalPath method.
+type ImplicitGetRequiredGlobalPathOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ImplicitGetRequiredGlobalQueryOptions contains the optional parameters for the Implicit.GetRequiredGlobalQuery method.
+type ImplicitGetRequiredGlobalQueryOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ImplicitGetRequiredPathOptions contains the optional parameters for the Implicit.GetRequiredPath method.
+type ImplicitGetRequiredPathOptions struct {
+	// placeholder for future optional parameters
 }
 
 // ImplicitPutOptionalBodyOptions contains the optional parameters for the Implicit.PutOptionalBody method.

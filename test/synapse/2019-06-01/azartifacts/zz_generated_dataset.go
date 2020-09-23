@@ -23,8 +23,8 @@ func (client *datasetClient) Do(req *azcore.Request) (*azcore.Response, error) {
 }
 
 // CreateOrUpdateDataset - Creates or updates a dataset.
-func (client *datasetClient) CreateOrUpdateDataset(ctx context.Context, datasetName string, dataset DatasetResource, datasetCreateOrUpdateDatasetOptions *DatasetCreateOrUpdateDatasetOptions) (*azcore.Response, error) {
-	req, err := client.CreateOrUpdateDatasetCreateRequest(ctx, datasetName, dataset, datasetCreateOrUpdateDatasetOptions)
+func (client *datasetClient) CreateOrUpdateDataset(ctx context.Context, datasetName string, dataset DatasetResource, options *DatasetCreateOrUpdateDatasetOptions) (*azcore.Response, error) {
+	req, err := client.CreateOrUpdateDatasetCreateRequest(ctx, datasetName, dataset, options)
 	if err != nil {
 		return nil, err
 	}
@@ -39,7 +39,7 @@ func (client *datasetClient) CreateOrUpdateDataset(ctx context.Context, datasetN
 }
 
 // CreateOrUpdateDatasetCreateRequest creates the CreateOrUpdateDataset request.
-func (client *datasetClient) CreateOrUpdateDatasetCreateRequest(ctx context.Context, datasetName string, dataset DatasetResource, datasetCreateOrUpdateDatasetOptions *DatasetCreateOrUpdateDatasetOptions) (*azcore.Request, error) {
+func (client *datasetClient) CreateOrUpdateDatasetCreateRequest(ctx context.Context, datasetName string, dataset DatasetResource, options *DatasetCreateOrUpdateDatasetOptions) (*azcore.Request, error) {
 	urlPath := "/datasets/{datasetName}"
 	urlPath = strings.ReplaceAll(urlPath, "{datasetName}", url.PathEscape(datasetName))
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
@@ -49,8 +49,8 @@ func (client *datasetClient) CreateOrUpdateDatasetCreateRequest(ctx context.Cont
 	query := req.URL.Query()
 	query.Set("api-version", "2019-06-01-preview")
 	req.URL.RawQuery = query.Encode()
-	if datasetCreateOrUpdateDatasetOptions != nil && datasetCreateOrUpdateDatasetOptions.IfMatch != nil {
-		req.Header.Set("If-Match", *datasetCreateOrUpdateDatasetOptions.IfMatch)
+	if options != nil && options.IfMatch != nil {
+		req.Header.Set("If-Match", *options.IfMatch)
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(dataset)
@@ -72,8 +72,8 @@ func (client *datasetClient) CreateOrUpdateDatasetHandleError(resp *azcore.Respo
 }
 
 // DeleteDataset - Deletes a dataset.
-func (client *datasetClient) DeleteDataset(ctx context.Context, datasetName string) (*azcore.Response, error) {
-	req, err := client.DeleteDatasetCreateRequest(ctx, datasetName)
+func (client *datasetClient) DeleteDataset(ctx context.Context, datasetName string, options *DatasetDeleteDatasetOptions) (*azcore.Response, error) {
+	req, err := client.DeleteDatasetCreateRequest(ctx, datasetName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -88,7 +88,7 @@ func (client *datasetClient) DeleteDataset(ctx context.Context, datasetName stri
 }
 
 // DeleteDatasetCreateRequest creates the DeleteDataset request.
-func (client *datasetClient) DeleteDatasetCreateRequest(ctx context.Context, datasetName string) (*azcore.Request, error) {
+func (client *datasetClient) DeleteDatasetCreateRequest(ctx context.Context, datasetName string, options *DatasetDeleteDatasetOptions) (*azcore.Request, error) {
 	urlPath := "/datasets/{datasetName}"
 	urlPath = strings.ReplaceAll(urlPath, "{datasetName}", url.PathEscape(datasetName))
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
@@ -112,8 +112,8 @@ func (client *datasetClient) DeleteDatasetHandleError(resp *azcore.Response) err
 }
 
 // GetDataset - Gets a dataset.
-func (client *datasetClient) GetDataset(ctx context.Context, datasetName string, datasetGetDatasetOptions *DatasetGetDatasetOptions) (*DatasetResourceResponse, error) {
-	req, err := client.GetDatasetCreateRequest(ctx, datasetName, datasetGetDatasetOptions)
+func (client *datasetClient) GetDataset(ctx context.Context, datasetName string, options *DatasetGetDatasetOptions) (*DatasetResourceResponse, error) {
+	req, err := client.GetDatasetCreateRequest(ctx, datasetName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -132,7 +132,7 @@ func (client *datasetClient) GetDataset(ctx context.Context, datasetName string,
 }
 
 // GetDatasetCreateRequest creates the GetDataset request.
-func (client *datasetClient) GetDatasetCreateRequest(ctx context.Context, datasetName string, datasetGetDatasetOptions *DatasetGetDatasetOptions) (*azcore.Request, error) {
+func (client *datasetClient) GetDatasetCreateRequest(ctx context.Context, datasetName string, options *DatasetGetDatasetOptions) (*azcore.Request, error) {
 	urlPath := "/datasets/{datasetName}"
 	urlPath = strings.ReplaceAll(urlPath, "{datasetName}", url.PathEscape(datasetName))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
@@ -142,8 +142,8 @@ func (client *datasetClient) GetDatasetCreateRequest(ctx context.Context, datase
 	query := req.URL.Query()
 	query.Set("api-version", "2019-06-01-preview")
 	req.URL.RawQuery = query.Encode()
-	if datasetGetDatasetOptions != nil && datasetGetDatasetOptions.IfNoneMatch != nil {
-		req.Header.Set("If-None-Match", *datasetGetDatasetOptions.IfNoneMatch)
+	if options != nil && options.IfNoneMatch != nil {
+		req.Header.Set("If-None-Match", *options.IfNoneMatch)
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
@@ -165,11 +165,11 @@ func (client *datasetClient) GetDatasetHandleError(resp *azcore.Response) error 
 }
 
 // GetDatasetsByWorkspace - Lists datasets.
-func (client *datasetClient) GetDatasetsByWorkspace() DatasetListResponsePager {
+func (client *datasetClient) GetDatasetsByWorkspace(options *DatasetGetDatasetsByWorkspaceOptions) DatasetListResponsePager {
 	return &datasetListResponsePager{
 		pipeline: client.p,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
-			return client.GetDatasetsByWorkspaceCreateRequest(ctx)
+			return client.GetDatasetsByWorkspaceCreateRequest(ctx, options)
 		},
 		responder: client.GetDatasetsByWorkspaceHandleResponse,
 		errorer:   client.GetDatasetsByWorkspaceHandleError,
@@ -180,7 +180,7 @@ func (client *datasetClient) GetDatasetsByWorkspace() DatasetListResponsePager {
 }
 
 // GetDatasetsByWorkspaceCreateRequest creates the GetDatasetsByWorkspace request.
-func (client *datasetClient) GetDatasetsByWorkspaceCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *datasetClient) GetDatasetsByWorkspaceCreateRequest(ctx context.Context, options *DatasetGetDatasetsByWorkspaceOptions) (*azcore.Request, error) {
 	urlPath := "/datasets"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {

@@ -23,8 +23,8 @@ func (client *integrationRuntimesClient) Do(req *azcore.Request) (*azcore.Respon
 }
 
 // Get - Get Integration Runtime
-func (client *integrationRuntimesClient) Get(ctx context.Context, integrationRuntimeName string) (*IntegrationRuntimeResourceResponse, error) {
-	req, err := client.GetCreateRequest(ctx, integrationRuntimeName)
+func (client *integrationRuntimesClient) Get(ctx context.Context, integrationRuntimeName string, options *IntegrationRuntimesGetOptions) (*IntegrationRuntimeResourceResponse, error) {
+	req, err := client.GetCreateRequest(ctx, integrationRuntimeName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -43,7 +43,7 @@ func (client *integrationRuntimesClient) Get(ctx context.Context, integrationRun
 }
 
 // GetCreateRequest creates the Get request.
-func (client *integrationRuntimesClient) GetCreateRequest(ctx context.Context, integrationRuntimeName string) (*azcore.Request, error) {
+func (client *integrationRuntimesClient) GetCreateRequest(ctx context.Context, integrationRuntimeName string, options *IntegrationRuntimesGetOptions) (*azcore.Request, error) {
 	urlPath := "/integrationRuntimes/{integrationRuntimeName}"
 	urlPath = strings.ReplaceAll(urlPath, "{integrationRuntimeName}", url.PathEscape(integrationRuntimeName))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
@@ -73,8 +73,8 @@ func (client *integrationRuntimesClient) GetHandleError(resp *azcore.Response) e
 }
 
 // List - List Integration Runtimes
-func (client *integrationRuntimesClient) List(ctx context.Context) (*IntegrationRuntimeListResponseResponse, error) {
-	req, err := client.ListCreateRequest(ctx)
+func (client *integrationRuntimesClient) List(ctx context.Context, options *IntegrationRuntimesListOptions) (*IntegrationRuntimeListResponseResponse, error) {
+	req, err := client.ListCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -93,7 +93,7 @@ func (client *integrationRuntimesClient) List(ctx context.Context) (*Integration
 }
 
 // ListCreateRequest creates the List request.
-func (client *integrationRuntimesClient) ListCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *integrationRuntimesClient) ListCreateRequest(ctx context.Context, options *IntegrationRuntimesListOptions) (*azcore.Request, error) {
 	urlPath := "/integrationRuntimes"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {

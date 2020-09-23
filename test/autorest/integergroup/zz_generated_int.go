@@ -15,33 +15,33 @@ import (
 // IntOperations contains the methods for the Int group.
 type IntOperations interface {
 	// GetInvalid - Get invalid Int value
-	GetInvalid(ctx context.Context) (*Int32Response, error)
+	GetInvalid(ctx context.Context, options *IntGetInvalidOptions) (*Int32Response, error)
 	// GetInvalidUnixTime - Get invalid Unix time value
-	GetInvalidUnixTime(ctx context.Context) (*TimeResponse, error)
+	GetInvalidUnixTime(ctx context.Context, options *IntGetInvalidUnixTimeOptions) (*TimeResponse, error)
 	// GetNull - Get null Int value
-	GetNull(ctx context.Context) (*Int32Response, error)
+	GetNull(ctx context.Context, options *IntGetNullOptions) (*Int32Response, error)
 	// GetNullUnixTime - Get null Unix time value
-	GetNullUnixTime(ctx context.Context) (*TimeResponse, error)
+	GetNullUnixTime(ctx context.Context, options *IntGetNullUnixTimeOptions) (*TimeResponse, error)
 	// GetOverflowInt32 - Get overflow Int32 value
-	GetOverflowInt32(ctx context.Context) (*Int32Response, error)
+	GetOverflowInt32(ctx context.Context, options *IntGetOverflowInt32Options) (*Int32Response, error)
 	// GetOverflowInt64 - Get overflow Int64 value
-	GetOverflowInt64(ctx context.Context) (*Int64Response, error)
+	GetOverflowInt64(ctx context.Context, options *IntGetOverflowInt64Options) (*Int64Response, error)
 	// GetUnderflowInt32 - Get underflow Int32 value
-	GetUnderflowInt32(ctx context.Context) (*Int32Response, error)
+	GetUnderflowInt32(ctx context.Context, options *IntGetUnderflowInt32Options) (*Int32Response, error)
 	// GetUnderflowInt64 - Get underflow Int64 value
-	GetUnderflowInt64(ctx context.Context) (*Int64Response, error)
+	GetUnderflowInt64(ctx context.Context, options *IntGetUnderflowInt64Options) (*Int64Response, error)
 	// GetUnixTime - Get datetime encoded as Unix time value
-	GetUnixTime(ctx context.Context) (*TimeResponse, error)
+	GetUnixTime(ctx context.Context, options *IntGetUnixTimeOptions) (*TimeResponse, error)
 	// PutMax32 - Put max int32 value
-	PutMax32(ctx context.Context, intBody int32) (*http.Response, error)
+	PutMax32(ctx context.Context, intBody int32, options *IntPutMax32Options) (*http.Response, error)
 	// PutMax64 - Put max int64 value
-	PutMax64(ctx context.Context, intBody int64) (*http.Response, error)
+	PutMax64(ctx context.Context, intBody int64, options *IntPutMax64Options) (*http.Response, error)
 	// PutMin32 - Put min int32 value
-	PutMin32(ctx context.Context, intBody int32) (*http.Response, error)
+	PutMin32(ctx context.Context, intBody int32, options *IntPutMin32Options) (*http.Response, error)
 	// PutMin64 - Put min int64 value
-	PutMin64(ctx context.Context, intBody int64) (*http.Response, error)
+	PutMin64(ctx context.Context, intBody int64, options *IntPutMin64Options) (*http.Response, error)
 	// PutUnixTimeDate - Put datetime encoded as Unix time
-	PutUnixTimeDate(ctx context.Context, intBody time.Time) (*http.Response, error)
+	PutUnixTimeDate(ctx context.Context, intBody time.Time, options *IntPutUnixTimeDateOptions) (*http.Response, error)
 }
 
 // IntClient implements the IntOperations interface.
@@ -61,8 +61,8 @@ func (client *IntClient) Do(req *azcore.Request) (*azcore.Response, error) {
 }
 
 // GetInvalid - Get invalid Int value
-func (client *IntClient) GetInvalid(ctx context.Context) (*Int32Response, error) {
-	req, err := client.GetInvalidCreateRequest(ctx)
+func (client *IntClient) GetInvalid(ctx context.Context, options *IntGetInvalidOptions) (*Int32Response, error) {
+	req, err := client.GetInvalidCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -81,7 +81,7 @@ func (client *IntClient) GetInvalid(ctx context.Context) (*Int32Response, error)
 }
 
 // GetInvalidCreateRequest creates the GetInvalid request.
-func (client *IntClient) GetInvalidCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *IntClient) GetInvalidCreateRequest(ctx context.Context, options *IntGetInvalidOptions) (*azcore.Request, error) {
 	urlPath := "/int/invalid"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -107,8 +107,8 @@ func (client *IntClient) GetInvalidHandleError(resp *azcore.Response) error {
 }
 
 // GetInvalidUnixTime - Get invalid Unix time value
-func (client *IntClient) GetInvalidUnixTime(ctx context.Context) (*TimeResponse, error) {
-	req, err := client.GetInvalidUnixTimeCreateRequest(ctx)
+func (client *IntClient) GetInvalidUnixTime(ctx context.Context, options *IntGetInvalidUnixTimeOptions) (*TimeResponse, error) {
+	req, err := client.GetInvalidUnixTimeCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -127,7 +127,7 @@ func (client *IntClient) GetInvalidUnixTime(ctx context.Context) (*TimeResponse,
 }
 
 // GetInvalidUnixTimeCreateRequest creates the GetInvalidUnixTime request.
-func (client *IntClient) GetInvalidUnixTimeCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *IntClient) GetInvalidUnixTimeCreateRequest(ctx context.Context, options *IntGetInvalidUnixTimeOptions) (*azcore.Request, error) {
 	urlPath := "/int/invalidunixtime"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -154,8 +154,8 @@ func (client *IntClient) GetInvalidUnixTimeHandleError(resp *azcore.Response) er
 }
 
 // GetNull - Get null Int value
-func (client *IntClient) GetNull(ctx context.Context) (*Int32Response, error) {
-	req, err := client.GetNullCreateRequest(ctx)
+func (client *IntClient) GetNull(ctx context.Context, options *IntGetNullOptions) (*Int32Response, error) {
+	req, err := client.GetNullCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -174,7 +174,7 @@ func (client *IntClient) GetNull(ctx context.Context) (*Int32Response, error) {
 }
 
 // GetNullCreateRequest creates the GetNull request.
-func (client *IntClient) GetNullCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *IntClient) GetNullCreateRequest(ctx context.Context, options *IntGetNullOptions) (*azcore.Request, error) {
 	urlPath := "/int/null"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -200,8 +200,8 @@ func (client *IntClient) GetNullHandleError(resp *azcore.Response) error {
 }
 
 // GetNullUnixTime - Get null Unix time value
-func (client *IntClient) GetNullUnixTime(ctx context.Context) (*TimeResponse, error) {
-	req, err := client.GetNullUnixTimeCreateRequest(ctx)
+func (client *IntClient) GetNullUnixTime(ctx context.Context, options *IntGetNullUnixTimeOptions) (*TimeResponse, error) {
+	req, err := client.GetNullUnixTimeCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -220,7 +220,7 @@ func (client *IntClient) GetNullUnixTime(ctx context.Context) (*TimeResponse, er
 }
 
 // GetNullUnixTimeCreateRequest creates the GetNullUnixTime request.
-func (client *IntClient) GetNullUnixTimeCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *IntClient) GetNullUnixTimeCreateRequest(ctx context.Context, options *IntGetNullUnixTimeOptions) (*azcore.Request, error) {
 	urlPath := "/int/nullunixtime"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -247,8 +247,8 @@ func (client *IntClient) GetNullUnixTimeHandleError(resp *azcore.Response) error
 }
 
 // GetOverflowInt32 - Get overflow Int32 value
-func (client *IntClient) GetOverflowInt32(ctx context.Context) (*Int32Response, error) {
-	req, err := client.GetOverflowInt32CreateRequest(ctx)
+func (client *IntClient) GetOverflowInt32(ctx context.Context, options *IntGetOverflowInt32Options) (*Int32Response, error) {
+	req, err := client.GetOverflowInt32CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -267,7 +267,7 @@ func (client *IntClient) GetOverflowInt32(ctx context.Context) (*Int32Response, 
 }
 
 // GetOverflowInt32CreateRequest creates the GetOverflowInt32 request.
-func (client *IntClient) GetOverflowInt32CreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *IntClient) GetOverflowInt32CreateRequest(ctx context.Context, options *IntGetOverflowInt32Options) (*azcore.Request, error) {
 	urlPath := "/int/overflowint32"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -293,8 +293,8 @@ func (client *IntClient) GetOverflowInt32HandleError(resp *azcore.Response) erro
 }
 
 // GetOverflowInt64 - Get overflow Int64 value
-func (client *IntClient) GetOverflowInt64(ctx context.Context) (*Int64Response, error) {
-	req, err := client.GetOverflowInt64CreateRequest(ctx)
+func (client *IntClient) GetOverflowInt64(ctx context.Context, options *IntGetOverflowInt64Options) (*Int64Response, error) {
+	req, err := client.GetOverflowInt64CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -313,7 +313,7 @@ func (client *IntClient) GetOverflowInt64(ctx context.Context) (*Int64Response, 
 }
 
 // GetOverflowInt64CreateRequest creates the GetOverflowInt64 request.
-func (client *IntClient) GetOverflowInt64CreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *IntClient) GetOverflowInt64CreateRequest(ctx context.Context, options *IntGetOverflowInt64Options) (*azcore.Request, error) {
 	urlPath := "/int/overflowint64"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -339,8 +339,8 @@ func (client *IntClient) GetOverflowInt64HandleError(resp *azcore.Response) erro
 }
 
 // GetUnderflowInt32 - Get underflow Int32 value
-func (client *IntClient) GetUnderflowInt32(ctx context.Context) (*Int32Response, error) {
-	req, err := client.GetUnderflowInt32CreateRequest(ctx)
+func (client *IntClient) GetUnderflowInt32(ctx context.Context, options *IntGetUnderflowInt32Options) (*Int32Response, error) {
+	req, err := client.GetUnderflowInt32CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -359,7 +359,7 @@ func (client *IntClient) GetUnderflowInt32(ctx context.Context) (*Int32Response,
 }
 
 // GetUnderflowInt32CreateRequest creates the GetUnderflowInt32 request.
-func (client *IntClient) GetUnderflowInt32CreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *IntClient) GetUnderflowInt32CreateRequest(ctx context.Context, options *IntGetUnderflowInt32Options) (*azcore.Request, error) {
 	urlPath := "/int/underflowint32"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -385,8 +385,8 @@ func (client *IntClient) GetUnderflowInt32HandleError(resp *azcore.Response) err
 }
 
 // GetUnderflowInt64 - Get underflow Int64 value
-func (client *IntClient) GetUnderflowInt64(ctx context.Context) (*Int64Response, error) {
-	req, err := client.GetUnderflowInt64CreateRequest(ctx)
+func (client *IntClient) GetUnderflowInt64(ctx context.Context, options *IntGetUnderflowInt64Options) (*Int64Response, error) {
+	req, err := client.GetUnderflowInt64CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -405,7 +405,7 @@ func (client *IntClient) GetUnderflowInt64(ctx context.Context) (*Int64Response,
 }
 
 // GetUnderflowInt64CreateRequest creates the GetUnderflowInt64 request.
-func (client *IntClient) GetUnderflowInt64CreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *IntClient) GetUnderflowInt64CreateRequest(ctx context.Context, options *IntGetUnderflowInt64Options) (*azcore.Request, error) {
 	urlPath := "/int/underflowint64"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -431,8 +431,8 @@ func (client *IntClient) GetUnderflowInt64HandleError(resp *azcore.Response) err
 }
 
 // GetUnixTime - Get datetime encoded as Unix time value
-func (client *IntClient) GetUnixTime(ctx context.Context) (*TimeResponse, error) {
-	req, err := client.GetUnixTimeCreateRequest(ctx)
+func (client *IntClient) GetUnixTime(ctx context.Context, options *IntGetUnixTimeOptions) (*TimeResponse, error) {
+	req, err := client.GetUnixTimeCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -451,7 +451,7 @@ func (client *IntClient) GetUnixTime(ctx context.Context) (*TimeResponse, error)
 }
 
 // GetUnixTimeCreateRequest creates the GetUnixTime request.
-func (client *IntClient) GetUnixTimeCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *IntClient) GetUnixTimeCreateRequest(ctx context.Context, options *IntGetUnixTimeOptions) (*azcore.Request, error) {
 	urlPath := "/int/unixtime"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -478,8 +478,8 @@ func (client *IntClient) GetUnixTimeHandleError(resp *azcore.Response) error {
 }
 
 // PutMax32 - Put max int32 value
-func (client *IntClient) PutMax32(ctx context.Context, intBody int32) (*http.Response, error) {
-	req, err := client.PutMax32CreateRequest(ctx, intBody)
+func (client *IntClient) PutMax32(ctx context.Context, intBody int32, options *IntPutMax32Options) (*http.Response, error) {
+	req, err := client.PutMax32CreateRequest(ctx, intBody, options)
 	if err != nil {
 		return nil, err
 	}
@@ -494,7 +494,7 @@ func (client *IntClient) PutMax32(ctx context.Context, intBody int32) (*http.Res
 }
 
 // PutMax32CreateRequest creates the PutMax32 request.
-func (client *IntClient) PutMax32CreateRequest(ctx context.Context, intBody int32) (*azcore.Request, error) {
+func (client *IntClient) PutMax32CreateRequest(ctx context.Context, intBody int32, options *IntPutMax32Options) (*azcore.Request, error) {
 	urlPath := "/int/max/32"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -514,8 +514,8 @@ func (client *IntClient) PutMax32HandleError(resp *azcore.Response) error {
 }
 
 // PutMax64 - Put max int64 value
-func (client *IntClient) PutMax64(ctx context.Context, intBody int64) (*http.Response, error) {
-	req, err := client.PutMax64CreateRequest(ctx, intBody)
+func (client *IntClient) PutMax64(ctx context.Context, intBody int64, options *IntPutMax64Options) (*http.Response, error) {
+	req, err := client.PutMax64CreateRequest(ctx, intBody, options)
 	if err != nil {
 		return nil, err
 	}
@@ -530,7 +530,7 @@ func (client *IntClient) PutMax64(ctx context.Context, intBody int64) (*http.Res
 }
 
 // PutMax64CreateRequest creates the PutMax64 request.
-func (client *IntClient) PutMax64CreateRequest(ctx context.Context, intBody int64) (*azcore.Request, error) {
+func (client *IntClient) PutMax64CreateRequest(ctx context.Context, intBody int64, options *IntPutMax64Options) (*azcore.Request, error) {
 	urlPath := "/int/max/64"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -550,8 +550,8 @@ func (client *IntClient) PutMax64HandleError(resp *azcore.Response) error {
 }
 
 // PutMin32 - Put min int32 value
-func (client *IntClient) PutMin32(ctx context.Context, intBody int32) (*http.Response, error) {
-	req, err := client.PutMin32CreateRequest(ctx, intBody)
+func (client *IntClient) PutMin32(ctx context.Context, intBody int32, options *IntPutMin32Options) (*http.Response, error) {
+	req, err := client.PutMin32CreateRequest(ctx, intBody, options)
 	if err != nil {
 		return nil, err
 	}
@@ -566,7 +566,7 @@ func (client *IntClient) PutMin32(ctx context.Context, intBody int32) (*http.Res
 }
 
 // PutMin32CreateRequest creates the PutMin32 request.
-func (client *IntClient) PutMin32CreateRequest(ctx context.Context, intBody int32) (*azcore.Request, error) {
+func (client *IntClient) PutMin32CreateRequest(ctx context.Context, intBody int32, options *IntPutMin32Options) (*azcore.Request, error) {
 	urlPath := "/int/min/32"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -586,8 +586,8 @@ func (client *IntClient) PutMin32HandleError(resp *azcore.Response) error {
 }
 
 // PutMin64 - Put min int64 value
-func (client *IntClient) PutMin64(ctx context.Context, intBody int64) (*http.Response, error) {
-	req, err := client.PutMin64CreateRequest(ctx, intBody)
+func (client *IntClient) PutMin64(ctx context.Context, intBody int64, options *IntPutMin64Options) (*http.Response, error) {
+	req, err := client.PutMin64CreateRequest(ctx, intBody, options)
 	if err != nil {
 		return nil, err
 	}
@@ -602,7 +602,7 @@ func (client *IntClient) PutMin64(ctx context.Context, intBody int64) (*http.Res
 }
 
 // PutMin64CreateRequest creates the PutMin64 request.
-func (client *IntClient) PutMin64CreateRequest(ctx context.Context, intBody int64) (*azcore.Request, error) {
+func (client *IntClient) PutMin64CreateRequest(ctx context.Context, intBody int64, options *IntPutMin64Options) (*azcore.Request, error) {
 	urlPath := "/int/min/64"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -622,8 +622,8 @@ func (client *IntClient) PutMin64HandleError(resp *azcore.Response) error {
 }
 
 // PutUnixTimeDate - Put datetime encoded as Unix time
-func (client *IntClient) PutUnixTimeDate(ctx context.Context, intBody time.Time) (*http.Response, error) {
-	req, err := client.PutUnixTimeDateCreateRequest(ctx, intBody)
+func (client *IntClient) PutUnixTimeDate(ctx context.Context, intBody time.Time, options *IntPutUnixTimeDateOptions) (*http.Response, error) {
+	req, err := client.PutUnixTimeDateCreateRequest(ctx, intBody, options)
 	if err != nil {
 		return nil, err
 	}
@@ -638,7 +638,7 @@ func (client *IntClient) PutUnixTimeDate(ctx context.Context, intBody time.Time)
 }
 
 // PutUnixTimeDateCreateRequest creates the PutUnixTimeDate request.
-func (client *IntClient) PutUnixTimeDateCreateRequest(ctx context.Context, intBody time.Time) (*azcore.Request, error) {
+func (client *IntClient) PutUnixTimeDateCreateRequest(ctx context.Context, intBody time.Time, options *IntPutUnixTimeDateOptions) (*azcore.Request, error) {
 	urlPath := "/int/unixtime"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {

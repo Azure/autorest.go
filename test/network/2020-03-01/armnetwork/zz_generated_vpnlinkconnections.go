@@ -16,7 +16,7 @@ import (
 // VpnLinkConnectionsOperations contains the methods for the VpnLinkConnections group.
 type VpnLinkConnectionsOperations interface {
 	// ListByVpnConnection - Retrieves all vpn site link connections for a particular virtual wan vpn gateway vpn connection.
-	ListByVpnConnection(resourceGroupName string, gatewayName string, connectionName string) ListVpnSiteLinkConnectionsResultPager
+	ListByVpnConnection(resourceGroupName string, gatewayName string, connectionName string, options *VpnLinkConnectionsListByVpnConnectionOptions) ListVpnSiteLinkConnectionsResultPager
 }
 
 // VpnLinkConnectionsClient implements the VpnLinkConnectionsOperations interface.
@@ -37,11 +37,11 @@ func (client *VpnLinkConnectionsClient) Do(req *azcore.Request) (*azcore.Respons
 }
 
 // ListByVpnConnection - Retrieves all vpn site link connections for a particular virtual wan vpn gateway vpn connection.
-func (client *VpnLinkConnectionsClient) ListByVpnConnection(resourceGroupName string, gatewayName string, connectionName string) ListVpnSiteLinkConnectionsResultPager {
+func (client *VpnLinkConnectionsClient) ListByVpnConnection(resourceGroupName string, gatewayName string, connectionName string, options *VpnLinkConnectionsListByVpnConnectionOptions) ListVpnSiteLinkConnectionsResultPager {
 	return &listVpnSiteLinkConnectionsResultPager{
 		pipeline: client.p,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
-			return client.ListByVpnConnectionCreateRequest(ctx, resourceGroupName, gatewayName, connectionName)
+			return client.ListByVpnConnectionCreateRequest(ctx, resourceGroupName, gatewayName, connectionName, options)
 		},
 		responder: client.ListByVpnConnectionHandleResponse,
 		errorer:   client.ListByVpnConnectionHandleError,
@@ -52,7 +52,7 @@ func (client *VpnLinkConnectionsClient) ListByVpnConnection(resourceGroupName st
 }
 
 // ListByVpnConnectionCreateRequest creates the ListByVpnConnection request.
-func (client *VpnLinkConnectionsClient) ListByVpnConnectionCreateRequest(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string) (*azcore.Request, error) {
+func (client *VpnLinkConnectionsClient) ListByVpnConnectionCreateRequest(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, options *VpnLinkConnectionsListByVpnConnectionOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}/vpnLinkConnections"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))

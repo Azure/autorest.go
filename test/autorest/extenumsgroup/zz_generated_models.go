@@ -22,6 +22,11 @@ type PetAddPetOptions struct {
 	PetParam *Pet
 }
 
+// PetGetByPetIDOptions contains the optional parameters for the Pet.GetByPetID method.
+type PetGetByPetIDOptions struct {
+	// placeholder for future optional parameters
+}
+
 // PetResponse is the response envelope for operations that return a Pet type.
 type PetResponse struct {
 	Pet *Pet

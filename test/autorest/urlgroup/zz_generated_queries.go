@@ -18,75 +18,75 @@ import (
 // QueriesOperations contains the methods for the Queries group.
 type QueriesOperations interface {
 	// ArrayStringCSVEmpty - Get an empty array [] of string using the csv-array format
-	ArrayStringCSVEmpty(ctx context.Context, queriesArrayStringCsvEmptyOptions *QueriesArrayStringCSVEmptyOptions) (*http.Response, error)
+	ArrayStringCSVEmpty(ctx context.Context, options *QueriesArrayStringCSVEmptyOptions) (*http.Response, error)
 	// ArrayStringCSVNull - Get a null array of string using the csv-array format
-	ArrayStringCSVNull(ctx context.Context, queriesArrayStringCsvNullOptions *QueriesArrayStringCSVNullOptions) (*http.Response, error)
+	ArrayStringCSVNull(ctx context.Context, options *QueriesArrayStringCSVNullOptions) (*http.Response, error)
 	// ArrayStringCSVValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
-	ArrayStringCSVValid(ctx context.Context, queriesArrayStringCsvValidOptions *QueriesArrayStringCSVValidOptions) (*http.Response, error)
+	ArrayStringCSVValid(ctx context.Context, options *QueriesArrayStringCSVValidOptions) (*http.Response, error)
 	// ArrayStringNoCollectionFormatEmpty - Array query has no defined collection format, should default to csv. Pass in ['hello', 'nihao', 'bonjour'] for the 'arrayQuery' parameter to the service
-	ArrayStringNoCollectionFormatEmpty(ctx context.Context, queriesArrayStringNoCollectionFormatEmptyOptions *QueriesArrayStringNoCollectionFormatEmptyOptions) (*http.Response, error)
+	ArrayStringNoCollectionFormatEmpty(ctx context.Context, options *QueriesArrayStringNoCollectionFormatEmptyOptions) (*http.Response, error)
 	// ArrayStringPipesValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the pipes-array format
-	ArrayStringPipesValid(ctx context.Context, queriesArrayStringPipesValidOptions *QueriesArrayStringPipesValidOptions) (*http.Response, error)
+	ArrayStringPipesValid(ctx context.Context, options *QueriesArrayStringPipesValidOptions) (*http.Response, error)
 	// ArrayStringSsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the ssv-array format
-	ArrayStringSsvValid(ctx context.Context, queriesArrayStringSsvValidOptions *QueriesArrayStringSsvValidOptions) (*http.Response, error)
+	ArrayStringSsvValid(ctx context.Context, options *QueriesArrayStringSsvValidOptions) (*http.Response, error)
 	// ArrayStringTsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the tsv-array format
-	ArrayStringTsvValid(ctx context.Context, queriesArrayStringTsvValidOptions *QueriesArrayStringTsvValidOptions) (*http.Response, error)
+	ArrayStringTsvValid(ctx context.Context, options *QueriesArrayStringTsvValidOptions) (*http.Response, error)
 	// ByteEmpty - Get '' as byte array
-	ByteEmpty(ctx context.Context) (*http.Response, error)
+	ByteEmpty(ctx context.Context, options *QueriesByteEmptyOptions) (*http.Response, error)
 	// ByteMultiByte - Get '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
-	ByteMultiByte(ctx context.Context, queriesByteMultiByteOptions *QueriesByteMultiByteOptions) (*http.Response, error)
+	ByteMultiByte(ctx context.Context, options *QueriesByteMultiByteOptions) (*http.Response, error)
 	// ByteNull - Get null as byte array (no query parameters in uri)
-	ByteNull(ctx context.Context, queriesByteNullOptions *QueriesByteNullOptions) (*http.Response, error)
+	ByteNull(ctx context.Context, options *QueriesByteNullOptions) (*http.Response, error)
 	// DateNull - Get null as date - this should result in no query parameters in uri
-	DateNull(ctx context.Context, queriesDateNullOptions *QueriesDateNullOptions) (*http.Response, error)
+	DateNull(ctx context.Context, options *QueriesDateNullOptions) (*http.Response, error)
 	// DateTimeNull - Get null as date-time, should result in no query parameters in uri
-	DateTimeNull(ctx context.Context, queriesDateTimeNullOptions *QueriesDateTimeNullOptions) (*http.Response, error)
+	DateTimeNull(ctx context.Context, options *QueriesDateTimeNullOptions) (*http.Response, error)
 	// DateTimeValid - Get '2012-01-01T01:01:01Z' as date-time
-	DateTimeValid(ctx context.Context) (*http.Response, error)
+	DateTimeValid(ctx context.Context, options *QueriesDateTimeValidOptions) (*http.Response, error)
 	// DateValid - Get '2012-01-01' as date
-	DateValid(ctx context.Context) (*http.Response, error)
+	DateValid(ctx context.Context, options *QueriesDateValidOptions) (*http.Response, error)
 	// DoubleDecimalNegative - Get '-9999999.999' numeric value
-	DoubleDecimalNegative(ctx context.Context) (*http.Response, error)
+	DoubleDecimalNegative(ctx context.Context, options *QueriesDoubleDecimalNegativeOptions) (*http.Response, error)
 	// DoubleDecimalPositive - Get '9999999.999' numeric value
-	DoubleDecimalPositive(ctx context.Context) (*http.Response, error)
+	DoubleDecimalPositive(ctx context.Context, options *QueriesDoubleDecimalPositiveOptions) (*http.Response, error)
 	// DoubleNull - Get null numeric value (no query parameter)
-	DoubleNull(ctx context.Context, queriesDoubleNullOptions *QueriesDoubleNullOptions) (*http.Response, error)
+	DoubleNull(ctx context.Context, options *QueriesDoubleNullOptions) (*http.Response, error)
 	// EnumNull - Get null (no query parameter in url)
-	EnumNull(ctx context.Context, queriesEnumNullOptions *QueriesEnumNullOptions) (*http.Response, error)
+	EnumNull(ctx context.Context, options *QueriesEnumNullOptions) (*http.Response, error)
 	// EnumValid - Get using uri with query parameter 'green color'
-	EnumValid(ctx context.Context, queriesEnumValidOptions *QueriesEnumValidOptions) (*http.Response, error)
+	EnumValid(ctx context.Context, options *QueriesEnumValidOptions) (*http.Response, error)
 	// FloatNull - Get null numeric value (no query parameter)
-	FloatNull(ctx context.Context, queriesFloatNullOptions *QueriesFloatNullOptions) (*http.Response, error)
+	FloatNull(ctx context.Context, options *QueriesFloatNullOptions) (*http.Response, error)
 	// FloatScientificNegative - Get '-1.034E-20' numeric value
-	FloatScientificNegative(ctx context.Context) (*http.Response, error)
+	FloatScientificNegative(ctx context.Context, options *QueriesFloatScientificNegativeOptions) (*http.Response, error)
 	// FloatScientificPositive - Get '1.034E+20' numeric value
-	FloatScientificPositive(ctx context.Context) (*http.Response, error)
+	FloatScientificPositive(ctx context.Context, options *QueriesFloatScientificPositiveOptions) (*http.Response, error)
 	// GetBooleanFalse - Get false Boolean value on path
-	GetBooleanFalse(ctx context.Context) (*http.Response, error)
+	GetBooleanFalse(ctx context.Context, options *QueriesGetBooleanFalseOptions) (*http.Response, error)
 	// GetBooleanNull - Get null Boolean value on query (query string should be absent)
-	GetBooleanNull(ctx context.Context, queriesGetBooleanNullOptions *QueriesGetBooleanNullOptions) (*http.Response, error)
+	GetBooleanNull(ctx context.Context, options *QueriesGetBooleanNullOptions) (*http.Response, error)
 	// GetBooleanTrue - Get true Boolean value on path
-	GetBooleanTrue(ctx context.Context) (*http.Response, error)
+	GetBooleanTrue(ctx context.Context, options *QueriesGetBooleanTrueOptions) (*http.Response, error)
 	// GetIntNegativeOneMillion - Get '-1000000' integer value
-	GetIntNegativeOneMillion(ctx context.Context) (*http.Response, error)
+	GetIntNegativeOneMillion(ctx context.Context, options *QueriesGetIntNegativeOneMillionOptions) (*http.Response, error)
 	// GetIntNull - Get null integer value (no query parameter)
-	GetIntNull(ctx context.Context, queriesGetIntNullOptions *QueriesGetIntNullOptions) (*http.Response, error)
+	GetIntNull(ctx context.Context, options *QueriesGetIntNullOptions) (*http.Response, error)
 	// GetIntOneMillion - Get '1000000' integer value
-	GetIntOneMillion(ctx context.Context) (*http.Response, error)
+	GetIntOneMillion(ctx context.Context, options *QueriesGetIntOneMillionOptions) (*http.Response, error)
 	// GetLongNull - Get 'null 64 bit integer value (no query param in uri)
-	GetLongNull(ctx context.Context, queriesGetLongNullOptions *QueriesGetLongNullOptions) (*http.Response, error)
+	GetLongNull(ctx context.Context, options *QueriesGetLongNullOptions) (*http.Response, error)
 	// GetNegativeTenBillion - Get '-10000000000' 64 bit integer value
-	GetNegativeTenBillion(ctx context.Context) (*http.Response, error)
+	GetNegativeTenBillion(ctx context.Context, options *QueriesGetNegativeTenBillionOptions) (*http.Response, error)
 	// GetTenBillion - Get '10000000000' 64 bit integer value
-	GetTenBillion(ctx context.Context) (*http.Response, error)
+	GetTenBillion(ctx context.Context, options *QueriesGetTenBillionOptions) (*http.Response, error)
 	// StringEmpty - Get ''
-	StringEmpty(ctx context.Context) (*http.Response, error)
+	StringEmpty(ctx context.Context, options *QueriesStringEmptyOptions) (*http.Response, error)
 	// StringNull - Get null (no query parameter in url)
-	StringNull(ctx context.Context, queriesStringNullOptions *QueriesStringNullOptions) (*http.Response, error)
+	StringNull(ctx context.Context, options *QueriesStringNullOptions) (*http.Response, error)
 	// StringURLEncoded - Get 'begin!*'();:@ &=+$,/?#[]end
-	StringURLEncoded(ctx context.Context) (*http.Response, error)
+	StringURLEncoded(ctx context.Context, options *QueriesStringURLEncodedOptions) (*http.Response, error)
 	// StringUnicode - Get '啊齄丂狛狜隣郎隣兀﨩' multi-byte string value
-	StringUnicode(ctx context.Context) (*http.Response, error)
+	StringUnicode(ctx context.Context, options *QueriesStringUnicodeOptions) (*http.Response, error)
 }
 
 // QueriesClient implements the QueriesOperations interface.
@@ -106,8 +106,8 @@ func (client *QueriesClient) Do(req *azcore.Request) (*azcore.Response, error) {
 }
 
 // ArrayStringCSVEmpty - Get an empty array [] of string using the csv-array format
-func (client *QueriesClient) ArrayStringCSVEmpty(ctx context.Context, queriesArrayStringCsvEmptyOptions *QueriesArrayStringCSVEmptyOptions) (*http.Response, error) {
-	req, err := client.ArrayStringCSVEmptyCreateRequest(ctx, queriesArrayStringCsvEmptyOptions)
+func (client *QueriesClient) ArrayStringCSVEmpty(ctx context.Context, options *QueriesArrayStringCSVEmptyOptions) (*http.Response, error) {
+	req, err := client.ArrayStringCSVEmptyCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -122,15 +122,15 @@ func (client *QueriesClient) ArrayStringCSVEmpty(ctx context.Context, queriesArr
 }
 
 // ArrayStringCSVEmptyCreateRequest creates the ArrayStringCSVEmpty request.
-func (client *QueriesClient) ArrayStringCSVEmptyCreateRequest(ctx context.Context, queriesArrayStringCsvEmptyOptions *QueriesArrayStringCSVEmptyOptions) (*azcore.Request, error) {
+func (client *QueriesClient) ArrayStringCSVEmptyCreateRequest(ctx context.Context, options *QueriesArrayStringCSVEmptyOptions) (*azcore.Request, error) {
 	urlPath := "/queries/array/csv/string/empty"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	query := req.URL.Query()
-	if queriesArrayStringCsvEmptyOptions != nil && queriesArrayStringCsvEmptyOptions.ArrayQuery != nil {
-		query.Set("arrayQuery", strings.Join(*queriesArrayStringCsvEmptyOptions.ArrayQuery, ","))
+	if options != nil && options.ArrayQuery != nil {
+		query.Set("arrayQuery", strings.Join(*options.ArrayQuery, ","))
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
@@ -147,8 +147,8 @@ func (client *QueriesClient) ArrayStringCSVEmptyHandleError(resp *azcore.Respons
 }
 
 // ArrayStringCSVNull - Get a null array of string using the csv-array format
-func (client *QueriesClient) ArrayStringCSVNull(ctx context.Context, queriesArrayStringCsvNullOptions *QueriesArrayStringCSVNullOptions) (*http.Response, error) {
-	req, err := client.ArrayStringCSVNullCreateRequest(ctx, queriesArrayStringCsvNullOptions)
+func (client *QueriesClient) ArrayStringCSVNull(ctx context.Context, options *QueriesArrayStringCSVNullOptions) (*http.Response, error) {
+	req, err := client.ArrayStringCSVNullCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -163,15 +163,15 @@ func (client *QueriesClient) ArrayStringCSVNull(ctx context.Context, queriesArra
 }
 
 // ArrayStringCSVNullCreateRequest creates the ArrayStringCSVNull request.
-func (client *QueriesClient) ArrayStringCSVNullCreateRequest(ctx context.Context, queriesArrayStringCsvNullOptions *QueriesArrayStringCSVNullOptions) (*azcore.Request, error) {
+func (client *QueriesClient) ArrayStringCSVNullCreateRequest(ctx context.Context, options *QueriesArrayStringCSVNullOptions) (*azcore.Request, error) {
 	urlPath := "/queries/array/csv/string/null"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	query := req.URL.Query()
-	if queriesArrayStringCsvNullOptions != nil && queriesArrayStringCsvNullOptions.ArrayQuery != nil {
-		query.Set("arrayQuery", strings.Join(*queriesArrayStringCsvNullOptions.ArrayQuery, ","))
+	if options != nil && options.ArrayQuery != nil {
+		query.Set("arrayQuery", strings.Join(*options.ArrayQuery, ","))
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
@@ -188,8 +188,8 @@ func (client *QueriesClient) ArrayStringCSVNullHandleError(resp *azcore.Response
 }
 
 // ArrayStringCSVValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
-func (client *QueriesClient) ArrayStringCSVValid(ctx context.Context, queriesArrayStringCsvValidOptions *QueriesArrayStringCSVValidOptions) (*http.Response, error) {
-	req, err := client.ArrayStringCSVValidCreateRequest(ctx, queriesArrayStringCsvValidOptions)
+func (client *QueriesClient) ArrayStringCSVValid(ctx context.Context, options *QueriesArrayStringCSVValidOptions) (*http.Response, error) {
+	req, err := client.ArrayStringCSVValidCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -204,15 +204,15 @@ func (client *QueriesClient) ArrayStringCSVValid(ctx context.Context, queriesArr
 }
 
 // ArrayStringCSVValidCreateRequest creates the ArrayStringCSVValid request.
-func (client *QueriesClient) ArrayStringCSVValidCreateRequest(ctx context.Context, queriesArrayStringCsvValidOptions *QueriesArrayStringCSVValidOptions) (*azcore.Request, error) {
+func (client *QueriesClient) ArrayStringCSVValidCreateRequest(ctx context.Context, options *QueriesArrayStringCSVValidOptions) (*azcore.Request, error) {
 	urlPath := "/queries/array/csv/string/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	query := req.URL.Query()
-	if queriesArrayStringCsvValidOptions != nil && queriesArrayStringCsvValidOptions.ArrayQuery != nil {
-		query.Set("arrayQuery", strings.Join(*queriesArrayStringCsvValidOptions.ArrayQuery, ","))
+	if options != nil && options.ArrayQuery != nil {
+		query.Set("arrayQuery", strings.Join(*options.ArrayQuery, ","))
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
@@ -229,8 +229,8 @@ func (client *QueriesClient) ArrayStringCSVValidHandleError(resp *azcore.Respons
 }
 
 // ArrayStringNoCollectionFormatEmpty - Array query has no defined collection format, should default to csv. Pass in ['hello', 'nihao', 'bonjour'] for the 'arrayQuery' parameter to the service
-func (client *QueriesClient) ArrayStringNoCollectionFormatEmpty(ctx context.Context, queriesArrayStringNoCollectionFormatEmptyOptions *QueriesArrayStringNoCollectionFormatEmptyOptions) (*http.Response, error) {
-	req, err := client.ArrayStringNoCollectionFormatEmptyCreateRequest(ctx, queriesArrayStringNoCollectionFormatEmptyOptions)
+func (client *QueriesClient) ArrayStringNoCollectionFormatEmpty(ctx context.Context, options *QueriesArrayStringNoCollectionFormatEmptyOptions) (*http.Response, error) {
+	req, err := client.ArrayStringNoCollectionFormatEmptyCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -245,15 +245,15 @@ func (client *QueriesClient) ArrayStringNoCollectionFormatEmpty(ctx context.Cont
 }
 
 // ArrayStringNoCollectionFormatEmptyCreateRequest creates the ArrayStringNoCollectionFormatEmpty request.
-func (client *QueriesClient) ArrayStringNoCollectionFormatEmptyCreateRequest(ctx context.Context, queriesArrayStringNoCollectionFormatEmptyOptions *QueriesArrayStringNoCollectionFormatEmptyOptions) (*azcore.Request, error) {
+func (client *QueriesClient) ArrayStringNoCollectionFormatEmptyCreateRequest(ctx context.Context, options *QueriesArrayStringNoCollectionFormatEmptyOptions) (*azcore.Request, error) {
 	urlPath := "/queries/array/none/string/empty"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	query := req.URL.Query()
-	if queriesArrayStringNoCollectionFormatEmptyOptions != nil && queriesArrayStringNoCollectionFormatEmptyOptions.ArrayQuery != nil {
-		query.Set("arrayQuery", strings.Join(*queriesArrayStringNoCollectionFormatEmptyOptions.ArrayQuery, ","))
+	if options != nil && options.ArrayQuery != nil {
+		query.Set("arrayQuery", strings.Join(*options.ArrayQuery, ","))
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
@@ -270,8 +270,8 @@ func (client *QueriesClient) ArrayStringNoCollectionFormatEmptyHandleError(resp 
 }
 
 // ArrayStringPipesValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the pipes-array format
-func (client *QueriesClient) ArrayStringPipesValid(ctx context.Context, queriesArrayStringPipesValidOptions *QueriesArrayStringPipesValidOptions) (*http.Response, error) {
-	req, err := client.ArrayStringPipesValidCreateRequest(ctx, queriesArrayStringPipesValidOptions)
+func (client *QueriesClient) ArrayStringPipesValid(ctx context.Context, options *QueriesArrayStringPipesValidOptions) (*http.Response, error) {
+	req, err := client.ArrayStringPipesValidCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -286,15 +286,15 @@ func (client *QueriesClient) ArrayStringPipesValid(ctx context.Context, queriesA
 }
 
 // ArrayStringPipesValidCreateRequest creates the ArrayStringPipesValid request.
-func (client *QueriesClient) ArrayStringPipesValidCreateRequest(ctx context.Context, queriesArrayStringPipesValidOptions *QueriesArrayStringPipesValidOptions) (*azcore.Request, error) {
+func (client *QueriesClient) ArrayStringPipesValidCreateRequest(ctx context.Context, options *QueriesArrayStringPipesValidOptions) (*azcore.Request, error) {
 	urlPath := "/queries/array/pipes/string/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	query := req.URL.Query()
-	if queriesArrayStringPipesValidOptions != nil && queriesArrayStringPipesValidOptions.ArrayQuery != nil {
-		query.Set("arrayQuery", strings.Join(*queriesArrayStringPipesValidOptions.ArrayQuery, "|"))
+	if options != nil && options.ArrayQuery != nil {
+		query.Set("arrayQuery", strings.Join(*options.ArrayQuery, "|"))
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
@@ -311,8 +311,8 @@ func (client *QueriesClient) ArrayStringPipesValidHandleError(resp *azcore.Respo
 }
 
 // ArrayStringSsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the ssv-array format
-func (client *QueriesClient) ArrayStringSsvValid(ctx context.Context, queriesArrayStringSsvValidOptions *QueriesArrayStringSsvValidOptions) (*http.Response, error) {
-	req, err := client.ArrayStringSsvValidCreateRequest(ctx, queriesArrayStringSsvValidOptions)
+func (client *QueriesClient) ArrayStringSsvValid(ctx context.Context, options *QueriesArrayStringSsvValidOptions) (*http.Response, error) {
+	req, err := client.ArrayStringSsvValidCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -327,15 +327,15 @@ func (client *QueriesClient) ArrayStringSsvValid(ctx context.Context, queriesArr
 }
 
 // ArrayStringSsvValidCreateRequest creates the ArrayStringSsvValid request.
-func (client *QueriesClient) ArrayStringSsvValidCreateRequest(ctx context.Context, queriesArrayStringSsvValidOptions *QueriesArrayStringSsvValidOptions) (*azcore.Request, error) {
+func (client *QueriesClient) ArrayStringSsvValidCreateRequest(ctx context.Context, options *QueriesArrayStringSsvValidOptions) (*azcore.Request, error) {
 	urlPath := "/queries/array/ssv/string/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	query := req.URL.Query()
-	if queriesArrayStringSsvValidOptions != nil && queriesArrayStringSsvValidOptions.ArrayQuery != nil {
-		query.Set("arrayQuery", strings.Join(*queriesArrayStringSsvValidOptions.ArrayQuery, " "))
+	if options != nil && options.ArrayQuery != nil {
+		query.Set("arrayQuery", strings.Join(*options.ArrayQuery, " "))
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
@@ -352,8 +352,8 @@ func (client *QueriesClient) ArrayStringSsvValidHandleError(resp *azcore.Respons
 }
 
 // ArrayStringTsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the tsv-array format
-func (client *QueriesClient) ArrayStringTsvValid(ctx context.Context, queriesArrayStringTsvValidOptions *QueriesArrayStringTsvValidOptions) (*http.Response, error) {
-	req, err := client.ArrayStringTsvValidCreateRequest(ctx, queriesArrayStringTsvValidOptions)
+func (client *QueriesClient) ArrayStringTsvValid(ctx context.Context, options *QueriesArrayStringTsvValidOptions) (*http.Response, error) {
+	req, err := client.ArrayStringTsvValidCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -368,15 +368,15 @@ func (client *QueriesClient) ArrayStringTsvValid(ctx context.Context, queriesArr
 }
 
 // ArrayStringTsvValidCreateRequest creates the ArrayStringTsvValid request.
-func (client *QueriesClient) ArrayStringTsvValidCreateRequest(ctx context.Context, queriesArrayStringTsvValidOptions *QueriesArrayStringTsvValidOptions) (*azcore.Request, error) {
+func (client *QueriesClient) ArrayStringTsvValidCreateRequest(ctx context.Context, options *QueriesArrayStringTsvValidOptions) (*azcore.Request, error) {
 	urlPath := "/queries/array/tsv/string/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	query := req.URL.Query()
-	if queriesArrayStringTsvValidOptions != nil && queriesArrayStringTsvValidOptions.ArrayQuery != nil {
-		query.Set("arrayQuery", strings.Join(*queriesArrayStringTsvValidOptions.ArrayQuery, "\t"))
+	if options != nil && options.ArrayQuery != nil {
+		query.Set("arrayQuery", strings.Join(*options.ArrayQuery, "\t"))
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
@@ -393,8 +393,8 @@ func (client *QueriesClient) ArrayStringTsvValidHandleError(resp *azcore.Respons
 }
 
 // ByteEmpty - Get '' as byte array
-func (client *QueriesClient) ByteEmpty(ctx context.Context) (*http.Response, error) {
-	req, err := client.ByteEmptyCreateRequest(ctx)
+func (client *QueriesClient) ByteEmpty(ctx context.Context, options *QueriesByteEmptyOptions) (*http.Response, error) {
+	req, err := client.ByteEmptyCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -409,7 +409,7 @@ func (client *QueriesClient) ByteEmpty(ctx context.Context) (*http.Response, err
 }
 
 // ByteEmptyCreateRequest creates the ByteEmpty request.
-func (client *QueriesClient) ByteEmptyCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *QueriesClient) ByteEmptyCreateRequest(ctx context.Context, options *QueriesByteEmptyOptions) (*azcore.Request, error) {
 	urlPath := "/queries/byte/empty"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -432,8 +432,8 @@ func (client *QueriesClient) ByteEmptyHandleError(resp *azcore.Response) error {
 }
 
 // ByteMultiByte - Get '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
-func (client *QueriesClient) ByteMultiByte(ctx context.Context, queriesByteMultiByteOptions *QueriesByteMultiByteOptions) (*http.Response, error) {
-	req, err := client.ByteMultiByteCreateRequest(ctx, queriesByteMultiByteOptions)
+func (client *QueriesClient) ByteMultiByte(ctx context.Context, options *QueriesByteMultiByteOptions) (*http.Response, error) {
+	req, err := client.ByteMultiByteCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -448,15 +448,15 @@ func (client *QueriesClient) ByteMultiByte(ctx context.Context, queriesByteMulti
 }
 
 // ByteMultiByteCreateRequest creates the ByteMultiByte request.
-func (client *QueriesClient) ByteMultiByteCreateRequest(ctx context.Context, queriesByteMultiByteOptions *QueriesByteMultiByteOptions) (*azcore.Request, error) {
+func (client *QueriesClient) ByteMultiByteCreateRequest(ctx context.Context, options *QueriesByteMultiByteOptions) (*azcore.Request, error) {
 	urlPath := "/queries/byte/multibyte"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	query := req.URL.Query()
-	if queriesByteMultiByteOptions != nil && queriesByteMultiByteOptions.ByteQuery != nil {
-		query.Set("byteQuery", base64.StdEncoding.EncodeToString(*queriesByteMultiByteOptions.ByteQuery))
+	if options != nil && options.ByteQuery != nil {
+		query.Set("byteQuery", base64.StdEncoding.EncodeToString(*options.ByteQuery))
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
@@ -473,8 +473,8 @@ func (client *QueriesClient) ByteMultiByteHandleError(resp *azcore.Response) err
 }
 
 // ByteNull - Get null as byte array (no query parameters in uri)
-func (client *QueriesClient) ByteNull(ctx context.Context, queriesByteNullOptions *QueriesByteNullOptions) (*http.Response, error) {
-	req, err := client.ByteNullCreateRequest(ctx, queriesByteNullOptions)
+func (client *QueriesClient) ByteNull(ctx context.Context, options *QueriesByteNullOptions) (*http.Response, error) {
+	req, err := client.ByteNullCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -489,15 +489,15 @@ func (client *QueriesClient) ByteNull(ctx context.Context, queriesByteNullOption
 }
 
 // ByteNullCreateRequest creates the ByteNull request.
-func (client *QueriesClient) ByteNullCreateRequest(ctx context.Context, queriesByteNullOptions *QueriesByteNullOptions) (*azcore.Request, error) {
+func (client *QueriesClient) ByteNullCreateRequest(ctx context.Context, options *QueriesByteNullOptions) (*azcore.Request, error) {
 	urlPath := "/queries/byte/null"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	query := req.URL.Query()
-	if queriesByteNullOptions != nil && queriesByteNullOptions.ByteQuery != nil {
-		query.Set("byteQuery", base64.StdEncoding.EncodeToString(*queriesByteNullOptions.ByteQuery))
+	if options != nil && options.ByteQuery != nil {
+		query.Set("byteQuery", base64.StdEncoding.EncodeToString(*options.ByteQuery))
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
@@ -514,8 +514,8 @@ func (client *QueriesClient) ByteNullHandleError(resp *azcore.Response) error {
 }
 
 // DateNull - Get null as date - this should result in no query parameters in uri
-func (client *QueriesClient) DateNull(ctx context.Context, queriesDateNullOptions *QueriesDateNullOptions) (*http.Response, error) {
-	req, err := client.DateNullCreateRequest(ctx, queriesDateNullOptions)
+func (client *QueriesClient) DateNull(ctx context.Context, options *QueriesDateNullOptions) (*http.Response, error) {
+	req, err := client.DateNullCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -530,15 +530,15 @@ func (client *QueriesClient) DateNull(ctx context.Context, queriesDateNullOption
 }
 
 // DateNullCreateRequest creates the DateNull request.
-func (client *QueriesClient) DateNullCreateRequest(ctx context.Context, queriesDateNullOptions *QueriesDateNullOptions) (*azcore.Request, error) {
+func (client *QueriesClient) DateNullCreateRequest(ctx context.Context, options *QueriesDateNullOptions) (*azcore.Request, error) {
 	urlPath := "/queries/date/null"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	query := req.URL.Query()
-	if queriesDateNullOptions != nil && queriesDateNullOptions.DateQuery != nil {
-		query.Set("dateQuery", queriesDateNullOptions.DateQuery.Format("2006-01-02"))
+	if options != nil && options.DateQuery != nil {
+		query.Set("dateQuery", options.DateQuery.Format("2006-01-02"))
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
@@ -555,8 +555,8 @@ func (client *QueriesClient) DateNullHandleError(resp *azcore.Response) error {
 }
 
 // DateTimeNull - Get null as date-time, should result in no query parameters in uri
-func (client *QueriesClient) DateTimeNull(ctx context.Context, queriesDateTimeNullOptions *QueriesDateTimeNullOptions) (*http.Response, error) {
-	req, err := client.DateTimeNullCreateRequest(ctx, queriesDateTimeNullOptions)
+func (client *QueriesClient) DateTimeNull(ctx context.Context, options *QueriesDateTimeNullOptions) (*http.Response, error) {
+	req, err := client.DateTimeNullCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -571,15 +571,15 @@ func (client *QueriesClient) DateTimeNull(ctx context.Context, queriesDateTimeNu
 }
 
 // DateTimeNullCreateRequest creates the DateTimeNull request.
-func (client *QueriesClient) DateTimeNullCreateRequest(ctx context.Context, queriesDateTimeNullOptions *QueriesDateTimeNullOptions) (*azcore.Request, error) {
+func (client *QueriesClient) DateTimeNullCreateRequest(ctx context.Context, options *QueriesDateTimeNullOptions) (*azcore.Request, error) {
 	urlPath := "/queries/datetime/null"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	query := req.URL.Query()
-	if queriesDateTimeNullOptions != nil && queriesDateTimeNullOptions.DateTimeQuery != nil {
-		query.Set("dateTimeQuery", queriesDateTimeNullOptions.DateTimeQuery.Format(time.RFC3339Nano))
+	if options != nil && options.DateTimeQuery != nil {
+		query.Set("dateTimeQuery", options.DateTimeQuery.Format(time.RFC3339Nano))
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
@@ -596,8 +596,8 @@ func (client *QueriesClient) DateTimeNullHandleError(resp *azcore.Response) erro
 }
 
 // DateTimeValid - Get '2012-01-01T01:01:01Z' as date-time
-func (client *QueriesClient) DateTimeValid(ctx context.Context) (*http.Response, error) {
-	req, err := client.DateTimeValidCreateRequest(ctx)
+func (client *QueriesClient) DateTimeValid(ctx context.Context, options *QueriesDateTimeValidOptions) (*http.Response, error) {
+	req, err := client.DateTimeValidCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -612,7 +612,7 @@ func (client *QueriesClient) DateTimeValid(ctx context.Context) (*http.Response,
 }
 
 // DateTimeValidCreateRequest creates the DateTimeValid request.
-func (client *QueriesClient) DateTimeValidCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *QueriesClient) DateTimeValidCreateRequest(ctx context.Context, options *QueriesDateTimeValidOptions) (*azcore.Request, error) {
 	urlPath := "/queries/datetime/2012-01-01T01%3A01%3A01Z"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -635,8 +635,8 @@ func (client *QueriesClient) DateTimeValidHandleError(resp *azcore.Response) err
 }
 
 // DateValid - Get '2012-01-01' as date
-func (client *QueriesClient) DateValid(ctx context.Context) (*http.Response, error) {
-	req, err := client.DateValidCreateRequest(ctx)
+func (client *QueriesClient) DateValid(ctx context.Context, options *QueriesDateValidOptions) (*http.Response, error) {
+	req, err := client.DateValidCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -651,7 +651,7 @@ func (client *QueriesClient) DateValid(ctx context.Context) (*http.Response, err
 }
 
 // DateValidCreateRequest creates the DateValid request.
-func (client *QueriesClient) DateValidCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *QueriesClient) DateValidCreateRequest(ctx context.Context, options *QueriesDateValidOptions) (*azcore.Request, error) {
 	urlPath := "/queries/date/2012-01-01"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -674,8 +674,8 @@ func (client *QueriesClient) DateValidHandleError(resp *azcore.Response) error {
 }
 
 // DoubleDecimalNegative - Get '-9999999.999' numeric value
-func (client *QueriesClient) DoubleDecimalNegative(ctx context.Context) (*http.Response, error) {
-	req, err := client.DoubleDecimalNegativeCreateRequest(ctx)
+func (client *QueriesClient) DoubleDecimalNegative(ctx context.Context, options *QueriesDoubleDecimalNegativeOptions) (*http.Response, error) {
+	req, err := client.DoubleDecimalNegativeCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -690,7 +690,7 @@ func (client *QueriesClient) DoubleDecimalNegative(ctx context.Context) (*http.R
 }
 
 // DoubleDecimalNegativeCreateRequest creates the DoubleDecimalNegative request.
-func (client *QueriesClient) DoubleDecimalNegativeCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *QueriesClient) DoubleDecimalNegativeCreateRequest(ctx context.Context, options *QueriesDoubleDecimalNegativeOptions) (*azcore.Request, error) {
 	urlPath := "/queries/double/-9999999.999"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -713,8 +713,8 @@ func (client *QueriesClient) DoubleDecimalNegativeHandleError(resp *azcore.Respo
 }
 
 // DoubleDecimalPositive - Get '9999999.999' numeric value
-func (client *QueriesClient) DoubleDecimalPositive(ctx context.Context) (*http.Response, error) {
-	req, err := client.DoubleDecimalPositiveCreateRequest(ctx)
+func (client *QueriesClient) DoubleDecimalPositive(ctx context.Context, options *QueriesDoubleDecimalPositiveOptions) (*http.Response, error) {
+	req, err := client.DoubleDecimalPositiveCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -729,7 +729,7 @@ func (client *QueriesClient) DoubleDecimalPositive(ctx context.Context) (*http.R
 }
 
 // DoubleDecimalPositiveCreateRequest creates the DoubleDecimalPositive request.
-func (client *QueriesClient) DoubleDecimalPositiveCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *QueriesClient) DoubleDecimalPositiveCreateRequest(ctx context.Context, options *QueriesDoubleDecimalPositiveOptions) (*azcore.Request, error) {
 	urlPath := "/queries/double/9999999.999"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -752,8 +752,8 @@ func (client *QueriesClient) DoubleDecimalPositiveHandleError(resp *azcore.Respo
 }
 
 // DoubleNull - Get null numeric value (no query parameter)
-func (client *QueriesClient) DoubleNull(ctx context.Context, queriesDoubleNullOptions *QueriesDoubleNullOptions) (*http.Response, error) {
-	req, err := client.DoubleNullCreateRequest(ctx, queriesDoubleNullOptions)
+func (client *QueriesClient) DoubleNull(ctx context.Context, options *QueriesDoubleNullOptions) (*http.Response, error) {
+	req, err := client.DoubleNullCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -768,15 +768,15 @@ func (client *QueriesClient) DoubleNull(ctx context.Context, queriesDoubleNullOp
 }
 
 // DoubleNullCreateRequest creates the DoubleNull request.
-func (client *QueriesClient) DoubleNullCreateRequest(ctx context.Context, queriesDoubleNullOptions *QueriesDoubleNullOptions) (*azcore.Request, error) {
+func (client *QueriesClient) DoubleNullCreateRequest(ctx context.Context, options *QueriesDoubleNullOptions) (*azcore.Request, error) {
 	urlPath := "/queries/double/null"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	query := req.URL.Query()
-	if queriesDoubleNullOptions != nil && queriesDoubleNullOptions.DoubleQuery != nil {
-		query.Set("doubleQuery", strconv.FormatFloat(*queriesDoubleNullOptions.DoubleQuery, 'f', -1, 64))
+	if options != nil && options.DoubleQuery != nil {
+		query.Set("doubleQuery", strconv.FormatFloat(*options.DoubleQuery, 'f', -1, 64))
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
@@ -793,8 +793,8 @@ func (client *QueriesClient) DoubleNullHandleError(resp *azcore.Response) error 
 }
 
 // EnumNull - Get null (no query parameter in url)
-func (client *QueriesClient) EnumNull(ctx context.Context, queriesEnumNullOptions *QueriesEnumNullOptions) (*http.Response, error) {
-	req, err := client.EnumNullCreateRequest(ctx, queriesEnumNullOptions)
+func (client *QueriesClient) EnumNull(ctx context.Context, options *QueriesEnumNullOptions) (*http.Response, error) {
+	req, err := client.EnumNullCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -809,15 +809,15 @@ func (client *QueriesClient) EnumNull(ctx context.Context, queriesEnumNullOption
 }
 
 // EnumNullCreateRequest creates the EnumNull request.
-func (client *QueriesClient) EnumNullCreateRequest(ctx context.Context, queriesEnumNullOptions *QueriesEnumNullOptions) (*azcore.Request, error) {
+func (client *QueriesClient) EnumNullCreateRequest(ctx context.Context, options *QueriesEnumNullOptions) (*azcore.Request, error) {
 	urlPath := "/queries/enum/null"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	query := req.URL.Query()
-	if queriesEnumNullOptions != nil && queriesEnumNullOptions.EnumQuery != nil {
-		query.Set("enumQuery", string(*queriesEnumNullOptions.EnumQuery))
+	if options != nil && options.EnumQuery != nil {
+		query.Set("enumQuery", string(*options.EnumQuery))
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
@@ -834,8 +834,8 @@ func (client *QueriesClient) EnumNullHandleError(resp *azcore.Response) error {
 }
 
 // EnumValid - Get using uri with query parameter 'green color'
-func (client *QueriesClient) EnumValid(ctx context.Context, queriesEnumValidOptions *QueriesEnumValidOptions) (*http.Response, error) {
-	req, err := client.EnumValidCreateRequest(ctx, queriesEnumValidOptions)
+func (client *QueriesClient) EnumValid(ctx context.Context, options *QueriesEnumValidOptions) (*http.Response, error) {
+	req, err := client.EnumValidCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -850,15 +850,15 @@ func (client *QueriesClient) EnumValid(ctx context.Context, queriesEnumValidOpti
 }
 
 // EnumValidCreateRequest creates the EnumValid request.
-func (client *QueriesClient) EnumValidCreateRequest(ctx context.Context, queriesEnumValidOptions *QueriesEnumValidOptions) (*azcore.Request, error) {
+func (client *QueriesClient) EnumValidCreateRequest(ctx context.Context, options *QueriesEnumValidOptions) (*azcore.Request, error) {
 	urlPath := "/queries/enum/green%20color"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	query := req.URL.Query()
-	if queriesEnumValidOptions != nil && queriesEnumValidOptions.EnumQuery != nil {
-		query.Set("enumQuery", string(*queriesEnumValidOptions.EnumQuery))
+	if options != nil && options.EnumQuery != nil {
+		query.Set("enumQuery", string(*options.EnumQuery))
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
@@ -875,8 +875,8 @@ func (client *QueriesClient) EnumValidHandleError(resp *azcore.Response) error {
 }
 
 // FloatNull - Get null numeric value (no query parameter)
-func (client *QueriesClient) FloatNull(ctx context.Context, queriesFloatNullOptions *QueriesFloatNullOptions) (*http.Response, error) {
-	req, err := client.FloatNullCreateRequest(ctx, queriesFloatNullOptions)
+func (client *QueriesClient) FloatNull(ctx context.Context, options *QueriesFloatNullOptions) (*http.Response, error) {
+	req, err := client.FloatNullCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -891,15 +891,15 @@ func (client *QueriesClient) FloatNull(ctx context.Context, queriesFloatNullOpti
 }
 
 // FloatNullCreateRequest creates the FloatNull request.
-func (client *QueriesClient) FloatNullCreateRequest(ctx context.Context, queriesFloatNullOptions *QueriesFloatNullOptions) (*azcore.Request, error) {
+func (client *QueriesClient) FloatNullCreateRequest(ctx context.Context, options *QueriesFloatNullOptions) (*azcore.Request, error) {
 	urlPath := "/queries/float/null"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	query := req.URL.Query()
-	if queriesFloatNullOptions != nil && queriesFloatNullOptions.FloatQuery != nil {
-		query.Set("floatQuery", strconv.FormatFloat(float64(*queriesFloatNullOptions.FloatQuery), 'f', -1, 32))
+	if options != nil && options.FloatQuery != nil {
+		query.Set("floatQuery", strconv.FormatFloat(float64(*options.FloatQuery), 'f', -1, 32))
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
@@ -916,8 +916,8 @@ func (client *QueriesClient) FloatNullHandleError(resp *azcore.Response) error {
 }
 
 // FloatScientificNegative - Get '-1.034E-20' numeric value
-func (client *QueriesClient) FloatScientificNegative(ctx context.Context) (*http.Response, error) {
-	req, err := client.FloatScientificNegativeCreateRequest(ctx)
+func (client *QueriesClient) FloatScientificNegative(ctx context.Context, options *QueriesFloatScientificNegativeOptions) (*http.Response, error) {
+	req, err := client.FloatScientificNegativeCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -932,7 +932,7 @@ func (client *QueriesClient) FloatScientificNegative(ctx context.Context) (*http
 }
 
 // FloatScientificNegativeCreateRequest creates the FloatScientificNegative request.
-func (client *QueriesClient) FloatScientificNegativeCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *QueriesClient) FloatScientificNegativeCreateRequest(ctx context.Context, options *QueriesFloatScientificNegativeOptions) (*azcore.Request, error) {
 	urlPath := "/queries/float/-1.034E-20"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -955,8 +955,8 @@ func (client *QueriesClient) FloatScientificNegativeHandleError(resp *azcore.Res
 }
 
 // FloatScientificPositive - Get '1.034E+20' numeric value
-func (client *QueriesClient) FloatScientificPositive(ctx context.Context) (*http.Response, error) {
-	req, err := client.FloatScientificPositiveCreateRequest(ctx)
+func (client *QueriesClient) FloatScientificPositive(ctx context.Context, options *QueriesFloatScientificPositiveOptions) (*http.Response, error) {
+	req, err := client.FloatScientificPositiveCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -971,7 +971,7 @@ func (client *QueriesClient) FloatScientificPositive(ctx context.Context) (*http
 }
 
 // FloatScientificPositiveCreateRequest creates the FloatScientificPositive request.
-func (client *QueriesClient) FloatScientificPositiveCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *QueriesClient) FloatScientificPositiveCreateRequest(ctx context.Context, options *QueriesFloatScientificPositiveOptions) (*azcore.Request, error) {
 	urlPath := "/queries/float/1.034E+20"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -994,8 +994,8 @@ func (client *QueriesClient) FloatScientificPositiveHandleError(resp *azcore.Res
 }
 
 // GetBooleanFalse - Get false Boolean value on path
-func (client *QueriesClient) GetBooleanFalse(ctx context.Context) (*http.Response, error) {
-	req, err := client.GetBooleanFalseCreateRequest(ctx)
+func (client *QueriesClient) GetBooleanFalse(ctx context.Context, options *QueriesGetBooleanFalseOptions) (*http.Response, error) {
+	req, err := client.GetBooleanFalseCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1010,7 +1010,7 @@ func (client *QueriesClient) GetBooleanFalse(ctx context.Context) (*http.Respons
 }
 
 // GetBooleanFalseCreateRequest creates the GetBooleanFalse request.
-func (client *QueriesClient) GetBooleanFalseCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *QueriesClient) GetBooleanFalseCreateRequest(ctx context.Context, options *QueriesGetBooleanFalseOptions) (*azcore.Request, error) {
 	urlPath := "/queries/bool/false"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -1033,8 +1033,8 @@ func (client *QueriesClient) GetBooleanFalseHandleError(resp *azcore.Response) e
 }
 
 // GetBooleanNull - Get null Boolean value on query (query string should be absent)
-func (client *QueriesClient) GetBooleanNull(ctx context.Context, queriesGetBooleanNullOptions *QueriesGetBooleanNullOptions) (*http.Response, error) {
-	req, err := client.GetBooleanNullCreateRequest(ctx, queriesGetBooleanNullOptions)
+func (client *QueriesClient) GetBooleanNull(ctx context.Context, options *QueriesGetBooleanNullOptions) (*http.Response, error) {
+	req, err := client.GetBooleanNullCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1049,15 +1049,15 @@ func (client *QueriesClient) GetBooleanNull(ctx context.Context, queriesGetBoole
 }
 
 // GetBooleanNullCreateRequest creates the GetBooleanNull request.
-func (client *QueriesClient) GetBooleanNullCreateRequest(ctx context.Context, queriesGetBooleanNullOptions *QueriesGetBooleanNullOptions) (*azcore.Request, error) {
+func (client *QueriesClient) GetBooleanNullCreateRequest(ctx context.Context, options *QueriesGetBooleanNullOptions) (*azcore.Request, error) {
 	urlPath := "/queries/bool/null"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	query := req.URL.Query()
-	if queriesGetBooleanNullOptions != nil && queriesGetBooleanNullOptions.BoolQuery != nil {
-		query.Set("boolQuery", strconv.FormatBool(*queriesGetBooleanNullOptions.BoolQuery))
+	if options != nil && options.BoolQuery != nil {
+		query.Set("boolQuery", strconv.FormatBool(*options.BoolQuery))
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
@@ -1074,8 +1074,8 @@ func (client *QueriesClient) GetBooleanNullHandleError(resp *azcore.Response) er
 }
 
 // GetBooleanTrue - Get true Boolean value on path
-func (client *QueriesClient) GetBooleanTrue(ctx context.Context) (*http.Response, error) {
-	req, err := client.GetBooleanTrueCreateRequest(ctx)
+func (client *QueriesClient) GetBooleanTrue(ctx context.Context, options *QueriesGetBooleanTrueOptions) (*http.Response, error) {
+	req, err := client.GetBooleanTrueCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1090,7 +1090,7 @@ func (client *QueriesClient) GetBooleanTrue(ctx context.Context) (*http.Response
 }
 
 // GetBooleanTrueCreateRequest creates the GetBooleanTrue request.
-func (client *QueriesClient) GetBooleanTrueCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *QueriesClient) GetBooleanTrueCreateRequest(ctx context.Context, options *QueriesGetBooleanTrueOptions) (*azcore.Request, error) {
 	urlPath := "/queries/bool/true"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -1113,8 +1113,8 @@ func (client *QueriesClient) GetBooleanTrueHandleError(resp *azcore.Response) er
 }
 
 // GetIntNegativeOneMillion - Get '-1000000' integer value
-func (client *QueriesClient) GetIntNegativeOneMillion(ctx context.Context) (*http.Response, error) {
-	req, err := client.GetIntNegativeOneMillionCreateRequest(ctx)
+func (client *QueriesClient) GetIntNegativeOneMillion(ctx context.Context, options *QueriesGetIntNegativeOneMillionOptions) (*http.Response, error) {
+	req, err := client.GetIntNegativeOneMillionCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1129,7 +1129,7 @@ func (client *QueriesClient) GetIntNegativeOneMillion(ctx context.Context) (*htt
 }
 
 // GetIntNegativeOneMillionCreateRequest creates the GetIntNegativeOneMillion request.
-func (client *QueriesClient) GetIntNegativeOneMillionCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *QueriesClient) GetIntNegativeOneMillionCreateRequest(ctx context.Context, options *QueriesGetIntNegativeOneMillionOptions) (*azcore.Request, error) {
 	urlPath := "/queries/int/-1000000"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -1152,8 +1152,8 @@ func (client *QueriesClient) GetIntNegativeOneMillionHandleError(resp *azcore.Re
 }
 
 // GetIntNull - Get null integer value (no query parameter)
-func (client *QueriesClient) GetIntNull(ctx context.Context, queriesGetIntNullOptions *QueriesGetIntNullOptions) (*http.Response, error) {
-	req, err := client.GetIntNullCreateRequest(ctx, queriesGetIntNullOptions)
+func (client *QueriesClient) GetIntNull(ctx context.Context, options *QueriesGetIntNullOptions) (*http.Response, error) {
+	req, err := client.GetIntNullCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1168,15 +1168,15 @@ func (client *QueriesClient) GetIntNull(ctx context.Context, queriesGetIntNullOp
 }
 
 // GetIntNullCreateRequest creates the GetIntNull request.
-func (client *QueriesClient) GetIntNullCreateRequest(ctx context.Context, queriesGetIntNullOptions *QueriesGetIntNullOptions) (*azcore.Request, error) {
+func (client *QueriesClient) GetIntNullCreateRequest(ctx context.Context, options *QueriesGetIntNullOptions) (*azcore.Request, error) {
 	urlPath := "/queries/int/null"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	query := req.URL.Query()
-	if queriesGetIntNullOptions != nil && queriesGetIntNullOptions.IntQuery != nil {
-		query.Set("intQuery", strconv.FormatInt(int64(*queriesGetIntNullOptions.IntQuery), 10))
+	if options != nil && options.IntQuery != nil {
+		query.Set("intQuery", strconv.FormatInt(int64(*options.IntQuery), 10))
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
@@ -1193,8 +1193,8 @@ func (client *QueriesClient) GetIntNullHandleError(resp *azcore.Response) error 
 }
 
 // GetIntOneMillion - Get '1000000' integer value
-func (client *QueriesClient) GetIntOneMillion(ctx context.Context) (*http.Response, error) {
-	req, err := client.GetIntOneMillionCreateRequest(ctx)
+func (client *QueriesClient) GetIntOneMillion(ctx context.Context, options *QueriesGetIntOneMillionOptions) (*http.Response, error) {
+	req, err := client.GetIntOneMillionCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1209,7 +1209,7 @@ func (client *QueriesClient) GetIntOneMillion(ctx context.Context) (*http.Respon
 }
 
 // GetIntOneMillionCreateRequest creates the GetIntOneMillion request.
-func (client *QueriesClient) GetIntOneMillionCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *QueriesClient) GetIntOneMillionCreateRequest(ctx context.Context, options *QueriesGetIntOneMillionOptions) (*azcore.Request, error) {
 	urlPath := "/queries/int/1000000"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -1232,8 +1232,8 @@ func (client *QueriesClient) GetIntOneMillionHandleError(resp *azcore.Response) 
 }
 
 // GetLongNull - Get 'null 64 bit integer value (no query param in uri)
-func (client *QueriesClient) GetLongNull(ctx context.Context, queriesGetLongNullOptions *QueriesGetLongNullOptions) (*http.Response, error) {
-	req, err := client.GetLongNullCreateRequest(ctx, queriesGetLongNullOptions)
+func (client *QueriesClient) GetLongNull(ctx context.Context, options *QueriesGetLongNullOptions) (*http.Response, error) {
+	req, err := client.GetLongNullCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1248,15 +1248,15 @@ func (client *QueriesClient) GetLongNull(ctx context.Context, queriesGetLongNull
 }
 
 // GetLongNullCreateRequest creates the GetLongNull request.
-func (client *QueriesClient) GetLongNullCreateRequest(ctx context.Context, queriesGetLongNullOptions *QueriesGetLongNullOptions) (*azcore.Request, error) {
+func (client *QueriesClient) GetLongNullCreateRequest(ctx context.Context, options *QueriesGetLongNullOptions) (*azcore.Request, error) {
 	urlPath := "/queries/long/null"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	query := req.URL.Query()
-	if queriesGetLongNullOptions != nil && queriesGetLongNullOptions.LongQuery != nil {
-		query.Set("longQuery", strconv.FormatInt(*queriesGetLongNullOptions.LongQuery, 10))
+	if options != nil && options.LongQuery != nil {
+		query.Set("longQuery", strconv.FormatInt(*options.LongQuery, 10))
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
@@ -1273,8 +1273,8 @@ func (client *QueriesClient) GetLongNullHandleError(resp *azcore.Response) error
 }
 
 // GetNegativeTenBillion - Get '-10000000000' 64 bit integer value
-func (client *QueriesClient) GetNegativeTenBillion(ctx context.Context) (*http.Response, error) {
-	req, err := client.GetNegativeTenBillionCreateRequest(ctx)
+func (client *QueriesClient) GetNegativeTenBillion(ctx context.Context, options *QueriesGetNegativeTenBillionOptions) (*http.Response, error) {
+	req, err := client.GetNegativeTenBillionCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1289,7 +1289,7 @@ func (client *QueriesClient) GetNegativeTenBillion(ctx context.Context) (*http.R
 }
 
 // GetNegativeTenBillionCreateRequest creates the GetNegativeTenBillion request.
-func (client *QueriesClient) GetNegativeTenBillionCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *QueriesClient) GetNegativeTenBillionCreateRequest(ctx context.Context, options *QueriesGetNegativeTenBillionOptions) (*azcore.Request, error) {
 	urlPath := "/queries/long/-10000000000"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -1312,8 +1312,8 @@ func (client *QueriesClient) GetNegativeTenBillionHandleError(resp *azcore.Respo
 }
 
 // GetTenBillion - Get '10000000000' 64 bit integer value
-func (client *QueriesClient) GetTenBillion(ctx context.Context) (*http.Response, error) {
-	req, err := client.GetTenBillionCreateRequest(ctx)
+func (client *QueriesClient) GetTenBillion(ctx context.Context, options *QueriesGetTenBillionOptions) (*http.Response, error) {
+	req, err := client.GetTenBillionCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1328,7 +1328,7 @@ func (client *QueriesClient) GetTenBillion(ctx context.Context) (*http.Response,
 }
 
 // GetTenBillionCreateRequest creates the GetTenBillion request.
-func (client *QueriesClient) GetTenBillionCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *QueriesClient) GetTenBillionCreateRequest(ctx context.Context, options *QueriesGetTenBillionOptions) (*azcore.Request, error) {
 	urlPath := "/queries/long/10000000000"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -1351,8 +1351,8 @@ func (client *QueriesClient) GetTenBillionHandleError(resp *azcore.Response) err
 }
 
 // StringEmpty - Get ''
-func (client *QueriesClient) StringEmpty(ctx context.Context) (*http.Response, error) {
-	req, err := client.StringEmptyCreateRequest(ctx)
+func (client *QueriesClient) StringEmpty(ctx context.Context, options *QueriesStringEmptyOptions) (*http.Response, error) {
+	req, err := client.StringEmptyCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1367,7 +1367,7 @@ func (client *QueriesClient) StringEmpty(ctx context.Context) (*http.Response, e
 }
 
 // StringEmptyCreateRequest creates the StringEmpty request.
-func (client *QueriesClient) StringEmptyCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *QueriesClient) StringEmptyCreateRequest(ctx context.Context, options *QueriesStringEmptyOptions) (*azcore.Request, error) {
 	urlPath := "/queries/string/empty"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -1390,8 +1390,8 @@ func (client *QueriesClient) StringEmptyHandleError(resp *azcore.Response) error
 }
 
 // StringNull - Get null (no query parameter in url)
-func (client *QueriesClient) StringNull(ctx context.Context, queriesStringNullOptions *QueriesStringNullOptions) (*http.Response, error) {
-	req, err := client.StringNullCreateRequest(ctx, queriesStringNullOptions)
+func (client *QueriesClient) StringNull(ctx context.Context, options *QueriesStringNullOptions) (*http.Response, error) {
+	req, err := client.StringNullCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1406,15 +1406,15 @@ func (client *QueriesClient) StringNull(ctx context.Context, queriesStringNullOp
 }
 
 // StringNullCreateRequest creates the StringNull request.
-func (client *QueriesClient) StringNullCreateRequest(ctx context.Context, queriesStringNullOptions *QueriesStringNullOptions) (*azcore.Request, error) {
+func (client *QueriesClient) StringNullCreateRequest(ctx context.Context, options *QueriesStringNullOptions) (*azcore.Request, error) {
 	urlPath := "/queries/string/null"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	query := req.URL.Query()
-	if queriesStringNullOptions != nil && queriesStringNullOptions.StringQuery != nil {
-		query.Set("stringQuery", *queriesStringNullOptions.StringQuery)
+	if options != nil && options.StringQuery != nil {
+		query.Set("stringQuery", *options.StringQuery)
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
@@ -1431,8 +1431,8 @@ func (client *QueriesClient) StringNullHandleError(resp *azcore.Response) error 
 }
 
 // StringURLEncoded - Get 'begin!*'();:@ &=+$,/?#[]end
-func (client *QueriesClient) StringURLEncoded(ctx context.Context) (*http.Response, error) {
-	req, err := client.StringURLEncodedCreateRequest(ctx)
+func (client *QueriesClient) StringURLEncoded(ctx context.Context, options *QueriesStringURLEncodedOptions) (*http.Response, error) {
+	req, err := client.StringURLEncodedCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1447,7 +1447,7 @@ func (client *QueriesClient) StringURLEncoded(ctx context.Context) (*http.Respon
 }
 
 // StringURLEncodedCreateRequest creates the StringURLEncoded request.
-func (client *QueriesClient) StringURLEncodedCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *QueriesClient) StringURLEncodedCreateRequest(ctx context.Context, options *QueriesStringURLEncodedOptions) (*azcore.Request, error) {
 	urlPath := "/queries/string/begin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -1470,8 +1470,8 @@ func (client *QueriesClient) StringURLEncodedHandleError(resp *azcore.Response) 
 }
 
 // StringUnicode - Get '啊齄丂狛狜隣郎隣兀﨩' multi-byte string value
-func (client *QueriesClient) StringUnicode(ctx context.Context) (*http.Response, error) {
-	req, err := client.StringUnicodeCreateRequest(ctx)
+func (client *QueriesClient) StringUnicode(ctx context.Context, options *QueriesStringUnicodeOptions) (*http.Response, error) {
+	req, err := client.StringUnicodeCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1486,7 +1486,7 @@ func (client *QueriesClient) StringUnicode(ctx context.Context) (*http.Response,
 }
 
 // StringUnicodeCreateRequest creates the StringUnicode request.
-func (client *QueriesClient) StringUnicodeCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *QueriesClient) StringUnicodeCreateRequest(ctx context.Context, options *QueriesStringUnicodeOptions) (*azcore.Request, error) {
 	urlPath := "/queries/string/unicode/"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {

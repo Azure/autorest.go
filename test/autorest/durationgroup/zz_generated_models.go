@@ -10,6 +10,26 @@ import (
 	"net/http"
 )
 
+// DurationGetInvalidOptions contains the optional parameters for the Duration.GetInvalid method.
+type DurationGetInvalidOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DurationGetNullOptions contains the optional parameters for the Duration.GetNull method.
+type DurationGetNullOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DurationGetPositiveDurationOptions contains the optional parameters for the Duration.GetPositiveDuration method.
+type DurationGetPositiveDurationOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DurationPutPositiveDurationOptions contains the optional parameters for the Duration.PutPositiveDuration method.
+type DurationPutPositiveDurationOptions struct {
+	// placeholder for future optional parameters
+}
+
 type Error struct {
 	Message *string `json:"message,omitempty"`
 	Status  *int32  `json:"status,omitempty"`

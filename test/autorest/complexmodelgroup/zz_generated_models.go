@@ -46,6 +46,21 @@ type CatalogDictionaryResponse struct {
 	RawResponse *http.Response
 }
 
+// ComplexModelClientCreateOptions contains the optional parameters for the ComplexModelClient.Create method.
+type ComplexModelClientCreateOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ComplexModelClientListOptions contains the optional parameters for the ComplexModelClient.List method.
+type ComplexModelClientListOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ComplexModelClientUpdateOptions contains the optional parameters for the ComplexModelClient.Update method.
+type ComplexModelClientUpdateOptions struct {
+	// placeholder for future optional parameters
+}
+
 type Error struct {
 	Message *string `json:"message,omitempty"`
 	Status  *int32  `json:"status,omitempty"`

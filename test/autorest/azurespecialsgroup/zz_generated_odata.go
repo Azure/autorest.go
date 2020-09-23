@@ -15,7 +15,7 @@ import (
 // OdataOperations contains the methods for the Odata group.
 type OdataOperations interface {
 	// GetWithFilter - Specify filter parameter with value '$filter=id gt 5 and name eq 'foo'&$orderby=id&$top=10'
-	GetWithFilter(ctx context.Context, odataGetWithFilterOptions *OdataGetWithFilterOptions) (*http.Response, error)
+	GetWithFilter(ctx context.Context, options *OdataGetWithFilterOptions) (*http.Response, error)
 }
 
 // OdataClient implements the OdataOperations interface.
@@ -35,8 +35,8 @@ func (client *OdataClient) Do(req *azcore.Request) (*azcore.Response, error) {
 }
 
 // GetWithFilter - Specify filter parameter with value '$filter=id gt 5 and name eq 'foo'&$orderby=id&$top=10'
-func (client *OdataClient) GetWithFilter(ctx context.Context, odataGetWithFilterOptions *OdataGetWithFilterOptions) (*http.Response, error) {
-	req, err := client.GetWithFilterCreateRequest(ctx, odataGetWithFilterOptions)
+func (client *OdataClient) GetWithFilter(ctx context.Context, options *OdataGetWithFilterOptions) (*http.Response, error) {
+	req, err := client.GetWithFilterCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -51,21 +51,21 @@ func (client *OdataClient) GetWithFilter(ctx context.Context, odataGetWithFilter
 }
 
 // GetWithFilterCreateRequest creates the GetWithFilter request.
-func (client *OdataClient) GetWithFilterCreateRequest(ctx context.Context, odataGetWithFilterOptions *OdataGetWithFilterOptions) (*azcore.Request, error) {
+func (client *OdataClient) GetWithFilterCreateRequest(ctx context.Context, options *OdataGetWithFilterOptions) (*azcore.Request, error) {
 	urlPath := "/azurespecials/odata/filter"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	query := req.URL.Query()
-	if odataGetWithFilterOptions != nil && odataGetWithFilterOptions.Filter != nil {
-		query.Set("$filter", *odataGetWithFilterOptions.Filter)
+	if options != nil && options.Filter != nil {
+		query.Set("$filter", *options.Filter)
 	}
-	if odataGetWithFilterOptions != nil && odataGetWithFilterOptions.Top != nil {
-		query.Set("$top", strconv.FormatInt(int64(*odataGetWithFilterOptions.Top), 10))
+	if options != nil && options.Top != nil {
+		query.Set("$top", strconv.FormatInt(int64(*options.Top), 10))
 	}
-	if odataGetWithFilterOptions != nil && odataGetWithFilterOptions.Orderby != nil {
-		query.Set("$orderby", *odataGetWithFilterOptions.Orderby)
+	if options != nil && options.Orderby != nil {
+		query.Set("$orderby", *options.Orderby)
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")

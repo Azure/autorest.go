@@ -15,7 +15,7 @@ import (
 // PathsOperations contains the methods for the Paths group.
 type PathsOperations interface {
 	// GetEmpty - Get a 200 to test a valid base uri
-	GetEmpty(ctx context.Context, accountName string) (*http.Response, error)
+	GetEmpty(ctx context.Context, accountName string, options *PathsGetEmptyOptions) (*http.Response, error)
 }
 
 // PathsClient implements the PathsOperations interface.
@@ -35,8 +35,8 @@ func (client *PathsClient) Do(req *azcore.Request) (*azcore.Response, error) {
 }
 
 // GetEmpty - Get a 200 to test a valid base uri
-func (client *PathsClient) GetEmpty(ctx context.Context, accountName string) (*http.Response, error) {
-	req, err := client.GetEmptyCreateRequest(ctx, accountName)
+func (client *PathsClient) GetEmpty(ctx context.Context, accountName string, options *PathsGetEmptyOptions) (*http.Response, error) {
+	req, err := client.GetEmptyCreateRequest(ctx, accountName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -51,7 +51,7 @@ func (client *PathsClient) GetEmpty(ctx context.Context, accountName string) (*h
 }
 
 // GetEmptyCreateRequest creates the GetEmpty request.
-func (client *PathsClient) GetEmptyCreateRequest(ctx context.Context, accountName string) (*azcore.Request, error) {
+func (client *PathsClient) GetEmptyCreateRequest(ctx context.Context, accountName string, options *PathsGetEmptyOptions) (*azcore.Request, error) {
 	host := "http://{accountName}{host}"
 	host = strings.ReplaceAll(host, "{host}", client.host)
 	host = strings.ReplaceAll(host, "{accountName}", accountName)

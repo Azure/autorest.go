@@ -27,8 +27,8 @@ func (client *sparkBatchClient) Do(req *azcore.Request) (*azcore.Response, error
 }
 
 // CancelSparkBatchJob - Cancels a running spark batch job.
-func (client *sparkBatchClient) CancelSparkBatchJob(ctx context.Context, batchId int32) (*http.Response, error) {
-	req, err := client.CancelSparkBatchJobCreateRequest(ctx, batchId)
+func (client *sparkBatchClient) CancelSparkBatchJob(ctx context.Context, batchId int32, options *SparkBatchCancelSparkBatchJobOptions) (*http.Response, error) {
+	req, err := client.CancelSparkBatchJobCreateRequest(ctx, batchId, options)
 	if err != nil {
 		return nil, err
 	}
@@ -43,7 +43,7 @@ func (client *sparkBatchClient) CancelSparkBatchJob(ctx context.Context, batchId
 }
 
 // CancelSparkBatchJobCreateRequest creates the CancelSparkBatchJob request.
-func (client *sparkBatchClient) CancelSparkBatchJobCreateRequest(ctx context.Context, batchId int32) (*azcore.Request, error) {
+func (client *sparkBatchClient) CancelSparkBatchJobCreateRequest(ctx context.Context, batchId int32, options *SparkBatchCancelSparkBatchJobOptions) (*azcore.Request, error) {
 	urlPath := "/batches/{batchId}"
 	urlPath = strings.ReplaceAll(urlPath, "{batchId}", url.PathEscape(strconv.FormatInt(int64(batchId), 10)))
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
@@ -66,8 +66,8 @@ func (client *sparkBatchClient) CancelSparkBatchJobHandleError(resp *azcore.Resp
 }
 
 // CreateSparkBatchJob - Create new spark batch job.
-func (client *sparkBatchClient) CreateSparkBatchJob(ctx context.Context, sparkBatchJobOptions SparkBatchJobOptions, sparkBatchCreateSparkBatchJobOptions *SparkBatchCreateSparkBatchJobOptions) (*SparkBatchJobResponse, error) {
-	req, err := client.CreateSparkBatchJobCreateRequest(ctx, sparkBatchJobOptions, sparkBatchCreateSparkBatchJobOptions)
+func (client *sparkBatchClient) CreateSparkBatchJob(ctx context.Context, sparkBatchJobOptions SparkBatchJobOptions, options *SparkBatchCreateSparkBatchJobOptions) (*SparkBatchJobResponse, error) {
+	req, err := client.CreateSparkBatchJobCreateRequest(ctx, sparkBatchJobOptions, options)
 	if err != nil {
 		return nil, err
 	}
@@ -86,15 +86,15 @@ func (client *sparkBatchClient) CreateSparkBatchJob(ctx context.Context, sparkBa
 }
 
 // CreateSparkBatchJobCreateRequest creates the CreateSparkBatchJob request.
-func (client *sparkBatchClient) CreateSparkBatchJobCreateRequest(ctx context.Context, sparkBatchJobOptions SparkBatchJobOptions, sparkBatchCreateSparkBatchJobOptions *SparkBatchCreateSparkBatchJobOptions) (*azcore.Request, error) {
+func (client *sparkBatchClient) CreateSparkBatchJobCreateRequest(ctx context.Context, sparkBatchJobOptions SparkBatchJobOptions, options *SparkBatchCreateSparkBatchJobOptions) (*azcore.Request, error) {
 	urlPath := "/batches"
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	query := req.URL.Query()
-	if sparkBatchCreateSparkBatchJobOptions != nil && sparkBatchCreateSparkBatchJobOptions.Detailed != nil {
-		query.Set("detailed", strconv.FormatBool(*sparkBatchCreateSparkBatchJobOptions.Detailed))
+	if options != nil && options.Detailed != nil {
+		query.Set("detailed", strconv.FormatBool(*options.Detailed))
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
@@ -120,8 +120,8 @@ func (client *sparkBatchClient) CreateSparkBatchJobHandleError(resp *azcore.Resp
 }
 
 // GetSparkBatchJob - Gets a single spark batch job.
-func (client *sparkBatchClient) GetSparkBatchJob(ctx context.Context, batchId int32, sparkBatchGetSparkBatchJobOptions *SparkBatchGetSparkBatchJobOptions) (*SparkBatchJobResponse, error) {
-	req, err := client.GetSparkBatchJobCreateRequest(ctx, batchId, sparkBatchGetSparkBatchJobOptions)
+func (client *sparkBatchClient) GetSparkBatchJob(ctx context.Context, batchId int32, options *SparkBatchGetSparkBatchJobOptions) (*SparkBatchJobResponse, error) {
+	req, err := client.GetSparkBatchJobCreateRequest(ctx, batchId, options)
 	if err != nil {
 		return nil, err
 	}
@@ -140,7 +140,7 @@ func (client *sparkBatchClient) GetSparkBatchJob(ctx context.Context, batchId in
 }
 
 // GetSparkBatchJobCreateRequest creates the GetSparkBatchJob request.
-func (client *sparkBatchClient) GetSparkBatchJobCreateRequest(ctx context.Context, batchId int32, sparkBatchGetSparkBatchJobOptions *SparkBatchGetSparkBatchJobOptions) (*azcore.Request, error) {
+func (client *sparkBatchClient) GetSparkBatchJobCreateRequest(ctx context.Context, batchId int32, options *SparkBatchGetSparkBatchJobOptions) (*azcore.Request, error) {
 	urlPath := "/batches/{batchId}"
 	urlPath = strings.ReplaceAll(urlPath, "{batchId}", url.PathEscape(strconv.FormatInt(int64(batchId), 10)))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
@@ -148,8 +148,8 @@ func (client *sparkBatchClient) GetSparkBatchJobCreateRequest(ctx context.Contex
 		return nil, err
 	}
 	query := req.URL.Query()
-	if sparkBatchGetSparkBatchJobOptions != nil && sparkBatchGetSparkBatchJobOptions.Detailed != nil {
-		query.Set("detailed", strconv.FormatBool(*sparkBatchGetSparkBatchJobOptions.Detailed))
+	if options != nil && options.Detailed != nil {
+		query.Set("detailed", strconv.FormatBool(*options.Detailed))
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
@@ -175,8 +175,8 @@ func (client *sparkBatchClient) GetSparkBatchJobHandleError(resp *azcore.Respons
 }
 
 // GetSparkBatchJobs - List all spark batch jobs which are running under a particular spark pool.
-func (client *sparkBatchClient) GetSparkBatchJobs(ctx context.Context, sparkBatchGetSparkBatchJobsOptions *SparkBatchGetSparkBatchJobsOptions) (*SparkBatchJobCollectionResponse, error) {
-	req, err := client.GetSparkBatchJobsCreateRequest(ctx, sparkBatchGetSparkBatchJobsOptions)
+func (client *sparkBatchClient) GetSparkBatchJobs(ctx context.Context, options *SparkBatchGetSparkBatchJobsOptions) (*SparkBatchJobCollectionResponse, error) {
+	req, err := client.GetSparkBatchJobsCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -195,21 +195,21 @@ func (client *sparkBatchClient) GetSparkBatchJobs(ctx context.Context, sparkBatc
 }
 
 // GetSparkBatchJobsCreateRequest creates the GetSparkBatchJobs request.
-func (client *sparkBatchClient) GetSparkBatchJobsCreateRequest(ctx context.Context, sparkBatchGetSparkBatchJobsOptions *SparkBatchGetSparkBatchJobsOptions) (*azcore.Request, error) {
+func (client *sparkBatchClient) GetSparkBatchJobsCreateRequest(ctx context.Context, options *SparkBatchGetSparkBatchJobsOptions) (*azcore.Request, error) {
 	urlPath := "/batches"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	query := req.URL.Query()
-	if sparkBatchGetSparkBatchJobsOptions != nil && sparkBatchGetSparkBatchJobsOptions.From != nil {
-		query.Set("from", strconv.FormatInt(int64(*sparkBatchGetSparkBatchJobsOptions.From), 10))
+	if options != nil && options.From != nil {
+		query.Set("from", strconv.FormatInt(int64(*options.From), 10))
 	}
-	if sparkBatchGetSparkBatchJobsOptions != nil && sparkBatchGetSparkBatchJobsOptions.Size != nil {
-		query.Set("size", strconv.FormatInt(int64(*sparkBatchGetSparkBatchJobsOptions.Size), 10))
+	if options != nil && options.Size != nil {
+		query.Set("size", strconv.FormatInt(int64(*options.Size), 10))
 	}
-	if sparkBatchGetSparkBatchJobsOptions != nil && sparkBatchGetSparkBatchJobsOptions.Detailed != nil {
-		query.Set("detailed", strconv.FormatBool(*sparkBatchGetSparkBatchJobsOptions.Detailed))
+	if options != nil && options.Detailed != nil {
+		query.Set("detailed", strconv.FormatBool(*options.Detailed))
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")

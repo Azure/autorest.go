@@ -432,3 +432,34 @@ type PetApTrueResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
+
+// PetsCreateApInPropertiesOptions contains the optional parameters for the Pets.CreateApInProperties method.
+type PetsCreateApInPropertiesOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PetsCreateApInPropertiesWithApstringOptions contains the optional parameters for the Pets.CreateApInPropertiesWithApstring
+// method.
+type PetsCreateApInPropertiesWithApstringOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PetsCreateApObjectOptions contains the optional parameters for the Pets.CreateApObject method.
+type PetsCreateApObjectOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PetsCreateApStringOptions contains the optional parameters for the Pets.CreateApString method.
+type PetsCreateApStringOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PetsCreateApTrueOptions contains the optional parameters for the Pets.CreateApTrue method.
+type PetsCreateApTrueOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PetsCreateCatApTrueOptions contains the optional parameters for the Pets.CreateCatApTrue method.
+type PetsCreateCatApTrueOptions struct {
+	// placeholder for future optional parameters
+}

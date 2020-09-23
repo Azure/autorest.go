@@ -18,17 +18,17 @@ import (
 // NetworkInterfaceTapConfigurationsOperations contains the methods for the NetworkInterfaceTapConfigurations group.
 type NetworkInterfaceTapConfigurationsOperations interface {
 	// BeginCreateOrUpdate - Creates or updates a Tap configuration in the specified NetworkInterface.
-	BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, tapConfigurationParameters NetworkInterfaceTapConfiguration) (*NetworkInterfaceTapConfigurationPollerResponse, error)
+	BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, tapConfigurationParameters NetworkInterfaceTapConfiguration, options *NetworkInterfaceTapConfigurationsCreateOrUpdateOptions) (*NetworkInterfaceTapConfigurationPollerResponse, error)
 	// ResumeCreateOrUpdate - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeCreateOrUpdate(token string) (NetworkInterfaceTapConfigurationPoller, error)
 	// BeginDelete - Deletes the specified tap configuration from the NetworkInterface.
-	BeginDelete(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string) (*HTTPPollerResponse, error)
+	BeginDelete(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, options *NetworkInterfaceTapConfigurationsDeleteOptions) (*HTTPPollerResponse, error)
 	// ResumeDelete - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeDelete(token string) (HTTPPoller, error)
 	// Get - Get the specified tap configuration on a network interface.
-	Get(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string) (*NetworkInterfaceTapConfigurationResponse, error)
+	Get(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, options *NetworkInterfaceTapConfigurationsGetOptions) (*NetworkInterfaceTapConfigurationResponse, error)
 	// List - Get all Tap configurations in a network interface.
-	List(resourceGroupName string, networkInterfaceName string) NetworkInterfaceTapConfigurationListResultPager
+	List(resourceGroupName string, networkInterfaceName string, options *NetworkInterfaceTapConfigurationsListOptions) NetworkInterfaceTapConfigurationListResultPager
 }
 
 // NetworkInterfaceTapConfigurationsClient implements the NetworkInterfaceTapConfigurationsOperations interface.
@@ -48,8 +48,8 @@ func (client *NetworkInterfaceTapConfigurationsClient) Do(req *azcore.Request) (
 	return client.p.Do(req)
 }
 
-func (client *NetworkInterfaceTapConfigurationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, tapConfigurationParameters NetworkInterfaceTapConfiguration) (*NetworkInterfaceTapConfigurationPollerResponse, error) {
-	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName, tapConfigurationParameters)
+func (client *NetworkInterfaceTapConfigurationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, tapConfigurationParameters NetworkInterfaceTapConfiguration, options *NetworkInterfaceTapConfigurationsCreateOrUpdateOptions) (*NetworkInterfaceTapConfigurationPollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName, tapConfigurationParameters, options)
 	if err != nil {
 		return nil, err
 	}
@@ -83,8 +83,8 @@ func (client *NetworkInterfaceTapConfigurationsClient) ResumeCreateOrUpdate(toke
 }
 
 // CreateOrUpdate - Creates or updates a Tap configuration in the specified NetworkInterface.
-func (client *NetworkInterfaceTapConfigurationsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, tapConfigurationParameters NetworkInterfaceTapConfiguration) (*azcore.Response, error) {
-	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName, tapConfigurationParameters)
+func (client *NetworkInterfaceTapConfigurationsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, tapConfigurationParameters NetworkInterfaceTapConfiguration, options *NetworkInterfaceTapConfigurationsCreateOrUpdateOptions) (*azcore.Response, error) {
+	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName, tapConfigurationParameters, options)
 	if err != nil {
 		return nil, err
 	}
@@ -99,7 +99,7 @@ func (client *NetworkInterfaceTapConfigurationsClient) CreateOrUpdate(ctx contex
 }
 
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *NetworkInterfaceTapConfigurationsClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, tapConfigurationParameters NetworkInterfaceTapConfiguration) (*azcore.Request, error) {
+func (client *NetworkInterfaceTapConfigurationsClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, tapConfigurationParameters NetworkInterfaceTapConfiguration, options *NetworkInterfaceTapConfigurationsCreateOrUpdateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/tapConfigurations/{tapConfigurationName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkInterfaceName}", url.PathEscape(networkInterfaceName))
@@ -131,8 +131,8 @@ func (client *NetworkInterfaceTapConfigurationsClient) CreateOrUpdateHandleError
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-func (client *NetworkInterfaceTapConfigurationsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string) (*HTTPPollerResponse, error) {
-	resp, err := client.Delete(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName)
+func (client *NetworkInterfaceTapConfigurationsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, options *NetworkInterfaceTapConfigurationsDeleteOptions) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -166,8 +166,8 @@ func (client *NetworkInterfaceTapConfigurationsClient) ResumeDelete(token string
 }
 
 // Delete - Deletes the specified tap configuration from the NetworkInterface.
-func (client *NetworkInterfaceTapConfigurationsClient) Delete(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string) (*azcore.Response, error) {
-	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName)
+func (client *NetworkInterfaceTapConfigurationsClient) Delete(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, options *NetworkInterfaceTapConfigurationsDeleteOptions) (*azcore.Response, error) {
+	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -182,7 +182,7 @@ func (client *NetworkInterfaceTapConfigurationsClient) Delete(ctx context.Contex
 }
 
 // DeleteCreateRequest creates the Delete request.
-func (client *NetworkInterfaceTapConfigurationsClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string) (*azcore.Request, error) {
+func (client *NetworkInterfaceTapConfigurationsClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, options *NetworkInterfaceTapConfigurationsDeleteOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/tapConfigurations/{tapConfigurationName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkInterfaceName}", url.PathEscape(networkInterfaceName))
@@ -209,8 +209,8 @@ func (client *NetworkInterfaceTapConfigurationsClient) DeleteHandleError(resp *a
 }
 
 // Get - Get the specified tap configuration on a network interface.
-func (client *NetworkInterfaceTapConfigurationsClient) Get(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string) (*NetworkInterfaceTapConfigurationResponse, error) {
-	req, err := client.GetCreateRequest(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName)
+func (client *NetworkInterfaceTapConfigurationsClient) Get(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, options *NetworkInterfaceTapConfigurationsGetOptions) (*NetworkInterfaceTapConfigurationResponse, error) {
+	req, err := client.GetCreateRequest(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -229,7 +229,7 @@ func (client *NetworkInterfaceTapConfigurationsClient) Get(ctx context.Context, 
 }
 
 // GetCreateRequest creates the Get request.
-func (client *NetworkInterfaceTapConfigurationsClient) GetCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string) (*azcore.Request, error) {
+func (client *NetworkInterfaceTapConfigurationsClient) GetCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, options *NetworkInterfaceTapConfigurationsGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/tapConfigurations/{tapConfigurationName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkInterfaceName}", url.PathEscape(networkInterfaceName))
@@ -262,11 +262,11 @@ func (client *NetworkInterfaceTapConfigurationsClient) GetHandleError(resp *azco
 }
 
 // List - Get all Tap configurations in a network interface.
-func (client *NetworkInterfaceTapConfigurationsClient) List(resourceGroupName string, networkInterfaceName string) NetworkInterfaceTapConfigurationListResultPager {
+func (client *NetworkInterfaceTapConfigurationsClient) List(resourceGroupName string, networkInterfaceName string, options *NetworkInterfaceTapConfigurationsListOptions) NetworkInterfaceTapConfigurationListResultPager {
 	return &networkInterfaceTapConfigurationListResultPager{
 		pipeline: client.p,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
-			return client.ListCreateRequest(ctx, resourceGroupName, networkInterfaceName)
+			return client.ListCreateRequest(ctx, resourceGroupName, networkInterfaceName, options)
 		},
 		responder: client.ListHandleResponse,
 		errorer:   client.ListHandleError,
@@ -277,7 +277,7 @@ func (client *NetworkInterfaceTapConfigurationsClient) List(resourceGroupName st
 }
 
 // ListCreateRequest creates the List request.
-func (client *NetworkInterfaceTapConfigurationsClient) ListCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string) (*azcore.Request, error) {
+func (client *NetworkInterfaceTapConfigurationsClient) ListCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfaceTapConfigurationsListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/tapConfigurations"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkInterfaceName}", url.PathEscape(networkInterfaceName))

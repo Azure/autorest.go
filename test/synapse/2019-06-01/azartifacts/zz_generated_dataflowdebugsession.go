@@ -21,8 +21,8 @@ func (client *dataFlowDebugSessionClient) Do(req *azcore.Request) (*azcore.Respo
 }
 
 // AddDataFlow - Add a data flow into debug session.
-func (client *dataFlowDebugSessionClient) AddDataFlow(ctx context.Context, request DataFlowDebugPackage) (*AddDataFlowToDebugSessionResponseResponse, error) {
-	req, err := client.AddDataFlowCreateRequest(ctx, request)
+func (client *dataFlowDebugSessionClient) AddDataFlow(ctx context.Context, request DataFlowDebugPackage, options *DataFlowDebugSessionAddDataFlowOptions) (*AddDataFlowToDebugSessionResponseResponse, error) {
+	req, err := client.AddDataFlowCreateRequest(ctx, request, options)
 	if err != nil {
 		return nil, err
 	}
@@ -41,7 +41,7 @@ func (client *dataFlowDebugSessionClient) AddDataFlow(ctx context.Context, reque
 }
 
 // AddDataFlowCreateRequest creates the AddDataFlow request.
-func (client *dataFlowDebugSessionClient) AddDataFlowCreateRequest(ctx context.Context, request DataFlowDebugPackage) (*azcore.Request, error) {
+func (client *dataFlowDebugSessionClient) AddDataFlowCreateRequest(ctx context.Context, request DataFlowDebugPackage, options *DataFlowDebugSessionAddDataFlowOptions) (*azcore.Request, error) {
 	urlPath := "/addDataFlowToDebugSession"
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -70,8 +70,8 @@ func (client *dataFlowDebugSessionClient) AddDataFlowHandleError(resp *azcore.Re
 }
 
 // CreateDataFlowDebugSession - Creates a data flow debug session.
-func (client *dataFlowDebugSessionClient) CreateDataFlowDebugSession(ctx context.Context, request CreateDataFlowDebugSessionRequest) (*azcore.Response, error) {
-	req, err := client.CreateDataFlowDebugSessionCreateRequest(ctx, request)
+func (client *dataFlowDebugSessionClient) CreateDataFlowDebugSession(ctx context.Context, request CreateDataFlowDebugSessionRequest, options *DataFlowDebugSessionCreateDataFlowDebugSessionOptions) (*azcore.Response, error) {
+	req, err := client.CreateDataFlowDebugSessionCreateRequest(ctx, request, options)
 	if err != nil {
 		return nil, err
 	}
@@ -86,7 +86,7 @@ func (client *dataFlowDebugSessionClient) CreateDataFlowDebugSession(ctx context
 }
 
 // CreateDataFlowDebugSessionCreateRequest creates the CreateDataFlowDebugSession request.
-func (client *dataFlowDebugSessionClient) CreateDataFlowDebugSessionCreateRequest(ctx context.Context, request CreateDataFlowDebugSessionRequest) (*azcore.Request, error) {
+func (client *dataFlowDebugSessionClient) CreateDataFlowDebugSessionCreateRequest(ctx context.Context, request CreateDataFlowDebugSessionRequest, options *DataFlowDebugSessionCreateDataFlowDebugSessionOptions) (*azcore.Request, error) {
 	urlPath := "/createDataFlowDebugSession"
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -115,8 +115,8 @@ func (client *dataFlowDebugSessionClient) CreateDataFlowDebugSessionHandleError(
 }
 
 // DeleteDataFlowDebugSession - Deletes a data flow debug session.
-func (client *dataFlowDebugSessionClient) DeleteDataFlowDebugSession(ctx context.Context, request DeleteDataFlowDebugSessionRequest) (*http.Response, error) {
-	req, err := client.DeleteDataFlowDebugSessionCreateRequest(ctx, request)
+func (client *dataFlowDebugSessionClient) DeleteDataFlowDebugSession(ctx context.Context, request DeleteDataFlowDebugSessionRequest, options *DataFlowDebugSessionDeleteDataFlowDebugSessionOptions) (*http.Response, error) {
+	req, err := client.DeleteDataFlowDebugSessionCreateRequest(ctx, request, options)
 	if err != nil {
 		return nil, err
 	}
@@ -131,7 +131,7 @@ func (client *dataFlowDebugSessionClient) DeleteDataFlowDebugSession(ctx context
 }
 
 // DeleteDataFlowDebugSessionCreateRequest creates the DeleteDataFlowDebugSession request.
-func (client *dataFlowDebugSessionClient) DeleteDataFlowDebugSessionCreateRequest(ctx context.Context, request DeleteDataFlowDebugSessionRequest) (*azcore.Request, error) {
+func (client *dataFlowDebugSessionClient) DeleteDataFlowDebugSessionCreateRequest(ctx context.Context, request DeleteDataFlowDebugSessionRequest, options *DataFlowDebugSessionDeleteDataFlowDebugSessionOptions) (*azcore.Request, error) {
 	urlPath := "/deleteDataFlowDebugSession"
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -154,8 +154,8 @@ func (client *dataFlowDebugSessionClient) DeleteDataFlowDebugSessionHandleError(
 }
 
 // ExecuteCommand - Execute a data flow debug command.
-func (client *dataFlowDebugSessionClient) ExecuteCommand(ctx context.Context, request DataFlowDebugCommandRequest) (*azcore.Response, error) {
-	req, err := client.ExecuteCommandCreateRequest(ctx, request)
+func (client *dataFlowDebugSessionClient) ExecuteCommand(ctx context.Context, request DataFlowDebugCommandRequest, options *DataFlowDebugSessionExecuteCommandOptions) (*azcore.Response, error) {
+	req, err := client.ExecuteCommandCreateRequest(ctx, request, options)
 	if err != nil {
 		return nil, err
 	}
@@ -170,7 +170,7 @@ func (client *dataFlowDebugSessionClient) ExecuteCommand(ctx context.Context, re
 }
 
 // ExecuteCommandCreateRequest creates the ExecuteCommand request.
-func (client *dataFlowDebugSessionClient) ExecuteCommandCreateRequest(ctx context.Context, request DataFlowDebugCommandRequest) (*azcore.Request, error) {
+func (client *dataFlowDebugSessionClient) ExecuteCommandCreateRequest(ctx context.Context, request DataFlowDebugCommandRequest, options *DataFlowDebugSessionExecuteCommandOptions) (*azcore.Request, error) {
 	urlPath := "/executeDataFlowDebugCommand"
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -199,11 +199,11 @@ func (client *dataFlowDebugSessionClient) ExecuteCommandHandleError(resp *azcore
 }
 
 // QueryDataFlowDebugSessionsByWorkspace - Query all active data flow debug sessions.
-func (client *dataFlowDebugSessionClient) QueryDataFlowDebugSessionsByWorkspace() QueryDataFlowDebugSessionsResponsePager {
+func (client *dataFlowDebugSessionClient) QueryDataFlowDebugSessionsByWorkspace(options *DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspaceOptions) QueryDataFlowDebugSessionsResponsePager {
 	return &queryDataFlowDebugSessionsResponsePager{
 		pipeline: client.p,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
-			return client.QueryDataFlowDebugSessionsByWorkspaceCreateRequest(ctx)
+			return client.QueryDataFlowDebugSessionsByWorkspaceCreateRequest(ctx, options)
 		},
 		responder: client.QueryDataFlowDebugSessionsByWorkspaceHandleResponse,
 		errorer:   client.QueryDataFlowDebugSessionsByWorkspaceHandleError,
@@ -214,7 +214,7 @@ func (client *dataFlowDebugSessionClient) QueryDataFlowDebugSessionsByWorkspace(
 }
 
 // QueryDataFlowDebugSessionsByWorkspaceCreateRequest creates the QueryDataFlowDebugSessionsByWorkspace request.
-func (client *dataFlowDebugSessionClient) QueryDataFlowDebugSessionsByWorkspaceCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *dataFlowDebugSessionClient) QueryDataFlowDebugSessionsByWorkspaceCreateRequest(ctx context.Context, options *DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspaceOptions) (*azcore.Request, error) {
 	urlPath := "/queryDataFlowDebugSessions"
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {

@@ -231,6 +231,16 @@ type PetActionResponse struct {
 	RawResponse *http.Response
 }
 
+// PetDoSomethingOptions contains the optional parameters for the Pet.DoSomething method.
+type PetDoSomethingOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PetGetPetByIDOptions contains the optional parameters for the Pet.GetPetByID method.
+type PetGetPetByIDOptions struct {
+	// placeholder for future optional parameters
+}
+
 type PetHungryOrThirstyError struct {
 	PetSadError
 	// is the pet hungry or thirsty or both

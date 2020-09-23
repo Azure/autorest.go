@@ -17,9 +17,9 @@ import (
 // FloatOperations contains the methods for the Float group.
 type FloatOperations interface {
 	// Get - Get a float enum
-	Get(ctx context.Context) (*FloatEnumResponse, error)
+	Get(ctx context.Context, options *FloatGetOptions) (*FloatEnumResponse, error)
 	// Put - Put a float enum
-	Put(ctx context.Context, floatPutOptions *FloatPutOptions) (*StringResponse, error)
+	Put(ctx context.Context, options *FloatPutOptions) (*StringResponse, error)
 }
 
 // FloatClient implements the FloatOperations interface.
@@ -39,8 +39,8 @@ func (client *FloatClient) Do(req *azcore.Request) (*azcore.Response, error) {
 }
 
 // Get - Get a float enum
-func (client *FloatClient) Get(ctx context.Context) (*FloatEnumResponse, error) {
-	req, err := client.GetCreateRequest(ctx)
+func (client *FloatClient) Get(ctx context.Context, options *FloatGetOptions) (*FloatEnumResponse, error) {
+	req, err := client.GetCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -59,7 +59,7 @@ func (client *FloatClient) Get(ctx context.Context) (*FloatEnumResponse, error) 
 }
 
 // GetCreateRequest creates the Get request.
-func (client *FloatClient) GetCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *FloatClient) GetCreateRequest(ctx context.Context, options *FloatGetOptions) (*azcore.Request, error) {
 	urlPath := "/nonStringEnums/float/get"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -88,8 +88,8 @@ func (client *FloatClient) GetHandleError(resp *azcore.Response) error {
 }
 
 // Put - Put a float enum
-func (client *FloatClient) Put(ctx context.Context, floatPutOptions *FloatPutOptions) (*StringResponse, error) {
-	req, err := client.PutCreateRequest(ctx, floatPutOptions)
+func (client *FloatClient) Put(ctx context.Context, options *FloatPutOptions) (*StringResponse, error) {
+	req, err := client.PutCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -108,15 +108,15 @@ func (client *FloatClient) Put(ctx context.Context, floatPutOptions *FloatPutOpt
 }
 
 // PutCreateRequest creates the Put request.
-func (client *FloatClient) PutCreateRequest(ctx context.Context, floatPutOptions *FloatPutOptions) (*azcore.Request, error) {
+func (client *FloatClient) PutCreateRequest(ctx context.Context, options *FloatPutOptions) (*azcore.Request, error) {
 	urlPath := "/nonStringEnums/float/put"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Header.Set("Accept", "application/json")
-	if floatPutOptions != nil {
-		return req, req.MarshalAsJSON(floatPutOptions.Input)
+	if options != nil {
+		return req, req.MarshalAsJSON(options.Input)
 	}
 	return req, nil
 }

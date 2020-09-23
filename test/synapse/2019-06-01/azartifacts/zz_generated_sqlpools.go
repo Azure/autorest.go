@@ -23,8 +23,8 @@ func (client *sqlPoolsClient) Do(req *azcore.Request) (*azcore.Response, error) 
 }
 
 // Get - Get Sql Pool
-func (client *sqlPoolsClient) Get(ctx context.Context, sqlPoolName string) (*SQLPoolResponse, error) {
-	req, err := client.GetCreateRequest(ctx, sqlPoolName)
+func (client *sqlPoolsClient) Get(ctx context.Context, sqlPoolName string, options *SQLPoolsGetOptions) (*SQLPoolResponse, error) {
+	req, err := client.GetCreateRequest(ctx, sqlPoolName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -43,7 +43,7 @@ func (client *sqlPoolsClient) Get(ctx context.Context, sqlPoolName string) (*SQL
 }
 
 // GetCreateRequest creates the Get request.
-func (client *sqlPoolsClient) GetCreateRequest(ctx context.Context, sqlPoolName string) (*azcore.Request, error) {
+func (client *sqlPoolsClient) GetCreateRequest(ctx context.Context, sqlPoolName string, options *SQLPoolsGetOptions) (*azcore.Request, error) {
 	urlPath := "/sqlPools/{sqlPoolName}"
 	urlPath = strings.ReplaceAll(urlPath, "{sqlPoolName}", url.PathEscape(sqlPoolName))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
@@ -73,8 +73,8 @@ func (client *sqlPoolsClient) GetHandleError(resp *azcore.Response) error {
 }
 
 // List - List Sql Pools
-func (client *sqlPoolsClient) List(ctx context.Context) (*SQLPoolInfoListResultResponse, error) {
-	req, err := client.ListCreateRequest(ctx)
+func (client *sqlPoolsClient) List(ctx context.Context, options *SQLPoolsListOptions) (*SQLPoolInfoListResultResponse, error) {
+	req, err := client.ListCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -93,7 +93,7 @@ func (client *sqlPoolsClient) List(ctx context.Context) (*SQLPoolInfoListResultR
 }
 
 // ListCreateRequest creates the List request.
-func (client *sqlPoolsClient) ListCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *sqlPoolsClient) ListCreateRequest(ctx context.Context, options *SQLPoolsListOptions) (*azcore.Request, error) {
 	urlPath := "/sqlPools"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {

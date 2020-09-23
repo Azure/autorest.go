@@ -16,6 +16,11 @@ type FloatEnumResponse struct {
 	Value *FloatEnum
 }
 
+// FloatGetOptions contains the optional parameters for the Float.Get method.
+type FloatGetOptions struct {
+	// placeholder for future optional parameters
+}
+
 // FloatPutOptions contains the optional parameters for the Float.Put method.
 type FloatPutOptions struct {
 	// Input float enum.
@@ -29,6 +34,11 @@ type IntEnumResponse struct {
 
 	// List of integer enums
 	Value *IntEnum
+}
+
+// IntGetOptions contains the optional parameters for the Int.Get method.
+type IntGetOptions struct {
+	// placeholder for future optional parameters
 }
 
 // IntPutOptions contains the optional parameters for the Int.Put method.

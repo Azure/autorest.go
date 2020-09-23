@@ -23,8 +23,8 @@ func (client *dataFlowClient) Do(req *azcore.Request) (*azcore.Response, error) 
 }
 
 // CreateOrUpdateDataFlow - Creates or updates a data flow.
-func (client *dataFlowClient) CreateOrUpdateDataFlow(ctx context.Context, dataFlowName string, dataFlow DataFlowResource, dataFlowCreateOrUpdateDataFlowOptions *DataFlowCreateOrUpdateDataFlowOptions) (*azcore.Response, error) {
-	req, err := client.CreateOrUpdateDataFlowCreateRequest(ctx, dataFlowName, dataFlow, dataFlowCreateOrUpdateDataFlowOptions)
+func (client *dataFlowClient) CreateOrUpdateDataFlow(ctx context.Context, dataFlowName string, dataFlow DataFlowResource, options *DataFlowCreateOrUpdateDataFlowOptions) (*azcore.Response, error) {
+	req, err := client.CreateOrUpdateDataFlowCreateRequest(ctx, dataFlowName, dataFlow, options)
 	if err != nil {
 		return nil, err
 	}
@@ -39,7 +39,7 @@ func (client *dataFlowClient) CreateOrUpdateDataFlow(ctx context.Context, dataFl
 }
 
 // CreateOrUpdateDataFlowCreateRequest creates the CreateOrUpdateDataFlow request.
-func (client *dataFlowClient) CreateOrUpdateDataFlowCreateRequest(ctx context.Context, dataFlowName string, dataFlow DataFlowResource, dataFlowCreateOrUpdateDataFlowOptions *DataFlowCreateOrUpdateDataFlowOptions) (*azcore.Request, error) {
+func (client *dataFlowClient) CreateOrUpdateDataFlowCreateRequest(ctx context.Context, dataFlowName string, dataFlow DataFlowResource, options *DataFlowCreateOrUpdateDataFlowOptions) (*azcore.Request, error) {
 	urlPath := "/dataflows/{dataFlowName}"
 	urlPath = strings.ReplaceAll(urlPath, "{dataFlowName}", url.PathEscape(dataFlowName))
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
@@ -49,8 +49,8 @@ func (client *dataFlowClient) CreateOrUpdateDataFlowCreateRequest(ctx context.Co
 	query := req.URL.Query()
 	query.Set("api-version", "2019-06-01-preview")
 	req.URL.RawQuery = query.Encode()
-	if dataFlowCreateOrUpdateDataFlowOptions != nil && dataFlowCreateOrUpdateDataFlowOptions.IfMatch != nil {
-		req.Header.Set("If-Match", *dataFlowCreateOrUpdateDataFlowOptions.IfMatch)
+	if options != nil && options.IfMatch != nil {
+		req.Header.Set("If-Match", *options.IfMatch)
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(dataFlow)
@@ -72,8 +72,8 @@ func (client *dataFlowClient) CreateOrUpdateDataFlowHandleError(resp *azcore.Res
 }
 
 // DeleteDataFlow - Deletes a data flow.
-func (client *dataFlowClient) DeleteDataFlow(ctx context.Context, dataFlowName string) (*azcore.Response, error) {
-	req, err := client.DeleteDataFlowCreateRequest(ctx, dataFlowName)
+func (client *dataFlowClient) DeleteDataFlow(ctx context.Context, dataFlowName string, options *DataFlowDeleteDataFlowOptions) (*azcore.Response, error) {
+	req, err := client.DeleteDataFlowCreateRequest(ctx, dataFlowName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -88,7 +88,7 @@ func (client *dataFlowClient) DeleteDataFlow(ctx context.Context, dataFlowName s
 }
 
 // DeleteDataFlowCreateRequest creates the DeleteDataFlow request.
-func (client *dataFlowClient) DeleteDataFlowCreateRequest(ctx context.Context, dataFlowName string) (*azcore.Request, error) {
+func (client *dataFlowClient) DeleteDataFlowCreateRequest(ctx context.Context, dataFlowName string, options *DataFlowDeleteDataFlowOptions) (*azcore.Request, error) {
 	urlPath := "/dataflows/{dataFlowName}"
 	urlPath = strings.ReplaceAll(urlPath, "{dataFlowName}", url.PathEscape(dataFlowName))
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
@@ -112,8 +112,8 @@ func (client *dataFlowClient) DeleteDataFlowHandleError(resp *azcore.Response) e
 }
 
 // GetDataFlow - Gets a data flow.
-func (client *dataFlowClient) GetDataFlow(ctx context.Context, dataFlowName string, dataFlowGetDataFlowOptions *DataFlowGetDataFlowOptions) (*DataFlowResourceResponse, error) {
-	req, err := client.GetDataFlowCreateRequest(ctx, dataFlowName, dataFlowGetDataFlowOptions)
+func (client *dataFlowClient) GetDataFlow(ctx context.Context, dataFlowName string, options *DataFlowGetDataFlowOptions) (*DataFlowResourceResponse, error) {
+	req, err := client.GetDataFlowCreateRequest(ctx, dataFlowName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -132,7 +132,7 @@ func (client *dataFlowClient) GetDataFlow(ctx context.Context, dataFlowName stri
 }
 
 // GetDataFlowCreateRequest creates the GetDataFlow request.
-func (client *dataFlowClient) GetDataFlowCreateRequest(ctx context.Context, dataFlowName string, dataFlowGetDataFlowOptions *DataFlowGetDataFlowOptions) (*azcore.Request, error) {
+func (client *dataFlowClient) GetDataFlowCreateRequest(ctx context.Context, dataFlowName string, options *DataFlowGetDataFlowOptions) (*azcore.Request, error) {
 	urlPath := "/dataflows/{dataFlowName}"
 	urlPath = strings.ReplaceAll(urlPath, "{dataFlowName}", url.PathEscape(dataFlowName))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
@@ -142,8 +142,8 @@ func (client *dataFlowClient) GetDataFlowCreateRequest(ctx context.Context, data
 	query := req.URL.Query()
 	query.Set("api-version", "2019-06-01-preview")
 	req.URL.RawQuery = query.Encode()
-	if dataFlowGetDataFlowOptions != nil && dataFlowGetDataFlowOptions.IfNoneMatch != nil {
-		req.Header.Set("If-None-Match", *dataFlowGetDataFlowOptions.IfNoneMatch)
+	if options != nil && options.IfNoneMatch != nil {
+		req.Header.Set("If-None-Match", *options.IfNoneMatch)
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
@@ -165,11 +165,11 @@ func (client *dataFlowClient) GetDataFlowHandleError(resp *azcore.Response) erro
 }
 
 // GetDataFlowsByWorkspace - Lists data flows.
-func (client *dataFlowClient) GetDataFlowsByWorkspace() DataFlowListResponsePager {
+func (client *dataFlowClient) GetDataFlowsByWorkspace(options *DataFlowGetDataFlowsByWorkspaceOptions) DataFlowListResponsePager {
 	return &dataFlowListResponsePager{
 		pipeline: client.p,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
-			return client.GetDataFlowsByWorkspaceCreateRequest(ctx)
+			return client.GetDataFlowsByWorkspaceCreateRequest(ctx, options)
 		},
 		responder: client.GetDataFlowsByWorkspaceHandleResponse,
 		errorer:   client.GetDataFlowsByWorkspaceHandleError,
@@ -180,7 +180,7 @@ func (client *dataFlowClient) GetDataFlowsByWorkspace() DataFlowListResponsePage
 }
 
 // GetDataFlowsByWorkspaceCreateRequest creates the GetDataFlowsByWorkspace request.
-func (client *dataFlowClient) GetDataFlowsByWorkspaceCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *dataFlowClient) GetDataFlowsByWorkspaceCreateRequest(ctx context.Context, options *DataFlowGetDataFlowsByWorkspaceOptions) (*azcore.Request, error) {
 	urlPath := "/dataflows"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {

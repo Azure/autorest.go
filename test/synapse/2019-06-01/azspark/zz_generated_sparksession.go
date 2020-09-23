@@ -27,8 +27,8 @@ func (client *sparkSessionClient) Do(req *azcore.Request) (*azcore.Response, err
 }
 
 // CancelSparkSession - Cancels a running spark session.
-func (client *sparkSessionClient) CancelSparkSession(ctx context.Context, sessionId int32) (*http.Response, error) {
-	req, err := client.CancelSparkSessionCreateRequest(ctx, sessionId)
+func (client *sparkSessionClient) CancelSparkSession(ctx context.Context, sessionId int32, options *SparkSessionCancelSparkSessionOptions) (*http.Response, error) {
+	req, err := client.CancelSparkSessionCreateRequest(ctx, sessionId, options)
 	if err != nil {
 		return nil, err
 	}
@@ -43,7 +43,7 @@ func (client *sparkSessionClient) CancelSparkSession(ctx context.Context, sessio
 }
 
 // CancelSparkSessionCreateRequest creates the CancelSparkSession request.
-func (client *sparkSessionClient) CancelSparkSessionCreateRequest(ctx context.Context, sessionId int32) (*azcore.Request, error) {
+func (client *sparkSessionClient) CancelSparkSessionCreateRequest(ctx context.Context, sessionId int32, options *SparkSessionCancelSparkSessionOptions) (*azcore.Request, error) {
 	urlPath := "/sessions/{sessionId}"
 	urlPath = strings.ReplaceAll(urlPath, "{sessionId}", url.PathEscape(strconv.FormatInt(int64(sessionId), 10)))
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
@@ -66,8 +66,8 @@ func (client *sparkSessionClient) CancelSparkSessionHandleError(resp *azcore.Res
 }
 
 // CancelSparkStatement - Kill a statement within a session.
-func (client *sparkSessionClient) CancelSparkStatement(ctx context.Context, sessionId int32, statementId int32) (*SparkStatementCancellationResultResponse, error) {
-	req, err := client.CancelSparkStatementCreateRequest(ctx, sessionId, statementId)
+func (client *sparkSessionClient) CancelSparkStatement(ctx context.Context, sessionId int32, statementId int32, options *SparkSessionCancelSparkStatementOptions) (*SparkStatementCancellationResultResponse, error) {
+	req, err := client.CancelSparkStatementCreateRequest(ctx, sessionId, statementId, options)
 	if err != nil {
 		return nil, err
 	}
@@ -86,7 +86,7 @@ func (client *sparkSessionClient) CancelSparkStatement(ctx context.Context, sess
 }
 
 // CancelSparkStatementCreateRequest creates the CancelSparkStatement request.
-func (client *sparkSessionClient) CancelSparkStatementCreateRequest(ctx context.Context, sessionId int32, statementId int32) (*azcore.Request, error) {
+func (client *sparkSessionClient) CancelSparkStatementCreateRequest(ctx context.Context, sessionId int32, statementId int32, options *SparkSessionCancelSparkStatementOptions) (*azcore.Request, error) {
 	urlPath := "/sessions/{sessionId}/statements/{statementId}/cancel"
 	urlPath = strings.ReplaceAll(urlPath, "{sessionId}", url.PathEscape(strconv.FormatInt(int64(sessionId), 10)))
 	urlPath = strings.ReplaceAll(urlPath, "{statementId}", url.PathEscape(strconv.FormatInt(int64(statementId), 10)))
@@ -117,8 +117,8 @@ func (client *sparkSessionClient) CancelSparkStatementHandleError(resp *azcore.R
 }
 
 // CreateSparkSession - Create new spark session.
-func (client *sparkSessionClient) CreateSparkSession(ctx context.Context, sparkSessionOptions SparkSessionOptions, sparkSessionCreateSparkSessionOptions *SparkSessionCreateSparkSessionOptions) (*SparkSessionResponse, error) {
-	req, err := client.CreateSparkSessionCreateRequest(ctx, sparkSessionOptions, sparkSessionCreateSparkSessionOptions)
+func (client *sparkSessionClient) CreateSparkSession(ctx context.Context, sparkSessionOptions SparkSessionOptions, options *SparkSessionCreateSparkSessionOptions) (*SparkSessionResponse, error) {
+	req, err := client.CreateSparkSessionCreateRequest(ctx, sparkSessionOptions, options)
 	if err != nil {
 		return nil, err
 	}
@@ -137,15 +137,15 @@ func (client *sparkSessionClient) CreateSparkSession(ctx context.Context, sparkS
 }
 
 // CreateSparkSessionCreateRequest creates the CreateSparkSession request.
-func (client *sparkSessionClient) CreateSparkSessionCreateRequest(ctx context.Context, sparkSessionOptions SparkSessionOptions, sparkSessionCreateSparkSessionOptions *SparkSessionCreateSparkSessionOptions) (*azcore.Request, error) {
+func (client *sparkSessionClient) CreateSparkSessionCreateRequest(ctx context.Context, sparkSessionOptions SparkSessionOptions, options *SparkSessionCreateSparkSessionOptions) (*azcore.Request, error) {
 	urlPath := "/sessions"
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	query := req.URL.Query()
-	if sparkSessionCreateSparkSessionOptions != nil && sparkSessionCreateSparkSessionOptions.Detailed != nil {
-		query.Set("detailed", strconv.FormatBool(*sparkSessionCreateSparkSessionOptions.Detailed))
+	if options != nil && options.Detailed != nil {
+		query.Set("detailed", strconv.FormatBool(*options.Detailed))
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
@@ -171,8 +171,8 @@ func (client *sparkSessionClient) CreateSparkSessionHandleError(resp *azcore.Res
 }
 
 // CreateSparkStatement - Create statement within a spark session.
-func (client *sparkSessionClient) CreateSparkStatement(ctx context.Context, sessionId int32, sparkStatementOptions SparkStatementOptions) (*SparkStatementResponse, error) {
-	req, err := client.CreateSparkStatementCreateRequest(ctx, sessionId, sparkStatementOptions)
+func (client *sparkSessionClient) CreateSparkStatement(ctx context.Context, sessionId int32, sparkStatementOptions SparkStatementOptions, options *SparkSessionCreateSparkStatementOptions) (*SparkStatementResponse, error) {
+	req, err := client.CreateSparkStatementCreateRequest(ctx, sessionId, sparkStatementOptions, options)
 	if err != nil {
 		return nil, err
 	}
@@ -191,7 +191,7 @@ func (client *sparkSessionClient) CreateSparkStatement(ctx context.Context, sess
 }
 
 // CreateSparkStatementCreateRequest creates the CreateSparkStatement request.
-func (client *sparkSessionClient) CreateSparkStatementCreateRequest(ctx context.Context, sessionId int32, sparkStatementOptions SparkStatementOptions) (*azcore.Request, error) {
+func (client *sparkSessionClient) CreateSparkStatementCreateRequest(ctx context.Context, sessionId int32, sparkStatementOptions SparkStatementOptions, options *SparkSessionCreateSparkStatementOptions) (*azcore.Request, error) {
 	urlPath := "/sessions/{sessionId}/statements"
 	urlPath = strings.ReplaceAll(urlPath, "{sessionId}", url.PathEscape(strconv.FormatInt(int64(sessionId), 10)))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
@@ -221,8 +221,8 @@ func (client *sparkSessionClient) CreateSparkStatementHandleError(resp *azcore.R
 }
 
 // GetSparkSession - Gets a single spark session.
-func (client *sparkSessionClient) GetSparkSession(ctx context.Context, sessionId int32, sparkSessionGetSparkSessionOptions *SparkSessionGetSparkSessionOptions) (*SparkSessionResponse, error) {
-	req, err := client.GetSparkSessionCreateRequest(ctx, sessionId, sparkSessionGetSparkSessionOptions)
+func (client *sparkSessionClient) GetSparkSession(ctx context.Context, sessionId int32, options *SparkSessionGetSparkSessionOptions) (*SparkSessionResponse, error) {
+	req, err := client.GetSparkSessionCreateRequest(ctx, sessionId, options)
 	if err != nil {
 		return nil, err
 	}
@@ -241,7 +241,7 @@ func (client *sparkSessionClient) GetSparkSession(ctx context.Context, sessionId
 }
 
 // GetSparkSessionCreateRequest creates the GetSparkSession request.
-func (client *sparkSessionClient) GetSparkSessionCreateRequest(ctx context.Context, sessionId int32, sparkSessionGetSparkSessionOptions *SparkSessionGetSparkSessionOptions) (*azcore.Request, error) {
+func (client *sparkSessionClient) GetSparkSessionCreateRequest(ctx context.Context, sessionId int32, options *SparkSessionGetSparkSessionOptions) (*azcore.Request, error) {
 	urlPath := "/sessions/{sessionId}"
 	urlPath = strings.ReplaceAll(urlPath, "{sessionId}", url.PathEscape(strconv.FormatInt(int64(sessionId), 10)))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
@@ -249,8 +249,8 @@ func (client *sparkSessionClient) GetSparkSessionCreateRequest(ctx context.Conte
 		return nil, err
 	}
 	query := req.URL.Query()
-	if sparkSessionGetSparkSessionOptions != nil && sparkSessionGetSparkSessionOptions.Detailed != nil {
-		query.Set("detailed", strconv.FormatBool(*sparkSessionGetSparkSessionOptions.Detailed))
+	if options != nil && options.Detailed != nil {
+		query.Set("detailed", strconv.FormatBool(*options.Detailed))
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
@@ -276,8 +276,8 @@ func (client *sparkSessionClient) GetSparkSessionHandleError(resp *azcore.Respon
 }
 
 // GetSparkSessions - List all spark sessions which are running under a particular spark pool.
-func (client *sparkSessionClient) GetSparkSessions(ctx context.Context, sparkSessionGetSparkSessionsOptions *SparkSessionGetSparkSessionsOptions) (*SparkSessionCollectionResponse, error) {
-	req, err := client.GetSparkSessionsCreateRequest(ctx, sparkSessionGetSparkSessionsOptions)
+func (client *sparkSessionClient) GetSparkSessions(ctx context.Context, options *SparkSessionGetSparkSessionsOptions) (*SparkSessionCollectionResponse, error) {
+	req, err := client.GetSparkSessionsCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -296,21 +296,21 @@ func (client *sparkSessionClient) GetSparkSessions(ctx context.Context, sparkSes
 }
 
 // GetSparkSessionsCreateRequest creates the GetSparkSessions request.
-func (client *sparkSessionClient) GetSparkSessionsCreateRequest(ctx context.Context, sparkSessionGetSparkSessionsOptions *SparkSessionGetSparkSessionsOptions) (*azcore.Request, error) {
+func (client *sparkSessionClient) GetSparkSessionsCreateRequest(ctx context.Context, options *SparkSessionGetSparkSessionsOptions) (*azcore.Request, error) {
 	urlPath := "/sessions"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	query := req.URL.Query()
-	if sparkSessionGetSparkSessionsOptions != nil && sparkSessionGetSparkSessionsOptions.From != nil {
-		query.Set("from", strconv.FormatInt(int64(*sparkSessionGetSparkSessionsOptions.From), 10))
+	if options != nil && options.From != nil {
+		query.Set("from", strconv.FormatInt(int64(*options.From), 10))
 	}
-	if sparkSessionGetSparkSessionsOptions != nil && sparkSessionGetSparkSessionsOptions.Size != nil {
-		query.Set("size", strconv.FormatInt(int64(*sparkSessionGetSparkSessionsOptions.Size), 10))
+	if options != nil && options.Size != nil {
+		query.Set("size", strconv.FormatInt(int64(*options.Size), 10))
 	}
-	if sparkSessionGetSparkSessionsOptions != nil && sparkSessionGetSparkSessionsOptions.Detailed != nil {
-		query.Set("detailed", strconv.FormatBool(*sparkSessionGetSparkSessionsOptions.Detailed))
+	if options != nil && options.Detailed != nil {
+		query.Set("detailed", strconv.FormatBool(*options.Detailed))
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
@@ -336,8 +336,8 @@ func (client *sparkSessionClient) GetSparkSessionsHandleError(resp *azcore.Respo
 }
 
 // GetSparkStatement - Gets a single statement within a spark session.
-func (client *sparkSessionClient) GetSparkStatement(ctx context.Context, sessionId int32, statementId int32) (*SparkStatementResponse, error) {
-	req, err := client.GetSparkStatementCreateRequest(ctx, sessionId, statementId)
+func (client *sparkSessionClient) GetSparkStatement(ctx context.Context, sessionId int32, statementId int32, options *SparkSessionGetSparkStatementOptions) (*SparkStatementResponse, error) {
+	req, err := client.GetSparkStatementCreateRequest(ctx, sessionId, statementId, options)
 	if err != nil {
 		return nil, err
 	}
@@ -356,7 +356,7 @@ func (client *sparkSessionClient) GetSparkStatement(ctx context.Context, session
 }
 
 // GetSparkStatementCreateRequest creates the GetSparkStatement request.
-func (client *sparkSessionClient) GetSparkStatementCreateRequest(ctx context.Context, sessionId int32, statementId int32) (*azcore.Request, error) {
+func (client *sparkSessionClient) GetSparkStatementCreateRequest(ctx context.Context, sessionId int32, statementId int32, options *SparkSessionGetSparkStatementOptions) (*azcore.Request, error) {
 	urlPath := "/sessions/{sessionId}/statements/{statementId}"
 	urlPath = strings.ReplaceAll(urlPath, "{sessionId}", url.PathEscape(strconv.FormatInt(int64(sessionId), 10)))
 	urlPath = strings.ReplaceAll(urlPath, "{statementId}", url.PathEscape(strconv.FormatInt(int64(statementId), 10)))
@@ -387,8 +387,8 @@ func (client *sparkSessionClient) GetSparkStatementHandleError(resp *azcore.Resp
 }
 
 // GetSparkStatements - Gets a list of statements within a spark session.
-func (client *sparkSessionClient) GetSparkStatements(ctx context.Context, sessionId int32) (*SparkStatementCollectionResponse, error) {
-	req, err := client.GetSparkStatementsCreateRequest(ctx, sessionId)
+func (client *sparkSessionClient) GetSparkStatements(ctx context.Context, sessionId int32, options *SparkSessionGetSparkStatementsOptions) (*SparkStatementCollectionResponse, error) {
+	req, err := client.GetSparkStatementsCreateRequest(ctx, sessionId, options)
 	if err != nil {
 		return nil, err
 	}
@@ -407,7 +407,7 @@ func (client *sparkSessionClient) GetSparkStatements(ctx context.Context, sessio
 }
 
 // GetSparkStatementsCreateRequest creates the GetSparkStatements request.
-func (client *sparkSessionClient) GetSparkStatementsCreateRequest(ctx context.Context, sessionId int32) (*azcore.Request, error) {
+func (client *sparkSessionClient) GetSparkStatementsCreateRequest(ctx context.Context, sessionId int32, options *SparkSessionGetSparkStatementsOptions) (*azcore.Request, error) {
 	urlPath := "/sessions/{sessionId}/statements"
 	urlPath = strings.ReplaceAll(urlPath, "{sessionId}", url.PathEscape(strconv.FormatInt(int64(sessionId), 10)))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
@@ -437,8 +437,8 @@ func (client *sparkSessionClient) GetSparkStatementsHandleError(resp *azcore.Res
 }
 
 // ResetSparkSessionTimeout - Sends a keep alive call to the current session to reset the session timeout.
-func (client *sparkSessionClient) ResetSparkSessionTimeout(ctx context.Context, sessionId int32) (*http.Response, error) {
-	req, err := client.ResetSparkSessionTimeoutCreateRequest(ctx, sessionId)
+func (client *sparkSessionClient) ResetSparkSessionTimeout(ctx context.Context, sessionId int32, options *SparkSessionResetSparkSessionTimeoutOptions) (*http.Response, error) {
+	req, err := client.ResetSparkSessionTimeoutCreateRequest(ctx, sessionId, options)
 	if err != nil {
 		return nil, err
 	}
@@ -453,7 +453,7 @@ func (client *sparkSessionClient) ResetSparkSessionTimeout(ctx context.Context, 
 }
 
 // ResetSparkSessionTimeoutCreateRequest creates the ResetSparkSessionTimeout request.
-func (client *sparkSessionClient) ResetSparkSessionTimeoutCreateRequest(ctx context.Context, sessionId int32) (*azcore.Request, error) {
+func (client *sparkSessionClient) ResetSparkSessionTimeoutCreateRequest(ctx context.Context, sessionId int32, options *SparkSessionResetSparkSessionTimeoutOptions) (*azcore.Request, error) {
 	urlPath := "/sessions/{sessionId}/reset-timeout"
 	urlPath = strings.ReplaceAll(urlPath, "{sessionId}", url.PathEscape(strconv.FormatInt(int64(sessionId), 10)))
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))

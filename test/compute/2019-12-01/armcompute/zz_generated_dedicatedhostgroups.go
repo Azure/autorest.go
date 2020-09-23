@@ -19,17 +19,17 @@ import (
 // DedicatedHostGroupsOperations contains the methods for the DedicatedHostGroups group.
 type DedicatedHostGroupsOperations interface {
 	// CreateOrUpdate - Create or update a dedicated host group. For details of Dedicated Host and Dedicated Host Groups please see [Dedicated Host Documentation] (https://go.microsoft.com/fwlink/?linkid=2082596)
-	CreateOrUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, parameters DedicatedHostGroup) (*DedicatedHostGroupResponse, error)
+	CreateOrUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, parameters DedicatedHostGroup, options *DedicatedHostGroupsCreateOrUpdateOptions) (*DedicatedHostGroupResponse, error)
 	// Delete - Delete a dedicated host group.
-	Delete(ctx context.Context, resourceGroupName string, hostGroupName string) (*http.Response, error)
+	Delete(ctx context.Context, resourceGroupName string, hostGroupName string, options *DedicatedHostGroupsDeleteOptions) (*http.Response, error)
 	// Get - Retrieves information about a dedicated host group.
-	Get(ctx context.Context, resourceGroupName string, hostGroupName string) (*DedicatedHostGroupResponse, error)
+	Get(ctx context.Context, resourceGroupName string, hostGroupName string, options *DedicatedHostGroupsGetOptions) (*DedicatedHostGroupResponse, error)
 	// ListByResourceGroup - Lists all of the dedicated host groups in the specified resource group. Use the nextLink property in the response to get the next page of dedicated host groups.
-	ListByResourceGroup(resourceGroupName string) DedicatedHostGroupListResultPager
+	ListByResourceGroup(resourceGroupName string, options *DedicatedHostGroupsListByResourceGroupOptions) DedicatedHostGroupListResultPager
 	// ListBySubscription - Lists all of the dedicated host groups in the subscription. Use the nextLink property in the response to get the next page of dedicated host groups.
-	ListBySubscription() DedicatedHostGroupListResultPager
+	ListBySubscription(options *DedicatedHostGroupsListBySubscriptionOptions) DedicatedHostGroupListResultPager
 	// Update - Update an dedicated host group.
-	Update(ctx context.Context, resourceGroupName string, hostGroupName string, parameters DedicatedHostGroupUpdate) (*DedicatedHostGroupResponse, error)
+	Update(ctx context.Context, resourceGroupName string, hostGroupName string, parameters DedicatedHostGroupUpdate, options *DedicatedHostGroupsUpdateOptions) (*DedicatedHostGroupResponse, error)
 }
 
 // DedicatedHostGroupsClient implements the DedicatedHostGroupsOperations interface.
@@ -50,8 +50,8 @@ func (client *DedicatedHostGroupsClient) Do(req *azcore.Request) (*azcore.Respon
 }
 
 // CreateOrUpdate - Create or update a dedicated host group. For details of Dedicated Host and Dedicated Host Groups please see [Dedicated Host Documentation] (https://go.microsoft.com/fwlink/?linkid=2082596)
-func (client *DedicatedHostGroupsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, parameters DedicatedHostGroup) (*DedicatedHostGroupResponse, error) {
-	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, hostGroupName, parameters)
+func (client *DedicatedHostGroupsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, parameters DedicatedHostGroup, options *DedicatedHostGroupsCreateOrUpdateOptions) (*DedicatedHostGroupResponse, error) {
+	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, hostGroupName, parameters, options)
 	if err != nil {
 		return nil, err
 	}
@@ -70,7 +70,7 @@ func (client *DedicatedHostGroupsClient) CreateOrUpdate(ctx context.Context, res
 }
 
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *DedicatedHostGroupsClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, hostGroupName string, parameters DedicatedHostGroup) (*azcore.Request, error) {
+func (client *DedicatedHostGroupsClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, hostGroupName string, parameters DedicatedHostGroup, options *DedicatedHostGroupsCreateOrUpdateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{hostGroupName}", url.PathEscape(hostGroupName))
@@ -105,8 +105,8 @@ func (client *DedicatedHostGroupsClient) CreateOrUpdateHandleError(resp *azcore.
 }
 
 // Delete - Delete a dedicated host group.
-func (client *DedicatedHostGroupsClient) Delete(ctx context.Context, resourceGroupName string, hostGroupName string) (*http.Response, error) {
-	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, hostGroupName)
+func (client *DedicatedHostGroupsClient) Delete(ctx context.Context, resourceGroupName string, hostGroupName string, options *DedicatedHostGroupsDeleteOptions) (*http.Response, error) {
+	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, hostGroupName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -121,7 +121,7 @@ func (client *DedicatedHostGroupsClient) Delete(ctx context.Context, resourceGro
 }
 
 // DeleteCreateRequest creates the Delete request.
-func (client *DedicatedHostGroupsClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, hostGroupName string) (*azcore.Request, error) {
+func (client *DedicatedHostGroupsClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, hostGroupName string, options *DedicatedHostGroupsDeleteOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{hostGroupName}", url.PathEscape(hostGroupName))
@@ -149,8 +149,8 @@ func (client *DedicatedHostGroupsClient) DeleteHandleError(resp *azcore.Response
 }
 
 // Get - Retrieves information about a dedicated host group.
-func (client *DedicatedHostGroupsClient) Get(ctx context.Context, resourceGroupName string, hostGroupName string) (*DedicatedHostGroupResponse, error) {
-	req, err := client.GetCreateRequest(ctx, resourceGroupName, hostGroupName)
+func (client *DedicatedHostGroupsClient) Get(ctx context.Context, resourceGroupName string, hostGroupName string, options *DedicatedHostGroupsGetOptions) (*DedicatedHostGroupResponse, error) {
+	req, err := client.GetCreateRequest(ctx, resourceGroupName, hostGroupName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -169,7 +169,7 @@ func (client *DedicatedHostGroupsClient) Get(ctx context.Context, resourceGroupN
 }
 
 // GetCreateRequest creates the Get request.
-func (client *DedicatedHostGroupsClient) GetCreateRequest(ctx context.Context, resourceGroupName string, hostGroupName string) (*azcore.Request, error) {
+func (client *DedicatedHostGroupsClient) GetCreateRequest(ctx context.Context, resourceGroupName string, hostGroupName string, options *DedicatedHostGroupsGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{hostGroupName}", url.PathEscape(hostGroupName))
@@ -204,11 +204,11 @@ func (client *DedicatedHostGroupsClient) GetHandleError(resp *azcore.Response) e
 }
 
 // ListByResourceGroup - Lists all of the dedicated host groups in the specified resource group. Use the nextLink property in the response to get the next page of dedicated host groups.
-func (client *DedicatedHostGroupsClient) ListByResourceGroup(resourceGroupName string) DedicatedHostGroupListResultPager {
+func (client *DedicatedHostGroupsClient) ListByResourceGroup(resourceGroupName string, options *DedicatedHostGroupsListByResourceGroupOptions) DedicatedHostGroupListResultPager {
 	return &dedicatedHostGroupListResultPager{
 		pipeline: client.p,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
-			return client.ListByResourceGroupCreateRequest(ctx, resourceGroupName)
+			return client.ListByResourceGroupCreateRequest(ctx, resourceGroupName, options)
 		},
 		responder: client.ListByResourceGroupHandleResponse,
 		errorer:   client.ListByResourceGroupHandleError,
@@ -219,7 +219,7 @@ func (client *DedicatedHostGroupsClient) ListByResourceGroup(resourceGroupName s
 }
 
 // ListByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *DedicatedHostGroupsClient) ListByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string) (*azcore.Request, error) {
+func (client *DedicatedHostGroupsClient) ListByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *DedicatedHostGroupsListByResourceGroupOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
@@ -253,11 +253,11 @@ func (client *DedicatedHostGroupsClient) ListByResourceGroupHandleError(resp *az
 }
 
 // ListBySubscription - Lists all of the dedicated host groups in the subscription. Use the nextLink property in the response to get the next page of dedicated host groups.
-func (client *DedicatedHostGroupsClient) ListBySubscription() DedicatedHostGroupListResultPager {
+func (client *DedicatedHostGroupsClient) ListBySubscription(options *DedicatedHostGroupsListBySubscriptionOptions) DedicatedHostGroupListResultPager {
 	return &dedicatedHostGroupListResultPager{
 		pipeline: client.p,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
-			return client.ListBySubscriptionCreateRequest(ctx)
+			return client.ListBySubscriptionCreateRequest(ctx, options)
 		},
 		responder: client.ListBySubscriptionHandleResponse,
 		errorer:   client.ListBySubscriptionHandleError,
@@ -268,7 +268,7 @@ func (client *DedicatedHostGroupsClient) ListBySubscription() DedicatedHostGroup
 }
 
 // ListBySubscriptionCreateRequest creates the ListBySubscription request.
-func (client *DedicatedHostGroupsClient) ListBySubscriptionCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *DedicatedHostGroupsClient) ListBySubscriptionCreateRequest(ctx context.Context, options *DedicatedHostGroupsListBySubscriptionOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/hostGroups"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
@@ -301,8 +301,8 @@ func (client *DedicatedHostGroupsClient) ListBySubscriptionHandleError(resp *azc
 }
 
 // Update - Update an dedicated host group.
-func (client *DedicatedHostGroupsClient) Update(ctx context.Context, resourceGroupName string, hostGroupName string, parameters DedicatedHostGroupUpdate) (*DedicatedHostGroupResponse, error) {
-	req, err := client.UpdateCreateRequest(ctx, resourceGroupName, hostGroupName, parameters)
+func (client *DedicatedHostGroupsClient) Update(ctx context.Context, resourceGroupName string, hostGroupName string, parameters DedicatedHostGroupUpdate, options *DedicatedHostGroupsUpdateOptions) (*DedicatedHostGroupResponse, error) {
+	req, err := client.UpdateCreateRequest(ctx, resourceGroupName, hostGroupName, parameters, options)
 	if err != nil {
 		return nil, err
 	}
@@ -321,7 +321,7 @@ func (client *DedicatedHostGroupsClient) Update(ctx context.Context, resourceGro
 }
 
 // UpdateCreateRequest creates the Update request.
-func (client *DedicatedHostGroupsClient) UpdateCreateRequest(ctx context.Context, resourceGroupName string, hostGroupName string, parameters DedicatedHostGroupUpdate) (*azcore.Request, error) {
+func (client *DedicatedHostGroupsClient) UpdateCreateRequest(ctx context.Context, resourceGroupName string, hostGroupName string, parameters DedicatedHostGroupUpdate, options *DedicatedHostGroupsUpdateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{hostGroupName}", url.PathEscape(hostGroupName))

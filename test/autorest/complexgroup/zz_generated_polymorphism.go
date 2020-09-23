@@ -14,23 +14,23 @@ import (
 // PolymorphismOperations contains the methods for the Polymorphism group.
 type PolymorphismOperations interface {
 	// GetComplicated - Get complex types that are polymorphic, but not at the root of the hierarchy; also have additional properties
-	GetComplicated(ctx context.Context) (*SalmonResponse, error)
+	GetComplicated(ctx context.Context, options *PolymorphismGetComplicatedOptions) (*SalmonResponse, error)
 	// GetComposedWithDiscriminator - Get complex object composing a polymorphic scalar property and array property with polymorphic element type, with discriminator specified. Deserialization must NOT fail and use the discriminator type specified on the wire.
-	GetComposedWithDiscriminator(ctx context.Context) (*DotFishMarketResponse, error)
+	GetComposedWithDiscriminator(ctx context.Context, options *PolymorphismGetComposedWithDiscriminatorOptions) (*DotFishMarketResponse, error)
 	// GetComposedWithoutDiscriminator - Get complex object composing a polymorphic scalar property and array property with polymorphic element type, without discriminator specified on wire. Deserialization must NOT fail and use the explicit type of the property.
-	GetComposedWithoutDiscriminator(ctx context.Context) (*DotFishMarketResponse, error)
+	GetComposedWithoutDiscriminator(ctx context.Context, options *PolymorphismGetComposedWithoutDiscriminatorOptions) (*DotFishMarketResponse, error)
 	// GetDotSyntax - Get complex types that are polymorphic, JSON key contains a dot
-	GetDotSyntax(ctx context.Context) (*DotFishResponse, error)
+	GetDotSyntax(ctx context.Context, options *PolymorphismGetDotSyntaxOptions) (*DotFishResponse, error)
 	// GetValid - Get complex types that are polymorphic
-	GetValid(ctx context.Context) (*FishResponse, error)
+	GetValid(ctx context.Context, options *PolymorphismGetValidOptions) (*FishResponse, error)
 	// PutComplicated - Put complex types that are polymorphic, but not at the root of the hierarchy; also have additional properties
-	PutComplicated(ctx context.Context, complexBody SalmonClassification) (*http.Response, error)
+	PutComplicated(ctx context.Context, complexBody SalmonClassification, options *PolymorphismPutComplicatedOptions) (*http.Response, error)
 	// PutMissingDiscriminator - Put complex types that are polymorphic, omitting the discriminator
-	PutMissingDiscriminator(ctx context.Context, complexBody SalmonClassification) (*SalmonResponse, error)
+	PutMissingDiscriminator(ctx context.Context, complexBody SalmonClassification, options *PolymorphismPutMissingDiscriminatorOptions) (*SalmonResponse, error)
 	// PutValid - Put complex types that are polymorphic
-	PutValid(ctx context.Context, complexBody FishClassification) (*http.Response, error)
+	PutValid(ctx context.Context, complexBody FishClassification, options *PolymorphismPutValidOptions) (*http.Response, error)
 	// PutValidMissingRequired - Put complex types that are polymorphic, attempting to omit required 'birthday' field - the request should not be allowed from the client
-	PutValidMissingRequired(ctx context.Context, complexBody FishClassification) (*http.Response, error)
+	PutValidMissingRequired(ctx context.Context, complexBody FishClassification, options *PolymorphismPutValidMissingRequiredOptions) (*http.Response, error)
 }
 
 // PolymorphismClient implements the PolymorphismOperations interface.
@@ -50,8 +50,8 @@ func (client *PolymorphismClient) Do(req *azcore.Request) (*azcore.Response, err
 }
 
 // GetComplicated - Get complex types that are polymorphic, but not at the root of the hierarchy; also have additional properties
-func (client *PolymorphismClient) GetComplicated(ctx context.Context) (*SalmonResponse, error) {
-	req, err := client.GetComplicatedCreateRequest(ctx)
+func (client *PolymorphismClient) GetComplicated(ctx context.Context, options *PolymorphismGetComplicatedOptions) (*SalmonResponse, error) {
+	req, err := client.GetComplicatedCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -70,7 +70,7 @@ func (client *PolymorphismClient) GetComplicated(ctx context.Context) (*SalmonRe
 }
 
 // GetComplicatedCreateRequest creates the GetComplicated request.
-func (client *PolymorphismClient) GetComplicatedCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *PolymorphismClient) GetComplicatedCreateRequest(ctx context.Context, options *PolymorphismGetComplicatedOptions) (*azcore.Request, error) {
 	urlPath := "/complex/polymorphism/complicated"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -96,8 +96,8 @@ func (client *PolymorphismClient) GetComplicatedHandleError(resp *azcore.Respons
 }
 
 // GetComposedWithDiscriminator - Get complex object composing a polymorphic scalar property and array property with polymorphic element type, with discriminator specified. Deserialization must NOT fail and use the discriminator type specified on the wire.
-func (client *PolymorphismClient) GetComposedWithDiscriminator(ctx context.Context) (*DotFishMarketResponse, error) {
-	req, err := client.GetComposedWithDiscriminatorCreateRequest(ctx)
+func (client *PolymorphismClient) GetComposedWithDiscriminator(ctx context.Context, options *PolymorphismGetComposedWithDiscriminatorOptions) (*DotFishMarketResponse, error) {
+	req, err := client.GetComposedWithDiscriminatorCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -116,7 +116,7 @@ func (client *PolymorphismClient) GetComposedWithDiscriminator(ctx context.Conte
 }
 
 // GetComposedWithDiscriminatorCreateRequest creates the GetComposedWithDiscriminator request.
-func (client *PolymorphismClient) GetComposedWithDiscriminatorCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *PolymorphismClient) GetComposedWithDiscriminatorCreateRequest(ctx context.Context, options *PolymorphismGetComposedWithDiscriminatorOptions) (*azcore.Request, error) {
 	urlPath := "/complex/polymorphism/composedWithDiscriminator"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -142,8 +142,8 @@ func (client *PolymorphismClient) GetComposedWithDiscriminatorHandleError(resp *
 }
 
 // GetComposedWithoutDiscriminator - Get complex object composing a polymorphic scalar property and array property with polymorphic element type, without discriminator specified on wire. Deserialization must NOT fail and use the explicit type of the property.
-func (client *PolymorphismClient) GetComposedWithoutDiscriminator(ctx context.Context) (*DotFishMarketResponse, error) {
-	req, err := client.GetComposedWithoutDiscriminatorCreateRequest(ctx)
+func (client *PolymorphismClient) GetComposedWithoutDiscriminator(ctx context.Context, options *PolymorphismGetComposedWithoutDiscriminatorOptions) (*DotFishMarketResponse, error) {
+	req, err := client.GetComposedWithoutDiscriminatorCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -162,7 +162,7 @@ func (client *PolymorphismClient) GetComposedWithoutDiscriminator(ctx context.Co
 }
 
 // GetComposedWithoutDiscriminatorCreateRequest creates the GetComposedWithoutDiscriminator request.
-func (client *PolymorphismClient) GetComposedWithoutDiscriminatorCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *PolymorphismClient) GetComposedWithoutDiscriminatorCreateRequest(ctx context.Context, options *PolymorphismGetComposedWithoutDiscriminatorOptions) (*azcore.Request, error) {
 	urlPath := "/complex/polymorphism/composedWithoutDiscriminator"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -188,8 +188,8 @@ func (client *PolymorphismClient) GetComposedWithoutDiscriminatorHandleError(res
 }
 
 // GetDotSyntax - Get complex types that are polymorphic, JSON key contains a dot
-func (client *PolymorphismClient) GetDotSyntax(ctx context.Context) (*DotFishResponse, error) {
-	req, err := client.GetDotSyntaxCreateRequest(ctx)
+func (client *PolymorphismClient) GetDotSyntax(ctx context.Context, options *PolymorphismGetDotSyntaxOptions) (*DotFishResponse, error) {
+	req, err := client.GetDotSyntaxCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -208,7 +208,7 @@ func (client *PolymorphismClient) GetDotSyntax(ctx context.Context) (*DotFishRes
 }
 
 // GetDotSyntaxCreateRequest creates the GetDotSyntax request.
-func (client *PolymorphismClient) GetDotSyntaxCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *PolymorphismClient) GetDotSyntaxCreateRequest(ctx context.Context, options *PolymorphismGetDotSyntaxOptions) (*azcore.Request, error) {
 	urlPath := "/complex/polymorphism/dotsyntax"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -234,8 +234,8 @@ func (client *PolymorphismClient) GetDotSyntaxHandleError(resp *azcore.Response)
 }
 
 // GetValid - Get complex types that are polymorphic
-func (client *PolymorphismClient) GetValid(ctx context.Context) (*FishResponse, error) {
-	req, err := client.GetValidCreateRequest(ctx)
+func (client *PolymorphismClient) GetValid(ctx context.Context, options *PolymorphismGetValidOptions) (*FishResponse, error) {
+	req, err := client.GetValidCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -254,7 +254,7 @@ func (client *PolymorphismClient) GetValid(ctx context.Context) (*FishResponse, 
 }
 
 // GetValidCreateRequest creates the GetValid request.
-func (client *PolymorphismClient) GetValidCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *PolymorphismClient) GetValidCreateRequest(ctx context.Context, options *PolymorphismGetValidOptions) (*azcore.Request, error) {
 	urlPath := "/complex/polymorphism/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -280,8 +280,8 @@ func (client *PolymorphismClient) GetValidHandleError(resp *azcore.Response) err
 }
 
 // PutComplicated - Put complex types that are polymorphic, but not at the root of the hierarchy; also have additional properties
-func (client *PolymorphismClient) PutComplicated(ctx context.Context, complexBody SalmonClassification) (*http.Response, error) {
-	req, err := client.PutComplicatedCreateRequest(ctx, complexBody)
+func (client *PolymorphismClient) PutComplicated(ctx context.Context, complexBody SalmonClassification, options *PolymorphismPutComplicatedOptions) (*http.Response, error) {
+	req, err := client.PutComplicatedCreateRequest(ctx, complexBody, options)
 	if err != nil {
 		return nil, err
 	}
@@ -296,7 +296,7 @@ func (client *PolymorphismClient) PutComplicated(ctx context.Context, complexBod
 }
 
 // PutComplicatedCreateRequest creates the PutComplicated request.
-func (client *PolymorphismClient) PutComplicatedCreateRequest(ctx context.Context, complexBody SalmonClassification) (*azcore.Request, error) {
+func (client *PolymorphismClient) PutComplicatedCreateRequest(ctx context.Context, complexBody SalmonClassification, options *PolymorphismPutComplicatedOptions) (*azcore.Request, error) {
 	urlPath := "/complex/polymorphism/complicated"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -316,8 +316,8 @@ func (client *PolymorphismClient) PutComplicatedHandleError(resp *azcore.Respons
 }
 
 // PutMissingDiscriminator - Put complex types that are polymorphic, omitting the discriminator
-func (client *PolymorphismClient) PutMissingDiscriminator(ctx context.Context, complexBody SalmonClassification) (*SalmonResponse, error) {
-	req, err := client.PutMissingDiscriminatorCreateRequest(ctx, complexBody)
+func (client *PolymorphismClient) PutMissingDiscriminator(ctx context.Context, complexBody SalmonClassification, options *PolymorphismPutMissingDiscriminatorOptions) (*SalmonResponse, error) {
+	req, err := client.PutMissingDiscriminatorCreateRequest(ctx, complexBody, options)
 	if err != nil {
 		return nil, err
 	}
@@ -336,7 +336,7 @@ func (client *PolymorphismClient) PutMissingDiscriminator(ctx context.Context, c
 }
 
 // PutMissingDiscriminatorCreateRequest creates the PutMissingDiscriminator request.
-func (client *PolymorphismClient) PutMissingDiscriminatorCreateRequest(ctx context.Context, complexBody SalmonClassification) (*azcore.Request, error) {
+func (client *PolymorphismClient) PutMissingDiscriminatorCreateRequest(ctx context.Context, complexBody SalmonClassification, options *PolymorphismPutMissingDiscriminatorOptions) (*azcore.Request, error) {
 	urlPath := "/complex/polymorphism/missingdiscriminator"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -362,8 +362,8 @@ func (client *PolymorphismClient) PutMissingDiscriminatorHandleError(resp *azcor
 }
 
 // PutValid - Put complex types that are polymorphic
-func (client *PolymorphismClient) PutValid(ctx context.Context, complexBody FishClassification) (*http.Response, error) {
-	req, err := client.PutValidCreateRequest(ctx, complexBody)
+func (client *PolymorphismClient) PutValid(ctx context.Context, complexBody FishClassification, options *PolymorphismPutValidOptions) (*http.Response, error) {
+	req, err := client.PutValidCreateRequest(ctx, complexBody, options)
 	if err != nil {
 		return nil, err
 	}
@@ -378,7 +378,7 @@ func (client *PolymorphismClient) PutValid(ctx context.Context, complexBody Fish
 }
 
 // PutValidCreateRequest creates the PutValid request.
-func (client *PolymorphismClient) PutValidCreateRequest(ctx context.Context, complexBody FishClassification) (*azcore.Request, error) {
+func (client *PolymorphismClient) PutValidCreateRequest(ctx context.Context, complexBody FishClassification, options *PolymorphismPutValidOptions) (*azcore.Request, error) {
 	urlPath := "/complex/polymorphism/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -398,8 +398,8 @@ func (client *PolymorphismClient) PutValidHandleError(resp *azcore.Response) err
 }
 
 // PutValidMissingRequired - Put complex types that are polymorphic, attempting to omit required 'birthday' field - the request should not be allowed from the client
-func (client *PolymorphismClient) PutValidMissingRequired(ctx context.Context, complexBody FishClassification) (*http.Response, error) {
-	req, err := client.PutValidMissingRequiredCreateRequest(ctx, complexBody)
+func (client *PolymorphismClient) PutValidMissingRequired(ctx context.Context, complexBody FishClassification, options *PolymorphismPutValidMissingRequiredOptions) (*http.Response, error) {
+	req, err := client.PutValidMissingRequiredCreateRequest(ctx, complexBody, options)
 	if err != nil {
 		return nil, err
 	}
@@ -414,7 +414,7 @@ func (client *PolymorphismClient) PutValidMissingRequired(ctx context.Context, c
 }
 
 // PutValidMissingRequiredCreateRequest creates the PutValidMissingRequired request.
-func (client *PolymorphismClient) PutValidMissingRequiredCreateRequest(ctx context.Context, complexBody FishClassification) (*azcore.Request, error) {
+func (client *PolymorphismClient) PutValidMissingRequiredCreateRequest(ctx context.Context, complexBody FishClassification, options *PolymorphismPutValidMissingRequiredOptions) (*azcore.Request, error) {
 	urlPath := "/complex/polymorphism/missingrequired/invalid"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {

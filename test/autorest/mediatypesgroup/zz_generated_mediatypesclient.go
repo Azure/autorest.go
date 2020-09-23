@@ -18,9 +18,9 @@ import (
 // MediaTypesClientOperations contains the methods for the MediaTypesClient group.
 type MediaTypesClientOperations interface {
 	// AnalyzeBody - Analyze body, that could be different media types.
-	AnalyzeBody(ctx context.Context, contentType ContentType, input azcore.ReadSeekCloser) (*StringResponse, error)
+	AnalyzeBody(ctx context.Context, contentType ContentType, input azcore.ReadSeekCloser, options *MediaTypesClientAnalyzeBodyOptions) (*StringResponse, error)
 	// AnalyzeBodyWithSourcePath - Analyze body, that could be different media types.
-	AnalyzeBodyWithSourcePath(ctx context.Context, mediaTypesClientAnalyzeBodyWithSourcePathOptions *MediaTypesClientAnalyzeBodyWithSourcePathOptions) (*StringResponse, error)
+	AnalyzeBodyWithSourcePath(ctx context.Context, options *MediaTypesClientAnalyzeBodyWithSourcePathOptions) (*StringResponse, error)
 	// ContentTypeWithEncoding - Pass in contentType 'text/plain; encoding=UTF-8' to pass test. Value for input does not matter
 	ContentTypeWithEncoding(ctx context.Context, input string) (*StringResponse, error)
 }
@@ -42,8 +42,8 @@ func (client *MediaTypesClient) Do(req *azcore.Request) (*azcore.Response, error
 }
 
 // AnalyzeBody - Analyze body, that could be different media types.
-func (client *MediaTypesClient) AnalyzeBody(ctx context.Context, contentType ContentType, input azcore.ReadSeekCloser) (*StringResponse, error) {
-	req, err := client.AnalyzeBodyCreateRequest(ctx, contentType, input)
+func (client *MediaTypesClient) AnalyzeBody(ctx context.Context, contentType ContentType, input azcore.ReadSeekCloser, options *MediaTypesClientAnalyzeBodyOptions) (*StringResponse, error) {
+	req, err := client.AnalyzeBodyCreateRequest(ctx, contentType, input, options)
 	if err != nil {
 		return nil, err
 	}
@@ -62,7 +62,7 @@ func (client *MediaTypesClient) AnalyzeBody(ctx context.Context, contentType Con
 }
 
 // AnalyzeBodyCreateRequest creates the AnalyzeBody request.
-func (client *MediaTypesClient) AnalyzeBodyCreateRequest(ctx context.Context, contentType ContentType, input azcore.ReadSeekCloser) (*azcore.Request, error) {
+func (client *MediaTypesClient) AnalyzeBodyCreateRequest(ctx context.Context, contentType ContentType, input azcore.ReadSeekCloser, options *MediaTypesClientAnalyzeBodyOptions) (*azcore.Request, error) {
 	urlPath := "/mediatypes/analyze"
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -92,8 +92,8 @@ func (client *MediaTypesClient) AnalyzeBodyHandleError(resp *azcore.Response) er
 }
 
 // AnalyzeBodyWithSourcePath - Analyze body, that could be different media types.
-func (client *MediaTypesClient) AnalyzeBodyWithSourcePath(ctx context.Context, mediaTypesClientAnalyzeBodyWithSourcePathOptions *MediaTypesClientAnalyzeBodyWithSourcePathOptions) (*StringResponse, error) {
-	req, err := client.AnalyzeBodyWithSourcePathCreateRequest(ctx, mediaTypesClientAnalyzeBodyWithSourcePathOptions)
+func (client *MediaTypesClient) AnalyzeBodyWithSourcePath(ctx context.Context, options *MediaTypesClientAnalyzeBodyWithSourcePathOptions) (*StringResponse, error) {
+	req, err := client.AnalyzeBodyWithSourcePathCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -112,15 +112,15 @@ func (client *MediaTypesClient) AnalyzeBodyWithSourcePath(ctx context.Context, m
 }
 
 // AnalyzeBodyWithSourcePathCreateRequest creates the AnalyzeBodyWithSourcePath request.
-func (client *MediaTypesClient) AnalyzeBodyWithSourcePathCreateRequest(ctx context.Context, mediaTypesClientAnalyzeBodyWithSourcePathOptions *MediaTypesClientAnalyzeBodyWithSourcePathOptions) (*azcore.Request, error) {
+func (client *MediaTypesClient) AnalyzeBodyWithSourcePathCreateRequest(ctx context.Context, options *MediaTypesClientAnalyzeBodyWithSourcePathOptions) (*azcore.Request, error) {
 	urlPath := "/mediatypes/analyze"
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Header.Set("Accept", "application/json")
-	if mediaTypesClientAnalyzeBodyWithSourcePathOptions != nil {
-		return req, req.MarshalAsJSON(mediaTypesClientAnalyzeBodyWithSourcePathOptions.Input)
+	if options != nil {
+		return req, req.MarshalAsJSON(options.Input)
 	}
 	return req, nil
 }

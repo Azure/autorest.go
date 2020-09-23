@@ -25,7 +25,7 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
   }
   const paramGroups = <Array<GroupProperty>>session.model.language.go!.parameterGroups;
   for (const paramGroup of values(paramGroups)) {
-    structs.push(generateParamGroupStruct(paramGroup.language.go!, paramGroup.originalParameter));
+    structs.push(generateParamGroupStruct(paramGroup.schema.language.go!, paramGroup.originalParameter));
   }
 
   // imports
@@ -92,6 +92,10 @@ class StructDef {
     }
     // used to track when to add an extra \n between fields that have comments
     let first = true;
+    if (this.Properties === undefined && this.Parameters?.length === 0) {
+      // this is an optional params placeholder struct
+      text += '\t// placeholder for future optional parameters\n';
+    }
     for (const prop of values(this.Properties)) {
       if (hasDescription(prop.language.go!)) {
         if (!first) {
