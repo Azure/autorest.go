@@ -26,3 +26,18 @@ func (e Error) Error() string {
 	}
 	return msg
 }
+
+// FilesGetEmptyFileOptions contains the optional parameters for the Files.GetEmptyFile method.
+type FilesGetEmptyFileOptions struct {
+	// placeholder for future optional parameters
+}
+
+// FilesGetFileLargeOptions contains the optional parameters for the Files.GetFileLarge method.
+type FilesGetFileLargeOptions struct {
+	// placeholder for future optional parameters
+}
+
+// FilesGetFileOptions contains the optional parameters for the Files.GetFile method.
+type FilesGetFileOptions struct {
+	// placeholder for future optional parameters
+}

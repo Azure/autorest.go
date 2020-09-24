@@ -18,17 +18,17 @@ import (
 // DdosCustomPoliciesOperations contains the methods for the DdosCustomPolicies group.
 type DdosCustomPoliciesOperations interface {
 	// BeginCreateOrUpdate - Creates or updates a DDoS custom policy.
-	BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string, parameters DdosCustomPolicy) (*DdosCustomPolicyPollerResponse, error)
+	BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string, parameters DdosCustomPolicy, options *DdosCustomPoliciesCreateOrUpdateOptions) (*DdosCustomPolicyPollerResponse, error)
 	// ResumeCreateOrUpdate - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeCreateOrUpdate(token string) (DdosCustomPolicyPoller, error)
 	// BeginDelete - Deletes the specified DDoS custom policy.
-	BeginDelete(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string) (*HTTPPollerResponse, error)
+	BeginDelete(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string, options *DdosCustomPoliciesDeleteOptions) (*HTTPPollerResponse, error)
 	// ResumeDelete - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeDelete(token string) (HTTPPoller, error)
 	// Get - Gets information about the specified DDoS custom policy.
-	Get(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string) (*DdosCustomPolicyResponse, error)
+	Get(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string, options *DdosCustomPoliciesGetOptions) (*DdosCustomPolicyResponse, error)
 	// UpdateTags - Update a DDoS custom policy tags.
-	UpdateTags(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string, parameters TagsObject) (*DdosCustomPolicyResponse, error)
+	UpdateTags(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string, parameters TagsObject, options *DdosCustomPoliciesUpdateTagsOptions) (*DdosCustomPolicyResponse, error)
 }
 
 // DdosCustomPoliciesClient implements the DdosCustomPoliciesOperations interface.
@@ -48,8 +48,8 @@ func (client *DdosCustomPoliciesClient) Do(req *azcore.Request) (*azcore.Respons
 	return client.p.Do(req)
 }
 
-func (client *DdosCustomPoliciesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string, parameters DdosCustomPolicy) (*DdosCustomPolicyPollerResponse, error) {
-	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, ddosCustomPolicyName, parameters)
+func (client *DdosCustomPoliciesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string, parameters DdosCustomPolicy, options *DdosCustomPoliciesCreateOrUpdateOptions) (*DdosCustomPolicyPollerResponse, error) {
+	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, ddosCustomPolicyName, parameters, options)
 	if err != nil {
 		return nil, err
 	}
@@ -83,8 +83,8 @@ func (client *DdosCustomPoliciesClient) ResumeCreateOrUpdate(token string) (Ddos
 }
 
 // CreateOrUpdate - Creates or updates a DDoS custom policy.
-func (client *DdosCustomPoliciesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string, parameters DdosCustomPolicy) (*azcore.Response, error) {
-	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, ddosCustomPolicyName, parameters)
+func (client *DdosCustomPoliciesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string, parameters DdosCustomPolicy, options *DdosCustomPoliciesCreateOrUpdateOptions) (*azcore.Response, error) {
+	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, ddosCustomPolicyName, parameters, options)
 	if err != nil {
 		return nil, err
 	}
@@ -99,7 +99,7 @@ func (client *DdosCustomPoliciesClient) CreateOrUpdate(ctx context.Context, reso
 }
 
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *DdosCustomPoliciesClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string, parameters DdosCustomPolicy) (*azcore.Request, error) {
+func (client *DdosCustomPoliciesClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string, parameters DdosCustomPolicy, options *DdosCustomPoliciesCreateOrUpdateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosCustomPolicies/{ddosCustomPolicyName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{ddosCustomPolicyName}", url.PathEscape(ddosCustomPolicyName))
@@ -130,8 +130,8 @@ func (client *DdosCustomPoliciesClient) CreateOrUpdateHandleError(resp *azcore.R
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-func (client *DdosCustomPoliciesClient) BeginDelete(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string) (*HTTPPollerResponse, error) {
-	resp, err := client.Delete(ctx, resourceGroupName, ddosCustomPolicyName)
+func (client *DdosCustomPoliciesClient) BeginDelete(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string, options *DdosCustomPoliciesDeleteOptions) (*HTTPPollerResponse, error) {
+	resp, err := client.Delete(ctx, resourceGroupName, ddosCustomPolicyName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -165,8 +165,8 @@ func (client *DdosCustomPoliciesClient) ResumeDelete(token string) (HTTPPoller, 
 }
 
 // Delete - Deletes the specified DDoS custom policy.
-func (client *DdosCustomPoliciesClient) Delete(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string) (*azcore.Response, error) {
-	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, ddosCustomPolicyName)
+func (client *DdosCustomPoliciesClient) Delete(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string, options *DdosCustomPoliciesDeleteOptions) (*azcore.Response, error) {
+	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, ddosCustomPolicyName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -181,7 +181,7 @@ func (client *DdosCustomPoliciesClient) Delete(ctx context.Context, resourceGrou
 }
 
 // DeleteCreateRequest creates the Delete request.
-func (client *DdosCustomPoliciesClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string) (*azcore.Request, error) {
+func (client *DdosCustomPoliciesClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string, options *DdosCustomPoliciesDeleteOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosCustomPolicies/{ddosCustomPolicyName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{ddosCustomPolicyName}", url.PathEscape(ddosCustomPolicyName))
@@ -207,8 +207,8 @@ func (client *DdosCustomPoliciesClient) DeleteHandleError(resp *azcore.Response)
 }
 
 // Get - Gets information about the specified DDoS custom policy.
-func (client *DdosCustomPoliciesClient) Get(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string) (*DdosCustomPolicyResponse, error) {
-	req, err := client.GetCreateRequest(ctx, resourceGroupName, ddosCustomPolicyName)
+func (client *DdosCustomPoliciesClient) Get(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string, options *DdosCustomPoliciesGetOptions) (*DdosCustomPolicyResponse, error) {
+	req, err := client.GetCreateRequest(ctx, resourceGroupName, ddosCustomPolicyName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -227,7 +227,7 @@ func (client *DdosCustomPoliciesClient) Get(ctx context.Context, resourceGroupNa
 }
 
 // GetCreateRequest creates the Get request.
-func (client *DdosCustomPoliciesClient) GetCreateRequest(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string) (*azcore.Request, error) {
+func (client *DdosCustomPoliciesClient) GetCreateRequest(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string, options *DdosCustomPoliciesGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosCustomPolicies/{ddosCustomPolicyName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{ddosCustomPolicyName}", url.PathEscape(ddosCustomPolicyName))
@@ -259,8 +259,8 @@ func (client *DdosCustomPoliciesClient) GetHandleError(resp *azcore.Response) er
 }
 
 // UpdateTags - Update a DDoS custom policy tags.
-func (client *DdosCustomPoliciesClient) UpdateTags(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string, parameters TagsObject) (*DdosCustomPolicyResponse, error) {
-	req, err := client.UpdateTagsCreateRequest(ctx, resourceGroupName, ddosCustomPolicyName, parameters)
+func (client *DdosCustomPoliciesClient) UpdateTags(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string, parameters TagsObject, options *DdosCustomPoliciesUpdateTagsOptions) (*DdosCustomPolicyResponse, error) {
+	req, err := client.UpdateTagsCreateRequest(ctx, resourceGroupName, ddosCustomPolicyName, parameters, options)
 	if err != nil {
 		return nil, err
 	}
@@ -279,7 +279,7 @@ func (client *DdosCustomPoliciesClient) UpdateTags(ctx context.Context, resource
 }
 
 // UpdateTagsCreateRequest creates the UpdateTags request.
-func (client *DdosCustomPoliciesClient) UpdateTagsCreateRequest(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string, parameters TagsObject) (*azcore.Request, error) {
+func (client *DdosCustomPoliciesClient) UpdateTagsCreateRequest(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string, parameters TagsObject, options *DdosCustomPoliciesUpdateTagsOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosCustomPolicies/{ddosCustomPolicyName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{ddosCustomPolicyName}", url.PathEscape(ddosCustomPolicyName))

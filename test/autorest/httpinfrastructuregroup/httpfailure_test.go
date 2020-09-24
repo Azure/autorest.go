@@ -14,7 +14,7 @@ func newHTTPFailureClient() HTTPFailureOperations {
 
 func TestHTTPFailureGetEmptyError(t *testing.T) {
 	client := newHTTPFailureClient()
-	result, err := client.GetEmptyError(context.Background())
+	result, err := client.GetEmptyError(context.Background(), nil)
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
@@ -25,7 +25,7 @@ func TestHTTPFailureGetEmptyError(t *testing.T) {
 
 func TestHTTPFailureGetNoModelEmpty(t *testing.T) {
 	client := newHTTPFailureClient()
-	result, err := client.GetNoModelEmpty(context.Background())
+	result, err := client.GetNoModelEmpty(context.Background(), nil)
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
@@ -36,7 +36,7 @@ func TestHTTPFailureGetNoModelEmpty(t *testing.T) {
 
 func TestHTTPFailureGetNoModelError(t *testing.T) {
 	client := newHTTPFailureClient()
-	result, err := client.GetNoModelError(context.Background())
+	result, err := client.GetNoModelError(context.Background(), nil)
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}

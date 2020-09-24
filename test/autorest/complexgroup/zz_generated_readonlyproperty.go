@@ -14,9 +14,9 @@ import (
 // ReadonlypropertyOperations contains the methods for the Readonlyproperty group.
 type ReadonlypropertyOperations interface {
 	// GetValid - Get complex types that have readonly properties
-	GetValid(ctx context.Context) (*ReadonlyObjResponse, error)
+	GetValid(ctx context.Context, options *ReadonlypropertyGetValidOptions) (*ReadonlyObjResponse, error)
 	// PutValid - Put complex types that have readonly properties
-	PutValid(ctx context.Context, complexBody ReadonlyObj) (*http.Response, error)
+	PutValid(ctx context.Context, complexBody ReadonlyObj, options *ReadonlypropertyPutValidOptions) (*http.Response, error)
 }
 
 // ReadonlypropertyClient implements the ReadonlypropertyOperations interface.
@@ -36,8 +36,8 @@ func (client *ReadonlypropertyClient) Do(req *azcore.Request) (*azcore.Response,
 }
 
 // GetValid - Get complex types that have readonly properties
-func (client *ReadonlypropertyClient) GetValid(ctx context.Context) (*ReadonlyObjResponse, error) {
-	req, err := client.GetValidCreateRequest(ctx)
+func (client *ReadonlypropertyClient) GetValid(ctx context.Context, options *ReadonlypropertyGetValidOptions) (*ReadonlyObjResponse, error) {
+	req, err := client.GetValidCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -56,7 +56,7 @@ func (client *ReadonlypropertyClient) GetValid(ctx context.Context) (*ReadonlyOb
 }
 
 // GetValidCreateRequest creates the GetValid request.
-func (client *ReadonlypropertyClient) GetValidCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *ReadonlypropertyClient) GetValidCreateRequest(ctx context.Context, options *ReadonlypropertyGetValidOptions) (*azcore.Request, error) {
 	urlPath := "/complex/readonlyproperty/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -82,8 +82,8 @@ func (client *ReadonlypropertyClient) GetValidHandleError(resp *azcore.Response)
 }
 
 // PutValid - Put complex types that have readonly properties
-func (client *ReadonlypropertyClient) PutValid(ctx context.Context, complexBody ReadonlyObj) (*http.Response, error) {
-	req, err := client.PutValidCreateRequest(ctx, complexBody)
+func (client *ReadonlypropertyClient) PutValid(ctx context.Context, complexBody ReadonlyObj, options *ReadonlypropertyPutValidOptions) (*http.Response, error) {
+	req, err := client.PutValidCreateRequest(ctx, complexBody, options)
 	if err != nil {
 		return nil, err
 	}
@@ -98,7 +98,7 @@ func (client *ReadonlypropertyClient) PutValid(ctx context.Context, complexBody 
 }
 
 // PutValidCreateRequest creates the PutValid request.
-func (client *ReadonlypropertyClient) PutValidCreateRequest(ctx context.Context, complexBody ReadonlyObj) (*azcore.Request, error) {
+func (client *ReadonlypropertyClient) PutValidCreateRequest(ctx context.Context, complexBody ReadonlyObj, options *ReadonlypropertyPutValidOptions) (*azcore.Request, error) {
 	urlPath := "/complex/readonlyproperty/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {

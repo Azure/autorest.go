@@ -18,7 +18,7 @@ func newMultipleInheritanceServiceClient() MultipleInheritanceServiceClientOpera
 // GetCat - Get a cat with name 'Whiskers' where likesMilk, meows, and hisses is true
 func TestGetCat(t *testing.T) {
 	client := newMultipleInheritanceServiceClient()
-	result, err := client.GetCat(context.Background())
+	result, err := client.GetCat(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -37,7 +37,7 @@ func TestGetCat(t *testing.T) {
 // GetFeline - Get a feline where meows and hisses are true
 func TestGetFeline(t *testing.T) {
 	client := newMultipleInheritanceServiceClient()
-	result, err := client.GetFeline(context.Background())
+	result, err := client.GetFeline(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -50,7 +50,7 @@ func TestGetFeline(t *testing.T) {
 // GetHorse - Get a horse with name 'Fred' and isAShowHorse true
 func TestGetHorse(t *testing.T) {
 	client := newMultipleInheritanceServiceClient()
-	result, err := client.GetHorse(context.Background())
+	result, err := client.GetHorse(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -65,7 +65,7 @@ func TestGetHorse(t *testing.T) {
 // GetKitten - Get a kitten with name 'Gatito' where likesMilk and meows is true, and hisses and eatsMiceYet is false
 func TestGetKitten(t *testing.T) {
 	client := newMultipleInheritanceServiceClient()
-	result, err := client.GetKitten(context.Background())
+	result, err := client.GetKitten(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -87,7 +87,7 @@ func TestGetKitten(t *testing.T) {
 // GetPet - Get a pet with name 'Peanut'
 func TestGetPet(t *testing.T) {
 	client := newMultipleInheritanceServiceClient()
-	result, err := client.GetPet(context.Background())
+	result, err := client.GetPet(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -108,7 +108,7 @@ func TestPutCat(t *testing.T) {
 			Name: to.StringPtr("Boots"),
 		},
 		LikesMilk: to.BoolPtr(false),
-	})
+	}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -121,7 +121,7 @@ func TestPutFeline(t *testing.T) {
 	result, err := client.PutFeline(context.Background(), Feline{
 		Hisses: to.BoolPtr(true),
 		Meows:  to.BoolPtr(false),
-	})
+	}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -136,7 +136,7 @@ func TestPutHorse(t *testing.T) {
 			Name: to.StringPtr("General"),
 		},
 		IsAShowHorse: to.BoolPtr(false),
-	})
+	}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -158,7 +158,7 @@ func TestPutKitten(t *testing.T) {
 			LikesMilk: to.BoolPtr(false),
 		},
 		EatsMiceYet: to.BoolPtr(true),
-	})
+	}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -170,7 +170,7 @@ func TestPutPet(t *testing.T) {
 	client := newMultipleInheritanceServiceClient()
 	result, err := client.PutPet(context.Background(), Pet{
 		Name: to.StringPtr("Butter"),
-	})
+	}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}

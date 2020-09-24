@@ -16,11 +16,11 @@ import (
 // ComplexModelClientOperations contains the methods for the ComplexModelClient group.
 type ComplexModelClientOperations interface {
 	// Create - Resets products.
-	Create(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogDictionaryOfArray) (*CatalogDictionaryResponse, error)
+	Create(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogDictionaryOfArray, options *ComplexModelClientCreateOptions) (*CatalogDictionaryResponse, error)
 	// List - The Products endpoint returns information about the Uber products offered at a given location. The response includes the display name and other details about each product, and lists the products in the proper display order.
-	List(ctx context.Context, resourceGroupName string) (*CatalogArrayResponse, error)
+	List(ctx context.Context, resourceGroupName string, options *ComplexModelClientListOptions) (*CatalogArrayResponse, error)
 	// Update - Resets products.
-	Update(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogArrayOfDictionary) (*CatalogArrayResponse, error)
+	Update(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogArrayOfDictionary, options *ComplexModelClientUpdateOptions) (*CatalogArrayResponse, error)
 }
 
 // ComplexModelClient implements the ComplexModelClientOperations interface.
@@ -40,8 +40,8 @@ func (client *ComplexModelClient) Do(req *azcore.Request) (*azcore.Response, err
 }
 
 // Create - Resets products.
-func (client *ComplexModelClient) Create(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogDictionaryOfArray) (*CatalogDictionaryResponse, error) {
-	req, err := client.CreateCreateRequest(ctx, subscriptionId, resourceGroupName, bodyParameter)
+func (client *ComplexModelClient) Create(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogDictionaryOfArray, options *ComplexModelClientCreateOptions) (*CatalogDictionaryResponse, error) {
+	req, err := client.CreateCreateRequest(ctx, subscriptionId, resourceGroupName, bodyParameter, options)
 	if err != nil {
 		return nil, err
 	}
@@ -60,7 +60,7 @@ func (client *ComplexModelClient) Create(ctx context.Context, subscriptionId str
 }
 
 // CreateCreateRequest creates the Create request.
-func (client *ComplexModelClient) CreateCreateRequest(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogDictionaryOfArray) (*azcore.Request, error) {
+func (client *ComplexModelClient) CreateCreateRequest(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogDictionaryOfArray, options *ComplexModelClientCreateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/Microsoft.Cache/Redis"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionId))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
@@ -91,8 +91,8 @@ func (client *ComplexModelClient) CreateHandleError(resp *azcore.Response) error
 }
 
 // List - The Products endpoint returns information about the Uber products offered at a given location. The response includes the display name and other details about each product, and lists the products in the proper display order.
-func (client *ComplexModelClient) List(ctx context.Context, resourceGroupName string) (*CatalogArrayResponse, error) {
-	req, err := client.ListCreateRequest(ctx, resourceGroupName)
+func (client *ComplexModelClient) List(ctx context.Context, resourceGroupName string, options *ComplexModelClientListOptions) (*CatalogArrayResponse, error) {
+	req, err := client.ListCreateRequest(ctx, resourceGroupName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -111,7 +111,7 @@ func (client *ComplexModelClient) List(ctx context.Context, resourceGroupName st
 }
 
 // ListCreateRequest creates the List request.
-func (client *ComplexModelClient) ListCreateRequest(ctx context.Context, resourceGroupName string) (*azcore.Request, error) {
+func (client *ComplexModelClient) ListCreateRequest(ctx context.Context, resourceGroupName string, options *ComplexModelClientListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/Microsoft.Cache/Redis"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape("123456"))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
@@ -142,8 +142,8 @@ func (client *ComplexModelClient) ListHandleError(resp *azcore.Response) error {
 }
 
 // Update - Resets products.
-func (client *ComplexModelClient) Update(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogArrayOfDictionary) (*CatalogArrayResponse, error) {
-	req, err := client.UpdateCreateRequest(ctx, subscriptionId, resourceGroupName, bodyParameter)
+func (client *ComplexModelClient) Update(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogArrayOfDictionary, options *ComplexModelClientUpdateOptions) (*CatalogArrayResponse, error) {
+	req, err := client.UpdateCreateRequest(ctx, subscriptionId, resourceGroupName, bodyParameter, options)
 	if err != nil {
 		return nil, err
 	}
@@ -162,7 +162,7 @@ func (client *ComplexModelClient) Update(ctx context.Context, subscriptionId str
 }
 
 // UpdateCreateRequest creates the Update request.
-func (client *ComplexModelClient) UpdateCreateRequest(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogArrayOfDictionary) (*azcore.Request, error) {
+func (client *ComplexModelClient) UpdateCreateRequest(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogArrayOfDictionary, options *ComplexModelClientUpdateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/Microsoft.Cache/Redis"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionId))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))

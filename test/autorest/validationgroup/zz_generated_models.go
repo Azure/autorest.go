@@ -10,6 +10,12 @@ import (
 	"net/http"
 )
 
+// AutoRestValidationTestGetWithConstantInPathOptions contains the optional parameters for the AutoRestValidationTest.GetWithConstantInPath
+// method.
+type AutoRestValidationTestGetWithConstantInPathOptions struct {
+	// placeholder for future optional parameters
+}
+
 // AutoRestValidationTestPostWithConstantInBodyOptions contains the optional parameters for the AutoRestValidationTest.PostWithConstantInBody
 // method.
 type AutoRestValidationTestPostWithConstantInBodyOptions struct {
@@ -20,6 +26,12 @@ type AutoRestValidationTestPostWithConstantInBodyOptions struct {
 // method.
 type AutoRestValidationTestValidationOfBodyOptions struct {
 	Body *Product
+}
+
+// AutoRestValidationTestValidationOfMethodParametersOptions contains the optional parameters for the AutoRestValidationTest.ValidationOfMethodParameters
+// method.
+type AutoRestValidationTestValidationOfMethodParametersOptions struct {
+	// placeholder for future optional parameters
 }
 
 // The product documentation.

@@ -19,19 +19,19 @@ import (
 // SSHPublicKeysOperations contains the methods for the SSHPublicKeys group.
 type SSHPublicKeysOperations interface {
 	// Create - Creates a new SSH public key resource.
-	Create(ctx context.Context, resourceGroupName string, sshPublicKeyName string, parameters SSHPublicKeyResource) (*SSHPublicKeyResourceResponse, error)
+	Create(ctx context.Context, resourceGroupName string, sshPublicKeyName string, parameters SSHPublicKeyResource, options *SSHPublicKeysCreateOptions) (*SSHPublicKeyResourceResponse, error)
 	// Delete - Delete an SSH public key.
-	Delete(ctx context.Context, resourceGroupName string, sshPublicKeyName string) (*http.Response, error)
+	Delete(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *SSHPublicKeysDeleteOptions) (*http.Response, error)
 	// GenerateKeyPair - Generates and returns a public/private key pair and populates the SSH public key resource with the public key. The length of the key will be 3072 bits. This operation can only be performed once per SSH public key resource.
-	GenerateKeyPair(ctx context.Context, resourceGroupName string, sshPublicKeyName string) (*SSHPublicKeyGenerateKeyPairResultResponse, error)
+	GenerateKeyPair(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *SSHPublicKeysGenerateKeyPairOptions) (*SSHPublicKeyGenerateKeyPairResultResponse, error)
 	// Get - Retrieves information about an SSH public key.
-	Get(ctx context.Context, resourceGroupName string, sshPublicKeyName string) (*SSHPublicKeyResourceResponse, error)
+	Get(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *SSHPublicKeysGetOptions) (*SSHPublicKeyResourceResponse, error)
 	// ListByResourceGroup - Lists all of the SSH public keys in the specified resource group. Use the nextLink property in the response to get the next page of SSH public keys.
-	ListByResourceGroup(resourceGroupName string) SSHPublicKeysGroupListResultPager
+	ListByResourceGroup(resourceGroupName string, options *SSHPublicKeysListByResourceGroupOptions) SSHPublicKeysGroupListResultPager
 	// ListBySubscription - Lists all of the SSH public keys in the subscription. Use the nextLink property in the response to get the next page of SSH public keys.
-	ListBySubscription() SSHPublicKeysGroupListResultPager
+	ListBySubscription(options *SSHPublicKeysListBySubscriptionOptions) SSHPublicKeysGroupListResultPager
 	// Update - Updates a new SSH public key resource.
-	Update(ctx context.Context, resourceGroupName string, sshPublicKeyName string, parameters SSHPublicKeyUpdateResource) (*SSHPublicKeyResourceResponse, error)
+	Update(ctx context.Context, resourceGroupName string, sshPublicKeyName string, parameters SSHPublicKeyUpdateResource, options *SSHPublicKeysUpdateOptions) (*SSHPublicKeyResourceResponse, error)
 }
 
 // SSHPublicKeysClient implements the SSHPublicKeysOperations interface.
@@ -52,8 +52,8 @@ func (client *SSHPublicKeysClient) Do(req *azcore.Request) (*azcore.Response, er
 }
 
 // Create - Creates a new SSH public key resource.
-func (client *SSHPublicKeysClient) Create(ctx context.Context, resourceGroupName string, sshPublicKeyName string, parameters SSHPublicKeyResource) (*SSHPublicKeyResourceResponse, error) {
-	req, err := client.CreateCreateRequest(ctx, resourceGroupName, sshPublicKeyName, parameters)
+func (client *SSHPublicKeysClient) Create(ctx context.Context, resourceGroupName string, sshPublicKeyName string, parameters SSHPublicKeyResource, options *SSHPublicKeysCreateOptions) (*SSHPublicKeyResourceResponse, error) {
+	req, err := client.CreateCreateRequest(ctx, resourceGroupName, sshPublicKeyName, parameters, options)
 	if err != nil {
 		return nil, err
 	}
@@ -72,7 +72,7 @@ func (client *SSHPublicKeysClient) Create(ctx context.Context, resourceGroupName
 }
 
 // CreateCreateRequest creates the Create request.
-func (client *SSHPublicKeysClient) CreateCreateRequest(ctx context.Context, resourceGroupName string, sshPublicKeyName string, parameters SSHPublicKeyResource) (*azcore.Request, error) {
+func (client *SSHPublicKeysClient) CreateCreateRequest(ctx context.Context, resourceGroupName string, sshPublicKeyName string, parameters SSHPublicKeyResource, options *SSHPublicKeysCreateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/sshPublicKeys/{sshPublicKeyName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{sshPublicKeyName}", url.PathEscape(sshPublicKeyName))
@@ -107,8 +107,8 @@ func (client *SSHPublicKeysClient) CreateHandleError(resp *azcore.Response) erro
 }
 
 // Delete - Delete an SSH public key.
-func (client *SSHPublicKeysClient) Delete(ctx context.Context, resourceGroupName string, sshPublicKeyName string) (*http.Response, error) {
-	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, sshPublicKeyName)
+func (client *SSHPublicKeysClient) Delete(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *SSHPublicKeysDeleteOptions) (*http.Response, error) {
+	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, sshPublicKeyName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -123,7 +123,7 @@ func (client *SSHPublicKeysClient) Delete(ctx context.Context, resourceGroupName
 }
 
 // DeleteCreateRequest creates the Delete request.
-func (client *SSHPublicKeysClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, sshPublicKeyName string) (*azcore.Request, error) {
+func (client *SSHPublicKeysClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *SSHPublicKeysDeleteOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/sshPublicKeys/{sshPublicKeyName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{sshPublicKeyName}", url.PathEscape(sshPublicKeyName))
@@ -151,8 +151,8 @@ func (client *SSHPublicKeysClient) DeleteHandleError(resp *azcore.Response) erro
 }
 
 // GenerateKeyPair - Generates and returns a public/private key pair and populates the SSH public key resource with the public key. The length of the key will be 3072 bits. This operation can only be performed once per SSH public key resource.
-func (client *SSHPublicKeysClient) GenerateKeyPair(ctx context.Context, resourceGroupName string, sshPublicKeyName string) (*SSHPublicKeyGenerateKeyPairResultResponse, error) {
-	req, err := client.GenerateKeyPairCreateRequest(ctx, resourceGroupName, sshPublicKeyName)
+func (client *SSHPublicKeysClient) GenerateKeyPair(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *SSHPublicKeysGenerateKeyPairOptions) (*SSHPublicKeyGenerateKeyPairResultResponse, error) {
+	req, err := client.GenerateKeyPairCreateRequest(ctx, resourceGroupName, sshPublicKeyName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -171,7 +171,7 @@ func (client *SSHPublicKeysClient) GenerateKeyPair(ctx context.Context, resource
 }
 
 // GenerateKeyPairCreateRequest creates the GenerateKeyPair request.
-func (client *SSHPublicKeysClient) GenerateKeyPairCreateRequest(ctx context.Context, resourceGroupName string, sshPublicKeyName string) (*azcore.Request, error) {
+func (client *SSHPublicKeysClient) GenerateKeyPairCreateRequest(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *SSHPublicKeysGenerateKeyPairOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/sshPublicKeys/{sshPublicKeyName}/generateKeyPair"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{sshPublicKeyName}", url.PathEscape(sshPublicKeyName))
@@ -206,8 +206,8 @@ func (client *SSHPublicKeysClient) GenerateKeyPairHandleError(resp *azcore.Respo
 }
 
 // Get - Retrieves information about an SSH public key.
-func (client *SSHPublicKeysClient) Get(ctx context.Context, resourceGroupName string, sshPublicKeyName string) (*SSHPublicKeyResourceResponse, error) {
-	req, err := client.GetCreateRequest(ctx, resourceGroupName, sshPublicKeyName)
+func (client *SSHPublicKeysClient) Get(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *SSHPublicKeysGetOptions) (*SSHPublicKeyResourceResponse, error) {
+	req, err := client.GetCreateRequest(ctx, resourceGroupName, sshPublicKeyName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -226,7 +226,7 @@ func (client *SSHPublicKeysClient) Get(ctx context.Context, resourceGroupName st
 }
 
 // GetCreateRequest creates the Get request.
-func (client *SSHPublicKeysClient) GetCreateRequest(ctx context.Context, resourceGroupName string, sshPublicKeyName string) (*azcore.Request, error) {
+func (client *SSHPublicKeysClient) GetCreateRequest(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *SSHPublicKeysGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/sshPublicKeys/{sshPublicKeyName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{sshPublicKeyName}", url.PathEscape(sshPublicKeyName))
@@ -261,11 +261,11 @@ func (client *SSHPublicKeysClient) GetHandleError(resp *azcore.Response) error {
 }
 
 // ListByResourceGroup - Lists all of the SSH public keys in the specified resource group. Use the nextLink property in the response to get the next page of SSH public keys.
-func (client *SSHPublicKeysClient) ListByResourceGroup(resourceGroupName string) SSHPublicKeysGroupListResultPager {
+func (client *SSHPublicKeysClient) ListByResourceGroup(resourceGroupName string, options *SSHPublicKeysListByResourceGroupOptions) SSHPublicKeysGroupListResultPager {
 	return &sshPublicKeysGroupListResultPager{
 		pipeline: client.p,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
-			return client.ListByResourceGroupCreateRequest(ctx, resourceGroupName)
+			return client.ListByResourceGroupCreateRequest(ctx, resourceGroupName, options)
 		},
 		responder: client.ListByResourceGroupHandleResponse,
 		errorer:   client.ListByResourceGroupHandleError,
@@ -276,7 +276,7 @@ func (client *SSHPublicKeysClient) ListByResourceGroup(resourceGroupName string)
 }
 
 // ListByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *SSHPublicKeysClient) ListByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string) (*azcore.Request, error) {
+func (client *SSHPublicKeysClient) ListByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *SSHPublicKeysListByResourceGroupOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/sshPublicKeys"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
@@ -310,11 +310,11 @@ func (client *SSHPublicKeysClient) ListByResourceGroupHandleError(resp *azcore.R
 }
 
 // ListBySubscription - Lists all of the SSH public keys in the subscription. Use the nextLink property in the response to get the next page of SSH public keys.
-func (client *SSHPublicKeysClient) ListBySubscription() SSHPublicKeysGroupListResultPager {
+func (client *SSHPublicKeysClient) ListBySubscription(options *SSHPublicKeysListBySubscriptionOptions) SSHPublicKeysGroupListResultPager {
 	return &sshPublicKeysGroupListResultPager{
 		pipeline: client.p,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
-			return client.ListBySubscriptionCreateRequest(ctx)
+			return client.ListBySubscriptionCreateRequest(ctx, options)
 		},
 		responder: client.ListBySubscriptionHandleResponse,
 		errorer:   client.ListBySubscriptionHandleError,
@@ -325,7 +325,7 @@ func (client *SSHPublicKeysClient) ListBySubscription() SSHPublicKeysGroupListRe
 }
 
 // ListBySubscriptionCreateRequest creates the ListBySubscription request.
-func (client *SSHPublicKeysClient) ListBySubscriptionCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *SSHPublicKeysClient) ListBySubscriptionCreateRequest(ctx context.Context, options *SSHPublicKeysListBySubscriptionOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/sshPublicKeys"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
@@ -358,8 +358,8 @@ func (client *SSHPublicKeysClient) ListBySubscriptionHandleError(resp *azcore.Re
 }
 
 // Update - Updates a new SSH public key resource.
-func (client *SSHPublicKeysClient) Update(ctx context.Context, resourceGroupName string, sshPublicKeyName string, parameters SSHPublicKeyUpdateResource) (*SSHPublicKeyResourceResponse, error) {
-	req, err := client.UpdateCreateRequest(ctx, resourceGroupName, sshPublicKeyName, parameters)
+func (client *SSHPublicKeysClient) Update(ctx context.Context, resourceGroupName string, sshPublicKeyName string, parameters SSHPublicKeyUpdateResource, options *SSHPublicKeysUpdateOptions) (*SSHPublicKeyResourceResponse, error) {
+	req, err := client.UpdateCreateRequest(ctx, resourceGroupName, sshPublicKeyName, parameters, options)
 	if err != nil {
 		return nil, err
 	}
@@ -378,7 +378,7 @@ func (client *SSHPublicKeysClient) Update(ctx context.Context, resourceGroupName
 }
 
 // UpdateCreateRequest creates the Update request.
-func (client *SSHPublicKeysClient) UpdateCreateRequest(ctx context.Context, resourceGroupName string, sshPublicKeyName string, parameters SSHPublicKeyUpdateResource) (*azcore.Request, error) {
+func (client *SSHPublicKeysClient) UpdateCreateRequest(ctx context.Context, resourceGroupName string, sshPublicKeyName string, parameters SSHPublicKeyUpdateResource, options *SSHPublicKeysUpdateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/sshPublicKeys/{sshPublicKeyName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{sshPublicKeyName}", url.PathEscape(sshPublicKeyName))

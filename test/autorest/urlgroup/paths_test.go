@@ -17,7 +17,7 @@ func newPathsClient() PathsOperations {
 
 func TestArrayCSVInPath(t *testing.T) {
 	client := newPathsClient()
-	result, err := client.ArrayCSVInPath(context.Background(), []string{"ArrayPath1", "begin!*'();:@ &=+$,/?#[]end", "", ""})
+	result, err := client.ArrayCSVInPath(context.Background(), []string{"ArrayPath1", "begin!*'();:@ &=+$,/?#[]end", "", ""}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -26,7 +26,7 @@ func TestArrayCSVInPath(t *testing.T) {
 
 func TestPathsBase64URL(t *testing.T) {
 	client := newPathsClient()
-	result, err := client.Base64URL(context.Background(), []byte("lorem"))
+	result, err := client.Base64URL(context.Background(), []byte("lorem"), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -35,7 +35,7 @@ func TestPathsBase64URL(t *testing.T) {
 
 func TestPathsByteEmpty(t *testing.T) {
 	client := newPathsClient()
-	result, err := client.ByteEmpty(context.Background())
+	result, err := client.ByteEmpty(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -44,7 +44,7 @@ func TestPathsByteEmpty(t *testing.T) {
 
 func TestPathsByteMultiByte(t *testing.T) {
 	client := newPathsClient()
-	result, err := client.ByteMultiByte(context.Background(), []byte("啊齄丂狛狜隣郎隣兀﨩"))
+	result, err := client.ByteMultiByte(context.Background(), []byte("啊齄丂狛狜隣郎隣兀﨩"), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -54,7 +54,7 @@ func TestPathsByteMultiByte(t *testing.T) {
 // TODO: check
 func TestPathsByteNull(t *testing.T) {
 	client := newPathsClient()
-	_, err := client.ByteNull(context.Background(), nil)
+	_, err := client.ByteNull(context.Background(), nil, nil)
 	if err == nil {
 		t.Fatalf("Did not receive an error, but expected one")
 	}
@@ -63,7 +63,7 @@ func TestPathsByteNull(t *testing.T) {
 func TestPathsDateNull(t *testing.T) {
 	client := newPathsClient()
 	var time time.Time
-	result, err := client.DateNull(context.Background(), time)
+	result, err := client.DateNull(context.Background(), time, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -73,7 +73,7 @@ func TestPathsDateNull(t *testing.T) {
 func TestPathsDateTimeNull(t *testing.T) {
 	client := newPathsClient()
 	var time time.Time
-	result, err := client.DateTimeNull(context.Background(), time)
+	result, err := client.DateTimeNull(context.Background(), time, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -82,7 +82,7 @@ func TestPathsDateTimeNull(t *testing.T) {
 
 func TestPathsDateTimeValid(t *testing.T) {
 	client := newPathsClient()
-	result, err := client.DateTimeValid(context.Background())
+	result, err := client.DateTimeValid(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -91,7 +91,7 @@ func TestPathsDateTimeValid(t *testing.T) {
 
 func TestPathsDateValid(t *testing.T) {
 	client := newPathsClient()
-	result, err := client.DateValid(context.Background())
+	result, err := client.DateValid(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -100,7 +100,7 @@ func TestPathsDateValid(t *testing.T) {
 
 func TestPathsDoubleDecimalNegative(t *testing.T) {
 	client := newPathsClient()
-	result, err := client.DoubleDecimalNegative(context.Background())
+	result, err := client.DoubleDecimalNegative(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -109,7 +109,7 @@ func TestPathsDoubleDecimalNegative(t *testing.T) {
 
 func TestPathsDoubleDecimalPositive(t *testing.T) {
 	client := newPathsClient()
-	result, err := client.DoubleDecimalPositive(context.Background())
+	result, err := client.DoubleDecimalPositive(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -119,7 +119,7 @@ func TestPathsDoubleDecimalPositive(t *testing.T) {
 func TestPathsEnumNull(t *testing.T) {
 	client := newPathsClient()
 	var color URIColor
-	_, err := client.EnumNull(context.Background(), color)
+	_, err := client.EnumNull(context.Background(), color, nil)
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
@@ -128,7 +128,7 @@ func TestPathsEnumNull(t *testing.T) {
 func TestPathsEnumValid(t *testing.T) {
 	client := newPathsClient()
 	color := URIColorGreenColor
-	result, err := client.EnumValid(context.Background(), color)
+	result, err := client.EnumValid(context.Background(), color, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -137,7 +137,7 @@ func TestPathsEnumValid(t *testing.T) {
 
 func TestPathsFloatScientificNegative(t *testing.T) {
 	client := newPathsClient()
-	result, err := client.FloatScientificNegative(context.Background())
+	result, err := client.FloatScientificNegative(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -146,7 +146,7 @@ func TestPathsFloatScientificNegative(t *testing.T) {
 
 func TestPathsFloatScientificPositive(t *testing.T) {
 	client := newPathsClient()
-	result, err := client.FloatScientificPositive(context.Background())
+	result, err := client.FloatScientificPositive(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -155,7 +155,7 @@ func TestPathsFloatScientificPositive(t *testing.T) {
 
 func TestPathsGetBooleanFalse(t *testing.T) {
 	client := newPathsClient()
-	result, err := client.GetBooleanFalse(context.Background())
+	result, err := client.GetBooleanFalse(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -164,7 +164,7 @@ func TestPathsGetBooleanFalse(t *testing.T) {
 
 func TestPathsGetBooleanTrue(t *testing.T) {
 	client := newPathsClient()
-	result, err := client.GetBooleanTrue(context.Background())
+	result, err := client.GetBooleanTrue(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -173,7 +173,7 @@ func TestPathsGetBooleanTrue(t *testing.T) {
 
 func TestPathsGetIntNegativeOneMillion(t *testing.T) {
 	client := newPathsClient()
-	result, err := client.GetIntNegativeOneMillion(context.Background())
+	result, err := client.GetIntNegativeOneMillion(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -182,7 +182,7 @@ func TestPathsGetIntNegativeOneMillion(t *testing.T) {
 
 func TestPathsGetIntOneMillion(t *testing.T) {
 	client := newPathsClient()
-	result, err := client.GetIntOneMillion(context.Background())
+	result, err := client.GetIntOneMillion(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -191,7 +191,7 @@ func TestPathsGetIntOneMillion(t *testing.T) {
 
 func TestPathsGetNegativeTenBillion(t *testing.T) {
 	client := newPathsClient()
-	result, err := client.GetNegativeTenBillion(context.Background())
+	result, err := client.GetNegativeTenBillion(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -200,7 +200,7 @@ func TestPathsGetNegativeTenBillion(t *testing.T) {
 
 func TestPathsGetTenBillion(t *testing.T) {
 	client := newPathsClient()
-	result, err := client.GetTenBillion(context.Background())
+	result, err := client.GetTenBillion(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -209,7 +209,7 @@ func TestPathsGetTenBillion(t *testing.T) {
 
 func TestPathsStringEmpty(t *testing.T) {
 	client := newPathsClient()
-	result, err := client.StringEmpty(context.Background())
+	result, err := client.StringEmpty(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -219,7 +219,7 @@ func TestPathsStringEmpty(t *testing.T) {
 func TestPathsStringNull(t *testing.T) {
 	client := newPathsClient()
 	var s string
-	_, err := client.StringNull(context.Background(), s)
+	_, err := client.StringNull(context.Background(), s, nil)
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
@@ -227,7 +227,7 @@ func TestPathsStringNull(t *testing.T) {
 
 func TestPathsStringURLEncoded(t *testing.T) {
 	client := newPathsClient()
-	result, err := client.StringURLEncoded(context.Background())
+	result, err := client.StringURLEncoded(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -236,7 +236,7 @@ func TestPathsStringURLEncoded(t *testing.T) {
 
 func TestPathsStringURLNonEncoded(t *testing.T) {
 	client := newPathsClient()
-	result, err := client.StringURLNonEncoded(context.Background())
+	result, err := client.StringURLNonEncoded(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -245,7 +245,7 @@ func TestPathsStringURLNonEncoded(t *testing.T) {
 
 func TestPathsStringUnicode(t *testing.T) {
 	client := newPathsClient()
-	result, err := client.StringUnicode(context.Background())
+	result, err := client.StringUnicode(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -258,7 +258,7 @@ func TestPathsUnixTimeURL(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	result, err := client.UnixTimeURL(context.Background(), d)
+	result, err := client.UnixTimeURL(context.Background(), d, nil)
 	if err != nil {
 		t.Fatal(err)
 	}

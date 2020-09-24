@@ -18,7 +18,7 @@ func newBasicClient() BasicOperations {
 
 func TestBasicGetValid(t *testing.T) {
 	client := newBasicClient()
-	result, err := client.GetValid(context.Background())
+	result, err := client.GetValid(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetValid: %v", err)
 	}
@@ -31,7 +31,7 @@ func TestBasicPutValid(t *testing.T) {
 		ID:    to.Int32Ptr(2),
 		Name:  to.StringPtr("abc"),
 		Color: CMYKColorsMagenta.ToPtr(),
-	})
+	}, nil)
 	if err != nil {
 		t.Fatalf("PutValid: %v", err)
 	}
@@ -40,7 +40,7 @@ func TestBasicPutValid(t *testing.T) {
 
 func TestBasicGetInvalid(t *testing.T) {
 	client := newBasicClient()
-	result, err := client.GetInvalid(context.Background())
+	result, err := client.GetInvalid(context.Background(), nil)
 	if err == nil {
 		t.Fatal("GetInvalid expected an error")
 	}
@@ -51,7 +51,7 @@ func TestBasicGetInvalid(t *testing.T) {
 
 func TestBasicGetEmpty(t *testing.T) {
 	client := newBasicClient()
-	result, err := client.GetEmpty(context.Background())
+	result, err := client.GetEmpty(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetEmpty: %v", err)
 	}
@@ -60,7 +60,7 @@ func TestBasicGetEmpty(t *testing.T) {
 
 func TestBasicGetNull(t *testing.T) {
 	client := newBasicClient()
-	result, err := client.GetNull(context.Background())
+	result, err := client.GetNull(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetNull: %v", err)
 	}
@@ -69,7 +69,7 @@ func TestBasicGetNull(t *testing.T) {
 
 func TestBasicGetNotProvided(t *testing.T) {
 	client := newBasicClient()
-	result, err := client.GetNotProvided(context.Background())
+	result, err := client.GetNotProvided(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetNotProvided: %v", err)
 	}

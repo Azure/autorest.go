@@ -11,6 +11,11 @@ import (
 	"time"
 )
 
+// SparkBatchCancelSparkBatchJobOptions contains the optional parameters for the SparkBatch.CancelSparkBatchJob method.
+type SparkBatchCancelSparkBatchJobOptions struct {
+	// placeholder for future optional parameters
+}
+
 // SparkBatchCreateSparkBatchJobOptions contains the optional parameters for the SparkBatch.CreateSparkBatchJob method.
 type SparkBatchCreateSparkBatchJobOptions struct {
 	// Optional query param specifying whether detailed response is returned beyond plain livy.
@@ -498,6 +503,16 @@ type SparkSession struct {
 	WorkspaceName *string            `json:"workspaceName,omitempty"`
 }
 
+// SparkSessionCancelSparkSessionOptions contains the optional parameters for the SparkSession.CancelSparkSession method.
+type SparkSessionCancelSparkSessionOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SparkSessionCancelSparkStatementOptions contains the optional parameters for the SparkSession.CancelSparkStatement method.
+type SparkSessionCancelSparkStatementOptions struct {
+	// placeholder for future optional parameters
+}
+
 type SparkSessionCollection struct {
 	From     *int32          `json:"from,omitempty"`
 	Sessions *[]SparkSession `json:"sessions,omitempty"`
@@ -517,6 +532,11 @@ type SparkSessionCreateSparkSessionOptions struct {
 	Detailed *bool
 }
 
+// SparkSessionCreateSparkStatementOptions contains the optional parameters for the SparkSession.CreateSparkStatement method.
+type SparkSessionCreateSparkStatementOptions struct {
+	// placeholder for future optional parameters
+}
+
 // SparkSessionGetSparkSessionOptions contains the optional parameters for the SparkSession.GetSparkSession method.
 type SparkSessionGetSparkSessionOptions struct {
 	// Optional query param specifying whether detailed response is returned beyond plain livy.
@@ -532,6 +552,16 @@ type SparkSessionGetSparkSessionsOptions struct {
 	// Optional param specifying the size of the returned list.
 	// By default it is 20 and that is the maximum.
 	Size *int32
+}
+
+// SparkSessionGetSparkStatementOptions contains the optional parameters for the SparkSession.GetSparkStatement method.
+type SparkSessionGetSparkStatementOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SparkSessionGetSparkStatementsOptions contains the optional parameters for the SparkSession.GetSparkStatements method.
+type SparkSessionGetSparkStatementsOptions struct {
+	// placeholder for future optional parameters
 }
 
 type SparkSessionOptions struct {
@@ -555,6 +585,12 @@ type SparkSessionOptions struct {
 
 	// Dictionary of <string>
 	Tags *map[string]string `json:"tags,omitempty"`
+}
+
+// SparkSessionResetSparkSessionTimeoutOptions contains the optional parameters for the SparkSession.ResetSparkSessionTimeout
+// method.
+type SparkSessionResetSparkSessionTimeoutOptions struct {
+	// placeholder for future optional parameters
 }
 
 // SparkSessionResponse is the response envelope for operations that return a SparkSession type.

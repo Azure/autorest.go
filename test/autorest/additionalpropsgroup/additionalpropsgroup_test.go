@@ -27,7 +27,7 @@ func TestCreateApInProperties(t *testing.T) {
 			"weight":   599,
 			"footsize": 11.5,
 		},
-	})
+	}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -60,7 +60,7 @@ func TestCreateApInPropertiesWithApstring(t *testing.T) {
 			"weight":   599,
 			"footsize": 11.5,
 		},
-	})
+	}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -101,7 +101,7 @@ func TestCreateApObject(t *testing.T) {
 			},
 			"picture": base64.StdEncoding.EncodeToString([]byte{255, 255, 255, 255, 254}),
 		},
-	})
+	}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -136,7 +136,7 @@ func TestCreateApString(t *testing.T) {
 			"weight": "10 kg",
 			"city":   "Bombay",
 		},
-	})
+	}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -164,7 +164,7 @@ func TestCreateApTrue(t *testing.T) {
 				"color": "Red",
 			},
 		},
-	})
+	}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -196,7 +196,7 @@ func TestCreateCatApTrue(t *testing.T) {
 			},
 		},
 		Friendly: to.BoolPtr(true),
-	})
+	}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -327,15 +327,24 @@ function processOperationRequests(session: Session<CodeModel>) {
           }
           continue;
         }
+        // create an optional params struct even if the operation contains no optional params.
+        // this provides version resiliency in case optional params are added in the future.
+        // don't do this for paging next link operation as this isn't part of the public API
+        if (op.language.go!.paging && op.language.go!.paging.isNextOp) {
+          continue;
+        }
+        // create a type named <OperationGroup><Operation>Options
+        const paramGroupName = `${group.language.go!.name}${op.language.go!.name}Options`;
+        if (!paramGroups.has(paramGroupName)) {
+          const desc = `${paramGroupName} contains the optional parameters for the ${group.language.go!.name}.${op.language.go!.name} method.`;
+          const gp = createGroupProperty(paramGroupName, desc);
+          gp.required = false;
+          paramGroups.set(paramGroupName, gp);
+          // associate the param group with the operation
+          op.language.go!.optionalParamGroup = gp;
+        }
         // include non-required constants that aren't body params in the optional values struct
         if (param.required !== true && !(param.schema.type === SchemaType.Constant && param.protocol.http!.in === 'body')) {
-          // create a type named <OperationGroup><Operation>Options
-          const paramGroupName = `${group.language.go!.name}${op.language.go!.name}Options`;
-          // create group entry and add the param to it
-          if (!paramGroups.has(paramGroupName)) {
-            const desc = `${paramGroupName} contains the optional parameters for the ${group.language.go!.name}.${op.language.go!.name} method.`;
-            paramGroups.set(paramGroupName, createGroupProperty(paramGroupName, desc));
-          }
           // associate the group with the param
           param.language.go!.paramGroup = paramGroups.get(paramGroupName);
           paramGroups.get(paramGroupName)!.originalParameter.push(param);

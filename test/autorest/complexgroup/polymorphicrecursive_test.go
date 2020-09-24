@@ -20,7 +20,7 @@ func newPolymorphicrecursiveClient() PolymorphicrecursiveOperations {
 // GetValid - Get complex types that are polymorphic and have recursive references
 func TestGetValid(t *testing.T) {
 	client := newPolymorphicrecursiveClient()
-	result, err := client.GetValid(context.Background())
+	result, err := client.GetValid(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -192,7 +192,7 @@ func TestPutValid(t *testing.T) {
 		},
 		Iswild:   to.BoolPtr(true),
 		Location: to.StringPtr("alaska"),
-	})
+	}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}

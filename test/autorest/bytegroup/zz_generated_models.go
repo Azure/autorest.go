@@ -19,6 +19,31 @@ type ByteArrayResponse struct {
 	Value *[]byte
 }
 
+// ByteGetEmptyOptions contains the optional parameters for the Byte.GetEmpty method.
+type ByteGetEmptyOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ByteGetInvalidOptions contains the optional parameters for the Byte.GetInvalid method.
+type ByteGetInvalidOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ByteGetNonASCIIOptions contains the optional parameters for the Byte.GetNonASCII method.
+type ByteGetNonASCIIOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ByteGetNullOptions contains the optional parameters for the Byte.GetNull method.
+type ByteGetNullOptions struct {
+	// placeholder for future optional parameters
+}
+
+// BytePutNonASCIIOptions contains the optional parameters for the Byte.PutNonASCII method.
+type BytePutNonASCIIOptions struct {
+	// placeholder for future optional parameters
+}
+
 type Error struct {
 	Message *string `json:"message,omitempty"`
 	Status  *int32  `json:"status,omitempty"`

@@ -87,7 +87,7 @@ func TestArrayStringTsvValid(t *testing.T) {
 // ByteEmpty - Get '' as byte array
 func TestByteEmpty(t *testing.T) {
 	client := newQueriesClient()
-	result, err := client.ByteEmpty(context.Background())
+	result, err := client.ByteEmpty(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -139,7 +139,7 @@ func TestDateTimeNull(t *testing.T) {
 // DateTimeValid - Get '2012-01-01T01:01:01Z' as date-time
 func TestDateTimeValid(t *testing.T) {
 	client := newQueriesClient()
-	result, err := client.DateTimeValid(context.Background())
+	result, err := client.DateTimeValid(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -149,7 +149,7 @@ func TestDateTimeValid(t *testing.T) {
 // DateValid - Get '2012-01-01' as date
 func TestDateValid(t *testing.T) {
 	client := newQueriesClient()
-	result, err := client.DateValid(context.Background())
+	result, err := client.DateValid(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -159,7 +159,7 @@ func TestDateValid(t *testing.T) {
 // DoubleDecimalNegative - Get '-9999999.999' numeric value
 func TestDoubleDecimalNegative(t *testing.T) {
 	client := newQueriesClient()
-	result, err := client.DoubleDecimalNegative(context.Background())
+	result, err := client.DoubleDecimalNegative(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -169,7 +169,7 @@ func TestDoubleDecimalNegative(t *testing.T) {
 // DoubleDecimalPositive - Get '9999999.999' numeric value
 func TestDoubleDecimalPositive(t *testing.T) {
 	client := newQueriesClient()
-	result, err := client.DoubleDecimalPositive(context.Background())
+	result, err := client.DoubleDecimalPositive(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -221,7 +221,7 @@ func TestFloatNull(t *testing.T) {
 // FloatScientificNegative - Get '-1.034E-20' numeric value
 func TestFloatScientificNegative(t *testing.T) {
 	client := newQueriesClient()
-	result, err := client.FloatScientificNegative(context.Background())
+	result, err := client.FloatScientificNegative(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -231,7 +231,7 @@ func TestFloatScientificNegative(t *testing.T) {
 // FloatScientificPositive - Get '1.034E+20' numeric value
 func TestFloatScientificPositive(t *testing.T) {
 	client := newQueriesClient()
-	result, err := client.FloatScientificPositive(context.Background())
+	result, err := client.FloatScientificPositive(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -241,7 +241,7 @@ func TestFloatScientificPositive(t *testing.T) {
 // GetBooleanFalse - Get false Boolean value on path
 func TestGetBooleanFalse(t *testing.T) {
 	client := newQueriesClient()
-	result, err := client.GetBooleanFalse(context.Background())
+	result, err := client.GetBooleanFalse(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -261,7 +261,7 @@ func TestGetBooleanNull(t *testing.T) {
 // GetBooleanTrue - Get true Boolean value on path
 func TestGetBooleanTrue(t *testing.T) {
 	client := newQueriesClient()
-	result, err := client.GetBooleanTrue(context.Background())
+	result, err := client.GetBooleanTrue(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -271,7 +271,7 @@ func TestGetBooleanTrue(t *testing.T) {
 // GetIntNegativeOneMillion - Get '-1000000' integer value
 func TestGetIntNegativeOneMillion(t *testing.T) {
 	client := newQueriesClient()
-	result, err := client.GetIntNegativeOneMillion(context.Background())
+	result, err := client.GetIntNegativeOneMillion(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -291,7 +291,7 @@ func TestGetIntNull(t *testing.T) {
 // GetIntOneMillion - Get '1000000' integer value
 func TestGetIntOneMillion(t *testing.T) {
 	client := newQueriesClient()
-	result, err := client.GetIntOneMillion(context.Background())
+	result, err := client.GetIntOneMillion(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -311,7 +311,7 @@ func TestGetLongNull(t *testing.T) {
 // GetNegativeTenBillion - Get '-10000000000' 64 bit integer value
 func TestGetNegativeTenBillion(t *testing.T) {
 	client := newQueriesClient()
-	result, err := client.GetNegativeTenBillion(context.Background())
+	result, err := client.GetNegativeTenBillion(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -321,7 +321,7 @@ func TestGetNegativeTenBillion(t *testing.T) {
 // GetTenBillion - Get '10000000000' 64 bit integer value
 func TestGetTenBillion(t *testing.T) {
 	client := newQueriesClient()
-	result, err := client.GetTenBillion(context.Background())
+	result, err := client.GetTenBillion(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -331,7 +331,7 @@ func TestGetTenBillion(t *testing.T) {
 // StringEmpty - Get ''
 func TestStringEmpty(t *testing.T) {
 	client := newQueriesClient()
-	result, err := client.StringEmpty(context.Background())
+	result, err := client.StringEmpty(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -351,7 +351,7 @@ func TestStringNull(t *testing.T) {
 // StringURLEncoded - Get 'begin!*'();:@ &=+$,/?#[]end
 func TestStringURLEncoded(t *testing.T) {
 	client := newQueriesClient()
-	result, err := client.StringURLEncoded(context.Background())
+	result, err := client.StringURLEncoded(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -361,7 +361,7 @@ func TestStringURLEncoded(t *testing.T) {
 // StringUnicode - Get '啊齄丂狛狜隣郎隣兀﨩' multi-byte string value
 func TestStringUnicode(t *testing.T) {
 	client := newQueriesClient()
-	result, err := client.StringUnicode(context.Background())
+	result, err := client.StringUnicode(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}

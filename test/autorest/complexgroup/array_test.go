@@ -16,7 +16,7 @@ func newArrayClient() ArrayOperations {
 
 func TestArrayGetEmpty(t *testing.T) {
 	client := newArrayClient()
-	result, err := client.GetEmpty(context.Background())
+	result, err := client.GetEmpty(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetEmpty: %v", err)
 	}
@@ -27,7 +27,7 @@ func TestArrayGetEmpty(t *testing.T) {
 
 func TestArrayGetNotProvided(t *testing.T) {
 	client := newArrayClient()
-	result, err := client.GetNotProvided(context.Background())
+	result, err := client.GetNotProvided(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetNotProvided: %v", err)
 	}
@@ -36,7 +36,7 @@ func TestArrayGetNotProvided(t *testing.T) {
 
 func TestArrayGetValid(t *testing.T) {
 	client := newArrayClient()
-	result, err := client.GetValid(context.Background())
+	result, err := client.GetValid(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetValid: %v", err)
 	}
@@ -47,7 +47,7 @@ func TestArrayGetValid(t *testing.T) {
 
 func TestArrayPutEmpty(t *testing.T) {
 	client := newArrayClient()
-	result, err := client.PutEmpty(context.Background(), ArrayWrapper{Array: &[]string{}})
+	result, err := client.PutEmpty(context.Background(), ArrayWrapper{Array: &[]string{}}, nil)
 	if err != nil {
 		t.Fatalf("PutEmpty: %v", err)
 	}

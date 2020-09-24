@@ -594,6 +594,46 @@ type StorageServicePropertiesResponse struct {
 	StorageServiceProperties *StorageServiceProperties `xml:"StorageServiceProperties"`
 }
 
+// XMLGetACLsOptions contains the optional parameters for the XML.GetACLs method.
+type XMLGetACLsOptions struct {
+	// placeholder for future optional parameters
+}
+
+// XMLGetComplexTypeRefNoMetaOptions contains the optional parameters for the XML.GetComplexTypeRefNoMeta method.
+type XMLGetComplexTypeRefNoMetaOptions struct {
+	// placeholder for future optional parameters
+}
+
+// XMLGetComplexTypeRefWithMetaOptions contains the optional parameters for the XML.GetComplexTypeRefWithMeta method.
+type XMLGetComplexTypeRefWithMetaOptions struct {
+	// placeholder for future optional parameters
+}
+
+// XMLGetEmptyChildElementOptions contains the optional parameters for the XML.GetEmptyChildElement method.
+type XMLGetEmptyChildElementOptions struct {
+	// placeholder for future optional parameters
+}
+
+// XMLGetEmptyListOptions contains the optional parameters for the XML.GetEmptyList method.
+type XMLGetEmptyListOptions struct {
+	// placeholder for future optional parameters
+}
+
+// XMLGetEmptyRootListOptions contains the optional parameters for the XML.GetEmptyRootList method.
+type XMLGetEmptyRootListOptions struct {
+	// placeholder for future optional parameters
+}
+
+// XMLGetEmptyWrappedListsOptions contains the optional parameters for the XML.GetEmptyWrappedLists method.
+type XMLGetEmptyWrappedListsOptions struct {
+	// placeholder for future optional parameters
+}
+
+// XMLGetHeadersOptions contains the optional parameters for the XML.GetHeaders method.
+type XMLGetHeadersOptions struct {
+	// placeholder for future optional parameters
+}
+
 // XMLGetHeadersResponse contains the response from method XML.GetHeaders.
 type XMLGetHeadersResponse struct {
 	// CustomHeader contains the information returned from the Custom-Header header response.
@@ -601,4 +641,114 @@ type XMLGetHeadersResponse struct {
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// XMLGetRootListOptions contains the optional parameters for the XML.GetRootList method.
+type XMLGetRootListOptions struct {
+	// placeholder for future optional parameters
+}
+
+// XMLGetRootListSingleItemOptions contains the optional parameters for the XML.GetRootListSingleItem method.
+type XMLGetRootListSingleItemOptions struct {
+	// placeholder for future optional parameters
+}
+
+// XMLGetServicePropertiesOptions contains the optional parameters for the XML.GetServiceProperties method.
+type XMLGetServicePropertiesOptions struct {
+	// placeholder for future optional parameters
+}
+
+// XMLGetSimpleOptions contains the optional parameters for the XML.GetSimple method.
+type XMLGetSimpleOptions struct {
+	// placeholder for future optional parameters
+}
+
+// XMLGetWrappedListsOptions contains the optional parameters for the XML.GetWrappedLists method.
+type XMLGetWrappedListsOptions struct {
+	// placeholder for future optional parameters
+}
+
+// XMLGetXMSTextOptions contains the optional parameters for the XML.GetXMSText method.
+type XMLGetXMSTextOptions struct {
+	// placeholder for future optional parameters
+}
+
+// XMLJSONInputOptions contains the optional parameters for the XML.JSONInput method.
+type XMLJSONInputOptions struct {
+	// placeholder for future optional parameters
+}
+
+// XMLJSONOutputOptions contains the optional parameters for the XML.JSONOutput method.
+type XMLJSONOutputOptions struct {
+	// placeholder for future optional parameters
+}
+
+// XMLListBlobsOptions contains the optional parameters for the XML.ListBlobs method.
+type XMLListBlobsOptions struct {
+	// placeholder for future optional parameters
+}
+
+// XMLListContainersOptions contains the optional parameters for the XML.ListContainers method.
+type XMLListContainersOptions struct {
+	// placeholder for future optional parameters
+}
+
+// XMLPutACLsOptions contains the optional parameters for the XML.PutACLs method.
+type XMLPutACLsOptions struct {
+	// placeholder for future optional parameters
+}
+
+// XMLPutComplexTypeRefNoMetaOptions contains the optional parameters for the XML.PutComplexTypeRefNoMeta method.
+type XMLPutComplexTypeRefNoMetaOptions struct {
+	// placeholder for future optional parameters
+}
+
+// XMLPutComplexTypeRefWithMetaOptions contains the optional parameters for the XML.PutComplexTypeRefWithMeta method.
+type XMLPutComplexTypeRefWithMetaOptions struct {
+	// placeholder for future optional parameters
+}
+
+// XMLPutEmptyChildElementOptions contains the optional parameters for the XML.PutEmptyChildElement method.
+type XMLPutEmptyChildElementOptions struct {
+	// placeholder for future optional parameters
+}
+
+// XMLPutEmptyListOptions contains the optional parameters for the XML.PutEmptyList method.
+type XMLPutEmptyListOptions struct {
+	// placeholder for future optional parameters
+}
+
+// XMLPutEmptyRootListOptions contains the optional parameters for the XML.PutEmptyRootList method.
+type XMLPutEmptyRootListOptions struct {
+	// placeholder for future optional parameters
+}
+
+// XMLPutEmptyWrappedListsOptions contains the optional parameters for the XML.PutEmptyWrappedLists method.
+type XMLPutEmptyWrappedListsOptions struct {
+	// placeholder for future optional parameters
+}
+
+// XMLPutRootListOptions contains the optional parameters for the XML.PutRootList method.
+type XMLPutRootListOptions struct {
+	// placeholder for future optional parameters
+}
+
+// XMLPutRootListSingleItemOptions contains the optional parameters for the XML.PutRootListSingleItem method.
+type XMLPutRootListSingleItemOptions struct {
+	// placeholder for future optional parameters
+}
+
+// XMLPutServicePropertiesOptions contains the optional parameters for the XML.PutServiceProperties method.
+type XMLPutServicePropertiesOptions struct {
+	// placeholder for future optional parameters
+}
+
+// XMLPutSimpleOptions contains the optional parameters for the XML.PutSimple method.
+type XMLPutSimpleOptions struct {
+	// placeholder for future optional parameters
+}
+
+// XMLPutWrappedListsOptions contains the optional parameters for the XML.PutWrappedLists method.
+type XMLPutWrappedListsOptions struct {
+	// placeholder for future optional parameters
 }

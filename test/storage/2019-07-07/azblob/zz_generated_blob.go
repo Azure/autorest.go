@@ -1108,8 +1108,8 @@ func (client *blobClient) GetAccessControlHandleError(resp *azcore.Response) err
 }
 
 // GetAccountInfo - Returns the sku name and account kind
-func (client *blobClient) GetAccountInfo(ctx context.Context) (*BlobGetAccountInfoResponse, error) {
-	req, err := client.GetAccountInfoCreateRequest(ctx)
+func (client *blobClient) GetAccountInfo(ctx context.Context, options *BlobGetAccountInfoOptions) (*BlobGetAccountInfoResponse, error) {
+	req, err := client.GetAccountInfoCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1128,7 +1128,7 @@ func (client *blobClient) GetAccountInfo(ctx context.Context) (*BlobGetAccountIn
 }
 
 // GetAccountInfoCreateRequest creates the GetAccountInfo request.
-func (client *blobClient) GetAccountInfoCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *blobClient) GetAccountInfoCreateRequest(ctx context.Context, options *BlobGetAccountInfoOptions) (*azcore.Request, error) {
 	req, err := azcore.NewRequest(ctx, http.MethodGet, client.u)
 	if err != nil {
 		return nil, err
@@ -2312,8 +2312,8 @@ func (client *blobClient) StartCopyFromURLHandleError(resp *azcore.Response) err
 }
 
 // Undelete - Undelete a blob that was previously soft deleted
-func (client *blobClient) Undelete(ctx context.Context, blobUndeleteOptions *BlobUndeleteOptions) (*BlobUndeleteResponse, error) {
-	req, err := client.UndeleteCreateRequest(ctx, blobUndeleteOptions)
+func (client *blobClient) Undelete(ctx context.Context, options *BlobUndeleteOptions) (*BlobUndeleteResponse, error) {
+	req, err := client.UndeleteCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -2332,20 +2332,20 @@ func (client *blobClient) Undelete(ctx context.Context, blobUndeleteOptions *Blo
 }
 
 // UndeleteCreateRequest creates the Undelete request.
-func (client *blobClient) UndeleteCreateRequest(ctx context.Context, blobUndeleteOptions *BlobUndeleteOptions) (*azcore.Request, error) {
+func (client *blobClient) UndeleteCreateRequest(ctx context.Context, options *BlobUndeleteOptions) (*azcore.Request, error) {
 	req, err := azcore.NewRequest(ctx, http.MethodPut, client.u)
 	if err != nil {
 		return nil, err
 	}
 	query := req.URL.Query()
 	query.Set("comp", "undelete")
-	if blobUndeleteOptions != nil && blobUndeleteOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*blobUndeleteOptions.Timeout), 10))
+	if options != nil && options.Timeout != nil {
+		query.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("x-ms-version", "2019-07-07")
-	if blobUndeleteOptions != nil && blobUndeleteOptions.RequestId != nil {
-		req.Header.Set("x-ms-client-request-id", *blobUndeleteOptions.RequestId)
+	if options != nil && options.RequestId != nil {
+		req.Header.Set("x-ms-client-request-id", *options.RequestId)
 	}
 	req.Header.Set("Accept", "application/xml")
 	return req, nil

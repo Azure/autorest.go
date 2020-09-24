@@ -16,7 +16,7 @@ import (
 
 // FlattencomplexOperations contains the methods for the Flattencomplex group.
 type FlattencomplexOperations interface {
-	GetValid(ctx context.Context) (*MyBaseTypeResponse, error)
+	GetValid(ctx context.Context, options *FlattencomplexGetValidOptions) (*MyBaseTypeResponse, error)
 }
 
 // FlattencomplexClient implements the FlattencomplexOperations interface.
@@ -35,8 +35,8 @@ func (client *FlattencomplexClient) Do(req *azcore.Request) (*azcore.Response, e
 	return client.p.Do(req)
 }
 
-func (client *FlattencomplexClient) GetValid(ctx context.Context) (*MyBaseTypeResponse, error) {
-	req, err := client.GetValidCreateRequest(ctx)
+func (client *FlattencomplexClient) GetValid(ctx context.Context, options *FlattencomplexGetValidOptions) (*MyBaseTypeResponse, error) {
+	req, err := client.GetValidCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -55,7 +55,7 @@ func (client *FlattencomplexClient) GetValid(ctx context.Context) (*MyBaseTypeRe
 }
 
 // GetValidCreateRequest creates the GetValid request.
-func (client *FlattencomplexClient) GetValidCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *FlattencomplexClient) GetValidCreateRequest(ctx context.Context, options *FlattencomplexGetValidOptions) (*azcore.Request, error) {
 	urlPath := "/complex/flatten/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {

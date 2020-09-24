@@ -21,8 +21,8 @@ func (client *workspaceClient) Do(req *azcore.Request) (*azcore.Response, error)
 }
 
 // Get - Get Workspace
-func (client *workspaceClient) Get(ctx context.Context) (*WorkspaceResponse, error) {
-	req, err := client.GetCreateRequest(ctx)
+func (client *workspaceClient) Get(ctx context.Context, options *WorkspaceGetOptions) (*WorkspaceResponse, error) {
+	req, err := client.GetCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -41,7 +41,7 @@ func (client *workspaceClient) Get(ctx context.Context) (*WorkspaceResponse, err
 }
 
 // GetCreateRequest creates the Get request.
-func (client *workspaceClient) GetCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *workspaceClient) GetCreateRequest(ctx context.Context, options *WorkspaceGetOptions) (*azcore.Request, error) {
 	urlPath := "/workspace"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {

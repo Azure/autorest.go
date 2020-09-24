@@ -27,7 +27,7 @@ func TestGetMethodLocalNull(t *testing.T) {
 // GetMethodLocalValid - Get method with api-version modeled in the method.  pass in api-version = '2.0' to succeed
 func TestGetMethodLocalValid(t *testing.T) {
 	client := newAPIVersionLocalClient()
-	result, err := client.GetMethodLocalValid(context.Background())
+	result, err := client.GetMethodLocalValid(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -37,7 +37,7 @@ func TestGetMethodLocalValid(t *testing.T) {
 // GetPathLocalValid - Get method with api-version modeled in the method.  pass in api-version = '2.0' to succeed
 func TestGetPathLocalValid(t *testing.T) {
 	client := newAPIVersionLocalClient()
-	result, err := client.GetPathLocalValid(context.Background())
+	result, err := client.GetPathLocalValid(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -47,7 +47,7 @@ func TestGetPathLocalValid(t *testing.T) {
 // GetSwaggerLocalValid - Get method with api-version modeled in the method.  pass in api-version = '2.0' to succeed
 func TestGetSwaggerLocalValid(t *testing.T) {
 	client := newAPIVersionLocalClient()
-	result, err := client.GetSwaggerLocalValid(context.Background())
+	result, err := client.GetSwaggerLocalValid(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}

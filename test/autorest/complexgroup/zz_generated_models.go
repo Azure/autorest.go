@@ -12,6 +12,31 @@ import (
 	"time"
 )
 
+// ArrayGetEmptyOptions contains the optional parameters for the Array.GetEmpty method.
+type ArrayGetEmptyOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ArrayGetNotProvidedOptions contains the optional parameters for the Array.GetNotProvided method.
+type ArrayGetNotProvidedOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ArrayGetValidOptions contains the optional parameters for the Array.GetValid method.
+type ArrayGetValidOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ArrayPutEmptyOptions contains the optional parameters for the Array.PutEmpty method.
+type ArrayPutEmptyOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ArrayPutValidOptions contains the optional parameters for the Array.PutValid method.
+type ArrayPutValidOptions struct {
+	// placeholder for future optional parameters
+}
+
 type ArrayWrapper struct {
 	Array *[]string `json:"array,omitempty"`
 }
@@ -32,6 +57,36 @@ type Basic struct {
 
 	// Name property with a very long description that does not fit on a single line and a line break.
 	Name *string `json:"name,omitempty"`
+}
+
+// BasicGetEmptyOptions contains the optional parameters for the Basic.GetEmpty method.
+type BasicGetEmptyOptions struct {
+	// placeholder for future optional parameters
+}
+
+// BasicGetInvalidOptions contains the optional parameters for the Basic.GetInvalid method.
+type BasicGetInvalidOptions struct {
+	// placeholder for future optional parameters
+}
+
+// BasicGetNotProvidedOptions contains the optional parameters for the Basic.GetNotProvided method.
+type BasicGetNotProvidedOptions struct {
+	// placeholder for future optional parameters
+}
+
+// BasicGetNullOptions contains the optional parameters for the Basic.GetNull method.
+type BasicGetNullOptions struct {
+	// placeholder for future optional parameters
+}
+
+// BasicGetValidOptions contains the optional parameters for the Basic.GetValid method.
+type BasicGetValidOptions struct {
+	// placeholder for future optional parameters
+}
+
+// BasicPutValidOptions contains the optional parameters for the Basic.PutValid method.
+type BasicPutValidOptions struct {
+	// placeholder for future optional parameters
 }
 
 // BasicResponse is the response envelope for operations that return a Basic type.
@@ -206,6 +261,36 @@ type Datetimerfc1123WrapperResponse struct {
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// DictionaryGetEmptyOptions contains the optional parameters for the Dictionary.GetEmpty method.
+type DictionaryGetEmptyOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DictionaryGetNotProvidedOptions contains the optional parameters for the Dictionary.GetNotProvided method.
+type DictionaryGetNotProvidedOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DictionaryGetNullOptions contains the optional parameters for the Dictionary.GetNull method.
+type DictionaryGetNullOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DictionaryGetValidOptions contains the optional parameters for the Dictionary.GetValid method.
+type DictionaryGetValidOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DictionaryPutEmptyOptions contains the optional parameters for the Dictionary.PutEmpty method.
+type DictionaryPutEmptyOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DictionaryPutValidOptions contains the optional parameters for the Dictionary.PutValid method.
+type DictionaryPutValidOptions struct {
+	// placeholder for future optional parameters
 }
 
 type DictionaryWrapper struct {
@@ -530,6 +615,11 @@ func (f *FishResponse) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// FlattencomplexGetValidOptions contains the optional parameters for the Flattencomplex.GetValid method.
+type FlattencomplexGetValidOptions struct {
+	// placeholder for future optional parameters
+}
+
 type FloatWrapper struct {
 	Field1 *float32 `json:"field1,omitempty"`
 	Field2 *float32 `json:"field2,omitempty"`
@@ -587,6 +677,16 @@ func (g *Goblinshark) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return g.Shark.unmarshalInternal(rawMsg)
+}
+
+// InheritanceGetValidOptions contains the optional parameters for the Inheritance.GetValid method.
+type InheritanceGetValidOptions struct {
+	// placeholder for future optional parameters
+}
+
+// InheritancePutValidOptions contains the optional parameters for the Inheritance.PutValid method.
+type InheritancePutValidOptions struct {
+	// placeholder for future optional parameters
 }
 
 type IntWrapper struct {
@@ -741,6 +841,175 @@ type Pet struct {
 	Name *string `json:"name,omitempty"`
 }
 
+// PolymorphicrecursiveGetValidOptions contains the optional parameters for the Polymorphicrecursive.GetValid method.
+type PolymorphicrecursiveGetValidOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PolymorphicrecursivePutValidOptions contains the optional parameters for the Polymorphicrecursive.PutValid method.
+type PolymorphicrecursivePutValidOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PolymorphismGetComplicatedOptions contains the optional parameters for the Polymorphism.GetComplicated method.
+type PolymorphismGetComplicatedOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PolymorphismGetComposedWithDiscriminatorOptions contains the optional parameters for the Polymorphism.GetComposedWithDiscriminator
+// method.
+type PolymorphismGetComposedWithDiscriminatorOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PolymorphismGetComposedWithoutDiscriminatorOptions contains the optional parameters for the Polymorphism.GetComposedWithoutDiscriminator
+// method.
+type PolymorphismGetComposedWithoutDiscriminatorOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PolymorphismGetDotSyntaxOptions contains the optional parameters for the Polymorphism.GetDotSyntax method.
+type PolymorphismGetDotSyntaxOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PolymorphismGetValidOptions contains the optional parameters for the Polymorphism.GetValid method.
+type PolymorphismGetValidOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PolymorphismPutComplicatedOptions contains the optional parameters for the Polymorphism.PutComplicated method.
+type PolymorphismPutComplicatedOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PolymorphismPutMissingDiscriminatorOptions contains the optional parameters for the Polymorphism.PutMissingDiscriminator
+// method.
+type PolymorphismPutMissingDiscriminatorOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PolymorphismPutValidMissingRequiredOptions contains the optional parameters for the Polymorphism.PutValidMissingRequired
+// method.
+type PolymorphismPutValidMissingRequiredOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PolymorphismPutValidOptions contains the optional parameters for the Polymorphism.PutValid method.
+type PolymorphismPutValidOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PrimitiveGetBoolOptions contains the optional parameters for the Primitive.GetBool method.
+type PrimitiveGetBoolOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PrimitiveGetByteOptions contains the optional parameters for the Primitive.GetByte method.
+type PrimitiveGetByteOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PrimitiveGetDateOptions contains the optional parameters for the Primitive.GetDate method.
+type PrimitiveGetDateOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PrimitiveGetDateTimeOptions contains the optional parameters for the Primitive.GetDateTime method.
+type PrimitiveGetDateTimeOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PrimitiveGetDateTimeRFC1123Options contains the optional parameters for the Primitive.GetDateTimeRFC1123 method.
+type PrimitiveGetDateTimeRFC1123Options struct {
+	// placeholder for future optional parameters
+}
+
+// PrimitiveGetDoubleOptions contains the optional parameters for the Primitive.GetDouble method.
+type PrimitiveGetDoubleOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PrimitiveGetDurationOptions contains the optional parameters for the Primitive.GetDuration method.
+type PrimitiveGetDurationOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PrimitiveGetFloatOptions contains the optional parameters for the Primitive.GetFloat method.
+type PrimitiveGetFloatOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PrimitiveGetIntOptions contains the optional parameters for the Primitive.GetInt method.
+type PrimitiveGetIntOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PrimitiveGetLongOptions contains the optional parameters for the Primitive.GetLong method.
+type PrimitiveGetLongOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PrimitiveGetStringOptions contains the optional parameters for the Primitive.GetString method.
+type PrimitiveGetStringOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PrimitivePutBoolOptions contains the optional parameters for the Primitive.PutBool method.
+type PrimitivePutBoolOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PrimitivePutByteOptions contains the optional parameters for the Primitive.PutByte method.
+type PrimitivePutByteOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PrimitivePutDateOptions contains the optional parameters for the Primitive.PutDate method.
+type PrimitivePutDateOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PrimitivePutDateTimeOptions contains the optional parameters for the Primitive.PutDateTime method.
+type PrimitivePutDateTimeOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PrimitivePutDateTimeRFC1123Options contains the optional parameters for the Primitive.PutDateTimeRFC1123 method.
+type PrimitivePutDateTimeRFC1123Options struct {
+	// placeholder for future optional parameters
+}
+
+// PrimitivePutDoubleOptions contains the optional parameters for the Primitive.PutDouble method.
+type PrimitivePutDoubleOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PrimitivePutDurationOptions contains the optional parameters for the Primitive.PutDuration method.
+type PrimitivePutDurationOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PrimitivePutFloatOptions contains the optional parameters for the Primitive.PutFloat method.
+type PrimitivePutFloatOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PrimitivePutIntOptions contains the optional parameters for the Primitive.PutInt method.
+type PrimitivePutIntOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PrimitivePutLongOptions contains the optional parameters for the Primitive.PutLong method.
+type PrimitivePutLongOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PrimitivePutStringOptions contains the optional parameters for the Primitive.PutString method.
+type PrimitivePutStringOptions struct {
+	// placeholder for future optional parameters
+}
+
 type ReadonlyObj struct {
 	ID   *string `json:"id,omitempty" azure:"ro"`
 	Size *int32  `json:"size,omitempty"`
@@ -751,6 +1020,16 @@ type ReadonlyObjResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 	ReadonlyObj *ReadonlyObj
+}
+
+// ReadonlypropertyGetValidOptions contains the optional parameters for the Readonlyproperty.GetValid method.
+type ReadonlypropertyGetValidOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ReadonlypropertyPutValidOptions contains the optional parameters for the Readonlyproperty.PutValid method.
+type ReadonlypropertyPutValidOptions struct {
+	// placeholder for future optional parameters
 }
 
 // SalmonClassification provides polymorphic access to related types.

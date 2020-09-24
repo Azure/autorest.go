@@ -24,8 +24,8 @@ func (client *pipelineClient) Do(req *azcore.Request) (*azcore.Response, error) 
 }
 
 // CreateOrUpdatePipeline - Creates or updates a pipeline.
-func (client *pipelineClient) CreateOrUpdatePipeline(ctx context.Context, pipelineName string, pipeline PipelineResource, pipelineCreateOrUpdatePipelineOptions *PipelineCreateOrUpdatePipelineOptions) (*azcore.Response, error) {
-	req, err := client.CreateOrUpdatePipelineCreateRequest(ctx, pipelineName, pipeline, pipelineCreateOrUpdatePipelineOptions)
+func (client *pipelineClient) CreateOrUpdatePipeline(ctx context.Context, pipelineName string, pipeline PipelineResource, options *PipelineCreateOrUpdatePipelineOptions) (*azcore.Response, error) {
+	req, err := client.CreateOrUpdatePipelineCreateRequest(ctx, pipelineName, pipeline, options)
 	if err != nil {
 		return nil, err
 	}
@@ -40,7 +40,7 @@ func (client *pipelineClient) CreateOrUpdatePipeline(ctx context.Context, pipeli
 }
 
 // CreateOrUpdatePipelineCreateRequest creates the CreateOrUpdatePipeline request.
-func (client *pipelineClient) CreateOrUpdatePipelineCreateRequest(ctx context.Context, pipelineName string, pipeline PipelineResource, pipelineCreateOrUpdatePipelineOptions *PipelineCreateOrUpdatePipelineOptions) (*azcore.Request, error) {
+func (client *pipelineClient) CreateOrUpdatePipelineCreateRequest(ctx context.Context, pipelineName string, pipeline PipelineResource, options *PipelineCreateOrUpdatePipelineOptions) (*azcore.Request, error) {
 	urlPath := "/pipelines/{pipelineName}"
 	urlPath = strings.ReplaceAll(urlPath, "{pipelineName}", url.PathEscape(pipelineName))
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
@@ -50,8 +50,8 @@ func (client *pipelineClient) CreateOrUpdatePipelineCreateRequest(ctx context.Co
 	query := req.URL.Query()
 	query.Set("api-version", "2019-06-01-preview")
 	req.URL.RawQuery = query.Encode()
-	if pipelineCreateOrUpdatePipelineOptions != nil && pipelineCreateOrUpdatePipelineOptions.IfMatch != nil {
-		req.Header.Set("If-Match", *pipelineCreateOrUpdatePipelineOptions.IfMatch)
+	if options != nil && options.IfMatch != nil {
+		req.Header.Set("If-Match", *options.IfMatch)
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(pipeline)
@@ -73,8 +73,8 @@ func (client *pipelineClient) CreateOrUpdatePipelineHandleError(resp *azcore.Res
 }
 
 // CreatePipelineRun - Creates a run of a pipeline.
-func (client *pipelineClient) CreatePipelineRun(ctx context.Context, pipelineName string, pipelineCreatePipelineRunOptions *PipelineCreatePipelineRunOptions) (*CreateRunResponseResponse, error) {
-	req, err := client.CreatePipelineRunCreateRequest(ctx, pipelineName, pipelineCreatePipelineRunOptions)
+func (client *pipelineClient) CreatePipelineRun(ctx context.Context, pipelineName string, options *PipelineCreatePipelineRunOptions) (*CreateRunResponseResponse, error) {
+	req, err := client.CreatePipelineRunCreateRequest(ctx, pipelineName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -93,7 +93,7 @@ func (client *pipelineClient) CreatePipelineRun(ctx context.Context, pipelineNam
 }
 
 // CreatePipelineRunCreateRequest creates the CreatePipelineRun request.
-func (client *pipelineClient) CreatePipelineRunCreateRequest(ctx context.Context, pipelineName string, pipelineCreatePipelineRunOptions *PipelineCreatePipelineRunOptions) (*azcore.Request, error) {
+func (client *pipelineClient) CreatePipelineRunCreateRequest(ctx context.Context, pipelineName string, options *PipelineCreatePipelineRunOptions) (*azcore.Request, error) {
 	urlPath := "/pipelines/{pipelineName}/createRun"
 	urlPath = strings.ReplaceAll(urlPath, "{pipelineName}", url.PathEscape(pipelineName))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
@@ -102,19 +102,19 @@ func (client *pipelineClient) CreatePipelineRunCreateRequest(ctx context.Context
 	}
 	query := req.URL.Query()
 	query.Set("api-version", "2019-06-01-preview")
-	if pipelineCreatePipelineRunOptions != nil && pipelineCreatePipelineRunOptions.ReferencePipelineRunId != nil {
-		query.Set("referencePipelineRunId", *pipelineCreatePipelineRunOptions.ReferencePipelineRunId)
+	if options != nil && options.ReferencePipelineRunId != nil {
+		query.Set("referencePipelineRunId", *options.ReferencePipelineRunId)
 	}
-	if pipelineCreatePipelineRunOptions != nil && pipelineCreatePipelineRunOptions.IsRecovery != nil {
-		query.Set("isRecovery", strconv.FormatBool(*pipelineCreatePipelineRunOptions.IsRecovery))
+	if options != nil && options.IsRecovery != nil {
+		query.Set("isRecovery", strconv.FormatBool(*options.IsRecovery))
 	}
-	if pipelineCreatePipelineRunOptions != nil && pipelineCreatePipelineRunOptions.StartActivityName != nil {
-		query.Set("startActivityName", *pipelineCreatePipelineRunOptions.StartActivityName)
+	if options != nil && options.StartActivityName != nil {
+		query.Set("startActivityName", *options.StartActivityName)
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
-	if pipelineCreatePipelineRunOptions != nil {
-		return req, req.MarshalAsJSON(pipelineCreatePipelineRunOptions.Parameters)
+	if options != nil {
+		return req, req.MarshalAsJSON(options.Parameters)
 	}
 	return req, nil
 }
@@ -135,8 +135,8 @@ func (client *pipelineClient) CreatePipelineRunHandleError(resp *azcore.Response
 }
 
 // DeletePipeline - Deletes a pipeline.
-func (client *pipelineClient) DeletePipeline(ctx context.Context, pipelineName string) (*azcore.Response, error) {
-	req, err := client.DeletePipelineCreateRequest(ctx, pipelineName)
+func (client *pipelineClient) DeletePipeline(ctx context.Context, pipelineName string, options *PipelineDeletePipelineOptions) (*azcore.Response, error) {
+	req, err := client.DeletePipelineCreateRequest(ctx, pipelineName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -151,7 +151,7 @@ func (client *pipelineClient) DeletePipeline(ctx context.Context, pipelineName s
 }
 
 // DeletePipelineCreateRequest creates the DeletePipeline request.
-func (client *pipelineClient) DeletePipelineCreateRequest(ctx context.Context, pipelineName string) (*azcore.Request, error) {
+func (client *pipelineClient) DeletePipelineCreateRequest(ctx context.Context, pipelineName string, options *PipelineDeletePipelineOptions) (*azcore.Request, error) {
 	urlPath := "/pipelines/{pipelineName}"
 	urlPath = strings.ReplaceAll(urlPath, "{pipelineName}", url.PathEscape(pipelineName))
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
@@ -175,8 +175,8 @@ func (client *pipelineClient) DeletePipelineHandleError(resp *azcore.Response) e
 }
 
 // GetPipeline - Gets a pipeline.
-func (client *pipelineClient) GetPipeline(ctx context.Context, pipelineName string, pipelineGetPipelineOptions *PipelineGetPipelineOptions) (*PipelineResourceResponse, error) {
-	req, err := client.GetPipelineCreateRequest(ctx, pipelineName, pipelineGetPipelineOptions)
+func (client *pipelineClient) GetPipeline(ctx context.Context, pipelineName string, options *PipelineGetPipelineOptions) (*PipelineResourceResponse, error) {
+	req, err := client.GetPipelineCreateRequest(ctx, pipelineName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -195,7 +195,7 @@ func (client *pipelineClient) GetPipeline(ctx context.Context, pipelineName stri
 }
 
 // GetPipelineCreateRequest creates the GetPipeline request.
-func (client *pipelineClient) GetPipelineCreateRequest(ctx context.Context, pipelineName string, pipelineGetPipelineOptions *PipelineGetPipelineOptions) (*azcore.Request, error) {
+func (client *pipelineClient) GetPipelineCreateRequest(ctx context.Context, pipelineName string, options *PipelineGetPipelineOptions) (*azcore.Request, error) {
 	urlPath := "/pipelines/{pipelineName}"
 	urlPath = strings.ReplaceAll(urlPath, "{pipelineName}", url.PathEscape(pipelineName))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
@@ -205,8 +205,8 @@ func (client *pipelineClient) GetPipelineCreateRequest(ctx context.Context, pipe
 	query := req.URL.Query()
 	query.Set("api-version", "2019-06-01-preview")
 	req.URL.RawQuery = query.Encode()
-	if pipelineGetPipelineOptions != nil && pipelineGetPipelineOptions.IfNoneMatch != nil {
-		req.Header.Set("If-None-Match", *pipelineGetPipelineOptions.IfNoneMatch)
+	if options != nil && options.IfNoneMatch != nil {
+		req.Header.Set("If-None-Match", *options.IfNoneMatch)
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
@@ -228,11 +228,11 @@ func (client *pipelineClient) GetPipelineHandleError(resp *azcore.Response) erro
 }
 
 // GetPipelinesByWorkspace - Lists pipelines.
-func (client *pipelineClient) GetPipelinesByWorkspace() PipelineListResponsePager {
+func (client *pipelineClient) GetPipelinesByWorkspace(options *PipelineGetPipelinesByWorkspaceOptions) PipelineListResponsePager {
 	return &pipelineListResponsePager{
 		pipeline: client.p,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
-			return client.GetPipelinesByWorkspaceCreateRequest(ctx)
+			return client.GetPipelinesByWorkspaceCreateRequest(ctx, options)
 		},
 		responder: client.GetPipelinesByWorkspaceHandleResponse,
 		errorer:   client.GetPipelinesByWorkspaceHandleError,
@@ -243,7 +243,7 @@ func (client *pipelineClient) GetPipelinesByWorkspace() PipelineListResponsePage
 }
 
 // GetPipelinesByWorkspaceCreateRequest creates the GetPipelinesByWorkspace request.
-func (client *pipelineClient) GetPipelinesByWorkspaceCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *pipelineClient) GetPipelinesByWorkspaceCreateRequest(ctx context.Context, options *PipelineGetPipelinesByWorkspaceOptions) (*azcore.Request, error) {
 	urlPath := "/pipelines"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {

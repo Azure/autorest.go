@@ -18,7 +18,7 @@ func newAutoRestValidationTestClient() AutoRestValidationTestOperations {
 
 func TestValidationGetWithConstantInPath(t *testing.T) {
 	client := newAutoRestValidationTestClient()
-	result, err := client.GetWithConstantInPath(context.Background())
+	result, err := client.GetWithConstantInPath(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetWithConstantInPath: %v", err)
 	}

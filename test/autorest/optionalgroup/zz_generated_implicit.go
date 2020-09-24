@@ -17,19 +17,19 @@ import (
 // ImplicitOperations contains the methods for the Implicit group.
 type ImplicitOperations interface {
 	// GetOptionalGlobalQuery - Test implicitly optional query parameter
-	GetOptionalGlobalQuery(ctx context.Context) (*http.Response, error)
+	GetOptionalGlobalQuery(ctx context.Context, options *ImplicitGetOptionalGlobalQueryOptions) (*http.Response, error)
 	// GetRequiredGlobalPath - Test implicitly required path parameter
-	GetRequiredGlobalPath(ctx context.Context) (*http.Response, error)
+	GetRequiredGlobalPath(ctx context.Context, options *ImplicitGetRequiredGlobalPathOptions) (*http.Response, error)
 	// GetRequiredGlobalQuery - Test implicitly required query parameter
-	GetRequiredGlobalQuery(ctx context.Context) (*http.Response, error)
+	GetRequiredGlobalQuery(ctx context.Context, options *ImplicitGetRequiredGlobalQueryOptions) (*http.Response, error)
 	// GetRequiredPath - Test implicitly required path parameter
-	GetRequiredPath(ctx context.Context, pathParameter string) (*http.Response, error)
+	GetRequiredPath(ctx context.Context, pathParameter string, options *ImplicitGetRequiredPathOptions) (*http.Response, error)
 	// PutOptionalBody - Test implicitly optional body parameter
-	PutOptionalBody(ctx context.Context, implicitPutOptionalBodyOptions *ImplicitPutOptionalBodyOptions) (*http.Response, error)
+	PutOptionalBody(ctx context.Context, options *ImplicitPutOptionalBodyOptions) (*http.Response, error)
 	// PutOptionalHeader - Test implicitly optional header parameter
-	PutOptionalHeader(ctx context.Context, implicitPutOptionalHeaderOptions *ImplicitPutOptionalHeaderOptions) (*http.Response, error)
+	PutOptionalHeader(ctx context.Context, options *ImplicitPutOptionalHeaderOptions) (*http.Response, error)
 	// PutOptionalQuery - Test implicitly optional query parameter
-	PutOptionalQuery(ctx context.Context, implicitPutOptionalQueryOptions *ImplicitPutOptionalQueryOptions) (*http.Response, error)
+	PutOptionalQuery(ctx context.Context, options *ImplicitPutOptionalQueryOptions) (*http.Response, error)
 }
 
 // ImplicitClient implements the ImplicitOperations interface.
@@ -52,8 +52,8 @@ func (client *ImplicitClient) Do(req *azcore.Request) (*azcore.Response, error) 
 }
 
 // GetOptionalGlobalQuery - Test implicitly optional query parameter
-func (client *ImplicitClient) GetOptionalGlobalQuery(ctx context.Context) (*http.Response, error) {
-	req, err := client.GetOptionalGlobalQueryCreateRequest(ctx)
+func (client *ImplicitClient) GetOptionalGlobalQuery(ctx context.Context, options *ImplicitGetOptionalGlobalQueryOptions) (*http.Response, error) {
+	req, err := client.GetOptionalGlobalQueryCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -68,7 +68,7 @@ func (client *ImplicitClient) GetOptionalGlobalQuery(ctx context.Context) (*http
 }
 
 // GetOptionalGlobalQueryCreateRequest creates the GetOptionalGlobalQuery request.
-func (client *ImplicitClient) GetOptionalGlobalQueryCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *ImplicitClient) GetOptionalGlobalQueryCreateRequest(ctx context.Context, options *ImplicitGetOptionalGlobalQueryOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/global/optional/query"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -93,8 +93,8 @@ func (client *ImplicitClient) GetOptionalGlobalQueryHandleError(resp *azcore.Res
 }
 
 // GetRequiredGlobalPath - Test implicitly required path parameter
-func (client *ImplicitClient) GetRequiredGlobalPath(ctx context.Context) (*http.Response, error) {
-	req, err := client.GetRequiredGlobalPathCreateRequest(ctx)
+func (client *ImplicitClient) GetRequiredGlobalPath(ctx context.Context, options *ImplicitGetRequiredGlobalPathOptions) (*http.Response, error) {
+	req, err := client.GetRequiredGlobalPathCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -109,7 +109,7 @@ func (client *ImplicitClient) GetRequiredGlobalPath(ctx context.Context) (*http.
 }
 
 // GetRequiredGlobalPathCreateRequest creates the GetRequiredGlobalPath request.
-func (client *ImplicitClient) GetRequiredGlobalPathCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *ImplicitClient) GetRequiredGlobalPathCreateRequest(ctx context.Context, options *ImplicitGetRequiredGlobalPathOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/global/required/path/{required-global-path}"
 	urlPath = strings.ReplaceAll(urlPath, "{required-global-path}", url.PathEscape(client.requiredGlobalPath))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
@@ -130,8 +130,8 @@ func (client *ImplicitClient) GetRequiredGlobalPathHandleError(resp *azcore.Resp
 }
 
 // GetRequiredGlobalQuery - Test implicitly required query parameter
-func (client *ImplicitClient) GetRequiredGlobalQuery(ctx context.Context) (*http.Response, error) {
-	req, err := client.GetRequiredGlobalQueryCreateRequest(ctx)
+func (client *ImplicitClient) GetRequiredGlobalQuery(ctx context.Context, options *ImplicitGetRequiredGlobalQueryOptions) (*http.Response, error) {
+	req, err := client.GetRequiredGlobalQueryCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -146,7 +146,7 @@ func (client *ImplicitClient) GetRequiredGlobalQuery(ctx context.Context) (*http
 }
 
 // GetRequiredGlobalQueryCreateRequest creates the GetRequiredGlobalQuery request.
-func (client *ImplicitClient) GetRequiredGlobalQueryCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *ImplicitClient) GetRequiredGlobalQueryCreateRequest(ctx context.Context, options *ImplicitGetRequiredGlobalQueryOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/global/required/query"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
@@ -169,8 +169,8 @@ func (client *ImplicitClient) GetRequiredGlobalQueryHandleError(resp *azcore.Res
 }
 
 // GetRequiredPath - Test implicitly required path parameter
-func (client *ImplicitClient) GetRequiredPath(ctx context.Context, pathParameter string) (*http.Response, error) {
-	req, err := client.GetRequiredPathCreateRequest(ctx, pathParameter)
+func (client *ImplicitClient) GetRequiredPath(ctx context.Context, pathParameter string, options *ImplicitGetRequiredPathOptions) (*http.Response, error) {
+	req, err := client.GetRequiredPathCreateRequest(ctx, pathParameter, options)
 	if err != nil {
 		return nil, err
 	}
@@ -185,7 +185,7 @@ func (client *ImplicitClient) GetRequiredPath(ctx context.Context, pathParameter
 }
 
 // GetRequiredPathCreateRequest creates the GetRequiredPath request.
-func (client *ImplicitClient) GetRequiredPathCreateRequest(ctx context.Context, pathParameter string) (*azcore.Request, error) {
+func (client *ImplicitClient) GetRequiredPathCreateRequest(ctx context.Context, pathParameter string, options *ImplicitGetRequiredPathOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/implicit/required/path/{pathParameter}"
 	urlPath = strings.ReplaceAll(urlPath, "{pathParameter}", url.PathEscape(pathParameter))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
@@ -206,8 +206,8 @@ func (client *ImplicitClient) GetRequiredPathHandleError(resp *azcore.Response) 
 }
 
 // PutOptionalBody - Test implicitly optional body parameter
-func (client *ImplicitClient) PutOptionalBody(ctx context.Context, implicitPutOptionalBodyOptions *ImplicitPutOptionalBodyOptions) (*http.Response, error) {
-	req, err := client.PutOptionalBodyCreateRequest(ctx, implicitPutOptionalBodyOptions)
+func (client *ImplicitClient) PutOptionalBody(ctx context.Context, options *ImplicitPutOptionalBodyOptions) (*http.Response, error) {
+	req, err := client.PutOptionalBodyCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -222,15 +222,15 @@ func (client *ImplicitClient) PutOptionalBody(ctx context.Context, implicitPutOp
 }
 
 // PutOptionalBodyCreateRequest creates the PutOptionalBody request.
-func (client *ImplicitClient) PutOptionalBodyCreateRequest(ctx context.Context, implicitPutOptionalBodyOptions *ImplicitPutOptionalBodyOptions) (*azcore.Request, error) {
+func (client *ImplicitClient) PutOptionalBodyCreateRequest(ctx context.Context, options *ImplicitPutOptionalBodyOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/implicit/optional/body"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Header.Set("Accept", "application/json")
-	if implicitPutOptionalBodyOptions != nil {
-		return req, req.MarshalAsJSON(implicitPutOptionalBodyOptions.BodyParameter)
+	if options != nil {
+		return req, req.MarshalAsJSON(options.BodyParameter)
 	}
 	return req, nil
 }
@@ -245,8 +245,8 @@ func (client *ImplicitClient) PutOptionalBodyHandleError(resp *azcore.Response) 
 }
 
 // PutOptionalHeader - Test implicitly optional header parameter
-func (client *ImplicitClient) PutOptionalHeader(ctx context.Context, implicitPutOptionalHeaderOptions *ImplicitPutOptionalHeaderOptions) (*http.Response, error) {
-	req, err := client.PutOptionalHeaderCreateRequest(ctx, implicitPutOptionalHeaderOptions)
+func (client *ImplicitClient) PutOptionalHeader(ctx context.Context, options *ImplicitPutOptionalHeaderOptions) (*http.Response, error) {
+	req, err := client.PutOptionalHeaderCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -261,14 +261,14 @@ func (client *ImplicitClient) PutOptionalHeader(ctx context.Context, implicitPut
 }
 
 // PutOptionalHeaderCreateRequest creates the PutOptionalHeader request.
-func (client *ImplicitClient) PutOptionalHeaderCreateRequest(ctx context.Context, implicitPutOptionalHeaderOptions *ImplicitPutOptionalHeaderOptions) (*azcore.Request, error) {
+func (client *ImplicitClient) PutOptionalHeaderCreateRequest(ctx context.Context, options *ImplicitPutOptionalHeaderOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/implicit/optional/header"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	if implicitPutOptionalHeaderOptions != nil && implicitPutOptionalHeaderOptions.QueryParameter != nil {
-		req.Header.Set("queryParameter", *implicitPutOptionalHeaderOptions.QueryParameter)
+	if options != nil && options.QueryParameter != nil {
+		req.Header.Set("queryParameter", *options.QueryParameter)
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
@@ -284,8 +284,8 @@ func (client *ImplicitClient) PutOptionalHeaderHandleError(resp *azcore.Response
 }
 
 // PutOptionalQuery - Test implicitly optional query parameter
-func (client *ImplicitClient) PutOptionalQuery(ctx context.Context, implicitPutOptionalQueryOptions *ImplicitPutOptionalQueryOptions) (*http.Response, error) {
-	req, err := client.PutOptionalQueryCreateRequest(ctx, implicitPutOptionalQueryOptions)
+func (client *ImplicitClient) PutOptionalQuery(ctx context.Context, options *ImplicitPutOptionalQueryOptions) (*http.Response, error) {
+	req, err := client.PutOptionalQueryCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -300,15 +300,15 @@ func (client *ImplicitClient) PutOptionalQuery(ctx context.Context, implicitPutO
 }
 
 // PutOptionalQueryCreateRequest creates the PutOptionalQuery request.
-func (client *ImplicitClient) PutOptionalQueryCreateRequest(ctx context.Context, implicitPutOptionalQueryOptions *ImplicitPutOptionalQueryOptions) (*azcore.Request, error) {
+func (client *ImplicitClient) PutOptionalQueryCreateRequest(ctx context.Context, options *ImplicitPutOptionalQueryOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/implicit/optional/query"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	query := req.URL.Query()
-	if implicitPutOptionalQueryOptions != nil && implicitPutOptionalQueryOptions.QueryParameter != nil {
-		query.Set("queryParameter", *implicitPutOptionalQueryOptions.QueryParameter)
+	if options != nil && options.QueryParameter != nil {
+		query.Set("queryParameter", *options.QueryParameter)
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")

@@ -16,19 +16,19 @@ import (
 // LrOSCustomHeaderOperations contains the methods for the LrOSCustomHeader group.
 type LrOSCustomHeaderOperations interface {
 	// BeginPost202Retry200 - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for all requests. Long running post request, service returns a 202 to the initial request, with 'Location' and 'Retry-After' headers, Polls return a 200 with a response body after success
-	BeginPost202Retry200(ctx context.Context, lrOSCustomHeaderPost202Retry200Options *LrOSCustomHeaderPost202Retry200Options) (*HTTPPollerResponse, error)
+	BeginPost202Retry200(ctx context.Context, options *LrOSCustomHeaderPost202Retry200Options) (*HTTPPollerResponse, error)
 	// ResumePost202Retry200 - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumePost202Retry200(token string) (HTTPPoller, error)
 	// BeginPostAsyncRetrySucceeded - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for all requests. Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-	BeginPostAsyncRetrySucceeded(ctx context.Context, lrOSCustomHeaderPostAsyncRetrySucceededOptions *LrOSCustomHeaderPostAsyncRetrySucceededOptions) (*HTTPPollerResponse, error)
+	BeginPostAsyncRetrySucceeded(ctx context.Context, options *LrOSCustomHeaderPostAsyncRetrySucceededOptions) (*HTTPPollerResponse, error)
 	// ResumePostAsyncRetrySucceeded - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumePostAsyncRetrySucceeded(token string) (HTTPPoller, error)
 	// BeginPut201CreatingSucceeded200 - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for all requests. Long running put request, service returns a 201 to the initial request, with an entity that contains ProvisioningState=’Creating’.  Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
-	BeginPut201CreatingSucceeded200(ctx context.Context, lrOSCustomHeaderPut201CreatingSucceeded200Options *LrOSCustomHeaderPut201CreatingSucceeded200Options) (*ProductPollerResponse, error)
+	BeginPut201CreatingSucceeded200(ctx context.Context, options *LrOSCustomHeaderPut201CreatingSucceeded200Options) (*ProductPollerResponse, error)
 	// ResumePut201CreatingSucceeded200 - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumePut201CreatingSucceeded200(token string) (ProductPoller, error)
 	// BeginPutAsyncRetrySucceeded - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for all requests. Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-	BeginPutAsyncRetrySucceeded(ctx context.Context, lrOSCustomHeaderPutAsyncRetrySucceededOptions *LrOSCustomHeaderPutAsyncRetrySucceededOptions) (*ProductPollerResponse, error)
+	BeginPutAsyncRetrySucceeded(ctx context.Context, options *LrOSCustomHeaderPutAsyncRetrySucceededOptions) (*ProductPollerResponse, error)
 	// ResumePutAsyncRetrySucceeded - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumePutAsyncRetrySucceeded(token string) (ProductPoller, error)
 }
@@ -49,8 +49,8 @@ func (client *LrOSCustomHeaderClient) Do(req *azcore.Request) (*azcore.Response,
 	return client.p.Do(req)
 }
 
-func (client *LrOSCustomHeaderClient) BeginPost202Retry200(ctx context.Context, lrOSCustomHeaderPost202Retry200Options *LrOSCustomHeaderPost202Retry200Options) (*HTTPPollerResponse, error) {
-	resp, err := client.Post202Retry200(ctx, lrOSCustomHeaderPost202Retry200Options)
+func (client *LrOSCustomHeaderClient) BeginPost202Retry200(ctx context.Context, options *LrOSCustomHeaderPost202Retry200Options) (*HTTPPollerResponse, error) {
+	resp, err := client.Post202Retry200(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -84,8 +84,8 @@ func (client *LrOSCustomHeaderClient) ResumePost202Retry200(token string) (HTTPP
 }
 
 // Post202Retry200 - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for all requests. Long running post request, service returns a 202 to the initial request, with 'Location' and 'Retry-After' headers, Polls return a 200 with a response body after success
-func (client *LrOSCustomHeaderClient) Post202Retry200(ctx context.Context, lrOSCustomHeaderPost202Retry200Options *LrOSCustomHeaderPost202Retry200Options) (*azcore.Response, error) {
-	req, err := client.Post202Retry200CreateRequest(ctx, lrOSCustomHeaderPost202Retry200Options)
+func (client *LrOSCustomHeaderClient) Post202Retry200(ctx context.Context, options *LrOSCustomHeaderPost202Retry200Options) (*azcore.Response, error) {
+	req, err := client.Post202Retry200CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -100,15 +100,15 @@ func (client *LrOSCustomHeaderClient) Post202Retry200(ctx context.Context, lrOSC
 }
 
 // Post202Retry200CreateRequest creates the Post202Retry200 request.
-func (client *LrOSCustomHeaderClient) Post202Retry200CreateRequest(ctx context.Context, lrOSCustomHeaderPost202Retry200Options *LrOSCustomHeaderPost202Retry200Options) (*azcore.Request, error) {
+func (client *LrOSCustomHeaderClient) Post202Retry200CreateRequest(ctx context.Context, options *LrOSCustomHeaderPost202Retry200Options) (*azcore.Request, error) {
 	urlPath := "/lro/customheader/post/202/retry/200"
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Header.Set("Accept", "application/json")
-	if lrOSCustomHeaderPost202Retry200Options != nil {
-		return req, req.MarshalAsJSON(lrOSCustomHeaderPost202Retry200Options.Product)
+	if options != nil {
+		return req, req.MarshalAsJSON(options.Product)
 	}
 	return req, nil
 }
@@ -122,8 +122,8 @@ func (client *LrOSCustomHeaderClient) Post202Retry200HandleError(resp *azcore.Re
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-func (client *LrOSCustomHeaderClient) BeginPostAsyncRetrySucceeded(ctx context.Context, lrOSCustomHeaderPostAsyncRetrySucceededOptions *LrOSCustomHeaderPostAsyncRetrySucceededOptions) (*HTTPPollerResponse, error) {
-	resp, err := client.PostAsyncRetrySucceeded(ctx, lrOSCustomHeaderPostAsyncRetrySucceededOptions)
+func (client *LrOSCustomHeaderClient) BeginPostAsyncRetrySucceeded(ctx context.Context, options *LrOSCustomHeaderPostAsyncRetrySucceededOptions) (*HTTPPollerResponse, error) {
+	resp, err := client.PostAsyncRetrySucceeded(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -157,8 +157,8 @@ func (client *LrOSCustomHeaderClient) ResumePostAsyncRetrySucceeded(token string
 }
 
 // PostAsyncRetrySucceeded - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for all requests. Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-func (client *LrOSCustomHeaderClient) PostAsyncRetrySucceeded(ctx context.Context, lrOSCustomHeaderPostAsyncRetrySucceededOptions *LrOSCustomHeaderPostAsyncRetrySucceededOptions) (*azcore.Response, error) {
-	req, err := client.PostAsyncRetrySucceededCreateRequest(ctx, lrOSCustomHeaderPostAsyncRetrySucceededOptions)
+func (client *LrOSCustomHeaderClient) PostAsyncRetrySucceeded(ctx context.Context, options *LrOSCustomHeaderPostAsyncRetrySucceededOptions) (*azcore.Response, error) {
+	req, err := client.PostAsyncRetrySucceededCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -173,15 +173,15 @@ func (client *LrOSCustomHeaderClient) PostAsyncRetrySucceeded(ctx context.Contex
 }
 
 // PostAsyncRetrySucceededCreateRequest creates the PostAsyncRetrySucceeded request.
-func (client *LrOSCustomHeaderClient) PostAsyncRetrySucceededCreateRequest(ctx context.Context, lrOSCustomHeaderPostAsyncRetrySucceededOptions *LrOSCustomHeaderPostAsyncRetrySucceededOptions) (*azcore.Request, error) {
+func (client *LrOSCustomHeaderClient) PostAsyncRetrySucceededCreateRequest(ctx context.Context, options *LrOSCustomHeaderPostAsyncRetrySucceededOptions) (*azcore.Request, error) {
 	urlPath := "/lro/customheader/postasync/retry/succeeded"
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Header.Set("Accept", "application/json")
-	if lrOSCustomHeaderPostAsyncRetrySucceededOptions != nil {
-		return req, req.MarshalAsJSON(lrOSCustomHeaderPostAsyncRetrySucceededOptions.Product)
+	if options != nil {
+		return req, req.MarshalAsJSON(options.Product)
 	}
 	return req, nil
 }
@@ -195,8 +195,8 @@ func (client *LrOSCustomHeaderClient) PostAsyncRetrySucceededHandleError(resp *a
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-func (client *LrOSCustomHeaderClient) BeginPut201CreatingSucceeded200(ctx context.Context, lrOSCustomHeaderPut201CreatingSucceeded200Options *LrOSCustomHeaderPut201CreatingSucceeded200Options) (*ProductPollerResponse, error) {
-	resp, err := client.Put201CreatingSucceeded200(ctx, lrOSCustomHeaderPut201CreatingSucceeded200Options)
+func (client *LrOSCustomHeaderClient) BeginPut201CreatingSucceeded200(ctx context.Context, options *LrOSCustomHeaderPut201CreatingSucceeded200Options) (*ProductPollerResponse, error) {
+	resp, err := client.Put201CreatingSucceeded200(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -230,8 +230,8 @@ func (client *LrOSCustomHeaderClient) ResumePut201CreatingSucceeded200(token str
 }
 
 // Put201CreatingSucceeded200 - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for all requests. Long running put request, service returns a 201 to the initial request, with an entity that contains ProvisioningState=’Creating’.  Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
-func (client *LrOSCustomHeaderClient) Put201CreatingSucceeded200(ctx context.Context, lrOSCustomHeaderPut201CreatingSucceeded200Options *LrOSCustomHeaderPut201CreatingSucceeded200Options) (*azcore.Response, error) {
-	req, err := client.Put201CreatingSucceeded200CreateRequest(ctx, lrOSCustomHeaderPut201CreatingSucceeded200Options)
+func (client *LrOSCustomHeaderClient) Put201CreatingSucceeded200(ctx context.Context, options *LrOSCustomHeaderPut201CreatingSucceeded200Options) (*azcore.Response, error) {
+	req, err := client.Put201CreatingSucceeded200CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -246,15 +246,15 @@ func (client *LrOSCustomHeaderClient) Put201CreatingSucceeded200(ctx context.Con
 }
 
 // Put201CreatingSucceeded200CreateRequest creates the Put201CreatingSucceeded200 request.
-func (client *LrOSCustomHeaderClient) Put201CreatingSucceeded200CreateRequest(ctx context.Context, lrOSCustomHeaderPut201CreatingSucceeded200Options *LrOSCustomHeaderPut201CreatingSucceeded200Options) (*azcore.Request, error) {
+func (client *LrOSCustomHeaderClient) Put201CreatingSucceeded200CreateRequest(ctx context.Context, options *LrOSCustomHeaderPut201CreatingSucceeded200Options) (*azcore.Request, error) {
 	urlPath := "/lro/customheader/put/201/creating/succeeded/200"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Header.Set("Accept", "application/json")
-	if lrOSCustomHeaderPut201CreatingSucceeded200Options != nil {
-		return req, req.MarshalAsJSON(lrOSCustomHeaderPut201CreatingSucceeded200Options.Product)
+	if options != nil {
+		return req, req.MarshalAsJSON(options.Product)
 	}
 	return req, nil
 }
@@ -274,8 +274,8 @@ func (client *LrOSCustomHeaderClient) Put201CreatingSucceeded200HandleError(resp
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-func (client *LrOSCustomHeaderClient) BeginPutAsyncRetrySucceeded(ctx context.Context, lrOSCustomHeaderPutAsyncRetrySucceededOptions *LrOSCustomHeaderPutAsyncRetrySucceededOptions) (*ProductPollerResponse, error) {
-	resp, err := client.PutAsyncRetrySucceeded(ctx, lrOSCustomHeaderPutAsyncRetrySucceededOptions)
+func (client *LrOSCustomHeaderClient) BeginPutAsyncRetrySucceeded(ctx context.Context, options *LrOSCustomHeaderPutAsyncRetrySucceededOptions) (*ProductPollerResponse, error) {
+	resp, err := client.PutAsyncRetrySucceeded(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -309,8 +309,8 @@ func (client *LrOSCustomHeaderClient) ResumePutAsyncRetrySucceeded(token string)
 }
 
 // PutAsyncRetrySucceeded - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for all requests. Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-func (client *LrOSCustomHeaderClient) PutAsyncRetrySucceeded(ctx context.Context, lrOSCustomHeaderPutAsyncRetrySucceededOptions *LrOSCustomHeaderPutAsyncRetrySucceededOptions) (*azcore.Response, error) {
-	req, err := client.PutAsyncRetrySucceededCreateRequest(ctx, lrOSCustomHeaderPutAsyncRetrySucceededOptions)
+func (client *LrOSCustomHeaderClient) PutAsyncRetrySucceeded(ctx context.Context, options *LrOSCustomHeaderPutAsyncRetrySucceededOptions) (*azcore.Response, error) {
+	req, err := client.PutAsyncRetrySucceededCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -325,15 +325,15 @@ func (client *LrOSCustomHeaderClient) PutAsyncRetrySucceeded(ctx context.Context
 }
 
 // PutAsyncRetrySucceededCreateRequest creates the PutAsyncRetrySucceeded request.
-func (client *LrOSCustomHeaderClient) PutAsyncRetrySucceededCreateRequest(ctx context.Context, lrOSCustomHeaderPutAsyncRetrySucceededOptions *LrOSCustomHeaderPutAsyncRetrySucceededOptions) (*azcore.Request, error) {
+func (client *LrOSCustomHeaderClient) PutAsyncRetrySucceededCreateRequest(ctx context.Context, options *LrOSCustomHeaderPutAsyncRetrySucceededOptions) (*azcore.Request, error) {
 	urlPath := "/lro/customheader/putasync/retry/succeeded"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Header.Set("Accept", "application/json")
-	if lrOSCustomHeaderPutAsyncRetrySucceededOptions != nil {
-		return req, req.MarshalAsJSON(lrOSCustomHeaderPutAsyncRetrySucceededOptions.Product)
+	if options != nil {
+		return req, req.MarshalAsJSON(options.Product)
 	}
 	return req, nil
 }

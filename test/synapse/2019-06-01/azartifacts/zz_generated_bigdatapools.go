@@ -23,8 +23,8 @@ func (client *bigDataPoolsClient) Do(req *azcore.Request) (*azcore.Response, err
 }
 
 // Get - Get Big Data Pool
-func (client *bigDataPoolsClient) Get(ctx context.Context, bigDataPoolName string) (*BigDataPoolResourceInfoResponse, error) {
-	req, err := client.GetCreateRequest(ctx, bigDataPoolName)
+func (client *bigDataPoolsClient) Get(ctx context.Context, bigDataPoolName string, options *BigDataPoolsGetOptions) (*BigDataPoolResourceInfoResponse, error) {
+	req, err := client.GetCreateRequest(ctx, bigDataPoolName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -43,7 +43,7 @@ func (client *bigDataPoolsClient) Get(ctx context.Context, bigDataPoolName strin
 }
 
 // GetCreateRequest creates the Get request.
-func (client *bigDataPoolsClient) GetCreateRequest(ctx context.Context, bigDataPoolName string) (*azcore.Request, error) {
+func (client *bigDataPoolsClient) GetCreateRequest(ctx context.Context, bigDataPoolName string, options *BigDataPoolsGetOptions) (*azcore.Request, error) {
 	urlPath := "/bigDataPools/{bigDataPoolName}"
 	urlPath = strings.ReplaceAll(urlPath, "{bigDataPoolName}", url.PathEscape(bigDataPoolName))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
@@ -73,8 +73,8 @@ func (client *bigDataPoolsClient) GetHandleError(resp *azcore.Response) error {
 }
 
 // List - List Big Data Pools
-func (client *bigDataPoolsClient) List(ctx context.Context) (*BigDataPoolResourceInfoListResultResponse, error) {
-	req, err := client.ListCreateRequest(ctx)
+func (client *bigDataPoolsClient) List(ctx context.Context, options *BigDataPoolsListOptions) (*BigDataPoolResourceInfoListResultResponse, error) {
+	req, err := client.ListCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -93,7 +93,7 @@ func (client *bigDataPoolsClient) List(ctx context.Context) (*BigDataPoolResourc
 }
 
 // ListCreateRequest creates the List request.
-func (client *bigDataPoolsClient) ListCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *bigDataPoolsClient) ListCreateRequest(ctx context.Context, options *BigDataPoolsListOptions) (*azcore.Request, error) {
 	urlPath := "/bigDataPools"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {

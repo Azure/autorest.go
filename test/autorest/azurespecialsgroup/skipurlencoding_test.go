@@ -17,7 +17,7 @@ func newSkipURLEncodingClient() SkipURLEncodingOperations {
 // GetMethodPathValid - Get method with unencoded path parameter with value 'path1/path2/path3'
 func TestGetMethodPathValid(t *testing.T) {
 	client := newSkipURLEncodingClient()
-	result, err := client.GetMethodPathValid(context.Background(), "path1/path2/path3")
+	result, err := client.GetMethodPathValid(context.Background(), "path1/path2/path3", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -37,7 +37,7 @@ func TestGetMethodQueryNull(t *testing.T) {
 // GetMethodQueryValid - Get method with unencoded query parameter with value 'value1&q2=value2&q3=value3'
 func TestGetMethodQueryValid(t *testing.T) {
 	client := newSkipURLEncodingClient()
-	result, err := client.GetMethodQueryValid(context.Background(), "value1&q2=value2&q3=value3")
+	result, err := client.GetMethodQueryValid(context.Background(), "value1&q2=value2&q3=value3", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -47,7 +47,7 @@ func TestGetMethodQueryValid(t *testing.T) {
 // GetPathQueryValid - Get method with unencoded query parameter with value 'value1&q2=value2&q3=value3'
 func TestGetPathQueryValid(t *testing.T) {
 	client := newSkipURLEncodingClient()
-	result, err := client.GetPathQueryValid(context.Background(), "value1&q2=value2&q3=value3")
+	result, err := client.GetPathQueryValid(context.Background(), "value1&q2=value2&q3=value3", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -57,7 +57,7 @@ func TestGetPathQueryValid(t *testing.T) {
 // GetPathValid - Get method with unencoded path parameter with value 'path1/path2/path3'
 func TestGetPathValid(t *testing.T) {
 	client := newSkipURLEncodingClient()
-	result, err := client.GetPathValid(context.Background(), "path1/path2/path3")
+	result, err := client.GetPathValid(context.Background(), "path1/path2/path3", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -67,7 +67,7 @@ func TestGetPathValid(t *testing.T) {
 // GetSwaggerPathValid - Get method with unencoded path parameter with value 'path1/path2/path3'
 func TestGetSwaggerPathValid(t *testing.T) {
 	client := newSkipURLEncodingClient()
-	result, err := client.GetSwaggerPathValid(context.Background())
+	result, err := client.GetSwaggerPathValid(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -77,7 +77,7 @@ func TestGetSwaggerPathValid(t *testing.T) {
 // GetSwaggerQueryValid - Get method with unencoded query parameter with value 'value1&q2=value2&q3=value3'
 func TestGetSwaggerQueryValid(t *testing.T) {
 	client := newSkipURLEncodingClient()
-	result, err := client.GetSwaggerQueryValid(context.Background())
+	result, err := client.GetSwaggerQueryValid(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}

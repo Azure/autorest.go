@@ -22,7 +22,7 @@ func TestPostMethodLocalNull(t *testing.T) {
 // PostMethodLocalValid - POST method with subscriptionId modeled in the method.  pass in subscription id = '1234-5678-9012-3456' to succeed
 func TestPostMethodLocalValid(t *testing.T) {
 	client := newSubscriptionInMethodClient()
-	result, err := client.PostMethodLocalValid(context.Background(), "1234-5678-9012-3456")
+	result, err := client.PostMethodLocalValid(context.Background(), "1234-5678-9012-3456", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -32,7 +32,7 @@ func TestPostMethodLocalValid(t *testing.T) {
 // PostPathLocalValid - POST method with subscriptionId modeled in the method.  pass in subscription id = '1234-5678-9012-3456' to succeed
 func TestPostPathLocalValid(t *testing.T) {
 	client := newSubscriptionInMethodClient()
-	result, err := client.PostPathLocalValid(context.Background(), "1234-5678-9012-3456")
+	result, err := client.PostPathLocalValid(context.Background(), "1234-5678-9012-3456", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -42,7 +42,7 @@ func TestPostPathLocalValid(t *testing.T) {
 // PostSwaggerLocalValid - POST method with subscriptionId modeled in the method.  pass in subscription id = '1234-5678-9012-3456' to succeed
 func TestPostSwaggerLocalValid(t *testing.T) {
 	client := newSubscriptionInMethodClient()
-	result, err := client.PostSwaggerLocalValid(context.Background(), "1234-5678-9012-3456")
+	result, err := client.PostSwaggerLocalValid(context.Background(), "1234-5678-9012-3456", nil)
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -21,7 +21,7 @@ func newMediaTypesClient() MediaTypesClientOperations {
 func TestAnalyzeBody(t *testing.T) {
 	client := newMediaTypesClient()
 	body := azcore.NopCloser(bytes.NewReader([]byte("PDF")))
-	result, err := client.AnalyzeBody(context.Background(), ContentTypeApplicationPDF, body)
+	result, err := client.AnalyzeBody(context.Background(), ContentTypeApplicationPDF, body, nil)
 	if err != nil {
 		t.Fatalf("AnalyzeBody: %v", err)
 	}

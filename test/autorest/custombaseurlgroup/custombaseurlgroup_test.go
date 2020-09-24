@@ -19,7 +19,7 @@ func newPathsClient() PathsOperations {
 
 func TestGetEmpty(t *testing.T) {
 	client := newPathsClient()
-	result, err := client.GetEmpty(context.Background(), "localhost")
+	result, err := client.GetEmpty(context.Background(), "localhost", nil)
 	if err != nil {
 		t.Fatalf("GetEmpty: %v", err)
 	}

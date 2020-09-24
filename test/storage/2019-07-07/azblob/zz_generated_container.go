@@ -581,8 +581,8 @@ func (client *containerClient) GetAccessPolicyHandleError(resp *azcore.Response)
 }
 
 // GetAccountInfo - Returns the sku name and account kind
-func (client *containerClient) GetAccountInfo(ctx context.Context) (*ContainerGetAccountInfoResponse, error) {
-	req, err := client.GetAccountInfoCreateRequest(ctx)
+func (client *containerClient) GetAccountInfo(ctx context.Context, options *ContainerGetAccountInfoOptions) (*ContainerGetAccountInfoResponse, error) {
+	req, err := client.GetAccountInfoCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -601,7 +601,7 @@ func (client *containerClient) GetAccountInfo(ctx context.Context) (*ContainerGe
 }
 
 // GetAccountInfoCreateRequest creates the GetAccountInfo request.
-func (client *containerClient) GetAccountInfoCreateRequest(ctx context.Context) (*azcore.Request, error) {
+func (client *containerClient) GetAccountInfoCreateRequest(ctx context.Context, options *ContainerGetAccountInfoOptions) (*azcore.Request, error) {
 	req, err := azcore.NewRequest(ctx, http.MethodGet, client.u)
 	if err != nil {
 		return nil, err
@@ -781,11 +781,11 @@ func (client *containerClient) GetPropertiesHandleError(resp *azcore.Response) e
 }
 
 // ListBlobFlatSegment - [Update] The List Blobs operation returns a list of the blobs under the specified container
-func (client *containerClient) ListBlobFlatSegment(containerListBlobFlatSegmentOptions *ContainerListBlobFlatSegmentOptions) ListBlobsFlatSegmentResponsePager {
+func (client *containerClient) ListBlobFlatSegment(options *ContainerListBlobFlatSegmentOptions) ListBlobsFlatSegmentResponsePager {
 	return &listBlobsFlatSegmentResponsePager{
 		pipeline: client.p,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
-			return client.ListBlobFlatSegmentCreateRequest(ctx, containerListBlobFlatSegmentOptions)
+			return client.ListBlobFlatSegmentCreateRequest(ctx, options)
 		},
 		responder: client.ListBlobFlatSegmentHandleResponse,
 		errorer:   client.ListBlobFlatSegmentHandleError,
@@ -796,7 +796,7 @@ func (client *containerClient) ListBlobFlatSegment(containerListBlobFlatSegmentO
 }
 
 // ListBlobFlatSegmentCreateRequest creates the ListBlobFlatSegment request.
-func (client *containerClient) ListBlobFlatSegmentCreateRequest(ctx context.Context, containerListBlobFlatSegmentOptions *ContainerListBlobFlatSegmentOptions) (*azcore.Request, error) {
+func (client *containerClient) ListBlobFlatSegmentCreateRequest(ctx context.Context, options *ContainerListBlobFlatSegmentOptions) (*azcore.Request, error) {
 	req, err := azcore.NewRequest(ctx, http.MethodGet, client.u)
 	if err != nil {
 		return nil, err
@@ -804,25 +804,25 @@ func (client *containerClient) ListBlobFlatSegmentCreateRequest(ctx context.Cont
 	query := req.URL.Query()
 	query.Set("restype", "container")
 	query.Set("comp", "list")
-	if containerListBlobFlatSegmentOptions != nil && containerListBlobFlatSegmentOptions.Prefix != nil {
-		query.Set("prefix", *containerListBlobFlatSegmentOptions.Prefix)
+	if options != nil && options.Prefix != nil {
+		query.Set("prefix", *options.Prefix)
 	}
-	if containerListBlobFlatSegmentOptions != nil && containerListBlobFlatSegmentOptions.Marker != nil {
-		query.Set("marker", *containerListBlobFlatSegmentOptions.Marker)
+	if options != nil && options.Marker != nil {
+		query.Set("marker", *options.Marker)
 	}
-	if containerListBlobFlatSegmentOptions != nil && containerListBlobFlatSegmentOptions.Maxresults != nil {
-		query.Set("maxresults", strconv.FormatInt(int64(*containerListBlobFlatSegmentOptions.Maxresults), 10))
+	if options != nil && options.Maxresults != nil {
+		query.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
 	}
-	if containerListBlobFlatSegmentOptions != nil && containerListBlobFlatSegmentOptions.Include != nil {
-		query.Set("include", strings.Join(strings.Fields(strings.Trim(fmt.Sprint(*containerListBlobFlatSegmentOptions.Include), "[]")), ","))
+	if options != nil && options.Include != nil {
+		query.Set("include", strings.Join(strings.Fields(strings.Trim(fmt.Sprint(*options.Include), "[]")), ","))
 	}
-	if containerListBlobFlatSegmentOptions != nil && containerListBlobFlatSegmentOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*containerListBlobFlatSegmentOptions.Timeout), 10))
+	if options != nil && options.Timeout != nil {
+		query.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("x-ms-version", "2019-07-07")
-	if containerListBlobFlatSegmentOptions != nil && containerListBlobFlatSegmentOptions.RequestId != nil {
-		req.Header.Set("x-ms-client-request-id", *containerListBlobFlatSegmentOptions.RequestId)
+	if options != nil && options.RequestId != nil {
+		req.Header.Set("x-ms-client-request-id", *options.RequestId)
 	}
 	req.Header.Set("Accept", "application/xml")
 	return req, nil
@@ -863,11 +863,11 @@ func (client *containerClient) ListBlobFlatSegmentHandleError(resp *azcore.Respo
 }
 
 // ListBlobHierarchySegment - [Update] The List Blobs operation returns a list of the blobs under the specified container
-func (client *containerClient) ListBlobHierarchySegment(delimiter string, containerListBlobHierarchySegmentOptions *ContainerListBlobHierarchySegmentOptions) ListBlobsHierarchySegmentResponsePager {
+func (client *containerClient) ListBlobHierarchySegment(delimiter string, options *ContainerListBlobHierarchySegmentOptions) ListBlobsHierarchySegmentResponsePager {
 	return &listBlobsHierarchySegmentResponsePager{
 		pipeline: client.p,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
-			return client.ListBlobHierarchySegmentCreateRequest(ctx, delimiter, containerListBlobHierarchySegmentOptions)
+			return client.ListBlobHierarchySegmentCreateRequest(ctx, delimiter, options)
 		},
 		responder: client.ListBlobHierarchySegmentHandleResponse,
 		errorer:   client.ListBlobHierarchySegmentHandleError,
@@ -878,7 +878,7 @@ func (client *containerClient) ListBlobHierarchySegment(delimiter string, contai
 }
 
 // ListBlobHierarchySegmentCreateRequest creates the ListBlobHierarchySegment request.
-func (client *containerClient) ListBlobHierarchySegmentCreateRequest(ctx context.Context, delimiter string, containerListBlobHierarchySegmentOptions *ContainerListBlobHierarchySegmentOptions) (*azcore.Request, error) {
+func (client *containerClient) ListBlobHierarchySegmentCreateRequest(ctx context.Context, delimiter string, options *ContainerListBlobHierarchySegmentOptions) (*azcore.Request, error) {
 	req, err := azcore.NewRequest(ctx, http.MethodGet, client.u)
 	if err != nil {
 		return nil, err
@@ -886,26 +886,26 @@ func (client *containerClient) ListBlobHierarchySegmentCreateRequest(ctx context
 	query := req.URL.Query()
 	query.Set("restype", "container")
 	query.Set("comp", "list")
-	if containerListBlobHierarchySegmentOptions != nil && containerListBlobHierarchySegmentOptions.Prefix != nil {
-		query.Set("prefix", *containerListBlobHierarchySegmentOptions.Prefix)
+	if options != nil && options.Prefix != nil {
+		query.Set("prefix", *options.Prefix)
 	}
 	query.Set("delimiter", delimiter)
-	if containerListBlobHierarchySegmentOptions != nil && containerListBlobHierarchySegmentOptions.Marker != nil {
-		query.Set("marker", *containerListBlobHierarchySegmentOptions.Marker)
+	if options != nil && options.Marker != nil {
+		query.Set("marker", *options.Marker)
 	}
-	if containerListBlobHierarchySegmentOptions != nil && containerListBlobHierarchySegmentOptions.Maxresults != nil {
-		query.Set("maxresults", strconv.FormatInt(int64(*containerListBlobHierarchySegmentOptions.Maxresults), 10))
+	if options != nil && options.Maxresults != nil {
+		query.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
 	}
-	if containerListBlobHierarchySegmentOptions != nil && containerListBlobHierarchySegmentOptions.Include != nil {
-		query.Set("include", strings.Join(strings.Fields(strings.Trim(fmt.Sprint(*containerListBlobHierarchySegmentOptions.Include), "[]")), ","))
+	if options != nil && options.Include != nil {
+		query.Set("include", strings.Join(strings.Fields(strings.Trim(fmt.Sprint(*options.Include), "[]")), ","))
 	}
-	if containerListBlobHierarchySegmentOptions != nil && containerListBlobHierarchySegmentOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*containerListBlobHierarchySegmentOptions.Timeout), 10))
+	if options != nil && options.Timeout != nil {
+		query.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("x-ms-version", "2019-07-07")
-	if containerListBlobHierarchySegmentOptions != nil && containerListBlobHierarchySegmentOptions.RequestId != nil {
-		req.Header.Set("x-ms-client-request-id", *containerListBlobHierarchySegmentOptions.RequestId)
+	if options != nil && options.RequestId != nil {
+		req.Header.Set("x-ms-client-request-id", *options.RequestId)
 	}
 	req.Header.Set("Accept", "application/xml")
 	return req, nil

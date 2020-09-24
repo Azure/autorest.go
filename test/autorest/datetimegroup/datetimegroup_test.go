@@ -17,7 +17,7 @@ func newDatetimeClient() DatetimeOperations {
 
 func TestGetInvalid(t *testing.T) {
 	client := newDatetimeClient()
-	_, err := client.GetInvalid(context.Background())
+	_, err := client.GetInvalid(context.Background(), nil)
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
@@ -25,7 +25,7 @@ func TestGetInvalid(t *testing.T) {
 
 func TestGetLocalNegativeOffsetLowercaseMaxDateTime(t *testing.T) {
 	client := newDatetimeClient()
-	result, err := client.GetLocalNegativeOffsetLowercaseMaxDateTime(context.Background())
+	result, err := client.GetLocalNegativeOffsetLowercaseMaxDateTime(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -38,7 +38,7 @@ func TestGetLocalNegativeOffsetLowercaseMaxDateTime(t *testing.T) {
 
 func TestGetLocalNegativeOffsetMinDateTime(t *testing.T) {
 	client := newDatetimeClient()
-	result, err := client.GetLocalNegativeOffsetMinDateTime(context.Background())
+	result, err := client.GetLocalNegativeOffsetMinDateTime(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -51,7 +51,7 @@ func TestGetLocalNegativeOffsetMinDateTime(t *testing.T) {
 
 func TestGetLocalNegativeOffsetUppercaseMaxDateTime(t *testing.T) {
 	client := newDatetimeClient()
-	result, err := client.GetLocalNegativeOffsetUppercaseMaxDateTime(context.Background())
+	result, err := client.GetLocalNegativeOffsetUppercaseMaxDateTime(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -64,7 +64,7 @@ func TestGetLocalNegativeOffsetUppercaseMaxDateTime(t *testing.T) {
 
 func TestGetLocalPositiveOffsetLowercaseMaxDateTime(t *testing.T) {
 	client := newDatetimeClient()
-	result, err := client.GetLocalPositiveOffsetLowercaseMaxDateTime(context.Background())
+	result, err := client.GetLocalPositiveOffsetLowercaseMaxDateTime(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -77,7 +77,7 @@ func TestGetLocalPositiveOffsetLowercaseMaxDateTime(t *testing.T) {
 
 func TestGetLocalPositiveOffsetMinDateTime(t *testing.T) {
 	client := newDatetimeClient()
-	result, err := client.GetLocalPositiveOffsetMinDateTime(context.Background())
+	result, err := client.GetLocalPositiveOffsetMinDateTime(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -90,7 +90,7 @@ func TestGetLocalPositiveOffsetMinDateTime(t *testing.T) {
 
 func TestGetLocalNoOffsetMinDateTime(t *testing.T) {
 	client := newDatetimeClient()
-	result, err := client.GetLocalNoOffsetMinDateTime(context.Background())
+	result, err := client.GetLocalNoOffsetMinDateTime(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -103,7 +103,7 @@ func TestGetLocalNoOffsetMinDateTime(t *testing.T) {
 
 func TestGetLocalPositiveOffsetUppercaseMaxDateTime(t *testing.T) {
 	client := newDatetimeClient()
-	result, err := client.GetLocalPositiveOffsetUppercaseMaxDateTime(context.Background())
+	result, err := client.GetLocalPositiveOffsetUppercaseMaxDateTime(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -116,7 +116,7 @@ func TestGetLocalPositiveOffsetUppercaseMaxDateTime(t *testing.T) {
 
 func TestGetNull(t *testing.T) {
 	client := newDatetimeClient()
-	result, err := client.GetNull(context.Background())
+	result, err := client.GetNull(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -127,7 +127,7 @@ func TestGetNull(t *testing.T) {
 func TestGetOverflow(t *testing.T) {
 	t.Skip("API doesn't actually overflow")
 	client := newDatetimeClient()
-	_, err := client.GetOverflow(context.Background())
+	_, err := client.GetOverflow(context.Background(), nil)
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
@@ -135,7 +135,7 @@ func TestGetOverflow(t *testing.T) {
 
 func TestGetUnderflow(t *testing.T) {
 	client := newDatetimeClient()
-	_, err := client.GetUnderflow(context.Background())
+	_, err := client.GetUnderflow(context.Background(), nil)
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
@@ -143,7 +143,7 @@ func TestGetUnderflow(t *testing.T) {
 
 func TestGetUTCLowercaseMaxDateTime(t *testing.T) {
 	client := newDatetimeClient()
-	result, err := client.GetUTCLowercaseMaxDateTime(context.Background())
+	result, err := client.GetUTCLowercaseMaxDateTime(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -156,7 +156,7 @@ func TestGetUTCLowercaseMaxDateTime(t *testing.T) {
 
 func TestGetUTCMinDateTime(t *testing.T) {
 	client := newDatetimeClient()
-	result, err := client.GetUTCMinDateTime(context.Background())
+	result, err := client.GetUTCMinDateTime(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -169,7 +169,7 @@ func TestGetUTCMinDateTime(t *testing.T) {
 
 func TestGetUTCUppercaseMaxDateTime(t *testing.T) {
 	client := newDatetimeClient()
-	result, err := client.GetUTCUppercaseMaxDateTime(context.Background())
+	result, err := client.GetUTCUppercaseMaxDateTime(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -182,7 +182,7 @@ func TestGetUTCUppercaseMaxDateTime(t *testing.T) {
 
 func TestGetUTCUppercaseMaxDateTime7Digits(t *testing.T) {
 	client := newDatetimeClient()
-	result, err := client.GetUTCUppercaseMaxDateTime7Digits(context.Background())
+	result, err := client.GetUTCUppercaseMaxDateTime7Digits(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -199,7 +199,7 @@ func TestPutLocalNegativeOffsetMaxDateTime(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	result, err := client.PutLocalNegativeOffsetMaxDateTime(context.Background(), body)
+	result, err := client.PutLocalNegativeOffsetMaxDateTime(context.Background(), body, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -212,7 +212,7 @@ func TestPutLocalNegativeOffsetMinDateTime(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	result, err := client.PutLocalNegativeOffsetMinDateTime(context.Background(), body)
+	result, err := client.PutLocalNegativeOffsetMinDateTime(context.Background(), body, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -225,7 +225,7 @@ func TestPutLocalPositiveOffsetMaxDateTime(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	result, err := client.PutLocalPositiveOffsetMaxDateTime(context.Background(), body)
+	result, err := client.PutLocalPositiveOffsetMaxDateTime(context.Background(), body, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -238,7 +238,7 @@ func TestPutLocalPositiveOffsetMinDateTime(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	result, err := client.PutLocalPositiveOffsetMinDateTime(context.Background(), body)
+	result, err := client.PutLocalPositiveOffsetMinDateTime(context.Background(), body, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -251,7 +251,7 @@ func TestPutUTCMaxDateTime(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	result, err := client.PutUTCMaxDateTime(context.Background(), body)
+	result, err := client.PutUTCMaxDateTime(context.Background(), body, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -264,7 +264,7 @@ func TestPutUTCMaxDateTime7Digits(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	result, err := client.PutUTCMaxDateTime7Digits(context.Background(), body)
+	result, err := client.PutUTCMaxDateTime7Digits(context.Background(), body, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -277,7 +277,7 @@ func TestPutUTCMinDateTime(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	result, err := client.PutUTCMinDateTime(context.Background(), body)
+	result, err := client.PutUTCMinDateTime(context.Background(), body, nil)
 	if err != nil {
 		t.Fatal(err)
 	}

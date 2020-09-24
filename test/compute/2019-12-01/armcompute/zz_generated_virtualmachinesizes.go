@@ -19,7 +19,7 @@ import (
 // VirtualMachineSizesOperations contains the methods for the VirtualMachineSizes group.
 type VirtualMachineSizesOperations interface {
 	// List - This API is deprecated. Use [Resources Skus](https://docs.microsoft.com/en-us/rest/api/compute/resourceskus/list)
-	List(ctx context.Context, location string) (*VirtualMachineSizeListResultResponse, error)
+	List(ctx context.Context, location string, options *VirtualMachineSizesListOptions) (*VirtualMachineSizeListResultResponse, error)
 }
 
 // VirtualMachineSizesClient implements the VirtualMachineSizesOperations interface.
@@ -40,8 +40,8 @@ func (client *VirtualMachineSizesClient) Do(req *azcore.Request) (*azcore.Respon
 }
 
 // List - This API is deprecated. Use [Resources Skus](https://docs.microsoft.com/en-us/rest/api/compute/resourceskus/list)
-func (client *VirtualMachineSizesClient) List(ctx context.Context, location string) (*VirtualMachineSizeListResultResponse, error) {
-	req, err := client.ListCreateRequest(ctx, location)
+func (client *VirtualMachineSizesClient) List(ctx context.Context, location string, options *VirtualMachineSizesListOptions) (*VirtualMachineSizeListResultResponse, error) {
+	req, err := client.ListCreateRequest(ctx, location, options)
 	if err != nil {
 		return nil, err
 	}
@@ -60,7 +60,7 @@ func (client *VirtualMachineSizesClient) List(ctx context.Context, location stri
 }
 
 // ListCreateRequest creates the List request.
-func (client *VirtualMachineSizesClient) ListCreateRequest(ctx context.Context, location string) (*azcore.Request, error) {
+func (client *VirtualMachineSizesClient) ListCreateRequest(ctx context.Context, location string, options *VirtualMachineSizesListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/vmSizes"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))

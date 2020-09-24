@@ -19,9 +19,9 @@ import (
 // PetOperations contains the methods for the Pet group.
 type PetOperations interface {
 	// AddPet - add pet
-	AddPet(ctx context.Context, petAddPetOptions *PetAddPetOptions) (*PetResponse, error)
+	AddPet(ctx context.Context, options *PetAddPetOptions) (*PetResponse, error)
 	// GetByPetID - get pet by id
-	GetByPetID(ctx context.Context, petId string) (*PetResponse, error)
+	GetByPetID(ctx context.Context, petId string, options *PetGetByPetIDOptions) (*PetResponse, error)
 }
 
 // PetClient implements the PetOperations interface.
@@ -41,8 +41,8 @@ func (client *PetClient) Do(req *azcore.Request) (*azcore.Response, error) {
 }
 
 // AddPet - add pet
-func (client *PetClient) AddPet(ctx context.Context, petAddPetOptions *PetAddPetOptions) (*PetResponse, error) {
-	req, err := client.AddPetCreateRequest(ctx, petAddPetOptions)
+func (client *PetClient) AddPet(ctx context.Context, options *PetAddPetOptions) (*PetResponse, error) {
+	req, err := client.AddPetCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -61,15 +61,15 @@ func (client *PetClient) AddPet(ctx context.Context, petAddPetOptions *PetAddPet
 }
 
 // AddPetCreateRequest creates the AddPet request.
-func (client *PetClient) AddPetCreateRequest(ctx context.Context, petAddPetOptions *PetAddPetOptions) (*azcore.Request, error) {
+func (client *PetClient) AddPetCreateRequest(ctx context.Context, options *PetAddPetOptions) (*azcore.Request, error) {
 	urlPath := "/extensibleenums/pet/addPet"
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Header.Set("Accept", "application/json")
-	if petAddPetOptions != nil {
-		return req, req.MarshalAsJSON(petAddPetOptions.PetParam)
+	if options != nil {
+		return req, req.MarshalAsJSON(options.PetParam)
 	}
 	return req, nil
 }
@@ -93,8 +93,8 @@ func (client *PetClient) AddPetHandleError(resp *azcore.Response) error {
 }
 
 // GetByPetID - get pet by id
-func (client *PetClient) GetByPetID(ctx context.Context, petId string) (*PetResponse, error) {
-	req, err := client.GetByPetIDCreateRequest(ctx, petId)
+func (client *PetClient) GetByPetID(ctx context.Context, petId string, options *PetGetByPetIDOptions) (*PetResponse, error) {
+	req, err := client.GetByPetIDCreateRequest(ctx, petId, options)
 	if err != nil {
 		return nil, err
 	}
@@ -113,7 +113,7 @@ func (client *PetClient) GetByPetID(ctx context.Context, petId string) (*PetResp
 }
 
 // GetByPetIDCreateRequest creates the GetByPetID request.
-func (client *PetClient) GetByPetIDCreateRequest(ctx context.Context, petId string) (*azcore.Request, error) {
+func (client *PetClient) GetByPetIDCreateRequest(ctx context.Context, petId string, options *PetGetByPetIDOptions) (*azcore.Request, error) {
 	urlPath := "/extensibleenums/pet/{petId}"
 	urlPath = strings.ReplaceAll(urlPath, "{petId}", url.PathEscape(petId))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))

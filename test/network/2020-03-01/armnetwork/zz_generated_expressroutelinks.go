@@ -16,9 +16,9 @@ import (
 // ExpressRouteLinksOperations contains the methods for the ExpressRouteLinks group.
 type ExpressRouteLinksOperations interface {
 	// Get - Retrieves the specified ExpressRouteLink resource.
-	Get(ctx context.Context, resourceGroupName string, expressRoutePortName string, linkName string) (*ExpressRouteLinkResponse, error)
+	Get(ctx context.Context, resourceGroupName string, expressRoutePortName string, linkName string, options *ExpressRouteLinksGetOptions) (*ExpressRouteLinkResponse, error)
 	// List - Retrieve the ExpressRouteLink sub-resources of the specified ExpressRoutePort resource.
-	List(resourceGroupName string, expressRoutePortName string) ExpressRouteLinkListResultPager
+	List(resourceGroupName string, expressRoutePortName string, options *ExpressRouteLinksListOptions) ExpressRouteLinkListResultPager
 }
 
 // ExpressRouteLinksClient implements the ExpressRouteLinksOperations interface.
@@ -39,8 +39,8 @@ func (client *ExpressRouteLinksClient) Do(req *azcore.Request) (*azcore.Response
 }
 
 // Get - Retrieves the specified ExpressRouteLink resource.
-func (client *ExpressRouteLinksClient) Get(ctx context.Context, resourceGroupName string, expressRoutePortName string, linkName string) (*ExpressRouteLinkResponse, error) {
-	req, err := client.GetCreateRequest(ctx, resourceGroupName, expressRoutePortName, linkName)
+func (client *ExpressRouteLinksClient) Get(ctx context.Context, resourceGroupName string, expressRoutePortName string, linkName string, options *ExpressRouteLinksGetOptions) (*ExpressRouteLinkResponse, error) {
+	req, err := client.GetCreateRequest(ctx, resourceGroupName, expressRoutePortName, linkName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -59,7 +59,7 @@ func (client *ExpressRouteLinksClient) Get(ctx context.Context, resourceGroupNam
 }
 
 // GetCreateRequest creates the Get request.
-func (client *ExpressRouteLinksClient) GetCreateRequest(ctx context.Context, resourceGroupName string, expressRoutePortName string, linkName string) (*azcore.Request, error) {
+func (client *ExpressRouteLinksClient) GetCreateRequest(ctx context.Context, resourceGroupName string, expressRoutePortName string, linkName string, options *ExpressRouteLinksGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}/links/{linkName}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
@@ -92,11 +92,11 @@ func (client *ExpressRouteLinksClient) GetHandleError(resp *azcore.Response) err
 }
 
 // List - Retrieve the ExpressRouteLink sub-resources of the specified ExpressRoutePort resource.
-func (client *ExpressRouteLinksClient) List(resourceGroupName string, expressRoutePortName string) ExpressRouteLinkListResultPager {
+func (client *ExpressRouteLinksClient) List(resourceGroupName string, expressRoutePortName string, options *ExpressRouteLinksListOptions) ExpressRouteLinkListResultPager {
 	return &expressRouteLinkListResultPager{
 		pipeline: client.p,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
-			return client.ListCreateRequest(ctx, resourceGroupName, expressRoutePortName)
+			return client.ListCreateRequest(ctx, resourceGroupName, expressRoutePortName, options)
 		},
 		responder: client.ListHandleResponse,
 		errorer:   client.ListHandleError,
@@ -107,7 +107,7 @@ func (client *ExpressRouteLinksClient) List(resourceGroupName string, expressRou
 }
 
 // ListCreateRequest creates the List request.
-func (client *ExpressRouteLinksClient) ListCreateRequest(ctx context.Context, resourceGroupName string, expressRoutePortName string) (*azcore.Request, error) {
+func (client *ExpressRouteLinksClient) ListCreateRequest(ctx context.Context, resourceGroupName string, expressRoutePortName string, options *ExpressRouteLinksListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}/links"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))

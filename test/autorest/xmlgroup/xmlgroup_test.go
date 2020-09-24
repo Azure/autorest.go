@@ -27,7 +27,7 @@ func newXMLClient() XMLOperations {
 
 func TestGetACLs(t *testing.T) {
 	client := newXMLClient()
-	result, err := client.GetACLs(context.Background())
+	result, err := client.GetACLs(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -47,7 +47,7 @@ func TestGetACLs(t *testing.T) {
 
 func TestGetComplexTypeRefNoMeta(t *testing.T) {
 	client := newXMLClient()
-	result, err := client.GetComplexTypeRefNoMeta(context.Background())
+	result, err := client.GetComplexTypeRefNoMeta(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -63,7 +63,7 @@ func TestGetComplexTypeRefNoMeta(t *testing.T) {
 
 func TestGetComplexTypeRefWithMeta(t *testing.T) {
 	client := newXMLClient()
-	result, err := client.GetComplexTypeRefWithMeta(context.Background())
+	result, err := client.GetComplexTypeRefWithMeta(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -78,7 +78,7 @@ func TestGetComplexTypeRefWithMeta(t *testing.T) {
 
 func TestGetEmptyChildElement(t *testing.T) {
 	client := newXMLClient()
-	result, err := client.GetEmptyChildElement(context.Background())
+	result, err := client.GetEmptyChildElement(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -93,7 +93,7 @@ func TestGetEmptyChildElement(t *testing.T) {
 
 func TestGetEmptyList(t *testing.T) {
 	client := newXMLClient()
-	result, err := client.GetEmptyList(context.Background())
+	result, err := client.GetEmptyList(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -104,7 +104,7 @@ func TestGetEmptyList(t *testing.T) {
 
 func TestGetEmptyRootList(t *testing.T) {
 	client := newXMLClient()
-	result, err := client.GetEmptyRootList(context.Background())
+	result, err := client.GetEmptyRootList(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -116,7 +116,7 @@ func TestGetEmptyRootList(t *testing.T) {
 
 func TestGetEmptyWrappedLists(t *testing.T) {
 	client := newXMLClient()
-	result, err := client.GetEmptyWrappedLists(context.Background())
+	result, err := client.GetEmptyWrappedLists(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -127,7 +127,7 @@ func TestGetEmptyWrappedLists(t *testing.T) {
 
 func TestGetHeaders(t *testing.T) {
 	client := newXMLClient()
-	result, err := client.GetHeaders(context.Background())
+	result, err := client.GetHeaders(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -136,7 +136,7 @@ func TestGetHeaders(t *testing.T) {
 
 func TestGetRootList(t *testing.T) {
 	client := newXMLClient()
-	result, err := client.GetRootList(context.Background())
+	result, err := client.GetRootList(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -158,7 +158,7 @@ func TestGetRootList(t *testing.T) {
 
 func TestGetRootListSingleItem(t *testing.T) {
 	client := newXMLClient()
-	result, err := client.GetRootListSingleItem(context.Background())
+	result, err := client.GetRootListSingleItem(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -175,7 +175,7 @@ func TestGetRootListSingleItem(t *testing.T) {
 
 func TestGetServiceProperties(t *testing.T) {
 	client := newXMLClient()
-	result, err := client.GetServiceProperties(context.Background())
+	result, err := client.GetServiceProperties(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -215,7 +215,7 @@ func TestGetServiceProperties(t *testing.T) {
 
 func TestGetSimple(t *testing.T) {
 	client := newXMLClient()
-	result, err := client.GetSimple(context.Background())
+	result, err := client.GetSimple(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -241,7 +241,7 @@ func TestGetSimple(t *testing.T) {
 
 func TestGetWrappedLists(t *testing.T) {
 	client := newXMLClient()
-	result, err := client.GetWrappedLists(context.Background())
+	result, err := client.GetWrappedLists(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -257,7 +257,7 @@ func TestJSONInput(t *testing.T) {
 	client := newXMLClient()
 	result, err := client.JSONInput(context.Background(), JSONInput{
 		ID: to.Int32Ptr(42),
-	})
+	}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -266,7 +266,7 @@ func TestJSONInput(t *testing.T) {
 
 func TestJSONOutput(t *testing.T) {
 	client := newXMLClient()
-	result, err := client.JSONOutput(context.Background())
+	result, err := client.JSONOutput(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -278,7 +278,7 @@ func TestJSONOutput(t *testing.T) {
 
 func TestListBlobs(t *testing.T) {
 	client := newXMLClient()
-	result, err := client.ListBlobs(context.Background())
+	result, err := client.ListBlobs(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -405,7 +405,7 @@ func TestListBlobs(t *testing.T) {
 
 func TestListContainers(t *testing.T) {
 	client := newXMLClient()
-	result, err := client.ListContainers(context.Background())
+	result, err := client.ListContainers(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -453,7 +453,7 @@ func TestPutACLs(t *testing.T) {
 				Permission: to.StringPtr("rwd"),
 			},
 		},
-	})
+	}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -467,7 +467,7 @@ func TestPutComplexTypeRefNoMeta(t *testing.T) {
 			ID: to.StringPtr("myid"),
 		},
 		Something: to.StringPtr("else"),
-	})
+	}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -481,7 +481,7 @@ func TestPutComplexTypeRefWithMeta(t *testing.T) {
 			ID: to.StringPtr("myid"),
 		},
 		Something: to.StringPtr("else"),
-	})
+	}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -494,7 +494,7 @@ func TestPutEmptyChildElement(t *testing.T) {
 		Name:       to.StringPtr("Unknown Banana"),
 		Expiration: toTimePtr(time.RFC3339Nano, "2012-02-24T00:53:52.789Z"),
 		Flavor:     to.StringPtr(""),
-	})
+	}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -505,7 +505,7 @@ func TestPutEmptyList(t *testing.T) {
 	client := newXMLClient()
 	result, err := client.PutEmptyList(context.Background(), Slideshow{
 		Slides: &[]Slide{},
-	})
+	}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -514,7 +514,7 @@ func TestPutEmptyList(t *testing.T) {
 
 func TestPutEmptyRootList(t *testing.T) {
 	client := newXMLClient()
-	result, err := client.PutEmptyRootList(context.Background(), []Banana{})
+	result, err := client.PutEmptyRootList(context.Background(), []Banana{}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -526,7 +526,7 @@ func TestPutEmptyWrappedLists(t *testing.T) {
 	result, err := client.PutEmptyWrappedLists(context.Background(), AppleBarrel{
 		BadApples:  &[]string{},
 		GoodApples: &[]string{},
-	})
+	}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -546,7 +546,7 @@ func TestPutRootList(t *testing.T) {
 			Flavor:     to.StringPtr("Savory"),
 			Expiration: toTimePtr(time.RFC3339Nano, "2018-02-28T00:40:00.123Z"),
 		},
-	})
+	}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -561,7 +561,7 @@ func TestPutRootListSingleItem(t *testing.T) {
 			Flavor:     to.StringPtr("Sweet"),
 			Expiration: toTimePtr(time.RFC3339Nano, "2018-02-28T00:40:00.123Z"),
 		},
-	})
+	}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -599,7 +599,7 @@ func TestPutServiceProperties(t *testing.T) {
 				Days:    to.Int32Ptr(7),
 			},
 		},
-	})
+	}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -623,7 +623,7 @@ func TestPutSimple(t *testing.T) {
 				Type:  to.StringPtr("all"),
 			},
 		},
-	})
+	}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -635,7 +635,7 @@ func TestPutWrappedLists(t *testing.T) {
 	result, err := client.PutWrappedLists(context.Background(), AppleBarrel{
 		BadApples:  &[]string{"Red Delicious"},
 		GoodApples: &[]string{"Fuji", "Gala"},
-	})
+	}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
