@@ -192,8 +192,17 @@ namespace AutoRest.Go
 
         private static bool IsPreviewPackage(string[] files)
         {
-            // only evaluate composite builds if all swaggers are preview as we don't have a well-defined model for mixed preview/stable swaggers
-            return files.All(file => file.IndexOf(previewSubDir) >= 0);
+            // from the breaking change perspective, we should regard a composite package as a preview package when at least one of the swagger is preview, since preview swagger files may receive breaking changes frequently
+            return files.Any(IsPreviewSwagger);
+        }
+
+        private static bool IsPreviewSwagger(string file)
+        {
+            // a preview swagger should have the '/preview/' segment in the middle of its path, or start with preview/ (this happens in some data plane swaggers)
+            // for mgmt plane swagger, the input-file should always start with a microsoft namespace, such as 'Microsoft.Network/preview/something.json'
+            // for data plane swagger, in some circumstances, it may start with the preview without namespace, such as 'preview/something.json'
+            var r = new Regex(@"^preview|.+\/preview\/");
+            return r.IsMatch(file);
         }
     }
 }
