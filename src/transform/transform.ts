@@ -410,8 +410,8 @@ function createGroupProperty(name: string, description: string): GroupProperty {
 }
 
 function processOperationResponses(session: Session<CodeModel>) {
-  if (session.model.language.go!.responseSchemas === undefined) {
-    session.model.language.go!.responseSchemas = new Array<Schema>();
+  if (session.model.language.go!.responseEnvelopes === undefined) {
+    session.model.language.go!.responseEnvelopes = new Array<Schema>();
   }
   for (const group of values(session.model.operationGroups)) {
     for (const op of values(group.operations)) {
@@ -496,7 +496,7 @@ function processOperationResponses(session: Session<CodeModel>) {
       } else if (op.responses.length !== filtered.length) {
         op.responses = filtered;
       }
-      createResponseType(session.model, group, op);
+      createResponseEnvelope(session.model, group, op);
     }
   }
 }
@@ -533,8 +533,8 @@ interface HttpHeaderWithDescription extends HttpHeader {
 // the name of the struct field for scalar responses (int, string, etc)
 const scalarResponsePropName = 'Value';
 
-// creates the response type to be returned from an operation and updates the operation
-function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Operation) {
+// creates the response envelope type to be returned from an operation and updates the operation
+function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op: Operation) {
   // create the `type <type>Response struct` response
   // type with a `RawResponse *http.Response` field
 
@@ -582,16 +582,16 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
           description: description,
           responseType: true,
         }
-        if (!responseExists(codeModel, object.language.go!.responseType.name)) {
+        if (!responseEnvelopeExists(codeModel, object.language.go!.responseType.name)) {
           // add this response schema to the global list of response
-          const responseSchemas = <Array<Schema>>codeModel.language.go!.responseSchemas;
-          responseSchemas.push(object);
+          const responseEnvelopes = <Array<Schema>>codeModel.language.go!.responseEnvelopes;
+          responseEnvelopes.push(object);
           // attach it to the response
           (<SchemaResponse>response).schema = object;
         }
       }
-    } else if (!responseTypeCreated(codeModel, response.schema)) {
-      response.schema.language.go!.responseType = generateResponseTypeName(response.schema);
+    } else if (!responseEnvelopeCreated(codeModel, response.schema)) {
+      response.schema.language.go!.responseType = generateResponseEnvelopeName(response.schema);
       response.schema.language.go!.properties = [
         newProperty('RawResponse', 'RawResponse contains the underlying HTTP response.', newObject('http.Response', 'HTTP response'))
       ];
@@ -623,21 +623,21 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
       }
       // the Widget response doesn't belong in the poller response envelope
       (<Array<Property>>response.schema.language.go!.properties).push(newProperty(propName, response.schema.language.go!.description, response.schema));
-      if (!responseExists(codeModel, response.schema.language.go!.name)) {
+      if (!responseEnvelopeExists(codeModel, response.schema.language.go!.name)) {
         // add this response schema to the global list of response
-        const responseSchemas = <Array<Schema>>codeModel.language.go!.responseSchemas;
-        responseSchemas.push(response.schema);
+        const responseEnvelopes = <Array<Schema>>codeModel.language.go!.responseEnvelopes;
+        responseEnvelopes.push(response.schema);
       }
     } else if (headers.size > 0 && !isLROOperation(op)) {
       // the response envelope has already been created.  it's shared across operations
       // however we fold all header responses into the same envelope.
       // find the matching response type entry.
-      const rt = generateResponseTypeName(response.schema);
-      const responseSchemas = <Array<Schema>>codeModel.language.go!.responseSchemas;
-      for (const resp of values(responseSchemas)) {
-        if (resp.language.go!.responseType.name === rt.name) {
+      const rt = generateResponseEnvelopeName(response.schema);
+      const responseEnvelopes = <Array<Schema>>codeModel.language.go!.responseEnvelopes;
+      for (const respEnv of values(responseEnvelopes)) {
+        if (respEnv.language.go!.responseType.name === rt.name) {
           // check if we need to add any headers
-          const respProps = <Array<Property>>resp.language.go!.properties;
+          const respProps = <Array<Property>>respEnv.language.go!.properties;
           for (const header of items(headers)) {
             let exists = false;
             for (const prop of values(respProps)) {
@@ -691,7 +691,7 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
     // create poller type info
     if (isLROOperation(op)) {
       // create the poller response envelope
-      generateLROResponseType(response, op, codeModel);
+      generateLROResponseEnvelope(response, op, codeModel);
       if (codeModel.language.go!.pollerTypes === undefined) {
         codeModel.language.go!.pollerTypes = new Array<PollerInfo>();
       }
@@ -726,8 +726,9 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
   }
 }
 
-function responseExists(codeModel: CodeModel, name: string): boolean {
-  for (const resp of codeModel.language.go!.responseSchemas) {
+// returns true if the named response envelope has already been created
+function responseEnvelopeExists(codeModel: CodeModel, name: string): boolean {
+  for (const resp of codeModel.language.go!.responseEnvelopes) {
     if (resp.language.go!.name === name) {
       return true;
     }
@@ -763,18 +764,20 @@ function getMarshallingFormat(protocol: Protocols): 'json' | 'xml' | 'na' {
   }
 }
 
-function responseTypeCreated(codeModel: CodeModel, schema: Schema): boolean {
-  const responseType = generateResponseTypeName(schema);
-  const responseSchemas = <Array<Schema>>codeModel.language.go!.responseSchemas;
-  for (const responseSchema of values(responseSchemas)) {
-    if (responseSchema.language.go!.responseType.name === responseType.name) {
+// returns true if a response envelope has been created for the specified response.
+// also associates the response envelope with the specified response as required.
+function responseEnvelopeCreated(codeModel: CodeModel, schema: Schema): boolean {
+  const responseType = generateResponseEnvelopeName(schema);
+  const responseEnvelopes = <Array<Schema>>codeModel.language.go!.responseEnvelopes;
+  for (const respEnv of values(responseEnvelopes)) {
+    if (respEnv.language.go!.responseType.name === responseType.name) {
       // unnamed string enum responses and string responses are different schemas
       // but with identical layouts.  so we have a corner-case where we've already
       // created a response type (i.e. StringResponse) for one of the schemas but
       // not for the other.  so if the response type has already been created and
       // the responseType hasn't been set, copy it over.
       if (schema.language.go!.responseType === undefined) {
-        schema.language.go!.responseType = responseSchema.language.go!.responseType;
+        schema.language.go!.responseType = respEnv.language.go!.responseType;
       }
       return true;
     }
@@ -829,7 +832,7 @@ function recursiveTypeName(schema: Schema): string {
   }
 }
 
-function generateResponseTypeName(schema: Schema): Language {
+function generateResponseEnvelopeName(schema: Schema): Language {
   const name = `${recursiveTypeName(schema)}Response`;
   return {
     name: name,
@@ -840,7 +843,7 @@ function generateResponseTypeName(schema: Schema): Language {
 
 // generate LRO response type name is separate from the general response type name
 // generation, since it requires returning the poller response envelope
-function generateLROResponseTypeName(response: Response, op: Operation): Language {
+function generateLROResponseEnvelopeName(response: Response, op: Operation): Language {
   // default to generic response envelope
   let name = 'HTTPPollerResponse';
   let desc = `${name} contains the asynchronous HTTP response from the call to the service endpoint.`;
@@ -875,9 +878,10 @@ function generateLROPollerName(response: Response, op: Operation): string {
   return `${schemaResp.schema.language.go!.responseType.value}Poller`;
 }
 
-function generateLROResponseType(response: Response, op: Operation, codeModel: CodeModel) {
-  const respTypeName = generateLROResponseTypeName(response, op);
-  if (responseExists(codeModel, respTypeName.name)) {
+// creates the LRO response envelope for the specified operation/response
+function generateLROResponseEnvelope(response: Response, op: Operation, codeModel: CodeModel) {
+  const respTypeName = generateLROResponseEnvelopeName(response, op);
+  if (responseEnvelopeExists(codeModel, respTypeName.name)) {
     return;
   }
   const respTypeObject = newObject(respTypeName.name, respTypeName.description);
@@ -917,8 +921,8 @@ function generateLROResponseType(response: Response, op: Operation, codeModel: C
     poller
   ];
   // add the LRO response schema to the global list of response
-  const responseSchemas = <Array<Schema>>codeModel.language.go!.responseSchemas;
-  responseSchemas.push(respTypeObject);
+  const responseEnvelopes = <Array<Schema>>codeModel.language.go!.responseEnvelopes;
+  responseEnvelopes.push(respTypeObject);
 }
 
 function getRootDiscriminator(obj: ObjectSchema): ObjectSchema {

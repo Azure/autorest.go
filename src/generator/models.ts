@@ -17,9 +17,9 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
 
   // we do model generation first as it can add imports to the imports list
   const structs = generateStructs(session.model.schemas.objects);
-  const responseSchemas = <Array<Schema>>session.model.language.go!.responseSchemas;
-  for (const schema of values(responseSchemas)) {
-    const respType = generateStruct(schema.language.go!.responseType, schema.language.go!.properties);
+  const responseEnvelopes = <Array<Schema>>session.model.language.go!.responseEnvelopes;
+  for (const respEnv of values(responseEnvelopes)) {
+    const respType = generateStruct(respEnv.language.go!.responseType, respEnv.language.go!.properties);
     generateUnmarshallerForResponseEnvelope(respType);
     structs.push(respType);
   }
