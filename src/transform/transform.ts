@@ -566,28 +566,27 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
       if (headers.size > 0 && !isLROOperation(op)) {
         const name = `${group.language.go!.name}${op.language.go!.name}Response`;
         const description = `${name} contains the response from method ${group.language.go!.name}.${op.language.go!.name}.`;
-        const object = new ObjectSchema(name, description);
-        object.language.go = object.language.default;
-        object.language.go!.properties = [
+        const respEnv = newObject(name, description);
+        respEnv.language.go!.properties = [
           newProperty('RawResponse', 'RawResponse contains the underlying HTTP response.', newObject('http.Response', 'raw HTTP response'))
         ];
         for (const item of items(headers)) {
           const prop = newProperty(item.key, item.value.description, item.value.schema);
           prop.language.go!.fromHeader = item.value.header;
-          (<Array<Property>>object.language.go!.properties).push(prop);
+          (<Array<Property>>respEnv.language.go!.properties).push(prop);
         }
         // mark as a response type
-        object.language.go!.responseType = {
+        respEnv.language.go!.responseType = {
           name: name,
           description: description,
           responseType: true,
         }
-        if (!responseEnvelopeExists(codeModel, object.language.go!.responseType.name)) {
+        if (!responseEnvelopeExists(codeModel, respEnv.language.go!.responseType.name)) {
           // add this response schema to the global list of response
           const responseEnvelopes = <Array<Schema>>codeModel.language.go!.responseEnvelopes;
-          responseEnvelopes.push(object);
+          responseEnvelopes.push(respEnv);
           // attach it to the response
-          (<SchemaResponse>response).schema = object;
+          (<SchemaResponse>response).schema = respEnv;
         }
       }
     } else if (!responseEnvelopeCreated(codeModel, response.schema)) {
@@ -718,8 +717,6 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
         pollers.push(poller);
         op.language.go!.pollerType = poller;
       }
-    }
-    if (isLROOperation(op)) {
       // treat LROs as single-response ops
       break;
     }

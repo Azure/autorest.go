@@ -234,6 +234,7 @@ function generateOperation(op: Operation, imports: ImportManager): string {
     const pager = <PagerInfo>op.language.go!.pageableType;
     const schemaResponse = <SchemaResponse>pager.op.responses![0];
     const nextLink = pager.op.language.go!.paging.nextLinkName;
+    text += `\t\tadvancer: func(ctx context.Context, resp *${schemaResponse.schema.language.go!.responseType.name}) (*azcore.Request, error) {\n`;
     if (op.language.go!.paging.member) {
       const nextOpParams = getCreateRequestParametersSig(op.language.go!.paging.nextLinkOperation).split(',');
       // keep the parameter names from the name/type tuples and find nextLink param
@@ -246,19 +247,16 @@ function generateOperation(op: Operation, imports: ImportManager): string {
           nextOpParams[i] = paramName;
         }
       }
-      text += `\t\tadvancer: func(ctx context.Context, resp *${schemaResponse.schema.language.go!.responseType.name}) (*azcore.Request, error) {\n`;
       text += `\t\t\treturn client.${op.language.go!.paging.member}CreateRequest(${nextOpParams.join(', ')})\n`;
-      text += '\t\t},\n';
     } else {
       let resultTypeName = schemaResponse.schema.language.go!.name;
       if (schemaResponse.schema.serialization?.xml?.name) {
         // xml can specifiy its own name, prefer that if available
         resultTypeName = schemaResponse.schema.serialization.xml.name;
       }
-      text += `\t\tadvancer: func(ctx context.Context, resp *${schemaResponse.schema.language.go!.responseType.name}) (*azcore.Request, error) {\n`;
       text += `\t\t\treturn azcore.NewRequest(ctx, http.MethodGet, *resp.${resultTypeName}.${nextLink})\n`;
-      text += `\t\t},\n`;
     }
+    text += `\t\t},\n`;
     text += `\t}\n`;
     text += '}\n\n';
     return text;
