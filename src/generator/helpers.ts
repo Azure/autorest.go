@@ -278,9 +278,6 @@ export function getStatusCodes(op: Operation): string[] {
   for (const resp of values(op.responses)) {
     statusCodes = statusCodes.concat(resp.protocol.http?.statusCodes);
   }
-  /*if (isLROOperation(op) && statusCodes.find(element => element === '204') === undefined) {
-    statusCodes = statusCodes.concat('204');
-  }*/
   return statusCodes;
 }
 
