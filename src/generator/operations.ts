@@ -233,9 +233,7 @@ function generateOperation(op: Operation, imports: ImportManager): string {
     text += `\t\tresponder: client.${info.protocolNaming.responseMethod},\n`;
     text += `\t\terrorer:   client.${info.protocolNaming.errorMethod},\n`;
     const pager = <PagerInfo>op.language.go!.pageableType;
-    const schemaResponse = <SchemaResponse>pager.op.responses![0];
-    const nextLink = pager.op.language.go!.paging.nextLinkName;
-    text += `\t\tadvancer: func(ctx context.Context, resp *${schemaResponse.schema.language.go!.responseType.name}) (*azcore.Request, error) {\n`;
+    text += `\t\tadvancer: func(ctx context.Context, resp *${pager.respEnv}) (*azcore.Request, error) {\n`;
     if (op.language.go!.paging.member) {
       const nextOpParams = getCreateRequestParametersSig(op.language.go!.paging.nextLinkOperation).split(',');
       // keep the parameter names from the name/type tuples and find nextLink param
@@ -243,19 +241,14 @@ function generateOperation(op: Operation, imports: ImportManager): string {
         const paramName = nextOpParams[i].trim().split(' ')[0];
         const paramType = nextOpParams[i].trim().split(' ')[1];
         if (paramName.startsWith('next') && paramType === 'string') {
-          nextOpParams[i] = `*resp.${schemaResponse.schema.language.go!.name}.${nextLink}`;
+          nextOpParams[i] = `*resp.${pager.respField}.${pager.nextLink}`;
         } else {
           nextOpParams[i] = paramName;
         }
       }
       text += `\t\t\treturn client.${op.language.go!.paging.member}CreateRequest(${nextOpParams.join(', ')})\n`;
     } else {
-      let resultTypeName = schemaResponse.schema.language.go!.name;
-      if (schemaResponse.schema.serialization?.xml?.name) {
-        // xml can specifiy its own name, prefer that if available
-        resultTypeName = schemaResponse.schema.serialization.xml.name;
-      }
-      text += `\t\t\treturn azcore.NewRequest(ctx, http.MethodGet, *resp.${resultTypeName}.${nextLink})\n`;
+      text += `\t\t\treturn azcore.NewRequest(ctx, http.MethodGet, *resp.${pager.respField}.${pager.nextLink})\n`;
     }
     text += `\t\t},\n`;
     text += `\t\tstatusCodes: []int{${formatStatusCodes(statusCodes)}},\n`;

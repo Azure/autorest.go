@@ -5,7 +5,7 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { camelCase } from '@azure-tools/codegen';
-import { CodeModel, SchemaResponse } from '@azure-tools/codemodel';
+import { CodeModel } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { PagerInfo } from '../common/helpers';
 import { contentPreamble, sortAscending } from './helpers';
@@ -28,10 +28,6 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
   pagers.sort((a: PagerInfo, b: PagerInfo) => { return sortAscending(a.name, b.name) });
   for (const pager of values(pagers)) {
     const pagerType = camelCase(pager.name);
-    const schemaResponse = <SchemaResponse>pager.op.responses![0];
-    const responseType = schemaResponse.schema.language.go!.responseType.name;
-    const resultType = schemaResponse.schema.language.go!.name;
-    let resultTypeName = resultType;
     let pollerRespField = '';
     let respFieldCheck = '\tresp, err := p.pipeline.Do(req)';
     let requesterCondition = '';
@@ -48,22 +44,18 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
   }`;
       requesterCondition = ' if p.resp == nil';
     }
-    if (schemaResponse.schema.serialization?.xml?.name) {
-      // xml can specifiy its own name, prefer that if available
-      resultTypeName = schemaResponse.schema.serialization.xml.name;
-    }
-    const requesterType = `${camelCase(resultType)}CreateRequest`;
-    const errorerType = `${camelCase(resultType)}HandleError`;
-    const responderType = `${camelCase(resultType)}HandleResponse`;
-    const advanceType = `${camelCase(resultType)}AdvancePage`;
-    text += `// ${pager.name} provides iteration over ${resultType} pages.
+    const requesterType = `${camelCase(pager.respType)}CreateRequest`;
+    const errorerType = `${camelCase(pager.respType)}HandleError`;
+    const responderType = `${camelCase(pager.respType)}HandleResponse`;
+    const advanceType = `${camelCase(pager.respType)}AdvancePage`;
+    text += `// ${pager.name} provides iteration over ${pager.respType} pages.
 type ${pager.name} interface {
 	// NextPage returns true if the pager advanced to the next page.
 	// Returns false if there are no more pages or an error occurred.
 	NextPage(context.Context) bool
 
-	// Page returns the current ${responseType}.
-	PageResponse() *${responseType}
+	// Page returns the current ${pager.respEnv}.
+	PageResponse() *${pager.respEnv}
 
 	// Err returns the last error encountered while paging.
 	Err() error
@@ -73,9 +65,9 @@ type ${requesterType} func(context.Context) (*azcore.Request, error)
 
 type ${errorerType} func(*azcore.Response) error
 
-type ${responderType} func(*azcore.Response) (*${responseType}, error)
+type ${responderType} func(*azcore.Response) (*${pager.respEnv}, error)
 
-type ${advanceType} func(context.Context, *${responseType}) (*azcore.Request, error)
+type ${advanceType} func(context.Context, *${pager.respEnv}) (*azcore.Request, error)
 
 type ${pagerType} struct {
 	// the pipeline for making the request
@@ -89,7 +81,7 @@ type ${pagerType} struct {
 	// callback for advancing to the next page
 	advancer ${advanceType}
 	// contains the current response
-	current *${responseType}
+	current *${pager.respEnv}
 	// status codes for successful retrieval
 	statusCodes []int
 	// any error encountered
@@ -104,7 +96,7 @@ func (p *${pagerType}) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if p.current != nil {
-		if p.current.${resultTypeName}.${pager.op.language.go!.paging.nextLinkName} == nil || len(*p.current.${resultTypeName}.${pager.op.language.go!.paging.nextLinkName}) == 0 {
+		if p.current.${pager.respField}.${pager.nextLink} == nil || len(*p.current.${pager.respField}.${pager.nextLink}) == 0 {
 			return false
 		}
 		req, err = p.advancer(ctx, p.current)
@@ -134,7 +126,7 @@ func (p *${pagerType}) NextPage(ctx context.Context) bool {
 	return true
 }
 
-func (p *${pagerType}) PageResponse() *${responseType} {
+func (p *${pagerType}) PageResponse() *${pager.respEnv} {
 	return p.current
 }
 

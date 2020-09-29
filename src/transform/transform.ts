@@ -676,10 +676,19 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
         }
       }
       if (!skipAddPager) {
+        const schemaResp = <SchemaResponse>response;
         // create a new one, add to global list and assign to method
+        let respField = schemaResp.schema.language.go!.name;
+        if (schemaResp.schema.serialization?.xml?.name) {
+          // xml can specifiy its own name, prefer that if available
+          respField = schemaResp.schema.serialization.xml.name;
+        }
         const pager = {
           name: name,
-          op: op,
+          respEnv: schemaResp.schema.language.go!.responseType.name,
+          respType: schemaResp.schema.language.go!.name,
+          respField: respField,
+          nextLink: op.language.go!.paging.nextLinkName,
           hasLRO: isLROOperation(op),
         };
         pagers.push(pager);

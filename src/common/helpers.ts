@@ -36,8 +36,11 @@ export function isSchemaResponse(resp?: Response): resp is SchemaResponse {
 
 export interface PagerInfo {
   name: string;
-  op: Operation;
-  hasLRO: boolean;
+  respEnv: string;   // name of the response envelope
+  respType: string;  // name of the response type
+  respField: string; // name of the response type field within the response envelope
+  nextLink: string;  // name of the next link field within the response envelope
+  hasLRO: boolean;   // true if this pager is used with an LRO
 }
 
 // returns true if the operation is pageable

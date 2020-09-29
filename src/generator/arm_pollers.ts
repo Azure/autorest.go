@@ -7,7 +7,7 @@ import { Session } from '@azure-tools/autorest-extension-base';
 import { camelCase } from '@azure-tools/codegen';
 import { CodeModel, SchemaResponse, SchemaType, Operation, Schema, ArraySchema } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { PollerInfo, isSchemaResponse, isPageableOperation } from '../common/helpers';
+import { PollerInfo, isSchemaResponse, isPageableOperation, PagerInfo } from '../common/helpers';
 import { contentPreamble, getStatusCodes, formatStatusCodes, sortAscending, getCreateRequestParametersSig, getMethodParameters } from './helpers';
 import { ImportManager } from './imports';
 import { OperationNaming } from '../transform/namer';
@@ -111,9 +111,10 @@ export async function generateARMPollers(session: Session<CodeModel>): Promise<s
       pollUntilDoneReturn = 'p.FinalResponse(ctx)';
       // for operations that do return a model add a final response method that handles the final get URL scenario
       finalResponseDeclaration = `FinalResponse(ctx context.Context) (${responseType}, error)`;
+      const pageableType = <PagerInfo>poller.op.language.go!.pageableType;
       pagerFields = `
-      errHandler  ${camelCase(poller.op.language.go!.pageableType.op.responses![0].schema.language.go!.name)}HandleError
-      respHandler ${camelCase(poller.op.language.go!.pageableType.op.responses![0].schema.language.go!.name)}HandleResponse`;
+      errHandler  ${camelCase(pageableType.respType)}HandleError
+      respHandler ${camelCase(pageableType.respType)}HandleResponse`;
       handleResponse = `
       func (p *${pollerName}) handleResponse(resp *azcore.Response) (${responseType}, error) {
         ${generatePagerReturnInstance(poller.op)}
