@@ -103,6 +103,7 @@ func (client *VpnSiteLinksClient) ListByVpnSite(resourceGroupName string, vpnSit
 		advancer: func(ctx context.Context, resp *ListVpnSiteLinksResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ListVpnSiteLinksResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

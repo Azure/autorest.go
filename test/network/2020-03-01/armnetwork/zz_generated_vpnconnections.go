@@ -273,6 +273,7 @@ func (client *VpnConnectionsClient) ListByVpnGateway(resourceGroupName string, g
 		advancer: func(ctx context.Context, resp *ListVpnConnectionsResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ListVpnConnectionsResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

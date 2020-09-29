@@ -525,6 +525,7 @@ func (client *ApplicationGatewaysClient) List(resourceGroupName string, options 
 		advancer: func(ctx context.Context, resp *ApplicationGatewayListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ApplicationGatewayListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -571,6 +572,7 @@ func (client *ApplicationGatewaysClient) ListAll(options *ApplicationGatewaysLis
 		advancer: func(ctx context.Context, resp *ApplicationGatewayListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ApplicationGatewayListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -816,6 +818,7 @@ func (client *ApplicationGatewaysClient) ListAvailableSslPredefinedPolicies(opti
 		advancer: func(ctx context.Context, resp *ApplicationGatewayAvailableSslPredefinedPoliciesResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ApplicationGatewayAvailableSslPredefinedPolicies.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

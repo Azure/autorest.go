@@ -342,6 +342,7 @@ func (client *PublicIPAddressesClient) List(resourceGroupName string, options *P
 		advancer: func(ctx context.Context, resp *PublicIPAddressListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.PublicIPAddressListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -388,6 +389,7 @@ func (client *PublicIPAddressesClient) ListAll(options *PublicIPAddressesListAll
 		advancer: func(ctx context.Context, resp *PublicIPAddressListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.PublicIPAddressListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -433,6 +435,7 @@ func (client *PublicIPAddressesClient) ListVirtualMachineScaleSetPublicIPAddress
 		advancer: func(ctx context.Context, resp *PublicIPAddressListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.PublicIPAddressListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -480,6 +483,7 @@ func (client *PublicIPAddressesClient) ListVirtualMachineScaleSetVMPublicIPaddre
 		advancer: func(ctx context.Context, resp *PublicIPAddressListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.PublicIPAddressListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

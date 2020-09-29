@@ -380,6 +380,7 @@ func (client *SnapshotsClient) List(options *SnapshotsListOptions) SnapshotListP
 		advancer: func(ctx context.Context, resp *SnapshotListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.SnapshotList.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -428,6 +429,7 @@ func (client *SnapshotsClient) ListByResourceGroup(resourceGroupName string, opt
 		advancer: func(ctx context.Context, resp *SnapshotListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.SnapshotList.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

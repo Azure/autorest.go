@@ -48,6 +48,7 @@ func (client *UsagesClient) List(location string, options *UsagesListOptions) Us
 		advancer: func(ctx context.Context, resp *UsagesListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.UsagesListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

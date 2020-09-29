@@ -1072,6 +1072,7 @@ func (client *VirtualNetworkGatewaysClient) List(resourceGroupName string, optio
 		advancer: func(ctx context.Context, resp *VirtualNetworkGatewayListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.VirtualNetworkGatewayListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -1118,6 +1119,7 @@ func (client *VirtualNetworkGatewaysClient) ListConnections(resourceGroupName st
 		advancer: func(ctx context.Context, resp *VirtualNetworkGatewayListConnectionsResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.VirtualNetworkGatewayListConnectionsResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

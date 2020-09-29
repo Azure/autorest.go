@@ -274,6 +274,7 @@ func (client *ExpressRoutePortsClient) List(options *ExpressRoutePortsListOption
 		advancer: func(ctx context.Context, resp *ExpressRoutePortListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ExpressRoutePortListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -319,6 +320,7 @@ func (client *ExpressRoutePortsClient) ListByResourceGroup(resourceGroupName str
 		advancer: func(ctx context.Context, resp *ExpressRoutePortListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ExpressRoutePortListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

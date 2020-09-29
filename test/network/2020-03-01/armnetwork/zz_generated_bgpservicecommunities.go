@@ -48,6 +48,7 @@ func (client *BgpServiceCommunitiesClient) List(options *BgpServiceCommunitiesLi
 		advancer: func(ctx context.Context, resp *BgpServiceCommunityListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.BgpServiceCommunityListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

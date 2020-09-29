@@ -276,6 +276,7 @@ func (client *InboundNatRulesClient) List(resourceGroupName string, loadBalancer
 		advancer: func(ctx context.Context, resp *InboundNatRuleListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.InboundNatRuleListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

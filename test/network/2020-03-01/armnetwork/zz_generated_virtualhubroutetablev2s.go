@@ -273,6 +273,7 @@ func (client *VirtualHubRouteTableV2SClient) List(resourceGroupName string, virt
 		advancer: func(ctx context.Context, resp *ListVirtualHubRouteTableV2SResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ListVirtualHubRouteTableV2SResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

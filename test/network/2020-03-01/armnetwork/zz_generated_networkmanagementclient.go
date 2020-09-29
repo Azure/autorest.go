@@ -200,6 +200,7 @@ func (client *NetworkManagementClient) DisconnectActiveSessions(resourceGroupNam
 		advancer: func(ctx context.Context, resp *BastionSessionDeleteResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.BastionSessionDeleteResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -421,6 +422,7 @@ func (client *NetworkManagementClient) GetBastionShareableLink(resourceGroupName
 		advancer: func(ctx context.Context, resp *BastionShareableLinkListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.BastionShareableLinkListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

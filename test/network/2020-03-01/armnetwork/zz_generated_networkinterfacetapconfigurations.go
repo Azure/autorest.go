@@ -273,6 +273,7 @@ func (client *NetworkInterfaceTapConfigurationsClient) List(resourceGroupName st
 		advancer: func(ctx context.Context, resp *NetworkInterfaceTapConfigurationListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.NetworkInterfaceTapConfigurationListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

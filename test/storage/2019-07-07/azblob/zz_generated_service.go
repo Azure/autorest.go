@@ -315,6 +315,7 @@ func (client *serviceClient) ListContainersSegment(options *ServiceListContainer
 		advancer: func(ctx context.Context, resp *ListContainersSegmentResponseResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.EnumerationResults.NextMarker)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

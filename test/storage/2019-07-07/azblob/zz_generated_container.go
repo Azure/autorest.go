@@ -792,6 +792,7 @@ func (client *containerClient) ListBlobFlatSegment(options *ContainerListBlobFla
 		advancer: func(ctx context.Context, resp *ListBlobsFlatSegmentResponseResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.EnumerationResults.NextMarker)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -874,6 +875,7 @@ func (client *containerClient) ListBlobHierarchySegment(delimiter string, option
 		advancer: func(ctx context.Context, resp *ListBlobsHierarchySegmentResponseResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.EnumerationResults.NextMarker)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

@@ -275,6 +275,7 @@ func (client *PrivateEndpointsClient) List(resourceGroupName string, options *Pr
 		advancer: func(ctx context.Context, resp *PrivateEndpointListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.PrivateEndpointListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -321,6 +322,7 @@ func (client *PrivateEndpointsClient) ListBySubscription(options *PrivateEndpoin
 		advancer: func(ctx context.Context, resp *PrivateEndpointListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.PrivateEndpointListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

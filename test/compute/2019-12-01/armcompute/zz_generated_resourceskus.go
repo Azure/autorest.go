@@ -51,6 +51,7 @@ func (client *ResourceSKUsClient) List(options *ResourceSKUsListOptions) Resourc
 		advancer: func(ctx context.Context, resp *ResourceSKUsResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ResourceSKUsResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

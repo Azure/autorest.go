@@ -176,6 +176,7 @@ func (client *notebookClient) GetNotebookSummaryByWorkSpace(options *NotebookGet
 		advancer: func(ctx context.Context, resp *NotebookListResponseResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.NotebookListResponse.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -220,6 +221,7 @@ func (client *notebookClient) GetNotebooksByWorkspace(options *NotebookGetNotebo
 		advancer: func(ctx context.Context, resp *NotebookListResponseResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.NotebookListResponse.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

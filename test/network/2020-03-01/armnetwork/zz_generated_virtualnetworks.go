@@ -334,6 +334,7 @@ func (client *VirtualNetworksClient) List(resourceGroupName string, options *Vir
 		advancer: func(ctx context.Context, resp *VirtualNetworkListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.VirtualNetworkListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -380,6 +381,7 @@ func (client *VirtualNetworksClient) ListAll(options *VirtualNetworksListAllOpti
 		advancer: func(ctx context.Context, resp *VirtualNetworkListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.VirtualNetworkListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -425,6 +427,7 @@ func (client *VirtualNetworksClient) ListUsage(resourceGroupName string, virtual
 		advancer: func(ctx context.Context, resp *VirtualNetworkListUsageResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.VirtualNetworkListUsageResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

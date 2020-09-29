@@ -226,6 +226,7 @@ func (client *triggerClient) GetTriggersByWorkspace(options *TriggerGetTriggersB
 		advancer: func(ctx context.Context, resp *TriggerListResponseResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.TriggerListResponse.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

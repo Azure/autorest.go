@@ -176,6 +176,7 @@ func (client *datasetClient) GetDatasetsByWorkspace(options *DatasetGetDatasetsB
 		advancer: func(ctx context.Context, resp *DatasetListResponseResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.DatasetListResponse.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

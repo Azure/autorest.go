@@ -206,6 +206,7 @@ func (client *ExpressRouteCrossConnectionsClient) List(options *ExpressRouteCros
 		advancer: func(ctx context.Context, resp *ExpressRouteCrossConnectionListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ExpressRouteCrossConnectionListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -335,6 +336,7 @@ func (client *ExpressRouteCrossConnectionsClient) ListByResourceGroup(resourceGr
 		advancer: func(ctx context.Context, resp *ExpressRouteCrossConnectionListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ExpressRouteCrossConnectionListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

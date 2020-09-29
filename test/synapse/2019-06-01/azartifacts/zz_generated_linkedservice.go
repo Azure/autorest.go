@@ -176,6 +176,7 @@ func (client *linkedServiceClient) GetLinkedServicesByWorkspace(options *LinkedS
 		advancer: func(ctx context.Context, resp *LinkedServiceListResponseResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.LinkedServiceListResponse.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

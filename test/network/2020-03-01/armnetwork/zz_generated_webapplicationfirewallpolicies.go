@@ -240,6 +240,7 @@ func (client *WebApplicationFirewallPoliciesClient) List(resourceGroupName strin
 		advancer: func(ctx context.Context, resp *WebApplicationFirewallPolicyListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.WebApplicationFirewallPolicyListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -286,6 +287,7 @@ func (client *WebApplicationFirewallPoliciesClient) ListAll(options *WebApplicat
 		advancer: func(ctx context.Context, resp *WebApplicationFirewallPolicyListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.WebApplicationFirewallPolicyListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

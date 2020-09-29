@@ -284,6 +284,7 @@ func (client *SubnetsClient) List(resourceGroupName string, virtualNetworkName s
 		advancer: func(ctx context.Context, resp *SubnetListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.SubnetListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

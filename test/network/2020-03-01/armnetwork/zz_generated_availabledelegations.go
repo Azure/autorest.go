@@ -48,6 +48,7 @@ func (client *AvailableDelegationsClient) List(location string, options *Availab
 		advancer: func(ctx context.Context, resp *AvailableDelegationsResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.AvailableDelegationsResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

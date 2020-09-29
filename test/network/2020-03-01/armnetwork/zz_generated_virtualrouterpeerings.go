@@ -273,6 +273,7 @@ func (client *VirtualRouterPeeringsClient) List(resourceGroupName string, virtua
 		advancer: func(ctx context.Context, resp *VirtualRouterPeeringListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.VirtualRouterPeeringListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

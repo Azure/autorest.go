@@ -103,6 +103,7 @@ func (client *NetworkInterfaceIPConfigurationsClient) List(resourceGroupName str
 		advancer: func(ctx context.Context, resp *NetworkInterfaceIPConfigurationListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.NetworkInterfaceIPConfigurationListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

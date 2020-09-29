@@ -276,6 +276,7 @@ func (client *GalleriesClient) List(options *GalleriesListOptions) GalleryListPa
 		advancer: func(ctx context.Context, resp *GalleryListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.GalleryList.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -321,6 +322,7 @@ func (client *GalleriesClient) ListByResourceGroup(resourceGroupName string, opt
 		advancer: func(ctx context.Context, resp *GalleryListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.GalleryList.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

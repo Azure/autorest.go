@@ -492,6 +492,7 @@ func (client *NetworkInterfacesClient) List(resourceGroupName string, options *N
 		advancer: func(ctx context.Context, resp *NetworkInterfaceListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.NetworkInterfaceListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -538,6 +539,7 @@ func (client *NetworkInterfacesClient) ListAll(options *NetworkInterfacesListAll
 		advancer: func(ctx context.Context, resp *NetworkInterfaceListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.NetworkInterfaceListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -665,6 +667,7 @@ func (client *NetworkInterfacesClient) ListVirtualMachineScaleSetIPConfiguration
 		advancer: func(ctx context.Context, resp *NetworkInterfaceIPConfigurationListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.NetworkInterfaceIPConfigurationListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -717,6 +720,7 @@ func (client *NetworkInterfacesClient) ListVirtualMachineScaleSetNetworkInterfac
 		advancer: func(ctx context.Context, resp *NetworkInterfaceListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.NetworkInterfaceListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -764,6 +768,7 @@ func (client *NetworkInterfacesClient) ListVirtualMachineScaleSetVMNetworkInterf
 		advancer: func(ctx context.Context, resp *NetworkInterfaceListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.NetworkInterfaceListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

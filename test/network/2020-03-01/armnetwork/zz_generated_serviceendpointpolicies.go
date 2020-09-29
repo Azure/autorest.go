@@ -277,6 +277,7 @@ func (client *ServiceEndpointPoliciesClient) List(options *ServiceEndpointPolici
 		advancer: func(ctx context.Context, resp *ServiceEndpointPolicyListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ServiceEndpointPolicyListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -322,6 +323,7 @@ func (client *ServiceEndpointPoliciesClient) ListByResourceGroup(resourceGroupNa
 		advancer: func(ctx context.Context, resp *ServiceEndpointPolicyListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ServiceEndpointPolicyListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

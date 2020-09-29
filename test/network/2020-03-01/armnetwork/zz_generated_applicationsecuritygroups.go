@@ -274,6 +274,7 @@ func (client *ApplicationSecurityGroupsClient) List(resourceGroupName string, op
 		advancer: func(ctx context.Context, resp *ApplicationSecurityGroupListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ApplicationSecurityGroupListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -320,6 +321,7 @@ func (client *ApplicationSecurityGroupsClient) ListAll(options *ApplicationSecur
 		advancer: func(ctx context.Context, resp *ApplicationSecurityGroupListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ApplicationSecurityGroupListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

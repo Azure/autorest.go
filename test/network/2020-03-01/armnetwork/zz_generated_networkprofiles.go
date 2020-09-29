@@ -245,6 +245,7 @@ func (client *NetworkProfilesClient) List(resourceGroupName string, options *Net
 		advancer: func(ctx context.Context, resp *NetworkProfileListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.NetworkProfileListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -291,6 +292,7 @@ func (client *NetworkProfilesClient) ListAll(options *NetworkProfilesListAllOpti
 		advancer: func(ctx context.Context, resp *NetworkProfileListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.NetworkProfileListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

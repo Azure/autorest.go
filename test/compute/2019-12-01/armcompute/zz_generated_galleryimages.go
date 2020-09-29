@@ -277,6 +277,7 @@ func (client *GalleryImagesClient) ListByGallery(resourceGroupName string, galle
 		advancer: func(ctx context.Context, resp *GalleryImageListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.GalleryImageList.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

@@ -612,6 +612,7 @@ func (client *P2SVpnGatewaysClient) List(options *P2SVpnGatewaysListOptions) Lis
 		advancer: func(ctx context.Context, resp *ListP2SVpnGatewaysResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ListP2SVpnGatewaysResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -657,6 +658,7 @@ func (client *P2SVpnGatewaysClient) ListByResourceGroup(resourceGroupName string
 		advancer: func(ctx context.Context, resp *ListP2SVpnGatewaysResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ListP2SVpnGatewaysResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

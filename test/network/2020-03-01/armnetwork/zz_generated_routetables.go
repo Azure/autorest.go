@@ -277,6 +277,7 @@ func (client *RouteTablesClient) List(resourceGroupName string, options *RouteTa
 		advancer: func(ctx context.Context, resp *RouteTableListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.RouteTableListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -323,6 +324,7 @@ func (client *RouteTablesClient) ListAll(options *RouteTablesListAllOptions) Rou
 		advancer: func(ctx context.Context, resp *RouteTableListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.RouteTableListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

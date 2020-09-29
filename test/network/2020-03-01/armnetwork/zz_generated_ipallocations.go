@@ -277,6 +277,7 @@ func (client *IPAllocationsClient) List(options *IPAllocationsListOptions) IPAll
 		advancer: func(ctx context.Context, resp *IPAllocationListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.IPAllocationListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -322,6 +323,7 @@ func (client *IPAllocationsClient) ListByResourceGroup(resourceGroupName string,
 		advancer: func(ctx context.Context, resp *IPAllocationListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.IPAllocationListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

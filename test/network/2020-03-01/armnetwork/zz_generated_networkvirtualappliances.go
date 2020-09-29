@@ -277,6 +277,7 @@ func (client *NetworkVirtualAppliancesClient) List(options *NetworkVirtualApplia
 		advancer: func(ctx context.Context, resp *NetworkVirtualApplianceListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.NetworkVirtualApplianceListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -322,6 +323,7 @@ func (client *NetworkVirtualAppliancesClient) ListByResourceGroup(resourceGroupN
 		advancer: func(ctx context.Context, resp *NetworkVirtualApplianceListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.NetworkVirtualApplianceListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

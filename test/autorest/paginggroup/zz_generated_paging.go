@@ -85,6 +85,7 @@ func (client *PagingClient) GetMultiplePages(options *PagingGetMultiplePagesOpti
 		advancer: func(ctx context.Context, resp *ProductResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ProductResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -138,6 +139,7 @@ func (client *PagingClient) GetMultiplePagesFailure(options *PagingGetMultiplePa
 		advancer: func(ctx context.Context, resp *ProductResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ProductResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -182,6 +184,7 @@ func (client *PagingClient) GetMultiplePagesFailureURI(options *PagingGetMultipl
 		advancer: func(ctx context.Context, resp *ProductResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ProductResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -226,6 +229,7 @@ func (client *PagingClient) GetMultiplePagesFragmentNextLink(apiVersion string, 
 		advancer: func(ctx context.Context, resp *OdataProductResultResponse) (*azcore.Request, error) {
 			return client.NextFragmentCreateRequest(ctx, apiVersion, tenant, *resp.OdataProductResult.OdataNextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -274,6 +278,7 @@ func (client *PagingClient) GetMultiplePagesFragmentWithGroupingNextLink(customP
 		advancer: func(ctx context.Context, resp *OdataProductResultResponse) (*azcore.Request, error) {
 			return client.NextFragmentWithGroupingCreateRequest(ctx, *resp.OdataProductResult.OdataNextLink, customParameterGroup)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -420,6 +425,7 @@ func (client *PagingClient) GetMultiplePagesRetryFirst(options *PagingGetMultipl
 		advancer: func(ctx context.Context, resp *ProductResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ProductResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -464,6 +470,7 @@ func (client *PagingClient) GetMultiplePagesRetrySecond(options *PagingGetMultip
 		advancer: func(ctx context.Context, resp *ProductResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ProductResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -508,6 +515,7 @@ func (client *PagingClient) GetMultiplePagesWithOffset(pagingGetMultiplePagesWit
 		advancer: func(ctx context.Context, resp *ProductResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ProductResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -562,6 +570,7 @@ func (client *PagingClient) GetNoItemNamePages(options *PagingGetNoItemNamePages
 		advancer: func(ctx context.Context, resp *ProductResultValueResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ProductResultValue.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -655,6 +664,7 @@ func (client *PagingClient) GetOdataMultiplePages(options *PagingGetOdataMultipl
 		advancer: func(ctx context.Context, resp *OdataProductResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.OdataProductResult.OdataNextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -708,6 +718,7 @@ func (client *PagingClient) GetPagingModelWithItemNameWithXmsClientName(options 
 		advancer: func(ctx context.Context, resp *ProductResultValueWithXmsClientNameResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ProductResultValueWithXmsClientName.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -752,6 +763,7 @@ func (client *PagingClient) GetSinglePages(options *PagingGetSinglePagesOptions)
 		advancer: func(ctx context.Context, resp *ProductResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ProductResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -796,6 +808,7 @@ func (client *PagingClient) GetSinglePagesFailure(options *PagingGetSinglePagesF
 		advancer: func(ctx context.Context, resp *ProductResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ProductResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -840,6 +853,7 @@ func (client *PagingClient) GetWithQueryParams(requiredQueryParameter int32, opt
 		advancer: func(ctx context.Context, resp *ProductResultResponse) (*azcore.Request, error) {
 			return client.NextOperationWithQueryParamsCreateRequest(ctx)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

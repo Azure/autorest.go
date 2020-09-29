@@ -277,6 +277,7 @@ func (client *RouteFiltersClient) List(options *RouteFiltersListOptions) RouteFi
 		advancer: func(ctx context.Context, resp *RouteFilterListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.RouteFilterListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -322,6 +323,7 @@ func (client *RouteFiltersClient) ListByResourceGroup(resourceGroupName string, 
 		advancer: func(ctx context.Context, resp *RouteFilterListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.RouteFilterListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

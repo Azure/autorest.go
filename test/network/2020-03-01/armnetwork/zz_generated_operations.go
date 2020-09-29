@@ -45,6 +45,7 @@ func (client *OperationsClient) List(options *OperationsListOptions) OperationLi
 		advancer: func(ctx context.Context, resp *OperationListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.OperationListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

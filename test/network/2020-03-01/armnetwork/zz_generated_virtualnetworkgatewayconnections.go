@@ -344,6 +344,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) List(resourceGroupName str
 		advancer: func(ctx context.Context, resp *VirtualNetworkGatewayConnectionListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.VirtualNetworkGatewayConnectionListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

@@ -272,6 +272,7 @@ func (client *SSHPublicKeysClient) ListByResourceGroup(resourceGroupName string,
 		advancer: func(ctx context.Context, resp *SSHPublicKeysGroupListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.SSHPublicKeysGroupListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -321,6 +322,7 @@ func (client *SSHPublicKeysClient) ListBySubscription(options *SSHPublicKeysList
 		advancer: func(ctx context.Context, resp *SSHPublicKeysGroupListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.SSHPublicKeysGroupListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

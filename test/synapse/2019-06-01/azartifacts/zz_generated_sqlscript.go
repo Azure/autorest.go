@@ -180,6 +180,7 @@ func (client *sqlScriptClient) GetSQLScriptsByWorkspace(options *SQLScriptGetSQL
 		advancer: func(ctx context.Context, resp *SQLScriptsListResponseResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.SQLScriptsListResponse.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

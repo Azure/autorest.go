@@ -276,6 +276,7 @@ func (client *ExpressRouteCircuitConnectionsClient) List(resourceGroupName strin
 		advancer: func(ctx context.Context, resp *ExpressRouteCircuitConnectionListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ExpressRouteCircuitConnectionListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

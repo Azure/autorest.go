@@ -273,6 +273,7 @@ func (client *FirewallPolicyRuleGroupsClient) List(resourceGroupName string, fir
 		advancer: func(ctx context.Context, resp *FirewallPolicyRuleGroupListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.FirewallPolicyRuleGroupListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

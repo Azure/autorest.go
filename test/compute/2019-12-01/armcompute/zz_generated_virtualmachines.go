@@ -685,6 +685,7 @@ func (client *VirtualMachinesClient) List(resourceGroupName string, options *Vir
 		advancer: func(ctx context.Context, resp *VirtualMachineListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.VirtualMachineListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -734,6 +735,7 @@ func (client *VirtualMachinesClient) ListAll(options *VirtualMachinesListAllOpti
 		advancer: func(ctx context.Context, resp *VirtualMachineListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.VirtualMachineListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -840,6 +842,7 @@ func (client *VirtualMachinesClient) ListByLocation(location string, options *Vi
 		advancer: func(ctx context.Context, resp *VirtualMachineListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.VirtualMachineListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

@@ -377,6 +377,7 @@ func (client *VirtualMachineScaleSetVMSClient) List(resourceGroupName string, vi
 		advancer: func(ctx context.Context, resp *VirtualMachineScaleSetVMListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.VirtualMachineScaleSetVMListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

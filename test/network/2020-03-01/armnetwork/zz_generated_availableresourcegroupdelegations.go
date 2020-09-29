@@ -48,6 +48,7 @@ func (client *AvailableResourceGroupDelegationsClient) List(location string, res
 		advancer: func(ctx context.Context, resp *AvailableDelegationsResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.AvailableDelegationsResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

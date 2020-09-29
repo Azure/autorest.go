@@ -277,6 +277,7 @@ func (client *LoadBalancersClient) List(resourceGroupName string, options *LoadB
 		advancer: func(ctx context.Context, resp *LoadBalancerListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.LoadBalancerListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -323,6 +324,7 @@ func (client *LoadBalancersClient) ListAll(options *LoadBalancersListAllOptions)
 		advancer: func(ctx context.Context, resp *LoadBalancerListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.LoadBalancerListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

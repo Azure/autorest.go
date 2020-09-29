@@ -8,7 +8,7 @@ import { camelCase } from '@azure-tools/codegen';
 import { CodeModel, SchemaResponse } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { PagerInfo } from '../common/helpers';
-import { contentPreamble, formatStatusCodes, getStatusCodes, sortAscending } from './helpers';
+import { contentPreamble, sortAscending } from './helpers';
 import { ImportManager } from './imports';
 
 // Creates the content in pagers.go
@@ -22,7 +22,6 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
   const imports = new ImportManager();
   imports.add('context');
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
-  imports.add('net/http');
   text += imports.text();
 
   const pagers = <Array<PagerInfo>>session.model.language.go!.pageableTypes;
@@ -36,7 +35,7 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
     let pollerRespField = '';
     let respFieldCheck = '\tresp, err := p.pipeline.Do(req)';
     let requesterCondition = '';
-    if (pager.respField) {
+    if (pager.hasLRO) {
       pollerRespField = `
       // previous response from the endpoint (LRO case)
       resp *azcore.Response`;
@@ -91,6 +90,8 @@ type ${pagerType} struct {
 	advancer ${advanceType}
 	// contains the current response
 	current *${responseType}
+	// status codes for successful retrieval
+	statusCodes []int
 	// any error encountered
 	err error${pollerRespField}
 }
@@ -120,8 +121,7 @@ func (p *${pagerType}) NextPage(ctx context.Context) bool {
 		return false
 	}
 `;
-    const statusCodes = getStatusCodes(pager.op);
-    text += `\tif !resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
+    text += `\tif !resp.HasStatusCode(p.statusCodes...) {\n`;
     text += `\tp.err = p.errorer(resp)\n`
     text += `\t\treturn false\n`;
     text += '\t}\n';

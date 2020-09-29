@@ -103,6 +103,7 @@ func (client *LoadBalancerBackendAddressPoolsClient) List(resourceGroupName stri
 		advancer: func(ctx context.Context, resp *LoadBalancerBackendAddressPoolListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.LoadBalancerBackendAddressPoolListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

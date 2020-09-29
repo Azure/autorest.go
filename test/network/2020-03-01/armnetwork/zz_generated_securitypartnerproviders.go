@@ -274,6 +274,7 @@ func (client *SecurityPartnerProvidersClient) List(options *SecurityPartnerProvi
 		advancer: func(ctx context.Context, resp *SecurityPartnerProviderListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.SecurityPartnerProviderListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -319,6 +320,7 @@ func (client *SecurityPartnerProvidersClient) ListByResourceGroup(resourceGroupN
 		advancer: func(ctx context.Context, resp *SecurityPartnerProviderListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.SecurityPartnerProviderListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
