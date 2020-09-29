@@ -290,6 +290,7 @@ func (client *ImagesClient) List(options *ImagesListOptions) ImageListResultPage
 		advancer: func(ctx context.Context, resp *ImageListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ImageListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -338,6 +339,7 @@ func (client *ImagesClient) ListByResourceGroup(resourceGroupName string, option
 		advancer: func(ctx context.Context, resp *ImageListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ImageListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

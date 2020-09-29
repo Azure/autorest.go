@@ -276,6 +276,7 @@ func (client *DiskEncryptionSetsClient) List(options *DiskEncryptionSetsListOpti
 		advancer: func(ctx context.Context, resp *DiskEncryptionSetListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.DiskEncryptionSetList.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -321,6 +322,7 @@ func (client *DiskEncryptionSetsClient) ListByResourceGroup(resourceGroupName st
 		advancer: func(ctx context.Context, resp *DiskEncryptionSetListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.DiskEncryptionSetList.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

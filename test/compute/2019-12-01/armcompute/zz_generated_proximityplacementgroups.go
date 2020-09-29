@@ -218,6 +218,7 @@ func (client *ProximityPlacementGroupsClient) ListByResourceGroup(resourceGroupN
 		advancer: func(ctx context.Context, resp *ProximityPlacementGroupListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ProximityPlacementGroupListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -267,6 +268,7 @@ func (client *ProximityPlacementGroupsClient) ListBySubscription(options *Proxim
 		advancer: func(ctx context.Context, resp *ProximityPlacementGroupListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ProximityPlacementGroupListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

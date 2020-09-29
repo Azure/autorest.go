@@ -48,6 +48,7 @@ func (client *ExpressRouteServiceProvidersClient) List(options *ExpressRouteServ
 		advancer: func(ctx context.Context, resp *ExpressRouteServiceProviderListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ExpressRouteServiceProviderListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

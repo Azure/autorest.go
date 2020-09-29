@@ -48,6 +48,7 @@ func (client *AzureFirewallFqdnTagsClient) ListAll(options *AzureFirewallFqdnTag
 		advancer: func(ctx context.Context, resp *AzureFirewallFqdnTagListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.AzureFirewallFqdnTagListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

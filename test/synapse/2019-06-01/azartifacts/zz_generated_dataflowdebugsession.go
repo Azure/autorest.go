@@ -210,6 +210,7 @@ func (client *dataFlowDebugSessionClient) QueryDataFlowDebugSessionsByWorkspace(
 		advancer: func(ctx context.Context, resp *QueryDataFlowDebugSessionsResponseResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.QueryDataFlowDebugSessionsResponse.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

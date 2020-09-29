@@ -593,6 +593,7 @@ func (client *PrivateLinkServicesClient) List(resourceGroupName string, options 
 		advancer: func(ctx context.Context, resp *PrivateLinkServiceListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.PrivateLinkServiceListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -639,6 +640,7 @@ func (client *PrivateLinkServicesClient) ListAutoApprovedPrivateLinkServices(loc
 		advancer: func(ctx context.Context, resp *AutoApprovedPrivateLinkServicesResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.AutoApprovedPrivateLinkServicesResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -685,6 +687,7 @@ func (client *PrivateLinkServicesClient) ListAutoApprovedPrivateLinkServicesByRe
 		advancer: func(ctx context.Context, resp *AutoApprovedPrivateLinkServicesResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.AutoApprovedPrivateLinkServicesResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -732,6 +735,7 @@ func (client *PrivateLinkServicesClient) ListBySubscription(options *PrivateLink
 		advancer: func(ctx context.Context, resp *PrivateLinkServiceListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.PrivateLinkServiceListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -777,6 +781,7 @@ func (client *PrivateLinkServicesClient) ListPrivateEndpointConnections(resource
 		advancer: func(ctx context.Context, resp *PrivateEndpointConnectionListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.PrivateEndpointConnectionListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

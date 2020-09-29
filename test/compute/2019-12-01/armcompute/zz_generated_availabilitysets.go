@@ -217,6 +217,7 @@ func (client *AvailabilitySetsClient) List(resourceGroupName string, options *Av
 		advancer: func(ctx context.Context, resp *AvailabilitySetListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.AvailabilitySetListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -321,6 +322,7 @@ func (client *AvailabilitySetsClient) ListBySubscription(options *AvailabilitySe
 		advancer: func(ctx context.Context, resp *AvailabilitySetListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.AvailabilitySetListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

@@ -50,6 +50,7 @@ func (client *AvailablePrivateEndpointTypesClient) List(location string, options
 		advancer: func(ctx context.Context, resp *AvailablePrivateEndpointTypesResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.AvailablePrivateEndpointTypesResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -96,6 +97,7 @@ func (client *AvailablePrivateEndpointTypesClient) ListByResourceGroup(location 
 		advancer: func(ctx context.Context, resp *AvailablePrivateEndpointTypesResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.AvailablePrivateEndpointTypesResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

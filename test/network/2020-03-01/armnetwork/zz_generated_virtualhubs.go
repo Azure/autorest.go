@@ -274,6 +274,7 @@ func (client *VirtualHubsClient) List(options *VirtualHubsListOptions) ListVirtu
 		advancer: func(ctx context.Context, resp *ListVirtualHubsResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ListVirtualHubsResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -319,6 +320,7 @@ func (client *VirtualHubsClient) ListByResourceGroup(resourceGroupName string, o
 		advancer: func(ctx context.Context, resp *ListVirtualHubsResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ListVirtualHubsResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

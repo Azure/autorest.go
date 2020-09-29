@@ -8,7 +8,6 @@ package azartifacts
 import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"net/http"
 )
 
 // DataFlowListResponsePager provides iteration over DataFlowListResponse pages.
@@ -45,6 +44,8 @@ type dataFlowListResponsePager struct {
 	advancer dataFlowListResponseAdvancePage
 	// contains the current response
 	current *DataFlowListResponseResponse
+	// status codes for successful retrieval
+	statusCodes []int
 	// any error encountered
 	err error
 }
@@ -73,7 +74,7 @@ func (p *dataFlowListResponsePager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !resp.HasStatusCode(p.statusCodes...) {
 		p.err = p.errorer(resp)
 		return false
 	}
@@ -124,6 +125,8 @@ type datasetListResponsePager struct {
 	advancer datasetListResponseAdvancePage
 	// contains the current response
 	current *DatasetListResponseResponse
+	// status codes for successful retrieval
+	statusCodes []int
 	// any error encountered
 	err error
 }
@@ -152,7 +155,7 @@ func (p *datasetListResponsePager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !resp.HasStatusCode(p.statusCodes...) {
 		p.err = p.errorer(resp)
 		return false
 	}
@@ -203,6 +206,8 @@ type linkedServiceListResponsePager struct {
 	advancer linkedServiceListResponseAdvancePage
 	// contains the current response
 	current *LinkedServiceListResponseResponse
+	// status codes for successful retrieval
+	statusCodes []int
 	// any error encountered
 	err error
 }
@@ -231,7 +236,7 @@ func (p *linkedServiceListResponsePager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !resp.HasStatusCode(p.statusCodes...) {
 		p.err = p.errorer(resp)
 		return false
 	}
@@ -282,6 +287,8 @@ type notebookListResponsePager struct {
 	advancer notebookListResponseAdvancePage
 	// contains the current response
 	current *NotebookListResponseResponse
+	// status codes for successful retrieval
+	statusCodes []int
 	// any error encountered
 	err error
 }
@@ -310,7 +317,7 @@ func (p *notebookListResponsePager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !resp.HasStatusCode(p.statusCodes...) {
 		p.err = p.errorer(resp)
 		return false
 	}
@@ -361,6 +368,8 @@ type pipelineListResponsePager struct {
 	advancer pipelineListResponseAdvancePage
 	// contains the current response
 	current *PipelineListResponseResponse
+	// status codes for successful retrieval
+	statusCodes []int
 	// any error encountered
 	err error
 }
@@ -389,7 +398,7 @@ func (p *pipelineListResponsePager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !resp.HasStatusCode(p.statusCodes...) {
 		p.err = p.errorer(resp)
 		return false
 	}
@@ -440,6 +449,8 @@ type queryDataFlowDebugSessionsResponsePager struct {
 	advancer queryDataFlowDebugSessionsResponseAdvancePage
 	// contains the current response
 	current *QueryDataFlowDebugSessionsResponseResponse
+	// status codes for successful retrieval
+	statusCodes []int
 	// any error encountered
 	err error
 }
@@ -468,7 +479,7 @@ func (p *queryDataFlowDebugSessionsResponsePager) NextPage(ctx context.Context) 
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !resp.HasStatusCode(p.statusCodes...) {
 		p.err = p.errorer(resp)
 		return false
 	}
@@ -519,6 +530,8 @@ type sqlScriptsListResponsePager struct {
 	advancer sqlScriptsListResponseAdvancePage
 	// contains the current response
 	current *SQLScriptsListResponseResponse
+	// status codes for successful retrieval
+	statusCodes []int
 	// any error encountered
 	err error
 }
@@ -547,7 +560,7 @@ func (p *sqlScriptsListResponsePager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !resp.HasStatusCode(p.statusCodes...) {
 		p.err = p.errorer(resp)
 		return false
 	}
@@ -598,6 +611,8 @@ type sparkJobDefinitionsListResponsePager struct {
 	advancer sparkJobDefinitionsListResponseAdvancePage
 	// contains the current response
 	current *SparkJobDefinitionsListResponseResponse
+	// status codes for successful retrieval
+	statusCodes []int
 	// any error encountered
 	err error
 }
@@ -626,7 +641,7 @@ func (p *sparkJobDefinitionsListResponsePager) NextPage(ctx context.Context) boo
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !resp.HasStatusCode(p.statusCodes...) {
 		p.err = p.errorer(resp)
 		return false
 	}
@@ -677,6 +692,8 @@ type triggerListResponsePager struct {
 	advancer triggerListResponseAdvancePage
 	// contains the current response
 	current *TriggerListResponseResponse
+	// status codes for successful retrieval
+	statusCodes []int
 	// any error encountered
 	err error
 }
@@ -705,7 +722,7 @@ func (p *triggerListResponsePager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !resp.HasStatusCode(p.statusCodes...) {
 		p.err = p.errorer(resp)
 		return false
 	}

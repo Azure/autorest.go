@@ -656,6 +656,7 @@ func (client *VirtualMachineScaleSetsClient) GetOSUpgradeHistory(resourceGroupNa
 		advancer: func(ctx context.Context, resp *VirtualMachineScaleSetListOSUpgradeHistoryResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.VirtualMachineScaleSetListOSUpgradeHistory.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -706,6 +707,7 @@ func (client *VirtualMachineScaleSetsClient) List(resourceGroupName string, opti
 		advancer: func(ctx context.Context, resp *VirtualMachineScaleSetListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.VirtualMachineScaleSetListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -755,6 +757,7 @@ func (client *VirtualMachineScaleSetsClient) ListAll(options *VirtualMachineScal
 		advancer: func(ctx context.Context, resp *VirtualMachineScaleSetListWithLinkResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.VirtualMachineScaleSetListWithLinkResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -803,6 +806,7 @@ func (client *VirtualMachineScaleSetsClient) ListSKUs(resourceGroupName string, 
 		advancer: func(ctx context.Context, resp *VirtualMachineScaleSetListSKUsResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.VirtualMachineScaleSetListSKUsResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

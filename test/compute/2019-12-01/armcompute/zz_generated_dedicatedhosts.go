@@ -291,6 +291,7 @@ func (client *DedicatedHostsClient) ListByHostGroup(resourceGroupName string, ho
 		advancer: func(ctx context.Context, resp *DedicatedHostListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.DedicatedHostListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

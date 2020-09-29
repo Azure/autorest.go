@@ -277,6 +277,7 @@ func (client *IPGroupsClient) List(options *IPGroupsListOptions) IPGroupListResu
 		advancer: func(ctx context.Context, resp *IPGroupListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.IPGroupListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -322,6 +323,7 @@ func (client *IPGroupsClient) ListByResourceGroup(resourceGroupName string, opti
 		advancer: func(ctx context.Context, resp *IPGroupListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.IPGroupListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

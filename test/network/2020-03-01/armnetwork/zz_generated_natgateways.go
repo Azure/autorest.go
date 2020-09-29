@@ -277,6 +277,7 @@ func (client *NatGatewaysClient) List(resourceGroupName string, options *NatGate
 		advancer: func(ctx context.Context, resp *NatGatewayListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.NatGatewayListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -323,6 +324,7 @@ func (client *NatGatewaysClient) ListAll(options *NatGatewaysListAllOptions) Nat
 		advancer: func(ctx context.Context, resp *NatGatewayListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.NatGatewayListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

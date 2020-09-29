@@ -50,6 +50,7 @@ func (client *AvailableServiceAliasesClient) List(location string, options *Avai
 		advancer: func(ctx context.Context, resp *AvailableServiceAliasesResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.AvailableServiceAliasesResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -96,6 +97,7 @@ func (client *AvailableServiceAliasesClient) ListByResourceGroup(resourceGroupNa
 		advancer: func(ctx context.Context, resp *AvailableServiceAliasesResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.AvailableServiceAliasesResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

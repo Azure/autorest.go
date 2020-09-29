@@ -176,6 +176,7 @@ func (client *dataFlowClient) GetDataFlowsByWorkspace(options *DataFlowGetDataFl
 		advancer: func(ctx context.Context, resp *DataFlowListResponseResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.DataFlowListResponse.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

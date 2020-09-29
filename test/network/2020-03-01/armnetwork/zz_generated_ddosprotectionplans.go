@@ -274,6 +274,7 @@ func (client *DdosProtectionPlansClient) List(options *DdosProtectionPlansListOp
 		advancer: func(ctx context.Context, resp *DdosProtectionPlanListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.DdosProtectionPlanListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -319,6 +320,7 @@ func (client *DdosProtectionPlansClient) ListByResourceGroup(resourceGroupName s
 		advancer: func(ctx context.Context, resp *DdosProtectionPlanListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.DdosProtectionPlanListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

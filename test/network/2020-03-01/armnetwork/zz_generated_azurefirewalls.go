@@ -276,6 +276,7 @@ func (client *AzureFirewallsClient) List(resourceGroupName string, options *Azur
 		advancer: func(ctx context.Context, resp *AzureFirewallListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.AzureFirewallListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -322,6 +323,7 @@ func (client *AzureFirewallsClient) ListAll(options *AzureFirewallsListAllOption
 		advancer: func(ctx context.Context, resp *AzureFirewallListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.AzureFirewallListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

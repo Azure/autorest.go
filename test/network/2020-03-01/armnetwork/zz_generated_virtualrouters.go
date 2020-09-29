@@ -275,6 +275,7 @@ func (client *VirtualRoutersClient) List(options *VirtualRoutersListOptions) Vir
 		advancer: func(ctx context.Context, resp *VirtualRouterListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.VirtualRouterListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -320,6 +321,7 @@ func (client *VirtualRoutersClient) ListByResourceGroup(resourceGroupName string
 		advancer: func(ctx context.Context, resp *VirtualRouterListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.VirtualRouterListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

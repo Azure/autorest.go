@@ -274,6 +274,7 @@ func (client *VirtualNetworkTapsClient) ListAll(options *VirtualNetworkTapsListA
 		advancer: func(ctx context.Context, resp *VirtualNetworkTapListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.VirtualNetworkTapListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -319,6 +320,7 @@ func (client *VirtualNetworkTapsClient) ListByResourceGroup(resourceGroupName st
 		advancer: func(ctx context.Context, resp *VirtualNetworkTapListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.VirtualNetworkTapListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

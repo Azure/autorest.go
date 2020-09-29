@@ -222,6 +222,7 @@ function generateOperation(op: Operation, imports: ImportManager): string {
   }
   text += `func (client *${clientName}) ${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;
   const reqParams = getCreateRequestParameters(op);
+  const statusCodes = getStatusCodes(op);
   if (isPageableOperation(op) && !isLROOperation(op)) {
     imports.add('context');
     text += `\treturn &${camelCase(op.language.go!.pageableType.name)}{\n`;
@@ -257,6 +258,7 @@ function generateOperation(op: Operation, imports: ImportManager): string {
       text += `\t\t\treturn azcore.NewRequest(ctx, http.MethodGet, *resp.${resultTypeName}.${nextLink})\n`;
     }
     text += `\t\t},\n`;
+    text += `\t\tstatusCodes: []int{${formatStatusCodes(statusCodes)}},\n`;
     text += `\t}\n`;
     text += '}\n\n';
     return text;
@@ -269,7 +271,6 @@ function generateOperation(op: Operation, imports: ImportManager): string {
   text += `\tif err != nil {\n`;
   text += `\t\treturn nil, err\n`;
   text += `\t}\n`;
-  const statusCodes = getStatusCodes(op);
   text += `\tif !resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
   text += `\t\treturn nil, client.${info.protocolNaming.errorMethod}(resp)\n`;
   text += '\t}\n';

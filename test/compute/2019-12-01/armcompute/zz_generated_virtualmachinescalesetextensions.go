@@ -291,6 +291,7 @@ func (client *VirtualMachineScaleSetExtensionsClient) List(resourceGroupName str
 		advancer: func(ctx context.Context, resp *VirtualMachineScaleSetExtensionListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.VirtualMachineScaleSetExtensionListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

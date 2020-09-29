@@ -273,6 +273,7 @@ func (client *RouteFilterRulesClient) ListByRouteFilter(resourceGroupName string
 		advancer: func(ctx context.Context, resp *RouteFilterRuleListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.RouteFilterRuleListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

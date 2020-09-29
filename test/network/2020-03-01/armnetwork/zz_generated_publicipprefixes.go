@@ -277,6 +277,7 @@ func (client *PublicIPPrefixesClient) List(resourceGroupName string, options *Pu
 		advancer: func(ctx context.Context, resp *PublicIPPrefixListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.PublicIPPrefixListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -323,6 +324,7 @@ func (client *PublicIPPrefixesClient) ListAll(options *PublicIPPrefixesListAllOp
 		advancer: func(ctx context.Context, resp *PublicIPPrefixListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.PublicIPPrefixListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

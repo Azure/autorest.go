@@ -273,6 +273,7 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) List(resourceGroupName 
 		advancer: func(ctx context.Context, resp *ExpressRouteCrossConnectionPeeringListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ExpressRouteCrossConnectionPeeringList.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

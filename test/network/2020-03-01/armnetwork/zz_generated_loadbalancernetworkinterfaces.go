@@ -48,6 +48,7 @@ func (client *LoadBalancerNetworkInterfacesClient) List(resourceGroupName string
 		advancer: func(ctx context.Context, resp *NetworkInterfaceListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.NetworkInterfaceListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

@@ -271,6 +271,7 @@ func (client *sparkJobDefinitionClient) GetSparkJobDefinitionsByWorkspace(option
 		advancer: func(ctx context.Context, resp *SparkJobDefinitionsListResponseResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.SparkJobDefinitionsListResponse.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

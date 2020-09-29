@@ -273,6 +273,7 @@ func (client *RoutesClient) List(resourceGroupName string, routeTableName string
 		advancer: func(ctx context.Context, resp *RouteListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.RouteListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

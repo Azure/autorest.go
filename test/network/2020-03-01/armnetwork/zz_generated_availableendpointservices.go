@@ -48,6 +48,7 @@ func (client *AvailableEndpointServicesClient) List(location string, options *Av
 		advancer: func(ctx context.Context, resp *EndpointServicesListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.EndpointServicesListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

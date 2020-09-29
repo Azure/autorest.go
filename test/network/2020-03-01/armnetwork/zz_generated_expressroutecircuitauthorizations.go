@@ -273,6 +273,7 @@ func (client *ExpressRouteCircuitAuthorizationsClient) List(resourceGroupName st
 		advancer: func(ctx context.Context, resp *AuthorizationListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.AuthorizationListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

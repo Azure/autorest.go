@@ -8,7 +8,6 @@ package paginggroup
 import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"net/http"
 )
 
 // OdataProductResultPager provides iteration over OdataProductResult pages.
@@ -45,6 +44,8 @@ type odataProductResultPager struct {
 	advancer odataProductResultAdvancePage
 	// contains the current response
 	current *OdataProductResultResponse
+	// status codes for successful retrieval
+	statusCodes []int
 	// any error encountered
 	err error
 }
@@ -73,7 +74,7 @@ func (p *odataProductResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !resp.HasStatusCode(p.statusCodes...) {
 		p.err = p.errorer(resp)
 		return false
 	}
@@ -124,6 +125,8 @@ type productResultPager struct {
 	advancer productResultAdvancePage
 	// contains the current response
 	current *ProductResultResponse
+	// status codes for successful retrieval
+	statusCodes []int
 	// any error encountered
 	err error
 	// previous response from the endpoint (LRO case)
@@ -159,7 +162,7 @@ func (p *productResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !resp.HasStatusCode(p.statusCodes...) {
 		p.err = p.errorer(resp)
 		return false
 	}
@@ -210,6 +213,8 @@ type productResultValuePager struct {
 	advancer productResultValueAdvancePage
 	// contains the current response
 	current *ProductResultValueResponse
+	// status codes for successful retrieval
+	statusCodes []int
 	// any error encountered
 	err error
 }
@@ -238,7 +243,7 @@ func (p *productResultValuePager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !resp.HasStatusCode(p.statusCodes...) {
 		p.err = p.errorer(resp)
 		return false
 	}
@@ -289,6 +294,8 @@ type productResultValueWithXmsClientNamePager struct {
 	advancer productResultValueWithXmsClientNameAdvancePage
 	// contains the current response
 	current *ProductResultValueWithXmsClientNameResponse
+	// status codes for successful retrieval
+	statusCodes []int
 	// any error encountered
 	err error
 }
@@ -317,7 +324,7 @@ func (p *productResultValueWithXmsClientNamePager) NextPage(ctx context.Context)
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !resp.HasStatusCode(p.statusCodes...) {
 		p.err = p.errorer(resp)
 		return false
 	}

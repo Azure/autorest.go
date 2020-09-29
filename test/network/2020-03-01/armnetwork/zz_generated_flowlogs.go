@@ -273,6 +273,7 @@ func (client *FlowLogsClient) List(resourceGroupName string, networkWatcherName 
 		advancer: func(ctx context.Context, resp *FlowLogListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.FlowLogListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

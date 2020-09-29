@@ -108,6 +108,7 @@ func (client *VirtualMachineRunCommandsClient) List(location string, options *Vi
 		advancer: func(ctx context.Context, resp *RunCommandListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.RunCommandListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

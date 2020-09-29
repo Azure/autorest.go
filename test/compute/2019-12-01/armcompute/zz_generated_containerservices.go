@@ -283,6 +283,7 @@ func (client *ContainerServicesClient) List(options *ContainerServicesListOption
 		advancer: func(ctx context.Context, resp *ContainerServiceListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ContainerServiceListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -331,6 +332,7 @@ func (client *ContainerServicesClient) ListByResourceGroup(resourceGroupName str
 		advancer: func(ctx context.Context, resp *ContainerServiceListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ContainerServiceListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

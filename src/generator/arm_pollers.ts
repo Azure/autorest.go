@@ -7,8 +7,8 @@ import { Session } from '@azure-tools/autorest-extension-base';
 import { camelCase } from '@azure-tools/codegen';
 import { CodeModel, SchemaResponse, SchemaType, Operation, Schema, ArraySchema } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { PagerInfo, PollerInfo, isSchemaResponse, isPageableOperation } from '../common/helpers';
-import { contentPreamble, sortAscending, getCreateRequestParametersSig, getMethodParameters } from './helpers';
+import { PollerInfo, isSchemaResponse, isPageableOperation } from '../common/helpers';
+import { contentPreamble, getStatusCodes, formatStatusCodes, sortAscending, getCreateRequestParametersSig, getMethodParameters } from './helpers';
 import { ImportManager } from './imports';
 import { OperationNaming } from '../transform/namer';
 
@@ -53,6 +53,13 @@ function generatePagerReturnInstance(op: Operation): string {
     text += `\t\t\treturn azcore.NewRequest(ctx, http.MethodGet, *resp.${resultTypeName}.${op.language.go!.paging.nextLinkName})\n`;
   }
   text += '\t\t},\n';
+  const statusCodes = getStatusCodes(op);
+  if (statusCodes.indexOf('200') === -1) {
+    // most GETs for the next page return a 200 on success however
+    // not all LROs specify 200 as a status code for initial response
+    statusCodes.push('200');
+  }
+  text += `\t\tstatusCodes: []int{${formatStatusCodes(statusCodes)}},\n`;
   text += `\t}, nil`;
   return text;
 }

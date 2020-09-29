@@ -215,6 +215,7 @@ func (client *DedicatedHostGroupsClient) ListByResourceGroup(resourceGroupName s
 		advancer: func(ctx context.Context, resp *DedicatedHostGroupListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.DedicatedHostGroupListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -264,6 +265,7 @@ func (client *DedicatedHostGroupsClient) ListBySubscription(options *DedicatedHo
 		advancer: func(ctx context.Context, resp *DedicatedHostGroupListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.DedicatedHostGroupListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

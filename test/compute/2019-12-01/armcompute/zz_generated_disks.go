@@ -380,6 +380,7 @@ func (client *DisksClient) List(options *DisksListOptions) DiskListPager {
 		advancer: func(ctx context.Context, resp *DiskListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.DiskList.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -428,6 +429,7 @@ func (client *DisksClient) ListByResourceGroup(resourceGroupName string, options
 		advancer: func(ctx context.Context, resp *DiskListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.DiskList.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

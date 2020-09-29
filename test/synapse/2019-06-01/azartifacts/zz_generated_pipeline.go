@@ -239,6 +239,7 @@ func (client *pipelineClient) GetPipelinesByWorkspace(options *PipelineGetPipeli
 		advancer: func(ctx context.Context, resp *PipelineListResponseResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.PipelineListResponse.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

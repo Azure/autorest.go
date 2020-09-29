@@ -101,6 +101,7 @@ func (client *ExpressRoutePortsLocationsClient) List(options *ExpressRoutePortsL
 		advancer: func(ctx context.Context, resp *ExpressRoutePortsLocationListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ExpressRoutePortsLocationListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

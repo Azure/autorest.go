@@ -272,6 +272,7 @@ func (client *BastionHostsClient) List(options *BastionHostsListOptions) Bastion
 		advancer: func(ctx context.Context, resp *BastionHostListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.BastionHostListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -317,6 +318,7 @@ func (client *BastionHostsClient) ListByResourceGroup(resourceGroupName string, 
 		advancer: func(ctx context.Context, resp *BastionHostListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.BastionHostListResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

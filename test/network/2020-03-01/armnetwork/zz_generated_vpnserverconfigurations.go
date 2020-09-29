@@ -274,6 +274,7 @@ func (client *VpnServerConfigurationsClient) List(options *VpnServerConfiguratio
 		advancer: func(ctx context.Context, resp *ListVpnServerConfigurationsResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ListVpnServerConfigurationsResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -319,6 +320,7 @@ func (client *VpnServerConfigurationsClient) ListByResourceGroup(resourceGroupNa
 		advancer: func(ctx context.Context, resp *ListVpnServerConfigurationsResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ListVpnServerConfigurationsResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 

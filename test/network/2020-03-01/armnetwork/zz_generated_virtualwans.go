@@ -274,6 +274,7 @@ func (client *VirtualWansClient) List(options *VirtualWansListOptions) ListVirtu
 		advancer: func(ctx context.Context, resp *ListVirtualWaNsResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ListVirtualWaNsResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -319,6 +320,7 @@ func (client *VirtualWansClient) ListByResourceGroup(resourceGroupName string, o
 		advancer: func(ctx context.Context, resp *ListVirtualWaNsResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ListVirtualWaNsResult.NextLink)
 		},
+		statusCodes: []int{http.StatusOK},
 	}
 }
 
