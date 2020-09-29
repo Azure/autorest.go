@@ -12,7 +12,7 @@ import { contentPreamble, sortAscending, getCreateRequestParametersSig, getMetho
 import { ImportManager } from './imports';
 import { OperationNaming } from '../transform/namer';
 
-function generatePagerReturnInstance(op: Operation, imports: ImportManager): string {
+function generatePagerReturnInstance(op: Operation): string {
   let text = '';
   const info = <OperationNaming>op.language.go!;
   // split param list into individual params
@@ -26,8 +26,8 @@ function generatePagerReturnInstance(op: Operation, imports: ImportManager): str
   text += `\t\tresp: resp,\n`;
   text += '\t\terrorer: p.errHandler,\n';
   text += `\t\tresponder: p.respHandler,\n`;
-  const pager = <PagerInfo>op.language.go!.pageableType;
-  const pagerSchema = <SchemaResponse>pager.op.responses![0];
+  const pagerSchema = <SchemaResponse>op.responses![0];
+  text += `\t\tadvancer: func(ctx context.Context, resp *${pagerSchema.schema.language.go!.responseType.name}) (*azcore.Request, error) {\n`;
   if (op.language.go!.paging.member) {
     // find the location of the nextLink param
     const nextLinkOpParams = getMethodParameters(op.language.go!.paging.nextLinkOperation);
@@ -35,7 +35,7 @@ function generatePagerReturnInstance(op: Operation, imports: ImportManager): str
     for (let i = 0; i < nextLinkOpParams.length; ++i) {
       if (nextLinkOpParams[i].schema.type === SchemaType.String && nextLinkOpParams[i].language.go!.name.startsWith('next')) {
         // found it
-        reqParams.splice(i, 0, `*resp.${pagerSchema.schema.language.go!.name}.${pager.op.language.go!.paging.nextLinkName}`);
+        reqParams.splice(i, 0, `*resp.${pagerSchema.schema.language.go!.name}.${op.language.go!.paging.nextLinkName}`);
         found = true;
         break;
       }
@@ -43,19 +43,16 @@ function generatePagerReturnInstance(op: Operation, imports: ImportManager): str
     if (!found) {
       throw console.error(`failed to find nextLink parameter for operation ${op.language.go!.paging.nextLinkOperation.language.go!.name}`);
     }
-    text += `\t\tadvancer: func(ctx context.Context, resp *${pagerSchema.schema.language.go!.responseType.name}) (*azcore.Request, error) {\n`;
     text += `\t\t\treturn client.${camelCase(op.language.go!.paging.member)}CreateRequest(ctx, ${reqParams.join(', ')})\n`;
-    text += '\t\t},\n';
   } else {
     let resultTypeName = pagerSchema.schema.language.go!.name;
     if (pagerSchema.schema.serialization?.xml?.name) {
       // xml can specifiy its own name, prefer that if available
       resultTypeName = pagerSchema.schema.serialization.xml.name;
     }
-    text += `\t\tadvancer: func(ctx context.Context, resp *${pagerSchema.schema.language.go!.responseType.name}) (*azcore.Request, error) {\n`;
-    text += `\t\t\treturn azcore.NewRequest(ctx, http.MethodGet, *resp.${resultTypeName}.${pager.op.language.go!.paging.nextLinkName})\n`;
-    text += `\t\t},\n`;
+    text += `\t\t\treturn azcore.NewRequest(ctx, http.MethodGet, *resp.${resultTypeName}.${op.language.go!.paging.nextLinkName})\n`;
   }
+  text += '\t\t},\n';
   text += `\t}, nil`;
   return text;
 }
@@ -112,7 +109,7 @@ export async function generateARMPollers(session: Session<CodeModel>): Promise<s
       respHandler ${camelCase(poller.op.language.go!.pageableType.op.responses![0].schema.language.go!.name)}HandleResponse`;
       handleResponse = `
       func (p *${pollerName}) handleResponse(resp *azcore.Response) (${responseType}, error) {
-        ${generatePagerReturnInstance(poller.op, imports)}
+        ${generatePagerReturnInstance(poller.op)}
       }
       `;
       finalResponse = `${finalResponseDeclaration} {
