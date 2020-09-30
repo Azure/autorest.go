@@ -697,6 +697,11 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
     }
     // create poller type info
     if (isLROOperation(op)) {
+      if (op.language.go!.paging && op.language.go!.paging.member) {
+        // implementing support for this is very complicated, and since
+        // no services at present use this pattern avoid it for now
+        throw console.error(`${op.language.go!.name}: unsupported pager-poller that uses next page operation`);
+      }
       // create the poller response envelope
       generateLROResponseEnvelope(response, op, codeModel);
       if (codeModel.language.go!.pollerTypes === undefined) {
@@ -718,9 +723,20 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
       if (!skipAddLRO) {
         // Adding the operation group name to the poller name for polling operations that need to be unique to that operation group
         // create a new one, add to global list and assign to method
+        let respEnv = "HTTPPollerResponse";
+        let respField: string | undefined;
+        let respType: Schema | undefined;
+        if (isSchemaResponse(response)) {
+          respEnv = response.schema.language.go!.responseType.name;
+          respField = response.schema.language.go!.responseType.value;
+          respType = (<SchemaResponse>op.responses![0]).schema;
+        }
         const poller = {
           name: name,
-          op: op,
+          respEnv: respEnv,
+          respField: respField,
+          respType: respType,
+          pager: op.language.go!.pageableType,
         };
         pollers.push(poller);
         op.language.go!.pollerType = poller;

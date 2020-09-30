@@ -936,6 +936,7 @@ function generateARMLROBeginMethod(op: Operation, imports: ImportManager): strin
     text += `\t\trespHandler: func(resp *azcore.Response) (*${(<SchemaResponse>op.responses![0]).schema.language.go!.responseType.name}, error) {\n`;
     text += generateResponseUnmarshaller(op.responses![0], imports);
     text += '\t\t},\n';
+    text += `\t\tstatusCodes: []int{${formatStatusCodes(statusCodes)}},\n`;
   }
   text += '\t\tpipeline: client.p,\n';
   text += '\t}\n';

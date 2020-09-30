@@ -26,6 +26,7 @@ type productResultPagerPoller struct {
 	pipeline    azcore.Pipeline
 	errHandler  productResultHandleError
 	respHandler productResultHandleResponse
+	statusCodes []int
 	pt          armcore.Poller
 }
 
@@ -72,6 +73,6 @@ func (p *productResultPagerPoller) handleResponse(resp *azcore.Response) (Produc
 		advancer: func(ctx context.Context, resp *ProductResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ProductResult.NextLink)
 		},
-		statusCodes: []int{http.StatusAccepted, http.StatusOK},
+		statusCodes: p.statusCodes,
 	}, nil
 }

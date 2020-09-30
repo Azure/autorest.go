@@ -376,6 +376,7 @@ type bastionActiveSessionListResultPagerPoller struct {
 	pipeline    azcore.Pipeline
 	errHandler  bastionActiveSessionListResultHandleError
 	respHandler bastionActiveSessionListResultHandleResponse
+	statusCodes []int
 	pt          armcore.Poller
 }
 
@@ -422,7 +423,7 @@ func (p *bastionActiveSessionListResultPagerPoller) handleResponse(resp *azcore.
 		advancer: func(ctx context.Context, resp *BastionActiveSessionListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.BastionActiveSessionListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK, http.StatusAccepted},
+		statusCodes: p.statusCodes,
 	}, nil
 }
 
@@ -489,6 +490,7 @@ type bastionShareableLinkListResultPagerPoller struct {
 	pipeline    azcore.Pipeline
 	errHandler  bastionShareableLinkListResultHandleError
 	respHandler bastionShareableLinkListResultHandleResponse
+	statusCodes []int
 	pt          armcore.Poller
 }
 
@@ -535,7 +537,7 @@ func (p *bastionShareableLinkListResultPagerPoller) handleResponse(resp *azcore.
 		advancer: func(ctx context.Context, resp *BastionShareableLinkListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.BastionShareableLinkListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK, http.StatusAccepted},
+		statusCodes: p.statusCodes,
 	}, nil
 }
 
