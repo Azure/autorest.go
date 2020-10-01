@@ -312,7 +312,11 @@ type Dog struct {
 }
 
 // DotFishClassification provides polymorphic access to related types.
+// Call the interface's GetDotFish() method to access the common type.
+// Use a type switch to determine the concrete type.  The possible types are:
+// - *DotFish, *DotSalmon
 type DotFishClassification interface {
+	// GetDotFish() returns the DotFish content of the underlying type.
 	GetDotFish() *DotFish
 }
 
@@ -526,7 +530,11 @@ func (e Error) Error() string {
 }
 
 // FishClassification provides polymorphic access to related types.
+// Call the interface's GetFish() method to access the common type.
+// Use a type switch to determine the concrete type.  The possible types are:
+// - *Fish, *Cookiecuttershark, *Goblinshark, *Salmon, *Sawshark, *Shark, *SmartSalmon
 type FishClassification interface {
+	// GetFish() returns the Fish content of the underlying type.
 	GetFish() *Fish
 }
 
@@ -720,7 +728,11 @@ type MyBaseHelperType struct {
 }
 
 // MyBaseTypeClassification provides polymorphic access to related types.
+// Call the interface's GetMyBaseType() method to access the common type.
+// Use a type switch to determine the concrete type.  The possible types are:
+// - *MyBaseType, *MyDerivedType
 type MyBaseTypeClassification interface {
+	// GetMyBaseType() returns the MyBaseType content of the underlying type.
 	GetMyBaseType() *MyBaseType
 }
 
@@ -1033,8 +1045,12 @@ type ReadonlypropertyPutValidOptions struct {
 }
 
 // SalmonClassification provides polymorphic access to related types.
+// Call the interface's GetSalmon() method to access the common type.
+// Use a type switch to determine the concrete type.  The possible types are:
+// - *Salmon, *SmartSalmon
 type SalmonClassification interface {
 	FishClassification
+	// GetSalmon() returns the Salmon content of the underlying type.
 	GetSalmon() *Salmon
 }
 
@@ -1149,8 +1165,12 @@ func (s *Sawshark) UnmarshalJSON(data []byte) error {
 }
 
 // SharkClassification provides polymorphic access to related types.
+// Call the interface's GetShark() method to access the common type.
+// Use a type switch to determine the concrete type.  The possible types are:
+// - *Shark, *Cookiecuttershark, *Goblinshark, *Sawshark
 type SharkClassification interface {
 	FishClassification
+	// GetShark() returns the Shark content of the underlying type.
 	GetShark() *Shark
 }
 
