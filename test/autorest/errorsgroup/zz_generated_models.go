@@ -91,8 +91,12 @@ func (l *LinkNotFound) UnmarshalJSON(data []byte) error {
 }
 
 // NotFoundErrorBaseClassification provides polymorphic access to related types.
+// Call the interface's GetNotFoundErrorBase() method to access the common type.
+// Use a type switch to determine the concrete type.  The possible types are:
+// - *NotFoundErrorBase, *AnimalNotFound, *LinkNotFound
 type NotFoundErrorBaseClassification interface {
 	error
+	// GetNotFoundErrorBase() returns the NotFoundErrorBase content of the underlying type.
 	GetNotFoundErrorBase() *NotFoundErrorBase
 }
 
@@ -163,8 +167,12 @@ type PetAction struct {
 }
 
 // PetActionErrorClassification provides polymorphic access to related types.
+// Call the interface's GetPetActionError() method to access the common type.
+// Use a type switch to determine the concrete type.  The possible types are:
+// - *PetActionError, *PetHungryOrThirstyError, *PetSadError
 type PetActionErrorClassification interface {
 	error
+	// GetPetActionError() returns the PetActionError content of the underlying type.
 	GetPetActionError() *PetActionError
 }
 
@@ -278,8 +286,12 @@ type PetResponse struct {
 }
 
 // PetSadErrorClassification provides polymorphic access to related types.
+// Call the interface's GetPetSadError() method to access the common type.
+// Use a type switch to determine the concrete type.  The possible types are:
+// - *PetSadError, *PetHungryOrThirstyError
 type PetSadErrorClassification interface {
 	PetActionErrorClassification
+	// GetPetSadError() returns the PetSadError content of the underlying type.
 	GetPetSadError() *PetSadError
 }
 

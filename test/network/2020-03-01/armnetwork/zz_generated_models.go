@@ -6057,7 +6057,11 @@ type FirewallPolicyResponse struct {
 }
 
 // FirewallPolicyRuleClassification provides polymorphic access to related types.
+// Call the interface's GetFirewallPolicyRule() method to access the common type.
+// Use a type switch to determine the concrete type.  The possible types are:
+// - *FirewallPolicyRule, *FirewallPolicyFilterRule, *FirewallPolicyNatRule
 type FirewallPolicyRuleClassification interface {
+	// GetFirewallPolicyRule() returns the FirewallPolicyRule content of the underlying type.
 	GetFirewallPolicyRule() *FirewallPolicyRule
 }
 
@@ -6126,7 +6130,11 @@ func (f *FirewallPolicyRule) unmarshalInternal(rawMsg map[string]*json.RawMessag
 }
 
 // FirewallPolicyRuleConditionClassification provides polymorphic access to related types.
+// Call the interface's GetFirewallPolicyRuleCondition() method to access the common type.
+// Use a type switch to determine the concrete type.  The possible types are:
+// - *FirewallPolicyRuleCondition, *ApplicationRuleCondition, *NatRuleCondition, *NetworkRuleCondition
 type FirewallPolicyRuleConditionClassification interface {
+	// GetFirewallPolicyRuleCondition() returns the FirewallPolicyRuleCondition content of the underlying type.
 	GetFirewallPolicyRuleCondition() *FirewallPolicyRuleCondition
 }
 

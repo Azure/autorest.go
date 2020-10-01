@@ -14,7 +14,18 @@ import (
 )
 
 // ActivityClassification provides polymorphic access to related types.
+// Call the interface's GetActivity() method to access the common type.
+// Use a type switch to determine the concrete type.  The possible types are:
+// - *Activity, *AppendVariableActivity, *AzureDataExplorerCommandActivity, *AzureFunctionActivity, *AzureMLBatchExecutionActivity,
+// - *AzureMLExecutePipelineActivity, *AzureMLUpdateResourceActivity, *ControlActivity, *CopyActivity, *CustomActivity, *DataLakeAnalyticsUsqlActivity,
+// - *DatabricksNotebookActivity, *DatabricksSparkJarActivity, *DatabricksSparkPythonActivity, *DeleteActivity, *ExecuteDataFlowActivity,
+// - *ExecutePipelineActivity, *ExecuteSsisPackageActivity, *ExecutionActivity, *FilterActivity, *ForEachActivity, *GetMetadataActivity,
+// - *HDInsightHiveActivity, *HDInsightMapReduceActivity, *HDInsightPigActivity, *HDInsightSparkActivity, *HDInsightStreamingActivity,
+// - *IfConditionActivity, *LookupActivity, *SetVariableActivity, *SynapseSparkJobDefinitionActivity, *SqlPoolStoredProcedureActivity,
+// - *SqlServerStoredProcedureActivity, *SwitchActivity, *SynapseNotebookActivity, *UntilActivity, *ValidationActivity, *WaitActivity,
+// - *WebActivity, *WebHookActivity
 type ActivityClassification interface {
+	// GetActivity() returns the Activity content of the underlying type.
 	GetActivity() *Activity
 }
 
@@ -7157,7 +7168,15 @@ type CopyActivityTypeProperties struct {
 }
 
 // CopySinkClassification provides polymorphic access to related types.
+// Call the interface's GetCopySink() method to access the common type.
+// Use a type switch to determine the concrete type.  The possible types are:
+// - *CopySink, *AvroSink, *AzureBlobFSSink, *AzureDataExplorerSink, *AzureDataLakeStoreSink, *AzureMySqlSink, *AzurePostgreSqlSink,
+// - *AzureQueueSink, *AzureSearchIndexSink, *AzureSqlSink, *AzureTableSink, *BinarySink, *BlobSink, *CommonDataServiceForAppsSink,
+// - *CosmosDbMongoDbApiSink, *CosmosDbSqlApiSink, *DelimitedTextSink, *DocumentDbCollectionSink, *DynamicsCrmSink, *DynamicsSink,
+// - *FileSystemSink, *InformixSink, *JsonSink, *MicrosoftAccessSink, *OdbcSink, *OracleSink, *OrcSink, *ParquetSink, *SalesforceServiceCloudSink,
+// - *SalesforceSink, *SapCloudForCustomerSink, *SqlDWSink, *SqlMISink, *SqlServerSink, *SqlSink
 type CopySinkClassification interface {
+	// GetCopySink() returns the CopySink content of the underlying type.
 	GetCopySink() *CopySink
 }
 
@@ -7277,7 +7296,22 @@ func (c *CopySink) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
 }
 
 // CopySourceClassification provides polymorphic access to related types.
+// Call the interface's GetCopySource() method to access the common type.
+// Use a type switch to determine the concrete type.  The possible types are:
+// - *CopySource, *AmazonMWSSource, *AmazonRedshiftSource, *AvroSource, *AzureBlobFSSource, *AzureDataExplorerSource, *AzureDataLakeStoreSource,
+// - *AzureMariaDBSource, *AzureMySqlSource, *AzurePostgreSqlSource, *AzureSqlSource, *AzureTableSource, *BinarySource, *BlobSource,
+// - *CassandraSource, *CommonDataServiceForAppsSource, *ConcurSource, *CosmosDbMongoDbApiSource, *CosmosDbSqlApiSource, *CouchbaseSource,
+// - *Db2Source, *DelimitedTextSource, *DocumentDbCollectionSource, *DrillSource, *DynamicsAXSource, *DynamicsCrmSource, *DynamicsSource,
+// - *EloquaSource, *FileSystemSource, *GoogleAdWordsSource, *GoogleBigQuerySource, *GreenplumSource, *HBaseSource, *HdfsSource,
+// - *HiveSource, *HttpSource, *HubspotSource, *ImpalaSource, *InformixSource, *JiraSource, *JsonSource, *MagentoSource, *MariaDBSource,
+// - *MarketoSource, *MicrosoftAccessSource, *MongoDbSource, *MongoDbV2Source, *MySqlSource, *NetezzaSource, *ODataSource,
+// - *OdbcSource, *Office365Source, *OracleServiceCloudSource, *OracleSource, *OrcSource, *ParquetSource, *PaypalSource, *PhoenixSource,
+// - *PostgreSqlSource, *PrestoSource, *QuickBooksSource, *RelationalSource, *ResponsysSource, *RestSource, *SalesforceMarketingCloudSource,
+// - *SalesforceServiceCloudSource, *SalesforceSource, *SapBwSource, *SapCloudForCustomerSource, *SapEccSource, *SapHanaSource,
+// - *SapOpenHubSource, *SapTableSource, *ServiceNowSource, *ShopifySource, *SparkSource, *SqlDWSource, *SqlMISource, *SqlServerSource,
+// - *SqlSource, *SquareSource, *SybaseSource, *TabularSource, *TeradataSource, *VerticaSource, *WebSource, *XeroSource, *ZohoSource
 type CopySourceClassification interface {
+	// GetCopySource() returns the CopySource content of the underlying type.
 	GetCopySource() *CopySource
 }
 
@@ -7375,7 +7409,11 @@ func (c *CopySource) unmarshalInternal(rawMsg map[string]*json.RawMessage) error
 }
 
 // CopyTranslatorClassification provides polymorphic access to related types.
+// Call the interface's GetCopyTranslator() method to access the common type.
+// Use a type switch to determine the concrete type.  The possible types are:
+// - *CopyTranslator, *TabularTranslator
 type CopyTranslatorClassification interface {
+	// GetCopyTranslator() returns the CopyTranslator content of the underlying type.
 	GetCopyTranslator() *CopyTranslator
 }
 
@@ -8224,7 +8262,11 @@ func (c *CustomDataset) UnmarshalJSON(data []byte) error {
 }
 
 // CustomSetupBaseClassification provides polymorphic access to related types.
+// Call the interface's GetCustomSetupBase() method to access the common type.
+// Use a type switch to determine the concrete type.  The possible types are:
+// - *CustomSetupBase
 type CustomSetupBaseClassification interface {
+	// GetCustomSetupBase() returns the CustomSetupBase content of the underlying type.
 	GetCustomSetupBase() *CustomSetupBase
 }
 
@@ -8271,7 +8313,11 @@ func (c *CustomSetupBase) unmarshalInternal(rawMsg map[string]*json.RawMessage) 
 }
 
 // DataFlowClassification provides polymorphic access to related types.
+// Call the interface's GetDataFlow() method to access the common type.
+// Use a type switch to determine the concrete type.  The possible types are:
+// - *DataFlow, *MappingDataFlow
 type DataFlowClassification interface {
+	// GetDataFlow() returns the DataFlow content of the underlying type.
 	GetDataFlow() *DataFlow
 }
 
@@ -9213,7 +9259,26 @@ type DatabricksSparkPythonActivityTypeProperties struct {
 }
 
 // DatasetClassification provides polymorphic access to related types.
+// Call the interface's GetDataset() method to access the common type.
+// Use a type switch to determine the concrete type.  The possible types are:
+// - *Dataset, *AmazonMWSObjectDataset, *AmazonRedshiftTableDataset, *AvroDataset, *AzureDataExplorerTableDataset, *AzureMariaDBTableDataset,
+// - *AzureMySqlTableDataset, *AzurePostgreSqlTableDataset, *AzureSearchIndexDataset, *AzureSqlDWTableDataset, *AzureSqlMITableDataset,
+// - *AzureSqlTableDataset, *AzureTableDataset, *BinaryDataset, *CassandraTableDataset, *CommonDataServiceForAppsEntityDataset,
+// - *ConcurObjectDataset, *CosmosDbMongoDbApiCollectionDataset, *CosmosDbSqlApiCollectionDataset, *CouchbaseTableDataset,
+// - *CustomDataset, *Db2TableDataset, *DelimitedTextDataset, *DocumentDbCollectionDataset, *DrillTableDataset, *DynamicsAXResourceDataset,
+// - *DynamicsCrmEntityDataset, *DynamicsEntityDataset, *EloquaObjectDataset, *GoogleAdWordsObjectDataset, *GoogleBigQueryObjectDataset,
+// - *GreenplumTableDataset, *HBaseObjectDataset, *HiveObjectDataset, *HubspotObjectDataset, *ImpalaObjectDataset, *InformixTableDataset,
+// - *JiraObjectDataset, *JsonDataset, *MagentoObjectDataset, *MariaDBTableDataset, *MarketoObjectDataset, *MicrosoftAccessTableDataset,
+// - *MongoDbCollectionDataset, *MongoDbV2CollectionDataset, *MySqlTableDataset, *NetezzaTableDataset, *ODataResourceDataset,
+// - *OdbcTableDataset, *Office365Dataset, *OracleServiceCloudObjectDataset, *OracleTableDataset, *OrcDataset, *ParquetDataset,
+// - *PaypalObjectDataset, *PhoenixObjectDataset, *PostgreSqlTableDataset, *PrestoObjectDataset, *QuickBooksObjectDataset,
+// - *RelationalTableDataset, *ResponsysObjectDataset, *RestResourceDataset, *SalesforceMarketingCloudObjectDataset, *SalesforceObjectDataset,
+// - *SalesforceServiceCloudObjectDataset, *SapBwCubeDataset, *SapCloudForCustomerResourceDataset, *SapEccResourceDataset,
+// - *SapHanaTableDataset, *SapOpenHubTableDataset, *SapTableResourceDataset, *ServiceNowObjectDataset, *ShopifyObjectDataset,
+// - *SparkObjectDataset, *SqlServerTableDataset, *SquareObjectDataset, *SybaseTableDataset, *TeradataTableDataset, *VerticaTableDataset,
+// - *WebTableDataset, *XeroObjectDataset, *ZohoObjectDataset
 type DatasetClassification interface {
+	// GetDataset() returns the Dataset content of the underlying type.
 	GetDataset() *Dataset
 }
 
@@ -9368,7 +9433,11 @@ func (d DatasetBZip2Compression) MarshalJSON() ([]byte, error) {
 }
 
 // DatasetCompressionClassification provides polymorphic access to related types.
+// Call the interface's GetDatasetCompression() method to access the common type.
+// Use a type switch to determine the concrete type.  The possible types are:
+// - *DatasetCompression, *DatasetBZip2Compression, *DatasetDeflateCompression, *DatasetGZipCompression, *DatasetZipDeflateCompression
 type DatasetCompressionClassification interface {
+	// GetDatasetCompression() returns the DatasetCompression content of the underlying type.
 	GetDatasetCompression() *DatasetCompression
 }
 
@@ -9573,7 +9642,12 @@ type DatasetListResponseResponse struct {
 }
 
 // DatasetLocationClassification provides polymorphic access to related types.
+// Call the interface's GetDatasetLocation() method to access the common type.
+// Use a type switch to determine the concrete type.  The possible types are:
+// - *DatasetLocation, *AmazonS3Location, *AzureBlobFSLocation, *AzureBlobStorageLocation, *AzureDataLakeStoreLocation, *AzureFileStorageLocation,
+// - *FileServerLocation, *FtpServerLocation, *GoogleCloudStorageLocation, *HdfsLocation, *HttpServerLocation, *SftpLocation
 type DatasetLocationClassification interface {
+	// GetDatasetLocation() returns the DatasetLocation content of the underlying type.
 	GetDatasetLocation() *DatasetLocation
 }
 
@@ -9766,7 +9840,11 @@ func (d *DatasetSchemaDataElement) UnmarshalJSON(data []byte) error {
 }
 
 // DatasetStorageFormatClassification provides polymorphic access to related types.
+// Call the interface's GetDatasetStorageFormat() method to access the common type.
+// Use a type switch to determine the concrete type.  The possible types are:
+// - *DatasetStorageFormat, *AvroFormat, *JsonFormat, *OrcFormat, *ParquetFormat, *TextFormat
 type DatasetStorageFormatClassification interface {
+	// GetDatasetStorageFormat() returns the DatasetStorageFormat content of the underlying type.
 	GetDatasetStorageFormat() *DatasetStorageFormat
 }
 
@@ -10494,7 +10572,11 @@ func (d *DelimitedTextWriteSettings) UnmarshalJSON(data []byte) error {
 }
 
 // DependencyReferenceClassification provides polymorphic access to related types.
+// Call the interface's GetDependencyReference() method to access the common type.
+// Use a type switch to determine the concrete type.  The possible types are:
+// - *DependencyReference, *SelfDependencyTumblingWindowTriggerReference, *TriggerDependencyReference, *TumblingWindowTriggerDependencyReference
 type DependencyReferenceClassification interface {
+	// GetDependencyReference() returns the DependencyReference content of the underlying type.
 	GetDependencyReference() *DependencyReference
 }
 
@@ -12135,8 +12217,16 @@ type ExecuteSsisPackageActivityTypeProperties struct {
 }
 
 // ExecutionActivityClassification provides polymorphic access to related types.
+// Call the interface's GetExecutionActivity() method to access the common type.
+// Use a type switch to determine the concrete type.  The possible types are:
+// - *ExecutionActivity, *AzureDataExplorerCommandActivity, *AzureFunctionActivity, *AzureMLBatchExecutionActivity, *AzureMLExecutePipelineActivity,
+// - *AzureMLUpdateResourceActivity, *CopyActivity, *CustomActivity, *DataLakeAnalyticsUsqlActivity, *DatabricksNotebookActivity,
+// - *DatabricksSparkJarActivity, *DatabricksSparkPythonActivity, *DeleteActivity, *ExecuteDataFlowActivity, *ExecuteSsisPackageActivity,
+// - *GetMetadataActivity, *HDInsightHiveActivity, *HDInsightMapReduceActivity, *HDInsightPigActivity, *HDInsightSparkActivity,
+// - *HDInsightStreamingActivity, *LookupActivity, *SqlServerStoredProcedureActivity, *WebActivity
 type ExecutionActivityClassification interface {
 	ActivityClassification
+	// GetExecutionActivity() returns the ExecutionActivity content of the underlying type.
 	GetExecutionActivity() *ExecutionActivity
 }
 
@@ -12650,7 +12740,11 @@ func (f *ForEachActivityTypeProperties) UnmarshalJSON(data []byte) error {
 }
 
 // FormatReadSettingsClassification provides polymorphic access to related types.
+// Call the interface's GetFormatReadSettings() method to access the common type.
+// Use a type switch to determine the concrete type.  The possible types are:
+// - *FormatReadSettings, *DelimitedTextReadSettings
 type FormatReadSettingsClassification interface {
+	// GetFormatReadSettings() returns the FormatReadSettings content of the underlying type.
 	GetFormatReadSettings() *FormatReadSettings
 }
 
@@ -12715,7 +12809,11 @@ func (f *FormatReadSettings) unmarshalInternal(rawMsg map[string]*json.RawMessag
 }
 
 // FormatWriteSettingsClassification provides polymorphic access to related types.
+// Call the interface's GetFormatWriteSettings() method to access the common type.
+// Use a type switch to determine the concrete type.  The possible types are:
+// - *FormatWriteSettings, *AvroWriteSettings, *DelimitedTextWriteSettings, *JsonWriteSettings
 type FormatWriteSettingsClassification interface {
+	// GetFormatWriteSettings() returns the FormatWriteSettings content of the underlying type.
 	GetFormatWriteSettings() *FormatWriteSettings
 }
 
@@ -16278,7 +16376,11 @@ type InformixTableDatasetTypeProperties struct {
 }
 
 // IntegrationRuntimeClassification provides polymorphic access to related types.
+// Call the interface's GetIntegrationRuntime() method to access the common type.
+// Use a type switch to determine the concrete type.  The possible types are:
+// - *IntegrationRuntime, *ManagedIntegrationRuntime, *SelfHostedIntegrationRuntime
 type IntegrationRuntimeClassification interface {
+	// GetIntegrationRuntime() returns the IntegrationRuntime content of the underlying type.
 	GetIntegrationRuntime() *IntegrationRuntime
 }
 
@@ -17533,7 +17635,11 @@ func (l *LinkedIntegrationRuntimeRbacAuthorization) UnmarshalJSON(data []byte) e
 }
 
 // LinkedIntegrationRuntimeTypeClassification provides polymorphic access to related types.
+// Call the interface's GetLinkedIntegrationRuntimeType() method to access the common type.
+// Use a type switch to determine the concrete type.  The possible types are:
+// - *LinkedIntegrationRuntimeType, *LinkedIntegrationRuntimeKeyAuthorization, *LinkedIntegrationRuntimeRbacAuthorization
 type LinkedIntegrationRuntimeTypeClassification interface {
+	// GetLinkedIntegrationRuntimeType() returns the LinkedIntegrationRuntimeType content of the underlying type.
 	GetLinkedIntegrationRuntimeType() *LinkedIntegrationRuntimeType
 }
 
@@ -17582,7 +17688,30 @@ func (l *LinkedIntegrationRuntimeType) unmarshalInternal(rawMsg map[string]*json
 }
 
 // LinkedServiceClassification provides polymorphic access to related types.
+// Call the interface's GetLinkedService() method to access the common type.
+// Use a type switch to determine the concrete type.  The possible types are:
+// - *LinkedService, *AmazonMWSLinkedService, *AmazonRedshiftLinkedService, *AmazonS3LinkedService, *AzureBatchLinkedService,
+// - *AzureBlobFSLinkedService, *AzureBlobStorageLinkedService, *AzureDataExplorerLinkedService, *AzureDataLakeAnalyticsLinkedService,
+// - *AzureDataLakeStoreLinkedService, *AzureDatabricksLinkedService, *AzureFileStorageLinkedService, *AzureFunctionLinkedService,
+// - *AzureKeyVaultLinkedService, *AzureMLLinkedService, *AzureMLServiceLinkedService, *AzureMariaDBLinkedService, *AzureMySqlLinkedService,
+// - *AzurePostgreSqlLinkedService, *AzureSearchLinkedService, *AzureSqlDWLinkedService, *AzureSqlDatabaseLinkedService, *AzureSqlMILinkedService,
+// - *AzureStorageLinkedService, *AzureTableStorageLinkedService, *CassandraLinkedService, *CommonDataServiceForAppsLinkedService,
+// - *ConcurLinkedService, *CosmosDbLinkedService, *CosmosDbMongoDbApiLinkedService, *CouchbaseLinkedService, *CustomDataSourceLinkedService,
+// - *Db2LinkedService, *DrillLinkedService, *DynamicsLinkedService, *DynamicsAXLinkedService, *DynamicsCrmLinkedService,
+// - *EloquaLinkedService, *FileServerLinkedService, *FtpServerLinkedService, *GoogleAdWordsLinkedService, *GoogleBigQueryLinkedService,
+// - *GoogleCloudStorageLinkedService, *GreenplumLinkedService, *HBaseLinkedService, *HDInsightLinkedService, *HDInsightOnDemandLinkedService,
+// - *HdfsLinkedService, *HiveLinkedService, *HttpLinkedService, *HubspotLinkedService, *ImpalaLinkedService, *InformixLinkedService,
+// - *JiraLinkedService, *MagentoLinkedService, *MariaDBLinkedService, *MarketoLinkedService, *MicrosoftAccessLinkedService,
+// - *MongoDbLinkedService, *MongoDbV2LinkedService, *MySqlLinkedService, *NetezzaLinkedService, *ODataLinkedService, *OdbcLinkedService,
+// - *Office365LinkedService, *OracleLinkedService, *OracleServiceCloudLinkedService, *PaypalLinkedService, *PhoenixLinkedService,
+// - *PostgreSqlLinkedService, *PrestoLinkedService, *QuickBooksLinkedService, *ResponsysLinkedService, *RestServiceLinkedService,
+// - *SalesforceLinkedService, *SalesforceMarketingCloudLinkedService, *SalesforceServiceCloudLinkedService, *SapBWLinkedService,
+// - *SapCloudForCustomerLinkedService, *SapEccLinkedService, *SapHanaLinkedService, *SapOpenHubLinkedService, *SapTableLinkedService,
+// - *ServiceNowLinkedService, *SftpServerLinkedService, *ShopifyLinkedService, *SparkLinkedService, *SqlServerLinkedService,
+// - *SquareLinkedService, *SybaseLinkedService, *TeradataLinkedService, *VerticaLinkedService, *WebLinkedService, *XeroLinkedService,
+// - *ZohoLinkedService
 type LinkedServiceClassification interface {
+	// GetLinkedService() returns the LinkedService content of the underlying type.
 	GetLinkedService() *LinkedService
 }
 
@@ -19237,8 +19366,12 @@ func (m *MongoDbV2Source) UnmarshalJSON(data []byte) error {
 }
 
 // MultiplePipelineTriggerClassification provides polymorphic access to related types.
+// Call the interface's GetMultiplePipelineTrigger() method to access the common type.
+// Use a type switch to determine the concrete type.  The possible types are:
+// - *MultiplePipelineTrigger, *BlobEventsTrigger, *BlobTrigger, *ScheduleTrigger
 type MultiplePipelineTriggerClassification interface {
 	TriggerClassification
+	// GetMultiplePipelineTrigger() returns the MultiplePipelineTrigger content of the underlying type.
 	GetMultiplePipelineTrigger() *MultiplePipelineTrigger
 }
 
@@ -28076,7 +28209,11 @@ type ScriptAction struct {
 }
 
 // SecretBaseClassification provides polymorphic access to related types.
+// Call the interface's GetSecretBase() method to access the common type.
+// Use a type switch to determine the concrete type.  The possible types are:
+// - *SecretBase, *AzureKeyVaultSecretReference, *SecureString
 type SecretBaseClassification interface {
+	// GetSecretBase() returns the SecretBase content of the underlying type.
 	GetSecretBase() *SecretBase
 }
 
@@ -30503,7 +30640,13 @@ type StartDataFlowDebugSessionResponse struct {
 }
 
 // StoreReadSettingsClassification provides polymorphic access to related types.
+// Call the interface's GetStoreReadSettings() method to access the common type.
+// Use a type switch to determine the concrete type.  The possible types are:
+// - *StoreReadSettings, *AmazonS3ReadSettings, *AzureBlobFSReadSettings, *AzureBlobStorageReadSettings, *AzureDataLakeStoreReadSettings,
+// - *AzureFileStorageReadSettings, *FileServerReadSettings, *FtpReadSettings, *GoogleCloudStorageReadSettings, *HdfsReadSettings,
+// - *HttpReadSettings, *SftpReadSettings
 type StoreReadSettingsClassification interface {
+	// GetStoreReadSettings() returns the StoreReadSettings content of the underlying type.
 	GetStoreReadSettings() *StoreReadSettings
 }
 
@@ -30579,7 +30722,12 @@ func (s *StoreReadSettings) unmarshalInternal(rawMsg map[string]*json.RawMessage
 }
 
 // StoreWriteSettingsClassification provides polymorphic access to related types.
+// Call the interface's GetStoreWriteSettings() method to access the common type.
+// Use a type switch to determine the concrete type.  The possible types are:
+// - *StoreWriteSettings, *AzureBlobFSWriteSettings, *AzureBlobStorageWriteSettings, *AzureDataLakeStoreWriteSettings, *FileServerWriteSettings,
+// - *SftpWriteSettings
 type StoreWriteSettingsClassification interface {
+	// GetStoreWriteSettings() returns the StoreWriteSettings content of the underlying type.
 	GetStoreWriteSettings() *StoreWriteSettings
 }
 
@@ -31139,8 +31287,19 @@ type SynapseSparkJobReference struct {
 }
 
 // TabularSourceClassification provides polymorphic access to related types.
+// Call the interface's GetTabularSource() method to access the common type.
+// Use a type switch to determine the concrete type.  The possible types are:
+// - *TabularSource, *AmazonMWSSource, *AmazonRedshiftSource, *AzureMariaDBSource, *AzureMySqlSource, *AzurePostgreSqlSource,
+// - *AzureSqlSource, *AzureTableSource, *CassandraSource, *ConcurSource, *CouchbaseSource, *Db2Source, *DrillSource, *DynamicsAXSource,
+// - *EloquaSource, *GoogleAdWordsSource, *GoogleBigQuerySource, *GreenplumSource, *HBaseSource, *HiveSource, *HubspotSource,
+// - *ImpalaSource, *InformixSource, *JiraSource, *MagentoSource, *MariaDBSource, *MarketoSource, *MySqlSource, *NetezzaSource,
+// - *OdbcSource, *OracleServiceCloudSource, *PaypalSource, *PhoenixSource, *PostgreSqlSource, *PrestoSource, *QuickBooksSource,
+// - *ResponsysSource, *SalesforceMarketingCloudSource, *SalesforceSource, *SapBwSource, *SapCloudForCustomerSource, *SapEccSource,
+// - *SapHanaSource, *SapOpenHubSource, *SapTableSource, *ServiceNowSource, *ShopifySource, *SparkSource, *SqlDWSource, *SqlMISource,
+// - *SqlServerSource, *SqlSource, *SquareSource, *SybaseSource, *TeradataSource, *VerticaSource, *XeroSource, *ZohoSource
 type TabularSourceClassification interface {
 	CopySourceClassification
+	// GetTabularSource() returns the TabularSource content of the underlying type.
 	GetTabularSource() *TabularSource
 }
 
@@ -31662,7 +31821,12 @@ type Transformation struct {
 }
 
 // TriggerClassification provides polymorphic access to related types.
+// Call the interface's GetTrigger() method to access the common type.
+// Use a type switch to determine the concrete type.  The possible types are:
+// - *Trigger, *BlobEventsTrigger, *BlobTrigger, *ChainingTrigger, *MultiplePipelineTrigger, *RerunTumblingWindowTrigger,
+// - *ScheduleTrigger, *TumblingWindowTrigger
 type TriggerClassification interface {
+	// GetTrigger() returns the Trigger content of the underlying type.
 	GetTrigger() *Trigger
 }
 
@@ -31781,8 +31945,12 @@ type TriggerDependencyProvisioningStatus struct {
 }
 
 // TriggerDependencyReferenceClassification provides polymorphic access to related types.
+// Call the interface's GetTriggerDependencyReference() method to access the common type.
+// Use a type switch to determine the concrete type.  The possible types are:
+// - *TriggerDependencyReference, *TumblingWindowTriggerDependencyReference
 type TriggerDependencyReferenceClassification interface {
 	DependencyReferenceClassification
+	// GetTriggerDependencyReference() returns the TriggerDependencyReference content of the underlying type.
 	GetTriggerDependencyReference() *TriggerDependencyReference
 }
 
@@ -33055,7 +33223,11 @@ func (w *WebLinkedService) UnmarshalJSON(data []byte) error {
 }
 
 // WebLinkedServiceTypePropertiesClassification provides polymorphic access to related types.
+// Call the interface's GetWebLinkedServiceTypeProperties() method to access the common type.
+// Use a type switch to determine the concrete type.  The possible types are:
+// - *WebLinkedServiceTypeProperties, *WebAnonymousAuthentication, *WebBasicAuthentication, *WebClientCertificateAuthentication
 type WebLinkedServiceTypePropertiesClassification interface {
+	// GetWebLinkedServiceTypeProperties() returns the WebLinkedServiceTypeProperties content of the underlying type.
 	GetWebLinkedServiceTypeProperties() *WebLinkedServiceTypeProperties
 }
 

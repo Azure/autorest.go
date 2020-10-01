@@ -201,12 +201,17 @@ class StructDef {
     if (!this.Language.discriminatorInterface) {
       return '';
     }
+    const methodName = `Get${this.Language.name}()`;
     let text = `// ${this.Language.discriminatorInterface} provides polymorphic access to related types.\n`;
-    text += `type ${this.Language.discriminatorInterface} interface {\n`;
+    text += `// Call the interface's ${methodName} method to access the common type.\n`;
+    text += `// Use a type switch to determine the concrete type.  The possible types are:\n`;
+    text += comment((<Array<string>>this.Language.discriminatorTypes).join(', '), '// - ');
+    text += `\ntype ${this.Language.discriminatorInterface} interface {\n`;
     if (this.Language.discriminatorParent) {
       text += `\t${this.Language.discriminatorParent}\n`;
     }
-    text += `\tGet${this.Language.name}() *${this.Language.name}\n`;
+    text += `\t// ${methodName} returns the ${this.Language.name} content of the underlying type.\n`;
+    text += `\t${methodName} *${this.Language.name}\n`;
     text += '}\n\n';
     return text;
   }
