@@ -339,7 +339,8 @@ func (client *PagingClient) BeginGetMultiplePagesLro(ctx context.Context, option
 			result := ProductResultResponse{RawResponse: resp.Response}
 			return &result, resp.UnmarshalAsJSON(&result.ProductResult)
 		},
-		pipeline: client.p,
+		statusCodes: []int{http.StatusOK, http.StatusAccepted, http.StatusNoContent},
+		pipeline:    client.p,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResultPager, error) {

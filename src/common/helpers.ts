@@ -50,7 +50,10 @@ export function isPageableOperation(op: Operation): boolean {
 
 export interface PollerInfo {
   name: string;
-  op: Operation;
+  respEnv: string;    // name of the response envelope
+  respField?: string; // name of the response type field within the response envelope
+  respType?: Schema;  // schema of the response type
+  pager?: PagerInfo;
 }
 
 // returns true if the operation is a long-running operation

@@ -342,7 +342,8 @@ func (client *NetworkManagementClient) BeginGetActiveSessions(ctx context.Contex
 			result := BastionActiveSessionListResultResponse{RawResponse: resp.Response}
 			return &result, resp.UnmarshalAsJSON(&result.BastionActiveSessionListResult)
 		},
-		pipeline: client.p,
+		statusCodes: []int{http.StatusOK, http.StatusAccepted, http.StatusNoContent},
+		pipeline:    client.p,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (BastionActiveSessionListResultPager, error) {
@@ -482,7 +483,8 @@ func (client *NetworkManagementClient) BeginPutBastionShareableLink(ctx context.
 			result := BastionShareableLinkListResultResponse{RawResponse: resp.Response}
 			return &result, resp.UnmarshalAsJSON(&result.BastionShareableLinkListResult)
 		},
-		pipeline: client.p,
+		statusCodes: []int{http.StatusOK, http.StatusAccepted, http.StatusNoContent},
+		pipeline:    client.p,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (BastionShareableLinkListResultPager, error) {

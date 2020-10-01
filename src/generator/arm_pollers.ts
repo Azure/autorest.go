@@ -5,61 +5,23 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { camelCase } from '@azure-tools/codegen';
-import { CodeModel, SchemaResponse, SchemaType, Operation, Schema, ArraySchema } from '@azure-tools/codemodel';
+import { CodeModel, SchemaType, Schema, ArraySchema } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { PollerInfo, isSchemaResponse, isPageableOperation, PagerInfo } from '../common/helpers';
-import { contentPreamble, getStatusCodes, formatStatusCodes, sortAscending, getCreateRequestParametersSig, getMethodParameters } from './helpers';
+import { PollerInfo, PagerInfo } from '../common/helpers';
+import { contentPreamble, sortAscending, getCreateRequestParametersSig, getMethodParameters } from './helpers';
 import { ImportManager } from './imports';
-import { OperationNaming } from '../transform/namer';
 
-function generatePagerReturnInstance(op: Operation): string {
+function generatePagerReturnInstance(pager: PagerInfo): string {
   let text = '';
-  const info = <OperationNaming>op.language.go!;
-  // split param list into individual params
-  const reqParams = getCreateRequestParametersSig(op).split(',');
-  // keep the parameter names from the name/type tuples
-  for (let i = 0; i < reqParams.length; ++i) {
-    reqParams[i] = reqParams[i].trim().split(' ')[0];
-  }
-  text += `\treturn &${camelCase(op.language.go!.pageableType.name)}{\n`;
+  text += `\treturn &${camelCase(pager.name)}{\n`;
   text += `\t\tpipeline: p.pipeline,\n`;
   text += `\t\tresp: resp,\n`;
   text += '\t\terrorer: p.errHandler,\n';
   text += `\t\tresponder: p.respHandler,\n`;
-  const pagerSchema = <SchemaResponse>op.responses![0];
-  text += `\t\tadvancer: func(ctx context.Context, resp *${pagerSchema.schema.language.go!.responseType.name}) (*azcore.Request, error) {\n`;
-  if (op.language.go!.paging.member) {
-    // find the location of the nextLink param
-    const nextLinkOpParams = getMethodParameters(op.language.go!.paging.nextLinkOperation);
-    let found = false;
-    for (let i = 0; i < nextLinkOpParams.length; ++i) {
-      if (nextLinkOpParams[i].schema.type === SchemaType.String && nextLinkOpParams[i].language.go!.name.startsWith('next')) {
-        // found it
-        reqParams.splice(i, 0, `*resp.${pagerSchema.schema.language.go!.name}.${op.language.go!.paging.nextLinkName}`);
-        found = true;
-        break;
-      }
-    }
-    if (!found) {
-      throw console.error(`failed to find nextLink parameter for operation ${op.language.go!.paging.nextLinkOperation.language.go!.name}`);
-    }
-    text += `\t\t\treturn client.${camelCase(op.language.go!.paging.member)}CreateRequest(ctx, ${reqParams.join(', ')})\n`;
-  } else {
-    let resultTypeName = pagerSchema.schema.language.go!.name;
-    if (pagerSchema.schema.serialization?.xml?.name) {
-      // xml can specifiy its own name, prefer that if available
-      resultTypeName = pagerSchema.schema.serialization.xml.name;
-    }
-    text += `\t\t\treturn azcore.NewRequest(ctx, http.MethodGet, *resp.${resultTypeName}.${op.language.go!.paging.nextLinkName})\n`;
-  }
+  text += `\t\tadvancer: func(ctx context.Context, resp *${pager.respEnv}) (*azcore.Request, error) {\n`;
+  text += `\t\t\treturn azcore.NewRequest(ctx, http.MethodGet, *resp.${pager.respField}.${pager.nextLink})\n`;
   text += '\t\t},\n';
-  const statusCodes = getStatusCodes(op);
-  if (statusCodes.indexOf('200') === -1) {
-    // most GETs for the next page return a 200 on success however
-    // not all LROs specify 200 as a status code for initial response
-    statusCodes.push('200');
-  }
-  text += `\t\tstatusCodes: []int{${formatStatusCodes(statusCodes)}},\n`;
+  text += `\t\tstatusCodes: p.statusCodes,\n`;
   text += `\t}, nil`;
   return text;
 }
@@ -91,13 +53,10 @@ export async function generateARMPollers(session: Session<CodeModel>): Promise<s
         return p.pt.FinalResponse(ctx, p.pipeline, nil)
       }`;
     let pollUntilDoneResponse = '(*http.Response, error)';
-    let pollUntilDoneReturn = 'p.FinalResponse(), nil';
     let pollUntilDone = `return p.pt.PollUntilDone(ctx, frequency, p.pipeline, nil)`;
     let handleResponse = '';
-    const schemaResponse = <SchemaResponse>poller.op.responses![0];
-    let unmarshalResponse = 'nil';
     let pagerFields = '';
-    if (isPageableOperation(poller.op)) {
+    if (poller.pager) {
       function finalPagerProcessing(name: string, params: string): string {
         return `respType := &${camelCase(responseType)}{}
                 resp, err := p.pt.${name}(${params})
@@ -106,18 +65,17 @@ export async function generateARMPollers(session: Session<CodeModel>): Promise<s
                 }
                 return p.handleResponse(&azcore.Response{Response: resp})`;
       }
-      responseType = poller.op.language.go!.pageableType.name;
+      responseType = poller.pager.name;
       pollUntilDoneResponse = `(${responseType}, error)`;
-      pollUntilDoneReturn = 'p.FinalResponse(ctx)';
       // for operations that do return a model add a final response method that handles the final get URL scenario
       finalResponseDeclaration = `FinalResponse(ctx context.Context) (${responseType}, error)`;
-      const pageableType = <PagerInfo>poller.op.language.go!.pageableType;
       pagerFields = `
-      errHandler  ${camelCase(pageableType.respType)}HandleError
-      respHandler ${camelCase(pageableType.respType)}HandleResponse`;
+      errHandler  ${camelCase(poller.pager.respType)}HandleError
+      respHandler ${camelCase(poller.pager.respType)}HandleResponse
+      statusCodes []int`;
       handleResponse = `
       func (p *${pollerName}) handleResponse(resp *azcore.Response) (${responseType}, error) {
-        ${generatePagerReturnInstance(poller.op)}
+        ${generatePagerReturnInstance(poller.pager)}
       }
       `;
       finalResponse = `${finalResponseDeclaration} {
@@ -125,23 +83,21 @@ export async function generateARMPollers(session: Session<CodeModel>): Promise<s
 	  }
       `;
       pollUntilDone = finalPagerProcessing('PollUntilDone', 'ctx, frequency, p.pipeline, respType');
-    } else if (isSchemaResponse(schemaResponse) && schemaResponse.schema.language.go!.responseType.name !== undefined) {
-      responseType = schemaResponse.schema.language.go!.responseType.name;
+    } else if (poller.respType) {
+      responseType = poller.respEnv;
       pollUntilDoneResponse = `(*${responseType}, error)`;
-      pollUntilDoneReturn = 'p.FinalResponse(ctx)';
-      unmarshalResponse = `resp.UnmarshalAsJSON(&result.${schemaResponse.schema.language.go!.responseType.value})`;
       // for operations that do return a model add a final response method that handles the final get URL scenario
       finalResponseDeclaration = `FinalResponse(ctx context.Context) (*${responseType}, error)`;
       finalResponse = `FinalResponse(ctx context.Context) (*${responseType}, error) {`;
-      let respType = `respType := &${responseType}{${schemaResponse.schema.language.go!.responseType.value}: &${schemaResponse.schema.language.go!.name}{}}`;
+      let respType = `respType := &${responseType}{${poller.respField}: &${poller.respType.language.go!.name}{}}`;
       let reference = '';
-      const isScalar = isScalarType(schemaResponse.schema);
+      const isScalar = isScalarType(poller.respType);
       if (isScalar) {
         respType = `respType := &${responseType}{}\n`;
         reference = '&';
       }
       pollUntilDone = `${respType}
-		resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, ${reference}respType.${schemaResponse.schema.language.go!.responseType.value})
+		resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, ${reference}respType.${poller.respField})
 		if err != nil {
 			return nil, err
     }
@@ -149,7 +105,7 @@ export async function generateARMPollers(session: Session<CodeModel>): Promise<s
     return respType, nil`;
       finalResponse += `
       ${respType}
-		resp, err := p.pt.FinalResponse(ctx, p.pipeline, ${reference}respType.${schemaResponse.schema.language.go!.responseType.value})
+		resp, err := p.pt.FinalResponse(ctx, p.pipeline, ${reference}respType.${poller.respField})
 		if err != nil {
 			return nil, err
     }
