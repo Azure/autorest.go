@@ -32,17 +32,18 @@ func DefaultClientOptions() ClientOptions {
 		HTTPClient:        azcore.DefaultHTTPClientTransport(),
 		Retry:             azcore.DefaultRetryOptions(),
 		RegisterRPOptions: armcore.DefaultRegistrationOptions(),
+		Telemetry:         azcore.DefaultTelemetryOptions(),
 	}
 }
 
-func (c *ClientOptions) telemetryOptions() azcore.TelemetryOptions {
+func (c *ClientOptions) telemetryOptions() *azcore.TelemetryOptions {
 	to := c.Telemetry
 	if to.Value == "" {
 		to.Value = telemetryInfo
 	} else {
 		to.Value = fmt.Sprintf("%s %s", telemetryInfo, to.Value)
 	}
-	return to
+	return &to
 }
 
 // Client - Compute Client
@@ -67,13 +68,12 @@ func NewClient(endpoint string, cred azcore.Credential, options *ClientOptions) 
 	}
 	policies := []azcore.Policy{
 		azcore.NewTelemetryPolicy(options.telemetryOptions()),
-		azcore.NewUniqueRequestIDPolicy(),
 	}
 	policies = append(policies, armcore.NewRPRegistrationPolicy(cred, &options.RegisterRPOptions))
 	policies = append(policies,
 		azcore.NewRetryPolicy(&options.Retry),
 		cred.AuthenticationPolicy(azcore.AuthenticationPolicyOptions{Options: azcore.TokenRequestOptions{Scopes: []string{scope}}}),
-		azcore.NewRequestLogPolicy(nil))
+		azcore.NewLogPolicy(nil))
 	p := azcore.NewPipeline(options.HTTPClient, policies...)
 	return NewClientWithPipeline(endpoint, p)
 }
