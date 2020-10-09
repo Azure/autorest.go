@@ -28,17 +28,18 @@ func defaultClientOptions() clientOptions {
 	return clientOptions{
 		HTTPClient: azcore.DefaultHTTPClientTransport(),
 		Retry:      azcore.DefaultRetryOptions(),
+		Telemetry:  azcore.DefaultTelemetryOptions(),
 	}
 }
 
-func (c *clientOptions) telemetryOptions() azcore.TelemetryOptions {
+func (c *clientOptions) telemetryOptions() *azcore.TelemetryOptions {
 	to := c.Telemetry
 	if to.Value == "" {
 		to.Value = telemetryInfo
 	} else {
 		to.Value = fmt.Sprintf("%s %s", telemetryInfo, to.Value)
 	}
-	return to
+	return &to
 }
 
 type client struct {
@@ -54,9 +55,8 @@ func newClient(endpoint string, livyAPIVersion *string, sparkPoolName string, op
 	}
 	p := azcore.NewPipeline(options.HTTPClient,
 		azcore.NewTelemetryPolicy(options.telemetryOptions()),
-		azcore.NewUniqueRequestIDPolicy(),
 		azcore.NewRetryPolicy(&options.Retry),
-		azcore.NewRequestLogPolicy(nil))
+		azcore.NewLogPolicy(nil))
 	return newClientWithPipeline(endpoint, livyAPIVersion, sparkPoolName, p)
 }
 

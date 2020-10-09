@@ -60,17 +60,18 @@ function generateContent(session: Session<CodeModel>, exportClient: boolean): st
   if (isARM && session.model.security.authenticationRequired) {
     text += '\t\tRegisterRPOptions: armcore.DefaultRegistrationOptions(),\n';
   }
+  text += '\t\tTelemetry: azcore.DefaultTelemetryOptions(),\n';
   text += '\t}\n';
   text += '}\n\n';
 
-  text += `func (c *${clientOptions}) telemetryOptions() azcore.TelemetryOptions {\n`;
+  text += `func (c *${clientOptions}) telemetryOptions() *azcore.TelemetryOptions {\n`;
   text += '\tto := c.Telemetry\n';
   text += '\tif to.Value == "" {\n';
   text += '\t\tto.Value = telemetryInfo\n';
   text += '\t} else {\n';
   text += '\t\tto.Value = fmt.Sprintf("%s %s", telemetryInfo, to.Value)\n';
   text += '\t}\n';
-  text += '\treturn to\n';
+  text += '\treturn &to\n';
   text += '}\n\n';
 
   // Client
@@ -152,15 +153,13 @@ function generateContent(session: Session<CodeModel>, exportClient: boolean): st
   text += '\t\toptions = &o\n';
   text += '\t}\n';
   const telemetryPolicy = 'azcore.NewTelemetryPolicy(options.telemetryOptions())';
-  const reqIDPolicy = 'azcore.NewUniqueRequestIDPolicy()';
   const retryPolicy = 'azcore.NewRetryPolicy(&options.Retry)';
   const credPolicy = 'cred.AuthenticationPolicy(azcore.AuthenticationPolicyOptions{Options: azcore.TokenRequestOptions{Scopes: []string{scope}}})';
-  const logPolicy = 'azcore.NewRequestLogPolicy(nil))';
+  const logPolicy = 'azcore.NewLogPolicy(nil))';
   // ARM will optionally inject the RP registration policy into the pipeline
   if (isARM && session.model.security.authenticationRequired) {
     text += '\tpolicies := []azcore.Policy{\n';
     text += `\t\t${telemetryPolicy},\n`;
-    text += `\t\t${reqIDPolicy},\n`;
     text += '\t}\n';
     // RP registration policy must appear before the retry policy
     text += '\tpolicies = append(policies, armcore.NewRPRegistrationPolicy(cred, &options.RegisterRPOptions))\n';
@@ -173,7 +172,6 @@ function generateContent(session: Session<CodeModel>, exportClient: boolean): st
   } else {
     text += '\tp := azcore.NewPipeline(options.HTTPClient,\n';
     text += `\t\t${telemetryPolicy},\n`;
-    text += `\t\t${reqIDPolicy},\n`;
     text += `\t\t${retryPolicy},\n`;
     if (session.model.security.authenticationRequired) {
       text += `\t\t${credPolicy},\n`;

@@ -8,6 +8,8 @@ import (
 	"generatortests/helpers"
 	"net/http"
 	"testing"
+
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
 func newSubscriptionInMethodClient() SubscriptionInMethodOperations {
@@ -22,7 +24,9 @@ func TestPostMethodLocalNull(t *testing.T) {
 // PostMethodLocalValid - POST method with subscriptionId modeled in the method.  pass in subscription id = '1234-5678-9012-3456' to succeed
 func TestPostMethodLocalValid(t *testing.T) {
 	client := newSubscriptionInMethodClient()
-	result, err := client.PostMethodLocalValid(context.Background(), "1234-5678-9012-3456", nil)
+	result, err := client.PostMethodLocalValid(azcore.WithHTTPHeader(context.Background(), http.Header{
+		"x-ms-client-request-id": []string{"9C4D50EE-2D56-4CD3-8152-34347DC9F2B0"},
+	}), "1234-5678-9012-3456", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -32,7 +36,9 @@ func TestPostMethodLocalValid(t *testing.T) {
 // PostPathLocalValid - POST method with subscriptionId modeled in the method.  pass in subscription id = '1234-5678-9012-3456' to succeed
 func TestPostPathLocalValid(t *testing.T) {
 	client := newSubscriptionInMethodClient()
-	result, err := client.PostPathLocalValid(context.Background(), "1234-5678-9012-3456", nil)
+	result, err := client.PostPathLocalValid(azcore.WithHTTPHeader(context.Background(), http.Header{
+		"x-ms-client-request-id": []string{"9C4D50EE-2D56-4CD3-8152-34347DC9F2B0"},
+	}), "1234-5678-9012-3456", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -42,7 +48,9 @@ func TestPostPathLocalValid(t *testing.T) {
 // PostSwaggerLocalValid - POST method with subscriptionId modeled in the method.  pass in subscription id = '1234-5678-9012-3456' to succeed
 func TestPostSwaggerLocalValid(t *testing.T) {
 	client := newSubscriptionInMethodClient()
-	result, err := client.PostSwaggerLocalValid(context.Background(), "1234-5678-9012-3456", nil)
+	result, err := client.PostSwaggerLocalValid(azcore.WithHTTPHeader(context.Background(), http.Header{
+		"x-ms-client-request-id": []string{"9C4D50EE-2D56-4CD3-8152-34347DC9F2B0"},
+	}), "1234-5678-9012-3456", nil)
 	if err != nil {
 		t.Fatal(err)
 	}

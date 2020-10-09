@@ -27,17 +27,18 @@ func DefaultClientOptions() ClientOptions {
 	return ClientOptions{
 		HTTPClient: azcore.DefaultHTTPClientTransport(),
 		Retry:      azcore.DefaultRetryOptions(),
+		Telemetry:  azcore.DefaultTelemetryOptions(),
 	}
 }
 
-func (c *ClientOptions) telemetryOptions() azcore.TelemetryOptions {
+func (c *ClientOptions) telemetryOptions() *azcore.TelemetryOptions {
 	to := c.Telemetry
 	if to.Value == "" {
 		to.Value = telemetryInfo
 	} else {
 		to.Value = fmt.Sprintf("%s %s", telemetryInfo, to.Value)
 	}
-	return to
+	return &to
 }
 
 // Client - XMS Error Response Extensions
@@ -62,9 +63,8 @@ func NewClient(endpoint string, options *ClientOptions) *Client {
 	}
 	p := azcore.NewPipeline(options.HTTPClient,
 		azcore.NewTelemetryPolicy(options.telemetryOptions()),
-		azcore.NewUniqueRequestIDPolicy(),
 		azcore.NewRetryPolicy(&options.Retry),
-		azcore.NewRequestLogPolicy(nil))
+		azcore.NewLogPolicy(nil))
 	return NewClientWithPipeline(endpoint, p)
 }
 
