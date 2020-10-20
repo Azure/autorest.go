@@ -5724,6 +5724,9 @@ type BigDataPoolResourceProperties struct {
 	// The state of the Big Data pool.
 	ProvisioningState *string `json:"provisioningState,omitempty"`
 
+	// Spark configuration file to specify additional properties
+	SparkConfigProperties *LibraryRequirements `json:"sparkConfigProperties,omitempty"`
+
 	// The Spark events folder
 	SparkEventsFolder *string `json:"sparkEventsFolder,omitempty"`
 
@@ -5763,6 +5766,9 @@ func (b BigDataPoolResourceProperties) MarshalJSON() ([]byte, error) {
 	}
 	if b.ProvisioningState != nil {
 		objectMap["provisioningState"] = b.ProvisioningState
+	}
+	if b.SparkConfigProperties != nil {
+		objectMap["sparkConfigProperties"] = b.SparkConfigProperties
 	}
 	if b.SparkEventsFolder != nil {
 		objectMap["sparkEventsFolder"] = b.SparkEventsFolder
@@ -5832,6 +5838,11 @@ func (b *BigDataPoolResourceProperties) UnmarshalJSON(data []byte) error {
 		case "provisioningState":
 			if val != nil {
 				err = json.Unmarshal(*val, &b.ProvisioningState)
+			}
+			delete(rawMsg, key)
+		case "sparkConfigProperties":
+			if val != nil {
+				err = json.Unmarshal(*val, &b.SparkConfigProperties)
 			}
 			delete(rawMsg, key)
 		case "sparkEventsFolder":
@@ -18280,6 +18291,18 @@ type ManagedIntegrationRuntimeTypeProperties struct {
 
 	// SSIS properties for managed integration runtime.
 	SsisProperties *IntegrationRuntimeSsisProperties `json:"ssisProperties,omitempty"`
+}
+
+// Managed Virtual Network Settings
+type ManagedVirtualNetworkSettings struct {
+	// Allowed Aad Tenant Ids For Linking
+	AllowedAadTenantIDsForLinking *[]string `json:"allowedAadTenantIdsForLinking,omitempty"`
+
+	// Linked Access Check On Target Resource
+	LinkedAccessCheckOnTargetResource *bool `json:"linkedAccessCheckOnTargetResource,omitempty"`
+
+	// Prevent Data Exfiltration
+	PreventDataExfiltration *bool `json:"preventDataExfiltration,omitempty"`
 }
 
 // Mapping data flow.
@@ -33391,6 +33414,9 @@ type WorkspaceProperties struct {
 	// Setting this to 'default' will ensure that all compute for this workspace is in a virtual network managed on behalf of
 	// the user.
 	ManagedVirtualNetwork *string `json:"managedVirtualNetwork,omitempty"`
+
+	// Managed Virtual Network Settings
+	ManagedVirtualNetworkSettings *ManagedVirtualNetworkSettings `json:"managedVirtualNetworkSettings,omitempty"`
 
 	// Private endpoint connections to the workspace
 	PrivateEndpointConnections *[]PrivateEndpointConnection `json:"privateEndpointConnections,omitempty"`

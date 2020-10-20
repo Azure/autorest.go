@@ -169,8 +169,7 @@ class StructDef {
         tag = '';
       }
       let pointer = '*';
-      if (prop.schema.language.go!.discriminatorInterface || prop.schema.language.go!.lroPointerException) {
-        // pointer-to-interface introduces very clunky code
+      if (prop.schema.language.go!.byValue) {
         pointer = '';
       }
       text += `\t${prop.language.go!.name} ${pointer}${typeName}${tag}\n`;
@@ -187,8 +186,7 @@ class StructDef {
         text += `\t${comment(param.language.go!.description, '// ')}\n`;
       }
       let pointer = '*';
-      if (param.required || param.schema.language.go!.discriminatorInterface) {
-        // pointer-to-interface introduces very clunky code
+      if (param.required || param.schema.language.go!.byValue) {
         pointer = '';
       }
       text += `\t${pascalCase(param.language.go!.name)} ${pointer}${param.schema.language.go!.name}\n`;

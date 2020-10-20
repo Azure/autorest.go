@@ -29,7 +29,6 @@ type ClientOptions struct {
 // DefaultClientOptions creates a ClientOptions type initialized with default values.
 func DefaultClientOptions() ClientOptions {
 	return ClientOptions{
-		HTTPClient:        azcore.DefaultHTTPClientTransport(),
 		Retry:             azcore.DefaultRetryOptions(),
 		RegisterRPOptions: armcore.DefaultRegistrationOptions(),
 		Telemetry:         azcore.DefaultTelemetryOptions(),

@@ -93,6 +93,9 @@ type HeaderCustomNamedRequestIDHeadResponse struct {
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+
+	// Success indicates if the operation succeeded or failed.
+	Success bool
 }
 
 // HeaderCustomNamedRequestIDOptions contains the optional parameters for the Header.CustomNamedRequestID method.

@@ -83,7 +83,9 @@ func TestHTTPRedirectsHead301(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if !result.Success {
+		t.Fatal("unexpected Success")
+	}
 }
 
 func TestHTTPRedirectsHead302(t *testing.T) {
@@ -92,7 +94,9 @@ func TestHTTPRedirectsHead302(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if !result.Success {
+		t.Fatal("unexpected Success")
+	}
 }
 
 func TestHTTPRedirectsHead307(t *testing.T) {
@@ -101,7 +105,9 @@ func TestHTTPRedirectsHead307(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if !result.Success {
+		t.Fatal("unexpected Success")
+	}
 }
 
 func TestHTTPRedirectsOptions307(t *testing.T) {

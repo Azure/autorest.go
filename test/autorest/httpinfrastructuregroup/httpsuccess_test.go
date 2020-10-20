@@ -56,7 +56,9 @@ func TestHTTPSuccessHead200(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if !result.Success {
+		t.Fatal("unexpected Success")
+	}
 }
 
 func TestHTTPSuccessHead204(t *testing.T) {
@@ -65,7 +67,9 @@ func TestHTTPSuccessHead204(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusNoContent)
+	if !result.Success {
+		t.Fatal("unexpected Success")
+	}
 }
 
 func TestHTTPSuccessHead404(t *testing.T) {
@@ -74,7 +78,9 @@ func TestHTTPSuccessHead404(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusNotFound)
+	if result.Success {
+		t.Fatal("unexpected Success")
+	}
 }
 
 func TestHTTPSuccessOptions200(t *testing.T) {

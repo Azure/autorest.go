@@ -34,7 +34,9 @@ export async function transform(host: Host) {
 
 async function process(session: Session<CodeModel>) {
   const specType = await session.getValue('openapi-type', 'not_specified');
+  const headAsBoolean = await session.getValue('head-as-boolean', false);
   session.model.language.go!.openApiType = specType;
+  session.model.language.go!.headAsBoolean = headAsBoolean;
   processOperationRequests(session);
   processOperationResponses(session);
   // fix up dictionary element types (additional properties)
@@ -556,7 +558,42 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
       }
     }
   }
+  const createRawResponseProp = function (): Property {
+    return newProperty('RawResponse', 'RawResponse contains the underlying HTTP response.', newObject('http.Response', 'raw HTTP response'));
+  }
+  const createSuccessProp = function (): Property {
+    const successProp = newObject('bool', 'bool response');
+    successProp.language.go!.byValue = true;
+    return newProperty('Success', 'Success indicates if the operation succeeded or failed.', successProp);
+  }
+  // if head-as-boolean (HAB) is enabled and this is a HEAD method then return a BooleanResponse
+  // response envelope instead of http.Response.  only do this if the operation doesn't model any
+  // header values (HAB will be enabled for that response envelope).
+  if (codeModel.language.go!.headAsBoolean && op.requests![0].protocol.http!.method === 'head' && headers.size === 0) {
+    // enable treating HEAD requests as boolean responses.
+    op.language.go!.headAsBoolean = codeModel.language.go!.headAsBoolean;
+    const name = 'BooleanResponse';
+    if (!responseEnvelopeExists(codeModel, name)) {
+      const description = `${name} contains a boolean response.`;
+      const respEnv = newObject(name, description);
 
+      respEnv.language.go!.properties = [
+        createRawResponseProp(),
+        createSuccessProp(),
+      ];
+      // mark as a response type
+      respEnv.language.go!.responseType = {
+        name: name,
+        description: description,
+        responseType: true,
+      }
+      // add this response schema to the global list of response
+      const responseEnvelopes = <Array<Schema>>codeModel.language.go!.responseEnvelopes;
+      responseEnvelopes.push(respEnv);
+    }
+    // HEAD operations will never be pagable, LROs etc so exit
+    return;
+  }
   // if the response defines a schema then add it as a field to the response type.
   // only do this if the response schema hasn't been processed yet.
   for (const response of values(op.responses)) {
@@ -568,12 +605,17 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
         const description = `${name} contains the response from method ${group.language.go!.name}.${op.language.go!.name}.`;
         const respEnv = newObject(name, description);
         respEnv.language.go!.properties = [
-          newProperty('RawResponse', 'RawResponse contains the underlying HTTP response.', newObject('http.Response', 'raw HTTP response'))
+          createRawResponseProp()
         ];
         for (const item of items(headers)) {
           const prop = newProperty(item.key, item.value.description, item.value.schema);
           prop.language.go!.fromHeader = item.value.header;
           (<Array<Property>>respEnv.language.go!.properties).push(prop);
+        }
+        if (codeModel.language.go!.headAsBoolean && op.requests![0].protocol.http!.method === 'head') {
+          // this is the intersection of head-as-boolean with modeled header responses
+          op.language.go!.headAsBoolean = codeModel.language.go!.headAsBoolean;
+          (<Array<Property>>respEnv.language.go!.properties).push(createSuccessProp());
         }
         // mark as a response type
         respEnv.language.go!.responseType = {
@@ -592,7 +634,7 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
     } else if (!responseEnvelopeCreated(codeModel, response.schema)) {
       response.schema.language.go!.responseType = generateResponseEnvelopeName(response.schema);
       response.schema.language.go!.properties = [
-        newProperty('RawResponse', 'RawResponse contains the underlying HTTP response.', newObject('http.Response', 'HTTP response'))
+        createRawResponseProp()
       ];
       const marshallingFormat = getMarshallingFormat(response.protocol);
       response.schema.language.go!.responseType.marshallingFormat = marshallingFormat;
@@ -930,12 +972,15 @@ function generateLROResponseEnvelope(response: Response, op: Operation, codeMode
     response.schema.language.go!.lroResponseType = respTypeObject;
   }
   // create PollUntilDone
+  const pollerFunc = newObject(`func(ctx context.Context, frequency time.Duration) (${pollerResponse}, error)`, 'PollUntilDone');
+  pollerFunc.language.go!.byValue = true;
   const pollUntilDone = newProperty('PollUntilDone', 'PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received',
-    newObject(`func(ctx context.Context, frequency time.Duration) (${pollerResponse}, error)`, 'PollUntilDone'));
-  pollUntilDone.schema.language.go!.lroPointerException = true;
+    pollerFunc);
+  pollUntilDone.language.go!.byValue = true;
   // create Poller
-  const poller = newProperty('Poller', 'Poller contains an initialized poller.', newObject(pollerTypeName, 'poller'));
-  poller.schema.language.go!.lroPointerException = true;
+  const pollerType = newObject(pollerTypeName, 'poller');
+  pollerType.language.go!.byValue = true;
+  const poller = newProperty('Poller', 'Poller contains an initialized poller.', pollerType);
   respTypeObject.language.go!.properties = [
     newProperty('RawResponse', 'RawResponse contains the underlying HTTP response.', newObject('http.Response', 'HTTP response')),
     pollUntilDone,

@@ -55,7 +55,6 @@ function generateContent(session: Session<CodeModel>, exportClient: boolean): st
   text += `// ${defaultClientOptions} creates a ${clientOptions} type initialized with default values.\n`;
   text += `func ${defaultClientOptions}() ${clientOptions} {\n`;
   text += `\treturn ${clientOptions}{\n`;
-  text += '\t\tHTTPClient: azcore.DefaultHTTPClientTransport(),\n';
   text += '\t\tRetry: azcore.DefaultRetryOptions(),\n';
   if (isARM && session.model.security.authenticationRequired) {
     text += '\t\tRegisterRPOptions: armcore.DefaultRegistrationOptions(),\n';
