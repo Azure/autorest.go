@@ -264,20 +264,32 @@ function generateOperation(op: Operation, imports: ImportManager): string {
   text += `\tif err != nil {\n`;
   text += `\t\treturn nil, err\n`;
   text += `\t}\n`;
-  text += `\tif !resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
-  text += `\t\treturn nil, client.${info.protocolNaming.errorMethod}(resp)\n`;
-  text += '\t}\n';
-  if (isLROOperation(op)) {
-    text += '\t return resp, nil\n';
-  } else if (needsResponseHandler(op)) {
-    // also cheating here as at present the only param to the responder is an azcore.Response
-    text += `\tresult, err := client.${info.protocolNaming.responseMethod}(resp)\n`;
-    text += `\tif err != nil {\n`;
-    text += `\t\treturn nil, err\n`;
-    text += `\t}\n`;
-    text += `\treturn result, nil\n`;
+  // HAB with schema response is handled in protocol responder
+  if (op.language.go!.headAsBoolean && !(op.responses && isSchemaResponse(op.responses[0]))) {
+    let respEnv = 'BooleanResponse';
+    text += '\tif resp.StatusCode >= 200 && resp.StatusCode < 300 {\n';
+    text += `\t\treturn &${respEnv}{RawResponse: resp.Response, Success: true}, nil\n`;
+    text += '\t} else if resp.StatusCode >= 400 && resp.StatusCode < 500 {\n';
+    text += `\t\treturn &${respEnv}{RawResponse: resp.Response, Success: false}, nil\n`;
+    text += '\t} else {\n';
+    text += `\t\treturn nil, client.${info.protocolNaming.errorMethod}(resp)\n`;
+    text += '\t}\n';
   } else {
-    text += '\treturn resp.Response, nil\n';
+    text += `\tif !resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
+    text += `\t\treturn nil, client.${info.protocolNaming.errorMethod}(resp)\n`;
+    text += '\t}\n';
+    if (isLROOperation(op)) {
+      text += '\t return resp, nil\n';
+    } else if (needsResponseHandler(op)) {
+      // also cheating here as at present the only param to the responder is an azcore.Response
+      text += `\tresult, err := client.${info.protocolNaming.responseMethod}(resp)\n`;
+      text += `\tif err != nil {\n`;
+      text += `\t\treturn nil, err\n`;
+      text += `\t}\n`;
+      text += `\treturn result, nil\n`;
+    } else {
+      text += '\treturn resp.Response, nil\n';
+    }
   }
   text += '}\n\n';
   return text;
@@ -570,7 +582,7 @@ function needsResponseHandler(op: Operation): boolean {
   return hasSchemaResponse(op) || (isLROOperation(op) && hasSchemaResponse(op)) || isPageableOperation(op);
 }
 
-function generateResponseUnmarshaller(response: Response, imports: ImportManager): string {
+function generateResponseUnmarshaller(op: Operation, response: Response, imports: ImportManager): string {
   let unmarshallerText = '';
   if (!isSchemaResponse(response)) {
     throw console.error('TODO');
@@ -610,6 +622,11 @@ function generateResponseUnmarshaller(response: Response, imports: ImportManager
   const schemaResponse = <SchemaResponse>response;
   let respObj = `${schemaResponse.schema.language.go!.responseType.name}{RawResponse: resp.Response}`;
   unmarshallerText += `\tresult := ${respObj}\n`;
+  if (op.language.go!.headAsBoolean) {
+    unmarshallerText += '\tif resp.StatusCode >= 200 && resp.StatusCode < 300 {\n';
+    unmarshallerText += '\t\tresult.Success = true\n';
+    unmarshallerText += '\t}\n';
+  }
   // assign any header values
   for (const prop of values(<Array<Property>>schemaResponse.schema.language.go!.properties)) {
     if (prop.language.go!.fromHeader) {
@@ -641,13 +658,13 @@ function createProtocolResponse(op: Operation, imports: ImportManager): string {
   let text = `${comment(name, '// ')} handles the ${info.name} response.\n`;
   text += `func (client *${clientName}) ${name}(resp *azcore.Response) (${generateReturnsInfo(op, 'handler').join(', ')}) {\n`;
   if (!isMultiRespOperation(op)) {
-    text += generateResponseUnmarshaller(op.responses![0], imports);
+    text += generateResponseUnmarshaller(op, op.responses![0], imports);
   } else {
     imports.add('fmt');
     text += '\tswitch resp.StatusCode {\n';
     for (const response of values(op.responses)) {
       text += `\tcase ${formatStatusCodes(response.protocol.http!.statusCodes)}:\n`
-      text += generateResponseUnmarshaller(response, imports);
+      text += generateResponseUnmarshaller(op, response, imports);
     }
     text += '\tdefault:\n';
     text += `\t\treturn nil, fmt.Errorf("unhandled HTTP status code %d", resp.StatusCode)\n`;
@@ -883,6 +900,10 @@ function generateReturnsInfo(op: Operation, apiType: 'int' | 'op' | 'handler'): 
   } else if (hasSchemaResponse(op)) {
     // simple schema response
     returnType = '*' + (<SchemaResponse>op.responses![0]).schema.language.go!.responseType.name;
+  } else if (op.language.go!.headAsBoolean) {
+    // NOTE: this case must come after the hasSchemaResponse() check to properly handle
+    //       the intersection of head-as-boolean with modeled response headers
+    return ['*BooleanResponse', 'error'];
   }
   return [returnType, 'error'];
 }
@@ -934,7 +955,7 @@ function generateARMLROBeginMethod(op: Operation, imports: ImportManager): strin
     text += `\t\t\treturn client.${info.protocolNaming.errorMethod}(resp)\n`;
     text += '\t\t},\n';
     text += `\t\trespHandler: func(resp *azcore.Response) (*${(<SchemaResponse>op.responses![0]).schema.language.go!.responseType.name}, error) {\n`;
-    text += generateResponseUnmarshaller(op.responses![0], imports);
+    text += generateResponseUnmarshaller(op, op.responses![0], imports);
     text += '\t\t},\n';
     text += `\t\tstatusCodes: []int{${formatStatusCodes(statusCodes)}},\n`;
   }

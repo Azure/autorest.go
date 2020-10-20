@@ -22,11 +22,11 @@ type HTTPSuccessOperations interface {
 	// Get200 - Get 200 success
 	Get200(ctx context.Context, options *HTTPSuccessGet200Options) (*BoolResponse, error)
 	// Head200 - Return 200 status code if successful
-	Head200(ctx context.Context, options *HTTPSuccessHead200Options) (*http.Response, error)
+	Head200(ctx context.Context, options *HTTPSuccessHead200Options) (*BooleanResponse, error)
 	// Head204 - Return 204 status code if successful
-	Head204(ctx context.Context, options *HTTPSuccessHead204Options) (*http.Response, error)
+	Head204(ctx context.Context, options *HTTPSuccessHead204Options) (*BooleanResponse, error)
 	// Head404 - Return 404 status code
-	Head404(ctx context.Context, options *HTTPSuccessHead404Options) (*http.Response, error)
+	Head404(ctx context.Context, options *HTTPSuccessHead404Options) (*BooleanResponse, error)
 	// Options200 - Options 200 success
 	Options200(ctx context.Context, options *HTTPSuccessOptions200Options) (*BoolResponse, error)
 	// Patch200 - Patch true Boolean value in request returning 200
@@ -224,7 +224,7 @@ func (client *HTTPSuccessClient) Get200HandleError(resp *azcore.Response) error 
 }
 
 // Head200 - Return 200 status code if successful
-func (client *HTTPSuccessClient) Head200(ctx context.Context, options *HTTPSuccessHead200Options) (*http.Response, error) {
+func (client *HTTPSuccessClient) Head200(ctx context.Context, options *HTTPSuccessHead200Options) (*BooleanResponse, error) {
 	req, err := client.Head200CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -233,10 +233,13 @@ func (client *HTTPSuccessClient) Head200(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
+		return &BooleanResponse{RawResponse: resp.Response, Success: true}, nil
+	} else if resp.StatusCode >= 400 && resp.StatusCode < 500 {
+		return &BooleanResponse{RawResponse: resp.Response, Success: false}, nil
+	} else {
 		return nil, client.Head200HandleError(resp)
 	}
-	return resp.Response, nil
 }
 
 // Head200CreateRequest creates the Head200 request.
@@ -260,7 +263,7 @@ func (client *HTTPSuccessClient) Head200HandleError(resp *azcore.Response) error
 }
 
 // Head204 - Return 204 status code if successful
-func (client *HTTPSuccessClient) Head204(ctx context.Context, options *HTTPSuccessHead204Options) (*http.Response, error) {
+func (client *HTTPSuccessClient) Head204(ctx context.Context, options *HTTPSuccessHead204Options) (*BooleanResponse, error) {
 	req, err := client.Head204CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -269,10 +272,13 @@ func (client *HTTPSuccessClient) Head204(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusNoContent) {
+	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
+		return &BooleanResponse{RawResponse: resp.Response, Success: true}, nil
+	} else if resp.StatusCode >= 400 && resp.StatusCode < 500 {
+		return &BooleanResponse{RawResponse: resp.Response, Success: false}, nil
+	} else {
 		return nil, client.Head204HandleError(resp)
 	}
-	return resp.Response, nil
 }
 
 // Head204CreateRequest creates the Head204 request.
@@ -296,7 +302,7 @@ func (client *HTTPSuccessClient) Head204HandleError(resp *azcore.Response) error
 }
 
 // Head404 - Return 404 status code
-func (client *HTTPSuccessClient) Head404(ctx context.Context, options *HTTPSuccessHead404Options) (*http.Response, error) {
+func (client *HTTPSuccessClient) Head404(ctx context.Context, options *HTTPSuccessHead404Options) (*BooleanResponse, error) {
 	req, err := client.Head404CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -305,10 +311,13 @@ func (client *HTTPSuccessClient) Head404(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusNoContent, http.StatusNotFound) {
+	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
+		return &BooleanResponse{RawResponse: resp.Response, Success: true}, nil
+	} else if resp.StatusCode >= 400 && resp.StatusCode < 500 {
+		return &BooleanResponse{RawResponse: resp.Response, Success: false}, nil
+	} else {
 		return nil, client.Head404HandleError(resp)
 	}
-	return resp.Response, nil
 }
 
 // Head404CreateRequest creates the Head404 request.

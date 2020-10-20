@@ -938,12 +938,13 @@ func (c NetezzaPartitionOption) ToPtr() *NetezzaPartitionOption {
 type NodeSize string
 
 const (
-	NodeSizeLarge   NodeSize = "Large"
-	NodeSizeMedium  NodeSize = "Medium"
-	NodeSizeNone    NodeSize = "None"
-	NodeSizeSmall   NodeSize = "Small"
-	NodeSizeXLarge  NodeSize = "XLarge"
-	NodeSizeXxLarge NodeSize = "XXLarge"
+	NodeSizeLarge    NodeSize = "Large"
+	NodeSizeMedium   NodeSize = "Medium"
+	NodeSizeNone     NodeSize = "None"
+	NodeSizeSmall    NodeSize = "Small"
+	NodeSizeXLarge   NodeSize = "XLarge"
+	NodeSizeXxLarge  NodeSize = "XXLarge"
+	NodeSizeXxxLarge NodeSize = "XXXLarge"
 )
 
 func PossibleNodeSizeValues() []NodeSize {
@@ -954,6 +955,7 @@ func PossibleNodeSizeValues() []NodeSize {
 		NodeSizeSmall,
 		NodeSizeXLarge,
 		NodeSizeXxLarge,
+		NodeSizeXxxLarge,
 	}
 }
 

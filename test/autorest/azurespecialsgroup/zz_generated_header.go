@@ -122,6 +122,9 @@ func (client *HeaderClient) CustomNamedRequestIDHeadCreateRequest(ctx context.Co
 // CustomNamedRequestIDHeadHandleResponse handles the CustomNamedRequestIDHead response.
 func (client *HeaderClient) CustomNamedRequestIDHeadHandleResponse(resp *azcore.Response) (*HeaderCustomNamedRequestIDHeadResponse, error) {
 	result := HeaderCustomNamedRequestIDHeadResponse{RawResponse: resp.Response}
+	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
+		result.Success = true
+	}
 	if val := resp.Header.Get("foo-request-id"); val != "" {
 		result.FooRequestID = &val
 	}

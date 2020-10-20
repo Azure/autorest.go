@@ -32,6 +32,15 @@ type BoolResponse struct {
 	Value *bool
 }
 
+// BooleanResponse contains a boolean response.
+type BooleanResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// Success indicates if the operation succeeded or failed.
+	Success bool
+}
+
 type C struct {
 	HTTPCode *string `json:"httpCode,omitempty"`
 }
@@ -267,6 +276,9 @@ type HTTPRedirectsHead300Response struct {
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+
+	// Success indicates if the operation succeeded or failed.
+	Success bool
 }
 
 // HTTPRedirectsHead301Options contains the optional parameters for the HTTPRedirects.Head301 method.

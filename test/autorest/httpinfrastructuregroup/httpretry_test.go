@@ -56,7 +56,9 @@ func TestHTTPRetryHead408(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if !result.Success {
+		t.Fatal("unexpected Success")
+	}
 }
 
 func TestHTTPRetryOptions502(t *testing.T) {

@@ -28,6 +28,7 @@ const goMappings = {
     'filegroup': 'body-file.json',
     //'formdatagroup': 'body-formdata.json',
     'headergroup': 'header.json',
+    'headgroup': 'head.json',
     'httpinfrastructuregroup': 'httpInfrastructure.json',
     'integergroup': 'body-integer.json',
     'lrogroup': 'lro.json',
@@ -52,7 +53,7 @@ const goMappings = {
 for (namespace in goMappings) {
     // for each swagger run the autorest command to generate code based on the swagger for the relevant namespace and output to the /generated directory
     const inputFile = swaggerDir + goMappings[namespace];
-    generate(inputFile, 'test/autorest/' + namespace);
+    generate(inputFile, 'test/autorest/' + namespace, '--head-as-boolean=true');
 }
 
 const blobStorage = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/storage-dataplane-preview/specification/storage/data-plane/Microsoft.BlobStorage/preview/2019-07-07/blob.json';

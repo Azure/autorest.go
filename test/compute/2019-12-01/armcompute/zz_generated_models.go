@@ -302,22 +302,6 @@ func (e CloudError) Error() string {
 	return msg
 }
 
-type Components1H8M3EpSchemasVirtualmachineidentityPropertiesUserassignedidentitiesAdditionalproperties struct {
-	// The client id of user assigned identity.
-	ClientID *string `json:"clientId,omitempty" azure:"ro"`
-
-	// The principal id of user assigned identity.
-	PrincipalID *string `json:"principalId,omitempty" azure:"ro"`
-}
-
-type ComponentsNj115SSchemasVirtualmachinescalesetidentityPropertiesUserassignedidentitiesAdditionalproperties struct {
-	// The client id of user assigned identity.
-	ClientID *string `json:"clientId,omitempty" azure:"ro"`
-
-	// The principal id of user assigned identity.
-	PrincipalID *string `json:"principalId,omitempty" azure:"ro"`
-}
-
 // The List Compute Operation operation response.
 type ComputeOperationListResult struct {
 	// The list of compute operations
@@ -4721,6 +4705,14 @@ type UserArtifactSource struct {
 	MediaLink *string `json:"mediaLink,omitempty"`
 }
 
+type UserAssignedIDentitiesValue struct {
+	// The client id of user assigned identity.
+	ClientID *string `json:"clientId,omitempty" azure:"ro"`
+
+	// The principal id of user assigned identity.
+	PrincipalID *string `json:"principalId,omitempty" azure:"ro"`
+}
+
 type VMScaleSetConvertToSinglePlacementGroupInput struct {
 	// Id of the placement group in which you want future virtual machine instances to be placed. To query placement group Id,
 	// please use Virtual Machine Scale Set VMs - Get API. If not provided, the platform will choose one with maximum number of
@@ -5094,7 +5086,7 @@ type VirtualMachineIDentity struct {
 
 	// The list of user identities associated with the Virtual Machine. The user identity dictionary key references will be ARM
 	// resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
-	UserAssignedIDentities *map[string]Components1H8M3EpSchemasVirtualmachineidentityPropertiesUserassignedidentitiesAdditionalproperties `json:"userAssignedIdentities,omitempty"`
+	UserAssignedIDentities *map[string]UserAssignedIDentitiesValue `json:"userAssignedIdentities,omitempty"`
 }
 
 // Describes a Virtual Machine Image.
@@ -5575,7 +5567,15 @@ type VirtualMachineScaleSetIDentity struct {
 
 	// The list of user identities associated with the virtual machine scale set. The user identity dictionary key references
 	// will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
-	UserAssignedIDentities *map[string]ComponentsNj115SSchemasVirtualmachinescalesetidentityPropertiesUserassignedidentitiesAdditionalproperties `json:"userAssignedIdentities,omitempty"`
+	UserAssignedIDentities *map[string]VirtualMachineScaleSetIDentityUserAssignedIdentitiesValue `json:"userAssignedIdentities,omitempty"`
+}
+
+type VirtualMachineScaleSetIDentityUserAssignedIdentitiesValue struct {
+	// The client id of user assigned identity.
+	ClientID *string `json:"clientId,omitempty" azure:"ro"`
+
+	// The principal id of user assigned identity.
+	PrincipalID *string `json:"principalId,omitempty" azure:"ro"`
 }
 
 // Describes a virtual machine scale set network profile's IP configuration.

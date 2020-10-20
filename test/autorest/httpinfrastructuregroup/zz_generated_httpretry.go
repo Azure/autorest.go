@@ -18,7 +18,7 @@ type HTTPRetryOperations interface {
 	// Get502 - Return 502 status code, then 200 after retry
 	Get502(ctx context.Context, options *HTTPRetryGet502Options) (*http.Response, error)
 	// Head408 - Return 408 status code, then 200 after retry
-	Head408(ctx context.Context, options *HTTPRetryHead408Options) (*http.Response, error)
+	Head408(ctx context.Context, options *HTTPRetryHead408Options) (*BooleanResponse, error)
 	// Options502 - Return 502 status code, then 200 after retry
 	Options502(ctx context.Context, options *HTTPRetryOptions502Options) (*BoolResponse, error)
 	// Patch500 - Return 500 status code, then 200 after retry
@@ -122,7 +122,7 @@ func (client *HTTPRetryClient) Get502HandleError(resp *azcore.Response) error {
 }
 
 // Head408 - Return 408 status code, then 200 after retry
-func (client *HTTPRetryClient) Head408(ctx context.Context, options *HTTPRetryHead408Options) (*http.Response, error) {
+func (client *HTTPRetryClient) Head408(ctx context.Context, options *HTTPRetryHead408Options) (*BooleanResponse, error) {
 	req, err := client.Head408CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -131,10 +131,13 @@ func (client *HTTPRetryClient) Head408(ctx context.Context, options *HTTPRetryHe
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
+		return &BooleanResponse{RawResponse: resp.Response, Success: true}, nil
+	} else if resp.StatusCode >= 400 && resp.StatusCode < 500 {
+		return &BooleanResponse{RawResponse: resp.Response, Success: false}, nil
+	} else {
 		return nil, client.Head408HandleError(resp)
 	}
-	return resp.Response, nil
 }
 
 // Head408CreateRequest creates the Head408 request.
