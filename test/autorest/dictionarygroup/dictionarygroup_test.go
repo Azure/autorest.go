@@ -37,9 +37,9 @@ func TestGetArrayItemEmpty(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.DeepEqualOrFatal(t, resp.Value, &map[string][]string{
-		"0": []string{"1", "2", "3"},
-		"1": []string{},
-		"2": []string{"7", "8", "9"},
+		"0": {"1", "2", "3"},
+		"1": {},
+		"2": {"7", "8", "9"},
 	})
 }
 
@@ -52,9 +52,9 @@ func TestGetArrayItemNull(t *testing.T) {
 	}
 	// TODO: this should technically fail since there's no x-nullable
 	helpers.DeepEqualOrFatal(t, resp.Value, &map[string][]string{
-		"0": []string{"1", "2", "3"},
+		"0": {"1", "2", "3"},
 		"1": nil,
-		"2": []string{"7", "8", "9"},
+		"2": {"7", "8", "9"},
 	})
 }
 
@@ -78,15 +78,25 @@ func TestGetArrayValid(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.DeepEqualOrFatal(t, resp.Value, &map[string][]string{
-		"0": []string{"1", "2", "3"},
-		"1": []string{"4", "5", "6"},
-		"2": []string{"7", "8", "9"},
+		"0": {"1", "2", "3"},
+		"1": {"4", "5", "6"},
+		"2": {"7", "8", "9"},
 	})
 }
 
 // GetBase64URL - Get base64url dictionary value {"0": "a string that gets encoded with base64url", "1": "test string", "2": "Lorem ipsum"}
 func TestGetBase64URL(t *testing.T) {
-	t.Skip("NYI")
+	t.Skip("unmarshalling fails")
+	client := newDictionaryClient()
+	resp, err := client.GetBase64URL(context.Background(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.DeepEqualOrFatal(t, resp.Value, &map[string][]byte{
+		"0": {},
+		"1": {},
+		"2": {},
+	})
 }
 
 // GetBooleanInvalidNull - Get boolean dictionary value {"0": true, "1": null, "2": false }
@@ -174,17 +184,16 @@ func TestGetComplexItemEmpty(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.DeepEqualOrFatal(t, resp.Value, &map[string]Widget{
-		"0": Widget{Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
-		"1": Widget{},
-		"2": Widget{Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
+		"0": {Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
+		"1": {},
+		"2": {Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
 	})
 }
 
 // GetComplexItemNull - Get dictionary of complex type with null item {"0": {"integer": 1, "string": "2"}, "1": null, "2": {"integer": 5, "string": "6"}}
-/*
-test is invalid, expects nil value but missing x-nullable
 func TestGetComplexItemNull(t *testing.T) {
-	client := newDictionaryClient()
+	t.Skip("test is invalid, expects nil value but missing x-nullable")
+	/*client := newDictionaryClient()
 	resp, err := client.GetComplexItemNull(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
@@ -193,8 +202,8 @@ func TestGetComplexItemNull(t *testing.T) {
 		"0": Widget{Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
 		"1": nil,
 		"2": Widget{Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
-	})
-}*/
+	})*/
+}
 
 // GetComplexNull - Get dictionary of complex type null value
 func TestGetComplexNull(t *testing.T) {
@@ -216,20 +225,27 @@ func TestGetComplexValid(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.DeepEqualOrFatal(t, resp.Value, &map[string]Widget{
-		"0": Widget{Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
-		"1": Widget{Integer: to.Int32Ptr(3), String: to.StringPtr("4")},
-		"2": Widget{Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
+		"0": {Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
+		"1": {Integer: to.Int32Ptr(3), String: to.StringPtr("4")},
+		"2": {Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
 	})
 }
 
 // GetDateInvalidChars - Get date dictionary value {"0": "2011-03-22", "1": "date"}
 func TestGetDateInvalidChars(t *testing.T) {
-	t.Skip("NYI")
+	client := newDictionaryClient()
+	resp, err := client.GetDateInvalidChars(context.Background(), nil)
+	if err == nil {
+		t.Fatal("unexpected nil error")
+	}
+	if resp != nil {
+		t.Fatal("expected nil response")
+	}
 }
 
 // GetDateInvalidNull - Get date dictionary value {"0": "2012-01-01", "1": null, "2": "1776-07-04"}
 func TestGetDateInvalidNull(t *testing.T) {
-	t.Skip("NYI")
+	t.Skip("x-nullable")
 }
 
 // GetDateTimeInvalidChars - Get date dictionary value {"0": "2000-12-01t00:00:01z", "1": "date-time"}
@@ -292,7 +308,20 @@ func TestGetDateTimeValid(t *testing.T) {
 
 // GetDateValid - Get integer dictionary value {"0": "2000-12-01", "1": "1980-01-02", "2": "1492-10-12"}
 func TestGetDateValid(t *testing.T) {
-	t.Skip("NYI")
+	t.Skip("unmarshalling fails")
+	client := newDictionaryClient()
+	resp, err := client.GetDateValid(context.Background(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	dt1 := time.Date(2000, 12, 01, 0, 0, 0, 0, nil)
+	dt2 := time.Date(1980, 01, 02, 0, 0, 0, 0, nil)
+	dt3 := time.Date(1492, 10, 12, 0, 0, 0, 0, nil)
+	helpers.DeepEqualOrFatal(t, resp.Value, &map[string]time.Time{
+		"0": dt1,
+		"1": dt2,
+		"2": dt3,
+	})
 }
 
 // GetDictionaryEmpty - Get an dictionaries of dictionaries of type <string, string> with value {}
@@ -307,7 +336,7 @@ func TestGetDictionaryEmpty(t *testing.T) {
 
 // GetDictionaryItemEmpty - Get an dictionaries of dictionaries of type <string, string> with value {"0": {"1": "one", "2": "two", "3": "three"}, "1": {}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
 func TestGetDictionaryItemEmpty(t *testing.T) {
-	t.Skip("needs codegen fix")
+	t.Skip("needs m4 fix (dictionary-of-dictionary")
 	client := newDictionaryClient()
 	resp, err := client.GetDictionaryItemEmpty(context.Background(), nil)
 	if err != nil {
@@ -318,17 +347,17 @@ func TestGetDictionaryItemEmpty(t *testing.T) {
 
 // GetDictionaryItemNull - Get an dictionaries of dictionaries of type <string, string> with value {"0": {"1": "one", "2": "two", "3": "three"}, "1": null, "2": {"7": "seven", "8": "eight", "9": "nine"}}
 func TestGetDictionaryItemNull(t *testing.T) {
-	t.Skip("needs codegen fix")
+	t.Skip("needs m4 fix (dictionary-of-dictionary")
 }
 
 // GetDictionaryNull - Get an dictionaries of dictionaries with value null
 func TestGetDictionaryNull(t *testing.T) {
-	t.Skip("needs codegen fix")
+	t.Skip("needs m4 fix (dictionary-of-dictionary")
 }
 
 // GetDictionaryValid - Get an dictionaries of dictionaries of type <string, string> with value {"0": {"1": "one", "2": "two", "3": "three"}, "1": {"4": "four", "5": "five", "6": "six"}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
 func TestGetDictionaryValid(t *testing.T) {
-	t.Skip("needs codegen fix")
+	t.Skip("needs m4 fix (dictionary-of-dictionary")
 }
 
 // GetDoubleInvalidNull - Get float dictionary value {"0": 0.0, "1": null, "2": 1.2e20}
@@ -565,11 +594,11 @@ func TestGetNullValue(t *testing.T) {
 	t.Skip("should fail, nil but no x-nullable")
 	client := newDictionaryClient()
 	resp, err := client.GetNullValue(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
+	if err != nil {
+		t.Fatal(err)
 	}
-	if resp != nil {
-		t.Fatal("expected nil response")
+	if resp.Value != nil {
+		t.Fatal("expected nil dictionary")
 	}
 }
 
@@ -616,9 +645,9 @@ func TestGetStringWithNull(t *testing.T) {
 func TestPutArrayValid(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.PutArrayValid(context.Background(), map[string][]string{
-		"0": []string{"1", "2", "3"},
-		"1": []string{"4", "5", "6"},
-		"2": []string{"7", "8", "9"},
+		"0": {"1", "2", "3"},
+		"1": {"4", "5", "6"},
+		"2": {"7", "8", "9"},
 	}, nil)
 	if err != nil {
 		t.Fatal(err)
@@ -659,9 +688,9 @@ func TestPutByteValid(t *testing.T) {
 func TestPutComplexValid(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.PutComplexValid(context.Background(), map[string]Widget{
-		"0": Widget{Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
-		"1": Widget{Integer: to.Int32Ptr(3), String: to.StringPtr("4")},
-		"2": Widget{Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
+		"0": {Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
+		"1": {Integer: to.Int32Ptr(3), String: to.StringPtr("4")},
+		"2": {Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
 	}, nil)
 	if err != nil {
 		t.Fatal(err)
@@ -710,7 +739,7 @@ func TestPutDateValid(t *testing.T) {
 
 // PutDictionaryValid - Get an dictionaries of dictionaries of type <string, string> with value {"0": {"1": "one", "2": "two", "3": "three"}, "1": {"4": "four", "5": "five", "6": "six"}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
 func TestPutDictionaryValid(t *testing.T) {
-	t.Skip("needs codegen fix")
+	t.Skip("needs m4 fix (dictionary-of-dictionary")
 }
 
 // PutDoubleValid - Set dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
