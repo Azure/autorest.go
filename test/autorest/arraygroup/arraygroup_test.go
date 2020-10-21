@@ -40,9 +40,9 @@ func TestGetArrayItemEmpty(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.DeepEqualOrFatal(t, resp.StringArrayArray, &[][]string{
-		[]string{"1", "2", "3"},
-		[]string{},
-		[]string{"7", "8", "9"},
+		{"1", "2", "3"},
+		{},
+		{"7", "8", "9"},
 	})
 }
 
@@ -54,9 +54,9 @@ func TestGetArrayItemNull(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.DeepEqualOrFatal(t, resp.StringArrayArray, &[][]string{
-		[]string{"1", "2", "3"},
+		{"1", "2", "3"},
 		nil,
-		[]string{"7", "8", "9"},
+		{"7", "8", "9"},
 	})
 }
 
@@ -80,9 +80,9 @@ func TestGetArrayValid(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.DeepEqualOrFatal(t, resp.StringArrayArray, &[][]string{
-		[]string{"1", "2", "3"},
-		[]string{"4", "5", "6"},
-		[]string{"7", "8", "9"},
+		{"1", "2", "3"},
+		{"4", "5", "6"},
+		{"7", "8", "9"},
 	})
 }
 
@@ -95,9 +95,9 @@ func TestGetBase64URL(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.DeepEqualOrFatal(t, resp.ByteArrayArray, &[][]byte{
-		[]byte{0},
-		[]byte{0},
-		[]byte{0},
+		{0},
+		{0},
+		{0},
 	})
 }
 
@@ -186,9 +186,9 @@ func TestGetComplexItemEmpty(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.DeepEqualOrFatal(t, resp.ProductArray, &[]Product{
-		Product{Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
-		Product{},
-		Product{Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
+		{Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
+		{},
+		{Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
 	})
 }
 
@@ -199,7 +199,14 @@ func TestGetComplexItemNull(t *testing.T) {
 
 // GetComplexNull - Get array of complex type null value
 func TestGetComplexNull(t *testing.T) {
-	t.Skip("arrays with nil elements")
+	client := newArrayClient()
+	resp, err := client.GetComplexNull(context.Background(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if resp.ProductArray != nil {
+		t.Fatal("expected nil array")
+	}
 }
 
 // GetComplexValid - Get array of complex type with [{'integer': 1 'string': '2'}, {'integer': 3, 'string': '4'}, {'integer': 5, 'string': '6'}]
@@ -210,9 +217,9 @@ func TestGetComplexValid(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.DeepEqualOrFatal(t, resp.ProductArray, &[]Product{
-		Product{Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
-		Product{Integer: to.Int32Ptr(3), String: to.StringPtr("4")},
-		Product{Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
+		{Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
+		{Integer: to.Int32Ptr(3), String: to.StringPtr("4")},
+		{Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
 	})
 }
 
@@ -324,13 +331,13 @@ func TestGetDictionaryItemEmpty(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.DeepEqualOrFatal(t, resp.MapOfStringArray, &[]map[string]string{
-		map[string]string{
+		{
 			"1": "one",
 			"2": "two",
 			"3": "three",
 		},
-		map[string]string{},
-		map[string]string{
+		{},
+		{
 			"7": "seven",
 			"8": "eight",
 			"9": "nine",
@@ -346,13 +353,13 @@ func TestGetDictionaryItemNull(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.DeepEqualOrFatal(t, resp.MapOfStringArray, &[]map[string]string{
-		map[string]string{
+		{
 			"1": "one",
 			"2": "two",
 			"3": "three",
 		},
 		nil,
-		map[string]string{
+		{
 			"7": "seven",
 			"8": "eight",
 			"9": "nine",
@@ -380,17 +387,17 @@ func TestGetDictionaryValid(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.DeepEqualOrFatal(t, resp.MapOfStringArray, &[]map[string]string{
-		map[string]string{
+		{
 			"1": "one",
 			"2": "two",
 			"3": "three",
 		},
-		map[string]string{
+		{
 			"4": "four",
 			"5": "five",
 			"6": "six",
 		},
-		map[string]string{
+		{
 			"7": "seven",
 			"8": "eight",
 			"9": "nine",
@@ -661,9 +668,9 @@ func TestGetUUIDValid(t *testing.T) {
 func TestPutArrayValid(t *testing.T) {
 	client := newArrayClient()
 	resp, err := client.PutArrayValid(context.Background(), [][]string{
-		[]string{"1", "2", "3"},
-		[]string{"4", "5", "6"},
-		[]string{"7", "8", "9"},
+		{"1", "2", "3"},
+		{"4", "5", "6"},
+		{"7", "8", "9"},
 	}, nil)
 	if err != nil {
 		t.Fatal(err)
@@ -685,9 +692,9 @@ func TestPutBooleanTfft(t *testing.T) {
 func TestPutByteValid(t *testing.T) {
 	client := newArrayClient()
 	resp, err := client.PutByteValid(context.Background(), [][]byte{
-		[]byte{0xFF, 0xFF, 0xFF, 0xFA},
-		[]byte{0x01, 0x02, 0x03},
-		[]byte{0x25, 0x29, 0x43},
+		{0xFF, 0xFF, 0xFF, 0xFA},
+		{0x01, 0x02, 0x03},
+		{0x25, 0x29, 0x43},
 	}, nil)
 	if err != nil {
 		t.Fatal(err)
@@ -699,9 +706,9 @@ func TestPutByteValid(t *testing.T) {
 func TestPutComplexValid(t *testing.T) {
 	client := newArrayClient()
 	resp, err := client.PutComplexValid(context.Background(), []Product{
-		Product{Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
-		Product{Integer: to.Int32Ptr(3), String: to.StringPtr("4")},
-		Product{Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
+		{Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
+		{Integer: to.Int32Ptr(3), String: to.StringPtr("4")},
+		{Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
 	}, nil)
 	if err != nil {
 		t.Fatal(err)
@@ -744,17 +751,17 @@ func TestPutDateValid(t *testing.T) {
 func TestPutDictionaryValid(t *testing.T) {
 	client := newArrayClient()
 	resp, err := client.PutDictionaryValid(context.Background(), []map[string]string{
-		map[string]string{
+		{
 			"1": "one",
 			"2": "two",
 			"3": "three",
 		},
-		map[string]string{
+		{
 			"4": "four",
 			"5": "five",
 			"6": "six",
 		},
-		map[string]string{
+		{
 			"7": "seven",
 			"8": "eight",
 			"9": "nine",
