@@ -492,6 +492,9 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
         addr = '';
       }
       body = `wrapper{${fieldName}: ${addr}${body}}`;
+    } else if (bodyParam!.schema.type === SchemaType.Date) {
+      // wrap the body in the internal dateType
+      body = `dateType(${body})`;
     } else if ((bodyParam!.schema.type === SchemaType.DateTime && (<DateTimeSchema>bodyParam!.schema).format === 'date-time-rfc1123') || bodyParam!.schema.type === SchemaType.UnixTime) {
       // wrap the body in the custom RFC1123 type
       text += `\taux := ${bodyParam!.schema.language.go!.internalTimeType}(${body})\n`;
@@ -586,14 +589,14 @@ function generateResponseUnmarshaller(op: Operation, response: Response, imports
   let unmarshallerText = '';
   if (!isSchemaResponse(response)) {
     throw console.error('TODO');
-  } else if (response.schema.type === SchemaType.DateTime || response.schema.type === SchemaType.UnixTime) {
+  } else if (response.schema.type === SchemaType.DateTime || response.schema.type === SchemaType.UnixTime || response.schema.type === SchemaType.Date) {
     // use the designated time type for unmarshalling
     unmarshallerText += `\tvar aux *${response.schema.language.go!.internalTimeType}\n`;
     unmarshallerText += `\terr := resp.UnmarshalAs${getMediaType(response.protocol)}(&aux)\n`;
     const resp = `${response.schema.language.go!.responseType.name}{RawResponse: resp.Response, ${response.schema.language.go!.responseType.value}: (*time.Time)(aux)}`;
     unmarshallerText += `\treturn &${resp}, err\n`;
     return unmarshallerText;
-  } else if (isArrayOfDateTime(response.schema)) {
+  } else if (isArrayOfDateTime(response.schema) || isArrayOfDate(response.schema)) {
     // unmarshalling arrays of date/time is a little more involved
     unmarshallerText += `\tvar aux *[]${(<ArraySchema>response.schema).elementType.language.go!.internalTimeType}\n`;
     unmarshallerText += `\tif err := resp.UnmarshalAs${getMediaType(response.protocol)}(&aux); err != nil {\n`;
@@ -606,7 +609,7 @@ function generateResponseUnmarshaller(op: Operation, response: Response, imports
     const resp = `${response.schema.language.go!.responseType.name}{RawResponse: resp.Response, ${response.schema.language.go!.responseType.value}: &cp}`;
     unmarshallerText += `\treturn &${resp}, nil\n`;
     return unmarshallerText;
-  } else if (isMapOfDateTime(response.schema)) {
+  } else if (isMapOfDateTime(response.schema) || isMapOfDate(response.schema)) {
     unmarshallerText += `\taux := map[string]${(<DictionarySchema>response.schema).elementType.language.go!.internalTimeType}{}\n`;
     unmarshallerText += `\tif err := resp.UnmarshalAs${getMediaType(response.protocol)}(&aux); err != nil {\n`;
     unmarshallerText += '\t\treturn nil, err\n';
@@ -761,6 +764,15 @@ function isArrayOfDateTime(schema: Schema): boolean {
   return arrayElem.type === SchemaType.DateTime || arrayElem.type === SchemaType.UnixTime;
 }
 
+function isArrayOfDate(schema: Schema): boolean {
+  if (schema.type !== SchemaType.Array) {
+    return false;
+  }
+  const arraySchema = <ArraySchema>schema;
+  const arrayElem = <Schema>arraySchema.elementType;
+  return arrayElem.type === SchemaType.Date;
+}
+
 function isMapOfDateTime(schema: Schema): boolean {
   if (schema.type !== SchemaType.Dictionary) {
     return false;
@@ -768,6 +780,15 @@ function isMapOfDateTime(schema: Schema): boolean {
   const dictSchema = <DictionarySchema>schema;
   const dictElem = <Schema>dictSchema.elementType;
   return dictElem.type === SchemaType.DateTime || dictElem.type === SchemaType.UnixTime;
+}
+
+function isMapOfDate(schema: Schema): boolean {
+  if (schema.type !== SchemaType.Dictionary) {
+    return false;
+  }
+  const dictSchema = <DictionarySchema>schema;
+  const dictElem = <Schema>dictSchema.elementType;
+  return dictElem.type === SchemaType.Date;
 }
 
 function createInterfaceDefinition(group: OperationGroup, imports: ImportManager): string {

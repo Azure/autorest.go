@@ -5703,6 +5703,9 @@ type BigDataPoolResourceProperties struct {
 	// The time when the Big Data pool was created.
 	CreationDate *time.Time `json:"creationDate,omitempty"`
 
+	// List of custom libraries/packages associated with the spark pool.
+	CustomLibraries *[]LibraryInfo `json:"customLibraries,omitempty"`
+
 	// The default folder where Spark logs will be written.
 	DefaultSparkLogFolder *string `json:"defaultSparkLogFolder,omitempty"`
 
@@ -5723,6 +5726,9 @@ type BigDataPoolResourceProperties struct {
 
 	// The state of the Big Data pool.
 	ProvisioningState *string `json:"provisioningState,omitempty"`
+
+	// Whether session level library/package management is enabled or not.
+	SessionLevelPackagesEnabled *bool `json:"sessionLevelPackagesEnabled,omitempty"`
 
 	// Spark configuration file to specify additional properties
 	SparkConfigProperties *LibraryRequirements `json:"sparkConfigProperties,omitempty"`
@@ -5746,6 +5752,9 @@ func (b BigDataPoolResourceProperties) MarshalJSON() ([]byte, error) {
 	if b.CreationDate != nil {
 		objectMap["creationDate"] = (*timeRFC3339)(b.CreationDate)
 	}
+	if b.CustomLibraries != nil {
+		objectMap["customLibraries"] = b.CustomLibraries
+	}
 	if b.DefaultSparkLogFolder != nil {
 		objectMap["defaultSparkLogFolder"] = b.DefaultSparkLogFolder
 	}
@@ -5766,6 +5775,9 @@ func (b BigDataPoolResourceProperties) MarshalJSON() ([]byte, error) {
 	}
 	if b.ProvisioningState != nil {
 		objectMap["provisioningState"] = b.ProvisioningState
+	}
+	if b.SessionLevelPackagesEnabled != nil {
+		objectMap["sessionLevelPackagesEnabled"] = b.SessionLevelPackagesEnabled
 	}
 	if b.SparkConfigProperties != nil {
 		objectMap["sparkConfigProperties"] = b.SparkConfigProperties
@@ -5805,6 +5817,11 @@ func (b *BigDataPoolResourceProperties) UnmarshalJSON(data []byte) error {
 				b.CreationDate = (*time.Time)(&aux)
 			}
 			delete(rawMsg, key)
+		case "customLibraries":
+			if val != nil {
+				err = json.Unmarshal(*val, &b.CustomLibraries)
+			}
+			delete(rawMsg, key)
 		case "defaultSparkLogFolder":
 			if val != nil {
 				err = json.Unmarshal(*val, &b.DefaultSparkLogFolder)
@@ -5838,6 +5855,11 @@ func (b *BigDataPoolResourceProperties) UnmarshalJSON(data []byte) error {
 		case "provisioningState":
 			if val != nil {
 				err = json.Unmarshal(*val, &b.ProvisioningState)
+			}
+			delete(rawMsg, key)
+		case "sessionLevelPackagesEnabled":
+			if val != nil {
+				err = json.Unmarshal(*val, &b.SessionLevelPackagesEnabled)
 			}
 			delete(rawMsg, key)
 		case "sparkConfigProperties":
@@ -17506,6 +17528,89 @@ func (j *JiraSource) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return j.TabularSource.unmarshalInternal(rawMsg)
+}
+
+// Library/package information of a Big Data pool powered by Apache Spark
+type LibraryInfo struct {
+	// Storage blob container name.
+	ContainerName *string `json:"containerName,omitempty"`
+
+	// Name of the library.
+	Name *string `json:"name,omitempty"`
+
+	// Storage blob path of library.
+	Path *string `json:"path,omitempty"`
+
+	// Type of the library.
+	Type *string `json:"type,omitempty"`
+
+	// The last update time of the library.
+	UploadedTimestamp *time.Time `json:"uploadedTimestamp,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type LibraryInfo.
+func (l LibraryInfo) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if l.ContainerName != nil {
+		objectMap["containerName"] = l.ContainerName
+	}
+	if l.Name != nil {
+		objectMap["name"] = l.Name
+	}
+	if l.Path != nil {
+		objectMap["path"] = l.Path
+	}
+	if l.Type != nil {
+		objectMap["type"] = l.Type
+	}
+	if l.UploadedTimestamp != nil {
+		objectMap["uploadedTimestamp"] = (*timeRFC3339)(l.UploadedTimestamp)
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type LibraryInfo.
+func (l *LibraryInfo) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "containerName":
+			if val != nil {
+				err = json.Unmarshal(*val, &l.ContainerName)
+			}
+			delete(rawMsg, key)
+		case "name":
+			if val != nil {
+				err = json.Unmarshal(*val, &l.Name)
+			}
+			delete(rawMsg, key)
+		case "path":
+			if val != nil {
+				err = json.Unmarshal(*val, &l.Path)
+			}
+			delete(rawMsg, key)
+		case "type":
+			if val != nil {
+				err = json.Unmarshal(*val, &l.Type)
+			}
+			delete(rawMsg, key)
+		case "uploadedTimestamp":
+			if val != nil {
+				var aux timeRFC3339
+				err = json.Unmarshal(*val, &aux)
+				l.UploadedTimestamp = (*time.Time)(&aux)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // Library requirements for a Big Data pool powered by Apache Spark

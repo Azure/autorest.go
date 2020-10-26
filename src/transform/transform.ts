@@ -5,7 +5,7 @@
 
 import { camelCase, KnownMediaType, pascalCase, serialize } from '@azure-tools/codegen';
 import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
-import { ObjectSchema, ArraySchema, ChoiceValue, codeModelSchema, CodeModel, DateTimeSchema, GroupProperty, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema, Request } from '@azure-tools/codemodel';
+import { ObjectSchema, ArraySchema, ChoiceValue, codeModelSchema, CodeModel, DateTimeSchema, GroupProperty, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema, Request, DateSchema } from '@azure-tools/codemodel';
 import { items, values } from '@azure-tools/linq';
 import { aggregateParameters, hasAdditionalProperties, isPageableOperation, isObjectSchema, isSchemaResponse, PagerInfo, isLROOperation, PollerInfo } from '../common/helpers';
 import { namer, protocolMethods } from './namer';
@@ -74,6 +74,8 @@ async function process(session: Session<CodeModel>) {
       details.name = `${schemaTypeToGoType(session.model, prop.schema, true)}`;
       if (prop.schema.type === SchemaType.DateTime) {
         obj.language.go!.needsDateTimeMarshalling = true;
+      } else if (prop.schema.type === SchemaType.Date) {
+        obj.language.go!.needsDateMarshalling = true;
       } else if (prop.schema.type === SchemaType.Dictionary && obj.language.go!.marshallingFormat === 'xml') {
         // mark that we need custom XML unmarshalling for a dictionary
         prop.language.go!.needsXMLDictionaryUnmarshalling = true;
@@ -137,7 +139,6 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolea
           schema.language.go!.internalTimeType = 'timeRFC3339';
         }
       }
-    case SchemaType.Date:
       return 'time.Time';
     case SchemaType.UnixTime:
       codeModel.language.go!.hasUnixTime = true;
@@ -166,6 +167,12 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolea
       return 'string';
     case SchemaType.Uri:
       return 'url.URL';
+    case SchemaType.Date:
+      if (inBody) {
+        codeModel.language.go!.hasDate = true;
+        schema.language.go!.internalTimeType = 'dateType';
+      }
+      return 'time.Time';
     default:
       return schema.language.go!.name;
   }

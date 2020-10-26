@@ -143,6 +143,49 @@ type DateWrapper struct {
 	Leap  *time.Time `json:"leap,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type DateWrapper.
+func (d DateWrapper) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if d.Field != nil {
+		objectMap["field"] = (*dateType)(d.Field)
+	}
+	if d.Leap != nil {
+		objectMap["leap"] = (*dateType)(d.Leap)
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type DateWrapper.
+func (d *DateWrapper) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "field":
+			if val != nil {
+				var aux dateType
+				err = json.Unmarshal(*val, &aux)
+				d.Field = (*time.Time)(&aux)
+			}
+			delete(rawMsg, key)
+		case "leap":
+			if val != nil {
+				var aux dateType
+				err = json.Unmarshal(*val, &aux)
+				d.Leap = (*time.Time)(&aux)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 // DateWrapperResponse is the response envelope for operations that return a DateWrapper type.
 type DateWrapperResponse struct {
 	DateWrapper *DateWrapper

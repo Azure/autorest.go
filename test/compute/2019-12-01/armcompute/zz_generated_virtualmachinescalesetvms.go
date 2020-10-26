@@ -35,7 +35,7 @@ type VirtualMachineScaleSetVMSOperations interface {
 	GetInstanceView(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSGetInstanceViewOptions) (*VirtualMachineScaleSetVMInstanceViewResponse, error)
 	// List - Gets a list of all virtual machines in a VM scale sets.
 	List(resourceGroupName string, virtualMachineScaleSetName string, options *VirtualMachineScaleSetVMSListOptions) VirtualMachineScaleSetVMListResultPager
-	// BeginPerformMaintenance - Performs maintenance on a virtual machine in a VM scale set.
+	// BeginPerformMaintenance - Shuts down the virtual machine in a VMScaleSet, moves it to an already updated node, and powers it back on during the self-service phase of planned maintenance.
 	BeginPerformMaintenance(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSPerformMaintenanceOptions) (*HTTPPollerResponse, error)
 	// ResumePerformMaintenance - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumePerformMaintenance(token string) (HTTPPoller, error)
@@ -459,7 +459,7 @@ func (client *VirtualMachineScaleSetVMSClient) ResumePerformMaintenance(token st
 	}, nil
 }
 
-// PerformMaintenance - Performs maintenance on a virtual machine in a VM scale set.
+// PerformMaintenance - Shuts down the virtual machine in a VMScaleSet, moves it to an already updated node, and powers it back on during the self-service phase of planned maintenance.
 func (client *VirtualMachineScaleSetVMSClient) PerformMaintenance(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSPerformMaintenanceOptions) (*azcore.Response, error) {
 	req, err := client.PerformMaintenanceCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceId, options)
 	if err != nil {

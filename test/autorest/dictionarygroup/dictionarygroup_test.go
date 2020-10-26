@@ -308,15 +308,14 @@ func TestGetDateTimeValid(t *testing.T) {
 
 // GetDateValid - Get integer dictionary value {"0": "2000-12-01", "1": "1980-01-02", "2": "1492-10-12"}
 func TestGetDateValid(t *testing.T) {
-	t.Skip("unmarshalling fails")
 	client := newDictionaryClient()
 	resp, err := client.GetDateValid(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
-	dt1 := time.Date(2000, 12, 01, 0, 0, 0, 0, nil)
-	dt2 := time.Date(1980, 01, 02, 0, 0, 0, 0, nil)
-	dt3 := time.Date(1492, 10, 12, 0, 0, 0, 0, nil)
+	dt1 := time.Date(2000, 12, 01, 0, 0, 0, 0, time.UTC)
+	dt2 := time.Date(1980, 01, 02, 0, 0, 0, 0, time.UTC)
+	dt3 := time.Date(1492, 10, 12, 0, 0, 0, 0, time.UTC)
 	helpers.DeepEqualOrFatal(t, resp.Value, &map[string]time.Time{
 		"0": dt1,
 		"1": dt2,
