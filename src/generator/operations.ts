@@ -499,14 +499,14 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
       // wrap the body in the custom RFC1123 type
       text += `\taux := ${bodyParam!.schema.language.go!.internalTimeType}(${body})\n`;
       body = 'aux';
-    } else if (isArrayOfTimesForMarshalling(bodyParam!.schema)) {
+    } else if (isArrayOfTimesForMarshalling(bodyParam!.schema) || isArrayOfDatesForMarshalling(bodyParam!.schema)) {
       const timeType = (<ArraySchema>bodyParam!.schema).elementType.language.go!.internalTimeType;
       text += `\taux := make([]${timeType}, len(${body}), len(${body}))\n`;
       text += `\tfor i := 0; i < len(${body}); i++ {\n`;
       text += `\t\taux[i] = ${timeType}(${body}[i])\n`;
       text += '\t}\n';
       body = 'aux';
-    } else if (isMapOfDateTime(bodyParam!.schema)) {
+    } else if (isMapOfDateTime(bodyParam!.schema) || isMapOfDate(bodyParam!.schema)) {
       const timeType = (<ArraySchema>bodyParam!.schema).elementType.language.go!.internalTimeType;
       text += `\taux := map[string]${timeType}{}\n`;
       text += `\tfor k, v := range ${body} {\n`;
@@ -579,6 +579,15 @@ function isArrayOfTimesForMarshalling(schema: Schema): boolean {
     return false;
   }
   return (<DateTimeSchema>arrayElem).format === 'date-time-rfc1123';
+}
+
+function isArrayOfDatesForMarshalling(schema: Schema): boolean {
+  if (schema.type !== SchemaType.Array) {
+    return false;
+  }
+  const arraySchema = <ArraySchema>schema;
+  const arrayElem = <Schema>arraySchema.elementType;
+  return arrayElem.type === SchemaType.Date;
 }
 
 function needsResponseHandler(op: Operation): boolean {
