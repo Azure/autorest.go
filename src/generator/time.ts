@@ -32,6 +32,9 @@ export async function generateTimeHelpers(session: Session<CodeModel>): Promise<
   if (session.model.language.go!.hasUnixTime) {
     content.push(new Content('time_unix', generateUnixTimeHelper(preamble)));
   }
+  if (session.model.language.go!.hasDate) {
+    content.push(new Content('date_type', generateDateHelper(preamble)));
+  }
   return content;
 }
 
@@ -153,6 +156,33 @@ func (t *timeUnix) UnmarshalJSON(data []byte) error {
 
 func (t timeUnix) String() string {
 	return fmt.Sprintf("%d", time.Time(t).Unix())
+}
+`;
+}
+
+function generateDateHelper(preamble: string): string {
+  return `${preamble}
+
+import (
+	"fmt"
+	"time"
+)
+
+const (
+	fullDateJSON = \`"2006-01-02"\`
+	jsonFormat   = \`"%04d-%02d-%02d"\`
+)
+
+type dateType time.Time
+
+func (t dateType) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf(jsonFormat, time.Time(t).Year(), time.Time(t).Month(), time.Time(t).Day())), nil
+}
+
+func (d *dateType) UnmarshalJSON(data []byte) (err error) {
+	t, err := time.Parse(fullDateJSON, string(data))
+	*d = (dateType)(t)
+	return err
 }
 `;
 }

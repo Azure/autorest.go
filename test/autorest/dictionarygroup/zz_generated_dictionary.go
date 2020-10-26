@@ -931,8 +931,15 @@ func (client *DictionaryClient) GetDateInvalidCharsCreateRequest(ctx context.Con
 
 // GetDateInvalidCharsHandleResponse handles the GetDateInvalidChars response.
 func (client *DictionaryClient) GetDateInvalidCharsHandleResponse(resp *azcore.Response) (*MapOfTimeResponse, error) {
-	result := MapOfTimeResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Value)
+	aux := map[string]dateType{}
+	if err := resp.UnmarshalAsJSON(&aux); err != nil {
+		return nil, err
+	}
+	cp := map[string]time.Time{}
+	for k, v := range aux {
+		cp[k] = time.Time(v)
+	}
+	return &MapOfTimeResponse{RawResponse: resp.Response, Value: &cp}, nil
 }
 
 // GetDateInvalidCharsHandleError handles the GetDateInvalidChars error response.
@@ -977,8 +984,15 @@ func (client *DictionaryClient) GetDateInvalidNullCreateRequest(ctx context.Cont
 
 // GetDateInvalidNullHandleResponse handles the GetDateInvalidNull response.
 func (client *DictionaryClient) GetDateInvalidNullHandleResponse(resp *azcore.Response) (*MapOfTimeResponse, error) {
-	result := MapOfTimeResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Value)
+	aux := map[string]dateType{}
+	if err := resp.UnmarshalAsJSON(&aux); err != nil {
+		return nil, err
+	}
+	cp := map[string]time.Time{}
+	for k, v := range aux {
+		cp[k] = time.Time(v)
+	}
+	return &MapOfTimeResponse{RawResponse: resp.Response, Value: &cp}, nil
 }
 
 // GetDateInvalidNullHandleError handles the GetDateInvalidNull error response.
@@ -1235,8 +1249,15 @@ func (client *DictionaryClient) GetDateValidCreateRequest(ctx context.Context, o
 
 // GetDateValidHandleResponse handles the GetDateValid response.
 func (client *DictionaryClient) GetDateValidHandleResponse(resp *azcore.Response) (*MapOfTimeResponse, error) {
-	result := MapOfTimeResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Value)
+	aux := map[string]dateType{}
+	if err := resp.UnmarshalAsJSON(&aux); err != nil {
+		return nil, err
+	}
+	cp := map[string]time.Time{}
+	for k, v := range aux {
+		cp[k] = time.Time(v)
+	}
+	return &MapOfTimeResponse{RawResponse: resp.Response, Value: &cp}, nil
 }
 
 // GetDateValidHandleError handles the GetDateValid error response.

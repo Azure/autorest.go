@@ -308,7 +308,7 @@ function generateStructs(objects?: ObjectSchema[]): StructDef[] {
           needsIntM = needsIntU = true;
         }
       }
-    } else if (obj.language.go!.needsDateTimeMarshalling || hasAdditionalProperties(obj)) {
+    } else if (obj.language.go!.needsDateTimeMarshalling || hasAdditionalProperties(obj) || obj.language.go!.needsDateMarshalling) {
       // singular type not in any hierarchy
       needsM = needsU = true;
     } else if (hasPolymorphicField(obj)) {

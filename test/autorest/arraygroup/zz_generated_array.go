@@ -939,8 +939,15 @@ func (client *ArrayClient) GetDateInvalidCharsCreateRequest(ctx context.Context,
 
 // GetDateInvalidCharsHandleResponse handles the GetDateInvalidChars response.
 func (client *ArrayClient) GetDateInvalidCharsHandleResponse(resp *azcore.Response) (*TimeArrayResponse, error) {
-	result := TimeArrayResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.TimeArray)
+	var aux *[]dateType
+	if err := resp.UnmarshalAsJSON(&aux); err != nil {
+		return nil, err
+	}
+	cp := make([]time.Time, len(*aux), len(*aux))
+	for i := 0; i < len(*aux); i++ {
+		cp[i] = time.Time((*aux)[i])
+	}
+	return &TimeArrayResponse{RawResponse: resp.Response, TimeArray: &cp}, nil
 }
 
 // GetDateInvalidCharsHandleError handles the GetDateInvalidChars error response.
@@ -985,8 +992,15 @@ func (client *ArrayClient) GetDateInvalidNullCreateRequest(ctx context.Context, 
 
 // GetDateInvalidNullHandleResponse handles the GetDateInvalidNull response.
 func (client *ArrayClient) GetDateInvalidNullHandleResponse(resp *azcore.Response) (*TimeArrayResponse, error) {
-	result := TimeArrayResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.TimeArray)
+	var aux *[]dateType
+	if err := resp.UnmarshalAsJSON(&aux); err != nil {
+		return nil, err
+	}
+	cp := make([]time.Time, len(*aux), len(*aux))
+	for i := 0; i < len(*aux); i++ {
+		cp[i] = time.Time((*aux)[i])
+	}
+	return &TimeArrayResponse{RawResponse: resp.Response, TimeArray: &cp}, nil
 }
 
 // GetDateInvalidNullHandleError handles the GetDateInvalidNull error response.
@@ -1243,8 +1257,15 @@ func (client *ArrayClient) GetDateValidCreateRequest(ctx context.Context, option
 
 // GetDateValidHandleResponse handles the GetDateValid response.
 func (client *ArrayClient) GetDateValidHandleResponse(resp *azcore.Response) (*TimeArrayResponse, error) {
-	result := TimeArrayResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.TimeArray)
+	var aux *[]dateType
+	if err := resp.UnmarshalAsJSON(&aux); err != nil {
+		return nil, err
+	}
+	cp := make([]time.Time, len(*aux), len(*aux))
+	for i := 0; i < len(*aux); i++ {
+		cp[i] = time.Time((*aux)[i])
+	}
+	return &TimeArrayResponse{RawResponse: resp.Response, TimeArray: &cp}, nil
 }
 
 // GetDateValidHandleError handles the GetDateValid error response.
