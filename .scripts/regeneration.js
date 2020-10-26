@@ -18,7 +18,7 @@ const goMappings = {
     'complexgroup': 'body-complex.json',
     'complexmodelgroup': 'complex-model.json',
     'custombaseurlgroup': 'custom-baseUrl.json',
-    //'dategroup': 'body-date.json',
+    'dategroup': 'body-date.json',
     'datetimegroup': 'body-datetime.json',
     'datetimerfc1123group': 'body-datetime-rfc1123.json',
     'dictionarygroup': 'body-dictionary.json',
