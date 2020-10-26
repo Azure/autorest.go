@@ -300,7 +300,6 @@ func TestGetDateTimeValid(t *testing.T) {
 
 // GetDateValid - Get integer array value ['2000-12-01', '1980-01-02', '1492-10-12']
 func TestGetDateValid(t *testing.T) {
-	t.Skip("needs codegen fix")
 	client := newArrayClient()
 	resp, err := client.GetDateValid(context.Background(), nil)
 	if err != nil {
@@ -744,7 +743,16 @@ func TestPutDateTimeValid(t *testing.T) {
 
 // PutDateValid - Set array value  ['2000-12-01', '1980-01-02', '1492-10-12']
 func TestPutDateValid(t *testing.T) {
-	t.Skip("needs codegen fix")
+	client := newArrayClient()
+	resp, err := client.PutDateValid(context.Background(), []time.Time{
+		time.Date(2000, 12, 01, 0, 0, 0, 0, time.UTC),
+		time.Date(1980, 01, 02, 0, 0, 0, 0, time.UTC),
+		time.Date(1492, 10, 12, 0, 0, 0, 0, time.UTC),
+	}, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, resp, http.StatusOK)
 }
 
 // PutDictionaryValid - Get an array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two', '3': 'three'}, {'4': 'four', '5': 'five', '6': 'six'}, {'7': 'seven', '8': 'eight', '9': 'nine'}]

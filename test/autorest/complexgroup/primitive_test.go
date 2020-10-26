@@ -184,25 +184,22 @@ func TestPrimitiveGetDate(t *testing.T) {
 	helpers.DeepEqualOrFatal(t, result.DateWrapper, dw)
 }
 
-// func TestPrimitivePutDate(t *testing.T) {
-// 	client := newPrimitiveClient()
-// 	a, err := time.Parse("2006-01-02", "0001-01-01")
-// 	if err != nil {
-// 		t.Fatalf("Unable to parse date string: %v", err)
-// 	}
-// 	b, err := time.Parse("2006-01-02", "2016-02-29")
-// 	if err != nil {
-// 		t.Fatalf("Unable to parse leap year date string: %v", err)
-// 	}
-// 	result, err := client.PutDate(context.Background(), DateWrapper{Field: &a, Leap: &b})
-// 	if err != nil {
-// 		t.Fatalf("PutDate: %v", err)
-// 	}
-// 	expected := &PrimitivePutDateResponse{
-// 		StatusCode: http.StatusOK,
-// 	}
-// 	deepEqualOrFatal(t, result, expected)
-// }
+func TestPrimitivePutDate(t *testing.T) {
+	client := newPrimitiveClient()
+	a, err := time.Parse("2006-01-02", "0001-01-01")
+	if err != nil {
+		t.Fatalf("Unable to parse date string: %v", err)
+	}
+	b, err := time.Parse("2006-01-02", "2016-02-29")
+	if err != nil {
+		t.Fatalf("Unable to parse leap year date string: %v", err)
+	}
+	resp, err := client.PutDate(context.Background(), DateWrapper{Field: &a, Leap: &b}, nil)
+	if err != nil {
+		t.Fatalf("PutDate: %v", err)
+	}
+	helpers.VerifyStatusCode(t, resp, http.StatusOK)
+}
 
 func TestPrimitiveGetDuration(t *testing.T) {
 	client := newPrimitiveClient()

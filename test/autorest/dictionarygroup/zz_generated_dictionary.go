@@ -2759,7 +2759,11 @@ func (client *DictionaryClient) PutDateValidCreateRequest(ctx context.Context, a
 		return nil, err
 	}
 	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(arrayBody)
+	aux := map[string]dateType{}
+	for k, v := range arrayBody {
+		aux[k] = dateType(v)
+	}
+	return req, req.MarshalAsJSON(aux)
 }
 
 // PutDateValidHandleError handles the PutDateValid error response.

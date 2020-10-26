@@ -733,7 +733,19 @@ func TestPutDateTimeValid(t *testing.T) {
 
 // PutDateValid - Set dictionary value  {"0": "2000-12-01", "1": "1980-01-02", "2": "1492-10-12"}
 func TestPutDateValid(t *testing.T) {
-	t.Skip("NYI")
+	client := newDictionaryClient()
+	d1 := time.Date(2000, 12, 01, 0, 0, 0, 0, time.UTC)
+	d2 := time.Date(1980, 01, 02, 0, 0, 0, 0, time.UTC)
+	d3 := time.Date(1492, 10, 12, 0, 0, 0, 0, time.UTC)
+	resp, err := client.PutDateValid(context.Background(), map[string]time.Time{
+		"0": d1,
+		"1": d2,
+		"2": d3,
+	}, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, resp, http.StatusOK)
 }
 
 // PutDictionaryValid - Get an dictionaries of dictionaries of type <string, string> with value {"0": {"1": "one", "2": "two", "3": "three"}, "1": {"4": "four", "5": "five", "6": "six"}, "2": {"7": "seven", "8": "eight", "9": "nine"}}

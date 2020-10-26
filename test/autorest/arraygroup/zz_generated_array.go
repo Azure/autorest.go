@@ -2809,7 +2809,11 @@ func (client *ArrayClient) PutDateValidCreateRequest(ctx context.Context, arrayB
 		return nil, err
 	}
 	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(arrayBody)
+	aux := make([]dateType, len(arrayBody), len(arrayBody))
+	for i := 0; i < len(arrayBody); i++ {
+		aux[i] = dateType(arrayBody[i])
+	}
+	return req, req.MarshalAsJSON(aux)
 }
 
 // PutDateValidHandleError handles the PutDateValid error response.
