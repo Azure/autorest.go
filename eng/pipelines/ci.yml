@@ -50,7 +50,7 @@ jobs:
       - script: |
           sudo apt-get install libunwind8
           npm install
-          npm install -g gulp-cli
+          npm install gulp
         displayName: 'Prepare Generator Environment'
 
       - script: |
