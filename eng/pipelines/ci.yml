@@ -10,8 +10,6 @@ pr:
 
 variables:
   NodeVersion: '10.15.3'
-  GOPATH: '$(system.defaultWorkingDirectory)/work'
-  sdkPath: '$(GOPATH)/src/github.com/$(build.repository.name)'
 
 jobs:
   - job: 'AutoRest_Go_CI'
@@ -38,23 +36,16 @@ jobs:
           versionSpec: '$(NodeVersion)'
 
       - script: |
-          set -e
-          mkdir -p '$(GOPATH)/bin'
-          mkdir -p '$(sdkPath)'
-          shopt -s extglob
-          mv !(work) '$(sdkPath)'
           echo '##vso[task.prependpath]$(GOROOT)/bin'
-          echo '##vso[task.prependpath]$(GOPATH)/bin'
-        displayName: 'Create Go Workspace'
+          go version
+        displayName: 'Select Go Version'
 
       - script: |
           sudo apt-get install libunwind8
           npm install
           npm install gulp
         displayName: 'Prepare Generator Environment'
-        workingDirectory: '$(sdkPath)'
 
       - script: |
           gulp testci
         displayName: 'Gulp testci'
-        workingDirectory: '$(sdkPath)'
