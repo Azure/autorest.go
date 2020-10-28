@@ -62,8 +62,8 @@
             var @(dt.Name.FixedValue.ToVariableName()) @(dt.Name)
             err := json.Unmarshal(body, &@(dt.Name.FixedValue.ToVariableName()))
             return @(dt.Name.FixedValue.ToVariableName()), err
-            </text>
-        }
+    </text>
+}
         default:
         var @(Model.Name.FixedValue.ToVariableName()) @(Model.Name)
         err := json.Unmarshal(body, &@(Model.Name.FixedValue.ToVariableName()))
@@ -89,59 +89,59 @@
         }
         return @(Model.Name.FixedValue.ToVariableName())Array, nil
         }
-    </text>
-}
-else
-{
-    if (Model is PageTypeGo)
-    {
-        var pageType = Model as PageTypeGo;
-        var itemName = pageType.ItemName;
-        var contentType = pageType.ContentType.Name;
-        var receiverVar = contentType.FixedValue.ToVariableName();
-
-        <text>
-            @EmptyLine
-            // IsEmpty returns true if the ListResult contains no values.
-            func (@receiverVar @contentType) IsEmpty() bool {
-            return @(receiverVar).@itemName == nil || len(*@(receiverVar).@itemName) == 0
-            }
-            @EmptyLine
-            // hasNextLink returns true if the NextLink is not empty.
-            func (@receiverVar @contentType) hasNextLink() bool {
-            return @(receiverVar).@(pageType.NextLink) != nil && len(*@(receiverVar).@(pageType.NextLink)) != 0
-            }
         </text>
-        if (pageType.PreparerNeeded)
+    }
+    else
+    {
+        if (Model is PageTypeGo)
         {
+            var pageType = Model as PageTypeGo;
+            var itemName = pageType.ItemName;
+            var contentType = pageType.ContentType.Name;
+            var receiverVar = contentType.FixedValue.ToVariableName();
+
             <text>
-                // @(pageType.PreparerMethodName) prepares a request to retrieve the next set of results.
-                // It returns nil if no more results exist.
-                func (@receiverVar @contentType) @(pageType.PreparerMethodName)(ctx context.Context) (*http.Request, error) {
-                if !@(receiverVar).hasNextLink() {
-                return nil, nil
-                }
-                return autorest.Prepare((&http.Request{}).WithContext(ctx),
-                autorest.AsJSON(),
-                autorest.AsGet(),
-                autorest.WithBaseURL(to.String( @(receiverVar).@(pageType.NextLink))));
+                @EmptyLine
+                // IsEmpty returns true if the ListResult contains no values.
+                func (@receiverVar @contentType) IsEmpty() bool {
+                return @(receiverVar).@itemName == nil || len(*@(receiverVar).@itemName) == 0
                 }
                 @EmptyLine
+                // hasNextLink returns true if the NextLink is not empty.
+                func (@receiverVar @contentType) hasNextLink() bool {
+                return @(receiverVar).@(pageType.NextLink) != nil && len(*@(receiverVar).@(pageType.NextLink)) != 0
+                }
             </text>
+            if (pageType.PreparerNeeded)
+            {
+                <text>
+                    // @(pageType.PreparerMethodName) prepares a request to retrieve the next set of results.
+                    // It returns nil if no more results exist.
+                    func (@receiverVar @contentType) @(pageType.PreparerMethodName)(ctx context.Context) (*http.Request, error) {
+                    if !@(receiverVar).hasNextLink() {
+                    return nil, nil
+                    }
+                    return autorest.Prepare((&http.Request{}).WithContext(ctx),
+                    autorest.AsJSON(),
+                    autorest.AsGet(),
+                    autorest.WithBaseURL(to.String( @(receiverVar).@(pageType.NextLink))));
+                    }
+                    @EmptyLine
+                </text>
+            }
         }
+        <text>
+            @if (Model.Deprecated)
+            {
+                @:@WrapComment("// Deprecated: ", depMessage)
+            }
+            @WrapComment("// ", $"{Model.Name} {Model.Documentation.ToSentence()}")
+            type @(Model.Name) struct {
+            @(Model.AddHTTPResponse())
+            @(Model.Fields())
+            }
+        </text>
     }
-    <text>
-        @if (Model.Deprecated)
-        {
-            @:@WrapComment("// Deprecated: ", depMessage)
-        }
-        @WrapComment("// ", $"{Model.Name} {Model.Documentation.ToSentence()}")
-        type @(Model.Name) struct {
-        @(Model.AddHTTPResponse())
-        @(Model.Fields())
-        }
-    </text>
-}
 
 @if (Model.NeedsCustomMarshalling)
 {
@@ -228,10 +228,10 @@ else
                 @:}
                 @EmptyLine
             }
-        </text>
-        }
     </text>
 }
+        </text>
+    }
 
 @if (Model.NeedsCustomUnmarshalling)
 {
@@ -255,9 +255,9 @@ else
             }
             <text>
             if err != nil {
-                return err
+            return err
             }
-            </text>
+    </text>
     if (Model.BaseType is SequenceType type)
     {
         @:@(receiverVar).Value = &@varName
@@ -316,8 +316,8 @@ if (modelType is DictionaryTypeGo dictionaryType && dictionaryType.SupportsAddit
         <text>
         var @varName @(modelType.Name)
         err = json.Unmarshal(*v, &@varName)
-    </text>
-    }
+</text>
+}
     if err != nil {
     return err
     }
@@ -376,14 +376,14 @@ if (modelType is DictionaryTypeGo dictionaryType && dictionaryType.SupportsAddit
         }()
         }
         for {
-            next, err := page.@(modelPageType.FnFieldName)(ctx, page.@modelPageType.ResultFieldName)
-            if err != nil {
-            return err
-            }
-            page.@modelPageType.ResultFieldName = next
-            if !next.hasNextLink() || !next.IsEmpty() {
-                break
-            }
+        next, err := page.@(modelPageType.FnFieldName)(ctx, page.@modelPageType.ResultFieldName)
+        if err != nil {
+        return err
+        }
+        page.@modelPageType.ResultFieldName = next
+        if !next.hasNextLink() || !next.IsEmpty() {
+        break
+        }
         }
         return nil
         }
@@ -414,8 +414,11 @@ if (modelType is DictionaryTypeGo dictionaryType && dictionaryType.SupportsAddit
         }
 
         // Creates a new instance of the @Model.Name type.
-        func New@(Model.Name) (getNextPage @(modelPageType.NextPageFunctionSig)) @Model.Name {
-            return @(Model.Name){@(modelPageType.FnFieldName): getNextPage}
+        func New@(Model.Name) (cur @(modelPageType.ContentType.Name), getNextPage @(modelPageType.NextPageFunctionSig)) @Model.Name {
+        return @(Model.Name){
+        @(modelPageType.FnFieldName): getNextPage,
+        @(modelPageType.ResultFieldName): cur,
+        }
         }
     </text>
 }
@@ -478,7 +481,7 @@ if (modelType is DictionaryTypeGo dictionaryType && dictionaryType.SupportsAddit
 
         // Creates a new instance of the @Model.Name type.
         func New@(Model.Name) (page @(iterType.PageType.Name)) @Model.Name {
-            return @(Model.Name){@(iterType.PageField): page}
+        return @(Model.Name){@(iterType.PageField): page}
         }
     </text>
 }
