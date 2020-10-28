@@ -20,25 +20,23 @@ jobs:
         Linux_Go113:
           vm.image: 'ubuntu-18.04'
           go.version: '1.14.10'
-          GOROOT: '/usr/local/go$(go.version)'
         Linux_Go114:
           vm.image: 'ubuntu-18.04'
           go.version: '1.15.3'
-          GOROOT: '/usr/local/go$(go.version)'
 
     pool:
       vmImage: '$(vm.image)'
 
     steps:
+      - task: GoTool@0
+        inputs:
+          version: '$(go.version)'
+        displayName: "Select Go Version"
+
       - task: NodeTool@0
         displayName: 'Install Node $(NodeVersion)'
         inputs:
           versionSpec: '$(NodeVersion)'
-
-      - script: |
-          echo '##vso[task.prependpath]$(GOROOT)/bin'
-          go version
-        displayName: 'Select Go Version'
 
       - script: |
           sudo apt-get install libunwind8
@@ -47,5 +45,6 @@ jobs:
         displayName: 'Prepare Generator Environment'
 
       - script: |
+          go version
           gulp testci
         displayName: 'Gulp testci'
