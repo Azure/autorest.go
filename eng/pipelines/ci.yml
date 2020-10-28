@@ -52,7 +52,9 @@ jobs:
           npm install
           npm install gulp
         displayName: 'Prepare Generator Environment'
+        workingDirectory: '$(sdkPath)'
 
       - script: |
           gulp testci
         displayName: 'Gulp testci'
+        workingDirectory: '$(sdkPath)'
