@@ -25,7 +25,8 @@ type P2SVpnGatewaysOperations interface {
 	BeginDelete(ctx context.Context, resourceGroupName string, gatewayName string, options *P2SVpnGatewaysDeleteOptions) (*HTTPPollerResponse, error)
 	// ResumeDelete - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeDelete(token string) (HTTPPoller, error)
-	// BeginDisconnectP2SVpnConnections - Disconnect P2S vpn connections of the virtual wan P2SVpnGateway in the specified resource group.
+	// BeginDisconnectP2SVpnConnections - Disconnect P2S vpn connections of the virtual wan P2SVpnGateway in the specified resource
+	// group.
 	BeginDisconnectP2SVpnConnections(ctx context.Context, resourceGroupName string, p2SVpnGatewayName string, request P2SVpnConnectionRequest, options *P2SVpnGatewaysDisconnectP2SVpnConnectionsOptions) (*HTTPPollerResponse, error)
 	// ResumeDisconnectP2SVpnConnections - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeDisconnectP2SVpnConnections(token string) (HTTPPoller, error)
@@ -35,11 +36,13 @@ type P2SVpnGatewaysOperations interface {
 	ResumeGenerateVpnProfile(token string) (VpnProfileResponsePoller, error)
 	// Get - Retrieves the details of a virtual wan p2s vpn gateway.
 	Get(ctx context.Context, resourceGroupName string, gatewayName string, options *P2SVpnGatewaysGetOptions) (*P2SVpnGatewayResponse, error)
-	// BeginGetP2SVpnConnectionHealth - Gets the connection health of P2S clients of the virtual wan P2SVpnGateway in the specified resource group.
+	// BeginGetP2SVpnConnectionHealth - Gets the connection health of P2S clients of the virtual wan P2SVpnGateway in the specified
+	// resource group.
 	BeginGetP2SVpnConnectionHealth(ctx context.Context, resourceGroupName string, gatewayName string, options *P2SVpnGatewaysGetP2SVpnConnectionHealthOptions) (*P2SVpnGatewayPollerResponse, error)
 	// ResumeGetP2SVpnConnectionHealth - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeGetP2SVpnConnectionHealth(token string) (P2SVpnGatewayPoller, error)
-	// BeginGetP2SVpnConnectionHealthDetailed - Gets the sas url to get the connection health detail of P2S clients of the virtual wan P2SVpnGateway in the specified resource group.
+	// BeginGetP2SVpnConnectionHealthDetailed - Gets the sas url to get the connection health detail of P2S clients of the virtual
+	// wan P2SVpnGateway in the specified resource group.
 	BeginGetP2SVpnConnectionHealthDetailed(ctx context.Context, resourceGroupName string, gatewayName string, request P2SVpnConnectionHealthRequest, options *P2SVpnGatewaysGetP2SVpnConnectionHealthDetailedOptions) (*P2SVpnConnectionHealthPollerResponse, error)
 	// ResumeGetP2SVpnConnectionHealthDetailed - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeGetP2SVpnConnectionHealthDetailed(token string) (P2SVpnConnectionHealthPoller, error)
@@ -260,7 +263,8 @@ func (client *P2SVpnGatewaysClient) ResumeDisconnectP2SVpnConnections(token stri
 	}, nil
 }
 
-// DisconnectP2SVpnConnections - Disconnect P2S vpn connections of the virtual wan P2SVpnGateway in the specified resource group.
+// DisconnectP2SVpnConnections - Disconnect P2S vpn connections of the virtual wan P2SVpnGateway in the specified resource
+// group.
 func (client *P2SVpnGatewaysClient) DisconnectP2SVpnConnections(ctx context.Context, resourceGroupName string, p2SVpnGatewayName string, request P2SVpnConnectionRequest, options *P2SVpnGatewaysDisconnectP2SVpnConnectionsOptions) (*azcore.Response, error) {
 	req, err := client.DisconnectP2SVpnConnectionsCreateRequest(ctx, resourceGroupName, p2SVpnGatewayName, request, options)
 	if err != nil {
@@ -470,7 +474,8 @@ func (client *P2SVpnGatewaysClient) ResumeGetP2SVpnConnectionHealth(token string
 	}, nil
 }
 
-// GetP2SVpnConnectionHealth - Gets the connection health of P2S clients of the virtual wan P2SVpnGateway in the specified resource group.
+// GetP2SVpnConnectionHealth - Gets the connection health of P2S clients of the virtual wan P2SVpnGateway in the specified
+// resource group.
 func (client *P2SVpnGatewaysClient) GetP2SVpnConnectionHealth(ctx context.Context, resourceGroupName string, gatewayName string, options *P2SVpnGatewaysGetP2SVpnConnectionHealthOptions) (*azcore.Response, error) {
 	req, err := client.GetP2SVpnConnectionHealthCreateRequest(ctx, resourceGroupName, gatewayName, options)
 	if err != nil {
@@ -552,7 +557,8 @@ func (client *P2SVpnGatewaysClient) ResumeGetP2SVpnConnectionHealthDetailed(toke
 	}, nil
 }
 
-// GetP2SVpnConnectionHealthDetailed - Gets the sas url to get the connection health detail of P2S clients of the virtual wan P2SVpnGateway in the specified resource group.
+// GetP2SVpnConnectionHealthDetailed - Gets the sas url to get the connection health detail of P2S clients of the virtual
+// wan P2SVpnGateway in the specified resource group.
 func (client *P2SVpnGatewaysClient) GetP2SVpnConnectionHealthDetailed(ctx context.Context, resourceGroupName string, gatewayName string, request P2SVpnConnectionHealthRequest, options *P2SVpnGatewaysGetP2SVpnConnectionHealthDetailedOptions) (*azcore.Response, error) {
 	req, err := client.GetP2SVpnConnectionHealthDetailedCreateRequest(ctx, resourceGroupName, gatewayName, request, options)
 	if err != nil {

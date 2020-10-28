@@ -94,7 +94,8 @@ func (client *serviceClient) GetAccountInfoHandleError(resp *azcore.Response) er
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// GetProperties - gets the properties of a storage account's Blob service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules.
+// GetProperties - gets the properties of a storage account's Blob service, including properties for Storage Analytics and
+// CORS (Cross-Origin Resource Sharing) rules.
 func (client *serviceClient) GetProperties(ctx context.Context, options *ServiceGetPropertiesOptions) (*StorageServicePropertiesResponse, error) {
 	req, err := client.GetPropertiesCreateRequest(ctx, options)
 	if err != nil {
@@ -159,7 +160,8 @@ func (client *serviceClient) GetPropertiesHandleError(resp *azcore.Response) err
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// GetStatistics - Retrieves statistics related to replication for the Blob service. It is only available on the secondary location endpoint when read-access geo-redundant replication is enabled for the storage account.
+// GetStatistics - Retrieves statistics related to replication for the Blob service. It is only available on the secondary
+// location endpoint when read-access geo-redundant replication is enabled for the storage account.
 func (client *serviceClient) GetStatistics(ctx context.Context, options *ServiceGetStatisticsOptions) (*StorageServiceStatsResponse, error) {
 	req, err := client.GetStatisticsCreateRequest(ctx, options)
 	if err != nil {
@@ -231,7 +233,8 @@ func (client *serviceClient) GetStatisticsHandleError(resp *azcore.Response) err
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// GetUserDelegationKey - Retrieves a user delegation key for the Blob service. This is only a valid operation when using bearer token authentication.
+// GetUserDelegationKey - Retrieves a user delegation key for the Blob service. This is only a valid operation when using
+// bearer token authentication.
 func (client *serviceClient) GetUserDelegationKey(ctx context.Context, keyInfo KeyInfo, options *ServiceGetUserDelegationKeyOptions) (*UserDelegationKeyResponse, error) {
 	req, err := client.GetUserDelegationKeyCreateRequest(ctx, keyInfo, options)
 	if err != nil {
@@ -375,7 +378,8 @@ func (client *serviceClient) ListContainersSegmentHandleError(resp *azcore.Respo
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// SetProperties - Sets properties for a storage account's Blob service endpoint, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules
+// SetProperties - Sets properties for a storage account's Blob service endpoint, including properties for Storage Analytics
+// and CORS (Cross-Origin Resource Sharing) rules
 func (client *serviceClient) SetProperties(ctx context.Context, storageServiceProperties StorageServiceProperties, options *ServiceSetPropertiesOptions) (*ServiceSetPropertiesResponse, error) {
 	req, err := client.SetPropertiesCreateRequest(ctx, storageServiceProperties, options)
 	if err != nil {

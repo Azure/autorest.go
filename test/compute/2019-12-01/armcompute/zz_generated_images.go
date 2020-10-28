@@ -30,7 +30,8 @@ type ImagesOperations interface {
 	ResumeDelete(token string) (HTTPPoller, error)
 	// Get - Gets an image.
 	Get(ctx context.Context, resourceGroupName string, imageName string, options *ImagesGetOptions) (*ImageResponse, error)
-	// List - Gets the list of Images in the subscription. Use nextLink property in the response to get the next page of Images. Do this till nextLink is null to fetch all the Images.
+	// List - Gets the list of Images in the subscription. Use nextLink property in the response to get the next page of Images.
+	// Do this till nextLink is null to fetch all the Images.
 	List(options *ImagesListOptions) ImageListResultPager
 	// ListByResourceGroup - Gets the list of images under a resource group.
 	ListByResourceGroup(resourceGroupName string, options *ImagesListByResourceGroupOptions) ImageListResultPager
@@ -278,7 +279,8 @@ func (client *ImagesClient) GetHandleError(resp *azcore.Response) error {
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-// List - Gets the list of Images in the subscription. Use nextLink property in the response to get the next page of Images. Do this till nextLink is null to fetch all the Images.
+// List - Gets the list of Images in the subscription. Use nextLink property in the response to get the next page of Images.
+// Do this till nextLink is null to fetch all the Images.
 func (client *ImagesClient) List(options *ImagesListOptions) ImageListResultPager {
 	return &imageListResultPager{
 		pipeline: client.p,

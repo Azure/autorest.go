@@ -17,7 +17,8 @@ import (
 
 // VpnConnectionsOperations contains the methods for the VpnConnections group.
 type VpnConnectionsOperations interface {
-	// BeginCreateOrUpdate - Creates a vpn connection to a scalable vpn gateway if it doesn't exist else updates the existing connection.
+	// BeginCreateOrUpdate - Creates a vpn connection to a scalable vpn gateway if it doesn't exist else updates the existing
+	// connection.
 	BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, vpnConnectionParameters VpnConnection, options *VpnConnectionsCreateOrUpdateOptions) (*VpnConnectionPollerResponse, error)
 	// ResumeCreateOrUpdate - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeCreateOrUpdate(token string) (VpnConnectionPoller, error)

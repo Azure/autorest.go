@@ -31,7 +31,8 @@ type NetworkInterfacesOperations interface {
 	BeginGetEffectiveRouteTable(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfacesGetEffectiveRouteTableOptions) (*EffectiveRouteListResultPollerResponse, error)
 	// ResumeGetEffectiveRouteTable - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeGetEffectiveRouteTable(token string) (EffectiveRouteListResultPoller, error)
-	// GetVirtualMachineScaleSetIPConfiguration - Get the specified network interface ip configuration in a virtual machine scale set.
+	// GetVirtualMachineScaleSetIPConfiguration - Get the specified network interface ip configuration in a virtual machine scale
+	// set.
 	GetVirtualMachineScaleSetIPConfiguration(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, ipConfigurationName string, options *NetworkInterfacesGetVirtualMachineScaleSetIPConfigurationOptions) (*NetworkInterfaceIPConfigurationResponse, error)
 	// GetVirtualMachineScaleSetNetworkInterface - Get the specified network interface in a virtual machine scale set.
 	GetVirtualMachineScaleSetNetworkInterface(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, options *NetworkInterfacesGetVirtualMachineScaleSetNetworkInterfaceOptions) (*NetworkInterfaceResponse, error)
@@ -43,11 +44,13 @@ type NetworkInterfacesOperations interface {
 	BeginListEffectiveNetworkSecurityGroups(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfacesListEffectiveNetworkSecurityGroupsOptions) (*EffectiveNetworkSecurityGroupListResultPollerResponse, error)
 	// ResumeListEffectiveNetworkSecurityGroups - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeListEffectiveNetworkSecurityGroups(token string) (EffectiveNetworkSecurityGroupListResultPoller, error)
-	// ListVirtualMachineScaleSetIPConfigurations - Get the specified network interface ip configuration in a virtual machine scale set.
+	// ListVirtualMachineScaleSetIPConfigurations - Get the specified network interface ip configuration in a virtual machine
+	// scale set.
 	ListVirtualMachineScaleSetIPConfigurations(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, options *NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsOptions) NetworkInterfaceIPConfigurationListResultPager
 	// ListVirtualMachineScaleSetNetworkInterfaces - Gets all network interfaces in a virtual machine scale set.
 	ListVirtualMachineScaleSetNetworkInterfaces(resourceGroupName string, virtualMachineScaleSetName string, options *NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesOptions) NetworkInterfaceListResultPager
-	// ListVirtualMachineScaleSetVMNetworkInterfaces - Gets information about all network interfaces in a virtual machine in a virtual machine scale set.
+	// ListVirtualMachineScaleSetVMNetworkInterfaces - Gets information about all network interfaces in a virtual machine in a
+	// virtual machine scale set.
 	ListVirtualMachineScaleSetVMNetworkInterfaces(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, options *NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesOptions) NetworkInterfaceListResultPager
 	// UpdateTags - Updates a network interface tags.
 	UpdateTags(ctx context.Context, resourceGroupName string, networkInterfaceName string, parameters TagsObject, options *NetworkInterfacesUpdateTagsOptions) (*NetworkInterfaceResponse, error)
@@ -365,7 +368,8 @@ func (client *NetworkInterfacesClient) GetEffectiveRouteTableHandleError(resp *a
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// GetVirtualMachineScaleSetIPConfiguration - Get the specified network interface ip configuration in a virtual machine scale set.
+// GetVirtualMachineScaleSetIPConfiguration - Get the specified network interface ip configuration in a virtual machine scale
+// set.
 func (client *NetworkInterfacesClient) GetVirtualMachineScaleSetIPConfiguration(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, ipConfigurationName string, options *NetworkInterfacesGetVirtualMachineScaleSetIPConfigurationOptions) (*NetworkInterfaceIPConfigurationResponse, error) {
 	req, err := client.GetVirtualMachineScaleSetIPConfigurationCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, ipConfigurationName, options)
 	if err != nil {
@@ -655,7 +659,8 @@ func (client *NetworkInterfacesClient) ListEffectiveNetworkSecurityGroupsHandleE
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// ListVirtualMachineScaleSetIPConfigurations - Get the specified network interface ip configuration in a virtual machine scale set.
+// ListVirtualMachineScaleSetIPConfigurations - Get the specified network interface ip configuration in a virtual machine
+// scale set.
 func (client *NetworkInterfacesClient) ListVirtualMachineScaleSetIPConfigurations(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, options *NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsOptions) NetworkInterfaceIPConfigurationListResultPager {
 	return &networkInterfaceIPConfigurationListResultPager{
 		pipeline: client.p,
@@ -756,7 +761,8 @@ func (client *NetworkInterfacesClient) ListVirtualMachineScaleSetNetworkInterfac
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// ListVirtualMachineScaleSetVMNetworkInterfaces - Gets information about all network interfaces in a virtual machine in a virtual machine scale set.
+// ListVirtualMachineScaleSetVMNetworkInterfaces - Gets information about all network interfaces in a virtual machine in a
+// virtual machine scale set.
 func (client *NetworkInterfacesClient) ListVirtualMachineScaleSetVMNetworkInterfaces(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, options *NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesOptions) NetworkInterfaceListResultPager {
 	return &networkInterfaceListResultPager{
 		pipeline: client.p,

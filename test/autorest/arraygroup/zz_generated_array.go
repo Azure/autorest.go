@@ -24,7 +24,8 @@ type ArrayOperations interface {
 	GetArrayNull(ctx context.Context, options *ArrayGetArrayNullOptions) (*StringArrayArrayResponse, error)
 	// GetArrayValid - Get an array of array of strings [['1', '2', '3'], ['4', '5', '6'], ['7', '8', '9']]
 	GetArrayValid(ctx context.Context, options *ArrayGetArrayValidOptions) (*StringArrayArrayResponse, error)
-	// GetBase64URL - Get array value ['a string that gets encoded with base64url', 'test string' 'Lorem ipsum'] with the items base64url encoded
+	// GetBase64URL - Get array value ['a string that gets encoded with base64url', 'test string' 'Lorem ipsum'] with the items
+	// base64url encoded
 	GetBase64URL(ctx context.Context, options *ArrayGetBase64URLOptions) (*ByteArrayArrayResponse, error)
 	// GetBooleanInvalidNull - Get boolean array value [true, null, false]
 	GetBooleanInvalidNull(ctx context.Context, options *ArrayGetBooleanInvalidNullOptions) (*BoolArrayResponse, error)
@@ -38,13 +39,16 @@ type ArrayOperations interface {
 	GetByteValid(ctx context.Context, options *ArrayGetByteValidOptions) (*ByteArrayArrayResponse, error)
 	// GetComplexEmpty - Get empty array of complex type []
 	GetComplexEmpty(ctx context.Context, options *ArrayGetComplexEmptyOptions) (*ProductArrayResponse, error)
-	// GetComplexItemEmpty - Get array of complex type with empty item [{'integer': 1 'string': '2'}, {}, {'integer': 5, 'string': '6'}]
+	// GetComplexItemEmpty - Get array of complex type with empty item [{'integer': 1 'string': '2'}, {}, {'integer': 5, 'string':
+	// '6'}]
 	GetComplexItemEmpty(ctx context.Context, options *ArrayGetComplexItemEmptyOptions) (*ProductArrayResponse, error)
-	// GetComplexItemNull - Get array of complex type with null item [{'integer': 1 'string': '2'}, null, {'integer': 5, 'string': '6'}]
+	// GetComplexItemNull - Get array of complex type with null item [{'integer': 1 'string': '2'}, null, {'integer': 5, 'string':
+	// '6'}]
 	GetComplexItemNull(ctx context.Context, options *ArrayGetComplexItemNullOptions) (*ProductArrayResponse, error)
 	// GetComplexNull - Get array of complex type null value
 	GetComplexNull(ctx context.Context, options *ArrayGetComplexNullOptions) (*ProductArrayResponse, error)
-	// GetComplexValid - Get array of complex type with [{'integer': 1 'string': '2'}, {'integer': 3, 'string': '4'}, {'integer': 5, 'string': '6'}]
+	// GetComplexValid - Get array of complex type with [{'integer': 1 'string': '2'}, {'integer': 3, 'string': '4'}, {'integer':
+	// 5, 'string': '6'}]
 	GetComplexValid(ctx context.Context, options *ArrayGetComplexValidOptions) (*ProductArrayResponse, error)
 	// GetDateInvalidChars - Get date array value ['2011-03-22', 'date']
 	GetDateInvalidChars(ctx context.Context, options *ArrayGetDateInvalidCharsOptions) (*TimeArrayResponse, error)
@@ -54,21 +58,25 @@ type ArrayOperations interface {
 	GetDateTimeInvalidChars(ctx context.Context, options *ArrayGetDateTimeInvalidCharsOptions) (*TimeArrayResponse, error)
 	// GetDateTimeInvalidNull - Get date array value ['2000-12-01t00:00:01z', null]
 	GetDateTimeInvalidNull(ctx context.Context, options *ArrayGetDateTimeInvalidNullOptions) (*TimeArrayResponse, error)
-	// GetDateTimeRFC1123Valid - Get date-time array value ['Fri, 01 Dec 2000 00:00:01 GMT', 'Wed, 02 Jan 1980 00:11:35 GMT', 'Wed, 12 Oct 1492 10:15:01 GMT']
+	// GetDateTimeRFC1123Valid - Get date-time array value ['Fri, 01 Dec 2000 00:00:01 GMT', 'Wed, 02 Jan 1980 00:11:35 GMT',
+	// 'Wed, 12 Oct 1492 10:15:01 GMT']
 	GetDateTimeRFC1123Valid(ctx context.Context, options *ArrayGetDateTimeRFC1123ValidOptions) (*TimeArrayResponse, error)
 	// GetDateTimeValid - Get date-time array value ['2000-12-01t00:00:01z', '1980-01-02T00:11:35+01:00', '1492-10-12T10:15:01-08:00']
 	GetDateTimeValid(ctx context.Context, options *ArrayGetDateTimeValidOptions) (*TimeArrayResponse, error)
 	// GetDateValid - Get integer array value ['2000-12-01', '1980-01-02', '1492-10-12']
 	GetDateValid(ctx context.Context, options *ArrayGetDateValidOptions) (*TimeArrayResponse, error)
-	// GetDictionaryEmpty - Get an array of Dictionaries of type <string, string> with value []
+	// GetDictionaryEmpty - Get an array of Dictionaries of type with value []
 	GetDictionaryEmpty(ctx context.Context, options *ArrayGetDictionaryEmptyOptions) (*MapOfStringArrayResponse, error)
-	// GetDictionaryItemEmpty - Get an array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two', '3': 'three'}, {}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
+	// GetDictionaryItemEmpty - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, {}, {'7':
+	// 'seven', '8': 'eight', '9': 'nine'}]
 	GetDictionaryItemEmpty(ctx context.Context, options *ArrayGetDictionaryItemEmptyOptions) (*MapOfStringArrayResponse, error)
-	// GetDictionaryItemNull - Get an array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two', '3': 'three'}, null, {'7': 'seven', '8': 'eight', '9': 'nine'}]
+	// GetDictionaryItemNull - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, null,
+	// {'7': 'seven', '8': 'eight', '9': 'nine'}]
 	GetDictionaryItemNull(ctx context.Context, options *ArrayGetDictionaryItemNullOptions) (*MapOfStringArrayResponse, error)
 	// GetDictionaryNull - Get an array of Dictionaries with value null
 	GetDictionaryNull(ctx context.Context, options *ArrayGetDictionaryNullOptions) (*MapOfStringArrayResponse, error)
-	// GetDictionaryValid - Get an array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two', '3': 'three'}, {'4': 'four', '5': 'five', '6': 'six'}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
+	// GetDictionaryValid - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, {'4': 'four',
+	// '5': 'five', '6': 'six'}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
 	GetDictionaryValid(ctx context.Context, options *ArrayGetDictionaryValidOptions) (*MapOfStringArrayResponse, error)
 	// GetDoubleInvalidNull - Get float array value [0.0, null, -1.2e20]
 	GetDoubleInvalidNull(ctx context.Context, options *ArrayGetDoubleInvalidNullOptions) (*Float64ArrayResponse, error)
@@ -120,21 +128,25 @@ type ArrayOperations interface {
 	PutArrayValid(ctx context.Context, arrayBody [][]string, options *ArrayPutArrayValidOptions) (*http.Response, error)
 	// PutBooleanTfft - Set array value empty [true, false, false, true]
 	PutBooleanTfft(ctx context.Context, arrayBody []bool, options *ArrayPutBooleanTfftOptions) (*http.Response, error)
-	// PutByteValid - Put the array value [hex(FF FF FF FA), hex(01 02 03), hex (25, 29, 43)] with each elementencoded in base 64
+	// PutByteValid - Put the array value [hex(FF FF FF FA), hex(01 02 03), hex (25, 29, 43)] with each elementencoded in base
+	// 64
 	PutByteValid(ctx context.Context, arrayBody [][]byte, options *ArrayPutByteValidOptions) (*http.Response, error)
-	// PutComplexValid - Put an array of complex type with values [{'integer': 1 'string': '2'}, {'integer': 3, 'string': '4'}, {'integer': 5, 'string': '6'}]
+	// PutComplexValid - Put an array of complex type with values [{'integer': 1 'string': '2'}, {'integer': 3, 'string': '4'},
+	// {'integer': 5, 'string': '6'}]
 	PutComplexValid(ctx context.Context, arrayBody []Product, options *ArrayPutComplexValidOptions) (*http.Response, error)
-	// PutDateTimeRFC1123Valid - Set array value  ['Fri, 01 Dec 2000 00:00:01 GMT', 'Wed, 02 Jan 1980 00:11:35 GMT', 'Wed, 12 Oct 1492 10:15:01 GMT']
+	// PutDateTimeRFC1123Valid - Set array value ['Fri, 01 Dec 2000 00:00:01 GMT', 'Wed, 02 Jan 1980 00:11:35 GMT', 'Wed, 12 Oct
+	// 1492 10:15:01 GMT']
 	PutDateTimeRFC1123Valid(ctx context.Context, arrayBody []time.Time, options *ArrayPutDateTimeRFC1123ValidOptions) (*http.Response, error)
-	// PutDateTimeValid - Set array value  ['2000-12-01t00:00:01z', '1980-01-02T00:11:35+01:00', '1492-10-12T10:15:01-08:00']
+	// PutDateTimeValid - Set array value ['2000-12-01t00:00:01z', '1980-01-02T00:11:35+01:00', '1492-10-12T10:15:01-08:00']
 	PutDateTimeValid(ctx context.Context, arrayBody []time.Time, options *ArrayPutDateTimeValidOptions) (*http.Response, error)
-	// PutDateValid - Set array value  ['2000-12-01', '1980-01-02', '1492-10-12']
+	// PutDateValid - Set array value ['2000-12-01', '1980-01-02', '1492-10-12']
 	PutDateValid(ctx context.Context, arrayBody []time.Time, options *ArrayPutDateValidOptions) (*http.Response, error)
-	// PutDictionaryValid - Get an array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two', '3': 'three'}, {'4': 'four', '5': 'five', '6': 'six'}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
+	// PutDictionaryValid - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, {'4': 'four',
+	// '5': 'five', '6': 'six'}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
 	PutDictionaryValid(ctx context.Context, arrayBody []map[string]string, options *ArrayPutDictionaryValidOptions) (*http.Response, error)
 	// PutDoubleValid - Set array value [0, -0.01, 1.2e20]
 	PutDoubleValid(ctx context.Context, arrayBody []float64, options *ArrayPutDoubleValidOptions) (*http.Response, error)
-	// PutDurationValid - Set array value  ['P123DT22H14M12.011S', 'P5DT1H0M0S']
+	// PutDurationValid - Set array value ['P123DT22H14M12.011S', 'P5DT1H0M0S']
 	PutDurationValid(ctx context.Context, arrayBody []string, options *ArrayPutDurationValidOptions) (*http.Response, error)
 	// PutEmpty - Set array value empty []
 	PutEmpty(ctx context.Context, arrayBody []string, options *ArrayPutEmptyOptions) (*http.Response, error)
@@ -150,7 +162,7 @@ type ArrayOperations interface {
 	PutStringEnumValid(ctx context.Context, arrayBody []Enum1, options *ArrayPutStringEnumValidOptions) (*http.Response, error)
 	// PutStringValid - Set array value ['foo1', 'foo2', 'foo3']
 	PutStringValid(ctx context.Context, arrayBody []string, options *ArrayPutStringValidOptions) (*http.Response, error)
-	// PutUUIDValid - Set array value  ['6dcc7237-45fe-45c4-8a6b-3a8a3f625652', 'd1399005-30f7-40d6-8da6-dd7c89ad34db', 'f42f6aa1-a5bc-4ddf-907e-5f915de43205']
+	// PutUUIDValid - Set array value ['6dcc7237-45fe-45c4-8a6b-3a8a3f625652', 'd1399005-30f7-40d6-8da6-dd7c89ad34db', 'f42f6aa1-a5bc-4ddf-907e-5f915de43205']
 	PutUUIDValid(ctx context.Context, arrayBody []string, options *ArrayPutUUIDValidOptions) (*http.Response, error)
 }
 
@@ -400,7 +412,8 @@ func (client *ArrayClient) GetArrayValidHandleError(resp *azcore.Response) error
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// GetBase64URL - Get array value ['a string that gets encoded with base64url', 'test string' 'Lorem ipsum'] with the items base64url encoded
+// GetBase64URL - Get array value ['a string that gets encoded with base64url', 'test string' 'Lorem ipsum'] with the items
+// base64url encoded
 func (client *ArrayClient) GetBase64URL(ctx context.Context, options *ArrayGetBase64URLOptions) (*ByteArrayArrayResponse, error) {
 	req, err := client.GetBase64URLCreateRequest(ctx, options)
 	if err != nil {
@@ -722,7 +735,8 @@ func (client *ArrayClient) GetComplexEmptyHandleError(resp *azcore.Response) err
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// GetComplexItemEmpty - Get array of complex type with empty item [{'integer': 1 'string': '2'}, {}, {'integer': 5, 'string': '6'}]
+// GetComplexItemEmpty - Get array of complex type with empty item [{'integer': 1 'string': '2'}, {}, {'integer': 5, 'string':
+// '6'}]
 func (client *ArrayClient) GetComplexItemEmpty(ctx context.Context, options *ArrayGetComplexItemEmptyOptions) (*ProductArrayResponse, error) {
 	req, err := client.GetComplexItemEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -768,7 +782,8 @@ func (client *ArrayClient) GetComplexItemEmptyHandleError(resp *azcore.Response)
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// GetComplexItemNull - Get array of complex type with null item [{'integer': 1 'string': '2'}, null, {'integer': 5, 'string': '6'}]
+// GetComplexItemNull - Get array of complex type with null item [{'integer': 1 'string': '2'}, null, {'integer': 5, 'string':
+// '6'}]
 func (client *ArrayClient) GetComplexItemNull(ctx context.Context, options *ArrayGetComplexItemNullOptions) (*ProductArrayResponse, error) {
 	req, err := client.GetComplexItemNullCreateRequest(ctx, options)
 	if err != nil {
@@ -860,7 +875,8 @@ func (client *ArrayClient) GetComplexNullHandleError(resp *azcore.Response) erro
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// GetComplexValid - Get array of complex type with [{'integer': 1 'string': '2'}, {'integer': 3, 'string': '4'}, {'integer': 5, 'string': '6'}]
+// GetComplexValid - Get array of complex type with [{'integer': 1 'string': '2'}, {'integer': 3, 'string': '4'}, {'integer':
+// 5, 'string': '6'}]
 func (client *ArrayClient) GetComplexValid(ctx context.Context, options *ArrayGetComplexValidOptions) (*ProductArrayResponse, error) {
 	req, err := client.GetComplexValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1118,7 +1134,8 @@ func (client *ArrayClient) GetDateTimeInvalidNullHandleError(resp *azcore.Respon
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// GetDateTimeRFC1123Valid - Get date-time array value ['Fri, 01 Dec 2000 00:00:01 GMT', 'Wed, 02 Jan 1980 00:11:35 GMT', 'Wed, 12 Oct 1492 10:15:01 GMT']
+// GetDateTimeRFC1123Valid - Get date-time array value ['Fri, 01 Dec 2000 00:00:01 GMT', 'Wed, 02 Jan 1980 00:11:35 GMT',
+// 'Wed, 12 Oct 1492 10:15:01 GMT']
 func (client *ArrayClient) GetDateTimeRFC1123Valid(ctx context.Context, options *ArrayGetDateTimeRFC1123ValidOptions) (*TimeArrayResponse, error) {
 	req, err := client.GetDateTimeRFC1123ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1277,7 +1294,7 @@ func (client *ArrayClient) GetDateValidHandleError(resp *azcore.Response) error 
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// GetDictionaryEmpty - Get an array of Dictionaries of type <string, string> with value []
+// GetDictionaryEmpty - Get an array of Dictionaries of type with value []
 func (client *ArrayClient) GetDictionaryEmpty(ctx context.Context, options *ArrayGetDictionaryEmptyOptions) (*MapOfStringArrayResponse, error) {
 	req, err := client.GetDictionaryEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -1323,7 +1340,8 @@ func (client *ArrayClient) GetDictionaryEmptyHandleError(resp *azcore.Response) 
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// GetDictionaryItemEmpty - Get an array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two', '3': 'three'}, {}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
+// GetDictionaryItemEmpty - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, {}, {'7':
+// 'seven', '8': 'eight', '9': 'nine'}]
 func (client *ArrayClient) GetDictionaryItemEmpty(ctx context.Context, options *ArrayGetDictionaryItemEmptyOptions) (*MapOfStringArrayResponse, error) {
 	req, err := client.GetDictionaryItemEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -1369,7 +1387,8 @@ func (client *ArrayClient) GetDictionaryItemEmptyHandleError(resp *azcore.Respon
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// GetDictionaryItemNull - Get an array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two', '3': 'three'}, null, {'7': 'seven', '8': 'eight', '9': 'nine'}]
+// GetDictionaryItemNull - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, null,
+// {'7': 'seven', '8': 'eight', '9': 'nine'}]
 func (client *ArrayClient) GetDictionaryItemNull(ctx context.Context, options *ArrayGetDictionaryItemNullOptions) (*MapOfStringArrayResponse, error) {
 	req, err := client.GetDictionaryItemNullCreateRequest(ctx, options)
 	if err != nil {
@@ -1461,7 +1480,8 @@ func (client *ArrayClient) GetDictionaryNullHandleError(resp *azcore.Response) e
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// GetDictionaryValid - Get an array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two', '3': 'three'}, {'4': 'four', '5': 'five', '6': 'six'}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
+// GetDictionaryValid - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, {'4': 'four',
+// '5': 'five', '6': 'six'}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
 func (client *ArrayClient) GetDictionaryValid(ctx context.Context, options *ArrayGetDictionaryValidOptions) (*MapOfStringArrayResponse, error) {
 	req, err := client.GetDictionaryValidCreateRequest(ctx, options)
 	if err != nil {
@@ -2637,7 +2657,8 @@ func (client *ArrayClient) PutBooleanTfftHandleError(resp *azcore.Response) erro
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// PutByteValid - Put the array value [hex(FF FF FF FA), hex(01 02 03), hex (25, 29, 43)] with each elementencoded in base 64
+// PutByteValid - Put the array value [hex(FF FF FF FA), hex(01 02 03), hex (25, 29, 43)] with each elementencoded in base
+// 64
 func (client *ArrayClient) PutByteValid(ctx context.Context, arrayBody [][]byte, options *ArrayPutByteValidOptions) (*http.Response, error) {
 	req, err := client.PutByteValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2673,7 +2694,8 @@ func (client *ArrayClient) PutByteValidHandleError(resp *azcore.Response) error 
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// PutComplexValid - Put an array of complex type with values [{'integer': 1 'string': '2'}, {'integer': 3, 'string': '4'}, {'integer': 5, 'string': '6'}]
+// PutComplexValid - Put an array of complex type with values [{'integer': 1 'string': '2'}, {'integer': 3, 'string': '4'},
+// {'integer': 5, 'string': '6'}]
 func (client *ArrayClient) PutComplexValid(ctx context.Context, arrayBody []Product, options *ArrayPutComplexValidOptions) (*http.Response, error) {
 	req, err := client.PutComplexValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2709,7 +2731,8 @@ func (client *ArrayClient) PutComplexValidHandleError(resp *azcore.Response) err
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// PutDateTimeRFC1123Valid - Set array value  ['Fri, 01 Dec 2000 00:00:01 GMT', 'Wed, 02 Jan 1980 00:11:35 GMT', 'Wed, 12 Oct 1492 10:15:01 GMT']
+// PutDateTimeRFC1123Valid - Set array value ['Fri, 01 Dec 2000 00:00:01 GMT', 'Wed, 02 Jan 1980 00:11:35 GMT', 'Wed, 12 Oct
+// 1492 10:15:01 GMT']
 func (client *ArrayClient) PutDateTimeRFC1123Valid(ctx context.Context, arrayBody []time.Time, options *ArrayPutDateTimeRFC1123ValidOptions) (*http.Response, error) {
 	req, err := client.PutDateTimeRFC1123ValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2749,7 +2772,7 @@ func (client *ArrayClient) PutDateTimeRFC1123ValidHandleError(resp *azcore.Respo
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// PutDateTimeValid - Set array value  ['2000-12-01t00:00:01z', '1980-01-02T00:11:35+01:00', '1492-10-12T10:15:01-08:00']
+// PutDateTimeValid - Set array value ['2000-12-01t00:00:01z', '1980-01-02T00:11:35+01:00', '1492-10-12T10:15:01-08:00']
 func (client *ArrayClient) PutDateTimeValid(ctx context.Context, arrayBody []time.Time, options *ArrayPutDateTimeValidOptions) (*http.Response, error) {
 	req, err := client.PutDateTimeValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2785,7 +2808,7 @@ func (client *ArrayClient) PutDateTimeValidHandleError(resp *azcore.Response) er
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// PutDateValid - Set array value  ['2000-12-01', '1980-01-02', '1492-10-12']
+// PutDateValid - Set array value ['2000-12-01', '1980-01-02', '1492-10-12']
 func (client *ArrayClient) PutDateValid(ctx context.Context, arrayBody []time.Time, options *ArrayPutDateValidOptions) (*http.Response, error) {
 	req, err := client.PutDateValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2825,7 +2848,8 @@ func (client *ArrayClient) PutDateValidHandleError(resp *azcore.Response) error 
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// PutDictionaryValid - Get an array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two', '3': 'three'}, {'4': 'four', '5': 'five', '6': 'six'}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
+// PutDictionaryValid - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, {'4': 'four',
+// '5': 'five', '6': 'six'}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
 func (client *ArrayClient) PutDictionaryValid(ctx context.Context, arrayBody []map[string]string, options *ArrayPutDictionaryValidOptions) (*http.Response, error) {
 	req, err := client.PutDictionaryValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2897,7 +2921,7 @@ func (client *ArrayClient) PutDoubleValidHandleError(resp *azcore.Response) erro
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// PutDurationValid - Set array value  ['P123DT22H14M12.011S', 'P5DT1H0M0S']
+// PutDurationValid - Set array value ['P123DT22H14M12.011S', 'P5DT1H0M0S']
 func (client *ArrayClient) PutDurationValid(ctx context.Context, arrayBody []string, options *ArrayPutDurationValidOptions) (*http.Response, error) {
 	req, err := client.PutDurationValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -3185,7 +3209,7 @@ func (client *ArrayClient) PutStringValidHandleError(resp *azcore.Response) erro
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// PutUUIDValid - Set array value  ['6dcc7237-45fe-45c4-8a6b-3a8a3f625652', 'd1399005-30f7-40d6-8da6-dd7c89ad34db', 'f42f6aa1-a5bc-4ddf-907e-5f915de43205']
+// PutUUIDValid - Set array value ['6dcc7237-45fe-45c4-8a6b-3a8a3f625652', 'd1399005-30f7-40d6-8da6-dd7c89ad34db', 'f42f6aa1-a5bc-4ddf-907e-5f915de43205']
 func (client *ArrayClient) PutUUIDValid(ctx context.Context, arrayBody []string, options *ArrayPutUUIDValidOptions) (*http.Response, error) {
 	req, err := client.PutUUIDValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {

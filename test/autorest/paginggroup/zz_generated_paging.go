@@ -29,15 +29,18 @@ type PagingOperations interface {
 	GetMultiplePagesFailureURI(options *PagingGetMultiplePagesFailureURIOptions) ProductResultPager
 	// GetMultiplePagesFragmentNextLink - A paging operation that doesn't return a full URL, just a fragment
 	GetMultiplePagesFragmentNextLink(apiVersion string, tenant string, options *PagingGetMultiplePagesFragmentNextLinkOptions) OdataProductResultPager
-	// GetMultiplePagesFragmentWithGroupingNextLink - A paging operation that doesn't return a full URL, just a fragment with parameters grouped
+	// GetMultiplePagesFragmentWithGroupingNextLink - A paging operation that doesn't return a full URL, just a fragment with
+	// parameters grouped
 	GetMultiplePagesFragmentWithGroupingNextLink(customParameterGroup CustomParameterGroup) OdataProductResultPager
 	// BeginGetMultiplePagesLro - A long-running paging operation that includes a nextLink that has 10 pages
 	BeginGetMultiplePagesLro(ctx context.Context, options *PagingGetMultiplePagesLroOptions) (*ProductResultPagerPollerResponse, error)
 	// ResumeGetMultiplePagesLro - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeGetMultiplePagesLro(token string) (ProductResultPagerPoller, error)
-	// GetMultiplePagesRetryFirst - A paging operation that fails on the first call with 500 and then retries and then get a response including a nextLink that has 10 pages
+	// GetMultiplePagesRetryFirst - A paging operation that fails on the first call with 500 and then retries and then get a response
+	// including a nextLink that has 10 pages
 	GetMultiplePagesRetryFirst(options *PagingGetMultiplePagesRetryFirstOptions) ProductResultPager
-	// GetMultiplePagesRetrySecond - A paging operation that includes a nextLink that has 10 pages, of which the 2nd call fails first with 500. The client should retry and finish all 10 pages eventually.
+	// GetMultiplePagesRetrySecond - A paging operation that includes a nextLink that has 10 pages, of which the 2nd call fails
+	// first with 500. The client should retry and finish all 10 pages eventually.
 	GetMultiplePagesRetrySecond(options *PagingGetMultiplePagesRetrySecondOptions) ProductResultPager
 	// GetMultiplePagesWithOffset - A paging operation that includes a nextLink that has 10 pages
 	GetMultiplePagesWithOffset(pagingGetMultiplePagesWithOffsetOptions PagingGetMultiplePagesWithOffsetOptions) ProductResultPager
@@ -47,13 +50,15 @@ type PagingOperations interface {
 	GetNullNextLinkNamePages(ctx context.Context, options *PagingGetNullNextLinkNamePagesOptions) (*ProductResultResponse, error)
 	// GetOdataMultiplePages - A paging operation that includes a nextLink in odata format that has 10 pages
 	GetOdataMultiplePages(options *PagingGetOdataMultiplePagesOptions) OdataProductResultPager
-	// GetPagingModelWithItemNameWithXmsClientName - A paging operation that returns a paging model whose item name is is overriden by x-ms-client-name 'indexes'.
+	// GetPagingModelWithItemNameWithXmsClientName - A paging operation that returns a paging model whose item name is is overriden
+	// by x-ms-client-name 'indexes'.
 	GetPagingModelWithItemNameWithXmsClientName(options *PagingGetPagingModelWithItemNameWithXmsClientNameOptions) ProductResultValueWithXmsClientNamePager
 	// GetSinglePages - A paging operation that finishes on the first call without a nextlink
 	GetSinglePages(options *PagingGetSinglePagesOptions) ProductResultPager
 	// GetSinglePagesFailure - A paging operation that receives a 400 on the first call
 	GetSinglePagesFailure(options *PagingGetSinglePagesFailureOptions) ProductResultPager
-	// GetWithQueryParams - A paging operation that includes a next operation. It has a different query parameter from it's next operation nextOperationWithQueryParams. Returns a ProductResult
+	// GetWithQueryParams - A paging operation that includes a next operation. It has a different query parameter from it's next
+	// operation nextOperationWithQueryParams. Returns a ProductResult
 	GetWithQueryParams(requiredQueryParameter int32, options *PagingGetWithQueryParamsOptions) ProductResultPager
 }
 
@@ -266,7 +271,8 @@ func (client *PagingClient) GetMultiplePagesFragmentNextLinkHandleError(resp *az
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-// GetMultiplePagesFragmentWithGroupingNextLink - A paging operation that doesn't return a full URL, just a fragment with parameters grouped
+// GetMultiplePagesFragmentWithGroupingNextLink - A paging operation that doesn't return a full URL, just a fragment with
+// parameters grouped
 func (client *PagingClient) GetMultiplePagesFragmentWithGroupingNextLink(customParameterGroup CustomParameterGroup) OdataProductResultPager {
 	return &odataProductResultPager{
 		pipeline: client.p,
@@ -414,7 +420,8 @@ func (client *PagingClient) GetMultiplePagesLroHandleError(resp *azcore.Response
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-// GetMultiplePagesRetryFirst - A paging operation that fails on the first call with 500 and then retries and then get a response including a nextLink that has 10 pages
+// GetMultiplePagesRetryFirst - A paging operation that fails on the first call with 500 and then retries and then get a response
+// including a nextLink that has 10 pages
 func (client *PagingClient) GetMultiplePagesRetryFirst(options *PagingGetMultiplePagesRetryFirstOptions) ProductResultPager {
 	return &productResultPager{
 		pipeline: client.p,
@@ -459,7 +466,8 @@ func (client *PagingClient) GetMultiplePagesRetryFirstHandleError(resp *azcore.R
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-// GetMultiplePagesRetrySecond - A paging operation that includes a nextLink that has 10 pages, of which the 2nd call fails first with 500. The client should retry and finish all 10 pages eventually.
+// GetMultiplePagesRetrySecond - A paging operation that includes a nextLink that has 10 pages, of which the 2nd call fails
+// first with 500. The client should retry and finish all 10 pages eventually.
 func (client *PagingClient) GetMultiplePagesRetrySecond(options *PagingGetMultiplePagesRetrySecondOptions) ProductResultPager {
 	return &productResultPager{
 		pipeline: client.p,
@@ -707,7 +715,8 @@ func (client *PagingClient) GetOdataMultiplePagesHandleError(resp *azcore.Respon
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-// GetPagingModelWithItemNameWithXmsClientName - A paging operation that returns a paging model whose item name is is overriden by x-ms-client-name 'indexes'.
+// GetPagingModelWithItemNameWithXmsClientName - A paging operation that returns a paging model whose item name is is overriden
+// by x-ms-client-name 'indexes'.
 func (client *PagingClient) GetPagingModelWithItemNameWithXmsClientName(options *PagingGetPagingModelWithItemNameWithXmsClientNameOptions) ProductResultValueWithXmsClientNamePager {
 	return &productResultValueWithXmsClientNamePager{
 		pipeline: client.p,
@@ -842,7 +851,8 @@ func (client *PagingClient) GetSinglePagesFailureHandleError(resp *azcore.Respon
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-// GetWithQueryParams - A paging operation that includes a next operation. It has a different query parameter from it's next operation nextOperationWithQueryParams. Returns a ProductResult
+// GetWithQueryParams - A paging operation that includes a next operation. It has a different query parameter from it's next
+// operation nextOperationWithQueryParams. Returns a ProductResult
 func (client *PagingClient) GetWithQueryParams(requiredQueryParameter int32, options *PagingGetWithQueryParamsOptions) ProductResultPager {
 	return &productResultPager{
 		pipeline: client.p,

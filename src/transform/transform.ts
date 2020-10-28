@@ -9,6 +9,8 @@ import { ObjectSchema, ArraySchema, ChoiceValue, codeModelSchema, CodeModel, Dat
 import { items, values } from '@azure-tools/linq';
 import { aggregateParameters, hasAdditionalProperties, isPageableOperation, isObjectSchema, isSchemaResponse, PagerInfo, isLROOperation, PollerInfo } from '../common/helpers';
 import { namer, protocolMethods } from './namer';
+import { Marked } from '@ts-stack/markdown';
+import { fromString } from 'html-to-text';
 
 // The transformer adds Go-specific information to the code model.
 export async function transform(host: Host) {
@@ -39,14 +41,28 @@ async function process(session: Session<CodeModel>) {
   session.model.language.go!.headAsBoolean = headAsBoolean;
   processOperationRequests(session);
   processOperationResponses(session);
+  // parse operation comments that are in Markdown to convert them to plain text
+  for (const group of values(session.model.operationGroups)) {
+    for (const op of values(group.operations)) {
+      if (op.language.go!.description) {
+        op.language.go!.description = parseComments(op.language.go!.description);
+      }
+    }
+  }
   // fix up dictionary element types (additional properties)
   // this must happen before processing objects as we depend on the
   // schema type being an actual Go type.
   for (const dictionary of values(session.model.schemas.dictionaries)) {
     dictionary.elementType.language.go!.name = schemaTypeToGoType(session.model, dictionary.elementType, false);
+    if (dictionary.language.go!.description) {
+      dictionary.language.go!.description = parseComments(dictionary.language.go!.description);
+    }
   }
   // fix up struct field types
   for (const obj of values(session.model.schemas.objects)) {
+    if (obj.language.go!.description) {
+      obj.language.go!.description = parseComments(obj.language.go!.description);
+    }
     if (obj.discriminator) {
       // discriminators will contain the root type of each discriminated type hierarchy
       if (!session.model.language.go!.discriminators) {
@@ -100,9 +116,15 @@ async function process(session: Session<CodeModel>) {
   // fix up enum types
   for (const choice of values(session.model.schemas.choices)) {
     choice.choiceType.language.go!.name = schemaTypeToGoType(session.model, choice.choiceType, false);
+    // if (choice.language.go!.description) {
+    //   choice.language.go!.description = parseComments(choice.language.go!.description);
+    // }
   }
   for (const choice of values(session.model.schemas.sealedChoices)) {
     choice.choiceType.language.go!.name = schemaTypeToGoType(session.model, choice.choiceType, false);
+    // if (choice.language.go!.description) {
+    //   choice.language.go!.description = parseComments(choice.language.go!.description);
+    // }
   }
 }
 
@@ -227,6 +249,9 @@ function processOperationRequests(session: Session<CodeModel>) {
   const paramGroups = new Map<string, GroupProperty>();
   for (const group of values(session.model.operationGroups)) {
     for (const op of values(group.operations)) {
+      if (op.language.go!.description) {
+        op.language.go!.description = parseComments(op.language.go!.description);
+      }
       if (op.requests!.length > 1) {
         for (const req of values(op.requests)) {
           const newOp = JSON.parse(JSON.stringify(op));
@@ -238,6 +263,9 @@ function processOperationRequests(session: Session<CodeModel>) {
           newOp.language.go!.name = name;
           newOp.language.go!.protocolNaming = new protocolMethods(newOp.language.go!.name);
           group.addOperation(newOp);
+          if (op.language.go!.description) {
+            op.language.go!.description = parseComments(op.language.go!.description);
+          }
         }
         group.operations.splice(group.operations.indexOf(op), 1);
         continue;
@@ -1056,4 +1084,11 @@ function getEnumForDiscriminatorValue(discValue: string, enums: Array<ChoiceValu
     }
   }
   throw console.error(`failed to find discriminator enum value for ${discValue}`);
+}
+
+// convert comments that are in Markdown to html and then to plain text
+export function parseComments(comment: string): string {
+  return fromString(Marked.parse(comment), {
+    wordwrap: 200,
+  });
 }

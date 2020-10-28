@@ -22,13 +22,17 @@ type SSHPublicKeysOperations interface {
 	Create(ctx context.Context, resourceGroupName string, sshPublicKeyName string, parameters SSHPublicKeyResource, options *SSHPublicKeysCreateOptions) (*SSHPublicKeyResourceResponse, error)
 	// Delete - Delete an SSH public key.
 	Delete(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *SSHPublicKeysDeleteOptions) (*http.Response, error)
-	// GenerateKeyPair - Generates and returns a public/private key pair and populates the SSH public key resource with the public key. The length of the key will be 3072 bits. This operation can only be performed once per SSH public key resource.
+	// GenerateKeyPair - Generates and returns a public/private key pair and populates the SSH public key resource with the public
+	// key. The length of the key will be 3072 bits. This operation can only be performed once per
+	// SSH public key resource.
 	GenerateKeyPair(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *SSHPublicKeysGenerateKeyPairOptions) (*SSHPublicKeyGenerateKeyPairResultResponse, error)
 	// Get - Retrieves information about an SSH public key.
 	Get(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *SSHPublicKeysGetOptions) (*SSHPublicKeyResourceResponse, error)
-	// ListByResourceGroup - Lists all of the SSH public keys in the specified resource group. Use the nextLink property in the response to get the next page of SSH public keys.
+	// ListByResourceGroup - Lists all of the SSH public keys in the specified resource group. Use the nextLink property in the
+	// response to get the next page of SSH public keys.
 	ListByResourceGroup(resourceGroupName string, options *SSHPublicKeysListByResourceGroupOptions) SSHPublicKeysGroupListResultPager
-	// ListBySubscription - Lists all of the SSH public keys in the subscription. Use the nextLink property in the response to get the next page of SSH public keys.
+	// ListBySubscription - Lists all of the SSH public keys in the subscription. Use the nextLink property in the response to
+	// get the next page of SSH public keys.
 	ListBySubscription(options *SSHPublicKeysListBySubscriptionOptions) SSHPublicKeysGroupListResultPager
 	// Update - Updates a new SSH public key resource.
 	Update(ctx context.Context, resourceGroupName string, sshPublicKeyName string, parameters SSHPublicKeyUpdateResource, options *SSHPublicKeysUpdateOptions) (*SSHPublicKeyResourceResponse, error)
@@ -150,7 +154,9 @@ func (client *SSHPublicKeysClient) DeleteHandleError(resp *azcore.Response) erro
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-// GenerateKeyPair - Generates and returns a public/private key pair and populates the SSH public key resource with the public key. The length of the key will be 3072 bits. This operation can only be performed once per SSH public key resource.
+// GenerateKeyPair - Generates and returns a public/private key pair and populates the SSH public key resource with the public
+// key. The length of the key will be 3072 bits. This operation can only be performed once per
+// SSH public key resource.
 func (client *SSHPublicKeysClient) GenerateKeyPair(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *SSHPublicKeysGenerateKeyPairOptions) (*SSHPublicKeyGenerateKeyPairResultResponse, error) {
 	req, err := client.GenerateKeyPairCreateRequest(ctx, resourceGroupName, sshPublicKeyName, options)
 	if err != nil {
@@ -260,7 +266,8 @@ func (client *SSHPublicKeysClient) GetHandleError(resp *azcore.Response) error {
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-// ListByResourceGroup - Lists all of the SSH public keys in the specified resource group. Use the nextLink property in the response to get the next page of SSH public keys.
+// ListByResourceGroup - Lists all of the SSH public keys in the specified resource group. Use the nextLink property in the
+// response to get the next page of SSH public keys.
 func (client *SSHPublicKeysClient) ListByResourceGroup(resourceGroupName string, options *SSHPublicKeysListByResourceGroupOptions) SSHPublicKeysGroupListResultPager {
 	return &sshPublicKeysGroupListResultPager{
 		pipeline: client.p,
@@ -310,7 +317,8 @@ func (client *SSHPublicKeysClient) ListByResourceGroupHandleError(resp *azcore.R
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-// ListBySubscription - Lists all of the SSH public keys in the subscription. Use the nextLink property in the response to get the next page of SSH public keys.
+// ListBySubscription - Lists all of the SSH public keys in the subscription. Use the nextLink property in the response to
+// get the next page of SSH public keys.
 func (client *SSHPublicKeysClient) ListBySubscription(options *SSHPublicKeysListBySubscriptionOptions) SSHPublicKeysGroupListResultPager {
 	return &sshPublicKeysGroupListResultPager{
 		pipeline: client.p,

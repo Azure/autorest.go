@@ -25,21 +25,25 @@ type VirtualNetworkGatewaysOperations interface {
 	BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysDeleteOptions) (*HTTPPollerResponse, error)
 	// ResumeDelete - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeDelete(token string) (HTTPPoller, error)
-	// BeginDisconnectVirtualNetworkGatewayVpnConnections - Disconnect vpn connections of virtual network gateway in the specified resource group.
+	// BeginDisconnectVirtualNetworkGatewayVpnConnections - Disconnect vpn connections of virtual network gateway in the specified
+	// resource group.
 	BeginDisconnectVirtualNetworkGatewayVpnConnections(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, request P2SVpnConnectionRequest, options *VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVpnConnectionsOptions) (*HTTPPollerResponse, error)
 	// ResumeDisconnectVirtualNetworkGatewayVpnConnections - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeDisconnectVirtualNetworkGatewayVpnConnections(token string) (HTTPPoller, error)
-	// BeginGenerateVpnProfile - Generates VPN profile for P2S client of the virtual network gateway in the specified resource group. Used for IKEV2 and radius based authentication.
+	// BeginGenerateVpnProfile - Generates VPN profile for P2S client of the virtual network gateway in the specified resource
+	// group. Used for IKEV2 and radius based authentication.
 	BeginGenerateVpnProfile(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VpnClientParameters, options *VirtualNetworkGatewaysGenerateVpnProfileOptions) (*StringPollerResponse, error)
 	// ResumeGenerateVpnProfile - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeGenerateVpnProfile(token string) (StringPoller, error)
-	// BeginGeneratevpnclientpackage - Generates VPN client package for P2S client of the virtual network gateway in the specified resource group.
+	// BeginGeneratevpnclientpackage - Generates VPN client package for P2S client of the virtual network gateway in the specified
+	// resource group.
 	BeginGeneratevpnclientpackage(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VpnClientParameters, options *VirtualNetworkGatewaysGeneratevpnclientpackageOptions) (*StringPollerResponse, error)
 	// ResumeGeneratevpnclientpackage - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeGeneratevpnclientpackage(token string) (StringPoller, error)
 	// Get - Gets the specified virtual network gateway by resource group.
 	Get(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysGetOptions) (*VirtualNetworkGatewayResponse, error)
-	// BeginGetAdvertisedRoutes - This operation retrieves a list of routes the virtual network gateway is advertising to the specified peer.
+	// BeginGetAdvertisedRoutes - This operation retrieves a list of routes the virtual network gateway is advertising to the
+	// specified peer.
 	BeginGetAdvertisedRoutes(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, peer string, options *VirtualNetworkGatewaysGetAdvertisedRoutesOptions) (*GatewayRouteListResultPollerResponse, error)
 	// ResumeGetAdvertisedRoutes - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeGetAdvertisedRoutes(token string) (GatewayRouteListResultPoller, error)
@@ -47,19 +51,24 @@ type VirtualNetworkGatewaysOperations interface {
 	BeginGetBgpPeerStatus(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysGetBgpPeerStatusOptions) (*BgpPeerStatusListResultPollerResponse, error)
 	// ResumeGetBgpPeerStatus - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeGetBgpPeerStatus(token string) (BgpPeerStatusListResultPoller, error)
-	// BeginGetLearnedRoutes - This operation retrieves a list of routes the virtual network gateway has learned, including routes learned from BGP peers.
+	// BeginGetLearnedRoutes - This operation retrieves a list of routes the virtual network gateway has learned, including routes
+	// learned from BGP peers.
 	BeginGetLearnedRoutes(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysGetLearnedRoutesOptions) (*GatewayRouteListResultPollerResponse, error)
 	// ResumeGetLearnedRoutes - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeGetLearnedRoutes(token string) (GatewayRouteListResultPoller, error)
-	// BeginGetVpnProfilePackageURL - Gets pre-generated VPN profile for P2S client of the virtual network gateway in the specified resource group. The profile needs to be generated first using generateVpnProfile.
+	// BeginGetVpnProfilePackageURL - Gets pre-generated VPN profile for P2S client of the virtual network gateway in the specified
+	// resource group. The profile needs to be generated first using generateVpnProfile.
 	BeginGetVpnProfilePackageURL(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysGetVpnProfilePackageURLOptions) (*StringPollerResponse, error)
 	// ResumeGetVpnProfilePackageURL - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeGetVpnProfilePackageURL(token string) (StringPoller, error)
-	// BeginGetVpnclientConnectionHealth - Get VPN client connection health detail per P2S client connection of the virtual network gateway in the specified resource group.
+	// BeginGetVpnclientConnectionHealth - Get VPN client connection health detail per P2S client connection of the virtual network
+	// gateway in the specified resource group.
 	BeginGetVpnclientConnectionHealth(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysGetVpnclientConnectionHealthOptions) (*VpnClientConnectionHealthDetailListResultPollerResponse, error)
 	// ResumeGetVpnclientConnectionHealth - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeGetVpnclientConnectionHealth(token string) (VpnClientConnectionHealthDetailListResultPoller, error)
-	// BeginGetVpnclientIPsecParameters - The Get VpnclientIpsecParameters operation retrieves information about the vpnclient ipsec policy for P2S client of virtual network gateway in the specified resource group through Network resource provider.
+	// BeginGetVpnclientIPsecParameters - The Get VpnclientIpsecParameters operation retrieves information about the vpnclient
+	// ipsec policy for P2S client of virtual network gateway in the specified resource group through Network resource
+	// provider.
 	BeginGetVpnclientIPsecParameters(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysGetVpnclientIPsecParametersOptions) (*VpnClientIPsecParametersPollerResponse, error)
 	// ResumeGetVpnclientIPsecParameters - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeGetVpnclientIPsecParameters(token string) (VpnClientIPsecParametersPoller, error)
@@ -71,11 +80,13 @@ type VirtualNetworkGatewaysOperations interface {
 	BeginReset(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysResetOptions) (*VirtualNetworkGatewayPollerResponse, error)
 	// ResumeReset - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeReset(token string) (VirtualNetworkGatewayPoller, error)
-	// BeginResetVpnClientSharedKey - Resets the VPN client shared key of the virtual network gateway in the specified resource group.
+	// BeginResetVpnClientSharedKey - Resets the VPN client shared key of the virtual network gateway in the specified resource
+	// group.
 	BeginResetVpnClientSharedKey(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysResetVpnClientSharedKeyOptions) (*HTTPPollerResponse, error)
 	// ResumeResetVpnClientSharedKey - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeResetVpnClientSharedKey(token string) (HTTPPoller, error)
-	// BeginSetVpnclientIPsecParameters - The Set VpnclientIpsecParameters operation sets the vpnclient ipsec policy for P2S client of virtual network gateway in the specified resource group through Network resource provider.
+	// BeginSetVpnclientIPsecParameters - The Set VpnclientIpsecParameters operation sets the vpnclient ipsec policy for P2S client
+	// of virtual network gateway in the specified resource group through Network resource provider.
 	BeginSetVpnclientIPsecParameters(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, vpnclientIpsecParams VpnClientIPsecParameters, options *VirtualNetworkGatewaysSetVpnclientIPsecParametersOptions) (*VpnClientIPsecParametersPollerResponse, error)
 	// ResumeSetVpnclientIPsecParameters - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeSetVpnclientIPsecParameters(token string) (VpnClientIPsecParametersPoller, error)
@@ -306,7 +317,8 @@ func (client *VirtualNetworkGatewaysClient) ResumeDisconnectVirtualNetworkGatewa
 	}, nil
 }
 
-// DisconnectVirtualNetworkGatewayVpnConnections - Disconnect vpn connections of virtual network gateway in the specified resource group.
+// DisconnectVirtualNetworkGatewayVpnConnections - Disconnect vpn connections of virtual network gateway in the specified
+// resource group.
 func (client *VirtualNetworkGatewaysClient) DisconnectVirtualNetworkGatewayVpnConnections(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, request P2SVpnConnectionRequest, options *VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVpnConnectionsOptions) (*azcore.Response, error) {
 	req, err := client.DisconnectVirtualNetworkGatewayVpnConnectionsCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, request, options)
 	if err != nil {
@@ -382,7 +394,8 @@ func (client *VirtualNetworkGatewaysClient) ResumeGenerateVpnProfile(token strin
 	}, nil
 }
 
-// GenerateVpnProfile - Generates VPN profile for P2S client of the virtual network gateway in the specified resource group. Used for IKEV2 and radius based authentication.
+// GenerateVpnProfile - Generates VPN profile for P2S client of the virtual network gateway in the specified resource group.
+// Used for IKEV2 and radius based authentication.
 func (client *VirtualNetworkGatewaysClient) GenerateVpnProfile(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VpnClientParameters, options *VirtualNetworkGatewaysGenerateVpnProfileOptions) (*azcore.Response, error) {
 	req, err := client.GenerateVpnProfileCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, parameters, options)
 	if err != nil {
@@ -464,7 +477,8 @@ func (client *VirtualNetworkGatewaysClient) ResumeGeneratevpnclientpackage(token
 	}, nil
 }
 
-// Generatevpnclientpackage - Generates VPN client package for P2S client of the virtual network gateway in the specified resource group.
+// Generatevpnclientpackage - Generates VPN client package for P2S client of the virtual network gateway in the specified
+// resource group.
 func (client *VirtualNetworkGatewaysClient) Generatevpnclientpackage(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VpnClientParameters, options *VirtualNetworkGatewaysGeneratevpnclientpackageOptions) (*azcore.Response, error) {
 	req, err := client.GeneratevpnclientpackageCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, parameters, options)
 	if err != nil {
@@ -598,7 +612,8 @@ func (client *VirtualNetworkGatewaysClient) ResumeGetAdvertisedRoutes(token stri
 	}, nil
 }
 
-// GetAdvertisedRoutes - This operation retrieves a list of routes the virtual network gateway is advertising to the specified peer.
+// GetAdvertisedRoutes - This operation retrieves a list of routes the virtual network gateway is advertising to the specified
+// peer.
 func (client *VirtualNetworkGatewaysClient) GetAdvertisedRoutes(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, peer string, options *VirtualNetworkGatewaysGetAdvertisedRoutesOptions) (*azcore.Response, error) {
 	req, err := client.GetAdvertisedRoutesCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, peer, options)
 	if err != nil {
@@ -766,7 +781,8 @@ func (client *VirtualNetworkGatewaysClient) ResumeGetLearnedRoutes(token string)
 	}, nil
 }
 
-// GetLearnedRoutes - This operation retrieves a list of routes the virtual network gateway has learned, including routes learned from BGP peers.
+// GetLearnedRoutes - This operation retrieves a list of routes the virtual network gateway has learned, including routes
+// learned from BGP peers.
 func (client *VirtualNetworkGatewaysClient) GetLearnedRoutes(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysGetLearnedRoutesOptions) (*azcore.Response, error) {
 	req, err := client.GetLearnedRoutesCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 	if err != nil {
@@ -848,7 +864,8 @@ func (client *VirtualNetworkGatewaysClient) ResumeGetVpnProfilePackageURL(token 
 	}, nil
 }
 
-// GetVpnProfilePackageURL - Gets pre-generated VPN profile for P2S client of the virtual network gateway in the specified resource group. The profile needs to be generated first using generateVpnProfile.
+// GetVpnProfilePackageURL - Gets pre-generated VPN profile for P2S client of the virtual network gateway in the specified
+// resource group. The profile needs to be generated first using generateVpnProfile.
 func (client *VirtualNetworkGatewaysClient) GetVpnProfilePackageURL(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysGetVpnProfilePackageURLOptions) (*azcore.Response, error) {
 	req, err := client.GetVpnProfilePackageURLCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 	if err != nil {
@@ -930,7 +947,8 @@ func (client *VirtualNetworkGatewaysClient) ResumeGetVpnclientConnectionHealth(t
 	}, nil
 }
 
-// GetVpnclientConnectionHealth - Get VPN client connection health detail per P2S client connection of the virtual network gateway in the specified resource group.
+// GetVpnclientConnectionHealth - Get VPN client connection health detail per P2S client connection of the virtual network
+// gateway in the specified resource group.
 func (client *VirtualNetworkGatewaysClient) GetVpnclientConnectionHealth(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysGetVpnclientConnectionHealthOptions) (*azcore.Response, error) {
 	req, err := client.GetVpnclientConnectionHealthCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 	if err != nil {
@@ -1012,7 +1030,9 @@ func (client *VirtualNetworkGatewaysClient) ResumeGetVpnclientIPsecParameters(to
 	}, nil
 }
 
-// GetVpnclientIPsecParameters - The Get VpnclientIpsecParameters operation retrieves information about the vpnclient ipsec policy for P2S client of virtual network gateway in the specified resource group through Network resource provider.
+// GetVpnclientIPsecParameters - The Get VpnclientIpsecParameters operation retrieves information about the vpnclient ipsec
+// policy for P2S client of virtual network gateway in the specified resource group through Network resource
+// provider.
 func (client *VirtualNetworkGatewaysClient) GetVpnclientIPsecParameters(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysGetVpnclientIPsecParametersOptions) (*azcore.Response, error) {
 	req, err := client.GetVpnclientIPsecParametersCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 	if err != nil {
@@ -1350,7 +1370,8 @@ func (client *VirtualNetworkGatewaysClient) ResumeSetVpnclientIPsecParameters(to
 	}, nil
 }
 
-// SetVpnclientIPsecParameters - The Set VpnclientIpsecParameters operation sets the vpnclient ipsec policy for P2S client of virtual network gateway in the specified resource group through Network resource provider.
+// SetVpnclientIPsecParameters - The Set VpnclientIpsecParameters operation sets the vpnclient ipsec policy for P2S client
+// of virtual network gateway in the specified resource group through Network resource provider.
 func (client *VirtualNetworkGatewaysClient) SetVpnclientIPsecParameters(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, vpnclientIpsecParams VpnClientIPsecParameters, options *VirtualNetworkGatewaysSetVpnclientIPsecParametersOptions) (*azcore.Response, error) {
 	req, err := client.SetVpnclientIPsecParametersCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, vpnclientIpsecParams, options)
 	if err != nil {

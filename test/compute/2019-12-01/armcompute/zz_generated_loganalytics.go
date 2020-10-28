@@ -20,11 +20,13 @@ import (
 
 // LogAnalyticsOperations contains the methods for the LogAnalytics group.
 type LogAnalyticsOperations interface {
-	// BeginExportRequestRateByInterval - Export logs that show Api requests made by this subscription in the given time window to show throttling activities.
+	// BeginExportRequestRateByInterval - Export logs that show Api requests made by this subscription in the given time window
+	// to show throttling activities.
 	BeginExportRequestRateByInterval(ctx context.Context, location string, parameters RequestRateByIntervalInput, options *LogAnalyticsExportRequestRateByIntervalOptions) (*LogAnalyticsOperationResultPollerResponse, error)
 	// ResumeExportRequestRateByInterval - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeExportRequestRateByInterval(token string) (LogAnalyticsOperationResultPoller, error)
-	// BeginExportThrottledRequests - Export logs that show total throttled Api requests for this subscription in the given time window.
+	// BeginExportThrottledRequests - Export logs that show total throttled Api requests for this subscription in the given time
+	// window.
 	BeginExportThrottledRequests(ctx context.Context, location string, parameters LogAnalyticsInputBase, options *LogAnalyticsExportThrottledRequestsOptions) (*LogAnalyticsOperationResultPollerResponse, error)
 	// ResumeExportThrottledRequests - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeExportThrottledRequests(token string) (LogAnalyticsOperationResultPoller, error)
@@ -81,7 +83,8 @@ func (client *LogAnalyticsClient) ResumeExportRequestRateByInterval(token string
 	}, nil
 }
 
-// ExportRequestRateByInterval - Export logs that show Api requests made by this subscription in the given time window to show throttling activities.
+// ExportRequestRateByInterval - Export logs that show Api requests made by this subscription in the given time window to
+// show throttling activities.
 func (client *LogAnalyticsClient) ExportRequestRateByInterval(ctx context.Context, location string, parameters RequestRateByIntervalInput, options *LogAnalyticsExportRequestRateByIntervalOptions) (*azcore.Response, error) {
 	req, err := client.ExportRequestRateByIntervalCreateRequest(ctx, location, parameters, options)
 	if err != nil {

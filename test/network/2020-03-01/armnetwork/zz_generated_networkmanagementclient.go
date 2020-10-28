@@ -25,7 +25,8 @@ type NetworkManagementClientOperations interface {
 	ResumeDeleteBastionShareableLink(token string) (HTTPPoller, error)
 	// DisconnectActiveSessions - Returns the list of currently active sessions on the Bastion.
 	DisconnectActiveSessions(resourceGroupName string, bastionHostName string, sessionIds SessionIDs, options *NetworkManagementClientDisconnectActiveSessionsOptions) BastionSessionDeleteResultPager
-	// BeginGeneratevirtualwanvpnserverconfigurationvpnprofile - Generates a unique VPN profile for P2S clients for VirtualWan and associated VpnServerConfiguration combination in the specified resource group.
+	// BeginGeneratevirtualwanvpnserverconfigurationvpnprofile - Generates a unique VPN profile for P2S clients for VirtualWan
+	// and associated VpnServerConfiguration combination in the specified resource group.
 	BeginGeneratevirtualwanvpnserverconfigurationvpnprofile(ctx context.Context, resourceGroupName string, virtualWanName string, vpnClientParams VirtualWanVpnProfileParameters, options *NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileOptions) (*VpnProfileResponsePollerResponse, error)
 	// ResumeGeneratevirtualwanvpnserverconfigurationvpnprofile - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeGeneratevirtualwanvpnserverconfigurationvpnprofile(token string) (VpnProfileResponsePoller, error)
@@ -270,7 +271,8 @@ func (client *NetworkManagementClient) ResumeGeneratevirtualwanvpnserverconfigur
 	}, nil
 }
 
-// Generatevirtualwanvpnserverconfigurationvpnprofile - Generates a unique VPN profile for P2S clients for VirtualWan and associated VpnServerConfiguration combination in the specified resource group.
+// Generatevirtualwanvpnserverconfigurationvpnprofile - Generates a unique VPN profile for P2S clients for VirtualWan and
+// associated VpnServerConfiguration combination in the specified resource group.
 func (client *NetworkManagementClient) Generatevirtualwanvpnserverconfigurationvpnprofile(ctx context.Context, resourceGroupName string, virtualWanName string, vpnClientParams VirtualWanVpnProfileParameters, options *NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileOptions) (*azcore.Response, error) {
 	req, err := client.GeneratevirtualwanvpnserverconfigurationvpnprofileCreateRequest(ctx, resourceGroupName, virtualWanName, vpnClientParams, options)
 	if err != nil {

@@ -17,7 +17,8 @@ import (
 type AvailablePrivateEndpointTypesOperations interface {
 	// List - Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
 	List(location string, options *AvailablePrivateEndpointTypesListOptions) AvailablePrivateEndpointTypesResultPager
-	// ListByResourceGroup - Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
+	// ListByResourceGroup - Returns all of the resource types that can be linked to a Private Endpoint in this subscription in
+	// this region.
 	ListByResourceGroup(location string, resourceGroupName string, options *AvailablePrivateEndpointTypesListByResourceGroupOptions) AvailablePrivateEndpointTypesResultPager
 }
 
@@ -85,7 +86,8 @@ func (client *AvailablePrivateEndpointTypesClient) ListHandleError(resp *azcore.
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// ListByResourceGroup - Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
+// ListByResourceGroup - Returns all of the resource types that can be linked to a Private Endpoint in this subscription in
+// this region.
 func (client *AvailablePrivateEndpointTypesClient) ListByResourceGroup(location string, resourceGroupName string, options *AvailablePrivateEndpointTypesListByResourceGroupOptions) AvailablePrivateEndpointTypesResultPager {
 	return &availablePrivateEndpointTypesResultPager{
 		pipeline: client.p,

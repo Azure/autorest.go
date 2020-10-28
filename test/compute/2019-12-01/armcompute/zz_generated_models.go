@@ -85,7 +85,8 @@ type AdditionalCapabilities struct {
 }
 
 // Specifies additional XML formatted information that can be included in the Unattend.xml file, which is used by Windows
-// Setup. Contents are defined by setting name, component name, and the pass in which the content is applied.
+// Setup. Contents are defined by setting name, component name, and the pass in
+// which the content is applied.
 type AdditionalUnattendContent struct {
 	// The component name. Currently, the only allowable value is Microsoft-Windows-Shell-Setup.
 	ComponentName *string `json:"componentName,omitempty"`
@@ -132,10 +133,12 @@ type AutomaticRepairsPolicy struct {
 }
 
 // Specifies information about the availability set that the virtual machine should be assigned to. Virtual machines specified
-// in the same availability set are allocated to different nodes to maximize availability. For more information about availability
-// sets, see [Manage the availability of virtual machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-manage-availability?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).
-// <br><br> For more information on Azure planned maintenance, see [Planned maintenance for virtual machines in Azure](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-planned-maintenance?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)
-// <br><br> Currently, a VM can only be added to availability set at creation time. An existing VM cannot be added to an availability
+// in the same availability set are allocated to different nodes to maximize
+// availability. For more information about availability sets, see Manage the availability of virtual machines
+// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-manage-availability?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json].
+// For more information on Azure planned maintenance, see Planned maintenance for virtual machines in Azure
+// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-planned-maintenance?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json]
+// Currently, a VM can only be added to availability set at creation time. An existing VM cannot be added to an availability
 // set.
 type AvailabilitySet struct {
 	Resource
@@ -247,7 +250,8 @@ type AvailabilitySetsUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Specifies the billing related details of a Azure Spot VM or VMSS. <br><br>Minimum api-version: 2019-03-01.
+// Specifies the billing related details of a Azure Spot VM or VMSS.
+// Minimum api-version: 2019-03-01.
 type BillingProfile struct {
 	// Specifies the maximum price you are willing to pay for a Azure Spot VM/VMSS. This price is in US Dollars. <br><br> This
 	// price will be compared with the current Azure Spot price for the VM size. Also, the prices are compared at the time of
@@ -260,9 +264,9 @@ type BillingProfile struct {
 	MaxPrice *float64 `json:"maxPrice,omitempty"`
 }
 
-// Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. <br><br>
-// You can easily view the output of your console log. <br><br> Azure also enables you to see a screenshot of the VM from
-// the hypervisor.
+// Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status.
+// You can easily view the output of your console log.
+// Azure also enables you to see a screenshot of the VM from the hypervisor.
 type BootDiagnostics struct {
 	// Whether boot diagnostics should be enabled on the Virtual Machine.
 	Enabled *bool `json:"enabled,omitempty"`
@@ -663,9 +667,9 @@ type DedicatedHostAvailableCapacity struct {
 	AllocatableVMS *[]DedicatedHostAllocatableVM `json:"allocatableVMs,omitempty"`
 }
 
-// Specifies information about the dedicated host group that the dedicated hosts should be assigned to. <br><br> Currently,
-// a dedicated host can only be added to a dedicated host group at creation time. An existing dedicated host cannot be added
-// to another dedicated host group.
+// Specifies information about the dedicated host group that the dedicated hosts should be assigned to.
+// Currently, a dedicated host can only be added to a dedicated host group at creation time. An existing dedicated host cannot
+// be added to another dedicated host group.
 type DedicatedHostGroup struct {
 	Resource
 	// Dedicated Host Group Properties.
@@ -964,7 +968,8 @@ type DedicatedHostsUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Specifies the boot diagnostic settings state. <br><br>Minimum api-version: 2015-06-15.
+// Specifies the boot diagnostic settings state.
+// Minimum api-version: 2015-06-15.
 type DiagnosticsProfile struct {
 	// Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. <br><br>
 	// You can easily view the output of your console log. <br><br> Azure also enables you to see a screenshot of the VM from
@@ -972,8 +977,8 @@ type DiagnosticsProfile struct {
 	BootDiagnostics *BootDiagnostics `json:"bootDiagnostics,omitempty"`
 }
 
-// Describes the parameters of ephemeral disk settings that can be specified for operating system disk. <br><br> NOTE: The
-// ephemeral disk settings can only be specified for managed disk.
+// Describes the parameters of ephemeral disk settings that can be specified for operating system disk.
+// NOTE: The ephemeral disk settings can only be specified for managed disk.
 type DiffDiskSettings struct {
 	// Specifies the ephemeral disk settings for operating system disk.
 	Option *DiffDiskOptions `json:"option,omitempty"`
@@ -1040,9 +1045,9 @@ type DiskEncryptionSetListResponse struct {
 	RawResponse *http.Response
 }
 
-// Describes the parameter of customer managed disk encryption set resource id that can be specified for disk. <br><br> NOTE:
-// The disk encryption set resource id can only be specified for managed disk. Please refer https://aka.ms/mdssewithcmkoverview
-// for more details.
+// Describes the parameter of customer managed disk encryption set resource id that can be specified for disk.
+// NOTE: The disk encryption set resource id can only be specified for managed disk. Please refer https://aka.ms/mdssewithcmkoverview
+// [https://aka.ms/mdssewithcmkoverview] for more details.
 type DiskEncryptionSetParameters struct {
 	SubResource
 }
@@ -2562,7 +2567,8 @@ type HardwareProfile struct {
 }
 
 // The source user image virtual hard disk. The virtual hard disk will be copied before being attached to the virtual machine.
-// If SourceImage is provided, the destination virtual hard drive must not exist.
+// If SourceImage is provided, the destination virtual hard drive must not
+// exist.
 type Image struct {
 	Resource
 	// Describes the properties of an Image.
@@ -2683,9 +2689,9 @@ type ImagePurchasePlan struct {
 }
 
 // Specifies information about the image to use. You can specify information about platform images, marketplace images, or
-// virtual machine images. This element is required when you want to use a platform image, marketplace image, or virtual machine
-// image, but is not used in other creation operations. NOTE: Image reference publisher and offer can only be set when you
-// create the scale set.
+// virtual machine images. This element is required when you want to use a platform
+// image, marketplace image, or virtual machine image, but is not used in other creation operations. NOTE: Image reference
+// publisher and offer can only be set when you create the scale set.
 type ImageReference struct {
 	SubResource
 	// Specifies in decimal numbers, the version of platform image or marketplace image used to create the virtual machine. This
@@ -2899,9 +2905,11 @@ type KeyVaultSecretReference struct {
 	SourceVault *SubResource `json:"sourceVault,omitempty"`
 }
 
-// Specifies the Linux operating system settings on the virtual machine. <br><br>For a list of supported Linux distributions,
-// see [Linux on Azure-Endorsed Distributions](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-endorsed-distros?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json)
-// <br><br> For running non-endorsed distributions, see [Information for Non-Endorsed Distributions](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-create-upload-generic?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json).
+// Specifies the Linux operating system settings on the virtual machine.
+// For a list of supported Linux distributions, see Linux on Azure-Endorsed Distributions
+// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-endorsed-distros?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json]
+// For running non-endorsed distributions, see Information for Non-Endorsed Distributions
+// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-create-upload-generic?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json].
 type LinuxConfiguration struct {
 	// Specifies whether password authentication should be disabled.
 	DisablePasswordAuthentication *bool `json:"disablePasswordAuthentication,omitempty"`
@@ -3232,8 +3240,9 @@ type NetworkProfile struct {
 	NetworkInterfaces *[]NetworkInterfaceReference `json:"networkInterfaces,omitempty"`
 }
 
-// Specifies information about the operating system disk used by the virtual machine. <br><br> For more information about
-// disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-about-disks-vhds?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).
+// Specifies information about the operating system disk used by the virtual machine.
+// For more information about disks, see About disks and VHDs for Azure virtual machines
+// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-about-disks-vhds?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json].
 type OSDisk struct {
 	// Specifies the caching requirements. <br><br> Possible values are: <br><br> **None** <br><br> **ReadOnly** <br><br> **ReadWrite**
 	// <br><br> Default: **None** for Standard storage. **ReadOnly** for Premium storage.
@@ -3365,9 +3374,10 @@ type OrchestrationServiceSummary struct {
 }
 
 // Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace
-// images. Before you can use a marketplace image from an API, you must enable the image for programmatic use. In the Azure
-// portal, find the marketplace image that you want to use and then click **Want to deploy programmatically, Get Started ->**.
-// Enter any required information and then click **Save**.
+// images. Before you can use a marketplace image from an API, you must
+// enable the image for programmatic use. In the Azure portal, find the marketplace image that you want to use and then click
+// Want to deploy programmatically, Get Started ->. Enter any required
+// information and then click Save.
 type Plan struct {
 	// The plan ID.
 	Name *string `json:"name,omitempty"`
@@ -4022,7 +4032,8 @@ type RunCommandResultResponse struct {
 }
 
 // Describes a virtual machine scale set sku. NOTE: If the new VM SKU is not supported on the hardware the scale set is currently
-// on, you need to deallocate the VMs in the scale set before you modify the SKU name.
+// on, you need to deallocate the VMs in the scale set before you modify the
+// SKU name.
 type SKU struct {
 	// Specifies the number of virtual machines in the scale set.
 	Capacity *int64 `json:"capacity,omitempty"`
@@ -6073,7 +6084,8 @@ type VirtualMachineScaleSetUpdate struct {
 }
 
 // Describes a virtual machine scale set network profile's IP configuration. NOTE: The subnet of a scale set may be modified
-// as long as the original subnet and the new subnet are in the same virtual network
+// as long as the original subnet and the new subnet are in the same virtual
+// network
 type VirtualMachineScaleSetUpdateIPConfiguration struct {
 	SubResource
 	// The IP configuration name.

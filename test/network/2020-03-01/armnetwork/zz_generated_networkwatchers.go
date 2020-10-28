@@ -17,7 +17,8 @@ import (
 
 // NetworkWatchersOperations contains the methods for the NetworkWatchers group.
 type NetworkWatchersOperations interface {
-	// BeginCheckConnectivity - Verifies the possibility of establishing a direct TCP connection from a virtual machine to a given endpoint including another VM or an arbitrary remote server.
+	// BeginCheckConnectivity - Verifies the possibility of establishing a direct TCP connection from a virtual machine to a given
+	// endpoint including another VM or an arbitrary remote server.
 	BeginCheckConnectivity(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters ConnectivityParameters, options *NetworkWatchersCheckConnectivityOptions) (*ConnectivityInformationPollerResponse, error)
 	// ResumeCheckConnectivity - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeCheckConnectivity(token string) (ConnectivityInformationPoller, error)
@@ -29,7 +30,8 @@ type NetworkWatchersOperations interface {
 	ResumeDelete(token string) (HTTPPoller, error)
 	// Get - Gets the specified network watcher by resource group.
 	Get(ctx context.Context, resourceGroupName string, networkWatcherName string, options *NetworkWatchersGetOptions) (*NetworkWatcherResponse, error)
-	// BeginGetAzureReachabilityReport - NOTE: This feature is currently in preview and still being tested for stability. Gets the relative latency score for internet service providers from a specified location to Azure regions.
+	// BeginGetAzureReachabilityReport - NOTE: This feature is currently in preview and still being tested for stability. Gets
+	// the relative latency score for internet service providers from a specified location to Azure regions.
 	BeginGetAzureReachabilityReport(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters AzureReachabilityReportParameters, options *NetworkWatchersGetAzureReachabilityReportOptions) (*AzureReachabilityReportPollerResponse, error)
 	// ResumeGetAzureReachabilityReport - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeGetAzureReachabilityReport(token string) (AzureReachabilityReportPoller, error)
@@ -37,7 +39,11 @@ type NetworkWatchersOperations interface {
 	BeginGetFlowLogStatus(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters FlowLogStatusParameters, options *NetworkWatchersGetFlowLogStatusOptions) (*FlowLogInformationPollerResponse, error)
 	// ResumeGetFlowLogStatus - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeGetFlowLogStatus(token string) (FlowLogInformationPoller, error)
-	// BeginGetNetworkConfigurationDiagnostic - Gets Network Configuration Diagnostic data to help customers understand and debug network behavior. It provides detailed information on what security rules were applied to a specified traffic flow and the result of evaluating these rules. Customers must provide details of a flow like source, destination, protocol, etc. The API returns whether traffic was allowed or denied, the rules evaluated for the specified flow and the evaluation results.
+	// BeginGetNetworkConfigurationDiagnostic - Gets Network Configuration Diagnostic data to help customers understand and debug
+	// network behavior. It provides detailed information on what security rules were applied to a specified traffic flow and
+	// the result of evaluating these rules. Customers must provide details of a flow like source, destination, protocol, etc.
+	// The API returns whether traffic was allowed or denied, the rules evaluated for
+	// the specified flow and the evaluation results.
 	BeginGetNetworkConfigurationDiagnostic(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters NetworkConfigurationDiagnosticParameters, options *NetworkWatchersGetNetworkConfigurationDiagnosticOptions) (*NetworkConfigurationDiagnosticResponsePollerResponse, error)
 	// ResumeGetNetworkConfigurationDiagnostic - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeGetNetworkConfigurationDiagnostic(token string) (NetworkConfigurationDiagnosticResponsePoller, error)
@@ -63,7 +69,8 @@ type NetworkWatchersOperations interface {
 	List(ctx context.Context, resourceGroupName string, options *NetworkWatchersListOptions) (*NetworkWatcherListResultResponse, error)
 	// ListAll - Gets all network watchers by subscription.
 	ListAll(ctx context.Context, options *NetworkWatchersListAllOptions) (*NetworkWatcherListResultResponse, error)
-	// BeginListAvailableProviders - NOTE: This feature is currently in preview and still being tested for stability. Lists all available internet service providers for a specified Azure region.
+	// BeginListAvailableProviders - NOTE: This feature is currently in preview and still being tested for stability. Lists all
+	// available internet service providers for a specified Azure region.
 	BeginListAvailableProviders(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters AvailableProvidersListParameters, options *NetworkWatchersListAvailableProvidersOptions) (*AvailableProvidersListPollerResponse, error)
 	// ResumeListAvailableProviders - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeListAvailableProviders(token string) (AvailableProvidersListPoller, error)
@@ -130,7 +137,8 @@ func (client *NetworkWatchersClient) ResumeCheckConnectivity(token string) (Conn
 	}, nil
 }
 
-// CheckConnectivity - Verifies the possibility of establishing a direct TCP connection from a virtual machine to a given endpoint including another VM or an arbitrary remote server.
+// CheckConnectivity - Verifies the possibility of establishing a direct TCP connection from a virtual machine to a given
+// endpoint including another VM or an arbitrary remote server.
 func (client *NetworkWatchersClient) CheckConnectivity(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters ConnectivityParameters, options *NetworkWatchersCheckConnectivityOptions) (*azcore.Response, error) {
 	req, err := client.CheckConnectivityCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
@@ -392,7 +400,8 @@ func (client *NetworkWatchersClient) ResumeGetAzureReachabilityReport(token stri
 	}, nil
 }
 
-// GetAzureReachabilityReport - NOTE: This feature is currently in preview and still being tested for stability. Gets the relative latency score for internet service providers from a specified location to Azure regions.
+// GetAzureReachabilityReport - NOTE: This feature is currently in preview and still being tested for stability. Gets the
+// relative latency score for internet service providers from a specified location to Azure regions.
 func (client *NetworkWatchersClient) GetAzureReachabilityReport(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters AzureReachabilityReportParameters, options *NetworkWatchersGetAzureReachabilityReportOptions) (*azcore.Response, error) {
 	req, err := client.GetAzureReachabilityReportCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
@@ -556,7 +565,11 @@ func (client *NetworkWatchersClient) ResumeGetNetworkConfigurationDiagnostic(tok
 	}, nil
 }
 
-// GetNetworkConfigurationDiagnostic - Gets Network Configuration Diagnostic data to help customers understand and debug network behavior. It provides detailed information on what security rules were applied to a specified traffic flow and the result of evaluating these rules. Customers must provide details of a flow like source, destination, protocol, etc. The API returns whether traffic was allowed or denied, the rules evaluated for the specified flow and the evaluation results.
+// GetNetworkConfigurationDiagnostic - Gets Network Configuration Diagnostic data to help customers understand and debug network
+// behavior. It provides detailed information on what security rules were applied to a specified traffic flow and
+// the result of evaluating these rules. Customers must provide details of a flow like source, destination, protocol, etc.
+// The API returns whether traffic was allowed or denied, the rules evaluated for
+// the specified flow and the evaluation results.
 func (client *NetworkWatchersClient) GetNetworkConfigurationDiagnostic(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters NetworkConfigurationDiagnosticParameters, options *NetworkWatchersGetNetworkConfigurationDiagnosticOptions) (*azcore.Response, error) {
 	req, err := client.GetNetworkConfigurationDiagnosticCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
@@ -1119,7 +1132,8 @@ func (client *NetworkWatchersClient) ResumeListAvailableProviders(token string) 
 	}, nil
 }
 
-// ListAvailableProviders - NOTE: This feature is currently in preview and still being tested for stability. Lists all available internet service providers for a specified Azure region.
+// ListAvailableProviders - NOTE: This feature is currently in preview and still being tested for stability. Lists all available
+// internet service providers for a specified Azure region.
 func (client *NetworkWatchersClient) ListAvailableProviders(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters AvailableProvidersListParameters, options *NetworkWatchersListAvailableProvidersOptions) (*azcore.Response, error) {
 	req, err := client.ListAvailableProvidersCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {

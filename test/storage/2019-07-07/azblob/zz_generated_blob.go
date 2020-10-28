@@ -26,7 +26,8 @@ func (client *blobClient) Do(req *azcore.Request) (*azcore.Response, error) {
 	return client.p.Do(req)
 }
 
-// AbortCopyFromURL - The Abort Copy From URL operation aborts a pending Copy From URL operation, and leaves a destination blob with zero length and full metadata.
+// AbortCopyFromURL - The Abort Copy From URL operation aborts a pending Copy From URL operation, and leaves a destination
+// blob with zero length and full metadata.
 func (client *blobClient) AbortCopyFromURL(ctx context.Context, copyId string, blobAbortCopyFromUrlOptions *BlobAbortCopyFromURLOptions, leaseAccessConditions *LeaseAccessConditions) (*BlobAbortCopyFromURLResponse, error) {
 	req, err := client.AbortCopyFromURLCreateRequest(ctx, copyId, blobAbortCopyFromUrlOptions, leaseAccessConditions)
 	if err != nil {
@@ -409,7 +410,8 @@ func (client *blobClient) ChangeLeaseHandleError(resp *azcore.Response) error {
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// CopyFromURL - The Copy From URL operation copies a blob or an internet resource to a new blob. It will not return a response until the copy is complete.
+// CopyFromURL - The Copy From URL operation copies a blob or an internet resource to a new blob. It will not return a response
+// until the copy is complete.
 func (client *blobClient) CopyFromURL(ctx context.Context, copySource url.URL, blobCopyFromUrlOptions *BlobCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*BlobCopyFromURLResponse, error) {
 	req, err := client.CopyFromURLCreateRequest(ctx, copySource, blobCopyFromUrlOptions, sourceModifiedAccessConditions, modifiedAccessConditions, leaseAccessConditions)
 	if err != nil {
@@ -672,7 +674,17 @@ func (client *blobClient) CreateSnapshotHandleError(resp *azcore.Response) error
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// Delete - If the storage account's soft delete feature is disabled then, when a blob is deleted, it is permanently removed from the storage account. If the storage account's soft delete feature is enabled, then, when a blob is deleted, it is marked for deletion and becomes inaccessible immediately. However, the blob service retains the blob or snapshot for the number of days specified by the DeleteRetentionPolicy section of [Storage service properties] (Set-Blob-Service-Properties.md). After the specified number of days has passed, the blob's data is permanently removed from the storage account. Note that you continue to be charged for the soft-deleted blob's storage until it is permanently removed. Use the List Blobs API and specify the "include=deleted" query parameter to discover which blobs and snapshots have been soft deleted. You can then use the Undelete Blob API to restore a soft-deleted blob. All other operations on a soft-deleted blob or snapshot causes the service to return an HTTP status code of 404 (ResourceNotFound).
+// Delete - If the storage account's soft delete feature is disabled then, when a blob is deleted, it is permanently removed
+// from the storage account. If the storage account's soft delete feature is enabled,
+// then, when a blob is deleted, it is marked for deletion and becomes inaccessible immediately. However, the blob service
+// retains the blob or snapshot for the number of days specified by the
+// DeleteRetentionPolicy section of [Storage service properties] (Set-Blob-Service-Properties.md). After the specified number
+// of days has passed, the blob's data is permanently removed from the storage
+// account. Note that you continue to be charged for the soft-deleted blob's storage until it is permanently removed. Use
+// the List Blobs API and specify the "include=deleted" query parameter to discover
+// which blobs and snapshots have been soft deleted. You can then use the Undelete Blob API to restore a soft-deleted blob.
+// All other operations on a soft-deleted blob or snapshot causes the service to
+// return an HTTP status code of 404 (ResourceNotFound).
 func (client *blobClient) Delete(ctx context.Context, blobDeleteOptions *BlobDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*BlobDeleteResponse, error) {
 	req, err := client.DeleteCreateRequest(ctx, blobDeleteOptions, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
@@ -763,7 +775,8 @@ func (client *blobClient) DeleteHandleError(resp *azcore.Response) error {
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// Download - The Download operation reads or downloads a blob from the system, including its metadata and properties. You can also call Download to read a snapshot.
+// Download - The Download operation reads or downloads a blob from the system, including its metadata and properties. You
+// can also call Download to read a snapshot.
 func (client *blobClient) Download(ctx context.Context, blobDownloadOptions *BlobDownloadOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (*BlobDownloadResponse, error) {
 	req, err := client.DownloadCreateRequest(ctx, blobDownloadOptions, leaseAccessConditions, cpkInfo, modifiedAccessConditions)
 	if err != nil {
@@ -1179,7 +1192,8 @@ func (client *blobClient) GetAccountInfoHandleError(resp *azcore.Response) error
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// GetProperties - The Get Properties operation returns all user-defined metadata, standard HTTP properties, and system properties for the blob. It does not return the content of the blob.
+// GetProperties - The Get Properties operation returns all user-defined metadata, standard HTTP properties, and system properties
+// for the blob. It does not return the content of the blob.
 func (client *blobClient) GetProperties(ctx context.Context, blobGetPropertiesOptions *BlobGetPropertiesOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (*BlobGetPropertiesResponse, error) {
 	req, err := client.GetPropertiesCreateRequest(ctx, blobGetPropertiesOptions, leaseAccessConditions, cpkInfo, modifiedAccessConditions)
 	if err != nil {
@@ -1520,7 +1534,12 @@ func (client *blobClient) ReleaseLeaseHandleError(resp *azcore.Response) error {
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// Rename - Rename a blob/file.  By default, the destination is overwritten and if the destination already exists and has a lease the lease is broken.  This operation supports conditional HTTP requests.  For more information, see [Specifying Conditional Headers for Blob Service Operations](https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations).  To fail if the destination already exists, use a conditional request with If-None-Match: "*".
+// Rename - Rename a blob/file. By default, the destination is overwritten and if the destination already exists and has a
+// lease the lease is broken. This operation supports conditional HTTP requests. For more
+// information, see Specifying Conditional Headers for Blob Service Operations [https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations
+// [https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations]].
+// To fail if the destination already exists, use a conditional request with
+// If-None-Match: "*".
 func (client *blobClient) Rename(ctx context.Context, renameSource string, blobRenameOptions *BlobRenameOptions, directoryHttpHeaders *DirectoryHttpHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*BlobRenameResponse, error) {
 	req, err := client.RenameCreateRequest(ctx, renameSource, blobRenameOptions, directoryHttpHeaders, leaseAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
@@ -1989,7 +2008,8 @@ func (client *blobClient) SetHTTPHeadersHandleError(resp *azcore.Response) error
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// SetMetadata - The Set Blob Metadata operation sets user-defined metadata for the specified blob as one or more name-value pairs
+// SetMetadata - The Set Blob Metadata operation sets user-defined metadata for the specified blob as one or more name-value
+// pairs
 func (client *blobClient) SetMetadata(ctx context.Context, blobSetMetadataOptions *BlobSetMetadataOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*BlobSetMetadataResponse, error) {
 	req, err := client.SetMetadataCreateRequest(ctx, blobSetMetadataOptions, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
@@ -2115,7 +2135,10 @@ func (client *blobClient) SetMetadataHandleError(resp *azcore.Response) error {
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// SetTier - The Set Tier operation sets the tier on a blob. The operation is allowed on a page blob in a premium storage account and on a block blob in a blob storage account (locally redundant storage only). A premium page blob's tier determines the allowed size, IOPS, and bandwidth of the blob. A block blob's tier determines Hot/Cool/Archive storage type. This operation does not update the blob's ETag.
+// SetTier - The Set Tier operation sets the tier on a blob. The operation is allowed on a page blob in a premium storage
+// account and on a block blob in a blob storage account (locally redundant storage only). A
+// premium page blob's tier determines the allowed size, IOPS, and bandwidth of the blob. A block blob's tier determines Hot/Cool/Archive
+// storage type. This operation does not update the blob's ETag.
 func (client *blobClient) SetTier(ctx context.Context, tier AccessTier, blobSetTierOptions *BlobSetTierOptions, leaseAccessConditions *LeaseAccessConditions) (*BlobSetTierResponse, error) {
 	req, err := client.SetTierCreateRequest(ctx, tier, blobSetTierOptions, leaseAccessConditions)
 	if err != nil {

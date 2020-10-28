@@ -15,9 +15,11 @@ import (
 
 // ExpressRoutePortsLocationsOperations contains the methods for the ExpressRoutePortsLocations group.
 type ExpressRoutePortsLocationsOperations interface {
-	// Get - Retrieves a single ExpressRoutePort peering location, including the list of available bandwidths available at said peering location.
+	// Get - Retrieves a single ExpressRoutePort peering location, including the list of available bandwidths available at said
+	// peering location.
 	Get(ctx context.Context, locationName string, options *ExpressRoutePortsLocationsGetOptions) (*ExpressRoutePortsLocationResponse, error)
-	// List - Retrieves all ExpressRoutePort peering locations. Does not return available bandwidths for each location. Available bandwidths can only be obtained when retrieving a specific peering location.
+	// List - Retrieves all ExpressRoutePort peering locations. Does not return available bandwidths for each location. Available
+	// bandwidths can only be obtained when retrieving a specific peering location.
 	List(options *ExpressRoutePortsLocationsListOptions) ExpressRoutePortsLocationListResultPager
 }
 
@@ -38,7 +40,8 @@ func (client *ExpressRoutePortsLocationsClient) Do(req *azcore.Request) (*azcore
 	return client.p.Do(req)
 }
 
-// Get - Retrieves a single ExpressRoutePort peering location, including the list of available bandwidths available at said peering location.
+// Get - Retrieves a single ExpressRoutePort peering location, including the list of available bandwidths available at said
+// peering location.
 func (client *ExpressRoutePortsLocationsClient) Get(ctx context.Context, locationName string, options *ExpressRoutePortsLocationsGetOptions) (*ExpressRoutePortsLocationResponse, error) {
 	req, err := client.GetCreateRequest(ctx, locationName, options)
 	if err != nil {
@@ -89,7 +92,8 @@ func (client *ExpressRoutePortsLocationsClient) GetHandleError(resp *azcore.Resp
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// List - Retrieves all ExpressRoutePort peering locations. Does not return available bandwidths for each location. Available bandwidths can only be obtained when retrieving a specific peering location.
+// List - Retrieves all ExpressRoutePort peering locations. Does not return available bandwidths for each location. Available
+// bandwidths can only be obtained when retrieving a specific peering location.
 func (client *ExpressRoutePortsLocationsClient) List(options *ExpressRoutePortsLocationsListOptions) ExpressRoutePortsLocationListResultPager {
 	return &expressRoutePortsLocationListResultPager{
 		pipeline: client.p,

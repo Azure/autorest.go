@@ -215,7 +215,7 @@ function generateOperation(op: Operation, imports: ImportManager): string {
   const clientName = op.language.go!.clientName;
   let text = '';
   if (hasDescription(op.language.go!)) {
-    text += `// ${op.language.go!.name} - ${op.language.go!.description} \n`;
+    text += comment(`${op.language.go!.name} - ${op.language.go!.description}`) + '\n';
   }
   if (isMultiRespOperation(op)) {
     text += generateMultiRespComment(op);
@@ -819,7 +819,7 @@ function createInterfaceDefinition(group: OperationGroup, imports: ImportManager
       imports.addImportForSchemaType(param.schema);
     }
     if (hasDescription(op.language.go!)) {
-      interfaceText += `\t// ${opName} - ${op.language.go!.description} \n`;
+      interfaceText += '\t' + comment(`${opName} - ${op.language.go!.description}`) + '\n';
     }
     if (isMultiRespOperation(op)) {
       interfaceText += generateMultiRespComment(op);

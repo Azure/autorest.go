@@ -18,7 +18,8 @@ import (
 
 // VirtualMachineSizesOperations contains the methods for the VirtualMachineSizes group.
 type VirtualMachineSizesOperations interface {
-	// List - This API is deprecated. Use [Resources Skus](https://docs.microsoft.com/en-us/rest/api/compute/resourceskus/list)
+	// List - This API is deprecated. Use Resources Skus [https://docs.microsoft.com/en-us/rest/api/compute/resourceskus/list
+	// [https://docs.microsoft.com/en-us/rest/api/compute/resourceskus/list]]
 	List(ctx context.Context, location string, options *VirtualMachineSizesListOptions) (*VirtualMachineSizeListResultResponse, error)
 }
 
@@ -39,7 +40,8 @@ func (client *VirtualMachineSizesClient) Do(req *azcore.Request) (*azcore.Respon
 	return client.p.Do(req)
 }
 
-// List - This API is deprecated. Use [Resources Skus](https://docs.microsoft.com/en-us/rest/api/compute/resourceskus/list)
+// List - This API is deprecated. Use Resources Skus [https://docs.microsoft.com/en-us/rest/api/compute/resourceskus/list
+// [https://docs.microsoft.com/en-us/rest/api/compute/resourceskus/list]]
 func (client *VirtualMachineSizesClient) List(ctx context.Context, location string, options *VirtualMachineSizesListOptions) (*VirtualMachineSizeListResultResponse, error) {
 	req, err := client.ListCreateRequest(ctx, location, options)
 	if err != nil {

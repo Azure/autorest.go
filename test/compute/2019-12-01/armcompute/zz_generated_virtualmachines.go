@@ -21,19 +21,27 @@ import (
 
 // VirtualMachinesOperations contains the methods for the VirtualMachines group.
 type VirtualMachinesOperations interface {
-	// BeginCapture - Captures the VM by copying virtual hard disks of the VM and outputs a template that can be used to create similar VMs.
+	// BeginCapture - Captures the VM by copying virtual hard disks of the VM and outputs a template that can be used to create
+	// similar VMs.
 	BeginCapture(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineCaptureParameters, options *VirtualMachinesCaptureOptions) (*VirtualMachineCaptureResultPollerResponse, error)
 	// ResumeCapture - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeCapture(token string) (VirtualMachineCaptureResultPoller, error)
-	// BeginConvertToManagedDisks - Converts virtual machine disks from blob-based to managed disks. Virtual machine must be stop-deallocated before invoking this operation. <br>For Windows, please refer to [Convert a virtual machine from unmanaged disks to managed disks.](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/convert-unmanaged-to-managed-disks).<br>For Linux, please refer to [Convert a virtual machine from unmanaged disks to managed disks.](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/convert-unmanaged-to-managed-disks).
+	// BeginConvertToManagedDisks - Converts virtual machine disks from blob-based to managed disks. Virtual machine must be stop-deallocated
+	// before invoking this operation. For Windows, please refer to Convert a virtual machine from
+	// unmanaged disks to managed disks. [https://docs.microsoft.com/en-us/azure/virtual-machines/windows/convert-unmanaged-to-managed-disks
+	// [https://docs.microsoft.com/en-us/azure/virtual-machines/windows/convert-unmanaged-to-managed-disks]]. For Linux, please
+	// refer to Convert a virtual machine from unmanaged disks to managed disks. [
+	// https://docs.microsoft.com/en-us/azure/virtual-machines/linux/convert-unmanaged-to-managed-disks [https://docs.microsoft.com/en-us/azure/virtual-machines/linux/convert-unmanaged-to-managed-disks]].
 	BeginConvertToManagedDisks(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesConvertToManagedDisksOptions) (*HTTPPollerResponse, error)
 	// ResumeConvertToManagedDisks - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeConvertToManagedDisks(token string) (HTTPPoller, error)
-	// BeginCreateOrUpdate - The operation to create or update a virtual machine. Please note some properties can be set only during virtual machine creation.
+	// BeginCreateOrUpdate - The operation to create or update a virtual machine. Please note some properties can be set only
+	// during virtual machine creation.
 	BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachine, options *VirtualMachinesCreateOrUpdateOptions) (*VirtualMachinePollerResponse, error)
 	// ResumeCreateOrUpdate - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeCreateOrUpdate(token string) (VirtualMachinePoller, error)
-	// BeginDeallocate - Shuts down the virtual machine and releases the compute resources. You are not billed for the compute resources that this virtual machine uses.
+	// BeginDeallocate - Shuts down the virtual machine and releases the compute resources. You are not billed for the compute
+	// resources that this virtual machine uses.
 	BeginDeallocate(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesDeallocateOptions) (*HTTPPollerResponse, error)
 	// ResumeDeallocate - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeDeallocate(token string) (HTTPPoller, error)
@@ -41,25 +49,33 @@ type VirtualMachinesOperations interface {
 	BeginDelete(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesDeleteOptions) (*HTTPPollerResponse, error)
 	// ResumeDelete - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeDelete(token string) (HTTPPoller, error)
-	// Generalize - Sets the OS state of the virtual machine to generalized. It is recommended to sysprep the virtual machine before performing this operation. <br>For Windows, please refer to [Create a managed image of a generalized VM in Azure](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/capture-image-resource).<br>For Linux, please refer to [How to create an image of a virtual machine or VHD](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/capture-image).
+	// Generalize - Sets the OS state of the virtual machine to generalized. It is recommended to sysprep the virtual machine
+	// before performing this operation. For Windows, please refer to Create a managed image of a
+	// generalized VM in Azure [https://docs.microsoft.com/en-us/azure/virtual-machines/windows/capture-image-resource [https://docs.microsoft.com/en-us/azure/virtual-machines/windows/capture-image-resource]
+	// ]. For Linux, please refer to How to create an image of a virtual machine or VHD [https://docs.microsoft.com/en-us/azure/virtual-machines/linux/capture-image
+	// [https://docs.microsoft.com/en-us/azure/virtual-machines/linux/capture-image]].
 	Generalize(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesGeneralizeOptions) (*http.Response, error)
 	// Get - Retrieves information about the model view or the instance view of a virtual machine.
 	Get(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesGetOptions) (*VirtualMachineResponse, error)
 	// InstanceView - Retrieves information about the run-time state of a virtual machine.
 	InstanceView(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesInstanceViewOptions) (*VirtualMachineInstanceViewResponse, error)
-	// List - Lists all of the virtual machines in the specified resource group. Use the nextLink property in the response to get the next page of virtual machines.
+	// List - Lists all of the virtual machines in the specified resource group. Use the nextLink property in the response to
+	// get the next page of virtual machines.
 	List(resourceGroupName string, options *VirtualMachinesListOptions) VirtualMachineListResultPager
-	// ListAll - Lists all of the virtual machines in the specified subscription. Use the nextLink property in the response to get the next page of virtual machines.
+	// ListAll - Lists all of the virtual machines in the specified subscription. Use the nextLink property in the response to
+	// get the next page of virtual machines.
 	ListAll(options *VirtualMachinesListAllOptions) VirtualMachineListResultPager
 	// ListAvailableSizes - Lists all available virtual machine sizes to which the specified virtual machine can be resized.
 	ListAvailableSizes(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesListAvailableSizesOptions) (*VirtualMachineSizeListResultResponse, error)
 	// ListByLocation - Gets all the virtual machines under the specified subscription for the specified location.
 	ListByLocation(location string, options *VirtualMachinesListByLocationOptions) VirtualMachineListResultPager
-	// BeginPerformMaintenance - Shuts down the virtual machine, moves it to an already updated node, and powers it back on during the self-service phase of planned maintenance.
+	// BeginPerformMaintenance - Shuts down the virtual machine, moves it to an already updated node, and powers it back on during
+	// the self-service phase of planned maintenance.
 	BeginPerformMaintenance(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesPerformMaintenanceOptions) (*HTTPPollerResponse, error)
 	// ResumePerformMaintenance - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumePerformMaintenance(token string) (HTTPPoller, error)
-	// BeginPowerOff - The operation to power off (stop) a virtual machine. The virtual machine can be restarted with the same provisioned resources. You are still charged for this virtual machine.
+	// BeginPowerOff - The operation to power off (stop) a virtual machine. The virtual machine can be restarted with the same
+	// provisioned resources. You are still charged for this virtual machine.
 	BeginPowerOff(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesPowerOffOptions) (*HTTPPollerResponse, error)
 	// ResumePowerOff - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumePowerOff(token string) (HTTPPoller, error)
@@ -83,7 +99,8 @@ type VirtualMachinesOperations interface {
 	BeginRunCommand(ctx context.Context, resourceGroupName string, vmName string, parameters RunCommandInput, options *VirtualMachinesRunCommandOptions) (*RunCommandResultPollerResponse, error)
 	// ResumeRunCommand - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeRunCommand(token string) (RunCommandResultPoller, error)
-	// SimulateEviction - The operation to simulate the eviction of spot virtual machine. The eviction will occur within 30 minutes of calling the API
+	// SimulateEviction - The operation to simulate the eviction of spot virtual machine. The eviction will occur within 30 minutes
+	// of calling the API
 	SimulateEviction(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesSimulateEvictionOptions) (*http.Response, error)
 	// BeginStart - The operation to start a virtual machine.
 	BeginStart(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesStartOptions) (*HTTPPollerResponse, error)
@@ -146,7 +163,8 @@ func (client *VirtualMachinesClient) ResumeCapture(token string) (VirtualMachine
 	}, nil
 }
 
-// Capture - Captures the VM by copying virtual hard disks of the VM and outputs a template that can be used to create similar VMs.
+// Capture - Captures the VM by copying virtual hard disks of the VM and outputs a template that can be used to create similar
+// VMs.
 func (client *VirtualMachinesClient) Capture(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineCaptureParameters, options *VirtualMachinesCaptureOptions) (*azcore.Response, error) {
 	req, err := client.CaptureCreateRequest(ctx, resourceGroupName, vmName, parameters, options)
 	if err != nil {
@@ -231,7 +249,12 @@ func (client *VirtualMachinesClient) ResumeConvertToManagedDisks(token string) (
 	}, nil
 }
 
-// ConvertToManagedDisks - Converts virtual machine disks from blob-based to managed disks. Virtual machine must be stop-deallocated before invoking this operation. <br>For Windows, please refer to [Convert a virtual machine from unmanaged disks to managed disks.](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/convert-unmanaged-to-managed-disks).<br>For Linux, please refer to [Convert a virtual machine from unmanaged disks to managed disks.](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/convert-unmanaged-to-managed-disks).
+// ConvertToManagedDisks - Converts virtual machine disks from blob-based to managed disks. Virtual machine must be stop-deallocated
+// before invoking this operation. For Windows, please refer to Convert a virtual machine from
+// unmanaged disks to managed disks. [https://docs.microsoft.com/en-us/azure/virtual-machines/windows/convert-unmanaged-to-managed-disks
+// [https://docs.microsoft.com/en-us/azure/virtual-machines/windows/convert-unmanaged-to-managed-disks]]. For Linux, please
+// refer to Convert a virtual machine from unmanaged disks to managed disks. [
+// https://docs.microsoft.com/en-us/azure/virtual-machines/linux/convert-unmanaged-to-managed-disks [https://docs.microsoft.com/en-us/azure/virtual-machines/linux/convert-unmanaged-to-managed-disks]].
 func (client *VirtualMachinesClient) ConvertToManagedDisks(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesConvertToManagedDisksOptions) (*azcore.Response, error) {
 	req, err := client.ConvertToManagedDisksCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
@@ -309,7 +332,8 @@ func (client *VirtualMachinesClient) ResumeCreateOrUpdate(token string) (Virtual
 	}, nil
 }
 
-// CreateOrUpdate - The operation to create or update a virtual machine. Please note some properties can be set only during virtual machine creation.
+// CreateOrUpdate - The operation to create or update a virtual machine. Please note some properties can be set only during
+// virtual machine creation.
 func (client *VirtualMachinesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachine, options *VirtualMachinesCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, vmName, parameters, options)
 	if err != nil {
@@ -394,7 +418,8 @@ func (client *VirtualMachinesClient) ResumeDeallocate(token string) (HTTPPoller,
 	}, nil
 }
 
-// Deallocate - Shuts down the virtual machine and releases the compute resources. You are not billed for the compute resources that this virtual machine uses.
+// Deallocate - Shuts down the virtual machine and releases the compute resources. You are not billed for the compute resources
+// that this virtual machine uses.
 func (client *VirtualMachinesClient) Deallocate(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesDeallocateOptions) (*azcore.Response, error) {
 	req, err := client.DeallocateCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
@@ -516,7 +541,11 @@ func (client *VirtualMachinesClient) DeleteHandleError(resp *azcore.Response) er
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-// Generalize - Sets the OS state of the virtual machine to generalized. It is recommended to sysprep the virtual machine before performing this operation. <br>For Windows, please refer to [Create a managed image of a generalized VM in Azure](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/capture-image-resource).<br>For Linux, please refer to [How to create an image of a virtual machine or VHD](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/capture-image).
+// Generalize - Sets the OS state of the virtual machine to generalized. It is recommended to sysprep the virtual machine
+// before performing this operation. For Windows, please refer to Create a managed image of a
+// generalized VM in Azure [https://docs.microsoft.com/en-us/azure/virtual-machines/windows/capture-image-resource [https://docs.microsoft.com/en-us/azure/virtual-machines/windows/capture-image-resource]
+// ]. For Linux, please refer to How to create an image of a virtual machine or VHD [https://docs.microsoft.com/en-us/azure/virtual-machines/linux/capture-image
+// [https://docs.microsoft.com/en-us/azure/virtual-machines/linux/capture-image]].
 func (client *VirtualMachinesClient) Generalize(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesGeneralizeOptions) (*http.Response, error) {
 	req, err := client.GeneralizeCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
@@ -673,7 +702,8 @@ func (client *VirtualMachinesClient) InstanceViewHandleError(resp *azcore.Respon
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-// List - Lists all of the virtual machines in the specified resource group. Use the nextLink property in the response to get the next page of virtual machines.
+// List - Lists all of the virtual machines in the specified resource group. Use the nextLink property in the response to
+// get the next page of virtual machines.
 func (client *VirtualMachinesClient) List(resourceGroupName string, options *VirtualMachinesListOptions) VirtualMachineListResultPager {
 	return &virtualMachineListResultPager{
 		pipeline: client.p,
@@ -723,7 +753,8 @@ func (client *VirtualMachinesClient) ListHandleError(resp *azcore.Response) erro
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-// ListAll - Lists all of the virtual machines in the specified subscription. Use the nextLink property in the response to get the next page of virtual machines.
+// ListAll - Lists all of the virtual machines in the specified subscription. Use the nextLink property in the response to
+// get the next page of virtual machines.
 func (client *VirtualMachinesClient) ListAll(options *VirtualMachinesListAllOptions) VirtualMachineListResultPager {
 	return &virtualMachineListResultPager{
 		pipeline: client.p,
@@ -914,7 +945,8 @@ func (client *VirtualMachinesClient) ResumePerformMaintenance(token string) (HTT
 	}, nil
 }
 
-// PerformMaintenance - Shuts down the virtual machine, moves it to an already updated node, and powers it back on during the self-service phase of planned maintenance.
+// PerformMaintenance - Shuts down the virtual machine, moves it to an already updated node, and powers it back on during
+// the self-service phase of planned maintenance.
 func (client *VirtualMachinesClient) PerformMaintenance(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesPerformMaintenanceOptions) (*azcore.Response, error) {
 	req, err := client.PerformMaintenanceCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
@@ -992,7 +1024,8 @@ func (client *VirtualMachinesClient) ResumePowerOff(token string) (HTTPPoller, e
 	}, nil
 }
 
-// PowerOff - The operation to power off (stop) a virtual machine. The virtual machine can be restarted with the same provisioned resources. You are still charged for this virtual machine.
+// PowerOff - The operation to power off (stop) a virtual machine. The virtual machine can be restarted with the same provisioned
+// resources. You are still charged for this virtual machine.
 func (client *VirtualMachinesClient) PowerOff(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesPowerOffOptions) (*azcore.Response, error) {
 	req, err := client.PowerOffCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
@@ -1437,7 +1470,8 @@ func (client *VirtualMachinesClient) RunCommandHandleError(resp *azcore.Response
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-// SimulateEviction - The operation to simulate the eviction of spot virtual machine. The eviction will occur within 30 minutes of calling the API
+// SimulateEviction - The operation to simulate the eviction of spot virtual machine. The eviction will occur within 30 minutes
+// of calling the API
 func (client *VirtualMachinesClient) SimulateEviction(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesSimulateEvictionOptions) (*http.Response, error) {
 	req, err := client.SimulateEvictionCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {

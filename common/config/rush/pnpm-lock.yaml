@@ -8,12 +8,15 @@ dependencies:
   '@azure-tools/tasks': 3.0.248
   '@microsoft.azure/autorest.testserver': 2.10.60
   '@rush-temp/go': 'file:projects/go.tgz'
+  '@ts-stack/markdown': 1.3.0
+  '@types/html-to-text': 5.1.2
   '@types/js-yaml': 3.12.1
   '@types/mocha': 5.2.5
   '@types/node': 12.7.2
   '@typescript-eslint/eslint-plugin': 2.6.1_0f9de35efc14b47ab036222a817af3e8
   '@typescript-eslint/parser': 2.6.1_eslint@6.6.0+typescript@3.7.5
   eslint: 6.6.0
+  html-to-text: 5.1.1
   js-yaml: 3.13.1
   mocha: 5.2.0
   mocha-typescript: 1.1.17
@@ -155,6 +158,12 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-pXkKHmGLlfOHnKcwDsNDbjqnxhM2RWwunCnjWEBcjXVYm+Vqvo1FxcpBeaGEXzKVOzLeqZQGWCGAjBaXv3DCAw==
+  /@ts-stack/markdown/1.3.0:
+    dependencies:
+      tslib: 2.0.3
+    dev: false
+    resolution:
+      integrity: sha512-pyDQYwl9/JyWSMt9uYuuetPq+Z1AYcNOxiv+Io7BrbRGJAq431/Ob7bo0BEJQ9bx1zglp+kB5u9qvylS0PZe8A==
   /@types/babel-types/7.0.8:
     dev: false
     resolution:
@@ -173,6 +182,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-OCutwjDZ4aFS6PB1UZ988C4YgwlBHJd6wCeQqaLdmadZ/7e+w79+hbMUFC1QXDNCmdyoRfAFdm0RypzwR+Qpag==
+  /@types/html-to-text/5.1.2:
+    dev: false
+    resolution:
+      integrity: sha512-56PHFwRe18fmZ+UsN6GqUaoKfalOwFzxaBMRA2O5URde3d5mxdH1HvnIV7LSugCiO8JWlRdSL2L3xJXykCTKVg==
   /@types/js-yaml/3.12.1:
     dev: false
     resolution:
@@ -902,6 +915,34 @@ packages:
     dev: false
     resolution:
       integrity: sha1-6oCxBqh1OHdOijpKWv4pPeSJ4Kk=
+  /dom-serializer/0.2.2:
+    dependencies:
+      domelementtype: 2.0.2
+      entities: 2.1.0
+    dev: false
+    resolution:
+      integrity: sha512-2/xPb3ORsQ42nHYiSunXkDjPLBaEj/xTwUO4B7XCZQTRk7EBtTOPaygh10YAAh2OI1Qrp6NWfpAhzswj0ydt9g==
+  /domelementtype/1.3.1:
+    dev: false
+    resolution:
+      integrity: sha512-BSKB+TSpMpFI/HOxCNr1O8aMOTZ8hT3pM3GQ0w/mWRmkhEDSFJkkyzz4XQsBV44BChwGkrDfMyjVD0eA2aFV3w==
+  /domelementtype/2.0.2:
+    dev: false
+    resolution:
+      integrity: sha512-wFwTwCVebUrMgGeAwRL/NhZtHAUyT9n9yg4IMDwf10+6iCMxSkVq9MGCVEH+QZWo1nNidy8kNvwmv4zWHDTqvA==
+  /domhandler/2.4.2:
+    dependencies:
+      domelementtype: 1.3.1
+    dev: false
+    resolution:
+      integrity: sha512-JiK04h0Ht5u/80fdLMCEmV4zkNh2BcoMFBmZ/91WtYZ8qVXSKjiw7fXMgFPnHcSZgOo3XdinHvmnDUeMf5R4wA==
+  /domutils/1.7.0:
+    dependencies:
+      dom-serializer: 0.2.2
+      domelementtype: 1.3.1
+    dev: false
+    resolution:
+      integrity: sha512-Lgd2XcJ/NjEw+7tFvfKxOzCYKZsdct5lczQ2ZaQY8Djz7pfAD3Gbp8ySJWtreII/vDlMVmxwa6pHmdxIYgttDg==
   /ecc-jsbn/0.1.2:
     dependencies:
       jsbn: 0.1.1
@@ -972,6 +1013,14 @@ packages:
       node: '>=8.0.0'
     resolution:
       integrity: sha512-b4Q85dFkGw+TqgytGPrGgACRUhsdKc9S9ErRAXpPGy/CXKs4tYoHDkvIRdsseAF7NjfVwjRFIn6KTnbw7LwJZg==
+  /entities/1.1.2:
+    dev: false
+    resolution:
+      integrity: sha512-f2LZMYl1Fzu7YSBKg+RoROelpOaNrcGmE9AZubeDfrCEia483oW4MI4VyFd5VNHIgQ/7qm1I0wUHK1eJnn2y2w==
+  /entities/2.1.0:
+    dev: false
+    resolution:
+      integrity: sha512-hCx1oky9PFrJ611mf0ifBLBRW8lUUVRlFolb5gWRfIELabBlbp9xZvrqZLZAs+NxFnbfQoeGd8wDkygjg7U85w==
   /escape-html/1.0.3:
     dev: false
     resolution:
@@ -1399,6 +1448,34 @@ packages:
     hasBin: true
     resolution:
       integrity: sha1-k0EP0hsAlzUVH4howvJx80J+I/0=
+  /he/1.2.0:
+    dev: false
+    hasBin: true
+    resolution:
+      integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==
+  /html-to-text/5.1.1:
+    dependencies:
+      he: 1.2.0
+      htmlparser2: 3.10.1
+      lodash: 4.17.19
+      minimist: 1.2.5
+    dev: false
+    engines:
+      node: '>= 4.0.0'
+    hasBin: true
+    resolution:
+      integrity: sha512-Bci6bD/JIfZSvG4s0gW/9mMKwBRoe/1RWLxUME/d6WUSZCdY7T60bssf/jFf7EYXRyqU4P5xdClVqiYU0/ypdA==
+  /htmlparser2/3.10.1:
+    dependencies:
+      domelementtype: 1.3.1
+      domhandler: 2.4.2
+      domutils: 1.7.0
+      entities: 1.1.2
+      inherits: 2.0.4
+      readable-stream: 3.6.0
+    dev: false
+    resolution:
+      integrity: sha512-IgieNijUMbkDovyoKObU1DUhm1iwNYE/fuifEoEHfd1oZKZDaONBSkal7Y01shxsM49R4XaMdGez3WnF9UfiCQ==
   /http-errors/1.7.2:
     dependencies:
       depd: 1.1.2
@@ -2823,6 +2900,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-i/6DQjL8Xf3be4K/E6Wgpekn5Qasl1usyw++dAA35Ue5orEn65VIxOA+YvNNl9HV3qv70T7CNwjODHZrLwvd1Q==
+  /tslib/2.0.3:
+    dev: false
+    resolution:
+      integrity: sha512-uZtkfKblCEQtZKBF6EBXVZeQNl82yqtDQdv+eck8u7tdPxjLu2/lp5/uPW+um2tpuxINHWy3GhiccY7QgEaVHQ==
   /tsutils/3.17.1_typescript@3.7.5:
     dependencies:
       tslib: 1.13.0
@@ -3131,12 +3212,15 @@ packages:
       '@azure-tools/linq': 3.1.257
       '@azure-tools/tasks': 3.0.248
       '@microsoft.azure/autorest.testserver': 2.10.60
+      '@ts-stack/markdown': 1.3.0
+      '@types/html-to-text': 5.1.2
       '@types/js-yaml': 3.12.1
       '@types/mocha': 5.2.5
       '@types/node': 12.7.2
       '@typescript-eslint/eslint-plugin': 2.6.1_0f9de35efc14b47ab036222a817af3e8
       '@typescript-eslint/parser': 2.6.1_eslint@6.6.0+typescript@3.7.5
       eslint: 6.6.0
+      html-to-text: 5.1.1
       js-yaml: 3.13.1
       mocha: 5.2.0
       mocha-typescript: 1.1.17
@@ -3145,7 +3229,7 @@ packages:
     dev: false
     name: '@rush-temp/go'
     resolution:
-      integrity: sha512-UOoshZgFqHzLg9o1ynH7ddjR0ToqQzXuywosCLpm1CAQK75c+a8/Twy4KZBv3ywOTKQlua4Apx97f6ZcYUGITQ==
+      integrity: sha512-Rw2z9HdV0kHctQ46j0u4CeCVp2ISLK7NE68sEf6HUOJHYdSvqLID+Gv1MowUoFe4LPO7wfrf6Mg5pE7DVu/WUQ==
       tarball: 'file:projects/go.tgz'
     version: 0.0.0
 registry: ''
@@ -3159,12 +3243,15 @@ specifiers:
   '@azure-tools/tasks': ~3.0.0
   '@microsoft.azure/autorest.testserver': 2.10.60
   '@rush-temp/go': 'file:./projects/go.tgz'
+  '@ts-stack/markdown': ^1.3.0
+  '@types/html-to-text': ^5.1.2
   '@types/js-yaml': 3.12.1
   '@types/mocha': 5.2.5
   '@types/node': 12.7.2
   '@typescript-eslint/eslint-plugin': ~2.6.0
   '@typescript-eslint/parser': ~2.6.0
   eslint: ~6.6.0
+  html-to-text: ^5.1.1
   js-yaml: 3.13.1
   mocha: 5.2.0
   mocha-typescript: 1.1.17

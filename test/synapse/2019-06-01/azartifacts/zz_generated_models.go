@@ -3194,7 +3194,7 @@ func (a *AzureDatabricksLinkedServiceTypeProperties) UnmarshalJSON(data []byte) 
 	return nil
 }
 
-// The resource model definition for a Azure Resource Manager resource with an etag.
+// The resource model definition for an Azure Resource Manager resource with an etag.
 type AzureEntityResource struct {
 	Resource
 	// Resource Etag.
@@ -6493,8 +6493,9 @@ type CassandraTableDatasetTypeProperties struct {
 }
 
 // Trigger that allows the referenced pipeline to depend on other pipeline runs based on runDimension Name/Value pairs. Upstream
-// pipelines should declare the same runDimension Name and their runs should have the values for those runDimensions. The
-// referenced pipeline run would be triggered if the values for the runDimension match for all upstream pipeline runs.
+// pipelines should declare the same runDimension Name and their runs should
+// have the values for those runDimensions. The referenced pipeline run would be triggered if the values for the runDimension
+// match for all upstream pipeline runs.
 type ChainingTrigger struct {
 	Trigger
 	// Pipeline for which runs are created when all upstream pipelines complete successfully.
@@ -12023,7 +12024,8 @@ func (e ErrorContract) Error() string {
 	return msg
 }
 
-// The resource management error response.
+// Common error response for all Azure Resource Manager APIs to return error details for failed operations. (This also follows
+// the OData error response format.)
 type ErrorResponse struct {
 	// The error additional info.
 	AdditionalInfo *[]ErrorAdditionalInfo `json:"additionalInfo,omitempty" azure:"ro"`
@@ -20351,9 +20353,20 @@ func (n *NotebookMetadata) UnmarshalJSON(data []byte) error {
 
 // Notebook resource type.
 type NotebookResource struct {
-	AzureEntityResource
+	// Resource Etag.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+
+	// Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// The name of the resource
+	Name *string `json:"name,omitempty"`
+
 	// Properties of Notebook.
 	Properties *Notebook `json:"properties,omitempty"`
+
+	// The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // NotebookResourcePollerResponse is the response envelope for operations that asynchronously return a NotebookResource type.
@@ -23258,7 +23271,7 @@ type PrivateLinkServiceConnectionState struct {
 	Status *PrivateLinkServiceConnectionStateStatus `json:"status,omitempty"`
 }
 
-// The resource model definition for a ARM proxy resource. It will have everything other than required location and tags
+// The resource model definition for a Azure Resource Manager proxy resource. It will not have tags and a location
 type ProxyResource struct {
 	Resource
 }
@@ -23714,7 +23727,8 @@ func (r *RedirectIncompatibleRowSettings) UnmarshalJSON(data []byte) error {
 }
 
 // The Amazon S3 settings needed for the interim Amazon S3 when copying from Amazon Redshift with unload. With this, data
-// from Amazon Redshift source will be unloaded into S3 first and then copied into the targeted sink from the interim S3.
+// from Amazon Redshift source will be unloaded into S3 first and then copied into
+// the targeted sink from the interim S3.
 type RedshiftUnloadSettings struct {
 	// The bucket of the interim Amazon S3 which will be used to store the unloaded data from Amazon Redshift source. The bucket
 	// must be in the same region as the Amazon Redshift source. Type: string (or Expression with resultType string).
@@ -23999,14 +24013,15 @@ func (r *RerunTumblingWindowTriggerTypeProperties) UnmarshalJSON(data []byte) er
 	return nil
 }
 
+// Common fields that are returned in the response for all Azure Resource Manager resources
 type Resource struct {
-	// Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	// Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string `json:"id,omitempty" azure:"ro"`
 
 	// The name of the resource
 	Name *string `json:"name,omitempty" azure:"ro"`
 
-	// The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
+	// The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
@@ -25535,9 +25550,20 @@ func (s *SQLScriptMetadata) UnmarshalJSON(data []byte) error {
 
 // Sql Script resource type.
 type SQLScriptResource struct {
-	AzureEntityResource
+	// Resource Etag.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+
+	// Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// The name of the resource
+	Name *string `json:"name,omitempty"`
+
 	// Properties of sql script.
 	Properties *SQLScript `json:"properties,omitempty"`
+
+	// The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // SQLScriptResourceResponse is the response envelope for operations that return a SQLScriptResource type.
@@ -31929,7 +31955,7 @@ func (t *TextFormat) UnmarshalJSON(data []byte) error {
 	return t.DatasetStorageFormat.unmarshalInternal(rawMsg)
 }
 
-// The resource model definition for a ARM tracked top level resource
+// The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'
 type TrackedResource struct {
 	Resource
 	// The geo-location where the resource lives
@@ -33196,7 +33222,8 @@ func (w *WebBasicAuthentication) UnmarshalJSON(data []byte) error {
 }
 
 // A WebLinkedService that uses client certificate based authentication to communicate with an HTTP endpoint. This scheme
-// follows mutual authentication; the server must also provide valid credentials to the client.
+// follows mutual authentication; the server must also provide valid credentials to
+// the client.
 type WebClientCertificateAuthentication struct {
 	WebLinkedServiceTypeProperties
 	// Password for the PFX file.

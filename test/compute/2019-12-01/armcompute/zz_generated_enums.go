@@ -281,20 +281,13 @@ func (c DiffDiskPlacement) ToPtr() *DiffDiskPlacement {
 type DiskCreateOption string
 
 const (
-	// DiskCreateOptionAttach - Disk will be attached to a VM.
-	DiskCreateOptionAttach DiskCreateOption = "Attach"
-	// DiskCreateOptionCopy - Create a new disk or snapshot by copying from a disk or snapshot specified by the given sourceResourceId.
-	DiskCreateOptionCopy DiskCreateOption = "Copy"
-	// DiskCreateOptionEmpty - Create an empty data disk of a size given by diskSizeGB.
-	DiskCreateOptionEmpty DiskCreateOption = "Empty"
-	// DiskCreateOptionFromImage - Create a new disk from a platform image specified by the given imageReference or galleryImageReference.
-	DiskCreateOptionFromImage DiskCreateOption = "FromImage"
-	// DiskCreateOptionImport - Create a disk by importing from a blob specified by a sourceUri in a storage account specified by storageAccountId.
-	DiskCreateOptionImport DiskCreateOption = "Import"
-	// DiskCreateOptionRestore - Create a new disk by copying from a backup recovery point.
-	DiskCreateOptionRestore DiskCreateOption = "Restore"
-	// DiskCreateOptionUpload - Create a new disk by obtaining a write token and using it to directly upload the contents of the disk.
-	DiskCreateOptionUpload DiskCreateOption = "Upload"
+// Disk will be attached to a VM.	DiskCreateOptionAttach DiskCreateOption = "Attach"
+// Create a new disk or snapshot by copying from a disk or snapshot specified by the given sourceResourceId.	DiskCreateOptionCopy DiskCreateOption = "Copy"
+// Create an empty data disk of a size given by diskSizeGB.	DiskCreateOptionEmpty DiskCreateOption = "Empty"
+// Create a new disk from a platform image specified by the given imageReference or galleryImageReference.	DiskCreateOptionFromImage DiskCreateOption = "FromImage"
+// Create a disk by importing from a blob specified by a sourceUri in a storage account specified by storageAccountId.	DiskCreateOptionImport DiskCreateOption = "Import"
+// Create a new disk by copying from a backup recovery point.	DiskCreateOptionRestore DiskCreateOption = "Restore"
+// Create a new disk by obtaining a write token and using it to directly upload the contents of the disk.	DiskCreateOptionUpload DiskCreateOption = "Upload"
 )
 
 func PossibleDiskCreateOptionValues() []DiskCreateOption {
@@ -355,18 +348,12 @@ func (c DiskEncryptionSetIDentityType) ToPtr() *DiskEncryptionSetIDentityType {
 type DiskState string
 
 const (
-	// DiskStateActiveSas - The disk currently has an Active SAS Uri associated with it.
-	DiskStateActiveSas DiskState = "ActiveSAS"
-	// DiskStateActiveUpload - A disk is created for upload and a write token has been issued for uploading to it.
-	DiskStateActiveUpload DiskState = "ActiveUpload"
-	// DiskStateAttached - The disk is currently mounted to a running VM.
-	DiskStateAttached DiskState = "Attached"
-	// DiskStateReadyToUpload - A disk is ready to be created by upload by requesting a write token.
-	DiskStateReadyToUpload DiskState = "ReadyToUpload"
-	// DiskStateReserved - The disk is mounted to a stopped-deallocated VM
-	DiskStateReserved DiskState = "Reserved"
-	// DiskStateUnattached - The disk is not being used and can be attached to a VM.
-	DiskStateUnattached DiskState = "Unattached"
+// The disk currently has an Active SAS Uri associated with it.	DiskStateActiveSas DiskState = "ActiveSAS"
+// A disk is created for upload and a write token has been issued for uploading to it.	DiskStateActiveUpload DiskState = "ActiveUpload"
+// The disk is currently mounted to a running VM.	DiskStateAttached DiskState = "Attached"
+// A disk is ready to be created by upload by requesting a write token.	DiskStateReadyToUpload DiskState = "ReadyToUpload"
+// The disk is mounted to a stopped-deallocated VM	DiskStateReserved DiskState = "Reserved"
+// The disk is not being used and can be attached to a VM.	DiskStateUnattached DiskState = "Unattached"
 )
 
 func PossibleDiskStateValues() []DiskState {
@@ -388,14 +375,11 @@ func (c DiskState) ToPtr() *DiskState {
 type DiskStorageAccountTypes string
 
 const (
-	// DiskStorageAccountTypesPremiumLrs - Premium SSD locally redundant storage. Best for production and performance sensitive workloads.
-	DiskStorageAccountTypesPremiumLrs DiskStorageAccountTypes = "Premium_LRS"
-	// DiskStorageAccountTypesStandardLrs - Standard HDD locally redundant storage. Best for backup, non-critical, and infrequent access.
-	DiskStorageAccountTypesStandardLrs DiskStorageAccountTypes = "Standard_LRS"
-	// DiskStorageAccountTypesStandardSsdlrs - Standard SSD locally redundant storage. Best for web servers, lightly used enterprise applications and dev/test.
-	DiskStorageAccountTypesStandardSsdlrs DiskStorageAccountTypes = "StandardSSD_LRS"
-	// DiskStorageAccountTypesUltraSsdlrs - Ultra SSD locally redundant storage. Best for IO-intensive workloads such as SAP HANA, top tier databases (for example, SQL, Oracle), and other transaction-heavy workloads.
-	DiskStorageAccountTypesUltraSsdlrs DiskStorageAccountTypes = "UltraSSD_LRS"
+// Premium SSD locally redundant storage. Best for production and performance sensitive workloads.	DiskStorageAccountTypesPremiumLrs DiskStorageAccountTypes = "Premium_LRS"
+// Standard HDD locally redundant storage. Best for backup, non-critical, and infrequent access.	DiskStorageAccountTypesStandardLrs DiskStorageAccountTypes = "Standard_LRS"
+// Standard SSD locally redundant storage. Best for web servers, lightly used enterprise applications and dev/test.	DiskStorageAccountTypesStandardSsdlrs DiskStorageAccountTypes = "StandardSSD_LRS"
+// Ultra SSD locally redundant storage. Best for IO-intensive workloads such as SAP HANA, top tier databases (for example,
+// SQL, Oracle), and other transaction-heavy workloads.	DiskStorageAccountTypesUltraSsdlrs DiskStorageAccountTypes = "UltraSSD_LRS"
 )
 
 func PossibleDiskStorageAccountTypesValues() []DiskStorageAccountTypes {
@@ -415,10 +399,8 @@ func (c DiskStorageAccountTypes) ToPtr() *DiskStorageAccountTypes {
 type EncryptionType string
 
 const (
-	// EncryptionTypeEncryptionAtRestWithCustomerKey - Disk is encrypted with Customer managed key at rest.
-	EncryptionTypeEncryptionAtRestWithCustomerKey EncryptionType = "EncryptionAtRestWithCustomerKey"
-	// EncryptionTypeEncryptionAtRestWithPlatformKey - Disk is encrypted with XStore managed key at rest. It is the default encryption type.
-	EncryptionTypeEncryptionAtRestWithPlatformKey EncryptionType = "EncryptionAtRestWithPlatformKey"
+// Disk is encrypted with Customer managed key at rest.	EncryptionTypeEncryptionAtRestWithCustomerKey EncryptionType = "EncryptionAtRestWithCustomerKey"
+// Disk is encrypted with XStore managed key at rest. It is the default encryption type.	EncryptionTypeEncryptionAtRestWithPlatformKey EncryptionType = "EncryptionAtRestWithPlatformKey"
 )
 
 func PossibleEncryptionTypeValues() []EncryptionType {
@@ -708,10 +690,8 @@ func (c MaintenanceOperationResultCodeTypes) ToPtr() *MaintenanceOperationResult
 type OperatingSystemStateTypes string
 
 const (
-	// OperatingSystemStateTypesGeneralized - Generalized image. Needs to be provisioned during deployment time.
-	OperatingSystemStateTypesGeneralized OperatingSystemStateTypes = "Generalized"
-	// OperatingSystemStateTypesSpecialized - Specialized image. Contains already provisioned OS Disk.
-	OperatingSystemStateTypesSpecialized OperatingSystemStateTypes = "Specialized"
+// Generalized image. Needs to be provisioned during deployment time.	OperatingSystemStateTypesGeneralized OperatingSystemStateTypes = "Generalized"
+// Specialized image. Contains already provisioned OS Disk.	OperatingSystemStateTypesSpecialized OperatingSystemStateTypes = "Specialized"
 )
 
 func PossibleOperatingSystemStateTypesValues() []OperatingSystemStateTypes {
@@ -1025,12 +1005,9 @@ func (c SettingNames) ToPtr() *SettingNames {
 type SnapshotStorageAccountTypes string
 
 const (
-	// SnapshotStorageAccountTypesPremiumLrs - Premium SSD locally redundant storage
-	SnapshotStorageAccountTypesPremiumLrs SnapshotStorageAccountTypes = "Premium_LRS"
-	// SnapshotStorageAccountTypesStandardLrs - Standard HDD locally redundant storage
-	SnapshotStorageAccountTypesStandardLrs SnapshotStorageAccountTypes = "Standard_LRS"
-	// SnapshotStorageAccountTypesStandardZrs - Standard zone redundant storage
-	SnapshotStorageAccountTypesStandardZrs SnapshotStorageAccountTypes = "Standard_ZRS"
+// Premium SSD locally redundant storage	SnapshotStorageAccountTypesPremiumLrs SnapshotStorageAccountTypes = "Premium_LRS"
+// Standard HDD locally redundant storage	SnapshotStorageAccountTypesStandardLrs SnapshotStorageAccountTypes = "Standard_LRS"
+// Standard zone redundant storage	SnapshotStorageAccountTypesStandardZrs SnapshotStorageAccountTypes = "Standard_ZRS"
 )
 
 func PossibleSnapshotStorageAccountTypesValues() []SnapshotStorageAccountTypes {

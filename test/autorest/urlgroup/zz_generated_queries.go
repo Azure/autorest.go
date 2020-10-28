@@ -21,15 +21,20 @@ type QueriesOperations interface {
 	ArrayStringCSVEmpty(ctx context.Context, options *QueriesArrayStringCSVEmptyOptions) (*http.Response, error)
 	// ArrayStringCSVNull - Get a null array of string using the csv-array format
 	ArrayStringCSVNull(ctx context.Context, options *QueriesArrayStringCSVNullOptions) (*http.Response, error)
-	// ArrayStringCSVValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
+	// ArrayStringCSVValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array
+	// format
 	ArrayStringCSVValid(ctx context.Context, options *QueriesArrayStringCSVValidOptions) (*http.Response, error)
-	// ArrayStringNoCollectionFormatEmpty - Array query has no defined collection format, should default to csv. Pass in ['hello', 'nihao', 'bonjour'] for the 'arrayQuery' parameter to the service
+	// ArrayStringNoCollectionFormatEmpty - Array query has no defined collection format, should default to csv. Pass in ['hello',
+	// 'nihao', 'bonjour'] for the 'arrayQuery' parameter to the service
 	ArrayStringNoCollectionFormatEmpty(ctx context.Context, options *QueriesArrayStringNoCollectionFormatEmptyOptions) (*http.Response, error)
-	// ArrayStringPipesValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the pipes-array format
+	// ArrayStringPipesValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the pipes-array
+	// format
 	ArrayStringPipesValid(ctx context.Context, options *QueriesArrayStringPipesValidOptions) (*http.Response, error)
-	// ArrayStringSsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the ssv-array format
+	// ArrayStringSsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the ssv-array
+	// format
 	ArrayStringSsvValid(ctx context.Context, options *QueriesArrayStringSsvValidOptions) (*http.Response, error)
-	// ArrayStringTsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the tsv-array format
+	// ArrayStringTsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the tsv-array
+	// format
 	ArrayStringTsvValid(ctx context.Context, options *QueriesArrayStringTsvValidOptions) (*http.Response, error)
 	// ByteEmpty - Get '' as byte array
 	ByteEmpty(ctx context.Context, options *QueriesByteEmptyOptions) (*http.Response, error)
@@ -187,7 +192,8 @@ func (client *QueriesClient) ArrayStringCSVNullHandleError(resp *azcore.Response
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// ArrayStringCSVValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
+// ArrayStringCSVValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array
+// format
 func (client *QueriesClient) ArrayStringCSVValid(ctx context.Context, options *QueriesArrayStringCSVValidOptions) (*http.Response, error) {
 	req, err := client.ArrayStringCSVValidCreateRequest(ctx, options)
 	if err != nil {
@@ -228,7 +234,8 @@ func (client *QueriesClient) ArrayStringCSVValidHandleError(resp *azcore.Respons
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// ArrayStringNoCollectionFormatEmpty - Array query has no defined collection format, should default to csv. Pass in ['hello', 'nihao', 'bonjour'] for the 'arrayQuery' parameter to the service
+// ArrayStringNoCollectionFormatEmpty - Array query has no defined collection format, should default to csv. Pass in ['hello',
+// 'nihao', 'bonjour'] for the 'arrayQuery' parameter to the service
 func (client *QueriesClient) ArrayStringNoCollectionFormatEmpty(ctx context.Context, options *QueriesArrayStringNoCollectionFormatEmptyOptions) (*http.Response, error) {
 	req, err := client.ArrayStringNoCollectionFormatEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -269,7 +276,8 @@ func (client *QueriesClient) ArrayStringNoCollectionFormatEmptyHandleError(resp 
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// ArrayStringPipesValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the pipes-array format
+// ArrayStringPipesValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the pipes-array
+// format
 func (client *QueriesClient) ArrayStringPipesValid(ctx context.Context, options *QueriesArrayStringPipesValidOptions) (*http.Response, error) {
 	req, err := client.ArrayStringPipesValidCreateRequest(ctx, options)
 	if err != nil {
@@ -310,7 +318,8 @@ func (client *QueriesClient) ArrayStringPipesValidHandleError(resp *azcore.Respo
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// ArrayStringSsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the ssv-array format
+// ArrayStringSsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the ssv-array
+// format
 func (client *QueriesClient) ArrayStringSsvValid(ctx context.Context, options *QueriesArrayStringSsvValidOptions) (*http.Response, error) {
 	req, err := client.ArrayStringSsvValidCreateRequest(ctx, options)
 	if err != nil {
@@ -351,7 +360,8 @@ func (client *QueriesClient) ArrayStringSsvValidHandleError(resp *azcore.Respons
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// ArrayStringTsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the tsv-array format
+// ArrayStringTsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the tsv-array
+// format
 func (client *QueriesClient) ArrayStringTsvValid(ctx context.Context, options *QueriesArrayStringTsvValidOptions) (*http.Response, error) {
 	req, err := client.ArrayStringTsvValidCreateRequest(ctx, options)
 	if err != nil {

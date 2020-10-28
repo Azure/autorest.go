@@ -167,7 +167,11 @@ func (client *pageBlobClient) ClearPagesHandleError(resp *azcore.Response) error
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// CopyIncremental - The Copy Incremental operation copies a snapshot of the source page blob to a destination page blob. The snapshot is copied such that only the differential changes between the previously copied snapshot are transferred to the destination. The copied snapshots are complete copies of the original snapshot and can be read or copied from as usual. This API is supported since REST version 2016-05-31.
+// CopyIncremental - The Copy Incremental operation copies a snapshot of the source page blob to a destination page blob.
+// The snapshot is copied such that only the differential changes between the previously copied
+// snapshot are transferred to the destination. The copied snapshots are complete copies of the original snapshot and can
+// be read or copied from as usual. This API is supported since REST version
+// 2016-05-31.
 func (client *pageBlobClient) CopyIncremental(ctx context.Context, copySource url.URL, pageBlobCopyIncrementalOptions *PageBlobCopyIncrementalOptions, modifiedAccessConditions *ModifiedAccessConditions) (*PageBlobCopyIncrementalResponse, error) {
 	req, err := client.CopyIncrementalCreateRequest(ctx, copySource, pageBlobCopyIncrementalOptions, modifiedAccessConditions)
 	if err != nil {
@@ -426,7 +430,8 @@ func (client *pageBlobClient) CreateHandleError(resp *azcore.Response) error {
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// GetPageRanges - The Get Page Ranges operation returns the list of valid page ranges for a page blob or snapshot of a page blob
+// GetPageRanges - The Get Page Ranges operation returns the list of valid page ranges for a page blob or snapshot of a page
+// blob
 func (client *pageBlobClient) GetPageRanges(ctx context.Context, pageBlobGetPageRangesOptions *PageBlobGetPageRangesOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*PageListResponse, error) {
 	req, err := client.GetPageRangesCreateRequest(ctx, pageBlobGetPageRangesOptions, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
@@ -535,7 +540,8 @@ func (client *pageBlobClient) GetPageRangesHandleError(resp *azcore.Response) er
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// GetPageRangesDiff - The Get Page Ranges Diff operation returns the list of valid page ranges for a page blob that were changed between target blob and previous snapshot.
+// GetPageRangesDiff - The Get Page Ranges Diff operation returns the list of valid page ranges for a page blob that were
+// changed between target blob and previous snapshot.
 func (client *pageBlobClient) GetPageRangesDiff(ctx context.Context, pageBlobGetPageRangesDiffOptions *PageBlobGetPageRangesDiffOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*PageListResponse, error) {
 	req, err := client.GetPageRangesDiffCreateRequest(ctx, pageBlobGetPageRangesDiffOptions, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
@@ -1035,7 +1041,8 @@ func (client *pageBlobClient) UploadPagesHandleError(resp *azcore.Response) erro
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// UploadPagesFromURL - The Upload Pages operation writes a range of pages to a page blob where the contents are read from a URL
+// UploadPagesFromURL - The Upload Pages operation writes a range of pages to a page blob where the contents are read from
+// a URL
 func (client *pageBlobClient) UploadPagesFromURL(ctx context.Context, sourceUrl url.URL, sourceRange string, contentLength int64, rangeParameter string, pageBlobUploadPagesFromUrlOptions *PageBlobUploadPagesFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sequenceNumberAccessConditions *SequenceNumberAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*PageBlobUploadPagesFromURLResponse, error) {
 	req, err := client.UploadPagesFromURLCreateRequest(ctx, sourceUrl, sourceRange, contentLength, rangeParameter, pageBlobUploadPagesFromUrlOptions, cpkInfo, cpkScopeInfo, leaseAccessConditions, sequenceNumberAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
