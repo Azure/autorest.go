@@ -41,14 +41,6 @@ async function process(session: Session<CodeModel>) {
   session.model.language.go!.headAsBoolean = headAsBoolean;
   processOperationRequests(session);
   processOperationResponses(session);
-  // parse operation comments that are in Markdown to convert them to plain text
-  for (const group of values(session.model.operationGroups)) {
-    for (const op of values(group.operations)) {
-      if (op.language.go!.description) {
-        op.language.go!.description = parseComments(op.language.go!.description);
-      }
-    }
-  }
   // fix up dictionary element types (additional properties)
   // this must happen before processing objects as we depend on the
   // schema type being an actual Go type.
@@ -1090,7 +1082,7 @@ function getEnumForDiscriminatorValue(discValue: string, enums: Array<ChoiceValu
 }
 
 // convert comments that are in Markdown to html and then to plain text
-export function parseComments(comment: string): string {
+function parseComments(comment: string): string {
   let converter = new Converter();
   converter.setOption('tables', true);
   let html = converter.makeHtml(comment);
