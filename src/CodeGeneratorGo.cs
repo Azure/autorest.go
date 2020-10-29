@@ -186,7 +186,7 @@ namespace AutoRest.Go
             }
         }
 
-        private const string information = "https://github.com/Azure/azure-rest-api-specs/blob/master/documentation/samplefiles/readme.go.md";
+        private const string information = "https://github.com/Azure/azure-rest-api-specs/blob/master/documentation/code-gen/configure-go-sdk.md";
 
         private const string previewSubDir = "/preview/";
 
