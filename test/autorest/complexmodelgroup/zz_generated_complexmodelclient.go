@@ -17,8 +17,8 @@ import (
 type ComplexModelClientOperations interface {
 	// Create - Resets products.
 	Create(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogDictionaryOfArray, options *ComplexModelClientCreateOptions) (*CatalogDictionaryResponse, error)
-	// List - The Products endpoint returns information about the Uber products offered at a given location. The response includes
-	// the display name and other details about each product, and lists the products in
+	// List - The Products endpoint returns information about the Uber products offered at a given location. The response includes the display name and other
+	// details about each product, and lists the products in
 	// the proper display order.
 	List(ctx context.Context, resourceGroupName string, options *ComplexModelClientListOptions) (*CatalogArrayResponse, error)
 	// Update - Resets products.

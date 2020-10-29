@@ -314,10 +314,10 @@ func (c *ContainerProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 	return nil
 }
 
-// CORS is an HTTP feature that enables a web application running under one domain to access resources in another domain.
-// Web browsers implement a security restriction known as same-origin policy that
-// prevents a web page from calling APIs in a different domain; CORS provides a secure way to allow one domain (the origin
-// domain) to call APIs in another domain
+// CORS is an HTTP feature that enables a web application running under one domain to access resources in another domain. Web browsers implement a security
+// restriction known as same-origin policy that
+// prevents a web page from calling APIs in a different domain; CORS provides a secure way to allow one domain (the origin domain) to call APIs in another
+// domain
 type CorsRule struct {
 	// the request headers that the origin domain may specify on the CORS request.
 	AllowedHeaders *string `xml:"AllowedHeaders"`
@@ -325,10 +325,10 @@ type CorsRule struct {
 	// The methods (HTTP request verbs) that the origin domain may use for a CORS request. (comma separated)
 	AllowedMethods *string `xml:"AllowedMethods"`
 
-	// The origin domains that are permitted to make a request against the storage service via CORS. The origin domain is the
-	// domain from which the request originates. Note that the origin must be an exact
-	// case-sensitive match with the origin that the user age sends to the service. You can also use the wildcard character '*'
-	// to allow all origin domains to make requests via CORS.
+	// The origin domains that are permitted to make a request against the storage service via CORS. The origin domain is the domain from which the request
+	// originates. Note that the origin must be an exact
+	// case-sensitive match with the origin that the user age sends to the service. You can also use the wildcard character '*' to allow all origin domains
+	// to make requests via CORS.
 	AllowedOrigins *string `xml:"AllowedOrigins"`
 
 	// The response headers that may be sent in the response to the CORS request and exposed by the browser to the request issuer
@@ -466,8 +466,7 @@ type ObjectWithXMSTextPropertyResponse struct {
 
 // the retention policy
 type RetentionPolicy struct {
-	// Indicates the number of days that metrics or logging or soft-deleted data should be retained. All data older than this
-	// value will be deleted
+	// Indicates the number of days that metrics or logging or soft-deleted data should be retained. All data older than this value will be deleted
 	Days *int32 `xml:"Days"`
 
 	// Indicates whether a retention policy is enabled for the storage service
@@ -569,8 +568,8 @@ type StorageServiceProperties struct {
 	// The set of CORS rules.
 	Cors *[]CorsRule `xml:"Cors>CorsRule"`
 
-	// The default version to use for requests to the Blob service if an incoming request's version is not specified. Possible
-	// values include version 2008-10-27 and all more recent versions
+	// The default version to use for requests to the Blob service if an incoming request's version is not specified. Possible values include version 2008-10-27
+	// and all more recent versions
 	DefaultServiceVersion *string `xml:"DefaultServiceVersion"`
 
 	// The Delete Retention Policy for the service

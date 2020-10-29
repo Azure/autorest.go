@@ -26,8 +26,7 @@ type AvailabilitySetsOperations interface {
 	Get(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsGetOptions) (*AvailabilitySetResponse, error)
 	// List - Lists all availability sets in a resource group.
 	List(resourceGroupName string, options *AvailabilitySetsListOptions) AvailabilitySetListResultPager
-	// ListAvailableSizes - Lists all available virtual machine sizes that can be used to create a new virtual machine in an existing
-	// availability set.
+	// ListAvailableSizes - Lists all available virtual machine sizes that can be used to create a new virtual machine in an existing availability set.
 	ListAvailableSizes(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsListAvailableSizesOptions) (*VirtualMachineSizeListResultResponse, error)
 	// ListBySubscription - Lists all availability sets in a subscription.
 	ListBySubscription(options *AvailabilitySetsListBySubscriptionOptions) AvailabilitySetListResultPager

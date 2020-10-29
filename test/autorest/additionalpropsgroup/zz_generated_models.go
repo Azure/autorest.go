@@ -181,8 +181,7 @@ func (p *PetApInPropertiesWithApstring) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// PetApInPropertiesWithApstringResponse is the response envelope for operations that return a PetApInPropertiesWithApstring
-// type.
+// PetApInPropertiesWithApstringResponse is the response envelope for operations that return a PetApInPropertiesWithApstring type.
 type PetApInPropertiesWithApstringResponse struct {
 	PetApInPropertiesWithApstring *PetApInPropertiesWithApstring
 
@@ -438,8 +437,7 @@ type PetsCreateApInPropertiesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PetsCreateApInPropertiesWithApstringOptions contains the optional parameters for the Pets.CreateApInPropertiesWithApstring
-// method.
+// PetsCreateApInPropertiesWithApstringOptions contains the optional parameters for the Pets.CreateApInPropertiesWithApstring method.
 type PetsCreateApInPropertiesWithApstringOptions struct {
 	// placeholder for future optional parameters
 }

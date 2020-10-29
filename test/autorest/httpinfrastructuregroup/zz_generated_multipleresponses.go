@@ -19,8 +19,7 @@ type MultipleResponsesOperations interface {
 	// Get200Model201ModelDefaultError200Valid - Send a 200 response with valid payload: {'statusCode': '200'}
 	// Possible return types are *MyExceptionResponse, *BResponse
 	Get200Model201ModelDefaultError200Valid(ctx context.Context, options *MultipleResponsesGet200Model201ModelDefaultError200ValidOptions) (interface{}, error)
-	// Get200Model201ModelDefaultError201Valid - Send a 201 response with valid payload: {'statusCode': '201', 'textStatusCode':
-	// 'Created'}
+	// Get200Model201ModelDefaultError201Valid - Send a 201 response with valid payload: {'statusCode': '201', 'textStatusCode': 'Created'}
 	// Possible return types are *MyExceptionResponse, *BResponse
 	Get200Model201ModelDefaultError201Valid(ctx context.Context, options *MultipleResponsesGet200Model201ModelDefaultError201ValidOptions) (interface{}, error)
 	// Get200Model201ModelDefaultError400Valid - Send a 400 response with valid payload: {'code': '400', 'message': 'client error'}
@@ -34,13 +33,11 @@ type MultipleResponsesOperations interface {
 	Get200Model204NoModelDefaultError202None(ctx context.Context, options *MultipleResponsesGet200Model204NoModelDefaultError202NoneOptions) (*MyExceptionResponse, error)
 	// Get200Model204NoModelDefaultError204Valid - Send a 204 response with no payload
 	Get200Model204NoModelDefaultError204Valid(ctx context.Context, options *MultipleResponsesGet200Model204NoModelDefaultError204ValidOptions) (*MyExceptionResponse, error)
-	// Get200Model204NoModelDefaultError400Valid - Send a 400 response with valid error payload: {'status': 400, 'message': 'client
-	// error'}
+	// Get200Model204NoModelDefaultError400Valid - Send a 400 response with valid error payload: {'status': 400, 'message': 'client error'}
 	Get200Model204NoModelDefaultError400Valid(ctx context.Context, options *MultipleResponsesGet200Model204NoModelDefaultError400ValidOptions) (*MyExceptionResponse, error)
 	// Get200ModelA200Invalid - Send a 200 response with invalid payload {'statusCodeInvalid': '200'}
 	Get200ModelA200Invalid(ctx context.Context, options *MultipleResponsesGet200ModelA200InvalidOptions) (*MyExceptionResponse, error)
-	// Get200ModelA200None - Send a 200 response with no payload, when a payload is expected - client should return a null object
-	// of thde type for model A
+	// Get200ModelA200None - Send a 200 response with no payload, when a payload is expected - client should return a null object of thde type for model A
 	Get200ModelA200None(ctx context.Context, options *MultipleResponsesGet200ModelA200NoneOptions) (*MyExceptionResponse, error)
 	// Get200ModelA200Valid - Send a 200 response with payload {'statusCode': '200'}
 	Get200ModelA200Valid(ctx context.Context, options *MultipleResponsesGet200ModelA200ValidOptions) (*MyExceptionResponse, error)
@@ -50,8 +47,7 @@ type MultipleResponsesOperations interface {
 	// Get200ModelA201ModelC404ModelDDefaultError201Valid - Send a 200 response with valid payload: {'httpCode': '201'}
 	// Possible return types are *MyExceptionResponse, *CResponse, *DResponse
 	Get200ModelA201ModelC404ModelDDefaultError201Valid(ctx context.Context, options *MultipleResponsesGet200ModelA201ModelC404ModelDDefaultError201ValidOptions) (interface{}, error)
-	// Get200ModelA201ModelC404ModelDDefaultError400Valid - Send a 400 response with valid payload: {'code': '400', 'message':
-	// 'client error'}
+	// Get200ModelA201ModelC404ModelDDefaultError400Valid - Send a 400 response with valid payload: {'code': '400', 'message': 'client error'}
 	// Possible return types are *MyExceptionResponse, *CResponse, *DResponse
 	Get200ModelA201ModelC404ModelDDefaultError400Valid(ctx context.Context, options *MultipleResponsesGet200ModelA201ModelC404ModelDDefaultError400ValidOptions) (interface{}, error)
 	// Get200ModelA201ModelC404ModelDDefaultError404Valid - Send a 200 response with valid payload: {'httpStatusCode': '404'}

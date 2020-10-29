@@ -18,19 +18,19 @@ import (
 
 // DedicatedHostGroupsOperations contains the methods for the DedicatedHostGroups group.
 type DedicatedHostGroupsOperations interface {
-	// CreateOrUpdate - Create or update a dedicated host group. For details of Dedicated Host and Dedicated Host Groups please
-	// see [Dedicated Host Documentation] (https://go.microsoft.com/fwlink/?linkid=2082596
+	// CreateOrUpdate - Create or update a dedicated host group. For details of Dedicated Host and Dedicated Host Groups please see [Dedicated Host Documentation]
+	// (https://go.microsoft.com/fwlink/?linkid=2082596
 	// [https://go.microsoft.com/fwlink/?linkid=2082596][https://go.microsoft.com/fwlink/?linkid=2082596 [https://go.microsoft.com/fwlink/?linkid=2082596]])
 	CreateOrUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, parameters DedicatedHostGroup, options *DedicatedHostGroupsCreateOrUpdateOptions) (*DedicatedHostGroupResponse, error)
 	// Delete - Delete a dedicated host group.
 	Delete(ctx context.Context, resourceGroupName string, hostGroupName string, options *DedicatedHostGroupsDeleteOptions) (*http.Response, error)
 	// Get - Retrieves information about a dedicated host group.
 	Get(ctx context.Context, resourceGroupName string, hostGroupName string, options *DedicatedHostGroupsGetOptions) (*DedicatedHostGroupResponse, error)
-	// ListByResourceGroup - Lists all of the dedicated host groups in the specified resource group. Use the nextLink property
-	// in the response to get the next page of dedicated host groups.
+	// ListByResourceGroup - Lists all of the dedicated host groups in the specified resource group. Use the nextLink property in the response to get the next
+	// page of dedicated host groups.
 	ListByResourceGroup(resourceGroupName string, options *DedicatedHostGroupsListByResourceGroupOptions) DedicatedHostGroupListResultPager
-	// ListBySubscription - Lists all of the dedicated host groups in the subscription. Use the nextLink property in the response
-	// to get the next page of dedicated host groups.
+	// ListBySubscription - Lists all of the dedicated host groups in the subscription. Use the nextLink property in the response to get the next page of dedicated
+	// host groups.
 	ListBySubscription(options *DedicatedHostGroupsListBySubscriptionOptions) DedicatedHostGroupListResultPager
 	// Update - Update an dedicated host group.
 	Update(ctx context.Context, resourceGroupName string, hostGroupName string, parameters DedicatedHostGroupUpdate, options *DedicatedHostGroupsUpdateOptions) (*DedicatedHostGroupResponse, error)

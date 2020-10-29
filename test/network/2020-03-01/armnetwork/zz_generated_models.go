@@ -103,8 +103,7 @@ type ApplicationGatewayAvailableSslOptionsPropertiesFormat struct {
 	PredefinedPolicies *[]SubResource `json:"predefinedPolicies,omitempty"`
 }
 
-// ApplicationGatewayAvailableSslOptionsResponse is the response envelope for operations that return a ApplicationGatewayAvailableSslOptions
-// type.
+// ApplicationGatewayAvailableSslOptionsResponse is the response envelope for operations that return a ApplicationGatewayAvailableSslOptions type.
 type ApplicationGatewayAvailableSslOptionsResponse struct {
 	// Response for ApplicationGatewayAvailableSslOptions API service call.
 	ApplicationGatewayAvailableSslOptions *ApplicationGatewayAvailableSslOptions
@@ -239,8 +238,8 @@ type ApplicationGatewayBackendHTTPSettingsPropertiesFormat struct {
 	// The provisioning state of the backend HTTP settings resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
-	// Request timeout in seconds. Application Gateway will fail the request if response is not received within RequestTimeout.
-	// Acceptable values are from 1 second to 86400 seconds.
+	// Request timeout in seconds. Application Gateway will fail the request if response is not received within RequestTimeout. Acceptable values are from 1
+	// second to 86400 seconds.
 	RequestTimeout *int32 `json:"requestTimeout,omitempty"`
 
 	// Array of references to application gateway trusted root certificates.
@@ -271,8 +270,8 @@ type ApplicationGatewayBackendHealthOnDemand struct {
 	BackendHealthHTTPSettings *ApplicationGatewayBackendHealthHTTPSettings `json:"backendHealthHttpSettings,omitempty"`
 }
 
-// ApplicationGatewayBackendHealthOnDemandPollerResponse is the response envelope for operations that asynchronously return
-// a ApplicationGatewayBackendHealthOnDemand type.
+// ApplicationGatewayBackendHealthOnDemandPollerResponse is the response envelope for operations that asynchronously return a ApplicationGatewayBackendHealthOnDemand
+// type.
 type ApplicationGatewayBackendHealthOnDemandPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*ApplicationGatewayBackendHealthOnDemandResponse, error)
@@ -284,8 +283,7 @@ type ApplicationGatewayBackendHealthOnDemandPollerResponse struct {
 	RawResponse *http.Response
 }
 
-// ApplicationGatewayBackendHealthOnDemandResponse is the response envelope for operations that return a ApplicationGatewayBackendHealthOnDemand
-// type.
+// ApplicationGatewayBackendHealthOnDemandResponse is the response envelope for operations that return a ApplicationGatewayBackendHealthOnDemand type.
 type ApplicationGatewayBackendHealthOnDemandResponse struct {
 	// Result of on demand test probe.
 	ApplicationGatewayBackendHealthOnDemand *ApplicationGatewayBackendHealthOnDemand
@@ -294,8 +292,7 @@ type ApplicationGatewayBackendHealthOnDemandResponse struct {
 	RawResponse *http.Response
 }
 
-// ApplicationGatewayBackendHealthPollerResponse is the response envelope for operations that asynchronously return a ApplicationGatewayBackendHealth
-// type.
+// ApplicationGatewayBackendHealthPollerResponse is the response envelope for operations that asynchronously return a ApplicationGatewayBackendHealth type.
 type ApplicationGatewayBackendHealthPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*ApplicationGatewayBackendHealthResponse, error)
@@ -316,8 +313,7 @@ type ApplicationGatewayBackendHealthPool struct {
 	BackendHTTPSettingsCollection *[]ApplicationGatewayBackendHealthHTTPSettings `json:"backendHttpSettingsCollection,omitempty"`
 }
 
-// ApplicationGatewayBackendHealthResponse is the response envelope for operations that return a ApplicationGatewayBackendHealth
-// type.
+// ApplicationGatewayBackendHealthResponse is the response envelope for operations that return a ApplicationGatewayBackendHealth type.
 type ApplicationGatewayBackendHealthResponse struct {
 	// Response for ApplicationGatewayBackendHealth API service call.
 	ApplicationGatewayBackendHealth *ApplicationGatewayBackendHealth
@@ -341,8 +337,7 @@ type ApplicationGatewayBackendHealthServer struct {
 	IPConfiguration *NetworkInterfaceIPConfiguration `json:"ipConfiguration,omitempty"`
 }
 
-// Connection draining allows open connections to a backend server to be active for a specified time after the backend server
-// got removed from the configuration.
+// Connection draining allows open connections to a backend server to be active for a specified time after the backend server got removed from the configuration.
 type ApplicationGatewayConnectionDraining struct {
 	// The number of seconds connection draining is active. Acceptable values are from 1 second to 3600 seconds.
 	DrainTimeoutInSec *int32 `json:"drainTimeoutInSec,omitempty"`
@@ -377,8 +372,7 @@ type ApplicationGatewayFirewallExclusion struct {
 	// When matchVariable is a collection, operator used to specify which elements in the collection this exclusion applies to.
 	Selector *string `json:"selector,omitempty"`
 
-	// When matchVariable is a collection, operate on the selector to specify which elements in the collection this exclusion
-	// applies to.
+	// When matchVariable is a collection, operate on the selector to specify which elements in the collection this exclusion applies to.
 	SelectorMatchOperator *string `json:"selectorMatchOperator,omitempty"`
 }
 
@@ -576,8 +570,7 @@ type ApplicationGatewayListResult struct {
 	Value *[]ApplicationGateway `json:"value,omitempty"`
 }
 
-// ApplicationGatewayListResultResponse is the response envelope for operations that return a ApplicationGatewayListResult
-// type.
+// ApplicationGatewayListResultResponse is the response envelope for operations that return a ApplicationGatewayListResult type.
 type ApplicationGatewayListResultResponse struct {
 	// Response for ListApplicationGateways API service call.
 	ApplicationGatewayListResult *ApplicationGatewayListResult
@@ -609,8 +602,8 @@ type ApplicationGatewayOnDemandProbe struct {
 	// The protocol used for the probe.
 	Protocol *ApplicationGatewayProtocol `json:"protocol,omitempty"`
 
-	// The probe timeout in seconds. Probe marked as failed if valid response is not received with this timeout period. Acceptable
-	// values are from 1 second to 86400 seconds.
+	// The probe timeout in seconds. Probe marked as failed if valid response is not received with this timeout period. Acceptable values are from 1 second
+	// to 86400 seconds.
 	Timeout *int32 `json:"timeout,omitempty"`
 }
 
@@ -654,8 +647,7 @@ type ApplicationGatewayPathRulePropertiesFormat struct {
 	RewriteRuleSet *SubResource `json:"rewriteRuleSet,omitempty"`
 }
 
-// ApplicationGatewayPollerResponse is the response envelope for operations that asynchronously return a ApplicationGateway
-// type.
+// ApplicationGatewayPollerResponse is the response envelope for operations that asynchronously return a ApplicationGateway type.
 type ApplicationGatewayPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*ApplicationGatewayResponse, error)
@@ -697,8 +689,7 @@ type ApplicationGatewayProbePropertiesFormat struct {
 	// Host name to send the probe to.
 	Host *string `json:"host,omitempty"`
 
-	// The probing interval in seconds. This is the time interval between two consecutive probes. Acceptable values are from 1
-	// second to 86400 seconds.
+	// The probing interval in seconds. This is the time interval between two consecutive probes. Acceptable values are from 1 second to 86400 seconds.
 	Interval *int32 `json:"interval,omitempty"`
 
 	// Criterion for classifying a healthy probe response.
@@ -713,8 +704,8 @@ type ApplicationGatewayProbePropertiesFormat struct {
 	// Whether the host header should be picked from the backend http settings. Default value is false.
 	PickHostNameFromBackendHTTPSettings *bool `json:"pickHostNameFromBackendHttpSettings,omitempty"`
 
-	// Custom port which will be used for probing the backend servers. The valid value ranges from 1 to 65535. In case not set,
-	// port from http settings will be used. This property is valid for Standard_v2
+	// Custom port which will be used for probing the backend servers. The valid value ranges from 1 to 65535. In case not set, port from http settings will
+	// be used. This property is valid for Standard_v2
 	// and WAF_v2 only.
 	Port *int32 `json:"port,omitempty"`
 
@@ -724,12 +715,12 @@ type ApplicationGatewayProbePropertiesFormat struct {
 	// The provisioning state of the probe resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
-	// The probe timeout in seconds. Probe marked as failed if valid response is not received with this timeout period. Acceptable
-	// values are from 1 second to 86400 seconds.
+	// The probe timeout in seconds. Probe marked as failed if valid response is not received with this timeout period. Acceptable values are from 1 second
+	// to 86400 seconds.
 	Timeout *int32 `json:"timeout,omitempty"`
 
-	// The probe retry count. Backend server is marked down after consecutive probe failure count reaches UnhealthyThreshold.
-	// Acceptable values are from 1 second to 20.
+	// The probe retry count. Backend server is marked down after consecutive probe failure count reaches UnhealthyThreshold. Acceptable values are from 1 second
+	// to 20.
 	UnhealthyThreshold *int32 `json:"unhealthyThreshold,omitempty"`
 }
 
@@ -1066,8 +1057,7 @@ type ApplicationGatewaySslPredefinedPolicyPropertiesFormat struct {
 	MinProtocolVersion *ApplicationGatewaySslProtocol `json:"minProtocolVersion,omitempty"`
 }
 
-// ApplicationGatewaySslPredefinedPolicyResponse is the response envelope for operations that return a ApplicationGatewaySslPredefinedPolicy
-// type.
+// ApplicationGatewaySslPredefinedPolicyResponse is the response envelope for operations that return a ApplicationGatewaySslPredefinedPolicy type.
 type ApplicationGatewaySslPredefinedPolicyResponse struct {
 	// An Ssl predefined policy.
 	ApplicationGatewaySslPredefinedPolicy *ApplicationGatewaySslPredefinedPolicy
@@ -1112,8 +1102,7 @@ type ApplicationGatewayURLConfiguration struct {
 	// Query string which user has provided for url rewrite. Null means no query string will be updated. Default value is null.
 	ModifiedQueryString *string `json:"modifiedQueryString,omitempty"`
 
-	// If set as true, it will re-evaluate the url path map provided in path based request routing rules using modified path.
-	// Default value is false.
+	// If set as true, it will re-evaluate the url path map provided in path based request routing rules using modified path. Default value is false.
 	Reroute *bool `json:"reroute,omitempty"`
 }
 
@@ -1187,8 +1176,7 @@ type ApplicationGatewayWebApplicationFirewallConfiguration struct {
 	RuleSetVersion *string `json:"ruleSetVersion,omitempty"`
 }
 
-// ApplicationGatewaysBackendHealthOnDemandOptions contains the optional parameters for the ApplicationGateways.BackendHealthOnDemand
-// method.
+// ApplicationGatewaysBackendHealthOnDemandOptions contains the optional parameters for the ApplicationGateways.BackendHealthOnDemand method.
 type ApplicationGatewaysBackendHealthOnDemandOptions struct {
 	// Expands BackendAddressPool and BackendHttpSettings referenced in backend health.
 	Expand *string
@@ -1215,8 +1203,7 @@ type ApplicationGatewaysGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ApplicationGatewaysGetSslPredefinedPolicyOptions contains the optional parameters for the ApplicationGateways.GetSslPredefinedPolicy
-// method.
+// ApplicationGatewaysGetSslPredefinedPolicyOptions contains the optional parameters for the ApplicationGateways.GetSslPredefinedPolicy method.
 type ApplicationGatewaysGetSslPredefinedPolicyOptions struct {
 	// placeholder for future optional parameters
 }
@@ -1226,26 +1213,22 @@ type ApplicationGatewaysListAllOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ApplicationGatewaysListAvailableRequestHeadersOptions contains the optional parameters for the ApplicationGateways.ListAvailableRequestHeaders
-// method.
+// ApplicationGatewaysListAvailableRequestHeadersOptions contains the optional parameters for the ApplicationGateways.ListAvailableRequestHeaders method.
 type ApplicationGatewaysListAvailableRequestHeadersOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ApplicationGatewaysListAvailableResponseHeadersOptions contains the optional parameters for the ApplicationGateways.ListAvailableResponseHeaders
-// method.
+// ApplicationGatewaysListAvailableResponseHeadersOptions contains the optional parameters for the ApplicationGateways.ListAvailableResponseHeaders method.
 type ApplicationGatewaysListAvailableResponseHeadersOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ApplicationGatewaysListAvailableServerVariablesOptions contains the optional parameters for the ApplicationGateways.ListAvailableServerVariables
-// method.
+// ApplicationGatewaysListAvailableServerVariablesOptions contains the optional parameters for the ApplicationGateways.ListAvailableServerVariables method.
 type ApplicationGatewaysListAvailableServerVariablesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ApplicationGatewaysListAvailableSslOptionsOptions contains the optional parameters for the ApplicationGateways.ListAvailableSslOptions
-// method.
+// ApplicationGatewaysListAvailableSslOptionsOptions contains the optional parameters for the ApplicationGateways.ListAvailableSslOptions method.
 type ApplicationGatewaysListAvailableSslOptionsOptions struct {
 	// placeholder for future optional parameters
 }
@@ -1256,8 +1239,7 @@ type ApplicationGatewaysListAvailableSslPredefinedPoliciesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ApplicationGatewaysListAvailableWafRuleSetsOptions contains the optional parameters for the ApplicationGateways.ListAvailableWafRuleSets
-// method.
+// ApplicationGatewaysListAvailableWafRuleSetsOptions contains the optional parameters for the ApplicationGateways.ListAvailableWafRuleSets method.
 type ApplicationGatewaysListAvailableWafRuleSetsOptions struct {
 	// placeholder for future optional parameters
 }
@@ -1394,8 +1376,7 @@ type ApplicationSecurityGroupListResult struct {
 	Value *[]ApplicationSecurityGroup `json:"value,omitempty"`
 }
 
-// ApplicationSecurityGroupListResultResponse is the response envelope for operations that return a ApplicationSecurityGroupListResult
-// type.
+// ApplicationSecurityGroupListResultResponse is the response envelope for operations that return a ApplicationSecurityGroupListResult type.
 type ApplicationSecurityGroupListResultResponse struct {
 	// A list of application security groups.
 	ApplicationSecurityGroupListResult *ApplicationSecurityGroupListResult
@@ -1404,8 +1385,7 @@ type ApplicationSecurityGroupListResultResponse struct {
 	RawResponse *http.Response
 }
 
-// ApplicationSecurityGroupPollerResponse is the response envelope for operations that asynchronously return a ApplicationSecurityGroup
-// type.
+// ApplicationSecurityGroupPollerResponse is the response envelope for operations that asynchronously return a ApplicationSecurityGroup type.
 type ApplicationSecurityGroupPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*ApplicationSecurityGroupResponse, error)
@@ -1422,8 +1402,8 @@ type ApplicationSecurityGroupPropertiesFormat struct {
 	// The provisioning state of the application security group resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
-	// The resource GUID property of the application security group resource. It uniquely identifies a resource, even if the user
-	// changes its name or migrate the resource across subscriptions or resource
+	// The resource GUID property of the application security group resource. It uniquely identifies a resource, even if the user changes its name or migrate
+	// the resource across subscriptions or resource
 	// groups.
 	ResourceGUID *string `json:"resourceGuid,omitempty" azure:"ro"`
 }
@@ -1437,8 +1417,7 @@ type ApplicationSecurityGroupResponse struct {
 	RawResponse *http.Response
 }
 
-// ApplicationSecurityGroupsCreateOrUpdateOptions contains the optional parameters for the ApplicationSecurityGroups.CreateOrUpdate
-// method.
+// ApplicationSecurityGroupsCreateOrUpdateOptions contains the optional parameters for the ApplicationSecurityGroups.CreateOrUpdate method.
 type ApplicationSecurityGroupsCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
@@ -1463,8 +1442,7 @@ type ApplicationSecurityGroupsListOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ApplicationSecurityGroupsUpdateTagsOptions contains the optional parameters for the ApplicationSecurityGroups.UpdateTags
-// method.
+// ApplicationSecurityGroupsUpdateTagsOptions contains the optional parameters for the ApplicationSecurityGroups.UpdateTags method.
 type ApplicationSecurityGroupsUpdateTagsOptions struct {
 	// placeholder for future optional parameters
 }
@@ -1514,8 +1492,7 @@ type AutoApprovedPrivateLinkServicesResult struct {
 	Value *[]AutoApprovedPrivateLinkService `json:"value,omitempty"`
 }
 
-// AutoApprovedPrivateLinkServicesResultResponse is the response envelope for operations that return a AutoApprovedPrivateLinkServicesResult
-// type.
+// AutoApprovedPrivateLinkServicesResultResponse is the response envelope for operations that return a AutoApprovedPrivateLinkServicesResult type.
 type AutoApprovedPrivateLinkServicesResultResponse struct {
 	// An array of private link service id that can be linked to a private end point with auto approved.
 	AutoApprovedPrivateLinkServicesResult *AutoApprovedPrivateLinkServicesResult
@@ -1597,8 +1574,7 @@ type AvailablePrivateEndpointType struct {
 	Type *string `json:"type,omitempty"`
 }
 
-// AvailablePrivateEndpointTypesListByResourceGroupOptions contains the optional parameters for the AvailablePrivateEndpointTypes.ListByResourceGroup
-// method.
+// AvailablePrivateEndpointTypesListByResourceGroupOptions contains the optional parameters for the AvailablePrivateEndpointTypes.ListByResourceGroup method.
 type AvailablePrivateEndpointTypesListByResourceGroupOptions struct {
 	// placeholder for future optional parameters
 }
@@ -1617,8 +1593,7 @@ type AvailablePrivateEndpointTypesResult struct {
 	Value *[]AvailablePrivateEndpointType `json:"value,omitempty"`
 }
 
-// AvailablePrivateEndpointTypesResultResponse is the response envelope for operations that return a AvailablePrivateEndpointTypesResult
-// type.
+// AvailablePrivateEndpointTypesResultResponse is the response envelope for operations that return a AvailablePrivateEndpointTypesResult type.
 type AvailablePrivateEndpointTypesResultResponse struct {
 	// An array of available PrivateEndpoint types.
 	AvailablePrivateEndpointTypesResult *AvailablePrivateEndpointTypesResult
@@ -1669,8 +1644,7 @@ type AvailableProvidersListParameters struct {
 	State *string `json:"state,omitempty"`
 }
 
-// AvailableProvidersListPollerResponse is the response envelope for operations that asynchronously return a AvailableProvidersList
-// type.
+// AvailableProvidersListPollerResponse is the response envelope for operations that asynchronously return a AvailableProvidersList type.
 type AvailableProvidersListPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*AvailableProvidersListResponse, error)
@@ -1703,8 +1677,7 @@ type AvailableProvidersListState struct {
 	StateName *string `json:"stateName,omitempty"`
 }
 
-// AvailableResourceGroupDelegationsListOptions contains the optional parameters for the AvailableResourceGroupDelegations.List
-// method.
+// AvailableResourceGroupDelegationsListOptions contains the optional parameters for the AvailableResourceGroupDelegations.List method.
 type AvailableResourceGroupDelegationsListOptions struct {
 	// placeholder for future optional parameters
 }
@@ -1724,8 +1697,7 @@ type AvailableServiceAlias struct {
 	Type *string `json:"type,omitempty"`
 }
 
-// AvailableServiceAliasesListByResourceGroupOptions contains the optional parameters for the AvailableServiceAliases.ListByResourceGroup
-// method.
+// AvailableServiceAliasesListByResourceGroupOptions contains the optional parameters for the AvailableServiceAliases.ListByResourceGroup method.
 type AvailableServiceAliasesListByResourceGroupOptions struct {
 	// placeholder for future optional parameters
 }
@@ -1744,8 +1716,7 @@ type AvailableServiceAliasesResult struct {
 	Value *[]AvailableServiceAlias `json:"value,omitempty"`
 }
 
-// AvailableServiceAliasesResultResponse is the response envelope for operations that return a AvailableServiceAliasesResult
-// type.
+// AvailableServiceAliasesResultResponse is the response envelope for operations that return a AvailableServiceAliasesResult type.
 type AvailableServiceAliasesResultResponse struct {
 	// An array of available service aliases.
 	AvailableServiceAliasesResult *AvailableServiceAliasesResult
@@ -1754,12 +1725,11 @@ type AvailableServiceAliasesResultResponse struct {
 	RawResponse *http.Response
 }
 
-// The response body contains the status of the specified asynchronous operation, indicating whether it has succeeded, is
-// in progress, or has failed. Note that this status is distinct from the HTTP
-// status code returned for the Get Operation Status operation itself. If the asynchronous operation succeeded, the response
-// body includes the HTTP status code for the successful request. If the
-// asynchronous operation failed, the response body includes the HTTP status code for the failed request and error information
-// regarding the failure.
+// The response body contains the status of the specified asynchronous operation, indicating whether it has succeeded, is in progress, or has failed. Note
+// that this status is distinct from the HTTP
+// status code returned for the Get Operation Status operation itself. If the asynchronous operation succeeded, the response body includes the HTTP status
+// code for the successful request. If the
+// asynchronous operation failed, the response body includes the HTTP status code for the failed request and error information regarding the failure.
 type AzureAsyncOperationResult struct {
 	// Details of the error occurred during specified asynchronous operation.
 	Error *Error `json:"error,omitempty"`
@@ -1861,8 +1831,7 @@ type AzureFirewallFqdnTagListResult struct {
 	Value *[]AzureFirewallFqdnTag `json:"value,omitempty"`
 }
 
-// AzureFirewallFqdnTagListResultResponse is the response envelope for operations that return a AzureFirewallFqdnTagListResult
-// type.
+// AzureFirewallFqdnTagListResultResponse is the response envelope for operations that return a AzureFirewallFqdnTagListResult type.
 type AzureFirewallFqdnTagListResultResponse struct {
 	// Response for ListAzureFirewallFqdnTags API service call.
 	AzureFirewallFqdnTagListResult *AzureFirewallFqdnTagListResult
@@ -2353,8 +2322,7 @@ func (a *AzureReachabilityReportParameters) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// AzureReachabilityReportPollerResponse is the response envelope for operations that asynchronously return a AzureReachabilityReport
-// type.
+// AzureReachabilityReportPollerResponse is the response envelope for operations that asynchronously return a AzureReachabilityReport type.
 type AzureReachabilityReportPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*AzureReachabilityReportResponse, error)
@@ -2381,8 +2349,7 @@ type BackendAddressPool struct {
 	// A unique read-only string that changes whenever the resource is updated.
 	Etag *string `json:"etag,omitempty" azure:"ro"`
 
-	// The name of the resource that is unique within the set of backend address pools used by the load balancer. This name can
-	// be used to access the resource.
+	// The name of the resource that is unique within the set of backend address pools used by the load balancer. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of load balancer backend address pool.
@@ -2464,8 +2431,8 @@ type BastionActiveSessionListResult struct {
 	Value *[]BastionActiveSession `json:"value,omitempty"`
 }
 
-// BastionActiveSessionListResultPagerPollerResponse is the response envelope for operations that asynchronously return a
-// BastionActiveSessionListResultPager type.
+// BastionActiveSessionListResultPagerPollerResponse is the response envelope for operations that asynchronously return a BastionActiveSessionListResultPager
+// type.
 type BastionActiveSessionListResultPagerPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (BastionActiveSessionListResultPager, error)
@@ -2477,8 +2444,7 @@ type BastionActiveSessionListResultPagerPollerResponse struct {
 	RawResponse *http.Response
 }
 
-// BastionActiveSessionListResultResponse is the response envelope for operations that return a BastionActiveSessionListResult
-// type.
+// BastionActiveSessionListResultResponse is the response envelope for operations that return a BastionActiveSessionListResult type.
 type BastionActiveSessionListResultResponse struct {
 	// Response for GetActiveSessions.
 	BastionActiveSessionListResult *BastionActiveSessionListResult
@@ -2664,8 +2630,8 @@ type BastionShareableLinkListResult struct {
 	Value *[]BastionShareableLink `json:"value,omitempty"`
 }
 
-// BastionShareableLinkListResultPagerPollerResponse is the response envelope for operations that asynchronously return a
-// BastionShareableLinkListResultPager type.
+// BastionShareableLinkListResultPagerPollerResponse is the response envelope for operations that asynchronously return a BastionShareableLinkListResultPager
+// type.
 type BastionShareableLinkListResultPagerPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (BastionShareableLinkListResultPager, error)
@@ -2677,8 +2643,7 @@ type BastionShareableLinkListResultPagerPollerResponse struct {
 	RawResponse *http.Response
 }
 
-// BastionShareableLinkListResultResponse is the response envelope for operations that return a BastionShareableLinkListResult
-// type.
+// BastionShareableLinkListResultResponse is the response envelope for operations that return a BastionShareableLinkListResult type.
 type BastionShareableLinkListResultResponse struct {
 	// Response for all the Bastion Shareable Link endpoints.
 	BastionShareableLinkListResult *BastionShareableLinkListResult
@@ -2742,8 +2707,7 @@ type BgpPeerStatusListResult struct {
 	Value *[]BgpPeerStatus `json:"value,omitempty"`
 }
 
-// BgpPeerStatusListResultPollerResponse is the response envelope for operations that asynchronously return a BgpPeerStatusListResult
-// type.
+// BgpPeerStatusListResultPollerResponse is the response envelope for operations that asynchronously return a BgpPeerStatusListResult type.
 type BgpPeerStatusListResultPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*BgpPeerStatusListResultResponse, error)
@@ -2785,8 +2749,7 @@ type BgpServiceCommunityListResult struct {
 	Value *[]BgpServiceCommunity `json:"value,omitempty"`
 }
 
-// BgpServiceCommunityListResultResponse is the response envelope for operations that return a BgpServiceCommunityListResult
-// type.
+// BgpServiceCommunityListResultResponse is the response envelope for operations that return a BgpServiceCommunityListResult type.
 type BgpServiceCommunityListResultResponse struct {
 	// Response for the ListServiceCommunity API service call.
 	BgpServiceCommunityListResult *BgpServiceCommunityListResult
@@ -3102,8 +3065,7 @@ type ConnectionMonitorQueryResult struct {
 	States *[]ConnectionStateSnapshot `json:"states,omitempty"`
 }
 
-// ConnectionMonitorQueryResultPollerResponse is the response envelope for operations that asynchronously return a ConnectionMonitorQueryResult
-// type.
+// ConnectionMonitorQueryResultPollerResponse is the response envelope for operations that asynchronously return a ConnectionMonitorQueryResult type.
 type ConnectionMonitorQueryResultPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*ConnectionMonitorQueryResultResponse, error)
@@ -3115,8 +3077,7 @@ type ConnectionMonitorQueryResultPollerResponse struct {
 	RawResponse *http.Response
 }
 
-// ConnectionMonitorQueryResultResponse is the response envelope for operations that return a ConnectionMonitorQueryResult
-// type.
+// ConnectionMonitorQueryResultResponse is the response envelope for operations that return a ConnectionMonitorQueryResult type.
 type ConnectionMonitorQueryResultResponse struct {
 	// List of connection states snapshots.
 	ConnectionMonitorQueryResult *ConnectionMonitorQueryResult
@@ -3149,8 +3110,7 @@ type ConnectionMonitorResult struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
-// ConnectionMonitorResultPollerResponse is the response envelope for operations that asynchronously return a ConnectionMonitorResult
-// type.
+// ConnectionMonitorResultPollerResponse is the response envelope for operations that asynchronously return a ConnectionMonitorResult type.
 type ConnectionMonitorResultPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*ConnectionMonitorResultResponse, error)
@@ -3282,8 +3242,7 @@ type ConnectionMonitorTestConfiguration struct {
 	// The name of the connection monitor test configuration.
 	Name *string `json:"name,omitempty"`
 
-	// The preferred IP version to use in test evaluation. The connection monitor may choose to use a different version depending
-	// on other parameters.
+	// The preferred IP version to use in test evaluation. The connection monitor may choose to use a different version depending on other parameters.
 	PreferredIPVersion *PreferredIPVersion `json:"preferredIPVersion,omitempty"`
 
 	// The protocol to use in test evaluation.
@@ -3369,8 +3328,7 @@ type ConnectionResetSharedKey struct {
 	KeyLength *int32 `json:"keyLength,omitempty"`
 }
 
-// ConnectionResetSharedKeyPollerResponse is the response envelope for operations that asynchronously return a ConnectionResetSharedKey
-// type.
+// ConnectionResetSharedKeyPollerResponse is the response envelope for operations that asynchronously return a ConnectionResetSharedKey type.
 type ConnectionResetSharedKeyPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*ConnectionResetSharedKeyResponse, error)
@@ -3398,8 +3356,7 @@ type ConnectionSharedKey struct {
 	Value *string `json:"value,omitempty"`
 }
 
-// ConnectionSharedKeyPollerResponse is the response envelope for operations that asynchronously return a ConnectionSharedKey
-// type.
+// ConnectionSharedKeyPollerResponse is the response envelope for operations that asynchronously return a ConnectionSharedKey type.
 type ConnectionSharedKeyPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*ConnectionSharedKeyResponse, error)
@@ -3617,8 +3574,7 @@ type ConnectivityInformation struct {
 	ProbesSent *int32 `json:"probesSent,omitempty" azure:"ro"`
 }
 
-// ConnectivityInformationPollerResponse is the response envelope for operations that asynchronously return a ConnectivityInformation
-// type.
+// ConnectivityInformationPollerResponse is the response envelope for operations that asynchronously return a ConnectivityInformation type.
 type ConnectivityInformationPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*ConnectivityInformationResponse, error)
@@ -3843,8 +3799,8 @@ type DdosCustomPolicyPropertiesFormat struct {
 	// The list of public IPs associated with the DDoS custom policy resource. This list is read-only.
 	PublicIPAddresses *[]SubResource `json:"publicIPAddresses,omitempty" azure:"ro"`
 
-	// The resource GUID property of the DDoS custom policy resource. It uniquely identifies the resource, even if the user changes
-	// its name or migrate the resource across subscriptions or resource groups.
+	// The resource GUID property of the DDoS custom policy resource. It uniquely identifies the resource, even if the user changes its name or migrate the
+	// resource across subscriptions or resource groups.
 	ResourceGUID *string `json:"resourceGuid,omitempty" azure:"ro"`
 }
 
@@ -3890,8 +3846,7 @@ type DdosProtectionPlanListResult struct {
 	Value *[]DdosProtectionPlan `json:"value,omitempty"`
 }
 
-// DdosProtectionPlanListResultResponse is the response envelope for operations that return a DdosProtectionPlanListResult
-// type.
+// DdosProtectionPlanListResultResponse is the response envelope for operations that return a DdosProtectionPlanListResult type.
 type DdosProtectionPlanListResultResponse struct {
 	// A list of DDoS protection plans.
 	DdosProtectionPlanListResult *DdosProtectionPlanListResult
@@ -3900,8 +3855,7 @@ type DdosProtectionPlanListResultResponse struct {
 	RawResponse *http.Response
 }
 
-// DdosProtectionPlanPollerResponse is the response envelope for operations that asynchronously return a DdosProtectionPlan
-// type.
+// DdosProtectionPlanPollerResponse is the response envelope for operations that asynchronously return a DdosProtectionPlan type.
 type DdosProtectionPlanPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*DdosProtectionPlanResponse, error)
@@ -3918,8 +3872,8 @@ type DdosProtectionPlanPropertiesFormat struct {
 	// The provisioning state of the DDoS protection plan resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
-	// The resource GUID property of the DDoS protection plan resource. It uniquely identifies the resource, even if the user
-	// changes its name or migrate the resource across subscriptions or resource groups.
+	// The resource GUID property of the DDoS protection plan resource. It uniquely identifies the resource, even if the user changes its name or migrate the
+	// resource across subscriptions or resource groups.
 	ResourceGUID *string `json:"resourceGuid,omitempty" azure:"ro"`
 
 	// The list of virtual networks associated with the DDoS protection plan resource. This list is read-only.
@@ -3950,8 +3904,7 @@ type DdosProtectionPlansGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DdosProtectionPlansListByResourceGroupOptions contains the optional parameters for the DdosProtectionPlans.ListByResourceGroup
-// method.
+// DdosProtectionPlansListByResourceGroupOptions contains the optional parameters for the DdosProtectionPlans.ListByResourceGroup method.
 type DdosProtectionPlansListByResourceGroupOptions struct {
 	// placeholder for future optional parameters
 }
@@ -4013,8 +3966,8 @@ type DeviceProperties struct {
 	LinkSpeedInMbps *int32 `json:"linkSpeedInMbps,omitempty"`
 }
 
-// DhcpOptions contains an array of DNS servers available to VMs deployed in the virtual network. Standard DHCP option for
-// a subnet overrides VNET DHCP options.
+// DhcpOptions contains an array of DNS servers available to VMs deployed in the virtual network. Standard DHCP option for a subnet overrides VNET DHCP
+// options.
 type DhcpOptions struct {
 	// The list of DNS servers IP addresses.
 	DNSServers *[]string `json:"dnsServers,omitempty"`
@@ -4065,8 +4018,8 @@ type EffectiveNetworkSecurityGroupListResult struct {
 	Value *[]EffectiveNetworkSecurityGroup `json:"value,omitempty"`
 }
 
-// EffectiveNetworkSecurityGroupListResultPollerResponse is the response envelope for operations that asynchronously return
-// a EffectiveNetworkSecurityGroupListResult type.
+// EffectiveNetworkSecurityGroupListResultPollerResponse is the response envelope for operations that asynchronously return a EffectiveNetworkSecurityGroupListResult
+// type.
 type EffectiveNetworkSecurityGroupListResultPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*EffectiveNetworkSecurityGroupListResultResponse, error)
@@ -4078,8 +4031,7 @@ type EffectiveNetworkSecurityGroupListResultPollerResponse struct {
 	RawResponse *http.Response
 }
 
-// EffectiveNetworkSecurityGroupListResultResponse is the response envelope for operations that return a EffectiveNetworkSecurityGroupListResult
-// type.
+// EffectiveNetworkSecurityGroupListResultResponse is the response envelope for operations that return a EffectiveNetworkSecurityGroupListResult type.
 type EffectiveNetworkSecurityGroupListResultResponse struct {
 	// Response for list effective network security groups API service call.
 	EffectiveNetworkSecurityGroupListResult *EffectiveNetworkSecurityGroupListResult
@@ -4096,15 +4048,15 @@ type EffectiveNetworkSecurityRule struct {
 	// The destination address prefix.
 	DestinationAddressPrefix *string `json:"destinationAddressPrefix,omitempty"`
 
-	// The destination address prefixes. Expected values include CIDR IP ranges, Default Tags (VirtualNetwork, AzureLoadBalancer,
-	// Internet), System Tags, and the asterisk (*).
+	// The destination address prefixes. Expected values include CIDR IP ranges, Default Tags (VirtualNetwork, AzureLoadBalancer, Internet), System Tags, and
+	// the asterisk (*).
 	DestinationAddressPrefixes *[]string `json:"destinationAddressPrefixes,omitempty"`
 
 	// The destination port or range.
 	DestinationPortRange *string `json:"destinationPortRange,omitempty"`
 
-	// The destination port ranges. Expected values include a single integer between 0 and 65535, a range using '-' as separator
-	// (e.g. 100-400), or an asterisk (*).
+	// The destination port ranges. Expected values include a single integer between 0 and 65535, a range using '-' as separator (e.g. 100-400), or an asterisk
+	// (*).
 	DestinationPortRanges *[]string `json:"destinationPortRanges,omitempty"`
 
 	// The direction of the rule.
@@ -4128,15 +4080,14 @@ type EffectiveNetworkSecurityRule struct {
 	// The source address prefix.
 	SourceAddressPrefix *string `json:"sourceAddressPrefix,omitempty"`
 
-	// The source address prefixes. Expected values include CIDR IP ranges, Default Tags (VirtualNetwork, AzureLoadBalancer, Internet),
-	// System Tags, and the asterisk (*).
+	// The source address prefixes. Expected values include CIDR IP ranges, Default Tags (VirtualNetwork, AzureLoadBalancer, Internet), System Tags, and the
+	// asterisk (*).
 	SourceAddressPrefixes *[]string `json:"sourceAddressPrefixes,omitempty"`
 
 	// The source port or range.
 	SourcePortRange *string `json:"sourcePortRange,omitempty"`
 
-	// The source port ranges. Expected values include a single integer between 0 and 65535, a range using '-' as separator (e.g.
-	// 100-400), or an asterisk (*).
+	// The source port ranges. Expected values include a single integer between 0 and 65535, a range using '-' as separator (e.g. 100-400), or an asterisk (*).
 	SourcePortRanges *[]string `json:"sourcePortRanges,omitempty"`
 }
 
@@ -4173,8 +4124,7 @@ type EffectiveRouteListResult struct {
 	Value *[]EffectiveRoute `json:"value,omitempty"`
 }
 
-// EffectiveRouteListResultPollerResponse is the response envelope for operations that asynchronously return a EffectiveRouteListResult
-// type.
+// EffectiveRouteListResultPollerResponse is the response envelope for operations that asynchronously return a EffectiveRouteListResult type.
 type EffectiveRouteListResultPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*EffectiveRouteListResultResponse, error)
@@ -4367,8 +4317,7 @@ type ExpressRouteCircuitAuthorizationPollerResponse struct {
 	RawResponse *http.Response
 }
 
-// ExpressRouteCircuitAuthorizationResponse is the response envelope for operations that return a ExpressRouteCircuitAuthorization
-// type.
+// ExpressRouteCircuitAuthorizationResponse is the response envelope for operations that return a ExpressRouteCircuitAuthorization type.
 type ExpressRouteCircuitAuthorizationResponse struct {
 	// Authorization in an ExpressRouteCircuit resource.
 	ExpressRouteCircuitAuthorization *ExpressRouteCircuitAuthorization
@@ -4377,26 +4326,22 @@ type ExpressRouteCircuitAuthorizationResponse struct {
 	RawResponse *http.Response
 }
 
-// ExpressRouteCircuitAuthorizationsCreateOrUpdateOptions contains the optional parameters for the ExpressRouteCircuitAuthorizations.CreateOrUpdate
-// method.
+// ExpressRouteCircuitAuthorizationsCreateOrUpdateOptions contains the optional parameters for the ExpressRouteCircuitAuthorizations.CreateOrUpdate method.
 type ExpressRouteCircuitAuthorizationsCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ExpressRouteCircuitAuthorizationsDeleteOptions contains the optional parameters for the ExpressRouteCircuitAuthorizations.Delete
-// method.
+// ExpressRouteCircuitAuthorizationsDeleteOptions contains the optional parameters for the ExpressRouteCircuitAuthorizations.Delete method.
 type ExpressRouteCircuitAuthorizationsDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ExpressRouteCircuitAuthorizationsGetOptions contains the optional parameters for the ExpressRouteCircuitAuthorizations.Get
-// method.
+// ExpressRouteCircuitAuthorizationsGetOptions contains the optional parameters for the ExpressRouteCircuitAuthorizations.Get method.
 type ExpressRouteCircuitAuthorizationsGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ExpressRouteCircuitAuthorizationsListOptions contains the optional parameters for the ExpressRouteCircuitAuthorizations.List
-// method.
+// ExpressRouteCircuitAuthorizationsListOptions contains the optional parameters for the ExpressRouteCircuitAuthorizations.List method.
 type ExpressRouteCircuitAuthorizationsListOptions struct {
 	// placeholder for future optional parameters
 }
@@ -4417,8 +4362,7 @@ type ExpressRouteCircuitConnection struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
-// Response for ListConnections API service call retrieves all global reach connections that belongs to a Private Peering
-// for an ExpressRouteCircuit.
+// Response for ListConnections API service call retrieves all global reach connections that belongs to a Private Peering for an ExpressRouteCircuit.
 type ExpressRouteCircuitConnectionListResult struct {
 	// The URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty"`
@@ -4427,19 +4371,16 @@ type ExpressRouteCircuitConnectionListResult struct {
 	Value *[]ExpressRouteCircuitConnection `json:"value,omitempty"`
 }
 
-// ExpressRouteCircuitConnectionListResultResponse is the response envelope for operations that return a ExpressRouteCircuitConnectionListResult
-// type.
+// ExpressRouteCircuitConnectionListResultResponse is the response envelope for operations that return a ExpressRouteCircuitConnectionListResult type.
 type ExpressRouteCircuitConnectionListResultResponse struct {
-	// Response for ListConnections API service call retrieves all global reach connections that belongs to a Private Peering
-	// for an ExpressRouteCircuit.
+	// Response for ListConnections API service call retrieves all global reach connections that belongs to a Private Peering for an ExpressRouteCircuit.
 	ExpressRouteCircuitConnectionListResult *ExpressRouteCircuitConnectionListResult
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ExpressRouteCircuitConnectionPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteCircuitConnection
-// type.
+// ExpressRouteCircuitConnectionPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteCircuitConnection type.
 type ExpressRouteCircuitConnectionPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*ExpressRouteCircuitConnectionResponse, error)
@@ -4475,8 +4416,7 @@ type ExpressRouteCircuitConnectionPropertiesFormat struct {
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
-// ExpressRouteCircuitConnectionResponse is the response envelope for operations that return a ExpressRouteCircuitConnection
-// type.
+// ExpressRouteCircuitConnectionResponse is the response envelope for operations that return a ExpressRouteCircuitConnection type.
 type ExpressRouteCircuitConnectionResponse struct {
 	// Express Route Circuit Connection in an ExpressRouteCircuitPeering resource.
 	ExpressRouteCircuitConnection *ExpressRouteCircuitConnection
@@ -4485,14 +4425,12 @@ type ExpressRouteCircuitConnectionResponse struct {
 	RawResponse *http.Response
 }
 
-// ExpressRouteCircuitConnectionsCreateOrUpdateOptions contains the optional parameters for the ExpressRouteCircuitConnections.CreateOrUpdate
-// method.
+// ExpressRouteCircuitConnectionsCreateOrUpdateOptions contains the optional parameters for the ExpressRouteCircuitConnections.CreateOrUpdate method.
 type ExpressRouteCircuitConnectionsCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ExpressRouteCircuitConnectionsDeleteOptions contains the optional parameters for the ExpressRouteCircuitConnections.Delete
-// method.
+// ExpressRouteCircuitConnectionsDeleteOptions contains the optional parameters for the ExpressRouteCircuitConnections.Delete method.
 type ExpressRouteCircuitConnectionsDeleteOptions struct {
 	// placeholder for future optional parameters
 }
@@ -4502,8 +4440,7 @@ type ExpressRouteCircuitConnectionsGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ExpressRouteCircuitConnectionsListOptions contains the optional parameters for the ExpressRouteCircuitConnections.List
-// method.
+// ExpressRouteCircuitConnectionsListOptions contains the optional parameters for the ExpressRouteCircuitConnections.List method.
 type ExpressRouteCircuitConnectionsListOptions struct {
 	// placeholder for future optional parameters
 }
@@ -4517,8 +4454,7 @@ type ExpressRouteCircuitListResult struct {
 	Value *[]ExpressRouteCircuit `json:"value,omitempty"`
 }
 
-// ExpressRouteCircuitListResultResponse is the response envelope for operations that return a ExpressRouteCircuitListResult
-// type.
+// ExpressRouteCircuitListResultResponse is the response envelope for operations that return a ExpressRouteCircuitListResult type.
 type ExpressRouteCircuitListResultResponse struct {
 	// Response for ListExpressRouteCircuit API service call.
 	ExpressRouteCircuitListResult *ExpressRouteCircuitListResult
@@ -4579,8 +4515,7 @@ type ExpressRouteCircuitPeeringListResult struct {
 	Value *[]ExpressRouteCircuitPeering `json:"value,omitempty"`
 }
 
-// ExpressRouteCircuitPeeringListResultResponse is the response envelope for operations that return a ExpressRouteCircuitPeeringListResult
-// type.
+// ExpressRouteCircuitPeeringListResultResponse is the response envelope for operations that return a ExpressRouteCircuitPeeringListResult type.
 type ExpressRouteCircuitPeeringListResultResponse struct {
 	// Response for ListPeering API service call retrieves all peerings that belong to an ExpressRouteCircuit.
 	ExpressRouteCircuitPeeringListResult *ExpressRouteCircuitPeeringListResult
@@ -4589,8 +4524,7 @@ type ExpressRouteCircuitPeeringListResultResponse struct {
 	RawResponse *http.Response
 }
 
-// ExpressRouteCircuitPeeringPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteCircuitPeering
-// type.
+// ExpressRouteCircuitPeeringPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteCircuitPeering type.
 type ExpressRouteCircuitPeeringPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*ExpressRouteCircuitPeeringResponse, error)
@@ -4674,8 +4608,7 @@ type ExpressRouteCircuitPeeringResponse struct {
 	RawResponse *http.Response
 }
 
-// ExpressRouteCircuitPeeringsCreateOrUpdateOptions contains the optional parameters for the ExpressRouteCircuitPeerings.CreateOrUpdate
-// method.
+// ExpressRouteCircuitPeeringsCreateOrUpdateOptions contains the optional parameters for the ExpressRouteCircuitPeerings.CreateOrUpdate method.
 type ExpressRouteCircuitPeeringsCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
@@ -4695,8 +4628,7 @@ type ExpressRouteCircuitPeeringsListOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ExpressRouteCircuitPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteCircuit
-// type.
+// ExpressRouteCircuitPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteCircuit type.
 type ExpressRouteCircuitPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*ExpressRouteCircuitResponse, error)
@@ -4797,8 +4729,7 @@ type ExpressRouteCircuitRoutesTableSummary struct {
 	// Current state of the BGP session, and the number of prefixes that have been received from a neighbor or peer group.
 	StatePfxRcd *string `json:"statePfxRcd,omitempty"`
 
-	// The length of time that the BGP session has been in the Established state, or the current status if not in the Established
-	// state.
+	// The length of time that the BGP session has been in the Established state, or the current status if not in the Established state.
 	UpDown *string `json:"upDown,omitempty"`
 
 	// BGP version number spoken to the neighbor.
@@ -4862,8 +4793,8 @@ type ExpressRouteCircuitsArpTableListResult struct {
 	Value *[]ExpressRouteCircuitArpTable `json:"value,omitempty"`
 }
 
-// ExpressRouteCircuitsArpTableListResultPollerResponse is the response envelope for operations that asynchronously return
-// a ExpressRouteCircuitsArpTableListResult type.
+// ExpressRouteCircuitsArpTableListResultPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteCircuitsArpTableListResult
+// type.
 type ExpressRouteCircuitsArpTableListResultPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*ExpressRouteCircuitsArpTableListResultResponse, error)
@@ -4875,8 +4806,7 @@ type ExpressRouteCircuitsArpTableListResultPollerResponse struct {
 	RawResponse *http.Response
 }
 
-// ExpressRouteCircuitsArpTableListResultResponse is the response envelope for operations that return a ExpressRouteCircuitsArpTableListResult
-// type.
+// ExpressRouteCircuitsArpTableListResultResponse is the response envelope for operations that return a ExpressRouteCircuitsArpTableListResult type.
 type ExpressRouteCircuitsArpTableListResultResponse struct {
 	// Response for ListArpTable associated with the Express Route Circuits API.
 	ExpressRouteCircuitsArpTableListResult *ExpressRouteCircuitsArpTableListResult
@@ -4885,8 +4815,7 @@ type ExpressRouteCircuitsArpTableListResultResponse struct {
 	RawResponse *http.Response
 }
 
-// ExpressRouteCircuitsCreateOrUpdateOptions contains the optional parameters for the ExpressRouteCircuits.CreateOrUpdate
-// method.
+// ExpressRouteCircuitsCreateOrUpdateOptions contains the optional parameters for the ExpressRouteCircuits.CreateOrUpdate method.
 type ExpressRouteCircuitsCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
@@ -4901,8 +4830,7 @@ type ExpressRouteCircuitsGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ExpressRouteCircuitsGetPeeringStatsOptions contains the optional parameters for the ExpressRouteCircuits.GetPeeringStats
-// method.
+// ExpressRouteCircuitsGetPeeringStatsOptions contains the optional parameters for the ExpressRouteCircuits.GetPeeringStats method.
 type ExpressRouteCircuitsGetPeeringStatsOptions struct {
 	// placeholder for future optional parameters
 }
@@ -4927,14 +4855,12 @@ type ExpressRouteCircuitsListOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ExpressRouteCircuitsListRoutesTableOptions contains the optional parameters for the ExpressRouteCircuits.ListRoutesTable
-// method.
+// ExpressRouteCircuitsListRoutesTableOptions contains the optional parameters for the ExpressRouteCircuits.ListRoutesTable method.
 type ExpressRouteCircuitsListRoutesTableOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ExpressRouteCircuitsListRoutesTableSummaryOptions contains the optional parameters for the ExpressRouteCircuits.ListRoutesTableSummary
-// method.
+// ExpressRouteCircuitsListRoutesTableSummaryOptions contains the optional parameters for the ExpressRouteCircuits.ListRoutesTableSummary method.
 type ExpressRouteCircuitsListRoutesTableSummaryOptions struct {
 	// placeholder for future optional parameters
 }
@@ -4948,8 +4874,8 @@ type ExpressRouteCircuitsRoutesTableListResult struct {
 	Value *[]ExpressRouteCircuitRoutesTable `json:"value,omitempty"`
 }
 
-// ExpressRouteCircuitsRoutesTableListResultPollerResponse is the response envelope for operations that asynchronously return
-// a ExpressRouteCircuitsRoutesTableListResult type.
+// ExpressRouteCircuitsRoutesTableListResultPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteCircuitsRoutesTableListResult
+// type.
 type ExpressRouteCircuitsRoutesTableListResultPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*ExpressRouteCircuitsRoutesTableListResultResponse, error)
@@ -4961,8 +4887,7 @@ type ExpressRouteCircuitsRoutesTableListResultPollerResponse struct {
 	RawResponse *http.Response
 }
 
-// ExpressRouteCircuitsRoutesTableListResultResponse is the response envelope for operations that return a ExpressRouteCircuitsRoutesTableListResult
-// type.
+// ExpressRouteCircuitsRoutesTableListResultResponse is the response envelope for operations that return a ExpressRouteCircuitsRoutesTableListResult type.
 type ExpressRouteCircuitsRoutesTableListResultResponse struct {
 	// Response for ListRoutesTable associated with the Express Route Circuits API.
 	ExpressRouteCircuitsRoutesTableListResult *ExpressRouteCircuitsRoutesTableListResult
@@ -4980,8 +4905,8 @@ type ExpressRouteCircuitsRoutesTableSummaryListResult struct {
 	Value *[]ExpressRouteCircuitRoutesTableSummary `json:"value,omitempty"`
 }
 
-// ExpressRouteCircuitsRoutesTableSummaryListResultPollerResponse is the response envelope for operations that asynchronously
-// return a ExpressRouteCircuitsRoutesTableSummaryListResult type.
+// ExpressRouteCircuitsRoutesTableSummaryListResultPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteCircuitsRoutesTableSummaryListResult
+// type.
 type ExpressRouteCircuitsRoutesTableSummaryListResultPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*ExpressRouteCircuitsRoutesTableSummaryListResultResponse, error)
@@ -5039,8 +4964,7 @@ type ExpressRouteConnectionListResponse struct {
 	RawResponse *http.Response
 }
 
-// ExpressRouteConnectionPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteConnection
-// type.
+// ExpressRouteConnectionPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteConnection type.
 type ExpressRouteConnectionPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*ExpressRouteConnectionResponse, error)
@@ -5079,8 +5003,7 @@ type ExpressRouteConnectionResponse struct {
 	RawResponse *http.Response
 }
 
-// ExpressRouteConnectionsCreateOrUpdateOptions contains the optional parameters for the ExpressRouteConnections.CreateOrUpdate
-// method.
+// ExpressRouteConnectionsCreateOrUpdateOptions contains the optional parameters for the ExpressRouteConnections.CreateOrUpdate method.
 type ExpressRouteConnectionsCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
@@ -5119,8 +5042,7 @@ type ExpressRouteCrossConnectionListResult struct {
 	Value *[]ExpressRouteCrossConnection `json:"value,omitempty"`
 }
 
-// ExpressRouteCrossConnectionListResultResponse is the response envelope for operations that return a ExpressRouteCrossConnectionListResult
-// type.
+// ExpressRouteCrossConnectionListResultResponse is the response envelope for operations that return a ExpressRouteCrossConnectionListResult type.
 type ExpressRouteCrossConnectionListResultResponse struct {
 	// Response for ListExpressRouteCrossConnection API service call.
 	ExpressRouteCrossConnectionListResult *ExpressRouteCrossConnectionListResult
@@ -5151,8 +5073,7 @@ type ExpressRouteCrossConnectionPeeringList struct {
 	Value *[]ExpressRouteCrossConnectionPeering `json:"value,omitempty"`
 }
 
-// ExpressRouteCrossConnectionPeeringListResponse is the response envelope for operations that return a ExpressRouteCrossConnectionPeeringList
-// type.
+// ExpressRouteCrossConnectionPeeringListResponse is the response envelope for operations that return a ExpressRouteCrossConnectionPeeringList type.
 type ExpressRouteCrossConnectionPeeringListResponse struct {
 	// Response for ListPeering API service call retrieves all peerings that belong to an ExpressRouteCrossConnection.
 	ExpressRouteCrossConnectionPeeringList *ExpressRouteCrossConnectionPeeringList
@@ -5222,8 +5143,7 @@ type ExpressRouteCrossConnectionPeeringProperties struct {
 	VlanID *int32 `json:"vlanId,omitempty"`
 }
 
-// ExpressRouteCrossConnectionPeeringResponse is the response envelope for operations that return a ExpressRouteCrossConnectionPeering
-// type.
+// ExpressRouteCrossConnectionPeeringResponse is the response envelope for operations that return a ExpressRouteCrossConnectionPeering type.
 type ExpressRouteCrossConnectionPeeringResponse struct {
 	// Peering in an ExpressRoute Cross Connection resource.
 	ExpressRouteCrossConnectionPeering *ExpressRouteCrossConnectionPeering
@@ -5238,26 +5158,22 @@ type ExpressRouteCrossConnectionPeeringsCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ExpressRouteCrossConnectionPeeringsDeleteOptions contains the optional parameters for the ExpressRouteCrossConnectionPeerings.Delete
-// method.
+// ExpressRouteCrossConnectionPeeringsDeleteOptions contains the optional parameters for the ExpressRouteCrossConnectionPeerings.Delete method.
 type ExpressRouteCrossConnectionPeeringsDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ExpressRouteCrossConnectionPeeringsGetOptions contains the optional parameters for the ExpressRouteCrossConnectionPeerings.Get
-// method.
+// ExpressRouteCrossConnectionPeeringsGetOptions contains the optional parameters for the ExpressRouteCrossConnectionPeerings.Get method.
 type ExpressRouteCrossConnectionPeeringsGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ExpressRouteCrossConnectionPeeringsListOptions contains the optional parameters for the ExpressRouteCrossConnectionPeerings.List
-// method.
+// ExpressRouteCrossConnectionPeeringsListOptions contains the optional parameters for the ExpressRouteCrossConnectionPeerings.List method.
 type ExpressRouteCrossConnectionPeeringsListOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ExpressRouteCrossConnectionPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteCrossConnection
-// type.
+// ExpressRouteCrossConnectionPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteCrossConnection type.
 type ExpressRouteCrossConnectionPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*ExpressRouteCrossConnectionResponse, error)
@@ -5322,13 +5238,11 @@ type ExpressRouteCrossConnectionRoutesTableSummary struct {
 	// Current state of the BGP session, and the number of prefixes that have been received from a neighbor or peer group.
 	StateOrPrefixesReceived *string `json:"stateOrPrefixesReceived,omitempty"`
 
-	// The length of time that the BGP session has been in the Established state, or the current status if not in the Established
-	// state.
+	// The length of time that the BGP session has been in the Established state, or the current status if not in the Established state.
 	UpDown *string `json:"upDown,omitempty"`
 }
 
-// ExpressRouteCrossConnectionsCreateOrUpdateOptions contains the optional parameters for the ExpressRouteCrossConnections.CreateOrUpdate
-// method.
+// ExpressRouteCrossConnectionsCreateOrUpdateOptions contains the optional parameters for the ExpressRouteCrossConnections.CreateOrUpdate method.
 type ExpressRouteCrossConnectionsCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
@@ -5338,14 +5252,12 @@ type ExpressRouteCrossConnectionsGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ExpressRouteCrossConnectionsListArpTableOptions contains the optional parameters for the ExpressRouteCrossConnections.ListArpTable
-// method.
+// ExpressRouteCrossConnectionsListArpTableOptions contains the optional parameters for the ExpressRouteCrossConnections.ListArpTable method.
 type ExpressRouteCrossConnectionsListArpTableOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ExpressRouteCrossConnectionsListByResourceGroupOptions contains the optional parameters for the ExpressRouteCrossConnections.ListByResourceGroup
-// method.
+// ExpressRouteCrossConnectionsListByResourceGroupOptions contains the optional parameters for the ExpressRouteCrossConnections.ListByResourceGroup method.
 type ExpressRouteCrossConnectionsListByResourceGroupOptions struct {
 	// placeholder for future optional parameters
 }
@@ -5355,8 +5267,7 @@ type ExpressRouteCrossConnectionsListOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ExpressRouteCrossConnectionsListRoutesTableOptions contains the optional parameters for the ExpressRouteCrossConnections.ListRoutesTable
-// method.
+// ExpressRouteCrossConnectionsListRoutesTableOptions contains the optional parameters for the ExpressRouteCrossConnections.ListRoutesTable method.
 type ExpressRouteCrossConnectionsListRoutesTableOptions struct {
 	// placeholder for future optional parameters
 }
@@ -5376,8 +5287,8 @@ type ExpressRouteCrossConnectionsRoutesTableSummaryListResult struct {
 	Value *[]ExpressRouteCrossConnectionRoutesTableSummary `json:"value,omitempty"`
 }
 
-// ExpressRouteCrossConnectionsRoutesTableSummaryListResultPollerResponse is the response envelope for operations that asynchronously
-// return a ExpressRouteCrossConnectionsRoutesTableSummaryListResult type.
+// ExpressRouteCrossConnectionsRoutesTableSummaryListResultPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteCrossConnectionsRoutesTableSummaryListResult
+// type.
 type ExpressRouteCrossConnectionsRoutesTableSummaryListResultPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*ExpressRouteCrossConnectionsRoutesTableSummaryListResultResponse, error)
@@ -5389,8 +5300,8 @@ type ExpressRouteCrossConnectionsRoutesTableSummaryListResultPollerResponse stru
 	RawResponse *http.Response
 }
 
-// ExpressRouteCrossConnectionsRoutesTableSummaryListResultResponse is the response envelope for operations that return a
-// ExpressRouteCrossConnectionsRoutesTableSummaryListResult type.
+// ExpressRouteCrossConnectionsRoutesTableSummaryListResultResponse is the response envelope for operations that return a ExpressRouteCrossConnectionsRoutesTableSummaryListResult
+// type.
 type ExpressRouteCrossConnectionsRoutesTableSummaryListResultResponse struct {
 	// Response for ListRoutesTable associated with the Express Route Cross Connections.
 	ExpressRouteCrossConnectionsRoutesTableSummaryListResult *ExpressRouteCrossConnectionsRoutesTableSummaryListResult
@@ -5399,8 +5310,7 @@ type ExpressRouteCrossConnectionsRoutesTableSummaryListResultResponse struct {
 	RawResponse *http.Response
 }
 
-// ExpressRouteCrossConnectionsUpdateTagsOptions contains the optional parameters for the ExpressRouteCrossConnections.UpdateTags
-// method.
+// ExpressRouteCrossConnectionsUpdateTagsOptions contains the optional parameters for the ExpressRouteCrossConnections.UpdateTags method.
 type ExpressRouteCrossConnectionsUpdateTagsOptions struct {
 	// placeholder for future optional parameters
 }
@@ -5430,8 +5340,7 @@ type ExpressRouteGatewayListResponse struct {
 	RawResponse *http.Response
 }
 
-// ExpressRouteGatewayPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteGateway
-// type.
+// ExpressRouteGatewayPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteGateway type.
 type ExpressRouteGatewayPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*ExpressRouteGatewayResponse, error)
@@ -5482,8 +5391,7 @@ type ExpressRouteGatewayResponse struct {
 	RawResponse *http.Response
 }
 
-// ExpressRouteGatewaysCreateOrUpdateOptions contains the optional parameters for the ExpressRouteGateways.CreateOrUpdate
-// method.
+// ExpressRouteGatewaysCreateOrUpdateOptions contains the optional parameters for the ExpressRouteGateways.CreateOrUpdate method.
 type ExpressRouteGatewaysCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
@@ -5498,14 +5406,12 @@ type ExpressRouteGatewaysGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ExpressRouteGatewaysListByResourceGroupOptions contains the optional parameters for the ExpressRouteGateways.ListByResourceGroup
-// method.
+// ExpressRouteGatewaysListByResourceGroupOptions contains the optional parameters for the ExpressRouteGateways.ListByResourceGroup method.
 type ExpressRouteGatewaysListByResourceGroupOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ExpressRouteGatewaysListBySubscriptionOptions contains the optional parameters for the ExpressRouteGateways.ListBySubscription
-// method.
+// ExpressRouteGatewaysListBySubscriptionOptions contains the optional parameters for the ExpressRouteGateways.ListBySubscription method.
 type ExpressRouteGatewaysListBySubscriptionOptions struct {
 	// placeholder for future optional parameters
 }
@@ -5702,8 +5608,7 @@ type ExpressRoutePortsGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ExpressRoutePortsListByResourceGroupOptions contains the optional parameters for the ExpressRoutePorts.ListByResourceGroup
-// method.
+// ExpressRoutePortsListByResourceGroupOptions contains the optional parameters for the ExpressRoutePorts.ListByResourceGroup method.
 type ExpressRoutePortsListByResourceGroupOptions struct {
 	// placeholder for future optional parameters
 }
@@ -5738,8 +5643,7 @@ type ExpressRoutePortsLocationListResult struct {
 	Value *[]ExpressRoutePortsLocation `json:"value,omitempty"`
 }
 
-// ExpressRoutePortsLocationListResultResponse is the response envelope for operations that return a ExpressRoutePortsLocationListResult
-// type.
+// ExpressRoutePortsLocationListResultResponse is the response envelope for operations that return a ExpressRoutePortsLocationListResult type.
 type ExpressRoutePortsLocationListResultResponse struct {
 	// Response for ListExpressRoutePortsLocations API service call.
 	ExpressRoutePortsLocationListResult *ExpressRoutePortsLocationListResult
@@ -5812,8 +5716,7 @@ type ExpressRouteServiceProviderListResult struct {
 	Value *[]ExpressRouteServiceProvider `json:"value,omitempty"`
 }
 
-// ExpressRouteServiceProviderListResultResponse is the response envelope for operations that return a ExpressRouteServiceProviderListResult
-// type.
+// ExpressRouteServiceProviderListResultResponse is the response envelope for operations that return a ExpressRouteServiceProviderListResult type.
 type ExpressRouteServiceProviderListResultResponse struct {
 	// Response for the ListExpressRouteServiceProvider API service call.
 	ExpressRouteServiceProviderListResult *ExpressRouteServiceProviderListResult
@@ -6249,8 +6152,7 @@ type FirewallPolicyRuleGroupListResult struct {
 	Value *[]FirewallPolicyRuleGroup `json:"value,omitempty"`
 }
 
-// FirewallPolicyRuleGroupListResultResponse is the response envelope for operations that return a FirewallPolicyRuleGroupListResult
-// type.
+// FirewallPolicyRuleGroupListResultResponse is the response envelope for operations that return a FirewallPolicyRuleGroupListResult type.
 type FirewallPolicyRuleGroupListResultResponse struct {
 	// Response for ListFirewallPolicyRuleGroups API service call.
 	FirewallPolicyRuleGroupListResult *FirewallPolicyRuleGroupListResult
@@ -6259,8 +6161,7 @@ type FirewallPolicyRuleGroupListResultResponse struct {
 	RawResponse *http.Response
 }
 
-// FirewallPolicyRuleGroupPollerResponse is the response envelope for operations that asynchronously return a FirewallPolicyRuleGroup
-// type.
+// FirewallPolicyRuleGroupPollerResponse is the response envelope for operations that asynchronously return a FirewallPolicyRuleGroup type.
 type FirewallPolicyRuleGroupPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*FirewallPolicyRuleGroupResponse, error)
@@ -6325,8 +6226,7 @@ type FirewallPolicyRuleGroupResponse struct {
 	RawResponse *http.Response
 }
 
-// FirewallPolicyRuleGroupsCreateOrUpdateOptions contains the optional parameters for the FirewallPolicyRuleGroups.CreateOrUpdate
-// method.
+// FirewallPolicyRuleGroupsCreateOrUpdateOptions contains the optional parameters for the FirewallPolicyRuleGroups.CreateOrUpdate method.
 type FirewallPolicyRuleGroupsCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
@@ -6377,8 +6277,7 @@ type FlowLogInformation struct {
 	TargetResourceID *string `json:"targetResourceId,omitempty"`
 }
 
-// FlowLogInformationPollerResponse is the response envelope for operations that asynchronously return a FlowLogInformation
-// type.
+// FlowLogInformationPollerResponse is the response envelope for operations that asynchronously return a FlowLogInformation type.
 type FlowLogInformationPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*FlowLogInformationResponse, error)
@@ -6512,8 +6411,7 @@ type FrontendIPConfiguration struct {
 	// A unique read-only string that changes whenever the resource is updated.
 	Etag *string `json:"etag,omitempty" azure:"ro"`
 
-	// The name of the resource that is unique within the set of frontend IP configurations used by the load balancer. This name
-	// can be used to access the resource.
+	// The name of the resource that is unique within the set of frontend IP configurations used by the load balancer. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the load balancer probe.
@@ -6601,8 +6499,7 @@ type GatewayRouteListResult struct {
 	Value *[]GatewayRoute `json:"value,omitempty"`
 }
 
-// GatewayRouteListResultPollerResponse is the response envelope for operations that asynchronously return a GatewayRouteListResult
-// type.
+// GatewayRouteListResultPollerResponse is the response envelope for operations that asynchronously return a GatewayRouteListResult type.
 type GatewayRouteListResultPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*GatewayRouteListResultResponse, error)
@@ -7081,8 +6978,7 @@ type InboundNatPool struct {
 	// A unique read-only string that changes whenever the resource is updated.
 	Etag *string `json:"etag,omitempty" azure:"ro"`
 
-	// The name of the resource that is unique within the set of inbound NAT pools used by the load balancer. This name can be
-	// used to access the resource.
+	// The name of the resource that is unique within the set of inbound NAT pools used by the load balancer. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of load balancer inbound nat pool.
@@ -7097,28 +6993,28 @@ type InboundNatPoolPropertiesFormat struct {
 	// The port used for internal connections on the endpoint. Acceptable values are between 1 and 65535.
 	BackendPort *int32 `json:"backendPort,omitempty"`
 
-	// Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability
-	// Group. This setting is required when using the SQL AlwaysOn Availability Groups
+	// Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required
+	// when using the SQL AlwaysOn Availability Groups
 	// in SQL server. This setting can't be changed after you create the endpoint.
 	EnableFloatingIP *bool `json:"enableFloatingIP,omitempty"`
 
-	// Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used
-	// when the protocol is set to TCP.
+	// Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to
+	// TCP.
 	EnableTCPReset *bool `json:"enableTcpReset,omitempty"`
 
 	// A reference to frontend IP addresses.
 	FrontendIPConfiguration *SubResource `json:"frontendIPConfiguration,omitempty"`
 
-	// The last port number in the range of external ports that will be used to provide Inbound Nat to NICs associated with a
-	// load balancer. Acceptable values range between 1 and 65535.
+	// The last port number in the range of external ports that will be used to provide Inbound Nat to NICs associated with a load balancer. Acceptable values
+	// range between 1 and 65535.
 	FrontendPortRangeEnd *int32 `json:"frontendPortRangeEnd,omitempty"`
 
-	// The first port number in the range of external ports that will be used to provide Inbound Nat to NICs associated with a
-	// load balancer. Acceptable values range between 1 and 65534.
+	// The first port number in the range of external ports that will be used to provide Inbound Nat to NICs associated with a load balancer. Acceptable values
+	// range between 1 and 65534.
 	FrontendPortRangeStart *int32 `json:"frontendPortRangeStart,omitempty"`
 
-	// The timeout for the TCP idle connection. The value can be set between 4 and 30 minutes. The default value is 4 minutes.
-	// This element is only used when the protocol is set to TCP.
+	// The timeout for the TCP idle connection. The value can be set between 4 and 30 minutes. The default value is 4 minutes. This element is only used when
+	// the protocol is set to TCP.
 	IDleTimeoutInMinutes *int32 `json:"idleTimeoutInMinutes,omitempty"`
 
 	// The reference to the transport protocol used by the inbound NAT pool.
@@ -7134,8 +7030,7 @@ type InboundNatRule struct {
 	// A unique read-only string that changes whenever the resource is updated.
 	Etag *string `json:"etag,omitempty" azure:"ro"`
 
-	// The name of the resource that is unique within the set of inbound NAT rules used by the load balancer. This name can be
-	// used to access the resource.
+	// The name of the resource that is unique within the set of inbound NAT rules used by the load balancer. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of load balancer inbound nat rule.
@@ -7177,31 +7072,30 @@ type InboundNatRulePollerResponse struct {
 
 // Properties of the inbound NAT rule.
 type InboundNatRulePropertiesFormat struct {
-	// A reference to a private IP address defined on a network interface of a VM. Traffic sent to the frontend port of each of
-	// the frontend IP configurations is forwarded to the backend IP.
+	// A reference to a private IP address defined on a network interface of a VM. Traffic sent to the frontend port of each of the frontend IP configurations
+	// is forwarded to the backend IP.
 	BackendIPConfiguration *NetworkInterfaceIPConfiguration `json:"backendIPConfiguration,omitempty" azure:"ro"`
 
 	// The port used for the internal endpoint. Acceptable values range from 1 to 65535.
 	BackendPort *int32 `json:"backendPort,omitempty"`
 
-	// Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability
-	// Group. This setting is required when using the SQL AlwaysOn Availability Groups
+	// Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required
+	// when using the SQL AlwaysOn Availability Groups
 	// in SQL server. This setting can't be changed after you create the endpoint.
 	EnableFloatingIP *bool `json:"enableFloatingIP,omitempty"`
 
-	// Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used
-	// when the protocol is set to TCP.
+	// Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to
+	// TCP.
 	EnableTCPReset *bool `json:"enableTcpReset,omitempty"`
 
 	// A reference to frontend IP addresses.
 	FrontendIPConfiguration *SubResource `json:"frontendIPConfiguration,omitempty"`
 
-	// The port for the external endpoint. Port numbers for each rule must be unique within the Load Balancer. Acceptable values
-	// range from 1 to 65534.
+	// The port for the external endpoint. Port numbers for each rule must be unique within the Load Balancer. Acceptable values range from 1 to 65534.
 	FrontendPort *int32 `json:"frontendPort,omitempty"`
 
-	// The timeout for the TCP idle connection. The value can be set between 4 and 30 minutes. The default value is 4 minutes.
-	// This element is only used when the protocol is set to TCP.
+	// The timeout for the TCP idle connection. The value can be set between 4 and 30 minutes. The default value is 4 minutes. This element is only used when
+	// the protocol is set to TCP.
 	IDleTimeoutInMinutes *int32 `json:"idleTimeoutInMinutes,omitempty"`
 
 	// The reference to the transport protocol used by the load balancing rule.
@@ -7250,8 +7144,7 @@ type ListHubVirtualNetworkConnectionsResult struct {
 	Value *[]HubVirtualNetworkConnection `json:"value,omitempty"`
 }
 
-// ListHubVirtualNetworkConnectionsResultResponse is the response envelope for operations that return a ListHubVirtualNetworkConnectionsResult
-// type.
+// ListHubVirtualNetworkConnectionsResultResponse is the response envelope for operations that return a ListHubVirtualNetworkConnectionsResult type.
 type ListHubVirtualNetworkConnectionsResultResponse struct {
 	// List of HubVirtualNetworkConnections and a URL nextLink to get the next set of results.
 	ListHubVirtualNetworkConnectionsResult *ListHubVirtualNetworkConnectionsResult
@@ -7260,8 +7153,7 @@ type ListHubVirtualNetworkConnectionsResultResponse struct {
 	RawResponse *http.Response
 }
 
-// Result of the request to list P2SVpnGateways. It contains a list of P2SVpnGateways and a URL nextLink to get the next set
-// of results.
+// Result of the request to list P2SVpnGateways. It contains a list of P2SVpnGateways and a URL nextLink to get the next set of results.
 type ListP2SVpnGatewaysResult struct {
 	// URL to get the next set of operation list results if there are any.
 	NextLink *string `json:"nextLink,omitempty"`
@@ -7272,8 +7164,7 @@ type ListP2SVpnGatewaysResult struct {
 
 // ListP2SVpnGatewaysResultResponse is the response envelope for operations that return a ListP2SVpnGatewaysResult type.
 type ListP2SVpnGatewaysResultResponse struct {
-	// Result of the request to list P2SVpnGateways. It contains a list of P2SVpnGateways and a URL nextLink to get the next set
-	// of results.
+	// Result of the request to list P2SVpnGateways. It contains a list of P2SVpnGateways and a URL nextLink to get the next set of results.
 	ListP2SVpnGatewaysResult *ListP2SVpnGatewaysResult
 
 	// RawResponse contains the underlying HTTP response.
@@ -7289,8 +7180,7 @@ type ListVirtualHubRouteTableV2SResult struct {
 	Value *[]VirtualHubRouteTableV2 `json:"value,omitempty"`
 }
 
-// ListVirtualHubRouteTableV2SResultResponse is the response envelope for operations that return a ListVirtualHubRouteTableV2SResult
-// type.
+// ListVirtualHubRouteTableV2SResultResponse is the response envelope for operations that return a ListVirtualHubRouteTableV2SResult type.
 type ListVirtualHubRouteTableV2SResultResponse struct {
 	// List of VirtualHubRouteTableV2s and a URL nextLink to get the next set of results.
 	ListVirtualHubRouteTableV2SResult *ListVirtualHubRouteTableV2SResult
@@ -7299,8 +7189,7 @@ type ListVirtualHubRouteTableV2SResultResponse struct {
 	RawResponse *http.Response
 }
 
-// Result of the request to list VirtualHubs. It contains a list of VirtualHubs and a URL nextLink to get the next set of
-// results.
+// Result of the request to list VirtualHubs. It contains a list of VirtualHubs and a URL nextLink to get the next set of results.
 type ListVirtualHubsResult struct {
 	// URL to get the next set of operation list results if there are any.
 	NextLink *string `json:"nextLink,omitempty"`
@@ -7311,16 +7200,14 @@ type ListVirtualHubsResult struct {
 
 // ListVirtualHubsResultResponse is the response envelope for operations that return a ListVirtualHubsResult type.
 type ListVirtualHubsResultResponse struct {
-	// Result of the request to list VirtualHubs. It contains a list of VirtualHubs and a URL nextLink to get the next set of
-	// results.
+	// Result of the request to list VirtualHubs. It contains a list of VirtualHubs and a URL nextLink to get the next set of results.
 	ListVirtualHubsResult *ListVirtualHubsResult
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// Result of the request to list VirtualWANs. It contains a list of VirtualWANs and a URL nextLink to get the next set of
-// results.
+// Result of the request to list VirtualWANs. It contains a list of VirtualWANs and a URL nextLink to get the next set of results.
 type ListVirtualWaNsResult struct {
 	// URL to get the next set of operation list results if there are any.
 	NextLink *string `json:"nextLink,omitempty"`
@@ -7331,16 +7218,15 @@ type ListVirtualWaNsResult struct {
 
 // ListVirtualWaNsResultResponse is the response envelope for operations that return a ListVirtualWaNsResult type.
 type ListVirtualWaNsResultResponse struct {
-	// Result of the request to list VirtualWANs. It contains a list of VirtualWANs and a URL nextLink to get the next set of
-	// results.
+	// Result of the request to list VirtualWANs. It contains a list of VirtualWANs and a URL nextLink to get the next set of results.
 	ListVirtualWaNsResult *ListVirtualWaNsResult
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// Result of the request to list all vpn connections to a virtual wan vpn gateway. It contains a list of Vpn Connections and
-// a URL nextLink to get the next set of results.
+// Result of the request to list all vpn connections to a virtual wan vpn gateway. It contains a list of Vpn Connections and a URL nextLink to get the next
+// set of results.
 type ListVpnConnectionsResult struct {
 	// URL to get the next set of operation list results if there are any.
 	NextLink *string `json:"nextLink,omitempty"`
@@ -7351,16 +7237,15 @@ type ListVpnConnectionsResult struct {
 
 // ListVpnConnectionsResultResponse is the response envelope for operations that return a ListVpnConnectionsResult type.
 type ListVpnConnectionsResultResponse struct {
-	// Result of the request to list all vpn connections to a virtual wan vpn gateway. It contains a list of Vpn Connections and
-	// a URL nextLink to get the next set of results.
+	// Result of the request to list all vpn connections to a virtual wan vpn gateway. It contains a list of Vpn Connections and a URL nextLink to get the next
+	// set of results.
 	ListVpnConnectionsResult *ListVpnConnectionsResult
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// Result of the request to list VpnGateways. It contains a list of VpnGateways and a URL nextLink to get the next set of
-// results.
+// Result of the request to list VpnGateways. It contains a list of VpnGateways and a URL nextLink to get the next set of results.
 type ListVpnGatewaysResult struct {
 	// URL to get the next set of operation list results if there are any.
 	NextLink *string `json:"nextLink,omitempty"`
@@ -7371,16 +7256,14 @@ type ListVpnGatewaysResult struct {
 
 // ListVpnGatewaysResultResponse is the response envelope for operations that return a ListVpnGatewaysResult type.
 type ListVpnGatewaysResultResponse struct {
-	// Result of the request to list VpnGateways. It contains a list of VpnGateways and a URL nextLink to get the next set of
-	// results.
+	// Result of the request to list VpnGateways. It contains a list of VpnGateways and a URL nextLink to get the next set of results.
 	ListVpnGatewaysResult *ListVpnGatewaysResult
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// Result of the request to list all VpnServerConfigurations. It contains a list of VpnServerConfigurations and a URL nextLink
-// to get the next set of results.
+// Result of the request to list all VpnServerConfigurations. It contains a list of VpnServerConfigurations and a URL nextLink to get the next set of results.
 type ListVpnServerConfigurationsResult struct {
 	// URL to get the next set of operation list results if there are any.
 	NextLink *string `json:"nextLink,omitempty"`
@@ -7389,19 +7272,17 @@ type ListVpnServerConfigurationsResult struct {
 	Value *[]VpnServerConfiguration `json:"value,omitempty"`
 }
 
-// ListVpnServerConfigurationsResultResponse is the response envelope for operations that return a ListVpnServerConfigurationsResult
-// type.
+// ListVpnServerConfigurationsResultResponse is the response envelope for operations that return a ListVpnServerConfigurationsResult type.
 type ListVpnServerConfigurationsResultResponse struct {
-	// Result of the request to list all VpnServerConfigurations. It contains a list of VpnServerConfigurations and a URL nextLink
-	// to get the next set of results.
+	// Result of the request to list all VpnServerConfigurations. It contains a list of VpnServerConfigurations and a URL nextLink to get the next set of results.
 	ListVpnServerConfigurationsResult *ListVpnServerConfigurationsResult
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// Result of the request to list all vpn connections to a virtual wan vpn gateway. It contains a list of Vpn Connections and
-// a URL nextLink to get the next set of results.
+// Result of the request to list all vpn connections to a virtual wan vpn gateway. It contains a list of Vpn Connections and a URL nextLink to get the next
+// set of results.
 type ListVpnSiteLinkConnectionsResult struct {
 	// URL to get the next set of operation list results if there are any.
 	NextLink *string `json:"nextLink,omitempty"`
@@ -7410,19 +7291,17 @@ type ListVpnSiteLinkConnectionsResult struct {
 	Value *[]VpnSiteLinkConnection `json:"value,omitempty"`
 }
 
-// ListVpnSiteLinkConnectionsResultResponse is the response envelope for operations that return a ListVpnSiteLinkConnectionsResult
-// type.
+// ListVpnSiteLinkConnectionsResultResponse is the response envelope for operations that return a ListVpnSiteLinkConnectionsResult type.
 type ListVpnSiteLinkConnectionsResultResponse struct {
-	// Result of the request to list all vpn connections to a virtual wan vpn gateway. It contains a list of Vpn Connections and
-	// a URL nextLink to get the next set of results.
+	// Result of the request to list all vpn connections to a virtual wan vpn gateway. It contains a list of Vpn Connections and a URL nextLink to get the next
+	// set of results.
 	ListVpnSiteLinkConnectionsResult *ListVpnSiteLinkConnectionsResult
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// Result of the request to list VpnSiteLinks. It contains a list of VpnSiteLinks and a URL nextLink to get the next set of
-// results.
+// Result of the request to list VpnSiteLinks. It contains a list of VpnSiteLinks and a URL nextLink to get the next set of results.
 type ListVpnSiteLinksResult struct {
 	// URL to get the next set of operation list results if there are any.
 	NextLink *string `json:"nextLink,omitempty"`
@@ -7433,8 +7312,7 @@ type ListVpnSiteLinksResult struct {
 
 // ListVpnSiteLinksResultResponse is the response envelope for operations that return a ListVpnSiteLinksResult type.
 type ListVpnSiteLinksResultResponse struct {
-	// Result of the request to list VpnSiteLinks. It contains a list of VpnSiteLinks and a URL nextLink to get the next set of
-	// results.
+	// Result of the request to list VpnSiteLinks. It contains a list of VpnSiteLinks and a URL nextLink to get the next set of results.
 	ListVpnSiteLinksResult *ListVpnSiteLinksResult
 
 	// RawResponse contains the underlying HTTP response.
@@ -7481,8 +7359,7 @@ type LoadBalancerBackendAddressPoolListResult struct {
 	Value *[]BackendAddressPool `json:"value,omitempty"`
 }
 
-// LoadBalancerBackendAddressPoolListResultResponse is the response envelope for operations that return a LoadBalancerBackendAddressPoolListResult
-// type.
+// LoadBalancerBackendAddressPoolListResultResponse is the response envelope for operations that return a LoadBalancerBackendAddressPoolListResult type.
 type LoadBalancerBackendAddressPoolListResultResponse struct {
 	// Response for ListBackendAddressPool API service call.
 	LoadBalancerBackendAddressPoolListResult *LoadBalancerBackendAddressPoolListResult
@@ -7491,14 +7368,12 @@ type LoadBalancerBackendAddressPoolListResultResponse struct {
 	RawResponse *http.Response
 }
 
-// LoadBalancerBackendAddressPoolsGetOptions contains the optional parameters for the LoadBalancerBackendAddressPools.Get
-// method.
+// LoadBalancerBackendAddressPoolsGetOptions contains the optional parameters for the LoadBalancerBackendAddressPools.Get method.
 type LoadBalancerBackendAddressPoolsGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// LoadBalancerBackendAddressPoolsListOptions contains the optional parameters for the LoadBalancerBackendAddressPools.List
-// method.
+// LoadBalancerBackendAddressPoolsListOptions contains the optional parameters for the LoadBalancerBackendAddressPools.List method.
 type LoadBalancerBackendAddressPoolsListOptions struct {
 	// placeholder for future optional parameters
 }
@@ -7522,14 +7397,12 @@ type LoadBalancerFrontendIPConfigurationListResultResponse struct {
 	RawResponse *http.Response
 }
 
-// LoadBalancerFrontendIPConfigurationsGetOptions contains the optional parameters for the LoadBalancerFrontendIPConfigurations.Get
-// method.
+// LoadBalancerFrontendIPConfigurationsGetOptions contains the optional parameters for the LoadBalancerFrontendIPConfigurations.Get method.
 type LoadBalancerFrontendIPConfigurationsGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// LoadBalancerFrontendIPConfigurationsListOptions contains the optional parameters for the LoadBalancerFrontendIPConfigurations.List
-// method.
+// LoadBalancerFrontendIPConfigurationsListOptions contains the optional parameters for the LoadBalancerFrontendIPConfigurations.List method.
 type LoadBalancerFrontendIPConfigurationsListOptions struct {
 	// placeholder for future optional parameters
 }
@@ -7561,8 +7434,7 @@ type LoadBalancerLoadBalancingRuleListResult struct {
 	Value *[]LoadBalancingRule `json:"value,omitempty"`
 }
 
-// LoadBalancerLoadBalancingRuleListResultResponse is the response envelope for operations that return a LoadBalancerLoadBalancingRuleListResult
-// type.
+// LoadBalancerLoadBalancingRuleListResultResponse is the response envelope for operations that return a LoadBalancerLoadBalancingRuleListResult type.
 type LoadBalancerLoadBalancingRuleListResultResponse struct {
 	// Response for ListLoadBalancingRule API service call.
 	LoadBalancerLoadBalancingRuleListResult *LoadBalancerLoadBalancingRuleListResult
@@ -7576,8 +7448,7 @@ type LoadBalancerLoadBalancingRulesGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// LoadBalancerLoadBalancingRulesListOptions contains the optional parameters for the LoadBalancerLoadBalancingRules.List
-// method.
+// LoadBalancerLoadBalancingRulesListOptions contains the optional parameters for the LoadBalancerLoadBalancingRules.List method.
 type LoadBalancerLoadBalancingRulesListOptions struct {
 	// placeholder for future optional parameters
 }
@@ -7596,8 +7467,7 @@ type LoadBalancerOutboundRuleListResult struct {
 	Value *[]OutboundRule `json:"value,omitempty"`
 }
 
-// LoadBalancerOutboundRuleListResultResponse is the response envelope for operations that return a LoadBalancerOutboundRuleListResult
-// type.
+// LoadBalancerOutboundRuleListResultResponse is the response envelope for operations that return a LoadBalancerOutboundRuleListResult type.
 type LoadBalancerOutboundRuleListResultResponse struct {
 	// Response for ListOutboundRule API service call.
 	LoadBalancerOutboundRuleListResult *LoadBalancerOutboundRuleListResult
@@ -7664,18 +7534,18 @@ type LoadBalancerPropertiesFormat struct {
 	// Object representing the frontend IPs to be used for the load balancer.
 	FrontendIPConfigurations *[]FrontendIPConfiguration `json:"frontendIPConfigurations,omitempty"`
 
-	// Defines an external port range for inbound NAT to a single backend port on NICs associated with a load balancer. Inbound
-	// NAT rules are created automatically for each NIC associated with the Load
-	// Balancer using an external port from this range. Defining an Inbound NAT pool on your Load Balancer is mutually exclusive
-	// with defining inbound Nat rules. Inbound NAT pools are referenced from virtual
-	// machine scale sets. NICs that are associated with individual virtual machines cannot reference an inbound NAT pool. They
-	// have to reference individual inbound NAT rules.
+	// Defines an external port range for inbound NAT to a single backend port on NICs associated with a load balancer. Inbound NAT rules are created automatically
+	// for each NIC associated with the Load
+	// Balancer using an external port from this range. Defining an Inbound NAT pool on your Load Balancer is mutually exclusive with defining inbound Nat rules.
+	// Inbound NAT pools are referenced from virtual
+	// machine scale sets. NICs that are associated with individual virtual machines cannot reference an inbound NAT pool. They have to reference individual
+	// inbound NAT rules.
 	InboundNatPools *[]InboundNatPool `json:"inboundNatPools,omitempty"`
 
-	// Collection of inbound NAT Rules used by a load balancer. Defining inbound NAT rules on your load balancer is mutually exclusive
-	// with defining an inbound NAT pool. Inbound NAT pools are referenced from
-	// virtual machine scale sets. NICs that are associated with individual virtual machines cannot reference an Inbound NAT pool.
-	// They have to reference individual inbound NAT rules.
+	// Collection of inbound NAT Rules used by a load balancer. Defining inbound NAT rules on your load balancer is mutually exclusive with defining an inbound
+	// NAT pool. Inbound NAT pools are referenced from
+	// virtual machine scale sets. NICs that are associated with individual virtual machines cannot reference an Inbound NAT pool. They have to reference individual
+	// inbound NAT rules.
 	InboundNatRules *[]InboundNatRule `json:"inboundNatRules,omitempty"`
 
 	// Object collection representing the load balancing rules Gets the provisioning.
@@ -7746,8 +7616,7 @@ type LoadBalancingRule struct {
 	// A unique read-only string that changes whenever the resource is updated.
 	Etag *string `json:"etag,omitempty" azure:"ro"`
 
-	// The name of the resource that is unique within the set of load balancing rules used by the load balancer. This name can
-	// be used to access the resource.
+	// The name of the resource that is unique within the set of load balancing rules used by the load balancer. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of load balancer load balancing rule.
@@ -7762,32 +7631,30 @@ type LoadBalancingRulePropertiesFormat struct {
 	// A reference to a pool of DIPs. Inbound traffic is randomly load balanced across IPs in the backend IPs.
 	BackendAddressPool *SubResource `json:"backendAddressPool,omitempty"`
 
-	// The port used for internal connections on the endpoint. Acceptable values are between 0 and 65535. Note that value 0 enables
-	// "Any Port".
+	// The port used for internal connections on the endpoint. Acceptable values are between 0 and 65535. Note that value 0 enables "Any Port".
 	BackendPort *int32 `json:"backendPort,omitempty"`
 
-	// Configures SNAT for the VMs in the backend pool to use the publicIP address specified in the frontend of the load balancing
-	// rule.
+	// Configures SNAT for the VMs in the backend pool to use the publicIP address specified in the frontend of the load balancing rule.
 	DisableOutboundSnat *bool `json:"disableOutboundSnat,omitempty"`
 
-	// Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability
-	// Group. This setting is required when using the SQL AlwaysOn Availability Groups
+	// Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required
+	// when using the SQL AlwaysOn Availability Groups
 	// in SQL server. This setting can't be changed after you create the endpoint.
 	EnableFloatingIP *bool `json:"enableFloatingIP,omitempty"`
 
-	// Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used
-	// when the protocol is set to TCP.
+	// Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to
+	// TCP.
 	EnableTCPReset *bool `json:"enableTcpReset,omitempty"`
 
 	// A reference to frontend IP addresses.
 	FrontendIPConfiguration *SubResource `json:"frontendIPConfiguration,omitempty"`
 
-	// The port for the external endpoint. Port numbers for each rule must be unique within the Load Balancer. Acceptable values
-	// are between 0 and 65534. Note that value 0 enables "Any Port".
+	// The port for the external endpoint. Port numbers for each rule must be unique within the Load Balancer. Acceptable values are between 0 and 65534. Note
+	// that value 0 enables "Any Port".
 	FrontendPort *int32 `json:"frontendPort,omitempty"`
 
-	// The timeout for the TCP idle connection. The value can be set between 4 and 30 minutes. The default value is 4 minutes.
-	// This element is only used when the protocol is set to TCP.
+	// The timeout for the TCP idle connection. The value can be set between 4 and 30 minutes. The default value is 4 minutes. This element is only used when
+	// the protocol is set to TCP.
 	IDleTimeoutInMinutes *int32 `json:"idleTimeoutInMinutes,omitempty"`
 
 	// The load distribution policy for this rule.
@@ -7831,8 +7698,7 @@ type LocalNetworkGatewayListResult struct {
 	Value *[]LocalNetworkGateway `json:"value,omitempty"`
 }
 
-// LocalNetworkGatewayListResultResponse is the response envelope for operations that return a LocalNetworkGatewayListResult
-// type.
+// LocalNetworkGatewayListResultResponse is the response envelope for operations that return a LocalNetworkGatewayListResult type.
 type LocalNetworkGatewayListResultResponse struct {
 	// Response for ListLocalNetworkGateways API service call.
 	LocalNetworkGatewayListResult *LocalNetworkGatewayListResult
@@ -7841,8 +7707,7 @@ type LocalNetworkGatewayListResultResponse struct {
 	RawResponse *http.Response
 }
 
-// LocalNetworkGatewayPollerResponse is the response envelope for operations that asynchronously return a LocalNetworkGateway
-// type.
+// LocalNetworkGatewayPollerResponse is the response envelope for operations that asynchronously return a LocalNetworkGateway type.
 type LocalNetworkGatewayPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*LocalNetworkGatewayResponse, error)
@@ -7884,8 +7749,7 @@ type LocalNetworkGatewayResponse struct {
 	RawResponse *http.Response
 }
 
-// LocalNetworkGatewaysCreateOrUpdateOptions contains the optional parameters for the LocalNetworkGateways.CreateOrUpdate
-// method.
+// LocalNetworkGatewaysCreateOrUpdateOptions contains the optional parameters for the LocalNetworkGateways.CreateOrUpdate method.
 type LocalNetworkGatewaysCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
@@ -7969,13 +7833,12 @@ type ManagedServiceIDentity struct {
 	// The tenant id of the system assigned identity. This property will only be provided for a system assigned identity.
 	TenantID *string `json:"tenantId,omitempty" azure:"ro"`
 
-	// The type of identity used for the resource. The type 'SystemAssigned, UserAssigned' includes both an implicitly created
-	// identity and a set of user assigned identities. The type 'None' will remove any
+	// The type of identity used for the resource. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user assigned
+	// identities. The type 'None' will remove any
 	// identities from the virtual machine.
 	Type *ResourceIDentityType `json:"type,omitempty"`
 
-	// The list of user identities associated with resource. The user identity dictionary key references will be ARM resource
-	// ids in the form:
+	// The list of user identities associated with resource. The user identity dictionary key references will be ARM resource ids in the form:
 	// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
 	UserAssignedIDentities *map[string]Components1Jq1T4ISchemasManagedserviceidentityPropertiesUserassignedidentitiesAdditionalproperties `json:"userAssignedIdentities,omitempty"`
 }
@@ -8261,8 +8124,8 @@ type NetworkConfigurationDiagnosticParameters struct {
 	// List of network configuration diagnostic profiles.
 	Profiles *[]NetworkConfigurationDiagnosticProfile `json:"profiles,omitempty"`
 
-	// The ID of the target resource to perform network configuration diagnostic. Valid options are VM, NetworkInterface, VMSS/NetworkInterface
-	// and Application Gateway.
+	// The ID of the target resource to perform network configuration diagnostic. Valid options are VM, NetworkInterface, VMSS/NetworkInterface and Application
+	// Gateway.
 	TargetResourceID *string `json:"targetResourceId,omitempty"`
 
 	// Verbosity level.
@@ -8293,8 +8156,8 @@ type NetworkConfigurationDiagnosticResponse struct {
 	Results *[]NetworkConfigurationDiagnosticResult `json:"results,omitempty" azure:"ro"`
 }
 
-// NetworkConfigurationDiagnosticResponsePollerResponse is the response envelope for operations that asynchronously return
-// a NetworkConfigurationDiagnosticResponse type.
+// NetworkConfigurationDiagnosticResponsePollerResponse is the response envelope for operations that asynchronously return a NetworkConfigurationDiagnosticResponse
+// type.
 type NetworkConfigurationDiagnosticResponsePollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*NetworkConfigurationDiagnosticResponseResponse, error)
@@ -8306,8 +8169,7 @@ type NetworkConfigurationDiagnosticResponsePollerResponse struct {
 	RawResponse *http.Response
 }
 
-// NetworkConfigurationDiagnosticResponseResponse is the response envelope for operations that return a NetworkConfigurationDiagnosticResponse
-// type.
+// NetworkConfigurationDiagnosticResponseResponse is the response envelope for operations that return a NetworkConfigurationDiagnosticResponse type.
 type NetworkConfigurationDiagnosticResponseResponse struct {
 	// Results of network configuration diagnostic on the target resource.
 	NetworkConfigurationDiagnosticResponse *NetworkConfigurationDiagnosticResponse
@@ -8362,21 +8224,21 @@ type NetworkInterfaceAssociation struct {
 
 // DNS settings of a network interface.
 type NetworkInterfaceDNSSettings struct {
-	// If the VM that uses this NIC is part of an Availability Set, then this list will have the union of all DNS servers from
-	// all NICs that are part of the Availability Set. This property is what is
+	// If the VM that uses this NIC is part of an Availability Set, then this list will have the union of all DNS servers from all NICs that are part of the
+	// Availability Set. This property is what is
 	// configured on each of those VMs.
 	AppliedDNSServers *[]string `json:"appliedDnsServers,omitempty" azure:"ro"`
 
-	// List of DNS servers IP addresses. Use 'AzureProvidedDNS' to switch to azure provided DNS resolution. 'AzureProvidedDNS'
-	// value cannot be combined with other IPs, it must be the only value in dnsServers
+	// List of DNS servers IP addresses. Use 'AzureProvidedDNS' to switch to azure provided DNS resolution. 'AzureProvidedDNS' value cannot be combined with
+	// other IPs, it must be the only value in dnsServers
 	// collection.
 	DNSServers *[]string `json:"dnsServers,omitempty"`
 
 	// Relative DNS name for this NIC used for internal communications between VMs in the same virtual network.
 	InternalDNSNameLabel *string `json:"internalDnsNameLabel,omitempty"`
 
-	// Even if internalDnsNameLabel is not specified, a DNS entry is created for the primary NIC of the VM. This DNS name can
-	// be constructed by concatenating the VM name with the value of
+	// Even if internalDnsNameLabel is not specified, a DNS entry is created for the primary NIC of the VM. This DNS name can be constructed by concatenating
+	// the VM name with the value of
 	// internalDomainNameSuffix.
 	InternalDomainNameSuffix *string `json:"internalDomainNameSuffix,omitempty" azure:"ro"`
 
@@ -8406,8 +8268,7 @@ type NetworkInterfaceIPConfigurationListResult struct {
 	Value *[]NetworkInterfaceIPConfiguration `json:"value,omitempty"`
 }
 
-// NetworkInterfaceIPConfigurationListResultResponse is the response envelope for operations that return a NetworkInterfaceIPConfigurationListResult
-// type.
+// NetworkInterfaceIPConfigurationListResultResponse is the response envelope for operations that return a NetworkInterfaceIPConfigurationListResult type.
 type NetworkInterfaceIPConfigurationListResultResponse struct {
 	// Response for list ip configurations API service call.
 	NetworkInterfaceIPConfigurationListResult *NetworkInterfaceIPConfigurationListResult
@@ -8470,8 +8331,7 @@ type NetworkInterfaceIPConfigurationPropertiesFormat struct {
 	VirtualNetworkTaps *[]VirtualNetworkTap `json:"virtualNetworkTaps,omitempty"`
 }
 
-// NetworkInterfaceIPConfigurationResponse is the response envelope for operations that return a NetworkInterfaceIPConfiguration
-// type.
+// NetworkInterfaceIPConfigurationResponse is the response envelope for operations that return a NetworkInterfaceIPConfiguration type.
 type NetworkInterfaceIPConfigurationResponse struct {
 	// IPConfiguration in a network interface.
 	NetworkInterfaceIPConfiguration *NetworkInterfaceIPConfiguration
@@ -8480,14 +8340,12 @@ type NetworkInterfaceIPConfigurationResponse struct {
 	RawResponse *http.Response
 }
 
-// NetworkInterfaceIPConfigurationsGetOptions contains the optional parameters for the NetworkInterfaceIPConfigurations.Get
-// method.
+// NetworkInterfaceIPConfigurationsGetOptions contains the optional parameters for the NetworkInterfaceIPConfigurations.Get method.
 type NetworkInterfaceIPConfigurationsGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkInterfaceIPConfigurationsListOptions contains the optional parameters for the NetworkInterfaceIPConfigurations.List
-// method.
+// NetworkInterfaceIPConfigurationsListOptions contains the optional parameters for the NetworkInterfaceIPConfigurations.List method.
 type NetworkInterfaceIPConfigurationsListOptions struct {
 	// placeholder for future optional parameters
 }
@@ -8519,8 +8377,7 @@ type NetworkInterfaceLoadBalancerListResult struct {
 	Value *[]LoadBalancer `json:"value,omitempty"`
 }
 
-// NetworkInterfaceLoadBalancerListResultResponse is the response envelope for operations that return a NetworkInterfaceLoadBalancerListResult
-// type.
+// NetworkInterfaceLoadBalancerListResultResponse is the response envelope for operations that return a NetworkInterfaceLoadBalancerListResult type.
 type NetworkInterfaceLoadBalancerListResultResponse struct {
 	// Response for list ip configurations API service call.
 	NetworkInterfaceLoadBalancerListResult *NetworkInterfaceLoadBalancerListResult
@@ -8622,8 +8479,7 @@ type NetworkInterfaceTapConfigurationListResult struct {
 	Value *[]NetworkInterfaceTapConfiguration `json:"value,omitempty"`
 }
 
-// NetworkInterfaceTapConfigurationListResultResponse is the response envelope for operations that return a NetworkInterfaceTapConfigurationListResult
-// type.
+// NetworkInterfaceTapConfigurationListResultResponse is the response envelope for operations that return a NetworkInterfaceTapConfigurationListResult type.
 type NetworkInterfaceTapConfigurationListResultResponse struct {
 	// Response for list tap configurations API service call.
 	NetworkInterfaceTapConfigurationListResult *NetworkInterfaceTapConfigurationListResult
@@ -8654,8 +8510,7 @@ type NetworkInterfaceTapConfigurationPropertiesFormat struct {
 	VirtualNetworkTap *VirtualNetworkTap `json:"virtualNetworkTap,omitempty"`
 }
 
-// NetworkInterfaceTapConfigurationResponse is the response envelope for operations that return a NetworkInterfaceTapConfiguration
-// type.
+// NetworkInterfaceTapConfigurationResponse is the response envelope for operations that return a NetworkInterfaceTapConfiguration type.
 type NetworkInterfaceTapConfigurationResponse struct {
 	// Tap configuration in a Network Interface.
 	NetworkInterfaceTapConfiguration *NetworkInterfaceTapConfiguration
@@ -8664,26 +8519,22 @@ type NetworkInterfaceTapConfigurationResponse struct {
 	RawResponse *http.Response
 }
 
-// NetworkInterfaceTapConfigurationsCreateOrUpdateOptions contains the optional parameters for the NetworkInterfaceTapConfigurations.CreateOrUpdate
-// method.
+// NetworkInterfaceTapConfigurationsCreateOrUpdateOptions contains the optional parameters for the NetworkInterfaceTapConfigurations.CreateOrUpdate method.
 type NetworkInterfaceTapConfigurationsCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkInterfaceTapConfigurationsDeleteOptions contains the optional parameters for the NetworkInterfaceTapConfigurations.Delete
-// method.
+// NetworkInterfaceTapConfigurationsDeleteOptions contains the optional parameters for the NetworkInterfaceTapConfigurations.Delete method.
 type NetworkInterfaceTapConfigurationsDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkInterfaceTapConfigurationsGetOptions contains the optional parameters for the NetworkInterfaceTapConfigurations.Get
-// method.
+// NetworkInterfaceTapConfigurationsGetOptions contains the optional parameters for the NetworkInterfaceTapConfigurations.Get method.
 type NetworkInterfaceTapConfigurationsGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkInterfaceTapConfigurationsListOptions contains the optional parameters for the NetworkInterfaceTapConfigurations.List
-// method.
+// NetworkInterfaceTapConfigurationsListOptions contains the optional parameters for the NetworkInterfaceTapConfigurations.List method.
 type NetworkInterfaceTapConfigurationsListOptions struct {
 	// placeholder for future optional parameters
 }
@@ -8698,8 +8549,7 @@ type NetworkInterfacesDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkInterfacesGetEffectiveRouteTableOptions contains the optional parameters for the NetworkInterfaces.GetEffectiveRouteTable
-// method.
+// NetworkInterfacesGetEffectiveRouteTableOptions contains the optional parameters for the NetworkInterfaces.GetEffectiveRouteTable method.
 type NetworkInterfacesGetEffectiveRouteTableOptions struct {
 	// placeholder for future optional parameters
 }
@@ -8764,8 +8614,7 @@ type NetworkInterfacesUpdateTagsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkManagementClientCheckDNSNameAvailabilityOptions contains the optional parameters for the NetworkManagementClient.CheckDNSNameAvailability
-// method.
+// NetworkManagementClientCheckDNSNameAvailabilityOptions contains the optional parameters for the NetworkManagementClient.CheckDNSNameAvailability method.
 type NetworkManagementClientCheckDNSNameAvailabilityOptions struct {
 	// placeholder for future optional parameters
 }
@@ -8776,32 +8625,28 @@ type NetworkManagementClientDeleteBastionShareableLinkOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkManagementClientDisconnectActiveSessionsOptions contains the optional parameters for the NetworkManagementClient.DisconnectActiveSessions
-// method.
+// NetworkManagementClientDisconnectActiveSessionsOptions contains the optional parameters for the NetworkManagementClient.DisconnectActiveSessions method.
 type NetworkManagementClientDisconnectActiveSessionsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileOptions contains the optional parameters for the
-// NetworkManagementClient.Generatevirtualwanvpnserverconfigurationvpnprofile method.
+// NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileOptions contains the optional parameters for the NetworkManagementClient.Generatevirtualwanvpnserverconfigurationvpnprofile
+// method.
 type NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkManagementClientGetActiveSessionsOptions contains the optional parameters for the NetworkManagementClient.GetActiveSessions
-// method.
+// NetworkManagementClientGetActiveSessionsOptions contains the optional parameters for the NetworkManagementClient.GetActiveSessions method.
 type NetworkManagementClientGetActiveSessionsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkManagementClientGetBastionShareableLinkOptions contains the optional parameters for the NetworkManagementClient.GetBastionShareableLink
-// method.
+// NetworkManagementClientGetBastionShareableLinkOptions contains the optional parameters for the NetworkManagementClient.GetBastionShareableLink method.
 type NetworkManagementClientGetBastionShareableLinkOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkManagementClientPutBastionShareableLinkOptions contains the optional parameters for the NetworkManagementClient.PutBastionShareableLink
-// method.
+// NetworkManagementClientPutBastionShareableLinkOptions contains the optional parameters for the NetworkManagementClient.PutBastionShareableLink method.
 type NetworkManagementClientPutBastionShareableLinkOptions struct {
 	// placeholder for future optional parameters
 }
@@ -9007,8 +8852,7 @@ type NetworkSecurityGroupListResult struct {
 	Value *[]NetworkSecurityGroup `json:"value,omitempty"`
 }
 
-// NetworkSecurityGroupListResultResponse is the response envelope for operations that return a NetworkSecurityGroupListResult
-// type.
+// NetworkSecurityGroupListResultResponse is the response envelope for operations that return a NetworkSecurityGroupListResult type.
 type NetworkSecurityGroupListResultResponse struct {
 	// Response for ListNetworkSecurityGroups API service call.
 	NetworkSecurityGroupListResult *NetworkSecurityGroupListResult
@@ -9017,8 +8861,7 @@ type NetworkSecurityGroupListResultResponse struct {
 	RawResponse *http.Response
 }
 
-// NetworkSecurityGroupPollerResponse is the response envelope for operations that asynchronously return a NetworkSecurityGroup
-// type.
+// NetworkSecurityGroupPollerResponse is the response envelope for operations that asynchronously return a NetworkSecurityGroup type.
 type NetworkSecurityGroupPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*NetworkSecurityGroupResponse, error)
@@ -9072,8 +8915,7 @@ type NetworkSecurityGroupResult struct {
 	SecurityRuleAccessResult *SecurityRuleAccess `json:"securityRuleAccessResult,omitempty"`
 }
 
-// NetworkSecurityGroupsCreateOrUpdateOptions contains the optional parameters for the NetworkSecurityGroups.CreateOrUpdate
-// method.
+// NetworkSecurityGroupsCreateOrUpdateOptions contains the optional parameters for the NetworkSecurityGroups.CreateOrUpdate method.
 type NetworkSecurityGroupsCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
@@ -9150,8 +8992,7 @@ type NetworkVirtualApplianceListResult struct {
 	Value *[]NetworkVirtualAppliance `json:"value,omitempty"`
 }
 
-// NetworkVirtualApplianceListResultResponse is the response envelope for operations that return a NetworkVirtualApplianceListResult
-// type.
+// NetworkVirtualApplianceListResultResponse is the response envelope for operations that return a NetworkVirtualApplianceListResult type.
 type NetworkVirtualApplianceListResultResponse struct {
 	// Response for ListNetworkVirtualAppliances API service call.
 	NetworkVirtualApplianceListResult *NetworkVirtualApplianceListResult
@@ -9160,8 +9001,7 @@ type NetworkVirtualApplianceListResultResponse struct {
 	RawResponse *http.Response
 }
 
-// NetworkVirtualAppliancePollerResponse is the response envelope for operations that asynchronously return a NetworkVirtualAppliance
-// type.
+// NetworkVirtualAppliancePollerResponse is the response envelope for operations that asynchronously return a NetworkVirtualAppliance type.
 type NetworkVirtualAppliancePollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*NetworkVirtualApplianceResponse, error)
@@ -9203,8 +9043,7 @@ type NetworkVirtualApplianceResponse struct {
 	RawResponse *http.Response
 }
 
-// NetworkVirtualAppliancesCreateOrUpdateOptions contains the optional parameters for the NetworkVirtualAppliances.CreateOrUpdate
-// method.
+// NetworkVirtualAppliancesCreateOrUpdateOptions contains the optional parameters for the NetworkVirtualAppliances.CreateOrUpdate method.
 type NetworkVirtualAppliancesCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
@@ -9220,8 +9059,7 @@ type NetworkVirtualAppliancesGetOptions struct {
 	Expand *string
 }
 
-// NetworkVirtualAppliancesListByResourceGroupOptions contains the optional parameters for the NetworkVirtualAppliances.ListByResourceGroup
-// method.
+// NetworkVirtualAppliancesListByResourceGroupOptions contains the optional parameters for the NetworkVirtualAppliances.ListByResourceGroup method.
 type NetworkVirtualAppliancesListByResourceGroupOptions struct {
 	// placeholder for future optional parameters
 }
@@ -9231,8 +9069,7 @@ type NetworkVirtualAppliancesListOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkVirtualAppliancesUpdateTagsOptions contains the optional parameters for the NetworkVirtualAppliances.UpdateTags
-// method.
+// NetworkVirtualAppliancesUpdateTagsOptions contains the optional parameters for the NetworkVirtualAppliances.UpdateTags method.
 type NetworkVirtualAppliancesUpdateTagsOptions struct {
 	// placeholder for future optional parameters
 }
@@ -9292,8 +9129,7 @@ type NetworkWatchersDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkWatchersGetAzureReachabilityReportOptions contains the optional parameters for the NetworkWatchers.GetAzureReachabilityReport
-// method.
+// NetworkWatchersGetAzureReachabilityReportOptions contains the optional parameters for the NetworkWatchers.GetAzureReachabilityReport method.
 type NetworkWatchersGetAzureReachabilityReportOptions struct {
 	// placeholder for future optional parameters
 }
@@ -9303,8 +9139,7 @@ type NetworkWatchersGetFlowLogStatusOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkWatchersGetNetworkConfigurationDiagnosticOptions contains the optional parameters for the NetworkWatchers.GetNetworkConfigurationDiagnostic
-// method.
+// NetworkWatchersGetNetworkConfigurationDiagnosticOptions contains the optional parameters for the NetworkWatchers.GetNetworkConfigurationDiagnostic method.
 type NetworkWatchersGetNetworkConfigurationDiagnosticOptions struct {
 	// placeholder for future optional parameters
 }
@@ -9329,8 +9164,7 @@ type NetworkWatchersGetTroubleshootingOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkWatchersGetTroubleshootingResultOptions contains the optional parameters for the NetworkWatchers.GetTroubleshootingResult
-// method.
+// NetworkWatchersGetTroubleshootingResultOptions contains the optional parameters for the NetworkWatchers.GetTroubleshootingResult method.
 type NetworkWatchersGetTroubleshootingResultOptions struct {
 	// placeholder for future optional parameters
 }
@@ -9345,8 +9179,7 @@ type NetworkWatchersListAllOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkWatchersListAvailableProvidersOptions contains the optional parameters for the NetworkWatchers.ListAvailableProviders
-// method.
+// NetworkWatchersListAvailableProvidersOptions contains the optional parameters for the NetworkWatchers.ListAvailableProviders method.
 type NetworkWatchersListAvailableProvidersOptions struct {
 	// placeholder for future optional parameters
 }
@@ -9356,8 +9189,7 @@ type NetworkWatchersListOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkWatchersSetFlowLogConfigurationOptions contains the optional parameters for the NetworkWatchers.SetFlowLogConfiguration
-// method.
+// NetworkWatchersSetFlowLogConfigurationOptions contains the optional parameters for the NetworkWatchers.SetFlowLogConfiguration method.
 type NetworkWatchersSetFlowLogConfigurationOptions struct {
 	// placeholder for future optional parameters
 }
@@ -9380,8 +9212,7 @@ type NextHopParameters struct {
 	// The source IP address.
 	SourceIPAddress *string `json:"sourceIPAddress,omitempty"`
 
-	// The NIC ID. (If VM has multiple NICs and IP forwarding is enabled on any of the nics, then this parameter must be specified.
-	// Otherwise optional).
+	// The NIC ID. (If VM has multiple NICs and IP forwarding is enabled on any of the nics, then this parameter must be specified. Otherwise optional).
 	TargetNicResourceID *string `json:"targetNicResourceId,omitempty"`
 
 	// The resource identifier of the target resource against which the action is to be performed.
@@ -9396,8 +9227,8 @@ type NextHopResult struct {
 	// Next hop type.
 	NextHopType *NextHopType `json:"nextHopType,omitempty"`
 
-	// The resource identifier for the route table associated with the route being returned. If the route being returned does
-	// not correspond to any user created routes then this field will be the string
+	// The resource identifier for the route table associated with the route being returned. If the route being returned does not correspond to any user created
+	// routes then this field will be the string
 	// 'System Route'.
 	RouteTableID *string `json:"routeTableId,omitempty"`
 }
@@ -9453,8 +9284,7 @@ type OperationDisplay struct {
 	Resource *string `json:"resource,omitempty"`
 }
 
-// Result of the request to list Network operations. It contains a list of operations and a URL link to get the next set of
-// results.
+// Result of the request to list Network operations. It contains a list of operations and a URL link to get the next set of results.
 type OperationListResult struct {
 	// URL to get the next set of operation list results if there are any.
 	NextLink *string `json:"nextLink,omitempty"`
@@ -9465,8 +9295,7 @@ type OperationListResult struct {
 
 // OperationListResultResponse is the response envelope for operations that return a OperationListResult type.
 type OperationListResultResponse struct {
-	// Result of the request to list Network operations. It contains a list of operations and a URL link to get the next set of
-	// results.
+	// Result of the request to list Network operations. It contains a list of operations and a URL link to get the next set of results.
 	OperationListResult *OperationListResult
 
 	// RawResponse contains the underlying HTTP response.
@@ -9499,8 +9328,7 @@ type OutboundRule struct {
 	// A unique read-only string that changes whenever the resource is updated.
 	Etag *string `json:"etag,omitempty" azure:"ro"`
 
-	// The name of the resource that is unique within the set of outbound rules used by the load balancer. This name can be used
-	// to access the resource.
+	// The name of the resource that is unique within the set of outbound rules used by the load balancer. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of load balancer outbound rule.
@@ -9518,8 +9346,8 @@ type OutboundRulePropertiesFormat struct {
 	// A reference to a pool of DIPs. Outbound traffic is randomly load balanced across IPs in the backend IPs.
 	BackendAddressPool *SubResource `json:"backendAddressPool,omitempty"`
 
-	// Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used
-	// when the protocol is set to TCP.
+	// Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to
+	// TCP.
 	EnableTCPReset *bool `json:"enableTcpReset,omitempty"`
 
 	// The Frontend IP addresses of the load balancer.
@@ -9552,8 +9380,7 @@ type OwaspCrsExclusionEntry struct {
 	// When matchVariable is a collection, operator used to specify which elements in the collection this exclusion applies to.
 	Selector *string `json:"selector,omitempty"`
 
-	// When matchVariable is a collection, operate on the selector to specify which elements in the collection this exclusion
-	// applies to.
+	// When matchVariable is a collection, operate on the selector to specify which elements in the collection this exclusion applies to.
 	SelectorMatchOperator *OwaspCrsExclusionEntrySelectorMatchOperator `json:"selectorMatchOperator,omitempty"`
 }
 
@@ -9585,8 +9412,7 @@ type P2SVpnConnectionHealth struct {
 	SasURL *string `json:"sasUrl,omitempty"`
 }
 
-// P2SVpnConnectionHealthPollerResponse is the response envelope for operations that asynchronously return a P2SVpnConnectionHealth
-// type.
+// P2SVpnConnectionHealthPollerResponse is the response envelope for operations that asynchronously return a P2SVpnConnectionHealth type.
 type P2SVpnConnectionHealthPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*P2SVpnConnectionHealthResponse, error)
@@ -9684,8 +9510,7 @@ type P2SVpnGatewaysDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// P2SVpnGatewaysDisconnectP2SVpnConnectionsOptions contains the optional parameters for the P2SVpnGateways.DisconnectP2SVpnConnections
-// method.
+// P2SVpnGatewaysDisconnectP2SVpnConnectionsOptions contains the optional parameters for the P2SVpnGateways.DisconnectP2SVpnConnections method.
 type P2SVpnGatewaysDisconnectP2SVpnConnectionsOptions struct {
 	// placeholder for future optional parameters
 }
@@ -9700,14 +9525,12 @@ type P2SVpnGatewaysGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// P2SVpnGatewaysGetP2SVpnConnectionHealthDetailedOptions contains the optional parameters for the P2SVpnGateways.GetP2SVpnConnectionHealthDetailed
-// method.
+// P2SVpnGatewaysGetP2SVpnConnectionHealthDetailedOptions contains the optional parameters for the P2SVpnGateways.GetP2SVpnConnectionHealthDetailed method.
 type P2SVpnGatewaysGetP2SVpnConnectionHealthDetailedOptions struct {
 	// placeholder for future optional parameters
 }
 
-// P2SVpnGatewaysGetP2SVpnConnectionHealthOptions contains the optional parameters for the P2SVpnGateways.GetP2SVpnConnectionHealth
-// method.
+// P2SVpnGatewaysGetP2SVpnConnectionHealthOptions contains the optional parameters for the P2SVpnGateways.GetP2SVpnConnectionHealth method.
 type P2SVpnGatewaysGetP2SVpnConnectionHealthOptions struct {
 	// placeholder for future optional parameters
 }
@@ -9741,26 +9564,26 @@ type PacketCapture struct {
 
 // Filter that is applied to packet capture request. Multiple filters can be applied.
 type PacketCaptureFilter struct {
-	// Local IP Address to be filtered on. Notation: "127.0.0.1" for single address entry. "127.0.0.1-127.0.0.255" for range.
-	// "127.0.0.1;127.0.0.5"? for multiple entries. Multiple ranges not currently
+	// Local IP Address to be filtered on. Notation: "127.0.0.1" for single address entry. "127.0.0.1-127.0.0.255" for range. "127.0.0.1;127.0.0.5"? for multiple
+	// entries. Multiple ranges not currently
 	// supported. Mixing ranges with multiple entries not currently supported. Default = null.
 	LocalIPAddress *string `json:"localIPAddress,omitempty"`
 
-	// Local port to be filtered on. Notation: "80" for single port entry."80-85" for range. "80;443;" for multiple entries. Multiple
-	// ranges not currently supported. Mixing ranges with multiple entries not
+	// Local port to be filtered on. Notation: "80" for single port entry."80-85" for range. "80;443;" for multiple entries. Multiple ranges not currently supported.
+	// Mixing ranges with multiple entries not
 	// currently supported. Default = null.
 	LocalPort *string `json:"localPort,omitempty"`
 
 	// Protocol to be filtered on.
 	Protocol *PcProtocol `json:"protocol,omitempty"`
 
-	// Local IP Address to be filtered on. Notation: "127.0.0.1" for single address entry. "127.0.0.1-127.0.0.255" for range.
-	// "127.0.0.1;127.0.0.5;" for multiple entries. Multiple ranges not currently
+	// Local IP Address to be filtered on. Notation: "127.0.0.1" for single address entry. "127.0.0.1-127.0.0.255" for range. "127.0.0.1;127.0.0.5;" for multiple
+	// entries. Multiple ranges not currently
 	// supported. Mixing ranges with multiple entries not currently supported. Default = null.
 	RemoteIPAddress *string `json:"remoteIPAddress,omitempty"`
 
-	// Remote port to be filtered on. Notation: "80" for single port entry."80-85" for range. "80;443;" for multiple entries.
-	// Multiple ranges not currently supported. Mixing ranges with multiple entries not
+	// Remote port to be filtered on. Notation: "80" for single port entry."80-85" for range. "80;443;" for multiple entries. Multiple ranges not currently
+	// supported. Mixing ranges with multiple entries not
 	// currently supported. Default = null.
 	RemotePort *string `json:"remotePort,omitempty"`
 }
@@ -9895,8 +9718,7 @@ func (p *PacketCaptureQueryStatusResult) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// PacketCaptureQueryStatusResultPollerResponse is the response envelope for operations that asynchronously return a PacketCaptureQueryStatusResult
-// type.
+// PacketCaptureQueryStatusResultPollerResponse is the response envelope for operations that asynchronously return a PacketCaptureQueryStatusResult type.
 type PacketCaptureQueryStatusResultPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*PacketCaptureQueryStatusResultResponse, error)
@@ -9908,8 +9730,7 @@ type PacketCaptureQueryStatusResultPollerResponse struct {
 	RawResponse *http.Response
 }
 
-// PacketCaptureQueryStatusResultResponse is the response envelope for operations that return a PacketCaptureQueryStatusResult
-// type.
+// PacketCaptureQueryStatusResultResponse is the response envelope for operations that return a PacketCaptureQueryStatusResult type.
 type PacketCaptureQueryStatusResultResponse struct {
 	// Status of packet capture session.
 	PacketCaptureQueryStatusResult *PacketCaptureQueryStatusResult
@@ -9933,8 +9754,7 @@ type PacketCaptureResult struct {
 	Properties *PacketCaptureResultProperties `json:"properties,omitempty"`
 }
 
-// PacketCaptureResultPollerResponse is the response envelope for operations that asynchronously return a PacketCaptureResult
-// type.
+// PacketCaptureResultPollerResponse is the response envelope for operations that asynchronously return a PacketCaptureResult type.
 type PacketCaptureResultPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*PacketCaptureResultResponse, error)
@@ -9964,16 +9784,15 @@ type PacketCaptureResultResponse struct {
 
 // The storage location for a packet capture session.
 type PacketCaptureStorageLocation struct {
-	// A valid local path on the targeting VM. Must include the name of the capture file (*.cap). For linux virtual machine it
-	// must start with /var/captures. Required if no storage ID is provided, otherwise
+	// A valid local path on the targeting VM. Must include the name of the capture file (*.cap). For linux virtual machine it must start with /var/captures.
+	// Required if no storage ID is provided, otherwise
 	// optional.
 	FilePath *string `json:"filePath,omitempty"`
 
 	// The ID of the storage account to save the packet capture session. Required if no local file path is provided.
 	StorageID *string `json:"storageId,omitempty"`
 
-	// The URI of the storage path to save the packet capture. Must be a well-formed URI describing the location to save the packet
-	// capture.
+	// The URI of the storage path to save the packet capture. Must be a well-formed URI describing the location to save the packet capture.
 	StoragePath *string `json:"storagePath,omitempty"`
 }
 
@@ -10055,8 +9874,7 @@ type PeerExpressRouteCircuitConnection struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
-// Response for ListPeeredConnections API service call retrieves all global reach peer circuit connections that belongs to
-// a Private Peering for an ExpressRouteCircuit.
+// Response for ListPeeredConnections API service call retrieves all global reach peer circuit connections that belongs to a Private Peering for an ExpressRouteCircuit.
 type PeerExpressRouteCircuitConnectionListResult struct {
 	// The URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty"`
@@ -10068,8 +9886,7 @@ type PeerExpressRouteCircuitConnectionListResult struct {
 // PeerExpressRouteCircuitConnectionListResultResponse is the response envelope for operations that return a PeerExpressRouteCircuitConnectionListResult
 // type.
 type PeerExpressRouteCircuitConnectionListResultResponse struct {
-	// Response for ListPeeredConnections API service call retrieves all global reach peer circuit connections that belongs to
-	// a Private Peering for an ExpressRouteCircuit.
+	// Response for ListPeeredConnections API service call retrieves all global reach peer circuit connections that belongs to a Private Peering for an ExpressRouteCircuit.
 	PeerExpressRouteCircuitConnectionListResult *PeerExpressRouteCircuitConnectionListResult
 
 	// RawResponse contains the underlying HTTP response.
@@ -10100,8 +9917,7 @@ type PeerExpressRouteCircuitConnectionPropertiesFormat struct {
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
-// PeerExpressRouteCircuitConnectionResponse is the response envelope for operations that return a PeerExpressRouteCircuitConnection
-// type.
+// PeerExpressRouteCircuitConnectionResponse is the response envelope for operations that return a PeerExpressRouteCircuitConnection type.
 type PeerExpressRouteCircuitConnectionResponse struct {
 	// Peer Express Route Circuit Connection in an ExpressRouteCircuitPeering resource.
 	PeerExpressRouteCircuitConnection *PeerExpressRouteCircuitConnection
@@ -10110,14 +9926,12 @@ type PeerExpressRouteCircuitConnectionResponse struct {
 	RawResponse *http.Response
 }
 
-// PeerExpressRouteCircuitConnectionsGetOptions contains the optional parameters for the PeerExpressRouteCircuitConnections.Get
-// method.
+// PeerExpressRouteCircuitConnectionsGetOptions contains the optional parameters for the PeerExpressRouteCircuitConnections.Get method.
 type PeerExpressRouteCircuitConnectionsGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PeerExpressRouteCircuitConnectionsListOptions contains the optional parameters for the PeerExpressRouteCircuitConnections.List
-// method.
+// PeerExpressRouteCircuitConnectionsListOptions contains the optional parameters for the PeerExpressRouteCircuitConnections.List method.
 type PeerExpressRouteCircuitConnectionsListOptions struct {
 	// placeholder for future optional parameters
 }
@@ -10180,8 +9994,7 @@ type PrivateDNSZoneGroupListResult struct {
 	Value *[]PrivateDNSZoneGroup `json:"value,omitempty"`
 }
 
-// PrivateDNSZoneGroupListResultResponse is the response envelope for operations that return a PrivateDNSZoneGroupListResult
-// type.
+// PrivateDNSZoneGroupListResultResponse is the response envelope for operations that return a PrivateDNSZoneGroupListResult type.
 type PrivateDNSZoneGroupListResultResponse struct {
 	// Response for the ListPrivateDnsZoneGroups API service call.
 	PrivateDNSZoneGroupListResult *PrivateDNSZoneGroupListResult
@@ -10190,8 +10003,7 @@ type PrivateDNSZoneGroupListResultResponse struct {
 	RawResponse *http.Response
 }
 
-// PrivateDNSZoneGroupPollerResponse is the response envelope for operations that asynchronously return a PrivateDNSZoneGroup
-// type.
+// PrivateDNSZoneGroupPollerResponse is the response envelope for operations that asynchronously return a PrivateDNSZoneGroup type.
 type PrivateDNSZoneGroupPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*PrivateDNSZoneGroupResponse, error)
@@ -10221,8 +10033,7 @@ type PrivateDNSZoneGroupResponse struct {
 	RawResponse *http.Response
 }
 
-// PrivateDNSZoneGroupsCreateOrUpdateOptions contains the optional parameters for the PrivateDNSZoneGroups.CreateOrUpdate
-// method.
+// PrivateDNSZoneGroupsCreateOrUpdateOptions contains the optional parameters for the PrivateDNSZoneGroups.CreateOrUpdate method.
 type PrivateDNSZoneGroupsCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
@@ -10286,8 +10097,7 @@ type PrivateEndpointConnectionListResult struct {
 	Value *[]PrivateEndpointConnection `json:"value,omitempty"`
 }
 
-// PrivateEndpointConnectionListResultResponse is the response envelope for operations that return a PrivateEndpointConnectionListResult
-// type.
+// PrivateEndpointConnectionListResultResponse is the response envelope for operations that return a PrivateEndpointConnectionListResult type.
 type PrivateEndpointConnectionListResultResponse struct {
 	// Response for the ListPrivateEndpointConnection API service call.
 	PrivateEndpointConnectionListResult *PrivateEndpointConnectionListResult
@@ -10355,8 +10165,8 @@ type PrivateEndpointProperties struct {
 	// An array of custom dns configurations.
 	CustomDNSConfigs *[]CustomDNSConfigPropertiesFormat `json:"customDnsConfigs,omitempty"`
 
-	// A grouping of information about the connection to the remote resource. Used when the network admin does not have access
-	// to approve connections to the remote resource.
+	// A grouping of information about the connection to the remote resource. Used when the network admin does not have access to approve connections to the
+	// remote resource.
 	ManualPrivateLinkServiceConnections *[]PrivateLinkServiceConnection `json:"manualPrivateLinkServiceConnections,omitempty"`
 
 	// An array of references to the network interfaces created for this private endpoint.
@@ -10397,8 +10207,7 @@ type PrivateEndpointsGetOptions struct {
 	Expand *string
 }
 
-// PrivateEndpointsListBySubscriptionOptions contains the optional parameters for the PrivateEndpoints.ListBySubscription
-// method.
+// PrivateEndpointsListBySubscriptionOptions contains the optional parameters for the PrivateEndpoints.ListBySubscription method.
 type PrivateEndpointsListBySubscriptionOptions struct {
 	// placeholder for future optional parameters
 }
@@ -10510,8 +10319,7 @@ type PrivateLinkServiceListResult struct {
 	Value *[]PrivateLinkService `json:"value,omitempty"`
 }
 
-// PrivateLinkServiceListResultResponse is the response envelope for operations that return a PrivateLinkServiceListResult
-// type.
+// PrivateLinkServiceListResultResponse is the response envelope for operations that return a PrivateLinkServiceListResult type.
 type PrivateLinkServiceListResultResponse struct {
 	// Response for the ListPrivateLinkService API service call.
 	PrivateLinkServiceListResult *PrivateLinkServiceListResult
@@ -10520,8 +10328,7 @@ type PrivateLinkServiceListResultResponse struct {
 	RawResponse *http.Response
 }
 
-// PrivateLinkServicePollerResponse is the response envelope for operations that asynchronously return a PrivateLinkService
-// type.
+// PrivateLinkServicePollerResponse is the response envelope for operations that asynchronously return a PrivateLinkService type.
 type PrivateLinkServicePollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*PrivateLinkServiceResponse, error)
@@ -10591,8 +10398,7 @@ type PrivateLinkServiceVisibility struct {
 	Visible *bool `json:"visible,omitempty"`
 }
 
-// PrivateLinkServiceVisibilityPollerResponse is the response envelope for operations that asynchronously return a PrivateLinkServiceVisibility
-// type.
+// PrivateLinkServiceVisibilityPollerResponse is the response envelope for operations that asynchronously return a PrivateLinkServiceVisibility type.
 type PrivateLinkServiceVisibilityPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*PrivateLinkServiceVisibilityResponse, error)
@@ -10604,8 +10410,7 @@ type PrivateLinkServiceVisibilityPollerResponse struct {
 	RawResponse *http.Response
 }
 
-// PrivateLinkServiceVisibilityResponse is the response envelope for operations that return a PrivateLinkServiceVisibility
-// type.
+// PrivateLinkServiceVisibilityResponse is the response envelope for operations that return a PrivateLinkServiceVisibility type.
 type PrivateLinkServiceVisibilityResponse struct {
 	// Response for the CheckPrivateLinkServiceVisibility API service call.
 	PrivateLinkServiceVisibility *PrivateLinkServiceVisibility
@@ -10648,8 +10453,7 @@ type PrivateLinkServicesGetOptions struct {
 	Expand *string
 }
 
-// PrivateLinkServicesGetPrivateEndpointConnectionOptions contains the optional parameters for the PrivateLinkServices.GetPrivateEndpointConnection
-// method.
+// PrivateLinkServicesGetPrivateEndpointConnectionOptions contains the optional parameters for the PrivateLinkServices.GetPrivateEndpointConnection method.
 type PrivateLinkServicesGetPrivateEndpointConnectionOptions struct {
 	// Expands referenced resources.
 	Expand *string
@@ -10667,8 +10471,7 @@ type PrivateLinkServicesListAutoApprovedPrivateLinkServicesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PrivateLinkServicesListBySubscriptionOptions contains the optional parameters for the PrivateLinkServices.ListBySubscription
-// method.
+// PrivateLinkServicesListBySubscriptionOptions contains the optional parameters for the PrivateLinkServices.ListBySubscription method.
 type PrivateLinkServicesListBySubscriptionOptions struct {
 	// placeholder for future optional parameters
 }
@@ -10696,8 +10499,7 @@ type Probe struct {
 	// A unique read-only string that changes whenever the resource is updated.
 	Etag *string `json:"etag,omitempty" azure:"ro"`
 
-	// The name of the resource that is unique within the set of probes used by the load balancer. This name can be used to access
-	// the resource.
+	// The name of the resource that is unique within the set of probes used by the load balancer. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of load balancer probe.
@@ -10709,32 +10511,32 @@ type Probe struct {
 
 // Load balancer probe resource.
 type ProbePropertiesFormat struct {
-	// The interval, in seconds, for how frequently to probe the endpoint for health status. Typically, the interval is slightly
-	// less than half the allocated timeout period (in seconds) which allows two full
+	// The interval, in seconds, for how frequently to probe the endpoint for health status. Typically, the interval is slightly less than half the allocated
+	// timeout period (in seconds) which allows two full
 	// probes before taking the instance out of rotation. The default value is 15, the minimum value is 5.
 	IntervalInSeconds *int32 `json:"intervalInSeconds,omitempty"`
 
 	// The load balancer rules that use this probe.
 	LoadBalancingRules *[]SubResource `json:"loadBalancingRules,omitempty" azure:"ro"`
 
-	// The number of probes where if no response, will result in stopping further traffic from being delivered to the endpoint.
-	// This values allows endpoints to be taken out of rotation faster or slower than
+	// The number of probes where if no response, will result in stopping further traffic from being delivered to the endpoint. This values allows endpoints
+	// to be taken out of rotation faster or slower than
 	// the typical times used in Azure.
 	NumberOfProbes *int32 `json:"numberOfProbes,omitempty"`
 
 	// The port for communicating the probe. Possible values range from 1 to 65535, inclusive.
 	Port *int32 `json:"port,omitempty"`
 
-	// The protocol of the end point. If 'Tcp' is specified, a received ACK is required for the probe to be successful. If 'Http'
-	// or 'Https' is specified, a 200 OK response from the specifies URI is required
+	// The protocol of the end point. If 'Tcp' is specified, a received ACK is required for the probe to be successful. If 'Http' or 'Https' is specified, a
+	// 200 OK response from the specifies URI is required
 	// for the probe to be successful.
 	Protocol *ProbeProtocol `json:"protocol,omitempty"`
 
 	// The provisioning state of the probe resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
-	// The URI used for requesting health status from the VM. Path is required if a protocol is set to http. Otherwise, it is
-	// not allowed. There is no default value.
+	// The URI used for requesting health status from the VM. Path is required if a protocol is set to http. Otherwise, it is not allowed. There is no default
+	// value.
 	RequestPath *string `json:"requestPath,omitempty"`
 }
 
@@ -10764,10 +10566,9 @@ type ProtocolCustomSettingsFormat struct {
 	// The customized DDoS protection trigger rate.
 	TriggerRateOverride *string `json:"triggerRateOverride,omitempty"`
 
-	// The customized DDoS protection trigger rate sensitivity degrees. High: Trigger rate set with most sensitivity w.r.t. normal
-	// traffic. Default: Trigger rate set with moderate sensitivity w.r.t. normal
-	// traffic. Low: Trigger rate set with less sensitivity w.r.t. normal traffic. Relaxed: Trigger rate set with least sensitivity
-	// w.r.t. normal traffic.
+	// The customized DDoS protection trigger rate sensitivity degrees. High: Trigger rate set with most sensitivity w.r.t. normal traffic. Default: Trigger
+	// rate set with moderate sensitivity w.r.t. normal
+	// traffic. Low: Trigger rate set with less sensitivity w.r.t. normal traffic. Relaxed: Trigger rate set with least sensitivity w.r.t. normal traffic.
 	TriggerSensitivityOverride *DdosCustomPolicyTriggerSensitivityOverride `json:"triggerSensitivityOverride,omitempty"`
 }
 
@@ -10789,17 +10590,17 @@ type PublicIPAddress struct {
 
 // Contains FQDN of the DNS record associated with the public IP address.
 type PublicIPAddressDNSSettings struct {
-	// The domain name label. The concatenation of the domain name label and the regionalized DNS zone make up the fully qualified
-	// domain name associated with the public IP address. If a domain name label is
+	// The domain name label. The concatenation of the domain name label and the regionalized DNS zone make up the fully qualified domain name associated with
+	// the public IP address. If a domain name label is
 	// specified, an A DNS record is created for the public IP in the Microsoft Azure DNS system.
 	DomainNameLabel *string `json:"domainNameLabel,omitempty"`
 
-	// The Fully Qualified Domain Name of the A DNS record associated with the public IP. This is the concatenation of the domainNameLabel
-	// and the regionalized DNS zone.
+	// The Fully Qualified Domain Name of the A DNS record associated with the public IP. This is the concatenation of the domainNameLabel and the regionalized
+	// DNS zone.
 	Fqdn *string `json:"fqdn,omitempty"`
 
-	// The reverse FQDN. A user-visible, fully qualified domain name that resolves to this public IP address. If the reverseFqdn
-	// is specified, then a PTR DNS record is created pointing from the IP address in
+	// The reverse FQDN. A user-visible, fully qualified domain name that resolves to this public IP address. If the reverseFqdn is specified, then a PTR DNS
+	// record is created pointing from the IP address in
 	// the in-addr.arpa domain to the reverse FQDN.
 	ReverseFqdn *string `json:"reverseFqdn,omitempty"`
 }
@@ -11159,8 +10960,7 @@ type ResourceNavigationLinksListResult struct {
 	Value *[]ResourceNavigationLink `json:"value,omitempty"`
 }
 
-// ResourceNavigationLinksListResultResponse is the response envelope for operations that return a ResourceNavigationLinksListResult
-// type.
+// ResourceNavigationLinksListResultResponse is the response envelope for operations that return a ResourceNavigationLinksListResult type.
 type ResourceNavigationLinksListResultResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -11572,8 +11372,7 @@ type SecurityGroupViewResult struct {
 	NetworkInterfaces *[]SecurityGroupNetworkInterface `json:"networkInterfaces,omitempty"`
 }
 
-// SecurityGroupViewResultPollerResponse is the response envelope for operations that asynchronously return a SecurityGroupViewResult
-// type.
+// SecurityGroupViewResultPollerResponse is the response envelope for operations that asynchronously return a SecurityGroupViewResult type.
 type SecurityGroupViewResultPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*SecurityGroupViewResultResponse, error)
@@ -11613,8 +11412,7 @@ type SecurityPartnerProviderListResult struct {
 	Value *[]SecurityPartnerProvider `json:"value,omitempty"`
 }
 
-// SecurityPartnerProviderListResultResponse is the response envelope for operations that return a SecurityPartnerProviderListResult
-// type.
+// SecurityPartnerProviderListResultResponse is the response envelope for operations that return a SecurityPartnerProviderListResult type.
 type SecurityPartnerProviderListResultResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -11623,8 +11421,7 @@ type SecurityPartnerProviderListResultResponse struct {
 	SecurityPartnerProviderListResult *SecurityPartnerProviderListResult
 }
 
-// SecurityPartnerProviderPollerResponse is the response envelope for operations that asynchronously return a SecurityPartnerProvider
-// type.
+// SecurityPartnerProviderPollerResponse is the response envelope for operations that asynchronously return a SecurityPartnerProvider type.
 type SecurityPartnerProviderPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*SecurityPartnerProviderResponse, error)
@@ -11660,8 +11457,7 @@ type SecurityPartnerProviderResponse struct {
 	SecurityPartnerProvider *SecurityPartnerProvider
 }
 
-// SecurityPartnerProvidersCreateOrUpdateOptions contains the optional parameters for the SecurityPartnerProviders.CreateOrUpdate
-// method.
+// SecurityPartnerProvidersCreateOrUpdateOptions contains the optional parameters for the SecurityPartnerProviders.CreateOrUpdate method.
 type SecurityPartnerProvidersCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
@@ -11676,8 +11472,7 @@ type SecurityPartnerProvidersGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SecurityPartnerProvidersListByResourceGroupOptions contains the optional parameters for the SecurityPartnerProviders.ListByResourceGroup
-// method.
+// SecurityPartnerProvidersListByResourceGroupOptions contains the optional parameters for the SecurityPartnerProviders.ListByResourceGroup method.
 type SecurityPartnerProvidersListByResourceGroupOptions struct {
 	// placeholder for future optional parameters
 }
@@ -11687,8 +11482,7 @@ type SecurityPartnerProvidersListOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SecurityPartnerProvidersUpdateTagsOptions contains the optional parameters for the SecurityPartnerProviders.UpdateTags
-// method.
+// SecurityPartnerProvidersUpdateTagsOptions contains the optional parameters for the SecurityPartnerProviders.UpdateTags method.
 type SecurityPartnerProvidersUpdateTagsOptions struct {
 	// placeholder for future optional parameters
 }
@@ -11759,8 +11553,8 @@ type SecurityRulePropertiesFormat struct {
 	// A description for this rule. Restricted to 140 chars.
 	Description *string `json:"description,omitempty"`
 
-	// The destination address prefix. CIDR or destination IP range. Asterisk '*' can also be used to match all source IPs. Default
-	// tags such as 'VirtualNetwork', 'AzureLoadBalancer' and 'Internet' can also
+	// The destination address prefix. CIDR or destination IP range. Asterisk '*' can also be used to match all source IPs. Default tags such as 'VirtualNetwork',
+	// 'AzureLoadBalancer' and 'Internet' can also
 	// be used.
 	DestinationAddressPrefix *string `json:"destinationAddressPrefix,omitempty"`
 
@@ -11779,8 +11573,8 @@ type SecurityRulePropertiesFormat struct {
 	// The direction of the rule. The direction specifies if rule will be evaluated on incoming or outgoing traffic.
 	Direction *SecurityRuleDirection `json:"direction,omitempty"`
 
-	// The priority of the rule. The value can be between 100 and 4096. The priority number must be unique for each rule in the
-	// collection. The lower the priority number, the higher the priority of the rule.
+	// The priority of the rule. The value can be between 100 and 4096. The priority number must be unique for each rule in the collection. The lower the priority
+	// number, the higher the priority of the rule.
 	Priority *int32 `json:"priority,omitempty"`
 
 	// Network protocol this rule applies to.
@@ -11789,8 +11583,8 @@ type SecurityRulePropertiesFormat struct {
 	// The provisioning state of the security rule resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
-	// The CIDR or source IP range. Asterisk '*' can also be used to match all source IPs. Default tags such as 'VirtualNetwork',
-	// 'AzureLoadBalancer' and 'Internet' can also be used. If this is an ingress
+	// The CIDR or source IP range. Asterisk '*' can also be used to match all source IPs. Default tags such as 'VirtualNetwork', 'AzureLoadBalancer' and 'Internet'
+	// can also be used. If this is an ingress
 	// rule, specifies where network traffic originates from.
 	SourceAddressPrefix *string `json:"sourceAddressPrefix,omitempty"`
 
@@ -11884,8 +11678,7 @@ type ServiceAssociationLinksListResult struct {
 	Value *[]ServiceAssociationLink `json:"value,omitempty"`
 }
 
-// ServiceAssociationLinksListResultResponse is the response envelope for operations that return a ServiceAssociationLinksListResult
-// type.
+// ServiceAssociationLinksListResultResponse is the response envelope for operations that return a ServiceAssociationLinksListResult type.
 type ServiceAssociationLinksListResultResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -11906,8 +11699,7 @@ type ServiceDelegationPropertiesFormat struct {
 	ServiceName *string `json:"serviceName,omitempty"`
 }
 
-// ServiceEndpointPoliciesCreateOrUpdateOptions contains the optional parameters for the ServiceEndpointPolicies.CreateOrUpdate
-// method.
+// ServiceEndpointPoliciesCreateOrUpdateOptions contains the optional parameters for the ServiceEndpointPolicies.CreateOrUpdate method.
 type ServiceEndpointPoliciesCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
@@ -11923,8 +11715,7 @@ type ServiceEndpointPoliciesGetOptions struct {
 	Expand *string
 }
 
-// ServiceEndpointPoliciesListByResourceGroupOptions contains the optional parameters for the ServiceEndpointPolicies.ListByResourceGroup
-// method.
+// ServiceEndpointPoliciesListByResourceGroupOptions contains the optional parameters for the ServiceEndpointPolicies.ListByResourceGroup method.
 type ServiceEndpointPoliciesListByResourceGroupOptions struct {
 	// placeholder for future optional parameters
 }
@@ -11962,8 +11753,8 @@ type ServiceEndpointPolicyDefinition struct {
 	Properties *ServiceEndpointPolicyDefinitionPropertiesFormat `json:"properties,omitempty"`
 }
 
-// Response for ListServiceEndpointPolicyDefinition API service call. Retrieves all service endpoint policy definition that
-// belongs to a service endpoint policy.
+// Response for ListServiceEndpointPolicyDefinition API service call. Retrieves all service endpoint policy definition that belongs to a service endpoint
+// policy.
 type ServiceEndpointPolicyDefinitionListResult struct {
 	// The URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty"`
@@ -11972,19 +11763,17 @@ type ServiceEndpointPolicyDefinitionListResult struct {
 	Value *[]ServiceEndpointPolicyDefinition `json:"value,omitempty"`
 }
 
-// ServiceEndpointPolicyDefinitionListResultResponse is the response envelope for operations that return a ServiceEndpointPolicyDefinitionListResult
-// type.
+// ServiceEndpointPolicyDefinitionListResultResponse is the response envelope for operations that return a ServiceEndpointPolicyDefinitionListResult type.
 type ServiceEndpointPolicyDefinitionListResultResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 
-	// Response for ListServiceEndpointPolicyDefinition API service call. Retrieves all service endpoint policy definition that
-	// belongs to a service endpoint policy.
+	// Response for ListServiceEndpointPolicyDefinition API service call. Retrieves all service endpoint policy definition that belongs to a service endpoint
+	// policy.
 	ServiceEndpointPolicyDefinitionListResult *ServiceEndpointPolicyDefinitionListResult
 }
 
-// ServiceEndpointPolicyDefinitionPollerResponse is the response envelope for operations that asynchronously return a ServiceEndpointPolicyDefinition
-// type.
+// ServiceEndpointPolicyDefinitionPollerResponse is the response envelope for operations that asynchronously return a ServiceEndpointPolicyDefinition type.
 type ServiceEndpointPolicyDefinitionPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*ServiceEndpointPolicyDefinitionResponse, error)
@@ -12011,8 +11800,7 @@ type ServiceEndpointPolicyDefinitionPropertiesFormat struct {
 	ServiceResources *[]string `json:"serviceResources,omitempty"`
 }
 
-// ServiceEndpointPolicyDefinitionResponse is the response envelope for operations that return a ServiceEndpointPolicyDefinition
-// type.
+// ServiceEndpointPolicyDefinitionResponse is the response envelope for operations that return a ServiceEndpointPolicyDefinition type.
 type ServiceEndpointPolicyDefinitionResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -12021,20 +11809,17 @@ type ServiceEndpointPolicyDefinitionResponse struct {
 	ServiceEndpointPolicyDefinition *ServiceEndpointPolicyDefinition
 }
 
-// ServiceEndpointPolicyDefinitionsCreateOrUpdateOptions contains the optional parameters for the ServiceEndpointPolicyDefinitions.CreateOrUpdate
-// method.
+// ServiceEndpointPolicyDefinitionsCreateOrUpdateOptions contains the optional parameters for the ServiceEndpointPolicyDefinitions.CreateOrUpdate method.
 type ServiceEndpointPolicyDefinitionsCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ServiceEndpointPolicyDefinitionsDeleteOptions contains the optional parameters for the ServiceEndpointPolicyDefinitions.Delete
-// method.
+// ServiceEndpointPolicyDefinitionsDeleteOptions contains the optional parameters for the ServiceEndpointPolicyDefinitions.Delete method.
 type ServiceEndpointPolicyDefinitionsDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ServiceEndpointPolicyDefinitionsGetOptions contains the optional parameters for the ServiceEndpointPolicyDefinitions.Get
-// method.
+// ServiceEndpointPolicyDefinitionsGetOptions contains the optional parameters for the ServiceEndpointPolicyDefinitions.Get method.
 type ServiceEndpointPolicyDefinitionsGetOptions struct {
 	// placeholder for future optional parameters
 }
@@ -12054,8 +11839,7 @@ type ServiceEndpointPolicyListResult struct {
 	Value *[]ServiceEndpointPolicy `json:"value,omitempty"`
 }
 
-// ServiceEndpointPolicyListResultResponse is the response envelope for operations that return a ServiceEndpointPolicyListResult
-// type.
+// ServiceEndpointPolicyListResultResponse is the response envelope for operations that return a ServiceEndpointPolicyListResult type.
 type ServiceEndpointPolicyListResultResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -12064,8 +11848,7 @@ type ServiceEndpointPolicyListResultResponse struct {
 	ServiceEndpointPolicyListResult *ServiceEndpointPolicyListResult
 }
 
-// ServiceEndpointPolicyPollerResponse is the response envelope for operations that asynchronously return a ServiceEndpointPolicy
-// type.
+// ServiceEndpointPolicyPollerResponse is the response envelope for operations that asynchronously return a ServiceEndpointPolicy type.
 type ServiceEndpointPolicyPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*ServiceEndpointPolicyResponse, error)
@@ -12650,8 +12433,7 @@ func (t *TroubleshootingResult) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// TroubleshootingResultPollerResponse is the response envelope for operations that asynchronously return a TroubleshootingResult
-// type.
+// TroubleshootingResultPollerResponse is the response envelope for operations that asynchronously return a TroubleshootingResult type.
 type TroubleshootingResultPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*TroubleshootingResultResponse, error)
@@ -12759,8 +12541,7 @@ type VerificationIPFlowParameters struct {
 	// The local IP address. Acceptable values are valid IPv4 addresses.
 	LocalIPAddress *string `json:"localIPAddress,omitempty"`
 
-	// The local port. Acceptable values are a single integer in the range (0-65535). Support for * for the source port, which
-	// depends on the direction.
+	// The local port. Acceptable values are a single integer in the range (0-65535). Support for * for the source port, which depends on the direction.
 	LocalPort *string `json:"localPort,omitempty"`
 
 	// Protocol to be verified on.
@@ -12769,12 +12550,10 @@ type VerificationIPFlowParameters struct {
 	// The remote IP address. Acceptable values are valid IPv4 addresses.
 	RemoteIPAddress *string `json:"remoteIPAddress,omitempty"`
 
-	// The remote port. Acceptable values are a single integer in the range (0-65535). Support for * for the source port, which
-	// depends on the direction.
+	// The remote port. Acceptable values are a single integer in the range (0-65535). Support for * for the source port, which depends on the direction.
 	RemotePort *string `json:"remotePort,omitempty"`
 
-	// The NIC ID. (If VM has multiple NICs and IP forwarding is enabled on any of them, then this parameter must be specified.
-	// Otherwise optional).
+	// The NIC ID. (If VM has multiple NICs and IP forwarding is enabled on any of them, then this parameter must be specified. Otherwise optional).
 	TargetNicResourceID *string `json:"targetNicResourceId,omitempty"`
 
 	// The ID of the target resource to perform next-hop on.
@@ -12790,8 +12569,7 @@ type VerificationIPFlowResult struct {
 	RuleName *string `json:"ruleName,omitempty"`
 }
 
-// VerificationIPFlowResultPollerResponse is the response envelope for operations that asynchronously return a VerificationIPFlowResult
-// type.
+// VerificationIPFlowResultPollerResponse is the response envelope for operations that asynchronously return a VerificationIPFlowResult type.
 type VerificationIPFlowResultPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*VerificationIPFlowResultResponse, error)
@@ -12848,8 +12626,8 @@ type VirtualHub struct {
 
 // Virtual Hub identifier.
 type VirtualHubID struct {
-	// The resource URI for the Virtual Hub where the ExpressRoute gateway is or will be deployed. The Virtual Hub resource and
-	// the ExpressRoute gateway resource reside in the same subscription.
+	// The resource URI for the Virtual Hub where the ExpressRoute gateway is or will be deployed. The Virtual Hub resource and the ExpressRoute gateway resource
+	// reside in the same subscription.
 	ID *string `json:"id,omitempty"`
 }
 
@@ -12944,8 +12722,7 @@ type VirtualHubRouteTableV2 struct {
 	Properties *VirtualHubRouteTableV2Properties `json:"properties,omitempty"`
 }
 
-// VirtualHubRouteTableV2PollerResponse is the response envelope for operations that asynchronously return a VirtualHubRouteTableV2
-// type.
+// VirtualHubRouteTableV2PollerResponse is the response envelope for operations that asynchronously return a VirtualHubRouteTableV2 type.
 type VirtualHubRouteTableV2PollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*VirtualHubRouteTableV2Response, error)
@@ -12978,8 +12755,7 @@ type VirtualHubRouteTableV2Response struct {
 	VirtualHubRouteTableV2 *VirtualHubRouteTableV2
 }
 
-// VirtualHubRouteTableV2SCreateOrUpdateOptions contains the optional parameters for the VirtualHubRouteTableV2S.CreateOrUpdate
-// method.
+// VirtualHubRouteTableV2SCreateOrUpdateOptions contains the optional parameters for the VirtualHubRouteTableV2S.CreateOrUpdate method.
 type VirtualHubRouteTableV2SCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
@@ -13171,8 +12947,7 @@ type VirtualNetworkGatewayConnectionListResult struct {
 	Value *[]VirtualNetworkGatewayConnection `json:"value,omitempty"`
 }
 
-// VirtualNetworkGatewayConnectionListResultResponse is the response envelope for operations that return a VirtualNetworkGatewayConnectionListResult
-// type.
+// VirtualNetworkGatewayConnectionListResultResponse is the response envelope for operations that return a VirtualNetworkGatewayConnectionListResult type.
 type VirtualNetworkGatewayConnectionListResultResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -13181,8 +12956,7 @@ type VirtualNetworkGatewayConnectionListResultResponse struct {
 	VirtualNetworkGatewayConnectionListResult *VirtualNetworkGatewayConnectionListResult
 }
 
-// VirtualNetworkGatewayConnectionPollerResponse is the response envelope for operations that asynchronously return a VirtualNetworkGatewayConnection
-// type.
+// VirtualNetworkGatewayConnectionPollerResponse is the response envelope for operations that asynchronously return a VirtualNetworkGatewayConnection type.
 type VirtualNetworkGatewayConnectionPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*VirtualNetworkGatewayConnectionResponse, error)
@@ -13263,8 +13037,7 @@ type VirtualNetworkGatewayConnectionPropertiesFormat struct {
 	VirtualNetworkGateway2 *VirtualNetworkGateway `json:"virtualNetworkGateway2,omitempty"`
 }
 
-// VirtualNetworkGatewayConnectionResponse is the response envelope for operations that return a VirtualNetworkGatewayConnection
-// type.
+// VirtualNetworkGatewayConnectionResponse is the response envelope for operations that return a VirtualNetworkGatewayConnection type.
 type VirtualNetworkGatewayConnectionResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -13273,44 +13046,37 @@ type VirtualNetworkGatewayConnectionResponse struct {
 	VirtualNetworkGatewayConnection *VirtualNetworkGatewayConnection
 }
 
-// VirtualNetworkGatewayConnectionsCreateOrUpdateOptions contains the optional parameters for the VirtualNetworkGatewayConnections.CreateOrUpdate
-// method.
+// VirtualNetworkGatewayConnectionsCreateOrUpdateOptions contains the optional parameters for the VirtualNetworkGatewayConnections.CreateOrUpdate method.
 type VirtualNetworkGatewayConnectionsCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualNetworkGatewayConnectionsDeleteOptions contains the optional parameters for the VirtualNetworkGatewayConnections.Delete
-// method.
+// VirtualNetworkGatewayConnectionsDeleteOptions contains the optional parameters for the VirtualNetworkGatewayConnections.Delete method.
 type VirtualNetworkGatewayConnectionsDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualNetworkGatewayConnectionsGetOptions contains the optional parameters for the VirtualNetworkGatewayConnections.Get
-// method.
+// VirtualNetworkGatewayConnectionsGetOptions contains the optional parameters for the VirtualNetworkGatewayConnections.Get method.
 type VirtualNetworkGatewayConnectionsGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualNetworkGatewayConnectionsGetSharedKeyOptions contains the optional parameters for the VirtualNetworkGatewayConnections.GetSharedKey
-// method.
+// VirtualNetworkGatewayConnectionsGetSharedKeyOptions contains the optional parameters for the VirtualNetworkGatewayConnections.GetSharedKey method.
 type VirtualNetworkGatewayConnectionsGetSharedKeyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualNetworkGatewayConnectionsListOptions contains the optional parameters for the VirtualNetworkGatewayConnections.List
-// method.
+// VirtualNetworkGatewayConnectionsListOptions contains the optional parameters for the VirtualNetworkGatewayConnections.List method.
 type VirtualNetworkGatewayConnectionsListOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualNetworkGatewayConnectionsResetSharedKeyOptions contains the optional parameters for the VirtualNetworkGatewayConnections.ResetSharedKey
-// method.
+// VirtualNetworkGatewayConnectionsResetSharedKeyOptions contains the optional parameters for the VirtualNetworkGatewayConnections.ResetSharedKey method.
 type VirtualNetworkGatewayConnectionsResetSharedKeyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualNetworkGatewayConnectionsSetSharedKeyOptions contains the optional parameters for the VirtualNetworkGatewayConnections.SetSharedKey
-// method.
+// VirtualNetworkGatewayConnectionsSetSharedKeyOptions contains the optional parameters for the VirtualNetworkGatewayConnections.SetSharedKey method.
 type VirtualNetworkGatewayConnectionsSetSharedKeyOptions struct {
 	// placeholder for future optional parameters
 }
@@ -13328,8 +13094,7 @@ type VirtualNetworkGatewayConnectionsStopPacketCaptureOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualNetworkGatewayConnectionsUpdateTagsOptions contains the optional parameters for the VirtualNetworkGatewayConnections.UpdateTags
-// method.
+// VirtualNetworkGatewayConnectionsUpdateTagsOptions contains the optional parameters for the VirtualNetworkGatewayConnections.UpdateTags method.
 type VirtualNetworkGatewayConnectionsUpdateTagsOptions struct {
 	// placeholder for future optional parameters
 }
@@ -13374,8 +13139,7 @@ type VirtualNetworkGatewayListConnectionsResult struct {
 	Value *[]VirtualNetworkGatewayConnectionListEntity `json:"value,omitempty"`
 }
 
-// VirtualNetworkGatewayListConnectionsResultResponse is the response envelope for operations that return a VirtualNetworkGatewayListConnectionsResult
-// type.
+// VirtualNetworkGatewayListConnectionsResultResponse is the response envelope for operations that return a VirtualNetworkGatewayListConnectionsResult type.
 type VirtualNetworkGatewayListConnectionsResultResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -13393,8 +13157,7 @@ type VirtualNetworkGatewayListResult struct {
 	Value *[]VirtualNetworkGateway `json:"value,omitempty"`
 }
 
-// VirtualNetworkGatewayListResultResponse is the response envelope for operations that return a VirtualNetworkGatewayListResult
-// type.
+// VirtualNetworkGatewayListResultResponse is the response envelope for operations that return a VirtualNetworkGatewayListResult type.
 type VirtualNetworkGatewayListResultResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -13403,8 +13166,7 @@ type VirtualNetworkGatewayListResultResponse struct {
 	VirtualNetworkGatewayListResult *VirtualNetworkGatewayListResult
 }
 
-// VirtualNetworkGatewayPollerResponse is the response envelope for operations that asynchronously return a VirtualNetworkGateway
-// type.
+// VirtualNetworkGatewayPollerResponse is the response envelope for operations that asynchronously return a VirtualNetworkGateway type.
 type VirtualNetworkGatewayPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*VirtualNetworkGatewayResponse, error)
@@ -13424,8 +13186,8 @@ type VirtualNetworkGatewayPropertiesFormat struct {
 	// Virtual network gateway's BGP speaker settings.
 	BgpSettings *BgpSettings `json:"bgpSettings,omitempty"`
 
-	// The reference to the address space resource which represents the custom routes address space specified by the customer
-	// for virtual network gateway and VpnClient.
+	// The reference to the address space resource which represents the custom routes address space specified by the customer for virtual network gateway and
+	// VpnClient.
 	CustomRoutes *AddressSpace `json:"customRoutes,omitempty"`
 
 	// Whether BGP is enabled for this virtual network gateway or not.
@@ -13437,8 +13199,8 @@ type VirtualNetworkGatewayPropertiesFormat struct {
 	// Whether private IP needs to be enabled on this gateway for connections or not.
 	EnablePrivateIPAddress *bool `json:"enablePrivateIpAddress,omitempty"`
 
-	// The reference to the LocalNetworkGateway resource which represents local network site having default routes. Assign Null
-	// value in case of removing existing default site setting.
+	// The reference to the LocalNetworkGateway resource which represents local network site having default routes. Assign Null value in case of removing existing
+	// default site setting.
 	GatewayDefaultSite *SubResource `json:"gatewayDefaultSite,omitempty"`
 
 	// The type of this virtual network gateway.
@@ -13490,8 +13252,7 @@ type VirtualNetworkGatewaySKU struct {
 	Tier *VirtualNetworkGatewaySKUTier `json:"tier,omitempty"`
 }
 
-// VirtualNetworkGatewaysCreateOrUpdateOptions contains the optional parameters for the VirtualNetworkGateways.CreateOrUpdate
-// method.
+// VirtualNetworkGatewaysCreateOrUpdateOptions contains the optional parameters for the VirtualNetworkGateways.CreateOrUpdate method.
 type VirtualNetworkGatewaysCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
@@ -13507,33 +13268,28 @@ type VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVpnConnectionsOptions 
 	// placeholder for future optional parameters
 }
 
-// VirtualNetworkGatewaysGenerateVpnProfileOptions contains the optional parameters for the VirtualNetworkGateways.GenerateVpnProfile
-// method.
+// VirtualNetworkGatewaysGenerateVpnProfileOptions contains the optional parameters for the VirtualNetworkGateways.GenerateVpnProfile method.
 type VirtualNetworkGatewaysGenerateVpnProfileOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualNetworkGatewaysGeneratevpnclientpackageOptions contains the optional parameters for the VirtualNetworkGateways.Generatevpnclientpackage
-// method.
+// VirtualNetworkGatewaysGeneratevpnclientpackageOptions contains the optional parameters for the VirtualNetworkGateways.Generatevpnclientpackage method.
 type VirtualNetworkGatewaysGeneratevpnclientpackageOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualNetworkGatewaysGetAdvertisedRoutesOptions contains the optional parameters for the VirtualNetworkGateways.GetAdvertisedRoutes
-// method.
+// VirtualNetworkGatewaysGetAdvertisedRoutesOptions contains the optional parameters for the VirtualNetworkGateways.GetAdvertisedRoutes method.
 type VirtualNetworkGatewaysGetAdvertisedRoutesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualNetworkGatewaysGetBgpPeerStatusOptions contains the optional parameters for the VirtualNetworkGateways.GetBgpPeerStatus
-// method.
+// VirtualNetworkGatewaysGetBgpPeerStatusOptions contains the optional parameters for the VirtualNetworkGateways.GetBgpPeerStatus method.
 type VirtualNetworkGatewaysGetBgpPeerStatusOptions struct {
 	// The IP address of the peer to retrieve the status of.
 	Peer *string
 }
 
-// VirtualNetworkGatewaysGetLearnedRoutesOptions contains the optional parameters for the VirtualNetworkGateways.GetLearnedRoutes
-// method.
+// VirtualNetworkGatewaysGetLearnedRoutesOptions contains the optional parameters for the VirtualNetworkGateways.GetLearnedRoutes method.
 type VirtualNetworkGatewaysGetLearnedRoutesOptions struct {
 	// placeholder for future optional parameters
 }
@@ -13543,8 +13299,7 @@ type VirtualNetworkGatewaysGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualNetworkGatewaysGetVpnProfilePackageURLOptions contains the optional parameters for the VirtualNetworkGateways.GetVpnProfilePackageURL
-// method.
+// VirtualNetworkGatewaysGetVpnProfilePackageURLOptions contains the optional parameters for the VirtualNetworkGateways.GetVpnProfilePackageURL method.
 type VirtualNetworkGatewaysGetVpnProfilePackageURLOptions struct {
 	// placeholder for future optional parameters
 }
@@ -13561,8 +13316,7 @@ type VirtualNetworkGatewaysGetVpnclientIPsecParametersOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualNetworkGatewaysListConnectionsOptions contains the optional parameters for the VirtualNetworkGateways.ListConnections
-// method.
+// VirtualNetworkGatewaysListConnectionsOptions contains the optional parameters for the VirtualNetworkGateways.ListConnections method.
 type VirtualNetworkGatewaysListConnectionsOptions struct {
 	// placeholder for future optional parameters
 }
@@ -13578,8 +13332,7 @@ type VirtualNetworkGatewaysResetOptions struct {
 	GatewayVip *string
 }
 
-// VirtualNetworkGatewaysResetVpnClientSharedKeyOptions contains the optional parameters for the VirtualNetworkGateways.ResetVpnClientSharedKey
-// method.
+// VirtualNetworkGatewaysResetVpnClientSharedKeyOptions contains the optional parameters for the VirtualNetworkGateways.ResetVpnClientSharedKey method.
 type VirtualNetworkGatewaysResetVpnClientSharedKeyOptions struct {
 	// placeholder for future optional parameters
 }
@@ -13590,21 +13343,18 @@ type VirtualNetworkGatewaysSetVpnclientIPsecParametersOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualNetworkGatewaysStartPacketCaptureOptions contains the optional parameters for the VirtualNetworkGateways.StartPacketCapture
-// method.
+// VirtualNetworkGatewaysStartPacketCaptureOptions contains the optional parameters for the VirtualNetworkGateways.StartPacketCapture method.
 type VirtualNetworkGatewaysStartPacketCaptureOptions struct {
 	// Virtual network gateway packet capture parameters supplied to start packet capture on gateway.
 	Parameters *VpnPacketCaptureStartParameters
 }
 
-// VirtualNetworkGatewaysStopPacketCaptureOptions contains the optional parameters for the VirtualNetworkGateways.StopPacketCapture
-// method.
+// VirtualNetworkGatewaysStopPacketCaptureOptions contains the optional parameters for the VirtualNetworkGateways.StopPacketCapture method.
 type VirtualNetworkGatewaysStopPacketCaptureOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualNetworkGatewaysSupportedVpnDevicesOptions contains the optional parameters for the VirtualNetworkGateways.SupportedVpnDevices
-// method.
+// VirtualNetworkGatewaysSupportedVpnDevicesOptions contains the optional parameters for the VirtualNetworkGateways.SupportedVpnDevices method.
 type VirtualNetworkGatewaysSupportedVpnDevicesOptions struct {
 	// placeholder for future optional parameters
 }
@@ -13647,8 +13397,7 @@ type VirtualNetworkListUsageResult struct {
 	Value *[]VirtualNetworkUsage `json:"value,omitempty" azure:"ro"`
 }
 
-// VirtualNetworkListUsageResultResponse is the response envelope for operations that return a VirtualNetworkListUsageResult
-// type.
+// VirtualNetworkListUsageResultResponse is the response envelope for operations that return a VirtualNetworkListUsageResult type.
 type VirtualNetworkListUsageResultResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -13679,8 +13428,7 @@ type VirtualNetworkPeeringListResult struct {
 	Value *[]VirtualNetworkPeering `json:"value,omitempty"`
 }
 
-// VirtualNetworkPeeringListResultResponse is the response envelope for operations that return a VirtualNetworkPeeringListResult
-// type.
+// VirtualNetworkPeeringListResultResponse is the response envelope for operations that return a VirtualNetworkPeeringListResult type.
 type VirtualNetworkPeeringListResultResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -13689,8 +13437,7 @@ type VirtualNetworkPeeringListResultResponse struct {
 	VirtualNetworkPeeringListResult *VirtualNetworkPeeringListResult
 }
 
-// VirtualNetworkPeeringPollerResponse is the response envelope for operations that asynchronously return a VirtualNetworkPeering
-// type.
+// VirtualNetworkPeeringPollerResponse is the response envelope for operations that asynchronously return a VirtualNetworkPeering type.
 type VirtualNetworkPeeringPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*VirtualNetworkPeeringResponse, error)
@@ -13722,15 +13469,14 @@ type VirtualNetworkPeeringPropertiesFormat struct {
 	// The reference to the remote virtual network address space.
 	RemoteAddressSpace *AddressSpace `json:"remoteAddressSpace,omitempty"`
 
-	// The reference to the remote virtual network. The remote virtual network can be in the same or different region (preview).
-	// See here to register for the preview and learn more (
+	// The reference to the remote virtual network. The remote virtual network can be in the same or different region (preview). See here to register for the
+	// preview and learn more (
 	// https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-create-peering [https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-create-peering]).
 	RemoteVirtualNetwork *SubResource `json:"remoteVirtualNetwork,omitempty"`
 
-	// If remote gateways can be used on this virtual network. If the flag is set to true, and allowGatewayTransit on remote peering
-	// is also true, virtual network will use gateways of remote virtual network
-	// for transit. Only one peering can have this flag set to true. This flag cannot be set if virtual network already has a
-	// gateway.
+	// If remote gateways can be used on this virtual network. If the flag is set to true, and allowGatewayTransit on remote peering is also true, virtual network
+	// will use gateways of remote virtual network
+	// for transit. Only one peering can have this flag set to true. This flag cannot be set if virtual network already has a gateway.
 	UseRemoteGateways *bool `json:"useRemoteGateways,omitempty"`
 }
 
@@ -13743,8 +13489,7 @@ type VirtualNetworkPeeringResponse struct {
 	VirtualNetworkPeering *VirtualNetworkPeering
 }
 
-// VirtualNetworkPeeringsCreateOrUpdateOptions contains the optional parameters for the VirtualNetworkPeerings.CreateOrUpdate
-// method.
+// VirtualNetworkPeeringsCreateOrUpdateOptions contains the optional parameters for the VirtualNetworkPeerings.CreateOrUpdate method.
 type VirtualNetworkPeeringsCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
@@ -13790,8 +13535,8 @@ type VirtualNetworkPropertiesFormat struct {
 	// The dhcpOptions that contains an array of DNS servers available to VMs deployed in the virtual network.
 	DhcpOptions *DhcpOptions `json:"dhcpOptions,omitempty"`
 
-	// Indicates if DDoS protection is enabled for all the protected resources in the virtual network. It requires a DDoS protection
-	// plan associated with the resource.
+	// Indicates if DDoS protection is enabled for all the protected resources in the virtual network. It requires a DDoS protection plan associated with the
+	// resource.
 	EnableDdosProtection *bool `json:"enableDdosProtection,omitempty"`
 
 	// Indicates if VM protection is enabled for all the subnets in the virtual network.
@@ -13850,8 +13595,7 @@ type VirtualNetworkTapListResultResponse struct {
 	VirtualNetworkTapListResult *VirtualNetworkTapListResult
 }
 
-// VirtualNetworkTapPollerResponse is the response envelope for operations that asynchronously return a VirtualNetworkTap
-// type.
+// VirtualNetworkTapPollerResponse is the response envelope for operations that asynchronously return a VirtualNetworkTap type.
 type VirtualNetworkTapPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*VirtualNetworkTapResponse, error)
@@ -13913,8 +13657,7 @@ type VirtualNetworkTapsListAllOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualNetworkTapsListByResourceGroupOptions contains the optional parameters for the VirtualNetworkTaps.ListByResourceGroup
-// method.
+// VirtualNetworkTapsListByResourceGroupOptions contains the optional parameters for the VirtualNetworkTaps.ListByResourceGroup method.
 type VirtualNetworkTapsListByResourceGroupOptions struct {
 	// placeholder for future optional parameters
 }
@@ -13951,8 +13694,7 @@ type VirtualNetworkUsageName struct {
 	Value *string `json:"value,omitempty" azure:"ro"`
 }
 
-// VirtualNetworksCheckIPAddressAvailabilityOptions contains the optional parameters for the VirtualNetworks.CheckIPAddressAvailability
-// method.
+// VirtualNetworksCheckIPAddressAvailabilityOptions contains the optional parameters for the VirtualNetworks.CheckIPAddressAvailability method.
 type VirtualNetworksCheckIPAddressAvailabilityOptions struct {
 	// placeholder for future optional parameters
 }
@@ -14046,8 +13788,7 @@ type VirtualRouterPeeringListResult struct {
 	Value *[]VirtualRouterPeering `json:"value,omitempty"`
 }
 
-// VirtualRouterPeeringListResultResponse is the response envelope for operations that return a VirtualRouterPeeringListResult
-// type.
+// VirtualRouterPeeringListResultResponse is the response envelope for operations that return a VirtualRouterPeeringListResult type.
 type VirtualRouterPeeringListResultResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -14056,8 +13797,7 @@ type VirtualRouterPeeringListResultResponse struct {
 	VirtualRouterPeeringListResult *VirtualRouterPeeringListResult
 }
 
-// VirtualRouterPeeringPollerResponse is the response envelope for operations that asynchronously return a VirtualRouterPeering
-// type.
+// VirtualRouterPeeringPollerResponse is the response envelope for operations that asynchronously return a VirtualRouterPeering type.
 type VirtualRouterPeeringPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*VirtualRouterPeeringResponse, error)
@@ -14090,8 +13830,7 @@ type VirtualRouterPeeringResponse struct {
 	VirtualRouterPeering *VirtualRouterPeering
 }
 
-// VirtualRouterPeeringsCreateOrUpdateOptions contains the optional parameters for the VirtualRouterPeerings.CreateOrUpdate
-// method.
+// VirtualRouterPeeringsCreateOrUpdateOptions contains the optional parameters for the VirtualRouterPeerings.CreateOrUpdate method.
 type VirtualRouterPeeringsCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
@@ -14399,8 +14138,8 @@ type VpnClientConnectionHealthDetailListResult struct {
 	Value *[]VpnClientConnectionHealthDetail `json:"value,omitempty"`
 }
 
-// VpnClientConnectionHealthDetailListResultPollerResponse is the response envelope for operations that asynchronously return
-// a VpnClientConnectionHealthDetailListResult type.
+// VpnClientConnectionHealthDetailListResultPollerResponse is the response envelope for operations that asynchronously return a VpnClientConnectionHealthDetailListResult
+// type.
 type VpnClientConnectionHealthDetailListResultPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*VpnClientConnectionHealthDetailListResultResponse, error)
@@ -14412,8 +14151,7 @@ type VpnClientConnectionHealthDetailListResultPollerResponse struct {
 	RawResponse *http.Response
 }
 
-// VpnClientConnectionHealthDetailListResultResponse is the response envelope for operations that return a VpnClientConnectionHealthDetailListResult
-// type.
+// VpnClientConnectionHealthDetailListResultResponse is the response envelope for operations that return a VpnClientConnectionHealthDetailListResult type.
 type VpnClientConnectionHealthDetailListResultResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -14449,8 +14187,7 @@ type VpnClientIPsecParameters struct {
 	SaLifeTimeSeconds *int32 `json:"saLifeTimeSeconds,omitempty"`
 }
 
-// VpnClientIPsecParametersPollerResponse is the response envelope for operations that asynchronously return a VpnClientIPsecParameters
-// type.
+// VpnClientIPsecParametersPollerResponse is the response envelope for operations that asynchronously return a VpnClientIPsecParameters type.
 type VpnClientIPsecParametersPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*VpnClientIPsecParametersResponse, error)
@@ -14476,15 +14213,15 @@ type VpnClientParameters struct {
 	// VPN client authentication method.
 	AuthenticationMethod *AuthenticationMethod `json:"authenticationMethod,omitempty"`
 
-	// A list of client root certificates public certificate data encoded as Base-64 strings. Optional parameter for external
-	// radius based authentication with EAPTLS.
+	// A list of client root certificates public certificate data encoded as Base-64 strings. Optional parameter for external radius based authentication with
+	// EAPTLS.
 	ClientRootCertificates *[]string `json:"clientRootCertificates,omitempty"`
 
 	// VPN client Processor Architecture.
 	ProcessorArchitecture *ProcessorArchitecture `json:"processorArchitecture,omitempty"`
 
-	// The public certificate data for the radius server authentication certificate as a Base-64 encoded string. Required only
-	// if external radius authentication has been configured with EAPTLS
+	// The public certificate data for the radius server authentication certificate as a Base-64 encoded string. Required only if external radius authentication
+	// has been configured with EAPTLS
 	// authentication.
 	RadiusServerAuthCertificate *string `json:"radiusServerAuthCertificate,omitempty"`
 }
@@ -14746,8 +14483,7 @@ type VpnLinkBgpSettings struct {
 	BgpPeeringAddress *string `json:"bgpPeeringAddress,omitempty"`
 }
 
-// VpnLinkConnectionsListByVpnConnectionOptions contains the optional parameters for the VpnLinkConnections.ListByVpnConnection
-// method.
+// VpnLinkConnectionsListByVpnConnectionOptions contains the optional parameters for the VpnLinkConnections.ListByVpnConnection method.
 type VpnLinkConnectionsListByVpnConnectionOptions struct {
 	// placeholder for future optional parameters
 }
@@ -14779,8 +14515,7 @@ type VpnProfileResponse struct {
 	ProfileURL *string `json:"profileUrl,omitempty"`
 }
 
-// VpnProfileResponsePollerResponse is the response envelope for operations that asynchronously return a VpnProfileResponse
-// type.
+// VpnProfileResponsePollerResponse is the response envelope for operations that asynchronously return a VpnProfileResponse type.
 type VpnProfileResponsePollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*VpnProfileResponseResponse, error)
@@ -14847,8 +14582,7 @@ type VpnServerConfiguration struct {
 	Properties *VpnServerConfigurationProperties `json:"properties,omitempty"`
 }
 
-// VpnServerConfigurationPollerResponse is the response envelope for operations that asynchronously return a VpnServerConfiguration
-// type.
+// VpnServerConfigurationPollerResponse is the response envelope for operations that asynchronously return a VpnServerConfiguration type.
 type VpnServerConfigurationPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*VpnServerConfigurationResponse, error)
@@ -14923,8 +14657,7 @@ type VpnServerConfigurationsAssociatedWithVirtualWanListOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VpnServerConfigurationsCreateOrUpdateOptions contains the optional parameters for the VpnServerConfigurations.CreateOrUpdate
-// method.
+// VpnServerConfigurationsCreateOrUpdateOptions contains the optional parameters for the VpnServerConfigurations.CreateOrUpdate method.
 type VpnServerConfigurationsCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
@@ -14939,8 +14672,7 @@ type VpnServerConfigurationsGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VpnServerConfigurationsListByResourceGroupOptions contains the optional parameters for the VpnServerConfigurations.ListByResourceGroup
-// method.
+// VpnServerConfigurationsListByResourceGroupOptions contains the optional parameters for the VpnServerConfigurations.ListByResourceGroup method.
 type VpnServerConfigurationsListByResourceGroupOptions struct {
 	// placeholder for future optional parameters
 }
@@ -14956,8 +14688,7 @@ type VpnServerConfigurationsResponse struct {
 	VpnServerConfigurationResourceIDs *[]string `json:"vpnServerConfigurationResourceIds,omitempty"`
 }
 
-// VpnServerConfigurationsResponsePollerResponse is the response envelope for operations that asynchronously return a VpnServerConfigurationsResponse
-// type.
+// VpnServerConfigurationsResponsePollerResponse is the response envelope for operations that asynchronously return a VpnServerConfigurationsResponse type.
 type VpnServerConfigurationsResponsePollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*VpnServerConfigurationsResponseResponse, error)
@@ -14969,8 +14700,7 @@ type VpnServerConfigurationsResponsePollerResponse struct {
 	RawResponse *http.Response
 }
 
-// VpnServerConfigurationsResponseResponse is the response envelope for operations that return a VpnServerConfigurationsResponse
-// type.
+// VpnServerConfigurationsResponseResponse is the response envelope for operations that return a VpnServerConfigurationsResponse type.
 type VpnServerConfigurationsResponseResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -15235,14 +14965,12 @@ type WebApplicationFirewallCustomRule struct {
 	RuleType *WebApplicationFirewallRuleType `json:"ruleType,omitempty"`
 }
 
-// WebApplicationFirewallPoliciesCreateOrUpdateOptions contains the optional parameters for the WebApplicationFirewallPolicies.CreateOrUpdate
-// method.
+// WebApplicationFirewallPoliciesCreateOrUpdateOptions contains the optional parameters for the WebApplicationFirewallPolicies.CreateOrUpdate method.
 type WebApplicationFirewallPoliciesCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// WebApplicationFirewallPoliciesDeleteOptions contains the optional parameters for the WebApplicationFirewallPolicies.Delete
-// method.
+// WebApplicationFirewallPoliciesDeleteOptions contains the optional parameters for the WebApplicationFirewallPolicies.Delete method.
 type WebApplicationFirewallPoliciesDeleteOptions struct {
 	// placeholder for future optional parameters
 }
@@ -15252,14 +14980,12 @@ type WebApplicationFirewallPoliciesGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// WebApplicationFirewallPoliciesListAllOptions contains the optional parameters for the WebApplicationFirewallPolicies.ListAll
-// method.
+// WebApplicationFirewallPoliciesListAllOptions contains the optional parameters for the WebApplicationFirewallPolicies.ListAll method.
 type WebApplicationFirewallPoliciesListAllOptions struct {
 	// placeholder for future optional parameters
 }
 
-// WebApplicationFirewallPoliciesListOptions contains the optional parameters for the WebApplicationFirewallPolicies.List
-// method.
+// WebApplicationFirewallPoliciesListOptions contains the optional parameters for the WebApplicationFirewallPolicies.List method.
 type WebApplicationFirewallPoliciesListOptions struct {
 	// placeholder for future optional parameters
 }
@@ -15274,8 +15000,8 @@ type WebApplicationFirewallPolicy struct {
 	Properties *WebApplicationFirewallPolicyPropertiesFormat `json:"properties,omitempty"`
 }
 
-// Result of the request to list WebApplicationFirewallPolicies. It contains a list of WebApplicationFirewallPolicy objects
-// and a URL link to get the next set of results.
+// Result of the request to list WebApplicationFirewallPolicies. It contains a list of WebApplicationFirewallPolicy objects and a URL link to get the next
+// set of results.
 type WebApplicationFirewallPolicyListResult struct {
 	// URL to get the next set of WebApplicationFirewallPolicy objects if there are any.
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
@@ -15284,14 +15010,13 @@ type WebApplicationFirewallPolicyListResult struct {
 	Value *[]WebApplicationFirewallPolicy `json:"value,omitempty" azure:"ro"`
 }
 
-// WebApplicationFirewallPolicyListResultResponse is the response envelope for operations that return a WebApplicationFirewallPolicyListResult
-// type.
+// WebApplicationFirewallPolicyListResultResponse is the response envelope for operations that return a WebApplicationFirewallPolicyListResult type.
 type WebApplicationFirewallPolicyListResultResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 
-	// Result of the request to list WebApplicationFirewallPolicies. It contains a list of WebApplicationFirewallPolicy objects
-	// and a URL link to get the next set of results.
+	// Result of the request to list WebApplicationFirewallPolicies. It contains a list of WebApplicationFirewallPolicy objects and a URL link to get the next
+	// set of results.
 	WebApplicationFirewallPolicyListResult *WebApplicationFirewallPolicyListResult
 }
 
@@ -15322,8 +15047,7 @@ type WebApplicationFirewallPolicyPropertiesFormat struct {
 	ResourceState *WebApplicationFirewallPolicyResourceState `json:"resourceState,omitempty" azure:"ro"`
 }
 
-// WebApplicationFirewallPolicyResponse is the response envelope for operations that return a WebApplicationFirewallPolicy
-// type.
+// WebApplicationFirewallPolicyResponse is the response envelope for operations that return a WebApplicationFirewallPolicy type.
 type WebApplicationFirewallPolicyResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response

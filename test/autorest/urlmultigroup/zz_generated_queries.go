@@ -17,8 +17,7 @@ type QueriesOperations interface {
 	ArrayStringMultiEmpty(ctx context.Context, options *QueriesArrayStringMultiEmptyOptions) (*http.Response, error)
 	// ArrayStringMultiNull - Get a null array of string using the multi-array format
 	ArrayStringMultiNull(ctx context.Context, options *QueriesArrayStringMultiNullOptions) (*http.Response, error)
-	// ArrayStringMultiValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the mult-array
-	// format
+	// ArrayStringMultiValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the mult-array format
 	ArrayStringMultiValid(ctx context.Context, options *QueriesArrayStringMultiValidOptions) (*http.Response, error)
 }
 

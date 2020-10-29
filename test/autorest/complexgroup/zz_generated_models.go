@@ -911,14 +911,12 @@ type PolymorphismGetComplicatedOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PolymorphismGetComposedWithDiscriminatorOptions contains the optional parameters for the Polymorphism.GetComposedWithDiscriminator
-// method.
+// PolymorphismGetComposedWithDiscriminatorOptions contains the optional parameters for the Polymorphism.GetComposedWithDiscriminator method.
 type PolymorphismGetComposedWithDiscriminatorOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PolymorphismGetComposedWithoutDiscriminatorOptions contains the optional parameters for the Polymorphism.GetComposedWithoutDiscriminator
-// method.
+// PolymorphismGetComposedWithoutDiscriminatorOptions contains the optional parameters for the Polymorphism.GetComposedWithoutDiscriminator method.
 type PolymorphismGetComposedWithoutDiscriminatorOptions struct {
 	// placeholder for future optional parameters
 }
@@ -938,14 +936,12 @@ type PolymorphismPutComplicatedOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PolymorphismPutMissingDiscriminatorOptions contains the optional parameters for the Polymorphism.PutMissingDiscriminator
-// method.
+// PolymorphismPutMissingDiscriminatorOptions contains the optional parameters for the Polymorphism.PutMissingDiscriminator method.
 type PolymorphismPutMissingDiscriminatorOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PolymorphismPutValidMissingRequiredOptions contains the optional parameters for the Polymorphism.PutValidMissingRequired
-// method.
+// PolymorphismPutValidMissingRequiredOptions contains the optional parameters for the Polymorphism.PutValidMissingRequired method.
 type PolymorphismPutValidMissingRequiredOptions struct {
 	// placeholder for future optional parameters
 }

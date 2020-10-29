@@ -21,8 +21,8 @@ type PrivateLinkServicesOperations interface {
 	BeginCheckPrivateLinkServiceVisibility(ctx context.Context, location string, parameters CheckPrivateLinkServiceVisibilityRequest, options *PrivateLinkServicesCheckPrivateLinkServiceVisibilityOptions) (*PrivateLinkServiceVisibilityPollerResponse, error)
 	// ResumeCheckPrivateLinkServiceVisibility - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeCheckPrivateLinkServiceVisibility(token string) (PrivateLinkServiceVisibilityPoller, error)
-	// BeginCheckPrivateLinkServiceVisibilityByResourceGroup - Checks whether the subscription is visible to private link service
-	// in the specified resource group.
+	// BeginCheckPrivateLinkServiceVisibilityByResourceGroup - Checks whether the subscription is visible to private link service in the specified resource
+	// group.
 	BeginCheckPrivateLinkServiceVisibilityByResourceGroup(ctx context.Context, location string, resourceGroupName string, parameters CheckPrivateLinkServiceVisibilityRequest, options *PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupOptions) (*PrivateLinkServiceVisibilityPollerResponse, error)
 	// ResumeCheckPrivateLinkServiceVisibilityByResourceGroup - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeCheckPrivateLinkServiceVisibilityByResourceGroup(token string) (PrivateLinkServiceVisibilityPoller, error)
@@ -40,16 +40,15 @@ type PrivateLinkServicesOperations interface {
 	ResumeDeletePrivateEndpointConnection(token string) (HTTPPoller, error)
 	// Get - Gets the specified private link service by resource group.
 	Get(ctx context.Context, resourceGroupName string, serviceName string, options *PrivateLinkServicesGetOptions) (*PrivateLinkServiceResponse, error)
-	// GetPrivateEndpointConnection - Get the specific private end point connection by specific private link service in the resource
-	// group.
+	// GetPrivateEndpointConnection - Get the specific private end point connection by specific private link service in the resource group.
 	GetPrivateEndpointConnection(ctx context.Context, resourceGroupName string, serviceName string, peConnectionName string, options *PrivateLinkServicesGetPrivateEndpointConnectionOptions) (*PrivateEndpointConnectionResponse, error)
 	// List - Gets all private link services in a resource group.
 	List(resourceGroupName string, options *PrivateLinkServicesListOptions) PrivateLinkServiceListResultPager
-	// ListAutoApprovedPrivateLinkServices - Returns all of the private link service ids that can be linked to a Private Endpoint
-	// with auto approved in this subscription in this region.
+	// ListAutoApprovedPrivateLinkServices - Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this
+	// subscription in this region.
 	ListAutoApprovedPrivateLinkServices(location string, options *PrivateLinkServicesListAutoApprovedPrivateLinkServicesOptions) AutoApprovedPrivateLinkServicesResultPager
-	// ListAutoApprovedPrivateLinkServicesByResourceGroup - Returns all of the private link service ids that can be linked to
-	// a Private Endpoint with auto approved in this subscription in this region.
+	// ListAutoApprovedPrivateLinkServicesByResourceGroup - Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved
+	// in this subscription in this region.
 	ListAutoApprovedPrivateLinkServicesByResourceGroup(location string, resourceGroupName string, options *PrivateLinkServicesListAutoApprovedPrivateLinkServicesByResourceGroupOptions) AutoApprovedPrivateLinkServicesResultPager
 	// ListBySubscription - Gets all private link service in a subscription.
 	ListBySubscription(options *PrivateLinkServicesListBySubscriptionOptions) PrivateLinkServiceListResultPager

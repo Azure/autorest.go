@@ -47,8 +47,7 @@ type PagingGetMultiplePagesFailureURIOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PagingGetMultiplePagesFragmentNextLinkOptions contains the optional parameters for the Paging.GetMultiplePagesFragmentNextLink
-// method.
+// PagingGetMultiplePagesFragmentNextLinkOptions contains the optional parameters for the Paging.GetMultiplePagesFragmentNextLink method.
 type PagingGetMultiplePagesFragmentNextLinkOptions struct {
 	// placeholder for future optional parameters
 }
@@ -152,8 +151,7 @@ type ProductResult struct {
 	Values   *[]Product `json:"values,omitempty"`
 }
 
-// ProductResultPagerPollerResponse is the response envelope for operations that asynchronously return a ProductResultPager
-// type.
+// ProductResultPagerPollerResponse is the response envelope for operations that asynchronously return a ProductResultPager type.
 type ProductResultPagerPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (ProductResultPager, error)
@@ -191,8 +189,7 @@ type ProductResultValueWithXmsClientName struct {
 	NextLink *string    `json:"nextLink,omitempty"`
 }
 
-// ProductResultValueWithXmsClientNameResponse is the response envelope for operations that return a ProductResultValueWithXmsClientName
-// type.
+// ProductResultValueWithXmsClientNameResponse is the response envelope for operations that return a ProductResultValueWithXmsClientName type.
 type ProductResultValueWithXmsClientNameResponse struct {
 	ProductResultValueWithXmsClientName *ProductResultValueWithXmsClientName
 

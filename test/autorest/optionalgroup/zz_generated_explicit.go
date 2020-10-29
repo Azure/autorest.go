@@ -37,38 +37,34 @@ type ExplicitOperations interface {
 	PostOptionalStringParameter(ctx context.Context, options *ExplicitPostOptionalStringParameterOptions) (*http.Response, error)
 	// PostOptionalStringProperty - Test explicitly optional integer. Please put a valid string-wrapper with 'value' = null.
 	PostOptionalStringProperty(ctx context.Context, options *ExplicitPostOptionalStringPropertyOptions) (*http.Response, error)
-	// PostRequiredArrayHeader - Test explicitly required array. Please put a header 'headerParameter' => null and the client
-	// library should throw before the request is sent.
+	// PostRequiredArrayHeader - Test explicitly required array. Please put a header 'headerParameter' => null and the client library should throw before the
+	// request is sent.
 	PostRequiredArrayHeader(ctx context.Context, headerParameter []string, options *ExplicitPostRequiredArrayHeaderOptions) (*http.Response, error)
-	// PostRequiredArrayParameter - Test explicitly required array. Please put null and the client library should throw before
-	// the request is sent.
+	// PostRequiredArrayParameter - Test explicitly required array. Please put null and the client library should throw before the request is sent.
 	PostRequiredArrayParameter(ctx context.Context, bodyParameter []string, options *ExplicitPostRequiredArrayParameterOptions) (*http.Response, error)
-	// PostRequiredArrayProperty - Test explicitly required array. Please put a valid array-wrapper with 'value' = null and the
-	// client library should throw before the request is sent.
-	PostRequiredArrayProperty(ctx context.Context, bodyParameter ArrayWrapper, options *ExplicitPostRequiredArrayPropertyOptions) (*http.Response, error)
-	// PostRequiredClassParameter - Test explicitly required complex object. Please put null and the client library should throw
+	// PostRequiredArrayProperty - Test explicitly required array. Please put a valid array-wrapper with 'value' = null and the client library should throw
 	// before the request is sent.
+	PostRequiredArrayProperty(ctx context.Context, bodyParameter ArrayWrapper, options *ExplicitPostRequiredArrayPropertyOptions) (*http.Response, error)
+	// PostRequiredClassParameter - Test explicitly required complex object. Please put null and the client library should throw before the request is sent.
 	PostRequiredClassParameter(ctx context.Context, bodyParameter Product, options *ExplicitPostRequiredClassParameterOptions) (*http.Response, error)
-	// PostRequiredClassProperty - Test explicitly required complex object. Please put a valid class-wrapper with 'value' = null
-	// and the client library should throw before the request is sent.
+	// PostRequiredClassProperty - Test explicitly required complex object. Please put a valid class-wrapper with 'value' = null and the client library should
+	// throw before the request is sent.
 	PostRequiredClassProperty(ctx context.Context, bodyParameter ClassWrapper, options *ExplicitPostRequiredClassPropertyOptions) (*http.Response, error)
-	// PostRequiredIntegerHeader - Test explicitly required integer. Please put a header 'headerParameter' => null and the client
-	// library should throw before the request is sent.
+	// PostRequiredIntegerHeader - Test explicitly required integer. Please put a header 'headerParameter' => null and the client library should throw before
+	// the request is sent.
 	PostRequiredIntegerHeader(ctx context.Context, headerParameter int32, options *ExplicitPostRequiredIntegerHeaderOptions) (*http.Response, error)
-	// PostRequiredIntegerParameter - Test explicitly required integer. Please put null and the client library should throw before
-	// the request is sent.
+	// PostRequiredIntegerParameter - Test explicitly required integer. Please put null and the client library should throw before the request is sent.
 	PostRequiredIntegerParameter(ctx context.Context, bodyParameter int32, options *ExplicitPostRequiredIntegerParameterOptions) (*http.Response, error)
-	// PostRequiredIntegerProperty - Test explicitly required integer. Please put a valid int-wrapper with 'value' = null and
-	// the client library should throw before the request is sent.
+	// PostRequiredIntegerProperty - Test explicitly required integer. Please put a valid int-wrapper with 'value' = null and the client library should throw
+	// before the request is sent.
 	PostRequiredIntegerProperty(ctx context.Context, bodyParameter IntWrapper, options *ExplicitPostRequiredIntegerPropertyOptions) (*http.Response, error)
-	// PostRequiredStringHeader - Test explicitly required string. Please put a header 'headerParameter' => null and the client
-	// library should throw before the request is sent.
-	PostRequiredStringHeader(ctx context.Context, headerParameter string, options *ExplicitPostRequiredStringHeaderOptions) (*http.Response, error)
-	// PostRequiredStringParameter - Test explicitly required string. Please put null and the client library should throw before
+	// PostRequiredStringHeader - Test explicitly required string. Please put a header 'headerParameter' => null and the client library should throw before
 	// the request is sent.
+	PostRequiredStringHeader(ctx context.Context, headerParameter string, options *ExplicitPostRequiredStringHeaderOptions) (*http.Response, error)
+	// PostRequiredStringParameter - Test explicitly required string. Please put null and the client library should throw before the request is sent.
 	PostRequiredStringParameter(ctx context.Context, bodyParameter string, options *ExplicitPostRequiredStringParameterOptions) (*http.Response, error)
-	// PostRequiredStringProperty - Test explicitly required string. Please put a valid string-wrapper with 'value' = null and
-	// the client library should throw before the request is sent.
+	// PostRequiredStringProperty - Test explicitly required string. Please put a valid string-wrapper with 'value' = null and the client library should throw
+	// before the request is sent.
 	PostRequiredStringProperty(ctx context.Context, bodyParameter StringWrapper, options *ExplicitPostRequiredStringPropertyOptions) (*http.Response, error)
 }
 

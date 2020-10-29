@@ -18,8 +18,7 @@ import (
 
 // UsageOperations contains the methods for the Usage group.
 type UsageOperations interface {
-	// List - Gets, for the specified location, the current compute resource usage information as well as the limits for compute
-	// resources under the subscription.
+	// List - Gets, for the specified location, the current compute resource usage information as well as the limits for compute resources under the subscription.
 	List(location string, options *UsageListOptions) ListUsagesResultPager
 }
 

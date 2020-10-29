@@ -24,8 +24,7 @@ type ArrayOperations interface {
 	GetArrayNull(ctx context.Context, options *ArrayGetArrayNullOptions) (*StringArrayArrayResponse, error)
 	// GetArrayValid - Get an array of array of strings [['1', '2', '3'], ['4', '5', '6'], ['7', '8', '9']]
 	GetArrayValid(ctx context.Context, options *ArrayGetArrayValidOptions) (*StringArrayArrayResponse, error)
-	// GetBase64URL - Get array value ['a string that gets encoded with base64url', 'test string' 'Lorem ipsum'] with the items
-	// base64url encoded
+	// GetBase64URL - Get array value ['a string that gets encoded with base64url', 'test string' 'Lorem ipsum'] with the items base64url encoded
 	GetBase64URL(ctx context.Context, options *ArrayGetBase64URLOptions) (*ByteArrayArrayResponse, error)
 	// GetBooleanInvalidNull - Get boolean array value [true, null, false]
 	GetBooleanInvalidNull(ctx context.Context, options *ArrayGetBooleanInvalidNullOptions) (*BoolArrayResponse, error)
@@ -39,16 +38,13 @@ type ArrayOperations interface {
 	GetByteValid(ctx context.Context, options *ArrayGetByteValidOptions) (*ByteArrayArrayResponse, error)
 	// GetComplexEmpty - Get empty array of complex type []
 	GetComplexEmpty(ctx context.Context, options *ArrayGetComplexEmptyOptions) (*ProductArrayResponse, error)
-	// GetComplexItemEmpty - Get array of complex type with empty item [{'integer': 1 'string': '2'}, {}, {'integer': 5, 'string':
-	// '6'}]
+	// GetComplexItemEmpty - Get array of complex type with empty item [{'integer': 1 'string': '2'}, {}, {'integer': 5, 'string': '6'}]
 	GetComplexItemEmpty(ctx context.Context, options *ArrayGetComplexItemEmptyOptions) (*ProductArrayResponse, error)
-	// GetComplexItemNull - Get array of complex type with null item [{'integer': 1 'string': '2'}, null, {'integer': 5, 'string':
-	// '6'}]
+	// GetComplexItemNull - Get array of complex type with null item [{'integer': 1 'string': '2'}, null, {'integer': 5, 'string': '6'}]
 	GetComplexItemNull(ctx context.Context, options *ArrayGetComplexItemNullOptions) (*ProductArrayResponse, error)
 	// GetComplexNull - Get array of complex type null value
 	GetComplexNull(ctx context.Context, options *ArrayGetComplexNullOptions) (*ProductArrayResponse, error)
-	// GetComplexValid - Get array of complex type with [{'integer': 1 'string': '2'}, {'integer': 3, 'string': '4'}, {'integer':
-	// 5, 'string': '6'}]
+	// GetComplexValid - Get array of complex type with [{'integer': 1 'string': '2'}, {'integer': 3, 'string': '4'}, {'integer': 5, 'string': '6'}]
 	GetComplexValid(ctx context.Context, options *ArrayGetComplexValidOptions) (*ProductArrayResponse, error)
 	// GetDateInvalidChars - Get date array value ['2011-03-22', 'date']
 	GetDateInvalidChars(ctx context.Context, options *ArrayGetDateInvalidCharsOptions) (*TimeArrayResponse, error)
@@ -58,8 +54,7 @@ type ArrayOperations interface {
 	GetDateTimeInvalidChars(ctx context.Context, options *ArrayGetDateTimeInvalidCharsOptions) (*TimeArrayResponse, error)
 	// GetDateTimeInvalidNull - Get date array value ['2000-12-01t00:00:01z', null]
 	GetDateTimeInvalidNull(ctx context.Context, options *ArrayGetDateTimeInvalidNullOptions) (*TimeArrayResponse, error)
-	// GetDateTimeRFC1123Valid - Get date-time array value ['Fri, 01 Dec 2000 00:00:01 GMT', 'Wed, 02 Jan 1980 00:11:35 GMT',
-	// 'Wed, 12 Oct 1492 10:15:01 GMT']
+	// GetDateTimeRFC1123Valid - Get date-time array value ['Fri, 01 Dec 2000 00:00:01 GMT', 'Wed, 02 Jan 1980 00:11:35 GMT', 'Wed, 12 Oct 1492 10:15:01 GMT']
 	GetDateTimeRFC1123Valid(ctx context.Context, options *ArrayGetDateTimeRFC1123ValidOptions) (*TimeArrayResponse, error)
 	// GetDateTimeValid - Get date-time array value ['2000-12-01t00:00:01z', '1980-01-02T00:11:35+01:00', '1492-10-12T10:15:01-08:00']
 	GetDateTimeValid(ctx context.Context, options *ArrayGetDateTimeValidOptions) (*TimeArrayResponse, error)
@@ -67,16 +62,16 @@ type ArrayOperations interface {
 	GetDateValid(ctx context.Context, options *ArrayGetDateValidOptions) (*TimeArrayResponse, error)
 	// GetDictionaryEmpty - Get an array of Dictionaries of type with value []
 	GetDictionaryEmpty(ctx context.Context, options *ArrayGetDictionaryEmptyOptions) (*MapOfStringArrayResponse, error)
-	// GetDictionaryItemEmpty - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, {}, {'7':
-	// 'seven', '8': 'eight', '9': 'nine'}]
+	// GetDictionaryItemEmpty - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, {}, {'7': 'seven', '8': 'eight', '9':
+	// 'nine'}]
 	GetDictionaryItemEmpty(ctx context.Context, options *ArrayGetDictionaryItemEmptyOptions) (*MapOfStringArrayResponse, error)
-	// GetDictionaryItemNull - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, null,
-	// {'7': 'seven', '8': 'eight', '9': 'nine'}]
+	// GetDictionaryItemNull - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, null, {'7': 'seven', '8': 'eight', '9':
+	// 'nine'}]
 	GetDictionaryItemNull(ctx context.Context, options *ArrayGetDictionaryItemNullOptions) (*MapOfStringArrayResponse, error)
 	// GetDictionaryNull - Get an array of Dictionaries with value null
 	GetDictionaryNull(ctx context.Context, options *ArrayGetDictionaryNullOptions) (*MapOfStringArrayResponse, error)
-	// GetDictionaryValid - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, {'4': 'four',
-	// '5': 'five', '6': 'six'}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
+	// GetDictionaryValid - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, {'4': 'four', '5': 'five', '6': 'six'},
+	// {'7': 'seven', '8': 'eight', '9': 'nine'}]
 	GetDictionaryValid(ctx context.Context, options *ArrayGetDictionaryValidOptions) (*MapOfStringArrayResponse, error)
 	// GetDoubleInvalidNull - Get float array value [0.0, null, -1.2e20]
 	GetDoubleInvalidNull(ctx context.Context, options *ArrayGetDoubleInvalidNullOptions) (*Float64ArrayResponse, error)
@@ -128,21 +123,18 @@ type ArrayOperations interface {
 	PutArrayValid(ctx context.Context, arrayBody [][]string, options *ArrayPutArrayValidOptions) (*http.Response, error)
 	// PutBooleanTfft - Set array value empty [true, false, false, true]
 	PutBooleanTfft(ctx context.Context, arrayBody []bool, options *ArrayPutBooleanTfftOptions) (*http.Response, error)
-	// PutByteValid - Put the array value [hex(FF FF FF FA), hex(01 02 03), hex (25, 29, 43)] with each elementencoded in base
-	// 64
+	// PutByteValid - Put the array value [hex(FF FF FF FA), hex(01 02 03), hex (25, 29, 43)] with each elementencoded in base 64
 	PutByteValid(ctx context.Context, arrayBody [][]byte, options *ArrayPutByteValidOptions) (*http.Response, error)
-	// PutComplexValid - Put an array of complex type with values [{'integer': 1 'string': '2'}, {'integer': 3, 'string': '4'},
-	// {'integer': 5, 'string': '6'}]
+	// PutComplexValid - Put an array of complex type with values [{'integer': 1 'string': '2'}, {'integer': 3, 'string': '4'}, {'integer': 5, 'string': '6'}]
 	PutComplexValid(ctx context.Context, arrayBody []Product, options *ArrayPutComplexValidOptions) (*http.Response, error)
-	// PutDateTimeRFC1123Valid - Set array value ['Fri, 01 Dec 2000 00:00:01 GMT', 'Wed, 02 Jan 1980 00:11:35 GMT', 'Wed, 12 Oct
-	// 1492 10:15:01 GMT']
+	// PutDateTimeRFC1123Valid - Set array value ['Fri, 01 Dec 2000 00:00:01 GMT', 'Wed, 02 Jan 1980 00:11:35 GMT', 'Wed, 12 Oct 1492 10:15:01 GMT']
 	PutDateTimeRFC1123Valid(ctx context.Context, arrayBody []time.Time, options *ArrayPutDateTimeRFC1123ValidOptions) (*http.Response, error)
 	// PutDateTimeValid - Set array value ['2000-12-01t00:00:01z', '1980-01-02T00:11:35+01:00', '1492-10-12T10:15:01-08:00']
 	PutDateTimeValid(ctx context.Context, arrayBody []time.Time, options *ArrayPutDateTimeValidOptions) (*http.Response, error)
 	// PutDateValid - Set array value ['2000-12-01', '1980-01-02', '1492-10-12']
 	PutDateValid(ctx context.Context, arrayBody []time.Time, options *ArrayPutDateValidOptions) (*http.Response, error)
-	// PutDictionaryValid - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, {'4': 'four',
-	// '5': 'five', '6': 'six'}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
+	// PutDictionaryValid - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, {'4': 'four', '5': 'five', '6': 'six'},
+	// {'7': 'seven', '8': 'eight', '9': 'nine'}]
 	PutDictionaryValid(ctx context.Context, arrayBody []map[string]string, options *ArrayPutDictionaryValidOptions) (*http.Response, error)
 	// PutDoubleValid - Set array value [0, -0.01, 1.2e20]
 	PutDoubleValid(ctx context.Context, arrayBody []float64, options *ArrayPutDoubleValidOptions) (*http.Response, error)

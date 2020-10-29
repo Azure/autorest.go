@@ -33,11 +33,10 @@ type PublicIPAddressesOperations interface {
 	List(resourceGroupName string, options *PublicIPAddressesListOptions) PublicIPAddressListResultPager
 	// ListAll - Gets all the public IP addresses in a subscription.
 	ListAll(options *PublicIPAddressesListAllOptions) PublicIPAddressListResultPager
-	// ListVirtualMachineScaleSetPublicIPAddresses - Gets information about all public IP addresses on a virtual machine scale
-	// set level.
+	// ListVirtualMachineScaleSetPublicIPAddresses - Gets information about all public IP addresses on a virtual machine scale set level.
 	ListVirtualMachineScaleSetPublicIPAddresses(resourceGroupName string, virtualMachineScaleSetName string, options *PublicIPAddressesListVirtualMachineScaleSetPublicIPAddressesOptions) PublicIPAddressListResultPager
-	// ListVirtualMachineScaleSetVMPublicIPaddresses - Gets information about all public IP addresses in a virtual machine IP
-	// configuration in a virtual machine scale set.
+	// ListVirtualMachineScaleSetVMPublicIPaddresses - Gets information about all public IP addresses in a virtual machine IP configuration in a virtual machine
+	// scale set.
 	ListVirtualMachineScaleSetVMPublicIPaddresses(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, ipConfigurationName string, options *PublicIPAddressesListVirtualMachineScaleSetVMPublicIPaddressesOptions) PublicIPAddressListResultPager
 	// UpdateTags - Updates public IP address tags.
 	UpdateTags(ctx context.Context, resourceGroupName string, publicIPAddressName string, parameters TagsObject, options *PublicIPAddressesUpdateTagsOptions) (*PublicIPAddressResponse, error)

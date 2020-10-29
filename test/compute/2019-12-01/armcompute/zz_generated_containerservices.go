@@ -20,28 +20,27 @@ import (
 
 // ContainerServicesOperations contains the methods for the ContainerServices group.
 type ContainerServicesOperations interface {
-	// BeginCreateOrUpdate - Creates or updates a container service with the specified configuration of orchestrator, masters,
-	// and agents.
+	// BeginCreateOrUpdate - Creates or updates a container service with the specified configuration of orchestrator, masters, and agents.
 	BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, containerServiceName string, parameters ContainerService, options *ContainerServicesCreateOrUpdateOptions) (*ContainerServicePollerResponse, error)
 	// ResumeCreateOrUpdate - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeCreateOrUpdate(token string) (ContainerServicePoller, error)
-	// BeginDelete - Deletes the specified container service in the specified subscription and resource group. The operation does
-	// not delete other resources created as part of creating a container service, including
-	// storage accounts, VMs, and availability sets. All the other resources created with the container service are part of the
-	// same resource group and can be deleted individually.
+	// BeginDelete - Deletes the specified container service in the specified subscription and resource group. The operation does not delete other resources
+	// created as part of creating a container service, including
+	// storage accounts, VMs, and availability sets. All the other resources created with the container service are part of the same resource group and can
+	// be deleted individually.
 	BeginDelete(ctx context.Context, resourceGroupName string, containerServiceName string, options *ContainerServicesDeleteOptions) (*HTTPPollerResponse, error)
 	// ResumeDelete - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeDelete(token string) (HTTPPoller, error)
-	// Get - Gets the properties of the specified container service in the specified subscription and resource group. The operation
-	// returns the properties including state, orchestrator, number of masters and
+	// Get - Gets the properties of the specified container service in the specified subscription and resource group. The operation returns the properties including
+	// state, orchestrator, number of masters and
 	// agents, and FQDNs of masters and agents.
 	Get(ctx context.Context, resourceGroupName string, containerServiceName string, options *ContainerServicesGetOptions) (*ContainerServiceResponse, error)
-	// List - Gets a list of container services in the specified subscription. The operation returns properties of each container
-	// service including state, orchestrator, number of masters and agents, and FQDNs of
+	// List - Gets a list of container services in the specified subscription. The operation returns properties of each container service including state, orchestrator,
+	// number of masters and agents, and FQDNs of
 	// masters and agents.
 	List(options *ContainerServicesListOptions) ContainerServiceListResultPager
-	// ListByResourceGroup - Gets a list of container services in the specified subscription and resource group. The operation
-	// returns properties of each container service including state, orchestrator, number of masters and
+	// ListByResourceGroup - Gets a list of container services in the specified subscription and resource group. The operation returns properties of each container
+	// service including state, orchestrator, number of masters and
 	// agents, and FQDNs of masters and agents.
 	ListByResourceGroup(resourceGroupName string, options *ContainerServicesListByResourceGroupOptions) ContainerServiceListResultPager
 }

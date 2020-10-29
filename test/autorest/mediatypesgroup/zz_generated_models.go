@@ -12,8 +12,7 @@ type MediaTypesClientAnalyzeBodyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MediaTypesClientAnalyzeBodyWithSourcePathOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyWithSourcePath
-// method.
+// MediaTypesClientAnalyzeBodyWithSourcePathOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyWithSourcePath method.
 type MediaTypesClientAnalyzeBodyWithSourcePathOptions struct {
 	// Input parameter.
 	Input *SourcePath

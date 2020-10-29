@@ -39,13 +39,11 @@ type ExpressRouteCircuitsOperations interface {
 	BeginListArpTable(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string, options *ExpressRouteCircuitsListArpTableOptions) (*ExpressRouteCircuitsArpTableListResultPollerResponse, error)
 	// ResumeListArpTable - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeListArpTable(token string) (ExpressRouteCircuitsArpTableListResultPoller, error)
-	// BeginListRoutesTable - Gets the currently advertised routes table associated with the express route circuit in a resource
-	// group.
+	// BeginListRoutesTable - Gets the currently advertised routes table associated with the express route circuit in a resource group.
 	BeginListRoutesTable(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string, options *ExpressRouteCircuitsListRoutesTableOptions) (*ExpressRouteCircuitsRoutesTableListResultPollerResponse, error)
 	// ResumeListRoutesTable - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeListRoutesTable(token string) (ExpressRouteCircuitsRoutesTableListResultPoller, error)
-	// BeginListRoutesTableSummary - Gets the currently advertised routes table summary associated with the express route circuit
-	// in a resource group.
+	// BeginListRoutesTableSummary - Gets the currently advertised routes table summary associated with the express route circuit in a resource group.
 	BeginListRoutesTableSummary(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string, options *ExpressRouteCircuitsListRoutesTableSummaryOptions) (*ExpressRouteCircuitsRoutesTableSummaryListResultPollerResponse, error)
 	// ResumeListRoutesTableSummary - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeListRoutesTableSummary(token string) (ExpressRouteCircuitsRoutesTableSummaryListResultPoller, error)

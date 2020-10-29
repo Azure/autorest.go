@@ -33,10 +33,11 @@ type GoblinSharkColor string
 const (
 	GoblinSharkColorBrown GoblinSharkColor = "brown"
 	GoblinSharkColorGray  GoblinSharkColor = "gray"
-	// Lowercase RED	GoblinSharkColorLowerRed GoblinSharkColor = "red"
-	GoblinSharkColorPink GoblinSharkColor = "pink"
-
-// Uppercase RED	GoblinSharkColorUpperRed GoblinSharkColor = "RED"
+	// GoblinSharkColorLowerRed - Lowercase RED
+	GoblinSharkColorLowerRed GoblinSharkColor = "red"
+	GoblinSharkColorPink     GoblinSharkColor = "pink"
+	// GoblinSharkColorUpperRed - Uppercase RED
+	GoblinSharkColorUpperRed GoblinSharkColor = "RED"
 )
 
 func PossibleGoblinSharkColorValues() []GoblinSharkColor {

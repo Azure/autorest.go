@@ -27,19 +27,19 @@ type VirtualNetworkGatewayConnectionsOperations interface {
 	ResumeDelete(token string) (HTTPPoller, error)
 	// Get - Gets the specified virtual network gateway connection by resource group.
 	Get(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, options *VirtualNetworkGatewayConnectionsGetOptions) (*VirtualNetworkGatewayConnectionResponse, error)
-	// GetSharedKey - The Get VirtualNetworkGatewayConnectionSharedKey operation retrieves information about the specified virtual
-	// network gateway connection shared key through Network resource provider.
+	// GetSharedKey - The Get VirtualNetworkGatewayConnectionSharedKey operation retrieves information about the specified virtual network gateway connection
+	// shared key through Network resource provider.
 	GetSharedKey(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, options *VirtualNetworkGatewayConnectionsGetSharedKeyOptions) (*ConnectionSharedKeyResponse, error)
 	// List - The List VirtualNetworkGatewayConnections operation retrieves all the virtual network gateways connections created.
 	List(resourceGroupName string, options *VirtualNetworkGatewayConnectionsListOptions) VirtualNetworkGatewayConnectionListResultPager
-	// BeginResetSharedKey - The VirtualNetworkGatewayConnectionResetSharedKey operation resets the virtual network gateway connection
-	// shared key for passed virtual network gateway connection in the specified resource group
+	// BeginResetSharedKey - The VirtualNetworkGatewayConnectionResetSharedKey operation resets the virtual network gateway connection shared key for passed
+	// virtual network gateway connection in the specified resource group
 	// through Network resource provider.
 	BeginResetSharedKey(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters ConnectionResetSharedKey, options *VirtualNetworkGatewayConnectionsResetSharedKeyOptions) (*ConnectionResetSharedKeyPollerResponse, error)
 	// ResumeResetSharedKey - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeResetSharedKey(token string) (ConnectionResetSharedKeyPoller, error)
-	// BeginSetSharedKey - The Put VirtualNetworkGatewayConnectionSharedKey operation sets the virtual network gateway connection
-	// shared key for passed virtual network gateway connection in the specified resource group through
+	// BeginSetSharedKey - The Put VirtualNetworkGatewayConnectionSharedKey operation sets the virtual network gateway connection shared key for passed virtual
+	// network gateway connection in the specified resource group through
 	// Network resource provider.
 	BeginSetSharedKey(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters ConnectionSharedKey, options *VirtualNetworkGatewayConnectionsSetSharedKeyOptions) (*ConnectionSharedKeyPollerResponse, error)
 	// ResumeSetSharedKey - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.

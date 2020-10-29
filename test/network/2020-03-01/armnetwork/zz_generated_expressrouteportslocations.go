@@ -15,11 +15,10 @@ import (
 
 // ExpressRoutePortsLocationsOperations contains the methods for the ExpressRoutePortsLocations group.
 type ExpressRoutePortsLocationsOperations interface {
-	// Get - Retrieves a single ExpressRoutePort peering location, including the list of available bandwidths available at said
-	// peering location.
+	// Get - Retrieves a single ExpressRoutePort peering location, including the list of available bandwidths available at said peering location.
 	Get(ctx context.Context, locationName string, options *ExpressRoutePortsLocationsGetOptions) (*ExpressRoutePortsLocationResponse, error)
-	// List - Retrieves all ExpressRoutePort peering locations. Does not return available bandwidths for each location. Available
-	// bandwidths can only be obtained when retrieving a specific peering location.
+	// List - Retrieves all ExpressRoutePort peering locations. Does not return available bandwidths for each location. Available bandwidths can only be obtained
+	// when retrieving a specific peering location.
 	List(options *ExpressRoutePortsLocationsListOptions) ExpressRoutePortsLocationListResultPager
 }
 

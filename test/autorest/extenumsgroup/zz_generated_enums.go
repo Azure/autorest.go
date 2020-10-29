@@ -37,9 +37,12 @@ func (c DaysOfWeekExtensibleEnum) ToPtr() *DaysOfWeekExtensibleEnum {
 type IntEnum string
 
 const (
-// one	IntEnumOne IntEnum = "1"
-// three	IntEnumThree IntEnum = "3"
-// two	IntEnumTwo IntEnum = "2"
+	// IntEnumOne - one
+	IntEnumOne IntEnum = "1"
+	// IntEnumThree - three
+	IntEnumThree IntEnum = "3"
+	// IntEnumTwo - two
+	IntEnumTwo IntEnum = "2"
 )
 
 func PossibleIntEnumValues() []IntEnum {

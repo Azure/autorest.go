@@ -22,8 +22,7 @@ type DatetimeGetLocalNegativeOffsetLowercaseMaxDateTimeOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DatetimeGetLocalNegativeOffsetMinDateTimeOptions contains the optional parameters for the Datetime.GetLocalNegativeOffsetMinDateTime
-// method.
+// DatetimeGetLocalNegativeOffsetMinDateTimeOptions contains the optional parameters for the Datetime.GetLocalNegativeOffsetMinDateTime method.
 type DatetimeGetLocalNegativeOffsetMinDateTimeOptions struct {
 	// placeholder for future optional parameters
 }
@@ -34,8 +33,7 @@ type DatetimeGetLocalNegativeOffsetUppercaseMaxDateTimeOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DatetimeGetLocalNoOffsetMinDateTimeOptions contains the optional parameters for the Datetime.GetLocalNoOffsetMinDateTime
-// method.
+// DatetimeGetLocalNoOffsetMinDateTimeOptions contains the optional parameters for the Datetime.GetLocalNoOffsetMinDateTime method.
 type DatetimeGetLocalNoOffsetMinDateTimeOptions struct {
 	// placeholder for future optional parameters
 }
@@ -46,8 +44,7 @@ type DatetimeGetLocalPositiveOffsetLowercaseMaxDateTimeOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DatetimeGetLocalPositiveOffsetMinDateTimeOptions contains the optional parameters for the Datetime.GetLocalPositiveOffsetMinDateTime
-// method.
+// DatetimeGetLocalPositiveOffsetMinDateTimeOptions contains the optional parameters for the Datetime.GetLocalPositiveOffsetMinDateTime method.
 type DatetimeGetLocalPositiveOffsetMinDateTimeOptions struct {
 	// placeholder for future optional parameters
 }
@@ -68,8 +65,7 @@ type DatetimeGetOverflowOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DatetimeGetUTCLowercaseMaxDateTimeOptions contains the optional parameters for the Datetime.GetUTCLowercaseMaxDateTime
-// method.
+// DatetimeGetUTCLowercaseMaxDateTimeOptions contains the optional parameters for the Datetime.GetUTCLowercaseMaxDateTime method.
 type DatetimeGetUTCLowercaseMaxDateTimeOptions struct {
 	// placeholder for future optional parameters
 }
@@ -79,14 +75,12 @@ type DatetimeGetUTCMinDateTimeOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DatetimeGetUTCUppercaseMaxDateTime7DigitsOptions contains the optional parameters for the Datetime.GetUTCUppercaseMaxDateTime7Digits
-// method.
+// DatetimeGetUTCUppercaseMaxDateTime7DigitsOptions contains the optional parameters for the Datetime.GetUTCUppercaseMaxDateTime7Digits method.
 type DatetimeGetUTCUppercaseMaxDateTime7DigitsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DatetimeGetUTCUppercaseMaxDateTimeOptions contains the optional parameters for the Datetime.GetUTCUppercaseMaxDateTime
-// method.
+// DatetimeGetUTCUppercaseMaxDateTimeOptions contains the optional parameters for the Datetime.GetUTCUppercaseMaxDateTime method.
 type DatetimeGetUTCUppercaseMaxDateTimeOptions struct {
 	// placeholder for future optional parameters
 }
@@ -96,26 +90,22 @@ type DatetimeGetUnderflowOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DatetimePutLocalNegativeOffsetMaxDateTimeOptions contains the optional parameters for the Datetime.PutLocalNegativeOffsetMaxDateTime
-// method.
+// DatetimePutLocalNegativeOffsetMaxDateTimeOptions contains the optional parameters for the Datetime.PutLocalNegativeOffsetMaxDateTime method.
 type DatetimePutLocalNegativeOffsetMaxDateTimeOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DatetimePutLocalNegativeOffsetMinDateTimeOptions contains the optional parameters for the Datetime.PutLocalNegativeOffsetMinDateTime
-// method.
+// DatetimePutLocalNegativeOffsetMinDateTimeOptions contains the optional parameters for the Datetime.PutLocalNegativeOffsetMinDateTime method.
 type DatetimePutLocalNegativeOffsetMinDateTimeOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DatetimePutLocalPositiveOffsetMaxDateTimeOptions contains the optional parameters for the Datetime.PutLocalPositiveOffsetMaxDateTime
-// method.
+// DatetimePutLocalPositiveOffsetMaxDateTimeOptions contains the optional parameters for the Datetime.PutLocalPositiveOffsetMaxDateTime method.
 type DatetimePutLocalPositiveOffsetMaxDateTimeOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DatetimePutLocalPositiveOffsetMinDateTimeOptions contains the optional parameters for the Datetime.PutLocalPositiveOffsetMinDateTime
-// method.
+// DatetimePutLocalPositiveOffsetMinDateTimeOptions contains the optional parameters for the Datetime.PutLocalPositiveOffsetMinDateTime method.
 type DatetimePutLocalPositiveOffsetMinDateTimeOptions struct {
 	// placeholder for future optional parameters
 }

@@ -587,8 +587,7 @@ type SparkSessionOptions struct {
 	Tags *map[string]string `json:"tags,omitempty"`
 }
 
-// SparkSessionResetSparkSessionTimeoutOptions contains the optional parameters for the SparkSession.ResetSparkSessionTimeout
-// method.
+// SparkSessionResetSparkSessionTimeoutOptions contains the optional parameters for the SparkSession.ResetSparkSessionTimeout method.
 type SparkSessionResetSparkSessionTimeoutOptions struct {
 	// placeholder for future optional parameters
 }
@@ -756,8 +755,7 @@ type SparkStatementCancellationResult struct {
 	Msg *string `json:"msg,omitempty"`
 }
 
-// SparkStatementCancellationResultResponse is the response envelope for operations that return a SparkStatementCancellationResult
-// type.
+// SparkStatementCancellationResultResponse is the response envelope for operations that return a SparkStatementCancellationResult type.
 type SparkStatementCancellationResultResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse                      *http.Response

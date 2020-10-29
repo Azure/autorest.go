@@ -112,10 +112,9 @@ func (c BlobEventTypes) ToPtr() *BlobEventTypes {
 	return &c
 }
 
-// CassandraSourceReadConsistencyLevels - The consistency level specifies how many Cassandra servers must respond to a read
-// request before returning data to the client application. Cassandra checks the specified number of Cassandra servers
-// for data to satisfy the read request. Must be one of cassandraSourceReadConsistencyLevels. The default value is 'ONE'.
-// It is case-insensitive.
+// CassandraSourceReadConsistencyLevels - The consistency level specifies how many Cassandra servers must respond to a read request before returning data
+// to the client application. Cassandra checks the specified number of Cassandra servers
+// for data to satisfy the read request. Must be one of cassandraSourceReadConsistencyLevels. The default value is 'ONE'. It is case-insensitive.
 type CassandraSourceReadConsistencyLevels string
 
 const (
@@ -361,8 +360,8 @@ func (c DependencyCondition) ToPtr() *DependencyCondition {
 	return &c
 }
 
-// DynamicsAuthenticationType - The authentication type to connect to Dynamics server. 'Office365' for online scenario, 'Ifd'
-// for on-premises with Ifd scenario, 'AADServicePrincipal' for Server-To-Server authentication in online
+// DynamicsAuthenticationType - The authentication type to connect to Dynamics server. 'Office365' for online scenario, 'Ifd' for on-premises with Ifd scenario,
+// 'AADServicePrincipal' for Server-To-Server authentication in online
 // scenario. Type: string (or Expression with resultType string).
 type DynamicsAuthenticationType string
 
@@ -384,8 +383,8 @@ func (c DynamicsAuthenticationType) ToPtr() *DynamicsAuthenticationType {
 	return &c
 }
 
-// DynamicsDeploymentType - The deployment type of the Dynamics instance. 'Online' for Dynamics Online and 'OnPremisesWithIfd'
-// for Dynamics on-premises with Ifd. Type: string (or Expression with resultType string).
+// DynamicsDeploymentType - The deployment type of the Dynamics instance. 'Online' for Dynamics Online and 'OnPremisesWithIfd' for Dynamics on-premises
+// with Ifd. Type: string (or Expression with resultType string).
 type DynamicsDeploymentType string
 
 const (
@@ -404,8 +403,8 @@ func (c DynamicsDeploymentType) ToPtr() *DynamicsDeploymentType {
 	return &c
 }
 
-// DynamicsServicePrincipalCredentialType - The service principal credential type to use in Server-To-Server authentication.
-// 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for certificate. Type: string (or Expression with
+// DynamicsServicePrincipalCredentialType - The service principal credential type to use in Server-To-Server authentication. 'ServicePrincipalKey' for key/secret,
+// 'ServicePrincipalCert' for certificate. Type: string (or Expression with
 // resultType string).
 type DynamicsServicePrincipalCredentialType string
 
@@ -503,8 +502,8 @@ func (c FtpAuthenticationType) ToPtr() *FtpAuthenticationType {
 	return &c
 }
 
-// GoogleAdWordsAuthenticationType - The OAuth 2.0 authentication mechanism used for authentication. ServiceAuthentication
-// can only be used on self-hosted IR.
+// GoogleAdWordsAuthenticationType - The OAuth 2.0 authentication mechanism used for authentication. ServiceAuthentication can only be used on self-hosted
+// IR.
 type GoogleAdWordsAuthenticationType string
 
 const (
@@ -523,8 +522,8 @@ func (c GoogleAdWordsAuthenticationType) ToPtr() *GoogleAdWordsAuthenticationTyp
 	return &c
 }
 
-// GoogleBigQueryAuthenticationType - The OAuth 2.0 authentication mechanism used for authentication. ServiceAuthentication
-// can only be used on self-hosted IR.
+// GoogleBigQueryAuthenticationType - The OAuth 2.0 authentication mechanism used for authentication. ServiceAuthentication can only be used on self-hosted
+// IR.
 type GoogleBigQueryAuthenticationType string
 
 const (
@@ -789,8 +788,7 @@ func (c IntegrationRuntimeReferenceType) ToPtr() *IntegrationRuntimeReferenceTyp
 	return &c
 }
 
-// IntegrationRuntimeSsisCatalogPricingTier - The pricing tier for the catalog database. The valid values could be found in
-// https://azure.microsoft.com/en-us/pricing/details/sql-database/
+// IntegrationRuntimeSsisCatalogPricingTier - The pricing tier for the catalog database. The valid values could be found in https://azure.microsoft.com/en-us/pricing/details/sql-database/
 // [https://azure.microsoft.com/en-us/pricing/details/sql-database/]
 type IntegrationRuntimeSsisCatalogPricingTier string
 
@@ -887,8 +885,8 @@ func (c JSONFormatFilePattern) ToPtr() *JSONFormatFilePattern {
 	return &c
 }
 
-// JSONWriteFilePattern - File pattern of JSON. This setting controls the way a collection of JSON objects will be treated.
-// The default value is 'setOfObjects'. It is case-sensitive.
+// JSONWriteFilePattern - File pattern of JSON. This setting controls the way a collection of JSON objects will be treated. The default value is 'setOfObjects'.
+// It is case-sensitive.
 type JSONWriteFilePattern string
 
 const (
@@ -1346,8 +1344,8 @@ func (c RestServiceAuthenticationType) ToPtr() *RestServiceAuthenticationType {
 	return &c
 }
 
-// RunQueryFilterOperand - Parameter name to be used for filter. The allowed operands to query pipeline runs are PipelineName,
-// RunStart, RunEnd and Status; to query activity runs are ActivityName, ActivityRunStart,
+// RunQueryFilterOperand - Parameter name to be used for filter. The allowed operands to query pipeline runs are PipelineName, RunStart, RunEnd and Status;
+// to query activity runs are ActivityName, ActivityRunStart,
 // ActivityRunEnd, ActivityType and Status, and to query trigger runs are TriggerName, TriggerRunTimestamp and Status.
 type RunQueryFilterOperand string
 
@@ -1429,8 +1427,8 @@ func (c RunQueryOrder) ToPtr() *RunQueryOrder {
 	return &c
 }
 
-// RunQueryOrderByField - Parameter name to be used for order by. The allowed parameters to order by for pipeline runs are
-// PipelineName, RunStart, RunEnd and Status; for activity runs are ActivityName, ActivityRunStart,
+// RunQueryOrderByField - Parameter name to be used for order by. The allowed parameters to order by for pipeline runs are PipelineName, RunStart, RunEnd
+// and Status; for activity runs are ActivityName, ActivityRunStart,
 // ActivityRunEnd and Status; for trigger runs are TriggerName, TriggerRunTimestamp and Status.
 type RunQueryOrderByField string
 

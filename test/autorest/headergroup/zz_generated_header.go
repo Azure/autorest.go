@@ -22,38 +22,31 @@ type HeaderOperations interface {
 	ParamBool(ctx context.Context, scenario string, value bool, options *HeaderParamBoolOptions) (*http.Response, error)
 	// ParamByte - Send a post request with header values "scenario": "valid", "value": "啊齄丂狛狜隣郎隣兀﨩"
 	ParamByte(ctx context.Context, scenario string, value []byte, options *HeaderParamByteOptions) (*http.Response, error)
-	// ParamDate - Send a post request with header values "scenario": "valid", "value": "2010-01-01" or "scenario": "min", "value":
-	// "0001-01-01"
+	// ParamDate - Send a post request with header values "scenario": "valid", "value": "2010-01-01" or "scenario": "min", "value": "0001-01-01"
 	ParamDate(ctx context.Context, scenario string, value time.Time, options *HeaderParamDateOptions) (*http.Response, error)
-	// ParamDatetime - Send a post request with header values "scenario": "valid", "value": "2010-01-01T12:34:56Z" or "scenario":
-	// "min", "value": "0001-01-01T00:00:00Z"
+	// ParamDatetime - Send a post request with header values "scenario": "valid", "value": "2010-01-01T12:34:56Z" or "scenario": "min", "value": "0001-01-01T00:00:00Z"
 	ParamDatetime(ctx context.Context, scenario string, value time.Time, options *HeaderParamDatetimeOptions) (*http.Response, error)
-	// ParamDatetimeRFC1123 - Send a post request with header values "scenario": "valid", "value": "Wed, 01 Jan 2010 12:34:56
-	// GMT" or "scenario": "min", "value": "Mon, 01 Jan 0001 00:00:00 GMT"
+	// ParamDatetimeRFC1123 - Send a post request with header values "scenario": "valid", "value": "Wed, 01 Jan 2010 12:34:56 GMT" or "scenario": "min", "value":
+	// "Mon, 01 Jan 0001 00:00:00 GMT"
 	ParamDatetimeRFC1123(ctx context.Context, scenario string, options *HeaderParamDatetimeRFC1123Options) (*http.Response, error)
-	// ParamDouble - Send a post request with header values "scenario": "positive", "value": 7e120 or "scenario": "negative",
-	// "value": -3.0
+	// ParamDouble - Send a post request with header values "scenario": "positive", "value": 7e120 or "scenario": "negative", "value": -3.0
 	ParamDouble(ctx context.Context, scenario string, value float64, options *HeaderParamDoubleOptions) (*http.Response, error)
 	// ParamDuration - Send a post request with header values "scenario": "valid", "value": "P123DT22H14M12.011S"
 	ParamDuration(ctx context.Context, scenario string, value string, options *HeaderParamDurationOptions) (*http.Response, error)
-	// ParamEnum - Send a post request with header values "scenario": "valid", "value": "GREY" or "scenario": "null", "value":
-	// null
+	// ParamEnum - Send a post request with header values "scenario": "valid", "value": "GREY" or "scenario": "null", "value": null
 	ParamEnum(ctx context.Context, scenario string, options *HeaderParamEnumOptions) (*http.Response, error)
 	// ParamExistingKey - Send a post request with header value "User-Agent": "overwrite"
 	ParamExistingKey(ctx context.Context, userAgent string, options *HeaderParamExistingKeyOptions) (*http.Response, error)
-	// ParamFloat - Send a post request with header values "scenario": "positive", "value": 0.07 or "scenario": "negative", "value":
-	// -3.0
+	// ParamFloat - Send a post request with header values "scenario": "positive", "value": 0.07 or "scenario": "negative", "value": -3.0
 	ParamFloat(ctx context.Context, scenario string, value float32, options *HeaderParamFloatOptions) (*http.Response, error)
-	// ParamInteger - Send a post request with header values "scenario": "positive", "value": 1 or "scenario": "negative", "value":
-	// -2
+	// ParamInteger - Send a post request with header values "scenario": "positive", "value": 1 or "scenario": "negative", "value": -2
 	ParamInteger(ctx context.Context, scenario string, value int32, options *HeaderParamIntegerOptions) (*http.Response, error)
-	// ParamLong - Send a post request with header values "scenario": "positive", "value": 105 or "scenario": "negative", "value":
-	// -2
+	// ParamLong - Send a post request with header values "scenario": "positive", "value": 105 or "scenario": "negative", "value": -2
 	ParamLong(ctx context.Context, scenario string, value int64, options *HeaderParamLongOptions) (*http.Response, error)
 	// ParamProtectedKey - Send a post request with header value "Content-Type": "text/html"
 	ParamProtectedKey(ctx context.Context, contentType string, options *HeaderParamProtectedKeyOptions) (*http.Response, error)
-	// ParamString - Send a post request with header values "scenario": "valid", "value": "The quick brown fox jumps over the
-	// lazy dog" or "scenario": "null", "value": null or "scenario": "empty", "value": ""
+	// ParamString - Send a post request with header values "scenario": "valid", "value": "The quick brown fox jumps over the lazy dog" or "scenario": "null",
+	// "value": null or "scenario": "empty", "value": ""
 	ParamString(ctx context.Context, scenario string, options *HeaderParamStringOptions) (*http.Response, error)
 	// ResponseBool - Get a response with header value "value": true or false
 	ResponseBool(ctx context.Context, scenario string, options *HeaderResponseBoolOptions) (*HeaderResponseBoolResponse, error)
@@ -63,8 +56,7 @@ type HeaderOperations interface {
 	ResponseDate(ctx context.Context, scenario string, options *HeaderResponseDateOptions) (*HeaderResponseDateResponse, error)
 	// ResponseDatetime - Get a response with header values "2010-01-01T12:34:56Z" or "0001-01-01T00:00:00Z"
 	ResponseDatetime(ctx context.Context, scenario string, options *HeaderResponseDatetimeOptions) (*HeaderResponseDatetimeResponse, error)
-	// ResponseDatetimeRFC1123 - Get a response with header values "Wed, 01 Jan 2010 12:34:56 GMT" or "Mon, 01 Jan 0001 00:00:00
-	// GMT"
+	// ResponseDatetimeRFC1123 - Get a response with header values "Wed, 01 Jan 2010 12:34:56 GMT" or "Mon, 01 Jan 0001 00:00:00 GMT"
 	ResponseDatetimeRFC1123(ctx context.Context, scenario string, options *HeaderResponseDatetimeRFC1123Options) (*HeaderResponseDatetimeRFC1123Response, error)
 	// ResponseDouble - Get a response with header value "value": 7e120 or -3.0
 	ResponseDouble(ctx context.Context, scenario string, options *HeaderResponseDoubleOptions) (*HeaderResponseDoubleResponse, error)

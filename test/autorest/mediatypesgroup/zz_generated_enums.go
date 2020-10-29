@@ -9,10 +9,14 @@ package mediatypesgroup
 type ContentType string
 
 const (
-// Content Type 'application/pdf'	ContentTypeApplicationPDF ContentType = "application/pdf"
-// Content Type 'image/jpeg'	ContentTypeImageJPEG ContentType = "image/jpeg"
-// Content Type 'image/png'	ContentTypeImagePNG ContentType = "image/png"
-// Content Type 'image/tiff'	ContentTypeImageTIFF ContentType = "image/tiff"
+	// ContentTypeApplicationPDF - Content Type 'application/pdf'
+	ContentTypeApplicationPDF ContentType = "application/pdf"
+	// ContentTypeImageJPEG - Content Type 'image/jpeg'
+	ContentTypeImageJPEG ContentType = "image/jpeg"
+	// ContentTypeImagePNG - Content Type 'image/png'
+	ContentTypeImagePNG ContentType = "image/png"
+	// ContentTypeImageTIFF - Content Type 'image/tiff'
+	ContentTypeImageTIFF ContentType = "image/tiff"
 )
 
 func PossibleContentTypeValues() []ContentType {

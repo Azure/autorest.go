@@ -15,42 +15,41 @@ import (
 
 // LroRetrysOperations contains the methods for the LroRetrys group.
 type LroRetrysOperations interface {
-	// BeginDelete202Retry200 - Long running delete request, service returns a 500, then a 202 to the initial request. Polls return
-	// this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
+	// BeginDelete202Retry200 - Long running delete request, service returns a 500, then a 202 to the initial request. Polls return this value until the last
+	// poll returns a ‘200’ with ProvisioningState=’Succeeded’
 	BeginDelete202Retry200(ctx context.Context, options *LroRetrysDelete202Retry200Options) (*HTTPPollerResponse, error)
 	// ResumeDelete202Retry200 - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeDelete202Retry200(token string) (HTTPPoller, error)
-	// BeginDeleteAsyncRelativeRetrySucceeded - Long running delete request, service returns a 500, then a 202 to the initial
-	// request. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
+	// BeginDeleteAsyncRelativeRetrySucceeded - Long running delete request, service returns a 500, then a 202 to the initial request. Poll the endpoint indicated
+	// in the Azure-AsyncOperation header for operation status
 	BeginDeleteAsyncRelativeRetrySucceeded(ctx context.Context, options *LroRetrysDeleteAsyncRelativeRetrySucceededOptions) (*HTTPPollerResponse, error)
 	// ResumeDeleteAsyncRelativeRetrySucceeded - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeDeleteAsyncRelativeRetrySucceeded(token string) (HTTPPoller, error)
-	// BeginDeleteProvisioning202Accepted200Succeeded - Long running delete request, service returns a 500, then a 202 to the
-	// initial request, with an entity that contains ProvisioningState=’Accepted’. Polls return this value until the last poll
-	// returns a
+	// BeginDeleteProvisioning202Accepted200Succeeded - Long running delete request, service returns a 500, then a 202 to the initial request, with an entity
+	// that contains ProvisioningState=’Accepted’. Polls return this value until the last poll returns a
 	// ‘200’ with ProvisioningState=’Succeeded’
 	BeginDeleteProvisioning202Accepted200Succeeded(ctx context.Context, options *LroRetrysDeleteProvisioning202Accepted200SucceededOptions) (*ProductPollerResponse, error)
 	// ResumeDeleteProvisioning202Accepted200Succeeded - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeDeleteProvisioning202Accepted200Succeeded(token string) (ProductPoller, error)
-	// BeginPost202Retry200 - Long running post request, service returns a 500, then a 202 to the initial request, with 'Location'
-	// and 'Retry-After' headers, Polls return a 200 with a response body after success
+	// BeginPost202Retry200 - Long running post request, service returns a 500, then a 202 to the initial request, with 'Location' and 'Retry-After' headers,
+	// Polls return a 200 with a response body after success
 	BeginPost202Retry200(ctx context.Context, options *LroRetrysPost202Retry200Options) (*HTTPPollerResponse, error)
 	// ResumePost202Retry200 - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumePost202Retry200(token string) (HTTPPoller, error)
-	// BeginPostAsyncRelativeRetrySucceeded - Long running post request, service returns a 500, then a 202 to the initial request,
-	// with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation
+	// BeginPostAsyncRelativeRetrySucceeded - Long running post request, service returns a 500, then a 202 to the initial request, with an entity that contains
+	// ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation
 	// header for operation status
 	BeginPostAsyncRelativeRetrySucceeded(ctx context.Context, options *LroRetrysPostAsyncRelativeRetrySucceededOptions) (*HTTPPollerResponse, error)
 	// ResumePostAsyncRelativeRetrySucceeded - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumePostAsyncRelativeRetrySucceeded(token string) (HTTPPoller, error)
-	// BeginPut201CreatingSucceeded200 - Long running put request, service returns a 500, then a 201 to the initial request, with
-	// an entity that contains ProvisioningState=’Creating’. Polls return this value until the last poll returns a
+	// BeginPut201CreatingSucceeded200 - Long running put request, service returns a 500, then a 201 to the initial request, with an entity that contains ProvisioningState=’Creating’.
+	// Polls return this value until the last poll returns a
 	// ‘200’ with ProvisioningState=’Succeeded’
 	BeginPut201CreatingSucceeded200(ctx context.Context, options *LroRetrysPut201CreatingSucceeded200Options) (*ProductPollerResponse, error)
 	// ResumePut201CreatingSucceeded200 - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumePut201CreatingSucceeded200(token string) (ProductPoller, error)
-	// BeginPutAsyncRelativeRetrySucceeded - Long running put request, service returns a 500, then a 200 to the initial request,
-	// with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation
+	// BeginPutAsyncRelativeRetrySucceeded - Long running put request, service returns a 500, then a 200 to the initial request, with an entity that contains
+	// ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation
 	// header for operation status
 	BeginPutAsyncRelativeRetrySucceeded(ctx context.Context, options *LroRetrysPutAsyncRelativeRetrySucceededOptions) (*ProductPollerResponse, error)
 	// ResumePutAsyncRelativeRetrySucceeded - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.

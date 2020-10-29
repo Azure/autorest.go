@@ -21,8 +21,8 @@ import (
 
 // VirtualMachineScaleSetVMSOperations contains the methods for the VirtualMachineScaleSetVMS group.
 type VirtualMachineScaleSetVMSOperations interface {
-	// BeginDeallocate - Deallocates a specific virtual machine in a VM scale set. Shuts down the virtual machine and releases
-	// the compute resources it uses. You are not billed for the compute resources of this virtual
+	// BeginDeallocate - Deallocates a specific virtual machine in a VM scale set. Shuts down the virtual machine and releases the compute resources it uses.
+	// You are not billed for the compute resources of this virtual
 	// machine once it is deallocated.
 	BeginDeallocate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSDeallocateOptions) (*HTTPPollerResponse, error)
 	// ResumeDeallocate - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
@@ -37,19 +37,18 @@ type VirtualMachineScaleSetVMSOperations interface {
 	GetInstanceView(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSGetInstanceViewOptions) (*VirtualMachineScaleSetVMInstanceViewResponse, error)
 	// List - Gets a list of all virtual machines in a VM scale sets.
 	List(resourceGroupName string, virtualMachineScaleSetName string, options *VirtualMachineScaleSetVMSListOptions) VirtualMachineScaleSetVMListResultPager
-	// BeginPerformMaintenance - Shuts down the virtual machine in a VMScaleSet, moves it to an already updated node, and powers
-	// it back on during the self-service phase of planned maintenance.
+	// BeginPerformMaintenance - Shuts down the virtual machine in a VMScaleSet, moves it to an already updated node, and powers it back on during the self-service
+	// phase of planned maintenance.
 	BeginPerformMaintenance(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSPerformMaintenanceOptions) (*HTTPPollerResponse, error)
 	// ResumePerformMaintenance - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumePerformMaintenance(token string) (HTTPPoller, error)
-	// BeginPowerOff - Power off (stop) a virtual machine in a VM scale set. Note that resources are still attached and you are
-	// getting charged for the resources. Instead, use deallocate to release resources and avoid
+	// BeginPowerOff - Power off (stop) a virtual machine in a VM scale set. Note that resources are still attached and you are getting charged for the resources.
+	// Instead, use deallocate to release resources and avoid
 	// charges.
 	BeginPowerOff(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSPowerOffOptions) (*HTTPPollerResponse, error)
 	// ResumePowerOff - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumePowerOff(token string) (HTTPPoller, error)
-	// BeginRedeploy - Shuts down the virtual machine in the virtual machine scale set, moves it to a new node, and powers it
-	// back on.
+	// BeginRedeploy - Shuts down the virtual machine in the virtual machine scale set, moves it to a new node, and powers it back on.
 	BeginRedeploy(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSRedeployOptions) (*HTTPPollerResponse, error)
 	// ResumeRedeploy - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeRedeploy(token string) (HTTPPoller, error)
@@ -57,8 +56,8 @@ type VirtualMachineScaleSetVMSOperations interface {
 	BeginReimage(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSReimageOptions) (*HTTPPollerResponse, error)
 	// ResumeReimage - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeReimage(token string) (HTTPPoller, error)
-	// BeginReimageAll - Allows you to re-image all the disks ( including data disks ) in the a VM scale set instance. This operation
-	// is only supported for managed disks.
+	// BeginReimageAll - Allows you to re-image all the disks ( including data disks ) in the a VM scale set instance. This operation is only supported for
+	// managed disks.
 	BeginReimageAll(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSReimageAllOptions) (*HTTPPollerResponse, error)
 	// ResumeReimageAll - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeReimageAll(token string) (HTTPPoller, error)
@@ -70,8 +69,8 @@ type VirtualMachineScaleSetVMSOperations interface {
 	BeginRunCommand(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, parameters RunCommandInput, options *VirtualMachineScaleSetVMSRunCommandOptions) (*RunCommandResultPollerResponse, error)
 	// ResumeRunCommand - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeRunCommand(token string) (RunCommandResultPoller, error)
-	// SimulateEviction - The operation to simulate the eviction of spot virtual machine in a VM scale set. The eviction will
-	// occur within 30 minutes of calling the API
+	// SimulateEviction - The operation to simulate the eviction of spot virtual machine in a VM scale set. The eviction will occur within 30 minutes of calling
+	// the API
 	SimulateEviction(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSSimulateEvictionOptions) (*http.Response, error)
 	// BeginStart - Starts a virtual machine in a VM scale set.
 	BeginStart(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSStartOptions) (*HTTPPollerResponse, error)

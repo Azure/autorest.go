@@ -35,18 +35,18 @@ type HTTPRedirectsOperations interface {
 	Head307(ctx context.Context, options *HTTPRedirectsHead307Options) (*BooleanResponse, error)
 	// Options307 - options redirected with 307, resulting in a 200 after redirect
 	Options307(ctx context.Context, options *HTTPRedirectsOptions307Options) (*http.Response, error)
-	// Patch302 - Patch true Boolean value in request returns 302. This request should not be automatically redirected, but should
-	// return the received 302 to the caller for evaluation
+	// Patch302 - Patch true Boolean value in request returns 302. This request should not be automatically redirected, but should return the received 302 to
+	// the caller for evaluation
 	Patch302(ctx context.Context, options *HTTPRedirectsPatch302Options) (*HTTPRedirectsPatch302Response, error)
 	// Patch307 - Patch redirected with 307, resulting in a 200 after redirect
 	Patch307(ctx context.Context, options *HTTPRedirectsPatch307Options) (*http.Response, error)
-	// Post303 - Post true Boolean value in request returns 303. This request should be automatically redirected usign a get,
-	// ultimately returning a 200 status code
+	// Post303 - Post true Boolean value in request returns 303. This request should be automatically redirected usign a get, ultimately returning a 200 status
+	// code
 	Post303(ctx context.Context, options *HTTPRedirectsPost303Options) (*HTTPRedirectsPost303Response, error)
 	// Post307 - Post redirected with 307, resulting in a 200 after redirect
 	Post307(ctx context.Context, options *HTTPRedirectsPost307Options) (*http.Response, error)
-	// Put301 - Put true Boolean value in request returns 301. This request should not be automatically redirected, but should
-	// return the received 301 to the caller for evaluation
+	// Put301 - Put true Boolean value in request returns 301. This request should not be automatically redirected, but should return the received 301 to the
+	// caller for evaluation
 	Put301(ctx context.Context, options *HTTPRedirectsPut301Options) (*HTTPRedirectsPut301Response, error)
 	// Put307 - Put redirected with 307, resulting in a 200 after redirect
 	Put307(ctx context.Context, options *HTTPRedirectsPut307Options) (*http.Response, error)

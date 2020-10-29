@@ -25,20 +25,17 @@ type ExpressRouteCrossConnectionsOperations interface {
 	Get(ctx context.Context, resourceGroupName string, crossConnectionName string, options *ExpressRouteCrossConnectionsGetOptions) (*ExpressRouteCrossConnectionResponse, error)
 	// List - Retrieves all the ExpressRouteCrossConnections in a subscription.
 	List(options *ExpressRouteCrossConnectionsListOptions) ExpressRouteCrossConnectionListResultPager
-	// BeginListArpTable - Gets the currently advertised ARP table associated with the express route cross connection in a resource
-	// group.
+	// BeginListArpTable - Gets the currently advertised ARP table associated with the express route cross connection in a resource group.
 	BeginListArpTable(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, devicePath string, options *ExpressRouteCrossConnectionsListArpTableOptions) (*ExpressRouteCircuitsArpTableListResultPollerResponse, error)
 	// ResumeListArpTable - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeListArpTable(token string) (ExpressRouteCircuitsArpTableListResultPoller, error)
 	// ListByResourceGroup - Retrieves all the ExpressRouteCrossConnections in a resource group.
 	ListByResourceGroup(resourceGroupName string, options *ExpressRouteCrossConnectionsListByResourceGroupOptions) ExpressRouteCrossConnectionListResultPager
-	// BeginListRoutesTable - Gets the currently advertised routes table associated with the express route cross connection in
-	// a resource group.
+	// BeginListRoutesTable - Gets the currently advertised routes table associated with the express route cross connection in a resource group.
 	BeginListRoutesTable(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, devicePath string, options *ExpressRouteCrossConnectionsListRoutesTableOptions) (*ExpressRouteCircuitsRoutesTableListResultPollerResponse, error)
 	// ResumeListRoutesTable - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeListRoutesTable(token string) (ExpressRouteCircuitsRoutesTableListResultPoller, error)
-	// BeginListRoutesTableSummary - Gets the route table summary associated with the express route cross connection in a resource
-	// group.
+	// BeginListRoutesTableSummary - Gets the route table summary associated with the express route cross connection in a resource group.
 	BeginListRoutesTableSummary(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, devicePath string, options *ExpressRouteCrossConnectionsListRoutesTableSummaryOptions) (*ExpressRouteCrossConnectionsRoutesTableSummaryListResultPollerResponse, error)
 	// ResumeListRoutesTableSummary - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeListRoutesTableSummary(token string) (ExpressRouteCrossConnectionsRoutesTableSummaryListResultPoller, error)

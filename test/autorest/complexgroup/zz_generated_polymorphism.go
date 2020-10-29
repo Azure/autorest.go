@@ -15,12 +15,12 @@ import (
 type PolymorphismOperations interface {
 	// GetComplicated - Get complex types that are polymorphic, but not at the root of the hierarchy; also have additional properties
 	GetComplicated(ctx context.Context, options *PolymorphismGetComplicatedOptions) (*SalmonResponse, error)
-	// GetComposedWithDiscriminator - Get complex object composing a polymorphic scalar property and array property with polymorphic
-	// element type, with discriminator specified. Deserialization must NOT fail and use the discriminator type
+	// GetComposedWithDiscriminator - Get complex object composing a polymorphic scalar property and array property with polymorphic element type, with discriminator
+	// specified. Deserialization must NOT fail and use the discriminator type
 	// specified on the wire.
 	GetComposedWithDiscriminator(ctx context.Context, options *PolymorphismGetComposedWithDiscriminatorOptions) (*DotFishMarketResponse, error)
-	// GetComposedWithoutDiscriminator - Get complex object composing a polymorphic scalar property and array property with polymorphic
-	// element type, without discriminator specified on wire. Deserialization must NOT fail and use the explicit
+	// GetComposedWithoutDiscriminator - Get complex object composing a polymorphic scalar property and array property with polymorphic element type, without
+	// discriminator specified on wire. Deserialization must NOT fail and use the explicit
 	// type of the property.
 	GetComposedWithoutDiscriminator(ctx context.Context, options *PolymorphismGetComposedWithoutDiscriminatorOptions) (*DotFishMarketResponse, error)
 	// GetDotSyntax - Get complex types that are polymorphic, JSON key contains a dot
@@ -33,8 +33,8 @@ type PolymorphismOperations interface {
 	PutMissingDiscriminator(ctx context.Context, complexBody SalmonClassification, options *PolymorphismPutMissingDiscriminatorOptions) (*SalmonResponse, error)
 	// PutValid - Put complex types that are polymorphic
 	PutValid(ctx context.Context, complexBody FishClassification, options *PolymorphismPutValidOptions) (*http.Response, error)
-	// PutValidMissingRequired - Put complex types that are polymorphic, attempting to omit required 'birthday' field - the request
-	// should not be allowed from the client
+	// PutValidMissingRequired - Put complex types that are polymorphic, attempting to omit required 'birthday' field - the request should not be allowed from
+	// the client
 	PutValidMissingRequired(ctx context.Context, complexBody FishClassification, options *PolymorphismPutValidMissingRequiredOptions) (*http.Response, error)
 }
 

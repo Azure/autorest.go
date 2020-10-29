@@ -15,20 +15,20 @@ import (
 
 // PathItemsOperations contains the methods for the PathItems group.
 type PathItemsOperations interface {
-	// GetAllWithValues - send globalStringPath='globalStringPath', pathItemStringPath='pathItemStringPath', localStringPath='localStringPath',
-	// globalStringQuery='globalStringQuery', pathItemStringQuery='pathItemStringQuery',
+	// GetAllWithValues - send globalStringPath='globalStringPath', pathItemStringPath='pathItemStringPath', localStringPath='localStringPath', globalStringQuery='globalStringQuery',
+	// pathItemStringQuery='pathItemStringQuery',
 	// localStringQuery='localStringQuery'
 	GetAllWithValues(ctx context.Context, pathItemStringPath string, localStringPath string, options *PathItemsGetAllWithValuesOptions) (*http.Response, error)
-	// GetGlobalAndLocalQueryNull - send globalStringPath=globalStringPath, pathItemStringPath='pathItemStringPath', localStringPath='localStringPath',
-	// globalStringQuery=null, pathItemStringQuery='pathItemStringQuery',
+	// GetGlobalAndLocalQueryNull - send globalStringPath=globalStringPath, pathItemStringPath='pathItemStringPath', localStringPath='localStringPath', globalStringQuery=null,
+	// pathItemStringQuery='pathItemStringQuery',
 	// localStringQuery=null
 	GetGlobalAndLocalQueryNull(ctx context.Context, pathItemStringPath string, localStringPath string, options *PathItemsGetGlobalAndLocalQueryNullOptions) (*http.Response, error)
-	// GetGlobalQueryNull - send globalStringPath='globalStringPath', pathItemStringPath='pathItemStringPath', localStringPath='localStringPath',
-	// globalStringQuery=null, pathItemStringQuery='pathItemStringQuery',
+	// GetGlobalQueryNull - send globalStringPath='globalStringPath', pathItemStringPath='pathItemStringPath', localStringPath='localStringPath', globalStringQuery=null,
+	// pathItemStringQuery='pathItemStringQuery',
 	// localStringQuery='localStringQuery'
 	GetGlobalQueryNull(ctx context.Context, pathItemStringPath string, localStringPath string, options *PathItemsGetGlobalQueryNullOptions) (*http.Response, error)
-	// GetLocalPathItemQueryNull - send globalStringPath='globalStringPath', pathItemStringPath='pathItemStringPath', localStringPath='localStringPath',
-	// globalStringQuery='globalStringQuery', pathItemStringQuery=null,
+	// GetLocalPathItemQueryNull - send globalStringPath='globalStringPath', pathItemStringPath='pathItemStringPath', localStringPath='localStringPath', globalStringQuery='globalStringQuery',
+	// pathItemStringQuery=null,
 	// localStringQuery=null
 	GetLocalPathItemQueryNull(ctx context.Context, pathItemStringPath string, localStringPath string, options *PathItemsGetLocalPathItemQueryNullOptions) (*http.Response, error)
 }

@@ -24,8 +24,7 @@ type DictionaryOperations interface {
 	GetArrayNull(ctx context.Context, options *DictionaryGetArrayNullOptions) (*MapOfStringArrayResponse, error)
 	// GetArrayValid - Get an array of array of strings {"0": ["1", "2", "3"], "1": ["4", "5", "6"], "2": ["7", "8", "9"]}
 	GetArrayValid(ctx context.Context, options *DictionaryGetArrayValidOptions) (*MapOfStringArrayResponse, error)
-	// GetBase64URL - Get base64url dictionary value {"0": "a string that gets encoded with base64url", "1": "test string", "2":
-	// "Lorem ipsum"}
+	// GetBase64URL - Get base64url dictionary value {"0": "a string that gets encoded with base64url", "1": "test string", "2": "Lorem ipsum"}
 	GetBase64URL(ctx context.Context, options *DictionaryGetBase64URLOptions) (*MapOfByteArrayResponse, error)
 	// GetBooleanInvalidNull - Get boolean dictionary value {"0": true, "1": null, "2": false }
 	GetBooleanInvalidNull(ctx context.Context, options *DictionaryGetBooleanInvalidNullOptions) (*MapOfBoolResponse, error)
@@ -35,21 +34,18 @@ type DictionaryOperations interface {
 	GetBooleanTfft(ctx context.Context, options *DictionaryGetBooleanTfftOptions) (*MapOfBoolResponse, error)
 	// GetByteInvalidNull - Get byte dictionary value {"0": hex(FF FF FF FA), "1": null} with the first item base64 encoded
 	GetByteInvalidNull(ctx context.Context, options *DictionaryGetByteInvalidNullOptions) (*MapOfByteArrayResponse, error)
-	// GetByteValid - Get byte dictionary value {"0": hex(FF FF FF FA), "1": hex(01 02 03), "2": hex (25, 29, 43)} with each item
-	// encoded in base64
+	// GetByteValid - Get byte dictionary value {"0": hex(FF FF FF FA), "1": hex(01 02 03), "2": hex (25, 29, 43)} with each item encoded in base64
 	GetByteValid(ctx context.Context, options *DictionaryGetByteValidOptions) (*MapOfByteArrayResponse, error)
 	// GetComplexEmpty - Get empty dictionary of complex type {}
 	GetComplexEmpty(ctx context.Context, options *DictionaryGetComplexEmptyOptions) (*MapOfWidgetResponse, error)
-	// GetComplexItemEmpty - Get dictionary of complex type with empty item {"0": {"integer": 1, "string": "2"}, "1:" {}, "2":
-	// {"integer": 5, "string": "6"}}
+	// GetComplexItemEmpty - Get dictionary of complex type with empty item {"0": {"integer": 1, "string": "2"}, "1:" {}, "2": {"integer": 5, "string": "6"}}
 	GetComplexItemEmpty(ctx context.Context, options *DictionaryGetComplexItemEmptyOptions) (*MapOfWidgetResponse, error)
-	// GetComplexItemNull - Get dictionary of complex type with null item {"0": {"integer": 1, "string": "2"}, "1": null, "2":
-	// {"integer": 5, "string": "6"}}
+	// GetComplexItemNull - Get dictionary of complex type with null item {"0": {"integer": 1, "string": "2"}, "1": null, "2": {"integer": 5, "string": "6"}}
 	GetComplexItemNull(ctx context.Context, options *DictionaryGetComplexItemNullOptions) (*MapOfWidgetResponse, error)
 	// GetComplexNull - Get dictionary of complex type null value
 	GetComplexNull(ctx context.Context, options *DictionaryGetComplexNullOptions) (*MapOfWidgetResponse, error)
-	// GetComplexValid - Get dictionary of complex type with {"0": {"integer": 1, "string": "2"}, "1": {"integer": 3, "string":
-	// "4"}, "2": {"integer": 5, "string": "6"}}
+	// GetComplexValid - Get dictionary of complex type with {"0": {"integer": 1, "string": "2"}, "1": {"integer": 3, "string": "4"}, "2": {"integer": 5, "string":
+	// "6"}}
 	GetComplexValid(ctx context.Context, options *DictionaryGetComplexValidOptions) (*MapOfWidgetResponse, error)
 	// GetDateInvalidChars - Get date dictionary value {"0": "2011-03-22", "1": "date"}
 	GetDateInvalidChars(ctx context.Context, options *DictionaryGetDateInvalidCharsOptions) (*MapOfTimeResponse, error)
@@ -59,26 +55,25 @@ type DictionaryOperations interface {
 	GetDateTimeInvalidChars(ctx context.Context, options *DictionaryGetDateTimeInvalidCharsOptions) (*MapOfTimeResponse, error)
 	// GetDateTimeInvalidNull - Get date dictionary value {"0": "2000-12-01t00:00:01z", "1": null}
 	GetDateTimeInvalidNull(ctx context.Context, options *DictionaryGetDateTimeInvalidNullOptions) (*MapOfTimeResponse, error)
-	// GetDateTimeRFC1123Valid - Get date-time-rfc1123 dictionary value {"0": "Fri, 01 Dec 2000 00:00:01 GMT", "1": "Wed, 02 Jan
-	// 1980 00:11:35 GMT", "2": "Wed, 12 Oct 1492 10:15:01 GMT"}
+	// GetDateTimeRFC1123Valid - Get date-time-rfc1123 dictionary value {"0": "Fri, 01 Dec 2000 00:00:01 GMT", "1": "Wed, 02 Jan 1980 00:11:35 GMT", "2": "Wed,
+	// 12 Oct 1492 10:15:01 GMT"}
 	GetDateTimeRFC1123Valid(ctx context.Context, options *DictionaryGetDateTimeRFC1123ValidOptions) (*MapOfTimeResponse, error)
-	// GetDateTimeValid - Get date-time dictionary value {"0": "2000-12-01t00:00:01z", "1": "1980-01-02T00:11:35+01:00", "2":
-	// "1492-10-12T10:15:01-08:00"}
+	// GetDateTimeValid - Get date-time dictionary value {"0": "2000-12-01t00:00:01z", "1": "1980-01-02T00:11:35+01:00", "2": "1492-10-12T10:15:01-08:00"}
 	GetDateTimeValid(ctx context.Context, options *DictionaryGetDateTimeValidOptions) (*MapOfTimeResponse, error)
 	// GetDateValid - Get integer dictionary value {"0": "2000-12-01", "1": "1980-01-02", "2": "1492-10-12"}
 	GetDateValid(ctx context.Context, options *DictionaryGetDateValidOptions) (*MapOfTimeResponse, error)
 	// GetDictionaryEmpty - Get an dictionaries of dictionaries of type with value {}
 	GetDictionaryEmpty(ctx context.Context, options *DictionaryGetDictionaryEmptyOptions) (*MapOfInterfaceResponse, error)
-	// GetDictionaryItemEmpty - Get an dictionaries of dictionaries of type with value {"0": {"1": "one", "2": "two", "3": "three"},
-	// "1": {}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
+	// GetDictionaryItemEmpty - Get an dictionaries of dictionaries of type with value {"0": {"1": "one", "2": "two", "3": "three"}, "1": {}, "2": {"7": "seven",
+	// "8": "eight", "9": "nine"}}
 	GetDictionaryItemEmpty(ctx context.Context, options *DictionaryGetDictionaryItemEmptyOptions) (*MapOfInterfaceResponse, error)
-	// GetDictionaryItemNull - Get an dictionaries of dictionaries of type with value {"0": {"1": "one", "2": "two", "3": "three"},
-	// "1": null, "2": {"7": "seven", "8": "eight", "9": "nine"}}
+	// GetDictionaryItemNull - Get an dictionaries of dictionaries of type with value {"0": {"1": "one", "2": "two", "3": "three"}, "1": null, "2": {"7": "seven",
+	// "8": "eight", "9": "nine"}}
 	GetDictionaryItemNull(ctx context.Context, options *DictionaryGetDictionaryItemNullOptions) (*MapOfInterfaceResponse, error)
 	// GetDictionaryNull - Get an dictionaries of dictionaries with value null
 	GetDictionaryNull(ctx context.Context, options *DictionaryGetDictionaryNullOptions) (*MapOfInterfaceResponse, error)
-	// GetDictionaryValid - Get an dictionaries of dictionaries of type with value {"0": {"1": "one", "2": "two", "3": "three"},
-	// "1": {"4": "four", "5": "five", "6": "six"}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
+	// GetDictionaryValid - Get an dictionaries of dictionaries of type with value {"0": {"1": "one", "2": "two", "3": "three"}, "1": {"4": "four", "5": "five",
+	// "6": "six"}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
 	GetDictionaryValid(ctx context.Context, options *DictionaryGetDictionaryValidOptions) (*MapOfInterfaceResponse, error)
 	// GetDoubleInvalidNull - Get float dictionary value {"0": 0.0, "1": null, "2": 1.2e20}
 	GetDoubleInvalidNull(ctx context.Context, options *DictionaryGetDoubleInvalidNullOptions) (*MapOfFloat64Response, error)
@@ -128,21 +123,20 @@ type DictionaryOperations interface {
 	PutArrayValid(ctx context.Context, arrayBody map[string][]string, options *DictionaryPutArrayValidOptions) (*http.Response, error)
 	// PutBooleanTfft - Set dictionary value empty {"0": true, "1": false, "2": false, "3": true }
 	PutBooleanTfft(ctx context.Context, arrayBody map[string]bool, options *DictionaryPutBooleanTfftOptions) (*http.Response, error)
-	// PutByteValid - Put the dictionary value {"0": hex(FF FF FF FA), "1": hex(01 02 03), "2": hex (25, 29, 43)} with each elementencoded
-	// in base 64
+	// PutByteValid - Put the dictionary value {"0": hex(FF FF FF FA), "1": hex(01 02 03), "2": hex (25, 29, 43)} with each elementencoded in base 64
 	PutByteValid(ctx context.Context, arrayBody map[string][]byte, options *DictionaryPutByteValidOptions) (*http.Response, error)
-	// PutComplexValid - Put an dictionary of complex type with values {"0": {"integer": 1, "string": "2"}, "1": {"integer": 3,
-	// "string": "4"}, "2": {"integer": 5, "string": "6"}}
+	// PutComplexValid - Put an dictionary of complex type with values {"0": {"integer": 1, "string": "2"}, "1": {"integer": 3, "string": "4"}, "2": {"integer":
+	// 5, "string": "6"}}
 	PutComplexValid(ctx context.Context, arrayBody map[string]Widget, options *DictionaryPutComplexValidOptions) (*http.Response, error)
-	// PutDateTimeRFC1123Valid - Set dictionary value empty {"0": "Fri, 01 Dec 2000 00:00:01 GMT", "1": "Wed, 02 Jan 1980 00:11:35
-	// GMT", "2": "Wed, 12 Oct 1492 10:15:01 GMT"}
+	// PutDateTimeRFC1123Valid - Set dictionary value empty {"0": "Fri, 01 Dec 2000 00:00:01 GMT", "1": "Wed, 02 Jan 1980 00:11:35 GMT", "2": "Wed, 12 Oct 1492
+	// 10:15:01 GMT"}
 	PutDateTimeRFC1123Valid(ctx context.Context, arrayBody map[string]time.Time, options *DictionaryPutDateTimeRFC1123ValidOptions) (*http.Response, error)
 	// PutDateTimeValid - Set dictionary value {"0": "2000-12-01t00:00:01z", "1": "1980-01-02T00:11:35+01:00", "2": "1492-10-12T10:15:01-08:00"}
 	PutDateTimeValid(ctx context.Context, arrayBody map[string]time.Time, options *DictionaryPutDateTimeValidOptions) (*http.Response, error)
 	// PutDateValid - Set dictionary value {"0": "2000-12-01", "1": "1980-01-02", "2": "1492-10-12"}
 	PutDateValid(ctx context.Context, arrayBody map[string]time.Time, options *DictionaryPutDateValidOptions) (*http.Response, error)
-	// PutDictionaryValid - Get an dictionaries of dictionaries of type with value {"0": {"1": "one", "2": "two", "3": "three"},
-	// "1": {"4": "four", "5": "five", "6": "six"}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
+	// PutDictionaryValid - Get an dictionaries of dictionaries of type with value {"0": {"1": "one", "2": "two", "3": "three"}, "1": {"4": "four", "5": "five",
+	// "6": "six"}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
 	PutDictionaryValid(ctx context.Context, arrayBody map[string]interface{}, options *DictionaryPutDictionaryValidOptions) (*http.Response, error)
 	// PutDoubleValid - Set dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
 	PutDoubleValid(ctx context.Context, arrayBody map[string]float64, options *DictionaryPutDoubleValidOptions) (*http.Response, error)
