@@ -337,7 +337,7 @@ type DictionaryPutValidOptions struct {
 }
 
 type DictionaryWrapper struct {
-	// Dictionary of <string>
+	// Dictionary of
 	DefaultProgram *map[string]string `json:"defaultProgram,omitempty"`
 }
 

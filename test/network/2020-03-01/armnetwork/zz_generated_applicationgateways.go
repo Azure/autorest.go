@@ -202,8 +202,8 @@ func (client *ApplicationGatewaysClient) ResumeBackendHealthOnDemand(token strin
 	}, nil
 }
 
-// BackendHealthOnDemand - Gets the backend health for given combination of backend pool and http setting of the specified
-// application gateway in a resource group.
+// BackendHealthOnDemand - Gets the backend health for given combination of backend pool and http setting of the specified application gateway in a resource
+// group.
 func (client *ApplicationGatewaysClient) BackendHealthOnDemand(ctx context.Context, resourceGroupName string, applicationGatewayName string, probeRequest ApplicationGatewayOnDemandProbe, options *ApplicationGatewaysBackendHealthOnDemandOptions) (*azcore.Response, error) {
 	req, err := client.BackendHealthOnDemandCreateRequest(ctx, resourceGroupName, applicationGatewayName, probeRequest, options)
 	if err != nil {

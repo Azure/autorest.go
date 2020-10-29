@@ -600,7 +600,7 @@ type ApplicationGatewayOnDemandProbe struct {
 	// Criterion for classifying a healthy probe response.
 	Match *ApplicationGatewayProbeHealthResponseMatch `json:"match,omitempty"`
 
-	// Relative path of probe. Valid path starts from '/'. Probe is sent to <Protocol>://<host>:<port><path>.
+	// Relative path of probe. Valid path starts from '/'. Probe is sent to ://:.
 	Path *string `json:"path,omitempty"`
 
 	// Whether the host header should be picked from the backend http settings. Default value is false.
@@ -707,14 +707,15 @@ type ApplicationGatewayProbePropertiesFormat struct {
 	// Minimum number of servers that are always marked healthy. Default value is 0.
 	MinServers *int32 `json:"minServers,omitempty"`
 
-	// Relative path of probe. Valid path starts from '/'. Probe is sent to <Protocol>://<host>:<port><path>.
+	// Relative path of probe. Valid path starts from '/'. Probe is sent to ://:.
 	Path *string `json:"path,omitempty"`
 
 	// Whether the host header should be picked from the backend http settings. Default value is false.
 	PickHostNameFromBackendHTTPSettings *bool `json:"pickHostNameFromBackendHttpSettings,omitempty"`
 
 	// Custom port which will be used for probing the backend servers. The valid value ranges from 1 to 65535. In case not set,
-	// port from http settings will be used. This property is valid for Standard_v2 and WAF_v2 only.
+	// port from http settings will be used. This property is valid for Standard_v2
+	// and WAF_v2 only.
 	Port *int32 `json:"port,omitempty"`
 
 	// The protocol used for the probe.
@@ -734,16 +735,19 @@ type ApplicationGatewayProbePropertiesFormat struct {
 
 // Properties of the application gateway.
 type ApplicationGatewayPropertiesFormat struct {
-	// Authentication certificates of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits).
+	// Authentication certificates of the application gateway resource. For default limits, see Application Gateway limits
+	// [https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits].
 	AuthenticationCertificates *[]ApplicationGatewayAuthenticationCertificate `json:"authenticationCertificates,omitempty"`
 
 	// Autoscale Configuration.
 	AutoscaleConfiguration *ApplicationGatewayAutoscaleConfiguration `json:"autoscaleConfiguration,omitempty"`
 
-	// Backend address pool of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits).
+	// Backend address pool of the application gateway resource. For default limits, see Application Gateway limits
+	// [https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits].
 	BackendAddressPools *[]ApplicationGatewayBackendAddressPool `json:"backendAddressPools,omitempty"`
 
-	// Backend http settings of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits).
+	// Backend http settings of the application gateway resource. For default limits, see Application Gateway limits
+	// [https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits].
 	BackendHTTPSettingsCollection *[]ApplicationGatewayBackendHTTPSettings `json:"backendHttpSettingsCollection,omitempty"`
 
 	// Custom error configurations of the application gateway resource.
@@ -761,16 +765,17 @@ type ApplicationGatewayPropertiesFormat struct {
 	// If true, associates a firewall policy with an application gateway regardless whether the policy differs from the WAF Config.
 	ForceFirewallPolicyAssociation *bool `json:"forceFirewallPolicyAssociation,omitempty"`
 
-	// Frontend IP addresses of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits).
+	// Frontend IP addresses of the application gateway resource. For default limits, see Application Gateway limits
+	// [https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits].
 	FrontendIPConfigurations *[]ApplicationGatewayFrontendIPConfiguration `json:"frontendIPConfigurations,omitempty"`
 
-	// Frontend ports of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits).
+	// Frontend ports of the application gateway resource. For default limits, see Application Gateway limits [https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits].
 	FrontendPorts *[]ApplicationGatewayFrontendPort `json:"frontendPorts,omitempty"`
 
-	// Subnets of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits).
+	// Subnets of the application gateway resource. For default limits, see Application Gateway limits [https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits].
 	GatewayIPConfigurations *[]ApplicationGatewayIPConfiguration `json:"gatewayIPConfigurations,omitempty"`
 
-	// Http listeners of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits).
+	// Http listeners of the application gateway resource. For default limits, see Application Gateway limits [https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits].
 	HTTPListeners *[]ApplicationGatewayHTTPListener `json:"httpListeners,omitempty"`
 
 	// Operational state of the application gateway resource.
@@ -782,7 +787,8 @@ type ApplicationGatewayPropertiesFormat struct {
 	// The provisioning state of the application gateway resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
-	// Redirect configurations of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits).
+	// Redirect configurations of the application gateway resource. For default limits, see Application Gateway limits
+	// [https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits].
 	RedirectConfigurations *[]ApplicationGatewayRedirectConfiguration `json:"redirectConfigurations,omitempty"`
 
 	// Request routing rules of the application gateway resource.
@@ -797,16 +803,18 @@ type ApplicationGatewayPropertiesFormat struct {
 	// SKU of the application gateway resource.
 	SKU *ApplicationGatewaySKU `json:"sku,omitempty"`
 
-	// SSL certificates of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits).
+	// SSL certificates of the application gateway resource. For default limits, see Application Gateway limits [https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits]
+	// .
 	SslCertificates *[]ApplicationGatewaySslCertificate `json:"sslCertificates,omitempty"`
 
 	// SSL policy of the application gateway resource.
 	SslPolicy *ApplicationGatewaySslPolicy `json:"sslPolicy,omitempty"`
 
-	// Trusted Root certificates of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits).
+	// Trusted Root certificates of the application gateway resource. For default limits, see Application Gateway limits
+	// [https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits].
 	TrustedRootCertificates *[]ApplicationGatewayTrustedRootCertificate `json:"trustedRootCertificates,omitempty"`
 
-	// URL path map of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits).
+	// URL path map of the application gateway resource. For default limits, see Application Gateway limits [https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits].
 	URLPathMaps *[]ApplicationGatewayURLPathMap `json:"urlPathMaps,omitempty"`
 
 	// Web application firewall configuration.
@@ -1415,7 +1423,8 @@ type ApplicationSecurityGroupPropertiesFormat struct {
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// The resource GUID property of the application security group resource. It uniquely identifies a resource, even if the user
-	// changes its name or migrate the resource across subscriptions or resource groups.
+	// changes its name or migrate the resource across subscriptions or resource
+	// groups.
 	ResourceGUID *string `json:"resourceGuid,omitempty" azure:"ro"`
 }
 
@@ -2686,7 +2695,8 @@ type BgpCommunity struct {
 	// The prefixes that the bgp community contains.
 	CommunityPrefixes *[]string `json:"communityPrefixes,omitempty"`
 
-	// The value of the bgp community. For more information: https://docs.microsoft.com/en-us/azure/expressroute/expressroute-routing.
+	// The value of the bgp community. For more information: https://docs.microsoft.com/en-us/azure/expressroute/expressroute-routing
+	// [https://docs.microsoft.com/en-us/azure/expressroute/expressroute-routing].
 	CommunityValue *string `json:"communityValue,omitempty"`
 
 	// Customer is authorized to use bgp community or not.
@@ -7088,8 +7098,8 @@ type InboundNatPoolPropertiesFormat struct {
 	BackendPort *int32 `json:"backendPort,omitempty"`
 
 	// Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability
-	// Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can't be changed
-	// after you create the endpoint.
+	// Group. This setting is required when using the SQL AlwaysOn Availability Groups
+	// in SQL server. This setting can't be changed after you create the endpoint.
 	EnableFloatingIP *bool `json:"enableFloatingIP,omitempty"`
 
 	// Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used
@@ -7175,8 +7185,8 @@ type InboundNatRulePropertiesFormat struct {
 	BackendPort *int32 `json:"backendPort,omitempty"`
 
 	// Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability
-	// Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can't be changed
-	// after you create the endpoint.
+	// Group. This setting is required when using the SQL AlwaysOn Availability Groups
+	// in SQL server. This setting can't be changed after you create the endpoint.
 	EnableFloatingIP *bool `json:"enableFloatingIP,omitempty"`
 
 	// Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used
@@ -7655,15 +7665,17 @@ type LoadBalancerPropertiesFormat struct {
 	FrontendIPConfigurations *[]FrontendIPConfiguration `json:"frontendIPConfigurations,omitempty"`
 
 	// Defines an external port range for inbound NAT to a single backend port on NICs associated with a load balancer. Inbound
-	// NAT rules are created automatically for each NIC associated with the Load Balancer using an external port from this range.
-	// Defining an Inbound NAT pool on your Load Balancer is mutually exclusive with defining inbound Nat rules. Inbound NAT pools
-	// are referenced from virtual machine scale sets. NICs that are associated with individual virtual machines cannot reference
-	// an inbound NAT pool. They have to reference individual inbound NAT rules.
+	// NAT rules are created automatically for each NIC associated with the Load
+	// Balancer using an external port from this range. Defining an Inbound NAT pool on your Load Balancer is mutually exclusive
+	// with defining inbound Nat rules. Inbound NAT pools are referenced from virtual
+	// machine scale sets. NICs that are associated with individual virtual machines cannot reference an inbound NAT pool. They
+	// have to reference individual inbound NAT rules.
 	InboundNatPools *[]InboundNatPool `json:"inboundNatPools,omitempty"`
 
 	// Collection of inbound NAT Rules used by a load balancer. Defining inbound NAT rules on your load balancer is mutually exclusive
-	// with defining an inbound NAT pool. Inbound NAT pools are referenced from virtual machine scale sets. NICs that are associated
-	// with individual virtual machines cannot reference an Inbound NAT pool. They have to reference individual inbound NAT rules.
+	// with defining an inbound NAT pool. Inbound NAT pools are referenced from
+	// virtual machine scale sets. NICs that are associated with individual virtual machines cannot reference an Inbound NAT pool.
+	// They have to reference individual inbound NAT rules.
 	InboundNatRules *[]InboundNatRule `json:"inboundNatRules,omitempty"`
 
 	// Object collection representing the load balancing rules Gets the provisioning.
@@ -7759,8 +7771,8 @@ type LoadBalancingRulePropertiesFormat struct {
 	DisableOutboundSnat *bool `json:"disableOutboundSnat,omitempty"`
 
 	// Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability
-	// Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can't be changed
-	// after you create the endpoint.
+	// Group. This setting is required when using the SQL AlwaysOn Availability Groups
+	// in SQL server. This setting can't be changed after you create the endpoint.
 	EnableFloatingIP *bool `json:"enableFloatingIP,omitempty"`
 
 	// Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used
@@ -7958,11 +7970,13 @@ type ManagedServiceIDentity struct {
 	TenantID *string `json:"tenantId,omitempty" azure:"ro"`
 
 	// The type of identity used for the resource. The type 'SystemAssigned, UserAssigned' includes both an implicitly created
-	// identity and a set of user assigned identities. The type 'None' will remove any identities from the virtual machine.
+	// identity and a set of user assigned identities. The type 'None' will remove any
+	// identities from the virtual machine.
 	Type *ResourceIDentityType `json:"type,omitempty"`
 
 	// The list of user identities associated with resource. The user identity dictionary key references will be ARM resource
-	// ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
+	// ids in the form:
+	// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
 	UserAssignedIDentities *map[string]Components1Jq1T4ISchemasManagedserviceidentityPropertiesUserassignedidentitiesAdditionalproperties `json:"userAssignedIdentities,omitempty"`
 }
 
@@ -8349,18 +8363,21 @@ type NetworkInterfaceAssociation struct {
 // DNS settings of a network interface.
 type NetworkInterfaceDNSSettings struct {
 	// If the VM that uses this NIC is part of an Availability Set, then this list will have the union of all DNS servers from
-	// all NICs that are part of the Availability Set. This property is what is configured on each of those VMs.
+	// all NICs that are part of the Availability Set. This property is what is
+	// configured on each of those VMs.
 	AppliedDNSServers *[]string `json:"appliedDnsServers,omitempty" azure:"ro"`
 
 	// List of DNS servers IP addresses. Use 'AzureProvidedDNS' to switch to azure provided DNS resolution. 'AzureProvidedDNS'
-	// value cannot be combined with other IPs, it must be the only value in dnsServers collection.
+	// value cannot be combined with other IPs, it must be the only value in dnsServers
+	// collection.
 	DNSServers *[]string `json:"dnsServers,omitempty"`
 
 	// Relative DNS name for this NIC used for internal communications between VMs in the same virtual network.
 	InternalDNSNameLabel *string `json:"internalDnsNameLabel,omitempty"`
 
 	// Even if internalDnsNameLabel is not specified, a DNS entry is created for the primary NIC of the VM. This DNS name can
-	// be constructed by concatenating the VM name with the value of internalDomainNameSuffix.
+	// be constructed by concatenating the VM name with the value of
+	// internalDomainNameSuffix.
 	InternalDomainNameSuffix *string `json:"internalDomainNameSuffix,omitempty" azure:"ro"`
 
 	// Fully qualified DNS name supporting internal communications between VMs in the same virtual network.
@@ -9380,7 +9397,8 @@ type NextHopResult struct {
 	NextHopType *NextHopType `json:"nextHopType,omitempty"`
 
 	// The resource identifier for the route table associated with the route being returned. If the route being returned does
-	// not correspond to any user created routes then this field will be the string 'System Route'.
+	// not correspond to any user created routes then this field will be the string
+	// 'System Route'.
 	RouteTableID *string `json:"routeTableId,omitempty"`
 }
 
@@ -9724,24 +9742,26 @@ type PacketCapture struct {
 // Filter that is applied to packet capture request. Multiple filters can be applied.
 type PacketCaptureFilter struct {
 	// Local IP Address to be filtered on. Notation: "127.0.0.1" for single address entry. "127.0.0.1-127.0.0.255" for range.
-	// "127.0.0.1;127.0.0.5"? for multiple entries. Multiple ranges not currently supported. Mixing ranges with multiple entries
-	// not currently supported. Default = null.
+	// "127.0.0.1;127.0.0.5"? for multiple entries. Multiple ranges not currently
+	// supported. Mixing ranges with multiple entries not currently supported. Default = null.
 	LocalIPAddress *string `json:"localIPAddress,omitempty"`
 
 	// Local port to be filtered on. Notation: "80" for single port entry."80-85" for range. "80;443;" for multiple entries. Multiple
-	// ranges not currently supported. Mixing ranges with multiple entries not currently supported. Default = null.
+	// ranges not currently supported. Mixing ranges with multiple entries not
+	// currently supported. Default = null.
 	LocalPort *string `json:"localPort,omitempty"`
 
 	// Protocol to be filtered on.
 	Protocol *PcProtocol `json:"protocol,omitempty"`
 
 	// Local IP Address to be filtered on. Notation: "127.0.0.1" for single address entry. "127.0.0.1-127.0.0.255" for range.
-	// "127.0.0.1;127.0.0.5;" for multiple entries. Multiple ranges not currently supported. Mixing ranges with multiple entries
-	// not currently supported. Default = null.
+	// "127.0.0.1;127.0.0.5;" for multiple entries. Multiple ranges not currently
+	// supported. Mixing ranges with multiple entries not currently supported. Default = null.
 	RemoteIPAddress *string `json:"remoteIPAddress,omitempty"`
 
 	// Remote port to be filtered on. Notation: "80" for single port entry."80-85" for range. "80;443;" for multiple entries.
-	// Multiple ranges not currently supported. Mixing ranges with multiple entries not currently supported. Default = null.
+	// Multiple ranges not currently supported. Mixing ranges with multiple entries not
+	// currently supported. Default = null.
 	RemotePort *string `json:"remotePort,omitempty"`
 }
 
@@ -9945,7 +9965,8 @@ type PacketCaptureResultResponse struct {
 // The storage location for a packet capture session.
 type PacketCaptureStorageLocation struct {
 	// A valid local path on the targeting VM. Must include the name of the capture file (*.cap). For linux virtual machine it
-	// must start with /var/captures. Required if no storage ID is provided, otherwise optional.
+	// must start with /var/captures. Required if no storage ID is provided, otherwise
+	// optional.
 	FilePath *string `json:"filePath,omitempty"`
 
 	// The ID of the storage account to save the packet capture session. Required if no local file path is provided.
@@ -10689,22 +10710,24 @@ type Probe struct {
 // Load balancer probe resource.
 type ProbePropertiesFormat struct {
 	// The interval, in seconds, for how frequently to probe the endpoint for health status. Typically, the interval is slightly
-	// less than half the allocated timeout period (in seconds) which allows two full probes before taking the instance out of
-	// rotation. The default value is 15, the minimum value is 5.
+	// less than half the allocated timeout period (in seconds) which allows two full
+	// probes before taking the instance out of rotation. The default value is 15, the minimum value is 5.
 	IntervalInSeconds *int32 `json:"intervalInSeconds,omitempty"`
 
 	// The load balancer rules that use this probe.
 	LoadBalancingRules *[]SubResource `json:"loadBalancingRules,omitempty" azure:"ro"`
 
 	// The number of probes where if no response, will result in stopping further traffic from being delivered to the endpoint.
-	// This values allows endpoints to be taken out of rotation faster or slower than the typical times used in Azure.
+	// This values allows endpoints to be taken out of rotation faster or slower than
+	// the typical times used in Azure.
 	NumberOfProbes *int32 `json:"numberOfProbes,omitempty"`
 
 	// The port for communicating the probe. Possible values range from 1 to 65535, inclusive.
 	Port *int32 `json:"port,omitempty"`
 
 	// The protocol of the end point. If 'Tcp' is specified, a received ACK is required for the probe to be successful. If 'Http'
-	// or 'Https' is specified, a 200 OK response from the specifies URI is required for the probe to be successful.
+	// or 'Https' is specified, a 200 OK response from the specifies URI is required
+	// for the probe to be successful.
 	Protocol *ProbeProtocol `json:"protocol,omitempty"`
 
 	// The provisioning state of the probe resource.
@@ -10742,8 +10765,9 @@ type ProtocolCustomSettingsFormat struct {
 	TriggerRateOverride *string `json:"triggerRateOverride,omitempty"`
 
 	// The customized DDoS protection trigger rate sensitivity degrees. High: Trigger rate set with most sensitivity w.r.t. normal
-	// traffic. Default: Trigger rate set with moderate sensitivity w.r.t. normal traffic. Low: Trigger rate set with less sensitivity
-	// w.r.t. normal traffic. Relaxed: Trigger rate set with least sensitivity w.r.t. normal traffic.
+	// traffic. Default: Trigger rate set with moderate sensitivity w.r.t. normal
+	// traffic. Low: Trigger rate set with less sensitivity w.r.t. normal traffic. Relaxed: Trigger rate set with least sensitivity
+	// w.r.t. normal traffic.
 	TriggerSensitivityOverride *DdosCustomPolicyTriggerSensitivityOverride `json:"triggerSensitivityOverride,omitempty"`
 }
 
@@ -10766,8 +10790,8 @@ type PublicIPAddress struct {
 // Contains FQDN of the DNS record associated with the public IP address.
 type PublicIPAddressDNSSettings struct {
 	// The domain name label. The concatenation of the domain name label and the regionalized DNS zone make up the fully qualified
-	// domain name associated with the public IP address. If a domain name label is specified, an A DNS record is created for
-	// the public IP in the Microsoft Azure DNS system.
+	// domain name associated with the public IP address. If a domain name label is
+	// specified, an A DNS record is created for the public IP in the Microsoft Azure DNS system.
 	DomainNameLabel *string `json:"domainNameLabel,omitempty"`
 
 	// The Fully Qualified Domain Name of the A DNS record associated with the public IP. This is the concatenation of the domainNameLabel
@@ -10775,7 +10799,8 @@ type PublicIPAddressDNSSettings struct {
 	Fqdn *string `json:"fqdn,omitempty"`
 
 	// The reverse FQDN. A user-visible, fully qualified domain name that resolves to this public IP address. If the reverseFqdn
-	// is specified, then a PTR DNS record is created pointing from the IP address in the in-addr.arpa domain to the reverse FQDN.
+	// is specified, then a PTR DNS record is created pointing from the IP address in
+	// the in-addr.arpa domain to the reverse FQDN.
 	ReverseFqdn *string `json:"reverseFqdn,omitempty"`
 }
 
@@ -11735,7 +11760,8 @@ type SecurityRulePropertiesFormat struct {
 	Description *string `json:"description,omitempty"`
 
 	// The destination address prefix. CIDR or destination IP range. Asterisk '*' can also be used to match all source IPs. Default
-	// tags such as 'VirtualNetwork', 'AzureLoadBalancer' and 'Internet' can also be used.
+	// tags such as 'VirtualNetwork', 'AzureLoadBalancer' and 'Internet' can also
+	// be used.
 	DestinationAddressPrefix *string `json:"destinationAddressPrefix,omitempty"`
 
 	// The destination address prefixes. CIDR or destination IP ranges.
@@ -11764,8 +11790,8 @@ type SecurityRulePropertiesFormat struct {
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// The CIDR or source IP range. Asterisk '*' can also be used to match all source IPs. Default tags such as 'VirtualNetwork',
-	// 'AzureLoadBalancer' and 'Internet' can also be used. If this is an ingress rule, specifies where network traffic originates
-	// from.
+	// 'AzureLoadBalancer' and 'Internet' can also be used. If this is an ingress
+	// rule, specifies where network traffic originates from.
 	SourceAddressPrefix *string `json:"sourceAddressPrefix,omitempty"`
 
 	// The CIDR or source IP ranges.
@@ -13697,12 +13723,14 @@ type VirtualNetworkPeeringPropertiesFormat struct {
 	RemoteAddressSpace *AddressSpace `json:"remoteAddressSpace,omitempty"`
 
 	// The reference to the remote virtual network. The remote virtual network can be in the same or different region (preview).
-	// See here to register for the preview and learn more (https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-create-peering).
+	// See here to register for the preview and learn more (
+	// https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-create-peering [https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-create-peering]).
 	RemoteVirtualNetwork *SubResource `json:"remoteVirtualNetwork,omitempty"`
 
 	// If remote gateways can be used on this virtual network. If the flag is set to true, and allowGatewayTransit on remote peering
-	// is also true, virtual network will use gateways of remote virtual network for transit. Only one peering can have this flag
-	// set to true. This flag cannot be set if virtual network already has a gateway.
+	// is also true, virtual network will use gateways of remote virtual network
+	// for transit. Only one peering can have this flag set to true. This flag cannot be set if virtual network already has a
+	// gateway.
 	UseRemoteGateways *bool `json:"useRemoteGateways,omitempty"`
 }
 
@@ -14456,7 +14484,8 @@ type VpnClientParameters struct {
 	ProcessorArchitecture *ProcessorArchitecture `json:"processorArchitecture,omitempty"`
 
 	// The public certificate data for the radius server authentication certificate as a Base-64 encoded string. Required only
-	// if external radius authentication has been configured with EAPTLS authentication.
+	// if external radius authentication has been configured with EAPTLS
+	// authentication.
 	RadiusServerAuthCertificate *string `json:"radiusServerAuthCertificate,omitempty"`
 }
 

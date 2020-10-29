@@ -478,8 +478,8 @@ func (client *HTTPRedirectsClient) Options307HandleError(resp *azcore.Response) 
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// Patch302 - Patch true Boolean value in request returns 302. This request should not be automatically redirected, but should
-// return the received 302 to the caller for evaluation
+// Patch302 - Patch true Boolean value in request returns 302. This request should not be automatically redirected, but should return the received 302 to
+// the caller for evaluation
 func (client *HTTPRedirectsClient) Patch302(ctx context.Context, options *HTTPRedirectsPatch302Options) (*HTTPRedirectsPatch302Response, error) {
 	req, err := client.Patch302CreateRequest(ctx, options)
 	if err != nil {
@@ -564,8 +564,8 @@ func (client *HTTPRedirectsClient) Patch307HandleError(resp *azcore.Response) er
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// Post303 - Post true Boolean value in request returns 303. This request should be automatically redirected usign a get,
-// ultimately returning a 200 status code
+// Post303 - Post true Boolean value in request returns 303. This request should be automatically redirected usign a get, ultimately returning a 200 status
+// code
 func (client *HTTPRedirectsClient) Post303(ctx context.Context, options *HTTPRedirectsPost303Options) (*HTTPRedirectsPost303Response, error) {
 	req, err := client.Post303CreateRequest(ctx, options)
 	if err != nil {
@@ -650,8 +650,8 @@ func (client *HTTPRedirectsClient) Post307HandleError(resp *azcore.Response) err
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// Put301 - Put true Boolean value in request returns 301. This request should not be automatically redirected, but should
-// return the received 301 to the caller for evaluation
+// Put301 - Put true Boolean value in request returns 301. This request should not be automatically redirected, but should return the received 301 to the
+// caller for evaluation
 func (client *HTTPRedirectsClient) Put301(ctx context.Context, options *HTTPRedirectsPut301Options) (*HTTPRedirectsPut301Response, error) {
 	req, err := client.Put301CreateRequest(ctx, options)
 	if err != nil {

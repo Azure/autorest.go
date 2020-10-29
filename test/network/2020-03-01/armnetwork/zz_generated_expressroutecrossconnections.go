@@ -277,8 +277,7 @@ func (client *ExpressRouteCrossConnectionsClient) ResumeListArpTable(token strin
 	}, nil
 }
 
-// ListArpTable - Gets the currently advertised ARP table associated with the express route cross connection in a resource
-// group.
+// ListArpTable - Gets the currently advertised ARP table associated with the express route cross connection in a resource group.
 func (client *ExpressRouteCrossConnectionsClient) ListArpTable(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, devicePath string, options *ExpressRouteCrossConnectionsListArpTableOptions) (*azcore.Response, error) {
 	req, err := client.ListArpTableCreateRequest(ctx, resourceGroupName, crossConnectionName, peeringName, devicePath, options)
 	if err != nil {
@@ -409,8 +408,7 @@ func (client *ExpressRouteCrossConnectionsClient) ResumeListRoutesTable(token st
 	}, nil
 }
 
-// ListRoutesTable - Gets the currently advertised routes table associated with the express route cross connection in a resource
-// group.
+// ListRoutesTable - Gets the currently advertised routes table associated with the express route cross connection in a resource group.
 func (client *ExpressRouteCrossConnectionsClient) ListRoutesTable(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, devicePath string, options *ExpressRouteCrossConnectionsListRoutesTableOptions) (*azcore.Response, error) {
 	req, err := client.ListRoutesTableCreateRequest(ctx, resourceGroupName, crossConnectionName, peeringName, devicePath, options)
 	if err != nil {
@@ -494,8 +492,7 @@ func (client *ExpressRouteCrossConnectionsClient) ResumeListRoutesTableSummary(t
 	}, nil
 }
 
-// ListRoutesTableSummary - Gets the route table summary associated with the express route cross connection in a resource
-// group.
+// ListRoutesTableSummary - Gets the route table summary associated with the express route cross connection in a resource group.
 func (client *ExpressRouteCrossConnectionsClient) ListRoutesTableSummary(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, devicePath string, options *ExpressRouteCrossConnectionsListRoutesTableSummaryOptions) (*azcore.Response, error) {
 	req, err := client.ListRoutesTableSummaryCreateRequest(ctx, resourceGroupName, crossConnectionName, peeringName, devicePath, options)
 	if err != nil {

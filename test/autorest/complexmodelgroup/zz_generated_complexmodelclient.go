@@ -92,8 +92,8 @@ func (client *ComplexModelClient) CreateHandleError(resp *azcore.Response) error
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// List - The Products endpoint returns information about the Uber products offered at a given location. The response includes
-// the display name and other details about each product, and lists the products in
+// List - The Products endpoint returns information about the Uber products offered at a given location. The response includes the display name and other
+// details about each product, and lists the products in
 // the proper display order.
 func (client *ComplexModelClient) List(ctx context.Context, resourceGroupName string, options *ComplexModelClientListOptions) (*CatalogArrayResponse, error) {
 	req, err := client.ListCreateRequest(ctx, resourceGroupName, options)

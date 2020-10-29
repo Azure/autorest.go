@@ -53,8 +53,8 @@ func (client *DedicatedHostGroupsClient) Do(req *azcore.Request) (*azcore.Respon
 	return client.p.Do(req)
 }
 
-// CreateOrUpdate - Create or update a dedicated host group. For details of Dedicated Host and Dedicated Host Groups please
-// see [Dedicated Host Documentation] (https://go.microsoft.com/fwlink/?linkid=2082596
+// CreateOrUpdate - Create or update a dedicated host group. For details of Dedicated Host and Dedicated Host Groups please see [Dedicated Host Documentation]
+// (https://go.microsoft.com/fwlink/?linkid=2082596
 // [https://go.microsoft.com/fwlink/?linkid=2082596][https://go.microsoft.com/fwlink/?linkid=2082596 [https://go.microsoft.com/fwlink/?linkid=2082596]])
 func (client *DedicatedHostGroupsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, parameters DedicatedHostGroup, options *DedicatedHostGroupsCreateOrUpdateOptions) (*DedicatedHostGroupResponse, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, hostGroupName, parameters, options)
@@ -209,8 +209,8 @@ func (client *DedicatedHostGroupsClient) GetHandleError(resp *azcore.Response) e
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-// ListByResourceGroup - Lists all of the dedicated host groups in the specified resource group. Use the nextLink property
-// in the response to get the next page of dedicated host groups.
+// ListByResourceGroup - Lists all of the dedicated host groups in the specified resource group. Use the nextLink property in the response to get the next
+// page of dedicated host groups.
 func (client *DedicatedHostGroupsClient) ListByResourceGroup(resourceGroupName string, options *DedicatedHostGroupsListByResourceGroupOptions) DedicatedHostGroupListResultPager {
 	return &dedicatedHostGroupListResultPager{
 		pipeline: client.p,
@@ -260,8 +260,8 @@ func (client *DedicatedHostGroupsClient) ListByResourceGroupHandleError(resp *az
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-// ListBySubscription - Lists all of the dedicated host groups in the subscription. Use the nextLink property in the response
-// to get the next page of dedicated host groups.
+// ListBySubscription - Lists all of the dedicated host groups in the subscription. Use the nextLink property in the response to get the next page of dedicated
+// host groups.
 func (client *DedicatedHostGroupsClient) ListBySubscription(options *DedicatedHostGroupsListBySubscriptionOptions) DedicatedHostGroupListResultPager {
 	return &dedicatedHostGroupListResultPager{
 		pipeline: client.p,

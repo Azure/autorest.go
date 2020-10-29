@@ -120,7 +120,7 @@ type SparkBatchJobOptions struct {
 	ArtifactID *string   `json:"artifactId,omitempty"`
 	ClassName  *string   `json:"className,omitempty"`
 
-	// Dictionary of <string>
+	// Dictionary of
 	Configuration  *map[string]string `json:"conf,omitempty"`
 	DriverCores    *int32             `json:"driverCores,omitempty"`
 	DriverMemory   *string            `json:"driverMemory,omitempty"`
@@ -133,7 +133,7 @@ type SparkBatchJobOptions struct {
 	Name           *string            `json:"name,omitempty"`
 	PythonFiles    *[]string          `json:"pyFiles,omitempty"`
 
-	// Dictionary of <string>
+	// Dictionary of
 	Tags *map[string]string `json:"tags,omitempty"`
 }
 
@@ -285,7 +285,7 @@ type SparkRequest struct {
 	Arguments *[]string `json:"args,omitempty"`
 	ClassName *string   `json:"className,omitempty"`
 
-	// Dictionary of <string>
+	// Dictionary of
 	Configuration  *map[string]string `json:"conf,omitempty"`
 	DriverCores    *int32             `json:"driverCores,omitempty"`
 	DriverMemory   *string            `json:"driverMemory,omitempty"`
@@ -477,7 +477,7 @@ func (s *SparkServicePlugin) UnmarshalJSON(data []byte) error {
 type SparkSession struct {
 	AppID *string `json:"appId,omitempty"`
 
-	// Dictionary of <string>
+	// Dictionary of
 	AppInfo    *map[string]string `json:"appInfo,omitempty"`
 	ArtifactID *string            `json:"artifactId,omitempty"`
 
@@ -498,7 +498,7 @@ type SparkSession struct {
 	SubmitterID   *string                 `json:"submitterId,omitempty"`
 	SubmitterName *string                 `json:"submitterName,omitempty"`
 
-	// Dictionary of <string>
+	// Dictionary of
 	Tags          *map[string]string `json:"tags,omitempty"`
 	WorkspaceName *string            `json:"workspaceName,omitempty"`
 }
@@ -570,7 +570,7 @@ type SparkSessionOptions struct {
 	ArtifactID *string   `json:"artifactId,omitempty"`
 	ClassName  *string   `json:"className,omitempty"`
 
-	// Dictionary of <string>
+	// Dictionary of
 	Configuration  *map[string]string `json:"conf,omitempty"`
 	DriverCores    *int32             `json:"driverCores,omitempty"`
 	DriverMemory   *string            `json:"driverMemory,omitempty"`
@@ -583,7 +583,7 @@ type SparkSessionOptions struct {
 	Name           *string            `json:"name,omitempty"`
 	PythonFiles    *[]string          `json:"pyFiles,omitempty"`
 
-	// Dictionary of <string>
+	// Dictionary of
 	Tags *map[string]string `json:"tags,omitempty"`
 }
 

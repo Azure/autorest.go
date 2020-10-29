@@ -76,7 +76,7 @@ func (e Error) Error() string {
 }
 
 type PetApInProperties struct {
-	// Dictionary of <number>
+	// Dictionary of
 	AdditionalProperties *map[string]float32 `json:"additionalProperties,omitempty"`
 	ID                   *int32              `json:"id,omitempty"`
 	Name                 *string             `json:"name,omitempty"`
@@ -95,7 +95,7 @@ type PetApInPropertiesWithApstring struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]string
 
-	// Dictionary of <number>
+	// Dictionary of
 	AdditionalProperties1 *map[string]float32 `json:"additionalProperties,omitempty"`
 	ID                    *int32              `json:"id,omitempty"`
 	Name                  *string             `json:"name,omitempty"`

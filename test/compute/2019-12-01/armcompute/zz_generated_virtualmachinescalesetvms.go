@@ -134,8 +134,8 @@ func (client *VirtualMachineScaleSetVMSClient) ResumeDeallocate(token string) (H
 	}, nil
 }
 
-// Deallocate - Deallocates a specific virtual machine in a VM scale set. Shuts down the virtual machine and releases the
-// compute resources it uses. You are not billed for the compute resources of this virtual
+// Deallocate - Deallocates a specific virtual machine in a VM scale set. Shuts down the virtual machine and releases the compute resources it uses. You
+// are not billed for the compute resources of this virtual
 // machine once it is deallocated.
 func (client *VirtualMachineScaleSetVMSClient) Deallocate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSDeallocateOptions) (*azcore.Response, error) {
 	req, err := client.DeallocateCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceId, options)
@@ -469,8 +469,8 @@ func (client *VirtualMachineScaleSetVMSClient) ResumePerformMaintenance(token st
 	}, nil
 }
 
-// PerformMaintenance - Shuts down the virtual machine in a VMScaleSet, moves it to an already updated node, and powers it
-// back on during the self-service phase of planned maintenance.
+// PerformMaintenance - Shuts down the virtual machine in a VMScaleSet, moves it to an already updated node, and powers it back on during the self-service
+// phase of planned maintenance.
 func (client *VirtualMachineScaleSetVMSClient) PerformMaintenance(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSPerformMaintenanceOptions) (*azcore.Response, error) {
 	req, err := client.PerformMaintenanceCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceId, options)
 	if err != nil {
@@ -549,8 +549,8 @@ func (client *VirtualMachineScaleSetVMSClient) ResumePowerOff(token string) (HTT
 	}, nil
 }
 
-// PowerOff - Power off (stop) a virtual machine in a VM scale set. Note that resources are still attached and you are getting
-// charged for the resources. Instead, use deallocate to release resources and avoid
+// PowerOff - Power off (stop) a virtual machine in a VM scale set. Note that resources are still attached and you are getting charged for the resources.
+// Instead, use deallocate to release resources and avoid
 // charges.
 func (client *VirtualMachineScaleSetVMSClient) PowerOff(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSPowerOffOptions) (*azcore.Response, error) {
 	req, err := client.PowerOffCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceId, options)
@@ -633,8 +633,7 @@ func (client *VirtualMachineScaleSetVMSClient) ResumeRedeploy(token string) (HTT
 	}, nil
 }
 
-// Redeploy - Shuts down the virtual machine in the virtual machine scale set, moves it to a new node, and powers it back
-// on.
+// Redeploy - Shuts down the virtual machine in the virtual machine scale set, moves it to a new node, and powers it back on.
 func (client *VirtualMachineScaleSetVMSClient) Redeploy(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSRedeployOptions) (*azcore.Response, error) {
 	req, err := client.RedeployCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceId, options)
 	if err != nil {
@@ -795,8 +794,8 @@ func (client *VirtualMachineScaleSetVMSClient) ResumeReimageAll(token string) (H
 	}, nil
 }
 
-// ReimageAll - Allows you to re-image all the disks ( including data disks ) in the a VM scale set instance. This operation
-// is only supported for managed disks.
+// ReimageAll - Allows you to re-image all the disks ( including data disks ) in the a VM scale set instance. This operation is only supported for managed
+// disks.
 func (client *VirtualMachineScaleSetVMSClient) ReimageAll(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSReimageAllOptions) (*azcore.Response, error) {
 	req, err := client.ReimageAllCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceId, options)
 	if err != nil {
@@ -1006,8 +1005,8 @@ func (client *VirtualMachineScaleSetVMSClient) RunCommandHandleError(resp *azcor
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-// SimulateEviction - The operation to simulate the eviction of spot virtual machine in a VM scale set. The eviction will
-// occur within 30 minutes of calling the API
+// SimulateEviction - The operation to simulate the eviction of spot virtual machine in a VM scale set. The eviction will occur within 30 minutes of calling
+// the API
 func (client *VirtualMachineScaleSetVMSClient) SimulateEviction(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSSimulateEvictionOptions) (*http.Response, error) {
 	req, err := client.SimulateEvictionCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceId, options)
 	if err != nil {

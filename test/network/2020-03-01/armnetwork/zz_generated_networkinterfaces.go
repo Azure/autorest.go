@@ -368,8 +368,7 @@ func (client *NetworkInterfacesClient) GetEffectiveRouteTableHandleError(resp *a
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// GetVirtualMachineScaleSetIPConfiguration - Get the specified network interface ip configuration in a virtual machine scale
-// set.
+// GetVirtualMachineScaleSetIPConfiguration - Get the specified network interface ip configuration in a virtual machine scale set.
 func (client *NetworkInterfacesClient) GetVirtualMachineScaleSetIPConfiguration(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, ipConfigurationName string, options *NetworkInterfacesGetVirtualMachineScaleSetIPConfigurationOptions) (*NetworkInterfaceIPConfigurationResponse, error) {
 	req, err := client.GetVirtualMachineScaleSetIPConfigurationCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, ipConfigurationName, options)
 	if err != nil {
@@ -659,8 +658,7 @@ func (client *NetworkInterfacesClient) ListEffectiveNetworkSecurityGroupsHandleE
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// ListVirtualMachineScaleSetIPConfigurations - Get the specified network interface ip configuration in a virtual machine
-// scale set.
+// ListVirtualMachineScaleSetIPConfigurations - Get the specified network interface ip configuration in a virtual machine scale set.
 func (client *NetworkInterfacesClient) ListVirtualMachineScaleSetIPConfigurations(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, options *NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsOptions) NetworkInterfaceIPConfigurationListResultPager {
 	return &networkInterfaceIPConfigurationListResultPager{
 		pipeline: client.p,
@@ -761,8 +759,7 @@ func (client *NetworkInterfacesClient) ListVirtualMachineScaleSetNetworkInterfac
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// ListVirtualMachineScaleSetVMNetworkInterfaces - Gets information about all network interfaces in a virtual machine in a
-// virtual machine scale set.
+// ListVirtualMachineScaleSetVMNetworkInterfaces - Gets information about all network interfaces in a virtual machine in a virtual machine scale set.
 func (client *NetworkInterfacesClient) ListVirtualMachineScaleSetVMNetworkInterfaces(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, options *NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesOptions) NetworkInterfaceListResultPager {
 	return &networkInterfaceListResultPager{
 		pipeline: client.p,

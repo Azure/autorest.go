@@ -25,8 +25,7 @@ func (client *containerClient) Do(req *azcore.Request) (*azcore.Response, error)
 	return client.p.Do(req)
 }
 
-// AcquireLease - [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15
-// to 60 seconds, or can be infinite
+// AcquireLease - [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite
 func (client *containerClient) AcquireLease(ctx context.Context, containerAcquireLeaseOptions *ContainerAcquireLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*ContainerAcquireLeaseResponse, error) {
 	req, err := client.AcquireLeaseCreateRequest(ctx, containerAcquireLeaseOptions, modifiedAccessConditions)
 	if err != nil {
@@ -124,8 +123,7 @@ func (client *containerClient) AcquireLeaseHandleError(resp *azcore.Response) er
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// BreakLease - [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15
-// to 60 seconds, or can be infinite
+// BreakLease - [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite
 func (client *containerClient) BreakLease(ctx context.Context, containerBreakLeaseOptions *ContainerBreakLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*ContainerBreakLeaseResponse, error) {
 	req, err := client.BreakLeaseCreateRequest(ctx, containerBreakLeaseOptions, modifiedAccessConditions)
 	if err != nil {
@@ -225,8 +223,7 @@ func (client *containerClient) BreakLeaseHandleError(resp *azcore.Response) erro
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// ChangeLease - [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15
-// to 60 seconds, or can be infinite
+// ChangeLease - [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite
 func (client *containerClient) ChangeLease(ctx context.Context, leaseId string, proposedLeaseId string, containerChangeLeaseOptions *ContainerChangeLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*ContainerChangeLeaseResponse, error) {
 	req, err := client.ChangeLeaseCreateRequest(ctx, leaseId, proposedLeaseId, containerChangeLeaseOptions, modifiedAccessConditions)
 	if err != nil {
@@ -320,8 +317,7 @@ func (client *containerClient) ChangeLeaseHandleError(resp *azcore.Response) err
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// Create - creates a new container under the specified account. If the container with the same name already exists, the operation
-// fails
+// Create - creates a new container under the specified account. If the container with the same name already exists, the operation fails
 func (client *containerClient) Create(ctx context.Context, containerCreateOptions *ContainerCreateOptions, containerCpkScopeInfo *ContainerCpkScopeInfo) (*ContainerCreateResponse, error) {
 	req, err := client.CreateCreateRequest(ctx, containerCreateOptions, containerCpkScopeInfo)
 	if err != nil {
@@ -416,8 +412,7 @@ func (client *containerClient) CreateHandleError(resp *azcore.Response) error {
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// Delete - operation marks the specified container for deletion. The container and any blobs contained within it are later
-// deleted during garbage collection
+// Delete - operation marks the specified container for deletion. The container and any blobs contained within it are later deleted during garbage collection
 func (client *containerClient) Delete(ctx context.Context, containerDeleteOptions *ContainerDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*ContainerDeleteResponse, error) {
 	req, err := client.DeleteCreateRequest(ctx, containerDeleteOptions, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
@@ -497,8 +492,7 @@ func (client *containerClient) DeleteHandleError(resp *azcore.Response) error {
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// GetAccessPolicy - gets the permissions for the specified container. The permissions indicate whether container data may
-// be accessed publicly.
+// GetAccessPolicy - gets the permissions for the specified container. The permissions indicate whether container data may be accessed publicly.
 func (client *containerClient) GetAccessPolicy(ctx context.Context, containerGetAccessPolicyOptions *ContainerGetAccessPolicyOptions, leaseAccessConditions *LeaseAccessConditions) (*SignedIDentifierArrayResponse, error) {
 	req, err := client.GetAccessPolicyCreateRequest(ctx, containerGetAccessPolicyOptions, leaseAccessConditions)
 	if err != nil {
@@ -658,8 +652,8 @@ func (client *containerClient) GetAccountInfoHandleError(resp *azcore.Response) 
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// GetProperties - returns all user-defined metadata and system properties for the specified container. The data returned
-// does not include the container's list of blobs
+// GetProperties - returns all user-defined metadata and system properties for the specified container. The data returned does not include the container's
+// list of blobs
 func (client *containerClient) GetProperties(ctx context.Context, containerGetPropertiesOptions *ContainerGetPropertiesOptions, leaseAccessConditions *LeaseAccessConditions) (*ContainerGetPropertiesResponse, error) {
 	req, err := client.GetPropertiesCreateRequest(ctx, containerGetPropertiesOptions, leaseAccessConditions)
 	if err != nil {
@@ -954,8 +948,7 @@ func (client *containerClient) ListBlobHierarchySegmentHandleError(resp *azcore.
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// ReleaseLease - [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15
-// to 60 seconds, or can be infinite
+// ReleaseLease - [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite
 func (client *containerClient) ReleaseLease(ctx context.Context, leaseId string, containerReleaseLeaseOptions *ContainerReleaseLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*ContainerReleaseLeaseResponse, error) {
 	req, err := client.ReleaseLeaseCreateRequest(ctx, leaseId, containerReleaseLeaseOptions, modifiedAccessConditions)
 	if err != nil {
@@ -1045,8 +1038,7 @@ func (client *containerClient) ReleaseLeaseHandleError(resp *azcore.Response) er
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// RenewLease - [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15
-// to 60 seconds, or can be infinite
+// RenewLease - [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite
 func (client *containerClient) RenewLease(ctx context.Context, leaseId string, containerRenewLeaseOptions *ContainerRenewLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*ContainerRenewLeaseResponse, error) {
 	req, err := client.RenewLeaseCreateRequest(ctx, leaseId, containerRenewLeaseOptions, modifiedAccessConditions)
 	if err != nil {
@@ -1139,8 +1131,7 @@ func (client *containerClient) RenewLeaseHandleError(resp *azcore.Response) erro
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// SetAccessPolicy - sets the permissions for the specified container. The permissions indicate whether blobs in a container
-// may be accessed publicly.
+// SetAccessPolicy - sets the permissions for the specified container. The permissions indicate whether blobs in a container may be accessed publicly.
 func (client *containerClient) SetAccessPolicy(ctx context.Context, containerSetAccessPolicyOptions *ContainerSetAccessPolicyOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*ContainerSetAccessPolicyResponse, error) {
 	req, err := client.SetAccessPolicyCreateRequest(ctx, containerSetAccessPolicyOptions, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {

@@ -285,8 +285,8 @@ func (client *VirtualNetworkGatewayConnectionsClient) GetHandleError(resp *azcor
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// GetSharedKey - The Get VirtualNetworkGatewayConnectionSharedKey operation retrieves information about the specified virtual
-// network gateway connection shared key through Network resource provider.
+// GetSharedKey - The Get VirtualNetworkGatewayConnectionSharedKey operation retrieves information about the specified virtual network gateway connection
+// shared key through Network resource provider.
 func (client *VirtualNetworkGatewayConnectionsClient) GetSharedKey(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, options *VirtualNetworkGatewayConnectionsGetSharedKeyOptions) (*ConnectionSharedKeyResponse, error) {
 	req, err := client.GetSharedKeyCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, options)
 	if err != nil {
@@ -419,8 +419,8 @@ func (client *VirtualNetworkGatewayConnectionsClient) ResumeResetSharedKey(token
 	}, nil
 }
 
-// ResetSharedKey - The VirtualNetworkGatewayConnectionResetSharedKey operation resets the virtual network gateway connection
-// shared key for passed virtual network gateway connection in the specified resource group
+// ResetSharedKey - The VirtualNetworkGatewayConnectionResetSharedKey operation resets the virtual network gateway connection shared key for passed virtual
+// network gateway connection in the specified resource group
 // through Network resource provider.
 func (client *VirtualNetworkGatewayConnectionsClient) ResetSharedKey(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters ConnectionResetSharedKey, options *VirtualNetworkGatewayConnectionsResetSharedKeyOptions) (*azcore.Response, error) {
 	req, err := client.ResetSharedKeyCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, parameters, options)
@@ -503,8 +503,8 @@ func (client *VirtualNetworkGatewayConnectionsClient) ResumeSetSharedKey(token s
 	}, nil
 }
 
-// SetSharedKey - The Put VirtualNetworkGatewayConnectionSharedKey operation sets the virtual network gateway connection shared
-// key for passed virtual network gateway connection in the specified resource group through
+// SetSharedKey - The Put VirtualNetworkGatewayConnectionSharedKey operation sets the virtual network gateway connection shared key for passed virtual network
+// gateway connection in the specified resource group through
 // Network resource provider.
 func (client *VirtualNetworkGatewayConnectionsClient) SetSharedKey(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters ConnectionSharedKey, options *VirtualNetworkGatewayConnectionsSetSharedKeyOptions) (*azcore.Response, error) {
 	req, err := client.SetSharedKeyCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, parameters, options)

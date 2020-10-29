@@ -317,8 +317,7 @@ func (client *VirtualNetworkGatewaysClient) ResumeDisconnectVirtualNetworkGatewa
 	}, nil
 }
 
-// DisconnectVirtualNetworkGatewayVpnConnections - Disconnect vpn connections of virtual network gateway in the specified
-// resource group.
+// DisconnectVirtualNetworkGatewayVpnConnections - Disconnect vpn connections of virtual network gateway in the specified resource group.
 func (client *VirtualNetworkGatewaysClient) DisconnectVirtualNetworkGatewayVpnConnections(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, request P2SVpnConnectionRequest, options *VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVpnConnectionsOptions) (*azcore.Response, error) {
 	req, err := client.DisconnectVirtualNetworkGatewayVpnConnectionsCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, request, options)
 	if err != nil {
@@ -394,8 +393,8 @@ func (client *VirtualNetworkGatewaysClient) ResumeGenerateVpnProfile(token strin
 	}, nil
 }
 
-// GenerateVpnProfile - Generates VPN profile for P2S client of the virtual network gateway in the specified resource group.
-// Used for IKEV2 and radius based authentication.
+// GenerateVpnProfile - Generates VPN profile for P2S client of the virtual network gateway in the specified resource group. Used for IKEV2 and radius based
+// authentication.
 func (client *VirtualNetworkGatewaysClient) GenerateVpnProfile(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VpnClientParameters, options *VirtualNetworkGatewaysGenerateVpnProfileOptions) (*azcore.Response, error) {
 	req, err := client.GenerateVpnProfileCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, parameters, options)
 	if err != nil {
@@ -477,8 +476,7 @@ func (client *VirtualNetworkGatewaysClient) ResumeGeneratevpnclientpackage(token
 	}, nil
 }
 
-// Generatevpnclientpackage - Generates VPN client package for P2S client of the virtual network gateway in the specified
-// resource group.
+// Generatevpnclientpackage - Generates VPN client package for P2S client of the virtual network gateway in the specified resource group.
 func (client *VirtualNetworkGatewaysClient) Generatevpnclientpackage(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VpnClientParameters, options *VirtualNetworkGatewaysGeneratevpnclientpackageOptions) (*azcore.Response, error) {
 	req, err := client.GeneratevpnclientpackageCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, parameters, options)
 	if err != nil {
@@ -612,8 +610,7 @@ func (client *VirtualNetworkGatewaysClient) ResumeGetAdvertisedRoutes(token stri
 	}, nil
 }
 
-// GetAdvertisedRoutes - This operation retrieves a list of routes the virtual network gateway is advertising to the specified
-// peer.
+// GetAdvertisedRoutes - This operation retrieves a list of routes the virtual network gateway is advertising to the specified peer.
 func (client *VirtualNetworkGatewaysClient) GetAdvertisedRoutes(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, peer string, options *VirtualNetworkGatewaysGetAdvertisedRoutesOptions) (*azcore.Response, error) {
 	req, err := client.GetAdvertisedRoutesCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, peer, options)
 	if err != nil {
@@ -781,8 +778,7 @@ func (client *VirtualNetworkGatewaysClient) ResumeGetLearnedRoutes(token string)
 	}, nil
 }
 
-// GetLearnedRoutes - This operation retrieves a list of routes the virtual network gateway has learned, including routes
-// learned from BGP peers.
+// GetLearnedRoutes - This operation retrieves a list of routes the virtual network gateway has learned, including routes learned from BGP peers.
 func (client *VirtualNetworkGatewaysClient) GetLearnedRoutes(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysGetLearnedRoutesOptions) (*azcore.Response, error) {
 	req, err := client.GetLearnedRoutesCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 	if err != nil {
@@ -864,8 +860,8 @@ func (client *VirtualNetworkGatewaysClient) ResumeGetVpnProfilePackageURL(token 
 	}, nil
 }
 
-// GetVpnProfilePackageURL - Gets pre-generated VPN profile for P2S client of the virtual network gateway in the specified
-// resource group. The profile needs to be generated first using generateVpnProfile.
+// GetVpnProfilePackageURL - Gets pre-generated VPN profile for P2S client of the virtual network gateway in the specified resource group. The profile needs
+// to be generated first using generateVpnProfile.
 func (client *VirtualNetworkGatewaysClient) GetVpnProfilePackageURL(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysGetVpnProfilePackageURLOptions) (*azcore.Response, error) {
 	req, err := client.GetVpnProfilePackageURLCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 	if err != nil {
@@ -947,8 +943,8 @@ func (client *VirtualNetworkGatewaysClient) ResumeGetVpnclientConnectionHealth(t
 	}, nil
 }
 
-// GetVpnclientConnectionHealth - Get VPN client connection health detail per P2S client connection of the virtual network
-// gateway in the specified resource group.
+// GetVpnclientConnectionHealth - Get VPN client connection health detail per P2S client connection of the virtual network gateway in the specified resource
+// group.
 func (client *VirtualNetworkGatewaysClient) GetVpnclientConnectionHealth(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysGetVpnclientConnectionHealthOptions) (*azcore.Response, error) {
 	req, err := client.GetVpnclientConnectionHealthCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 	if err != nil {
@@ -1030,8 +1026,8 @@ func (client *VirtualNetworkGatewaysClient) ResumeGetVpnclientIPsecParameters(to
 	}, nil
 }
 
-// GetVpnclientIPsecParameters - The Get VpnclientIpsecParameters operation retrieves information about the vpnclient ipsec
-// policy for P2S client of virtual network gateway in the specified resource group through Network resource
+// GetVpnclientIPsecParameters - The Get VpnclientIpsecParameters operation retrieves information about the vpnclient ipsec policy for P2S client of virtual
+// network gateway in the specified resource group through Network resource
 // provider.
 func (client *VirtualNetworkGatewaysClient) GetVpnclientIPsecParameters(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysGetVpnclientIPsecParametersOptions) (*azcore.Response, error) {
 	req, err := client.GetVpnclientIPsecParametersCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, options)
@@ -1370,8 +1366,8 @@ func (client *VirtualNetworkGatewaysClient) ResumeSetVpnclientIPsecParameters(to
 	}, nil
 }
 
-// SetVpnclientIPsecParameters - The Set VpnclientIpsecParameters operation sets the vpnclient ipsec policy for P2S client
-// of virtual network gateway in the specified resource group through Network resource provider.
+// SetVpnclientIPsecParameters - The Set VpnclientIpsecParameters operation sets the vpnclient ipsec policy for P2S client of virtual network gateway in
+// the specified resource group through Network resource provider.
 func (client *VirtualNetworkGatewaysClient) SetVpnclientIPsecParameters(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, vpnclientIpsecParams VpnClientIPsecParameters, options *VirtualNetworkGatewaysSetVpnclientIPsecParametersOptions) (*azcore.Response, error) {
 	req, err := client.SetVpnclientIPsecParametersCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, vpnclientIpsecParams, options)
 	if err != nil {

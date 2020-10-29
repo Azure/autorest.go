@@ -86,6 +86,9 @@ async function process(session: Session<CodeModel>) {
       }
     }
     for (const prop of values(obj.properties)) {
+      if (prop.language.go!.description) {
+        prop.language.go!.description = parseComments(prop.language.go!.description);
+      }
       const details = <Language>prop.schema.language.go;
       details.name = `${schemaTypeToGoType(session.model, prop.schema, true)}`;
       if (prop.schema.type === SchemaType.DateTime) {
@@ -116,15 +119,15 @@ async function process(session: Session<CodeModel>) {
   // fix up enum types
   for (const choice of values(session.model.schemas.choices)) {
     choice.choiceType.language.go!.name = schemaTypeToGoType(session.model, choice.choiceType, false);
-    // if (choice.language.go!.description) {
-    //   choice.language.go!.description = parseComments(choice.language.go!.description);
-    // }
+    if (choice.language.go!.description) {
+      choice.language.go!.description = parseComments(choice.language.go!.description);
+    }
   }
   for (const choice of values(session.model.schemas.sealedChoices)) {
     choice.choiceType.language.go!.name = schemaTypeToGoType(session.model, choice.choiceType, false);
-    // if (choice.language.go!.description) {
-    //   choice.language.go!.description = parseComments(choice.language.go!.description);
-    // }
+    if (choice.language.go!.description) {
+      choice.language.go!.description = parseComments(choice.language.go!.description);
+    }
   }
 }
 

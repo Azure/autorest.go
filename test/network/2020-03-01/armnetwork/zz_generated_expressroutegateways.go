@@ -167,8 +167,8 @@ func (client *ExpressRouteGatewaysClient) ResumeDelete(token string) (HTTPPoller
 	}, nil
 }
 
-// Delete - Deletes the specified ExpressRoute gateway in a resource group. An ExpressRoute gateway resource can only be deleted
-// when there are no connection subresources.
+// Delete - Deletes the specified ExpressRoute gateway in a resource group. An ExpressRoute gateway resource can only be deleted when there are no connection
+// subresources.
 func (client *ExpressRouteGatewaysClient) Delete(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, options *ExpressRouteGatewaysDeleteOptions) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, expressRouteGatewayName, options)
 	if err != nil {

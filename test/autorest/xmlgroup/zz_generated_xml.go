@@ -740,8 +740,8 @@ func (client *XMLClient) GetWrappedListsHandleError(resp *azcore.Response) error
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-// GetXMSText - Get back an XML object with an x-ms-text property, which should translate to the returned object's 'language'
-// property being 'english' and its 'content' property being 'I am text'
+// GetXMSText - Get back an XML object with an x-ms-text property, which should translate to the returned object's 'language' property being 'english' and
+// its 'content' property being 'I am text'
 func (client *XMLClient) GetXMSText(ctx context.Context, options *XMLGetXMSTextOptions) (*ObjectWithXMSTextPropertyResponse, error) {
 	req, err := client.GetXMSTextCreateRequest(ctx, options)
 	if err != nil {

@@ -49,8 +49,8 @@ func (client *SubscriptionInCredentialsClient) Do(req *azcore.Request) (*azcore.
 	return client.p.Do(req)
 }
 
-// PostMethodGlobalNotProvidedValid - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId
-// to '1234-5678-9012-3456' to succeed
+// PostMethodGlobalNotProvidedValid - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId to '1234-5678-9012-3456'
+// to succeed
 func (client *SubscriptionInCredentialsClient) PostMethodGlobalNotProvidedValid(ctx context.Context, options *SubscriptionInCredentialsPostMethodGlobalNotProvidedValidOptions) (*http.Response, error) {
 	req, err := client.PostMethodGlobalNotProvidedValidCreateRequest(ctx, options)
 	if err != nil {
@@ -90,8 +90,8 @@ func (client *SubscriptionInCredentialsClient) PostMethodGlobalNotProvidedValidH
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// PostMethodGlobalNull - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId to null,
-// and client-side validation should prevent you from making this call
+// PostMethodGlobalNull - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId to null, and client-side validation
+// should prevent you from making this call
 func (client *SubscriptionInCredentialsClient) PostMethodGlobalNull(ctx context.Context, options *SubscriptionInCredentialsPostMethodGlobalNullOptions) (*http.Response, error) {
 	req, err := client.PostMethodGlobalNullCreateRequest(ctx, options)
 	if err != nil {
@@ -128,8 +128,7 @@ func (client *SubscriptionInCredentialsClient) PostMethodGlobalNullHandleError(r
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// PostMethodGlobalValid - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId to '1234-5678-9012-3456'
-// to succeed
+// PostMethodGlobalValid - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId to '1234-5678-9012-3456' to succeed
 func (client *SubscriptionInCredentialsClient) PostMethodGlobalValid(ctx context.Context, options *SubscriptionInCredentialsPostMethodGlobalValidOptions) (*http.Response, error) {
 	req, err := client.PostMethodGlobalValidCreateRequest(ctx, options)
 	if err != nil {
@@ -166,8 +165,7 @@ func (client *SubscriptionInCredentialsClient) PostMethodGlobalValidHandleError(
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// PostPathGlobalValid - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId to '1234-5678-9012-3456'
-// to succeed
+// PostPathGlobalValid - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId to '1234-5678-9012-3456' to succeed
 func (client *SubscriptionInCredentialsClient) PostPathGlobalValid(ctx context.Context, options *SubscriptionInCredentialsPostPathGlobalValidOptions) (*http.Response, error) {
 	req, err := client.PostPathGlobalValidCreateRequest(ctx, options)
 	if err != nil {
@@ -204,8 +202,7 @@ func (client *SubscriptionInCredentialsClient) PostPathGlobalValidHandleError(re
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// PostSwaggerGlobalValid - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId to '1234-5678-9012-3456'
-// to succeed
+// PostSwaggerGlobalValid - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId to '1234-5678-9012-3456' to succeed
 func (client *SubscriptionInCredentialsClient) PostSwaggerGlobalValid(ctx context.Context, options *SubscriptionInCredentialsPostSwaggerGlobalValidOptions) (*http.Response, error) {
 	req, err := client.PostSwaggerGlobalValidCreateRequest(ctx, options)
 	if err != nil {

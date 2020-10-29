@@ -40,8 +40,7 @@ func (client *UsageClient) Do(req *azcore.Request) (*azcore.Response, error) {
 	return client.p.Do(req)
 }
 
-// List - Gets, for the specified location, the current compute resource usage information as well as the limits for compute
-// resources under the subscription.
+// List - Gets, for the specified location, the current compute resource usage information as well as the limits for compute resources under the subscription.
 func (client *UsageClient) List(location string, options *UsageListOptions) ListUsagesResultPager {
 	return &listUsagesResultPager{
 		pipeline: client.p,

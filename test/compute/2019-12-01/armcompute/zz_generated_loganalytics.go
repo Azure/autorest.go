@@ -83,8 +83,7 @@ func (client *LogAnalyticsClient) ResumeExportRequestRateByInterval(token string
 	}, nil
 }
 
-// ExportRequestRateByInterval - Export logs that show Api requests made by this subscription in the given time window to
-// show throttling activities.
+// ExportRequestRateByInterval - Export logs that show Api requests made by this subscription in the given time window to show throttling activities.
 func (client *LogAnalyticsClient) ExportRequestRateByInterval(ctx context.Context, location string, parameters RequestRateByIntervalInput, options *LogAnalyticsExportRequestRateByIntervalOptions) (*azcore.Response, error) {
 	req, err := client.ExportRequestRateByIntervalCreateRequest(ctx, location, parameters, options)
 	if err != nil {

@@ -256,8 +256,7 @@ func (client *AvailabilitySetsClient) ListHandleError(resp *azcore.Response) err
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-// ListAvailableSizes - Lists all available virtual machine sizes that can be used to create a new virtual machine in an existing
-// availability set.
+// ListAvailableSizes - Lists all available virtual machine sizes that can be used to create a new virtual machine in an existing availability set.
 func (client *AvailabilitySetsClient) ListAvailableSizes(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsListAvailableSizesOptions) (*VirtualMachineSizeListResultResponse, error) {
 	req, err := client.ListAvailableSizesCreateRequest(ctx, resourceGroupName, availabilitySetName, options)
 	if err != nil {

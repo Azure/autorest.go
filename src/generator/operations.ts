@@ -215,7 +215,7 @@ function generateOperation(op: Operation, imports: ImportManager): string {
   const clientName = op.language.go!.clientName;
   let text = '';
   if (hasDescription(op.language.go!)) {
-    text += comment(`${op.language.go!.name} - ${op.language.go!.description}`) + '\n';
+    text += `${comment(`${op.language.go!.name} - ${op.language.go!.description}`, "//", undefined, 150)}\n`;
   }
   if (isMultiRespOperation(op)) {
     text += generateMultiRespComment(op);

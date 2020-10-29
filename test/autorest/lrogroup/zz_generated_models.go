@@ -588,7 +588,7 @@ type Resource struct {
 	// Resource Name
 	Name *string `json:"name,omitempty" azure:"ro"`
 
-	// Dictionary of <string>
+	// Dictionary of
 	Tags *map[string]string `json:"tags,omitempty"`
 
 	// Resource Type

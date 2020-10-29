@@ -381,8 +381,7 @@ func (client *StringClient) GetNullBase64URLEncodedHandleError(resp *azcore.Resp
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// GetWhitespace - Get string value with leading and trailing whitespace 'Now is the time for all good men to come to the
-// aid of their country'
+// GetWhitespace - Get string value with leading and trailing whitespace 'Now is the time for all good men to come to the aid of their country'
 func (client *StringClient) GetWhitespace(ctx context.Context, options *StringGetWhitespaceOptions) (*StringResponse, error) {
 	req, err := client.GetWhitespaceCreateRequest(ctx, options)
 	if err != nil {
@@ -575,8 +574,7 @@ func (client *StringClient) PutNullHandleError(resp *azcore.Response) error {
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// PutWhitespace - Set String value with leading and trailing whitespace 'Now is the time for all good men to come to the
-// aid of their country'
+// PutWhitespace - Set String value with leading and trailing whitespace 'Now is the time for all good men to come to the aid of their country'
 func (client *StringClient) PutWhitespace(ctx context.Context, options *StringPutWhitespaceOptions) (*http.Response, error) {
 	req, err := client.PutWhitespaceCreateRequest(ctx, options)
 	if err != nil {

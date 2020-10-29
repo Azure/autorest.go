@@ -271,8 +271,8 @@ func (client *NetworkManagementClient) ResumeGeneratevirtualwanvpnserverconfigur
 	}, nil
 }
 
-// Generatevirtualwanvpnserverconfigurationvpnprofile - Generates a unique VPN profile for P2S clients for VirtualWan and
-// associated VpnServerConfiguration combination in the specified resource group.
+// Generatevirtualwanvpnserverconfigurationvpnprofile - Generates a unique VPN profile for P2S clients for VirtualWan and associated VpnServerConfiguration
+// combination in the specified resource group.
 func (client *NetworkManagementClient) Generatevirtualwanvpnserverconfigurationvpnprofile(ctx context.Context, resourceGroupName string, virtualWanName string, vpnClientParams VirtualWanVpnProfileParameters, options *NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileOptions) (*azcore.Response, error) {
 	req, err := client.GeneratevirtualwanvpnserverconfigurationvpnprofileCreateRequest(ctx, resourceGroupName, virtualWanName, vpnClientParams, options)
 	if err != nil {

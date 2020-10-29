@@ -680,8 +680,7 @@ func (client *ExpressRouteCircuitsClient) ResumeListRoutesTableSummary(token str
 	}, nil
 }
 
-// ListRoutesTableSummary - Gets the currently advertised routes table summary associated with the express route circuit in
-// a resource group.
+// ListRoutesTableSummary - Gets the currently advertised routes table summary associated with the express route circuit in a resource group.
 func (client *ExpressRouteCircuitsClient) ListRoutesTableSummary(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string, options *ExpressRouteCircuitsListRoutesTableSummaryOptions) (*azcore.Response, error) {
 	req, err := client.ListRoutesTableSummaryCreateRequest(ctx, resourceGroupName, circuitName, peeringName, devicePath, options)
 	if err != nil {

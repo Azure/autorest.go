@@ -168,8 +168,7 @@ func (client *MultipleResponsesClient) Get200Model201ModelDefaultError200ValidHa
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// Get200Model201ModelDefaultError201Valid - Send a 201 response with valid payload: {'statusCode': '201', 'textStatusCode':
-// 'Created'}
+// Get200Model201ModelDefaultError201Valid - Send a 201 response with valid payload: {'statusCode': '201', 'textStatusCode': 'Created'}
 // Possible return types are *MyExceptionResponse, *BResponse
 func (client *MultipleResponsesClient) Get200Model201ModelDefaultError201Valid(ctx context.Context, options *MultipleResponsesGet200Model201ModelDefaultError201ValidOptions) (interface{}, error) {
 	req, err := client.Get200Model201ModelDefaultError201ValidCreateRequest(ctx, options)
@@ -463,8 +462,7 @@ func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError204Valid
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// Get200Model204NoModelDefaultError400Valid - Send a 400 response with valid error payload: {'status': 400, 'message': 'client
-// error'}
+// Get200Model204NoModelDefaultError400Valid - Send a 400 response with valid error payload: {'status': 400, 'message': 'client error'}
 func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError400Valid(ctx context.Context, options *MultipleResponsesGet200Model204NoModelDefaultError400ValidOptions) (*MyExceptionResponse, error) {
 	req, err := client.Get200Model204NoModelDefaultError400ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -559,8 +557,7 @@ func (client *MultipleResponsesClient) Get200ModelA200InvalidHandleError(resp *a
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-// Get200ModelA200None - Send a 200 response with no payload, when a payload is expected - client should return a null object
-// of thde type for model A
+// Get200ModelA200None - Send a 200 response with no payload, when a payload is expected - client should return a null object of thde type for model A
 func (client *MultipleResponsesClient) Get200ModelA200None(ctx context.Context, options *MultipleResponsesGet200ModelA200NoneOptions) (*MyExceptionResponse, error) {
 	req, err := client.Get200ModelA200NoneCreateRequest(ctx, options)
 	if err != nil {
@@ -774,8 +771,7 @@ func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultErro
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// Get200ModelA201ModelC404ModelDDefaultError400Valid - Send a 400 response with valid payload: {'code': '400', 'message':
-// 'client error'}
+// Get200ModelA201ModelC404ModelDDefaultError400Valid - Send a 400 response with valid payload: {'code': '400', 'message': 'client error'}
 // Possible return types are *MyExceptionResponse, *CResponse, *DResponse
 func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError400Valid(ctx context.Context, options *MultipleResponsesGet200ModelA201ModelC404ModelDDefaultError400ValidOptions) (interface{}, error) {
 	req, err := client.Get200ModelA201ModelC404ModelDDefaultError400ValidCreateRequest(ctx, options)

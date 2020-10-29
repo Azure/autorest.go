@@ -224,8 +224,8 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) ResumeStartExtensionU
 	}, nil
 }
 
-// StartExtensionUpgrade - Starts a rolling upgrade to move all extensions for all virtual machine scale set instances to
-// the latest available extension version. Instances which are already running the latest extension versions
+// StartExtensionUpgrade - Starts a rolling upgrade to move all extensions for all virtual machine scale set instances to the latest available extension
+// version. Instances which are already running the latest extension versions
 // are not affected.
 func (client *VirtualMachineScaleSetRollingUpgradesClient) StartExtensionUpgrade(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetRollingUpgradesStartExtensionUpgradeOptions) (*azcore.Response, error) {
 	req, err := client.StartExtensionUpgradeCreateRequest(ctx, resourceGroupName, vmScaleSetName, options)
@@ -304,8 +304,8 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) ResumeStartOSUpgrade(
 	}, nil
 }
 
-// StartOSUpgrade - Starts a rolling upgrade to move all virtual machine scale set instances to the latest available Platform
-// Image OS version. Instances which are already running the latest available OS version are not
+// StartOSUpgrade - Starts a rolling upgrade to move all virtual machine scale set instances to the latest available Platform Image OS version. Instances
+// which are already running the latest available OS version are not
 // affected.
 func (client *VirtualMachineScaleSetRollingUpgradesClient) StartOSUpgrade(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetRollingUpgradesStartOSUpgradeOptions) (*azcore.Response, error) {
 	req, err := client.StartOSUpgradeCreateRequest(ctx, resourceGroupName, vmScaleSetName, options)

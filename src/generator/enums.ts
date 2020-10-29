@@ -19,14 +19,14 @@ export async function generateEnums(session: Session<CodeModel>): Promise<string
   let text = await contentPreamble(session);
   for (const enm of values(enums)) {
     if (enm.desc) {
-      text += `${comment(enm.name, '// ')} - ${enm.desc}\n`;
+      text += `${comment(`${enm.name} - ${enm.desc}`, '// ')}\n`;
     }
     text += `type ${enm.name} ${enm.type}\n\n`;
     const vals = new Array<string>();
     text += 'const (\n';
     for (const val of values(enm.choices)) {
       if (hasDescription(val.language.go!)) {
-        text += comment(val.language.go!.description);
+        text += `${comment(val.language.go!.description, "//", undefined, 150)}\n`;
       }
       let formatValue = `"${val.value}"`;
       if (enm.type !== 'string') {

@@ -97,8 +97,7 @@ func (client *ContainerServicesClient) ResumeCreateOrUpdate(token string) (Conta
 	}, nil
 }
 
-// CreateOrUpdate - Creates or updates a container service with the specified configuration of orchestrator, masters, and
-// agents.
+// CreateOrUpdate - Creates or updates a container service with the specified configuration of orchestrator, masters, and agents.
 func (client *ContainerServicesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, containerServiceName string, parameters ContainerService, options *ContainerServicesCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, containerServiceName, parameters, options)
 	if err != nil {
@@ -183,10 +182,10 @@ func (client *ContainerServicesClient) ResumeDelete(token string) (HTTPPoller, e
 	}, nil
 }
 
-// Delete - Deletes the specified container service in the specified subscription and resource group. The operation does not
-// delete other resources created as part of creating a container service, including
-// storage accounts, VMs, and availability sets. All the other resources created with the container service are part of the
-// same resource group and can be deleted individually.
+// Delete - Deletes the specified container service in the specified subscription and resource group. The operation does not delete other resources created
+// as part of creating a container service, including
+// storage accounts, VMs, and availability sets. All the other resources created with the container service are part of the same resource group and can
+// be deleted individually.
 func (client *ContainerServicesClient) Delete(ctx context.Context, resourceGroupName string, containerServiceName string, options *ContainerServicesDeleteOptions) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, containerServiceName, options)
 	if err != nil {
@@ -230,8 +229,8 @@ func (client *ContainerServicesClient) DeleteHandleError(resp *azcore.Response) 
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-// Get - Gets the properties of the specified container service in the specified subscription and resource group. The operation
-// returns the properties including state, orchestrator, number of masters and
+// Get - Gets the properties of the specified container service in the specified subscription and resource group. The operation returns the properties including
+// state, orchestrator, number of masters and
 // agents, and FQDNs of masters and agents.
 func (client *ContainerServicesClient) Get(ctx context.Context, resourceGroupName string, containerServiceName string, options *ContainerServicesGetOptions) (*ContainerServiceResponse, error) {
 	req, err := client.GetCreateRequest(ctx, resourceGroupName, containerServiceName, options)
@@ -287,8 +286,8 @@ func (client *ContainerServicesClient) GetHandleError(resp *azcore.Response) err
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-// List - Gets a list of container services in the specified subscription. The operation returns properties of each container
-// service including state, orchestrator, number of masters and agents, and FQDNs of
+// List - Gets a list of container services in the specified subscription. The operation returns properties of each container service including state, orchestrator,
+// number of masters and agents, and FQDNs of
 // masters and agents.
 func (client *ContainerServicesClient) List(options *ContainerServicesListOptions) ContainerServiceListResultPager {
 	return &containerServiceListResultPager{
@@ -338,8 +337,8 @@ func (client *ContainerServicesClient) ListHandleError(resp *azcore.Response) er
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-// ListByResourceGroup - Gets a list of container services in the specified subscription and resource group. The operation
-// returns properties of each container service including state, orchestrator, number of masters and
+// ListByResourceGroup - Gets a list of container services in the specified subscription and resource group. The operation returns properties of each container
+// service including state, orchestrator, number of masters and
 // agents, and FQDNs of masters and agents.
 func (client *ContainerServicesClient) ListByResourceGroup(resourceGroupName string, options *ContainerServicesListByResourceGroupOptions) ContainerServiceListResultPager {
 	return &containerServiceListResultPager{

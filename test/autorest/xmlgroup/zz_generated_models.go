@@ -132,7 +132,7 @@ type BananaResponse struct {
 type Blob struct {
 	Deleted *bool `xml:"Deleted"`
 
-	// Dictionary of <string>
+	// Dictionary of
 	Metadata *map[string]string `xml:"Metadata"`
 	Name     *string            `xml:"Name"`
 
@@ -251,7 +251,7 @@ type ComplexTypeWithMeta struct {
 
 // An Azure Storage container
 type Container struct {
-	// Dictionary of <string>
+	// Dictionary of
 	Metadata *map[string]string `xml:"Metadata"`
 	Name     *string            `xml:"Name"`
 
@@ -326,9 +326,9 @@ type CorsRule struct {
 	AllowedMethods *string `xml:"AllowedMethods"`
 
 	// The origin domains that are permitted to make a request against the storage service via CORS. The origin domain is the
-	// domain from which the request originates. Note that the origin must be an exact case-sensitive match with the origin that
-	// the user age sends to the service. You can also use the wildcard character '*' to allow all origin domains to make requests
-	// via CORS.
+	// domain from which the request originates. Note that the origin must be an exact
+	// case-sensitive match with the origin that the user age sends to the service. You can also use the wildcard character '*'
+	// to allow all origin domains to make requests via CORS.
 	AllowedOrigins *string `xml:"AllowedOrigins"`
 
 	// The response headers that may be sent in the response to the CORS request and exposed by the browser to the request issuer

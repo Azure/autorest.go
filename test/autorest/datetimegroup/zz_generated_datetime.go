@@ -689,8 +689,7 @@ func (client *DatetimeClient) GetUTCUppercaseMaxDateTimeHandleError(resp *azcore
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// GetUTCUppercaseMaxDateTime7Digits - This is against the recommendation that asks for 3 digits, but allow to test what happens
-// in that scenario
+// GetUTCUppercaseMaxDateTime7Digits - This is against the recommendation that asks for 3 digits, but allow to test what happens in that scenario
 func (client *DatetimeClient) GetUTCUppercaseMaxDateTime7Digits(ctx context.Context, options *DatetimeGetUTCUppercaseMaxDateTime7DigitsOptions) (*TimeResponse, error) {
 	req, err := client.GetUTCUppercaseMaxDateTime7DigitsCreateRequest(ctx, options)
 	if err != nil {
@@ -964,8 +963,7 @@ func (client *DatetimeClient) PutUTCMaxDateTimeHandleError(resp *azcore.Response
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// PutUTCMaxDateTime7Digits - This is against the recommendation that asks for 3 digits, but allow to test what happens in
-// that scenario
+// PutUTCMaxDateTime7Digits - This is against the recommendation that asks for 3 digits, but allow to test what happens in that scenario
 func (client *DatetimeClient) PutUTCMaxDateTime7Digits(ctx context.Context, datetimeBody time.Time, options *DatetimePutUTCMaxDateTime7DigitsOptions) (*http.Response, error) {
 	req, err := client.PutUTCMaxDateTime7DigitsCreateRequest(ctx, datetimeBody, options)
 	if err != nil {
