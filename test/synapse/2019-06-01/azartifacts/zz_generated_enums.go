@@ -789,7 +789,6 @@ func (c IntegrationRuntimeReferenceType) ToPtr() *IntegrationRuntimeReferenceTyp
 }
 
 // IntegrationRuntimeSsisCatalogPricingTier - The pricing tier for the catalog database. The valid values could be found in https://azure.microsoft.com/en-us/pricing/details/sql-database/
-// [https://azure.microsoft.com/en-us/pricing/details/sql-database/]
 type IntegrationRuntimeSsisCatalogPricingTier string
 
 const (

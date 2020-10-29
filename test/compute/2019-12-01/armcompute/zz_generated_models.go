@@ -15,7 +15,7 @@ import (
 
 // The API entity reference.
 type APIEntityReference struct {
-	// The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/...
+	// The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/…
 	ID *string `json:"id,omitempty"`
 }
 
@@ -78,8 +78,8 @@ type AccessURIResponse struct {
 
 // Enables or disables a capability on the virtual machine or virtual machine scale set.
 type AdditionalCapabilities struct {
-	// The flag that enables or disables a capability to have one or more managed data disks with UltraSSD_LRS storage account type on the VM or VMSS. Managed
-	// disks with storage account type UltraSSD_LRS can
+	// The flag that enables or disables a capability to have one or more managed data disks with UltraSSDLRS storage account type on the VM or VMSS. Managed
+	// disks with storage account type UltraSSDLRS can
 	// be added to a virtual machine or virtual machine scale set only if this property is enabled.
 	UltraSsdEnabled *bool `json:"ultraSSDEnabled,omitempty"`
 }
@@ -825,8 +825,8 @@ type DedicatedHostProperties struct {
 	// Specifies the software license type that will be applied to the VMs deployed on the dedicated host.
 	// Possible values are:
 	// None
-	// Windows_Server_Hybrid
-	// Windows_Server_Perpetual
+	// WindowsServerHybrid
+	// WindowsServerPerpetual
 	// Default: None
 	LicenseType *DedicatedHostLicenseTypes `json:"licenseType,omitempty"`
 
@@ -994,10 +994,8 @@ type DiffDiskSettings struct {
 	// CacheDisk
 	// ResourceDisk
 	// Default: CacheDisk if one is configured for the VM size otherwise ResourceDisk is used.
-	// Refer to VM size documentation for Windows VM at https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes [https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes]
-	// and Linux
-	// VM at https://docs.microsoft.com/en-us/azure/virtual-machines/linux/sizes [https://docs.microsoft.com/en-us/azure/virtual-machines/linux/sizes] to check
-	// which VM sizes exposes a cache disk.
+	// Refer to VM size documentation for Windows VM at https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes and Linux VM at
+	// https://docs.microsoft.com/en-us/azure/virtual-machines/linux/sizes to check which VM sizes exposes a cache disk.
 	Placement *DiffDiskPlacement `json:"placement,omitempty"`
 }
 
@@ -1020,7 +1018,7 @@ type Disk struct {
 	// Disk resource properties.
 	Properties *DiskProperties `json:"properties,omitempty"`
 
-	// The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, or UltraSSD_LRS.
+	// The disks sku name. Can be StandardLRS, PremiumLRS, StandardSSDLRS, or UltraSSDLRS.
 	SKU *DiskSKU `json:"sku,omitempty"`
 
 	// The Logical zone list for Disk.
@@ -1054,8 +1052,7 @@ type DiskEncryptionSetListResponse struct {
 }
 
 // Describes the parameter of customer managed disk encryption set resource id that can be specified for disk.
-// NOTE: The disk encryption set resource id can only be specified for managed disk. Please refer https://aka.ms/mdssewithcmkoverview [https://aka.ms/mdssewithcmkoverview]
-// for more details.
+// NOTE: The disk encryption set resource id can only be specified for managed disk. Please refer https://aka.ms/mdssewithcmkoverview for more details.
 type DiskEncryptionSetParameters struct {
 	SubResource
 }
@@ -1417,7 +1414,7 @@ type DiskResponse struct {
 	RawResponse *http.Response
 }
 
-// The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, or UltraSSD_LRS.
+// The disks sku name. Can be StandardLRS, PremiumLRS, StandardSSDLRS, or UltraSSDLRS.
 type DiskSKU struct {
 	// The sku name.
 	Name *DiskStorageAccountTypes `json:"name,omitempty"`
@@ -1431,7 +1428,7 @@ type DiskUpdate struct {
 	// Disk resource update properties.
 	Properties *DiskUpdateProperties `json:"properties,omitempty"`
 
-	// The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, or UltraSSD_LRS.
+	// The disks sku name. Can be StandardLRS, PremiumLRS, StandardSSDLRS, or UltraSSDLRS.
 	SKU *DiskSKU `json:"sku,omitempty"`
 
 	// Resource tags
@@ -4236,7 +4233,7 @@ type Snapshot struct {
 	// Snapshot resource properties.
 	Properties *SnapshotProperties `json:"properties,omitempty"`
 
-	// The snapshots sku name. Can be Standard_LRS, Premium_LRS, or Standard_ZRS.
+	// The snapshots sku name. Can be StandardLRS, PremiumLRS, or Standard_ZRS.
 	SKU *SnapshotSKU `json:"sku,omitempty"`
 }
 
@@ -4430,7 +4427,7 @@ type SnapshotResponse struct {
 	Snapshot *Snapshot
 }
 
-// The snapshots sku name. Can be Standard_LRS, Premium_LRS, or Standard_ZRS.
+// The snapshots sku name. Can be StandardLRS, PremiumLRS, or Standard_ZRS.
 type SnapshotSKU struct {
 	// The sku name.
 	Name *SnapshotStorageAccountTypes `json:"name,omitempty"`
@@ -4444,7 +4441,7 @@ type SnapshotUpdate struct {
 	// Snapshot resource update properties.
 	Properties *SnapshotUpdateProperties `json:"properties,omitempty"`
 
-	// The snapshots sku name. Can be Standard_LRS, Premium_LRS, or Standard_ZRS.
+	// The snapshots sku name. Can be StandardLRS, PremiumLRS, or Standard_ZRS.
 	SKU *SnapshotSKU `json:"sku,omitempty"`
 
 	// Resource tags
@@ -5344,8 +5341,8 @@ type VirtualMachineProperties struct {
 	// Specifies that the image or disk that is being used was licensed on-premises. This element is only used for images that contain the Windows Server operating
 	// system.
 	// Possible values are:
-	// Windows_Client
-	// Windows_Server
+	// WindowsClient
+	// WindowsServer
 	// If this element is included in a request for an update, the value must match the initial value. This value cannot be updated.
 	// For more information, see Azure Hybrid Use Benefit for Windows Server
 	// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-hybrid-use-benefit-licensing?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json]
@@ -6533,8 +6530,8 @@ type VirtualMachineScaleSetVMProfile struct {
 	// Specifies that the image or disk that is being used was licensed on-premises. This element is only used for images that contain the Windows Server operating
 	// system.
 	// Possible values are:
-	// Windows_Client
-	// Windows_Server
+	// WindowsClient
+	// WindowsServer
 	// If this element is included in a request for an update, the value must match the initial value. This value cannot be updated.
 	// For more information, see Azure Hybrid Use Benefit for Windows Server
 	// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-hybrid-use-benefit-licensing?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json]
@@ -6590,8 +6587,8 @@ type VirtualMachineScaleSetVMProperties struct {
 	// Specifies that the image or disk that is being used was licensed on-premises. This element is only used for images that contain the Windows Server operating
 	// system.
 	// Possible values are:
-	// Windows_Client
-	// Windows_Server
+	// WindowsClient
+	// WindowsServer
 	// If this element is included in a request for an update, the value must match the initial value. This value cannot be updated.
 	// For more information, see Azure Hybrid Use Benefit for Windows Server
 	// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-hybrid-use-benefit-licensing?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json]

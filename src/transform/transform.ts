@@ -9,8 +9,8 @@ import { ObjectSchema, ArraySchema, ChoiceValue, codeModelSchema, CodeModel, Dat
 import { items, values } from '@azure-tools/linq';
 import { aggregateParameters, hasAdditionalProperties, isPageableOperation, isObjectSchema, isSchemaResponse, PagerInfo, isLROOperation, PollerInfo } from '../common/helpers';
 import { namer, protocolMethods } from './namer';
-import { Marked } from '@ts-stack/markdown';
 import { fromString } from 'html-to-text';
+import { Converter } from 'showdown';
 
 // The transformer adds Go-specific information to the code model.
 export async function transform(host: Host) {
@@ -1091,7 +1091,11 @@ function getEnumForDiscriminatorValue(discValue: string, enums: Array<ChoiceValu
 
 // convert comments that are in Markdown to html and then to plain text
 export function parseComments(comment: string): string {
-  return fromString(Marked.parse(comment), {
+  let converter = new Converter();
+  converter.setOption('tables', true);
+  let html = converter.makeHtml(comment);
+  return fromString(html, {
     wordwrap: 200,
+    tables: true,
   });
 }

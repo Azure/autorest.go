@@ -3030,9 +3030,8 @@ func (a *AzureDatabricksLinkedService) UnmarshalJSON(data []byte) error {
 
 // Azure Databricks linked service properties.
 type AzureDatabricksLinkedServiceTypeProperties struct {
-	// Access token for databricks REST API. Refer to https://docs.azuredatabricks.net/api/latest/authentication.html [https://docs.azuredatabricks.net/api/latest/authentication.html].
-	// Type: string (or
-	// Expression with resultType string).
+	// Access token for databricks REST API. Refer to https://docs.azuredatabricks.net/api/latest/authentication.html. Type: string (or Expression with resultType
+	// string).
 	AccessToken SecretBaseClassification `json:"accessToken,omitempty"`
 
 	// .azuredatabricks.net, domain name of your Databricks deployment. Type: string (or Expression with resultType string).
@@ -3594,7 +3593,7 @@ func (a *AzureKeyVaultLinkedService) UnmarshalJSON(data []byte) error {
 
 // Azure Key Vault linked service properties.
 type AzureKeyVaultLinkedServiceTypeProperties struct {
-	// The base URL of the Azure Key Vault. e.g. https://myakv.vault.azure.net [https://myakv.vault.azure.net] Type: string (or Expression with resultType string).
+	// The base URL of the Azure Key Vault. e.g. https://myakv.vault.azure.net Type: string (or Expression with resultType string).
 	BaseURL *interface{} `json:"baseUrl,omitempty"`
 }
 
@@ -10293,8 +10292,7 @@ type DelimitedTextDatasetTypeProperties struct {
 
 	// The code page name of the preferred encoding. If miss, the default value is UTF-8, unless BOM denotes another Unicode encoding. Refer to the name column
 	// of the table in the following link to set
-	// supported values: https://msdn.microsoft.com/library/system.text.encoding.aspx [https://msdn.microsoft.com/library/system.text.encoding.aspx]. Type:
-	// string (or Expression with resultType string).
+	// supported values: https://msdn.microsoft.com/library/system.text.encoding.aspx. Type: string (or Expression with resultType string).
 	EncodingName *interface{} `json:"encodingName,omitempty"`
 
 	// The escape character. Type: string (or Expression with resultType string).
@@ -14294,7 +14292,7 @@ type HTTPLinkedServiceTypeProperties struct {
 	// Password for Basic, Digest, Windows, or ClientCertificate with EmbeddedCertData authentication.
 	Password SecretBaseClassification `json:"password,omitempty"`
 
-	// The base URL of the HTTP endpoint, e.g. http://www.microsoft.com [http://www.microsoft.com]. Type: string (or Expression with resultType string).
+	// The base URL of the HTTP endpoint, e.g. http://www.microsoft.com. Type: string (or Expression with resultType string).
 	URL *interface{} `json:"url,omitempty"`
 
 	// User name for Basic, Digest, or Windows authentication. Type: string (or Expression with resultType string).
@@ -14821,9 +14819,7 @@ type HdInsightOnDemandLinkedServiceTypeProperties struct {
 	OozieConfiguration *interface{} `json:"oozieConfiguration,omitempty"`
 
 	// Custom script actions to run on HDI ondemand cluster once it's up. Please refer to
-	// https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-customize-cluster-linux?toc=%2Fen-us%2Fazure%2Fhdinsight%2Fr-server%2FTOC.json&bc=%2Fen-us%2Fazure%2Fbread%2Ftoc.json#understanding-script-actions
-	// [https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-customize-cluster-linux?toc=%2Fen-us%2Fazure%2Fhdinsight%2Fr-server%2FTOC.json&bc=%2Fen-us%2Fazure%2Fbread%2Ftoc.json#understanding-script-actions]
-	// .
+	// https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-customize-cluster-linux?toc=%2Fen-us%2Fazure%2Fhdinsight%2Fr-server%2FTOC.json&bc=%2Fen-us%2Fazure%2Fbread%2Ftoc.json#understanding-script-actions.
 	ScriptActions *[]ScriptAction `json:"scriptActions,omitempty"`
 
 	// The service principal id for the hostSubscriptionId. Type: string (or Expression with resultType string).
@@ -15114,8 +15110,7 @@ type HdfsLinkedServiceTypeProperties struct {
 	// Password for Windows authentication.
 	Password SecretBaseClassification `json:"password,omitempty"`
 
-	// The URL of the HDFS service endpoint, e.g. http://myhostname:50070/webhdfs/v1 [http://myhostname:50070/webhdfs/v1] . Type: string (or Expression with
-	// resultType string).
+	// The URL of the HDFS service endpoint, e.g. http://myhostname:50070/webhdfs/v1 . Type: string (or Expression with resultType string).
 	URL *interface{} `json:"url,omitempty"`
 
 	// User name for Windows authentication. Type: string (or Expression with resultType string).
@@ -16453,7 +16448,6 @@ type IntegrationRuntimeComputeProperties struct {
 	DataFlowProperties *IntegrationRuntimeDataFlowProperties `json:"dataFlowProperties,omitempty"`
 
 	// The location for managed integration runtime. The supported regions could be found on https://docs.microsoft.com/en-us/azure/data-factory/data-factory-data-movement-activities
-	// [https://docs.microsoft.com/en-us/azure/data-factory/data-factory-data-movement-activities]
 	Location *string `json:"location,omitempty"`
 
 	// Maximum parallel executions count per node for managed integration runtime.
@@ -16711,7 +16705,6 @@ type IntegrationRuntimeSsisCatalogInfo struct {
 	CatalogAdminUserName *string `json:"catalogAdminUserName,omitempty"`
 
 	// The pricing tier for the catalog database. The valid values could be found in https://azure.microsoft.com/en-us/pricing/details/sql-database/
-	// [https://azure.microsoft.com/en-us/pricing/details/sql-database/]
 	CatalogPricingTier *IntegrationRuntimeSsisCatalogPricingTier `json:"catalogPricingTier,omitempty"`
 
 	// The catalog database server URL.
@@ -17030,8 +17023,7 @@ type JSONDatasetTypeProperties struct {
 
 	// The code page name of the preferred encoding. If not specified, the default value is UTF-8, unless BOM denotes another Unicode encoding. Refer to the
 	// name column of the table in the following link to
-	// set supported values: https://msdn.microsoft.com/library/system.text.encoding.aspx [https://msdn.microsoft.com/library/system.text.encoding.aspx]. Type:
-	// string (or Expression with resultType string).
+	// set supported values: https://msdn.microsoft.com/library/system.text.encoding.aspx. Type: string (or Expression with resultType string).
 	EncodingName *interface{} `json:"encodingName,omitempty"`
 
 	// The location of the json data storage.
@@ -17075,9 +17067,8 @@ type JSONFormat struct {
 	DatasetStorageFormat
 	// The code page name of the preferred encoding. If not provided, the default value is 'utf-8', unless the byte order mark (BOM) denotes another Unicode
 	// encoding. The full list of supported values can be
-	// found in the 'Name' column of the table of encodings in the following reference: https://go.microsoft.com/fwlink/?linkid=861078 [https://go.microsoft.com/fwlink/?linkid=861078].
-	// Type: string (or
-	// Expression with resultType string).
+	// found in the 'Name' column of the table of encodings in the following reference: https://go.microsoft.com/fwlink/?linkid=861078. Type: string (or Expression
+	// with resultType string).
 	EncodingName *interface{} `json:"encodingName,omitempty"`
 
 	// File pattern of JSON. To be more specific, the way of separating a collection of JSON objects. The default value is 'setOfObjects'. It is case-sensitive.
@@ -26063,10 +26054,9 @@ type SalesforceLinkedServiceTypeProperties struct {
 	// with resultType string).
 	EncryptedCredential *interface{} `json:"encryptedCredential,omitempty"`
 
-	// The URL of Salesforce instance. Default is 'https://login.salesforce.com [https://login.salesforce.com]'. To copy data from sandbox, specify 'https://test.salesforce.com
-	// [https://test.salesforce.com]
-	// '. To copy data from custom domain, specify, for example, 'https://[domain].my.salesforce.com [https://[domain].my.salesforce.com]'. Type: string (or
-	// Expression with resultType string).
+	// The URL of Salesforce instance. Default is 'https://login.salesforce.com'. To copy data from sandbox, specify 'https://test.salesforce.com'. To copy
+	// data from custom domain, specify, for example,
+	// 'https://[domain].my.salesforce.com'. Type: string (or Expression with resultType string).
 	EnvironmentURL *interface{} `json:"environmentUrl,omitempty"`
 
 	// The password for Basic authentication of the Salesforce instance.
@@ -26395,11 +26385,9 @@ type SalesforceServiceCloudLinkedServiceTypeProperties struct {
 	// with resultType string).
 	EncryptedCredential *interface{} `json:"encryptedCredential,omitempty"`
 
-	// The URL of Salesforce Service Cloud instance. Default is 'https://login.salesforce.com [https://login.salesforce.com]'. To copy data from sandbox, specify
-	// 'https://test.salesforce.com
-	// [https://test.salesforce.com]'. To copy data from custom domain, specify, for example, 'https://[domain].my.salesforce.com [https://[domain].my.salesforce.com]'.
-	// Type: string (or Expression with
-	// resultType string).
+	// The URL of Salesforce Service Cloud instance. Default is 'https://login.salesforce.com'. To copy data from sandbox, specify 'https://test.salesforce.com'.
+	// To copy data from custom domain, specify, for
+	// example, 'https://[domain].my.salesforce.com'. Type: string (or Expression with resultType string).
 	EnvironmentURL *interface{} `json:"environmentUrl,omitempty"`
 
 	// Extended properties appended to the connection string. Type: string (or Expression with resultType string).
@@ -26937,9 +26925,8 @@ type SapCloudForCustomerLinkedServiceTypeProperties struct {
 	// The password for Basic authentication.
 	Password SecretBaseClassification `json:"password,omitempty"`
 
-	// The URL of SAP Cloud for Customer OData API. For example, '[https://[tenantname].crm.ondemand.com/sap/c4c/odata/v1 [https://[tenantname].crm.ondemand.com/sap/c4c/odata/v1]]'.
-	// Type: string (or
-	// Expression with resultType string).
+	// The URL of SAP Cloud for Customer OData API. For example, '[https://[tenantname].crm.ondemand.com/sap/c4c/odata/v1]'. Type: string (or Expression with
+	// resultType string).
 	URL *interface{} `json:"url,omitempty"`
 
 	// The username for Basic authentication. Type: string (or Expression with resultType string).
@@ -27151,9 +27138,7 @@ type SapEccLinkedServiceTypeProperties struct {
 	// The password for Basic authentication.
 	Password SecretBaseClassification `json:"password,omitempty"`
 
-	// The URL of SAP ECC OData API. For example, '[https://hostname:port/sap/opu/odata/sap/servicename/ [https://hostname:port/sap/opu/odata/sap/servicename/]]'.
-	// Type: string (or Expression with resultType
-	// string).
+	// The URL of SAP ECC OData API. For example, '[https://hostname:port/sap/opu/odata/sap/servicename/]'. Type: string (or Expression with resultType string).
 	URL *string `json:"url,omitempty"`
 
 	// The username for Basic authentication. Type: string (or Expression with resultType string).
@@ -30278,7 +30263,7 @@ type SquareLinkedServiceTypeProperties struct {
 	// The URL of the Square instance. (i.e. mystore.mysquare.com)
 	Host *interface{} `json:"host,omitempty"`
 
-	// The redirect URL assigned in the Square application dashboard. (i.e. http://localhost:2500 [http://localhost:2500])
+	// The redirect URL assigned in the Square application dashboard. (i.e. http://localhost:2500)
 	RedirectURI *interface{} `json:"redirectUri,omitempty"`
 
 	// Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true.
@@ -31728,9 +31713,7 @@ type TextFormat struct {
 
 	// The code page name of the preferred encoding. If miss, the default value is ΓÇ£utf-8ΓÇ¥, unless BOM denotes another Unicode encoding. Refer to the ΓÇ£NameΓÇ¥
 	// column of the table in the following link
-	// to set supported values: https://msdn.microsoft.com/library/system.text.encoding.aspx [https://msdn.microsoft.com/library/system.text.encoding.aspx].
-	// Type: string (or Expression with resultType
-	// string).
+	// to set supported values: https://msdn.microsoft.com/library/system.text.encoding.aspx. Type: string (or Expression with resultType string).
 	EncodingName *interface{} `json:"encodingName,omitempty"`
 
 	// The escape character. Type: string (or Expression with resultType string).
@@ -33284,7 +33267,7 @@ type WebLinkedServiceTypeProperties struct {
 	// Type of authentication used to connect to the web table source.
 	AuthenticationType *WebAuthenticationType `json:"authenticationType,omitempty"`
 
-	// The URL of the web service endpoint, e.g. http://www.microsoft.com [http://www.microsoft.com] . Type: string (or Expression with resultType string).
+	// The URL of the web service endpoint, e.g. http://www.microsoft.com . Type: string (or Expression with resultType string).
 	URL *interface{} `json:"url,omitempty"`
 }
 

@@ -65,9 +65,7 @@ type PathsOperations interface {
 	StringNull(ctx context.Context, stringPath string, options *PathsStringNullOptions) (*http.Response, error)
 	// StringURLEncoded - Get 'begin!*'();:@ &=+$,/?#[]end
 	StringURLEncoded(ctx context.Context, options *PathsStringURLEncodedOptions) (*http.Response, error)
-	// StringURLNonEncoded - https://tools.ietf.org/html/rfc3986#appendix-A [https://tools.ietf.org/html/rfc3986#appendix-A] [https://tools.ietf.org/html/rfc3986#appendix-A
-	// [https://tools.ietf.org/html/rfc3986#appendix-A]] 'path'
-	// accept any 'pchar' not encoded
+	// StringURLNonEncoded - https://tools.ietf.org/html/rfc3986#appendix-A 'path' accept any 'pchar' not encoded
 	StringURLNonEncoded(ctx context.Context, options *PathsStringURLNonEncodedOptions) (*http.Response, error)
 	// StringUnicode - Get '啊齄丂狛狜隣郎隣兀﨩' multi-byte string value
 	StringUnicode(ctx context.Context, options *PathsStringUnicodeOptions) (*http.Response, error)
@@ -979,9 +977,7 @@ func (client *PathsClient) StringURLEncodedHandleError(resp *azcore.Response) er
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// StringURLNonEncoded - https://tools.ietf.org/html/rfc3986#appendix-A [https://tools.ietf.org/html/rfc3986#appendix-A] [https://tools.ietf.org/html/rfc3986#appendix-A
-// [https://tools.ietf.org/html/rfc3986#appendix-A]] 'path'
-// accept any 'pchar' not encoded
+// StringURLNonEncoded - https://tools.ietf.org/html/rfc3986#appendix-A 'path' accept any 'pchar' not encoded
 func (client *PathsClient) StringURLNonEncoded(ctx context.Context, options *PathsStringURLNonEncodedOptions) (*http.Response, error) {
 	req, err := client.StringURLNonEncodedCreateRequest(ctx, options)
 	if err != nil {

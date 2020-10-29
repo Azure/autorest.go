@@ -229,8 +229,8 @@ func (c ContainerServiceVMSizeTypes) ToPtr() *ContainerServiceVMSizeTypes {
 // DedicatedHostLicenseTypes - Specifies the software license type that will be applied to the VMs deployed on the dedicated host.
 // Possible values are:
 // None
-// Windows_Server_Hybrid
-// Windows_Server_Perpetual
+// WindowsServerHybrid
+// WindowsServerPerpetual
 // Default: None
 type DedicatedHostLicenseTypes string
 
@@ -272,9 +272,8 @@ func (c DiffDiskOptions) ToPtr() *DiffDiskOptions {
 // DiffDiskPlacement - Specifies the ephemeral disk placement for operating system disk. This property can be used by user in the request to choose the
 // location i.e, cache disk or resource disk space for Ephemeral OS disk
 // provisioning. For more information on Ephemeral OS disk size requirements, please refer Ephemeral OS disk size requirements for Windows VM at
-// https://docs.microsoft.com/en-us/azure/virtual-machines/windows/ephemeral-os-disks#size-requirements
-// [https://docs.microsoft.com/en-us/azure/virtual-machines/windows/ephemeral-os-disks#size-requirements] and Linux VM at
-// https://docs.microsoft.com/en-us/azure/virtual-machines/linux/ephemeral-os-disks#size-requirements [https://docs.microsoft.com/en-us/azure/virtual-machines/linux/ephemeral-os-disks#size-requirements]
+// https://docs.microsoft.com/en-us/azure/virtual-machines/windows/ephemeral-os-disks#size-requirements and Linux VM at
+// https://docs.microsoft.com/en-us/azure/virtual-machines/linux/ephemeral-os-disks#size-requirements
 type DiffDiskPlacement string
 
 const (
@@ -1119,12 +1118,12 @@ func (c StorageAccountType) ToPtr() *StorageAccountType {
 }
 
 // StorageAccountTypes - Specifies the storage account type for the managed disk. Managed OS disk storage account type can only be set when you create the
-// scale set. NOTE: UltraSSD_LRS can only be used with data disks. It
-// cannot be used with OS Disk. Standard_LRS uses Standard HDD. StandardSSD_LRS uses Standard SSD. Premium_LRS uses Premium SSD. UltraSSD_LRS uses Ultra
-// disk. For more information regarding disks
-// supported for Windows Virtual Machines, refer to https://docs.microsoft.com/en-us/azure/virtual-machines/windows/disks-types
-// [https://docs.microsoft.com/en-us/azure/virtual-machines/windows/disks-types] and, for Linux Virtual Machines, refer to https://docs.microsoft.com/en-us/azure/virtual-machines/linux/disks-types
-// [https://docs.microsoft.com/en-us/azure/virtual-machines/linux/disks-types]
+// scale set. NOTE: UltraSSDLRS can only be used with data disks. It
+// cannot be used with OS Disk. StandardLRS uses Standard HDD. StandardSSDLRS uses Standard SSD. PremiumLRS uses Premium SSD. UltraSSD_LRS uses Ultra disk.
+// For more information regarding disks supported
+// for Windows Virtual Machines, refer to https://docs.microsoft.com/en-us/azure/virtual-machines/windows/disks-types and, for Linux Virtual Machines, refer
+// to
+// https://docs.microsoft.com/en-us/azure/virtual-machines/linux/disks-types
 type StorageAccountTypes string
 
 const (

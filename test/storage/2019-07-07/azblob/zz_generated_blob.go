@@ -677,7 +677,7 @@ func (client *blobClient) CreateSnapshotHandleError(resp *azcore.Response) error
 // the storage account's soft delete feature is enabled,
 // then, when a blob is deleted, it is marked for deletion and becomes inaccessible immediately. However, the blob service retains the blob or snapshot
 // for the number of days specified by the
-// DeleteRetentionPolicy section of [Storage service properties] (Set-Blob-Service-Properties.md). After the specified number of days has passed, the blob's
+// DeleteRetentionPolicy section of Storage service properties [Set-Blob-Service-Properties.md]. After the specified number of days has passed, the blob's
 // data is permanently removed from the storage
 // account. Note that you continue to be charged for the soft-deleted blob's storage until it is permanently removed. Use the List Blobs API and specify
 // the "include=deleted" query parameter to discover
@@ -1535,10 +1535,9 @@ func (client *blobClient) ReleaseLeaseHandleError(resp *azcore.Response) error {
 
 // Rename - Rename a blob/file. By default, the destination is overwritten and if the destination already exists and has a lease the lease is broken. This
 // operation supports conditional HTTP requests. For more
-// information, see Specifying Conditional Headers for Blob Service Operations [https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations
-// [https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations]]. To fail if the destination already
-// exists, use a conditional request with
-// If-None-Match: "*".
+// information, see Specifying Conditional Headers for Blob Service Operations [https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations].
+// To
+// fail if the destination already exists, use a conditional request with If-None-Match: "*".
 func (client *blobClient) Rename(ctx context.Context, renameSource string, blobRenameOptions *BlobRenameOptions, directoryHttpHeaders *DirectoryHttpHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*BlobRenameResponse, error) {
 	req, err := client.RenameCreateRequest(ctx, renameSource, blobRenameOptions, directoryHttpHeaders, leaseAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {

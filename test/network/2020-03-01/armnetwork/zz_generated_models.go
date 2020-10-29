@@ -705,8 +705,8 @@ type ApplicationGatewayProbePropertiesFormat struct {
 	PickHostNameFromBackendHTTPSettings *bool `json:"pickHostNameFromBackendHttpSettings,omitempty"`
 
 	// Custom port which will be used for probing the backend servers. The valid value ranges from 1 to 65535. In case not set, port from http settings will
-	// be used. This property is valid for Standard_v2
-	// and WAF_v2 only.
+	// be used. This property is valid for Standardv2 and
+	// WAFv2 only.
 	Port *int32 `json:"port,omitempty"`
 
 	// The protocol used for the probe.
@@ -2660,8 +2660,7 @@ type BgpCommunity struct {
 	// The prefixes that the bgp community contains.
 	CommunityPrefixes *[]string `json:"communityPrefixes,omitempty"`
 
-	// The value of the bgp community. For more information: https://docs.microsoft.com/en-us/azure/expressroute/expressroute-routing
-	// [https://docs.microsoft.com/en-us/azure/expressroute/expressroute-routing].
+	// The value of the bgp community. For more information: https://docs.microsoft.com/en-us/azure/expressroute/expressroute-routing.
 	CommunityValue *string `json:"communityValue,omitempty"`
 
 	// Customer is authorized to use bgp community or not.
@@ -13470,8 +13469,8 @@ type VirtualNetworkPeeringPropertiesFormat struct {
 	RemoteAddressSpace *AddressSpace `json:"remoteAddressSpace,omitempty"`
 
 	// The reference to the remote virtual network. The remote virtual network can be in the same or different region (preview). See here to register for the
-	// preview and learn more (
-	// https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-create-peering [https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-create-peering]).
+	// preview and learn more
+	// (https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-create-peering).
 	RemoteVirtualNetwork *SubResource `json:"remoteVirtualNetwork,omitempty"`
 
 	// If remote gateways can be used on this virtual network. If the flag is set to true, and allowGatewayTransit on remote peering is also true, virtual network

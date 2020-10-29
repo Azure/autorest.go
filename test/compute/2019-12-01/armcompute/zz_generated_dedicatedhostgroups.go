@@ -18,9 +18,8 @@ import (
 
 // DedicatedHostGroupsOperations contains the methods for the DedicatedHostGroups group.
 type DedicatedHostGroupsOperations interface {
-	// CreateOrUpdate - Create or update a dedicated host group. For details of Dedicated Host and Dedicated Host Groups please see [Dedicated Host Documentation]
-	// (https://go.microsoft.com/fwlink/?linkid=2082596
-	// [https://go.microsoft.com/fwlink/?linkid=2082596][https://go.microsoft.com/fwlink/?linkid=2082596 [https://go.microsoft.com/fwlink/?linkid=2082596]])
+	// CreateOrUpdate - Create or update a dedicated host group. For details of Dedicated Host and Dedicated Host Groups please see Dedicated Host Documentation
+	// [https://go.microsoft.com/fwlink/?linkid=2082596]
 	CreateOrUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, parameters DedicatedHostGroup, options *DedicatedHostGroupsCreateOrUpdateOptions) (*DedicatedHostGroupResponse, error)
 	// Delete - Delete a dedicated host group.
 	Delete(ctx context.Context, resourceGroupName string, hostGroupName string, options *DedicatedHostGroupsDeleteOptions) (*http.Response, error)
@@ -53,9 +52,8 @@ func (client *DedicatedHostGroupsClient) Do(req *azcore.Request) (*azcore.Respon
 	return client.p.Do(req)
 }
 
-// CreateOrUpdate - Create or update a dedicated host group. For details of Dedicated Host and Dedicated Host Groups please see [Dedicated Host Documentation]
-// (https://go.microsoft.com/fwlink/?linkid=2082596
-// [https://go.microsoft.com/fwlink/?linkid=2082596][https://go.microsoft.com/fwlink/?linkid=2082596 [https://go.microsoft.com/fwlink/?linkid=2082596]])
+// CreateOrUpdate - Create or update a dedicated host group. For details of Dedicated Host and Dedicated Host Groups please see Dedicated Host Documentation
+// [https://go.microsoft.com/fwlink/?linkid=2082596]
 func (client *DedicatedHostGroupsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, parameters DedicatedHostGroup, options *DedicatedHostGroupsCreateOrUpdateOptions) (*DedicatedHostGroupResponse, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, hostGroupName, parameters, options)
 	if err != nil {
