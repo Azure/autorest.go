@@ -258,8 +258,8 @@ function processOperationRequests(session: Session<CodeModel>) {
           newOp.language.go!.name = name;
           newOp.language.go!.protocolNaming = new protocolMethods(newOp.language.go!.name);
           group.addOperation(newOp);
-          if (op.language.go!.description) {
-            op.language.go!.description = parseComments(op.language.go!.description);
+          if (req.language.go!.description) {
+            req.language.go!.description = parseComments(req.language.go!.description);
           }
         }
         group.operations.splice(group.operations.indexOf(op), 1);
@@ -520,6 +520,9 @@ function processOperationResponses(session: Session<CodeModel>) {
           }
         }
         filtered.push(resp);
+        if (resp.language.go!.description) {
+          resp.language.go!.description = parseComments(resp.language.go!.description);
+        }
       }
       // replace with the filtered list if applicable
       if (filtered.length === 0) {
