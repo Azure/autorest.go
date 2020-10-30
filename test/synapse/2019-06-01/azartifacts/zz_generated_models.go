@@ -5619,6 +5619,12 @@ func (a *AzureTableStorageLinkedService) UnmarshalJSON(data []byte) error {
 	return a.LinkedService.unmarshalInternal(rawMsg)
 }
 
+// Babylon Configuration
+type BabylonConfiguration struct {
+	// Babylon Resource ID
+	BabylonResourceID *string `json:"babylonResourceId,omitempty"`
+}
+
 // Big data pool reference.
 type BigDataPoolReference struct {
 	// Reference big data pool name.
@@ -23150,41 +23156,40 @@ func (p *PrestoSource) UnmarshalJSON(data []byte) error {
 	return p.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// Private endpoint details
+// Private Endpoint
 type PrivateEndpoint struct {
-	// Resource id of the private endpoint.
+	// identifier
 	ID *string `json:"id,omitempty" azure:"ro"`
 }
 
-// A private endpoint connection
 type PrivateEndpointConnection struct {
 	Resource
-	// Private endpoint connection properties.
+	// Private Endpoint Connection Properties
 	Properties *PrivateEndpointConnectionProperties `json:"properties,omitempty"`
 }
 
-// Properties of a private endpoint connection.
+// Private Endpoint Connection Properties
 type PrivateEndpointConnectionProperties struct {
-	// The private endpoint which the connection belongs to.
+	// Private Endpoint
 	PrivateEndpoint *PrivateEndpoint `json:"privateEndpoint,omitempty"`
 
-	// Connection state of the private endpoint connection.
+	// Private Link Service Connection State
 	PrivateLinkServiceConnectionState *PrivateLinkServiceConnectionState `json:"privateLinkServiceConnectionState,omitempty"`
 
-	// Provisioning state of the private endpoint connection.
+	// Provisioning state
 	ProvisioningState *string `json:"provisioningState,omitempty" azure:"ro"`
 }
 
-// Connection state details of the private endpoint
+// Private Link Service Connection State
 type PrivateLinkServiceConnectionState struct {
-	// The actions required for private link service connection.
+	// Actions Required
 	ActionsRequired *string `json:"actionsRequired,omitempty" azure:"ro"`
 
-	// The private link service connection description.
-	Description *string `json:"description,omitempty"`
+	// Description of private link service connection state
+	Description *string `json:"description,omitempty" azure:"ro"`
 
-	// The private link service connection status.
-	Status *PrivateLinkServiceConnectionStateStatus `json:"status,omitempty"`
+	// Status of private link service connection state
+	Status *string `json:"status,omitempty" azure:"ro"`
 }
 
 // The resource model definition for a Azure Resource Manager proxy resource. It will not have tags and a location
@@ -33413,6 +33418,9 @@ type WorkspaceKeyDetails struct {
 
 // Workspace properties
 type WorkspaceProperties struct {
+	// Babylon Configuration
+	BabylonConfiguration *BabylonConfiguration `json:"babylonConfiguration,omitempty"`
+
 	// Connectivity endpoints
 	ConnectivityEndpoints *map[string]string `json:"connectivityEndpoints,omitempty"`
 

@@ -1249,29 +1249,6 @@ func (c PrestoAuthenticationType) ToPtr() *PrestoAuthenticationType {
 	return &c
 }
 
-// PrivateLinkServiceConnectionStateStatus - The private link service connection status.
-type PrivateLinkServiceConnectionStateStatus string
-
-const (
-	PrivateLinkServiceConnectionStateStatusApproved     PrivateLinkServiceConnectionStateStatus = "Approved"
-	PrivateLinkServiceConnectionStateStatusDisconnected PrivateLinkServiceConnectionStateStatus = "Disconnected"
-	PrivateLinkServiceConnectionStateStatusPending      PrivateLinkServiceConnectionStateStatus = "Pending"
-	PrivateLinkServiceConnectionStateStatusRejected     PrivateLinkServiceConnectionStateStatus = "Rejected"
-)
-
-func PossiblePrivateLinkServiceConnectionStateStatusValues() []PrivateLinkServiceConnectionStateStatus {
-	return []PrivateLinkServiceConnectionStateStatus{
-		PrivateLinkServiceConnectionStateStatusApproved,
-		PrivateLinkServiceConnectionStateStatusDisconnected,
-		PrivateLinkServiceConnectionStateStatusPending,
-		PrivateLinkServiceConnectionStateStatusRejected,
-	}
-}
-
-func (c PrivateLinkServiceConnectionStateStatus) ToPtr() *PrivateLinkServiceConnectionStateStatus {
-	return &c
-}
-
 // RecurrenceFrequency - Enumerates possible frequency option for the schedule trigger.
 type RecurrenceFrequency string
 
