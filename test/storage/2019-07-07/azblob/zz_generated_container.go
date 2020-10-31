@@ -652,7 +652,8 @@ func (client *containerClient) GetAccountInfoHandleError(resp *azcore.Response) 
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// GetProperties - returns all user-defined metadata and system properties for the specified container. The data returned does not include the container's list of blobs
+// GetProperties - returns all user-defined metadata and system properties for the specified container. The data returned does not include the container's
+// list of blobs
 func (client *containerClient) GetProperties(ctx context.Context, containerGetPropertiesOptions *ContainerGetPropertiesOptions, leaseAccessConditions *LeaseAccessConditions) (*ContainerGetPropertiesResponse, error) {
 	req, err := client.GetPropertiesCreateRequest(ctx, containerGetPropertiesOptions, leaseAccessConditions)
 	if err != nil {

@@ -39,7 +39,8 @@ type P2SVpnGatewaysOperations interface {
 	BeginGetP2SVpnConnectionHealth(ctx context.Context, resourceGroupName string, gatewayName string, options *P2SVpnGatewaysGetP2SVpnConnectionHealthOptions) (*P2SVpnGatewayPollerResponse, error)
 	// ResumeGetP2SVpnConnectionHealth - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeGetP2SVpnConnectionHealth(token string) (P2SVpnGatewayPoller, error)
-	// BeginGetP2SVpnConnectionHealthDetailed - Gets the sas url to get the connection health detail of P2S clients of the virtual wan P2SVpnGateway in the specified resource group.
+	// BeginGetP2SVpnConnectionHealthDetailed - Gets the sas url to get the connection health detail of P2S clients of the virtual wan P2SVpnGateway in the
+	// specified resource group.
 	BeginGetP2SVpnConnectionHealthDetailed(ctx context.Context, resourceGroupName string, gatewayName string, request P2SVpnConnectionHealthRequest, options *P2SVpnGatewaysGetP2SVpnConnectionHealthDetailedOptions) (*P2SVpnConnectionHealthPollerResponse, error)
 	// ResumeGetP2SVpnConnectionHealthDetailed - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeGetP2SVpnConnectionHealthDetailed(token string) (P2SVpnConnectionHealthPoller, error)
@@ -552,7 +553,8 @@ func (client *P2SVpnGatewaysClient) ResumeGetP2SVpnConnectionHealthDetailed(toke
 	}, nil
 }
 
-// GetP2SVpnConnectionHealthDetailed - Gets the sas url to get the connection health detail of P2S clients of the virtual wan P2SVpnGateway in the specified resource group.
+// GetP2SVpnConnectionHealthDetailed - Gets the sas url to get the connection health detail of P2S clients of the virtual wan P2SVpnGateway in the specified
+// resource group.
 func (client *P2SVpnGatewaysClient) GetP2SVpnConnectionHealthDetailed(ctx context.Context, resourceGroupName string, gatewayName string, request P2SVpnConnectionHealthRequest, options *P2SVpnGatewaysGetP2SVpnConnectionHealthDetailedOptions) (*azcore.Response, error) {
 	req, err := client.GetP2SVpnConnectionHealthDetailedCreateRequest(ctx, resourceGroupName, gatewayName, request, options)
 	if err != nil {

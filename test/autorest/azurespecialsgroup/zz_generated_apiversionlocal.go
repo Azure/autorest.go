@@ -13,13 +13,13 @@ import (
 
 // APIVersionLocalOperations contains the methods for the APIVersionLocal group.
 type APIVersionLocalOperations interface {
-	// GetMethodLocalNull - Get method with api-version modeled in the method.  pass in api-version = null to succeed
+	// GetMethodLocalNull - Get method with api-version modeled in the method. pass in api-version = null to succeed
 	GetMethodLocalNull(ctx context.Context, options *APIVersionLocalGetMethodLocalNullOptions) (*http.Response, error)
-	// GetMethodLocalValid - Get method with api-version modeled in the method.  pass in api-version = '2.0' to succeed
+	// GetMethodLocalValid - Get method with api-version modeled in the method. pass in api-version = '2.0' to succeed
 	GetMethodLocalValid(ctx context.Context, options *APIVersionLocalGetMethodLocalValidOptions) (*http.Response, error)
-	// GetPathLocalValid - Get method with api-version modeled in the method.  pass in api-version = '2.0' to succeed
+	// GetPathLocalValid - Get method with api-version modeled in the method. pass in api-version = '2.0' to succeed
 	GetPathLocalValid(ctx context.Context, options *APIVersionLocalGetPathLocalValidOptions) (*http.Response, error)
-	// GetSwaggerLocalValid - Get method with api-version modeled in the method.  pass in api-version = '2.0' to succeed
+	// GetSwaggerLocalValid - Get method with api-version modeled in the method. pass in api-version = '2.0' to succeed
 	GetSwaggerLocalValid(ctx context.Context, options *APIVersionLocalGetSwaggerLocalValidOptions) (*http.Response, error)
 }
 
@@ -39,7 +39,7 @@ func (client *APIVersionLocalClient) Do(req *azcore.Request) (*azcore.Response, 
 	return client.p.Do(req)
 }
 
-// GetMethodLocalNull - Get method with api-version modeled in the method.  pass in api-version = null to succeed
+// GetMethodLocalNull - Get method with api-version modeled in the method. pass in api-version = null to succeed
 func (client *APIVersionLocalClient) GetMethodLocalNull(ctx context.Context, options *APIVersionLocalGetMethodLocalNullOptions) (*http.Response, error) {
 	req, err := client.GetMethodLocalNullCreateRequest(ctx, options)
 	if err != nil {
@@ -80,7 +80,7 @@ func (client *APIVersionLocalClient) GetMethodLocalNullHandleError(resp *azcore.
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// GetMethodLocalValid - Get method with api-version modeled in the method.  pass in api-version = '2.0' to succeed
+// GetMethodLocalValid - Get method with api-version modeled in the method. pass in api-version = '2.0' to succeed
 func (client *APIVersionLocalClient) GetMethodLocalValid(ctx context.Context, options *APIVersionLocalGetMethodLocalValidOptions) (*http.Response, error) {
 	req, err := client.GetMethodLocalValidCreateRequest(ctx, options)
 	if err != nil {
@@ -119,7 +119,7 @@ func (client *APIVersionLocalClient) GetMethodLocalValidHandleError(resp *azcore
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// GetPathLocalValid - Get method with api-version modeled in the method.  pass in api-version = '2.0' to succeed
+// GetPathLocalValid - Get method with api-version modeled in the method. pass in api-version = '2.0' to succeed
 func (client *APIVersionLocalClient) GetPathLocalValid(ctx context.Context, options *APIVersionLocalGetPathLocalValidOptions) (*http.Response, error) {
 	req, err := client.GetPathLocalValidCreateRequest(ctx, options)
 	if err != nil {
@@ -158,7 +158,7 @@ func (client *APIVersionLocalClient) GetPathLocalValidHandleError(resp *azcore.R
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// GetSwaggerLocalValid - Get method with api-version modeled in the method.  pass in api-version = '2.0' to succeed
+// GetSwaggerLocalValid - Get method with api-version modeled in the method. pass in api-version = '2.0' to succeed
 func (client *APIVersionLocalClient) GetSwaggerLocalValid(ctx context.Context, options *APIVersionLocalGetSwaggerLocalValidOptions) (*http.Response, error) {
 	req, err := client.GetSwaggerLocalValidCreateRequest(ctx, options)
 	if err != nil {

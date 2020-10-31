@@ -167,7 +167,11 @@ func (client *pageBlobClient) ClearPagesHandleError(resp *azcore.Response) error
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// CopyIncremental - The Copy Incremental operation copies a snapshot of the source page blob to a destination page blob. The snapshot is copied such that only the differential changes between the previously copied snapshot are transferred to the destination. The copied snapshots are complete copies of the original snapshot and can be read or copied from as usual. This API is supported since REST version 2016-05-31.
+// CopyIncremental - The Copy Incremental operation copies a snapshot of the source page blob to a destination page blob. The snapshot is copied such that
+// only the differential changes between the previously copied
+// snapshot are transferred to the destination. The copied snapshots are complete copies of the original snapshot and can be read or copied from as usual.
+// This API is supported since REST version
+// 2016-05-31.
 func (client *pageBlobClient) CopyIncremental(ctx context.Context, copySource url.URL, pageBlobCopyIncrementalOptions *PageBlobCopyIncrementalOptions, modifiedAccessConditions *ModifiedAccessConditions) (*PageBlobCopyIncrementalResponse, error) {
 	req, err := client.CopyIncrementalCreateRequest(ctx, copySource, pageBlobCopyIncrementalOptions, modifiedAccessConditions)
 	if err != nil {
@@ -535,7 +539,8 @@ func (client *pageBlobClient) GetPageRangesHandleError(resp *azcore.Response) er
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// GetPageRangesDiff - The Get Page Ranges Diff operation returns the list of valid page ranges for a page blob that were changed between target blob and previous snapshot.
+// GetPageRangesDiff - The Get Page Ranges Diff operation returns the list of valid page ranges for a page blob that were changed between target blob and
+// previous snapshot.
 func (client *pageBlobClient) GetPageRangesDiff(ctx context.Context, pageBlobGetPageRangesDiffOptions *PageBlobGetPageRangesDiffOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*PageListResponse, error) {
 	req, err := client.GetPageRangesDiffCreateRequest(ctx, pageBlobGetPageRangesDiffOptions, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {

@@ -9,6 +9,8 @@ import { ObjectSchema, ArraySchema, ChoiceValue, codeModelSchema, CodeModel, Dat
 import { items, values } from '@azure-tools/linq';
 import { aggregateParameters, hasAdditionalProperties, isPageableOperation, isObjectSchema, isSchemaResponse, PagerInfo, isLROOperation, PollerInfo } from '../common/helpers';
 import { namer, protocolMethods } from './namer';
+import { fromString } from 'html-to-text';
+import { Converter } from 'showdown';
 
 // The transformer adds Go-specific information to the code model.
 export async function transform(host: Host) {
@@ -44,9 +46,15 @@ async function process(session: Session<CodeModel>) {
   // schema type being an actual Go type.
   for (const dictionary of values(session.model.schemas.dictionaries)) {
     dictionary.elementType.language.go!.name = schemaTypeToGoType(session.model, dictionary.elementType, false);
+    if (dictionary.language.go!.description) {
+      dictionary.language.go!.description = parseComments(dictionary.language.go!.description);
+    }
   }
   // fix up struct field types
   for (const obj of values(session.model.schemas.objects)) {
+    if (obj.language.go!.description) {
+      obj.language.go!.description = parseComments(obj.language.go!.description);
+    }
     if (obj.discriminator) {
       // discriminators will contain the root type of each discriminated type hierarchy
       if (!session.model.language.go!.discriminators) {
@@ -70,6 +78,9 @@ async function process(session: Session<CodeModel>) {
       }
     }
     for (const prop of values(obj.properties)) {
+      if (prop.language.go!.description) {
+        prop.language.go!.description = parseComments(prop.language.go!.description);
+      }
       const details = <Language>prop.schema.language.go;
       details.name = `${schemaTypeToGoType(session.model, prop.schema, true)}`;
       if (prop.schema.type === SchemaType.DateTime) {
@@ -100,9 +111,15 @@ async function process(session: Session<CodeModel>) {
   // fix up enum types
   for (const choice of values(session.model.schemas.choices)) {
     choice.choiceType.language.go!.name = schemaTypeToGoType(session.model, choice.choiceType, false);
+    if (choice.language.go!.description) {
+      choice.language.go!.description = parseComments(choice.language.go!.description);
+    }
   }
   for (const choice of values(session.model.schemas.sealedChoices)) {
     choice.choiceType.language.go!.name = schemaTypeToGoType(session.model, choice.choiceType, false);
+    if (choice.language.go!.description) {
+      choice.language.go!.description = parseComments(choice.language.go!.description);
+    }
   }
 }
 
@@ -227,6 +244,9 @@ function processOperationRequests(session: Session<CodeModel>) {
   const paramGroups = new Map<string, GroupProperty>();
   for (const group of values(session.model.operationGroups)) {
     for (const op of values(group.operations)) {
+      if (op.language.go!.description) {
+        op.language.go!.description = parseComments(op.language.go!.description);
+      }
       if (op.requests!.length > 1) {
         for (const req of values(op.requests)) {
           const newOp = JSON.parse(JSON.stringify(op));
@@ -238,6 +258,9 @@ function processOperationRequests(session: Session<CodeModel>) {
           newOp.language.go!.name = name;
           newOp.language.go!.protocolNaming = new protocolMethods(newOp.language.go!.name);
           group.addOperation(newOp);
+          if (req.language.go!.description) {
+            req.language.go!.description = parseComments(req.language.go!.description);
+          }
         }
         group.operations.splice(group.operations.indexOf(op), 1);
         continue;
@@ -497,6 +520,9 @@ function processOperationResponses(session: Session<CodeModel>) {
           }
         }
         filtered.push(resp);
+        if (resp.language.go!.description) {
+          resp.language.go!.description = parseComments(resp.language.go!.description);
+        }
       }
       // replace with the filtered list if applicable
       if (filtered.length === 0) {
@@ -1056,4 +1082,15 @@ function getEnumForDiscriminatorValue(discValue: string, enums: Array<ChoiceValu
     }
   }
   throw console.error(`failed to find discriminator enum value for ${discValue}`);
+}
+
+// convert comments that are in Markdown to html and then to plain text
+function parseComments(comment: string): string {
+  let converter = new Converter();
+  converter.setOption('tables', true);
+  let html = converter.makeHtml(comment);
+  return fromString(html, {
+    wordwrap: 200,
+    tables: true,
+  });
 }

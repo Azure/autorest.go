@@ -24,7 +24,13 @@ func (client *blockBlobClient) Do(req *azcore.Request) (*azcore.Response, error)
 	return client.p.Do(req)
 }
 
-// CommitBlockList - The Commit Block List operation writes a blob by specifying the list of block IDs that make up the blob. In order to be written as part of a blob, a block must have been successfully written to the server in a prior Put Block operation. You can call Put Block List to update a blob by uploading only those blocks that have changed, then committing the new and existing blocks together. You can do this by specifying whether to commit a block from the committed block list or from the uncommitted block list, or to commit the most recently uploaded version of the block, whichever list it may belong to.
+// CommitBlockList - The Commit Block List operation writes a blob by specifying the list of block IDs that make up the blob. In order to be written as
+// part of a blob, a block must have been successfully written to the
+// server in a prior Put Block operation. You can call Put Block List to update a blob by uploading only those blocks that have changed, then committing
+// the new and existing blocks together. You can do
+// this by specifying whether to commit a block from the committed block list or from the uncommitted block list, or to commit the most recently uploaded
+// version of the block, whichever list it may
+// belong to.
 func (client *blockBlobClient) CommitBlockList(ctx context.Context, blocks BlockLookupList, blockBlobCommitBlockListOptions *BlockBlobCommitBlockListOptions, blobHttpHeaders *BlobHttpHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*BlockBlobCommitBlockListResponse, error) {
 	req, err := client.CommitBlockListCreateRequest(ctx, blocks, blockBlobCommitBlockListOptions, blobHttpHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
@@ -547,7 +553,10 @@ func (client *blockBlobClient) StageBlockFromURLHandleError(resp *azcore.Respons
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// Upload - The Upload Block Blob operation updates the content of an existing block blob. Updating an existing block blob overwrites any existing metadata on the blob. Partial updates are not supported with Put Blob; the content of the existing blob is overwritten with the content of the new blob. To perform a partial update of the content of a block blob, use the Put Block List operation.
+// Upload - The Upload Block Blob operation updates the content of an existing block blob. Updating an existing block blob overwrites any existing metadata
+// on the blob. Partial updates are not supported with Put
+// Blob; the content of the existing blob is overwritten with the content of the new blob. To perform a partial update of the content of a block blob, use
+// the Put Block List operation.
 func (client *blockBlobClient) Upload(ctx context.Context, contentLength int64, body azcore.ReadSeekCloser, blockBlobUploadOptions *BlockBlobUploadOptions, blobHttpHeaders *BlobHttpHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*BlockBlobUploadResponse, error) {
 	req, err := client.UploadCreateRequest(ctx, contentLength, body, blockBlobUploadOptions, blobHttpHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {

@@ -21,7 +21,8 @@ type ExpressRouteGatewaysOperations interface {
 	BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, putExpressRouteGatewayParameters ExpressRouteGateway, options *ExpressRouteGatewaysCreateOrUpdateOptions) (*ExpressRouteGatewayPollerResponse, error)
 	// ResumeCreateOrUpdate - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeCreateOrUpdate(token string) (ExpressRouteGatewayPoller, error)
-	// BeginDelete - Deletes the specified ExpressRoute gateway in a resource group. An ExpressRoute gateway resource can only be deleted when there are no connection subresources.
+	// BeginDelete - Deletes the specified ExpressRoute gateway in a resource group. An ExpressRoute gateway resource can only be deleted when there are no
+	// connection subresources.
 	BeginDelete(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, options *ExpressRouteGatewaysDeleteOptions) (*HTTPPollerResponse, error)
 	// ResumeDelete - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeDelete(token string) (HTTPPoller, error)
@@ -166,7 +167,8 @@ func (client *ExpressRouteGatewaysClient) ResumeDelete(token string) (HTTPPoller
 	}, nil
 }
 
-// Delete - Deletes the specified ExpressRoute gateway in a resource group. An ExpressRoute gateway resource can only be deleted when there are no connection subresources.
+// Delete - Deletes the specified ExpressRoute gateway in a resource group. An ExpressRoute gateway resource can only be deleted when there are no connection
+// subresources.
 func (client *ExpressRouteGatewaysClient) Delete(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, options *ExpressRouteGatewaysDeleteOptions) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, expressRouteGatewayName, options)
 	if err != nil {

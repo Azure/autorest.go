@@ -30,7 +30,8 @@ type DedicatedHostsOperations interface {
 	ResumeDelete(token string) (HTTPPoller, error)
 	// Get - Retrieves information about a dedicated host.
 	Get(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, options *DedicatedHostsGetOptions) (*DedicatedHostResponse, error)
-	// ListByHostGroup - Lists all of the dedicated hosts in the specified dedicated host group. Use the nextLink property in the response to get the next page of dedicated hosts.
+	// ListByHostGroup - Lists all of the dedicated hosts in the specified dedicated host group. Use the nextLink property in the response to get the next page
+	// of dedicated hosts.
 	ListByHostGroup(resourceGroupName string, hostGroupName string, options *DedicatedHostsListByHostGroupOptions) DedicatedHostListResultPager
 	// BeginUpdate - Update an dedicated host .
 	BeginUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHostUpdate, options *DedicatedHostsUpdateOptions) (*DedicatedHostPollerResponse, error)
@@ -279,7 +280,8 @@ func (client *DedicatedHostsClient) GetHandleError(resp *azcore.Response) error 
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-// ListByHostGroup - Lists all of the dedicated hosts in the specified dedicated host group. Use the nextLink property in the response to get the next page of dedicated hosts.
+// ListByHostGroup - Lists all of the dedicated hosts in the specified dedicated host group. Use the nextLink property in the response to get the next page
+// of dedicated hosts.
 func (client *DedicatedHostsClient) ListByHostGroup(resourceGroupName string, hostGroupName string, options *DedicatedHostsListByHostGroupOptions) DedicatedHostListResultPager {
 	return &dedicatedHostListResultPager{
 		pipeline: client.p,

@@ -27,7 +27,9 @@ type VirtualMachineScaleSetsOperations interface {
 	BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters VirtualMachineScaleSet, options *VirtualMachineScaleSetsCreateOrUpdateOptions) (*VirtualMachineScaleSetPollerResponse, error)
 	// ResumeCreateOrUpdate - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeCreateOrUpdate(token string) (VirtualMachineScaleSetPoller, error)
-	// BeginDeallocate - Deallocates specific virtual machines in a VM scale set. Shuts down the virtual machines and releases the compute resources. You are not billed for the compute resources that this virtual machine scale set deallocates.
+	// BeginDeallocate - Deallocates specific virtual machines in a VM scale set. Shuts down the virtual machines and releases the compute resources. You are
+	// not billed for the compute resources that this virtual machine
+	// scale set deallocates.
 	BeginDeallocate(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsDeallocateOptions) (*HTTPPollerResponse, error)
 	// ResumeDeallocate - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeDeallocate(token string) (HTTPPoller, error)
@@ -39,7 +41,8 @@ type VirtualMachineScaleSetsOperations interface {
 	BeginDeleteInstances(ctx context.Context, resourceGroupName string, vmScaleSetName string, vmInstanceIDs VirtualMachineScaleSetVMInstanceRequiredIDs, options *VirtualMachineScaleSetsDeleteInstancesOptions) (*HTTPPollerResponse, error)
 	// ResumeDeleteInstances - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeDeleteInstances(token string) (HTTPPoller, error)
-	// ForceRecoveryServiceFabricPlatformUpdateDomainWalk - Manual platform update domain walk to update virtual machines in a service fabric virtual machine scale set.
+	// ForceRecoveryServiceFabricPlatformUpdateDomainWalk - Manual platform update domain walk to update virtual machines in a service fabric virtual machine
+	// scale set.
 	ForceRecoveryServiceFabricPlatformUpdateDomainWalk(ctx context.Context, resourceGroupName string, vmScaleSetName string, platformUpdateDomain int32, options *VirtualMachineScaleSetsForceRecoveryServiceFabricPlatformUpdateDomainWalkOptions) (*RecoveryWalkResponseResponse, error)
 	// Get - Display information about a virtual machine scale set.
 	Get(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsGetOptions) (*VirtualMachineScaleSetResponse, error)
@@ -49,15 +52,21 @@ type VirtualMachineScaleSetsOperations interface {
 	GetOSUpgradeHistory(resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsGetOSUpgradeHistoryOptions) VirtualMachineScaleSetListOSUpgradeHistoryPager
 	// List - Gets a list of all VM scale sets under a resource group.
 	List(resourceGroupName string, options *VirtualMachineScaleSetsListOptions) VirtualMachineScaleSetListResultPager
-	// ListAll - Gets a list of all VM Scale Sets in the subscription, regardless of the associated resource group. Use nextLink property in the response to get the next page of VM Scale Sets. Do this till nextLink is null to fetch all the VM Scale Sets.
+	// ListAll - Gets a list of all VM Scale Sets in the subscription, regardless of the associated resource group. Use nextLink property in the response to
+	// get the next page of VM Scale Sets. Do this till nextLink is
+	// null to fetch all the VM Scale Sets.
 	ListAll(options *VirtualMachineScaleSetsListAllOptions) VirtualMachineScaleSetListWithLinkResultPager
 	// ListSKUs - Gets a list of SKUs available for your VM scale set, including the minimum and maximum VM instances allowed for each SKU.
 	ListSKUs(resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsListSKUsOptions) VirtualMachineScaleSetListSKUsResultPager
-	// BeginPerformMaintenance - Perform maintenance on one or more virtual machines in a VM scale set. Operation on instances which are not eligible for perform maintenance will be failed. Please refer to best practices for more details: https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-maintenance-notifications
+	// BeginPerformMaintenance - Perform maintenance on one or more virtual machines in a VM scale set. Operation on instances which are not eligible for perform
+	// maintenance will be failed. Please refer to best practices for more
+	// details: https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-maintenance-notifications
 	BeginPerformMaintenance(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsPerformMaintenanceOptions) (*HTTPPollerResponse, error)
 	// ResumePerformMaintenance - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumePerformMaintenance(token string) (HTTPPoller, error)
-	// BeginPowerOff - Power off (stop) one or more virtual machines in a VM scale set. Note that resources are still attached and you are getting charged for the resources. Instead, use deallocate to release resources and avoid charges.
+	// BeginPowerOff - Power off (stop) one or more virtual machines in a VM scale set. Note that resources are still attached and you are getting charged for
+	// the resources. Instead, use deallocate to release resources and
+	// avoid charges.
 	BeginPowerOff(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsPowerOffOptions) (*HTTPPollerResponse, error)
 	// ResumePowerOff - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumePowerOff(token string) (HTTPPoller, error)
@@ -65,11 +74,14 @@ type VirtualMachineScaleSetsOperations interface {
 	BeginRedeploy(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsRedeployOptions) (*HTTPPollerResponse, error)
 	// ResumeRedeploy - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeRedeploy(token string) (HTTPPoller, error)
-	// BeginReimage - Reimages (upgrade the operating system) one or more virtual machines in a VM scale set which don't have a ephemeral OS disk, for virtual machines who have a ephemeral OS disk the virtual machine is reset to initial state.
+	// BeginReimage - Reimages (upgrade the operating system) one or more virtual machines in a VM scale set which don't have a ephemeral OS disk, for virtual
+	// machines who have a ephemeral OS disk the virtual machine is
+	// reset to initial state.
 	BeginReimage(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsReimageOptions) (*HTTPPollerResponse, error)
 	// ResumeReimage - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeReimage(token string) (HTTPPoller, error)
-	// BeginReimageAll - Reimages all the disks ( including data disks ) in the virtual machines in a VM scale set. This operation is only supported for managed disks.
+	// BeginReimageAll - Reimages all the disks ( including data disks ) in the virtual machines in a VM scale set. This operation is only supported for managed
+	// disks.
 	BeginReimageAll(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsReimageAllOptions) (*HTTPPollerResponse, error)
 	// ResumeReimageAll - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeReimageAll(token string) (HTTPPoller, error)
@@ -275,7 +287,9 @@ func (client *VirtualMachineScaleSetsClient) ResumeDeallocate(token string) (HTT
 	}, nil
 }
 
-// Deallocate - Deallocates specific virtual machines in a VM scale set. Shuts down the virtual machines and releases the compute resources. You are not billed for the compute resources that this virtual machine scale set deallocates.
+// Deallocate - Deallocates specific virtual machines in a VM scale set. Shuts down the virtual machines and releases the compute resources. You are not
+// billed for the compute resources that this virtual machine
+// scale set deallocates.
 func (client *VirtualMachineScaleSetsClient) Deallocate(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsDeallocateOptions) (*azcore.Response, error) {
 	req, err := client.DeallocateCreateRequest(ctx, resourceGroupName, vmScaleSetName, options)
 	if err != nil {
@@ -478,7 +492,8 @@ func (client *VirtualMachineScaleSetsClient) DeleteInstancesHandleError(resp *az
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-// ForceRecoveryServiceFabricPlatformUpdateDomainWalk - Manual platform update domain walk to update virtual machines in a service fabric virtual machine scale set.
+// ForceRecoveryServiceFabricPlatformUpdateDomainWalk - Manual platform update domain walk to update virtual machines in a service fabric virtual machine
+// scale set.
 func (client *VirtualMachineScaleSetsClient) ForceRecoveryServiceFabricPlatformUpdateDomainWalk(ctx context.Context, resourceGroupName string, vmScaleSetName string, platformUpdateDomain int32, options *VirtualMachineScaleSetsForceRecoveryServiceFabricPlatformUpdateDomainWalkOptions) (*RecoveryWalkResponseResponse, error) {
 	req, err := client.ForceRecoveryServiceFabricPlatformUpdateDomainWalkCreateRequest(ctx, resourceGroupName, vmScaleSetName, platformUpdateDomain, options)
 	if err != nil {
@@ -745,7 +760,9 @@ func (client *VirtualMachineScaleSetsClient) ListHandleError(resp *azcore.Respon
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-// ListAll - Gets a list of all VM Scale Sets in the subscription, regardless of the associated resource group. Use nextLink property in the response to get the next page of VM Scale Sets. Do this till nextLink is null to fetch all the VM Scale Sets.
+// ListAll - Gets a list of all VM Scale Sets in the subscription, regardless of the associated resource group. Use nextLink property in the response to
+// get the next page of VM Scale Sets. Do this till nextLink is
+// null to fetch all the VM Scale Sets.
 func (client *VirtualMachineScaleSetsClient) ListAll(options *VirtualMachineScaleSetsListAllOptions) VirtualMachineScaleSetListWithLinkResultPager {
 	return &virtualMachineScaleSetListWithLinkResultPager{
 		pipeline: client.p,
@@ -879,7 +896,9 @@ func (client *VirtualMachineScaleSetsClient) ResumePerformMaintenance(token stri
 	}, nil
 }
 
-// PerformMaintenance - Perform maintenance on one or more virtual machines in a VM scale set. Operation on instances which are not eligible for perform maintenance will be failed. Please refer to best practices for more details: https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-maintenance-notifications
+// PerformMaintenance - Perform maintenance on one or more virtual machines in a VM scale set. Operation on instances which are not eligible for perform
+// maintenance will be failed. Please refer to best practices for more
+// details: https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-maintenance-notifications
 func (client *VirtualMachineScaleSetsClient) PerformMaintenance(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsPerformMaintenanceOptions) (*azcore.Response, error) {
 	req, err := client.PerformMaintenanceCreateRequest(ctx, resourceGroupName, vmScaleSetName, options)
 	if err != nil {
@@ -960,7 +979,9 @@ func (client *VirtualMachineScaleSetsClient) ResumePowerOff(token string) (HTTPP
 	}, nil
 }
 
-// PowerOff - Power off (stop) one or more virtual machines in a VM scale set. Note that resources are still attached and you are getting charged for the resources. Instead, use deallocate to release resources and avoid charges.
+// PowerOff - Power off (stop) one or more virtual machines in a VM scale set. Note that resources are still attached and you are getting charged for the
+// resources. Instead, use deallocate to release resources and
+// avoid charges.
 func (client *VirtualMachineScaleSetsClient) PowerOff(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsPowerOffOptions) (*azcore.Response, error) {
 	req, err := client.PowerOffCreateRequest(ctx, resourceGroupName, vmScaleSetName, options)
 	if err != nil {
@@ -1125,7 +1146,9 @@ func (client *VirtualMachineScaleSetsClient) ResumeReimage(token string) (HTTPPo
 	}, nil
 }
 
-// Reimage - Reimages (upgrade the operating system) one or more virtual machines in a VM scale set which don't have a ephemeral OS disk, for virtual machines who have a ephemeral OS disk the virtual machine is reset to initial state.
+// Reimage - Reimages (upgrade the operating system) one or more virtual machines in a VM scale set which don't have a ephemeral OS disk, for virtual machines
+// who have a ephemeral OS disk the virtual machine is
+// reset to initial state.
 func (client *VirtualMachineScaleSetsClient) Reimage(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsReimageOptions) (*azcore.Response, error) {
 	req, err := client.ReimageCreateRequest(ctx, resourceGroupName, vmScaleSetName, options)
 	if err != nil {
@@ -1206,7 +1229,8 @@ func (client *VirtualMachineScaleSetsClient) ResumeReimageAll(token string) (HTT
 	}, nil
 }
 
-// ReimageAll - Reimages all the disks ( including data disks ) in the virtual machines in a VM scale set. This operation is only supported for managed disks.
+// ReimageAll - Reimages all the disks ( including data disks ) in the virtual machines in a VM scale set. This operation is only supported for managed
+// disks.
 func (client *VirtualMachineScaleSetsClient) ReimageAll(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsReimageAllOptions) (*azcore.Response, error) {
 	req, err := client.ReimageAllCreateRequest(ctx, resourceGroupName, vmScaleSetName, options)
 	if err != nil {

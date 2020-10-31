@@ -21,7 +21,8 @@ type PrivateLinkServicesOperations interface {
 	BeginCheckPrivateLinkServiceVisibility(ctx context.Context, location string, parameters CheckPrivateLinkServiceVisibilityRequest, options *PrivateLinkServicesCheckPrivateLinkServiceVisibilityOptions) (*PrivateLinkServiceVisibilityPollerResponse, error)
 	// ResumeCheckPrivateLinkServiceVisibility - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeCheckPrivateLinkServiceVisibility(token string) (PrivateLinkServiceVisibilityPoller, error)
-	// BeginCheckPrivateLinkServiceVisibilityByResourceGroup - Checks whether the subscription is visible to private link service in the specified resource group.
+	// BeginCheckPrivateLinkServiceVisibilityByResourceGroup - Checks whether the subscription is visible to private link service in the specified resource
+	// group.
 	BeginCheckPrivateLinkServiceVisibilityByResourceGroup(ctx context.Context, location string, resourceGroupName string, parameters CheckPrivateLinkServiceVisibilityRequest, options *PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupOptions) (*PrivateLinkServiceVisibilityPollerResponse, error)
 	// ResumeCheckPrivateLinkServiceVisibilityByResourceGroup - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeCheckPrivateLinkServiceVisibilityByResourceGroup(token string) (PrivateLinkServiceVisibilityPoller, error)
@@ -43,9 +44,11 @@ type PrivateLinkServicesOperations interface {
 	GetPrivateEndpointConnection(ctx context.Context, resourceGroupName string, serviceName string, peConnectionName string, options *PrivateLinkServicesGetPrivateEndpointConnectionOptions) (*PrivateEndpointConnectionResponse, error)
 	// List - Gets all private link services in a resource group.
 	List(resourceGroupName string, options *PrivateLinkServicesListOptions) PrivateLinkServiceListResultPager
-	// ListAutoApprovedPrivateLinkServices - Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region.
+	// ListAutoApprovedPrivateLinkServices - Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this
+	// subscription in this region.
 	ListAutoApprovedPrivateLinkServices(location string, options *PrivateLinkServicesListAutoApprovedPrivateLinkServicesOptions) AutoApprovedPrivateLinkServicesResultPager
-	// ListAutoApprovedPrivateLinkServicesByResourceGroup - Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region.
+	// ListAutoApprovedPrivateLinkServicesByResourceGroup - Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved
+	// in this subscription in this region.
 	ListAutoApprovedPrivateLinkServicesByResourceGroup(location string, resourceGroupName string, options *PrivateLinkServicesListAutoApprovedPrivateLinkServicesByResourceGroupOptions) AutoApprovedPrivateLinkServicesResultPager
 	// ListBySubscription - Gets all private link service in a subscription.
 	ListBySubscription(options *PrivateLinkServicesListBySubscriptionOptions) PrivateLinkServiceListResultPager
@@ -628,7 +631,8 @@ func (client *PrivateLinkServicesClient) ListHandleError(resp *azcore.Response) 
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// ListAutoApprovedPrivateLinkServices - Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region.
+// ListAutoApprovedPrivateLinkServices - Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this
+// subscription in this region.
 func (client *PrivateLinkServicesClient) ListAutoApprovedPrivateLinkServices(location string, options *PrivateLinkServicesListAutoApprovedPrivateLinkServicesOptions) AutoApprovedPrivateLinkServicesResultPager {
 	return &autoApprovedPrivateLinkServicesResultPager{
 		pipeline: client.p,
@@ -675,7 +679,8 @@ func (client *PrivateLinkServicesClient) ListAutoApprovedPrivateLinkServicesHand
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// ListAutoApprovedPrivateLinkServicesByResourceGroup - Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region.
+// ListAutoApprovedPrivateLinkServicesByResourceGroup - Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved
+// in this subscription in this region.
 func (client *PrivateLinkServicesClient) ListAutoApprovedPrivateLinkServicesByResourceGroup(location string, resourceGroupName string, options *PrivateLinkServicesListAutoApprovedPrivateLinkServicesByResourceGroupOptions) AutoApprovedPrivateLinkServicesResultPager {
 	return &autoApprovedPrivateLinkServicesResultPager{
 		pipeline: client.p,

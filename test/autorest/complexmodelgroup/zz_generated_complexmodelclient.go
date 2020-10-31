@@ -17,7 +17,9 @@ import (
 type ComplexModelClientOperations interface {
 	// Create - Resets products.
 	Create(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogDictionaryOfArray, options *ComplexModelClientCreateOptions) (*CatalogDictionaryResponse, error)
-	// List - The Products endpoint returns information about the Uber products offered at a given location. The response includes the display name and other details about each product, and lists the products in the proper display order.
+	// List - The Products endpoint returns information about the Uber products offered at a given location. The response includes the display name and other
+	// details about each product, and lists the products in
+	// the proper display order.
 	List(ctx context.Context, resourceGroupName string, options *ComplexModelClientListOptions) (*CatalogArrayResponse, error)
 	// Update - Resets products.
 	Update(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogArrayOfDictionary, options *ComplexModelClientUpdateOptions) (*CatalogArrayResponse, error)
@@ -90,7 +92,9 @@ func (client *ComplexModelClient) CreateHandleError(resp *azcore.Response) error
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// List - The Products endpoint returns information about the Uber products offered at a given location. The response includes the display name and other details about each product, and lists the products in the proper display order.
+// List - The Products endpoint returns information about the Uber products offered at a given location. The response includes the display name and other
+// details about each product, and lists the products in
+// the proper display order.
 func (client *ComplexModelClient) List(ctx context.Context, resourceGroupName string, options *ComplexModelClientListOptions) (*CatalogArrayResponse, error) {
 	req, err := client.ListCreateRequest(ctx, resourceGroupName, options)
 	if err != nil {

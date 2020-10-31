@@ -370,8 +370,7 @@ type MapOfByteArrayResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 
-	// The dictionary value {"0": hex(FF FF FF FA), "1": hex(01 02 03), "2": hex (25, 29, 43)} with each elementencoded in base
-	// 64
+	// The dictionary value {"0": hex(FF FF FF FA), "1": hex(01 02 03), "2": hex (25, 29, 43)} with each elementencoded in base 64
 	Value *map[string][]byte
 }
 

@@ -15,7 +15,7 @@ import (
 
 // The API entity reference.
 type APIEntityReference struct {
-	// The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/...
+	// The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/…
 	ID *string `json:"id,omitempty"`
 }
 
@@ -78,20 +78,22 @@ type AccessURIResponse struct {
 
 // Enables or disables a capability on the virtual machine or virtual machine scale set.
 type AdditionalCapabilities struct {
-	// The flag that enables or disables a capability to have one or more managed data disks with UltraSSD_LRS storage account
-	// type on the VM or VMSS. Managed disks with storage account type UltraSSD_LRS can be added to a virtual machine or virtual
-	// machine scale set only if this property is enabled.
+	// The flag that enables or disables a capability to have one or more managed data disks with UltraSSDLRS storage account type on the VM or VMSS. Managed
+	// disks with storage account type UltraSSDLRS can
+	// be added to a virtual machine or virtual machine scale set only if this property is enabled.
 	UltraSsdEnabled *bool `json:"ultraSSDEnabled,omitempty"`
 }
 
-// Specifies additional XML formatted information that can be included in the Unattend.xml file, which is used by Windows
-// Setup. Contents are defined by setting name, component name, and the pass in which the content is applied.
+// Specifies additional XML formatted information that can be included in the Unattend.xml file, which is used by Windows Setup. Contents are defined by
+// setting name, component name, and the pass in
+// which the content is applied.
 type AdditionalUnattendContent struct {
 	// The component name. Currently, the only allowable value is Microsoft-Windows-Shell-Setup.
 	ComponentName *string `json:"componentName,omitempty"`
 
-	// Specifies the XML formatted content that is added to the unattend.xml file for the specified path and component. The XML
-	// must be less than 4KB and must include the root element for the setting or feature that is being inserted.
+	// Specifies the XML formatted content that is added to the unattend.xml file for the specified path and component. The XML must be less than 4KB and must
+	// include the root element for the setting or
+	// feature that is being inserted.
 	Content *string `json:"content,omitempty"`
 
 	// The pass name. Currently, the only allowable value is OobeSystem.
@@ -106,10 +108,11 @@ type AutomaticOSUpgradePolicy struct {
 	// Whether OS image rollback feature should be disabled. Default value is false.
 	DisableAutomaticRollback *bool `json:"disableAutomaticRollback,omitempty"`
 
-	// Indicates whether OS upgrades should automatically be applied to scale set instances in a rolling fashion when a newer
-	// version of the OS image becomes available. Default value is false. <br><br> If this is set to true for Windows based scale
-	// sets, [enableAutomaticUpdates](https://docs.microsoft.com/dotnet/api/microsoft.azure.management.compute.models.windowsconfiguration.enableautomaticupdates?view=azure-dotnet)
-	// is automatically set to false and cannot be set to true.
+	// Indicates whether OS upgrades should automatically be applied to scale set instances in a rolling fashion when a newer version of the OS image becomes
+	// available. Default value is false.
+	// If this is set to true for Windows based scale sets, enableAutomaticUpdates
+	// [https://docs.microsoft.com/dotnet/api/microsoft.azure.management.compute.models.windowsconfiguration.enableautomaticupdates?view=azure-dotnet] is automatically
+	// set to false and cannot be set to true.
 	EnableAutomaticOSUpgrade *bool `json:"enableAutomaticOSUpgrade,omitempty"`
 }
 
@@ -124,27 +127,29 @@ type AutomaticRepairsPolicy struct {
 	// Specifies whether automatic repairs should be enabled on the virtual machine scale set. The default value is false.
 	Enabled *bool `json:"enabled,omitempty"`
 
-	// The amount of time for which automatic repairs are suspended due to a state change on VM. The grace time starts after the
-	// state change has completed. This helps avoid premature or accidental repairs. The time duration should be specified in
-	// ISO 8601 format. The minimum allowed grace period is 30 minutes (PT30M), which is also the default value. The maximum allowed
-	// grace period is 90 minutes (PT90M).
+	// The amount of time for which automatic repairs are suspended due to a state change on VM. The grace time starts after the state change has completed.
+	// This helps avoid premature or accidental repairs.
+	// The time duration should be specified in ISO 8601 format. The minimum allowed grace period is 30 minutes (PT30M), which is also the default value. The
+	// maximum allowed grace period is 90 minutes
+	// (PT90M).
 	GracePeriod *string `json:"gracePeriod,omitempty"`
 }
 
-// Specifies information about the availability set that the virtual machine should be assigned to. Virtual machines specified
-// in the same availability set are allocated to different nodes to maximize availability. For more information about availability
-// sets, see [Manage the availability of virtual machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-manage-availability?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).
-// <br><br> For more information on Azure planned maintenance, see [Planned maintenance for virtual machines in Azure](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-planned-maintenance?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)
-// <br><br> Currently, a VM can only be added to availability set at creation time. An existing VM cannot be added to an availability
-// set.
+// Specifies information about the availability set that the virtual machine should be assigned to. Virtual machines specified in the same availability
+// set are allocated to different nodes to maximize
+// availability. For more information about availability sets, see Manage the availability of virtual machines
+// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-manage-availability?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json].
+// For more information on Azure planned maintenance, see Planned maintenance for virtual machines in Azure
+// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-planned-maintenance?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json]
+// Currently, a VM can only be added to availability set at creation time. An existing VM cannot be added to an availability set.
 type AvailabilitySet struct {
 	Resource
 	// The instance view of a resource.
 	Properties *AvailabilitySetProperties `json:"properties,omitempty"`
 
-	// Sku of the availability set, only name is required to be set. See AvailabilitySetSkuTypes for possible set of values. Use
-	// 'Aligned' for virtual machines with managed disks and 'Classic' for virtual machines with unmanaged disks. Default value
-	// is 'Classic'.
+	// Sku of the availability set, only name is required to be set. See AvailabilitySetSkuTypes for possible set of values. Use 'Aligned' for virtual machines
+	// with managed disks and 'Classic' for virtual
+	// machines with unmanaged disks. Default value is 'Classic'.
 	SKU *SKU `json:"sku,omitempty"`
 }
 
@@ -174,8 +179,8 @@ type AvailabilitySetProperties struct {
 	// Update Domain count.
 	PlatformUpdateDomainCount *int32 `json:"platformUpdateDomainCount,omitempty"`
 
-	// Specifies information about the proximity placement group that the availability set should be assigned to. <br><br>Minimum
-	// api-version: 2018-04-01.
+	// Specifies information about the proximity placement group that the availability set should be assigned to.
+	// Minimum api-version: 2018-04-01.
 	ProximityPlacementGroup *SubResource `json:"proximityPlacementGroup,omitempty"`
 
 	// The resource status information.
@@ -187,12 +192,11 @@ type AvailabilitySetProperties struct {
 
 // AvailabilitySetResponse is the response envelope for operations that return a AvailabilitySet type.
 type AvailabilitySetResponse struct {
-	// Specifies information about the availability set that the virtual machine should be assigned to. Virtual machines specified
-	// in the same availability set are allocated to different nodes to maximize availability. For more information about availability
-	// sets, see [Manage the availability of virtual machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-manage-availability?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).
+	// Specifies information about the availability set that the virtual machine should be assigned to. Virtual machines specified in the same availability
+	// set are allocated to different nodes to maximize availability. For more information about availability sets, see [Manage the availability of virtual
+	// machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-manage-availability?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).
 	// <br><br> For more information on Azure planned maintenance, see [Planned maintenance for virtual machines in Azure](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-planned-maintenance?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)
-	// <br><br> Currently, a VM can only be added to availability set at creation time. An existing VM cannot be added to an availability
-	// set.
+	// <br><br> Currently, a VM can only be added to availability set at creation time. An existing VM cannot be added to an availability set.
 	AvailabilitySet *AvailabilitySet
 
 	// RawResponse contains the underlying HTTP response.
@@ -224,14 +228,12 @@ type AvailabilitySetsGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// AvailabilitySetsListAvailableSizesOptions contains the optional parameters for the AvailabilitySets.ListAvailableSizes
-// method.
+// AvailabilitySetsListAvailableSizesOptions contains the optional parameters for the AvailabilitySets.ListAvailableSizes method.
 type AvailabilitySetsListAvailableSizesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// AvailabilitySetsListBySubscriptionOptions contains the optional parameters for the AvailabilitySets.ListBySubscription
-// method.
+// AvailabilitySetsListBySubscriptionOptions contains the optional parameters for the AvailabilitySets.ListBySubscription method.
 type AvailabilitySetsListBySubscriptionOptions struct {
 	// The expand expression to apply to the operation. Allowed values are 'instanceView'.
 	Expand *string
@@ -247,22 +249,26 @@ type AvailabilitySetsUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Specifies the billing related details of a Azure Spot VM or VMSS. <br><br>Minimum api-version: 2019-03-01.
+// Specifies the billing related details of a Azure Spot VM or VMSS.
+// Minimum api-version: 2019-03-01.
 type BillingProfile struct {
-	// Specifies the maximum price you are willing to pay for a Azure Spot VM/VMSS. This price is in US Dollars. <br><br> This
-	// price will be compared with the current Azure Spot price for the VM size. Also, the prices are compared at the time of
-	// create/update of Azure Spot VM/VMSS and the operation will only succeed if the maxPrice is greater than the current Azure
-	// Spot price. <br><br> The maxPrice will also be used for evicting a Azure Spot VM/VMSS if the current Azure Spot price goes
-	// beyond the maxPrice after creation of VM/VMSS. <br><br> Possible values are: <br><br> - Any decimal value greater than
-	// zero. Example: 0.01538 <br><br> -1 – indicates default price to be up-to on-demand. <br><br> You can set the maxPrice to
-	// -1 to indicate that the Azure Spot VM/VMSS should not be evicted for price reasons. Also, the default max price is -1 if
-	// it is not provided by you. <br><br>Minimum api-version: 2019-03-01.
+	// Specifies the maximum price you are willing to pay for a Azure Spot VM/VMSS. This price is in US Dollars.
+	// This price will be compared with the current Azure Spot price for the VM size. Also, the prices are compared at the time of create/update of Azure Spot
+	// VM/VMSS and the operation will only succeed if
+	// the maxPrice is greater than the current Azure Spot price.
+	// The maxPrice will also be used for evicting a Azure Spot VM/VMSS if the current Azure Spot price goes beyond the maxPrice after creation of VM/VMSS.
+	// Possible values are:
+	// - Any decimal value greater than zero. Example: 0.01538
+	// -1 – indicates default price to be up-to on-demand.
+	// You can set the maxPrice to -1 to indicate that the Azure Spot VM/VMSS should not be evicted for price reasons. Also, the default max price is -1 if
+	// it is not provided by you.
+	// Minimum api-version: 2019-03-01.
 	MaxPrice *float64 `json:"maxPrice,omitempty"`
 }
 
-// Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. <br><br>
-// You can easily view the output of your console log. <br><br> Azure also enables you to see a screenshot of the VM from
-// the hypervisor.
+// Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status.
+// You can easily view the output of your console log.
+// Azure also enables you to see a screenshot of the VM from the hypervisor.
 type BootDiagnostics struct {
 	// Whether boot diagnostics should be enabled on the Virtual Machine.
 	Enabled *bool `json:"enabled,omitempty"`
@@ -279,8 +285,8 @@ type BootDiagnosticsInstanceView struct {
 	// The Linux serial console log blob Uri.
 	SerialConsoleLogBlobURI *string `json:"serialConsoleLogBlobUri,omitempty" azure:"ro"`
 
-	// The boot diagnostics status information for the VM. <br><br> NOTE: It will be set only if there are errors encountered
-	// in enabling boot diagnostics.
+	// The boot diagnostics status information for the VM.
+	// NOTE: It will be set only if there are errors encountered in enabling boot diagnostics.
 	Status *InstanceViewStatus `json:"status,omitempty" azure:"ro"`
 }
 
@@ -353,8 +359,7 @@ type ContainerService struct {
 
 // Profile for the container service agent pool.
 type ContainerServiceAgentPoolProfile struct {
-	// Number of agents (VMs) to host docker containers. Allowed values must be in the range of 1 to 100 (inclusive). The default
-	// value is 1.
+	// Number of agents (VMs) to host docker containers. Allowed values must be in the range of 1 to 100 (inclusive). The default value is 1.
 	Count *int32 `json:"count,omitempty"`
 
 	// DNS prefix to be used to create the FQDN for the agent pool.
@@ -494,8 +499,7 @@ type ContainerServiceSSHConfiguration struct {
 
 // Contains information about SSH certificate public key data.
 type ContainerServiceSSHPublicKey struct {
-	// Certificate public key used to authenticate with VMs through SSH. The certificate must be in PEM format with or without
-	// headers.
+	// Certificate public key used to authenticate with VMs through SSH. The certificate must be in PEM format with or without headers.
 	KeyData *string `json:"keyData,omitempty"`
 }
 
@@ -532,8 +536,7 @@ type ContainerServicesGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ContainerServicesListByResourceGroupOptions contains the optional parameters for the ContainerServices.ListByResourceGroup
-// method.
+// ContainerServicesListByResourceGroupOptions contains the optional parameters for the ContainerServices.ListByResourceGroup method.
 type ContainerServicesListByResourceGroupOptions struct {
 	// placeholder for future optional parameters
 }
@@ -548,8 +551,8 @@ type CreationData struct {
 	// This enumerates the possible sources of a disk's creation.
 	CreateOption *DiskCreateOption `json:"createOption,omitempty"`
 
-	// Required if creating from a Gallery Image. The id of the ImageDiskReference will be the ARM id of the shared galley image
-	// version from which to create a disk.
+	// Required if creating from a Gallery Image. The id of the ImageDiskReference will be the ARM id of the shared galley image version from which to create
+	// a disk.
 	GalleryImageReference *ImageDiskReference `json:"galleryImageReference,omitempty"`
 
 	// Disk source information.
@@ -564,45 +567,54 @@ type CreationData struct {
 	// If this field is set, this is the unique id identifying the source of this resource.
 	SourceUniqueID *string `json:"sourceUniqueId,omitempty" azure:"ro"`
 
-	// Required if createOption is Import. The Azure Resource Manager identifier of the storage account containing the blob to
-	// import as a disk.
+	// Required if createOption is Import. The Azure Resource Manager identifier of the storage account containing the blob to import as a disk.
 	StorageAccountID *string `json:"storageAccountId,omitempty"`
 
-	// If createOption is Upload, this is the size of the contents of the upload including the VHD footer. This value should be
-	// between 20972032 (20 MiB + 512 bytes for the VHD footer) and 35183298347520 bytes (32 TiB + 512 bytes for the VHD footer).
+	// If createOption is Upload, this is the size of the contents of the upload including the VHD footer. This value should be between 20972032 (20 MiB + 512
+	// bytes for the VHD footer) and 35183298347520
+	// bytes (32 TiB + 512 bytes for the VHD footer).
 	UploadSizeBytes *int64 `json:"uploadSizeBytes,omitempty"`
 }
 
 // Describes a data disk.
 type DataDisk struct {
-	// Specifies the caching requirements. <br><br> Possible values are: <br><br> **None** <br><br> **ReadOnly** <br><br> **ReadWrite**
-	// <br><br> Default: **None for Standard storage. ReadOnly for Premium storage**
+	// Specifies the caching requirements.
+	// Possible values are:
+	// None
+	// ReadOnly
+	// ReadWrite
+	// Default: None for Standard storage. ReadOnly for Premium storage
 	Caching *CachingTypes `json:"caching,omitempty"`
 
-	// Specifies how the virtual machine should be created.<br><br> Possible values are:<br><br> **Attach** \u2013 This value
-	// is used when you are using a specialized disk to create the virtual machine.<br><br> **FromImage** \u2013 This value is
-	// used when you are using an image to create the virtual machine. If you are using a platform image, you also use the imageReference
-	// element described above. If you are using a marketplace image, you also use the plan element previously described.
+	// Specifies how the virtual machine should be created.
+	// Possible values are:
+	// Attach \u2013 This value is used when you are using a specialized disk to create the virtual machine.
+	// FromImage \u2013 This value is used when you are using an image to create the virtual machine. If you are using a platform image, you also use the imageReference
+	// element described above. If you are
+	// using a marketplace image, you also use the plan element previously described.
 	CreateOption *DiskCreateOptionTypes `json:"createOption,omitempty"`
 
-	// Specifies the Read-Write IOPS for the managed disk when StorageAccountType is UltraSSD_LRS. Returned only for VirtualMachine
-	// ScaleSet VM disks. Can be updated only via updates to the VirtualMachine Scale Set.
+	// Specifies the Read-Write IOPS for the managed disk when StorageAccountType is UltraSSD_LRS. Returned only for VirtualMachine ScaleSet VM disks. Can be
+	// updated only via updates to the VirtualMachine
+	// Scale Set.
 	DiskIopsReadWrite *int64 `json:"diskIOPSReadWrite,omitempty" azure:"ro"`
 
-	// Specifies the bandwidth in MB per second for the managed disk when StorageAccountType is UltraSSD_LRS. Returned only for
-	// VirtualMachine ScaleSet VM disks. Can be updated only via updates to the VirtualMachine Scale Set.
+	// Specifies the bandwidth in MB per second for the managed disk when StorageAccountType is UltraSSD_LRS. Returned only for VirtualMachine ScaleSet VM disks.
+	// Can be updated only via updates to the
+	// VirtualMachine Scale Set.
 	DiskMBpsReadWrite *int64 `json:"diskMBpsReadWrite,omitempty" azure:"ro"`
 
-	// Specifies the size of an empty data disk in gigabytes. This element can be used to overwrite the size of the disk in a
-	// virtual machine image. <br><br> This value cannot be larger than 1023 GB
+	// Specifies the size of an empty data disk in gigabytes. This element can be used to overwrite the size of the disk in a virtual machine image.
+	// This value cannot be larger than 1023 GB
 	DiskSizeGb *int32 `json:"diskSizeGB,omitempty"`
 
-	// The source user image virtual hard disk. The virtual hard disk will be copied before being attached to the virtual machine.
-	// If SourceImage is provided, the destination virtual hard drive must not exist.
+	// The source user image virtual hard disk. The virtual hard disk will be copied before being attached to the virtual machine. If SourceImage is provided,
+	// the destination virtual hard drive must not
+	// exist.
 	Image *VirtualHardDisk `json:"image,omitempty"`
 
-	// Specifies the logical unit number of the data disk. This value is used to identify data disks within the VM and therefore
-	// must be unique for each data disk attached to a VM.
+	// Specifies the logical unit number of the data disk. This value is used to identify data disks within the VM and therefore must be unique for each data
+	// disk attached to a VM.
 	Lun *int32 `json:"lun,omitempty"`
 
 	// The managed disk parameters.
@@ -623,16 +635,17 @@ type DataDisk struct {
 
 // Contains the data disk images information.
 type DataDiskImage struct {
-	// Specifies the logical unit number of the data disk. This value is used to identify data disks within the VM and therefore
-	// must be unique for each data disk attached to a VM.
+	// Specifies the logical unit number of the data disk. This value is used to identify data disks within the VM and therefore must be unique for each data
+	// disk attached to a VM.
 	Lun *int32 `json:"lun,omitempty" azure:"ro"`
 }
 
 // Contains encryption settings for a data disk image.
 type DataDiskImageEncryption struct {
 	DiskImageEncryption
-	// This property specifies the logical unit number of the data disk. This value is used to identify data disks within the
-	// Virtual Machine and therefore must be unique for each data disk attached to the Virtual Machine.
+	// This property specifies the logical unit number of the data disk. This value is used to identify data disks within the Virtual Machine and therefore
+	// must be unique for each data disk attached to the
+	// Virtual Machine.
 	Lun *int32 `json:"lun,omitempty"`
 }
 
@@ -642,8 +655,8 @@ type DedicatedHost struct {
 	// Properties of the dedicated host.
 	Properties *DedicatedHostProperties `json:"properties,omitempty"`
 
-	// SKU of the dedicated host for Hardware Generation and VM family. Only name is required to be set. List Microsoft.Compute
-	// SKUs for a list of possible values.
+	// SKU of the dedicated host for Hardware Generation and VM family. Only name is required to be set. List Microsoft.Compute SKUs for a list of possible
+	// values.
 	SKU *SKU `json:"sku,omitempty"`
 }
 
@@ -658,37 +671,34 @@ type DedicatedHostAllocatableVM struct {
 
 // Dedicated host unutilized capacity.
 type DedicatedHostAvailableCapacity struct {
-	// The unutilized capacity of the dedicated host represented in terms of each VM size that is allowed to be deployed to the
-	// dedicated host.
+	// The unutilized capacity of the dedicated host represented in terms of each VM size that is allowed to be deployed to the dedicated host.
 	AllocatableVMS *[]DedicatedHostAllocatableVM `json:"allocatableVMs,omitempty"`
 }
 
-// Specifies information about the dedicated host group that the dedicated hosts should be assigned to. <br><br> Currently,
-// a dedicated host can only be added to a dedicated host group at creation time. An existing dedicated host cannot be added
-// to another dedicated host group.
+// Specifies information about the dedicated host group that the dedicated hosts should be assigned to.
+// Currently, a dedicated host can only be added to a dedicated host group at creation time. An existing dedicated host cannot be added to another dedicated
+// host group.
 type DedicatedHostGroup struct {
 	Resource
 	// Dedicated Host Group Properties.
 	Properties *DedicatedHostGroupProperties `json:"properties,omitempty"`
 
-	// Availability Zone to use for this host group. Only single zone is supported. The zone can be assigned only during creation.
-	// If not provided, the group supports all zones in the region. If provided, enforces each host in the group to be in the
-	// same zone.
+	// Availability Zone to use for this host group. Only single zone is supported. The zone can be assigned only during creation. If not provided, the group
+	// supports all zones in the region. If provided,
+	// enforces each host in the group to be in the same zone.
 	Zones *[]string `json:"zones,omitempty"`
 }
 
 // The List Dedicated Host Group with resource group response.
 type DedicatedHostGroupListResult struct {
-	// The URI to fetch the next page of Dedicated Host Groups. Call ListNext() with this URI to fetch the next page of Dedicated
-	// Host Groups.
+	// The URI to fetch the next page of Dedicated Host Groups. Call ListNext() with this URI to fetch the next page of Dedicated Host Groups.
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// The list of dedicated host groups
 	Value *[]DedicatedHostGroup `json:"value,omitempty"`
 }
 
-// DedicatedHostGroupListResultResponse is the response envelope for operations that return a DedicatedHostGroupListResult
-// type.
+// DedicatedHostGroupListResultResponse is the response envelope for operations that return a DedicatedHostGroupListResult type.
 type DedicatedHostGroupListResultResponse struct {
 	// The List Dedicated Host Group with resource group response.
 	DedicatedHostGroupListResult *DedicatedHostGroupListResult
@@ -708,9 +718,8 @@ type DedicatedHostGroupProperties struct {
 
 // DedicatedHostGroupResponse is the response envelope for operations that return a DedicatedHostGroup type.
 type DedicatedHostGroupResponse struct {
-	// Specifies information about the dedicated host group that the dedicated hosts should be assigned to. <br><br> Currently,
-	// a dedicated host can only be added to a dedicated host group at creation time. An existing dedicated host cannot be added
-	// to another dedicated host group.
+	// Specifies information about the dedicated host group that the dedicated hosts should be assigned to. <br><br> Currently, a dedicated host can only be
+	// added to a dedicated host group at creation time. An existing dedicated host cannot be added to another dedicated host group.
 	DedicatedHostGroup *DedicatedHostGroup
 
 	// RawResponse contains the underlying HTTP response.
@@ -723,9 +732,9 @@ type DedicatedHostGroupUpdate struct {
 	// Dedicated Host Group Properties.
 	Properties *DedicatedHostGroupProperties `json:"properties,omitempty"`
 
-	// Availability Zone to use for this host group. Only single zone is supported. The zone can be assigned only during creation.
-	// If not provided, the group supports all zones in the region. If provided, enforces each host in the group to be in the
-	// same zone.
+	// Availability Zone to use for this host group. Only single zone is supported. The zone can be assigned only during creation. If not provided, the group
+	// supports all zones in the region. If provided,
+	// enforces each host in the group to be in the same zone.
 	Zones *[]string `json:"zones,omitempty"`
 }
 
@@ -744,14 +753,12 @@ type DedicatedHostGroupsGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DedicatedHostGroupsListByResourceGroupOptions contains the optional parameters for the DedicatedHostGroups.ListByResourceGroup
-// method.
+// DedicatedHostGroupsListByResourceGroupOptions contains the optional parameters for the DedicatedHostGroups.ListByResourceGroup method.
 type DedicatedHostGroupsListByResourceGroupOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DedicatedHostGroupsListBySubscriptionOptions contains the optional parameters for the DedicatedHostGroups.ListBySubscription
-// method.
+// DedicatedHostGroupsListBySubscriptionOptions contains the optional parameters for the DedicatedHostGroups.ListBySubscription method.
 type DedicatedHostGroupsListBySubscriptionOptions struct {
 	// placeholder for future optional parameters
 }
@@ -805,19 +812,22 @@ type DedicatedHostPollerResponse struct {
 
 // Properties of the dedicated host.
 type DedicatedHostProperties struct {
-	// Specifies whether the dedicated host should be replaced automatically in case of a failure. The value is defaulted to 'true'
-	// when not provided.
+	// Specifies whether the dedicated host should be replaced automatically in case of a failure. The value is defaulted to 'true' when not provided.
 	AutoReplaceOnFailure *bool `json:"autoReplaceOnFailure,omitempty"`
 
-	// A unique id generated and assigned to the dedicated host by the platform. <br><br> Does not change throughout the lifetime
-	// of the host.
+	// A unique id generated and assigned to the dedicated host by the platform.
+	// Does not change throughout the lifetime of the host.
 	HostID *string `json:"hostId,omitempty" azure:"ro"`
 
 	// The dedicated host instance view.
 	InstanceView *DedicatedHostInstanceView `json:"instanceView,omitempty" azure:"ro"`
 
-	// Specifies the software license type that will be applied to the VMs deployed on the dedicated host. <br><br> Possible values
-	// are: <br><br> **None** <br><br> **Windows_Server_Hybrid** <br><br> **Windows_Server_Perpetual** <br><br> Default: **None**
+	// Specifies the software license type that will be applied to the VMs deployed on the dedicated host.
+	// Possible values are:
+	// None
+	// WindowsServerHybrid
+	// WindowsServerPerpetual
+	// Default: None
 	LicenseType *DedicatedHostLicenseTypes `json:"licenseType,omitempty"`
 
 	// Fault domain of the dedicated host within a dedicated host group.
@@ -964,25 +974,28 @@ type DedicatedHostsUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Specifies the boot diagnostic settings state. <br><br>Minimum api-version: 2015-06-15.
+// Specifies the boot diagnostic settings state.
+// Minimum api-version: 2015-06-15.
 type DiagnosticsProfile struct {
-	// Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. <br><br>
-	// You can easily view the output of your console log. <br><br> Azure also enables you to see a screenshot of the VM from
-	// the hypervisor.
+	// Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status.
+	// You can easily view the output of your console log.
+	// Azure also enables you to see a screenshot of the VM from the hypervisor.
 	BootDiagnostics *BootDiagnostics `json:"bootDiagnostics,omitempty"`
 }
 
-// Describes the parameters of ephemeral disk settings that can be specified for operating system disk. <br><br> NOTE: The
-// ephemeral disk settings can only be specified for managed disk.
+// Describes the parameters of ephemeral disk settings that can be specified for operating system disk.
+// NOTE: The ephemeral disk settings can only be specified for managed disk.
 type DiffDiskSettings struct {
 	// Specifies the ephemeral disk settings for operating system disk.
 	Option *DiffDiskOptions `json:"option,omitempty"`
 
-	// Specifies the ephemeral disk placement for operating system disk.<br><br> Possible values are: <br><br> **CacheDisk** <br><br>
-	// **ResourceDisk** <br><br> Default: **CacheDisk** if one is configured for the VM size otherwise **ResourceDisk** is used.<br><br>
-	// Refer to VM size documentation for Windows VM at https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes
-	// and Linux VM at https://docs.microsoft.com/en-us/azure/virtual-machines/linux/sizes to check which VM sizes exposes a cache
-	// disk.
+	// Specifies the ephemeral disk placement for operating system disk.
+	// Possible values are:
+	// CacheDisk
+	// ResourceDisk
+	// Default: CacheDisk if one is configured for the VM size otherwise ResourceDisk is used.
+	// Refer to VM size documentation for Windows VM at https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes and Linux VM at
+	// https://docs.microsoft.com/en-us/azure/virtual-machines/linux/sizes to check which VM sizes exposes a cache disk.
 	Placement *DiffDiskPlacement `json:"placement,omitempty"`
 }
 
@@ -998,14 +1011,14 @@ type Disk struct {
 	// A relative URI containing the ID of the VM that has the disk attached.
 	ManagedBy *string `json:"managedBy,omitempty" azure:"ro"`
 
-	// List of relative URIs containing the IDs of the VMs that have the disk attached. maxShares should be set to a value greater
-	// than one for disks to allow attaching them to multiple VMs.
+	// List of relative URIs containing the IDs of the VMs that have the disk attached. maxShares should be set to a value greater than one for disks to allow
+	// attaching them to multiple VMs.
 	ManagedByExtended *[]string `json:"managedByExtended,omitempty" azure:"ro"`
 
 	// Disk resource properties.
 	Properties *DiskProperties `json:"properties,omitempty"`
 
-	// The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, or UltraSSD_LRS.
+	// The disks sku name. Can be StandardLRS, PremiumLRS, StandardSSDLRS, or UltraSSDLRS.
 	SKU *DiskSKU `json:"sku,omitempty"`
 
 	// The Logical zone list for Disk.
@@ -1015,16 +1028,14 @@ type Disk struct {
 // disk encryption set resource.
 type DiskEncryptionSet struct {
 	Resource
-	// The managed identity for the disk encryption set. It should be given permission on the key vault before it can be used
-	// to encrypt disks.
+	// The managed identity for the disk encryption set. It should be given permission on the key vault before it can be used to encrypt disks.
 	IDentity   *EncryptionSetIDentity   `json:"identity,omitempty"`
 	Properties *EncryptionSetProperties `json:"properties,omitempty"`
 }
 
 // The List disk encryption set operation response.
 type DiskEncryptionSetList struct {
-	// The uri to fetch the next page of disk encryption sets. Call ListNext() with this to fetch the next page of disk encryption
-	// sets.
+	// The uri to fetch the next page of disk encryption sets. Call ListNext() with this to fetch the next page of disk encryption sets.
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// A list of disk encryption sets.
@@ -1040,15 +1051,13 @@ type DiskEncryptionSetListResponse struct {
 	RawResponse *http.Response
 }
 
-// Describes the parameter of customer managed disk encryption set resource id that can be specified for disk. <br><br> NOTE:
-// The disk encryption set resource id can only be specified for managed disk. Please refer https://aka.ms/mdssewithcmkoverview
-// for more details.
+// Describes the parameter of customer managed disk encryption set resource id that can be specified for disk.
+// NOTE: The disk encryption set resource id can only be specified for managed disk. Please refer https://aka.ms/mdssewithcmkoverview for more details.
 type DiskEncryptionSetParameters struct {
 	SubResource
 }
 
-// DiskEncryptionSetPollerResponse is the response envelope for operations that asynchronously return a DiskEncryptionSet
-// type.
+// DiskEncryptionSetPollerResponse is the response envelope for operations that asynchronously return a DiskEncryptionSet type.
 type DiskEncryptionSetPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*DiskEncryptionSetResponse, error)
@@ -1099,8 +1108,7 @@ type DiskEncryptionSetsGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DiskEncryptionSetsListByResourceGroupOptions contains the optional parameters for the DiskEncryptionSets.ListByResourceGroup
-// method.
+// DiskEncryptionSetsListByResourceGroupOptions contains the optional parameters for the DiskEncryptionSets.ListByResourceGroup method.
 type DiskEncryptionSetsListByResourceGroupOptions struct {
 	// placeholder for future optional parameters
 }
@@ -1135,7 +1143,8 @@ type DiskImageEncryption struct {
 
 // The instance view of the disk.
 type DiskInstanceView struct {
-	// Specifies the encryption settings for the OS Disk. <br><br> Minimum api-version: 2015-06-15
+	// Specifies the encryption settings for the OS Disk.
+	// Minimum api-version: 2015-06-15
 	EncryptionSettings *[]DiskEncryptionSettings `json:"encryptionSettings,omitempty"`
 
 	// The disk name.
@@ -1180,28 +1189,26 @@ type DiskProperties struct {
 	// Disk source information. CreationData information cannot be changed after the disk has been created.
 	CreationData *CreationData `json:"creationData,omitempty"`
 
-	// The total number of IOPS that will be allowed across all VMs mounting the shared disk as ReadOnly. One operation can transfer
-	// between 4k and 256k bytes.
+	// The total number of IOPS that will be allowed across all VMs mounting the shared disk as ReadOnly. One operation can transfer between 4k and 256k bytes.
 	DiskIopsReadOnly *int64 `json:"diskIOPSReadOnly,omitempty"`
 
-	// The number of IOPS allowed for this disk; only settable for UltraSSD disks. One operation can transfer between 4k and 256k
-	// bytes.
+	// The number of IOPS allowed for this disk; only settable for UltraSSD disks. One operation can transfer between 4k and 256k bytes.
 	DiskIopsReadWrite *int64 `json:"diskIOPSReadWrite,omitempty"`
 
-	// The total throughput (MBps) that will be allowed across all VMs mounting the shared disk as ReadOnly. MBps means millions
-	// of bytes per second - MB here uses the ISO notation, of powers of 10.
+	// The total throughput (MBps) that will be allowed across all VMs mounting the shared disk as ReadOnly. MBps means millions of bytes per second - MB here
+	// uses the ISO notation, of powers of 10.
 	DiskMBpsReadOnly *int64 `json:"diskMBpsReadOnly,omitempty"`
 
-	// The bandwidth allowed for this disk; only settable for UltraSSD disks. MBps means millions of bytes per second - MB here
-	// uses the ISO notation, of powers of 10.
+	// The bandwidth allowed for this disk; only settable for UltraSSD disks. MBps means millions of bytes per second - MB here uses the ISO notation, of powers
+	// of 10.
 	DiskMBpsReadWrite *int64 `json:"diskMBpsReadWrite,omitempty"`
 
 	// The size of the disk in bytes. This field is read only.
 	DiskSizeBytes *int64 `json:"diskSizeBytes,omitempty" azure:"ro"`
 
-	// If creationData.createOption is Empty, this field is mandatory and it indicates the size of the disk to create. If this
-	// field is present for updates or creation with other options, it indicates a resize. Resizes are only allowed if the disk
-	// is not attached to a running VM, and can only increase the disk's size.
+	// If creationData.createOption is Empty, this field is mandatory and it indicates the size of the disk to create. If this field is present for updates
+	// or creation with other options, it indicates a
+	// resize. Resizes are only allowed if the disk is not attached to a running VM, and can only increase the disk's size.
 	DiskSizeGb *int32 `json:"diskSizeGB,omitempty"`
 
 	// The state of the disk.
@@ -1216,8 +1223,8 @@ type DiskProperties struct {
 	// The hypervisor generation of the Virtual Machine. Applicable to OS disks only.
 	HyperVGeneration *HyperVGeneration `json:"hyperVGeneration,omitempty"`
 
-	// The maximum number of VMs that can attach to the disk at the same time. Value greater than one indicates a disk that can
-	// be mounted on multiple VMs at the same time.
+	// The maximum number of VMs that can attach to the disk at the same time. Value greater than one indicates a disk that can be mounted on multiple VMs at
+	// the same time.
 	MaxShares *int32 `json:"maxShares,omitempty"`
 
 	// The Operating System type.
@@ -1226,8 +1233,8 @@ type DiskProperties struct {
 	// The disk provisioning state.
 	ProvisioningState *string `json:"provisioningState,omitempty" azure:"ro"`
 
-	// Details of the list of all VMs that have the disk attached. maxShares should be set to a value greater than one for disks
-	// to allow attaching them to multiple VMs.
+	// Details of the list of all VMs that have the disk attached. maxShares should be set to a value greater than one for disks to allow attaching them to
+	// multiple VMs.
 	ShareInfo *[]ShareInfoElement `json:"shareInfo,omitempty" azure:"ro"`
 
 	// The time when the disk was created.
@@ -1407,7 +1414,7 @@ type DiskResponse struct {
 	RawResponse *http.Response
 }
 
-// The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, or UltraSSD_LRS.
+// The disks sku name. Can be StandardLRS, PremiumLRS, StandardSSDLRS, or UltraSSDLRS.
 type DiskSKU struct {
 	// The sku name.
 	Name *DiskStorageAccountTypes `json:"name,omitempty"`
@@ -1421,7 +1428,7 @@ type DiskUpdate struct {
 	// Disk resource update properties.
 	Properties *DiskUpdateProperties `json:"properties,omitempty"`
 
-	// The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, or UltraSSD_LRS.
+	// The disks sku name. Can be StandardLRS, PremiumLRS, StandardSSDLRS, or UltraSSDLRS.
 	SKU *DiskSKU `json:"sku,omitempty"`
 
 	// Resource tags
@@ -1430,25 +1437,23 @@ type DiskUpdate struct {
 
 // Disk resource update properties.
 type DiskUpdateProperties struct {
-	// The total number of IOPS that will be allowed across all VMs mounting the shared disk as ReadOnly. One operation can transfer
-	// between 4k and 256k bytes.
+	// The total number of IOPS that will be allowed across all VMs mounting the shared disk as ReadOnly. One operation can transfer between 4k and 256k bytes.
 	DiskIopsReadOnly *int64 `json:"diskIOPSReadOnly,omitempty"`
 
-	// The number of IOPS allowed for this disk; only settable for UltraSSD disks. One operation can transfer between 4k and 256k
-	// bytes.
+	// The number of IOPS allowed for this disk; only settable for UltraSSD disks. One operation can transfer between 4k and 256k bytes.
 	DiskIopsReadWrite *int64 `json:"diskIOPSReadWrite,omitempty"`
 
-	// The total throughput (MBps) that will be allowed across all VMs mounting the shared disk as ReadOnly. MBps means millions
-	// of bytes per second - MB here uses the ISO notation, of powers of 10.
+	// The total throughput (MBps) that will be allowed across all VMs mounting the shared disk as ReadOnly. MBps means millions of bytes per second - MB here
+	// uses the ISO notation, of powers of 10.
 	DiskMBpsReadOnly *int64 `json:"diskMBpsReadOnly,omitempty"`
 
-	// The bandwidth allowed for this disk; only settable for UltraSSD disks. MBps means millions of bytes per second - MB here
-	// uses the ISO notation, of powers of 10.
+	// The bandwidth allowed for this disk; only settable for UltraSSD disks. MBps means millions of bytes per second - MB here uses the ISO notation, of powers
+	// of 10.
 	DiskMBpsReadWrite *int64 `json:"diskMBpsReadWrite,omitempty"`
 
-	// If creationData.createOption is Empty, this field is mandatory and it indicates the size of the disk to create. If this
-	// field is present for updates or creation with other options, it indicates a resize. Resizes are only allowed if the disk
-	// is not attached to a running VM, and can only increase the disk's size.
+	// If creationData.createOption is Empty, this field is mandatory and it indicates the size of the disk to create. If this field is present for updates
+	// or creation with other options, it indicates a
+	// resize. Resizes are only allowed if the disk is not attached to a running VM, and can only increase the disk's size.
 	DiskSizeGb *int32 `json:"diskSizeGB,omitempty"`
 
 	// Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys.
@@ -1457,8 +1462,8 @@ type DiskUpdateProperties struct {
 	// Encryption settings collection used be Azure Disk Encryption, can contain multiple encryption settings per disk or snapshot.
 	EncryptionSettingsCollection *EncryptionSettingsCollection `json:"encryptionSettingsCollection,omitempty"`
 
-	// The maximum number of VMs that can attach to the disk at the same time. Value greater than one indicates a disk that can
-	// be mounted on multiple VMs at the same time.
+	// The maximum number of VMs that can attach to the disk at the same time. Value greater than one indicates a disk that can be mounted on multiple VMs at
+	// the same time.
 	MaxShares *int32 `json:"maxShares,omitempty"`
 
 	// the Operating System type.
@@ -1523,15 +1528,15 @@ type EncryptionImages struct {
 	OSDiskImage *DiskImageEncryption `json:"osDiskImage,omitempty"`
 }
 
-// The managed identity for the disk encryption set. It should be given permission on the key vault before it can be used
-// to encrypt disks.
+// The managed identity for the disk encryption set. It should be given permission on the key vault before it can be used to encrypt disks.
 type EncryptionSetIDentity struct {
-	// The object id of the Managed Identity Resource. This will be sent to the RP from ARM via the x-ms-identity-principal-id
-	// header in the PUT request if the resource has a systemAssigned(implicit) identity
+	// The object id of the Managed Identity Resource. This will be sent to the RP from ARM via the x-ms-identity-principal-id header in the PUT request if
+	// the resource has a systemAssigned(implicit)
+	// identity
 	PrincipalID *string `json:"principalId,omitempty" azure:"ro"`
 
-	// The tenant id of the Managed Identity Resource. This will be sent to the RP from ARM via the x-ms-client-tenant-id header
-	// in the PUT request if the resource has a systemAssigned(implicit) identity
+	// The tenant id of the Managed Identity Resource. This will be sent to the RP from ARM via the x-ms-client-tenant-id header in the PUT request if the resource
+	// has a systemAssigned(implicit) identity
 	TenantID *string `json:"tenantId,omitempty" azure:"ro"`
 
 	// The type of Managed Identity used by the DiskEncryptionSet. Only SystemAssigned is supported.
@@ -1542,8 +1547,8 @@ type EncryptionSetProperties struct {
 	// The key vault key which is currently used by this disk encryption set.
 	ActiveKey *KeyVaultAndKeyReference `json:"activeKey,omitempty"`
 
-	// A readonly collection of key vault keys previously used by this disk encryption set while a key rotation is in progress.
-	// It will be empty if there is no ongoing key rotation.
+	// A readonly collection of key vault keys previously used by this disk encryption set while a key rotation is in progress. It will be empty if there is
+	// no ongoing key rotation.
 	PreviousKeys *[]KeyVaultAndKeyReference `json:"previousKeys,omitempty" azure:"ro"`
 
 	// The disk encryption set provisioning state.
@@ -1552,16 +1557,17 @@ type EncryptionSetProperties struct {
 
 // Encryption settings for disk or snapshot
 type EncryptionSettingsCollection struct {
-	// Set this flag to true and provide DiskEncryptionKey and optional KeyEncryptionKey to enable encryption. Set this flag to
-	// false and remove DiskEncryptionKey and KeyEncryptionKey to disable encryption. If EncryptionSettings is null in the request
-	// object, the existing settings remain unchanged.
+	// Set this flag to true and provide DiskEncryptionKey and optional KeyEncryptionKey to enable encryption. Set this flag to false and remove DiskEncryptionKey
+	// and KeyEncryptionKey to disable encryption.
+	// If EncryptionSettings is null in the request object, the existing settings remain unchanged.
 	Enabled *bool `json:"enabled,omitempty"`
 
 	// A collection of encryption settings, one for each disk volume.
 	EncryptionSettings *[]EncryptionSettingsElement `json:"encryptionSettings,omitempty"`
 
-	// Describes what type of encryption is used for the disks. Once this field is set, it cannot be overwritten. '1.0' corresponds
-	// to Azure Disk Encryption with AAD app.'1.1' corresponds to Azure Disk Encryption.
+	// Describes what type of encryption is used for the disks. Once this field is set, it cannot be overwritten. '1.0' corresponds to Azure Disk Encryption
+	// with AAD app.'1.1' corresponds to Azure Disk
+	// Encryption.
 	EncryptionSettingsVersion *string `json:"encryptionSettingsVersion,omitempty"`
 }
 
@@ -1570,8 +1576,7 @@ type EncryptionSettingsElement struct {
 	// Key Vault Secret Url and vault id of the disk encryption key
 	DiskEncryptionKey *KeyVaultAndSecretReference `json:"diskEncryptionKey,omitempty"`
 
-	// Key Vault Key Url and vault id of the key encryption key. KeyEncryptionKey is optional and when provided is used to unwrap
-	// the disk encryption key.
+	// Key Vault Key Url and vault id of the key encryption key. KeyEncryptionKey is optional and when provided is used to unwrap the disk encryption key.
 	KeyEncryptionKey *KeyVaultAndKeyReference `json:"keyEncryptionKey,omitempty"`
 }
 
@@ -1621,8 +1626,8 @@ type GalleryApplication struct {
 
 // The List Gallery Applications operation response.
 type GalleryApplicationList struct {
-	// The uri to fetch the next page of Application Definitions in the Application Gallery. Call ListNext() with this to fetch
-	// the next page of gallery Application Definitions.
+	// The uri to fetch the next page of Application Definitions in the Application Gallery. Call ListNext() with this to fetch the next page of gallery Application
+	// Definitions.
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// A list of Gallery Applications.
@@ -1638,8 +1643,7 @@ type GalleryApplicationListResponse struct {
 	RawResponse *http.Response
 }
 
-// GalleryApplicationPollerResponse is the response envelope for operations that asynchronously return a GalleryApplication
-// type.
+// GalleryApplicationPollerResponse is the response envelope for operations that asynchronously return a GalleryApplication type.
 type GalleryApplicationPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*GalleryApplicationResponse, error)
@@ -1656,8 +1660,7 @@ type GalleryApplicationProperties struct {
 	// The description of this gallery Application Definition resource. This property is updatable.
 	Description *string `json:"description,omitempty"`
 
-	// The end of life date of the gallery Application Definition. This property can be used for decommissioning purposes. This
-	// property is updatable.
+	// The end of life date of the gallery Application Definition. This property can be used for decommissioning purposes. This property is updatable.
 	EndOfLifeDate *time.Time `json:"endOfLifeDate,omitempty"`
 
 	// The Eula agreement for the gallery Application Definition.
@@ -1669,8 +1672,10 @@ type GalleryApplicationProperties struct {
 	// The release note uri.
 	ReleaseNoteURI *string `json:"releaseNoteUri,omitempty"`
 
-	// This property allows you to specify the supported type of the OS that application is built for. <br><br> Possible values
-	// are: <br><br> **Windows** <br><br> **Linux**
+	// This property allows you to specify the supported type of the OS that application is built for.
+	// Possible values are:
+	// Windows
+	// Linux
 	SupportedOSType *OperatingSystemTypes `json:"supportedOSType,omitempty"`
 }
 
@@ -1772,16 +1777,14 @@ type GalleryApplicationVersion struct {
 
 // The List Gallery Application version operation response.
 type GalleryApplicationVersionList struct {
-	// The uri to fetch the next page of gallery Application Versions. Call ListNext() with this to fetch the next page of gallery
-	// Application Versions.
+	// The uri to fetch the next page of gallery Application Versions. Call ListNext() with this to fetch the next page of gallery Application Versions.
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// A list of gallery Application Versions.
 	Value *[]GalleryApplicationVersion `json:"value,omitempty"`
 }
 
-// GalleryApplicationVersionListResponse is the response envelope for operations that return a GalleryApplicationVersionList
-// type.
+// GalleryApplicationVersionListResponse is the response envelope for operations that return a GalleryApplicationVersionList type.
 type GalleryApplicationVersionListResponse struct {
 	// The List Gallery Application version operation response.
 	GalleryApplicationVersionList *GalleryApplicationVersionList
@@ -1790,8 +1793,7 @@ type GalleryApplicationVersionListResponse struct {
 	RawResponse *http.Response
 }
 
-// GalleryApplicationVersionPollerResponse is the response envelope for operations that asynchronously return a GalleryApplicationVersion
-// type.
+// GalleryApplicationVersionPollerResponse is the response envelope for operations that asynchronously return a GalleryApplicationVersion type.
 type GalleryApplicationVersionPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*GalleryApplicationVersionResponse, error)
@@ -1891,8 +1893,7 @@ type GalleryApplicationVersionUpdate struct {
 	Properties *GalleryApplicationVersionProperties `json:"properties,omitempty"`
 }
 
-// GalleryApplicationVersionsCreateOrUpdateOptions contains the optional parameters for the GalleryApplicationVersions.CreateOrUpdate
-// method.
+// GalleryApplicationVersionsCreateOrUpdateOptions contains the optional parameters for the GalleryApplicationVersions.CreateOrUpdate method.
 type GalleryApplicationVersionsCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
@@ -1946,8 +1947,7 @@ type GalleryApplicationsUpdateOptions struct {
 
 // Describes the basic gallery artifact publishing profile.
 type GalleryArtifactPublishingProfileBase struct {
-	// The end of life date of the gallery Image Version. This property can be used for decommissioning purposes. This property
-	// is updatable.
+	// The end of life date of the gallery Image Version. This property can be used for decommissioning purposes. This property is updatable.
 	EndOfLifeDate *time.Time `json:"endOfLifeDate,omitempty"`
 
 	// If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version.
@@ -1956,8 +1956,8 @@ type GalleryArtifactPublishingProfileBase struct {
 	// The timestamp for when the gallery Image Version is published.
 	PublishedDate *time.Time `json:"publishedDate,omitempty" azure:"ro"`
 
-	// The number of replicas of the Image Version to be created per region. This property would take effect for a region when
-	// regionalReplicaCount is not specified. This property is updatable.
+	// The number of replicas of the Image Version to be created per region. This property would take effect for a region when regionalReplicaCount is not specified.
+	// This property is updatable.
 	ReplicaCount *int32 `json:"replicaCount,omitempty"`
 
 	// Specifies the storage account type to be used to store the image. This property is not updatable.
@@ -2066,8 +2066,9 @@ type GalleryArtifactVersionSource struct {
 // This is the data disk image.
 type GalleryDataDiskImage struct {
 	GalleryDiskImage
-	// This property specifies the logical unit number of the data disk. This value is used to identify data disks within the
-	// Virtual Machine and therefore must be unique for each data disk attached to the Virtual Machine.
+	// This property specifies the logical unit number of the data disk. This value is used to identify data disks within the Virtual Machine and therefore
+	// must be unique for each data disk attached to the
+	// Virtual Machine.
 	Lun *int32 `json:"lun,omitempty"`
 }
 
@@ -2110,8 +2111,7 @@ type GalleryImageIDentifier struct {
 
 // The List Gallery Images operation response.
 type GalleryImageList struct {
-	// The uri to fetch the next page of Image Definitions in the Shared Image Gallery. Call ListNext() with this to fetch the
-	// next page of gallery Image Definitions.
+	// The uri to fetch the next page of Image Definitions in the Shared Image Gallery. Call ListNext() with this to fetch the next page of gallery Image Definitions.
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// A list of Shared Image Gallery images.
@@ -2147,8 +2147,7 @@ type GalleryImageProperties struct {
 	// Describes the disallowed disk types.
 	Disallowed *Disallowed `json:"disallowed,omitempty"`
 
-	// The end of life date of the gallery Image Definition. This property can be used for decommissioning purposes. This property
-	// is updatable.
+	// The end of life date of the gallery Image Definition. This property can be used for decommissioning purposes. This property is updatable.
 	EndOfLifeDate *time.Time `json:"endOfLifeDate,omitempty"`
 
 	// The Eula agreement for the gallery Image Definition.
@@ -2164,7 +2163,9 @@ type GalleryImageProperties struct {
 	OSState *OperatingSystemStateTypes `json:"osState,omitempty"`
 
 	// This property allows you to specify the type of the OS that is included in the disk when creating a VM from a managed image.
-	// <br><br> Possible values are: <br><br> **Windows** <br><br> **Linux**
+	// Possible values are:
+	// Windows
+	// Linux
 	OSType *OperatingSystemTypes `json:"osType,omitempty"`
 
 	// The privacy statement uri.
@@ -2337,8 +2338,7 @@ type GalleryImageVersion struct {
 
 // The List Gallery Image version operation response.
 type GalleryImageVersionList struct {
-	// The uri to fetch the next page of gallery Image Versions. Call ListNext() with this to fetch the next page of gallery Image
-	// Versions.
+	// The uri to fetch the next page of gallery Image Versions. Call ListNext() with this to fetch the next page of gallery Image Versions.
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// A list of gallery Image Versions.
@@ -2354,8 +2354,7 @@ type GalleryImageVersionListResponse struct {
 	RawResponse *http.Response
 }
 
-// GalleryImageVersionPollerResponse is the response envelope for operations that asynchronously return a GalleryImageVersion
-// type.
+// GalleryImageVersionPollerResponse is the response envelope for operations that asynchronously return a GalleryImageVersion type.
 type GalleryImageVersionPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*GalleryImageVersionResponse, error)
@@ -2415,8 +2414,7 @@ type GalleryImageVersionUpdate struct {
 	Properties *GalleryImageVersionProperties `json:"properties,omitempty"`
 }
 
-// GalleryImageVersionsCreateOrUpdateOptions contains the optional parameters for the GalleryImageVersions.CreateOrUpdate
-// method.
+// GalleryImageVersionsCreateOrUpdateOptions contains the optional parameters for the GalleryImageVersions.CreateOrUpdate method.
 type GalleryImageVersionsCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
@@ -2432,8 +2430,7 @@ type GalleryImageVersionsGetOptions struct {
 	Expand *ReplicationStatusTypes
 }
 
-// GalleryImageVersionsListByGalleryImageOptions contains the optional parameters for the GalleryImageVersions.ListByGalleryImage
-// method.
+// GalleryImageVersionsListByGalleryImageOptions contains the optional parameters for the GalleryImageVersions.ListByGalleryImage method.
 type GalleryImageVersionsListByGalleryImageOptions struct {
 	// placeholder for future optional parameters
 }
@@ -2553,16 +2550,18 @@ type HTTPPollerResponse struct {
 
 // Specifies the hardware settings for the virtual machine.
 type HardwareProfile struct {
-	// Specifies the size of the virtual machine. For more information about virtual machine sizes, see [Sizes for virtual machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-sizes?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).
-	// <br><br> The available VM sizes depend on region and availability set. For a list of available sizes use these APIs: <br><br>
-	// [List all available virtual machine sizes in an availability set](https://docs.microsoft.com/rest/api/compute/availabilitysets/listavailablesizes)
-	// <br><br> [List all available virtual machine sizes in a region](https://docs.microsoft.com/rest/api/compute/virtualmachinesizes/list)
-	// <br><br> [List all available virtual machine sizes for resizing](https://docs.microsoft.com/rest/api/compute/virtualmachines/listavailablesizes)
+	// Specifies the size of the virtual machine. For more information about virtual machine sizes, see Sizes for virtual machines
+	// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-sizes?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json].
+	// The available VM sizes depend on region and availability set. For a list of available sizes use these APIs:
+	// List all available virtual machine sizes in an availability set [https://docs.microsoft.com/rest/api/compute/availabilitysets/listavailablesizes]
+	// List all available virtual machine sizes in a region [https://docs.microsoft.com/rest/api/compute/virtualmachinesizes/list]
+	// List all available virtual machine sizes for resizing [https://docs.microsoft.com/rest/api/compute/virtualmachines/listavailablesizes]
 	VMSize *VirtualMachineSizeTypes `json:"vmSize,omitempty"`
 }
 
-// The source user image virtual hard disk. The virtual hard disk will be copied before being attached to the virtual machine.
-// If SourceImage is provided, the destination virtual hard drive must not exist.
+// The source user image virtual hard disk. The virtual hard disk will be copied before being attached to the virtual machine. If SourceImage is provided,
+// the destination virtual hard drive must not
+// exist.
 type Image struct {
 	Resource
 	// Describes the properties of an Image.
@@ -2572,8 +2571,8 @@ type Image struct {
 // Describes a data disk.
 type ImageDataDisk struct {
 	ImageDisk
-	// Specifies the logical unit number of the data disk. This value is used to identify data disks within the VM and therefore
-	// must be unique for each data disk attached to a VM.
+	// Specifies the logical unit number of the data disk. This value is used to identify data disks within the VM and therefore must be unique for each data
+	// disk attached to a VM.
 	Lun *int32 `json:"lun,omitempty"`
 }
 
@@ -2582,15 +2581,19 @@ type ImageDisk struct {
 	// The Virtual Hard Disk.
 	BlobURI *string `json:"blobUri,omitempty"`
 
-	// Specifies the caching requirements. <br><br> Possible values are: <br><br> **None** <br><br> **ReadOnly** <br><br> **ReadWrite**
-	// <br><br> Default: **None for Standard storage. ReadOnly for Premium storage**
+	// Specifies the caching requirements.
+	// Possible values are:
+	// None
+	// ReadOnly
+	// ReadWrite
+	// Default: None for Standard storage. ReadOnly for Premium storage
 	Caching *CachingTypes `json:"caching,omitempty"`
 
 	// Specifies the customer managed disk encryption set resource id for the managed image disk.
 	DiskEncryptionSet *SubResource `json:"diskEncryptionSet,omitempty"`
 
-	// Specifies the size of empty data disks in gigabytes. This element can be used to overwrite the name of the disk in a virtual
-	// machine image. <br><br> This value cannot be larger than 1023 GB
+	// Specifies the size of empty data disks in gigabytes. This element can be used to overwrite the name of the disk in a virtual machine image.
+	// This value cannot be larger than 1023 GB
 	DiskSizeGb *int32 `json:"diskSizeGB,omitempty"`
 
 	// The managedDisk.
@@ -2599,8 +2602,7 @@ type ImageDisk struct {
 	// The snapshot.
 	Snapshot *SubResource `json:"snapshot,omitempty"`
 
-	// Specifies the storage account type for the managed disk. NOTE: UltraSSD_LRS can only be used with data disks, it cannot
-	// be used with OS Disk.
+	// Specifies the storage account type for the managed disk. NOTE: UltraSSD_LRS can only be used with data disks, it cannot be used with OS Disk.
 	StorageAccountType *StorageAccountTypes `json:"storageAccountType,omitempty"`
 }
 
@@ -2609,8 +2611,8 @@ type ImageDiskReference struct {
 	// A relative uri containing either a Platform Image Repository or user image reference.
 	ID *string `json:"id,omitempty"`
 
-	// If the disk is created from an image's data disk, this is an index that indicates which of the data disks in the image
-	// to use. For OS disks, this field is null.
+	// If the disk is created from an image's data disk, this is an index that indicates which of the data disks in the image to use. For OS disks, this field
+	// is null.
 	Lun *int32 `json:"lun,omitempty"`
 }
 
@@ -2639,7 +2641,9 @@ type ImageOSDisk struct {
 	OSState *OperatingSystemStateTypes `json:"osState,omitempty"`
 
 	// This property allows you to specify the type of the OS that is included in the disk if creating a VM from a custom image.
-	// <br><br> Possible values are: <br><br> **Windows** <br><br> **Linux**
+	// Possible values are:
+	// Windows
+	// Linux
 	OSType *OperatingSystemTypes `json:"osType,omitempty"`
 }
 
@@ -2682,14 +2686,15 @@ type ImagePurchasePlan struct {
 	Publisher *string `json:"publisher,omitempty"`
 }
 
-// Specifies information about the image to use. You can specify information about platform images, marketplace images, or
-// virtual machine images. This element is required when you want to use a platform image, marketplace image, or virtual machine
-// image, but is not used in other creation operations. NOTE: Image reference publisher and offer can only be set when you
-// create the scale set.
+// Specifies information about the image to use. You can specify information about platform images, marketplace images, or virtual machine images. This
+// element is required when you want to use a platform
+// image, marketplace image, or virtual machine image, but is not used in other creation operations. NOTE: Image reference publisher and offer can only
+// be set when you create the scale set.
 type ImageReference struct {
 	SubResource
-	// Specifies in decimal numbers, the version of platform image or marketplace image used to create the virtual machine. This
-	// readonly field differs from 'version', only if the value specified in 'version' field is 'latest'.
+	// Specifies in decimal numbers, the version of platform image or marketplace image used to create the virtual machine. This readonly field differs from
+	// 'version', only if the value specified in
+	// 'version' field is 'latest'.
 	ExactVersion *string `json:"exactVersion,omitempty" azure:"ro"`
 
 	// Specifies the offer of the platform image or marketplace image used to create the virtual machine.
@@ -2701,17 +2706,18 @@ type ImageReference struct {
 	// The image SKU.
 	SKU *string `json:"sku,omitempty"`
 
-	// Specifies the version of the platform image or marketplace image used to create the virtual machine. The allowed formats
-	// are Major.Minor.Build or 'latest'. Major, Minor, and Build are decimal numbers. Specify 'latest' to use the latest version
-	// of an image available at deploy time. Even if you use 'latest', the VM image will not automatically update after deploy
-	// time even if a new version becomes available.
+	// Specifies the version of the platform image or marketplace image used to create the virtual machine. The allowed formats are Major.Minor.Build or 'latest'.
+	// Major, Minor, and Build are decimal numbers.
+	// Specify 'latest' to use the latest version of an image available at deploy time. Even if you use 'latest', the VM image will not automatically update
+	// after deploy time even if a new version becomes
+	// available.
 	Version *string `json:"version,omitempty"`
 }
 
 // ImageResponse is the response envelope for operations that return a Image type.
 type ImageResponse struct {
-	// The source user image virtual hard disk. The virtual hard disk will be copied before being attached to the virtual machine.
-	// If SourceImage is provided, the destination virtual hard drive must not exist.
+	// The source user image virtual hard disk. The virtual hard disk will be copied before being attached to the virtual machine. If SourceImage is provided,
+	// the destination virtual hard drive must not exist.
 	Image *Image
 
 	// RawResponse contains the underlying HTTP response.
@@ -2720,16 +2726,18 @@ type ImageResponse struct {
 
 // Describes a storage profile.
 type ImageStorageProfile struct {
-	// Specifies the parameters that are used to add a data disk to a virtual machine. <br><br> For more information about disks,
-	// see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-about-disks-vhds?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).
+	// Specifies the parameters that are used to add a data disk to a virtual machine.
+	// For more information about disks, see About disks and VHDs for Azure virtual machines
+	// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-about-disks-vhds?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json].
 	DataDisks *[]ImageDataDisk `json:"dataDisks,omitempty"`
 
-	// Specifies information about the operating system disk used by the virtual machine. <br><br> For more information about
-	// disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-about-disks-vhds?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).
+	// Specifies information about the operating system disk used by the virtual machine.
+	// For more information about disks, see About disks and VHDs for Azure virtual machines
+	// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-about-disks-vhds?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json].
 	OSDisk *ImageOSDisk `json:"osDisk,omitempty"`
 
-	// Specifies whether an image is zone resilient or not. Default is false. Zone resilient images can be created only in regions
-	// that provide Zone Redundant Storage (ZRS).
+	// Specifies whether an image is zone resilient or not. Default is false. Zone resilient images can be created only in regions that provide Zone Redundant
+	// Storage (ZRS).
 	ZoneResilient *bool `json:"zoneResilient,omitempty"`
 }
 
@@ -2899,16 +2907,18 @@ type KeyVaultSecretReference struct {
 	SourceVault *SubResource `json:"sourceVault,omitempty"`
 }
 
-// Specifies the Linux operating system settings on the virtual machine. <br><br>For a list of supported Linux distributions,
-// see [Linux on Azure-Endorsed Distributions](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-endorsed-distros?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json)
-// <br><br> For running non-endorsed distributions, see [Information for Non-Endorsed Distributions](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-create-upload-generic?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json).
+// Specifies the Linux operating system settings on the virtual machine.
+// For a list of supported Linux distributions, see Linux on Azure-Endorsed Distributions
+// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-endorsed-distros?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json]
+// For running non-endorsed distributions, see Information for Non-Endorsed Distributions
+// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-create-upload-generic?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json].
 type LinuxConfiguration struct {
 	// Specifies whether password authentication should be disabled.
 	DisablePasswordAuthentication *bool `json:"disablePasswordAuthentication,omitempty"`
 
-	// Indicates whether virtual machine agent should be provisioned on the virtual machine. <br><br> When this property is not
-	// specified in the request body, default behavior is to set it to true. This will ensure that VM Agent is installed on the
-	// VM so that extensions can be added to the VM later.
+	// Indicates whether virtual machine agent should be provisioned on the virtual machine.
+	// When this property is not specified in the request body, default behavior is to set it to true. This will ensure that VM Agent is installed on the VM
+	// so that extensions can be added to the VM later.
 	ProvisionVMAgent *bool `json:"provisionVMAgent,omitempty"`
 
 	// Specifies the ssh key configuration for a Linux OS.
@@ -2917,8 +2927,7 @@ type LinuxConfiguration struct {
 
 // The List Usages operation response.
 type ListUsagesResult struct {
-	// The URI to fetch the next page of compute resource usage information. Call ListNext() with this to fetch the next page
-	// of compute resource usage information.
+	// The URI to fetch the next page of compute resource usage information. Call ListNext() with this to fetch the next page of compute resource usage information.
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// The list of compute resource usages.
@@ -2934,14 +2943,12 @@ type ListUsagesResultResponse struct {
 	RawResponse *http.Response
 }
 
-// LogAnalyticsExportRequestRateByIntervalOptions contains the optional parameters for the LogAnalytics.ExportRequestRateByInterval
-// method.
+// LogAnalyticsExportRequestRateByIntervalOptions contains the optional parameters for the LogAnalytics.ExportRequestRateByInterval method.
 type LogAnalyticsExportRequestRateByIntervalOptions struct {
 	// placeholder for future optional parameters
 }
 
-// LogAnalyticsExportThrottledRequestsOptions contains the optional parameters for the LogAnalytics.ExportThrottledRequests
-// method.
+// LogAnalyticsExportThrottledRequestsOptions contains the optional parameters for the LogAnalytics.ExportThrottledRequests method.
 type LogAnalyticsExportThrottledRequestsOptions struct {
 	// placeholder for future optional parameters
 }
@@ -3057,8 +3064,7 @@ type LogAnalyticsOperationResult struct {
 	Properties *LogAnalyticsOutput `json:"properties,omitempty" azure:"ro"`
 }
 
-// LogAnalyticsOperationResultPollerResponse is the response envelope for operations that asynchronously return a LogAnalyticsOperationResult
-// type.
+// LogAnalyticsOperationResultPollerResponse is the response envelope for operations that asynchronously return a LogAnalyticsOperationResult type.
 type LogAnalyticsOperationResultPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*LogAnalyticsOperationResultResponse, error)
@@ -3208,8 +3214,7 @@ type ManagedDiskParameters struct {
 	// Specifies the customer managed disk encryption set resource id for the managed disk.
 	DiskEncryptionSet *SubResource `json:"diskEncryptionSet,omitempty"`
 
-	// Specifies the storage account type for the managed disk. NOTE: UltraSSD_LRS can only be used with data disks, it cannot
-	// be used with OS Disk.
+	// Specifies the storage account type for the managed disk. NOTE: UltraSSD_LRS can only be used with data disks, it cannot be used with OS Disk.
 	StorageAccountType *StorageAccountTypes `json:"storageAccountType,omitempty"`
 }
 
@@ -3232,31 +3237,40 @@ type NetworkProfile struct {
 	NetworkInterfaces *[]NetworkInterfaceReference `json:"networkInterfaces,omitempty"`
 }
 
-// Specifies information about the operating system disk used by the virtual machine. <br><br> For more information about
-// disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-about-disks-vhds?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).
+// Specifies information about the operating system disk used by the virtual machine.
+// For more information about disks, see About disks and VHDs for Azure virtual machines
+// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-about-disks-vhds?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json].
 type OSDisk struct {
-	// Specifies the caching requirements. <br><br> Possible values are: <br><br> **None** <br><br> **ReadOnly** <br><br> **ReadWrite**
-	// <br><br> Default: **None** for Standard storage. **ReadOnly** for Premium storage.
+	// Specifies the caching requirements.
+	// Possible values are:
+	// None
+	// ReadOnly
+	// ReadWrite
+	// Default: None for Standard storage. ReadOnly for Premium storage.
 	Caching *CachingTypes `json:"caching,omitempty"`
 
-	// Specifies how the virtual machine should be created.<br><br> Possible values are:<br><br> **Attach** \u2013 This value
-	// is used when you are using a specialized disk to create the virtual machine.<br><br> **FromImage** \u2013 This value is
-	// used when you are using an image to create the virtual machine. If you are using a platform image, you also use the imageReference
-	// element described above. If you are using a marketplace image, you also use the plan element previously described.
+	// Specifies how the virtual machine should be created.
+	// Possible values are:
+	// Attach \u2013 This value is used when you are using a specialized disk to create the virtual machine.
+	// FromImage \u2013 This value is used when you are using an image to create the virtual machine. If you are using a platform image, you also use the imageReference
+	// element described above. If you are
+	// using a marketplace image, you also use the plan element previously described.
 	CreateOption *DiskCreateOptionTypes `json:"createOption,omitempty"`
 
 	// Specifies the ephemeral Disk Settings for the operating system disk used by the virtual machine.
 	DiffDiskSettings *DiffDiskSettings `json:"diffDiskSettings,omitempty"`
 
-	// Specifies the size of an empty data disk in gigabytes. This element can be used to overwrite the size of the disk in a
-	// virtual machine image. <br><br> This value cannot be larger than 1023 GB
+	// Specifies the size of an empty data disk in gigabytes. This element can be used to overwrite the size of the disk in a virtual machine image.
+	// This value cannot be larger than 1023 GB
 	DiskSizeGb *int32 `json:"diskSizeGB,omitempty"`
 
-	// Specifies the encryption settings for the OS Disk. <br><br> Minimum api-version: 2015-06-15
+	// Specifies the encryption settings for the OS Disk.
+	// Minimum api-version: 2015-06-15
 	EncryptionSettings *DiskEncryptionSettings `json:"encryptionSettings,omitempty"`
 
-	// The source user image virtual hard disk. The virtual hard disk will be copied before being attached to the virtual machine.
-	// If SourceImage is provided, the destination virtual hard drive must not exist.
+	// The source user image virtual hard disk. The virtual hard disk will be copied before being attached to the virtual machine. If SourceImage is provided,
+	// the destination virtual hard drive must not
+	// exist.
 	Image *VirtualHardDisk `json:"image,omitempty"`
 
 	// The managed disk parameters.
@@ -3265,8 +3279,10 @@ type OSDisk struct {
 	// The disk name.
 	Name *string `json:"name,omitempty"`
 
-	// This property allows you to specify the type of the OS that is included in the disk if creating a VM from user-image or
-	// a specialized VHD. <br><br> Possible values are: <br><br> **Windows** <br><br> **Linux**
+	// This property allows you to specify the type of the OS that is included in the disk if creating a VM from user-image or a specialized VHD.
+	// Possible values are:
+	// Windows
+	// Linux
 	OSType *OperatingSystemTypes `json:"osType,omitempty"`
 
 	// The virtual hard disk.
@@ -3289,46 +3305,65 @@ type OSDiskImageEncryption struct {
 
 // Specifies the operating system settings for the virtual machine. Some of the settings cannot be changed once VM is provisioned.
 type OSProfile struct {
-	// Specifies the password of the administrator account. <br><br> **Minimum-length (Windows):** 8 characters <br><br> **Minimum-length
-	// (Linux):** 6 characters <br><br> **Max-length (Windows):** 123 characters <br><br> **Max-length (Linux):** 72 characters
-	// <br><br> **Complexity requirements:** 3 out of 4 conditions below need to be fulfilled <br> Has lower characters <br>Has
-	// upper characters <br> Has a digit <br> Has a special character (Regex match [\W_]) <br><br> **Disallowed values:** "abc@123",
-	// "P@$$w0rd", "P@ssw0rd", "P@ssword123", "Pa$$word", "pass@word1", "Password!", "Password1", "Password22", "iloveyou!" <br><br>
-	// For resetting the password, see [How to reset the Remote Desktop service or its login password in a Windows VM](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-reset-rdp?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)
-	// <br><br> For resetting root password, see [Manage users, SSH, and check or repair disks on Azure Linux VMs using the VMAccess
-	// Extension](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-using-vmaccess-extension?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json#reset-root-password)
+	// Specifies the password of the administrator account.
+	// Minimum-length (Windows): 8 characters
+	// Minimum-length (Linux): 6 characters
+	// Max-length (Windows): 123 characters
+	// Max-length (Linux): 72 characters
+	// Complexity requirements: 3 out of 4 conditions below need to be fulfilled
+	// Has lower characters
+	// Has upper characters
+	// Has a digit
+	// Has a special character (Regex match [\W_])
+	// Disallowed values: "abc@123", "P@$$w0rd", "P@ssw0rd", "P@ssword123", "Pa$$word", "pass@word1", "Password!", "Password1", "Password22", "iloveyou!"
+	// For resetting the password, see How to reset the Remote Desktop service or its login password in a Windows VM
+	// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-reset-rdp?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json]
+	// For resetting root password, see Manage users, SSH, and check or repair disks on Azure Linux VMs using the VMAccess Extension
+	// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-using-vmaccess-extension?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json#reset-root-password]
 	AdminPassword *string `json:"adminPassword,omitempty"`
 
-	// Specifies the name of the administrator account. <br><br> This property cannot be updated after the VM is created. <br><br>
-	// **Windows-only restriction:** Cannot end in "." <br><br> **Disallowed values:** "administrator", "admin", "user", "user1",
-	// "test", "user2", "test1", "user3", "admin1", "1", "123", "a", "actuser", "adm", "admin2", "aspnet", "backup", "console",
-	// "david", "guest", "john", "owner", "root", "server", "sql", "support", "support_388945a0", "sys", "test2", "test3", "user4",
-	// "user5". <br><br> **Minimum-length (Linux):** 1 character <br><br> **Max-length (Linux):** 64 characters <br><br> **Max-length
-	// (Windows):** 20 characters <br><br><li> For root access to the Linux VM, see [Using root privileges on Linux virtual machines
-	// in Azure](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-use-root-privileges?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json)<br><li>
-	// For a list of built-in system users on Linux that should not be used in this field, see [Selecting User Names for Linux
-	// on Azure](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-usernames?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json)
+	// Specifies the name of the administrator account.
+	// This property cannot be updated after the VM is created.
+	// Windows-only restriction: Cannot end in "."
+	// Disallowed values: "administrator", "admin", "user", "user1", "test", "user2", "test1", "user3", "admin1", "1", "123", "a", "actuser", "adm", "admin2",
+	// "aspnet", "backup", "console", "david", "guest",
+	// "john", "owner", "root", "server", "sql", "support", "support_388945a0", "sys", "test2", "test3", "user4", "user5".
+	// Minimum-length (Linux): 1 character
+	// Max-length (Linux): 64 characters
+	// Max-length (Windows): 20 characters
+	// For root access to the Linux VM, see Using root privileges on Linux virtual machines in Azure
+	// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-use-root-privileges?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json]
+	// For a list of built-in system users on Linux that should not be used in this field, see Selecting User Names for Linux on Azure
+	// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-usernames?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json]
 	AdminUsername *string `json:"adminUsername,omitempty"`
 
-	// Specifies whether extension operations should be allowed on the virtual machine. <br><br>This may only be set to False
-	// when no extensions are present on the virtual machine.
+	// Specifies whether extension operations should be allowed on the virtual machine.
+	// This may only be set to False when no extensions are present on the virtual machine.
 	AllowExtensionOperations *bool `json:"allowExtensionOperations,omitempty"`
 
-	// Specifies the host OS name of the virtual machine. <br><br> This name cannot be updated after the VM is created. <br><br>
-	// **Max-length (Windows):** 15 characters <br><br> **Max-length (Linux):** 64 characters. <br><br> For naming conventions
-	// and restrictions see [Azure infrastructure services implementation guidelines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-infrastructure-subscription-accounts-guidelines?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json#1-naming-conventions).
+	// Specifies the host OS name of the virtual machine.
+	// This name cannot be updated after the VM is created.
+	// Max-length (Windows): 15 characters
+	// Max-length (Linux): 64 characters.
+	// For naming conventions and restrictions see Azure infrastructure services implementation guidelines
+	// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-infrastructure-subscription-accounts-guidelines?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json#1-naming-conventions].
 	ComputerName *string `json:"computerName,omitempty"`
 
-	// Specifies a base-64 encoded string of custom data. The base-64 encoded string is decoded to a binary array that is saved
-	// as a file on the Virtual Machine. The maximum length of the binary array is 65535 bytes. <br><br> **Note: Do not pass any
-	// secrets or passwords in customData property** <br><br> This property cannot be updated after the VM is created. <br><br>
-	// customData is passed to the VM to be saved as a file, for more information see [Custom Data on Azure VMs](https://azure.microsoft.com/en-us/blog/custom-data-and-cloud-init-on-windows-azure/)
-	// <br><br> For using cloud-init for your Linux VM, see [Using cloud-init to customize a Linux VM during creation](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-using-cloud-init?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json)
+	// Specifies a base-64 encoded string of custom data. The base-64 encoded string is decoded to a binary array that is saved as a file on the Virtual Machine.
+	// The maximum length of the binary array is
+	// 65535 bytes.
+	// Note: Do not pass any secrets or passwords in customData property
+	// This property cannot be updated after the VM is created.
+	// customData is passed to the VM to be saved as a file, for more information see Custom Data on Azure VMs [https://azure.microsoft.com/en-us/blog/custom-data-and-cloud-init-on-windows-azure/]
+	// For using cloud-init for your Linux VM, see Using cloud-init to customize a Linux VM during creation
+	// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-using-cloud-init?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json]
 	CustomData *string `json:"customData,omitempty"`
 
-	// Specifies the Linux operating system settings on the virtual machine. <br><br>For a list of supported Linux distributions,
-	// see [Linux on Azure-Endorsed Distributions](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-endorsed-distros?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json)
-	// <br><br> For running non-endorsed distributions, see [Information for Non-Endorsed Distributions](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-create-upload-generic?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json).
+	// Specifies the Linux operating system settings on the virtual machine.
+	// For a list of supported Linux distributions, see Linux on Azure-Endorsed Distributions
+	// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-endorsed-distros?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json]
+	// For running non-endorsed distributions, see Information for Non-Endorsed Distributions
+	// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-create-upload-generic?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json].
 	LinuxConfiguration *LinuxConfiguration `json:"linuxConfiguration,omitempty"`
 
 	// Specifies whether the guest provision signal is required to infer provision success of the virtual machine.
@@ -3364,10 +3399,11 @@ type OrchestrationServiceSummary struct {
 	ServiceState *OrchestrationServiceState `json:"serviceState,omitempty" azure:"ro"`
 }
 
-// Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace
-// images. Before you can use a marketplace image from an API, you must enable the image for programmatic use. In the Azure
-// portal, find the marketplace image that you want to use and then click **Want to deploy programmatically, Get Started ->**.
-// Enter any required information and then click **Save**.
+// Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can
+// use a marketplace image from an API, you must
+// enable the image for programmatic use. In the Azure portal, find the marketplace image that you want to use and then click Want to deploy programmatically,
+// Get Started ->. Enter any required
+// information and then click Save.
 type Plan struct {
 	// The plan ID.
 	Name *string `json:"name,omitempty"`
@@ -3398,8 +3434,7 @@ type ProximityPlacementGroupListResult struct {
 	Value *[]ProximityPlacementGroup `json:"value,omitempty"`
 }
 
-// ProximityPlacementGroupListResultResponse is the response envelope for operations that return a ProximityPlacementGroupListResult
-// type.
+// ProximityPlacementGroupListResultResponse is the response envelope for operations that return a ProximityPlacementGroupListResult type.
 type ProximityPlacementGroupListResultResponse struct {
 	// The List Proximity Placement Group operation response.
 	ProximityPlacementGroupListResult *ProximityPlacementGroupListResult
@@ -3416,8 +3451,10 @@ type ProximityPlacementGroupProperties struct {
 	// Describes colocation status of the Proximity Placement Group.
 	ColocationStatus *InstanceViewStatus `json:"colocationStatus,omitempty"`
 
-	// Specifies the type of the proximity placement group. <br><br> Possible values are: <br><br> **Standard** : Co-locate resources
-	// within an Azure region or Availability Zone. <br><br> **Ultra** : For future use.
+	// Specifies the type of the proximity placement group.
+	// Possible values are:
+	// Standard : Co-locate resources within an Azure region or Availability Zone.
+	// Ultra : For future use.
 	ProximityPlacementGroupType *ProximityPlacementGroupType `json:"proximityPlacementGroupType,omitempty"`
 
 	// A list of references to all virtual machine scale sets in the proximity placement group.
@@ -3441,8 +3478,7 @@ type ProximityPlacementGroupUpdate struct {
 	UpdateResource
 }
 
-// ProximityPlacementGroupsCreateOrUpdateOptions contains the optional parameters for the ProximityPlacementGroups.CreateOrUpdate
-// method.
+// ProximityPlacementGroupsCreateOrUpdateOptions contains the optional parameters for the ProximityPlacementGroups.CreateOrUpdate method.
 type ProximityPlacementGroupsCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
@@ -3458,14 +3494,12 @@ type ProximityPlacementGroupsGetOptions struct {
 	IncludeColocationStatus *string
 }
 
-// ProximityPlacementGroupsListByResourceGroupOptions contains the optional parameters for the ProximityPlacementGroups.ListByResourceGroup
-// method.
+// ProximityPlacementGroupsListByResourceGroupOptions contains the optional parameters for the ProximityPlacementGroups.ListByResourceGroup method.
 type ProximityPlacementGroupsListByResourceGroupOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ProximityPlacementGroupsListBySubscriptionOptions contains the optional parameters for the ProximityPlacementGroups.ListBySubscription
-// method.
+// ProximityPlacementGroupsListBySubscriptionOptions contains the optional parameters for the ProximityPlacementGroups.ListBySubscription method.
 type ProximityPlacementGroupsListBySubscriptionOptions struct {
 	// placeholder for future optional parameters
 }
@@ -3641,8 +3675,10 @@ type ResourceSKU struct {
 	// The Size of the SKU.
 	Size *string `json:"size,omitempty" azure:"ro"`
 
-	// Specifies the tier of virtual machines in a scale set.<br /><br /> Possible Values:<br /><br /> **Standard**<br /><br />
-	// **Basic**
+	// Specifies the tier of virtual machines in a scale set.
+	// Possible Values:
+	// Standard
+	// Basic
 	Tier *string `json:"tier,omitempty" azure:"ro"`
 }
 
@@ -3712,8 +3748,7 @@ type ResourceSKURestrictions struct {
 	// The type of restrictions.
 	Type *ResourceSKURestrictionsType `json:"type,omitempty" azure:"ro"`
 
-	// The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU
-	// is restricted.
+	// The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted.
 	Values *[]string `json:"values,omitempty" azure:"ro"`
 }
 
@@ -3764,24 +3799,25 @@ type RollbackStatusInfo struct {
 
 // The configuration parameters used while performing a rolling upgrade.
 type RollingUpgradePolicy struct {
-	// The maximum percent of total virtual machine instances that will be upgraded simultaneously by the rolling upgrade in one
-	// batch. As this is a maximum, unhealthy instances in previous or future batches can cause the percentage of instances in
-	// a batch to decrease to ensure higher reliability. The default value for this parameter is 20%.
+	// The maximum percent of total virtual machine instances that will be upgraded simultaneously by the rolling upgrade in one batch. As this is a maximum,
+	// unhealthy instances in previous or future batches
+	// can cause the percentage of instances in a batch to decrease to ensure higher reliability. The default value for this parameter is 20%.
 	MaxBatchInstancePercent *int32 `json:"maxBatchInstancePercent,omitempty"`
 
-	// The maximum percentage of the total virtual machine instances in the scale set that can be simultaneously unhealthy, either
-	// as a result of being upgraded, or by being found in an unhealthy state by the virtual machine health checks before the
-	// rolling upgrade aborts. This constraint will be checked prior to starting any batch. The default value for this parameter
-	// is 20%.
+	// The maximum percentage of the total virtual machine instances in the scale set that can be simultaneously unhealthy, either as a result of being upgraded,
+	// or by being found in an unhealthy state by
+	// the virtual machine health checks before the rolling upgrade aborts. This constraint will be checked prior to starting any batch. The default value for
+	// this parameter is 20%.
 	MaxUnhealthyInstancePercent *int32 `json:"maxUnhealthyInstancePercent,omitempty"`
 
-	// The maximum percentage of upgraded virtual machine instances that can be found to be in an unhealthy state. This check
-	// will happen after each batch is upgraded. If this percentage is ever exceeded, the rolling update aborts. The default value
-	// for this parameter is 20%.
+	// The maximum percentage of upgraded virtual machine instances that can be found to be in an unhealthy state. This check will happen after each batch is
+	// upgraded. If this percentage is ever exceeded,
+	// the rolling update aborts. The default value for this parameter is 20%.
 	MaxUnhealthyUpgradedInstancePercent *int32 `json:"maxUnhealthyUpgradedInstancePercent,omitempty"`
 
-	// The wait time between completing the update for all virtual machines in one batch and starting the next batch. The time
-	// duration should be specified in ISO 8601 format. The default value is 0 seconds (PT0S).
+	// The wait time between completing the update for all virtual machines in one batch and starting the next batch. The time duration should be specified
+	// in ISO 8601 format. The default value is 0 seconds
+	// (PT0S).
 	PauseTimeBetweenBatches *string `json:"pauseTimeBetweenBatches,omitempty"`
 }
 
@@ -3950,8 +3986,7 @@ type RunCommandInput struct {
 	// The run command parameters.
 	Parameters *[]RunCommandInputParameter `json:"parameters,omitempty"`
 
-	// Optional. The script to be executed. When this value is given, the given script will override the default script of the
-	// command.
+	// Optional. The script to be executed. When this value is given, the given script will override the default script of the command.
 	Script *[]string `json:"script,omitempty"`
 }
 
@@ -4021,8 +4056,9 @@ type RunCommandResultResponse struct {
 	RunCommandResult *RunCommandResult
 }
 
-// Describes a virtual machine scale set sku. NOTE: If the new VM SKU is not supported on the hardware the scale set is currently
-// on, you need to deallocate the VMs in the scale set before you modify the SKU name.
+// Describes a virtual machine scale set sku. NOTE: If the new VM SKU is not supported on the hardware the scale set is currently on, you need to deallocate
+// the VMs in the scale set before you modify the
+// SKU name.
 type SKU struct {
 	// Specifies the number of virtual machines in the scale set.
 	Capacity *int64 `json:"capacity,omitempty"`
@@ -4030,8 +4066,10 @@ type SKU struct {
 	// The sku name.
 	Name *string `json:"name,omitempty"`
 
-	// Specifies the tier of virtual machines in a scale set.<br /><br /> Possible Values:<br /><br /> **Standard**<br /><br />
-	// **Basic**
+	// Specifies the tier of virtual machines in a scale set.
+	// Possible Values:
+	// Standard
+	// Basic
 	Tier *string `json:"tier,omitempty"`
 }
 
@@ -4043,12 +4081,13 @@ type SSHConfiguration struct {
 
 // Contains information about SSH certificate public key and the path on the Linux VM where the public key is placed.
 type SSHPublicKey struct {
-	// SSH public key certificate used to authenticate with the VM through ssh. The key needs to be at least 2048-bit and in ssh-rsa
-	// format. <br><br> For creating ssh keys, see [Create SSH keys on Linux and Mac for Linux VMs in Azure](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-mac-create-ssh-keys?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json).
+	// SSH public key certificate used to authenticate with the VM through ssh. The key needs to be at least 2048-bit and in ssh-rsa format.
+	// For creating ssh keys, see Create SSH keys on Linux and Mac for Linux VMs in Azure
+	// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-mac-create-ssh-keys?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json].
 	KeyData *string `json:"keyData,omitempty"`
 
-	// Specifies the full path on the created VM where ssh public key is stored. If the file already exists, the specified key
-	// is appended to the file. Example: /home/user/.ssh/authorized_keys
+	// Specifies the full path on the created VM where ssh public key is stored. If the file already exists, the specified key is appended to the file. Example:
+	// /home/user/.ssh/authorized_keys
 	Path *string `json:"path,omitempty"`
 }
 
@@ -4057,17 +4096,15 @@ type SSHPublicKeyGenerateKeyPairResult struct {
 	// The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/sshPublicKeys/{SshPublicKeyName}
 	ID *string `json:"id,omitempty"`
 
-	// Private key portion of the key pair used to authenticate to a virtual machine through ssh. The private key is returned
-	// in RFC3447 format and should be treated as a secret.
+	// Private key portion of the key pair used to authenticate to a virtual machine through ssh. The private key is returned in RFC3447 format and should be
+	// treated as a secret.
 	PrivateKey *string `json:"privateKey,omitempty"`
 
-	// Public key portion of the key pair used to authenticate to a virtual machine through ssh. The public key is in ssh-rsa
-	// format.
+	// Public key portion of the key pair used to authenticate to a virtual machine through ssh. The public key is in ssh-rsa format.
 	PublicKey *string `json:"publicKey,omitempty"`
 }
 
-// SSHPublicKeyGenerateKeyPairResultResponse is the response envelope for operations that return a SSHPublicKeyGenerateKeyPairResult
-// type.
+// SSHPublicKeyGenerateKeyPairResultResponse is the response envelope for operations that return a SSHPublicKeyGenerateKeyPairResult type.
 type SSHPublicKeyGenerateKeyPairResultResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -4085,9 +4122,10 @@ type SSHPublicKeyResource struct {
 
 // Properties of the SSH public key.
 type SSHPublicKeyResourceProperties struct {
-	// SSH public key used to authenticate to a virtual machine through ssh. If this property is not initially provided when the
-	// resource is created, the publicKey property will be populated when generateKeyPair is called. If the public key is provided
-	// upon resource creation, the provided public key needs to be at least 2048-bit and in ssh-rsa format.
+	// SSH public key used to authenticate to a virtual machine through ssh. If this property is not initially provided when the resource is created, the publicKey
+	// property will be populated when
+	// generateKeyPair is called. If the public key is provided upon resource creation, the provided public key needs to be at least 2048-bit and in ssh-rsa
+	// format.
 	PublicKey *string `json:"publicKey,omitempty"`
 }
 
@@ -4136,8 +4174,7 @@ type SSHPublicKeysGroupListResult struct {
 	Value *[]SSHPublicKeyResource `json:"value,omitempty"`
 }
 
-// SSHPublicKeysGroupListResultResponse is the response envelope for operations that return a SSHPublicKeysGroupListResult
-// type.
+// SSHPublicKeysGroupListResultResponse is the response envelope for operations that return a SSHPublicKeysGroupListResult type.
 type SSHPublicKeysGroupListResultResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -4163,16 +4200,17 @@ type SSHPublicKeysUpdateOptions struct {
 
 // Describes a scale-in policy for a virtual machine scale set.
 type ScaleInPolicy struct {
-	// The rules to be followed when scaling-in a virtual machine scale set. <br><br> Possible values are: <br><br> **Default**
-	// When a virtual machine scale set is scaled in, the scale set will first be balanced across zones if it is a zonal scale
-	// set. Then, it will be balanced across Fault Domains as far as possible. Within each Fault Domain, the virtual machines
-	// chosen for removal will be the newest ones that are not protected from scale-in. <br><br> **OldestVM** When a virtual machine
-	// scale set is being scaled-in, the oldest virtual machines that are not protected from scale-in will be chosen for removal.
-	// For zonal virtual machine scale sets, the scale set will first be balanced across zones. Within each zone, the oldest virtual
-	// machines that are not protected will be chosen for removal. <br><br> **NewestVM** When a virtual machine scale set is being
-	// scaled-in, the newest virtual machines that are not protected from scale-in will be chosen for removal. For zonal virtual
-	// machine scale sets, the scale set will first be balanced across zones. Within each zone, the newest virtual machines that
-	// are not protected will be chosen for removal. <br><br>
+	// The rules to be followed when scaling-in a virtual machine scale set.
+	// Possible values are:
+	// Default When a virtual machine scale set is scaled in, the scale set will first be balanced across zones if it is a zonal scale set. Then, it will be
+	// balanced across Fault Domains as far as possible.
+	// Within each Fault Domain, the virtual machines chosen for removal will be the newest ones that are not protected from scale-in.
+	// OldestVM When a virtual machine scale set is being scaled-in, the oldest virtual machines that are not protected from scale-in will be chosen for removal.
+	// For zonal virtual machine scale sets, the
+	// scale set will first be balanced across zones. Within each zone, the oldest virtual machines that are not protected will be chosen for removal.
+	// NewestVM When a virtual machine scale set is being scaled-in, the newest virtual machines that are not protected from scale-in will be chosen for removal.
+	// For zonal virtual machine scale sets, the
+	// scale set will first be balanced across zones. Within each zone, the newest virtual machines that are not protected will be chosen for removal.
 	Rules *[]VirtualMachineScaleSetScaleInRules `json:"rules,omitempty"`
 }
 
@@ -4195,7 +4233,7 @@ type Snapshot struct {
 	// Snapshot resource properties.
 	Properties *SnapshotProperties `json:"properties,omitempty"`
 
-	// The snapshots sku name. Can be Standard_LRS, Premium_LRS, or Standard_ZRS.
+	// The snapshots sku name. Can be StandardLRS, PremiumLRS, or Standard_ZRS.
 	SKU *SnapshotSKU `json:"sku,omitempty"`
 }
 
@@ -4237,9 +4275,9 @@ type SnapshotProperties struct {
 	// The size of the disk in bytes. This field is read only.
 	DiskSizeBytes *int64 `json:"diskSizeBytes,omitempty" azure:"ro"`
 
-	// If creationData.createOption is Empty, this field is mandatory and it indicates the size of the disk to create. If this
-	// field is present for updates or creation with other options, it indicates a resize. Resizes are only allowed if the disk
-	// is not attached to a running VM, and can only increase the disk's size.
+	// If creationData.createOption is Empty, this field is mandatory and it indicates the size of the disk to create. If this field is present for updates
+	// or creation with other options, it indicates a
+	// resize. Resizes are only allowed if the disk is not attached to a running VM, and can only increase the disk's size.
 	DiskSizeGb *int32 `json:"diskSizeGB,omitempty"`
 
 	// Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys.
@@ -4251,8 +4289,7 @@ type SnapshotProperties struct {
 	// The hypervisor generation of the Virtual Machine. Applicable to OS disks only.
 	HyperVGeneration *HyperVGeneration `json:"hyperVGeneration,omitempty"`
 
-	// Whether a snapshot is incremental. Incremental snapshots on the same disk occupy less space than full snapshots and can
-	// be diffed.
+	// Whether a snapshot is incremental. Incremental snapshots on the same disk occupy less space than full snapshots and can be diffed.
 	Incremental *bool `json:"incremental,omitempty"`
 
 	// The Operating System type.
@@ -4390,7 +4427,7 @@ type SnapshotResponse struct {
 	Snapshot *Snapshot
 }
 
-// The snapshots sku name. Can be Standard_LRS, Premium_LRS, or Standard_ZRS.
+// The snapshots sku name. Can be StandardLRS, PremiumLRS, or Standard_ZRS.
 type SnapshotSKU struct {
 	// The sku name.
 	Name *SnapshotStorageAccountTypes `json:"name,omitempty"`
@@ -4404,7 +4441,7 @@ type SnapshotUpdate struct {
 	// Snapshot resource update properties.
 	Properties *SnapshotUpdateProperties `json:"properties,omitempty"`
 
-	// The snapshots sku name. Can be Standard_LRS, Premium_LRS, or Standard_ZRS.
+	// The snapshots sku name. Can be StandardLRS, PremiumLRS, or Standard_ZRS.
 	SKU *SnapshotSKU `json:"sku,omitempty"`
 
 	// Resource tags
@@ -4413,9 +4450,9 @@ type SnapshotUpdate struct {
 
 // Snapshot resource update properties.
 type SnapshotUpdateProperties struct {
-	// If creationData.createOption is Empty, this field is mandatory and it indicates the size of the disk to create. If this
-	// field is present for updates or creation with other options, it indicates a resize. Resizes are only allowed if the disk
-	// is not attached to a running VM, and can only increase the disk's size.
+	// If creationData.createOption is Empty, this field is mandatory and it indicates the size of the disk to create. If this field is present for updates
+	// or creation with other options, it indicates a
+	// resize. Resizes are only allowed if the disk is not attached to a running VM, and can only increase the disk's size.
 	DiskSizeGb *int32 `json:"diskSizeGB,omitempty"`
 
 	// Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys.
@@ -4476,17 +4513,19 @@ type SourceVault struct {
 
 // Specifies the storage settings for the virtual machine disks.
 type StorageProfile struct {
-	// Specifies the parameters that are used to add a data disk to a virtual machine. <br><br> For more information about disks,
-	// see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-about-disks-vhds?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).
+	// Specifies the parameters that are used to add a data disk to a virtual machine.
+	// For more information about disks, see About disks and VHDs for Azure virtual machines
+	// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-about-disks-vhds?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json].
 	DataDisks *[]DataDisk `json:"dataDisks,omitempty"`
 
-	// Specifies information about the image to use. You can specify information about platform images, marketplace images, or
-	// virtual machine images. This element is required when you want to use a platform image, marketplace image, or virtual machine
-	// image, but is not used in other creation operations.
+	// Specifies information about the image to use. You can specify information about platform images, marketplace images, or virtual machine images. This
+	// element is required when you want to use a platform
+	// image, marketplace image, or virtual machine image, but is not used in other creation operations.
 	ImageReference *ImageReference `json:"imageReference,omitempty"`
 
-	// Specifies information about the operating system disk used by the virtual machine. <br><br> For more information about
-	// disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-about-disks-vhds?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).
+	// Specifies information about the operating system disk used by the virtual machine.
+	// For more information about disks, see About disks and VHDs for Azure virtual machines
+	// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-about-disks-vhds?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json].
 	OSDisk *OSDisk `json:"osDisk,omitempty"`
 }
 
@@ -4525,9 +4564,9 @@ type TerminateNotificationProfile struct {
 	// Specifies whether the Terminate Scheduled event is enabled or disabled.
 	Enable *bool `json:"enable,omitempty"`
 
-	// Configurable length of time a Virtual Machine being deleted will have to potentially approve the Terminate Scheduled Event
-	// before the event is auto approved (timed out). The configuration must be specified in ISO 8601 format, the default value
-	// is 5 minutes (PT5M)
+	// Configurable length of time a Virtual Machine being deleted will have to potentially approve the Terminate Scheduled Event before the event is auto approved
+	// (timed out). The configuration must be
+	// specified in ISO 8601 format, the default value is 5 minutes (PT5M)
 	NotBeforeTimeout *string `json:"notBeforeTimeout,omitempty"`
 }
 
@@ -4658,9 +4697,10 @@ type UpgradePolicy struct {
 	// Configuration parameters used for performing automatic OS Upgrade.
 	AutomaticOSUpgradePolicy *AutomaticOSUpgradePolicy `json:"automaticOSUpgradePolicy,omitempty"`
 
-	// Specifies the mode of an upgrade to virtual machines in the scale set.<br /><br /> Possible values are:<br /><br /> **Manual**
-	// - You control the application of updates to virtual machines in the scale set. You do this by using the manualUpgrade action.<br
-	// /><br /> **Automatic** - All virtual machines in the scale set are automatically updated at the same time.
+	// Specifies the mode of an upgrade to virtual machines in the scale set.
+	// Possible values are:
+	// Manual - You control the application of updates to virtual machines in the scale set. You do this by using the manualUpgrade action.
+	// Automatic - All virtual machines in the scale set are automatically updated at the same time.
 	Mode *UpgradeMode `json:"mode,omitempty"`
 
 	// The configuration parameters used while performing a rolling upgrade.
@@ -4714,24 +4754,30 @@ type UserAssignedIDentitiesValue struct {
 }
 
 type VMScaleSetConvertToSinglePlacementGroupInput struct {
-	// Id of the placement group in which you want future virtual machine instances to be placed. To query placement group Id,
-	// please use Virtual Machine Scale Set VMs - Get API. If not provided, the platform will choose one with maximum number of
-	// virtual machine instances.
+	// Id of the placement group in which you want future virtual machine instances to be placed. To query placement group Id, please use Virtual Machine Scale
+	// Set VMs - Get API. If not provided, the
+	// platform will choose one with maximum number of virtual machine instances.
 	ActivePlacementGroupID *string `json:"activePlacementGroupId,omitempty"`
 }
 
 // Describes a single certificate reference in a Key Vault, and where the certificate should reside on the VM.
 type VaultCertificate struct {
-	// For Windows VMs, specifies the certificate store on the Virtual Machine to which the certificate should be added. The specified
-	// certificate store is implicitly in the LocalMachine account. <br><br>For Linux VMs, the certificate file is placed under
-	// the /var/lib/waagent directory, with the file name &lt;UppercaseThumbprint&gt;.crt for the X509 certificate file and &lt;UppercaseThumbprint&gt;.prv
-	// for private key. Both of these files are .pem formatted.
+	// For Windows VMs, specifies the certificate store on the Virtual Machine to which the certificate should be added. The specified certificate store is
+	// implicitly in the LocalMachine account.
+	// For Linux VMs, the certificate file is placed under the /var/lib/waagent directory, with the file name <UppercaseThumbprint>.crt for the X509 certificate
+	// file and <UppercaseThumbprint>.prv for private
+	// key. Both of these files are .pem formatted.
 	CertificateStore *string `json:"certificateStore,omitempty"`
 
-	// This is the URL of a certificate that has been uploaded to Key Vault as a secret. For adding a secret to the Key Vault,
-	// see [Add a key or secret to the key vault](https://docs.microsoft.com/azure/key-vault/key-vault-get-started/#add). In this
-	// case, your certificate needs to be It is the Base64 encoding of the following JSON Object which is encoded in UTF-8: <br><br>
-	// {<br> "data":"<Base64-encoded-certificate>",<br> "dataType":"pfx",<br> "password":"<pfx-file-password>"<br>}
+	// This is the URL of a certificate that has been uploaded to Key Vault as a secret. For adding a secret to the Key Vault, see Add a key or secret to the
+	// key vault
+	// [https://docs.microsoft.com/azure/key-vault/key-vault-get-started/#add]. In this case, your certificate needs to be It is the Base64 encoding of the
+	// following JSON Object which is encoded in UTF-8:
+	// {
+	// "data":"",
+	// "dataType":"pfx",
+	// "password":""
+	// }
 	CertificateURL *string `json:"certificateUrl,omitempty"`
 }
 
@@ -4756,10 +4802,11 @@ type VirtualMachine struct {
 	// The identity of the virtual machine, if configured.
 	IDentity *VirtualMachineIDentity `json:"identity,omitempty"`
 
-	// Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace
-	// images. Before you can use a marketplace image from an API, you must enable the image for programmatic use. In the Azure
-	// portal, find the marketplace image that you want to use and then click **Want to deploy programmatically, Get Started ->**.
-	// Enter any required information and then click **Save**.
+	// Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can
+	// use a marketplace image from an API, you must
+	// enable the image for programmatic use. In the Azure portal, find the marketplace image that you want to use and then click Want to deploy programmatically,
+	// Get Started ->. Enter any required
+	// information and then click Save.
 	Plan *Plan `json:"plan,omitempty"`
 
 	// Describes the properties of a Virtual Machine.
@@ -4812,8 +4859,7 @@ type VirtualMachineCaptureResult struct {
 	Schema *string `json:"$schema,omitempty" azure:"ro"`
 }
 
-// VirtualMachineCaptureResultPollerResponse is the response envelope for operations that asynchronously return a VirtualMachineCaptureResult
-// type.
+// VirtualMachineCaptureResultPollerResponse is the response envelope for operations that asynchronously return a VirtualMachineCaptureResult type.
 type VirtualMachineCaptureResultPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*VirtualMachineCaptureResultResponse, error)
@@ -4860,8 +4906,7 @@ type VirtualMachineExtensionImage struct {
 	Properties *VirtualMachineExtensionImageProperties `json:"properties,omitempty"`
 }
 
-// VirtualMachineExtensionImageArrayResponse is the response envelope for operations that return a []VirtualMachineExtensionImage
-// type.
+// VirtualMachineExtensionImageArrayResponse is the response envelope for operations that return a []VirtualMachineExtensionImage type.
 type VirtualMachineExtensionImageArrayResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -4884,13 +4929,13 @@ type VirtualMachineExtensionImageProperties struct {
 	// Whether the handler can support multiple extensions.
 	SupportsMultipleExtensions *bool `json:"supportsMultipleExtensions,omitempty"`
 
-	// Whether the extension can be used on xRP VMScaleSets. By default existing extensions are usable on scalesets, but there
-	// might be cases where a publisher wants to explicitly indicate the extension is only enabled for CRP VMs but not VMSS.
+	// Whether the extension can be used on xRP VMScaleSets. By default existing extensions are usable on scalesets, but there might be cases where a publisher
+	// wants to explicitly indicate the extension is
+	// only enabled for CRP VMs but not VMSS.
 	VMScaleSetEnabled *bool `json:"vmScaleSetEnabled,omitempty"`
 }
 
-// VirtualMachineExtensionImageResponse is the response envelope for operations that return a VirtualMachineExtensionImage
-// type.
+// VirtualMachineExtensionImageResponse is the response envelope for operations that return a VirtualMachineExtensionImage type.
 type VirtualMachineExtensionImageResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -4904,14 +4949,12 @@ type VirtualMachineExtensionImagesGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineExtensionImagesListTypesOptions contains the optional parameters for the VirtualMachineExtensionImages.ListTypes
-// method.
+// VirtualMachineExtensionImagesListTypesOptions contains the optional parameters for the VirtualMachineExtensionImages.ListTypes method.
 type VirtualMachineExtensionImagesListTypesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineExtensionImagesListVersionsOptions contains the optional parameters for the VirtualMachineExtensionImages.ListVersions
-// method.
+// VirtualMachineExtensionImagesListVersionsOptions contains the optional parameters for the VirtualMachineExtensionImages.ListVersions method.
 type VirtualMachineExtensionImagesListVersionsOptions struct {
 	// The filter to apply on the operation.
 	Filter  *string
@@ -4937,8 +4980,7 @@ type VirtualMachineExtensionInstanceView struct {
 	TypeHandlerVersion *string `json:"typeHandlerVersion,omitempty"`
 }
 
-// VirtualMachineExtensionPollerResponse is the response envelope for operations that asynchronously return a VirtualMachineExtension
-// type.
+// VirtualMachineExtensionPollerResponse is the response envelope for operations that asynchronously return a VirtualMachineExtension type.
 type VirtualMachineExtensionPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*VirtualMachineExtensionResponse, error)
@@ -4952,8 +4994,9 @@ type VirtualMachineExtensionPollerResponse struct {
 
 // Describes the properties of a Virtual Machine Extension.
 type VirtualMachineExtensionProperties struct {
-	// Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed,
-	// however, the extension will not upgrade minor versions unless redeployed, even with this property set to true.
+	// Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not
+	// upgrade minor versions unless redeployed, even
+	// with this property set to true.
 	AutoUpgradeMinorVersion *bool `json:"autoUpgradeMinorVersion,omitempty"`
 
 	// How the extension handler should be forced to update even if the extension configuration has not changed.
@@ -4999,8 +5042,9 @@ type VirtualMachineExtensionUpdate struct {
 
 // Describes the properties of a Virtual Machine Extension.
 type VirtualMachineExtensionUpdateProperties struct {
-	// Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed,
-	// however, the extension will not upgrade minor versions unless redeployed, even with this property set to true.
+	// Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not
+	// upgrade minor versions unless redeployed, even
+	// with this property set to true.
 	AutoUpgradeMinorVersion *bool `json:"autoUpgradeMinorVersion,omitempty"`
 
 	// How the extension handler should be forced to update even if the extension configuration has not changed.
@@ -5022,8 +5066,7 @@ type VirtualMachineExtensionUpdateProperties struct {
 	TypeHandlerVersion *string `json:"typeHandlerVersion,omitempty"`
 }
 
-// VirtualMachineExtensionsCreateOrUpdateOptions contains the optional parameters for the VirtualMachineExtensions.CreateOrUpdate
-// method.
+// VirtualMachineExtensionsCreateOrUpdateOptions contains the optional parameters for the VirtualMachineExtensions.CreateOrUpdate method.
 type VirtualMachineExtensionsCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
@@ -5051,8 +5094,7 @@ type VirtualMachineExtensionsListResult struct {
 	Value *[]VirtualMachineExtension `json:"value,omitempty"`
 }
 
-// VirtualMachineExtensionsListResultResponse is the response envelope for operations that return a VirtualMachineExtensionsListResult
-// type.
+// VirtualMachineExtensionsListResultResponse is the response envelope for operations that return a VirtualMachineExtensionsListResult type.
 type VirtualMachineExtensionsListResultResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -5080,12 +5122,13 @@ type VirtualMachineIDentity struct {
 	// The tenant id associated with the virtual machine. This property will only be provided for a system assigned identity.
 	TenantID *string `json:"tenantId,omitempty" azure:"ro"`
 
-	// The type of identity used for the virtual machine. The type 'SystemAssigned, UserAssigned' includes both an implicitly
-	// created identity and a set of user assigned identities. The type 'None' will remove any identities from the virtual machine.
+	// The type of identity used for the virtual machine. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of
+	// user assigned identities. The type 'None' will
+	// remove any identities from the virtual machine.
 	Type *ResourceIDentityType `json:"type,omitempty"`
 
-	// The list of user identities associated with the Virtual Machine. The user identity dictionary key references will be ARM
-	// resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
+	// The list of user identities associated with the Virtual Machine. The user identity dictionary key references will be ARM resource ids in the form:
+	// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
 	UserAssignedIDentities *map[string]UserAssignedIDentitiesValue `json:"userAssignedIdentities,omitempty"`
 }
 
@@ -5121,13 +5164,12 @@ type VirtualMachineImageResource struct {
 	// The name of the resource.
 	Name *string `json:"name,omitempty"`
 
-	// Specifies the tags that are assigned to the virtual machine. For more information about using tags, see [Using tags to
-	// organize your Azure resources](https://docs.microsoft.com/azure/azure-resource-manager/resource-group-using-tags.md).
+	// Specifies the tags that are assigned to the virtual machine. For more information about using tags, see Using tags to organize your Azure resources
+	// [https://docs.microsoft.com/azure/azure-resource-manager/resource-group-using-tags.md].
 	Tags *map[string]string `json:"tags,omitempty"`
 }
 
-// VirtualMachineImageResourceArrayResponse is the response envelope for operations that return a []VirtualMachineImageResource
-// type.
+// VirtualMachineImageResourceArrayResponse is the response envelope for operations that return a []VirtualMachineImageResource type.
 type VirtualMachineImageResourceArrayResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -5163,8 +5205,7 @@ type VirtualMachineImagesListOptions struct {
 	Top     *int32
 }
 
-// VirtualMachineImagesListPublishersOptions contains the optional parameters for the VirtualMachineImages.ListPublishers
-// method.
+// VirtualMachineImagesListPublishersOptions contains the optional parameters for the VirtualMachineImages.ListPublishers method.
 type VirtualMachineImagesListPublishersOptions struct {
 	// placeholder for future optional parameters
 }
@@ -5176,9 +5217,9 @@ type VirtualMachineImagesListSKUsOptions struct {
 
 // The instance view of a virtual machine.
 type VirtualMachineInstanceView struct {
-	// Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. <br><br>
-	// You can easily view the output of your console log. <br><br> Azure also enables you to see a screenshot of the VM from
-	// the hypervisor.
+	// Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status.
+	// You can easily view the output of your console log.
+	// Azure also enables you to see a screenshot of the VM from the hypervisor.
 	BootDiagnostics *BootDiagnosticsInstanceView `json:"bootDiagnostics,omitempty"`
 
 	// The computer name assigned to the virtual machine.
@@ -5262,78 +5303,89 @@ type VirtualMachineProperties struct {
 	// Specifies additional capabilities enabled or disabled on the virtual machine.
 	AdditionalCapabilities *AdditionalCapabilities `json:"additionalCapabilities,omitempty"`
 
-	// Specifies information about the availability set that the virtual machine should be assigned to. Virtual machines specified
-	// in the same availability set are allocated to different nodes to maximize availability. For more information about availability
-	// sets, see [Manage the availability of virtual machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-manage-availability?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).
-	// <br><br> For more information on Azure planned maintenance, see [Planned maintenance for virtual machines in Azure](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-planned-maintenance?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)
-	// <br><br> Currently, a VM can only be added to availability set at creation time. The availability set to which the VM is
-	// being added should be under the same resource group as the availability set resource. An existing VM cannot be added to
-	// an availability set. <br><br>This property cannot exist along with a non-null properties.virtualMachineScaleSet reference.
+	// Specifies information about the availability set that the virtual machine should be assigned to. Virtual machines specified in the same availability
+	// set are allocated to different nodes to maximize
+	// availability. For more information about availability sets, see Manage the availability of virtual machines
+	// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-manage-availability?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json].
+	// For more information on Azure planned maintenance, see Planned maintenance for virtual machines in Azure
+	// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-planned-maintenance?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json]
+	// Currently, a VM can only be added to availability set at creation time. The availability set to which the VM is being added should be under the same
+	// resource group as the availability set resource. An
+	// existing VM cannot be added to an availability set.
+	// This property cannot exist along with a non-null properties.virtualMachineScaleSet reference.
 	AvailabilitySet *SubResource `json:"availabilitySet,omitempty"`
 
-	// Specifies the billing related details of a Azure Spot virtual machine. <br><br>Minimum api-version: 2019-03-01.
+	// Specifies the billing related details of a Azure Spot virtual machine.
+	// Minimum api-version: 2019-03-01.
 	BillingProfile *BillingProfile `json:"billingProfile,omitempty"`
 
-	// Specifies the boot diagnostic settings state. <br><br>Minimum api-version: 2015-06-15.
+	// Specifies the boot diagnostic settings state.
+	// Minimum api-version: 2015-06-15.
 	DiagnosticsProfile *DiagnosticsProfile `json:"diagnosticsProfile,omitempty"`
 
-	// Specifies the eviction policy for the Azure Spot virtual machine and Azure Spot scale set. <br><br>For Azure Spot virtual
-	// machines, both 'Deallocate' and 'Delete' are supported and the minimum api-version is 2019-03-01. <br><br>For Azure Spot
-	// scale sets, both 'Deallocate' and 'Delete' are supported and the minimum api-version is 2017-10-30-preview.
+	// Specifies the eviction policy for the Azure Spot virtual machine and Azure Spot scale set.
+	// For Azure Spot virtual machines, both 'Deallocate' and 'Delete' are supported and the minimum api-version is 2019-03-01.
+	// For Azure Spot scale sets, both 'Deallocate' and 'Delete' are supported and the minimum api-version is 2017-10-30-preview.
 	EvictionPolicy *VirtualMachineEvictionPolicyTypes `json:"evictionPolicy,omitempty"`
 
 	// Specifies the hardware settings for the virtual machine.
 	HardwareProfile *HardwareProfile `json:"hardwareProfile,omitempty"`
 
-	// Specifies information about the dedicated host that the virtual machine resides in. <br><br>Minimum api-version: 2018-10-01.
+	// Specifies information about the dedicated host that the virtual machine resides in.
+	// Minimum api-version: 2018-10-01.
 	Host *SubResource `json:"host,omitempty"`
 
 	// The virtual machine instance view.
 	InstanceView *VirtualMachineInstanceView `json:"instanceView,omitempty" azure:"ro"`
 
-	// Specifies that the image or disk that is being used was licensed on-premises. This element is only used for images that
-	// contain the Windows Server operating system. <br><br> Possible values are: <br><br> Windows_Client <br><br> Windows_Server
-	// <br><br> If this element is included in a request for an update, the value must match the initial value. This value cannot
-	// be updated. <br><br> For more information, see [Azure Hybrid Use Benefit for Windows Server](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-hybrid-use-benefit-licensing?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)
-	// <br><br> Minimum api-version: 2015-06-15
+	// Specifies that the image or disk that is being used was licensed on-premises. This element is only used for images that contain the Windows Server operating
+	// system.
+	// Possible values are:
+	// WindowsClient
+	// WindowsServer
+	// If this element is included in a request for an update, the value must match the initial value. This value cannot be updated.
+	// For more information, see Azure Hybrid Use Benefit for Windows Server
+	// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-hybrid-use-benefit-licensing?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json]
+	// Minimum api-version: 2015-06-15
 	LicenseType *string `json:"licenseType,omitempty"`
 
 	// Specifies the network interfaces of the virtual machine.
 	NetworkProfile *NetworkProfile `json:"networkProfile,omitempty"`
 
-	// Specifies the operating system settings used while creating the virtual machine. Some of the settings cannot be changed
-	// once VM is provisioned.
+	// Specifies the operating system settings used while creating the virtual machine. Some of the settings cannot be changed once VM is provisioned.
 	OSProfile *OSProfile `json:"osProfile,omitempty"`
 
-	// Specifies the priority for the virtual machine. <br><br>Minimum api-version: 2019-03-01
+	// Specifies the priority for the virtual machine.
+	// Minimum api-version: 2019-03-01
 	Priority *VirtualMachinePriorityTypes `json:"priority,omitempty"`
 
 	// The provisioning state, which only appears in the response.
 	ProvisioningState *string `json:"provisioningState,omitempty" azure:"ro"`
 
-	// Specifies information about the proximity placement group that the virtual machine should be assigned to. <br><br>Minimum
-	// api-version: 2018-04-01.
+	// Specifies information about the proximity placement group that the virtual machine should be assigned to.
+	// Minimum api-version: 2018-04-01.
 	ProximityPlacementGroup *SubResource `json:"proximityPlacementGroup,omitempty"`
 
 	// Specifies the storage settings for the virtual machine disks.
 	StorageProfile *StorageProfile `json:"storageProfile,omitempty"`
 
-	// Specifies the VM unique ID which is a 128-bits identifier that is encoded and stored in all Azure IaaS VMs SMBIOS and can
-	// be read using platform BIOS commands.
+	// Specifies the VM unique ID which is a 128-bits identifier that is encoded and stored in all Azure IaaS VMs SMBIOS and can be read using platform BIOS
+	// commands.
 	VMID *string `json:"vmId,omitempty" azure:"ro"`
 
-	// Specifies information about the virtual machine scale set that the virtual machine should be assigned to. Virtual machines
-	// specified in the same virtual machine scale set are allocated to different nodes to maximize availability. Currently, a
-	// VM can only be added to virtual machine scale set at creation time. An existing VM cannot be added to a virtual machine
-	// scale set. <br><br>This property cannot exist along with a non-null properties.availabilitySet reference. <br><br>Minimum
-	// api‐version: 2019‐03‐01
+	// Specifies information about the virtual machine scale set that the virtual machine should be assigned to. Virtual machines specified in the same virtual
+	// machine scale set are allocated to different
+	// nodes to maximize availability. Currently, a VM can only be added to virtual machine scale set at creation time. An existing VM cannot be added to a
+	// virtual machine scale set.
+	// This property cannot exist along with a non-null properties.availabilitySet reference.
+	// Minimum api‐version: 2019‐03‐01
 	VirtualMachineScaleSet *SubResource `json:"virtualMachineScaleSet,omitempty"`
 }
 
 // Parameters for Reimaging Virtual Machine. NOTE: Virtual Machine OS disk will always be reimaged
 type VirtualMachineReimageParameters struct {
-	// Specifies whether to reimage temp disk. Default value: false. Note: This temp disk reimage parameter is only supported
-	// for VM/VMSS with Ephemeral OS disk.
+	// Specifies whether to reimage temp disk. Default value: false. Note: This temp disk reimage parameter is only supported for VM/VMSS with Ephemeral OS
+	// disk.
 	TempDisk *bool `json:"tempDisk,omitempty"`
 }
 
@@ -5362,10 +5414,11 @@ type VirtualMachineScaleSet struct {
 	// The identity of the virtual machine scale set, if configured.
 	IDentity *VirtualMachineScaleSetIDentity `json:"identity,omitempty"`
 
-	// Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace
-	// images. Before you can use a marketplace image from an API, you must enable the image for programmatic use. In the Azure
-	// portal, find the marketplace image that you want to use and then click **Want to deploy programmatically, Get Started ->**.
-	// Enter any required information and then click **Save**.
+	// Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can
+	// use a marketplace image from an API, you must
+	// enable the image for programmatic use. In the Azure portal, find the marketplace image that you want to use and then click Want to deploy programmatically,
+	// Get Started ->. Enter any required
+	// information and then click Save.
 	Plan *Plan `json:"plan,omitempty"`
 
 	// Describes the properties of a Virtual Machine Scale Set.
@@ -5380,27 +5433,31 @@ type VirtualMachineScaleSet struct {
 
 // Describes a virtual machine scale set data disk.
 type VirtualMachineScaleSetDataDisk struct {
-	// Specifies the caching requirements. <br><br> Possible values are: <br><br> **None** <br><br> **ReadOnly** <br><br> **ReadWrite**
-	// <br><br> Default: **None for Standard storage. ReadOnly for Premium storage**
+	// Specifies the caching requirements.
+	// Possible values are:
+	// None
+	// ReadOnly
+	// ReadWrite
+	// Default: None for Standard storage. ReadOnly for Premium storage
 	Caching *CachingTypes `json:"caching,omitempty"`
 
 	// The create option.
 	CreateOption *DiskCreateOptionTypes `json:"createOption,omitempty"`
 
-	// Specifies the Read-Write IOPS for the managed disk. Should be used only when StorageAccountType is UltraSSD_LRS. If not
-	// specified, a default value would be assigned based on diskSizeGB.
+	// Specifies the Read-Write IOPS for the managed disk. Should be used only when StorageAccountType is UltraSSD_LRS. If not specified, a default value would
+	// be assigned based on diskSizeGB.
 	DiskIopsReadWrite *int64 `json:"diskIOPSReadWrite,omitempty"`
 
-	// Specifies the bandwidth in MB per second for the managed disk. Should be used only when StorageAccountType is UltraSSD_LRS.
-	// If not specified, a default value would be assigned based on diskSizeGB.
+	// Specifies the bandwidth in MB per second for the managed disk. Should be used only when StorageAccountType is UltraSSD_LRS. If not specified, a default
+	// value would be assigned based on diskSizeGB.
 	DiskMBpsReadWrite *int64 `json:"diskMBpsReadWrite,omitempty"`
 
-	// Specifies the size of an empty data disk in gigabytes. This element can be used to overwrite the size of the disk in a
-	// virtual machine image. <br><br> This value cannot be larger than 1023 GB
+	// Specifies the size of an empty data disk in gigabytes. This element can be used to overwrite the size of the disk in a virtual machine image.
+	// This value cannot be larger than 1023 GB
 	DiskSizeGb *int32 `json:"diskSizeGB,omitempty"`
 
-	// Specifies the logical unit number of the data disk. This value is used to identify data disks within the VM and therefore
-	// must be unique for each data disk attached to a VM.
+	// Specifies the logical unit number of the data disk. This value is used to identify data disks within the VM and therefore must be unique for each data
+	// disk attached to a VM.
 	Lun *int32 `json:"lun,omitempty"`
 
 	// The managed disk parameters.
@@ -5428,16 +5485,14 @@ type VirtualMachineScaleSetExtension struct {
 
 // The List VM scale set extension operation response.
 type VirtualMachineScaleSetExtensionListResult struct {
-	// The uri to fetch the next page of VM scale set extensions. Call ListNext() with this to fetch the next page of VM scale
-	// set extensions.
+	// The uri to fetch the next page of VM scale set extensions. Call ListNext() with this to fetch the next page of VM scale set extensions.
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// The list of VM scale set extensions.
 	Value *[]VirtualMachineScaleSetExtension `json:"value,omitempty"`
 }
 
-// VirtualMachineScaleSetExtensionListResultResponse is the response envelope for operations that return a VirtualMachineScaleSetExtensionListResult
-// type.
+// VirtualMachineScaleSetExtensionListResultResponse is the response envelope for operations that return a VirtualMachineScaleSetExtensionListResult type.
 type VirtualMachineScaleSetExtensionListResultResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -5446,8 +5501,7 @@ type VirtualMachineScaleSetExtensionListResultResponse struct {
 	VirtualMachineScaleSetExtensionListResult *VirtualMachineScaleSetExtensionListResult
 }
 
-// VirtualMachineScaleSetExtensionPollerResponse is the response envelope for operations that asynchronously return a VirtualMachineScaleSetExtension
-// type.
+// VirtualMachineScaleSetExtensionPollerResponse is the response envelope for operations that asynchronously return a VirtualMachineScaleSetExtension type.
 type VirtualMachineScaleSetExtensionPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*VirtualMachineScaleSetExtensionResponse, error)
@@ -5467,12 +5521,13 @@ type VirtualMachineScaleSetExtensionProfile struct {
 
 // Describes the properties of a Virtual Machine Scale Set Extension.
 type VirtualMachineScaleSetExtensionProperties struct {
-	// Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed,
-	// however, the extension will not upgrade minor versions unless redeployed, even with this property set to true.
+	// Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not
+	// upgrade minor versions unless redeployed, even
+	// with this property set to true.
 	AutoUpgradeMinorVersion *bool `json:"autoUpgradeMinorVersion,omitempty"`
 
-	// If a value is provided and is different from the previous value, the extension handler will be forced to update even if
-	// the extension configuration has not changed.
+	// If a value is provided and is different from the previous value, the extension handler will be forced to update even if the extension configuration has
+	// not changed.
 	ForceUpdateTag *string `json:"forceUpdateTag,omitempty"`
 
 	// The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all.
@@ -5497,8 +5552,7 @@ type VirtualMachineScaleSetExtensionProperties struct {
 	TypeHandlerVersion *string `json:"typeHandlerVersion,omitempty"`
 }
 
-// VirtualMachineScaleSetExtensionResponse is the response envelope for operations that return a VirtualMachineScaleSetExtension
-// type.
+// VirtualMachineScaleSetExtensionResponse is the response envelope for operations that return a VirtualMachineScaleSetExtension type.
 type VirtualMachineScaleSetExtensionResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -5520,33 +5574,28 @@ type VirtualMachineScaleSetExtensionUpdate struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
-// VirtualMachineScaleSetExtensionsCreateOrUpdateOptions contains the optional parameters for the VirtualMachineScaleSetExtensions.CreateOrUpdate
-// method.
+// VirtualMachineScaleSetExtensionsCreateOrUpdateOptions contains the optional parameters for the VirtualMachineScaleSetExtensions.CreateOrUpdate method.
 type VirtualMachineScaleSetExtensionsCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetExtensionsDeleteOptions contains the optional parameters for the VirtualMachineScaleSetExtensions.Delete
-// method.
+// VirtualMachineScaleSetExtensionsDeleteOptions contains the optional parameters for the VirtualMachineScaleSetExtensions.Delete method.
 type VirtualMachineScaleSetExtensionsDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetExtensionsGetOptions contains the optional parameters for the VirtualMachineScaleSetExtensions.Get
-// method.
+// VirtualMachineScaleSetExtensionsGetOptions contains the optional parameters for the VirtualMachineScaleSetExtensions.Get method.
 type VirtualMachineScaleSetExtensionsGetOptions struct {
 	// The expand expression to apply on the operation.
 	Expand *string
 }
 
-// VirtualMachineScaleSetExtensionsListOptions contains the optional parameters for the VirtualMachineScaleSetExtensions.List
-// method.
+// VirtualMachineScaleSetExtensionsListOptions contains the optional parameters for the VirtualMachineScaleSetExtensions.List method.
 type VirtualMachineScaleSetExtensionsListOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetExtensionsUpdateOptions contains the optional parameters for the VirtualMachineScaleSetExtensions.Update
-// method.
+// VirtualMachineScaleSetExtensionsUpdateOptions contains the optional parameters for the VirtualMachineScaleSetExtensions.Update method.
 type VirtualMachineScaleSetExtensionsUpdateOptions struct {
 	// placeholder for future optional parameters
 }
@@ -5556,17 +5605,17 @@ type VirtualMachineScaleSetIDentity struct {
 	// The principal id of virtual machine scale set identity. This property will only be provided for a system assigned identity.
 	PrincipalID *string `json:"principalId,omitempty" azure:"ro"`
 
-	// The tenant id associated with the virtual machine scale set. This property will only be provided for a system assigned
-	// identity.
+	// The tenant id associated with the virtual machine scale set. This property will only be provided for a system assigned identity.
 	TenantID *string `json:"tenantId,omitempty" azure:"ro"`
 
-	// The type of identity used for the virtual machine scale set. The type 'SystemAssigned, UserAssigned' includes both an implicitly
-	// created identity and a set of user assigned identities. The type 'None' will remove any identities from the virtual machine
-	// scale set.
+	// The type of identity used for the virtual machine scale set. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and
+	// a set of user assigned identities. The type 'None'
+	// will remove any identities from the virtual machine scale set.
 	Type *ResourceIDentityType `json:"type,omitempty"`
 
-	// The list of user identities associated with the virtual machine scale set. The user identity dictionary key references
-	// will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
+	// The list of user identities associated with the virtual machine scale set. The user identity dictionary key references will be ARM resource ids in the
+	// form:
+	// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
 	UserAssignedIDentities *map[string]VirtualMachineScaleSetIDentityUserAssignedIdentitiesValue `json:"userAssignedIdentities,omitempty"`
 }
 
@@ -5590,26 +5639,29 @@ type VirtualMachineScaleSetIPConfiguration struct {
 
 // Describes a virtual machine scale set network profile's IP configuration properties.
 type VirtualMachineScaleSetIPConfigurationProperties struct {
-	// Specifies an array of references to backend address pools of application gateways. A scale set can reference backend address
-	// pools of multiple application gateways. Multiple scale sets cannot use the same application gateway.
+	// Specifies an array of references to backend address pools of application gateways. A scale set can reference backend address pools of multiple application
+	// gateways. Multiple scale sets cannot use the
+	// same application gateway.
 	ApplicationGatewayBackendAddressPools *[]SubResource `json:"applicationGatewayBackendAddressPools,omitempty"`
 
 	// Specifies an array of references to application security group.
 	ApplicationSecurityGroups *[]SubResource `json:"applicationSecurityGroups,omitempty"`
 
-	// Specifies an array of references to backend address pools of load balancers. A scale set can reference backend address
-	// pools of one public and one internal load balancer. Multiple scale sets cannot use the same basic sku load balancer.
+	// Specifies an array of references to backend address pools of load balancers. A scale set can reference backend address pools of one public and one internal
+	// load balancer. Multiple scale sets cannot
+	// use the same basic sku load balancer.
 	LoadBalancerBackendAddressPools *[]SubResource `json:"loadBalancerBackendAddressPools,omitempty"`
 
-	// Specifies an array of references to inbound Nat pools of the load balancers. A scale set can reference inbound nat pools
-	// of one public and one internal load balancer. Multiple scale sets cannot use the same basic sku load balancer.
+	// Specifies an array of references to inbound Nat pools of the load balancers. A scale set can reference inbound nat pools of one public and one internal
+	// load balancer. Multiple scale sets cannot use
+	// the same basic sku load balancer.
 	LoadBalancerInboundNatPools *[]SubResource `json:"loadBalancerInboundNatPools,omitempty"`
 
 	// Specifies the primary network interface in case the virtual machine has more than 1 network interface.
 	Primary *bool `json:"primary,omitempty"`
 
-	// Available from Api-Version 2017-03-30 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default
-	// is taken as IPv4. Possible values are: 'IPv4' and 'IPv6'.
+	// Available from Api-Version 2017-03-30 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible
+	// values are: 'IPv4' and 'IPv6'.
 	PrivateIPAddressVersion *IPVersion `json:"privateIPAddressVersion,omitempty"`
 
 	// The publicIPAddressConfiguration.
@@ -5643,8 +5695,7 @@ type VirtualMachineScaleSetInstanceView struct {
 	VirtualMachine *VirtualMachineScaleSetInstanceViewStatusesSummary `json:"virtualMachine,omitempty" azure:"ro"`
 }
 
-// VirtualMachineScaleSetInstanceViewResponse is the response envelope for operations that return a VirtualMachineScaleSetInstanceView
-// type.
+// VirtualMachineScaleSetInstanceViewResponse is the response envelope for operations that return a VirtualMachineScaleSetInstanceView type.
 type VirtualMachineScaleSetInstanceViewResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -5668,8 +5719,7 @@ type VirtualMachineScaleSetListOSUpgradeHistory struct {
 	Value *[]UpgradeOperationHistoricalStatusInfo `json:"value,omitempty"`
 }
 
-// VirtualMachineScaleSetListOSUpgradeHistoryResponse is the response envelope for operations that return a VirtualMachineScaleSetListOSUpgradeHistory
-// type.
+// VirtualMachineScaleSetListOSUpgradeHistoryResponse is the response envelope for operations that return a VirtualMachineScaleSetListOSUpgradeHistory type.
 type VirtualMachineScaleSetListOSUpgradeHistoryResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -5687,8 +5737,7 @@ type VirtualMachineScaleSetListResult struct {
 	Value *[]VirtualMachineScaleSet `json:"value,omitempty"`
 }
 
-// VirtualMachineScaleSetListResultResponse is the response envelope for operations that return a VirtualMachineScaleSetListResult
-// type.
+// VirtualMachineScaleSetListResultResponse is the response envelope for operations that return a VirtualMachineScaleSetListResult type.
 type VirtualMachineScaleSetListResultResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -5699,16 +5748,14 @@ type VirtualMachineScaleSetListResultResponse struct {
 
 // The Virtual Machine Scale Set List Skus operation response.
 type VirtualMachineScaleSetListSKUsResult struct {
-	// The uri to fetch the next page of Virtual Machine Scale Set Skus. Call ListNext() with this to fetch the next page of VMSS
-	// Skus.
+	// The uri to fetch the next page of Virtual Machine Scale Set Skus. Call ListNext() with this to fetch the next page of VMSS Skus.
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// The list of skus available for the virtual machine scale set.
 	Value *[]VirtualMachineScaleSetSKU `json:"value,omitempty"`
 }
 
-// VirtualMachineScaleSetListSKUsResultResponse is the response envelope for operations that return a VirtualMachineScaleSetListSKUsResult
-// type.
+// VirtualMachineScaleSetListSKUsResultResponse is the response envelope for operations that return a VirtualMachineScaleSetListSKUsResult type.
 type VirtualMachineScaleSetListSKUsResultResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -5719,16 +5766,14 @@ type VirtualMachineScaleSetListSKUsResultResponse struct {
 
 // The List Virtual Machine operation response.
 type VirtualMachineScaleSetListWithLinkResult struct {
-	// The uri to fetch the next page of Virtual Machine Scale Sets. Call ListNext() with this to fetch the next page of Virtual
-	// Machine Scale Sets.
+	// The uri to fetch the next page of Virtual Machine Scale Sets. Call ListNext() with this to fetch the next page of Virtual Machine Scale Sets.
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// The list of virtual machine scale sets.
 	Value *[]VirtualMachineScaleSet `json:"value,omitempty"`
 }
 
-// VirtualMachineScaleSetListWithLinkResultResponse is the response envelope for operations that return a VirtualMachineScaleSetListWithLinkResult
-// type.
+// VirtualMachineScaleSetListWithLinkResultResponse is the response envelope for operations that return a VirtualMachineScaleSetListWithLinkResult type.
 type VirtualMachineScaleSetListWithLinkResultResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -5742,8 +5787,7 @@ type VirtualMachineScaleSetManagedDiskParameters struct {
 	// Specifies the customer managed disk encryption set resource id for the managed disk.
 	DiskEncryptionSet *SubResource `json:"diskEncryptionSet,omitempty"`
 
-	// Specifies the storage account type for the managed disk. NOTE: UltraSSD_LRS can only be used with data disks, it cannot
-	// be used with OS Disk.
+	// Specifies the storage account type for the managed disk. NOTE: UltraSSD_LRS can only be used with data disks, it cannot be used with OS Disk.
 	StorageAccountType *StorageAccountTypes `json:"storageAccountType,omitempty"`
 }
 
@@ -5786,8 +5830,8 @@ type VirtualMachineScaleSetNetworkConfigurationProperties struct {
 
 // Describes a virtual machine scale set network profile.
 type VirtualMachineScaleSetNetworkProfile struct {
-	// A reference to a load balancer probe used to determine the health of an instance in the virtual machine scale set. The
-	// reference will be in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/probes/{probeName}'.
+	// A reference to a load balancer probe used to determine the health of an instance in the virtual machine scale set. The reference will be in the form:
+	// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/probes/{probeName}'.
 	HealthProbe *APIEntityReference `json:"healthProbe,omitempty"`
 
 	// The list of network configurations.
@@ -5796,21 +5840,25 @@ type VirtualMachineScaleSetNetworkProfile struct {
 
 // Describes a virtual machine scale set operating system disk.
 type VirtualMachineScaleSetOSDisk struct {
-	// Specifies the caching requirements. <br><br> Possible values are: <br><br> **None** <br><br> **ReadOnly** <br><br> **ReadWrite**
-	// <br><br> Default: **None for Standard storage. ReadOnly for Premium storage**
+	// Specifies the caching requirements.
+	// Possible values are:
+	// None
+	// ReadOnly
+	// ReadWrite
+	// Default: None for Standard storage. ReadOnly for Premium storage
 	Caching *CachingTypes `json:"caching,omitempty"`
 
-	// Specifies how the virtual machines in the scale set should be created.<br><br> The only allowed value is: **FromImage**
-	// \u2013 This value is used when you are using an image to create the virtual machine. If you are using a platform image,
-	// you also use the imageReference element described above. If you are using a marketplace image, you also use the plan element
-	// previously described.
+	// Specifies how the virtual machines in the scale set should be created.
+	// The only allowed value is: FromImage \u2013 This value is used when you are using an image to create the virtual machine. If you are using a platform
+	// image, you also use the imageReference element
+	// described above. If you are using a marketplace image, you also use the plan element previously described.
 	CreateOption *DiskCreateOptionTypes `json:"createOption,omitempty"`
 
 	// Specifies the ephemeral disk Settings for the operating system disk used by the virtual machine scale set.
 	DiffDiskSettings *DiffDiskSettings `json:"diffDiskSettings,omitempty"`
 
-	// Specifies the size of the operating system disk in gigabytes. This element can be used to overwrite the size of the disk
-	// in a virtual machine image. <br><br> This value cannot be larger than 1023 GB
+	// Specifies the size of the operating system disk in gigabytes. This element can be used to overwrite the size of the disk in a virtual machine image.
+	// This value cannot be larger than 1023 GB
 	DiskSizeGb *int32 `json:"diskSizeGB,omitempty"`
 
 	// Specifies information about the unmanaged user image to base the scale set on.
@@ -5822,8 +5870,10 @@ type VirtualMachineScaleSetOSDisk struct {
 	// The disk name.
 	Name *string `json:"name,omitempty"`
 
-	// This property allows you to specify the type of the OS that is included in the disk if creating a VM from user-image or
-	// a specialized VHD. <br><br> Possible values are: <br><br> **Windows** <br><br> **Linux**
+	// This property allows you to specify the type of the OS that is included in the disk if creating a VM from user-image or a specialized VHD.
+	// Possible values are:
+	// Windows
+	// Linux
 	OSType *OperatingSystemTypes `json:"osType,omitempty"`
 
 	// Specifies the container urls that are used to store operating system disks for the scale set.
@@ -5835,38 +5885,52 @@ type VirtualMachineScaleSetOSDisk struct {
 
 // Describes a virtual machine scale set OS profile.
 type VirtualMachineScaleSetOSProfile struct {
-	// Specifies the password of the administrator account. <br><br> **Minimum-length (Windows):** 8 characters <br><br> **Minimum-length
-	// (Linux):** 6 characters <br><br> **Max-length (Windows):** 123 characters <br><br> **Max-length (Linux):** 72 characters
-	// <br><br> **Complexity requirements:** 3 out of 4 conditions below need to be fulfilled <br> Has lower characters <br>Has
-	// upper characters <br> Has a digit <br> Has a special character (Regex match [\W_]) <br><br> **Disallowed values:** "abc@123",
-	// "P@$$w0rd", "P@ssw0rd", "P@ssword123", "Pa$$word", "pass@word1", "Password!", "Password1", "Password22", "iloveyou!" <br><br>
-	// For resetting the password, see [How to reset the Remote Desktop service or its login password in a Windows VM](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-reset-rdp?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)
-	// <br><br> For resetting root password, see [Manage users, SSH, and check or repair disks on Azure Linux VMs using the VMAccess
-	// Extension](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-using-vmaccess-extension?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json#reset-root-password)
+	// Specifies the password of the administrator account.
+	// Minimum-length (Windows): 8 characters
+	// Minimum-length (Linux): 6 characters
+	// Max-length (Windows): 123 characters
+	// Max-length (Linux): 72 characters
+	// Complexity requirements: 3 out of 4 conditions below need to be fulfilled
+	// Has lower characters
+	// Has upper characters
+	// Has a digit
+	// Has a special character (Regex match [\W_])
+	// Disallowed values: "abc@123", "P@$$w0rd", "P@ssw0rd", "P@ssword123", "Pa$$word", "pass@word1", "Password!", "Password1", "Password22", "iloveyou!"
+	// For resetting the password, see How to reset the Remote Desktop service or its login password in a Windows VM
+	// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-reset-rdp?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json]
+	// For resetting root password, see Manage users, SSH, and check or repair disks on Azure Linux VMs using the VMAccess Extension
+	// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-using-vmaccess-extension?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json#reset-root-password]
 	AdminPassword *string `json:"adminPassword,omitempty"`
 
-	// Specifies the name of the administrator account. <br><br> **Windows-only restriction:** Cannot end in "." <br><br> **Disallowed
-	// values:** "administrator", "admin", "user", "user1", "test", "user2", "test1", "user3", "admin1", "1", "123", "a", "actuser",
-	// "adm", "admin2", "aspnet", "backup", "console", "david", "guest", "john", "owner", "root", "server", "sql", "support",
-	// "support_388945a0", "sys", "test2", "test3", "user4", "user5". <br><br> **Minimum-length (Linux):** 1 character <br><br>
-	// **Max-length (Linux):** 64 characters <br><br> **Max-length (Windows):** 20 characters <br><br><li> For root access to
-	// the Linux VM, see [Using root privileges on Linux virtual machines in Azure](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-use-root-privileges?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json)<br><li>
-	// For a list of built-in system users on Linux that should not be used in this field, see [Selecting User Names for Linux
-	// on Azure](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-usernames?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json)
+	// Specifies the name of the administrator account.
+	// Windows-only restriction: Cannot end in "."
+	// Disallowed values: "administrator", "admin", "user", "user1", "test", "user2", "test1", "user3", "admin1", "1", "123", "a", "actuser", "adm", "admin2",
+	// "aspnet", "backup", "console", "david", "guest",
+	// "john", "owner", "root", "server", "sql", "support", "support_388945a0", "sys", "test2", "test3", "user4", "user5".
+	// Minimum-length (Linux): 1 character
+	// Max-length (Linux): 64 characters
+	// Max-length (Windows): 20 characters
+	// For root access to the Linux VM, see Using root privileges on Linux virtual machines in Azure
+	// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-use-root-privileges?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json]
+	// For a list of built-in system users on Linux that should not be used in this field, see Selecting User Names for Linux on Azure
+	// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-usernames?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json]
 	AdminUsername *string `json:"adminUsername,omitempty"`
 
-	// Specifies the computer name prefix for all of the virtual machines in the scale set. Computer name prefixes must be 1 to
-	// 15 characters long.
+	// Specifies the computer name prefix for all of the virtual machines in the scale set. Computer name prefixes must be 1 to 15 characters long.
 	ComputerNamePrefix *string `json:"computerNamePrefix,omitempty"`
 
-	// Specifies a base-64 encoded string of custom data. The base-64 encoded string is decoded to a binary array that is saved
-	// as a file on the Virtual Machine. The maximum length of the binary array is 65535 bytes. <br><br> For using cloud-init
-	// for your VM, see [Using cloud-init to customize a Linux VM during creation](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-using-cloud-init?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json)
+	// Specifies a base-64 encoded string of custom data. The base-64 encoded string is decoded to a binary array that is saved as a file on the Virtual Machine.
+	// The maximum length of the binary array is
+	// 65535 bytes.
+	// For using cloud-init for your VM, see Using cloud-init to customize a Linux VM during creation
+	// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-using-cloud-init?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json]
 	CustomData *string `json:"customData,omitempty"`
 
-	// Specifies the Linux operating system settings on the virtual machine. <br><br>For a list of supported Linux distributions,
-	// see [Linux on Azure-Endorsed Distributions](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-endorsed-distros?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json)
-	// <br><br> For running non-endorsed distributions, see [Information for Non-Endorsed Distributions](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-create-upload-generic?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json).
+	// Specifies the Linux operating system settings on the virtual machine.
+	// For a list of supported Linux distributions, see Linux on Azure-Endorsed Distributions
+	// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-endorsed-distros?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json]
+	// For running non-endorsed distributions, see Information for Non-Endorsed Distributions
+	// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-create-upload-generic?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json].
 	LinuxConfiguration *LinuxConfiguration `json:"linuxConfiguration,omitempty"`
 
 	// Specifies set of certificates that should be installed onto the virtual machines in the scale set.
@@ -5876,8 +5940,7 @@ type VirtualMachineScaleSetOSProfile struct {
 	WindowsConfiguration *WindowsConfiguration `json:"windowsConfiguration,omitempty"`
 }
 
-// VirtualMachineScaleSetPollerResponse is the response envelope for operations that asynchronously return a VirtualMachineScaleSet
-// type.
+// VirtualMachineScaleSetPollerResponse is the response envelope for operations that asynchronously return a VirtualMachineScaleSet type.
 type VirtualMachineScaleSetPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*VirtualMachineScaleSetResponse, error)
@@ -5891,16 +5954,17 @@ type VirtualMachineScaleSetPollerResponse struct {
 
 // Describes the properties of a Virtual Machine Scale Set.
 type VirtualMachineScaleSetProperties struct {
-	// Specifies additional capabilities enabled or disabled on the Virtual Machines in the Virtual Machine Scale Set. For instance:
-	// whether the Virtual Machines have the capability to support attaching managed data disks with UltraSSD_LRS storage account
-	// type.
+	// Specifies additional capabilities enabled or disabled on the Virtual Machines in the Virtual Machine Scale Set. For instance: whether the Virtual Machines
+	// have the capability to support attaching
+	// managed data disks with UltraSSD_LRS storage account type.
 	AdditionalCapabilities *AdditionalCapabilities `json:"additionalCapabilities,omitempty"`
 
 	// Policy for automatic repairs.
 	AutomaticRepairsPolicy *AutomaticRepairsPolicy `json:"automaticRepairsPolicy,omitempty"`
 
-	// When Overprovision is enabled, extensions are launched only on the requested number of VMs which are finally kept. This
-	// property will hence ensure that the extensions do not run on the extra overprovisioned VMs.
+	// When Overprovision is enabled, extensions are launched only on the requested number of VMs which are finally kept. This property will hence ensure that
+	// the extensions do not run on the extra
+	// overprovisioned VMs.
 	DoNotRunExtensionsOnOverprovisionedVMS *bool `json:"doNotRunExtensionsOnOverprovisionedVMs,omitempty"`
 
 	// Specifies whether the Virtual Machine Scale Set should be overprovisioned.
@@ -5912,16 +5976,16 @@ type VirtualMachineScaleSetProperties struct {
 	// The provisioning state, which only appears in the response.
 	ProvisioningState *string `json:"provisioningState,omitempty" azure:"ro"`
 
-	// Specifies information about the proximity placement group that the virtual machine scale set should be assigned to. <br><br>Minimum
-	// api-version: 2018-04-01.
+	// Specifies information about the proximity placement group that the virtual machine scale set should be assigned to.
+	// Minimum api-version: 2018-04-01.
 	ProximityPlacementGroup *SubResource `json:"proximityPlacementGroup,omitempty"`
 
-	// Specifies the scale-in policy that decides which virtual machines are chosen for removal when a Virtual Machine Scale Set
-	// is scaled-in.
+	// Specifies the scale-in policy that decides which virtual machines are chosen for removal when a Virtual Machine Scale Set is scaled-in.
 	ScaleInPolicy *ScaleInPolicy `json:"scaleInPolicy,omitempty"`
 
-	// When true this limits the scale set to a single placement group, of max size 100 virtual machines. NOTE: If singlePlacementGroup
-	// is true, it may be modified to false. However, if singlePlacementGroup is false, it may not be modified to true.
+	// When true this limits the scale set to a single placement group, of max size 100 virtual machines. NOTE: If singlePlacementGroup is true, it may be modified
+	// to false. However, if singlePlacementGroup
+	// is false, it may not be modified to true.
 	SinglePlacementGroup *bool `json:"singlePlacementGroup,omitempty"`
 
 	// Specifies the ID which uniquely identifies a Virtual Machine Scale Set.
@@ -5948,8 +6012,8 @@ type VirtualMachineScaleSetPublicIPAddressConfiguration struct {
 
 // Describes a virtual machines scale sets network configuration's DNS settings.
 type VirtualMachineScaleSetPublicIPAddressConfigurationDNSSettings struct {
-	// The Domain name label.The concatenation of the domain name label and vm index will be the domain name labels of the PublicIPAddress
-	// resources that will be created
+	// The Domain name label.The concatenation of the domain name label and vm index will be the domain name labels of the PublicIPAddress resources that will
+	// be created
 	DomainNameLabel *string `json:"domainNameLabel,omitempty"`
 }
 
@@ -5964,8 +6028,8 @@ type VirtualMachineScaleSetPublicIPAddressConfigurationProperties struct {
 	// The list of IP tags associated with the public IP address.
 	IPTags *[]VirtualMachineScaleSetIPTag `json:"ipTags,omitempty"`
 
-	// Available from Api-Version 2019-07-01 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default
-	// is taken as IPv4. Possible values are: 'IPv4' and 'IPv6'.
+	// Available from Api-Version 2019-07-01 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible
+	// values are: 'IPv4' and 'IPv6'.
 	PublicIPAddressVersion *IPVersion `json:"publicIPAddressVersion,omitempty"`
 
 	// The PublicIPPrefix from which to allocate publicIP addresses.
@@ -5975,8 +6039,8 @@ type VirtualMachineScaleSetPublicIPAddressConfigurationProperties struct {
 // Describes a Virtual Machine Scale Set VM Reimage Parameters.
 type VirtualMachineScaleSetReimageParameters struct {
 	VirtualMachineReimageParameters
-	// The virtual machine scale set instance ids. Omitting the virtual machine scale set instance ids will result in the operation
-	// being performed on all virtual machines in the virtual machine scale set.
+	// The virtual machine scale set instance ids. Omitting the virtual machine scale set instance ids will result in the operation being performed on all virtual
+	// machines in the virtual machine scale set.
 	InstanceIDs *[]string `json:"instanceIds,omitempty"`
 }
 
@@ -5989,14 +6053,12 @@ type VirtualMachineScaleSetResponse struct {
 	VirtualMachineScaleSet *VirtualMachineScaleSet
 }
 
-// VirtualMachineScaleSetRollingUpgradesCancelOptions contains the optional parameters for the VirtualMachineScaleSetRollingUpgrades.Cancel
-// method.
+// VirtualMachineScaleSetRollingUpgradesCancelOptions contains the optional parameters for the VirtualMachineScaleSetRollingUpgrades.Cancel method.
 type VirtualMachineScaleSetRollingUpgradesCancelOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetRollingUpgradesGetLatestOptions contains the optional parameters for the VirtualMachineScaleSetRollingUpgrades.GetLatest
-// method.
+// VirtualMachineScaleSetRollingUpgradesGetLatestOptions contains the optional parameters for the VirtualMachineScaleSetRollingUpgrades.GetLatest method.
 type VirtualMachineScaleSetRollingUpgradesGetLatestOptions struct {
 	// placeholder for future optional parameters
 }
@@ -6042,17 +6104,19 @@ type VirtualMachineScaleSetSKUCapacity struct {
 
 // Describes a virtual machine scale set storage profile.
 type VirtualMachineScaleSetStorageProfile struct {
-	// Specifies the parameters that are used to add data disks to the virtual machines in the scale set. <br><br> For more information
-	// about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-about-disks-vhds?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).
+	// Specifies the parameters that are used to add data disks to the virtual machines in the scale set.
+	// For more information about disks, see About disks and VHDs for Azure virtual machines
+	// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-about-disks-vhds?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json].
 	DataDisks *[]VirtualMachineScaleSetDataDisk `json:"dataDisks,omitempty"`
 
-	// Specifies information about the image to use. You can specify information about platform images, marketplace images, or
-	// virtual machine images. This element is required when you want to use a platform image, marketplace image, or virtual machine
-	// image, but is not used in other creation operations.
+	// Specifies information about the image to use. You can specify information about platform images, marketplace images, or virtual machine images. This
+	// element is required when you want to use a platform
+	// image, marketplace image, or virtual machine image, but is not used in other creation operations.
 	ImageReference *ImageReference `json:"imageReference,omitempty"`
 
-	// Specifies information about the operating system disk used by the virtual machines in the scale set. <br><br> For more
-	// information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-about-disks-vhds?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).
+	// Specifies information about the operating system disk used by the virtual machines in the scale set.
+	// For more information about disks, see About disks and VHDs for Azure virtual machines
+	// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-about-disks-vhds?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json].
 	OSDisk *VirtualMachineScaleSetOSDisk `json:"osDisk,omitempty"`
 }
 
@@ -6072,8 +6136,9 @@ type VirtualMachineScaleSetUpdate struct {
 	SKU *SKU `json:"sku,omitempty"`
 }
 
-// Describes a virtual machine scale set network profile's IP configuration. NOTE: The subnet of a scale set may be modified
-// as long as the original subnet and the new subnet are in the same virtual network
+// Describes a virtual machine scale set network profile's IP configuration. NOTE: The subnet of a scale set may be modified as long as the original subnet
+// and the new subnet are in the same virtual
+// network
 type VirtualMachineScaleSetUpdateIPConfiguration struct {
 	SubResource
 	// The IP configuration name.
@@ -6100,8 +6165,8 @@ type VirtualMachineScaleSetUpdateIPConfigurationProperties struct {
 	// Specifies the primary IP Configuration in case the network interface has more than one IP Configuration.
 	Primary *bool `json:"primary,omitempty"`
 
-	// Available from Api-Version 2017-03-30 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default
-	// is taken as IPv4. Possible values are: 'IPv4' and 'IPv6'.
+	// Available from Api-Version 2017-03-30 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible
+	// values are: 'IPv4' and 'IPv6'.
 	PrivateIPAddressVersion *IPVersion `json:"privateIPAddressVersion,omitempty"`
 
 	// The publicIPAddressConfiguration.
@@ -6117,13 +6182,11 @@ type VirtualMachineScaleSetUpdateNetworkConfiguration struct {
 	// The network configuration name.
 	Name *string `json:"name,omitempty"`
 
-	// Describes a virtual machine scale set updatable network profile's IP configuration.Use this object for updating network
-	// profile's IP Configuration.
+	// Describes a virtual machine scale set updatable network profile's IP configuration.Use this object for updating network profile's IP Configuration.
 	Properties *VirtualMachineScaleSetUpdateNetworkConfigurationProperties `json:"properties,omitempty"`
 }
 
-// Describes a virtual machine scale set updatable network profile's IP configuration.Use this object for updating network
-// profile's IP Configuration.
+// Describes a virtual machine scale set updatable network profile's IP configuration.Use this object for updating network profile's IP Configuration.
 type VirtualMachineScaleSetUpdateNetworkConfigurationProperties struct {
 	// The dns settings to be applied on the network interfaces.
 	DNSSettings *VirtualMachineScaleSetNetworkConfigurationDNSSettings `json:"dnsSettings,omitempty"`
@@ -6146,8 +6209,8 @@ type VirtualMachineScaleSetUpdateNetworkConfigurationProperties struct {
 
 // Describes a virtual machine scale set network profile.
 type VirtualMachineScaleSetUpdateNetworkProfile struct {
-	// A reference to a load balancer probe used to determine the health of an instance in the virtual machine scale set. The
-	// reference will be in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/probes/{probeName}'.
+	// A reference to a load balancer probe used to determine the health of an instance in the virtual machine scale set. The reference will be in the form:
+	// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/probes/{probeName}'.
 	HealthProbe *APIEntityReference `json:"healthProbe,omitempty"`
 
 	// The list of network configurations.
@@ -6159,12 +6222,13 @@ type VirtualMachineScaleSetUpdateOSDisk struct {
 	// The caching type.
 	Caching *CachingTypes `json:"caching,omitempty"`
 
-	// Specifies the size of the operating system disk in gigabytes. This element can be used to overwrite the size of the disk
-	// in a virtual machine image. <br><br> This value cannot be larger than 1023 GB
+	// Specifies the size of the operating system disk in gigabytes. This element can be used to overwrite the size of the disk in a virtual machine image.
+	// This value cannot be larger than 1023 GB
 	DiskSizeGb *int32 `json:"diskSizeGB,omitempty"`
 
-	// The Source User Image VirtualHardDisk. This VirtualHardDisk will be copied before using it to attach to the Virtual Machine.
-	// If SourceImage is provided, the destination VirtualHardDisk should not exist.
+	// The Source User Image VirtualHardDisk. This VirtualHardDisk will be copied before using it to attach to the Virtual Machine. If SourceImage is provided,
+	// the destination VirtualHardDisk should not
+	// exist.
 	Image *VirtualHardDisk `json:"image,omitempty"`
 
 	// The managed disk parameters.
@@ -6194,31 +6258,32 @@ type VirtualMachineScaleSetUpdateOSProfile struct {
 
 // Describes the properties of a Virtual Machine Scale Set.
 type VirtualMachineScaleSetUpdateProperties struct {
-	// Specifies additional capabilities enabled or disabled on the Virtual Machines in the Virtual Machine Scale Set. For instance:
-	// whether the Virtual Machines have the capability to support attaching managed data disks with UltraSSD_LRS storage account
-	// type.
+	// Specifies additional capabilities enabled or disabled on the Virtual Machines in the Virtual Machine Scale Set. For instance: whether the Virtual Machines
+	// have the capability to support attaching
+	// managed data disks with UltraSSD_LRS storage account type.
 	AdditionalCapabilities *AdditionalCapabilities `json:"additionalCapabilities,omitempty"`
 
 	// Policy for automatic repairs.
 	AutomaticRepairsPolicy *AutomaticRepairsPolicy `json:"automaticRepairsPolicy,omitempty"`
 
-	// When Overprovision is enabled, extensions are launched only on the requested number of VMs which are finally kept. This
-	// property will hence ensure that the extensions do not run on the extra overprovisioned VMs.
+	// When Overprovision is enabled, extensions are launched only on the requested number of VMs which are finally kept. This property will hence ensure that
+	// the extensions do not run on the extra
+	// overprovisioned VMs.
 	DoNotRunExtensionsOnOverprovisionedVMS *bool `json:"doNotRunExtensionsOnOverprovisionedVMs,omitempty"`
 
 	// Specifies whether the Virtual Machine Scale Set should be overprovisioned.
 	Overprovision *bool `json:"overprovision,omitempty"`
 
-	// Specifies information about the proximity placement group that the virtual machine scale set should be assigned to. <br><br>Minimum
-	// api-version: 2018-04-01.
+	// Specifies information about the proximity placement group that the virtual machine scale set should be assigned to.
+	// Minimum api-version: 2018-04-01.
 	ProximityPlacementGroup *SubResource `json:"proximityPlacementGroup,omitempty"`
 
-	// Specifies the scale-in policy that decides which virtual machines are chosen for removal when a Virtual Machine Scale Set
-	// is scaled-in.
+	// Specifies the scale-in policy that decides which virtual machines are chosen for removal when a Virtual Machine Scale Set is scaled-in.
 	ScaleInPolicy *ScaleInPolicy `json:"scaleInPolicy,omitempty"`
 
-	// When true this limits the scale set to a single placement group, of max size 100 virtual machines. NOTE: If singlePlacementGroup
-	// is true, it may be modified to false. However, if singlePlacementGroup is false, it may not be modified to true.
+	// When true this limits the scale set to a single placement group, of max size 100 virtual machines. NOTE: If singlePlacementGroup is true, it may be modified
+	// to false. However, if singlePlacementGroup
+	// is false, it may not be modified to true.
 	SinglePlacementGroup *bool `json:"singlePlacementGroup,omitempty"`
 
 	// The upgrade policy.
@@ -6260,7 +6325,8 @@ type VirtualMachineScaleSetUpdateStorageProfile struct {
 
 // Describes a virtual machine scale set virtual machine profile.
 type VirtualMachineScaleSetUpdateVMProfile struct {
-	// Specifies the billing related details of a Azure Spot VMSS. <br><br>Minimum api-version: 2019-03-01.
+	// Specifies the billing related details of a Azure Spot VMSS.
+	// Minimum api-version: 2019-03-01.
 	BillingProfile *BillingProfile `json:"billingProfile,omitempty"`
 
 	// The virtual machine scale set diagnostics profile.
@@ -6291,10 +6357,11 @@ type VirtualMachineScaleSetVM struct {
 	// The virtual machine instance ID.
 	InstanceID *string `json:"instanceId,omitempty" azure:"ro"`
 
-	// Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace
-	// images. Before you can use a marketplace image from an API, you must enable the image for programmatic use. In the Azure
-	// portal, find the marketplace image that you want to use and then click **Want to deploy programmatically, Get Started ->**.
-	// Enter any required information and then click **Save**.
+	// Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can
+	// use a marketplace image from an API, you must
+	// enable the image for programmatic use. In the Azure portal, find the marketplace image that you want to use and then click Want to deploy programmatically,
+	// Get Started ->. Enter any required
+	// information and then click Save.
 	Plan *Plan `json:"plan,omitempty"`
 
 	// Describes the properties of a virtual machine scale set virtual machine.
@@ -6310,27 +6377,23 @@ type VirtualMachineScaleSetVM struct {
 	Zones *[]string `json:"zones,omitempty" azure:"ro"`
 }
 
-// VirtualMachineScaleSetVMExtensionsCreateOrUpdateOptions contains the optional parameters for the VirtualMachineScaleSetVMExtensions.CreateOrUpdate
-// method.
+// VirtualMachineScaleSetVMExtensionsCreateOrUpdateOptions contains the optional parameters for the VirtualMachineScaleSetVMExtensions.CreateOrUpdate method.
 type VirtualMachineScaleSetVMExtensionsCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetVMExtensionsDeleteOptions contains the optional parameters for the VirtualMachineScaleSetVMExtensions.Delete
-// method.
+// VirtualMachineScaleSetVMExtensionsDeleteOptions contains the optional parameters for the VirtualMachineScaleSetVMExtensions.Delete method.
 type VirtualMachineScaleSetVMExtensionsDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetVMExtensionsGetOptions contains the optional parameters for the VirtualMachineScaleSetVMExtensions.Get
-// method.
+// VirtualMachineScaleSetVMExtensionsGetOptions contains the optional parameters for the VirtualMachineScaleSetVMExtensions.Get method.
 type VirtualMachineScaleSetVMExtensionsGetOptions struct {
 	// The expand expression to apply on the operation.
 	Expand *string
 }
 
-// VirtualMachineScaleSetVMExtensionsListOptions contains the optional parameters for the VirtualMachineScaleSetVMExtensions.List
-// method.
+// VirtualMachineScaleSetVMExtensionsListOptions contains the optional parameters for the VirtualMachineScaleSetVMExtensions.List method.
 type VirtualMachineScaleSetVMExtensionsListOptions struct {
 	// The expand expression to apply on the operation.
 	Expand *string
@@ -6345,16 +6408,15 @@ type VirtualMachineScaleSetVMExtensionsSummary struct {
 	StatusesSummary *[]VirtualMachineStatusCodeCount `json:"statusesSummary,omitempty" azure:"ro"`
 }
 
-// VirtualMachineScaleSetVMExtensionsUpdateOptions contains the optional parameters for the VirtualMachineScaleSetVMExtensions.Update
-// method.
+// VirtualMachineScaleSetVMExtensionsUpdateOptions contains the optional parameters for the VirtualMachineScaleSetVMExtensions.Update method.
 type VirtualMachineScaleSetVMExtensionsUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
 // Specifies a list of virtual machine instance IDs from the VM scale set.
 type VirtualMachineScaleSetVMInstanceIDs struct {
-	// The virtual machine scale set instance ids. Omitting the virtual machine scale set instance ids will result in the operation
-	// being performed on all virtual machines in the virtual machine scale set.
+	// The virtual machine scale set instance ids. Omitting the virtual machine scale set instance ids will result in the operation being performed on all virtual
+	// machines in the virtual machine scale set.
 	InstanceIDs *[]string `json:"instanceIds,omitempty"`
 }
 
@@ -6366,9 +6428,9 @@ type VirtualMachineScaleSetVMInstanceRequiredIDs struct {
 
 // The instance view of a virtual machine scale set VM.
 type VirtualMachineScaleSetVMInstanceView struct {
-	// Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. <br><br>
-	// You can easily view the output of your console log. <br><br> Azure also enables you to see a screenshot of the VM from
-	// the hypervisor.
+	// Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status.
+	// You can easily view the output of your console log.
+	// Azure also enables you to see a screenshot of the VM from the hypervisor.
 	BootDiagnostics *BootDiagnosticsInstanceView `json:"bootDiagnostics,omitempty"`
 
 	// The disks information.
@@ -6402,8 +6464,7 @@ type VirtualMachineScaleSetVMInstanceView struct {
 	VMHealth *VirtualMachineHealthStatus `json:"vmHealth,omitempty" azure:"ro"`
 }
 
-// VirtualMachineScaleSetVMInstanceViewResponse is the response envelope for operations that return a VirtualMachineScaleSetVMInstanceView
-// type.
+// VirtualMachineScaleSetVMInstanceViewResponse is the response envelope for operations that return a VirtualMachineScaleSetVMInstanceView type.
 type VirtualMachineScaleSetVMInstanceViewResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -6414,16 +6475,14 @@ type VirtualMachineScaleSetVMInstanceViewResponse struct {
 
 // The List Virtual Machine Scale Set VMs operation response.
 type VirtualMachineScaleSetVMListResult struct {
-	// The uri to fetch the next page of Virtual Machine Scale Set VMs. Call ListNext() with this to fetch the next page of VMSS
-	// VMs
+	// The uri to fetch the next page of Virtual Machine Scale Set VMs. Call ListNext() with this to fetch the next page of VMSS VMs
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// The list of virtual machine scale sets VMs.
 	Value *[]VirtualMachineScaleSetVM `json:"value,omitempty"`
 }
 
-// VirtualMachineScaleSetVMListResultResponse is the response envelope for operations that return a VirtualMachineScaleSetVMListResult
-// type.
+// VirtualMachineScaleSetVMListResultResponse is the response envelope for operations that return a VirtualMachineScaleSetVMListResult type.
 type VirtualMachineScaleSetVMListResultResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -6438,8 +6497,7 @@ type VirtualMachineScaleSetVMNetworkProfileConfiguration struct {
 	NetworkInterfaceConfigurations *[]VirtualMachineScaleSetNetworkConfiguration `json:"networkInterfaceConfigurations,omitempty"`
 }
 
-// VirtualMachineScaleSetVMPollerResponse is the response envelope for operations that asynchronously return a VirtualMachineScaleSetVM
-// type.
+// VirtualMachineScaleSetVMPollerResponse is the response envelope for operations that asynchronously return a VirtualMachineScaleSetVM type.
 type VirtualMachineScaleSetVMPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*VirtualMachineScaleSetVMResponse, error)
@@ -6453,25 +6511,31 @@ type VirtualMachineScaleSetVMPollerResponse struct {
 
 // Describes a virtual machine scale set virtual machine profile.
 type VirtualMachineScaleSetVMProfile struct {
-	// Specifies the billing related details of a Azure Spot VMSS. <br><br>Minimum api-version: 2019-03-01.
+	// Specifies the billing related details of a Azure Spot VMSS.
+	// Minimum api-version: 2019-03-01.
 	BillingProfile *BillingProfile `json:"billingProfile,omitempty"`
 
-	// Specifies the boot diagnostic settings state. <br><br>Minimum api-version: 2015-06-15.
+	// Specifies the boot diagnostic settings state.
+	// Minimum api-version: 2015-06-15.
 	DiagnosticsProfile *DiagnosticsProfile `json:"diagnosticsProfile,omitempty"`
 
-	// Specifies the eviction policy for the Azure Spot virtual machine and Azure Spot scale set. <br><br>For Azure Spot virtual
-	// machines, both 'Deallocate' and 'Delete' are supported and the minimum api-version is 2019-03-01. <br><br>For Azure Spot
-	// scale sets, both 'Deallocate' and 'Delete' are supported and the minimum api-version is 2017-10-30-preview.
+	// Specifies the eviction policy for the Azure Spot virtual machine and Azure Spot scale set.
+	// For Azure Spot virtual machines, both 'Deallocate' and 'Delete' are supported and the minimum api-version is 2019-03-01.
+	// For Azure Spot scale sets, both 'Deallocate' and 'Delete' are supported and the minimum api-version is 2017-10-30-preview.
 	EvictionPolicy *VirtualMachineEvictionPolicyTypes `json:"evictionPolicy,omitempty"`
 
 	// Specifies a collection of settings for extensions installed on virtual machines in the scale set.
 	ExtensionProfile *VirtualMachineScaleSetExtensionProfile `json:"extensionProfile,omitempty"`
 
-	// Specifies that the image or disk that is being used was licensed on-premises. This element is only used for images that
-	// contain the Windows Server operating system. <br><br> Possible values are: <br><br> Windows_Client <br><br> Windows_Server
-	// <br><br> If this element is included in a request for an update, the value must match the initial value. This value cannot
-	// be updated. <br><br> For more information, see [Azure Hybrid Use Benefit for Windows Server](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-hybrid-use-benefit-licensing?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)
-	// <br><br> Minimum api-version: 2015-06-15
+	// Specifies that the image or disk that is being used was licensed on-premises. This element is only used for images that contain the Windows Server operating
+	// system.
+	// Possible values are:
+	// WindowsClient
+	// WindowsServer
+	// If this element is included in a request for an update, the value must match the initial value. This value cannot be updated.
+	// For more information, see Azure Hybrid Use Benefit for Windows Server
+	// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-hybrid-use-benefit-licensing?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json]
+	// Minimum api-version: 2015-06-15
 	LicenseType *string `json:"licenseType,omitempty"`
 
 	// Specifies properties of the network interfaces of the virtual machines in the scale set.
@@ -6480,7 +6544,8 @@ type VirtualMachineScaleSetVMProfile struct {
 	// Specifies the operating system settings for the virtual machines in the scale set.
 	OSProfile *VirtualMachineScaleSetOSProfile `json:"osProfile,omitempty"`
 
-	// Specifies the priority for the virtual machines in the scale set. <br><br>Minimum api-version: 2017-10-30-preview
+	// Specifies the priority for the virtual machines in the scale set.
+	// Minimum api-version: 2017-10-30-preview
 	Priority *VirtualMachinePriorityTypes `json:"priority,omitempty"`
 
 	// Specifies Scheduled Event related configurations.
@@ -6492,19 +6557,22 @@ type VirtualMachineScaleSetVMProfile struct {
 
 // Describes the properties of a virtual machine scale set virtual machine.
 type VirtualMachineScaleSetVMProperties struct {
-	// Specifies additional capabilities enabled or disabled on the virtual machine in the scale set. For instance: whether the
-	// virtual machine has the capability to support attaching managed data disks with UltraSSD_LRS storage account type.
+	// Specifies additional capabilities enabled or disabled on the virtual machine in the scale set. For instance: whether the virtual machine has the capability
+	// to support attaching managed data disks with
+	// UltraSSD_LRS storage account type.
 	AdditionalCapabilities *AdditionalCapabilities `json:"additionalCapabilities,omitempty"`
 
-	// Specifies information about the availability set that the virtual machine should be assigned to. Virtual machines specified
-	// in the same availability set are allocated to different nodes to maximize availability. For more information about availability
-	// sets, see [Manage the availability of virtual machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-manage-availability?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).
-	// <br><br> For more information on Azure planned maintenance, see [Planned maintenance for virtual machines in Azure](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-planned-maintenance?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)
-	// <br><br> Currently, a VM can only be added to availability set at creation time. An existing VM cannot be added to an availability
-	// set.
+	// Specifies information about the availability set that the virtual machine should be assigned to. Virtual machines specified in the same availability
+	// set are allocated to different nodes to maximize
+	// availability. For more information about availability sets, see Manage the availability of virtual machines
+	// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-manage-availability?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json].
+	// For more information on Azure planned maintenance, see Planned maintenance for virtual machines in Azure
+	// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-planned-maintenance?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json]
+	// Currently, a VM can only be added to availability set at creation time. An existing VM cannot be added to an availability set.
 	AvailabilitySet *SubResource `json:"availabilitySet,omitempty"`
 
-	// Specifies the boot diagnostic settings state. <br><br>Minimum api-version: 2015-06-15.
+	// Specifies the boot diagnostic settings state.
+	// Minimum api-version: 2015-06-15.
 	DiagnosticsProfile *DiagnosticsProfile `json:"diagnosticsProfile,omitempty"`
 
 	// Specifies the hardware settings for the virtual machine.
@@ -6516,15 +6584,18 @@ type VirtualMachineScaleSetVMProperties struct {
 	// Specifies whether the latest model has been applied to the virtual machine.
 	LatestModelApplied *bool `json:"latestModelApplied,omitempty" azure:"ro"`
 
-	// Specifies that the image or disk that is being used was licensed on-premises. This element is only used for images that
-	// contain the Windows Server operating system. <br><br> Possible values are: <br><br> Windows_Client <br><br> Windows_Server
-	// <br><br> If this element is included in a request for an update, the value must match the initial value. This value cannot
-	// be updated. <br><br> For more information, see [Azure Hybrid Use Benefit for Windows Server](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-hybrid-use-benefit-licensing?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)
-	// <br><br> Minimum api-version: 2015-06-15
+	// Specifies that the image or disk that is being used was licensed on-premises. This element is only used for images that contain the Windows Server operating
+	// system.
+	// Possible values are:
+	// WindowsClient
+	// WindowsServer
+	// If this element is included in a request for an update, the value must match the initial value. This value cannot be updated.
+	// For more information, see Azure Hybrid Use Benefit for Windows Server
+	// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-hybrid-use-benefit-licensing?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json]
+	// Minimum api-version: 2015-06-15
 	LicenseType *string `json:"licenseType,omitempty"`
 
-	// Specifies whether the model applied to the virtual machine is the model of the virtual machine scale set or the customized
-	// model for the virtual machine.
+	// Specifies whether the model applied to the virtual machine is the model of the virtual machine scale set or the customized model for the virtual machine.
 	ModelDefinitionApplied *string `json:"modelDefinitionApplied,omitempty" azure:"ro"`
 
 	// Specifies the network interfaces of the virtual machine.
@@ -6554,8 +6625,8 @@ type VirtualMachineScaleSetVMProtectionPolicy struct {
 	// Indicates that the virtual machine scale set VM shouldn't be considered for deletion during a scale-in operation.
 	ProtectFromScaleIn *bool `json:"protectFromScaleIn,omitempty"`
 
-	// Indicates that model updates or actions (including scale-in) initiated on the virtual machine scale set should not be applied
-	// to the virtual machine scale set VM.
+	// Indicates that model updates or actions (including scale-in) initiated on the virtual machine scale set should not be applied to the virtual machine
+	// scale set VM.
 	ProtectFromScaleSetActions *bool `json:"protectFromScaleSetActions,omitempty"`
 }
 
@@ -6573,8 +6644,7 @@ type VirtualMachineScaleSetVMResponse struct {
 	VirtualMachineScaleSetVM *VirtualMachineScaleSetVM
 }
 
-// VirtualMachineScaleSetVMSDeallocateOptions contains the optional parameters for the VirtualMachineScaleSetVMS.Deallocate
-// method.
+// VirtualMachineScaleSetVMSDeallocateOptions contains the optional parameters for the VirtualMachineScaleSetVMS.Deallocate method.
 type VirtualMachineScaleSetVMSDeallocateOptions struct {
 	// placeholder for future optional parameters
 }
@@ -6584,8 +6654,7 @@ type VirtualMachineScaleSetVMSDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetVMSGetInstanceViewOptions contains the optional parameters for the VirtualMachineScaleSetVMS.GetInstanceView
-// method.
+// VirtualMachineScaleSetVMSGetInstanceViewOptions contains the optional parameters for the VirtualMachineScaleSetVMS.GetInstanceView method.
 type VirtualMachineScaleSetVMSGetInstanceViewOptions struct {
 	// placeholder for future optional parameters
 }
@@ -6600,23 +6669,22 @@ type VirtualMachineScaleSetVMSGetOptions struct {
 type VirtualMachineScaleSetVMSListOptions struct {
 	// The expand expression to apply to the operation. Allowed values are 'instanceView'.
 	Expand *string
-	// The filter to apply to the operation. Allowed values are 'startswith(instanceView/statuses/code, 'PowerState') eq true',
-	// 'properties/latestModelApplied eq true', 'properties/latestModelApplied eq false'.
+	// The filter to apply to the operation. Allowed values are 'startswith(instanceView/statuses/code, 'PowerState') eq true', 'properties/latestModelApplied
+	// eq true', 'properties/latestModelApplied eq false'.
 	Filter *string
 	// The list parameters. Allowed values are 'instanceView', 'instanceView/statuses'.
 	SelectParameter *string
 }
 
-// VirtualMachineScaleSetVMSPerformMaintenanceOptions contains the optional parameters for the VirtualMachineScaleSetVMS.PerformMaintenance
-// method.
+// VirtualMachineScaleSetVMSPerformMaintenanceOptions contains the optional parameters for the VirtualMachineScaleSetVMS.PerformMaintenance method.
 type VirtualMachineScaleSetVMSPerformMaintenanceOptions struct {
 	// placeholder for future optional parameters
 }
 
 // VirtualMachineScaleSetVMSPowerOffOptions contains the optional parameters for the VirtualMachineScaleSetVMS.PowerOff method.
 type VirtualMachineScaleSetVMSPowerOffOptions struct {
-	// The parameter to request non-graceful VM shutdown. True value for this flag indicates non-graceful shutdown whereas false
-	// indicates otherwise. Default value for this flag is false if not specified
+	// The parameter to request non-graceful VM shutdown. True value for this flag indicates non-graceful shutdown whereas false indicates otherwise. Default
+	// value for this flag is false if not specified
 	SkipShutdown *bool
 }
 
@@ -6625,8 +6693,7 @@ type VirtualMachineScaleSetVMSRedeployOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetVMSReimageAllOptions contains the optional parameters for the VirtualMachineScaleSetVMS.ReimageAll
-// method.
+// VirtualMachineScaleSetVMSReimageAllOptions contains the optional parameters for the VirtualMachineScaleSetVMS.ReimageAll method.
 type VirtualMachineScaleSetVMSReimageAllOptions struct {
 	// placeholder for future optional parameters
 }
@@ -6642,14 +6709,12 @@ type VirtualMachineScaleSetVMSRestartOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetVMSRunCommandOptions contains the optional parameters for the VirtualMachineScaleSetVMS.RunCommand
-// method.
+// VirtualMachineScaleSetVMSRunCommandOptions contains the optional parameters for the VirtualMachineScaleSetVMS.RunCommand method.
 type VirtualMachineScaleSetVMSRunCommandOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetVMSSimulateEvictionOptions contains the optional parameters for the VirtualMachineScaleSetVMS.SimulateEviction
-// method.
+// VirtualMachineScaleSetVMSSimulateEvictionOptions contains the optional parameters for the VirtualMachineScaleSetVMS.SimulateEviction method.
 type VirtualMachineScaleSetVMSSimulateEvictionOptions struct {
 	// placeholder for future optional parameters
 }
@@ -6670,8 +6735,7 @@ type VirtualMachineScaleSetsConvertToSinglePlacementGroupOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetsCreateOrUpdateOptions contains the optional parameters for the VirtualMachineScaleSets.CreateOrUpdate
-// method.
+// VirtualMachineScaleSetsCreateOrUpdateOptions contains the optional parameters for the VirtualMachineScaleSets.CreateOrUpdate method.
 type VirtualMachineScaleSetsCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
@@ -6682,8 +6746,7 @@ type VirtualMachineScaleSetsDeallocateOptions struct {
 	VMInstanceIDs *VirtualMachineScaleSetVMInstanceIDs
 }
 
-// VirtualMachineScaleSetsDeleteInstancesOptions contains the optional parameters for the VirtualMachineScaleSets.DeleteInstances
-// method.
+// VirtualMachineScaleSetsDeleteInstancesOptions contains the optional parameters for the VirtualMachineScaleSets.DeleteInstances method.
 type VirtualMachineScaleSetsDeleteInstancesOptions struct {
 	// placeholder for future optional parameters
 }
@@ -6693,20 +6756,18 @@ type VirtualMachineScaleSetsDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetsForceRecoveryServiceFabricPlatformUpdateDomainWalkOptions contains the optional parameters for the
-// VirtualMachineScaleSets.ForceRecoveryServiceFabricPlatformUpdateDomainWalk method.
+// VirtualMachineScaleSetsForceRecoveryServiceFabricPlatformUpdateDomainWalkOptions contains the optional parameters for the VirtualMachineScaleSets.ForceRecoveryServiceFabricPlatformUpdateDomainWalk
+// method.
 type VirtualMachineScaleSetsForceRecoveryServiceFabricPlatformUpdateDomainWalkOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetsGetInstanceViewOptions contains the optional parameters for the VirtualMachineScaleSets.GetInstanceView
-// method.
+// VirtualMachineScaleSetsGetInstanceViewOptions contains the optional parameters for the VirtualMachineScaleSets.GetInstanceView method.
 type VirtualMachineScaleSetsGetInstanceViewOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetsGetOSUpgradeHistoryOptions contains the optional parameters for the VirtualMachineScaleSets.GetOSUpgradeHistory
-// method.
+// VirtualMachineScaleSetsGetOSUpgradeHistoryOptions contains the optional parameters for the VirtualMachineScaleSets.GetOSUpgradeHistory method.
 type VirtualMachineScaleSetsGetOSUpgradeHistoryOptions struct {
 	// placeholder for future optional parameters
 }
@@ -6731,8 +6792,7 @@ type VirtualMachineScaleSetsListSKUsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetsPerformMaintenanceOptions contains the optional parameters for the VirtualMachineScaleSets.PerformMaintenance
-// method.
+// VirtualMachineScaleSetsPerformMaintenanceOptions contains the optional parameters for the VirtualMachineScaleSets.PerformMaintenance method.
 type VirtualMachineScaleSetsPerformMaintenanceOptions struct {
 	// A list of virtual machine instance IDs from the VM scale set.
 	VMInstanceIDs *VirtualMachineScaleSetVMInstanceIDs
@@ -6740,8 +6800,8 @@ type VirtualMachineScaleSetsPerformMaintenanceOptions struct {
 
 // VirtualMachineScaleSetsPowerOffOptions contains the optional parameters for the VirtualMachineScaleSets.PowerOff method.
 type VirtualMachineScaleSetsPowerOffOptions struct {
-	// The parameter to request non-graceful VM shutdown. True value for this flag indicates non-graceful shutdown whereas false
-	// indicates otherwise. Default value for this flag is false if not specified
+	// The parameter to request non-graceful VM shutdown. True value for this flag indicates non-graceful shutdown whereas false indicates otherwise. Default
+	// value for this flag is false if not specified
 	SkipShutdown *bool
 	// A list of virtual machine instance IDs from the VM scale set.
 	VMInstanceIDs *VirtualMachineScaleSetVMInstanceIDs
@@ -6783,8 +6843,7 @@ type VirtualMachineScaleSetsStartOptions struct {
 	VMInstanceIDs *VirtualMachineScaleSetVMInstanceIDs
 }
 
-// VirtualMachineScaleSetsUpdateInstancesOptions contains the optional parameters for the VirtualMachineScaleSets.UpdateInstances
-// method.
+// VirtualMachineScaleSetsUpdateInstancesOptions contains the optional parameters for the VirtualMachineScaleSets.UpdateInstances method.
 type VirtualMachineScaleSetsUpdateInstancesOptions struct {
 	// placeholder for future optional parameters
 }
@@ -6821,8 +6880,7 @@ type VirtualMachineSizeListResult struct {
 	Value *[]VirtualMachineSize `json:"value,omitempty"`
 }
 
-// VirtualMachineSizeListResultResponse is the response envelope for operations that return a VirtualMachineSizeListResult
-// type.
+// VirtualMachineSizeListResultResponse is the response envelope for operations that return a VirtualMachineSizeListResult type.
 type VirtualMachineSizeListResultResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -6851,10 +6909,11 @@ type VirtualMachineUpdate struct {
 	// The identity of the virtual machine, if configured.
 	IDentity *VirtualMachineIDentity `json:"identity,omitempty"`
 
-	// Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace
-	// images. Before you can use a marketplace image from an API, you must enable the image for programmatic use. In the Azure
-	// portal, find the marketplace image that you want to use and then click **Want to deploy programmatically, Get Started ->**.
-	// Enter any required information and then click **Save**.
+	// Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can
+	// use a marketplace image from an API, you must
+	// enable the image for programmatic use. In the Azure portal, find the marketplace image that you want to use and then click Want to deploy programmatically,
+	// Get Started ->. Enter any required
+	// information and then click Save.
 	Plan *Plan `json:"plan,omitempty"`
 
 	// Describes the properties of a Virtual Machine.
@@ -6869,8 +6928,7 @@ type VirtualMachinesCaptureOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachinesConvertToManagedDisksOptions contains the optional parameters for the VirtualMachines.ConvertToManagedDisks
-// method.
+// VirtualMachinesConvertToManagedDisksOptions contains the optional parameters for the VirtualMachines.ConvertToManagedDisks method.
 type VirtualMachinesConvertToManagedDisksOptions struct {
 	// placeholder for future optional parameters
 }
@@ -6934,8 +6992,8 @@ type VirtualMachinesPerformMaintenanceOptions struct {
 
 // VirtualMachinesPowerOffOptions contains the optional parameters for the VirtualMachines.PowerOff method.
 type VirtualMachinesPowerOffOptions struct {
-	// The parameter to request non-graceful VM shutdown. True value for this flag indicates non-graceful shutdown whereas false
-	// indicates otherwise. Default value for this flag is false if not specified
+	// The parameter to request non-graceful VM shutdown. True value for this flag indicates non-graceful shutdown whereas false indicates otherwise. Default
+	// value for this flag is false if not specified
 	SkipShutdown *bool
 }
 
@@ -6988,33 +7046,42 @@ type WinRmConfiguration struct {
 
 // Describes Protocol and thumbprint of Windows Remote Management listener
 type WinRmListener struct {
-	// This is the URL of a certificate that has been uploaded to Key Vault as a secret. For adding a secret to the Key Vault,
-	// see [Add a key or secret to the key vault](https://docs.microsoft.com/azure/key-vault/key-vault-get-started/#add). In this
-	// case, your certificate needs to be It is the Base64 encoding of the following JSON Object which is encoded in UTF-8: <br><br>
-	// {<br> "data":"<Base64-encoded-certificate>",<br> "dataType":"pfx",<br> "password":"<pfx-file-password>"<br>}
+	// This is the URL of a certificate that has been uploaded to Key Vault as a secret. For adding a secret to the Key Vault, see Add a key or secret to the
+	// key vault
+	// [https://docs.microsoft.com/azure/key-vault/key-vault-get-started/#add]. In this case, your certificate needs to be It is the Base64 encoding of the
+	// following JSON Object which is encoded in UTF-8:
+	// {
+	// "data":"",
+	// "dataType":"pfx",
+	// "password":""
+	// }
 	CertificateURL *string `json:"certificateUrl,omitempty"`
 
-	// Specifies the protocol of WinRM listener. <br><br> Possible values are: <br>**http** <br><br> **https**
+	// Specifies the protocol of WinRM listener.
+	// Possible values are:
+	// http
+	// https
 	Protocol *ProtocolTypes `json:"protocol,omitempty"`
 }
 
 // Specifies Windows operating system settings on the virtual machine.
 type WindowsConfiguration struct {
-	// Specifies additional base-64 encoded XML formatted information that can be included in the Unattend.xml file, which is
-	// used by Windows Setup.
+	// Specifies additional base-64 encoded XML formatted information that can be included in the Unattend.xml file, which is used by Windows Setup.
 	AdditionalUnattendContent *[]AdditionalUnattendContent `json:"additionalUnattendContent,omitempty"`
 
-	// Indicates whether Automatic Updates is enabled for the Windows virtual machine. Default value is true. <br><br> For virtual
-	// machine scale sets, this property can be updated and updates will take effect on OS reprovisioning.
+	// Indicates whether Automatic Updates is enabled for the Windows virtual machine. Default value is true.
+	// For virtual machine scale sets, this property can be updated and updates will take effect on OS reprovisioning.
 	EnableAutomaticUpdates *bool `json:"enableAutomaticUpdates,omitempty"`
 
-	// Indicates whether virtual machine agent should be provisioned on the virtual machine. <br><br> When this property is not
-	// specified in the request body, default behavior is to set it to true. This will ensure that VM Agent is installed on the
-	// VM so that extensions can be added to the VM later.
+	// Indicates whether virtual machine agent should be provisioned on the virtual machine.
+	// When this property is not specified in the request body, default behavior is to set it to true. This will ensure that VM Agent is installed on the VM
+	// so that extensions can be added to the VM later.
 	ProvisionVMAgent *bool `json:"provisionVMAgent,omitempty"`
 
-	// Specifies the time zone of the virtual machine. e.g. "Pacific Standard Time". <br><br> Possible values can be [TimeZoneInfo.Id](https://docs.microsoft.com/en-us/dotnet/api/system.timezoneinfo.id?#System_TimeZoneInfo_Id)
-	// value from time zones returned by [TimeZoneInfo.GetSystemTimeZones](https://docs.microsoft.com/en-us/dotnet/api/system.timezoneinfo.getsystemtimezones).
+	// Specifies the time zone of the virtual machine. e.g. "Pacific Standard Time".
+	// Possible values can be TimeZoneInfo.Id [https://docs.microsoft.com/en-us/dotnet/api/system.timezoneinfo.id?#System_TimeZoneInfo_Id] value from time zones
+	// returned by TimeZoneInfo.GetSystemTimeZones
+	// [https://docs.microsoft.com/en-us/dotnet/api/system.timezoneinfo.getsystemtimezones].
 	TimeZone *string `json:"timeZone,omitempty"`
 
 	// Specifies the Windows Remote Management listeners. This enables remote Windows PowerShell.

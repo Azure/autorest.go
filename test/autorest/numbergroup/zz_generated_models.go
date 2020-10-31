@@ -44,8 +44,7 @@ type Float64Response struct {
 	Value       *float64
 }
 
-// NumberGetBigDecimalNegativeDecimalOptions contains the optional parameters for the Number.GetBigDecimalNegativeDecimal
-// method.
+// NumberGetBigDecimalNegativeDecimalOptions contains the optional parameters for the Number.GetBigDecimalNegativeDecimal method.
 type NumberGetBigDecimalNegativeDecimalOptions struct {
 	// placeholder for future optional parameters
 }
@@ -55,8 +54,7 @@ type NumberGetBigDecimalOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NumberGetBigDecimalPositiveDecimalOptions contains the optional parameters for the Number.GetBigDecimalPositiveDecimal
-// method.
+// NumberGetBigDecimalPositiveDecimalOptions contains the optional parameters for the Number.GetBigDecimalPositiveDecimal method.
 type NumberGetBigDecimalPositiveDecimalOptions struct {
 	// placeholder for future optional parameters
 }
@@ -116,8 +114,7 @@ type NumberGetSmallFloatOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NumberPutBigDecimalNegativeDecimalOptions contains the optional parameters for the Number.PutBigDecimalNegativeDecimal
-// method.
+// NumberPutBigDecimalNegativeDecimalOptions contains the optional parameters for the Number.PutBigDecimalNegativeDecimal method.
 type NumberPutBigDecimalNegativeDecimalOptions struct {
 	// placeholder for future optional parameters
 }
@@ -127,8 +124,7 @@ type NumberPutBigDecimalOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NumberPutBigDecimalPositiveDecimalOptions contains the optional parameters for the Number.PutBigDecimalPositiveDecimal
-// method.
+// NumberPutBigDecimalPositiveDecimalOptions contains the optional parameters for the Number.PutBigDecimalPositiveDecimal method.
 type NumberPutBigDecimalPositiveDecimalOptions struct {
 	// placeholder for future optional parameters
 }

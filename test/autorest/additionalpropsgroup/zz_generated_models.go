@@ -76,7 +76,7 @@ func (e Error) Error() string {
 }
 
 type PetApInProperties struct {
-	// Dictionary of <number>
+	// Dictionary of
 	AdditionalProperties *map[string]float32 `json:"additionalProperties,omitempty"`
 	ID                   *int32              `json:"id,omitempty"`
 	Name                 *string             `json:"name,omitempty"`
@@ -95,7 +95,7 @@ type PetApInPropertiesWithApstring struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]string
 
-	// Dictionary of <number>
+	// Dictionary of
 	AdditionalProperties1 *map[string]float32 `json:"additionalProperties,omitempty"`
 	ID                    *int32              `json:"id,omitempty"`
 	Name                  *string             `json:"name,omitempty"`
@@ -181,8 +181,7 @@ func (p *PetApInPropertiesWithApstring) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// PetApInPropertiesWithApstringResponse is the response envelope for operations that return a PetApInPropertiesWithApstring
-// type.
+// PetApInPropertiesWithApstringResponse is the response envelope for operations that return a PetApInPropertiesWithApstring type.
 type PetApInPropertiesWithApstringResponse struct {
 	PetApInPropertiesWithApstring *PetApInPropertiesWithApstring
 
@@ -438,8 +437,7 @@ type PetsCreateApInPropertiesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PetsCreateApInPropertiesWithApstringOptions contains the optional parameters for the Pets.CreateApInPropertiesWithApstring
-// method.
+// PetsCreateApInPropertiesWithApstringOptions contains the optional parameters for the Pets.CreateApInPropertiesWithApstring method.
 type PetsCreateApInPropertiesWithApstringOptions struct {
 	// placeholder for future optional parameters
 }

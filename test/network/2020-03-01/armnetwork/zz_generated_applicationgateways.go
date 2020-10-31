@@ -21,7 +21,8 @@ type ApplicationGatewaysOperations interface {
 	BeginBackendHealth(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysBackendHealthOptions) (*ApplicationGatewayBackendHealthPollerResponse, error)
 	// ResumeBackendHealth - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeBackendHealth(token string) (ApplicationGatewayBackendHealthPoller, error)
-	// BeginBackendHealthOnDemand - Gets the backend health for given combination of backend pool and http setting of the specified application gateway in a resource group.
+	// BeginBackendHealthOnDemand - Gets the backend health for given combination of backend pool and http setting of the specified application gateway in a
+	// resource group.
 	BeginBackendHealthOnDemand(ctx context.Context, resourceGroupName string, applicationGatewayName string, probeRequest ApplicationGatewayOnDemandProbe, options *ApplicationGatewaysBackendHealthOnDemandOptions) (*ApplicationGatewayBackendHealthOnDemandPollerResponse, error)
 	// ResumeBackendHealthOnDemand - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeBackendHealthOnDemand(token string) (ApplicationGatewayBackendHealthOnDemandPoller, error)
@@ -201,7 +202,8 @@ func (client *ApplicationGatewaysClient) ResumeBackendHealthOnDemand(token strin
 	}, nil
 }
 
-// BackendHealthOnDemand - Gets the backend health for given combination of backend pool and http setting of the specified application gateway in a resource group.
+// BackendHealthOnDemand - Gets the backend health for given combination of backend pool and http setting of the specified application gateway in a resource
+// group.
 func (client *ApplicationGatewaysClient) BackendHealthOnDemand(ctx context.Context, resourceGroupName string, applicationGatewayName string, probeRequest ApplicationGatewayOnDemandProbe, options *ApplicationGatewaysBackendHealthOnDemandOptions) (*azcore.Response, error) {
 	req, err := client.BackendHealthOnDemandCreateRequest(ctx, resourceGroupName, applicationGatewayName, probeRequest, options)
 	if err != nil {

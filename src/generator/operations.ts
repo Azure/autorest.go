@@ -7,7 +7,7 @@ import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, KnownMediaType, pascalCase, camelCase } from '@azure-tools/codegen';
 import { ArraySchema, ByteArraySchema, CodeModel, ConstantSchema, DateTimeSchema, DictionarySchema, GroupProperty, ImplementationLocation, NumberSchema, Operation, OperationGroup, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { aggregateParameters, isArraySchema, isPageableOperation, isSchemaResponse, PagerInfo, isLROOperation, exportClients } from '../common/helpers';
+import { aggregateParameters, isArraySchema, isPageableOperation, isSchemaResponse, PagerInfo, isLROOperation, exportClients, commentLength } from '../common/helpers';
 import { OperationNaming } from '../transform/namer';
 import { contentPreamble, formatParameterTypeName, formatStatusCodes, getStatusCodes, hasDescription, hasSchemaResponse, skipURLEncoding, sortAscending, getCreateRequestParameters, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired } from './helpers';
 import { ImportManager } from './imports';
@@ -215,7 +215,7 @@ function generateOperation(op: Operation, imports: ImportManager): string {
   const clientName = op.language.go!.clientName;
   let text = '';
   if (hasDescription(op.language.go!)) {
-    text += `// ${op.language.go!.name} - ${op.language.go!.description} \n`;
+    text += `${comment(`${op.language.go!.name} - ${op.language.go!.description}`, "//", undefined, commentLength)}\n`;
   }
   if (isMultiRespOperation(op)) {
     text += generateMultiRespComment(op);
@@ -819,7 +819,7 @@ function createInterfaceDefinition(group: OperationGroup, imports: ImportManager
       imports.addImportForSchemaType(param.schema);
     }
     if (hasDescription(op.language.go!)) {
-      interfaceText += `\t// ${opName} - ${op.language.go!.description} \n`;
+      interfaceText += `${comment(`${opName} - ${op.language.go!.description}`, "//", undefined, commentLength)}\n`;
     }
     if (isMultiRespOperation(op)) {
       interfaceText += generateMultiRespComment(op);

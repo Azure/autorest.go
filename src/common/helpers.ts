@@ -7,6 +7,9 @@ import { Session } from '@azure-tools/autorest-extension-base';
 import { ArraySchema, CodeModel, DictionarySchema, ObjectSchema, Operation, Parameter, Response, Schema, SchemaResponse, SchemaType } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 
+// variable to be used to determine comment length when calling comment from @azure-tools
+export const commentLength = 150;
+
 // aggregates the Parameter in op.parameters and the first request
 export function aggregateParameters(op: Operation): Array<Parameter> {
   let params = new Array<Parameter>();

@@ -58,13 +58,17 @@
     "@azure-tools/codemodel": "~4.13.347"
   },
   "dependencies": {
+    "@azure-tools/async-io": "~3.0.0",
+    "@azure-tools/autorest-extension-base": "~3.1.0",
     "@azure-tools/codegen": "~2.5.288",
     "@azure-tools/codemodel": "~4.13.347",
-    "@azure-tools/autorest-extension-base": "~3.1.0",
     "@azure-tools/linq": "~3.1.0",
     "@azure-tools/tasks": "~3.0.0",
-    "@azure-tools/async-io": "~3.0.0",
-    "source-map-support": "0.5.13",
-    "js-yaml": "3.13.1"
+    "@types/html-to-text": "^5.1.2",
+    "@types/showdown": "^1.9.3",
+    "html-to-text": "^5.1.1",
+    "js-yaml": "3.13.1",
+    "showdown": "^1.9.1",
+    "source-map-support": "0.5.13"
   }
 }

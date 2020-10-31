@@ -43,7 +43,8 @@ type XMLOperations interface {
 	GetSimple(ctx context.Context, options *XMLGetSimpleOptions) (*SlideshowResponse, error)
 	// GetWrappedLists - Get an XML document with multiple wrapped lists
 	GetWrappedLists(ctx context.Context, options *XMLGetWrappedListsOptions) (*AppleBarrelResponse, error)
-	// GetXMSText - Get back an XML object with an x-ms-text property, which should translate to the returned object's 'language' property being 'english' and its 'content' property being 'I am text'
+	// GetXMSText - Get back an XML object with an x-ms-text property, which should translate to the returned object's 'language' property being 'english' and
+	// its 'content' property being 'I am text'
 	GetXMSText(ctx context.Context, options *XMLGetXMSTextOptions) (*ObjectWithXMSTextPropertyResponse, error)
 	// JSONInput - A Swagger with XML that has one operation that takes JSON as input. You need to send the ID number 42
 	JSONInput(ctx context.Context, properties JSONInput, options *XMLJSONInputOptions) (*http.Response, error)
@@ -739,7 +740,8 @@ func (client *XMLClient) GetWrappedListsHandleError(resp *azcore.Response) error
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-// GetXMSText - Get back an XML object with an x-ms-text property, which should translate to the returned object's 'language' property being 'english' and its 'content' property being 'I am text'
+// GetXMSText - Get back an XML object with an x-ms-text property, which should translate to the returned object's 'language' property being 'english' and
+// its 'content' property being 'I am text'
 func (client *XMLClient) GetXMSText(ctx context.Context, options *XMLGetXMSTextOptions) (*ObjectWithXMSTextPropertyResponse, error) {
 	req, err := client.GetXMSTextCreateRequest(ctx, options)
 	if err != nil {

@@ -27,7 +27,7 @@ type StringOperations interface {
 	GetNull(ctx context.Context, options *StringGetNullOptions) (*StringResponse, error)
 	// GetNullBase64URLEncoded - Get null value that is expected to be base64url encoded
 	GetNullBase64URLEncoded(ctx context.Context, options *StringGetNullBase64URLEncodedOptions) (*ByteArrayResponse, error)
-	// GetWhitespace - Get string value with leading and trailing whitespace '<tab><space><space>Now is the time for all good men to come to the aid of their country<tab><space><space>'
+	// GetWhitespace - Get string value with leading and trailing whitespace 'Now is the time for all good men to come to the aid of their country'
 	GetWhitespace(ctx context.Context, options *StringGetWhitespaceOptions) (*StringResponse, error)
 	// PutBase64URLEncoded - Put value that is base64url encoded
 	PutBase64URLEncoded(ctx context.Context, stringBody []byte, options *StringPutBase64URLEncodedOptions) (*http.Response, error)
@@ -37,7 +37,7 @@ type StringOperations interface {
 	PutMBCS(ctx context.Context, options *StringPutMBCSOptions) (*http.Response, error)
 	// PutNull - Set string value null
 	PutNull(ctx context.Context, options *StringPutNullOptions) (*http.Response, error)
-	// PutWhitespace - Set String value with leading and trailing whitespace '<tab><space><space>Now is the time for all good men to come to the aid of their country<tab><space><space>'
+	// PutWhitespace - Set String value with leading and trailing whitespace 'Now is the time for all good men to come to the aid of their country'
 	PutWhitespace(ctx context.Context, options *StringPutWhitespaceOptions) (*http.Response, error)
 }
 
@@ -379,7 +379,7 @@ func (client *StringClient) GetNullBase64URLEncodedHandleError(resp *azcore.Resp
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// GetWhitespace - Get string value with leading and trailing whitespace '<tab><space><space>Now is the time for all good men to come to the aid of their country<tab><space><space>'
+// GetWhitespace - Get string value with leading and trailing whitespace 'Now is the time for all good men to come to the aid of their country'
 func (client *StringClient) GetWhitespace(ctx context.Context, options *StringGetWhitespaceOptions) (*StringResponse, error) {
 	req, err := client.GetWhitespaceCreateRequest(ctx, options)
 	if err != nil {
@@ -572,7 +572,7 @@ func (client *StringClient) PutNullHandleError(resp *azcore.Response) error {
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// PutWhitespace - Set String value with leading and trailing whitespace '<tab><space><space>Now is the time for all good men to come to the aid of their country<tab><space><space>'
+// PutWhitespace - Set String value with leading and trailing whitespace 'Now is the time for all good men to come to the aid of their country'
 func (client *StringClient) PutWhitespace(ctx context.Context, options *StringPutWhitespaceOptions) (*http.Response, error) {
 	req, err := client.PutWhitespaceCreateRequest(ctx, options)
 	if err != nil {

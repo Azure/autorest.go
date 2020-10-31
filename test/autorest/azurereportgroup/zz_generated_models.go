@@ -10,11 +10,10 @@ import (
 	"net/http"
 )
 
-// AutoRestReportServiceForAzureGetReportOptions contains the optional parameters for the AutoRestReportServiceForAzure.GetReport
-// method.
+// AutoRestReportServiceForAzureGetReportOptions contains the optional parameters for the AutoRestReportServiceForAzure.GetReport method.
 type AutoRestReportServiceForAzureGetReportOptions struct {
-	// If specified, qualifies the generated report further (e.g. '2.7' vs '3.5' in for Python). The only effect is, that generators
-	// that run all tests several times, can distinguish the generated reports.
+	// If specified, qualifies the generated report further (e.g. '2.7' vs '3.5' in for Python). The only effect is, that generators that run all tests several
+	// times, can distinguish the generated reports.
 	Qualifier *string
 }
 

@@ -19,7 +19,8 @@ type LrosaDsOperations interface {
 	BeginDelete202NonRetry400(ctx context.Context, options *LrosaDsDelete202NonRetry400Options) (*HTTPPollerResponse, error)
 	// ResumeDelete202NonRetry400 - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeDelete202NonRetry400(token string) (HTTPPoller, error)
-	// BeginDelete202RetryInvalidHeader - Long running delete request, service returns a 202 to the initial request receing a reponse with an invalid 'Location' and 'Retry-After' headers
+	// BeginDelete202RetryInvalidHeader - Long running delete request, service returns a 202 to the initial request receing a reponse with an invalid 'Location'
+	// and 'Retry-After' headers
 	BeginDelete202RetryInvalidHeader(ctx context.Context, options *LrosaDsDelete202RetryInvalidHeaderOptions) (*HTTPPollerResponse, error)
 	// ResumeDelete202RetryInvalidHeader - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeDelete202RetryInvalidHeader(token string) (HTTPPoller, error)
@@ -27,19 +28,23 @@ type LrosaDsOperations interface {
 	BeginDelete204Succeeded(ctx context.Context, options *LrosaDsDelete204SucceededOptions) (*HTTPPollerResponse, error)
 	// ResumeDelete204Succeeded - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeDelete204Succeeded(token string) (HTTPPoller, error)
-	// BeginDeleteAsyncRelativeRetry400 - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
+	// BeginDeleteAsyncRelativeRetry400 - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation
+	// header for operation status
 	BeginDeleteAsyncRelativeRetry400(ctx context.Context, options *LrosaDsDeleteAsyncRelativeRetry400Options) (*HTTPPollerResponse, error)
 	// ResumeDeleteAsyncRelativeRetry400 - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeDeleteAsyncRelativeRetry400(token string) (HTTPPoller, error)
-	// BeginDeleteAsyncRelativeRetryInvalidHeader - Long running delete request, service returns a 202 to the initial request. The endpoint indicated in the Azure-AsyncOperation header is invalid
+	// BeginDeleteAsyncRelativeRetryInvalidHeader - Long running delete request, service returns a 202 to the initial request. The endpoint indicated in the
+	// Azure-AsyncOperation header is invalid
 	BeginDeleteAsyncRelativeRetryInvalidHeader(ctx context.Context, options *LrosaDsDeleteAsyncRelativeRetryInvalidHeaderOptions) (*HTTPPollerResponse, error)
 	// ResumeDeleteAsyncRelativeRetryInvalidHeader - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeDeleteAsyncRelativeRetryInvalidHeader(token string) (HTTPPoller, error)
-	// BeginDeleteAsyncRelativeRetryInvalidJSONPolling - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
+	// BeginDeleteAsyncRelativeRetryInvalidJSONPolling - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated
+	// in the Azure-AsyncOperation header for operation status
 	BeginDeleteAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, options *LrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingOptions) (*HTTPPollerResponse, error)
 	// ResumeDeleteAsyncRelativeRetryInvalidJSONPolling - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeDeleteAsyncRelativeRetryInvalidJSONPolling(token string) (HTTPPoller, error)
-	// BeginDeleteAsyncRelativeRetryNoStatus - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
+	// BeginDeleteAsyncRelativeRetryNoStatus - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the
+	// Azure-AsyncOperation header for operation status
 	BeginDeleteAsyncRelativeRetryNoStatus(ctx context.Context, options *LrosaDsDeleteAsyncRelativeRetryNoStatusOptions) (*HTTPPollerResponse, error)
 	// ResumeDeleteAsyncRelativeRetryNoStatus - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeDeleteAsyncRelativeRetryNoStatus(token string) (HTTPPoller, error)
@@ -59,19 +64,26 @@ type LrosaDsOperations interface {
 	BeginPost202RetryInvalidHeader(ctx context.Context, options *LrosaDsPost202RetryInvalidHeaderOptions) (*HTTPPollerResponse, error)
 	// ResumePost202RetryInvalidHeader - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumePost202RetryInvalidHeader(token string) (HTTPPoller, error)
-	// BeginPostAsyncRelativeRetry400 - Long running post request, service returns a 202 to the initial request Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
+	// BeginPostAsyncRelativeRetry400 - Long running post request, service returns a 202 to the initial request Poll the endpoint indicated in the Azure-AsyncOperation
+	// header for operation status
 	BeginPostAsyncRelativeRetry400(ctx context.Context, options *LrosaDsPostAsyncRelativeRetry400Options) (*HTTPPollerResponse, error)
 	// ResumePostAsyncRelativeRetry400 - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumePostAsyncRelativeRetry400(token string) (HTTPPoller, error)
-	// BeginPostAsyncRelativeRetryInvalidHeader - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’. The endpoint indicated in the Azure-AsyncOperation header is invalid.
+	// BeginPostAsyncRelativeRetryInvalidHeader - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’.
+	// The endpoint indicated in the Azure-AsyncOperation header is
+	// invalid.
 	BeginPostAsyncRelativeRetryInvalidHeader(ctx context.Context, options *LrosaDsPostAsyncRelativeRetryInvalidHeaderOptions) (*HTTPPollerResponse, error)
 	// ResumePostAsyncRelativeRetryInvalidHeader - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumePostAsyncRelativeRetryInvalidHeader(token string) (HTTPPoller, error)
-	// BeginPostAsyncRelativeRetryInvalidJSONPolling - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
+	// BeginPostAsyncRelativeRetryInvalidJSONPolling - Long running post request, service returns a 202 to the initial request, with an entity that contains
+	// ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for
+	// operation status
 	BeginPostAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, options *LrosaDsPostAsyncRelativeRetryInvalidJSONPollingOptions) (*HTTPPollerResponse, error)
 	// ResumePostAsyncRelativeRetryInvalidJSONPolling - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumePostAsyncRelativeRetryInvalidJSONPolling(token string) (HTTPPoller, error)
-	// BeginPostAsyncRelativeRetryNoPayload - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
+	// BeginPostAsyncRelativeRetryNoPayload - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’.
+	// Poll the endpoint indicated in the Azure-AsyncOperation header for
+	// operation status
 	BeginPostAsyncRelativeRetryNoPayload(ctx context.Context, options *LrosaDsPostAsyncRelativeRetryNoPayloadOptions) (*HTTPPollerResponse, error)
 	// ResumePostAsyncRelativeRetryNoPayload - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumePostAsyncRelativeRetryNoPayload(token string) (HTTPPoller, error)
@@ -83,23 +95,31 @@ type LrosaDsOperations interface {
 	BeginPut200InvalidJSON(ctx context.Context, options *LrosaDsPut200InvalidJSONOptions) (*ProductPollerResponse, error)
 	// ResumePut200InvalidJSON - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumePut200InvalidJSON(token string) (ProductPoller, error)
-	// BeginPutAsyncRelativeRetry400 - Long running put request, service returns a 200 with ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
+	// BeginPutAsyncRelativeRetry400 - Long running put request, service returns a 200 with ProvisioningState=’Creating’. Poll the endpoint indicated in the
+	// Azure-AsyncOperation header for operation status
 	BeginPutAsyncRelativeRetry400(ctx context.Context, options *LrosaDsPutAsyncRelativeRetry400Options) (*ProductPollerResponse, error)
 	// ResumePutAsyncRelativeRetry400 - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumePutAsyncRelativeRetry400(token string) (ProductPoller, error)
-	// BeginPutAsyncRelativeRetryInvalidHeader - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’. The endpoint indicated in the Azure-AsyncOperation header is invalid.
+	// BeginPutAsyncRelativeRetryInvalidHeader - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’.
+	// The endpoint indicated in the Azure-AsyncOperation header is invalid.
 	BeginPutAsyncRelativeRetryInvalidHeader(ctx context.Context, options *LrosaDsPutAsyncRelativeRetryInvalidHeaderOptions) (*ProductPollerResponse, error)
 	// ResumePutAsyncRelativeRetryInvalidHeader - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumePutAsyncRelativeRetryInvalidHeader(token string) (ProductPoller, error)
-	// BeginPutAsyncRelativeRetryInvalidJSONPolling - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
+	// BeginPutAsyncRelativeRetryInvalidJSONPolling - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’.
+	// Poll the endpoint indicated in the Azure-AsyncOperation header for
+	// operation status
 	BeginPutAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, options *LrosaDsPutAsyncRelativeRetryInvalidJSONPollingOptions) (*ProductPollerResponse, error)
 	// ResumePutAsyncRelativeRetryInvalidJSONPolling - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumePutAsyncRelativeRetryInvalidJSONPolling(token string) (ProductPoller, error)
-	// BeginPutAsyncRelativeRetryNoStatus - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
+	// BeginPutAsyncRelativeRetryNoStatus - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’.
+	// Poll the endpoint indicated in the Azure-AsyncOperation header for
+	// operation status
 	BeginPutAsyncRelativeRetryNoStatus(ctx context.Context, options *LrosaDsPutAsyncRelativeRetryNoStatusOptions) (*ProductPollerResponse, error)
 	// ResumePutAsyncRelativeRetryNoStatus - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumePutAsyncRelativeRetryNoStatus(token string) (ProductPoller, error)
-	// BeginPutAsyncRelativeRetryNoStatusPayload - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
+	// BeginPutAsyncRelativeRetryNoStatusPayload - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’.
+	// Poll the endpoint indicated in the Azure-AsyncOperation header for
+	// operation status
 	BeginPutAsyncRelativeRetryNoStatusPayload(ctx context.Context, options *LrosaDsPutAsyncRelativeRetryNoStatusPayloadOptions) (*ProductPollerResponse, error)
 	// ResumePutAsyncRelativeRetryNoStatusPayload - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumePutAsyncRelativeRetryNoStatusPayload(token string) (ProductPoller, error)
@@ -111,7 +131,8 @@ type LrosaDsOperations interface {
 	BeginPutNonRetry201Creating400(ctx context.Context, options *LrosaDsPutNonRetry201Creating400Options) (*ProductPollerResponse, error)
 	// ResumePutNonRetry201Creating400 - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumePutNonRetry201Creating400(token string) (ProductPoller, error)
-	// BeginPutNonRetry201Creating400InvalidJSON - Long running put request, service returns a Product with 'ProvisioningState' = 'Creating' and 201 response code
+	// BeginPutNonRetry201Creating400InvalidJSON - Long running put request, service returns a Product with 'ProvisioningState' = 'Creating' and 201 response
+	// code
 	BeginPutNonRetry201Creating400InvalidJSON(ctx context.Context, options *LrosaDsPutNonRetry201Creating400InvalidJSONOptions) (*ProductPollerResponse, error)
 	// ResumePutNonRetry201Creating400InvalidJSON - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumePutNonRetry201Creating400InvalidJSON(token string) (ProductPoller, error)
@@ -241,7 +262,8 @@ func (client *LrosaDsClient) ResumeDelete202RetryInvalidHeader(token string) (HT
 	}, nil
 }
 
-// Delete202RetryInvalidHeader - Long running delete request, service returns a 202 to the initial request receing a reponse with an invalid 'Location' and 'Retry-After' headers
+// Delete202RetryInvalidHeader - Long running delete request, service returns a 202 to the initial request receing a reponse with an invalid 'Location'
+// and 'Retry-After' headers
 func (client *LrosaDsClient) Delete202RetryInvalidHeader(ctx context.Context, options *LrosaDsDelete202RetryInvalidHeaderOptions) (*azcore.Response, error) {
 	req, err := client.Delete202RetryInvalidHeaderCreateRequest(ctx, options)
 	if err != nil {
@@ -381,7 +403,8 @@ func (client *LrosaDsClient) ResumeDeleteAsyncRelativeRetry400(token string) (HT
 	}, nil
 }
 
-// DeleteAsyncRelativeRetry400 - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
+// DeleteAsyncRelativeRetry400 - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation
+// header for operation status
 func (client *LrosaDsClient) DeleteAsyncRelativeRetry400(ctx context.Context, options *LrosaDsDeleteAsyncRelativeRetry400Options) (*azcore.Response, error) {
 	req, err := client.DeleteAsyncRelativeRetry400CreateRequest(ctx, options)
 	if err != nil {
@@ -451,7 +474,8 @@ func (client *LrosaDsClient) ResumeDeleteAsyncRelativeRetryInvalidHeader(token s
 	}, nil
 }
 
-// DeleteAsyncRelativeRetryInvalidHeader - Long running delete request, service returns a 202 to the initial request. The endpoint indicated in the Azure-AsyncOperation header is invalid
+// DeleteAsyncRelativeRetryInvalidHeader - Long running delete request, service returns a 202 to the initial request. The endpoint indicated in the Azure-AsyncOperation
+// header is invalid
 func (client *LrosaDsClient) DeleteAsyncRelativeRetryInvalidHeader(ctx context.Context, options *LrosaDsDeleteAsyncRelativeRetryInvalidHeaderOptions) (*azcore.Response, error) {
 	req, err := client.DeleteAsyncRelativeRetryInvalidHeaderCreateRequest(ctx, options)
 	if err != nil {
@@ -521,7 +545,8 @@ func (client *LrosaDsClient) ResumeDeleteAsyncRelativeRetryInvalidJSONPolling(to
 	}, nil
 }
 
-// DeleteAsyncRelativeRetryInvalidJSONPolling - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
+// DeleteAsyncRelativeRetryInvalidJSONPolling - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in
+// the Azure-AsyncOperation header for operation status
 func (client *LrosaDsClient) DeleteAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, options *LrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingOptions) (*azcore.Response, error) {
 	req, err := client.DeleteAsyncRelativeRetryInvalidJSONPollingCreateRequest(ctx, options)
 	if err != nil {
@@ -591,7 +616,8 @@ func (client *LrosaDsClient) ResumeDeleteAsyncRelativeRetryNoStatus(token string
 	}, nil
 }
 
-// DeleteAsyncRelativeRetryNoStatus - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
+// DeleteAsyncRelativeRetryNoStatus - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation
+// header for operation status
 func (client *LrosaDsClient) DeleteAsyncRelativeRetryNoStatus(ctx context.Context, options *LrosaDsDeleteAsyncRelativeRetryNoStatusOptions) (*azcore.Response, error) {
 	req, err := client.DeleteAsyncRelativeRetryNoStatusCreateRequest(ctx, options)
 	if err != nil {
@@ -950,7 +976,8 @@ func (client *LrosaDsClient) ResumePostAsyncRelativeRetry400(token string) (HTTP
 	}, nil
 }
 
-// PostAsyncRelativeRetry400 - Long running post request, service returns a 202 to the initial request Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
+// PostAsyncRelativeRetry400 - Long running post request, service returns a 202 to the initial request Poll the endpoint indicated in the Azure-AsyncOperation
+// header for operation status
 func (client *LrosaDsClient) PostAsyncRelativeRetry400(ctx context.Context, options *LrosaDsPostAsyncRelativeRetry400Options) (*azcore.Response, error) {
 	req, err := client.PostAsyncRelativeRetry400CreateRequest(ctx, options)
 	if err != nil {
@@ -1023,7 +1050,9 @@ func (client *LrosaDsClient) ResumePostAsyncRelativeRetryInvalidHeader(token str
 	}, nil
 }
 
-// PostAsyncRelativeRetryInvalidHeader - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’. The endpoint indicated in the Azure-AsyncOperation header is invalid.
+// PostAsyncRelativeRetryInvalidHeader - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’.
+// The endpoint indicated in the Azure-AsyncOperation header is
+// invalid.
 func (client *LrosaDsClient) PostAsyncRelativeRetryInvalidHeader(ctx context.Context, options *LrosaDsPostAsyncRelativeRetryInvalidHeaderOptions) (*azcore.Response, error) {
 	req, err := client.PostAsyncRelativeRetryInvalidHeaderCreateRequest(ctx, options)
 	if err != nil {
@@ -1096,7 +1125,9 @@ func (client *LrosaDsClient) ResumePostAsyncRelativeRetryInvalidJSONPolling(toke
 	}, nil
 }
 
-// PostAsyncRelativeRetryInvalidJSONPolling - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
+// PostAsyncRelativeRetryInvalidJSONPolling - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’.
+// Poll the endpoint indicated in the Azure-AsyncOperation header for
+// operation status
 func (client *LrosaDsClient) PostAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, options *LrosaDsPostAsyncRelativeRetryInvalidJSONPollingOptions) (*azcore.Response, error) {
 	req, err := client.PostAsyncRelativeRetryInvalidJSONPollingCreateRequest(ctx, options)
 	if err != nil {
@@ -1169,7 +1200,9 @@ func (client *LrosaDsClient) ResumePostAsyncRelativeRetryNoPayload(token string)
 	}, nil
 }
 
-// PostAsyncRelativeRetryNoPayload - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
+// PostAsyncRelativeRetryNoPayload - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’.
+// Poll the endpoint indicated in the Azure-AsyncOperation header for
+// operation status
 func (client *LrosaDsClient) PostAsyncRelativeRetryNoPayload(ctx context.Context, options *LrosaDsPostAsyncRelativeRetryNoPayloadOptions) (*azcore.Response, error) {
 	req, err := client.PostAsyncRelativeRetryNoPayloadCreateRequest(ctx, options)
 	if err != nil {
@@ -1394,7 +1427,8 @@ func (client *LrosaDsClient) ResumePutAsyncRelativeRetry400(token string) (Produ
 	}, nil
 }
 
-// PutAsyncRelativeRetry400 - Long running put request, service returns a 200 with ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
+// PutAsyncRelativeRetry400 - Long running put request, service returns a 200 with ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation
+// header for operation status
 func (client *LrosaDsClient) PutAsyncRelativeRetry400(ctx context.Context, options *LrosaDsPutAsyncRelativeRetry400Options) (*azcore.Response, error) {
 	req, err := client.PutAsyncRelativeRetry400CreateRequest(ctx, options)
 	if err != nil {
@@ -1473,7 +1507,8 @@ func (client *LrosaDsClient) ResumePutAsyncRelativeRetryInvalidHeader(token stri
 	}, nil
 }
 
-// PutAsyncRelativeRetryInvalidHeader - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’. The endpoint indicated in the Azure-AsyncOperation header is invalid.
+// PutAsyncRelativeRetryInvalidHeader - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’.
+// The endpoint indicated in the Azure-AsyncOperation header is invalid.
 func (client *LrosaDsClient) PutAsyncRelativeRetryInvalidHeader(ctx context.Context, options *LrosaDsPutAsyncRelativeRetryInvalidHeaderOptions) (*azcore.Response, error) {
 	req, err := client.PutAsyncRelativeRetryInvalidHeaderCreateRequest(ctx, options)
 	if err != nil {
@@ -1552,7 +1587,9 @@ func (client *LrosaDsClient) ResumePutAsyncRelativeRetryInvalidJSONPolling(token
 	}, nil
 }
 
-// PutAsyncRelativeRetryInvalidJSONPolling - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
+// PutAsyncRelativeRetryInvalidJSONPolling - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’.
+// Poll the endpoint indicated in the Azure-AsyncOperation header for
+// operation status
 func (client *LrosaDsClient) PutAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, options *LrosaDsPutAsyncRelativeRetryInvalidJSONPollingOptions) (*azcore.Response, error) {
 	req, err := client.PutAsyncRelativeRetryInvalidJSONPollingCreateRequest(ctx, options)
 	if err != nil {
@@ -1631,7 +1668,9 @@ func (client *LrosaDsClient) ResumePutAsyncRelativeRetryNoStatus(token string) (
 	}, nil
 }
 
-// PutAsyncRelativeRetryNoStatus - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
+// PutAsyncRelativeRetryNoStatus - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’.
+// Poll the endpoint indicated in the Azure-AsyncOperation header for
+// operation status
 func (client *LrosaDsClient) PutAsyncRelativeRetryNoStatus(ctx context.Context, options *LrosaDsPutAsyncRelativeRetryNoStatusOptions) (*azcore.Response, error) {
 	req, err := client.PutAsyncRelativeRetryNoStatusCreateRequest(ctx, options)
 	if err != nil {
@@ -1710,7 +1749,9 @@ func (client *LrosaDsClient) ResumePutAsyncRelativeRetryNoStatusPayload(token st
 	}, nil
 }
 
-// PutAsyncRelativeRetryNoStatusPayload - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
+// PutAsyncRelativeRetryNoStatusPayload - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’.
+// Poll the endpoint indicated in the Azure-AsyncOperation header for
+// operation status
 func (client *LrosaDsClient) PutAsyncRelativeRetryNoStatusPayload(ctx context.Context, options *LrosaDsPutAsyncRelativeRetryNoStatusPayloadOptions) (*azcore.Response, error) {
 	req, err := client.PutAsyncRelativeRetryNoStatusPayloadCreateRequest(ctx, options)
 	if err != nil {

@@ -26,7 +26,8 @@ type HeaderOperations interface {
 	ParamDate(ctx context.Context, scenario string, value time.Time, options *HeaderParamDateOptions) (*http.Response, error)
 	// ParamDatetime - Send a post request with header values "scenario": "valid", "value": "2010-01-01T12:34:56Z" or "scenario": "min", "value": "0001-01-01T00:00:00Z"
 	ParamDatetime(ctx context.Context, scenario string, value time.Time, options *HeaderParamDatetimeOptions) (*http.Response, error)
-	// ParamDatetimeRFC1123 - Send a post request with header values "scenario": "valid", "value": "Wed, 01 Jan 2010 12:34:56 GMT" or "scenario": "min", "value": "Mon, 01 Jan 0001 00:00:00 GMT"
+	// ParamDatetimeRFC1123 - Send a post request with header values "scenario": "valid", "value": "Wed, 01 Jan 2010 12:34:56 GMT" or "scenario": "min", "value":
+	// "Mon, 01 Jan 0001 00:00:00 GMT"
 	ParamDatetimeRFC1123(ctx context.Context, scenario string, options *HeaderParamDatetimeRFC1123Options) (*http.Response, error)
 	// ParamDouble - Send a post request with header values "scenario": "positive", "value": 7e120 or "scenario": "negative", "value": -3.0
 	ParamDouble(ctx context.Context, scenario string, value float64, options *HeaderParamDoubleOptions) (*http.Response, error)
@@ -44,7 +45,8 @@ type HeaderOperations interface {
 	ParamLong(ctx context.Context, scenario string, value int64, options *HeaderParamLongOptions) (*http.Response, error)
 	// ParamProtectedKey - Send a post request with header value "Content-Type": "text/html"
 	ParamProtectedKey(ctx context.Context, contentType string, options *HeaderParamProtectedKeyOptions) (*http.Response, error)
-	// ParamString - Send a post request with header values "scenario": "valid", "value": "The quick brown fox jumps over the lazy dog" or "scenario": "null", "value": null or "scenario": "empty", "value": ""
+	// ParamString - Send a post request with header values "scenario": "valid", "value": "The quick brown fox jumps over the lazy dog" or "scenario": "null",
+	// "value": null or "scenario": "empty", "value": ""
 	ParamString(ctx context.Context, scenario string, options *HeaderParamStringOptions) (*http.Response, error)
 	// ResponseBool - Get a response with header value "value": true or false
 	ResponseBool(ctx context.Context, scenario string, options *HeaderResponseBoolOptions) (*HeaderResponseBoolResponse, error)
@@ -280,7 +282,8 @@ func (client *HeaderClient) ParamDatetimeHandleError(resp *azcore.Response) erro
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// ParamDatetimeRFC1123 - Send a post request with header values "scenario": "valid", "value": "Wed, 01 Jan 2010 12:34:56 GMT" or "scenario": "min", "value": "Mon, 01 Jan 0001 00:00:00 GMT"
+// ParamDatetimeRFC1123 - Send a post request with header values "scenario": "valid", "value": "Wed, 01 Jan 2010 12:34:56 GMT" or "scenario": "min", "value":
+// "Mon, 01 Jan 0001 00:00:00 GMT"
 func (client *HeaderClient) ParamDatetimeRFC1123(ctx context.Context, scenario string, options *HeaderParamDatetimeRFC1123Options) (*http.Response, error) {
 	req, err := client.ParamDatetimeRFC1123CreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -624,7 +627,8 @@ func (client *HeaderClient) ParamProtectedKeyHandleError(resp *azcore.Response) 
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// ParamString - Send a post request with header values "scenario": "valid", "value": "The quick brown fox jumps over the lazy dog" or "scenario": "null", "value": null or "scenario": "empty", "value": ""
+// ParamString - Send a post request with header values "scenario": "valid", "value": "The quick brown fox jumps over the lazy dog" or "scenario": "null",
+// "value": null or "scenario": "empty", "value": ""
 func (client *HeaderClient) ParamString(ctx context.Context, scenario string, options *HeaderParamStringOptions) (*http.Response, error) {
 	req, err := client.ParamStringCreateRequest(ctx, scenario, options)
 	if err != nil {

@@ -795,7 +795,9 @@ func (c DdosCustomPolicyProtocol) ToPtr() *DdosCustomPolicyProtocol {
 	return &c
 }
 
-// DdosCustomPolicyTriggerSensitivityOverride - The customized DDoS protection trigger rate sensitivity degrees. High: Trigger rate set with most sensitivity w.r.t. normal traffic. Default: Trigger rate set with moderate sensitivity w.r.t. normal traffic. Low: Trigger rate set with less sensitivity w.r.t. normal traffic. Relaxed: Trigger rate set with least sensitivity w.r.t. normal traffic.
+// DdosCustomPolicyTriggerSensitivityOverride - The customized DDoS protection trigger rate sensitivity degrees. High: Trigger rate set with most sensitivity
+// w.r.t. normal traffic. Default: Trigger rate set with moderate sensitivity w.r.t. normal
+// traffic. Low: Trigger rate set with less sensitivity w.r.t. normal traffic. Relaxed: Trigger rate set with least sensitivity w.r.t. normal traffic.
 type DdosCustomPolicyTriggerSensitivityOverride string
 
 const (
@@ -1815,7 +1817,8 @@ func (c OwaspCrsExclusionEntryMatchVariable) ToPtr() *OwaspCrsExclusionEntryMatc
 	return &c
 }
 
-// OwaspCrsExclusionEntrySelectorMatchOperator - When matchVariable is a collection, operate on the selector to specify which elements in the collection this exclusion applies to.
+// OwaspCrsExclusionEntrySelectorMatchOperator - When matchVariable is a collection, operate on the selector to specify which elements in the collection
+// this exclusion applies to.
 type OwaspCrsExclusionEntrySelectorMatchOperator string
 
 const (
@@ -1943,7 +1946,8 @@ func (c PfsGroup) ToPtr() *PfsGroup {
 	return &c
 }
 
-// PreferredIPVersion - The preferred IP version to use in test evaluation. The connection monitor may choose to use a different version depending on other parameters.
+// PreferredIPVersion - The preferred IP version to use in test evaluation. The connection monitor may choose to use a different version depending on other
+// parameters.
 type PreferredIPVersion string
 
 const (
@@ -1962,7 +1966,9 @@ func (c PreferredIPVersion) ToPtr() *PreferredIPVersion {
 	return &c
 }
 
-// ProbeProtocol - The protocol of the end point. If 'Tcp' is specified, a received ACK is required for the probe to be successful. If 'Http' or 'Https' is specified, a 200 OK response from the specifies URI is required for the probe to be successful.
+// ProbeProtocol - The protocol of the end point. If 'Tcp' is specified, a received ACK is required for the probe to be successful. If 'Http' or 'Https'
+// is specified, a 200 OK response from the specifies URI is required
+// for the probe to be successful.
 type ProbeProtocol string
 
 const (
@@ -2084,7 +2090,9 @@ func (c PublicIPPrefixSKUName) ToPtr() *PublicIPPrefixSKUName {
 	return &c
 }
 
-// ResourceIDentityType - The type of identity used for the resource. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user assigned identities. The type 'None' will remove any identities from the virtual machine.
+// ResourceIDentityType - The type of identity used for the resource. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity
+// and a set of user assigned identities. The type 'None' will remove any
+// identities from the virtual machine.
 type ResourceIDentityType string
 
 const (

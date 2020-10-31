@@ -26,11 +26,15 @@ type VirtualMachineScaleSetRollingUpgradesOperations interface {
 	ResumeCancel(token string) (HTTPPoller, error)
 	// GetLatest - Gets the status of the latest virtual machine scale set rolling upgrade.
 	GetLatest(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetRollingUpgradesGetLatestOptions) (*RollingUpgradeStatusInfoResponse, error)
-	// BeginStartExtensionUpgrade - Starts a rolling upgrade to move all extensions for all virtual machine scale set instances to the latest available extension version. Instances which are already running the latest extension versions are not affected.
+	// BeginStartExtensionUpgrade - Starts a rolling upgrade to move all extensions for all virtual machine scale set instances to the latest available extension
+	// version. Instances which are already running the latest extension versions
+	// are not affected.
 	BeginStartExtensionUpgrade(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetRollingUpgradesStartExtensionUpgradeOptions) (*HTTPPollerResponse, error)
 	// ResumeStartExtensionUpgrade - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeStartExtensionUpgrade(token string) (HTTPPoller, error)
-	// BeginStartOSUpgrade - Starts a rolling upgrade to move all virtual machine scale set instances to the latest available Platform Image OS version. Instances which are already running the latest available OS version are not affected.
+	// BeginStartOSUpgrade - Starts a rolling upgrade to move all virtual machine scale set instances to the latest available Platform Image OS version. Instances
+	// which are already running the latest available OS version are not
+	// affected.
 	BeginStartOSUpgrade(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetRollingUpgradesStartOSUpgradeOptions) (*HTTPPollerResponse, error)
 	// ResumeStartOSUpgrade - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeStartOSUpgrade(token string) (HTTPPoller, error)
@@ -220,7 +224,9 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) ResumeStartExtensionU
 	}, nil
 }
 
-// StartExtensionUpgrade - Starts a rolling upgrade to move all extensions for all virtual machine scale set instances to the latest available extension version. Instances which are already running the latest extension versions are not affected.
+// StartExtensionUpgrade - Starts a rolling upgrade to move all extensions for all virtual machine scale set instances to the latest available extension
+// version. Instances which are already running the latest extension versions
+// are not affected.
 func (client *VirtualMachineScaleSetRollingUpgradesClient) StartExtensionUpgrade(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetRollingUpgradesStartExtensionUpgradeOptions) (*azcore.Response, error) {
 	req, err := client.StartExtensionUpgradeCreateRequest(ctx, resourceGroupName, vmScaleSetName, options)
 	if err != nil {
@@ -298,7 +304,9 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) ResumeStartOSUpgrade(
 	}, nil
 }
 
-// StartOSUpgrade - Starts a rolling upgrade to move all virtual machine scale set instances to the latest available Platform Image OS version. Instances which are already running the latest available OS version are not affected.
+// StartOSUpgrade - Starts a rolling upgrade to move all virtual machine scale set instances to the latest available Platform Image OS version. Instances
+// which are already running the latest available OS version are not
+// affected.
 func (client *VirtualMachineScaleSetRollingUpgradesClient) StartOSUpgrade(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetRollingUpgradesStartOSUpgradeOptions) (*azcore.Response, error) {
 	req, err := client.StartOSUpgradeCreateRequest(ctx, resourceGroupName, vmScaleSetName, options)
 	if err != nil {

@@ -7,7 +7,7 @@ import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, pascalCase } from '@azure-tools/codegen';
 import { CodeModel, ComplexSchema, ConstantSchema, DictionarySchema, GroupProperty, ImplementationLocation, ObjectSchema, Language, Schema, SchemaType, Parameter, Property } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { isArraySchema, isObjectSchema, getRelationship, hasAdditionalProperties, hasPolymorphicField } from '../common/helpers';
+import { isArraySchema, isObjectSchema, getRelationship, hasAdditionalProperties, hasPolymorphicField, commentLength } from '../common/helpers';
 import { contentPreamble, hasDescription, sortAscending, substituteDiscriminator } from './helpers';
 import { ImportManager } from './imports';
 
@@ -83,7 +83,7 @@ class StructDef {
   text(): string {
     let text = '';
     if (hasDescription(this.Language)) {
-      text += `${comment(this.Language.description, '// ')}\n`;
+      text += `${comment(this.Language.description, '// ', undefined, commentLength)}\n`;
     }
     text += `type ${this.Language.name} struct {\n`;
     // any composed types go first
@@ -103,7 +103,7 @@ class StructDef {
           // has a comment and it's not the very first one.
           text += '\n';
         }
-        text += `\t${comment(prop.language.go!.description, '// ')}\n`;
+        text += `\t${comment(prop.language.go!.description, '// ', undefined, commentLength)}\n`;
       }
       let typeName = substituteDiscriminator(prop.schema);
       if (prop.schema.type === SchemaType.Constant) {
@@ -183,7 +183,7 @@ class StructDef {
         continue;
       }
       if (hasDescription(param.language.go!)) {
-        text += `\t${comment(param.language.go!.description, '// ')}\n`;
+        text += `\t${comment(param.language.go!.description, '// ', undefined, commentLength)}\n`;
       }
       let pointer = '*';
       if (param.required || param.schema.language.go!.byValue) {

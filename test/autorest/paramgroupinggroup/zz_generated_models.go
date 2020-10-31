@@ -34,14 +34,12 @@ type FirstParameterGroup struct {
 	QueryOne *int32
 }
 
-// ParameterGroupingPostMultiParamGroupsOptions contains the optional parameters for the ParameterGrouping.PostMultiParamGroups
-// method.
+// ParameterGroupingPostMultiParamGroupsOptions contains the optional parameters for the ParameterGrouping.PostMultiParamGroups method.
 type ParameterGroupingPostMultiParamGroupsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ParameterGroupingPostMultiParamGroupsSecondParamGroup contains a group of parameters for the ParameterGrouping.PostMultiParamGroups
-// method.
+// ParameterGroupingPostMultiParamGroupsSecondParamGroup contains a group of parameters for the ParameterGrouping.PostMultiParamGroups method.
 type ParameterGroupingPostMultiParamGroupsSecondParamGroup struct {
 	HeaderTwo *string
 	// Query parameter with default
@@ -75,8 +73,7 @@ type ParameterGroupingPostRequiredParameters struct {
 	Query *int32
 }
 
-// ParameterGroupingPostSharedParameterGroupObjectOptions contains the optional parameters for the ParameterGrouping.PostSharedParameterGroupObject
-// method.
+// ParameterGroupingPostSharedParameterGroupObjectOptions contains the optional parameters for the ParameterGrouping.PostSharedParameterGroupObject method.
 type ParameterGroupingPostSharedParameterGroupObjectOptions struct {
 	// placeholder for future optional parameters
 }
