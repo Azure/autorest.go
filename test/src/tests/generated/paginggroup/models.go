@@ -168,8 +168,11 @@ func (page OdataProductResultPage) Values() []Product {
 }
 
 // Creates a new instance of the OdataProductResultPage type.
-func NewOdataProductResultPage(getNextPage func(context.Context, OdataProductResult) (OdataProductResult, error)) OdataProductResultPage {
-	return OdataProductResultPage{fn: getNextPage}
+func NewOdataProductResultPage(cur OdataProductResult, getNextPage func(context.Context, OdataProductResult) (OdataProductResult, error)) OdataProductResultPage {
+	return OdataProductResultPage{
+		fn:  getNextPage,
+		opr: cur,
+	}
 }
 
 // OperationResult ...
@@ -207,8 +210,8 @@ func (future *PagingGetMultiplePagesLROAllFuture) Result(client PagingClient) (p
 	return
 }
 
-// PagingGetMultiplePagesLROFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// PagingGetMultiplePagesLROFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type PagingGetMultiplePagesLROFuture struct {
 	azure.Future
 }
@@ -397,8 +400,11 @@ func (page ProductResultPage) Values() []Product {
 }
 
 // Creates a new instance of the ProductResultPage type.
-func NewProductResultPage(getNextPage func(context.Context, ProductResult) (ProductResult, error)) ProductResultPage {
-	return ProductResultPage{fn: getNextPage}
+func NewProductResultPage(cur ProductResult, getNextPage func(context.Context, ProductResult) (ProductResult, error)) ProductResultPage {
+	return ProductResultPage{
+		fn: getNextPage,
+		pr: cur,
+	}
 }
 
 // ProductResultValue ...
@@ -551,6 +557,9 @@ func (page ProductResultValuePage) Values() []Product {
 }
 
 // Creates a new instance of the ProductResultValuePage type.
-func NewProductResultValuePage(getNextPage func(context.Context, ProductResultValue) (ProductResultValue, error)) ProductResultValuePage {
-	return ProductResultValuePage{fn: getNextPage}
+func NewProductResultValuePage(cur ProductResultValue, getNextPage func(context.Context, ProductResultValue) (ProductResultValue, error)) ProductResultValuePage {
+	return ProductResultValuePage{
+		fn:  getNextPage,
+		prv: cur,
+	}
 }
