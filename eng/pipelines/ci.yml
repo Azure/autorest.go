@@ -10,6 +10,7 @@ pr:
 
 variables:
   NodeVersion: '10.15.3'
+  LANG: 'en_US.UTF-8'
 
 jobs:
   - job: 'AutoRest_Go_CI'
