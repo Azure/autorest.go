@@ -43,10 +43,9 @@ jobs:
           npm install
           npm install gulp
         displayName: 'Prepare Generator Environment'
-        timeoutInMinutes: 20
 
       - script: |
           go version
           gulp testci
         displayName: 'Gulp testci'
-        timeoutInMinutes: 20
+        timeoutInMinutes: 15
