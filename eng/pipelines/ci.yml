@@ -1,0 +1,53 @@
+trigger:
+  branches:
+    include:
+    - master
+
+pr:
+  branches:
+    include:
+    - master
+
+variables:
+  NodeVersion: '10.15.3'
+  LANG: 'en_US.UTF-8'
+
+jobs:
+  - job: 'AutoRest_Go_CI'
+    displayName: 'Run AutoRest CI Checks'
+
+    strategy:
+      matrix:
+        Linux_Go113:
+          vm.image: 'ubuntu-18.04'
+          go.version: '1.14.10'
+        Linux_Go114:
+          vm.image: 'ubuntu-18.04'
+          go.version: '1.15.3'
+
+    pool:
+      vmImage: '$(vm.image)'
+
+    steps:
+      - task: GoTool@0
+        inputs:
+          version: '$(go.version)'
+        displayName: "Select Go Version"
+
+      - task: NodeTool@0
+        displayName: 'Install Node $(NodeVersion)'
+        inputs:
+          versionSpec: '$(NodeVersion)'
+
+      - script: |
+          sudo apt-get install libunwind8
+          npm install
+          npm install gulp
+        displayName: 'Prepare Generator Environment'
+
+      - script: |
+          locale
+          go version
+          gulp testci
+        displayName: 'Gulp testci'
+        timeoutInMinutes: 15
