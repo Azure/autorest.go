@@ -45,6 +45,7 @@ jobs:
         displayName: 'Prepare Generator Environment'
 
       - script: |
+          locale
           go version
           gulp testci
         displayName: 'Gulp testci'
