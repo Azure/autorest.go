@@ -97,6 +97,7 @@ steps:
     displayName: 'Publish GitHub Release'
 
   - script: |
+      cd src
       echo "//registry.npmjs.org/:_authToken=$(azure-sdk-npm-token)" > ./.npmrc
       npm publish --access public
     displayName: 'Publish to npm'
