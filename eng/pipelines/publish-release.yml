@@ -39,7 +39,7 @@ steps:
 
   - task: GoTool@0
     inputs:
-      version: '1.14'
+      version: '1.15.3'
     displayName: "Select Go Version"
 
   - script: |
