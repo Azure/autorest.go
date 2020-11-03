@@ -9,10 +9,6 @@ variables:
 pool:
   vmImage: 'ubuntu-18.04'
 
-variables:
-  NodeVersion: '12.x'
-  TestFolder: '$(Build.SourcesDirectory)/test/'
-
 steps:
   - task: NodeTool@0
     displayName: 'Install Node $(NodeVersion)'
