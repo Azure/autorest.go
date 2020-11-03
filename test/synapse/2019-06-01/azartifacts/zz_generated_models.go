@@ -1240,6 +1240,12 @@ type AppendVariableActivityTypeProperties struct {
 	VariableName *string `json:"variableName,omitempty"`
 }
 
+// Request body structure for rename artifact.
+type ArtifactRenameRequest struct {
+	// New name of the artifact.
+	NewName *string `json:"newName,omitempty"`
+}
+
 // Auto-pausing properties of a Big Data pool powered by Apache Spark
 type AutoPauseProperties struct {
 	// Number of minutes of idle time before the Big Data pool is automatically paused.
@@ -9040,6 +9046,11 @@ type DataFlowStagingInfo struct {
 	LinkedService *LinkedServiceReference `json:"linkedService,omitempty"`
 }
 
+// DataFlowsRenameOptions contains the optional parameters for the DataFlows.Rename method.
+type DataFlowsRenameOptions struct {
+	// placeholder for future optional parameters
+}
+
 // Data Lake Analytics U-SQL activity.
 type DataLakeAnalyticsUsqlActivity struct {
 	ExecutionActivity
@@ -9971,6 +9982,11 @@ func (d *DatasetZipDeflateCompression) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return d.DatasetCompression.unmarshalInternal(rawMsg)
+}
+
+// DatasetsRenameOptions contains the optional parameters for the Datasets.Rename method.
+type DatasetsRenameOptions struct {
+	// placeholder for future optional parameters
 }
 
 // Linked service for DB2 data source.
@@ -17975,6 +17991,11 @@ type LinkedServiceResourceResponse struct {
 	RawResponse *http.Response
 }
 
+// LinkedServicesRenameOptions contains the optional parameters for the LinkedServices.Rename method.
+type LinkedServicesRenameOptions struct {
+	// placeholder for future optional parameters
+}
+
 // Log storage settings.
 type LogStorageSettings struct {
 	// Contains additional key/value pairs not defined in the schema.
@@ -20347,6 +20368,11 @@ type NotebookSessionProperties struct {
 	NumExecutors *int32 `json:"numExecutors,omitempty"`
 }
 
+// NotebooksRenameOptions contains the optional parameters for the Notebooks.Rename method.
+type NotebooksRenameOptions struct {
+	// placeholder for future optional parameters
+}
+
 // Open Data Protocol (OData) linked service.
 type ODataLinkedService struct {
 	LinkedService
@@ -22664,6 +22690,11 @@ type PipelineRunsQueryResponseResponse struct {
 	RawResponse *http.Response
 }
 
+// PipelinesRenameOptions contains the optional parameters for the Pipelines.Rename method.
+type PipelinesRenameOptions struct {
+	// placeholder for future optional parameters
+}
+
 // PolyBase settings.
 type PolybaseSettings struct {
 	// Contains additional key/value pairs not defined in the schema.
@@ -23156,40 +23187,41 @@ func (p *PrestoSource) UnmarshalJSON(data []byte) error {
 	return p.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// Private Endpoint
+// Private endpoint details
 type PrivateEndpoint struct {
-	// identifier
+	// Resource id of the private endpoint.
 	ID *string `json:"id,omitempty" azure:"ro"`
 }
 
+// A private endpoint connection
 type PrivateEndpointConnection struct {
 	Resource
-	// Private Endpoint Connection Properties
+	// Private endpoint connection properties.
 	Properties *PrivateEndpointConnectionProperties `json:"properties,omitempty"`
 }
 
-// Private Endpoint Connection Properties
+// Properties of a private endpoint connection.
 type PrivateEndpointConnectionProperties struct {
-	// Private Endpoint
+	// The private endpoint which the connection belongs to.
 	PrivateEndpoint *PrivateEndpoint `json:"privateEndpoint,omitempty"`
 
-	// Private Link Service Connection State
+	// Connection state of the private endpoint connection.
 	PrivateLinkServiceConnectionState *PrivateLinkServiceConnectionState `json:"privateLinkServiceConnectionState,omitempty"`
 
-	// Provisioning state
+	// Provisioning state of the private endpoint connection.
 	ProvisioningState *string `json:"provisioningState,omitempty" azure:"ro"`
 }
 
-// Private Link Service Connection State
+// Connection state details of the private endpoint
 type PrivateLinkServiceConnectionState struct {
-	// Actions Required
+	// The actions required for private link service connection.
 	ActionsRequired *string `json:"actionsRequired,omitempty" azure:"ro"`
 
-	// Description of private link service connection state
-	Description *string `json:"description,omitempty" azure:"ro"`
+	// The private link service connection description.
+	Description *string `json:"description,omitempty"`
 
-	// Status of private link service connection state
-	Status *string `json:"status,omitempty" azure:"ro"`
+	// The private link service connection status.
+	Status *string `json:"status,omitempty"`
 }
 
 // The resource model definition for a Azure Resource Manager proxy resource. It will not have tags and a location
@@ -25506,6 +25538,11 @@ type SQLScriptsListResponseResponse struct {
 
 	// A list of sql scripts resources.
 	SQLScriptsListResponse *SQLScriptsListResponse
+}
+
+// SQLScriptsRenameOptions contains the optional parameters for the SQLScripts.Rename method.
+type SQLScriptsRenameOptions struct {
+	// placeholder for future optional parameters
 }
 
 // SQL Server linked service.
@@ -28438,7 +28475,7 @@ func (s *SelfHostedIntegrationRuntime) UnmarshalJSON(data []byte) error {
 
 // The self-hosted integration runtime properties.
 type SelfHostedIntegrationRuntimeTypeProperties struct {
-	// The base definition of a linked integration runtime.
+	// Linked integration runtime type from data factory
 	LinkedInfo LinkedIntegrationRuntimeTypeClassification `json:"linkedInfo,omitempty"`
 }
 
@@ -29583,6 +29620,11 @@ type SparkJobDefinitionsListResponseResponse struct {
 
 	// A list of spark job definitions resources.
 	SparkJobDefinitionsListResponse *SparkJobDefinitionsListResponse
+}
+
+// SparkJobDefinitionsRenameOptions contains the optional parameters for the SparkJobDefinitions.Rename method.
+type SparkJobDefinitionsRenameOptions struct {
+	// placeholder for future optional parameters
 }
 
 // The properties of the Spark job.
