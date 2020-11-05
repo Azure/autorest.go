@@ -80,7 +80,9 @@ type PetApInProperties struct {
 	AdditionalProperties *map[string]float32 `json:"additionalProperties,omitempty"`
 	ID                   *int32              `json:"id,omitempty"`
 	Name                 *string             `json:"name,omitempty"`
-	Status               *bool               `json:"status,omitempty" azure:"ro"`
+
+	// Status - READ-ONLY
+	Status *bool `json:"status,omitempty" azure:"ro"`
 }
 
 // PetApInPropertiesResponse is the response envelope for operations that return a PetApInProperties type.
@@ -100,7 +102,9 @@ type PetApInPropertiesWithApstring struct {
 	ID                    *int32              `json:"id,omitempty"`
 	Name                  *string             `json:"name,omitempty"`
 	OdataLocation         *string             `json:"@odata.location,omitempty"`
-	Status                *bool               `json:"status,omitempty" azure:"ro"`
+
+	// Status - READ-ONLY
+	Status *bool `json:"status,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type PetApInPropertiesWithApstring.
@@ -194,7 +198,9 @@ type PetApObject struct {
 	AdditionalProperties *map[string]interface{}
 	ID                   *int32  `json:"id,omitempty"`
 	Name                 *string `json:"name,omitempty"`
-	Status               *bool   `json:"status,omitempty" azure:"ro"`
+
+	// Status - READ-ONLY
+	Status *bool `json:"status,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type PetApObject.
@@ -272,7 +278,9 @@ type PetApString struct {
 	AdditionalProperties *map[string]string
 	ID                   *int32  `json:"id,omitempty"`
 	Name                 *string `json:"name,omitempty"`
-	Status               *bool   `json:"status,omitempty" azure:"ro"`
+
+	// Status - READ-ONLY
+	Status *bool `json:"status,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type PetApString.
@@ -350,7 +358,9 @@ type PetApTrue struct {
 	AdditionalProperties *map[string]interface{}
 	ID                   *int32  `json:"id,omitempty"`
 	Name                 *string `json:"name,omitempty"`
-	Status               *bool   `json:"status,omitempty" azure:"ro"`
+
+	// Status - READ-ONLY
+	Status *bool `json:"status,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type PetApTrue.

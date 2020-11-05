@@ -540,7 +540,9 @@ type ProductPollerResponse struct {
 }
 
 type ProductProperties struct {
-	ProvisioningState       *string                                   `json:"provisioningState,omitempty"`
+	ProvisioningState *string `json:"provisioningState,omitempty"`
+
+	// ProvisioningStateValues - READ-ONLY
 	ProvisioningStateValues *ProductPropertiesProvisioningStateValues `json:"provisioningStateValues,omitempty" azure:"ro"`
 }
 
@@ -553,19 +555,19 @@ type ProductResponse struct {
 }
 
 type Resource struct {
-	// Resource Id
+	// READ-ONLY; Resource Id
 	ID *string `json:"id,omitempty" azure:"ro"`
 
 	// Resource Location
 	Location *string `json:"location,omitempty"`
 
-	// Resource Name
+	// READ-ONLY; Resource Name
 	Name *string `json:"name,omitempty" azure:"ro"`
 
 	// Dictionary of
 	Tags *map[string]string `json:"tags,omitempty"`
 
-	// Resource Type
+	// READ-ONLY; Resource Type
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
@@ -611,7 +613,9 @@ type SubProductPollerResponse struct {
 }
 
 type SubProductProperties struct {
-	ProvisioningState       *string                                      `json:"provisioningState,omitempty"`
+	ProvisioningState *string `json:"provisioningState,omitempty"`
+
+	// ProvisioningStateValues - READ-ONLY
 	ProvisioningStateValues *SubProductPropertiesProvisioningStateValues `json:"provisioningStateValues,omitempty" azure:"ro"`
 }
 
@@ -623,6 +627,6 @@ type SubProductResponse struct {
 }
 
 type SubResource struct {
-	// Sub Resource Id
+	// READ-ONLY; Sub Resource Id
 	ID *string `json:"id,omitempty" azure:"ro"`
 }

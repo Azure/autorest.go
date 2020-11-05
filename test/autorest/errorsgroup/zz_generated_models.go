@@ -157,7 +157,7 @@ func (n *NotFoundErrorBase) unmarshalInternal(rawMsg map[string]*json.RawMessage
 
 type Pet struct {
 	Animal
-	// Gets the Pet by id.
+	// READ-ONLY; Gets the Pet by id.
 	Name *string `json:"name,omitempty" azure:"ro"`
 }
 

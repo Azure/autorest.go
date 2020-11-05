@@ -1062,6 +1062,7 @@ type PrimitivePutStringOptions struct {
 }
 
 type ReadonlyObj struct {
+	// ID - READ-ONLY
 	ID   *string `json:"id,omitempty" azure:"ro"`
 	Size *int32  `json:"size,omitempty"`
 }

@@ -300,46 +300,46 @@ func (a *ActivityPolicy) UnmarshalJSON(data []byte) error {
 
 // Information about an activity run in a pipeline.
 type ActivityRun struct {
-	// The name of the activity.
+	// READ-ONLY; The name of the activity.
 	ActivityName *string `json:"activityName,omitempty" azure:"ro"`
 
-	// The end time of the activity run in 'ISO 8601' format.
+	// READ-ONLY; The end time of the activity run in 'ISO 8601' format.
 	ActivityRunEnd *time.Time `json:"activityRunEnd,omitempty" azure:"ro"`
 
-	// The id of the activity run.
+	// READ-ONLY; The id of the activity run.
 	ActivityRunID *string `json:"activityRunId,omitempty" azure:"ro"`
 
-	// The start time of the activity run in 'ISO 8601' format.
+	// READ-ONLY; The start time of the activity run in 'ISO 8601' format.
 	ActivityRunStart *time.Time `json:"activityRunStart,omitempty" azure:"ro"`
 
-	// The type of the activity.
+	// READ-ONLY; The type of the activity.
 	ActivityType *string `json:"activityType,omitempty" azure:"ro"`
 
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
 
-	// The duration of the activity run.
+	// READ-ONLY; The duration of the activity run.
 	DurationInMS *int32 `json:"durationInMs,omitempty" azure:"ro"`
 
-	// The error if any from the activity run.
+	// READ-ONLY; The error if any from the activity run.
 	Error *interface{} `json:"error,omitempty" azure:"ro"`
 
-	// The input for the activity.
+	// READ-ONLY; The input for the activity.
 	Input *interface{} `json:"input,omitempty" azure:"ro"`
 
-	// The name of the compute linked service.
+	// READ-ONLY; The name of the compute linked service.
 	LinkedServiceName *string `json:"linkedServiceName,omitempty" azure:"ro"`
 
-	// The output for the activity.
+	// READ-ONLY; The output for the activity.
 	Output *interface{} `json:"output,omitempty" azure:"ro"`
 
-	// The name of the pipeline.
+	// READ-ONLY; The name of the pipeline.
 	PipelineName *string `json:"pipelineName,omitempty" azure:"ro"`
 
-	// The id of the pipeline run.
+	// READ-ONLY; The id of the pipeline run.
 	PipelineRunID *string `json:"pipelineRunId,omitempty" azure:"ro"`
 
-	// The status of the activity run.
+	// READ-ONLY; The status of the activity run.
 	Status *string `json:"status,omitempty" azure:"ro"`
 }
 
@@ -3181,7 +3181,7 @@ func (a *AzureDatabricksLinkedServiceTypeProperties) UnmarshalJSON(data []byte) 
 // The resource model definition for an Azure Resource Manager resource with an etag.
 type AzureEntityResource struct {
 	Resource
-	// Resource Etag.
+	// READ-ONLY; Resource Etag.
 	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
@@ -8329,7 +8329,7 @@ type CustomerManagedKeyDetails struct {
 	// The key object of the workspace
 	Key *WorkspaceKeyDetails `json:"key,omitempty"`
 
-	// The customer managed key status on the workspace
+	// READ-ONLY; The customer managed key status on the workspace
 	Status *string `json:"status,omitempty" azure:"ro"`
 }
 
@@ -11979,7 +11979,7 @@ type EncryptionDetails struct {
 	// Customer Managed Key Details
 	Cmk *CustomerManagedKeyDetails `json:"cmk,omitempty"`
 
-	// Double Encryption enabled
+	// READ-ONLY; Double Encryption enabled
 	DoubleEncryptionEnabled *bool `json:"doubleEncryptionEnabled,omitempty" azure:"ro"`
 }
 
@@ -11994,10 +11994,10 @@ type EntityReference struct {
 
 // The resource management error additional info.
 type ErrorAdditionalInfo struct {
-	// The additional info.
+	// READ-ONLY; The additional info.
 	Info *interface{} `json:"info,omitempty" azure:"ro"`
 
-	// The additional info type.
+	// READ-ONLY; The additional info type.
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
@@ -12022,19 +12022,19 @@ func (e ErrorContract) Error() string {
 // Common error response for all Azure Resource Manager APIs to return error details for failed operations. (This also follows the OData error response
 // format.)
 type ErrorResponse struct {
-	// The error additional info.
+	// READ-ONLY; The error additional info.
 	AdditionalInfo *[]ErrorAdditionalInfo `json:"additionalInfo,omitempty" azure:"ro"`
 
-	// The error code.
+	// READ-ONLY; The error code.
 	Code *string `json:"code,omitempty" azure:"ro"`
 
-	// The error details.
+	// READ-ONLY; The error details.
 	Details *[]ErrorResponse `json:"details,omitempty" azure:"ro"`
 
-	// The error message.
+	// READ-ONLY; The error message.
 	Message *string `json:"message,omitempty" azure:"ro"`
 
-	// The error target.
+	// READ-ONLY; The error target.
 	Target *string `json:"target,omitempty" azure:"ro"`
 }
 
@@ -12331,10 +12331,10 @@ type ExposureControlRequest struct {
 
 // The exposure control response.
 type ExposureControlResponse struct {
-	// The feature name.
+	// READ-ONLY; The feature name.
 	FeatureName *string `json:"featureName,omitempty" azure:"ro"`
 
-	// The feature value.
+	// READ-ONLY; The feature value.
 	Value *string `json:"value,omitempty" azure:"ro"`
 }
 
@@ -17503,11 +17503,17 @@ type LibraryInfo struct {
 	// Storage blob container name.
 	ContainerName *string `json:"containerName,omitempty"`
 
+	// READ-ONLY; Creator Id of the library/package.
+	CreatorID *string `json:"creatorId,omitempty" azure:"ro"`
+
 	// Name of the library.
 	Name *string `json:"name,omitempty"`
 
 	// Storage blob path of library.
 	Path *string `json:"path,omitempty"`
+
+	// READ-ONLY; Provisioning status of the library/package.
+	ProvisioningStatus *string `json:"provisioningStatus,omitempty" azure:"ro"`
 
 	// Type of the library.
 	Type *string `json:"type,omitempty"`
@@ -17522,11 +17528,17 @@ func (l LibraryInfo) MarshalJSON() ([]byte, error) {
 	if l.ContainerName != nil {
 		objectMap["containerName"] = l.ContainerName
 	}
+	if l.CreatorID != nil {
+		objectMap["creatorId"] = l.CreatorID
+	}
 	if l.Name != nil {
 		objectMap["name"] = l.Name
 	}
 	if l.Path != nil {
 		objectMap["path"] = l.Path
+	}
+	if l.ProvisioningStatus != nil {
+		objectMap["provisioningStatus"] = l.ProvisioningStatus
 	}
 	if l.Type != nil {
 		objectMap["type"] = l.Type
@@ -17551,6 +17563,11 @@ func (l *LibraryInfo) UnmarshalJSON(data []byte) error {
 				err = json.Unmarshal(*val, &l.ContainerName)
 			}
 			delete(rawMsg, key)
+		case "creatorId":
+			if val != nil {
+				err = json.Unmarshal(*val, &l.CreatorID)
+			}
+			delete(rawMsg, key)
 		case "name":
 			if val != nil {
 				err = json.Unmarshal(*val, &l.Name)
@@ -17559,6 +17576,11 @@ func (l *LibraryInfo) UnmarshalJSON(data []byte) error {
 		case "path":
 			if val != nil {
 				err = json.Unmarshal(*val, &l.Path)
+			}
+			delete(rawMsg, key)
+		case "provisioningStatus":
+			if val != nil {
+				err = json.Unmarshal(*val, &l.ProvisioningStatus)
 			}
 			delete(rawMsg, key)
 		case "type":
@@ -17589,7 +17611,7 @@ type LibraryRequirements struct {
 	// The filename of the library requirements file.
 	Filename *string `json:"filename,omitempty"`
 
-	// The last update time of the library requirements file.
+	// READ-ONLY; The last update time of the library requirements file.
 	Time *time.Time `json:"time,omitempty" azure:"ro"`
 }
 
@@ -18298,10 +18320,10 @@ func (m *MagentoSource) UnmarshalJSON(data []byte) error {
 
 // The workspace managed identity
 type ManagedIDentity struct {
-	// The principal ID of the workspace managed identity
+	// READ-ONLY; The principal ID of the workspace managed identity
 	PrincipalID *string `json:"principalId,omitempty" azure:"ro"`
 
-	// The tenant ID of the workspace managed identity
+	// READ-ONLY; The tenant ID of the workspace managed identity
 	TenantID *string `json:"tenantId,omitempty" azure:"ro"`
 
 	// The type of managed identity for the workspace
@@ -18311,7 +18333,7 @@ type ManagedIDentity struct {
 // Managed integration runtime, including managed elastic and managed dedicated integration runtimes.
 type ManagedIntegrationRuntime struct {
 	IntegrationRuntime
-	// Integration runtime state, only valid for managed dedicated integration runtime.
+	// READ-ONLY; Integration runtime state, only valid for managed dedicated integration runtime.
 	State *IntegrationRuntimeState `json:"state,omitempty" azure:"ro"`
 
 	// Managed integration runtime properties.
@@ -20313,10 +20335,10 @@ func (n *NotebookMetadata) UnmarshalJSON(data []byte) error {
 
 // Notebook resource type.
 type NotebookResource struct {
-	// Resource Etag.
+	// READ-ONLY; Resource Etag.
 	Etag *string `json:"etag,omitempty" azure:"ro"`
 
-	// Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	// READ-ONLY; Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string `json:"id,omitempty" azure:"ro"`
 
 	// The name of the resource
@@ -20325,7 +20347,7 @@ type NotebookResource struct {
 	// Properties of Notebook.
 	Properties *Notebook `json:"properties,omitempty"`
 
-	// The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
+	// READ-ONLY; The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
@@ -22453,40 +22475,40 @@ type PipelineRun struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
 
-	// The duration of a pipeline run.
+	// READ-ONLY; The duration of a pipeline run.
 	DurationInMS *int32 `json:"durationInMs,omitempty" azure:"ro"`
 
-	// Entity that started the pipeline run.
+	// READ-ONLY; Entity that started the pipeline run.
 	InvokedBy *PipelineRunInvokedBy `json:"invokedBy,omitempty" azure:"ro"`
 
-	// Indicates if the recovered pipeline run is the latest in its group.
+	// READ-ONLY; Indicates if the recovered pipeline run is the latest in its group.
 	IsLatest *bool `json:"isLatest,omitempty" azure:"ro"`
 
-	// The last updated timestamp for the pipeline run event in ISO8601 format.
+	// READ-ONLY; The last updated timestamp for the pipeline run event in ISO8601 format.
 	LastUpdated *time.Time `json:"lastUpdated,omitempty" azure:"ro"`
 
-	// The message from a pipeline run.
+	// READ-ONLY; The message from a pipeline run.
 	Message *string `json:"message,omitempty" azure:"ro"`
 
-	// The full or partial list of parameter name, value pair used in the pipeline run.
+	// READ-ONLY; The full or partial list of parameter name, value pair used in the pipeline run.
 	Parameters *map[string]string `json:"parameters,omitempty" azure:"ro"`
 
-	// The pipeline name.
+	// READ-ONLY; The pipeline name.
 	PipelineName *string `json:"pipelineName,omitempty" azure:"ro"`
 
-	// The end time of a pipeline run in ISO8601 format.
+	// READ-ONLY; The end time of a pipeline run in ISO8601 format.
 	RunEnd *time.Time `json:"runEnd,omitempty" azure:"ro"`
 
-	// Identifier that correlates all the recovery runs of a pipeline run.
+	// READ-ONLY; Identifier that correlates all the recovery runs of a pipeline run.
 	RunGroupID *string `json:"runGroupId,omitempty" azure:"ro"`
 
-	// Identifier of a run.
+	// READ-ONLY; Identifier of a run.
 	RunID *string `json:"runId,omitempty" azure:"ro"`
 
-	// The start time of a pipeline run in ISO8601 format.
+	// READ-ONLY; The start time of a pipeline run in ISO8601 format.
 	RunStart *time.Time `json:"runStart,omitempty" azure:"ro"`
 
-	// The status of a pipeline run.
+	// READ-ONLY; The status of a pipeline run.
 	Status *string `json:"status,omitempty" azure:"ro"`
 }
 
@@ -22643,13 +22665,13 @@ type PipelineRunGetPipelineRunOptions struct {
 
 // Provides entity name and id that started the pipeline run.
 type PipelineRunInvokedBy struct {
-	// The ID of the entity that started the run.
+	// READ-ONLY; The ID of the entity that started the run.
 	ID *string `json:"id,omitempty" azure:"ro"`
 
-	// The type of the entity that started the run.
+	// READ-ONLY; The type of the entity that started the run.
 	InvokedByType *string `json:"invokedByType,omitempty" azure:"ro"`
 
-	// Name of the entity that started the pipeline run.
+	// READ-ONLY; Name of the entity that started the pipeline run.
 	Name *string `json:"name,omitempty" azure:"ro"`
 }
 
@@ -23189,7 +23211,7 @@ func (p *PrestoSource) UnmarshalJSON(data []byte) error {
 
 // Private endpoint details
 type PrivateEndpoint struct {
-	// Resource id of the private endpoint.
+	// READ-ONLY; Resource id of the private endpoint.
 	ID *string `json:"id,omitempty" azure:"ro"`
 }
 
@@ -23208,13 +23230,13 @@ type PrivateEndpointConnectionProperties struct {
 	// Connection state of the private endpoint connection.
 	PrivateLinkServiceConnectionState *PrivateLinkServiceConnectionState `json:"privateLinkServiceConnectionState,omitempty"`
 
-	// Provisioning state of the private endpoint connection.
+	// READ-ONLY; Provisioning state of the private endpoint connection.
 	ProvisioningState *string `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // Connection state details of the private endpoint
 type PrivateLinkServiceConnectionState struct {
-	// The actions required for private link service connection.
+	// READ-ONLY; The actions required for private link service connection.
 	ActionsRequired *string `json:"actionsRequired,omitempty" azure:"ro"`
 
 	// The private link service connection description.
@@ -23776,7 +23798,7 @@ type RelationalTableDatasetTypeProperties struct {
 
 // A list of rerun triggers.
 type RerunTriggerListResponse struct {
-	// The continuation token for getting the next page of results, if any remaining results exist, null otherwise.
+	// READ-ONLY; The continuation token for getting the next page of results, if any remaining results exist, null otherwise.
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
 	// List of rerun triggers.
@@ -23967,13 +23989,13 @@ func (r *RerunTumblingWindowTriggerTypeProperties) UnmarshalJSON(data []byte) er
 
 // Common fields that are returned in the response for all Azure Resource Manager resources
 type Resource struct {
-	// Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string `json:"id,omitempty" azure:"ro"`
 
-	// The name of the resource
+	// READ-ONLY; The name of the resource
 	Name *string `json:"name,omitempty" azure:"ro"`
 
-	// The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
@@ -25497,10 +25519,10 @@ func (s *SQLScriptMetadata) UnmarshalJSON(data []byte) error {
 
 // Sql Script resource type.
 type SQLScriptResource struct {
-	// Resource Etag.
+	// READ-ONLY; Resource Etag.
 	Etag *string `json:"etag,omitempty" azure:"ro"`
 
-	// Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	// READ-ONLY; Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string `json:"id,omitempty" azure:"ro"`
 
 	// The name of the resource
@@ -25509,7 +25531,7 @@ type SQLScriptResource struct {
 	// Properties of sql script.
 	Properties *SQLScript `json:"properties,omitempty"`
 
-	// The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
+	// READ-ONLY; The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
@@ -31922,7 +31944,7 @@ type Trigger struct {
 	// Trigger description.
 	Description *string `json:"description,omitempty"`
 
-	// Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger.
+	// READ-ONLY; Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger.
 	RuntimeState *TriggerRuntimeState `json:"runtimeState,omitempty" azure:"ro"`
 
 	// Trigger type.
@@ -32172,28 +32194,28 @@ type TriggerRun struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
 
-	// Trigger error message.
+	// READ-ONLY; Trigger error message.
 	Message *string `json:"message,omitempty" azure:"ro"`
 
-	// List of property name and value related to trigger run. Name, value pair depends on type of trigger.
+	// READ-ONLY; List of property name and value related to trigger run. Name, value pair depends on type of trigger.
 	Properties *map[string]string `json:"properties,omitempty" azure:"ro"`
 
-	// Trigger run status.
+	// READ-ONLY; Trigger run status.
 	Status *TriggerRunStatus `json:"status,omitempty" azure:"ro"`
 
-	// Trigger name.
+	// READ-ONLY; Trigger name.
 	TriggerName *string `json:"triggerName,omitempty" azure:"ro"`
 
-	// Trigger run id.
+	// READ-ONLY; Trigger run id.
 	TriggerRunID *string `json:"triggerRunId,omitempty" azure:"ro"`
 
-	// Trigger run start time.
+	// READ-ONLY; Trigger run start time.
 	TriggerRunTimestamp *time.Time `json:"triggerRunTimestamp,omitempty" azure:"ro"`
 
-	// Trigger type.
+	// READ-ONLY; Trigger type.
 	TriggerType *string `json:"triggerType,omitempty" azure:"ro"`
 
-	// List of pipeline name and run Id triggered by the trigger run.
+	// READ-ONLY; List of pipeline name and run Id triggered by the trigger run.
 	TriggeredPipelines *map[string]string `json:"triggeredPipelines,omitempty" azure:"ro"`
 }
 
@@ -32351,10 +32373,10 @@ type TriggerSubscribeTriggerToEventsOptions struct {
 
 // Defines the response of a trigger subscription operation.
 type TriggerSubscriptionOperationStatus struct {
-	// Event Subscription Status.
+	// READ-ONLY; Event Subscription Status.
 	Status *EventSubscriptionStatus `json:"status,omitempty" azure:"ro"`
 
-	// Trigger name.
+	// READ-ONLY; Trigger name.
 	TriggerName *string `json:"triggerName,omitempty" azure:"ro"`
 }
 
@@ -33439,10 +33461,10 @@ type WorkspaceGetOptions struct {
 
 // Identity properties of the workspace resource.
 type WorkspaceIDentity struct {
-	// The principal id of the identity.
+	// READ-ONLY; The principal id of the identity.
 	PrincipalID *string `json:"principalId,omitempty" azure:"ro"`
 
-	// The client tenant id of the identity.
+	// READ-ONLY; The client tenant id of the identity.
 	TenantID *string `json:"tenantId,omitempty" azure:"ro"`
 
 	// The identity type. Currently the only supported type is 'SystemAssigned'.
@@ -33472,7 +33494,7 @@ type WorkspaceProperties struct {
 	// The encryption details of the workspace
 	Encryption *EncryptionDetails `json:"encryption,omitempty"`
 
-	// Workspace level configs and feature flags
+	// READ-ONLY; Workspace level configs and feature flags
 	ExtraProperties *map[string]interface{} `json:"extraProperties,omitempty" azure:"ro"`
 
 	// Workspace managed resource group. The resource group name uniquely identifies the resource group within the user subscriptionId. The resource group name
@@ -33489,7 +33511,7 @@ type WorkspaceProperties struct {
 	// Private endpoint connections to the workspace
 	PrivateEndpointConnections *[]PrivateEndpointConnection `json:"privateEndpointConnections,omitempty"`
 
-	// Resource provisioning state
+	// READ-ONLY; Resource provisioning state
 	ProvisioningState *string `json:"provisioningState,omitempty" azure:"ro"`
 
 	// Login for workspace SQL active directory administrator
@@ -33501,7 +33523,7 @@ type WorkspaceProperties struct {
 	// Virtual Network profile
 	VirtualNetworkProfile *VirtualNetworkProfile `json:"virtualNetworkProfile,omitempty"`
 
-	// The workspace unique identifier
+	// READ-ONLY; The workspace unique identifier
 	WorkspaceUId *string `json:"workspaceUID,omitempty" azure:"ro"`
 }
 
