@@ -51,7 +51,7 @@ type APIErrorBase struct {
 
 // A disk access SAS uri.
 type AccessURI struct {
-	// A SAS uri for accessing a disk.
+	// READ-ONLY; A SAS uri for accessing a disk.
 	AccessSas *string `json:"accessSAS,omitempty" azure:"ro"`
 }
 
@@ -183,7 +183,7 @@ type AvailabilitySetProperties struct {
 	// Minimum api-version: 2018-04-01.
 	ProximityPlacementGroup *SubResource `json:"proximityPlacementGroup,omitempty"`
 
-	// The resource status information.
+	// READ-ONLY; The resource status information.
 	Statuses *[]InstanceViewStatus `json:"statuses,omitempty" azure:"ro"`
 
 	// A list of references to all virtual machines in the availability set.
@@ -279,13 +279,13 @@ type BootDiagnostics struct {
 
 // The instance view of a virtual machine boot diagnostics.
 type BootDiagnosticsInstanceView struct {
-	// The console screenshot blob URI.
+	// READ-ONLY; The console screenshot blob URI.
 	ConsoleScreenshotBlobURI *string `json:"consoleScreenshotBlobUri,omitempty" azure:"ro"`
 
-	// The Linux serial console log blob Uri.
+	// READ-ONLY; The Linux serial console log blob Uri.
 	SerialConsoleLogBlobURI *string `json:"serialConsoleLogBlobUri,omitempty" azure:"ro"`
 
-	// The boot diagnostics status information for the VM.
+	// READ-ONLY; The boot diagnostics status information for the VM.
 	// NOTE: It will be set only if there are errors encountered in enabling boot diagnostics.
 	Status *InstanceViewStatus `json:"status,omitempty" azure:"ro"`
 }
@@ -310,7 +310,7 @@ func (e CloudError) Error() string {
 
 // The List Compute Operation operation response.
 type ComputeOperationListResult struct {
-	// The list of compute operations
+	// READ-ONLY; The list of compute operations
 	Value *[]ComputeOperationValue `json:"value,omitempty" azure:"ro"`
 }
 
@@ -328,25 +328,25 @@ type ComputeOperationValue struct {
 	// Describes the properties of a Compute Operation Value Display.
 	Display *ComputeOperationValueDisplay `json:"display,omitempty"`
 
-	// The name of the compute operation.
+	// READ-ONLY; The name of the compute operation.
 	Name *string `json:"name,omitempty" azure:"ro"`
 
-	// The origin of the compute operation.
+	// READ-ONLY; The origin of the compute operation.
 	Origin *string `json:"origin,omitempty" azure:"ro"`
 }
 
 // Describes the properties of a Compute Operation Value Display.
 type ComputeOperationValueDisplay struct {
-	// The description of the operation.
+	// READ-ONLY; The description of the operation.
 	Description *string `json:"description,omitempty" azure:"ro"`
 
-	// The display name of the compute operation.
+	// READ-ONLY; The display name of the compute operation.
 	Operation *string `json:"operation,omitempty" azure:"ro"`
 
-	// The resource provider for the operation.
+	// READ-ONLY; The resource provider for the operation.
 	Provider *string `json:"provider,omitempty" azure:"ro"`
 
-	// The display name of the resource the operation applies to.
+	// READ-ONLY; The display name of the resource the operation applies to.
 	Resource *string `json:"resource,omitempty" azure:"ro"`
 }
 
@@ -365,7 +365,7 @@ type ContainerServiceAgentPoolProfile struct {
 	// DNS prefix to be used to create the FQDN for the agent pool.
 	DNSPrefix *string `json:"dnsPrefix,omitempty"`
 
-	// FQDN for the agent pool.
+	// READ-ONLY; FQDN for the agent pool.
 	Fqdn *string `json:"fqdn,omitempty" azure:"ro"`
 
 	// Unique name of the agent pool profile in the context of the subscription and resource group.
@@ -421,7 +421,7 @@ type ContainerServiceMasterProfile struct {
 	// DNS prefix to be used to create the FQDN for master.
 	DNSPrefix *string `json:"dnsPrefix,omitempty"`
 
-	// FQDN for the master.
+	// READ-ONLY; FQDN for the master.
 	Fqdn *string `json:"fqdn,omitempty" azure:"ro"`
 }
 
@@ -472,7 +472,7 @@ type ContainerServiceProperties struct {
 	// Properties of the orchestrator.
 	OrchestratorProfile *ContainerServiceOrchestratorProfile `json:"orchestratorProfile,omitempty"`
 
-	// the current deployment or provisioning state, which only appears in the response.
+	// READ-ONLY; the current deployment or provisioning state, which only appears in the response.
 	ProvisioningState *string `json:"provisioningState,omitempty" azure:"ro"`
 
 	// Properties for cluster service principals.
@@ -508,7 +508,7 @@ type ContainerServiceVMDiagnostics struct {
 	// Whether the VM diagnostic agent is provisioned on the VM.
 	Enabled *bool `json:"enabled,omitempty"`
 
-	// The URI of the storage account where diagnostics are stored.
+	// READ-ONLY; The URI of the storage account where diagnostics are stored.
 	StorageURI *string `json:"storageUri,omitempty" azure:"ro"`
 }
 
@@ -564,7 +564,7 @@ type CreationData struct {
 	// If createOption is Import, this is the URI of a blob to be imported into a managed disk.
 	SourceURI *string `json:"sourceUri,omitempty"`
 
-	// If this field is set, this is the unique id identifying the source of this resource.
+	// READ-ONLY; If this field is set, this is the unique id identifying the source of this resource.
 	SourceUniqueID *string `json:"sourceUniqueId,omitempty" azure:"ro"`
 
 	// Required if createOption is Import. The Azure Resource Manager identifier of the storage account containing the blob to import as a disk.
@@ -594,13 +594,13 @@ type DataDisk struct {
 	// using a marketplace image, you also use the plan element previously described.
 	CreateOption *DiskCreateOptionTypes `json:"createOption,omitempty"`
 
-	// Specifies the Read-Write IOPS for the managed disk when StorageAccountType is UltraSSD_LRS. Returned only for VirtualMachine ScaleSet VM disks. Can be
-	// updated only via updates to the VirtualMachine
+	// READ-ONLY; Specifies the Read-Write IOPS for the managed disk when StorageAccountType is UltraSSD_LRS. Returned only for VirtualMachine ScaleSet VM disks.
+	// Can be updated only via updates to the VirtualMachine
 	// Scale Set.
 	DiskIopsReadWrite *int64 `json:"diskIOPSReadWrite,omitempty" azure:"ro"`
 
-	// Specifies the bandwidth in MB per second for the managed disk when StorageAccountType is UltraSSD_LRS. Returned only for VirtualMachine ScaleSet VM disks.
-	// Can be updated only via updates to the
+	// READ-ONLY; Specifies the bandwidth in MB per second for the managed disk when StorageAccountType is UltraSSD_LRS. Returned only for VirtualMachine ScaleSet
+	// VM disks. Can be updated only via updates to the
 	// VirtualMachine Scale Set.
 	DiskMBpsReadWrite *int64 `json:"diskMBpsReadWrite,omitempty" azure:"ro"`
 
@@ -635,8 +635,8 @@ type DataDisk struct {
 
 // Contains the data disk images information.
 type DataDiskImage struct {
-	// Specifies the logical unit number of the data disk. This value is used to identify data disks within the VM and therefore must be unique for each data
-	// disk attached to a VM.
+	// READ-ONLY; Specifies the logical unit number of the data disk. This value is used to identify data disks within the VM and therefore must be unique for
+	// each data disk attached to a VM.
 	Lun *int32 `json:"lun,omitempty" azure:"ro"`
 }
 
@@ -709,7 +709,7 @@ type DedicatedHostGroupListResultResponse struct {
 
 // Dedicated Host Group Properties.
 type DedicatedHostGroupProperties struct {
-	// A list of references to all dedicated hosts in the dedicated host group.
+	// READ-ONLY; A list of references to all dedicated hosts in the dedicated host group.
 	Hosts *[]SubResourceReadOnly `json:"hosts,omitempty" azure:"ro"`
 
 	// Number of fault domains that the host group can span.
@@ -770,7 +770,7 @@ type DedicatedHostGroupsUpdateOptions struct {
 
 // The instance view of a dedicated host.
 type DedicatedHostInstanceView struct {
-	// Specifies the unique id of the dedicated physical machine on which the dedicated host resides.
+	// READ-ONLY; Specifies the unique id of the dedicated physical machine on which the dedicated host resides.
 	AssetID *string `json:"assetId,omitempty" azure:"ro"`
 
 	// Unutilized capacity of the dedicated host.
@@ -815,11 +815,11 @@ type DedicatedHostProperties struct {
 	// Specifies whether the dedicated host should be replaced automatically in case of a failure. The value is defaulted to 'true' when not provided.
 	AutoReplaceOnFailure *bool `json:"autoReplaceOnFailure,omitempty"`
 
-	// A unique id generated and assigned to the dedicated host by the platform.
+	// READ-ONLY; A unique id generated and assigned to the dedicated host by the platform.
 	// Does not change throughout the lifetime of the host.
 	HostID *string `json:"hostId,omitempty" azure:"ro"`
 
-	// The dedicated host instance view.
+	// READ-ONLY; The dedicated host instance view.
 	InstanceView *DedicatedHostInstanceView `json:"instanceView,omitempty" azure:"ro"`
 
 	// Specifies the software license type that will be applied to the VMs deployed on the dedicated host.
@@ -833,13 +833,13 @@ type DedicatedHostProperties struct {
 	// Fault domain of the dedicated host within a dedicated host group.
 	PlatformFaultDomain *int32 `json:"platformFaultDomain,omitempty"`
 
-	// The provisioning state, which only appears in the response.
+	// READ-ONLY; The provisioning state, which only appears in the response.
 	ProvisioningState *string `json:"provisioningState,omitempty" azure:"ro"`
 
-	// The date when the host was first provisioned.
+	// READ-ONLY; The date when the host was first provisioned.
 	ProvisioningTime *time.Time `json:"provisioningTime,omitempty" azure:"ro"`
 
-	// A list of references to all virtual machines in the Dedicated Host.
+	// READ-ONLY; A list of references to all virtual machines in the Dedicated Host.
 	VirtualMachines *[]SubResourceReadOnly `json:"virtualMachines,omitempty" azure:"ro"`
 }
 
@@ -1008,11 +1008,11 @@ type Disallowed struct {
 // Disk resource.
 type Disk struct {
 	Resource
-	// A relative URI containing the ID of the VM that has the disk attached.
+	// READ-ONLY; A relative URI containing the ID of the VM that has the disk attached.
 	ManagedBy *string `json:"managedBy,omitempty" azure:"ro"`
 
-	// List of relative URIs containing the IDs of the VMs that have the disk attached. maxShares should be set to a value greater than one for disks to allow
-	// attaching them to multiple VMs.
+	// READ-ONLY; List of relative URIs containing the IDs of the VMs that have the disk attached. maxShares should be set to a value greater than one for disks
+	// to allow attaching them to multiple VMs.
 	ManagedByExtended *[]string `json:"managedByExtended,omitempty" azure:"ro"`
 
 	// Disk resource properties.
@@ -1203,7 +1203,7 @@ type DiskProperties struct {
 	// of 10.
 	DiskMBpsReadWrite *int64 `json:"diskMBpsReadWrite,omitempty"`
 
-	// The size of the disk in bytes. This field is read only.
+	// READ-ONLY; The size of the disk in bytes. This field is read only.
 	DiskSizeBytes *int64 `json:"diskSizeBytes,omitempty" azure:"ro"`
 
 	// If creationData.createOption is Empty, this field is mandatory and it indicates the size of the disk to create. If this field is present for updates
@@ -1211,7 +1211,7 @@ type DiskProperties struct {
 	// resize. Resizes are only allowed if the disk is not attached to a running VM, and can only increase the disk's size.
 	DiskSizeGb *int32 `json:"diskSizeGB,omitempty"`
 
-	// The state of the disk.
+	// READ-ONLY; The state of the disk.
 	DiskState *DiskState `json:"diskState,omitempty" azure:"ro"`
 
 	// Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys.
@@ -1230,17 +1230,17 @@ type DiskProperties struct {
 	// The Operating System type.
 	OSType *OperatingSystemTypes `json:"osType,omitempty"`
 
-	// The disk provisioning state.
+	// READ-ONLY; The disk provisioning state.
 	ProvisioningState *string `json:"provisioningState,omitempty" azure:"ro"`
 
-	// Details of the list of all VMs that have the disk attached. maxShares should be set to a value greater than one for disks to allow attaching them to
-	// multiple VMs.
+	// READ-ONLY; Details of the list of all VMs that have the disk attached. maxShares should be set to a value greater than one for disks to allow attaching
+	// them to multiple VMs.
 	ShareInfo *[]ShareInfoElement `json:"shareInfo,omitempty" azure:"ro"`
 
-	// The time when the disk was created.
+	// READ-ONLY; The time when the disk was created.
 	TimeCreated *time.Time `json:"timeCreated,omitempty" azure:"ro"`
 
-	// Unique Guid identifying the resource.
+	// READ-ONLY; Unique Guid identifying the resource.
 	UniqueID *string `json:"uniqueId,omitempty" azure:"ro"`
 }
 
@@ -1419,7 +1419,7 @@ type DiskSKU struct {
 	// The sku name.
 	Name *DiskStorageAccountTypes `json:"name,omitempty"`
 
-	// The sku tier.
+	// READ-ONLY; The sku tier.
 	Tier *string `json:"tier,omitempty" azure:"ro"`
 }
 
@@ -1530,13 +1530,13 @@ type EncryptionImages struct {
 
 // The managed identity for the disk encryption set. It should be given permission on the key vault before it can be used to encrypt disks.
 type EncryptionSetIDentity struct {
-	// The object id of the Managed Identity Resource. This will be sent to the RP from ARM via the x-ms-identity-principal-id header in the PUT request if
-	// the resource has a systemAssigned(implicit)
+	// READ-ONLY; The object id of the Managed Identity Resource. This will be sent to the RP from ARM via the x-ms-identity-principal-id header in the PUT
+	// request if the resource has a systemAssigned(implicit)
 	// identity
 	PrincipalID *string `json:"principalId,omitempty" azure:"ro"`
 
-	// The tenant id of the Managed Identity Resource. This will be sent to the RP from ARM via the x-ms-client-tenant-id header in the PUT request if the resource
-	// has a systemAssigned(implicit) identity
+	// READ-ONLY; The tenant id of the Managed Identity Resource. This will be sent to the RP from ARM via the x-ms-client-tenant-id header in the PUT request
+	// if the resource has a systemAssigned(implicit) identity
 	TenantID *string `json:"tenantId,omitempty" azure:"ro"`
 
 	// The type of Managed Identity used by the DiskEncryptionSet. Only SystemAssigned is supported.
@@ -1547,11 +1547,11 @@ type EncryptionSetProperties struct {
 	// The key vault key which is currently used by this disk encryption set.
 	ActiveKey *KeyVaultAndKeyReference `json:"activeKey,omitempty"`
 
-	// A readonly collection of key vault keys previously used by this disk encryption set while a key rotation is in progress. It will be empty if there is
-	// no ongoing key rotation.
+	// READ-ONLY; A readonly collection of key vault keys previously used by this disk encryption set while a key rotation is in progress. It will be empty
+	// if there is no ongoing key rotation.
 	PreviousKeys *[]KeyVaultAndKeyReference `json:"previousKeys,omitempty" azure:"ro"`
 
-	// The disk encryption set provisioning state.
+	// READ-ONLY; The disk encryption set provisioning state.
 	ProvisioningState *string `json:"provisioningState,omitempty" azure:"ro"`
 }
 
@@ -1807,13 +1807,13 @@ type GalleryApplicationVersionPollerResponse struct {
 
 // Describes the properties of a gallery Image Version.
 type GalleryApplicationVersionProperties struct {
-	// The provisioning state, which only appears in the response.
+	// READ-ONLY; The provisioning state, which only appears in the response.
 	ProvisioningState *GalleryApplicationVersionPropertiesProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// The publishing profile of a gallery Image Version.
 	PublishingProfile *GalleryApplicationVersionPublishingProfile `json:"publishingProfile,omitempty"`
 
-	// This is the replication status of the gallery Image Version.
+	// READ-ONLY; This is the replication status of the gallery Image Version.
 	ReplicationStatus *ReplicationStatus `json:"replicationStatus,omitempty" azure:"ro"`
 }
 
@@ -1953,7 +1953,7 @@ type GalleryArtifactPublishingProfileBase struct {
 	// If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version.
 	ExcludeFromLatest *bool `json:"excludeFromLatest,omitempty"`
 
-	// The timestamp for when the gallery Image Version is published.
+	// READ-ONLY; The timestamp for when the gallery Image Version is published.
 	PublishedDate *time.Time `json:"publishedDate,omitempty" azure:"ro"`
 
 	// The number of replicas of the Image Version to be created per region. This property would take effect for a region when regionalReplicaCount is not specified.
@@ -2077,7 +2077,7 @@ type GalleryDiskImage struct {
 	// The host caching of the disk. Valid values are 'None', 'ReadOnly', and 'ReadWrite'
 	HostCaching *HostCaching `json:"hostCaching,omitempty"`
 
-	// This property indicates the size of the VHD to be created.
+	// READ-ONLY; This property indicates the size of the VHD to be created.
 	SizeInGb *int32 `json:"sizeInGB,omitempty" azure:"ro"`
 
 	// The gallery artifact version source.
@@ -2086,7 +2086,7 @@ type GalleryDiskImage struct {
 
 // Describes the gallery unique name.
 type GalleryIDentifier struct {
-	// The unique name of the Shared Image Gallery. This name is generated automatically by Azure.
+	// READ-ONLY; The unique name of the Shared Image Gallery. This name is generated automatically by Azure.
 	UniqueName *string `json:"uniqueName,omitempty" azure:"ro"`
 }
 
@@ -2171,7 +2171,7 @@ type GalleryImageProperties struct {
 	// The privacy statement uri.
 	PrivacyStatementURI *string `json:"privacyStatementUri,omitempty"`
 
-	// The provisioning state, which only appears in the response.
+	// READ-ONLY; The provisioning state, which only appears in the response.
 	ProvisioningState *GalleryImagePropertiesProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// Describes the gallery Image Definition purchase plan. This is used by marketplace images.
@@ -2368,13 +2368,13 @@ type GalleryImageVersionPollerResponse struct {
 
 // Describes the properties of a gallery Image Version.
 type GalleryImageVersionProperties struct {
-	// The provisioning state, which only appears in the response.
+	// READ-ONLY; The provisioning state, which only appears in the response.
 	ProvisioningState *GalleryImageVersionPropertiesProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// Describes the basic gallery artifact publishing profile.
 	PublishingProfile *GalleryArtifactPublishingProfileBase `json:"publishingProfile,omitempty"`
 
-	// This is the replication status of the gallery Image Version.
+	// READ-ONLY; This is the replication status of the gallery Image Version.
 	ReplicationStatus *ReplicationStatus `json:"replicationStatus,omitempty" azure:"ro"`
 
 	// This is the storage profile of a Gallery Image Version.
@@ -2508,7 +2508,7 @@ type GalleryProperties struct {
 	// Describes the gallery unique name.
 	IDentifier *GalleryIDentifier `json:"identifier,omitempty"`
 
-	// The provisioning state, which only appears in the response.
+	// READ-ONLY; The provisioning state, which only appears in the response.
 	ProvisioningState *GalleryPropertiesProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
@@ -2664,7 +2664,7 @@ type ImageProperties struct {
 	// Gets the HyperVGenerationType of the VirtualMachine created from the image
 	HyperVGeneration *HyperVGenerationTypes `json:"hyperVGeneration,omitempty"`
 
-	// The provisioning state.
+	// READ-ONLY; The provisioning state.
 	ProvisioningState *string `json:"provisioningState,omitempty" azure:"ro"`
 
 	// The source virtual machine from which Image is created.
@@ -2692,8 +2692,8 @@ type ImagePurchasePlan struct {
 // be set when you create the scale set.
 type ImageReference struct {
 	SubResource
-	// Specifies in decimal numbers, the version of platform image or marketplace image used to create the virtual machine. This readonly field differs from
-	// 'version', only if the value specified in
+	// READ-ONLY; Specifies in decimal numbers, the version of platform image or marketplace image used to create the virtual machine. This readonly field differs
+	// from 'version', only if the value specified in
 	// 'version' field is 'latest'.
 	ExactVersion *string `json:"exactVersion,omitempty" azure:"ro"`
 
@@ -3060,7 +3060,7 @@ func (l *LogAnalyticsInputBase) unmarshalInternal(rawMsg map[string]*json.RawMes
 
 // LogAnalytics operation status response
 type LogAnalyticsOperationResult struct {
-	// LogAnalyticsOutput
+	// READ-ONLY; LogAnalyticsOutput
 	Properties *LogAnalyticsOutput `json:"properties,omitempty" azure:"ro"`
 }
 
@@ -3087,7 +3087,7 @@ type LogAnalyticsOperationResultResponse struct {
 
 // LogAnalytics output properties
 type LogAnalyticsOutput struct {
-	// Output file Uri path to blob container.
+	// READ-ONLY; Output file Uri path to blob container.
 	Output *string `json:"output,omitempty" azure:"ro"`
 }
 
@@ -3392,10 +3392,10 @@ type OrchestrationServiceStateInput struct {
 
 // Summary for an orchestration service of a virtual machine scale set.
 type OrchestrationServiceSummary struct {
-	// The name of the service.
+	// READ-ONLY; The name of the service.
 	ServiceName *OrchestrationServiceNames `json:"serviceName,omitempty" azure:"ro"`
 
-	// The current state of the service.
+	// READ-ONLY; The current state of the service.
 	ServiceState *OrchestrationServiceState `json:"serviceState,omitempty" azure:"ro"`
 }
 
@@ -3445,7 +3445,7 @@ type ProximityPlacementGroupListResultResponse struct {
 
 // Describes the properties of a Proximity Placement Group.
 type ProximityPlacementGroupProperties struct {
-	// A list of references to all availability sets in the proximity placement group.
+	// READ-ONLY; A list of references to all availability sets in the proximity placement group.
 	AvailabilitySets *[]SubResourceWithColocationStatus `json:"availabilitySets,omitempty" azure:"ro"`
 
 	// Describes colocation status of the Proximity Placement Group.
@@ -3457,10 +3457,10 @@ type ProximityPlacementGroupProperties struct {
 	// Ultra : For future use.
 	ProximityPlacementGroupType *ProximityPlacementGroupType `json:"proximityPlacementGroupType,omitempty"`
 
-	// A list of references to all virtual machine scale sets in the proximity placement group.
+	// READ-ONLY; A list of references to all virtual machine scale sets in the proximity placement group.
 	VirtualMachineScaleSets *[]SubResourceWithColocationStatus `json:"virtualMachineScaleSets,omitempty" azure:"ro"`
 
-	// A list of references to all virtual machines in the proximity placement group.
+	// READ-ONLY; A list of references to all virtual machines in the proximity placement group.
 	VirtualMachines *[]SubResourceWithColocationStatus `json:"virtualMachines,omitempty" azure:"ro"`
 }
 
@@ -3532,10 +3532,10 @@ type RecommendedMachineConfiguration struct {
 
 // Response after calling a manual recovery walk
 type RecoveryWalkResponse struct {
-	// The next update domain that needs to be walked. Null means walk spanning all update domains has been completed
+	// READ-ONLY; The next update domain that needs to be walked. Null means walk spanning all update domains has been completed
 	NextPlatformUpdateDomain *int32 `json:"nextPlatformUpdateDomain,omitempty" azure:"ro"`
 
-	// Whether the recovery walk was performed
+	// READ-ONLY; Whether the recovery walk was performed
 	WalkPerformed *bool `json:"walkPerformed,omitempty" azure:"ro"`
 }
 
@@ -3550,25 +3550,25 @@ type RecoveryWalkResponseResponse struct {
 
 // This is the regional replication status.
 type RegionalReplicationStatus struct {
-	// The details of the replication status.
+	// READ-ONLY; The details of the replication status.
 	Details *string `json:"details,omitempty" azure:"ro"`
 
-	// It indicates progress of the replication job.
+	// READ-ONLY; It indicates progress of the replication job.
 	Progress *int32 `json:"progress,omitempty" azure:"ro"`
 
-	// The region to which the gallery Image Version is being replicated to.
+	// READ-ONLY; The region to which the gallery Image Version is being replicated to.
 	Region *string `json:"region,omitempty" azure:"ro"`
 
-	// This is the regional replication state.
+	// READ-ONLY; This is the regional replication state.
 	State *ReplicationState `json:"state,omitempty" azure:"ro"`
 }
 
 // This is the replication status of the gallery Image Version.
 type ReplicationStatus struct {
-	// This is the aggregated replication status based on all the regional replication status flags.
+	// READ-ONLY; This is the aggregated replication status based on all the regional replication status flags.
 	AggregatedState *AggregatedReplicationState `json:"aggregatedState,omitempty" azure:"ro"`
 
-	// This is a summary of replication status for each region.
+	// READ-ONLY; This is a summary of replication status for each region.
 	Summary *[]RegionalReplicationStatus `json:"summary,omitempty" azure:"ro"`
 }
 
@@ -3612,19 +3612,19 @@ func (r *RequestRateByIntervalInput) UnmarshalJSON(data []byte) error {
 
 // The Resource model definition.
 type Resource struct {
-	// Resource Id
+	// READ-ONLY; Resource Id
 	ID *string `json:"id,omitempty" azure:"ro"`
 
 	// Resource location
 	Location *string `json:"location,omitempty"`
 
-	// Resource name
+	// READ-ONLY; Resource name
 	Name *string `json:"name,omitempty" azure:"ro"`
 
 	// Resource tags
 	Tags *map[string]string `json:"tags,omitempty"`
 
-	// Resource type
+	// READ-ONLY; Resource type
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
@@ -3639,43 +3639,43 @@ type ResourceRange struct {
 
 // Describes an available Compute SKU.
 type ResourceSKU struct {
-	// The api versions that support this SKU.
+	// READ-ONLY; The api versions that support this SKU.
 	APIVersions *[]string `json:"apiVersions,omitempty" azure:"ro"`
 
-	// A name value pair to describe the capability.
+	// READ-ONLY; A name value pair to describe the capability.
 	Capabilities *[]ResourceSKUCapabilities `json:"capabilities,omitempty" azure:"ro"`
 
-	// Specifies the number of virtual machines in the scale set.
+	// READ-ONLY; Specifies the number of virtual machines in the scale set.
 	Capacity *ResourceSKUCapacity `json:"capacity,omitempty" azure:"ro"`
 
-	// Metadata for retrieving price info.
+	// READ-ONLY; Metadata for retrieving price info.
 	Costs *[]ResourceSKUCosts `json:"costs,omitempty" azure:"ro"`
 
-	// The Family of this particular SKU.
+	// READ-ONLY; The Family of this particular SKU.
 	Family *string `json:"family,omitempty" azure:"ro"`
 
-	// The Kind of resources that are supported in this SKU.
+	// READ-ONLY; The Kind of resources that are supported in this SKU.
 	Kind *string `json:"kind,omitempty" azure:"ro"`
 
-	// A list of locations and availability zones in those locations where the SKU is available.
+	// READ-ONLY; A list of locations and availability zones in those locations where the SKU is available.
 	LocationInfo *[]ResourceSKULocationInfo `json:"locationInfo,omitempty" azure:"ro"`
 
-	// The set of locations that the SKU is available.
+	// READ-ONLY; The set of locations that the SKU is available.
 	Locations *[]string `json:"locations,omitempty" azure:"ro"`
 
-	// The name of SKU.
+	// READ-ONLY; The name of SKU.
 	Name *string `json:"name,omitempty" azure:"ro"`
 
-	// The type of resource the SKU applies to.
+	// READ-ONLY; The type of resource the SKU applies to.
 	ResourceType *string `json:"resourceType,omitempty" azure:"ro"`
 
-	// The restrictions because of which SKU cannot be used. This is empty if there are no restrictions.
+	// READ-ONLY; The restrictions because of which SKU cannot be used. This is empty if there are no restrictions.
 	Restrictions *[]ResourceSKURestrictions `json:"restrictions,omitempty" azure:"ro"`
 
-	// The Size of the SKU.
+	// READ-ONLY; The Size of the SKU.
 	Size *string `json:"size,omitempty" azure:"ro"`
 
-	// Specifies the tier of virtual machines in a scale set.
+	// READ-ONLY; Specifies the tier of virtual machines in a scale set.
 	// Possible Values:
 	// Standard
 	// Basic
@@ -3684,80 +3684,80 @@ type ResourceSKU struct {
 
 // Describes The SKU capabilities object.
 type ResourceSKUCapabilities struct {
-	// An invariant to describe the feature.
+	// READ-ONLY; An invariant to describe the feature.
 	Name *string `json:"name,omitempty" azure:"ro"`
 
-	// An invariant if the feature is measured by quantity.
+	// READ-ONLY; An invariant if the feature is measured by quantity.
 	Value *string `json:"value,omitempty" azure:"ro"`
 }
 
 // Describes scaling information of a SKU.
 type ResourceSKUCapacity struct {
-	// The default capacity.
+	// READ-ONLY; The default capacity.
 	Default *int64 `json:"default,omitempty" azure:"ro"`
 
-	// The maximum capacity that can be set.
+	// READ-ONLY; The maximum capacity that can be set.
 	Maximum *int64 `json:"maximum,omitempty" azure:"ro"`
 
-	// The minimum capacity.
+	// READ-ONLY; The minimum capacity.
 	Minimum *int64 `json:"minimum,omitempty" azure:"ro"`
 
-	// The scale type applicable to the sku.
+	// READ-ONLY; The scale type applicable to the sku.
 	ScaleType *ResourceSKUCapacityScaleType `json:"scaleType,omitempty" azure:"ro"`
 }
 
 // Describes metadata for retrieving price info.
 type ResourceSKUCosts struct {
-	// An invariant to show the extended unit.
+	// READ-ONLY; An invariant to show the extended unit.
 	ExtendedUnit *string `json:"extendedUnit,omitempty" azure:"ro"`
 
-	// Used for querying price from commerce.
+	// READ-ONLY; Used for querying price from commerce.
 	MeterID *string `json:"meterID,omitempty" azure:"ro"`
 
-	// The multiplier is needed to extend the base metered cost.
+	// READ-ONLY; The multiplier is needed to extend the base metered cost.
 	Quantity *int64 `json:"quantity,omitempty" azure:"ro"`
 }
 
 type ResourceSKULocationInfo struct {
-	// Location of the SKU
+	// READ-ONLY; Location of the SKU
 	Location *string `json:"location,omitempty" azure:"ro"`
 
-	// Details of capabilities available to a SKU in specific zones.
+	// READ-ONLY; Details of capabilities available to a SKU in specific zones.
 	ZoneDetails *[]ResourceSKUZoneDetails `json:"zoneDetails,omitempty" azure:"ro"`
 
-	// List of availability zones where the SKU is supported.
+	// READ-ONLY; List of availability zones where the SKU is supported.
 	Zones *[]string `json:"zones,omitempty" azure:"ro"`
 }
 
 type ResourceSKURestrictionInfo struct {
-	// Locations where the SKU is restricted
+	// READ-ONLY; Locations where the SKU is restricted
 	Locations *[]string `json:"locations,omitempty" azure:"ro"`
 
-	// List of availability zones where the SKU is restricted.
+	// READ-ONLY; List of availability zones where the SKU is restricted.
 	Zones *[]string `json:"zones,omitempty" azure:"ro"`
 }
 
 // Describes scaling information of a SKU.
 type ResourceSKURestrictions struct {
-	// The reason for restriction.
+	// READ-ONLY; The reason for restriction.
 	ReasonCode *ResourceSKURestrictionsReasonCode `json:"reasonCode,omitempty" azure:"ro"`
 
-	// The information about the restriction where the SKU cannot be used.
+	// READ-ONLY; The information about the restriction where the SKU cannot be used.
 	RestrictionInfo *ResourceSKURestrictionInfo `json:"restrictionInfo,omitempty" azure:"ro"`
 
-	// The type of restrictions.
+	// READ-ONLY; The type of restrictions.
 	Type *ResourceSKURestrictionsType `json:"type,omitempty" azure:"ro"`
 
-	// The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted.
+	// READ-ONLY; The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted.
 	Values *[]string `json:"values,omitempty" azure:"ro"`
 }
 
 // Describes The zonal capabilities of a SKU.
 type ResourceSKUZoneDetails struct {
-	// A list of capabilities that are available for the SKU in the specified list of zones.
+	// READ-ONLY; A list of capabilities that are available for the SKU in the specified list of zones.
 	Capabilities *[]ResourceSKUCapabilities `json:"capabilities,omitempty" azure:"ro"`
 
-	// The set of zones that the SKU is available in with the specified capabilities.
+	// READ-ONLY; The set of zones that the SKU is available in with the specified capabilities.
 	Name *[]string `json:"name,omitempty" azure:"ro"`
 }
 
@@ -3787,13 +3787,13 @@ type ResourceSKUsResultResponse struct {
 
 // Information about rollback on failed VM instances after a OS Upgrade operation.
 type RollbackStatusInfo struct {
-	// The number of instances which failed to rollback.
+	// READ-ONLY; The number of instances which failed to rollback.
 	FailedRolledbackInstanceCount *int32 `json:"failedRolledbackInstanceCount,omitempty" azure:"ro"`
 
-	// Error details if OS rollback failed.
+	// READ-ONLY; Error details if OS rollback failed.
 	RollbackError *APIError `json:"rollbackError,omitempty" azure:"ro"`
 
-	// The number of instances which have been successfully rolled back.
+	// READ-ONLY; The number of instances which have been successfully rolled back.
 	SuccessfullyRolledbackInstanceCount *int32 `json:"successfullyRolledbackInstanceCount,omitempty" azure:"ro"`
 }
 
@@ -3823,31 +3823,31 @@ type RollingUpgradePolicy struct {
 
 // Information about the number of virtual machine instances in each upgrade state.
 type RollingUpgradeProgressInfo struct {
-	// The number of instances that have failed to be upgraded successfully.
+	// READ-ONLY; The number of instances that have failed to be upgraded successfully.
 	FailedInstanceCount *int32 `json:"failedInstanceCount,omitempty" azure:"ro"`
 
-	// The number of instances that are currently being upgraded.
+	// READ-ONLY; The number of instances that are currently being upgraded.
 	InProgressInstanceCount *int32 `json:"inProgressInstanceCount,omitempty" azure:"ro"`
 
-	// The number of instances that have not yet begun to be upgraded.
+	// READ-ONLY; The number of instances that have not yet begun to be upgraded.
 	PendingInstanceCount *int32 `json:"pendingInstanceCount,omitempty" azure:"ro"`
 
-	// The number of instances that have been successfully upgraded.
+	// READ-ONLY; The number of instances that have been successfully upgraded.
 	SuccessfulInstanceCount *int32 `json:"successfulInstanceCount,omitempty" azure:"ro"`
 }
 
 // Information about the current running state of the overall upgrade.
 type RollingUpgradeRunningStatus struct {
-	// Code indicating the current status of the upgrade.
+	// READ-ONLY; Code indicating the current status of the upgrade.
 	Code *RollingUpgradeStatusCode `json:"code,omitempty" azure:"ro"`
 
-	// The last action performed on the rolling upgrade.
+	// READ-ONLY; The last action performed on the rolling upgrade.
 	LastAction *RollingUpgradeActionType `json:"lastAction,omitempty" azure:"ro"`
 
-	// Last action time of the upgrade.
+	// READ-ONLY; Last action time of the upgrade.
 	LastActionTime *time.Time `json:"lastActionTime,omitempty" azure:"ro"`
 
-	// Start time of the upgrade.
+	// READ-ONLY; Start time of the upgrade.
 	StartTime *time.Time `json:"startTime,omitempty" azure:"ro"`
 }
 
@@ -3919,16 +3919,16 @@ type RollingUpgradeStatusInfo struct {
 
 // The status of the latest virtual machine scale set rolling upgrade.
 type RollingUpgradeStatusInfoProperties struct {
-	// Error details for this upgrade, if there are any.
+	// READ-ONLY; Error details for this upgrade, if there are any.
 	Error *APIError `json:"error,omitempty" azure:"ro"`
 
-	// The rolling upgrade policies applied for this upgrade.
+	// READ-ONLY; The rolling upgrade policies applied for this upgrade.
 	Policy *RollingUpgradePolicy `json:"policy,omitempty" azure:"ro"`
 
-	// Information about the number of virtual machine instances in each upgrade state.
+	// READ-ONLY; Information about the number of virtual machine instances in each upgrade state.
 	Progress *RollingUpgradeProgressInfo `json:"progress,omitempty" azure:"ro"`
 
-	// Information about the current running state of the overall upgrade.
+	// READ-ONLY; Information about the current running state of the overall upgrade.
 	RunningStatus *RollingUpgradeRunningStatus `json:"runningStatus,omitempty" azure:"ro"`
 }
 
@@ -4220,14 +4220,14 @@ type ScheduledEventsProfile struct {
 }
 
 type ShareInfoElement struct {
-	// A relative URI containing the ID of the VM that has the disk attached.
+	// READ-ONLY; A relative URI containing the ID of the VM that has the disk attached.
 	VMURI *string `json:"vmUri,omitempty" azure:"ro"`
 }
 
 // Snapshot resource.
 type Snapshot struct {
 	Resource
-	// Unused. Always Null.
+	// READ-ONLY; Unused. Always Null.
 	ManagedBy *string `json:"managedBy,omitempty" azure:"ro"`
 
 	// Snapshot resource properties.
@@ -4272,7 +4272,7 @@ type SnapshotProperties struct {
 	// Disk source information. CreationData information cannot be changed after the disk has been created.
 	CreationData *CreationData `json:"creationData,omitempty"`
 
-	// The size of the disk in bytes. This field is read only.
+	// READ-ONLY; The size of the disk in bytes. This field is read only.
 	DiskSizeBytes *int64 `json:"diskSizeBytes,omitempty" azure:"ro"`
 
 	// If creationData.createOption is Empty, this field is mandatory and it indicates the size of the disk to create. If this field is present for updates
@@ -4295,13 +4295,13 @@ type SnapshotProperties struct {
 	// The Operating System type.
 	OSType *OperatingSystemTypes `json:"osType,omitempty"`
 
-	// The disk provisioning state.
+	// READ-ONLY; The disk provisioning state.
 	ProvisioningState *string `json:"provisioningState,omitempty" azure:"ro"`
 
-	// The time when the disk was created.
+	// READ-ONLY; The time when the disk was created.
 	TimeCreated *time.Time `json:"timeCreated,omitempty" azure:"ro"`
 
-	// Unique Guid identifying the resource.
+	// READ-ONLY; Unique Guid identifying the resource.
 	UniqueID *string `json:"uniqueId,omitempty" azure:"ro"`
 }
 
@@ -4432,7 +4432,7 @@ type SnapshotSKU struct {
 	// The sku name.
 	Name *SnapshotStorageAccountTypes `json:"name,omitempty"`
 
-	// The sku tier.
+	// READ-ONLY; The sku tier.
 	Tier *string `json:"tier,omitempty" azure:"ro"`
 }
 
@@ -4535,7 +4535,7 @@ type SubResource struct {
 }
 
 type SubResourceReadOnly struct {
-	// Resource Id
+	// READ-ONLY; Resource Id
 	ID *string `json:"id,omitempty" azure:"ro"`
 }
 
@@ -4583,61 +4583,61 @@ type UpdateResource struct {
 
 // The Update Resource model definition.
 type UpdateResourceDefinition struct {
-	// Resource Id
+	// READ-ONLY; Resource Id
 	ID *string `json:"id,omitempty" azure:"ro"`
 
-	// Resource name
+	// READ-ONLY; Resource name
 	Name *string `json:"name,omitempty" azure:"ro"`
 
 	// Resource tags
 	Tags *map[string]string `json:"tags,omitempty"`
 
-	// Resource type
+	// READ-ONLY; Resource type
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // Virtual Machine Scale Set OS Upgrade History operation response.
 type UpgradeOperationHistoricalStatusInfo struct {
-	// Resource location
+	// READ-ONLY; Resource location
 	Location *string `json:"location,omitempty" azure:"ro"`
 
-	// Information about the properties of the upgrade operation.
+	// READ-ONLY; Information about the properties of the upgrade operation.
 	Properties *UpgradeOperationHistoricalStatusInfoProperties `json:"properties,omitempty" azure:"ro"`
 
-	// Resource type
+	// READ-ONLY; Resource type
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // Describes each OS upgrade on the Virtual Machine Scale Set.
 type UpgradeOperationHistoricalStatusInfoProperties struct {
-	// Error Details for this upgrade if there are any.
+	// READ-ONLY; Error Details for this upgrade if there are any.
 	Error *APIError `json:"error,omitempty" azure:"ro"`
 
-	// Counts of the VMs in each state.
+	// READ-ONLY; Counts of the VMs in each state.
 	Progress *RollingUpgradeProgressInfo `json:"progress,omitempty" azure:"ro"`
 
-	// Information about OS rollback if performed
+	// READ-ONLY; Information about OS rollback if performed
 	RollbackInfo *RollbackStatusInfo `json:"rollbackInfo,omitempty" azure:"ro"`
 
-	// Information about the overall status of the upgrade operation.
+	// READ-ONLY; Information about the overall status of the upgrade operation.
 	RunningStatus *UpgradeOperationHistoryStatus `json:"runningStatus,omitempty" azure:"ro"`
 
-	// Invoker of the Upgrade Operation
+	// READ-ONLY; Invoker of the Upgrade Operation
 	StartedBy *UpgradeOperationInvoker `json:"startedBy,omitempty" azure:"ro"`
 
-	// Image Reference details
+	// READ-ONLY; Image Reference details
 	TargetImageReference *ImageReference `json:"targetImageReference,omitempty" azure:"ro"`
 }
 
 // Information about the current running state of the overall upgrade.
 type UpgradeOperationHistoryStatus struct {
-	// Code indicating the current status of the upgrade.
+	// READ-ONLY; Code indicating the current status of the upgrade.
 	Code *UpgradeState `json:"code,omitempty" azure:"ro"`
 
-	// End time of the upgrade.
+	// READ-ONLY; End time of the upgrade.
 	EndTime *time.Time `json:"endTime,omitempty" azure:"ro"`
 
-	// Start time of the upgrade.
+	// READ-ONLY; Start time of the upgrade.
 	StartTime *time.Time `json:"startTime,omitempty" azure:"ro"`
 }
 
@@ -4746,10 +4746,10 @@ type UserArtifactSource struct {
 }
 
 type UserAssignedIDentitiesValue struct {
-	// The client id of user assigned identity.
+	// READ-ONLY; The client id of user assigned identity.
 	ClientID *string `json:"clientId,omitempty" azure:"ro"`
 
-	// The principal id of user assigned identity.
+	// READ-ONLY; The principal id of user assigned identity.
 	PrincipalID *string `json:"principalId,omitempty" azure:"ro"`
 }
 
@@ -4812,7 +4812,7 @@ type VirtualMachine struct {
 	// Describes the properties of a Virtual Machine.
 	Properties *VirtualMachineProperties `json:"properties,omitempty"`
 
-	// The virtual machine child extension resources.
+	// READ-ONLY; The virtual machine child extension resources.
 	Resources *[]VirtualMachineExtension `json:"resources,omitempty" azure:"ro"`
 
 	// The virtual machine zones.
@@ -4846,16 +4846,16 @@ type VirtualMachineCaptureParameters struct {
 // Output of virtual machine capture operation.
 type VirtualMachineCaptureResult struct {
 	SubResource
-	// the version of the content
+	// READ-ONLY; the version of the content
 	ContentVersion *string `json:"contentVersion,omitempty" azure:"ro"`
 
-	// parameters of the captured virtual machine
+	// READ-ONLY; parameters of the captured virtual machine
 	Parameters *interface{} `json:"parameters,omitempty" azure:"ro"`
 
-	// a list of resource items of the captured virtual machine
+	// READ-ONLY; a list of resource items of the captured virtual machine
 	Resources *[]interface{} `json:"resources,omitempty" azure:"ro"`
 
-	// the schema of the captured virtual machine
+	// READ-ONLY; the schema of the captured virtual machine
 	Schema *string `json:"$schema,omitempty" azure:"ro"`
 }
 
@@ -5008,7 +5008,7 @@ type VirtualMachineExtensionProperties struct {
 	// The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all.
 	ProtectedSettings *interface{} `json:"protectedSettings,omitempty"`
 
-	// The provisioning state, which only appears in the response.
+	// READ-ONLY; The provisioning state, which only appears in the response.
 	ProvisioningState *string `json:"provisioningState,omitempty" azure:"ro"`
 
 	// The name of the extension handler publisher.
@@ -5110,16 +5110,16 @@ type VirtualMachineExtensionsUpdateOptions struct {
 
 // The health status of the VM.
 type VirtualMachineHealthStatus struct {
-	// The health status information for the VM.
+	// READ-ONLY; The health status information for the VM.
 	Status *InstanceViewStatus `json:"status,omitempty" azure:"ro"`
 }
 
 // Identity for the virtual machine.
 type VirtualMachineIDentity struct {
-	// The principal id of virtual machine identity. This property will only be provided for a system assigned identity.
+	// READ-ONLY; The principal id of virtual machine identity. This property will only be provided for a system assigned identity.
 	PrincipalID *string `json:"principalId,omitempty" azure:"ro"`
 
-	// The tenant id associated with the virtual machine. This property will only be provided for a system assigned identity.
+	// READ-ONLY; The tenant id associated with the virtual machine. This property will only be provided for a system assigned identity.
 	TenantID *string `json:"tenantId,omitempty" azure:"ro"`
 
 	// The type of identity used for the virtual machine. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of
@@ -5335,7 +5335,7 @@ type VirtualMachineProperties struct {
 	// Minimum api-version: 2018-10-01.
 	Host *SubResource `json:"host,omitempty"`
 
-	// The virtual machine instance view.
+	// READ-ONLY; The virtual machine instance view.
 	InstanceView *VirtualMachineInstanceView `json:"instanceView,omitempty" azure:"ro"`
 
 	// Specifies that the image or disk that is being used was licensed on-premises. This element is only used for images that contain the Windows Server operating
@@ -5359,7 +5359,7 @@ type VirtualMachineProperties struct {
 	// Minimum api-version: 2019-03-01
 	Priority *VirtualMachinePriorityTypes `json:"priority,omitempty"`
 
-	// The provisioning state, which only appears in the response.
+	// READ-ONLY; The provisioning state, which only appears in the response.
 	ProvisioningState *string `json:"provisioningState,omitempty" azure:"ro"`
 
 	// Specifies information about the proximity placement group that the virtual machine should be assigned to.
@@ -5369,8 +5369,8 @@ type VirtualMachineProperties struct {
 	// Specifies the storage settings for the virtual machine disks.
 	StorageProfile *StorageProfile `json:"storageProfile,omitempty"`
 
-	// Specifies the VM unique ID which is a 128-bits identifier that is encoded and stored in all Azure IaaS VMs SMBIOS and can be read using platform BIOS
-	// commands.
+	// READ-ONLY; Specifies the VM unique ID which is a 128-bits identifier that is encoded and stored in all Azure IaaS VMs SMBIOS and can be read using platform
+	// BIOS commands.
 	VMID *string `json:"vmId,omitempty" azure:"ro"`
 
 	// Specifies information about the virtual machine scale set that the virtual machine should be assigned to. Virtual machines specified in the same virtual
@@ -5479,7 +5479,7 @@ type VirtualMachineScaleSetExtension struct {
 	// Describes the properties of a Virtual Machine Scale Set Extension.
 	Properties *VirtualMachineScaleSetExtensionProperties `json:"properties,omitempty"`
 
-	// Resource type
+	// READ-ONLY; Resource type
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
@@ -5536,7 +5536,7 @@ type VirtualMachineScaleSetExtensionProperties struct {
 	// Collection of extension names after which this extension needs to be provisioned.
 	ProvisionAfterExtensions *[]string `json:"provisionAfterExtensions,omitempty"`
 
-	// The provisioning state, which only appears in the response.
+	// READ-ONLY; The provisioning state, which only appears in the response.
 	ProvisioningState *string `json:"provisioningState,omitempty" azure:"ro"`
 
 	// The name of the extension handler publisher.
@@ -5564,13 +5564,13 @@ type VirtualMachineScaleSetExtensionResponse struct {
 // Describes a Virtual Machine Scale Set Extension.
 type VirtualMachineScaleSetExtensionUpdate struct {
 	SubResourceReadOnly
-	// The name of the extension.
+	// READ-ONLY; The name of the extension.
 	Name *string `json:"name,omitempty" azure:"ro"`
 
 	// Describes the properties of a Virtual Machine Scale Set Extension.
 	Properties *VirtualMachineScaleSetExtensionProperties `json:"properties,omitempty"`
 
-	// Resource type
+	// READ-ONLY; Resource type
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
@@ -5602,10 +5602,10 @@ type VirtualMachineScaleSetExtensionsUpdateOptions struct {
 
 // Identity for the virtual machine scale set.
 type VirtualMachineScaleSetIDentity struct {
-	// The principal id of virtual machine scale set identity. This property will only be provided for a system assigned identity.
+	// READ-ONLY; The principal id of virtual machine scale set identity. This property will only be provided for a system assigned identity.
 	PrincipalID *string `json:"principalId,omitempty" azure:"ro"`
 
-	// The tenant id associated with the virtual machine scale set. This property will only be provided for a system assigned identity.
+	// READ-ONLY; The tenant id associated with the virtual machine scale set. This property will only be provided for a system assigned identity.
 	TenantID *string `json:"tenantId,omitempty" azure:"ro"`
 
 	// The type of identity used for the virtual machine scale set. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and
@@ -5620,10 +5620,10 @@ type VirtualMachineScaleSetIDentity struct {
 }
 
 type VirtualMachineScaleSetIDentityUserAssignedIdentitiesValue struct {
-	// The client id of user assigned identity.
+	// READ-ONLY; The client id of user assigned identity.
 	ClientID *string `json:"clientId,omitempty" azure:"ro"`
 
-	// The principal id of user assigned identity.
+	// READ-ONLY; The principal id of user assigned identity.
 	PrincipalID *string `json:"principalId,omitempty" azure:"ro"`
 }
 
@@ -5682,16 +5682,16 @@ type VirtualMachineScaleSetIPTag struct {
 
 // The instance view of a virtual machine scale set.
 type VirtualMachineScaleSetInstanceView struct {
-	// The extensions information.
+	// READ-ONLY; The extensions information.
 	Extensions *[]VirtualMachineScaleSetVMExtensionsSummary `json:"extensions,omitempty" azure:"ro"`
 
-	// The orchestration services information.
+	// READ-ONLY; The orchestration services information.
 	OrchestrationServices *[]OrchestrationServiceSummary `json:"orchestrationServices,omitempty" azure:"ro"`
 
 	// The resource status information.
 	Statuses *[]InstanceViewStatus `json:"statuses,omitempty"`
 
-	// The instance view status summary for the virtual machine scale set.
+	// READ-ONLY; The instance view status summary for the virtual machine scale set.
 	VirtualMachine *VirtualMachineScaleSetInstanceViewStatusesSummary `json:"virtualMachine,omitempty" azure:"ro"`
 }
 
@@ -5706,7 +5706,7 @@ type VirtualMachineScaleSetInstanceViewResponse struct {
 
 // Instance view statuses summary for virtual machines of a virtual machine scale set.
 type VirtualMachineScaleSetInstanceViewStatusesSummary struct {
-	// The extensions information.
+	// READ-ONLY; The extensions information.
 	StatusesSummary *[]VirtualMachineStatusCodeCount `json:"statusesSummary,omitempty" azure:"ro"`
 }
 
@@ -5973,7 +5973,7 @@ type VirtualMachineScaleSetProperties struct {
 	// Fault Domain count for each placement group.
 	PlatformFaultDomainCount *int32 `json:"platformFaultDomainCount,omitempty"`
 
-	// The provisioning state, which only appears in the response.
+	// READ-ONLY; The provisioning state, which only appears in the response.
 	ProvisioningState *string `json:"provisioningState,omitempty" azure:"ro"`
 
 	// Specifies information about the proximity placement group that the virtual machine scale set should be assigned to.
@@ -5988,7 +5988,7 @@ type VirtualMachineScaleSetProperties struct {
 	// is false, it may not be modified to true.
 	SinglePlacementGroup *bool `json:"singlePlacementGroup,omitempty"`
 
-	// Specifies the ID which uniquely identifies a Virtual Machine Scale Set.
+	// READ-ONLY; Specifies the ID which uniquely identifies a Virtual Machine Scale Set.
 	UniqueID *string `json:"uniqueId,omitempty" azure:"ro"`
 
 	// The upgrade policy.
@@ -6077,28 +6077,28 @@ type VirtualMachineScaleSetRollingUpgradesStartOSUpgradeOptions struct {
 
 // Describes an available virtual machine scale set sku.
 type VirtualMachineScaleSetSKU struct {
-	// Specifies the number of virtual machines in the scale set.
+	// READ-ONLY; Specifies the number of virtual machines in the scale set.
 	Capacity *VirtualMachineScaleSetSKUCapacity `json:"capacity,omitempty" azure:"ro"`
 
-	// The type of resource the sku applies to.
+	// READ-ONLY; The type of resource the sku applies to.
 	ResourceType *string `json:"resourceType,omitempty" azure:"ro"`
 
-	// The Sku.
+	// READ-ONLY; The Sku.
 	SKU *SKU `json:"sku,omitempty" azure:"ro"`
 }
 
 // Describes scaling information of a sku.
 type VirtualMachineScaleSetSKUCapacity struct {
-	// The default capacity.
+	// READ-ONLY; The default capacity.
 	DefaultCapacity *int64 `json:"defaultCapacity,omitempty" azure:"ro"`
 
-	// The maximum capacity that can be set.
+	// READ-ONLY; The maximum capacity that can be set.
 	Maximum *int64 `json:"maximum,omitempty" azure:"ro"`
 
-	// The minimum capacity.
+	// READ-ONLY; The minimum capacity.
 	Minimum *int64 `json:"minimum,omitempty" azure:"ro"`
 
-	// The scale type applicable to the sku.
+	// READ-ONLY; The scale type applicable to the sku.
 	ScaleType *VirtualMachineScaleSetSKUScaleType `json:"scaleType,omitempty" azure:"ro"`
 }
 
@@ -6354,7 +6354,7 @@ type VirtualMachineScaleSetUpdateVMProfile struct {
 // Describes a virtual machine scale set virtual machine.
 type VirtualMachineScaleSetVM struct {
 	Resource
-	// The virtual machine instance ID.
+	// READ-ONLY; The virtual machine instance ID.
 	InstanceID *string `json:"instanceId,omitempty" azure:"ro"`
 
 	// Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can
@@ -6367,13 +6367,13 @@ type VirtualMachineScaleSetVM struct {
 	// Describes the properties of a virtual machine scale set virtual machine.
 	Properties *VirtualMachineScaleSetVMProperties `json:"properties,omitempty"`
 
-	// The virtual machine child extension resources.
+	// READ-ONLY; The virtual machine child extension resources.
 	Resources *[]VirtualMachineExtension `json:"resources,omitempty" azure:"ro"`
 
-	// The virtual machine SKU.
+	// READ-ONLY; The virtual machine SKU.
 	SKU *SKU `json:"sku,omitempty" azure:"ro"`
 
-	// The virtual machine zones.
+	// READ-ONLY; The virtual machine zones.
 	Zones *[]string `json:"zones,omitempty" azure:"ro"`
 }
 
@@ -6401,10 +6401,10 @@ type VirtualMachineScaleSetVMExtensionsListOptions struct {
 
 // Extensions summary for virtual machines of a virtual machine scale set.
 type VirtualMachineScaleSetVMExtensionsSummary struct {
-	// The extension name.
+	// READ-ONLY; The extension name.
 	Name *string `json:"name,omitempty" azure:"ro"`
 
-	// The extensions information.
+	// READ-ONLY; The extensions information.
 	StatusesSummary *[]VirtualMachineStatusCodeCount `json:"statusesSummary,omitempty" azure:"ro"`
 }
 
@@ -6460,7 +6460,7 @@ type VirtualMachineScaleSetVMInstanceView struct {
 	// The VM Agent running on the virtual machine.
 	VMAgent *VirtualMachineAgentInstanceView `json:"vmAgent,omitempty"`
 
-	// The health status for the VM.
+	// READ-ONLY; The health status for the VM.
 	VMHealth *VirtualMachineHealthStatus `json:"vmHealth,omitempty" azure:"ro"`
 }
 
@@ -6578,10 +6578,10 @@ type VirtualMachineScaleSetVMProperties struct {
 	// Specifies the hardware settings for the virtual machine.
 	HardwareProfile *HardwareProfile `json:"hardwareProfile,omitempty"`
 
-	// The virtual machine instance view.
+	// READ-ONLY; The virtual machine instance view.
 	InstanceView *VirtualMachineScaleSetVMInstanceView `json:"instanceView,omitempty" azure:"ro"`
 
-	// Specifies whether the latest model has been applied to the virtual machine.
+	// READ-ONLY; Specifies whether the latest model has been applied to the virtual machine.
 	LatestModelApplied *bool `json:"latestModelApplied,omitempty" azure:"ro"`
 
 	// Specifies that the image or disk that is being used was licensed on-premises. This element is only used for images that contain the Windows Server operating
@@ -6595,7 +6595,8 @@ type VirtualMachineScaleSetVMProperties struct {
 	// Minimum api-version: 2015-06-15
 	LicenseType *string `json:"licenseType,omitempty"`
 
-	// Specifies whether the model applied to the virtual machine is the model of the virtual machine scale set or the customized model for the virtual machine.
+	// READ-ONLY; Specifies whether the model applied to the virtual machine is the model of the virtual machine scale set or the customized model for the virtual
+	// machine.
 	ModelDefinitionApplied *string `json:"modelDefinitionApplied,omitempty" azure:"ro"`
 
 	// Specifies the network interfaces of the virtual machine.
@@ -6610,13 +6611,13 @@ type VirtualMachineScaleSetVMProperties struct {
 	// Specifies the protection policy of the virtual machine.
 	ProtectionPolicy *VirtualMachineScaleSetVMProtectionPolicy `json:"protectionPolicy,omitempty"`
 
-	// The provisioning state, which only appears in the response.
+	// READ-ONLY; The provisioning state, which only appears in the response.
 	ProvisioningState *string `json:"provisioningState,omitempty" azure:"ro"`
 
 	// Specifies the storage settings for the virtual machine disks.
 	StorageProfile *StorageProfile `json:"storageProfile,omitempty"`
 
-	// Azure VM unique ID.
+	// READ-ONLY; Azure VM unique ID.
 	VMID *string `json:"vmId,omitempty" azure:"ro"`
 }
 
@@ -6896,10 +6897,10 @@ type VirtualMachineSizesListOptions struct {
 
 // The status code and count of the virtual machine scale set instance view status summary.
 type VirtualMachineStatusCodeCount struct {
-	// The instance view status code.
+	// READ-ONLY; The instance view status code.
 	Code *string `json:"code,omitempty" azure:"ro"`
 
-	// The number of instances having a particular status code.
+	// READ-ONLY; The number of instances having a particular status code.
 	Count *int32 `json:"count,omitempty" azure:"ro"`
 }
 

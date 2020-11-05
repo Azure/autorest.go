@@ -80,6 +80,11 @@ async function process(session: Session<CodeModel>) {
     for (const prop of values(obj.properties)) {
       if (prop.language.go!.description) {
         prop.language.go!.description = parseComments(prop.language.go!.description);
+        if (prop.readOnly) {
+          prop.language.go!.description = 'READ-ONLY; ' + prop.language.go!.description;
+        }
+      } else if (prop.readOnly) {
+        prop.language.go!.description = prop.language.go!.name + ' - READ-ONLY';
       }
       const details = <Language>prop.schema.language.go;
       details.name = `${schemaTypeToGoType(session.model, prop.schema, true)}`;
