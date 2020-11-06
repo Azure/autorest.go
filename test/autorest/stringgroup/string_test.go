@@ -13,7 +13,7 @@ import (
 )
 
 func newStringClient() StringOperations {
-	return NewStringClient(NewDefaultClient(nil))
+	return NewStringClient(NewDefaultConnection(nil))
 }
 
 func TestStringGetMBCS(t *testing.T) {

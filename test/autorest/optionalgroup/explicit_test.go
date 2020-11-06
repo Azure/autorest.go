@@ -11,7 +11,7 @@ import (
 )
 
 func newExplicitClient() ExplicitOperations {
-	return NewExplicitClient(NewDefaultClient(nil))
+	return NewExplicitClient(NewDefaultConnection(nil))
 }
 
 func TestExplicitPostOptionalArrayHeader(t *testing.T) {

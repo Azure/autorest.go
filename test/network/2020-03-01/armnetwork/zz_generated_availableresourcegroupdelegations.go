@@ -22,24 +22,24 @@ type AvailableResourceGroupDelegationsOperations interface {
 // AvailableResourceGroupDelegationsClient implements the AvailableResourceGroupDelegationsOperations interface.
 // Don't use this type directly, use NewAvailableResourceGroupDelegationsClient() instead.
 type AvailableResourceGroupDelegationsClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewAvailableResourceGroupDelegationsClient creates a new instance of AvailableResourceGroupDelegationsClient with the specified values.
-func NewAvailableResourceGroupDelegationsClient(c *Client, subscriptionID string) AvailableResourceGroupDelegationsOperations {
-	return &AvailableResourceGroupDelegationsClient{Client: c, subscriptionID: subscriptionID}
+func NewAvailableResourceGroupDelegationsClient(con *Connection, subscriptionID string) AvailableResourceGroupDelegationsOperations {
+	return &AvailableResourceGroupDelegationsClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *AvailableResourceGroupDelegationsClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *AvailableResourceGroupDelegationsClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // List - Gets all of the available subnet delegations for this resource group in this region.
 func (client *AvailableResourceGroupDelegationsClient) List(location string, resourceGroupName string, options *AvailableResourceGroupDelegationsListOptions) AvailableDelegationsResultPager {
 	return &availableDelegationsResultPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListCreateRequest(ctx, location, resourceGroupName, options)
 		},
@@ -58,7 +58,7 @@ func (client *AvailableResourceGroupDelegationsClient) ListCreateRequest(ctx con
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

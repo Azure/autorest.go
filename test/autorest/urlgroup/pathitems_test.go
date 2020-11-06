@@ -13,7 +13,7 @@ import (
 )
 
 func TestGetAllWithValues(t *testing.T) {
-	client := NewDefaultClient(nil)
+	client := NewDefaultConnection(nil)
 	grp := NewPathItemsClient(client, "globalStringPath", to.StringPtr("globalStringQuery"))
 	result, err := grp.GetAllWithValues(context.Background(), "pathItemStringPath", "localStringPath", &PathItemsGetAllWithValuesOptions{
 		LocalStringQuery:    to.StringPtr("localStringQuery"),
@@ -26,7 +26,7 @@ func TestGetAllWithValues(t *testing.T) {
 }
 
 func TestGetGlobalAndLocalQueryNull(t *testing.T) {
-	client := NewDefaultClient(nil)
+	client := NewDefaultConnection(nil)
 	grp := NewPathItemsClient(client, "globalStringPath", nil)
 	result, err := grp.GetGlobalAndLocalQueryNull(context.Background(), "pathItemStringPath", "localStringPath", &PathItemsGetGlobalAndLocalQueryNullOptions{
 		PathItemStringQuery: to.StringPtr("pathItemStringQuery"),
@@ -38,7 +38,7 @@ func TestGetGlobalAndLocalQueryNull(t *testing.T) {
 }
 
 func TestGetGlobalQueryNull(t *testing.T) {
-	client := NewDefaultClient(nil)
+	client := NewDefaultConnection(nil)
 	grp := NewPathItemsClient(client, "globalStringPath", nil)
 	result, err := grp.GetGlobalQueryNull(context.Background(), "pathItemStringPath", "localStringPath", &PathItemsGetGlobalQueryNullOptions{
 		LocalStringQuery:    to.StringPtr("localStringQuery"),
@@ -51,7 +51,7 @@ func TestGetGlobalQueryNull(t *testing.T) {
 }
 
 func TestGetLocalPathItemQueryNull(t *testing.T) {
-	client := NewDefaultClient(nil)
+	client := NewDefaultConnection(nil)
 	grp := NewPathItemsClient(client, "globalStringPath", to.StringPtr("globalStringQuery"))
 	result, err := grp.GetLocalPathItemQueryNull(context.Background(), "pathItemStringPath", "localStringPath", nil)
 	if err != nil {

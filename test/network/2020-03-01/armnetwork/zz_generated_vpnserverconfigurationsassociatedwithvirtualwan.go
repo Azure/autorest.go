@@ -26,18 +26,18 @@ type VpnServerConfigurationsAssociatedWithVirtualWanOperations interface {
 // VpnServerConfigurationsAssociatedWithVirtualWanClient implements the VpnServerConfigurationsAssociatedWithVirtualWanOperations interface.
 // Don't use this type directly, use NewVpnServerConfigurationsAssociatedWithVirtualWanClient() instead.
 type VpnServerConfigurationsAssociatedWithVirtualWanClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewVpnServerConfigurationsAssociatedWithVirtualWanClient creates a new instance of VpnServerConfigurationsAssociatedWithVirtualWanClient with the specified values.
-func NewVpnServerConfigurationsAssociatedWithVirtualWanClient(c *Client, subscriptionID string) VpnServerConfigurationsAssociatedWithVirtualWanOperations {
-	return &VpnServerConfigurationsAssociatedWithVirtualWanClient{Client: c, subscriptionID: subscriptionID}
+func NewVpnServerConfigurationsAssociatedWithVirtualWanClient(con *Connection, subscriptionID string) VpnServerConfigurationsAssociatedWithVirtualWanOperations {
+	return &VpnServerConfigurationsAssociatedWithVirtualWanClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *VpnServerConfigurationsAssociatedWithVirtualWanClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *VpnServerConfigurationsAssociatedWithVirtualWanClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 func (client *VpnServerConfigurationsAssociatedWithVirtualWanClient) BeginList(ctx context.Context, resourceGroupName string, virtualWanName string, options *VpnServerConfigurationsAssociatedWithVirtualWanListOptions) (*VpnServerConfigurationsResponsePollerResponse, error) {
@@ -54,7 +54,7 @@ func (client *VpnServerConfigurationsAssociatedWithVirtualWanClient) BeginList(c
 	}
 	poller := &vpnServerConfigurationsResponsePoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*VpnServerConfigurationsResponseResponse, error) {
@@ -69,7 +69,7 @@ func (client *VpnServerConfigurationsAssociatedWithVirtualWanClient) ResumeList(
 		return nil, err
 	}
 	return &vpnServerConfigurationsResponsePoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -80,7 +80,7 @@ func (client *VpnServerConfigurationsAssociatedWithVirtualWanClient) List(ctx co
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -96,7 +96,7 @@ func (client *VpnServerConfigurationsAssociatedWithVirtualWanClient) ListCreateR
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualWANName}", url.PathEscape(virtualWanName))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

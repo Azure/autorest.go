@@ -9,7 +9,7 @@ import (
 )
 
 func newComplexModelClient() ComplexModelClientOperations {
-	return NewComplexModelClient(NewDefaultClient(nil))
+	return NewComplexModelClient(NewDefaultConnection(nil))
 }
 
 func TestCreate(t *testing.T) {

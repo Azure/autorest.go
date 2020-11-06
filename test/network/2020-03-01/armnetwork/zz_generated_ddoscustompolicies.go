@@ -34,18 +34,18 @@ type DdosCustomPoliciesOperations interface {
 // DdosCustomPoliciesClient implements the DdosCustomPoliciesOperations interface.
 // Don't use this type directly, use NewDdosCustomPoliciesClient() instead.
 type DdosCustomPoliciesClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewDdosCustomPoliciesClient creates a new instance of DdosCustomPoliciesClient with the specified values.
-func NewDdosCustomPoliciesClient(c *Client, subscriptionID string) DdosCustomPoliciesOperations {
-	return &DdosCustomPoliciesClient{Client: c, subscriptionID: subscriptionID}
+func NewDdosCustomPoliciesClient(con *Connection, subscriptionID string) DdosCustomPoliciesOperations {
+	return &DdosCustomPoliciesClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *DdosCustomPoliciesClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *DdosCustomPoliciesClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 func (client *DdosCustomPoliciesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string, parameters DdosCustomPolicy, options *DdosCustomPoliciesCreateOrUpdateOptions) (*DdosCustomPolicyPollerResponse, error) {
@@ -62,7 +62,7 @@ func (client *DdosCustomPoliciesClient) BeginCreateOrUpdate(ctx context.Context,
 	}
 	poller := &ddosCustomPolicyPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*DdosCustomPolicyResponse, error) {
@@ -77,7 +77,7 @@ func (client *DdosCustomPoliciesClient) ResumeCreateOrUpdate(token string) (Ddos
 		return nil, err
 	}
 	return &ddosCustomPolicyPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -88,7 +88,7 @@ func (client *DdosCustomPoliciesClient) CreateOrUpdate(ctx context.Context, reso
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -104,7 +104,7 @@ func (client *DdosCustomPoliciesClient) CreateOrUpdateCreateRequest(ctx context.
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{ddosCustomPolicyName}", url.PathEscape(ddosCustomPolicyName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -144,7 +144,7 @@ func (client *DdosCustomPoliciesClient) BeginDelete(ctx context.Context, resourc
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -159,7 +159,7 @@ func (client *DdosCustomPoliciesClient) ResumeDelete(token string) (HTTPPoller, 
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -170,7 +170,7 @@ func (client *DdosCustomPoliciesClient) Delete(ctx context.Context, resourceGrou
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -186,7 +186,7 @@ func (client *DdosCustomPoliciesClient) DeleteCreateRequest(ctx context.Context,
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{ddosCustomPolicyName}", url.PathEscape(ddosCustomPolicyName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -212,7 +212,7 @@ func (client *DdosCustomPoliciesClient) Get(ctx context.Context, resourceGroupNa
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -232,7 +232,7 @@ func (client *DdosCustomPoliciesClient) GetCreateRequest(ctx context.Context, re
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{ddosCustomPolicyName}", url.PathEscape(ddosCustomPolicyName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -264,7 +264,7 @@ func (client *DdosCustomPoliciesClient) UpdateTags(ctx context.Context, resource
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -284,7 +284,7 @@ func (client *DdosCustomPoliciesClient) UpdateTagsCreateRequest(ctx context.Cont
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{ddosCustomPolicyName}", url.PathEscape(ddosCustomPolicyName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

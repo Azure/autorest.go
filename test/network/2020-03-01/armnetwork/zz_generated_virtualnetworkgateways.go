@@ -106,18 +106,18 @@ type VirtualNetworkGatewaysOperations interface {
 // VirtualNetworkGatewaysClient implements the VirtualNetworkGatewaysOperations interface.
 // Don't use this type directly, use NewVirtualNetworkGatewaysClient() instead.
 type VirtualNetworkGatewaysClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewVirtualNetworkGatewaysClient creates a new instance of VirtualNetworkGatewaysClient with the specified values.
-func NewVirtualNetworkGatewaysClient(c *Client, subscriptionID string) VirtualNetworkGatewaysOperations {
-	return &VirtualNetworkGatewaysClient{Client: c, subscriptionID: subscriptionID}
+func NewVirtualNetworkGatewaysClient(con *Connection, subscriptionID string) VirtualNetworkGatewaysOperations {
+	return &VirtualNetworkGatewaysClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *VirtualNetworkGatewaysClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *VirtualNetworkGatewaysClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 func (client *VirtualNetworkGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VirtualNetworkGateway, options *VirtualNetworkGatewaysCreateOrUpdateOptions) (*VirtualNetworkGatewayPollerResponse, error) {
@@ -134,7 +134,7 @@ func (client *VirtualNetworkGatewaysClient) BeginCreateOrUpdate(ctx context.Cont
 	}
 	poller := &virtualNetworkGatewayPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*VirtualNetworkGatewayResponse, error) {
@@ -149,7 +149,7 @@ func (client *VirtualNetworkGatewaysClient) ResumeCreateOrUpdate(token string) (
 		return nil, err
 	}
 	return &virtualNetworkGatewayPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -160,7 +160,7 @@ func (client *VirtualNetworkGatewaysClient) CreateOrUpdate(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -176,7 +176,7 @@ func (client *VirtualNetworkGatewaysClient) CreateOrUpdateCreateRequest(ctx cont
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -216,7 +216,7 @@ func (client *VirtualNetworkGatewaysClient) BeginDelete(ctx context.Context, res
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -231,7 +231,7 @@ func (client *VirtualNetworkGatewaysClient) ResumeDelete(token string) (HTTPPoll
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -242,7 +242,7 @@ func (client *VirtualNetworkGatewaysClient) Delete(ctx context.Context, resource
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -258,7 +258,7 @@ func (client *VirtualNetworkGatewaysClient) DeleteCreateRequest(ctx context.Cont
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -292,7 +292,7 @@ func (client *VirtualNetworkGatewaysClient) BeginDisconnectVirtualNetworkGateway
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -307,7 +307,7 @@ func (client *VirtualNetworkGatewaysClient) ResumeDisconnectVirtualNetworkGatewa
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -318,7 +318,7 @@ func (client *VirtualNetworkGatewaysClient) DisconnectVirtualNetworkGatewayVpnCo
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -334,7 +334,7 @@ func (client *VirtualNetworkGatewaysClient) DisconnectVirtualNetworkGatewayVpnCo
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -368,7 +368,7 @@ func (client *VirtualNetworkGatewaysClient) BeginGenerateVpnProfile(ctx context.
 	}
 	poller := &stringPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*StringResponse, error) {
@@ -383,7 +383,7 @@ func (client *VirtualNetworkGatewaysClient) ResumeGenerateVpnProfile(token strin
 		return nil, err
 	}
 	return &stringPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -395,7 +395,7 @@ func (client *VirtualNetworkGatewaysClient) GenerateVpnProfile(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -411,7 +411,7 @@ func (client *VirtualNetworkGatewaysClient) GenerateVpnProfileCreateRequest(ctx 
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -451,7 +451,7 @@ func (client *VirtualNetworkGatewaysClient) BeginGeneratevpnclientpackage(ctx co
 	}
 	poller := &stringPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*StringResponse, error) {
@@ -466,7 +466,7 @@ func (client *VirtualNetworkGatewaysClient) ResumeGeneratevpnclientpackage(token
 		return nil, err
 	}
 	return &stringPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -477,7 +477,7 @@ func (client *VirtualNetworkGatewaysClient) Generatevpnclientpackage(ctx context
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -493,7 +493,7 @@ func (client *VirtualNetworkGatewaysClient) GeneratevpnclientpackageCreateReques
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -525,7 +525,7 @@ func (client *VirtualNetworkGatewaysClient) Get(ctx context.Context, resourceGro
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -545,7 +545,7 @@ func (client *VirtualNetworkGatewaysClient) GetCreateRequest(ctx context.Context
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -585,7 +585,7 @@ func (client *VirtualNetworkGatewaysClient) BeginGetAdvertisedRoutes(ctx context
 	}
 	poller := &gatewayRouteListResultPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*GatewayRouteListResultResponse, error) {
@@ -600,7 +600,7 @@ func (client *VirtualNetworkGatewaysClient) ResumeGetAdvertisedRoutes(token stri
 		return nil, err
 	}
 	return &gatewayRouteListResultPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -611,7 +611,7 @@ func (client *VirtualNetworkGatewaysClient) GetAdvertisedRoutes(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -627,7 +627,7 @@ func (client *VirtualNetworkGatewaysClient) GetAdvertisedRoutesCreateRequest(ctx
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -668,7 +668,7 @@ func (client *VirtualNetworkGatewaysClient) BeginGetBgpPeerStatus(ctx context.Co
 	}
 	poller := &bgpPeerStatusListResultPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*BgpPeerStatusListResultResponse, error) {
@@ -683,7 +683,7 @@ func (client *VirtualNetworkGatewaysClient) ResumeGetBgpPeerStatus(token string)
 		return nil, err
 	}
 	return &bgpPeerStatusListResultPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -694,7 +694,7 @@ func (client *VirtualNetworkGatewaysClient) GetBgpPeerStatus(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -710,7 +710,7 @@ func (client *VirtualNetworkGatewaysClient) GetBgpPeerStatusCreateRequest(ctx co
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -753,7 +753,7 @@ func (client *VirtualNetworkGatewaysClient) BeginGetLearnedRoutes(ctx context.Co
 	}
 	poller := &gatewayRouteListResultPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*GatewayRouteListResultResponse, error) {
@@ -768,7 +768,7 @@ func (client *VirtualNetworkGatewaysClient) ResumeGetLearnedRoutes(token string)
 		return nil, err
 	}
 	return &gatewayRouteListResultPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -779,7 +779,7 @@ func (client *VirtualNetworkGatewaysClient) GetLearnedRoutes(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -795,7 +795,7 @@ func (client *VirtualNetworkGatewaysClient) GetLearnedRoutesCreateRequest(ctx co
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -835,7 +835,7 @@ func (client *VirtualNetworkGatewaysClient) BeginGetVpnProfilePackageURL(ctx con
 	}
 	poller := &stringPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*StringResponse, error) {
@@ -850,7 +850,7 @@ func (client *VirtualNetworkGatewaysClient) ResumeGetVpnProfilePackageURL(token 
 		return nil, err
 	}
 	return &stringPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -862,7 +862,7 @@ func (client *VirtualNetworkGatewaysClient) GetVpnProfilePackageURL(ctx context.
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -878,7 +878,7 @@ func (client *VirtualNetworkGatewaysClient) GetVpnProfilePackageURLCreateRequest
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -918,7 +918,7 @@ func (client *VirtualNetworkGatewaysClient) BeginGetVpnclientConnectionHealth(ct
 	}
 	poller := &vpnClientConnectionHealthDetailListResultPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*VpnClientConnectionHealthDetailListResultResponse, error) {
@@ -933,7 +933,7 @@ func (client *VirtualNetworkGatewaysClient) ResumeGetVpnclientConnectionHealth(t
 		return nil, err
 	}
 	return &vpnClientConnectionHealthDetailListResultPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -945,7 +945,7 @@ func (client *VirtualNetworkGatewaysClient) GetVpnclientConnectionHealth(ctx con
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -961,7 +961,7 @@ func (client *VirtualNetworkGatewaysClient) GetVpnclientConnectionHealthCreateRe
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1001,7 +1001,7 @@ func (client *VirtualNetworkGatewaysClient) BeginGetVpnclientIPsecParameters(ctx
 	}
 	poller := &vpnClientIPsecParametersPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*VpnClientIPsecParametersResponse, error) {
@@ -1016,7 +1016,7 @@ func (client *VirtualNetworkGatewaysClient) ResumeGetVpnclientIPsecParameters(to
 		return nil, err
 	}
 	return &vpnClientIPsecParametersPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -1029,7 +1029,7 @@ func (client *VirtualNetworkGatewaysClient) GetVpnclientIPsecParameters(ctx cont
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1045,7 +1045,7 @@ func (client *VirtualNetworkGatewaysClient) GetVpnclientIPsecParametersCreateReq
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1074,7 +1074,7 @@ func (client *VirtualNetworkGatewaysClient) GetVpnclientIPsecParametersHandleErr
 // List - Gets all virtual network gateways by resource group.
 func (client *VirtualNetworkGatewaysClient) List(resourceGroupName string, options *VirtualNetworkGatewaysListOptions) VirtualNetworkGatewayListResultPager {
 	return &virtualNetworkGatewayListResultPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListCreateRequest(ctx, resourceGroupName, options)
 		},
@@ -1092,7 +1092,7 @@ func (client *VirtualNetworkGatewaysClient) ListCreateRequest(ctx context.Contex
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1121,7 +1121,7 @@ func (client *VirtualNetworkGatewaysClient) ListHandleError(resp *azcore.Respons
 // ListConnections - Gets all the connections in a virtual network gateway.
 func (client *VirtualNetworkGatewaysClient) ListConnections(resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysListConnectionsOptions) VirtualNetworkGatewayListConnectionsResultPager {
 	return &virtualNetworkGatewayListConnectionsResultPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListConnectionsCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 		},
@@ -1140,7 +1140,7 @@ func (client *VirtualNetworkGatewaysClient) ListConnectionsCreateRequest(ctx con
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1180,7 +1180,7 @@ func (client *VirtualNetworkGatewaysClient) BeginReset(ctx context.Context, reso
 	}
 	poller := &virtualNetworkGatewayPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*VirtualNetworkGatewayResponse, error) {
@@ -1195,7 +1195,7 @@ func (client *VirtualNetworkGatewaysClient) ResumeReset(token string) (VirtualNe
 		return nil, err
 	}
 	return &virtualNetworkGatewayPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -1206,7 +1206,7 @@ func (client *VirtualNetworkGatewaysClient) Reset(ctx context.Context, resourceG
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1222,7 +1222,7 @@ func (client *VirtualNetworkGatewaysClient) ResetCreateRequest(ctx context.Conte
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1265,7 +1265,7 @@ func (client *VirtualNetworkGatewaysClient) BeginResetVpnClientSharedKey(ctx con
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -1280,7 +1280,7 @@ func (client *VirtualNetworkGatewaysClient) ResumeResetVpnClientSharedKey(token 
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -1291,7 +1291,7 @@ func (client *VirtualNetworkGatewaysClient) ResetVpnClientSharedKey(ctx context.
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1307,7 +1307,7 @@ func (client *VirtualNetworkGatewaysClient) ResetVpnClientSharedKeyCreateRequest
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1341,7 +1341,7 @@ func (client *VirtualNetworkGatewaysClient) BeginSetVpnclientIPsecParameters(ctx
 	}
 	poller := &vpnClientIPsecParametersPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*VpnClientIPsecParametersResponse, error) {
@@ -1356,7 +1356,7 @@ func (client *VirtualNetworkGatewaysClient) ResumeSetVpnclientIPsecParameters(to
 		return nil, err
 	}
 	return &vpnClientIPsecParametersPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -1368,7 +1368,7 @@ func (client *VirtualNetworkGatewaysClient) SetVpnclientIPsecParameters(ctx cont
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1384,7 +1384,7 @@ func (client *VirtualNetworkGatewaysClient) SetVpnclientIPsecParametersCreateReq
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1424,7 +1424,7 @@ func (client *VirtualNetworkGatewaysClient) BeginStartPacketCapture(ctx context.
 	}
 	poller := &stringPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*StringResponse, error) {
@@ -1439,7 +1439,7 @@ func (client *VirtualNetworkGatewaysClient) ResumeStartPacketCapture(token strin
 		return nil, err
 	}
 	return &stringPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -1450,7 +1450,7 @@ func (client *VirtualNetworkGatewaysClient) StartPacketCapture(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1466,7 +1466,7 @@ func (client *VirtualNetworkGatewaysClient) StartPacketCaptureCreateRequest(ctx 
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1509,7 +1509,7 @@ func (client *VirtualNetworkGatewaysClient) BeginStopPacketCapture(ctx context.C
 	}
 	poller := &stringPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*StringResponse, error) {
@@ -1524,7 +1524,7 @@ func (client *VirtualNetworkGatewaysClient) ResumeStopPacketCapture(token string
 		return nil, err
 	}
 	return &stringPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -1535,7 +1535,7 @@ func (client *VirtualNetworkGatewaysClient) StopPacketCapture(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1551,7 +1551,7 @@ func (client *VirtualNetworkGatewaysClient) StopPacketCaptureCreateRequest(ctx c
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1583,7 +1583,7 @@ func (client *VirtualNetworkGatewaysClient) SupportedVpnDevices(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1603,7 +1603,7 @@ func (client *VirtualNetworkGatewaysClient) SupportedVpnDevicesCreateRequest(ctx
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1643,7 +1643,7 @@ func (client *VirtualNetworkGatewaysClient) BeginUpdateTags(ctx context.Context,
 	}
 	poller := &virtualNetworkGatewayPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*VirtualNetworkGatewayResponse, error) {
@@ -1658,7 +1658,7 @@ func (client *VirtualNetworkGatewaysClient) ResumeUpdateTags(token string) (Virt
 		return nil, err
 	}
 	return &virtualNetworkGatewayPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -1669,7 +1669,7 @@ func (client *VirtualNetworkGatewaysClient) UpdateTags(ctx context.Context, reso
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1685,7 +1685,7 @@ func (client *VirtualNetworkGatewaysClient) UpdateTagsCreateRequest(ctx context.
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1717,7 +1717,7 @@ func (client *VirtualNetworkGatewaysClient) VpnDeviceConfigurationScript(ctx con
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1737,7 +1737,7 @@ func (client *VirtualNetworkGatewaysClient) VpnDeviceConfigurationScriptCreateRe
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayConnectionName}", url.PathEscape(virtualNetworkGatewayConnectionName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

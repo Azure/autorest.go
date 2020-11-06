@@ -38,18 +38,18 @@ type VirtualHubsOperations interface {
 // VirtualHubsClient implements the VirtualHubsOperations interface.
 // Don't use this type directly, use NewVirtualHubsClient() instead.
 type VirtualHubsClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewVirtualHubsClient creates a new instance of VirtualHubsClient with the specified values.
-func NewVirtualHubsClient(c *Client, subscriptionID string) VirtualHubsOperations {
-	return &VirtualHubsClient{Client: c, subscriptionID: subscriptionID}
+func NewVirtualHubsClient(con *Connection, subscriptionID string) VirtualHubsOperations {
+	return &VirtualHubsClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *VirtualHubsClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *VirtualHubsClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 func (client *VirtualHubsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, virtualHubParameters VirtualHub, options *VirtualHubsCreateOrUpdateOptions) (*VirtualHubPollerResponse, error) {
@@ -66,7 +66,7 @@ func (client *VirtualHubsClient) BeginCreateOrUpdate(ctx context.Context, resour
 	}
 	poller := &virtualHubPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*VirtualHubResponse, error) {
@@ -81,7 +81,7 @@ func (client *VirtualHubsClient) ResumeCreateOrUpdate(token string) (VirtualHubP
 		return nil, err
 	}
 	return &virtualHubPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -92,7 +92,7 @@ func (client *VirtualHubsClient) CreateOrUpdate(ctx context.Context, resourceGro
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -108,7 +108,7 @@ func (client *VirtualHubsClient) CreateOrUpdateCreateRequest(ctx context.Context
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualHubName}", url.PathEscape(virtualHubName))
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -148,7 +148,7 @@ func (client *VirtualHubsClient) BeginDelete(ctx context.Context, resourceGroupN
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -163,7 +163,7 @@ func (client *VirtualHubsClient) ResumeDelete(token string) (HTTPPoller, error) 
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -174,7 +174,7 @@ func (client *VirtualHubsClient) Delete(ctx context.Context, resourceGroupName s
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -190,7 +190,7 @@ func (client *VirtualHubsClient) DeleteCreateRequest(ctx context.Context, resour
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualHubName}", url.PathEscape(virtualHubName))
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -216,7 +216,7 @@ func (client *VirtualHubsClient) Get(ctx context.Context, resourceGroupName stri
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -236,7 +236,7 @@ func (client *VirtualHubsClient) GetCreateRequest(ctx context.Context, resourceG
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualHubName}", url.PathEscape(virtualHubName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -265,7 +265,7 @@ func (client *VirtualHubsClient) GetHandleError(resp *azcore.Response) error {
 // List - Lists all the VirtualHubs in a subscription.
 func (client *VirtualHubsClient) List(options *VirtualHubsListOptions) ListVirtualHubsResultPager {
 	return &listVirtualHubsResultPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListCreateRequest(ctx, options)
 		},
@@ -282,7 +282,7 @@ func (client *VirtualHubsClient) List(options *VirtualHubsListOptions) ListVirtu
 func (client *VirtualHubsClient) ListCreateRequest(ctx context.Context, options *VirtualHubsListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualHubs"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -311,7 +311,7 @@ func (client *VirtualHubsClient) ListHandleError(resp *azcore.Response) error {
 // ListByResourceGroup - Lists all the VirtualHubs in a resource group.
 func (client *VirtualHubsClient) ListByResourceGroup(resourceGroupName string, options *VirtualHubsListByResourceGroupOptions) ListVirtualHubsResultPager {
 	return &listVirtualHubsResultPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListByResourceGroupCreateRequest(ctx, resourceGroupName, options)
 		},
@@ -329,7 +329,7 @@ func (client *VirtualHubsClient) ListByResourceGroupCreateRequest(ctx context.Co
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -361,7 +361,7 @@ func (client *VirtualHubsClient) UpdateTags(ctx context.Context, resourceGroupNa
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -381,7 +381,7 @@ func (client *VirtualHubsClient) UpdateTagsCreateRequest(ctx context.Context, re
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualHubName}", url.PathEscape(virtualHubName))
-	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

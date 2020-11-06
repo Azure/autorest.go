@@ -34,18 +34,18 @@ type ServiceEndpointPolicyDefinitionsOperations interface {
 // ServiceEndpointPolicyDefinitionsClient implements the ServiceEndpointPolicyDefinitionsOperations interface.
 // Don't use this type directly, use NewServiceEndpointPolicyDefinitionsClient() instead.
 type ServiceEndpointPolicyDefinitionsClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewServiceEndpointPolicyDefinitionsClient creates a new instance of ServiceEndpointPolicyDefinitionsClient with the specified values.
-func NewServiceEndpointPolicyDefinitionsClient(c *Client, subscriptionID string) ServiceEndpointPolicyDefinitionsOperations {
-	return &ServiceEndpointPolicyDefinitionsClient{Client: c, subscriptionID: subscriptionID}
+func NewServiceEndpointPolicyDefinitionsClient(con *Connection, subscriptionID string) ServiceEndpointPolicyDefinitionsOperations {
+	return &ServiceEndpointPolicyDefinitionsClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *ServiceEndpointPolicyDefinitionsClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *ServiceEndpointPolicyDefinitionsClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 func (client *ServiceEndpointPolicyDefinitionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, serviceEndpointPolicyDefinitionName string, serviceEndpointPolicyDefinitions ServiceEndpointPolicyDefinition, options *ServiceEndpointPolicyDefinitionsCreateOrUpdateOptions) (*ServiceEndpointPolicyDefinitionPollerResponse, error) {
@@ -62,7 +62,7 @@ func (client *ServiceEndpointPolicyDefinitionsClient) BeginCreateOrUpdate(ctx co
 	}
 	poller := &serviceEndpointPolicyDefinitionPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ServiceEndpointPolicyDefinitionResponse, error) {
@@ -77,7 +77,7 @@ func (client *ServiceEndpointPolicyDefinitionsClient) ResumeCreateOrUpdate(token
 		return nil, err
 	}
 	return &serviceEndpointPolicyDefinitionPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -88,7 +88,7 @@ func (client *ServiceEndpointPolicyDefinitionsClient) CreateOrUpdate(ctx context
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -105,7 +105,7 @@ func (client *ServiceEndpointPolicyDefinitionsClient) CreateOrUpdateCreateReques
 	urlPath = strings.ReplaceAll(urlPath, "{serviceEndpointPolicyName}", url.PathEscape(serviceEndpointPolicyName))
 	urlPath = strings.ReplaceAll(urlPath, "{serviceEndpointPolicyDefinitionName}", url.PathEscape(serviceEndpointPolicyDefinitionName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -145,7 +145,7 @@ func (client *ServiceEndpointPolicyDefinitionsClient) BeginDelete(ctx context.Co
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -160,7 +160,7 @@ func (client *ServiceEndpointPolicyDefinitionsClient) ResumeDelete(token string)
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -171,7 +171,7 @@ func (client *ServiceEndpointPolicyDefinitionsClient) Delete(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -188,7 +188,7 @@ func (client *ServiceEndpointPolicyDefinitionsClient) DeleteCreateRequest(ctx co
 	urlPath = strings.ReplaceAll(urlPath, "{serviceEndpointPolicyName}", url.PathEscape(serviceEndpointPolicyName))
 	urlPath = strings.ReplaceAll(urlPath, "{serviceEndpointPolicyDefinitionName}", url.PathEscape(serviceEndpointPolicyDefinitionName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -214,7 +214,7 @@ func (client *ServiceEndpointPolicyDefinitionsClient) Get(ctx context.Context, r
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -235,7 +235,7 @@ func (client *ServiceEndpointPolicyDefinitionsClient) GetCreateRequest(ctx conte
 	urlPath = strings.ReplaceAll(urlPath, "{serviceEndpointPolicyName}", url.PathEscape(serviceEndpointPolicyName))
 	urlPath = strings.ReplaceAll(urlPath, "{serviceEndpointPolicyDefinitionName}", url.PathEscape(serviceEndpointPolicyDefinitionName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -264,7 +264,7 @@ func (client *ServiceEndpointPolicyDefinitionsClient) GetHandleError(resp *azcor
 // ListByResourceGroup - Gets all service endpoint policy definitions in a service end point policy.
 func (client *ServiceEndpointPolicyDefinitionsClient) ListByResourceGroup(resourceGroupName string, serviceEndpointPolicyName string, options *ServiceEndpointPolicyDefinitionsListByResourceGroupOptions) ServiceEndpointPolicyDefinitionListResultPager {
 	return &serviceEndpointPolicyDefinitionListResultPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListByResourceGroupCreateRequest(ctx, resourceGroupName, serviceEndpointPolicyName, options)
 		},
@@ -283,7 +283,7 @@ func (client *ServiceEndpointPolicyDefinitionsClient) ListByResourceGroupCreateR
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{serviceEndpointPolicyName}", url.PathEscape(serviceEndpointPolicyName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

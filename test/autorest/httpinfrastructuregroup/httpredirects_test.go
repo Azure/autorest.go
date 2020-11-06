@@ -11,7 +11,7 @@ import (
 )
 
 func newHTTPRedirectsClient() HTTPRedirectsOperations {
-	return NewHTTPRedirectsClient(NewDefaultClient(nil))
+	return NewHTTPRedirectsClient(NewDefaultConnection(nil))
 }
 
 func TestHTTPRedirectsDelete307(t *testing.T) {

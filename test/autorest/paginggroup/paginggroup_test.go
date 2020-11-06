@@ -15,10 +15,10 @@ import (
 )
 
 func newPagingClient() PagingOperations {
-	options := DefaultClientOptions()
+	options := DefaultConnectionOptions()
 	options.Retry.RetryDelay = 10 * time.Millisecond
 	options.HTTPClient = httpClientWithCookieJar()
-	return NewPagingClient(NewDefaultClient(&options))
+	return NewPagingClient(NewDefaultConnection(&options))
 }
 
 func httpClientWithCookieJar() azcore.Transport {

@@ -43,18 +43,18 @@ type VirtualMachineScaleSetRollingUpgradesOperations interface {
 // VirtualMachineScaleSetRollingUpgradesClient implements the VirtualMachineScaleSetRollingUpgradesOperations interface.
 // Don't use this type directly, use NewVirtualMachineScaleSetRollingUpgradesClient() instead.
 type VirtualMachineScaleSetRollingUpgradesClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewVirtualMachineScaleSetRollingUpgradesClient creates a new instance of VirtualMachineScaleSetRollingUpgradesClient with the specified values.
-func NewVirtualMachineScaleSetRollingUpgradesClient(c *Client, subscriptionID string) VirtualMachineScaleSetRollingUpgradesOperations {
-	return &VirtualMachineScaleSetRollingUpgradesClient{Client: c, subscriptionID: subscriptionID}
+func NewVirtualMachineScaleSetRollingUpgradesClient(con *Connection, subscriptionID string) VirtualMachineScaleSetRollingUpgradesOperations {
+	return &VirtualMachineScaleSetRollingUpgradesClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *VirtualMachineScaleSetRollingUpgradesClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *VirtualMachineScaleSetRollingUpgradesClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 func (client *VirtualMachineScaleSetRollingUpgradesClient) BeginCancel(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetRollingUpgradesCancelOptions) (*HTTPPollerResponse, error) {
@@ -71,7 +71,7 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) BeginCancel(ctx conte
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -86,7 +86,7 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) ResumeCancel(token st
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -97,7 +97,7 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) Cancel(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -113,7 +113,7 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) CancelCreateRequest(c
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{vmScaleSetName}", url.PathEscape(vmScaleSetName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -141,7 +141,7 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) GetLatest(ctx context
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -161,7 +161,7 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) GetLatestCreateReques
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{vmScaleSetName}", url.PathEscape(vmScaleSetName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -204,7 +204,7 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) BeginStartExtensionUp
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -219,7 +219,7 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) ResumeStartExtensionU
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -232,7 +232,7 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) StartExtensionUpgrade
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -248,7 +248,7 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) StartExtensionUpgrade
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{vmScaleSetName}", url.PathEscape(vmScaleSetName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -284,7 +284,7 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) BeginStartOSUpgrade(c
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -299,7 +299,7 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) ResumeStartOSUpgrade(
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -312,7 +312,7 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) StartOSUpgrade(ctx co
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -328,7 +328,7 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) StartOSUpgradeCreateR
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{vmScaleSetName}", url.PathEscape(vmScaleSetName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

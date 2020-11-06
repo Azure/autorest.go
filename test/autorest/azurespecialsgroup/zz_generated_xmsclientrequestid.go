@@ -25,17 +25,17 @@ type XMSClientRequestIDOperations interface {
 // XMSClientRequestIDClient implements the XMSClientRequestIDOperations interface.
 // Don't use this type directly, use NewXMSClientRequestIDClient() instead.
 type XMSClientRequestIDClient struct {
-	*Client
+	con *Connection
 }
 
 // NewXMSClientRequestIDClient creates a new instance of XMSClientRequestIDClient with the specified values.
-func NewXMSClientRequestIDClient(c *Client) XMSClientRequestIDOperations {
-	return &XMSClientRequestIDClient{Client: c}
+func NewXMSClientRequestIDClient(con *Connection) XMSClientRequestIDOperations {
+	return &XMSClientRequestIDClient{con: con}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *XMSClientRequestIDClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *XMSClientRequestIDClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // Get - Get method that overwrites x-ms-client-request header with value 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.
@@ -44,7 +44,7 @@ func (client *XMSClientRequestIDClient) Get(ctx context.Context, options *XMSCli
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -57,7 +57,7 @@ func (client *XMSClientRequestIDClient) Get(ctx context.Context, options *XMSCli
 // GetCreateRequest creates the Get request.
 func (client *XMSClientRequestIDClient) GetCreateRequest(ctx context.Context, options *XMSClientRequestIDGetOptions) (*azcore.Request, error) {
 	urlPath := "/azurespecials/overwrite/x-ms-client-request-id/method/"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -82,7 +82,7 @@ func (client *XMSClientRequestIDClient) ParamGet(ctx context.Context, xMSClientR
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -95,7 +95,7 @@ func (client *XMSClientRequestIDClient) ParamGet(ctx context.Context, xMSClientR
 // ParamGetCreateRequest creates the ParamGet request.
 func (client *XMSClientRequestIDClient) ParamGetCreateRequest(ctx context.Context, xMSClientRequestId string, options *XMSClientRequestIDParamGetOptions) (*azcore.Request, error) {
 	urlPath := "/azurespecials/overwrite/x-ms-client-request-id/via-param/method/"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

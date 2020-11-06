@@ -38,18 +38,18 @@ type GalleryApplicationVersionsOperations interface {
 // GalleryApplicationVersionsClient implements the GalleryApplicationVersionsOperations interface.
 // Don't use this type directly, use NewGalleryApplicationVersionsClient() instead.
 type GalleryApplicationVersionsClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewGalleryApplicationVersionsClient creates a new instance of GalleryApplicationVersionsClient with the specified values.
-func NewGalleryApplicationVersionsClient(c *Client, subscriptionID string) GalleryApplicationVersionsOperations {
-	return &GalleryApplicationVersionsClient{Client: c, subscriptionID: subscriptionID}
+func NewGalleryApplicationVersionsClient(con *Connection, subscriptionID string) GalleryApplicationVersionsOperations {
+	return &GalleryApplicationVersionsClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *GalleryApplicationVersionsClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *GalleryApplicationVersionsClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 func (client *GalleryApplicationVersionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplicationVersionName string, galleryApplicationVersion GalleryApplicationVersion, options *GalleryApplicationVersionsCreateOrUpdateOptions) (*GalleryApplicationVersionPollerResponse, error) {
@@ -66,7 +66,7 @@ func (client *GalleryApplicationVersionsClient) BeginCreateOrUpdate(ctx context.
 	}
 	poller := &galleryApplicationVersionPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*GalleryApplicationVersionResponse, error) {
@@ -81,7 +81,7 @@ func (client *GalleryApplicationVersionsClient) ResumeCreateOrUpdate(token strin
 		return nil, err
 	}
 	return &galleryApplicationVersionPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -92,7 +92,7 @@ func (client *GalleryApplicationVersionsClient) CreateOrUpdate(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -110,7 +110,7 @@ func (client *GalleryApplicationVersionsClient) CreateOrUpdateCreateRequest(ctx 
 	urlPath = strings.ReplaceAll(urlPath, "{galleryName}", url.PathEscape(galleryName))
 	urlPath = strings.ReplaceAll(urlPath, "{galleryApplicationName}", url.PathEscape(galleryApplicationName))
 	urlPath = strings.ReplaceAll(urlPath, "{galleryApplicationVersionName}", url.PathEscape(galleryApplicationVersionName))
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -150,7 +150,7 @@ func (client *GalleryApplicationVersionsClient) BeginDelete(ctx context.Context,
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -165,7 +165,7 @@ func (client *GalleryApplicationVersionsClient) ResumeDelete(token string) (HTTP
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -176,7 +176,7 @@ func (client *GalleryApplicationVersionsClient) Delete(ctx context.Context, reso
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -194,7 +194,7 @@ func (client *GalleryApplicationVersionsClient) DeleteCreateRequest(ctx context.
 	urlPath = strings.ReplaceAll(urlPath, "{galleryName}", url.PathEscape(galleryName))
 	urlPath = strings.ReplaceAll(urlPath, "{galleryApplicationName}", url.PathEscape(galleryApplicationName))
 	urlPath = strings.ReplaceAll(urlPath, "{galleryApplicationVersionName}", url.PathEscape(galleryApplicationVersionName))
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -220,7 +220,7 @@ func (client *GalleryApplicationVersionsClient) Get(ctx context.Context, resourc
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -242,7 +242,7 @@ func (client *GalleryApplicationVersionsClient) GetCreateRequest(ctx context.Con
 	urlPath = strings.ReplaceAll(urlPath, "{galleryName}", url.PathEscape(galleryName))
 	urlPath = strings.ReplaceAll(urlPath, "{galleryApplicationName}", url.PathEscape(galleryApplicationName))
 	urlPath = strings.ReplaceAll(urlPath, "{galleryApplicationVersionName}", url.PathEscape(galleryApplicationVersionName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -274,7 +274,7 @@ func (client *GalleryApplicationVersionsClient) GetHandleError(resp *azcore.Resp
 // ListByGalleryApplication - List gallery Application Versions in a gallery Application Definition.
 func (client *GalleryApplicationVersionsClient) ListByGalleryApplication(resourceGroupName string, galleryName string, galleryApplicationName string, options *GalleryApplicationVersionsListByGalleryApplicationOptions) GalleryApplicationVersionListPager {
 	return &galleryApplicationVersionListPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListByGalleryApplicationCreateRequest(ctx, resourceGroupName, galleryName, galleryApplicationName, options)
 		},
@@ -294,7 +294,7 @@ func (client *GalleryApplicationVersionsClient) ListByGalleryApplicationCreateRe
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{galleryName}", url.PathEscape(galleryName))
 	urlPath = strings.ReplaceAll(urlPath, "{galleryApplicationName}", url.PathEscape(galleryApplicationName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -334,7 +334,7 @@ func (client *GalleryApplicationVersionsClient) BeginUpdate(ctx context.Context,
 	}
 	poller := &galleryApplicationVersionPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*GalleryApplicationVersionResponse, error) {
@@ -349,7 +349,7 @@ func (client *GalleryApplicationVersionsClient) ResumeUpdate(token string) (Gall
 		return nil, err
 	}
 	return &galleryApplicationVersionPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -360,7 +360,7 @@ func (client *GalleryApplicationVersionsClient) Update(ctx context.Context, reso
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -378,7 +378,7 @@ func (client *GalleryApplicationVersionsClient) UpdateCreateRequest(ctx context.
 	urlPath = strings.ReplaceAll(urlPath, "{galleryName}", url.PathEscape(galleryName))
 	urlPath = strings.ReplaceAll(urlPath, "{galleryApplicationName}", url.PathEscape(galleryApplicationName))
 	urlPath = strings.ReplaceAll(urlPath, "{galleryApplicationVersionName}", url.PathEscape(galleryApplicationVersionName))
-	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

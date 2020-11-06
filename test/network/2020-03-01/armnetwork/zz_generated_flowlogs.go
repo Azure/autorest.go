@@ -34,18 +34,18 @@ type FlowLogsOperations interface {
 // FlowLogsClient implements the FlowLogsOperations interface.
 // Don't use this type directly, use NewFlowLogsClient() instead.
 type FlowLogsClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewFlowLogsClient creates a new instance of FlowLogsClient with the specified values.
-func NewFlowLogsClient(c *Client, subscriptionID string) FlowLogsOperations {
-	return &FlowLogsClient{Client: c, subscriptionID: subscriptionID}
+func NewFlowLogsClient(con *Connection, subscriptionID string) FlowLogsOperations {
+	return &FlowLogsClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *FlowLogsClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *FlowLogsClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 func (client *FlowLogsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, parameters FlowLog, options *FlowLogsCreateOrUpdateOptions) (*FlowLogPollerResponse, error) {
@@ -62,7 +62,7 @@ func (client *FlowLogsClient) BeginCreateOrUpdate(ctx context.Context, resourceG
 	}
 	poller := &flowLogPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*FlowLogResponse, error) {
@@ -77,7 +77,7 @@ func (client *FlowLogsClient) ResumeCreateOrUpdate(token string) (FlowLogPoller,
 		return nil, err
 	}
 	return &flowLogPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -88,7 +88,7 @@ func (client *FlowLogsClient) CreateOrUpdate(ctx context.Context, resourceGroupN
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -105,7 +105,7 @@ func (client *FlowLogsClient) CreateOrUpdateCreateRequest(ctx context.Context, r
 	urlPath = strings.ReplaceAll(urlPath, "{networkWatcherName}", url.PathEscape(networkWatcherName))
 	urlPath = strings.ReplaceAll(urlPath, "{flowLogName}", url.PathEscape(flowLogName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -145,7 +145,7 @@ func (client *FlowLogsClient) BeginDelete(ctx context.Context, resourceGroupName
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -160,7 +160,7 @@ func (client *FlowLogsClient) ResumeDelete(token string) (HTTPPoller, error) {
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -171,7 +171,7 @@ func (client *FlowLogsClient) Delete(ctx context.Context, resourceGroupName stri
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -188,7 +188,7 @@ func (client *FlowLogsClient) DeleteCreateRequest(ctx context.Context, resourceG
 	urlPath = strings.ReplaceAll(urlPath, "{networkWatcherName}", url.PathEscape(networkWatcherName))
 	urlPath = strings.ReplaceAll(urlPath, "{flowLogName}", url.PathEscape(flowLogName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -214,7 +214,7 @@ func (client *FlowLogsClient) Get(ctx context.Context, resourceGroupName string,
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -235,7 +235,7 @@ func (client *FlowLogsClient) GetCreateRequest(ctx context.Context, resourceGrou
 	urlPath = strings.ReplaceAll(urlPath, "{networkWatcherName}", url.PathEscape(networkWatcherName))
 	urlPath = strings.ReplaceAll(urlPath, "{flowLogName}", url.PathEscape(flowLogName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -264,7 +264,7 @@ func (client *FlowLogsClient) GetHandleError(resp *azcore.Response) error {
 // List - Lists all flow log resources for the specified Network Watcher.
 func (client *FlowLogsClient) List(resourceGroupName string, networkWatcherName string, options *FlowLogsListOptions) FlowLogListResultPager {
 	return &flowLogListResultPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListCreateRequest(ctx, resourceGroupName, networkWatcherName, options)
 		},
@@ -283,7 +283,7 @@ func (client *FlowLogsClient) ListCreateRequest(ctx context.Context, resourceGro
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkWatcherName}", url.PathEscape(networkWatcherName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

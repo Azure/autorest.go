@@ -14,7 +14,7 @@ import (
 )
 
 func newHeaderClient() HeaderOperations {
-	return NewHeaderClient(NewDefaultClient(nil))
+	return NewHeaderClient(NewDefaultConnection(nil))
 }
 
 // func TestHeaderCustomRequestID(t *testing.T) {

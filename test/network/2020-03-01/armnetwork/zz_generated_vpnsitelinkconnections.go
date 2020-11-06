@@ -22,18 +22,18 @@ type VpnSiteLinkConnectionsOperations interface {
 // VpnSiteLinkConnectionsClient implements the VpnSiteLinkConnectionsOperations interface.
 // Don't use this type directly, use NewVpnSiteLinkConnectionsClient() instead.
 type VpnSiteLinkConnectionsClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewVpnSiteLinkConnectionsClient creates a new instance of VpnSiteLinkConnectionsClient with the specified values.
-func NewVpnSiteLinkConnectionsClient(c *Client, subscriptionID string) VpnSiteLinkConnectionsOperations {
-	return &VpnSiteLinkConnectionsClient{Client: c, subscriptionID: subscriptionID}
+func NewVpnSiteLinkConnectionsClient(con *Connection, subscriptionID string) VpnSiteLinkConnectionsOperations {
+	return &VpnSiteLinkConnectionsClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *VpnSiteLinkConnectionsClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *VpnSiteLinkConnectionsClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // Get - Retrieves the details of a vpn site link connection.
@@ -42,7 +42,7 @@ func (client *VpnSiteLinkConnectionsClient) Get(ctx context.Context, resourceGro
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -64,7 +64,7 @@ func (client *VpnSiteLinkConnectionsClient) GetCreateRequest(ctx context.Context
 	urlPath = strings.ReplaceAll(urlPath, "{gatewayName}", url.PathEscape(gatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{connectionName}", url.PathEscape(connectionName))
 	urlPath = strings.ReplaceAll(urlPath, "{linkConnectionName}", url.PathEscape(linkConnectionName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

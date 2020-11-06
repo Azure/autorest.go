@@ -13,7 +13,7 @@ import (
 )
 
 func newBasicClient() BasicOperations {
-	return NewBasicClient(NewDefaultClient(nil))
+	return NewBasicClient(NewDefaultConnection(nil))
 }
 
 func TestBasicGetValid(t *testing.T) {

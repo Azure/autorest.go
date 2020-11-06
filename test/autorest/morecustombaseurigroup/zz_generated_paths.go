@@ -22,18 +22,18 @@ type PathsOperations interface {
 // PathsClient implements the PathsOperations interface.
 // Don't use this type directly, use NewPathsClient() instead.
 type PathsClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewPathsClient creates a new instance of PathsClient with the specified values.
-func NewPathsClient(c *Client, subscriptionID string) PathsOperations {
-	return &PathsClient{Client: c, subscriptionID: subscriptionID}
+func NewPathsClient(con *Connection, subscriptionID string) PathsOperations {
+	return &PathsClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *PathsClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *PathsClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // GetEmpty - Get a 200 to test a valid base uri
@@ -42,7 +42,7 @@ func (client *PathsClient) GetEmpty(ctx context.Context, vault string, secret st
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -55,7 +55,7 @@ func (client *PathsClient) GetEmpty(ctx context.Context, vault string, secret st
 // GetEmptyCreateRequest creates the GetEmpty request.
 func (client *PathsClient) GetEmptyCreateRequest(ctx context.Context, vault string, secret string, keyName string, options *PathsGetEmptyOptions) (*azcore.Request, error) {
 	host := "{vault}{secret}{dnsSuffix}"
-	host = strings.ReplaceAll(host, "{dnsSuffix}", client.dnsSuffix)
+	host = strings.ReplaceAll(host, "{dnsSuffix}", client.con.DnsSuffix())
 	host = strings.ReplaceAll(host, "{vault}", vault)
 	host = strings.ReplaceAll(host, "{secret}", secret)
 	urlPath := "/customuri/{subscriptionId}/{keyName}"

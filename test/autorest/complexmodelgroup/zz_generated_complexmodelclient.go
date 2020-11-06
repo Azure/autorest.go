@@ -28,17 +28,17 @@ type ComplexModelClientOperations interface {
 // ComplexModelClient implements the ComplexModelClientOperations interface.
 // Don't use this type directly, use NewComplexModelClient() instead.
 type ComplexModelClient struct {
-	*Client
+	con *Connection
 }
 
 // NewComplexModelClient creates a new instance of ComplexModelClient with the specified values.
-func NewComplexModelClient(c *Client) ComplexModelClientOperations {
-	return &ComplexModelClient{Client: c}
+func NewComplexModelClient(con *Connection) ComplexModelClientOperations {
+	return &ComplexModelClient{con: con}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *ComplexModelClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *ComplexModelClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // Create - Resets products.
@@ -47,7 +47,7 @@ func (client *ComplexModelClient) Create(ctx context.Context, subscriptionId str
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -66,7 +66,7 @@ func (client *ComplexModelClient) CreateCreateRequest(ctx context.Context, subsc
 	urlPath := "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/Microsoft.Cache/Redis"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionId))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -100,7 +100,7 @@ func (client *ComplexModelClient) List(ctx context.Context, resourceGroupName st
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -119,7 +119,7 @@ func (client *ComplexModelClient) ListCreateRequest(ctx context.Context, resourc
 	urlPath := "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/Microsoft.Cache/Redis"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape("123456"))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -151,7 +151,7 @@ func (client *ComplexModelClient) Update(ctx context.Context, subscriptionId str
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -170,7 +170,7 @@ func (client *ComplexModelClient) UpdateCreateRequest(ctx context.Context, subsc
 	urlPath := "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/Microsoft.Cache/Redis"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionId))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

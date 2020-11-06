@@ -11,7 +11,7 @@ import (
 )
 
 func newHTTPSuccessClient() HTTPSuccessOperations {
-	return NewHTTPSuccessClient(NewDefaultClient(nil))
+	return NewHTTPSuccessClient(NewDefaultConnection(nil))
 }
 
 func TestHTTPSuccessDelete200(t *testing.T) {

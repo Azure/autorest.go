@@ -20,17 +20,17 @@ type AutoRestReportServiceForAzureOperations interface {
 // AutoRestReportServiceForAzureClient implements the AutoRestReportServiceForAzureOperations interface.
 // Don't use this type directly, use NewAutoRestReportServiceForAzureClient() instead.
 type AutoRestReportServiceForAzureClient struct {
-	*Client
+	con *Connection
 }
 
 // NewAutoRestReportServiceForAzureClient creates a new instance of AutoRestReportServiceForAzureClient with the specified values.
-func NewAutoRestReportServiceForAzureClient(c *Client) AutoRestReportServiceForAzureOperations {
-	return &AutoRestReportServiceForAzureClient{Client: c}
+func NewAutoRestReportServiceForAzureClient(con *Connection) AutoRestReportServiceForAzureOperations {
+	return &AutoRestReportServiceForAzureClient{con: con}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *AutoRestReportServiceForAzureClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *AutoRestReportServiceForAzureClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // GetReport - Get test coverage report
@@ -39,7 +39,7 @@ func (client *AutoRestReportServiceForAzureClient) GetReport(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -56,7 +56,7 @@ func (client *AutoRestReportServiceForAzureClient) GetReport(ctx context.Context
 // GetReportCreateRequest creates the GetReport request.
 func (client *AutoRestReportServiceForAzureClient) GetReportCreateRequest(ctx context.Context, options *AutoRestReportServiceForAzureGetReportOptions) (*azcore.Request, error) {
 	urlPath := "/report/azure"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

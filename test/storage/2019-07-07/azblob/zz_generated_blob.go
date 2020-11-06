@@ -17,13 +17,13 @@ import (
 )
 
 type blobClient struct {
-	*client
+	con            *connection
 	pathRenameMode *PathRenameMode
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *blobClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *blobClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // AbortCopyFromURL - The Abort Copy From URL operation aborts a pending Copy From URL operation, and leaves a destination blob with zero length and full
@@ -33,7 +33,7 @@ func (client *blobClient) AbortCopyFromURL(ctx context.Context, copyId string, b
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -49,7 +49,7 @@ func (client *blobClient) AbortCopyFromURL(ctx context.Context, copyId string, b
 
 // AbortCopyFromURLCreateRequest creates the AbortCopyFromURL request.
 func (client *blobClient) AbortCopyFromURLCreateRequest(ctx context.Context, copyId string, blobAbortCopyFromUrlOptions *BlobAbortCopyFromURLOptions, leaseAccessConditions *LeaseAccessConditions) (*azcore.Request, error) {
-	req, err := azcore.NewRequest(ctx, http.MethodPut, client.u)
+	req, err := azcore.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
@@ -109,7 +109,7 @@ func (client *blobClient) AcquireLease(ctx context.Context, blobAcquireLeaseOpti
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -125,7 +125,7 @@ func (client *blobClient) AcquireLease(ctx context.Context, blobAcquireLeaseOpti
 
 // AcquireLeaseCreateRequest creates the AcquireLease request.
 func (client *blobClient) AcquireLeaseCreateRequest(ctx context.Context, blobAcquireLeaseOptions *BlobAcquireLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
-	req, err := azcore.NewRequest(ctx, http.MethodPut, client.u)
+	req, err := azcore.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
@@ -212,7 +212,7 @@ func (client *blobClient) BreakLease(ctx context.Context, blobBreakLeaseOptions 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -228,7 +228,7 @@ func (client *blobClient) BreakLease(ctx context.Context, blobBreakLeaseOptions 
 
 // BreakLeaseCreateRequest creates the BreakLease request.
 func (client *blobClient) BreakLeaseCreateRequest(ctx context.Context, blobBreakLeaseOptions *BlobBreakLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
-	req, err := azcore.NewRequest(ctx, http.MethodPut, client.u)
+	req, err := azcore.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
@@ -317,7 +317,7 @@ func (client *blobClient) ChangeLease(ctx context.Context, leaseId string, propo
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -333,7 +333,7 @@ func (client *blobClient) ChangeLease(ctx context.Context, leaseId string, propo
 
 // ChangeLeaseCreateRequest creates the ChangeLease request.
 func (client *blobClient) ChangeLeaseCreateRequest(ctx context.Context, leaseId string, proposedLeaseId string, blobChangeLeaseOptions *BlobChangeLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
-	req, err := azcore.NewRequest(ctx, http.MethodPut, client.u)
+	req, err := azcore.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
@@ -416,7 +416,7 @@ func (client *blobClient) CopyFromURL(ctx context.Context, copySource url.URL, b
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -432,7 +432,7 @@ func (client *blobClient) CopyFromURL(ctx context.Context, copySource url.URL, b
 
 // CopyFromURLCreateRequest creates the CopyFromURL request.
 func (client *blobClient) CopyFromURLCreateRequest(ctx context.Context, copySource url.URL, blobCopyFromUrlOptions *BlobCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*azcore.Request, error) {
-	req, err := azcore.NewRequest(ctx, http.MethodPut, client.u)
+	req, err := azcore.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
@@ -556,7 +556,7 @@ func (client *blobClient) CreateSnapshot(ctx context.Context, blobCreateSnapshot
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -572,7 +572,7 @@ func (client *blobClient) CreateSnapshot(ctx context.Context, blobCreateSnapshot
 
 // CreateSnapshotCreateRequest creates the CreateSnapshot request.
 func (client *blobClient) CreateSnapshotCreateRequest(ctx context.Context, blobCreateSnapshotOptions *BlobCreateSnapshotOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*azcore.Request, error) {
-	req, err := azcore.NewRequest(ctx, http.MethodPut, client.u)
+	req, err := azcore.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
@@ -689,7 +689,7 @@ func (client *blobClient) Delete(ctx context.Context, blobDeleteOptions *BlobDel
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -705,7 +705,7 @@ func (client *blobClient) Delete(ctx context.Context, blobDeleteOptions *BlobDel
 
 // DeleteCreateRequest creates the Delete request.
 func (client *blobClient) DeleteCreateRequest(ctx context.Context, blobDeleteOptions *BlobDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, client.u)
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
@@ -781,7 +781,7 @@ func (client *blobClient) Download(ctx context.Context, blobDownloadOptions *Blo
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -797,7 +797,7 @@ func (client *blobClient) Download(ctx context.Context, blobDownloadOptions *Blo
 
 // DownloadCreateRequest creates the Download request.
 func (client *blobClient) DownloadCreateRequest(ctx context.Context, blobDownloadOptions *BlobDownloadOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
-	req, err := azcore.NewRequest(ctx, http.MethodGet, client.u)
+	req, err := azcore.NewRequest(ctx, http.MethodGet, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
@@ -1017,7 +1017,7 @@ func (client *blobClient) GetAccessControl(ctx context.Context, blobGetAccessCon
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1033,7 +1033,7 @@ func (client *blobClient) GetAccessControl(ctx context.Context, blobGetAccessCon
 
 // GetAccessControlCreateRequest creates the GetAccessControl request.
 func (client *blobClient) GetAccessControlCreateRequest(ctx context.Context, blobGetAccessControlOptions *BlobGetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
-	req, err := azcore.NewRequest(ctx, http.MethodHead, client.u)
+	req, err := azcore.NewRequest(ctx, http.MethodHead, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
@@ -1125,7 +1125,7 @@ func (client *blobClient) GetAccountInfo(ctx context.Context, options *BlobGetAc
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1141,7 +1141,7 @@ func (client *blobClient) GetAccountInfo(ctx context.Context, options *BlobGetAc
 
 // GetAccountInfoCreateRequest creates the GetAccountInfo request.
 func (client *blobClient) GetAccountInfoCreateRequest(ctx context.Context, options *BlobGetAccountInfoOptions) (*azcore.Request, error) {
-	req, err := azcore.NewRequest(ctx, http.MethodGet, client.u)
+	req, err := azcore.NewRequest(ctx, http.MethodGet, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
@@ -1198,7 +1198,7 @@ func (client *blobClient) GetProperties(ctx context.Context, blobGetPropertiesOp
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1214,7 +1214,7 @@ func (client *blobClient) GetProperties(ctx context.Context, blobGetPropertiesOp
 
 // GetPropertiesCreateRequest creates the GetProperties request.
 func (client *blobClient) GetPropertiesCreateRequest(ctx context.Context, blobGetPropertiesOptions *BlobGetPropertiesOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
-	req, err := azcore.NewRequest(ctx, http.MethodHead, client.u)
+	req, err := azcore.NewRequest(ctx, http.MethodHead, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
@@ -1444,7 +1444,7 @@ func (client *blobClient) ReleaseLease(ctx context.Context, leaseId string, blob
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1460,7 +1460,7 @@ func (client *blobClient) ReleaseLease(ctx context.Context, leaseId string, blob
 
 // ReleaseLeaseCreateRequest creates the ReleaseLease request.
 func (client *blobClient) ReleaseLeaseCreateRequest(ctx context.Context, leaseId string, blobReleaseLeaseOptions *BlobReleaseLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
-	req, err := azcore.NewRequest(ctx, http.MethodPut, client.u)
+	req, err := azcore.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
@@ -1543,7 +1543,7 @@ func (client *blobClient) Rename(ctx context.Context, renameSource string, blobR
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1559,7 +1559,7 @@ func (client *blobClient) Rename(ctx context.Context, renameSource string, blobR
 
 // RenameCreateRequest creates the Rename request.
 func (client *blobClient) RenameCreateRequest(ctx context.Context, renameSource string, blobRenameOptions *BlobRenameOptions, directoryHttpHeaders *DirectoryHttpHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*azcore.Request, error) {
-	req, err := azcore.NewRequest(ctx, http.MethodPut, client.u)
+	req, err := azcore.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
@@ -1688,7 +1688,7 @@ func (client *blobClient) RenewLease(ctx context.Context, leaseId string, blobRe
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1704,7 +1704,7 @@ func (client *blobClient) RenewLease(ctx context.Context, leaseId string, blobRe
 
 // RenewLeaseCreateRequest creates the RenewLease request.
 func (client *blobClient) RenewLeaseCreateRequest(ctx context.Context, leaseId string, blobRenewLeaseOptions *BlobRenewLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
-	req, err := azcore.NewRequest(ctx, http.MethodPut, client.u)
+	req, err := azcore.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
@@ -1786,7 +1786,7 @@ func (client *blobClient) SetAccessControl(ctx context.Context, blobSetAccessCon
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1802,7 +1802,7 @@ func (client *blobClient) SetAccessControl(ctx context.Context, blobSetAccessCon
 
 // SetAccessControlCreateRequest creates the SetAccessControl request.
 func (client *blobClient) SetAccessControlCreateRequest(ctx context.Context, blobSetAccessControlOptions *BlobSetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
-	req, err := azcore.NewRequest(ctx, http.MethodPatch, client.u)
+	req, err := azcore.NewRequest(ctx, http.MethodPatch, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
@@ -1891,7 +1891,7 @@ func (client *blobClient) SetHTTPHeaders(ctx context.Context, blobSetHttpHeaders
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1907,7 +1907,7 @@ func (client *blobClient) SetHTTPHeaders(ctx context.Context, blobSetHttpHeaders
 
 // SetHTTPHeadersCreateRequest creates the SetHTTPHeaders request.
 func (client *blobClient) SetHTTPHeadersCreateRequest(ctx context.Context, blobSetHttpHeadersOptions *BlobSetHTTPHeadersOptions, blobHttpHeaders *BlobHttpHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
-	req, err := azcore.NewRequest(ctx, http.MethodPut, client.u)
+	req, err := azcore.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
@@ -2012,7 +2012,7 @@ func (client *blobClient) SetMetadata(ctx context.Context, blobSetMetadataOption
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2028,7 +2028,7 @@ func (client *blobClient) SetMetadata(ctx context.Context, blobSetMetadataOption
 
 // SetMetadataCreateRequest creates the SetMetadata request.
 func (client *blobClient) SetMetadataCreateRequest(ctx context.Context, blobSetMetadataOptions *BlobSetMetadataOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
-	req, err := azcore.NewRequest(ctx, http.MethodPut, client.u)
+	req, err := azcore.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
@@ -2141,7 +2141,7 @@ func (client *blobClient) SetTier(ctx context.Context, tier AccessTier, blobSetT
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2157,7 +2157,7 @@ func (client *blobClient) SetTier(ctx context.Context, tier AccessTier, blobSetT
 
 // SetTierCreateRequest creates the SetTier request.
 func (client *blobClient) SetTierCreateRequest(ctx context.Context, tier AccessTier, blobSetTierOptions *BlobSetTierOptions, leaseAccessConditions *LeaseAccessConditions) (*azcore.Request, error) {
-	req, err := azcore.NewRequest(ctx, http.MethodPut, client.u)
+	req, err := azcore.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
@@ -2212,7 +2212,7 @@ func (client *blobClient) StartCopyFromURL(ctx context.Context, copySource url.U
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2228,7 +2228,7 @@ func (client *blobClient) StartCopyFromURL(ctx context.Context, copySource url.U
 
 // StartCopyFromURLCreateRequest creates the StartCopyFromURL request.
 func (client *blobClient) StartCopyFromURLCreateRequest(ctx context.Context, copySource url.URL, blobStartCopyFromUrlOptions *BlobStartCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*azcore.Request, error) {
-	req, err := azcore.NewRequest(ctx, http.MethodPut, client.u)
+	req, err := azcore.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
@@ -2337,7 +2337,7 @@ func (client *blobClient) Undelete(ctx context.Context, options *BlobUndeleteOpt
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2353,7 +2353,7 @@ func (client *blobClient) Undelete(ctx context.Context, options *BlobUndeleteOpt
 
 // UndeleteCreateRequest creates the Undelete request.
 func (client *blobClient) UndeleteCreateRequest(ctx context.Context, options *BlobUndeleteOptions) (*azcore.Request, error) {
-	req, err := azcore.NewRequest(ctx, http.MethodPut, client.u)
+	req, err := azcore.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}

@@ -34,18 +34,18 @@ type VpnConnectionsOperations interface {
 // VpnConnectionsClient implements the VpnConnectionsOperations interface.
 // Don't use this type directly, use NewVpnConnectionsClient() instead.
 type VpnConnectionsClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewVpnConnectionsClient creates a new instance of VpnConnectionsClient with the specified values.
-func NewVpnConnectionsClient(c *Client, subscriptionID string) VpnConnectionsOperations {
-	return &VpnConnectionsClient{Client: c, subscriptionID: subscriptionID}
+func NewVpnConnectionsClient(con *Connection, subscriptionID string) VpnConnectionsOperations {
+	return &VpnConnectionsClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *VpnConnectionsClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *VpnConnectionsClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 func (client *VpnConnectionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, vpnConnectionParameters VpnConnection, options *VpnConnectionsCreateOrUpdateOptions) (*VpnConnectionPollerResponse, error) {
@@ -62,7 +62,7 @@ func (client *VpnConnectionsClient) BeginCreateOrUpdate(ctx context.Context, res
 	}
 	poller := &vpnConnectionPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*VpnConnectionResponse, error) {
@@ -77,7 +77,7 @@ func (client *VpnConnectionsClient) ResumeCreateOrUpdate(token string) (VpnConne
 		return nil, err
 	}
 	return &vpnConnectionPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -88,7 +88,7 @@ func (client *VpnConnectionsClient) CreateOrUpdate(ctx context.Context, resource
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -105,7 +105,7 @@ func (client *VpnConnectionsClient) CreateOrUpdateCreateRequest(ctx context.Cont
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{gatewayName}", url.PathEscape(gatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{connectionName}", url.PathEscape(connectionName))
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -145,7 +145,7 @@ func (client *VpnConnectionsClient) BeginDelete(ctx context.Context, resourceGro
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -160,7 +160,7 @@ func (client *VpnConnectionsClient) ResumeDelete(token string) (HTTPPoller, erro
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -171,7 +171,7 @@ func (client *VpnConnectionsClient) Delete(ctx context.Context, resourceGroupNam
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -188,7 +188,7 @@ func (client *VpnConnectionsClient) DeleteCreateRequest(ctx context.Context, res
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{gatewayName}", url.PathEscape(gatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{connectionName}", url.PathEscape(connectionName))
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -214,7 +214,7 @@ func (client *VpnConnectionsClient) Get(ctx context.Context, resourceGroupName s
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -235,7 +235,7 @@ func (client *VpnConnectionsClient) GetCreateRequest(ctx context.Context, resour
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{gatewayName}", url.PathEscape(gatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{connectionName}", url.PathEscape(connectionName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -264,7 +264,7 @@ func (client *VpnConnectionsClient) GetHandleError(resp *azcore.Response) error 
 // ListByVpnGateway - Retrieves all vpn connections for a particular virtual wan vpn gateway.
 func (client *VpnConnectionsClient) ListByVpnGateway(resourceGroupName string, gatewayName string, options *VpnConnectionsListByVpnGatewayOptions) ListVpnConnectionsResultPager {
 	return &listVpnConnectionsResultPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListByVpnGatewayCreateRequest(ctx, resourceGroupName, gatewayName, options)
 		},
@@ -283,7 +283,7 @@ func (client *VpnConnectionsClient) ListByVpnGatewayCreateRequest(ctx context.Co
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{gatewayName}", url.PathEscape(gatewayName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

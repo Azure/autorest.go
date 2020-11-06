@@ -25,24 +25,24 @@ type ResourceSKUsOperations interface {
 // ResourceSKUsClient implements the ResourceSKUsOperations interface.
 // Don't use this type directly, use NewResourceSKUsClient() instead.
 type ResourceSKUsClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewResourceSKUsClient creates a new instance of ResourceSKUsClient with the specified values.
-func NewResourceSKUsClient(c *Client, subscriptionID string) ResourceSKUsOperations {
-	return &ResourceSKUsClient{Client: c, subscriptionID: subscriptionID}
+func NewResourceSKUsClient(con *Connection, subscriptionID string) ResourceSKUsOperations {
+	return &ResourceSKUsClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *ResourceSKUsClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *ResourceSKUsClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // List - Gets the list of Microsoft.Compute SKUs available for your Subscription.
 func (client *ResourceSKUsClient) List(options *ResourceSKUsListOptions) ResourceSKUsResultPager {
 	return &resourceSkUsResultPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListCreateRequest(ctx, options)
 		},
@@ -59,7 +59,7 @@ func (client *ResourceSKUsClient) List(options *ResourceSKUsListOptions) Resourc
 func (client *ResourceSKUsClient) ListCreateRequest(ctx context.Context, options *ResourceSKUsListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/skus"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

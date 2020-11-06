@@ -12,7 +12,7 @@ import (
 )
 
 func newPathsClient() PathsOperations {
-	return NewPathsClient(NewDefaultClient(nil))
+	return NewPathsClient(NewDefaultConnection(nil))
 }
 
 func TestArrayCSVInPath(t *testing.T) {

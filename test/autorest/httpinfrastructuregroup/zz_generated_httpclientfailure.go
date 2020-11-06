@@ -70,17 +70,17 @@ type HTTPClientFailureOperations interface {
 // HTTPClientFailureClient implements the HTTPClientFailureOperations interface.
 // Don't use this type directly, use NewHTTPClientFailureClient() instead.
 type HTTPClientFailureClient struct {
-	*Client
+	con *Connection
 }
 
 // NewHTTPClientFailureClient creates a new instance of HTTPClientFailureClient with the specified values.
-func NewHTTPClientFailureClient(c *Client) HTTPClientFailureOperations {
-	return &HTTPClientFailureClient{Client: c}
+func NewHTTPClientFailureClient(con *Connection) HTTPClientFailureOperations {
+	return &HTTPClientFailureClient{con: con}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *HTTPClientFailureClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *HTTPClientFailureClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // Delete400 - Return 400 status code - should be represented in the client as an error
@@ -89,7 +89,7 @@ func (client *HTTPClientFailureClient) Delete400(ctx context.Context, options *H
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -102,7 +102,7 @@ func (client *HTTPClientFailureClient) Delete400(ctx context.Context, options *H
 // Delete400CreateRequest creates the Delete400 request.
 func (client *HTTPClientFailureClient) Delete400CreateRequest(ctx context.Context, options *HTTPClientFailureDelete400Options) (*azcore.Request, error) {
 	urlPath := "/http/failure/client/400"
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -125,7 +125,7 @@ func (client *HTTPClientFailureClient) Delete407(ctx context.Context, options *H
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -138,7 +138,7 @@ func (client *HTTPClientFailureClient) Delete407(ctx context.Context, options *H
 // Delete407CreateRequest creates the Delete407 request.
 func (client *HTTPClientFailureClient) Delete407CreateRequest(ctx context.Context, options *HTTPClientFailureDelete407Options) (*azcore.Request, error) {
 	urlPath := "/http/failure/client/407"
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -161,7 +161,7 @@ func (client *HTTPClientFailureClient) Delete417(ctx context.Context, options *H
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -174,7 +174,7 @@ func (client *HTTPClientFailureClient) Delete417(ctx context.Context, options *H
 // Delete417CreateRequest creates the Delete417 request.
 func (client *HTTPClientFailureClient) Delete417CreateRequest(ctx context.Context, options *HTTPClientFailureDelete417Options) (*azcore.Request, error) {
 	urlPath := "/http/failure/client/417"
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -197,7 +197,7 @@ func (client *HTTPClientFailureClient) Get400(ctx context.Context, options *HTTP
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -210,7 +210,7 @@ func (client *HTTPClientFailureClient) Get400(ctx context.Context, options *HTTP
 // Get400CreateRequest creates the Get400 request.
 func (client *HTTPClientFailureClient) Get400CreateRequest(ctx context.Context, options *HTTPClientFailureGet400Options) (*azcore.Request, error) {
 	urlPath := "/http/failure/client/400"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -233,7 +233,7 @@ func (client *HTTPClientFailureClient) Get402(ctx context.Context, options *HTTP
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -246,7 +246,7 @@ func (client *HTTPClientFailureClient) Get402(ctx context.Context, options *HTTP
 // Get402CreateRequest creates the Get402 request.
 func (client *HTTPClientFailureClient) Get402CreateRequest(ctx context.Context, options *HTTPClientFailureGet402Options) (*azcore.Request, error) {
 	urlPath := "/http/failure/client/402"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -269,7 +269,7 @@ func (client *HTTPClientFailureClient) Get403(ctx context.Context, options *HTTP
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -282,7 +282,7 @@ func (client *HTTPClientFailureClient) Get403(ctx context.Context, options *HTTP
 // Get403CreateRequest creates the Get403 request.
 func (client *HTTPClientFailureClient) Get403CreateRequest(ctx context.Context, options *HTTPClientFailureGet403Options) (*azcore.Request, error) {
 	urlPath := "/http/failure/client/403"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -305,7 +305,7 @@ func (client *HTTPClientFailureClient) Get411(ctx context.Context, options *HTTP
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -318,7 +318,7 @@ func (client *HTTPClientFailureClient) Get411(ctx context.Context, options *HTTP
 // Get411CreateRequest creates the Get411 request.
 func (client *HTTPClientFailureClient) Get411CreateRequest(ctx context.Context, options *HTTPClientFailureGet411Options) (*azcore.Request, error) {
 	urlPath := "/http/failure/client/411"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -341,7 +341,7 @@ func (client *HTTPClientFailureClient) Get412(ctx context.Context, options *HTTP
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -354,7 +354,7 @@ func (client *HTTPClientFailureClient) Get412(ctx context.Context, options *HTTP
 // Get412CreateRequest creates the Get412 request.
 func (client *HTTPClientFailureClient) Get412CreateRequest(ctx context.Context, options *HTTPClientFailureGet412Options) (*azcore.Request, error) {
 	urlPath := "/http/failure/client/412"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -377,7 +377,7 @@ func (client *HTTPClientFailureClient) Get416(ctx context.Context, options *HTTP
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -390,7 +390,7 @@ func (client *HTTPClientFailureClient) Get416(ctx context.Context, options *HTTP
 // Get416CreateRequest creates the Get416 request.
 func (client *HTTPClientFailureClient) Get416CreateRequest(ctx context.Context, options *HTTPClientFailureGet416Options) (*azcore.Request, error) {
 	urlPath := "/http/failure/client/416"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -413,7 +413,7 @@ func (client *HTTPClientFailureClient) Head400(ctx context.Context, options *HTT
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -426,7 +426,7 @@ func (client *HTTPClientFailureClient) Head400(ctx context.Context, options *HTT
 // Head400CreateRequest creates the Head400 request.
 func (client *HTTPClientFailureClient) Head400CreateRequest(ctx context.Context, options *HTTPClientFailureHead400Options) (*azcore.Request, error) {
 	urlPath := "/http/failure/client/400"
-	req, err := azcore.NewRequest(ctx, http.MethodHead, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodHead, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -449,7 +449,7 @@ func (client *HTTPClientFailureClient) Head401(ctx context.Context, options *HTT
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -462,7 +462,7 @@ func (client *HTTPClientFailureClient) Head401(ctx context.Context, options *HTT
 // Head401CreateRequest creates the Head401 request.
 func (client *HTTPClientFailureClient) Head401CreateRequest(ctx context.Context, options *HTTPClientFailureHead401Options) (*azcore.Request, error) {
 	urlPath := "/http/failure/client/401"
-	req, err := azcore.NewRequest(ctx, http.MethodHead, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodHead, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -485,7 +485,7 @@ func (client *HTTPClientFailureClient) Head410(ctx context.Context, options *HTT
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -498,7 +498,7 @@ func (client *HTTPClientFailureClient) Head410(ctx context.Context, options *HTT
 // Head410CreateRequest creates the Head410 request.
 func (client *HTTPClientFailureClient) Head410CreateRequest(ctx context.Context, options *HTTPClientFailureHead410Options) (*azcore.Request, error) {
 	urlPath := "/http/failure/client/410"
-	req, err := azcore.NewRequest(ctx, http.MethodHead, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodHead, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -521,7 +521,7 @@ func (client *HTTPClientFailureClient) Head429(ctx context.Context, options *HTT
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -534,7 +534,7 @@ func (client *HTTPClientFailureClient) Head429(ctx context.Context, options *HTT
 // Head429CreateRequest creates the Head429 request.
 func (client *HTTPClientFailureClient) Head429CreateRequest(ctx context.Context, options *HTTPClientFailureHead429Options) (*azcore.Request, error) {
 	urlPath := "/http/failure/client/429"
-	req, err := azcore.NewRequest(ctx, http.MethodHead, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodHead, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -557,7 +557,7 @@ func (client *HTTPClientFailureClient) Options400(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -570,7 +570,7 @@ func (client *HTTPClientFailureClient) Options400(ctx context.Context, options *
 // Options400CreateRequest creates the Options400 request.
 func (client *HTTPClientFailureClient) Options400CreateRequest(ctx context.Context, options *HTTPClientFailureOptions400Options) (*azcore.Request, error) {
 	urlPath := "/http/failure/client/400"
-	req, err := azcore.NewRequest(ctx, http.MethodOptions, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodOptions, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -593,7 +593,7 @@ func (client *HTTPClientFailureClient) Options403(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -606,7 +606,7 @@ func (client *HTTPClientFailureClient) Options403(ctx context.Context, options *
 // Options403CreateRequest creates the Options403 request.
 func (client *HTTPClientFailureClient) Options403CreateRequest(ctx context.Context, options *HTTPClientFailureOptions403Options) (*azcore.Request, error) {
 	urlPath := "/http/failure/client/403"
-	req, err := azcore.NewRequest(ctx, http.MethodOptions, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodOptions, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -629,7 +629,7 @@ func (client *HTTPClientFailureClient) Options412(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -642,7 +642,7 @@ func (client *HTTPClientFailureClient) Options412(ctx context.Context, options *
 // Options412CreateRequest creates the Options412 request.
 func (client *HTTPClientFailureClient) Options412CreateRequest(ctx context.Context, options *HTTPClientFailureOptions412Options) (*azcore.Request, error) {
 	urlPath := "/http/failure/client/412"
-	req, err := azcore.NewRequest(ctx, http.MethodOptions, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodOptions, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -665,7 +665,7 @@ func (client *HTTPClientFailureClient) Patch400(ctx context.Context, options *HT
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -678,7 +678,7 @@ func (client *HTTPClientFailureClient) Patch400(ctx context.Context, options *HT
 // Patch400CreateRequest creates the Patch400 request.
 func (client *HTTPClientFailureClient) Patch400CreateRequest(ctx context.Context, options *HTTPClientFailurePatch400Options) (*azcore.Request, error) {
 	urlPath := "/http/failure/client/400"
-	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -701,7 +701,7 @@ func (client *HTTPClientFailureClient) Patch405(ctx context.Context, options *HT
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -714,7 +714,7 @@ func (client *HTTPClientFailureClient) Patch405(ctx context.Context, options *HT
 // Patch405CreateRequest creates the Patch405 request.
 func (client *HTTPClientFailureClient) Patch405CreateRequest(ctx context.Context, options *HTTPClientFailurePatch405Options) (*azcore.Request, error) {
 	urlPath := "/http/failure/client/405"
-	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -737,7 +737,7 @@ func (client *HTTPClientFailureClient) Patch414(ctx context.Context, options *HT
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -750,7 +750,7 @@ func (client *HTTPClientFailureClient) Patch414(ctx context.Context, options *HT
 // Patch414CreateRequest creates the Patch414 request.
 func (client *HTTPClientFailureClient) Patch414CreateRequest(ctx context.Context, options *HTTPClientFailurePatch414Options) (*azcore.Request, error) {
 	urlPath := "/http/failure/client/414"
-	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -773,7 +773,7 @@ func (client *HTTPClientFailureClient) Post400(ctx context.Context, options *HTT
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -786,7 +786,7 @@ func (client *HTTPClientFailureClient) Post400(ctx context.Context, options *HTT
 // Post400CreateRequest creates the Post400 request.
 func (client *HTTPClientFailureClient) Post400CreateRequest(ctx context.Context, options *HTTPClientFailurePost400Options) (*azcore.Request, error) {
 	urlPath := "/http/failure/client/400"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -809,7 +809,7 @@ func (client *HTTPClientFailureClient) Post406(ctx context.Context, options *HTT
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -822,7 +822,7 @@ func (client *HTTPClientFailureClient) Post406(ctx context.Context, options *HTT
 // Post406CreateRequest creates the Post406 request.
 func (client *HTTPClientFailureClient) Post406CreateRequest(ctx context.Context, options *HTTPClientFailurePost406Options) (*azcore.Request, error) {
 	urlPath := "/http/failure/client/406"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -845,7 +845,7 @@ func (client *HTTPClientFailureClient) Post415(ctx context.Context, options *HTT
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -858,7 +858,7 @@ func (client *HTTPClientFailureClient) Post415(ctx context.Context, options *HTT
 // Post415CreateRequest creates the Post415 request.
 func (client *HTTPClientFailureClient) Post415CreateRequest(ctx context.Context, options *HTTPClientFailurePost415Options) (*azcore.Request, error) {
 	urlPath := "/http/failure/client/415"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -881,7 +881,7 @@ func (client *HTTPClientFailureClient) Put400(ctx context.Context, options *HTTP
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -894,7 +894,7 @@ func (client *HTTPClientFailureClient) Put400(ctx context.Context, options *HTTP
 // Put400CreateRequest creates the Put400 request.
 func (client *HTTPClientFailureClient) Put400CreateRequest(ctx context.Context, options *HTTPClientFailurePut400Options) (*azcore.Request, error) {
 	urlPath := "/http/failure/client/400"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -917,7 +917,7 @@ func (client *HTTPClientFailureClient) Put404(ctx context.Context, options *HTTP
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -930,7 +930,7 @@ func (client *HTTPClientFailureClient) Put404(ctx context.Context, options *HTTP
 // Put404CreateRequest creates the Put404 request.
 func (client *HTTPClientFailureClient) Put404CreateRequest(ctx context.Context, options *HTTPClientFailurePut404Options) (*azcore.Request, error) {
 	urlPath := "/http/failure/client/404"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -953,7 +953,7 @@ func (client *HTTPClientFailureClient) Put409(ctx context.Context, options *HTTP
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -966,7 +966,7 @@ func (client *HTTPClientFailureClient) Put409(ctx context.Context, options *HTTP
 // Put409CreateRequest creates the Put409 request.
 func (client *HTTPClientFailureClient) Put409CreateRequest(ctx context.Context, options *HTTPClientFailurePut409Options) (*azcore.Request, error) {
 	urlPath := "/http/failure/client/409"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -989,7 +989,7 @@ func (client *HTTPClientFailureClient) Put413(ctx context.Context, options *HTTP
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1002,7 +1002,7 @@ func (client *HTTPClientFailureClient) Put413(ctx context.Context, options *HTTP
 // Put413CreateRequest creates the Put413 request.
 func (client *HTTPClientFailureClient) Put413CreateRequest(ctx context.Context, options *HTTPClientFailurePut413Options) (*azcore.Request, error) {
 	urlPath := "/http/failure/client/413"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

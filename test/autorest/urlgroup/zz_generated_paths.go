@@ -76,17 +76,17 @@ type PathsOperations interface {
 // PathsClient implements the PathsOperations interface.
 // Don't use this type directly, use NewPathsClient() instead.
 type PathsClient struct {
-	*Client
+	con *Connection
 }
 
 // NewPathsClient creates a new instance of PathsClient with the specified values.
-func NewPathsClient(c *Client) PathsOperations {
-	return &PathsClient{Client: c}
+func NewPathsClient(con *Connection) PathsOperations {
+	return &PathsClient{con: con}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *PathsClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *PathsClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // ArrayCSVInPath - Get an array of string ['ArrayPath1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
@@ -95,7 +95,7 @@ func (client *PathsClient) ArrayCSVInPath(ctx context.Context, arrayPath []strin
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -109,7 +109,7 @@ func (client *PathsClient) ArrayCSVInPath(ctx context.Context, arrayPath []strin
 func (client *PathsClient) ArrayCSVInPathCreateRequest(ctx context.Context, arrayPath []string, options *PathsArrayCSVInPathOptions) (*azcore.Request, error) {
 	urlPath := "/paths/array/ArrayPath1%2cbegin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend%2c%2c/{arrayPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{arrayPath}", url.PathEscape(strings.Join(arrayPath, ",")))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -132,7 +132,7 @@ func (client *PathsClient) Base64URL(ctx context.Context, base64UrlPath []byte, 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -146,7 +146,7 @@ func (client *PathsClient) Base64URL(ctx context.Context, base64UrlPath []byte, 
 func (client *PathsClient) Base64URLCreateRequest(ctx context.Context, base64UrlPath []byte, options *PathsBase64URLOptions) (*azcore.Request, error) {
 	urlPath := "/paths/string/bG9yZW0/{base64UrlPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{base64UrlPath}", url.PathEscape(base64.RawURLEncoding.EncodeToString(base64UrlPath)))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -169,7 +169,7 @@ func (client *PathsClient) ByteEmpty(ctx context.Context, options *PathsByteEmpt
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -183,7 +183,7 @@ func (client *PathsClient) ByteEmpty(ctx context.Context, options *PathsByteEmpt
 func (client *PathsClient) ByteEmptyCreateRequest(ctx context.Context, options *PathsByteEmptyOptions) (*azcore.Request, error) {
 	urlPath := "/paths/byte/empty/{bytePath}"
 	urlPath = strings.ReplaceAll(urlPath, "{bytePath}", url.PathEscape(""))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -206,7 +206,7 @@ func (client *PathsClient) ByteMultiByte(ctx context.Context, bytePath []byte, o
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -220,7 +220,7 @@ func (client *PathsClient) ByteMultiByte(ctx context.Context, bytePath []byte, o
 func (client *PathsClient) ByteMultiByteCreateRequest(ctx context.Context, bytePath []byte, options *PathsByteMultiByteOptions) (*azcore.Request, error) {
 	urlPath := "/paths/byte/multibyte/{bytePath}"
 	urlPath = strings.ReplaceAll(urlPath, "{bytePath}", url.PathEscape(base64.StdEncoding.EncodeToString(bytePath)))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -243,7 +243,7 @@ func (client *PathsClient) ByteNull(ctx context.Context, bytePath []byte, option
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -257,7 +257,7 @@ func (client *PathsClient) ByteNull(ctx context.Context, bytePath []byte, option
 func (client *PathsClient) ByteNullCreateRequest(ctx context.Context, bytePath []byte, options *PathsByteNullOptions) (*azcore.Request, error) {
 	urlPath := "/paths/byte/null/{bytePath}"
 	urlPath = strings.ReplaceAll(urlPath, "{bytePath}", url.PathEscape(base64.StdEncoding.EncodeToString(bytePath)))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -280,7 +280,7 @@ func (client *PathsClient) DateNull(ctx context.Context, datePath time.Time, opt
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -294,7 +294,7 @@ func (client *PathsClient) DateNull(ctx context.Context, datePath time.Time, opt
 func (client *PathsClient) DateNullCreateRequest(ctx context.Context, datePath time.Time, options *PathsDateNullOptions) (*azcore.Request, error) {
 	urlPath := "/paths/date/null/{datePath}"
 	urlPath = strings.ReplaceAll(urlPath, "{datePath}", url.PathEscape(datePath.Format("2006-01-02")))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -317,7 +317,7 @@ func (client *PathsClient) DateTimeNull(ctx context.Context, dateTimePath time.T
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -331,7 +331,7 @@ func (client *PathsClient) DateTimeNull(ctx context.Context, dateTimePath time.T
 func (client *PathsClient) DateTimeNullCreateRequest(ctx context.Context, dateTimePath time.Time, options *PathsDateTimeNullOptions) (*azcore.Request, error) {
 	urlPath := "/paths/datetime/null/{dateTimePath}"
 	urlPath = strings.ReplaceAll(urlPath, "{dateTimePath}", url.PathEscape(dateTimePath.Format(time.RFC3339Nano)))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -354,7 +354,7 @@ func (client *PathsClient) DateTimeValid(ctx context.Context, options *PathsDate
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -368,7 +368,7 @@ func (client *PathsClient) DateTimeValid(ctx context.Context, options *PathsDate
 func (client *PathsClient) DateTimeValidCreateRequest(ctx context.Context, options *PathsDateTimeValidOptions) (*azcore.Request, error) {
 	urlPath := "/paths/datetime/2012-01-01T01%3A01%3A01Z/{dateTimePath}"
 	urlPath = strings.ReplaceAll(urlPath, "{dateTimePath}", url.PathEscape("2012-01-01T01:01:01Z"))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -391,7 +391,7 @@ func (client *PathsClient) DateValid(ctx context.Context, options *PathsDateVali
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -405,7 +405,7 @@ func (client *PathsClient) DateValid(ctx context.Context, options *PathsDateVali
 func (client *PathsClient) DateValidCreateRequest(ctx context.Context, options *PathsDateValidOptions) (*azcore.Request, error) {
 	urlPath := "/paths/date/2012-01-01/{datePath}"
 	urlPath = strings.ReplaceAll(urlPath, "{datePath}", url.PathEscape("2012-01-01"))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -428,7 +428,7 @@ func (client *PathsClient) DoubleDecimalNegative(ctx context.Context, options *P
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -442,7 +442,7 @@ func (client *PathsClient) DoubleDecimalNegative(ctx context.Context, options *P
 func (client *PathsClient) DoubleDecimalNegativeCreateRequest(ctx context.Context, options *PathsDoubleDecimalNegativeOptions) (*azcore.Request, error) {
 	urlPath := "/paths/double/-9999999.999/{doublePath}"
 	urlPath = strings.ReplaceAll(urlPath, "{doublePath}", url.PathEscape("-9999999.999"))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -465,7 +465,7 @@ func (client *PathsClient) DoubleDecimalPositive(ctx context.Context, options *P
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -479,7 +479,7 @@ func (client *PathsClient) DoubleDecimalPositive(ctx context.Context, options *P
 func (client *PathsClient) DoubleDecimalPositiveCreateRequest(ctx context.Context, options *PathsDoubleDecimalPositiveOptions) (*azcore.Request, error) {
 	urlPath := "/paths/double/9999999.999/{doublePath}"
 	urlPath = strings.ReplaceAll(urlPath, "{doublePath}", url.PathEscape("9999999.999"))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -502,7 +502,7 @@ func (client *PathsClient) EnumNull(ctx context.Context, enumPath URIColor, opti
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -516,7 +516,7 @@ func (client *PathsClient) EnumNull(ctx context.Context, enumPath URIColor, opti
 func (client *PathsClient) EnumNullCreateRequest(ctx context.Context, enumPath URIColor, options *PathsEnumNullOptions) (*azcore.Request, error) {
 	urlPath := "/paths/string/null/{enumPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{enumPath}", url.PathEscape(string(enumPath)))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -539,7 +539,7 @@ func (client *PathsClient) EnumValid(ctx context.Context, enumPath URIColor, opt
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -553,7 +553,7 @@ func (client *PathsClient) EnumValid(ctx context.Context, enumPath URIColor, opt
 func (client *PathsClient) EnumValidCreateRequest(ctx context.Context, enumPath URIColor, options *PathsEnumValidOptions) (*azcore.Request, error) {
 	urlPath := "/paths/enum/green%20color/{enumPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{enumPath}", url.PathEscape(string(enumPath)))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -576,7 +576,7 @@ func (client *PathsClient) FloatScientificNegative(ctx context.Context, options 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -590,7 +590,7 @@ func (client *PathsClient) FloatScientificNegative(ctx context.Context, options 
 func (client *PathsClient) FloatScientificNegativeCreateRequest(ctx context.Context, options *PathsFloatScientificNegativeOptions) (*azcore.Request, error) {
 	urlPath := "/paths/float/-1.034E-20/{floatPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{floatPath}", url.PathEscape("-1.034e-20"))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -613,7 +613,7 @@ func (client *PathsClient) FloatScientificPositive(ctx context.Context, options 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -627,7 +627,7 @@ func (client *PathsClient) FloatScientificPositive(ctx context.Context, options 
 func (client *PathsClient) FloatScientificPositiveCreateRequest(ctx context.Context, options *PathsFloatScientificPositiveOptions) (*azcore.Request, error) {
 	urlPath := "/paths/float/1.034E+20/{floatPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{floatPath}", url.PathEscape("103400000000000000000"))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -650,7 +650,7 @@ func (client *PathsClient) GetBooleanFalse(ctx context.Context, options *PathsGe
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -664,7 +664,7 @@ func (client *PathsClient) GetBooleanFalse(ctx context.Context, options *PathsGe
 func (client *PathsClient) GetBooleanFalseCreateRequest(ctx context.Context, options *PathsGetBooleanFalseOptions) (*azcore.Request, error) {
 	urlPath := "/paths/bool/false/{boolPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{boolPath}", url.PathEscape("false"))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -687,7 +687,7 @@ func (client *PathsClient) GetBooleanTrue(ctx context.Context, options *PathsGet
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -701,7 +701,7 @@ func (client *PathsClient) GetBooleanTrue(ctx context.Context, options *PathsGet
 func (client *PathsClient) GetBooleanTrueCreateRequest(ctx context.Context, options *PathsGetBooleanTrueOptions) (*azcore.Request, error) {
 	urlPath := "/paths/bool/true/{boolPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{boolPath}", url.PathEscape("true"))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -724,7 +724,7 @@ func (client *PathsClient) GetIntNegativeOneMillion(ctx context.Context, options
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -738,7 +738,7 @@ func (client *PathsClient) GetIntNegativeOneMillion(ctx context.Context, options
 func (client *PathsClient) GetIntNegativeOneMillionCreateRequest(ctx context.Context, options *PathsGetIntNegativeOneMillionOptions) (*azcore.Request, error) {
 	urlPath := "/paths/int/-1000000/{intPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{intPath}", url.PathEscape("-1000000"))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -761,7 +761,7 @@ func (client *PathsClient) GetIntOneMillion(ctx context.Context, options *PathsG
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -775,7 +775,7 @@ func (client *PathsClient) GetIntOneMillion(ctx context.Context, options *PathsG
 func (client *PathsClient) GetIntOneMillionCreateRequest(ctx context.Context, options *PathsGetIntOneMillionOptions) (*azcore.Request, error) {
 	urlPath := "/paths/int/1000000/{intPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{intPath}", url.PathEscape("1000000"))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -798,7 +798,7 @@ func (client *PathsClient) GetNegativeTenBillion(ctx context.Context, options *P
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -812,7 +812,7 @@ func (client *PathsClient) GetNegativeTenBillion(ctx context.Context, options *P
 func (client *PathsClient) GetNegativeTenBillionCreateRequest(ctx context.Context, options *PathsGetNegativeTenBillionOptions) (*azcore.Request, error) {
 	urlPath := "/paths/long/-10000000000/{longPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{longPath}", url.PathEscape("-10000000000"))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -835,7 +835,7 @@ func (client *PathsClient) GetTenBillion(ctx context.Context, options *PathsGetT
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -849,7 +849,7 @@ func (client *PathsClient) GetTenBillion(ctx context.Context, options *PathsGetT
 func (client *PathsClient) GetTenBillionCreateRequest(ctx context.Context, options *PathsGetTenBillionOptions) (*azcore.Request, error) {
 	urlPath := "/paths/long/10000000000/{longPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{longPath}", url.PathEscape("10000000000"))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -872,7 +872,7 @@ func (client *PathsClient) StringEmpty(ctx context.Context, options *PathsString
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -886,7 +886,7 @@ func (client *PathsClient) StringEmpty(ctx context.Context, options *PathsString
 func (client *PathsClient) StringEmptyCreateRequest(ctx context.Context, options *PathsStringEmptyOptions) (*azcore.Request, error) {
 	urlPath := "/paths/string/empty/{stringPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{stringPath}", url.PathEscape(""))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -909,7 +909,7 @@ func (client *PathsClient) StringNull(ctx context.Context, stringPath string, op
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -923,7 +923,7 @@ func (client *PathsClient) StringNull(ctx context.Context, stringPath string, op
 func (client *PathsClient) StringNullCreateRequest(ctx context.Context, stringPath string, options *PathsStringNullOptions) (*azcore.Request, error) {
 	urlPath := "/paths/string/null/{stringPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{stringPath}", url.PathEscape(stringPath))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -946,7 +946,7 @@ func (client *PathsClient) StringURLEncoded(ctx context.Context, options *PathsS
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -960,7 +960,7 @@ func (client *PathsClient) StringURLEncoded(ctx context.Context, options *PathsS
 func (client *PathsClient) StringURLEncodedCreateRequest(ctx context.Context, options *PathsStringURLEncodedOptions) (*azcore.Request, error) {
 	urlPath := "/paths/string/begin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend/{stringPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{stringPath}", url.PathEscape("begin!*'();:@ &=+$,/?#[]end"))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -983,7 +983,7 @@ func (client *PathsClient) StringURLNonEncoded(ctx context.Context, options *Pat
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -997,7 +997,7 @@ func (client *PathsClient) StringURLNonEncoded(ctx context.Context, options *Pat
 func (client *PathsClient) StringURLNonEncodedCreateRequest(ctx context.Context, options *PathsStringURLNonEncodedOptions) (*azcore.Request, error) {
 	urlPath := "/paths/string/begin!*'();:@&=+$,end/{stringPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{stringPath}", "begin!*'();:@&=+$,end")
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1020,7 +1020,7 @@ func (client *PathsClient) StringUnicode(ctx context.Context, options *PathsStri
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1034,7 +1034,7 @@ func (client *PathsClient) StringUnicode(ctx context.Context, options *PathsStri
 func (client *PathsClient) StringUnicodeCreateRequest(ctx context.Context, options *PathsStringUnicodeOptions) (*azcore.Request, error) {
 	urlPath := "/paths/string/unicode/{stringPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{stringPath}", url.PathEscape("啊齄丂狛狜隣郎隣兀﨩"))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1057,7 +1057,7 @@ func (client *PathsClient) UnixTimeURL(ctx context.Context, unixTimeUrlPath time
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1071,7 +1071,7 @@ func (client *PathsClient) UnixTimeURL(ctx context.Context, unixTimeUrlPath time
 func (client *PathsClient) UnixTimeURLCreateRequest(ctx context.Context, unixTimeUrlPath time.Time, options *PathsUnixTimeURLOptions) (*azcore.Request, error) {
 	urlPath := "/paths/int/1460505600/{unixTimeUrlPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{unixTimeUrlPath}", url.PathEscape(timeUnix(unixTimeUrlPath).String()))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

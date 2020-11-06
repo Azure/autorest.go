@@ -9,7 +9,7 @@ import (
 )
 
 func newHTTPSuccessOperationsClient() HTTPSuccessOperations {
-	return NewHTTPSuccessClient(NewDefaultClient(nil))
+	return NewHTTPSuccessClient(NewDefaultConnection(nil))
 }
 
 // Head200 - Return 200 status code if successful

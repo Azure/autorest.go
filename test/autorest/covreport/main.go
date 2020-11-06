@@ -13,12 +13,12 @@ import (
 
 // generate autorest test server coverage report
 func main() {
-	vanillaClient := reportgroup.NewAutoRestReportServiceClient(reportgroup.NewDefaultClient(nil))
+	vanillaClient := reportgroup.NewAutoRestReportServiceClient(reportgroup.NewDefaultConnection(nil))
 	vanillaReport, err := vanillaClient.GetReport(context.Background(), nil)
 	if err != nil {
 		panic(err)
 	}
-	azureClient := azurereportgroup.NewAutoRestReportServiceForAzureClient(azurereportgroup.NewDefaultClient(nil))
+	azureClient := azurereportgroup.NewAutoRestReportServiceForAzureClient(azurereportgroup.NewDefaultConnection(nil))
 	azureReport, err := azureClient.GetReport(context.Background(), nil)
 	if err != nil {
 		panic(err)

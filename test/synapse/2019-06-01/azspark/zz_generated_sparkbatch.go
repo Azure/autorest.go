@@ -18,12 +18,12 @@ import (
 )
 
 type sparkBatchClient struct {
-	*client
+	con *connection
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *sparkBatchClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *sparkBatchClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // CancelSparkBatchJob - Cancels a running spark batch job.
@@ -32,7 +32,7 @@ func (client *sparkBatchClient) CancelSparkBatchJob(ctx context.Context, batchId
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -46,7 +46,7 @@ func (client *sparkBatchClient) CancelSparkBatchJob(ctx context.Context, batchId
 func (client *sparkBatchClient) CancelSparkBatchJobCreateRequest(ctx context.Context, batchId int32, options *SparkBatchCancelSparkBatchJobOptions) (*azcore.Request, error) {
 	urlPath := "/batches/{batchId}"
 	urlPath = strings.ReplaceAll(urlPath, "{batchId}", url.PathEscape(strconv.FormatInt(int64(batchId), 10)))
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -71,7 +71,7 @@ func (client *sparkBatchClient) CreateSparkBatchJob(ctx context.Context, sparkBa
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -88,7 +88,7 @@ func (client *sparkBatchClient) CreateSparkBatchJob(ctx context.Context, sparkBa
 // CreateSparkBatchJobCreateRequest creates the CreateSparkBatchJob request.
 func (client *sparkBatchClient) CreateSparkBatchJobCreateRequest(ctx context.Context, sparkBatchJobOptions SparkBatchJobOptions, options *SparkBatchCreateSparkBatchJobOptions) (*azcore.Request, error) {
 	urlPath := "/batches"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -125,7 +125,7 @@ func (client *sparkBatchClient) GetSparkBatchJob(ctx context.Context, batchId in
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -143,7 +143,7 @@ func (client *sparkBatchClient) GetSparkBatchJob(ctx context.Context, batchId in
 func (client *sparkBatchClient) GetSparkBatchJobCreateRequest(ctx context.Context, batchId int32, options *SparkBatchGetSparkBatchJobOptions) (*azcore.Request, error) {
 	urlPath := "/batches/{batchId}"
 	urlPath = strings.ReplaceAll(urlPath, "{batchId}", url.PathEscape(strconv.FormatInt(int64(batchId), 10)))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -180,7 +180,7 @@ func (client *sparkBatchClient) GetSparkBatchJobs(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -197,7 +197,7 @@ func (client *sparkBatchClient) GetSparkBatchJobs(ctx context.Context, options *
 // GetSparkBatchJobsCreateRequest creates the GetSparkBatchJobs request.
 func (client *sparkBatchClient) GetSparkBatchJobsCreateRequest(ctx context.Context, options *SparkBatchGetSparkBatchJobsOptions) (*azcore.Request, error) {
 	urlPath := "/batches"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

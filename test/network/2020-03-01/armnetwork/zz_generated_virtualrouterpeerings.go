@@ -34,18 +34,18 @@ type VirtualRouterPeeringsOperations interface {
 // VirtualRouterPeeringsClient implements the VirtualRouterPeeringsOperations interface.
 // Don't use this type directly, use NewVirtualRouterPeeringsClient() instead.
 type VirtualRouterPeeringsClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewVirtualRouterPeeringsClient creates a new instance of VirtualRouterPeeringsClient with the specified values.
-func NewVirtualRouterPeeringsClient(c *Client, subscriptionID string) VirtualRouterPeeringsOperations {
-	return &VirtualRouterPeeringsClient{Client: c, subscriptionID: subscriptionID}
+func NewVirtualRouterPeeringsClient(con *Connection, subscriptionID string) VirtualRouterPeeringsOperations {
+	return &VirtualRouterPeeringsClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *VirtualRouterPeeringsClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *VirtualRouterPeeringsClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 func (client *VirtualRouterPeeringsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string, parameters VirtualRouterPeering, options *VirtualRouterPeeringsCreateOrUpdateOptions) (*VirtualRouterPeeringPollerResponse, error) {
@@ -62,7 +62,7 @@ func (client *VirtualRouterPeeringsClient) BeginCreateOrUpdate(ctx context.Conte
 	}
 	poller := &virtualRouterPeeringPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*VirtualRouterPeeringResponse, error) {
@@ -77,7 +77,7 @@ func (client *VirtualRouterPeeringsClient) ResumeCreateOrUpdate(token string) (V
 		return nil, err
 	}
 	return &virtualRouterPeeringPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -88,7 +88,7 @@ func (client *VirtualRouterPeeringsClient) CreateOrUpdate(ctx context.Context, r
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -105,7 +105,7 @@ func (client *VirtualRouterPeeringsClient) CreateOrUpdateCreateRequest(ctx conte
 	urlPath = strings.ReplaceAll(urlPath, "{virtualRouterName}", url.PathEscape(virtualRouterName))
 	urlPath = strings.ReplaceAll(urlPath, "{peeringName}", url.PathEscape(peeringName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -145,7 +145,7 @@ func (client *VirtualRouterPeeringsClient) BeginDelete(ctx context.Context, reso
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -160,7 +160,7 @@ func (client *VirtualRouterPeeringsClient) ResumeDelete(token string) (HTTPPolle
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -171,7 +171,7 @@ func (client *VirtualRouterPeeringsClient) Delete(ctx context.Context, resourceG
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -188,7 +188,7 @@ func (client *VirtualRouterPeeringsClient) DeleteCreateRequest(ctx context.Conte
 	urlPath = strings.ReplaceAll(urlPath, "{virtualRouterName}", url.PathEscape(virtualRouterName))
 	urlPath = strings.ReplaceAll(urlPath, "{peeringName}", url.PathEscape(peeringName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -214,7 +214,7 @@ func (client *VirtualRouterPeeringsClient) Get(ctx context.Context, resourceGrou
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -235,7 +235,7 @@ func (client *VirtualRouterPeeringsClient) GetCreateRequest(ctx context.Context,
 	urlPath = strings.ReplaceAll(urlPath, "{virtualRouterName}", url.PathEscape(virtualRouterName))
 	urlPath = strings.ReplaceAll(urlPath, "{peeringName}", url.PathEscape(peeringName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -264,7 +264,7 @@ func (client *VirtualRouterPeeringsClient) GetHandleError(resp *azcore.Response)
 // List - Lists all Virtual Router Peerings in a Virtual Router resource.
 func (client *VirtualRouterPeeringsClient) List(resourceGroupName string, virtualRouterName string, options *VirtualRouterPeeringsListOptions) VirtualRouterPeeringListResultPager {
 	return &virtualRouterPeeringListResultPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListCreateRequest(ctx, resourceGroupName, virtualRouterName, options)
 		},
@@ -283,7 +283,7 @@ func (client *VirtualRouterPeeringsClient) ListCreateRequest(ctx context.Context
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualRouterName}", url.PathEscape(virtualRouterName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

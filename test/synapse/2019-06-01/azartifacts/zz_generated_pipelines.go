@@ -14,12 +14,12 @@ import (
 )
 
 type pipelinesClient struct {
-	*client
+	con *connection
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *pipelinesClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *pipelinesClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // Rename - Renames a pipeline.
@@ -28,7 +28,7 @@ func (client *pipelinesClient) Rename(ctx context.Context, pipelineName string, 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -42,7 +42,7 @@ func (client *pipelinesClient) Rename(ctx context.Context, pipelineName string, 
 func (client *pipelinesClient) RenameCreateRequest(ctx context.Context, pipelineName string, request ArtifactRenameRequest, options *PipelinesRenameOptions) (*azcore.Request, error) {
 	urlPath := "/pipelines/{pipelineName}/rename"
 	urlPath = strings.ReplaceAll(urlPath, "{pipelineName}", url.PathEscape(pipelineName))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

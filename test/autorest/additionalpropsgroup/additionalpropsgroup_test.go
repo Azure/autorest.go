@@ -13,7 +13,7 @@ import (
 )
 
 func newPetsClient() PetsOperations {
-	return NewPetsClient(NewDefaultClient(nil))
+	return NewPetsClient(NewDefaultConnection(nil))
 }
 
 // CreateApInProperties - Create a Pet which contains more properties than what is defined.

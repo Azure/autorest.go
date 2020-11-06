@@ -30,18 +30,18 @@ type AutoRestValidationTestOperations interface {
 // AutoRestValidationTestClient implements the AutoRestValidationTestOperations interface.
 // Don't use this type directly, use NewAutoRestValidationTestClient() instead.
 type AutoRestValidationTestClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewAutoRestValidationTestClient creates a new instance of AutoRestValidationTestClient with the specified values.
-func NewAutoRestValidationTestClient(c *Client, subscriptionID string) AutoRestValidationTestOperations {
-	return &AutoRestValidationTestClient{Client: c, subscriptionID: subscriptionID}
+func NewAutoRestValidationTestClient(con *Connection, subscriptionID string) AutoRestValidationTestOperations {
+	return &AutoRestValidationTestClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *AutoRestValidationTestClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *AutoRestValidationTestClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 func (client *AutoRestValidationTestClient) GetWithConstantInPath(ctx context.Context, options *AutoRestValidationTestGetWithConstantInPathOptions) (*http.Response, error) {
@@ -49,7 +49,7 @@ func (client *AutoRestValidationTestClient) GetWithConstantInPath(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -63,7 +63,7 @@ func (client *AutoRestValidationTestClient) GetWithConstantInPath(ctx context.Co
 func (client *AutoRestValidationTestClient) GetWithConstantInPathCreateRequest(ctx context.Context, options *AutoRestValidationTestGetWithConstantInPathOptions) (*azcore.Request, error) {
 	urlPath := "/validation/constantsInPath/{constantParam}/value"
 	urlPath = strings.ReplaceAll(urlPath, "{constantParam}", url.PathEscape("constant"))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -87,7 +87,7 @@ func (client *AutoRestValidationTestClient) PostWithConstantInBody(ctx context.C
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -105,7 +105,7 @@ func (client *AutoRestValidationTestClient) PostWithConstantInBody(ctx context.C
 func (client *AutoRestValidationTestClient) PostWithConstantInBodyCreateRequest(ctx context.Context, options *AutoRestValidationTestPostWithConstantInBodyOptions) (*azcore.Request, error) {
 	urlPath := "/validation/constantsInPath/{constantParam}/value"
 	urlPath = strings.ReplaceAll(urlPath, "{constantParam}", url.PathEscape("constant"))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -140,7 +140,7 @@ func (client *AutoRestValidationTestClient) ValidationOfBody(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -160,7 +160,7 @@ func (client *AutoRestValidationTestClient) ValidationOfBodyCreateRequest(ctx co
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{id}", url.PathEscape(strconv.FormatInt(int64(id), 10)))
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -195,7 +195,7 @@ func (client *AutoRestValidationTestClient) ValidationOfMethodParameters(ctx con
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -215,7 +215,7 @@ func (client *AutoRestValidationTestClient) ValidationOfMethodParametersCreateRe
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{id}", url.PathEscape(strconv.FormatInt(int64(id), 10)))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

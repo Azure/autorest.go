@@ -81,17 +81,17 @@ type HeaderOperations interface {
 // HeaderClient implements the HeaderOperations interface.
 // Don't use this type directly, use NewHeaderClient() instead.
 type HeaderClient struct {
-	*Client
+	con *Connection
 }
 
 // NewHeaderClient creates a new instance of HeaderClient with the specified values.
-func NewHeaderClient(c *Client) HeaderOperations {
-	return &HeaderClient{Client: c}
+func NewHeaderClient(con *Connection) HeaderOperations {
+	return &HeaderClient{con: con}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *HeaderClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *HeaderClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // CustomRequestID - Send x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request
@@ -100,7 +100,7 @@ func (client *HeaderClient) CustomRequestID(ctx context.Context, options *Header
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -113,7 +113,7 @@ func (client *HeaderClient) CustomRequestID(ctx context.Context, options *Header
 // CustomRequestIDCreateRequest creates the CustomRequestID request.
 func (client *HeaderClient) CustomRequestIDCreateRequest(ctx context.Context, options *HeaderCustomRequestIDOptions) (*azcore.Request, error) {
 	urlPath := "/header/custom/x-ms-client-request-id/9C4D50EE-2D56-4CD3-8152-34347DC9F2B0"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -136,7 +136,7 @@ func (client *HeaderClient) ParamBool(ctx context.Context, scenario string, valu
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -149,7 +149,7 @@ func (client *HeaderClient) ParamBool(ctx context.Context, scenario string, valu
 // ParamBoolCreateRequest creates the ParamBool request.
 func (client *HeaderClient) ParamBoolCreateRequest(ctx context.Context, scenario string, value bool, options *HeaderParamBoolOptions) (*azcore.Request, error) {
 	urlPath := "/header/param/prim/bool"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -174,7 +174,7 @@ func (client *HeaderClient) ParamByte(ctx context.Context, scenario string, valu
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -187,7 +187,7 @@ func (client *HeaderClient) ParamByte(ctx context.Context, scenario string, valu
 // ParamByteCreateRequest creates the ParamByte request.
 func (client *HeaderClient) ParamByteCreateRequest(ctx context.Context, scenario string, value []byte, options *HeaderParamByteOptions) (*azcore.Request, error) {
 	urlPath := "/header/param/prim/byte"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -212,7 +212,7 @@ func (client *HeaderClient) ParamDate(ctx context.Context, scenario string, valu
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -225,7 +225,7 @@ func (client *HeaderClient) ParamDate(ctx context.Context, scenario string, valu
 // ParamDateCreateRequest creates the ParamDate request.
 func (client *HeaderClient) ParamDateCreateRequest(ctx context.Context, scenario string, value time.Time, options *HeaderParamDateOptions) (*azcore.Request, error) {
 	urlPath := "/header/param/prim/date"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -250,7 +250,7 @@ func (client *HeaderClient) ParamDatetime(ctx context.Context, scenario string, 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -263,7 +263,7 @@ func (client *HeaderClient) ParamDatetime(ctx context.Context, scenario string, 
 // ParamDatetimeCreateRequest creates the ParamDatetime request.
 func (client *HeaderClient) ParamDatetimeCreateRequest(ctx context.Context, scenario string, value time.Time, options *HeaderParamDatetimeOptions) (*azcore.Request, error) {
 	urlPath := "/header/param/prim/datetime"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -289,7 +289,7 @@ func (client *HeaderClient) ParamDatetimeRFC1123(ctx context.Context, scenario s
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -302,7 +302,7 @@ func (client *HeaderClient) ParamDatetimeRFC1123(ctx context.Context, scenario s
 // ParamDatetimeRFC1123CreateRequest creates the ParamDatetimeRFC1123 request.
 func (client *HeaderClient) ParamDatetimeRFC1123CreateRequest(ctx context.Context, scenario string, options *HeaderParamDatetimeRFC1123Options) (*azcore.Request, error) {
 	urlPath := "/header/param/prim/datetimerfc1123"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -329,7 +329,7 @@ func (client *HeaderClient) ParamDouble(ctx context.Context, scenario string, va
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -342,7 +342,7 @@ func (client *HeaderClient) ParamDouble(ctx context.Context, scenario string, va
 // ParamDoubleCreateRequest creates the ParamDouble request.
 func (client *HeaderClient) ParamDoubleCreateRequest(ctx context.Context, scenario string, value float64, options *HeaderParamDoubleOptions) (*azcore.Request, error) {
 	urlPath := "/header/param/prim/double"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -367,7 +367,7 @@ func (client *HeaderClient) ParamDuration(ctx context.Context, scenario string, 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -380,7 +380,7 @@ func (client *HeaderClient) ParamDuration(ctx context.Context, scenario string, 
 // ParamDurationCreateRequest creates the ParamDuration request.
 func (client *HeaderClient) ParamDurationCreateRequest(ctx context.Context, scenario string, value string, options *HeaderParamDurationOptions) (*azcore.Request, error) {
 	urlPath := "/header/param/prim/duration"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -405,7 +405,7 @@ func (client *HeaderClient) ParamEnum(ctx context.Context, scenario string, opti
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -418,7 +418,7 @@ func (client *HeaderClient) ParamEnum(ctx context.Context, scenario string, opti
 // ParamEnumCreateRequest creates the ParamEnum request.
 func (client *HeaderClient) ParamEnumCreateRequest(ctx context.Context, scenario string, options *HeaderParamEnumOptions) (*azcore.Request, error) {
 	urlPath := "/header/param/prim/enum"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -445,7 +445,7 @@ func (client *HeaderClient) ParamExistingKey(ctx context.Context, userAgent stri
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -458,7 +458,7 @@ func (client *HeaderClient) ParamExistingKey(ctx context.Context, userAgent stri
 // ParamExistingKeyCreateRequest creates the ParamExistingKey request.
 func (client *HeaderClient) ParamExistingKeyCreateRequest(ctx context.Context, userAgent string, options *HeaderParamExistingKeyOptions) (*azcore.Request, error) {
 	urlPath := "/header/param/existingkey"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -482,7 +482,7 @@ func (client *HeaderClient) ParamFloat(ctx context.Context, scenario string, val
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -495,7 +495,7 @@ func (client *HeaderClient) ParamFloat(ctx context.Context, scenario string, val
 // ParamFloatCreateRequest creates the ParamFloat request.
 func (client *HeaderClient) ParamFloatCreateRequest(ctx context.Context, scenario string, value float32, options *HeaderParamFloatOptions) (*azcore.Request, error) {
 	urlPath := "/header/param/prim/float"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -520,7 +520,7 @@ func (client *HeaderClient) ParamInteger(ctx context.Context, scenario string, v
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -533,7 +533,7 @@ func (client *HeaderClient) ParamInteger(ctx context.Context, scenario string, v
 // ParamIntegerCreateRequest creates the ParamInteger request.
 func (client *HeaderClient) ParamIntegerCreateRequest(ctx context.Context, scenario string, value int32, options *HeaderParamIntegerOptions) (*azcore.Request, error) {
 	urlPath := "/header/param/prim/integer"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -558,7 +558,7 @@ func (client *HeaderClient) ParamLong(ctx context.Context, scenario string, valu
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -571,7 +571,7 @@ func (client *HeaderClient) ParamLong(ctx context.Context, scenario string, valu
 // ParamLongCreateRequest creates the ParamLong request.
 func (client *HeaderClient) ParamLongCreateRequest(ctx context.Context, scenario string, value int64, options *HeaderParamLongOptions) (*azcore.Request, error) {
 	urlPath := "/header/param/prim/long"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -596,7 +596,7 @@ func (client *HeaderClient) ParamProtectedKey(ctx context.Context, contentType s
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -609,7 +609,7 @@ func (client *HeaderClient) ParamProtectedKey(ctx context.Context, contentType s
 // ParamProtectedKeyCreateRequest creates the ParamProtectedKey request.
 func (client *HeaderClient) ParamProtectedKeyCreateRequest(ctx context.Context, contentType string, options *HeaderParamProtectedKeyOptions) (*azcore.Request, error) {
 	urlPath := "/header/param/protectedkey"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -634,7 +634,7 @@ func (client *HeaderClient) ParamString(ctx context.Context, scenario string, op
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -647,7 +647,7 @@ func (client *HeaderClient) ParamString(ctx context.Context, scenario string, op
 // ParamStringCreateRequest creates the ParamString request.
 func (client *HeaderClient) ParamStringCreateRequest(ctx context.Context, scenario string, options *HeaderParamStringOptions) (*azcore.Request, error) {
 	urlPath := "/header/param/prim/string"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -674,7 +674,7 @@ func (client *HeaderClient) ResponseBool(ctx context.Context, scenario string, o
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -691,7 +691,7 @@ func (client *HeaderClient) ResponseBool(ctx context.Context, scenario string, o
 // ResponseBoolCreateRequest creates the ResponseBool request.
 func (client *HeaderClient) ResponseBoolCreateRequest(ctx context.Context, scenario string, options *HeaderResponseBoolOptions) (*azcore.Request, error) {
 	urlPath := "/header/response/prim/bool"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -728,7 +728,7 @@ func (client *HeaderClient) ResponseByte(ctx context.Context, scenario string, o
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -745,7 +745,7 @@ func (client *HeaderClient) ResponseByte(ctx context.Context, scenario string, o
 // ResponseByteCreateRequest creates the ResponseByte request.
 func (client *HeaderClient) ResponseByteCreateRequest(ctx context.Context, scenario string, options *HeaderResponseByteOptions) (*azcore.Request, error) {
 	urlPath := "/header/response/prim/byte"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -782,7 +782,7 @@ func (client *HeaderClient) ResponseDate(ctx context.Context, scenario string, o
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -799,7 +799,7 @@ func (client *HeaderClient) ResponseDate(ctx context.Context, scenario string, o
 // ResponseDateCreateRequest creates the ResponseDate request.
 func (client *HeaderClient) ResponseDateCreateRequest(ctx context.Context, scenario string, options *HeaderResponseDateOptions) (*azcore.Request, error) {
 	urlPath := "/header/response/prim/date"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -836,7 +836,7 @@ func (client *HeaderClient) ResponseDatetime(ctx context.Context, scenario strin
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -853,7 +853,7 @@ func (client *HeaderClient) ResponseDatetime(ctx context.Context, scenario strin
 // ResponseDatetimeCreateRequest creates the ResponseDatetime request.
 func (client *HeaderClient) ResponseDatetimeCreateRequest(ctx context.Context, scenario string, options *HeaderResponseDatetimeOptions) (*azcore.Request, error) {
 	urlPath := "/header/response/prim/datetime"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -890,7 +890,7 @@ func (client *HeaderClient) ResponseDatetimeRFC1123(ctx context.Context, scenari
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -907,7 +907,7 @@ func (client *HeaderClient) ResponseDatetimeRFC1123(ctx context.Context, scenari
 // ResponseDatetimeRFC1123CreateRequest creates the ResponseDatetimeRFC1123 request.
 func (client *HeaderClient) ResponseDatetimeRFC1123CreateRequest(ctx context.Context, scenario string, options *HeaderResponseDatetimeRFC1123Options) (*azcore.Request, error) {
 	urlPath := "/header/response/prim/datetimerfc1123"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -944,7 +944,7 @@ func (client *HeaderClient) ResponseDouble(ctx context.Context, scenario string,
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -961,7 +961,7 @@ func (client *HeaderClient) ResponseDouble(ctx context.Context, scenario string,
 // ResponseDoubleCreateRequest creates the ResponseDouble request.
 func (client *HeaderClient) ResponseDoubleCreateRequest(ctx context.Context, scenario string, options *HeaderResponseDoubleOptions) (*azcore.Request, error) {
 	urlPath := "/header/response/prim/double"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -998,7 +998,7 @@ func (client *HeaderClient) ResponseDuration(ctx context.Context, scenario strin
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1015,7 +1015,7 @@ func (client *HeaderClient) ResponseDuration(ctx context.Context, scenario strin
 // ResponseDurationCreateRequest creates the ResponseDuration request.
 func (client *HeaderClient) ResponseDurationCreateRequest(ctx context.Context, scenario string, options *HeaderResponseDurationOptions) (*azcore.Request, error) {
 	urlPath := "/header/response/prim/duration"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1048,7 +1048,7 @@ func (client *HeaderClient) ResponseEnum(ctx context.Context, scenario string, o
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1065,7 +1065,7 @@ func (client *HeaderClient) ResponseEnum(ctx context.Context, scenario string, o
 // ResponseEnumCreateRequest creates the ResponseEnum request.
 func (client *HeaderClient) ResponseEnumCreateRequest(ctx context.Context, scenario string, options *HeaderResponseEnumOptions) (*azcore.Request, error) {
 	urlPath := "/header/response/prim/enum"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1098,7 +1098,7 @@ func (client *HeaderClient) ResponseExistingKey(ctx context.Context, options *He
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1115,7 +1115,7 @@ func (client *HeaderClient) ResponseExistingKey(ctx context.Context, options *He
 // ResponseExistingKeyCreateRequest creates the ResponseExistingKey request.
 func (client *HeaderClient) ResponseExistingKeyCreateRequest(ctx context.Context, options *HeaderResponseExistingKeyOptions) (*azcore.Request, error) {
 	urlPath := "/header/response/existingkey"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1147,7 +1147,7 @@ func (client *HeaderClient) ResponseFloat(ctx context.Context, scenario string, 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1164,7 +1164,7 @@ func (client *HeaderClient) ResponseFloat(ctx context.Context, scenario string, 
 // ResponseFloatCreateRequest creates the ResponseFloat request.
 func (client *HeaderClient) ResponseFloatCreateRequest(ctx context.Context, scenario string, options *HeaderResponseFloatOptions) (*azcore.Request, error) {
 	urlPath := "/header/response/prim/float"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1202,7 +1202,7 @@ func (client *HeaderClient) ResponseInteger(ctx context.Context, scenario string
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1219,7 +1219,7 @@ func (client *HeaderClient) ResponseInteger(ctx context.Context, scenario string
 // ResponseIntegerCreateRequest creates the ResponseInteger request.
 func (client *HeaderClient) ResponseIntegerCreateRequest(ctx context.Context, scenario string, options *HeaderResponseIntegerOptions) (*azcore.Request, error) {
 	urlPath := "/header/response/prim/integer"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1257,7 +1257,7 @@ func (client *HeaderClient) ResponseLong(ctx context.Context, scenario string, o
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1274,7 +1274,7 @@ func (client *HeaderClient) ResponseLong(ctx context.Context, scenario string, o
 // ResponseLongCreateRequest creates the ResponseLong request.
 func (client *HeaderClient) ResponseLongCreateRequest(ctx context.Context, scenario string, options *HeaderResponseLongOptions) (*azcore.Request, error) {
 	urlPath := "/header/response/prim/long"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1311,7 +1311,7 @@ func (client *HeaderClient) ResponseProtectedKey(ctx context.Context, options *H
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1328,7 +1328,7 @@ func (client *HeaderClient) ResponseProtectedKey(ctx context.Context, options *H
 // ResponseProtectedKeyCreateRequest creates the ResponseProtectedKey request.
 func (client *HeaderClient) ResponseProtectedKeyCreateRequest(ctx context.Context, options *HeaderResponseProtectedKeyOptions) (*azcore.Request, error) {
 	urlPath := "/header/response/protectedkey"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1360,7 +1360,7 @@ func (client *HeaderClient) ResponseString(ctx context.Context, scenario string,
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1377,7 +1377,7 @@ func (client *HeaderClient) ResponseString(ctx context.Context, scenario string,
 // ResponseStringCreateRequest creates the ResponseString request.
 func (client *HeaderClient) ResponseStringCreateRequest(ctx context.Context, scenario string, options *HeaderResponseStringOptions) (*azcore.Request, error) {
 	urlPath := "/header/response/prim/string"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

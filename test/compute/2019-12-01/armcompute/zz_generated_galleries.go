@@ -40,18 +40,18 @@ type GalleriesOperations interface {
 // GalleriesClient implements the GalleriesOperations interface.
 // Don't use this type directly, use NewGalleriesClient() instead.
 type GalleriesClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewGalleriesClient creates a new instance of GalleriesClient with the specified values.
-func NewGalleriesClient(c *Client, subscriptionID string) GalleriesOperations {
-	return &GalleriesClient{Client: c, subscriptionID: subscriptionID}
+func NewGalleriesClient(con *Connection, subscriptionID string) GalleriesOperations {
+	return &GalleriesClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *GalleriesClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *GalleriesClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 func (client *GalleriesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, gallery Gallery, options *GalleriesCreateOrUpdateOptions) (*GalleryPollerResponse, error) {
@@ -68,7 +68,7 @@ func (client *GalleriesClient) BeginCreateOrUpdate(ctx context.Context, resource
 	}
 	poller := &galleryPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*GalleryResponse, error) {
@@ -83,7 +83,7 @@ func (client *GalleriesClient) ResumeCreateOrUpdate(token string) (GalleryPoller
 		return nil, err
 	}
 	return &galleryPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -94,7 +94,7 @@ func (client *GalleriesClient) CreateOrUpdate(ctx context.Context, resourceGroup
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -110,7 +110,7 @@ func (client *GalleriesClient) CreateOrUpdateCreateRequest(ctx context.Context, 
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{galleryName}", url.PathEscape(galleryName))
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -150,7 +150,7 @@ func (client *GalleriesClient) BeginDelete(ctx context.Context, resourceGroupNam
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -165,7 +165,7 @@ func (client *GalleriesClient) ResumeDelete(token string) (HTTPPoller, error) {
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -176,7 +176,7 @@ func (client *GalleriesClient) Delete(ctx context.Context, resourceGroupName str
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -192,7 +192,7 @@ func (client *GalleriesClient) DeleteCreateRequest(ctx context.Context, resource
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{galleryName}", url.PathEscape(galleryName))
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -218,7 +218,7 @@ func (client *GalleriesClient) Get(ctx context.Context, resourceGroupName string
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -238,7 +238,7 @@ func (client *GalleriesClient) GetCreateRequest(ctx context.Context, resourceGro
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{galleryName}", url.PathEscape(galleryName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -267,7 +267,7 @@ func (client *GalleriesClient) GetHandleError(resp *azcore.Response) error {
 // List - List galleries under a subscription.
 func (client *GalleriesClient) List(options *GalleriesListOptions) GalleryListPager {
 	return &galleryListPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListCreateRequest(ctx, options)
 		},
@@ -284,7 +284,7 @@ func (client *GalleriesClient) List(options *GalleriesListOptions) GalleryListPa
 func (client *GalleriesClient) ListCreateRequest(ctx context.Context, options *GalleriesListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/galleries"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -313,7 +313,7 @@ func (client *GalleriesClient) ListHandleError(resp *azcore.Response) error {
 // ListByResourceGroup - List galleries under a resource group.
 func (client *GalleriesClient) ListByResourceGroup(resourceGroupName string, options *GalleriesListByResourceGroupOptions) GalleryListPager {
 	return &galleryListPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListByResourceGroupCreateRequest(ctx, resourceGroupName, options)
 		},
@@ -331,7 +331,7 @@ func (client *GalleriesClient) ListByResourceGroupCreateRequest(ctx context.Cont
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -371,7 +371,7 @@ func (client *GalleriesClient) BeginUpdate(ctx context.Context, resourceGroupNam
 	}
 	poller := &galleryPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*GalleryResponse, error) {
@@ -386,7 +386,7 @@ func (client *GalleriesClient) ResumeUpdate(token string) (GalleryPoller, error)
 		return nil, err
 	}
 	return &galleryPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -397,7 +397,7 @@ func (client *GalleriesClient) Update(ctx context.Context, resourceGroupName str
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -413,7 +413,7 @@ func (client *GalleriesClient) UpdateCreateRequest(ctx context.Context, resource
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{galleryName}", url.PathEscape(galleryName))
-	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

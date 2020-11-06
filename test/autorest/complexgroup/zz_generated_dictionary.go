@@ -30,17 +30,17 @@ type DictionaryOperations interface {
 // DictionaryClient implements the DictionaryOperations interface.
 // Don't use this type directly, use NewDictionaryClient() instead.
 type DictionaryClient struct {
-	*Client
+	con *Connection
 }
 
 // NewDictionaryClient creates a new instance of DictionaryClient with the specified values.
-func NewDictionaryClient(c *Client) DictionaryOperations {
-	return &DictionaryClient{Client: c}
+func NewDictionaryClient(con *Connection) DictionaryOperations {
+	return &DictionaryClient{con: con}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *DictionaryClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *DictionaryClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // GetEmpty - Get complex types with dictionary property which is empty
@@ -49,7 +49,7 @@ func (client *DictionaryClient) GetEmpty(ctx context.Context, options *Dictionar
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -66,7 +66,7 @@ func (client *DictionaryClient) GetEmpty(ctx context.Context, options *Dictionar
 // GetEmptyCreateRequest creates the GetEmpty request.
 func (client *DictionaryClient) GetEmptyCreateRequest(ctx context.Context, options *DictionaryGetEmptyOptions) (*azcore.Request, error) {
 	urlPath := "/complex/dictionary/typed/empty"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -95,7 +95,7 @@ func (client *DictionaryClient) GetNotProvided(ctx context.Context, options *Dic
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -112,7 +112,7 @@ func (client *DictionaryClient) GetNotProvided(ctx context.Context, options *Dic
 // GetNotProvidedCreateRequest creates the GetNotProvided request.
 func (client *DictionaryClient) GetNotProvidedCreateRequest(ctx context.Context, options *DictionaryGetNotProvidedOptions) (*azcore.Request, error) {
 	urlPath := "/complex/dictionary/typed/notprovided"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -141,7 +141,7 @@ func (client *DictionaryClient) GetNull(ctx context.Context, options *Dictionary
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -158,7 +158,7 @@ func (client *DictionaryClient) GetNull(ctx context.Context, options *Dictionary
 // GetNullCreateRequest creates the GetNull request.
 func (client *DictionaryClient) GetNullCreateRequest(ctx context.Context, options *DictionaryGetNullOptions) (*azcore.Request, error) {
 	urlPath := "/complex/dictionary/typed/null"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -187,7 +187,7 @@ func (client *DictionaryClient) GetValid(ctx context.Context, options *Dictionar
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -204,7 +204,7 @@ func (client *DictionaryClient) GetValid(ctx context.Context, options *Dictionar
 // GetValidCreateRequest creates the GetValid request.
 func (client *DictionaryClient) GetValidCreateRequest(ctx context.Context, options *DictionaryGetValidOptions) (*azcore.Request, error) {
 	urlPath := "/complex/dictionary/typed/valid"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -233,7 +233,7 @@ func (client *DictionaryClient) PutEmpty(ctx context.Context, complexBody Dictio
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -246,7 +246,7 @@ func (client *DictionaryClient) PutEmpty(ctx context.Context, complexBody Dictio
 // PutEmptyCreateRequest creates the PutEmpty request.
 func (client *DictionaryClient) PutEmptyCreateRequest(ctx context.Context, complexBody DictionaryWrapper, options *DictionaryPutEmptyOptions) (*azcore.Request, error) {
 	urlPath := "/complex/dictionary/typed/empty"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -269,7 +269,7 @@ func (client *DictionaryClient) PutValid(ctx context.Context, complexBody Dictio
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -282,7 +282,7 @@ func (client *DictionaryClient) PutValid(ctx context.Context, complexBody Dictio
 // PutValidCreateRequest creates the PutValid request.
 func (client *DictionaryClient) PutValidCreateRequest(ctx context.Context, complexBody DictionaryWrapper, options *DictionaryPutValidOptions) (*azcore.Request, error) {
 	urlPath := "/complex/dictionary/typed/valid"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

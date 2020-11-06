@@ -22,18 +22,18 @@ type ServiceTagsOperations interface {
 // ServiceTagsClient implements the ServiceTagsOperations interface.
 // Don't use this type directly, use NewServiceTagsClient() instead.
 type ServiceTagsClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewServiceTagsClient creates a new instance of ServiceTagsClient with the specified values.
-func NewServiceTagsClient(c *Client, subscriptionID string) ServiceTagsOperations {
-	return &ServiceTagsClient{Client: c, subscriptionID: subscriptionID}
+func NewServiceTagsClient(con *Connection, subscriptionID string) ServiceTagsOperations {
+	return &ServiceTagsClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *ServiceTagsClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *ServiceTagsClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // List - Gets a list of service tag information resources.
@@ -42,7 +42,7 @@ func (client *ServiceTagsClient) List(ctx context.Context, location string, opti
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -61,7 +61,7 @@ func (client *ServiceTagsClient) ListCreateRequest(ctx context.Context, location
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/serviceTags"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

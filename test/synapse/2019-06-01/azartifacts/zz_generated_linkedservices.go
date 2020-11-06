@@ -14,12 +14,12 @@ import (
 )
 
 type linkedServicesClient struct {
-	*client
+	con *connection
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *linkedServicesClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *linkedServicesClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // Rename - Renames a linked service.
@@ -28,7 +28,7 @@ func (client *linkedServicesClient) Rename(ctx context.Context, linkedServiceNam
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -42,7 +42,7 @@ func (client *linkedServicesClient) Rename(ctx context.Context, linkedServiceNam
 func (client *linkedServicesClient) RenameCreateRequest(ctx context.Context, linkedServiceName string, request ArtifactRenameRequest, options *LinkedServicesRenameOptions) (*azcore.Request, error) {
 	urlPath := "/linkedservices/{linkedServiceName}/rename"
 	urlPath = strings.ReplaceAll(urlPath, "{linkedServiceName}", url.PathEscape(linkedServiceName))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

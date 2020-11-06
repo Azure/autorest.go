@@ -21,17 +21,17 @@ type PathsOperations interface {
 // PathsClient implements the PathsOperations interface.
 // Don't use this type directly, use NewPathsClient() instead.
 type PathsClient struct {
-	*Client
+	con *Connection
 }
 
 // NewPathsClient creates a new instance of PathsClient with the specified values.
-func NewPathsClient(c *Client) PathsOperations {
-	return &PathsClient{Client: c}
+func NewPathsClient(con *Connection) PathsOperations {
+	return &PathsClient{con: con}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *PathsClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *PathsClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // GetEmpty - Get a 200 to test a valid base uri
@@ -40,7 +40,7 @@ func (client *PathsClient) GetEmpty(ctx context.Context, accountName string, opt
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -53,7 +53,7 @@ func (client *PathsClient) GetEmpty(ctx context.Context, accountName string, opt
 // GetEmptyCreateRequest creates the GetEmpty request.
 func (client *PathsClient) GetEmptyCreateRequest(ctx context.Context, accountName string, options *PathsGetEmptyOptions) (*azcore.Request, error) {
 	host := "http://{accountName}{host}"
-	host = strings.ReplaceAll(host, "{host}", client.host)
+	host = strings.ReplaceAll(host, "{host}", client.con.Host())
 	host = strings.ReplaceAll(host, "{accountName}", accountName)
 	urlPath := "/customuri"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(host, urlPath))

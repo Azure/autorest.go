@@ -22,18 +22,18 @@ type ServiceAssociationLinksOperations interface {
 // ServiceAssociationLinksClient implements the ServiceAssociationLinksOperations interface.
 // Don't use this type directly, use NewServiceAssociationLinksClient() instead.
 type ServiceAssociationLinksClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewServiceAssociationLinksClient creates a new instance of ServiceAssociationLinksClient with the specified values.
-func NewServiceAssociationLinksClient(c *Client, subscriptionID string) ServiceAssociationLinksOperations {
-	return &ServiceAssociationLinksClient{Client: c, subscriptionID: subscriptionID}
+func NewServiceAssociationLinksClient(con *Connection, subscriptionID string) ServiceAssociationLinksOperations {
+	return &ServiceAssociationLinksClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *ServiceAssociationLinksClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *ServiceAssociationLinksClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // List - Gets a list of service association links for a subnet.
@@ -42,7 +42,7 @@ func (client *ServiceAssociationLinksClient) List(ctx context.Context, resourceG
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -63,7 +63,7 @@ func (client *ServiceAssociationLinksClient) ListCreateRequest(ctx context.Conte
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkName}", url.PathEscape(virtualNetworkName))
 	urlPath = strings.ReplaceAll(urlPath, "{subnetName}", url.PathEscape(subnetName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

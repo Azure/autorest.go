@@ -34,18 +34,18 @@ type ExpressRouteCircuitConnectionsOperations interface {
 // ExpressRouteCircuitConnectionsClient implements the ExpressRouteCircuitConnectionsOperations interface.
 // Don't use this type directly, use NewExpressRouteCircuitConnectionsClient() instead.
 type ExpressRouteCircuitConnectionsClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewExpressRouteCircuitConnectionsClient creates a new instance of ExpressRouteCircuitConnectionsClient with the specified values.
-func NewExpressRouteCircuitConnectionsClient(c *Client, subscriptionID string) ExpressRouteCircuitConnectionsOperations {
-	return &ExpressRouteCircuitConnectionsClient{Client: c, subscriptionID: subscriptionID}
+func NewExpressRouteCircuitConnectionsClient(con *Connection, subscriptionID string) ExpressRouteCircuitConnectionsOperations {
+	return &ExpressRouteCircuitConnectionsClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *ExpressRouteCircuitConnectionsClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *ExpressRouteCircuitConnectionsClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 func (client *ExpressRouteCircuitConnectionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, connectionName string, expressRouteCircuitConnectionParameters ExpressRouteCircuitConnection, options *ExpressRouteCircuitConnectionsCreateOrUpdateOptions) (*ExpressRouteCircuitConnectionPollerResponse, error) {
@@ -62,7 +62,7 @@ func (client *ExpressRouteCircuitConnectionsClient) BeginCreateOrUpdate(ctx cont
 	}
 	poller := &expressRouteCircuitConnectionPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ExpressRouteCircuitConnectionResponse, error) {
@@ -77,7 +77,7 @@ func (client *ExpressRouteCircuitConnectionsClient) ResumeCreateOrUpdate(token s
 		return nil, err
 	}
 	return &expressRouteCircuitConnectionPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -88,7 +88,7 @@ func (client *ExpressRouteCircuitConnectionsClient) CreateOrUpdate(ctx context.C
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -106,7 +106,7 @@ func (client *ExpressRouteCircuitConnectionsClient) CreateOrUpdateCreateRequest(
 	urlPath = strings.ReplaceAll(urlPath, "{peeringName}", url.PathEscape(peeringName))
 	urlPath = strings.ReplaceAll(urlPath, "{connectionName}", url.PathEscape(connectionName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -146,7 +146,7 @@ func (client *ExpressRouteCircuitConnectionsClient) BeginDelete(ctx context.Cont
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -161,7 +161,7 @@ func (client *ExpressRouteCircuitConnectionsClient) ResumeDelete(token string) (
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -172,7 +172,7 @@ func (client *ExpressRouteCircuitConnectionsClient) Delete(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -190,7 +190,7 @@ func (client *ExpressRouteCircuitConnectionsClient) DeleteCreateRequest(ctx cont
 	urlPath = strings.ReplaceAll(urlPath, "{peeringName}", url.PathEscape(peeringName))
 	urlPath = strings.ReplaceAll(urlPath, "{connectionName}", url.PathEscape(connectionName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -216,7 +216,7 @@ func (client *ExpressRouteCircuitConnectionsClient) Get(ctx context.Context, res
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -238,7 +238,7 @@ func (client *ExpressRouteCircuitConnectionsClient) GetCreateRequest(ctx context
 	urlPath = strings.ReplaceAll(urlPath, "{peeringName}", url.PathEscape(peeringName))
 	urlPath = strings.ReplaceAll(urlPath, "{connectionName}", url.PathEscape(connectionName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -267,7 +267,7 @@ func (client *ExpressRouteCircuitConnectionsClient) GetHandleError(resp *azcore.
 // List - Gets all global reach connections associated with a private peering in an express route circuit.
 func (client *ExpressRouteCircuitConnectionsClient) List(resourceGroupName string, circuitName string, peeringName string, options *ExpressRouteCircuitConnectionsListOptions) ExpressRouteCircuitConnectionListResultPager {
 	return &expressRouteCircuitConnectionListResultPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListCreateRequest(ctx, resourceGroupName, circuitName, peeringName, options)
 		},
@@ -287,7 +287,7 @@ func (client *ExpressRouteCircuitConnectionsClient) ListCreateRequest(ctx contex
 	urlPath = strings.ReplaceAll(urlPath, "{circuitName}", url.PathEscape(circuitName))
 	urlPath = strings.ReplaceAll(urlPath, "{peeringName}", url.PathEscape(peeringName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

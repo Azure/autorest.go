@@ -34,18 +34,18 @@ type RouteFilterRulesOperations interface {
 // RouteFilterRulesClient implements the RouteFilterRulesOperations interface.
 // Don't use this type directly, use NewRouteFilterRulesClient() instead.
 type RouteFilterRulesClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewRouteFilterRulesClient creates a new instance of RouteFilterRulesClient with the specified values.
-func NewRouteFilterRulesClient(c *Client, subscriptionID string) RouteFilterRulesOperations {
-	return &RouteFilterRulesClient{Client: c, subscriptionID: subscriptionID}
+func NewRouteFilterRulesClient(con *Connection, subscriptionID string) RouteFilterRulesOperations {
+	return &RouteFilterRulesClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *RouteFilterRulesClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *RouteFilterRulesClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 func (client *RouteFilterRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, routeFilterName string, ruleName string, routeFilterRuleParameters RouteFilterRule, options *RouteFilterRulesCreateOrUpdateOptions) (*RouteFilterRulePollerResponse, error) {
@@ -62,7 +62,7 @@ func (client *RouteFilterRulesClient) BeginCreateOrUpdate(ctx context.Context, r
 	}
 	poller := &routeFilterRulePoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*RouteFilterRuleResponse, error) {
@@ -77,7 +77,7 @@ func (client *RouteFilterRulesClient) ResumeCreateOrUpdate(token string) (RouteF
 		return nil, err
 	}
 	return &routeFilterRulePoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -88,7 +88,7 @@ func (client *RouteFilterRulesClient) CreateOrUpdate(ctx context.Context, resour
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -105,7 +105,7 @@ func (client *RouteFilterRulesClient) CreateOrUpdateCreateRequest(ctx context.Co
 	urlPath = strings.ReplaceAll(urlPath, "{routeFilterName}", url.PathEscape(routeFilterName))
 	urlPath = strings.ReplaceAll(urlPath, "{ruleName}", url.PathEscape(ruleName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -145,7 +145,7 @@ func (client *RouteFilterRulesClient) BeginDelete(ctx context.Context, resourceG
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -160,7 +160,7 @@ func (client *RouteFilterRulesClient) ResumeDelete(token string) (HTTPPoller, er
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -171,7 +171,7 @@ func (client *RouteFilterRulesClient) Delete(ctx context.Context, resourceGroupN
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -188,7 +188,7 @@ func (client *RouteFilterRulesClient) DeleteCreateRequest(ctx context.Context, r
 	urlPath = strings.ReplaceAll(urlPath, "{routeFilterName}", url.PathEscape(routeFilterName))
 	urlPath = strings.ReplaceAll(urlPath, "{ruleName}", url.PathEscape(ruleName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -214,7 +214,7 @@ func (client *RouteFilterRulesClient) Get(ctx context.Context, resourceGroupName
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -235,7 +235,7 @@ func (client *RouteFilterRulesClient) GetCreateRequest(ctx context.Context, reso
 	urlPath = strings.ReplaceAll(urlPath, "{routeFilterName}", url.PathEscape(routeFilterName))
 	urlPath = strings.ReplaceAll(urlPath, "{ruleName}", url.PathEscape(ruleName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -264,7 +264,7 @@ func (client *RouteFilterRulesClient) GetHandleError(resp *azcore.Response) erro
 // ListByRouteFilter - Gets all RouteFilterRules in a route filter.
 func (client *RouteFilterRulesClient) ListByRouteFilter(resourceGroupName string, routeFilterName string, options *RouteFilterRulesListByRouteFilterOptions) RouteFilterRuleListResultPager {
 	return &routeFilterRuleListResultPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListByRouteFilterCreateRequest(ctx, resourceGroupName, routeFilterName, options)
 		},
@@ -283,7 +283,7 @@ func (client *RouteFilterRulesClient) ListByRouteFilterCreateRequest(ctx context
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{routeFilterName}", url.PathEscape(routeFilterName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

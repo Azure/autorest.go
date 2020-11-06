@@ -9,7 +9,7 @@ import (
 )
 
 func newHTTPFailureClient() HTTPFailureOperations {
-	return NewHTTPFailureClient(NewDefaultClient(nil))
+	return NewHTTPFailureClient(NewDefaultConnection(nil))
 }
 
 func TestHTTPFailureGetEmptyError(t *testing.T) {

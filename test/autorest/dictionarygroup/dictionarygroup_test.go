@@ -14,7 +14,7 @@ import (
 )
 
 func newDictionaryClient() DictionaryOperations {
-	return NewDictionaryClient(NewDefaultClient(nil))
+	return NewDictionaryClient(NewDefaultConnection(nil))
 }
 
 // GetArrayEmpty - Get an empty dictionary {}

@@ -34,18 +34,18 @@ type WebApplicationFirewallPoliciesOperations interface {
 // WebApplicationFirewallPoliciesClient implements the WebApplicationFirewallPoliciesOperations interface.
 // Don't use this type directly, use NewWebApplicationFirewallPoliciesClient() instead.
 type WebApplicationFirewallPoliciesClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewWebApplicationFirewallPoliciesClient creates a new instance of WebApplicationFirewallPoliciesClient with the specified values.
-func NewWebApplicationFirewallPoliciesClient(c *Client, subscriptionID string) WebApplicationFirewallPoliciesOperations {
-	return &WebApplicationFirewallPoliciesClient{Client: c, subscriptionID: subscriptionID}
+func NewWebApplicationFirewallPoliciesClient(con *Connection, subscriptionID string) WebApplicationFirewallPoliciesOperations {
+	return &WebApplicationFirewallPoliciesClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *WebApplicationFirewallPoliciesClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *WebApplicationFirewallPoliciesClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // CreateOrUpdate - Creates or update policy with specified rule set name within a resource group.
@@ -54,7 +54,7 @@ func (client *WebApplicationFirewallPoliciesClient) CreateOrUpdate(ctx context.C
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -74,7 +74,7 @@ func (client *WebApplicationFirewallPoliciesClient) CreateOrUpdateCreateRequest(
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{policyName}", url.PathEscape(policyName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -114,7 +114,7 @@ func (client *WebApplicationFirewallPoliciesClient) BeginDelete(ctx context.Cont
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -129,7 +129,7 @@ func (client *WebApplicationFirewallPoliciesClient) ResumeDelete(token string) (
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -140,7 +140,7 @@ func (client *WebApplicationFirewallPoliciesClient) Delete(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -156,7 +156,7 @@ func (client *WebApplicationFirewallPoliciesClient) DeleteCreateRequest(ctx cont
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{policyName}", url.PathEscape(policyName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -182,7 +182,7 @@ func (client *WebApplicationFirewallPoliciesClient) Get(ctx context.Context, res
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -202,7 +202,7 @@ func (client *WebApplicationFirewallPoliciesClient) GetCreateRequest(ctx context
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{policyName}", url.PathEscape(policyName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -231,7 +231,7 @@ func (client *WebApplicationFirewallPoliciesClient) GetHandleError(resp *azcore.
 // List - Lists all of the protection policies within a resource group.
 func (client *WebApplicationFirewallPoliciesClient) List(resourceGroupName string, options *WebApplicationFirewallPoliciesListOptions) WebApplicationFirewallPolicyListResultPager {
 	return &webApplicationFirewallPolicyListResultPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListCreateRequest(ctx, resourceGroupName, options)
 		},
@@ -249,7 +249,7 @@ func (client *WebApplicationFirewallPoliciesClient) ListCreateRequest(ctx contex
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -278,7 +278,7 @@ func (client *WebApplicationFirewallPoliciesClient) ListHandleError(resp *azcore
 // ListAll - Gets all the WAF policies in a subscription.
 func (client *WebApplicationFirewallPoliciesClient) ListAll(options *WebApplicationFirewallPoliciesListAllOptions) WebApplicationFirewallPolicyListResultPager {
 	return &webApplicationFirewallPolicyListResultPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListAllCreateRequest(ctx, options)
 		},
@@ -295,7 +295,7 @@ func (client *WebApplicationFirewallPoliciesClient) ListAll(options *WebApplicat
 func (client *WebApplicationFirewallPoliciesClient) ListAllCreateRequest(ctx context.Context, options *WebApplicationFirewallPoliciesListAllOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -22,24 +22,24 @@ type AvailableEndpointServicesOperations interface {
 // AvailableEndpointServicesClient implements the AvailableEndpointServicesOperations interface.
 // Don't use this type directly, use NewAvailableEndpointServicesClient() instead.
 type AvailableEndpointServicesClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewAvailableEndpointServicesClient creates a new instance of AvailableEndpointServicesClient with the specified values.
-func NewAvailableEndpointServicesClient(c *Client, subscriptionID string) AvailableEndpointServicesOperations {
-	return &AvailableEndpointServicesClient{Client: c, subscriptionID: subscriptionID}
+func NewAvailableEndpointServicesClient(con *Connection, subscriptionID string) AvailableEndpointServicesOperations {
+	return &AvailableEndpointServicesClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *AvailableEndpointServicesClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *AvailableEndpointServicesClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // List - List what values of endpoint services are available for use.
 func (client *AvailableEndpointServicesClient) List(location string, options *AvailableEndpointServicesListOptions) EndpointServicesListResultPager {
 	return &endpointServicesListResultPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListCreateRequest(ctx, location, options)
 		},
@@ -57,7 +57,7 @@ func (client *AvailableEndpointServicesClient) ListCreateRequest(ctx context.Con
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/virtualNetworkAvailableEndpointServices"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

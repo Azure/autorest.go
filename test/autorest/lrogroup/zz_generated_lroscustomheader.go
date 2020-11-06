@@ -44,17 +44,17 @@ type LrOSCustomHeaderOperations interface {
 // LrOSCustomHeaderClient implements the LrOSCustomHeaderOperations interface.
 // Don't use this type directly, use NewLrOSCustomHeaderClient() instead.
 type LrOSCustomHeaderClient struct {
-	*Client
+	con *Connection
 }
 
 // NewLrOSCustomHeaderClient creates a new instance of LrOSCustomHeaderClient with the specified values.
-func NewLrOSCustomHeaderClient(c *Client) LrOSCustomHeaderOperations {
-	return &LrOSCustomHeaderClient{Client: c}
+func NewLrOSCustomHeaderClient(con *Connection) LrOSCustomHeaderOperations {
+	return &LrOSCustomHeaderClient{con: con}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *LrOSCustomHeaderClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *LrOSCustomHeaderClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 func (client *LrOSCustomHeaderClient) BeginPost202Retry200(ctx context.Context, options *LrOSCustomHeaderPost202Retry200Options) (*HTTPPollerResponse, error) {
@@ -71,7 +71,7 @@ func (client *LrOSCustomHeaderClient) BeginPost202Retry200(ctx context.Context, 
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -86,7 +86,7 @@ func (client *LrOSCustomHeaderClient) ResumePost202Retry200(token string) (HTTPP
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -99,7 +99,7 @@ func (client *LrOSCustomHeaderClient) Post202Retry200(ctx context.Context, optio
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -112,7 +112,7 @@ func (client *LrOSCustomHeaderClient) Post202Retry200(ctx context.Context, optio
 // Post202Retry200CreateRequest creates the Post202Retry200 request.
 func (client *LrOSCustomHeaderClient) Post202Retry200CreateRequest(ctx context.Context, options *LrOSCustomHeaderPost202Retry200Options) (*azcore.Request, error) {
 	urlPath := "/lro/customheader/post/202/retry/200"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -146,7 +146,7 @@ func (client *LrOSCustomHeaderClient) BeginPostAsyncRetrySucceeded(ctx context.C
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -161,7 +161,7 @@ func (client *LrOSCustomHeaderClient) ResumePostAsyncRetrySucceeded(token string
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -174,7 +174,7 @@ func (client *LrOSCustomHeaderClient) PostAsyncRetrySucceeded(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -187,7 +187,7 @@ func (client *LrOSCustomHeaderClient) PostAsyncRetrySucceeded(ctx context.Contex
 // PostAsyncRetrySucceededCreateRequest creates the PostAsyncRetrySucceeded request.
 func (client *LrOSCustomHeaderClient) PostAsyncRetrySucceededCreateRequest(ctx context.Context, options *LrOSCustomHeaderPostAsyncRetrySucceededOptions) (*azcore.Request, error) {
 	urlPath := "/lro/customheader/postasync/retry/succeeded"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -221,7 +221,7 @@ func (client *LrOSCustomHeaderClient) BeginPut201CreatingSucceeded200(ctx contex
 	}
 	poller := &productPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
@@ -236,7 +236,7 @@ func (client *LrOSCustomHeaderClient) ResumePut201CreatingSucceeded200(token str
 		return nil, err
 	}
 	return &productPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -249,7 +249,7 @@ func (client *LrOSCustomHeaderClient) Put201CreatingSucceeded200(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -262,7 +262,7 @@ func (client *LrOSCustomHeaderClient) Put201CreatingSucceeded200(ctx context.Con
 // Put201CreatingSucceeded200CreateRequest creates the Put201CreatingSucceeded200 request.
 func (client *LrOSCustomHeaderClient) Put201CreatingSucceeded200CreateRequest(ctx context.Context, options *LrOSCustomHeaderPut201CreatingSucceeded200Options) (*azcore.Request, error) {
 	urlPath := "/lro/customheader/put/201/creating/succeeded/200"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -302,7 +302,7 @@ func (client *LrOSCustomHeaderClient) BeginPutAsyncRetrySucceeded(ctx context.Co
 	}
 	poller := &productPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
@@ -317,7 +317,7 @@ func (client *LrOSCustomHeaderClient) ResumePutAsyncRetrySucceeded(token string)
 		return nil, err
 	}
 	return &productPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -330,7 +330,7 @@ func (client *LrOSCustomHeaderClient) PutAsyncRetrySucceeded(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -343,7 +343,7 @@ func (client *LrOSCustomHeaderClient) PutAsyncRetrySucceeded(ctx context.Context
 // PutAsyncRetrySucceededCreateRequest creates the PutAsyncRetrySucceeded request.
 func (client *LrOSCustomHeaderClient) PutAsyncRetrySucceededCreateRequest(ctx context.Context, options *LrOSCustomHeaderPutAsyncRetrySucceededOptions) (*azcore.Request, error) {
 	urlPath := "/lro/customheader/putasync/retry/succeeded"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

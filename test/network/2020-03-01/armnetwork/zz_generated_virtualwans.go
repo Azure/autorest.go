@@ -38,18 +38,18 @@ type VirtualWansOperations interface {
 // VirtualWansClient implements the VirtualWansOperations interface.
 // Don't use this type directly, use NewVirtualWansClient() instead.
 type VirtualWansClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewVirtualWansClient creates a new instance of VirtualWansClient with the specified values.
-func NewVirtualWansClient(c *Client, subscriptionID string) VirtualWansOperations {
-	return &VirtualWansClient{Client: c, subscriptionID: subscriptionID}
+func NewVirtualWansClient(con *Connection, subscriptionID string) VirtualWansOperations {
+	return &VirtualWansClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *VirtualWansClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *VirtualWansClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 func (client *VirtualWansClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualWanName string, wanParameters VirtualWan, options *VirtualWansCreateOrUpdateOptions) (*VirtualWanPollerResponse, error) {
@@ -66,7 +66,7 @@ func (client *VirtualWansClient) BeginCreateOrUpdate(ctx context.Context, resour
 	}
 	poller := &virtualWanPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*VirtualWanResponse, error) {
@@ -81,7 +81,7 @@ func (client *VirtualWansClient) ResumeCreateOrUpdate(token string) (VirtualWanP
 		return nil, err
 	}
 	return &virtualWanPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -92,7 +92,7 @@ func (client *VirtualWansClient) CreateOrUpdate(ctx context.Context, resourceGro
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -108,7 +108,7 @@ func (client *VirtualWansClient) CreateOrUpdateCreateRequest(ctx context.Context
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{VirtualWANName}", url.PathEscape(virtualWanName))
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -148,7 +148,7 @@ func (client *VirtualWansClient) BeginDelete(ctx context.Context, resourceGroupN
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -163,7 +163,7 @@ func (client *VirtualWansClient) ResumeDelete(token string) (HTTPPoller, error) 
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -174,7 +174,7 @@ func (client *VirtualWansClient) Delete(ctx context.Context, resourceGroupName s
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -190,7 +190,7 @@ func (client *VirtualWansClient) DeleteCreateRequest(ctx context.Context, resour
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{VirtualWANName}", url.PathEscape(virtualWanName))
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -216,7 +216,7 @@ func (client *VirtualWansClient) Get(ctx context.Context, resourceGroupName stri
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -236,7 +236,7 @@ func (client *VirtualWansClient) GetCreateRequest(ctx context.Context, resourceG
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{VirtualWANName}", url.PathEscape(virtualWanName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -265,7 +265,7 @@ func (client *VirtualWansClient) GetHandleError(resp *azcore.Response) error {
 // List - Lists all the VirtualWANs in a subscription.
 func (client *VirtualWansClient) List(options *VirtualWansListOptions) ListVirtualWaNsResultPager {
 	return &listVirtualWaNsResultPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListCreateRequest(ctx, options)
 		},
@@ -282,7 +282,7 @@ func (client *VirtualWansClient) List(options *VirtualWansListOptions) ListVirtu
 func (client *VirtualWansClient) ListCreateRequest(ctx context.Context, options *VirtualWansListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualWans"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -311,7 +311,7 @@ func (client *VirtualWansClient) ListHandleError(resp *azcore.Response) error {
 // ListByResourceGroup - Lists all the VirtualWANs in a resource group.
 func (client *VirtualWansClient) ListByResourceGroup(resourceGroupName string, options *VirtualWansListByResourceGroupOptions) ListVirtualWaNsResultPager {
 	return &listVirtualWaNsResultPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListByResourceGroupCreateRequest(ctx, resourceGroupName, options)
 		},
@@ -329,7 +329,7 @@ func (client *VirtualWansClient) ListByResourceGroupCreateRequest(ctx context.Co
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -361,7 +361,7 @@ func (client *VirtualWansClient) UpdateTags(ctx context.Context, resourceGroupNa
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -381,7 +381,7 @@ func (client *VirtualWansClient) UpdateTagsCreateRequest(ctx context.Context, re
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{VirtualWANName}", url.PathEscape(virtualWanName))
-	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

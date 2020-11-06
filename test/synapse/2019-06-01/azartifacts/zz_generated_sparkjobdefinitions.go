@@ -14,12 +14,12 @@ import (
 )
 
 type sparkJobDefinitionsClient struct {
-	*client
+	con *connection
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *sparkJobDefinitionsClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *sparkJobDefinitionsClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // Rename - Renames a sparkJobDefinition.
@@ -28,7 +28,7 @@ func (client *sparkJobDefinitionsClient) Rename(ctx context.Context, sparkJobDef
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -42,7 +42,7 @@ func (client *sparkJobDefinitionsClient) Rename(ctx context.Context, sparkJobDef
 func (client *sparkJobDefinitionsClient) RenameCreateRequest(ctx context.Context, sparkJobDefinitionName string, request ArtifactRenameRequest, options *SparkJobDefinitionsRenameOptions) (*azcore.Request, error) {
 	urlPath := "/sparkJobDefinitions/{sparkJobDefinitionName}/rename"
 	urlPath = strings.ReplaceAll(urlPath, "{sparkJobDefinitionName}", url.PathEscape(sparkJobDefinitionName))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

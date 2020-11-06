@@ -48,18 +48,18 @@ type ContainerServicesOperations interface {
 // ContainerServicesClient implements the ContainerServicesOperations interface.
 // Don't use this type directly, use NewContainerServicesClient() instead.
 type ContainerServicesClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewContainerServicesClient creates a new instance of ContainerServicesClient with the specified values.
-func NewContainerServicesClient(c *Client, subscriptionID string) ContainerServicesOperations {
-	return &ContainerServicesClient{Client: c, subscriptionID: subscriptionID}
+func NewContainerServicesClient(con *Connection, subscriptionID string) ContainerServicesOperations {
+	return &ContainerServicesClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *ContainerServicesClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *ContainerServicesClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 func (client *ContainerServicesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, containerServiceName string, parameters ContainerService, options *ContainerServicesCreateOrUpdateOptions) (*ContainerServicePollerResponse, error) {
@@ -76,7 +76,7 @@ func (client *ContainerServicesClient) BeginCreateOrUpdate(ctx context.Context, 
 	}
 	poller := &containerServicePoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ContainerServiceResponse, error) {
@@ -91,7 +91,7 @@ func (client *ContainerServicesClient) ResumeCreateOrUpdate(token string) (Conta
 		return nil, err
 	}
 	return &containerServicePoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -102,7 +102,7 @@ func (client *ContainerServicesClient) CreateOrUpdate(ctx context.Context, resou
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -118,7 +118,7 @@ func (client *ContainerServicesClient) CreateOrUpdateCreateRequest(ctx context.C
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{containerServiceName}", url.PathEscape(containerServiceName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -161,7 +161,7 @@ func (client *ContainerServicesClient) BeginDelete(ctx context.Context, resource
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -176,7 +176,7 @@ func (client *ContainerServicesClient) ResumeDelete(token string) (HTTPPoller, e
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -190,7 +190,7 @@ func (client *ContainerServicesClient) Delete(ctx context.Context, resourceGroup
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -206,7 +206,7 @@ func (client *ContainerServicesClient) DeleteCreateRequest(ctx context.Context, 
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{containerServiceName}", url.PathEscape(containerServiceName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -236,7 +236,7 @@ func (client *ContainerServicesClient) Get(ctx context.Context, resourceGroupNam
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -256,7 +256,7 @@ func (client *ContainerServicesClient) GetCreateRequest(ctx context.Context, res
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{containerServiceName}", url.PathEscape(containerServiceName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -290,7 +290,7 @@ func (client *ContainerServicesClient) GetHandleError(resp *azcore.Response) err
 // masters and agents.
 func (client *ContainerServicesClient) List(options *ContainerServicesListOptions) ContainerServiceListResultPager {
 	return &containerServiceListResultPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListCreateRequest(ctx, options)
 		},
@@ -307,7 +307,7 @@ func (client *ContainerServicesClient) List(options *ContainerServicesListOption
 func (client *ContainerServicesClient) ListCreateRequest(ctx context.Context, options *ContainerServicesListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/containerServices"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -341,7 +341,7 @@ func (client *ContainerServicesClient) ListHandleError(resp *azcore.Response) er
 // agents, and FQDNs of masters and agents.
 func (client *ContainerServicesClient) ListByResourceGroup(resourceGroupName string, options *ContainerServicesListByResourceGroupOptions) ContainerServiceListResultPager {
 	return &containerServiceListResultPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListByResourceGroupCreateRequest(ctx, resourceGroupName, options)
 		},
@@ -359,7 +359,7 @@ func (client *ContainerServicesClient) ListByResourceGroupCreateRequest(ctx cont
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/containerServices"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

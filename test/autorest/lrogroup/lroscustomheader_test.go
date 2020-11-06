@@ -15,10 +15,10 @@ import (
 )
 
 func newLrOSCustomHeaderClient() LrOSCustomHeaderOperations {
-	options := DefaultClientOptions()
+	options := DefaultConnectionOptions()
 	options.Retry.RetryDelay = 10 * time.Millisecond
 	options.HTTPClient = httpClientWithCookieJar()
-	return NewLrOSCustomHeaderClient(NewDefaultClient(&options))
+	return NewLrOSCustomHeaderClient(NewDefaultConnection(&options))
 }
 
 func ctxWithHTTPHeader() context.Context {

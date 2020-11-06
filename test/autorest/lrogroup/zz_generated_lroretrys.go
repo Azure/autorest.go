@@ -59,17 +59,17 @@ type LroRetrysOperations interface {
 // LroRetrysClient implements the LroRetrysOperations interface.
 // Don't use this type directly, use NewLroRetrysClient() instead.
 type LroRetrysClient struct {
-	*Client
+	con *Connection
 }
 
 // NewLroRetrysClient creates a new instance of LroRetrysClient with the specified values.
-func NewLroRetrysClient(c *Client) LroRetrysOperations {
-	return &LroRetrysClient{Client: c}
+func NewLroRetrysClient(con *Connection) LroRetrysOperations {
+	return &LroRetrysClient{con: con}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *LroRetrysClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *LroRetrysClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 func (client *LroRetrysClient) BeginDelete202Retry200(ctx context.Context, options *LroRetrysDelete202Retry200Options) (*HTTPPollerResponse, error) {
@@ -86,7 +86,7 @@ func (client *LroRetrysClient) BeginDelete202Retry200(ctx context.Context, optio
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -101,7 +101,7 @@ func (client *LroRetrysClient) ResumeDelete202Retry200(token string) (HTTPPoller
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -113,7 +113,7 @@ func (client *LroRetrysClient) Delete202Retry200(ctx context.Context, options *L
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -126,7 +126,7 @@ func (client *LroRetrysClient) Delete202Retry200(ctx context.Context, options *L
 // Delete202Retry200CreateRequest creates the Delete202Retry200 request.
 func (client *LroRetrysClient) Delete202Retry200CreateRequest(ctx context.Context, options *LroRetrysDelete202Retry200Options) (*azcore.Request, error) {
 	urlPath := "/lro/retryerror/delete/202/retry/200"
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -157,7 +157,7 @@ func (client *LroRetrysClient) BeginDeleteAsyncRelativeRetrySucceeded(ctx contex
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -172,7 +172,7 @@ func (client *LroRetrysClient) ResumeDeleteAsyncRelativeRetrySucceeded(token str
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -184,7 +184,7 @@ func (client *LroRetrysClient) DeleteAsyncRelativeRetrySucceeded(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -197,7 +197,7 @@ func (client *LroRetrysClient) DeleteAsyncRelativeRetrySucceeded(ctx context.Con
 // DeleteAsyncRelativeRetrySucceededCreateRequest creates the DeleteAsyncRelativeRetrySucceeded request.
 func (client *LroRetrysClient) DeleteAsyncRelativeRetrySucceededCreateRequest(ctx context.Context, options *LroRetrysDeleteAsyncRelativeRetrySucceededOptions) (*azcore.Request, error) {
 	urlPath := "/lro/retryerror/deleteasync/retry/succeeded"
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -228,7 +228,7 @@ func (client *LroRetrysClient) BeginDeleteProvisioning202Accepted200Succeeded(ct
 	}
 	poller := &productPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
@@ -243,7 +243,7 @@ func (client *LroRetrysClient) ResumeDeleteProvisioning202Accepted200Succeeded(t
 		return nil, err
 	}
 	return &productPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -256,7 +256,7 @@ func (client *LroRetrysClient) DeleteProvisioning202Accepted200Succeeded(ctx con
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -269,7 +269,7 @@ func (client *LroRetrysClient) DeleteProvisioning202Accepted200Succeeded(ctx con
 // DeleteProvisioning202Accepted200SucceededCreateRequest creates the DeleteProvisioning202Accepted200Succeeded request.
 func (client *LroRetrysClient) DeleteProvisioning202Accepted200SucceededCreateRequest(ctx context.Context, options *LroRetrysDeleteProvisioning202Accepted200SucceededOptions) (*azcore.Request, error) {
 	urlPath := "/lro/retryerror/delete/provisioning/202/accepted/200/succeeded"
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -306,7 +306,7 @@ func (client *LroRetrysClient) BeginPost202Retry200(ctx context.Context, options
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -321,7 +321,7 @@ func (client *LroRetrysClient) ResumePost202Retry200(token string) (HTTPPoller, 
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -333,7 +333,7 @@ func (client *LroRetrysClient) Post202Retry200(ctx context.Context, options *Lro
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -346,7 +346,7 @@ func (client *LroRetrysClient) Post202Retry200(ctx context.Context, options *Lro
 // Post202Retry200CreateRequest creates the Post202Retry200 request.
 func (client *LroRetrysClient) Post202Retry200CreateRequest(ctx context.Context, options *LroRetrysPost202Retry200Options) (*azcore.Request, error) {
 	urlPath := "/lro/retryerror/post/202/retry/200"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -380,7 +380,7 @@ func (client *LroRetrysClient) BeginPostAsyncRelativeRetrySucceeded(ctx context.
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -395,7 +395,7 @@ func (client *LroRetrysClient) ResumePostAsyncRelativeRetrySucceeded(token strin
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -408,7 +408,7 @@ func (client *LroRetrysClient) PostAsyncRelativeRetrySucceeded(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -421,7 +421,7 @@ func (client *LroRetrysClient) PostAsyncRelativeRetrySucceeded(ctx context.Conte
 // PostAsyncRelativeRetrySucceededCreateRequest creates the PostAsyncRelativeRetrySucceeded request.
 func (client *LroRetrysClient) PostAsyncRelativeRetrySucceededCreateRequest(ctx context.Context, options *LroRetrysPostAsyncRelativeRetrySucceededOptions) (*azcore.Request, error) {
 	urlPath := "/lro/retryerror/postasync/retry/succeeded"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -455,7 +455,7 @@ func (client *LroRetrysClient) BeginPut201CreatingSucceeded200(ctx context.Conte
 	}
 	poller := &productPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
@@ -470,7 +470,7 @@ func (client *LroRetrysClient) ResumePut201CreatingSucceeded200(token string) (P
 		return nil, err
 	}
 	return &productPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -483,7 +483,7 @@ func (client *LroRetrysClient) Put201CreatingSucceeded200(ctx context.Context, o
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -496,7 +496,7 @@ func (client *LroRetrysClient) Put201CreatingSucceeded200(ctx context.Context, o
 // Put201CreatingSucceeded200CreateRequest creates the Put201CreatingSucceeded200 request.
 func (client *LroRetrysClient) Put201CreatingSucceeded200CreateRequest(ctx context.Context, options *LroRetrysPut201CreatingSucceeded200Options) (*azcore.Request, error) {
 	urlPath := "/lro/retryerror/put/201/creating/succeeded/200"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -536,7 +536,7 @@ func (client *LroRetrysClient) BeginPutAsyncRelativeRetrySucceeded(ctx context.C
 	}
 	poller := &productPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
@@ -551,7 +551,7 @@ func (client *LroRetrysClient) ResumePutAsyncRelativeRetrySucceeded(token string
 		return nil, err
 	}
 	return &productPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -564,7 +564,7 @@ func (client *LroRetrysClient) PutAsyncRelativeRetrySucceeded(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -577,7 +577,7 @@ func (client *LroRetrysClient) PutAsyncRelativeRetrySucceeded(ctx context.Contex
 // PutAsyncRelativeRetrySucceededCreateRequest creates the PutAsyncRelativeRetrySucceeded request.
 func (client *LroRetrysClient) PutAsyncRelativeRetrySucceededCreateRequest(ctx context.Context, options *LroRetrysPutAsyncRelativeRetrySucceededOptions) (*azcore.Request, error) {
 	urlPath := "/lro/retryerror/putasync/retry/succeeded"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

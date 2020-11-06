@@ -26,17 +26,17 @@ type DurationOperations interface {
 // DurationClient implements the DurationOperations interface.
 // Don't use this type directly, use NewDurationClient() instead.
 type DurationClient struct {
-	*Client
+	con *Connection
 }
 
 // NewDurationClient creates a new instance of DurationClient with the specified values.
-func NewDurationClient(c *Client) DurationOperations {
-	return &DurationClient{Client: c}
+func NewDurationClient(con *Connection) DurationOperations {
+	return &DurationClient{con: con}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *DurationClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *DurationClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // GetInvalid - Get an invalid duration value
@@ -45,7 +45,7 @@ func (client *DurationClient) GetInvalid(ctx context.Context, options *DurationG
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -62,7 +62,7 @@ func (client *DurationClient) GetInvalid(ctx context.Context, options *DurationG
 // GetInvalidCreateRequest creates the GetInvalid request.
 func (client *DurationClient) GetInvalidCreateRequest(ctx context.Context, options *DurationGetInvalidOptions) (*azcore.Request, error) {
 	urlPath := "/duration/invalid"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -91,7 +91,7 @@ func (client *DurationClient) GetNull(ctx context.Context, options *DurationGetN
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -108,7 +108,7 @@ func (client *DurationClient) GetNull(ctx context.Context, options *DurationGetN
 // GetNullCreateRequest creates the GetNull request.
 func (client *DurationClient) GetNullCreateRequest(ctx context.Context, options *DurationGetNullOptions) (*azcore.Request, error) {
 	urlPath := "/duration/null"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -137,7 +137,7 @@ func (client *DurationClient) GetPositiveDuration(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -154,7 +154,7 @@ func (client *DurationClient) GetPositiveDuration(ctx context.Context, options *
 // GetPositiveDurationCreateRequest creates the GetPositiveDuration request.
 func (client *DurationClient) GetPositiveDurationCreateRequest(ctx context.Context, options *DurationGetPositiveDurationOptions) (*azcore.Request, error) {
 	urlPath := "/duration/positiveduration"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -183,7 +183,7 @@ func (client *DurationClient) PutPositiveDuration(ctx context.Context, durationB
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -196,7 +196,7 @@ func (client *DurationClient) PutPositiveDuration(ctx context.Context, durationB
 // PutPositiveDurationCreateRequest creates the PutPositiveDuration request.
 func (client *DurationClient) PutPositiveDurationCreateRequest(ctx context.Context, durationBody string, options *DurationPutPositiveDurationOptions) (*azcore.Request, error) {
 	urlPath := "/duration/positiveduration"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

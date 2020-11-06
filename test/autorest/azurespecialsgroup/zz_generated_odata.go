@@ -21,17 +21,17 @@ type OdataOperations interface {
 // OdataClient implements the OdataOperations interface.
 // Don't use this type directly, use NewOdataClient() instead.
 type OdataClient struct {
-	*Client
+	con *Connection
 }
 
 // NewOdataClient creates a new instance of OdataClient with the specified values.
-func NewOdataClient(c *Client) OdataOperations {
-	return &OdataClient{Client: c}
+func NewOdataClient(con *Connection) OdataOperations {
+	return &OdataClient{con: con}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *OdataClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *OdataClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // GetWithFilter - Specify filter parameter with value '$filter=id gt 5 and name eq 'foo'&$orderby=id&$top=10'
@@ -40,7 +40,7 @@ func (client *OdataClient) GetWithFilter(ctx context.Context, options *OdataGetW
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -53,7 +53,7 @@ func (client *OdataClient) GetWithFilter(ctx context.Context, options *OdataGetW
 // GetWithFilterCreateRequest creates the GetWithFilter request.
 func (client *OdataClient) GetWithFilterCreateRequest(ctx context.Context, options *OdataGetWithFilterOptions) (*azcore.Request, error) {
 	urlPath := "/azurespecials/odata/filter"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

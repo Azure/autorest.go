@@ -24,18 +24,18 @@ type LoadBalancerFrontendIPConfigurationsOperations interface {
 // LoadBalancerFrontendIPConfigurationsClient implements the LoadBalancerFrontendIPConfigurationsOperations interface.
 // Don't use this type directly, use NewLoadBalancerFrontendIPConfigurationsClient() instead.
 type LoadBalancerFrontendIPConfigurationsClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewLoadBalancerFrontendIPConfigurationsClient creates a new instance of LoadBalancerFrontendIPConfigurationsClient with the specified values.
-func NewLoadBalancerFrontendIPConfigurationsClient(c *Client, subscriptionID string) LoadBalancerFrontendIPConfigurationsOperations {
-	return &LoadBalancerFrontendIPConfigurationsClient{Client: c, subscriptionID: subscriptionID}
+func NewLoadBalancerFrontendIPConfigurationsClient(con *Connection, subscriptionID string) LoadBalancerFrontendIPConfigurationsOperations {
+	return &LoadBalancerFrontendIPConfigurationsClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *LoadBalancerFrontendIPConfigurationsClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *LoadBalancerFrontendIPConfigurationsClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // Get - Gets load balancer frontend IP configuration.
@@ -44,7 +44,7 @@ func (client *LoadBalancerFrontendIPConfigurationsClient) Get(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -65,7 +65,7 @@ func (client *LoadBalancerFrontendIPConfigurationsClient) GetCreateRequest(ctx c
 	urlPath = strings.ReplaceAll(urlPath, "{loadBalancerName}", url.PathEscape(loadBalancerName))
 	urlPath = strings.ReplaceAll(urlPath, "{frontendIPConfigurationName}", url.PathEscape(frontendIPConfigurationName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -94,7 +94,7 @@ func (client *LoadBalancerFrontendIPConfigurationsClient) GetHandleError(resp *a
 // List - Gets all the load balancer frontend IP configurations.
 func (client *LoadBalancerFrontendIPConfigurationsClient) List(resourceGroupName string, loadBalancerName string, options *LoadBalancerFrontendIPConfigurationsListOptions) LoadBalancerFrontendIPConfigurationListResultPager {
 	return &loadBalancerFrontendIPConfigurationListResultPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListCreateRequest(ctx, resourceGroupName, loadBalancerName, options)
 		},
@@ -113,7 +113,7 @@ func (client *LoadBalancerFrontendIPConfigurationsClient) ListCreateRequest(ctx 
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{loadBalancerName}", url.PathEscape(loadBalancerName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

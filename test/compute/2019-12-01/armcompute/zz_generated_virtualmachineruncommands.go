@@ -27,18 +27,18 @@ type VirtualMachineRunCommandsOperations interface {
 // VirtualMachineRunCommandsClient implements the VirtualMachineRunCommandsOperations interface.
 // Don't use this type directly, use NewVirtualMachineRunCommandsClient() instead.
 type VirtualMachineRunCommandsClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewVirtualMachineRunCommandsClient creates a new instance of VirtualMachineRunCommandsClient with the specified values.
-func NewVirtualMachineRunCommandsClient(c *Client, subscriptionID string) VirtualMachineRunCommandsOperations {
-	return &VirtualMachineRunCommandsClient{Client: c, subscriptionID: subscriptionID}
+func NewVirtualMachineRunCommandsClient(con *Connection, subscriptionID string) VirtualMachineRunCommandsOperations {
+	return &VirtualMachineRunCommandsClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *VirtualMachineRunCommandsClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *VirtualMachineRunCommandsClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // Get - Gets specific run command for a subscription in a location.
@@ -47,7 +47,7 @@ func (client *VirtualMachineRunCommandsClient) Get(ctx context.Context, location
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -67,7 +67,7 @@ func (client *VirtualMachineRunCommandsClient) GetCreateRequest(ctx context.Cont
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{commandId}", url.PathEscape(commandId))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -99,7 +99,7 @@ func (client *VirtualMachineRunCommandsClient) GetHandleError(resp *azcore.Respo
 // List - Lists all available run commands for a subscription in a location.
 func (client *VirtualMachineRunCommandsClient) List(location string, options *VirtualMachineRunCommandsListOptions) RunCommandListResultPager {
 	return &runCommandListResultPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListCreateRequest(ctx, location, options)
 		},
@@ -117,7 +117,7 @@ func (client *VirtualMachineRunCommandsClient) ListCreateRequest(ctx context.Con
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/runCommands"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

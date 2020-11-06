@@ -57,10 +57,10 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     // stitch it all together
     let text = await contentPreamble(session);
     const exportClient = await exportClients(session);
-    let client = 'Client';
+    let connection = 'Connection';
     let clientName = group.language.go!.clientName;
     if (!exportClient) {
-      client = 'client';
+      connection = camelCase(connection);
     }
     const clientCtor = group.language.go!.clientCtorName;
     text += imports.text();
@@ -72,7 +72,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       text += `// Don't use this type directly, use ${clientCtor}() instead.\n`;
     }
     text += `type ${clientName} struct {\n`;
-    text += `\t*${client}\n`;
+    text += `\tcon *${connection}\n`;
     if (group.language.go!.clientParams) {
       const clientParams = <Array<Parameter>>group.language.go!.clientParams;
       for (const clientParam of values(clientParams)) {
@@ -82,26 +82,26 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     text += '}\n\n';
     if (isARM) {
       // operation client constructor
-      const clientLiterals = [`${client}: c`];
-      const methodParams = [`c *${client}`];
+      const connectionLiterals = ['con: con'];
+      const methodParams = [`con *${connection}`];
       // add client params to the operation client constructor
       if (group.language.go!.clientParams) {
         const clientParams = <Array<Parameter>>group.language.go!.clientParams;
         clientParams.sort(sortParametersByRequired);
         for (const clientParam of values(clientParams)) {
-          clientLiterals.push(`${clientParam.language.go!.name}: ${clientParam.language.go!.name}`);
+          connectionLiterals.push(`${clientParam.language.go!.name}: ${clientParam.language.go!.name}`);
           methodParams.push(`${clientParam.language.go!.name} ${formatParameterTypeName(clientParam)}`);
         }
       }
       text += `// ${clientCtor} creates a new instance of ${clientName} with the specified values.\n`;
       text += `func ${clientCtor}(${methodParams.join(', ')}) ${interfaceName} {\n`;
-      text += `\treturn &${clientName}{${clientLiterals.join(', ')}}\n`;
+      text += `\treturn &${clientName}{${connectionLiterals.join(', ')}}\n`;
       text += '}\n\n';
     }
-    // operation client Do method
-    text += '// Do invokes the Do() method on the pipeline associated with this client.\n';
-    text += `func (client *${clientName}) Do(req *azcore.Request) (*azcore.Response, error) {\n`;
-    text += '\treturn client.p.Do(req)\n';
+    // operation client Pipeline method
+    text += '// Pipeline returns the pipeline associated with this client.\n';
+    text += `func (client *${clientName}) Pipeline() azcore.Pipeline {\n`;
+    text += '\treturn client.con.Pipeline()\n';
     text += '}\n\n';
     // add operations content last
     text += opText;
@@ -226,7 +226,7 @@ function generateOperation(op: Operation, imports: ImportManager): string {
   if (isPageableOperation(op) && !isLROOperation(op)) {
     imports.add('context');
     text += `\treturn &${camelCase(op.language.go!.pageableType.name)}{\n`;
-    text += `\t\tpipeline: client.p,\n`;
+    text += `\t\tpipeline: client.con.Pipeline(),\n`;
     text += `\t\trequester: func(ctx context.Context) (*azcore.Request, error) {\n`;
     text += `\t\t\treturn client.${info.protocolNaming.requestMethod}(${reqParams})\n`;
     text += '\t\t},\n';
@@ -260,7 +260,7 @@ function generateOperation(op: Operation, imports: ImportManager): string {
   text += `\tif err != nil {\n`;
   text += `\t\treturn nil, err\n`;
   text += `\t}\n`;
-  text += `\tresp, err := client.Do(req)\n`;
+  text += `\tresp, err := client.Pipeline().Do(req)\n`;
   text += `\tif err != nil {\n`;
   text += `\t\treturn nil, err\n`;
   text += `\t}\n`;
@@ -307,16 +307,16 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
   const returns = ['*azcore.Request', 'error'];
   let text = `${comment(name, '// ')} creates the ${info.name} request.\n`;
   text += `func (client *${op.language.go!.clientName}) ${name}(${getCreateRequestParametersSig(op)}) (${returns.join(', ')}) {\n`;
-  // default to host on the client
-  let hostParam = 'client.u';
+  // default to host on the connection
+  let hostParam = 'client.con.Endpoint()';
   if (codeModel.language.go!.complexHostParams) {
     imports.add('strings');
     // we have a complex parameterized host
     text += `\thost := "${op.requests![0].protocol.http!.uri}"\n`;
-    // get all the host params on the client
+    // get all the host params on the connection
     const hostParams = <Array<Parameter>>codeModel.language.go!.hostParams;
     for (const hostParam of values(hostParams)) {
-      text += `\thost = strings.ReplaceAll(host, "{${hostParam.language.go!.serializedName}}", client.${hostParam.language.go!.name})\n`;
+      text += `\thost = strings.ReplaceAll(host, "{${hostParam.language.go!.serializedName}}", client.con.${pascalCase(hostParam.language.go!.name)}())\n`;
     }
     // check for any method local host params
     for (const param of values(op.parameters)) {
@@ -989,7 +989,7 @@ function generateARMLROBeginMethod(op: Operation, imports: ImportManager): strin
     text += '\t\t},\n';
     text += `\t\tstatusCodes: []int{${formatStatusCodes(statusCodes)}},\n`;
   }
-  text += '\t\tpipeline: client.p,\n';
+  text += '\t\tpipeline: client.con.Pipeline(),\n';
   text += '\t}\n';
   text += '\tresult.Poller = poller\n';
   // determine the poller response based on the name and whether is is a pageable operation
@@ -1017,7 +1017,7 @@ function generateARMLROResumeMethod(op: Operation): string {
   text += '\t\treturn nil, err\n';
   text += '\t}\n';
   text += `\treturn &${camelCase(op.language.go!.pollerType.name)}{\n`;
-  text += '\t\tpipeline: client.p,\n';
+  text += '\t\tpipeline: client.con.Pipeline(),\n';
   text += '\t\tpt: pt,\n';
   text += '\t}, nil\n';
   text += '}\n\n';

@@ -71,17 +71,17 @@ type ExplicitOperations interface {
 // ExplicitClient implements the ExplicitOperations interface.
 // Don't use this type directly, use NewExplicitClient() instead.
 type ExplicitClient struct {
-	*Client
+	con *Connection
 }
 
 // NewExplicitClient creates a new instance of ExplicitClient with the specified values.
-func NewExplicitClient(c *Client) ExplicitOperations {
-	return &ExplicitClient{Client: c}
+func NewExplicitClient(con *Connection) ExplicitOperations {
+	return &ExplicitClient{con: con}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *ExplicitClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *ExplicitClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // PostOptionalArrayHeader - Test explicitly optional integer. Please put a header 'headerParameter' => null.
@@ -90,7 +90,7 @@ func (client *ExplicitClient) PostOptionalArrayHeader(ctx context.Context, optio
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (client *ExplicitClient) PostOptionalArrayHeader(ctx context.Context, optio
 // PostOptionalArrayHeaderCreateRequest creates the PostOptionalArrayHeader request.
 func (client *ExplicitClient) PostOptionalArrayHeaderCreateRequest(ctx context.Context, options *ExplicitPostOptionalArrayHeaderOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/optional/array/header"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -129,7 +129,7 @@ func (client *ExplicitClient) PostOptionalArrayParameter(ctx context.Context, op
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -142,7 +142,7 @@ func (client *ExplicitClient) PostOptionalArrayParameter(ctx context.Context, op
 // PostOptionalArrayParameterCreateRequest creates the PostOptionalArrayParameter request.
 func (client *ExplicitClient) PostOptionalArrayParameterCreateRequest(ctx context.Context, options *ExplicitPostOptionalArrayParameterOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/optional/array/parameter"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -168,7 +168,7 @@ func (client *ExplicitClient) PostOptionalArrayProperty(ctx context.Context, opt
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -181,7 +181,7 @@ func (client *ExplicitClient) PostOptionalArrayProperty(ctx context.Context, opt
 // PostOptionalArrayPropertyCreateRequest creates the PostOptionalArrayProperty request.
 func (client *ExplicitClient) PostOptionalArrayPropertyCreateRequest(ctx context.Context, options *ExplicitPostOptionalArrayPropertyOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/optional/array/property"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -207,7 +207,7 @@ func (client *ExplicitClient) PostOptionalClassParameter(ctx context.Context, op
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -220,7 +220,7 @@ func (client *ExplicitClient) PostOptionalClassParameter(ctx context.Context, op
 // PostOptionalClassParameterCreateRequest creates the PostOptionalClassParameter request.
 func (client *ExplicitClient) PostOptionalClassParameterCreateRequest(ctx context.Context, options *ExplicitPostOptionalClassParameterOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/optional/class/parameter"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -246,7 +246,7 @@ func (client *ExplicitClient) PostOptionalClassProperty(ctx context.Context, opt
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -259,7 +259,7 @@ func (client *ExplicitClient) PostOptionalClassProperty(ctx context.Context, opt
 // PostOptionalClassPropertyCreateRequest creates the PostOptionalClassProperty request.
 func (client *ExplicitClient) PostOptionalClassPropertyCreateRequest(ctx context.Context, options *ExplicitPostOptionalClassPropertyOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/optional/class/property"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -285,7 +285,7 @@ func (client *ExplicitClient) PostOptionalIntegerHeader(ctx context.Context, opt
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -298,7 +298,7 @@ func (client *ExplicitClient) PostOptionalIntegerHeader(ctx context.Context, opt
 // PostOptionalIntegerHeaderCreateRequest creates the PostOptionalIntegerHeader request.
 func (client *ExplicitClient) PostOptionalIntegerHeaderCreateRequest(ctx context.Context, options *ExplicitPostOptionalIntegerHeaderOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/optional/integer/header"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -324,7 +324,7 @@ func (client *ExplicitClient) PostOptionalIntegerParameter(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -337,7 +337,7 @@ func (client *ExplicitClient) PostOptionalIntegerParameter(ctx context.Context, 
 // PostOptionalIntegerParameterCreateRequest creates the PostOptionalIntegerParameter request.
 func (client *ExplicitClient) PostOptionalIntegerParameterCreateRequest(ctx context.Context, options *ExplicitPostOptionalIntegerParameterOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/optional/integer/parameter"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -363,7 +363,7 @@ func (client *ExplicitClient) PostOptionalIntegerProperty(ctx context.Context, o
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -376,7 +376,7 @@ func (client *ExplicitClient) PostOptionalIntegerProperty(ctx context.Context, o
 // PostOptionalIntegerPropertyCreateRequest creates the PostOptionalIntegerProperty request.
 func (client *ExplicitClient) PostOptionalIntegerPropertyCreateRequest(ctx context.Context, options *ExplicitPostOptionalIntegerPropertyOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/optional/integer/property"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -402,7 +402,7 @@ func (client *ExplicitClient) PostOptionalStringHeader(ctx context.Context, opti
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -415,7 +415,7 @@ func (client *ExplicitClient) PostOptionalStringHeader(ctx context.Context, opti
 // PostOptionalStringHeaderCreateRequest creates the PostOptionalStringHeader request.
 func (client *ExplicitClient) PostOptionalStringHeaderCreateRequest(ctx context.Context, options *ExplicitPostOptionalStringHeaderOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/optional/string/header"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -441,7 +441,7 @@ func (client *ExplicitClient) PostOptionalStringParameter(ctx context.Context, o
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -454,7 +454,7 @@ func (client *ExplicitClient) PostOptionalStringParameter(ctx context.Context, o
 // PostOptionalStringParameterCreateRequest creates the PostOptionalStringParameter request.
 func (client *ExplicitClient) PostOptionalStringParameterCreateRequest(ctx context.Context, options *ExplicitPostOptionalStringParameterOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/optional/string/parameter"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -480,7 +480,7 @@ func (client *ExplicitClient) PostOptionalStringProperty(ctx context.Context, op
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -493,7 +493,7 @@ func (client *ExplicitClient) PostOptionalStringProperty(ctx context.Context, op
 // PostOptionalStringPropertyCreateRequest creates the PostOptionalStringProperty request.
 func (client *ExplicitClient) PostOptionalStringPropertyCreateRequest(ctx context.Context, options *ExplicitPostOptionalStringPropertyOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/optional/string/property"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -520,7 +520,7 @@ func (client *ExplicitClient) PostRequiredArrayHeader(ctx context.Context, heade
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -533,7 +533,7 @@ func (client *ExplicitClient) PostRequiredArrayHeader(ctx context.Context, heade
 // PostRequiredArrayHeaderCreateRequest creates the PostRequiredArrayHeader request.
 func (client *ExplicitClient) PostRequiredArrayHeaderCreateRequest(ctx context.Context, headerParameter []string, options *ExplicitPostRequiredArrayHeaderOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/requied/array/header"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -557,7 +557,7 @@ func (client *ExplicitClient) PostRequiredArrayParameter(ctx context.Context, bo
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -570,7 +570,7 @@ func (client *ExplicitClient) PostRequiredArrayParameter(ctx context.Context, bo
 // PostRequiredArrayParameterCreateRequest creates the PostRequiredArrayParameter request.
 func (client *ExplicitClient) PostRequiredArrayParameterCreateRequest(ctx context.Context, bodyParameter []string, options *ExplicitPostRequiredArrayParameterOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/requied/array/parameter"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -594,7 +594,7 @@ func (client *ExplicitClient) PostRequiredArrayProperty(ctx context.Context, bod
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -607,7 +607,7 @@ func (client *ExplicitClient) PostRequiredArrayProperty(ctx context.Context, bod
 // PostRequiredArrayPropertyCreateRequest creates the PostRequiredArrayProperty request.
 func (client *ExplicitClient) PostRequiredArrayPropertyCreateRequest(ctx context.Context, bodyParameter ArrayWrapper, options *ExplicitPostRequiredArrayPropertyOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/requied/array/property"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -630,7 +630,7 @@ func (client *ExplicitClient) PostRequiredClassParameter(ctx context.Context, bo
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -643,7 +643,7 @@ func (client *ExplicitClient) PostRequiredClassParameter(ctx context.Context, bo
 // PostRequiredClassParameterCreateRequest creates the PostRequiredClassParameter request.
 func (client *ExplicitClient) PostRequiredClassParameterCreateRequest(ctx context.Context, bodyParameter Product, options *ExplicitPostRequiredClassParameterOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/requied/class/parameter"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -667,7 +667,7 @@ func (client *ExplicitClient) PostRequiredClassProperty(ctx context.Context, bod
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -680,7 +680,7 @@ func (client *ExplicitClient) PostRequiredClassProperty(ctx context.Context, bod
 // PostRequiredClassPropertyCreateRequest creates the PostRequiredClassProperty request.
 func (client *ExplicitClient) PostRequiredClassPropertyCreateRequest(ctx context.Context, bodyParameter ClassWrapper, options *ExplicitPostRequiredClassPropertyOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/requied/class/property"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -704,7 +704,7 @@ func (client *ExplicitClient) PostRequiredIntegerHeader(ctx context.Context, hea
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -717,7 +717,7 @@ func (client *ExplicitClient) PostRequiredIntegerHeader(ctx context.Context, hea
 // PostRequiredIntegerHeaderCreateRequest creates the PostRequiredIntegerHeader request.
 func (client *ExplicitClient) PostRequiredIntegerHeaderCreateRequest(ctx context.Context, headerParameter int32, options *ExplicitPostRequiredIntegerHeaderOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/requied/integer/header"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -741,7 +741,7 @@ func (client *ExplicitClient) PostRequiredIntegerParameter(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -754,7 +754,7 @@ func (client *ExplicitClient) PostRequiredIntegerParameter(ctx context.Context, 
 // PostRequiredIntegerParameterCreateRequest creates the PostRequiredIntegerParameter request.
 func (client *ExplicitClient) PostRequiredIntegerParameterCreateRequest(ctx context.Context, bodyParameter int32, options *ExplicitPostRequiredIntegerParameterOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/requied/integer/parameter"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -778,7 +778,7 @@ func (client *ExplicitClient) PostRequiredIntegerProperty(ctx context.Context, b
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -791,7 +791,7 @@ func (client *ExplicitClient) PostRequiredIntegerProperty(ctx context.Context, b
 // PostRequiredIntegerPropertyCreateRequest creates the PostRequiredIntegerProperty request.
 func (client *ExplicitClient) PostRequiredIntegerPropertyCreateRequest(ctx context.Context, bodyParameter IntWrapper, options *ExplicitPostRequiredIntegerPropertyOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/requied/integer/property"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -815,7 +815,7 @@ func (client *ExplicitClient) PostRequiredStringHeader(ctx context.Context, head
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -828,7 +828,7 @@ func (client *ExplicitClient) PostRequiredStringHeader(ctx context.Context, head
 // PostRequiredStringHeaderCreateRequest creates the PostRequiredStringHeader request.
 func (client *ExplicitClient) PostRequiredStringHeaderCreateRequest(ctx context.Context, headerParameter string, options *ExplicitPostRequiredStringHeaderOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/requied/string/header"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -852,7 +852,7 @@ func (client *ExplicitClient) PostRequiredStringParameter(ctx context.Context, b
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -865,7 +865,7 @@ func (client *ExplicitClient) PostRequiredStringParameter(ctx context.Context, b
 // PostRequiredStringParameterCreateRequest creates the PostRequiredStringParameter request.
 func (client *ExplicitClient) PostRequiredStringParameterCreateRequest(ctx context.Context, bodyParameter string, options *ExplicitPostRequiredStringParameterOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/requied/string/parameter"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -889,7 +889,7 @@ func (client *ExplicitClient) PostRequiredStringProperty(ctx context.Context, bo
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -902,7 +902,7 @@ func (client *ExplicitClient) PostRequiredStringProperty(ctx context.Context, bo
 // PostRequiredStringPropertyCreateRequest creates the PostRequiredStringProperty request.
 func (client *ExplicitClient) PostRequiredStringPropertyCreateRequest(ctx context.Context, bodyParameter StringWrapper, options *ExplicitPostRequiredStringPropertyOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/requied/string/property"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

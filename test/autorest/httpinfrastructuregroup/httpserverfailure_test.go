@@ -9,7 +9,7 @@ import (
 )
 
 func newHTTPServerFailureClient() HTTPServerFailureOperations {
-	return NewHTTPServerFailureClient(NewDefaultClient(nil))
+	return NewHTTPServerFailureClient(NewDefaultConnection(nil))
 }
 
 func TestHTTPServerFailureDelete505(t *testing.T) {

@@ -22,24 +22,24 @@ type BgpServiceCommunitiesOperations interface {
 // BgpServiceCommunitiesClient implements the BgpServiceCommunitiesOperations interface.
 // Don't use this type directly, use NewBgpServiceCommunitiesClient() instead.
 type BgpServiceCommunitiesClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewBgpServiceCommunitiesClient creates a new instance of BgpServiceCommunitiesClient with the specified values.
-func NewBgpServiceCommunitiesClient(c *Client, subscriptionID string) BgpServiceCommunitiesOperations {
-	return &BgpServiceCommunitiesClient{Client: c, subscriptionID: subscriptionID}
+func NewBgpServiceCommunitiesClient(con *Connection, subscriptionID string) BgpServiceCommunitiesOperations {
+	return &BgpServiceCommunitiesClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *BgpServiceCommunitiesClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *BgpServiceCommunitiesClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // List - Gets all the available bgp service communities.
 func (client *BgpServiceCommunitiesClient) List(options *BgpServiceCommunitiesListOptions) BgpServiceCommunityListResultPager {
 	return &bgpServiceCommunityListResultPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListCreateRequest(ctx, options)
 		},
@@ -56,7 +56,7 @@ func (client *BgpServiceCommunitiesClient) List(options *BgpServiceCommunitiesLi
 func (client *BgpServiceCommunitiesClient) ListCreateRequest(ctx context.Context, options *BgpServiceCommunitiesListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/bgpServiceCommunities"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

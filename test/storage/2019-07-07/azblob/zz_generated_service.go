@@ -14,12 +14,12 @@ import (
 )
 
 type serviceClient struct {
-	*client
+	con *connection
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *serviceClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *serviceClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // GetAccountInfo - Returns the sku name and account kind
@@ -28,7 +28,7 @@ func (client *serviceClient) GetAccountInfo(ctx context.Context, options *Servic
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -44,7 +44,7 @@ func (client *serviceClient) GetAccountInfo(ctx context.Context, options *Servic
 
 // GetAccountInfoCreateRequest creates the GetAccountInfo request.
 func (client *serviceClient) GetAccountInfoCreateRequest(ctx context.Context, options *ServiceGetAccountInfoOptions) (*azcore.Request, error) {
-	req, err := azcore.NewRequest(ctx, http.MethodGet, client.u)
+	req, err := azcore.NewRequest(ctx, http.MethodGet, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
@@ -101,7 +101,7 @@ func (client *serviceClient) GetProperties(ctx context.Context, options *Service
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -117,7 +117,7 @@ func (client *serviceClient) GetProperties(ctx context.Context, options *Service
 
 // GetPropertiesCreateRequest creates the GetProperties request.
 func (client *serviceClient) GetPropertiesCreateRequest(ctx context.Context, options *ServiceGetPropertiesOptions) (*azcore.Request, error) {
-	req, err := azcore.NewRequest(ctx, http.MethodGet, client.u)
+	req, err := azcore.NewRequest(ctx, http.MethodGet, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
@@ -167,7 +167,7 @@ func (client *serviceClient) GetStatistics(ctx context.Context, options *Service
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -183,7 +183,7 @@ func (client *serviceClient) GetStatistics(ctx context.Context, options *Service
 
 // GetStatisticsCreateRequest creates the GetStatistics request.
 func (client *serviceClient) GetStatisticsCreateRequest(ctx context.Context, options *ServiceGetStatisticsOptions) (*azcore.Request, error) {
-	req, err := azcore.NewRequest(ctx, http.MethodGet, client.u)
+	req, err := azcore.NewRequest(ctx, http.MethodGet, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
@@ -239,7 +239,7 @@ func (client *serviceClient) GetUserDelegationKey(ctx context.Context, keyInfo K
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -255,7 +255,7 @@ func (client *serviceClient) GetUserDelegationKey(ctx context.Context, keyInfo K
 
 // GetUserDelegationKeyCreateRequest creates the GetUserDelegationKey request.
 func (client *serviceClient) GetUserDelegationKeyCreateRequest(ctx context.Context, keyInfo KeyInfo, options *ServiceGetUserDelegationKeyOptions) (*azcore.Request, error) {
-	req, err := azcore.NewRequest(ctx, http.MethodPost, client.u)
+	req, err := azcore.NewRequest(ctx, http.MethodPost, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
@@ -308,7 +308,7 @@ func (client *serviceClient) GetUserDelegationKeyHandleError(resp *azcore.Respon
 // ListContainersSegment - The List Containers Segment operation returns a list of the containers under the specified account
 func (client *serviceClient) ListContainersSegment(options *ServiceListContainersSegmentOptions) ListContainersSegmentResponsePager {
 	return &listContainersSegmentResponsePager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListContainersSegmentCreateRequest(ctx, options)
 		},
@@ -323,7 +323,7 @@ func (client *serviceClient) ListContainersSegment(options *ServiceListContainer
 
 // ListContainersSegmentCreateRequest creates the ListContainersSegment request.
 func (client *serviceClient) ListContainersSegmentCreateRequest(ctx context.Context, options *ServiceListContainersSegmentOptions) (*azcore.Request, error) {
-	req, err := azcore.NewRequest(ctx, http.MethodGet, client.u)
+	req, err := azcore.NewRequest(ctx, http.MethodGet, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
@@ -384,7 +384,7 @@ func (client *serviceClient) SetProperties(ctx context.Context, storageServicePr
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -400,7 +400,7 @@ func (client *serviceClient) SetProperties(ctx context.Context, storageServicePr
 
 // SetPropertiesCreateRequest creates the SetProperties request.
 func (client *serviceClient) SetPropertiesCreateRequest(ctx context.Context, storageServiceProperties StorageServiceProperties, options *ServiceSetPropertiesOptions) (*azcore.Request, error) {
-	req, err := azcore.NewRequest(ctx, http.MethodPut, client.u)
+	req, err := azcore.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
@@ -449,7 +449,7 @@ func (client *serviceClient) SubmitBatch(ctx context.Context, contentLength int6
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -465,7 +465,7 @@ func (client *serviceClient) SubmitBatch(ctx context.Context, contentLength int6
 
 // SubmitBatchCreateRequest creates the SubmitBatch request.
 func (client *serviceClient) SubmitBatchCreateRequest(ctx context.Context, contentLength int64, multipartContentType string, body azcore.ReadSeekCloser, options *ServiceSubmitBatchOptions) (*azcore.Request, error) {
-	req, err := azcore.NewRequest(ctx, http.MethodPost, client.u)
+	req, err := azcore.NewRequest(ctx, http.MethodPost, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}

@@ -35,20 +35,20 @@ type ImplicitOperations interface {
 // ImplicitClient implements the ImplicitOperations interface.
 // Don't use this type directly, use NewImplicitClient() instead.
 type ImplicitClient struct {
-	*Client
+	con                 *Connection
 	requiredGlobalPath  string
 	requiredGlobalQuery string
 	optionalGlobalQuery *int32
 }
 
 // NewImplicitClient creates a new instance of ImplicitClient with the specified values.
-func NewImplicitClient(c *Client, requiredGlobalPath string, requiredGlobalQuery string, optionalGlobalQuery *int32) ImplicitOperations {
-	return &ImplicitClient{Client: c, requiredGlobalPath: requiredGlobalPath, requiredGlobalQuery: requiredGlobalQuery, optionalGlobalQuery: optionalGlobalQuery}
+func NewImplicitClient(con *Connection, requiredGlobalPath string, requiredGlobalQuery string, optionalGlobalQuery *int32) ImplicitOperations {
+	return &ImplicitClient{con: con, requiredGlobalPath: requiredGlobalPath, requiredGlobalQuery: requiredGlobalQuery, optionalGlobalQuery: optionalGlobalQuery}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *ImplicitClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *ImplicitClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // GetOptionalGlobalQuery - Test implicitly optional query parameter
@@ -57,7 +57,7 @@ func (client *ImplicitClient) GetOptionalGlobalQuery(ctx context.Context, option
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -70,7 +70,7 @@ func (client *ImplicitClient) GetOptionalGlobalQuery(ctx context.Context, option
 // GetOptionalGlobalQueryCreateRequest creates the GetOptionalGlobalQuery request.
 func (client *ImplicitClient) GetOptionalGlobalQueryCreateRequest(ctx context.Context, options *ImplicitGetOptionalGlobalQueryOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/global/optional/query"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -98,7 +98,7 @@ func (client *ImplicitClient) GetRequiredGlobalPath(ctx context.Context, options
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -112,7 +112,7 @@ func (client *ImplicitClient) GetRequiredGlobalPath(ctx context.Context, options
 func (client *ImplicitClient) GetRequiredGlobalPathCreateRequest(ctx context.Context, options *ImplicitGetRequiredGlobalPathOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/global/required/path/{required-global-path}"
 	urlPath = strings.ReplaceAll(urlPath, "{required-global-path}", url.PathEscape(client.requiredGlobalPath))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -135,7 +135,7 @@ func (client *ImplicitClient) GetRequiredGlobalQuery(ctx context.Context, option
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -148,7 +148,7 @@ func (client *ImplicitClient) GetRequiredGlobalQuery(ctx context.Context, option
 // GetRequiredGlobalQueryCreateRequest creates the GetRequiredGlobalQuery request.
 func (client *ImplicitClient) GetRequiredGlobalQueryCreateRequest(ctx context.Context, options *ImplicitGetRequiredGlobalQueryOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/global/required/query"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -174,7 +174,7 @@ func (client *ImplicitClient) GetRequiredPath(ctx context.Context, pathParameter
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -188,7 +188,7 @@ func (client *ImplicitClient) GetRequiredPath(ctx context.Context, pathParameter
 func (client *ImplicitClient) GetRequiredPathCreateRequest(ctx context.Context, pathParameter string, options *ImplicitGetRequiredPathOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/implicit/required/path/{pathParameter}"
 	urlPath = strings.ReplaceAll(urlPath, "{pathParameter}", url.PathEscape(pathParameter))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -211,7 +211,7 @@ func (client *ImplicitClient) PutOptionalBody(ctx context.Context, options *Impl
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -224,7 +224,7 @@ func (client *ImplicitClient) PutOptionalBody(ctx context.Context, options *Impl
 // PutOptionalBodyCreateRequest creates the PutOptionalBody request.
 func (client *ImplicitClient) PutOptionalBodyCreateRequest(ctx context.Context, options *ImplicitPutOptionalBodyOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/implicit/optional/body"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -250,7 +250,7 @@ func (client *ImplicitClient) PutOptionalHeader(ctx context.Context, options *Im
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -263,7 +263,7 @@ func (client *ImplicitClient) PutOptionalHeader(ctx context.Context, options *Im
 // PutOptionalHeaderCreateRequest creates the PutOptionalHeader request.
 func (client *ImplicitClient) PutOptionalHeaderCreateRequest(ctx context.Context, options *ImplicitPutOptionalHeaderOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/implicit/optional/header"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -289,7 +289,7 @@ func (client *ImplicitClient) PutOptionalQuery(ctx context.Context, options *Imp
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -302,7 +302,7 @@ func (client *ImplicitClient) PutOptionalQuery(ctx context.Context, options *Imp
 // PutOptionalQueryCreateRequest creates the PutOptionalQuery request.
 func (client *ImplicitClient) PutOptionalQueryCreateRequest(ctx context.Context, options *ImplicitPutOptionalQueryOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/implicit/optional/query"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

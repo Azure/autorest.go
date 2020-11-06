@@ -10,7 +10,7 @@ import { values } from '@azure-tools/linq';
 import { generateOperations } from './operations';
 import { generateModels } from './models';
 import { generateEnums } from './enums';
-import { generateClient } from './client';
+import { generateConnection } from './connection';
 import { generateTimeHelpers } from './time';
 import { generatePagers } from './pagers';
 import { generatePollers } from './data_plane_pollers';
@@ -48,8 +48,8 @@ export async function protocolGen(host: Host) {
     const models = await generateModels(session);
     host.WriteFile(`${filePrefix}models.go`, models, undefined, 'source-file-go');
 
-    const client = await generateClient(session);
-    host.WriteFile(`${filePrefix}client.go`, client, undefined, 'source-file-go');
+    const client = await generateConnection(session);
+    host.WriteFile(`${filePrefix}connection.go`, client, undefined, 'source-file-go');
 
     const timeHelpers = await generateTimeHelpers(session);
     for (const helper of values(timeHelpers)) {

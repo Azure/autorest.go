@@ -22,24 +22,24 @@ type AzureFirewallFqdnTagsOperations interface {
 // AzureFirewallFqdnTagsClient implements the AzureFirewallFqdnTagsOperations interface.
 // Don't use this type directly, use NewAzureFirewallFqdnTagsClient() instead.
 type AzureFirewallFqdnTagsClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewAzureFirewallFqdnTagsClient creates a new instance of AzureFirewallFqdnTagsClient with the specified values.
-func NewAzureFirewallFqdnTagsClient(c *Client, subscriptionID string) AzureFirewallFqdnTagsOperations {
-	return &AzureFirewallFqdnTagsClient{Client: c, subscriptionID: subscriptionID}
+func NewAzureFirewallFqdnTagsClient(con *Connection, subscriptionID string) AzureFirewallFqdnTagsOperations {
+	return &AzureFirewallFqdnTagsClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *AzureFirewallFqdnTagsClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *AzureFirewallFqdnTagsClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // ListAll - Gets all the Azure Firewall FQDN Tags in a subscription.
 func (client *AzureFirewallFqdnTagsClient) ListAll(options *AzureFirewallFqdnTagsListAllOptions) AzureFirewallFqdnTagListResultPager {
 	return &azureFirewallFqdnTagListResultPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListAllCreateRequest(ctx, options)
 		},
@@ -56,7 +56,7 @@ func (client *AzureFirewallFqdnTagsClient) ListAll(options *AzureFirewallFqdnTag
 func (client *AzureFirewallFqdnTagsClient) ListAllCreateRequest(ctx context.Context, options *AzureFirewallFqdnTagsListAllOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/azureFirewallFqdnTags"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

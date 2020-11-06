@@ -27,17 +27,17 @@ type HTTPSuccessOperations interface {
 // HTTPSuccessClient implements the HTTPSuccessOperations interface.
 // Don't use this type directly, use NewHTTPSuccessClient() instead.
 type HTTPSuccessClient struct {
-	*Client
+	con *Connection
 }
 
 // NewHTTPSuccessClient creates a new instance of HTTPSuccessClient with the specified values.
-func NewHTTPSuccessClient(c *Client) HTTPSuccessOperations {
-	return &HTTPSuccessClient{Client: c}
+func NewHTTPSuccessClient(con *Connection) HTTPSuccessOperations {
+	return &HTTPSuccessClient{con: con}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *HTTPSuccessClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *HTTPSuccessClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // Head200 - Return 200 status code if successful
@@ -46,7 +46,7 @@ func (client *HTTPSuccessClient) Head200(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -62,7 +62,7 @@ func (client *HTTPSuccessClient) Head200(ctx context.Context, options *HTTPSucce
 // Head200CreateRequest creates the Head200 request.
 func (client *HTTPSuccessClient) Head200CreateRequest(ctx context.Context, options *HTTPSuccessHead200Options) (*azcore.Request, error) {
 	urlPath := "/http/success/200"
-	req, err := azcore.NewRequest(ctx, http.MethodHead, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodHead, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -87,7 +87,7 @@ func (client *HTTPSuccessClient) Head204(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (client *HTTPSuccessClient) Head204(ctx context.Context, options *HTTPSucce
 // Head204CreateRequest creates the Head204 request.
 func (client *HTTPSuccessClient) Head204CreateRequest(ctx context.Context, options *HTTPSuccessHead204Options) (*azcore.Request, error) {
 	urlPath := "/http/success/204"
-	req, err := azcore.NewRequest(ctx, http.MethodHead, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodHead, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -128,7 +128,7 @@ func (client *HTTPSuccessClient) Head404(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -144,7 +144,7 @@ func (client *HTTPSuccessClient) Head404(ctx context.Context, options *HTTPSucce
 // Head404CreateRequest creates the Head404 request.
 func (client *HTTPSuccessClient) Head404CreateRequest(ctx context.Context, options *HTTPSuccessHead404Options) (*azcore.Request, error) {
 	urlPath := "/http/success/404"
-	req, err := azcore.NewRequest(ctx, http.MethodHead, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodHead, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

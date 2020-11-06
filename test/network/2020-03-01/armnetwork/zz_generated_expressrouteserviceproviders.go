@@ -22,24 +22,24 @@ type ExpressRouteServiceProvidersOperations interface {
 // ExpressRouteServiceProvidersClient implements the ExpressRouteServiceProvidersOperations interface.
 // Don't use this type directly, use NewExpressRouteServiceProvidersClient() instead.
 type ExpressRouteServiceProvidersClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewExpressRouteServiceProvidersClient creates a new instance of ExpressRouteServiceProvidersClient with the specified values.
-func NewExpressRouteServiceProvidersClient(c *Client, subscriptionID string) ExpressRouteServiceProvidersOperations {
-	return &ExpressRouteServiceProvidersClient{Client: c, subscriptionID: subscriptionID}
+func NewExpressRouteServiceProvidersClient(con *Connection, subscriptionID string) ExpressRouteServiceProvidersOperations {
+	return &ExpressRouteServiceProvidersClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *ExpressRouteServiceProvidersClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *ExpressRouteServiceProvidersClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // List - Gets all the available express route service providers.
 func (client *ExpressRouteServiceProvidersClient) List(options *ExpressRouteServiceProvidersListOptions) ExpressRouteServiceProviderListResultPager {
 	return &expressRouteServiceProviderListResultPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListCreateRequest(ctx, options)
 		},
@@ -56,7 +56,7 @@ func (client *ExpressRouteServiceProvidersClient) List(options *ExpressRouteServ
 func (client *ExpressRouteServiceProvidersClient) ListCreateRequest(ctx context.Context, options *ExpressRouteServiceProvidersListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteServiceProviders"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

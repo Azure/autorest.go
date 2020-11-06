@@ -16,12 +16,12 @@ import (
 )
 
 type blockBlobClient struct {
-	*client
+	con *connection
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *blockBlobClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *blockBlobClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // CommitBlockList - The Commit Block List operation writes a blob by specifying the list of block IDs that make up the blob. In order to be written as
@@ -36,7 +36,7 @@ func (client *blockBlobClient) CommitBlockList(ctx context.Context, blocks Block
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -52,7 +52,7 @@ func (client *blockBlobClient) CommitBlockList(ctx context.Context, blocks Block
 
 // CommitBlockListCreateRequest creates the CommitBlockList request.
 func (client *blockBlobClient) CommitBlockListCreateRequest(ctx context.Context, blocks BlockLookupList, blockBlobCommitBlockListOptions *BlockBlobCommitBlockListOptions, blobHttpHeaders *BlobHttpHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
-	req, err := azcore.NewRequest(ctx, http.MethodPut, client.u)
+	req, err := azcore.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
@@ -203,7 +203,7 @@ func (client *blockBlobClient) GetBlockList(ctx context.Context, listType BlockL
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -219,7 +219,7 @@ func (client *blockBlobClient) GetBlockList(ctx context.Context, listType BlockL
 
 // GetBlockListCreateRequest creates the GetBlockList request.
 func (client *blockBlobClient) GetBlockListCreateRequest(ctx context.Context, listType BlockListType, blockBlobGetBlockListOptions *BlockBlobGetBlockListOptions, leaseAccessConditions *LeaseAccessConditions) (*azcore.Request, error) {
-	req, err := azcore.NewRequest(ctx, http.MethodGet, client.u)
+	req, err := azcore.NewRequest(ctx, http.MethodGet, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
@@ -301,7 +301,7 @@ func (client *blockBlobClient) StageBlock(ctx context.Context, blockId string, c
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -317,7 +317,7 @@ func (client *blockBlobClient) StageBlock(ctx context.Context, blockId string, c
 
 // StageBlockCreateRequest creates the StageBlock request.
 func (client *blockBlobClient) StageBlockCreateRequest(ctx context.Context, blockId string, contentLength int64, body azcore.ReadSeekCloser, blockBlobStageBlockOptions *BlockBlobStageBlockOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo) (*azcore.Request, error) {
-	req, err := azcore.NewRequest(ctx, http.MethodPut, client.u)
+	req, err := azcore.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
@@ -422,7 +422,7 @@ func (client *blockBlobClient) StageBlockFromURL(ctx context.Context, blockId st
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -438,7 +438,7 @@ func (client *blockBlobClient) StageBlockFromURL(ctx context.Context, blockId st
 
 // StageBlockFromURLCreateRequest creates the StageBlockFromURL request.
 func (client *blockBlobClient) StageBlockFromURLCreateRequest(ctx context.Context, blockId string, contentLength int64, sourceUrl url.URL, blockBlobStageBlockFromUrlOptions *BlockBlobStageBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*azcore.Request, error) {
-	req, err := azcore.NewRequest(ctx, http.MethodPut, client.u)
+	req, err := azcore.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
@@ -562,7 +562,7 @@ func (client *blockBlobClient) Upload(ctx context.Context, contentLength int64, 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -578,7 +578,7 @@ func (client *blockBlobClient) Upload(ctx context.Context, contentLength int64, 
 
 // UploadCreateRequest creates the Upload request.
 func (client *blockBlobClient) UploadCreateRequest(ctx context.Context, contentLength int64, body azcore.ReadSeekCloser, blockBlobUploadOptions *BlockBlobUploadOptions, blobHttpHeaders *BlobHttpHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
-	req, err := azcore.NewRequest(ctx, http.MethodPut, client.u)
+	req, err := azcore.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}

@@ -12,7 +12,7 @@ import (
 )
 
 func newDateClient() DateOperations {
-	return NewDateClient(NewDefaultClient(nil))
+	return NewDateClient(NewDefaultConnection(nil))
 }
 
 func TestGetInvalidDate(t *testing.T) {

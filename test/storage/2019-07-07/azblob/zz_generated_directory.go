@@ -14,13 +14,13 @@ import (
 )
 
 type directoryClient struct {
-	*client
+	con            *connection
 	pathRenameMode *PathRenameMode
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *directoryClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *directoryClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // Create - Create a directory. By default, the destination is overwritten and if the destination already exists and has a lease the lease is broken. This
@@ -33,7 +33,7 @@ func (client *directoryClient) Create(ctx context.Context, directoryCreateOption
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -49,7 +49,7 @@ func (client *directoryClient) Create(ctx context.Context, directoryCreateOption
 
 // CreateCreateRequest creates the Create request.
 func (client *directoryClient) CreateCreateRequest(ctx context.Context, directoryCreateOptions *DirectoryCreateOptions, directoryHttpHeaders *DirectoryHttpHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
-	req, err := azcore.NewRequest(ctx, http.MethodPut, client.u)
+	req, err := azcore.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
@@ -160,7 +160,7 @@ func (client *directoryClient) Delete(ctx context.Context, recursiveDirectoryDel
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -176,7 +176,7 @@ func (client *directoryClient) Delete(ctx context.Context, recursiveDirectoryDel
 
 // DeleteCreateRequest creates the Delete request.
 func (client *directoryClient) DeleteCreateRequest(ctx context.Context, recursiveDirectoryDelete bool, directoryDeleteOptions *DirectoryDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, client.u)
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
@@ -252,7 +252,7 @@ func (client *directoryClient) GetAccessControl(ctx context.Context, directoryGe
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -268,7 +268,7 @@ func (client *directoryClient) GetAccessControl(ctx context.Context, directoryGe
 
 // GetAccessControlCreateRequest creates the GetAccessControl request.
 func (client *directoryClient) GetAccessControlCreateRequest(ctx context.Context, directoryGetAccessControlOptions *DirectoryGetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
-	req, err := azcore.NewRequest(ctx, http.MethodHead, client.u)
+	req, err := azcore.NewRequest(ctx, http.MethodHead, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
@@ -364,7 +364,7 @@ func (client *directoryClient) Rename(ctx context.Context, renameSource string, 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -380,7 +380,7 @@ func (client *directoryClient) Rename(ctx context.Context, renameSource string, 
 
 // RenameCreateRequest creates the Rename request.
 func (client *directoryClient) RenameCreateRequest(ctx context.Context, renameSource string, directoryRenameOptions *DirectoryRenameOptions, directoryHttpHeaders *DirectoryHttpHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*azcore.Request, error) {
-	req, err := azcore.NewRequest(ctx, http.MethodPut, client.u)
+	req, err := azcore.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
@@ -515,7 +515,7 @@ func (client *directoryClient) SetAccessControl(ctx context.Context, directorySe
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -531,7 +531,7 @@ func (client *directoryClient) SetAccessControl(ctx context.Context, directorySe
 
 // SetAccessControlCreateRequest creates the SetAccessControl request.
 func (client *directoryClient) SetAccessControlCreateRequest(ctx context.Context, directorySetAccessControlOptions *DirectorySetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
-	req, err := azcore.NewRequest(ctx, http.MethodPatch, client.u)
+	req, err := azcore.NewRequest(ctx, http.MethodPatch, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}

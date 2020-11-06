@@ -24,24 +24,24 @@ type AvailablePrivateEndpointTypesOperations interface {
 // AvailablePrivateEndpointTypesClient implements the AvailablePrivateEndpointTypesOperations interface.
 // Don't use this type directly, use NewAvailablePrivateEndpointTypesClient() instead.
 type AvailablePrivateEndpointTypesClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewAvailablePrivateEndpointTypesClient creates a new instance of AvailablePrivateEndpointTypesClient with the specified values.
-func NewAvailablePrivateEndpointTypesClient(c *Client, subscriptionID string) AvailablePrivateEndpointTypesOperations {
-	return &AvailablePrivateEndpointTypesClient{Client: c, subscriptionID: subscriptionID}
+func NewAvailablePrivateEndpointTypesClient(con *Connection, subscriptionID string) AvailablePrivateEndpointTypesOperations {
+	return &AvailablePrivateEndpointTypesClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *AvailablePrivateEndpointTypesClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *AvailablePrivateEndpointTypesClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // List - Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
 func (client *AvailablePrivateEndpointTypesClient) List(location string, options *AvailablePrivateEndpointTypesListOptions) AvailablePrivateEndpointTypesResultPager {
 	return &availablePrivateEndpointTypesResultPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListCreateRequest(ctx, location, options)
 		},
@@ -59,7 +59,7 @@ func (client *AvailablePrivateEndpointTypesClient) ListCreateRequest(ctx context
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availablePrivateEndpointTypes"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -88,7 +88,7 @@ func (client *AvailablePrivateEndpointTypesClient) ListHandleError(resp *azcore.
 // ListByResourceGroup - Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
 func (client *AvailablePrivateEndpointTypesClient) ListByResourceGroup(location string, resourceGroupName string, options *AvailablePrivateEndpointTypesListByResourceGroupOptions) AvailablePrivateEndpointTypesResultPager {
 	return &availablePrivateEndpointTypesResultPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListByResourceGroupCreateRequest(ctx, location, resourceGroupName, options)
 		},
@@ -107,7 +107,7 @@ func (client *AvailablePrivateEndpointTypesClient) ListByResourceGroupCreateRequ
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
