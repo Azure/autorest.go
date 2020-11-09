@@ -7,6 +7,7 @@ package armnetwork
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 )
@@ -20,11 +21,11 @@ type Operations interface {
 // OperationsClient implements the Operations interface.
 // Don't use this type directly, use NewOperationsClient() instead.
 type OperationsClient struct {
-	con *Connection
+	con *armcore.Connection
 }
 
 // NewOperationsClient creates a new instance of OperationsClient with the specified values.
-func NewOperationsClient(con *Connection) Operations {
+func NewOperationsClient(con *armcore.Connection) Operations {
 	return &OperationsClient{con: con}
 }
 

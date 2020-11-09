@@ -7,6 +7,7 @@ package armnetwork
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -24,12 +25,12 @@ type LoadBalancerProbesOperations interface {
 // LoadBalancerProbesClient implements the LoadBalancerProbesOperations interface.
 // Don't use this type directly, use NewLoadBalancerProbesClient() instead.
 type LoadBalancerProbesClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewLoadBalancerProbesClient creates a new instance of LoadBalancerProbesClient with the specified values.
-func NewLoadBalancerProbesClient(con *Connection, subscriptionID string) LoadBalancerProbesOperations {
+func NewLoadBalancerProbesClient(con *armcore.Connection, subscriptionID string) LoadBalancerProbesOperations {
 	return &LoadBalancerProbesClient{con: con, subscriptionID: subscriptionID}
 }
 

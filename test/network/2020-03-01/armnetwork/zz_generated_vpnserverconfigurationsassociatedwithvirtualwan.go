@@ -26,12 +26,12 @@ type VpnServerConfigurationsAssociatedWithVirtualWanOperations interface {
 // VpnServerConfigurationsAssociatedWithVirtualWanClient implements the VpnServerConfigurationsAssociatedWithVirtualWanOperations interface.
 // Don't use this type directly, use NewVpnServerConfigurationsAssociatedWithVirtualWanClient() instead.
 type VpnServerConfigurationsAssociatedWithVirtualWanClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewVpnServerConfigurationsAssociatedWithVirtualWanClient creates a new instance of VpnServerConfigurationsAssociatedWithVirtualWanClient with the specified values.
-func NewVpnServerConfigurationsAssociatedWithVirtualWanClient(con *Connection, subscriptionID string) VpnServerConfigurationsAssociatedWithVirtualWanOperations {
+func NewVpnServerConfigurationsAssociatedWithVirtualWanClient(con *armcore.Connection, subscriptionID string) VpnServerConfigurationsAssociatedWithVirtualWanOperations {
 	return &VpnServerConfigurationsAssociatedWithVirtualWanClient{con: con, subscriptionID: subscriptionID}
 }
 

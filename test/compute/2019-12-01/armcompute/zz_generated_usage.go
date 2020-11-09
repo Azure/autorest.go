@@ -9,6 +9,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"io/ioutil"
 	"net/http"
@@ -25,12 +26,12 @@ type UsageOperations interface {
 // UsageClient implements the UsageOperations interface.
 // Don't use this type directly, use NewUsageClient() instead.
 type UsageClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewUsageClient creates a new instance of UsageClient with the specified values.
-func NewUsageClient(con *Connection, subscriptionID string) UsageOperations {
+func NewUsageClient(con *armcore.Connection, subscriptionID string) UsageOperations {
 	return &UsageClient{con: con, subscriptionID: subscriptionID}
 }
 

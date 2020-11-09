@@ -7,6 +7,7 @@ package armnetwork
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -22,12 +23,12 @@ type AzureFirewallFqdnTagsOperations interface {
 // AzureFirewallFqdnTagsClient implements the AzureFirewallFqdnTagsOperations interface.
 // Don't use this type directly, use NewAzureFirewallFqdnTagsClient() instead.
 type AzureFirewallFqdnTagsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewAzureFirewallFqdnTagsClient creates a new instance of AzureFirewallFqdnTagsClient with the specified values.
-func NewAzureFirewallFqdnTagsClient(con *Connection, subscriptionID string) AzureFirewallFqdnTagsOperations {
+func NewAzureFirewallFqdnTagsClient(con *armcore.Connection, subscriptionID string) AzureFirewallFqdnTagsOperations {
 	return &AzureFirewallFqdnTagsClient{con: con, subscriptionID: subscriptionID}
 }
 

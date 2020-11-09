@@ -34,12 +34,12 @@ type NetworkInterfaceTapConfigurationsOperations interface {
 // NetworkInterfaceTapConfigurationsClient implements the NetworkInterfaceTapConfigurationsOperations interface.
 // Don't use this type directly, use NewNetworkInterfaceTapConfigurationsClient() instead.
 type NetworkInterfaceTapConfigurationsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewNetworkInterfaceTapConfigurationsClient creates a new instance of NetworkInterfaceTapConfigurationsClient with the specified values.
-func NewNetworkInterfaceTapConfigurationsClient(con *Connection, subscriptionID string) NetworkInterfaceTapConfigurationsOperations {
+func NewNetworkInterfaceTapConfigurationsClient(con *armcore.Connection, subscriptionID string) NetworkInterfaceTapConfigurationsOperations {
 	return &NetworkInterfaceTapConfigurationsClient{con: con, subscriptionID: subscriptionID}
 }
 

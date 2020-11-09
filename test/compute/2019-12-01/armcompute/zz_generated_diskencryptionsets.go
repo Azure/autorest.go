@@ -40,12 +40,12 @@ type DiskEncryptionSetsOperations interface {
 // DiskEncryptionSetsClient implements the DiskEncryptionSetsOperations interface.
 // Don't use this type directly, use NewDiskEncryptionSetsClient() instead.
 type DiskEncryptionSetsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewDiskEncryptionSetsClient creates a new instance of DiskEncryptionSetsClient with the specified values.
-func NewDiskEncryptionSetsClient(con *Connection, subscriptionID string) DiskEncryptionSetsOperations {
+func NewDiskEncryptionSetsClient(con *armcore.Connection, subscriptionID string) DiskEncryptionSetsOperations {
 	return &DiskEncryptionSetsClient{con: con, subscriptionID: subscriptionID}
 }
 

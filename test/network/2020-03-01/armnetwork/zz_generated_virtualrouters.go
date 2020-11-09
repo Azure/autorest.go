@@ -36,12 +36,12 @@ type VirtualRoutersOperations interface {
 // VirtualRoutersClient implements the VirtualRoutersOperations interface.
 // Don't use this type directly, use NewVirtualRoutersClient() instead.
 type VirtualRoutersClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewVirtualRoutersClient creates a new instance of VirtualRoutersClient with the specified values.
-func NewVirtualRoutersClient(con *Connection, subscriptionID string) VirtualRoutersOperations {
+func NewVirtualRoutersClient(con *armcore.Connection, subscriptionID string) VirtualRoutersOperations {
 	return &VirtualRoutersClient{con: con, subscriptionID: subscriptionID}
 }
 

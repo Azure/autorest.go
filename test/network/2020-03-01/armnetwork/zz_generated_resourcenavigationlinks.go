@@ -7,6 +7,7 @@ package armnetwork
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -22,12 +23,12 @@ type ResourceNavigationLinksOperations interface {
 // ResourceNavigationLinksClient implements the ResourceNavigationLinksOperations interface.
 // Don't use this type directly, use NewResourceNavigationLinksClient() instead.
 type ResourceNavigationLinksClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewResourceNavigationLinksClient creates a new instance of ResourceNavigationLinksClient with the specified values.
-func NewResourceNavigationLinksClient(con *Connection, subscriptionID string) ResourceNavigationLinksOperations {
+func NewResourceNavigationLinksClient(con *armcore.Connection, subscriptionID string) ResourceNavigationLinksOperations {
 	return &ResourceNavigationLinksClient{con: con, subscriptionID: subscriptionID}
 }
 

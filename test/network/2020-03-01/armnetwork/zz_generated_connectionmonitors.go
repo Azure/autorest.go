@@ -48,12 +48,12 @@ type ConnectionMonitorsOperations interface {
 // ConnectionMonitorsClient implements the ConnectionMonitorsOperations interface.
 // Don't use this type directly, use NewConnectionMonitorsClient() instead.
 type ConnectionMonitorsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewConnectionMonitorsClient creates a new instance of ConnectionMonitorsClient with the specified values.
-func NewConnectionMonitorsClient(con *Connection, subscriptionID string) ConnectionMonitorsOperations {
+func NewConnectionMonitorsClient(con *armcore.Connection, subscriptionID string) ConnectionMonitorsOperations {
 	return &ConnectionMonitorsClient{con: con, subscriptionID: subscriptionID}
 }
 

@@ -34,12 +34,12 @@ type WebApplicationFirewallPoliciesOperations interface {
 // WebApplicationFirewallPoliciesClient implements the WebApplicationFirewallPoliciesOperations interface.
 // Don't use this type directly, use NewWebApplicationFirewallPoliciesClient() instead.
 type WebApplicationFirewallPoliciesClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewWebApplicationFirewallPoliciesClient creates a new instance of WebApplicationFirewallPoliciesClient with the specified values.
-func NewWebApplicationFirewallPoliciesClient(con *Connection, subscriptionID string) WebApplicationFirewallPoliciesOperations {
+func NewWebApplicationFirewallPoliciesClient(con *armcore.Connection, subscriptionID string) WebApplicationFirewallPoliciesOperations {
 	return &WebApplicationFirewallPoliciesClient{con: con, subscriptionID: subscriptionID}
 }
 

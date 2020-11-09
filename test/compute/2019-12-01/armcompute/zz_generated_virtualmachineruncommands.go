@@ -9,6 +9,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"io/ioutil"
 	"net/http"
@@ -27,12 +28,12 @@ type VirtualMachineRunCommandsOperations interface {
 // VirtualMachineRunCommandsClient implements the VirtualMachineRunCommandsOperations interface.
 // Don't use this type directly, use NewVirtualMachineRunCommandsClient() instead.
 type VirtualMachineRunCommandsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewVirtualMachineRunCommandsClient creates a new instance of VirtualMachineRunCommandsClient with the specified values.
-func NewVirtualMachineRunCommandsClient(con *Connection, subscriptionID string) VirtualMachineRunCommandsOperations {
+func NewVirtualMachineRunCommandsClient(con *armcore.Connection, subscriptionID string) VirtualMachineRunCommandsOperations {
 	return &VirtualMachineRunCommandsClient{con: con, subscriptionID: subscriptionID}
 }
 

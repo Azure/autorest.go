@@ -38,12 +38,12 @@ type ApplicationSecurityGroupsOperations interface {
 // ApplicationSecurityGroupsClient implements the ApplicationSecurityGroupsOperations interface.
 // Don't use this type directly, use NewApplicationSecurityGroupsClient() instead.
 type ApplicationSecurityGroupsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewApplicationSecurityGroupsClient creates a new instance of ApplicationSecurityGroupsClient with the specified values.
-func NewApplicationSecurityGroupsClient(con *Connection, subscriptionID string) ApplicationSecurityGroupsOperations {
+func NewApplicationSecurityGroupsClient(con *armcore.Connection, subscriptionID string) ApplicationSecurityGroupsOperations {
 	return &ApplicationSecurityGroupsClient{con: con, subscriptionID: subscriptionID}
 }
 

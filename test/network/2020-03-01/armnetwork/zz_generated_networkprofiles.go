@@ -36,12 +36,12 @@ type NetworkProfilesOperations interface {
 // NetworkProfilesClient implements the NetworkProfilesOperations interface.
 // Don't use this type directly, use NewNetworkProfilesClient() instead.
 type NetworkProfilesClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewNetworkProfilesClient creates a new instance of NetworkProfilesClient with the specified values.
-func NewNetworkProfilesClient(con *Connection, subscriptionID string) NetworkProfilesOperations {
+func NewNetworkProfilesClient(con *armcore.Connection, subscriptionID string) NetworkProfilesOperations {
 	return &NetworkProfilesClient{con: con, subscriptionID: subscriptionID}
 }
 

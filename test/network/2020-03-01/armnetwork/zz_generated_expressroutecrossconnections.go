@@ -46,12 +46,12 @@ type ExpressRouteCrossConnectionsOperations interface {
 // ExpressRouteCrossConnectionsClient implements the ExpressRouteCrossConnectionsOperations interface.
 // Don't use this type directly, use NewExpressRouteCrossConnectionsClient() instead.
 type ExpressRouteCrossConnectionsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewExpressRouteCrossConnectionsClient creates a new instance of ExpressRouteCrossConnectionsClient with the specified values.
-func NewExpressRouteCrossConnectionsClient(con *Connection, subscriptionID string) ExpressRouteCrossConnectionsOperations {
+func NewExpressRouteCrossConnectionsClient(con *armcore.Connection, subscriptionID string) ExpressRouteCrossConnectionsOperations {
 	return &ExpressRouteCrossConnectionsClient{con: con, subscriptionID: subscriptionID}
 }
 

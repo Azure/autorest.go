@@ -34,12 +34,12 @@ type ExpressRouteCircuitPeeringsOperations interface {
 // ExpressRouteCircuitPeeringsClient implements the ExpressRouteCircuitPeeringsOperations interface.
 // Don't use this type directly, use NewExpressRouteCircuitPeeringsClient() instead.
 type ExpressRouteCircuitPeeringsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewExpressRouteCircuitPeeringsClient creates a new instance of ExpressRouteCircuitPeeringsClient with the specified values.
-func NewExpressRouteCircuitPeeringsClient(con *Connection, subscriptionID string) ExpressRouteCircuitPeeringsOperations {
+func NewExpressRouteCircuitPeeringsClient(con *armcore.Connection, subscriptionID string) ExpressRouteCircuitPeeringsOperations {
 	return &ExpressRouteCircuitPeeringsClient{con: con, subscriptionID: subscriptionID}
 }
 

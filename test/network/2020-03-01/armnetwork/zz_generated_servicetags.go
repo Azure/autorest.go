@@ -7,6 +7,7 @@ package armnetwork
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -22,12 +23,12 @@ type ServiceTagsOperations interface {
 // ServiceTagsClient implements the ServiceTagsOperations interface.
 // Don't use this type directly, use NewServiceTagsClient() instead.
 type ServiceTagsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewServiceTagsClient creates a new instance of ServiceTagsClient with the specified values.
-func NewServiceTagsClient(con *Connection, subscriptionID string) ServiceTagsOperations {
+func NewServiceTagsClient(con *armcore.Connection, subscriptionID string) ServiceTagsOperations {
 	return &ServiceTagsClient{con: con, subscriptionID: subscriptionID}
 }
 

@@ -56,12 +56,12 @@ type NetworkInterfacesOperations interface {
 // NetworkInterfacesClient implements the NetworkInterfacesOperations interface.
 // Don't use this type directly, use NewNetworkInterfacesClient() instead.
 type NetworkInterfacesClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewNetworkInterfacesClient creates a new instance of NetworkInterfacesClient with the specified values.
-func NewNetworkInterfacesClient(con *Connection, subscriptionID string) NetworkInterfacesOperations {
+func NewNetworkInterfacesClient(con *armcore.Connection, subscriptionID string) NetworkInterfacesOperations {
 	return &NetworkInterfacesClient{con: con, subscriptionID: subscriptionID}
 }
 

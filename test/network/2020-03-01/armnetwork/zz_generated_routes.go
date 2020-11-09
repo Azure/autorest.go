@@ -34,12 +34,12 @@ type RoutesOperations interface {
 // RoutesClient implements the RoutesOperations interface.
 // Don't use this type directly, use NewRoutesClient() instead.
 type RoutesClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewRoutesClient creates a new instance of RoutesClient with the specified values.
-func NewRoutesClient(con *Connection, subscriptionID string) RoutesOperations {
+func NewRoutesClient(con *armcore.Connection, subscriptionID string) RoutesOperations {
 	return &RoutesClient{con: con, subscriptionID: subscriptionID}
 }
 

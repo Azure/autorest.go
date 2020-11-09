@@ -34,12 +34,12 @@ type RouteFilterRulesOperations interface {
 // RouteFilterRulesClient implements the RouteFilterRulesOperations interface.
 // Don't use this type directly, use NewRouteFilterRulesClient() instead.
 type RouteFilterRulesClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewRouteFilterRulesClient creates a new instance of RouteFilterRulesClient with the specified values.
-func NewRouteFilterRulesClient(con *Connection, subscriptionID string) RouteFilterRulesOperations {
+func NewRouteFilterRulesClient(con *armcore.Connection, subscriptionID string) RouteFilterRulesOperations {
 	return &RouteFilterRulesClient{con: con, subscriptionID: subscriptionID}
 }
 

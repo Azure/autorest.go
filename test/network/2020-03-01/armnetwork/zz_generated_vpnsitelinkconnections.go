@@ -7,6 +7,7 @@ package armnetwork
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -22,12 +23,12 @@ type VpnSiteLinkConnectionsOperations interface {
 // VpnSiteLinkConnectionsClient implements the VpnSiteLinkConnectionsOperations interface.
 // Don't use this type directly, use NewVpnSiteLinkConnectionsClient() instead.
 type VpnSiteLinkConnectionsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewVpnSiteLinkConnectionsClient creates a new instance of VpnSiteLinkConnectionsClient with the specified values.
-func NewVpnSiteLinkConnectionsClient(con *Connection, subscriptionID string) VpnSiteLinkConnectionsOperations {
+func NewVpnSiteLinkConnectionsClient(con *armcore.Connection, subscriptionID string) VpnSiteLinkConnectionsOperations {
 	return &VpnSiteLinkConnectionsClient{con: con, subscriptionID: subscriptionID}
 }
 

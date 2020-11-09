@@ -7,6 +7,7 @@ package armnetwork
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -24,12 +25,12 @@ type NetworkInterfaceIPConfigurationsOperations interface {
 // NetworkInterfaceIPConfigurationsClient implements the NetworkInterfaceIPConfigurationsOperations interface.
 // Don't use this type directly, use NewNetworkInterfaceIPConfigurationsClient() instead.
 type NetworkInterfaceIPConfigurationsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewNetworkInterfaceIPConfigurationsClient creates a new instance of NetworkInterfaceIPConfigurationsClient with the specified values.
-func NewNetworkInterfaceIPConfigurationsClient(con *Connection, subscriptionID string) NetworkInterfaceIPConfigurationsOperations {
+func NewNetworkInterfaceIPConfigurationsClient(con *armcore.Connection, subscriptionID string) NetworkInterfaceIPConfigurationsOperations {
 	return &NetworkInterfaceIPConfigurationsClient{con: con, subscriptionID: subscriptionID}
 }
 

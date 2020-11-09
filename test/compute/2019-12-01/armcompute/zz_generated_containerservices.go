@@ -48,12 +48,12 @@ type ContainerServicesOperations interface {
 // ContainerServicesClient implements the ContainerServicesOperations interface.
 // Don't use this type directly, use NewContainerServicesClient() instead.
 type ContainerServicesClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewContainerServicesClient creates a new instance of ContainerServicesClient with the specified values.
-func NewContainerServicesClient(con *Connection, subscriptionID string) ContainerServicesOperations {
+func NewContainerServicesClient(con *armcore.Connection, subscriptionID string) ContainerServicesOperations {
 	return &ContainerServicesClient{con: con, subscriptionID: subscriptionID}
 }
 

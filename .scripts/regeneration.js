@@ -60,10 +60,10 @@ const blobStorage = 'https://raw.githubusercontent.com/Azure/azure-rest-api-spec
 generate(blobStorage, 'test/storage/2019-07-07/azblob', '--credential-scope="https://storage.azure.com/.default" --module="azstorage" --openapi-type="data-plane"');
 
 const network = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/network/resource-manager/readme.md';
-generateFromReadme(network, 'package-2020-03', 'test/network/2020-03-01/armnetwork', '--credential-scope="https://management.azure.com//.default" --module=armnetwork');
+generateFromReadme(network, 'package-2020-03', 'test/network/2020-03-01/armnetwork', '--credential-scope="https://management.azure.com//.default" --armcore-connection=true --module=armnetwork');
 
 const compute = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/compute/resource-manager/readme.md';
-generateFromReadme(compute, 'package-2019-12-01', 'test/compute/2019-12-01/armcompute', '--credential-scope="https://management.azure.com//.default" --module=armcompute');
+generateFromReadme(compute, 'package-2019-12-01', 'test/compute/2019-12-01/armcompute', '--credential-scope="https://management.azure.com//.default" --armcore-connection=true --module=armcompute');
 
 const synapseArtifacts = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/synapse/data-plane/readme.md';
 generateFromReadme(synapseArtifacts, 'package-artifacts-2019-06-01-preview', 'test/synapse/2019-06-01/azartifacts', '--credential-scope="https://dev.azuresynapse.net/.default" --module="azartifacts" --openapi-type="data-plane"');

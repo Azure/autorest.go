@@ -13,16 +13,18 @@ import { camelCase, pascalCase } from '@azure-tools/codegen';
 
 // generates content for connection.go
 export async function generateConnection(session: Session<CodeModel>): Promise<string> {
-  // add standard imports
-  imports.add('fmt');
-  imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
+  if (!session.model.language.go!.armcoreConnection) {
+    // add standard imports
+    imports.add('fmt');
+    imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
+  }
 
   let text = await contentPreamble(session);
   const exportClient = await exportClients(session);
   // content generation can add to the imports list, so execute it before emitting any text
   const content = generateContent(session, exportClient);
   text += imports.text();
-  if (session.model.security.authenticationRequired) {
+  if (session.model.security.authenticationRequired && !session.model.language.go!.armcoreConnection) {
     const scope = await session.getValue('credential-scope');
     text += `const scope = "${scope}"\n`;
   }
@@ -33,6 +35,10 @@ export async function generateConnection(session: Session<CodeModel>): Promise<s
 function generateContent(session: Session<CodeModel>, exportClient: boolean): string {
   const isARM = session.model.language.go!.openApiType === 'arm';
   let text = `const telemetryInfo = "azsdk-go-${session.model.language.go!.packageName}/<version>"\n`;
+  if (session.model.language.go!.armcoreConnection) {
+    // use the Connection type in armcore instead of generating one
+    return text;
+  }
   let connectionOptions = 'ConnectionOptions';
   let defaultConnectionOptions = 'DefaultConnectionOptions';
   if (!exportClient) {

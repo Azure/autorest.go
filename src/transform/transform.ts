@@ -39,6 +39,7 @@ async function process(session: Session<CodeModel>) {
   const headAsBoolean = await session.getValue('head-as-boolean', false);
   session.model.language.go!.openApiType = specType;
   session.model.language.go!.headAsBoolean = headAsBoolean;
+  session.model.language.go!.armcoreConnection = await session.getValue('armcore-connection', false);
   processOperationRequests(session);
   processOperationResponses(session);
   // fix up dictionary element types (additional properties)

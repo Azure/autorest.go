@@ -34,12 +34,12 @@ type InboundNatRulesOperations interface {
 // InboundNatRulesClient implements the InboundNatRulesOperations interface.
 // Don't use this type directly, use NewInboundNatRulesClient() instead.
 type InboundNatRulesClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewInboundNatRulesClient creates a new instance of InboundNatRulesClient with the specified values.
-func NewInboundNatRulesClient(con *Connection, subscriptionID string) InboundNatRulesOperations {
+func NewInboundNatRulesClient(con *armcore.Connection, subscriptionID string) InboundNatRulesOperations {
 	return &InboundNatRulesClient{con: con, subscriptionID: subscriptionID}
 }
 

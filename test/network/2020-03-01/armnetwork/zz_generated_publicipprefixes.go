@@ -38,12 +38,12 @@ type PublicIPPrefixesOperations interface {
 // PublicIPPrefixesClient implements the PublicIPPrefixesOperations interface.
 // Don't use this type directly, use NewPublicIPPrefixesClient() instead.
 type PublicIPPrefixesClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewPublicIPPrefixesClient creates a new instance of PublicIPPrefixesClient with the specified values.
-func NewPublicIPPrefixesClient(con *Connection, subscriptionID string) PublicIPPrefixesOperations {
+func NewPublicIPPrefixesClient(con *armcore.Connection, subscriptionID string) PublicIPPrefixesOperations {
 	return &PublicIPPrefixesClient{con: con, subscriptionID: subscriptionID}
 }
 

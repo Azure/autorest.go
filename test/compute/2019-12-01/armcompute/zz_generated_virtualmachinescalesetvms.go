@@ -85,12 +85,12 @@ type VirtualMachineScaleSetVMSOperations interface {
 // VirtualMachineScaleSetVMSClient implements the VirtualMachineScaleSetVMSOperations interface.
 // Don't use this type directly, use NewVirtualMachineScaleSetVMSClient() instead.
 type VirtualMachineScaleSetVMSClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewVirtualMachineScaleSetVMSClient creates a new instance of VirtualMachineScaleSetVMSClient with the specified values.
-func NewVirtualMachineScaleSetVMSClient(con *Connection, subscriptionID string) VirtualMachineScaleSetVMSOperations {
+func NewVirtualMachineScaleSetVMSClient(con *armcore.Connection, subscriptionID string) VirtualMachineScaleSetVMSOperations {
 	return &VirtualMachineScaleSetVMSClient{con: con, subscriptionID: subscriptionID}
 }
 

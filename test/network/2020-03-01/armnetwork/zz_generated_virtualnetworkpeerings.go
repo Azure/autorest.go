@@ -34,12 +34,12 @@ type VirtualNetworkPeeringsOperations interface {
 // VirtualNetworkPeeringsClient implements the VirtualNetworkPeeringsOperations interface.
 // Don't use this type directly, use NewVirtualNetworkPeeringsClient() instead.
 type VirtualNetworkPeeringsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewVirtualNetworkPeeringsClient creates a new instance of VirtualNetworkPeeringsClient with the specified values.
-func NewVirtualNetworkPeeringsClient(con *Connection, subscriptionID string) VirtualNetworkPeeringsOperations {
+func NewVirtualNetworkPeeringsClient(con *armcore.Connection, subscriptionID string) VirtualNetworkPeeringsOperations {
 	return &VirtualNetworkPeeringsClient{con: con, subscriptionID: subscriptionID}
 }
 

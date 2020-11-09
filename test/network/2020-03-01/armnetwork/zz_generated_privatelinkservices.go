@@ -61,12 +61,12 @@ type PrivateLinkServicesOperations interface {
 // PrivateLinkServicesClient implements the PrivateLinkServicesOperations interface.
 // Don't use this type directly, use NewPrivateLinkServicesClient() instead.
 type PrivateLinkServicesClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewPrivateLinkServicesClient creates a new instance of PrivateLinkServicesClient with the specified values.
-func NewPrivateLinkServicesClient(con *Connection, subscriptionID string) PrivateLinkServicesOperations {
+func NewPrivateLinkServicesClient(con *armcore.Connection, subscriptionID string) PrivateLinkServicesOperations {
 	return &PrivateLinkServicesClient{con: con, subscriptionID: subscriptionID}
 }
 

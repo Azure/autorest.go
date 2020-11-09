@@ -33,12 +33,12 @@ type LogAnalyticsOperations interface {
 // LogAnalyticsClient implements the LogAnalyticsOperations interface.
 // Don't use this type directly, use NewLogAnalyticsClient() instead.
 type LogAnalyticsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewLogAnalyticsClient creates a new instance of LogAnalyticsClient with the specified values.
-func NewLogAnalyticsClient(con *Connection, subscriptionID string) LogAnalyticsOperations {
+func NewLogAnalyticsClient(con *armcore.Connection, subscriptionID string) LogAnalyticsOperations {
 	return &LogAnalyticsClient{con: con, subscriptionID: subscriptionID}
 }
 

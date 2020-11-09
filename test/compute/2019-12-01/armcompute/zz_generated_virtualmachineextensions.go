@@ -41,12 +41,12 @@ type VirtualMachineExtensionsOperations interface {
 // VirtualMachineExtensionsClient implements the VirtualMachineExtensionsOperations interface.
 // Don't use this type directly, use NewVirtualMachineExtensionsClient() instead.
 type VirtualMachineExtensionsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewVirtualMachineExtensionsClient creates a new instance of VirtualMachineExtensionsClient with the specified values.
-func NewVirtualMachineExtensionsClient(con *Connection, subscriptionID string) VirtualMachineExtensionsOperations {
+func NewVirtualMachineExtensionsClient(con *armcore.Connection, subscriptionID string) VirtualMachineExtensionsOperations {
 	return &VirtualMachineExtensionsClient{con: con, subscriptionID: subscriptionID}
 }
 

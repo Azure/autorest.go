@@ -36,12 +36,12 @@ type PrivateEndpointsOperations interface {
 // PrivateEndpointsClient implements the PrivateEndpointsOperations interface.
 // Don't use this type directly, use NewPrivateEndpointsClient() instead.
 type PrivateEndpointsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewPrivateEndpointsClient creates a new instance of PrivateEndpointsClient with the specified values.
-func NewPrivateEndpointsClient(con *Connection, subscriptionID string) PrivateEndpointsOperations {
+func NewPrivateEndpointsClient(con *armcore.Connection, subscriptionID string) PrivateEndpointsOperations {
 	return &PrivateEndpointsClient{con: con, subscriptionID: subscriptionID}
 }
 

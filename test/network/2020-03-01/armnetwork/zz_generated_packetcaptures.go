@@ -42,12 +42,12 @@ type PacketCapturesOperations interface {
 // PacketCapturesClient implements the PacketCapturesOperations interface.
 // Don't use this type directly, use NewPacketCapturesClient() instead.
 type PacketCapturesClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewPacketCapturesClient creates a new instance of PacketCapturesClient with the specified values.
-func NewPacketCapturesClient(con *Connection, subscriptionID string) PacketCapturesOperations {
+func NewPacketCapturesClient(con *armcore.Connection, subscriptionID string) PacketCapturesOperations {
 	return &PacketCapturesClient{con: con, subscriptionID: subscriptionID}
 }
 

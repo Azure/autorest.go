@@ -43,12 +43,12 @@ type VirtualMachineScaleSetRollingUpgradesOperations interface {
 // VirtualMachineScaleSetRollingUpgradesClient implements the VirtualMachineScaleSetRollingUpgradesOperations interface.
 // Don't use this type directly, use NewVirtualMachineScaleSetRollingUpgradesClient() instead.
 type VirtualMachineScaleSetRollingUpgradesClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewVirtualMachineScaleSetRollingUpgradesClient creates a new instance of VirtualMachineScaleSetRollingUpgradesClient with the specified values.
-func NewVirtualMachineScaleSetRollingUpgradesClient(con *Connection, subscriptionID string) VirtualMachineScaleSetRollingUpgradesOperations {
+func NewVirtualMachineScaleSetRollingUpgradesClient(con *armcore.Connection, subscriptionID string) VirtualMachineScaleSetRollingUpgradesOperations {
 	return &VirtualMachineScaleSetRollingUpgradesClient{con: con, subscriptionID: subscriptionID}
 }
 

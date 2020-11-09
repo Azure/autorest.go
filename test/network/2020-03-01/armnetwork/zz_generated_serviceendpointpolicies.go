@@ -38,12 +38,12 @@ type ServiceEndpointPoliciesOperations interface {
 // ServiceEndpointPoliciesClient implements the ServiceEndpointPoliciesOperations interface.
 // Don't use this type directly, use NewServiceEndpointPoliciesClient() instead.
 type ServiceEndpointPoliciesClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewServiceEndpointPoliciesClient creates a new instance of ServiceEndpointPoliciesClient with the specified values.
-func NewServiceEndpointPoliciesClient(con *Connection, subscriptionID string) ServiceEndpointPoliciesOperations {
+func NewServiceEndpointPoliciesClient(con *armcore.Connection, subscriptionID string) ServiceEndpointPoliciesOperations {
 	return &ServiceEndpointPoliciesClient{con: con, subscriptionID: subscriptionID}
 }
 

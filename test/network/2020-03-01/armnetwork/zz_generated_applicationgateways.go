@@ -69,12 +69,12 @@ type ApplicationGatewaysOperations interface {
 // ApplicationGatewaysClient implements the ApplicationGatewaysOperations interface.
 // Don't use this type directly, use NewApplicationGatewaysClient() instead.
 type ApplicationGatewaysClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewApplicationGatewaysClient creates a new instance of ApplicationGatewaysClient with the specified values.
-func NewApplicationGatewaysClient(con *Connection, subscriptionID string) ApplicationGatewaysOperations {
+func NewApplicationGatewaysClient(con *armcore.Connection, subscriptionID string) ApplicationGatewaysOperations {
 	return &ApplicationGatewaysClient{con: con, subscriptionID: subscriptionID}
 }
 

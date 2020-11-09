@@ -89,12 +89,12 @@ type NetworkWatchersOperations interface {
 // NetworkWatchersClient implements the NetworkWatchersOperations interface.
 // Don't use this type directly, use NewNetworkWatchersClient() instead.
 type NetworkWatchersClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewNetworkWatchersClient creates a new instance of NetworkWatchersClient with the specified values.
-func NewNetworkWatchersClient(con *Connection, subscriptionID string) NetworkWatchersOperations {
+func NewNetworkWatchersClient(con *armcore.Connection, subscriptionID string) NetworkWatchersOperations {
 	return &NetworkWatchersClient{con: con, subscriptionID: subscriptionID}
 }
 

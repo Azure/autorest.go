@@ -40,12 +40,12 @@ type AzureFirewallsOperations interface {
 // AzureFirewallsClient implements the AzureFirewallsOperations interface.
 // Don't use this type directly, use NewAzureFirewallsClient() instead.
 type AzureFirewallsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewAzureFirewallsClient creates a new instance of AzureFirewallsClient with the specified values.
-func NewAzureFirewallsClient(con *Connection, subscriptionID string) AzureFirewallsOperations {
+func NewAzureFirewallsClient(con *armcore.Connection, subscriptionID string) AzureFirewallsOperations {
 	return &AzureFirewallsClient{con: con, subscriptionID: subscriptionID}
 }
 

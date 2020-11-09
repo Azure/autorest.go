@@ -9,6 +9,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"io/ioutil"
 	"net/http"
@@ -37,12 +38,12 @@ type AvailabilitySetsOperations interface {
 // AvailabilitySetsClient implements the AvailabilitySetsOperations interface.
 // Don't use this type directly, use NewAvailabilitySetsClient() instead.
 type AvailabilitySetsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewAvailabilitySetsClient creates a new instance of AvailabilitySetsClient with the specified values.
-func NewAvailabilitySetsClient(con *Connection, subscriptionID string) AvailabilitySetsOperations {
+func NewAvailabilitySetsClient(con *armcore.Connection, subscriptionID string) AvailabilitySetsOperations {
 	return &AvailabilitySetsClient{con: con, subscriptionID: subscriptionID}
 }
 

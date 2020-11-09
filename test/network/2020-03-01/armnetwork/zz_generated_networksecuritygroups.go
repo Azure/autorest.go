@@ -38,12 +38,12 @@ type NetworkSecurityGroupsOperations interface {
 // NetworkSecurityGroupsClient implements the NetworkSecurityGroupsOperations interface.
 // Don't use this type directly, use NewNetworkSecurityGroupsClient() instead.
 type NetworkSecurityGroupsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewNetworkSecurityGroupsClient creates a new instance of NetworkSecurityGroupsClient with the specified values.
-func NewNetworkSecurityGroupsClient(con *Connection, subscriptionID string) NetworkSecurityGroupsOperations {
+func NewNetworkSecurityGroupsClient(con *armcore.Connection, subscriptionID string) NetworkSecurityGroupsOperations {
 	return &NetworkSecurityGroupsClient{con: con, subscriptionID: subscriptionID}
 }
 

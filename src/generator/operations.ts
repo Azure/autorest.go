@@ -34,6 +34,9 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     // add standard imorts
     imports.add('net/http');
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
+    if (session.model.language.go!.armcoreConnection) {
+      imports.add('github.com/Azure/azure-sdk-for-go/sdk/armcore');
+    }
 
     let opText = '';
     group.operations.sort((a: Operation, b: Operation) => { return sortAscending(a.language.go!.name, b.language.go!.name) });
@@ -61,6 +64,8 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     let clientName = group.language.go!.clientName;
     if (!exportClient) {
       connection = camelCase(connection);
+    } else if (session.model.language.go!.armcoreConnection) {
+      connection = 'armcore.Connection';
     }
     const clientCtor = group.language.go!.clientCtorName;
     text += imports.text();

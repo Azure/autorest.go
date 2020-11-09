@@ -42,12 +42,12 @@ type VirtualNetworksOperations interface {
 // VirtualNetworksClient implements the VirtualNetworksOperations interface.
 // Don't use this type directly, use NewVirtualNetworksClient() instead.
 type VirtualNetworksClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewVirtualNetworksClient creates a new instance of VirtualNetworksClient with the specified values.
-func NewVirtualNetworksClient(con *Connection, subscriptionID string) VirtualNetworksOperations {
+func NewVirtualNetworksClient(con *armcore.Connection, subscriptionID string) VirtualNetworksOperations {
 	return &VirtualNetworksClient{con: con, subscriptionID: subscriptionID}
 }
 

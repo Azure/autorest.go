@@ -37,12 +37,12 @@ type ExpressRouteGatewaysOperations interface {
 // ExpressRouteGatewaysClient implements the ExpressRouteGatewaysOperations interface.
 // Don't use this type directly, use NewExpressRouteGatewaysClient() instead.
 type ExpressRouteGatewaysClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewExpressRouteGatewaysClient creates a new instance of ExpressRouteGatewaysClient with the specified values.
-func NewExpressRouteGatewaysClient(con *Connection, subscriptionID string) ExpressRouteGatewaysOperations {
+func NewExpressRouteGatewaysClient(con *armcore.Connection, subscriptionID string) ExpressRouteGatewaysOperations {
 	return &ExpressRouteGatewaysClient{con: con, subscriptionID: subscriptionID}
 }
 

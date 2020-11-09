@@ -36,12 +36,12 @@ type LocalNetworkGatewaysOperations interface {
 // LocalNetworkGatewaysClient implements the LocalNetworkGatewaysOperations interface.
 // Don't use this type directly, use NewLocalNetworkGatewaysClient() instead.
 type LocalNetworkGatewaysClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewLocalNetworkGatewaysClient creates a new instance of LocalNetworkGatewaysClient with the specified values.
-func NewLocalNetworkGatewaysClient(con *Connection, subscriptionID string) LocalNetworkGatewaysOperations {
+func NewLocalNetworkGatewaysClient(con *armcore.Connection, subscriptionID string) LocalNetworkGatewaysOperations {
 	return &LocalNetworkGatewaysClient{con: con, subscriptionID: subscriptionID}
 }
 

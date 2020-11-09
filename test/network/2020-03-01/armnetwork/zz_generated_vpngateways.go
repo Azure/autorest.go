@@ -42,12 +42,12 @@ type VpnGatewaysOperations interface {
 // VpnGatewaysClient implements the VpnGatewaysOperations interface.
 // Don't use this type directly, use NewVpnGatewaysClient() instead.
 type VpnGatewaysClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewVpnGatewaysClient creates a new instance of VpnGatewaysClient with the specified values.
-func NewVpnGatewaysClient(con *Connection, subscriptionID string) VpnGatewaysOperations {
+func NewVpnGatewaysClient(con *armcore.Connection, subscriptionID string) VpnGatewaysOperations {
 	return &VpnGatewaysClient{con: con, subscriptionID: subscriptionID}
 }
 

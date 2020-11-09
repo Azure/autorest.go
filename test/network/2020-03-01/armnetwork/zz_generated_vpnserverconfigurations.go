@@ -38,12 +38,12 @@ type VpnServerConfigurationsOperations interface {
 // VpnServerConfigurationsClient implements the VpnServerConfigurationsOperations interface.
 // Don't use this type directly, use NewVpnServerConfigurationsClient() instead.
 type VpnServerConfigurationsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewVpnServerConfigurationsClient creates a new instance of VpnServerConfigurationsClient with the specified values.
-func NewVpnServerConfigurationsClient(con *Connection, subscriptionID string) VpnServerConfigurationsOperations {
+func NewVpnServerConfigurationsClient(con *armcore.Connection, subscriptionID string) VpnServerConfigurationsOperations {
 	return &VpnServerConfigurationsClient{con: con, subscriptionID: subscriptionID}
 }
 

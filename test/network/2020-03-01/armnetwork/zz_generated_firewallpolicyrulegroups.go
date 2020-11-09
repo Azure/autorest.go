@@ -34,12 +34,12 @@ type FirewallPolicyRuleGroupsOperations interface {
 // FirewallPolicyRuleGroupsClient implements the FirewallPolicyRuleGroupsOperations interface.
 // Don't use this type directly, use NewFirewallPolicyRuleGroupsClient() instead.
 type FirewallPolicyRuleGroupsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewFirewallPolicyRuleGroupsClient creates a new instance of FirewallPolicyRuleGroupsClient with the specified values.
-func NewFirewallPolicyRuleGroupsClient(con *Connection, subscriptionID string) FirewallPolicyRuleGroupsOperations {
+func NewFirewallPolicyRuleGroupsClient(con *armcore.Connection, subscriptionID string) FirewallPolicyRuleGroupsOperations {
 	return &FirewallPolicyRuleGroupsClient{con: con, subscriptionID: subscriptionID}
 }
 

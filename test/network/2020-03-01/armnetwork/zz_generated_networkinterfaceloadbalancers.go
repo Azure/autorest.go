@@ -7,6 +7,7 @@ package armnetwork
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -22,12 +23,12 @@ type NetworkInterfaceLoadBalancersOperations interface {
 // NetworkInterfaceLoadBalancersClient implements the NetworkInterfaceLoadBalancersOperations interface.
 // Don't use this type directly, use NewNetworkInterfaceLoadBalancersClient() instead.
 type NetworkInterfaceLoadBalancersClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewNetworkInterfaceLoadBalancersClient creates a new instance of NetworkInterfaceLoadBalancersClient with the specified values.
-func NewNetworkInterfaceLoadBalancersClient(con *Connection, subscriptionID string) NetworkInterfaceLoadBalancersOperations {
+func NewNetworkInterfaceLoadBalancersClient(con *armcore.Connection, subscriptionID string) NetworkInterfaceLoadBalancersOperations {
 	return &NetworkInterfaceLoadBalancersClient{con: con, subscriptionID: subscriptionID}
 }
 

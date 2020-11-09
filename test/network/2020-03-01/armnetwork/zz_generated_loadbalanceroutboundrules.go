@@ -7,6 +7,7 @@ package armnetwork
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -24,12 +25,12 @@ type LoadBalancerOutboundRulesOperations interface {
 // LoadBalancerOutboundRulesClient implements the LoadBalancerOutboundRulesOperations interface.
 // Don't use this type directly, use NewLoadBalancerOutboundRulesClient() instead.
 type LoadBalancerOutboundRulesClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewLoadBalancerOutboundRulesClient creates a new instance of LoadBalancerOutboundRulesClient with the specified values.
-func NewLoadBalancerOutboundRulesClient(con *Connection, subscriptionID string) LoadBalancerOutboundRulesOperations {
+func NewLoadBalancerOutboundRulesClient(con *armcore.Connection, subscriptionID string) LoadBalancerOutboundRulesOperations {
 	return &LoadBalancerOutboundRulesClient{con: con, subscriptionID: subscriptionID}
 }
 

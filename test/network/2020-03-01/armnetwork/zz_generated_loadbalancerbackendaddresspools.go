@@ -7,6 +7,7 @@ package armnetwork
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -24,12 +25,12 @@ type LoadBalancerBackendAddressPoolsOperations interface {
 // LoadBalancerBackendAddressPoolsClient implements the LoadBalancerBackendAddressPoolsOperations interface.
 // Don't use this type directly, use NewLoadBalancerBackendAddressPoolsClient() instead.
 type LoadBalancerBackendAddressPoolsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewLoadBalancerBackendAddressPoolsClient creates a new instance of LoadBalancerBackendAddressPoolsClient with the specified values.
-func NewLoadBalancerBackendAddressPoolsClient(con *Connection, subscriptionID string) LoadBalancerBackendAddressPoolsOperations {
+func NewLoadBalancerBackendAddressPoolsClient(con *armcore.Connection, subscriptionID string) LoadBalancerBackendAddressPoolsOperations {
 	return &LoadBalancerBackendAddressPoolsClient{con: con, subscriptionID: subscriptionID}
 }
 

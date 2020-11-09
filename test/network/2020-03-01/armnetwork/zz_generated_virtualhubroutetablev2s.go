@@ -34,12 +34,12 @@ type VirtualHubRouteTableV2SOperations interface {
 // VirtualHubRouteTableV2SClient implements the VirtualHubRouteTableV2SOperations interface.
 // Don't use this type directly, use NewVirtualHubRouteTableV2SClient() instead.
 type VirtualHubRouteTableV2SClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewVirtualHubRouteTableV2SClient creates a new instance of VirtualHubRouteTableV2SClient with the specified values.
-func NewVirtualHubRouteTableV2SClient(con *Connection, subscriptionID string) VirtualHubRouteTableV2SOperations {
+func NewVirtualHubRouteTableV2SClient(con *armcore.Connection, subscriptionID string) VirtualHubRouteTableV2SOperations {
 	return &VirtualHubRouteTableV2SClient{con: con, subscriptionID: subscriptionID}
 }
 

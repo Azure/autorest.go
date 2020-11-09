@@ -9,6 +9,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"io/ioutil"
 	"net/http"
@@ -25,12 +26,12 @@ type ResourceSKUsOperations interface {
 // ResourceSKUsClient implements the ResourceSKUsOperations interface.
 // Don't use this type directly, use NewResourceSKUsClient() instead.
 type ResourceSKUsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewResourceSKUsClient creates a new instance of ResourceSKUsClient with the specified values.
-func NewResourceSKUsClient(con *Connection, subscriptionID string) ResourceSKUsOperations {
+func NewResourceSKUsClient(con *armcore.Connection, subscriptionID string) ResourceSKUsOperations {
 	return &ResourceSKUsClient{con: con, subscriptionID: subscriptionID}
 }
 

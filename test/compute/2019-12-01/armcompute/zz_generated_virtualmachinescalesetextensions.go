@@ -41,12 +41,12 @@ type VirtualMachineScaleSetExtensionsOperations interface {
 // VirtualMachineScaleSetExtensionsClient implements the VirtualMachineScaleSetExtensionsOperations interface.
 // Don't use this type directly, use NewVirtualMachineScaleSetExtensionsClient() instead.
 type VirtualMachineScaleSetExtensionsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewVirtualMachineScaleSetExtensionsClient creates a new instance of VirtualMachineScaleSetExtensionsClient with the specified values.
-func NewVirtualMachineScaleSetExtensionsClient(con *Connection, subscriptionID string) VirtualMachineScaleSetExtensionsOperations {
+func NewVirtualMachineScaleSetExtensionsClient(con *armcore.Connection, subscriptionID string) VirtualMachineScaleSetExtensionsOperations {
 	return &VirtualMachineScaleSetExtensionsClient{con: con, subscriptionID: subscriptionID}
 }
 

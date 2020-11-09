@@ -34,12 +34,12 @@ type DdosCustomPoliciesOperations interface {
 // DdosCustomPoliciesClient implements the DdosCustomPoliciesOperations interface.
 // Don't use this type directly, use NewDdosCustomPoliciesClient() instead.
 type DdosCustomPoliciesClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewDdosCustomPoliciesClient creates a new instance of DdosCustomPoliciesClient with the specified values.
-func NewDdosCustomPoliciesClient(con *Connection, subscriptionID string) DdosCustomPoliciesOperations {
+func NewDdosCustomPoliciesClient(con *armcore.Connection, subscriptionID string) DdosCustomPoliciesOperations {
 	return &DdosCustomPoliciesClient{con: con, subscriptionID: subscriptionID}
 }
 
