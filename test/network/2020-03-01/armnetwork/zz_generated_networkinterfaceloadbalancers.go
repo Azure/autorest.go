@@ -22,24 +22,24 @@ type NetworkInterfaceLoadBalancersOperations interface {
 // NetworkInterfaceLoadBalancersClient implements the NetworkInterfaceLoadBalancersOperations interface.
 // Don't use this type directly, use NewNetworkInterfaceLoadBalancersClient() instead.
 type NetworkInterfaceLoadBalancersClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewNetworkInterfaceLoadBalancersClient creates a new instance of NetworkInterfaceLoadBalancersClient with the specified values.
-func NewNetworkInterfaceLoadBalancersClient(c *Client, subscriptionID string) NetworkInterfaceLoadBalancersOperations {
-	return &NetworkInterfaceLoadBalancersClient{Client: c, subscriptionID: subscriptionID}
+func NewNetworkInterfaceLoadBalancersClient(con *Connection, subscriptionID string) NetworkInterfaceLoadBalancersOperations {
+	return &NetworkInterfaceLoadBalancersClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *NetworkInterfaceLoadBalancersClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *NetworkInterfaceLoadBalancersClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // List - List all load balancers in a network interface.
 func (client *NetworkInterfaceLoadBalancersClient) List(resourceGroupName string, networkInterfaceName string, options *NetworkInterfaceLoadBalancersListOptions) NetworkInterfaceLoadBalancerListResultPager {
 	return &networkInterfaceLoadBalancerListResultPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListCreateRequest(ctx, resourceGroupName, networkInterfaceName, options)
 		},
@@ -58,7 +58,7 @@ func (client *NetworkInterfaceLoadBalancersClient) ListCreateRequest(ctx context
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkInterfaceName}", url.PathEscape(networkInterfaceName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -13,7 +13,7 @@ import (
 )
 
 func newXMSClientRequestIDClient() XMSClientRequestIDOperations {
-	return NewXMSClientRequestIDClient(NewDefaultClient(nil))
+	return NewXMSClientRequestIDClient(NewDefaultConnection(nil))
 }
 
 // Get - Get method that overwrites x-ms-client-request header with value 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.

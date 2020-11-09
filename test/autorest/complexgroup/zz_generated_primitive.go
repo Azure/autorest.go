@@ -62,17 +62,17 @@ type PrimitiveOperations interface {
 // PrimitiveClient implements the PrimitiveOperations interface.
 // Don't use this type directly, use NewPrimitiveClient() instead.
 type PrimitiveClient struct {
-	*Client
+	con *Connection
 }
 
 // NewPrimitiveClient creates a new instance of PrimitiveClient with the specified values.
-func NewPrimitiveClient(c *Client) PrimitiveOperations {
-	return &PrimitiveClient{Client: c}
+func NewPrimitiveClient(con *Connection) PrimitiveOperations {
+	return &PrimitiveClient{con: con}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *PrimitiveClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *PrimitiveClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // GetBool - Get complex types with bool properties
@@ -81,7 +81,7 @@ func (client *PrimitiveClient) GetBool(ctx context.Context, options *PrimitiveGe
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -98,7 +98,7 @@ func (client *PrimitiveClient) GetBool(ctx context.Context, options *PrimitiveGe
 // GetBoolCreateRequest creates the GetBool request.
 func (client *PrimitiveClient) GetBoolCreateRequest(ctx context.Context, options *PrimitiveGetBoolOptions) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/bool"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -127,7 +127,7 @@ func (client *PrimitiveClient) GetByte(ctx context.Context, options *PrimitiveGe
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -144,7 +144,7 @@ func (client *PrimitiveClient) GetByte(ctx context.Context, options *PrimitiveGe
 // GetByteCreateRequest creates the GetByte request.
 func (client *PrimitiveClient) GetByteCreateRequest(ctx context.Context, options *PrimitiveGetByteOptions) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/byte"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -173,7 +173,7 @@ func (client *PrimitiveClient) GetDate(ctx context.Context, options *PrimitiveGe
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -190,7 +190,7 @@ func (client *PrimitiveClient) GetDate(ctx context.Context, options *PrimitiveGe
 // GetDateCreateRequest creates the GetDate request.
 func (client *PrimitiveClient) GetDateCreateRequest(ctx context.Context, options *PrimitiveGetDateOptions) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/date"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -219,7 +219,7 @@ func (client *PrimitiveClient) GetDateTime(ctx context.Context, options *Primiti
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -236,7 +236,7 @@ func (client *PrimitiveClient) GetDateTime(ctx context.Context, options *Primiti
 // GetDateTimeCreateRequest creates the GetDateTime request.
 func (client *PrimitiveClient) GetDateTimeCreateRequest(ctx context.Context, options *PrimitiveGetDateTimeOptions) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/datetime"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -265,7 +265,7 @@ func (client *PrimitiveClient) GetDateTimeRFC1123(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -282,7 +282,7 @@ func (client *PrimitiveClient) GetDateTimeRFC1123(ctx context.Context, options *
 // GetDateTimeRFC1123CreateRequest creates the GetDateTimeRFC1123 request.
 func (client *PrimitiveClient) GetDateTimeRFC1123CreateRequest(ctx context.Context, options *PrimitiveGetDateTimeRFC1123Options) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/datetimerfc1123"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -311,7 +311,7 @@ func (client *PrimitiveClient) GetDouble(ctx context.Context, options *Primitive
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -328,7 +328,7 @@ func (client *PrimitiveClient) GetDouble(ctx context.Context, options *Primitive
 // GetDoubleCreateRequest creates the GetDouble request.
 func (client *PrimitiveClient) GetDoubleCreateRequest(ctx context.Context, options *PrimitiveGetDoubleOptions) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/double"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -357,7 +357,7 @@ func (client *PrimitiveClient) GetDuration(ctx context.Context, options *Primiti
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -374,7 +374,7 @@ func (client *PrimitiveClient) GetDuration(ctx context.Context, options *Primiti
 // GetDurationCreateRequest creates the GetDuration request.
 func (client *PrimitiveClient) GetDurationCreateRequest(ctx context.Context, options *PrimitiveGetDurationOptions) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/duration"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -403,7 +403,7 @@ func (client *PrimitiveClient) GetFloat(ctx context.Context, options *PrimitiveG
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -420,7 +420,7 @@ func (client *PrimitiveClient) GetFloat(ctx context.Context, options *PrimitiveG
 // GetFloatCreateRequest creates the GetFloat request.
 func (client *PrimitiveClient) GetFloatCreateRequest(ctx context.Context, options *PrimitiveGetFloatOptions) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/float"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -449,7 +449,7 @@ func (client *PrimitiveClient) GetInt(ctx context.Context, options *PrimitiveGet
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -466,7 +466,7 @@ func (client *PrimitiveClient) GetInt(ctx context.Context, options *PrimitiveGet
 // GetIntCreateRequest creates the GetInt request.
 func (client *PrimitiveClient) GetIntCreateRequest(ctx context.Context, options *PrimitiveGetIntOptions) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/integer"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -495,7 +495,7 @@ func (client *PrimitiveClient) GetLong(ctx context.Context, options *PrimitiveGe
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -512,7 +512,7 @@ func (client *PrimitiveClient) GetLong(ctx context.Context, options *PrimitiveGe
 // GetLongCreateRequest creates the GetLong request.
 func (client *PrimitiveClient) GetLongCreateRequest(ctx context.Context, options *PrimitiveGetLongOptions) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/long"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -541,7 +541,7 @@ func (client *PrimitiveClient) GetString(ctx context.Context, options *Primitive
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -558,7 +558,7 @@ func (client *PrimitiveClient) GetString(ctx context.Context, options *Primitive
 // GetStringCreateRequest creates the GetString request.
 func (client *PrimitiveClient) GetStringCreateRequest(ctx context.Context, options *PrimitiveGetStringOptions) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/string"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -587,7 +587,7 @@ func (client *PrimitiveClient) PutBool(ctx context.Context, complexBody BooleanW
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -600,7 +600,7 @@ func (client *PrimitiveClient) PutBool(ctx context.Context, complexBody BooleanW
 // PutBoolCreateRequest creates the PutBool request.
 func (client *PrimitiveClient) PutBoolCreateRequest(ctx context.Context, complexBody BooleanWrapper, options *PrimitivePutBoolOptions) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/bool"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -623,7 +623,7 @@ func (client *PrimitiveClient) PutByte(ctx context.Context, complexBody ByteWrap
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -636,7 +636,7 @@ func (client *PrimitiveClient) PutByte(ctx context.Context, complexBody ByteWrap
 // PutByteCreateRequest creates the PutByte request.
 func (client *PrimitiveClient) PutByteCreateRequest(ctx context.Context, complexBody ByteWrapper, options *PrimitivePutByteOptions) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/byte"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -659,7 +659,7 @@ func (client *PrimitiveClient) PutDate(ctx context.Context, complexBody DateWrap
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -672,7 +672,7 @@ func (client *PrimitiveClient) PutDate(ctx context.Context, complexBody DateWrap
 // PutDateCreateRequest creates the PutDate request.
 func (client *PrimitiveClient) PutDateCreateRequest(ctx context.Context, complexBody DateWrapper, options *PrimitivePutDateOptions) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/date"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -695,7 +695,7 @@ func (client *PrimitiveClient) PutDateTime(ctx context.Context, complexBody Date
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -708,7 +708,7 @@ func (client *PrimitiveClient) PutDateTime(ctx context.Context, complexBody Date
 // PutDateTimeCreateRequest creates the PutDateTime request.
 func (client *PrimitiveClient) PutDateTimeCreateRequest(ctx context.Context, complexBody DatetimeWrapper, options *PrimitivePutDateTimeOptions) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/datetime"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -731,7 +731,7 @@ func (client *PrimitiveClient) PutDateTimeRFC1123(ctx context.Context, complexBo
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -744,7 +744,7 @@ func (client *PrimitiveClient) PutDateTimeRFC1123(ctx context.Context, complexBo
 // PutDateTimeRFC1123CreateRequest creates the PutDateTimeRFC1123 request.
 func (client *PrimitiveClient) PutDateTimeRFC1123CreateRequest(ctx context.Context, complexBody Datetimerfc1123Wrapper, options *PrimitivePutDateTimeRFC1123Options) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/datetimerfc1123"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -767,7 +767,7 @@ func (client *PrimitiveClient) PutDouble(ctx context.Context, complexBody Double
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -780,7 +780,7 @@ func (client *PrimitiveClient) PutDouble(ctx context.Context, complexBody Double
 // PutDoubleCreateRequest creates the PutDouble request.
 func (client *PrimitiveClient) PutDoubleCreateRequest(ctx context.Context, complexBody DoubleWrapper, options *PrimitivePutDoubleOptions) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/double"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -803,7 +803,7 @@ func (client *PrimitiveClient) PutDuration(ctx context.Context, complexBody Dura
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -816,7 +816,7 @@ func (client *PrimitiveClient) PutDuration(ctx context.Context, complexBody Dura
 // PutDurationCreateRequest creates the PutDuration request.
 func (client *PrimitiveClient) PutDurationCreateRequest(ctx context.Context, complexBody DurationWrapper, options *PrimitivePutDurationOptions) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/duration"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -839,7 +839,7 @@ func (client *PrimitiveClient) PutFloat(ctx context.Context, complexBody FloatWr
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -852,7 +852,7 @@ func (client *PrimitiveClient) PutFloat(ctx context.Context, complexBody FloatWr
 // PutFloatCreateRequest creates the PutFloat request.
 func (client *PrimitiveClient) PutFloatCreateRequest(ctx context.Context, complexBody FloatWrapper, options *PrimitivePutFloatOptions) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/float"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -875,7 +875,7 @@ func (client *PrimitiveClient) PutInt(ctx context.Context, complexBody IntWrappe
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -888,7 +888,7 @@ func (client *PrimitiveClient) PutInt(ctx context.Context, complexBody IntWrappe
 // PutIntCreateRequest creates the PutInt request.
 func (client *PrimitiveClient) PutIntCreateRequest(ctx context.Context, complexBody IntWrapper, options *PrimitivePutIntOptions) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/integer"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -911,7 +911,7 @@ func (client *PrimitiveClient) PutLong(ctx context.Context, complexBody LongWrap
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -924,7 +924,7 @@ func (client *PrimitiveClient) PutLong(ctx context.Context, complexBody LongWrap
 // PutLongCreateRequest creates the PutLong request.
 func (client *PrimitiveClient) PutLongCreateRequest(ctx context.Context, complexBody LongWrapper, options *PrimitivePutLongOptions) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/long"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -947,7 +947,7 @@ func (client *PrimitiveClient) PutString(ctx context.Context, complexBody String
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -960,7 +960,7 @@ func (client *PrimitiveClient) PutString(ctx context.Context, complexBody String
 // PutStringCreateRequest creates the PutString request.
 func (client *PrimitiveClient) PutStringCreateRequest(ctx context.Context, complexBody StringWrapper, options *PrimitivePutStringOptions) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/string"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

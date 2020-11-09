@@ -55,18 +55,18 @@ type P2SVpnGatewaysOperations interface {
 // P2SVpnGatewaysClient implements the P2SVpnGatewaysOperations interface.
 // Don't use this type directly, use NewP2SVpnGatewaysClient() instead.
 type P2SVpnGatewaysClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewP2SVpnGatewaysClient creates a new instance of P2SVpnGatewaysClient with the specified values.
-func NewP2SVpnGatewaysClient(c *Client, subscriptionID string) P2SVpnGatewaysOperations {
-	return &P2SVpnGatewaysClient{Client: c, subscriptionID: subscriptionID}
+func NewP2SVpnGatewaysClient(con *Connection, subscriptionID string) P2SVpnGatewaysOperations {
+	return &P2SVpnGatewaysClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *P2SVpnGatewaysClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *P2SVpnGatewaysClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 func (client *P2SVpnGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, p2SVpnGatewayParameters P2SVpnGateway, options *P2SVpnGatewaysCreateOrUpdateOptions) (*P2SVpnGatewayPollerResponse, error) {
@@ -83,7 +83,7 @@ func (client *P2SVpnGatewaysClient) BeginCreateOrUpdate(ctx context.Context, res
 	}
 	poller := &p2SVpnGatewayPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*P2SVpnGatewayResponse, error) {
@@ -98,7 +98,7 @@ func (client *P2SVpnGatewaysClient) ResumeCreateOrUpdate(token string) (P2SVpnGa
 		return nil, err
 	}
 	return &p2SVpnGatewayPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -109,7 +109,7 @@ func (client *P2SVpnGatewaysClient) CreateOrUpdate(ctx context.Context, resource
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -125,7 +125,7 @@ func (client *P2SVpnGatewaysClient) CreateOrUpdateCreateRequest(ctx context.Cont
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{gatewayName}", url.PathEscape(gatewayName))
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -165,7 +165,7 @@ func (client *P2SVpnGatewaysClient) BeginDelete(ctx context.Context, resourceGro
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -180,7 +180,7 @@ func (client *P2SVpnGatewaysClient) ResumeDelete(token string) (HTTPPoller, erro
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -191,7 +191,7 @@ func (client *P2SVpnGatewaysClient) Delete(ctx context.Context, resourceGroupNam
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -207,7 +207,7 @@ func (client *P2SVpnGatewaysClient) DeleteCreateRequest(ctx context.Context, res
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{gatewayName}", url.PathEscape(gatewayName))
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -241,7 +241,7 @@ func (client *P2SVpnGatewaysClient) BeginDisconnectP2SVpnConnections(ctx context
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -256,7 +256,7 @@ func (client *P2SVpnGatewaysClient) ResumeDisconnectP2SVpnConnections(token stri
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -267,7 +267,7 @@ func (client *P2SVpnGatewaysClient) DisconnectP2SVpnConnections(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -283,7 +283,7 @@ func (client *P2SVpnGatewaysClient) DisconnectP2SVpnConnectionsCreateRequest(ctx
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{p2sVpnGatewayName}", url.PathEscape(p2SVpnGatewayName))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -317,7 +317,7 @@ func (client *P2SVpnGatewaysClient) BeginGenerateVpnProfile(ctx context.Context,
 	}
 	poller := &vpnProfileResponsePoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*VpnProfileResponseResponse, error) {
@@ -332,7 +332,7 @@ func (client *P2SVpnGatewaysClient) ResumeGenerateVpnProfile(token string) (VpnP
 		return nil, err
 	}
 	return &vpnProfileResponsePoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -343,7 +343,7 @@ func (client *P2SVpnGatewaysClient) GenerateVpnProfile(ctx context.Context, reso
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -359,7 +359,7 @@ func (client *P2SVpnGatewaysClient) GenerateVpnProfileCreateRequest(ctx context.
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{gatewayName}", url.PathEscape(gatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -391,7 +391,7 @@ func (client *P2SVpnGatewaysClient) Get(ctx context.Context, resourceGroupName s
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -411,7 +411,7 @@ func (client *P2SVpnGatewaysClient) GetCreateRequest(ctx context.Context, resour
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{gatewayName}", url.PathEscape(gatewayName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -451,7 +451,7 @@ func (client *P2SVpnGatewaysClient) BeginGetP2SVpnConnectionHealth(ctx context.C
 	}
 	poller := &p2SVpnGatewayPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*P2SVpnGatewayResponse, error) {
@@ -466,7 +466,7 @@ func (client *P2SVpnGatewaysClient) ResumeGetP2SVpnConnectionHealth(token string
 		return nil, err
 	}
 	return &p2SVpnGatewayPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -477,7 +477,7 @@ func (client *P2SVpnGatewaysClient) GetP2SVpnConnectionHealth(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -493,7 +493,7 @@ func (client *P2SVpnGatewaysClient) GetP2SVpnConnectionHealthCreateRequest(ctx c
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{gatewayName}", url.PathEscape(gatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -533,7 +533,7 @@ func (client *P2SVpnGatewaysClient) BeginGetP2SVpnConnectionHealthDetailed(ctx c
 	}
 	poller := &p2SVpnConnectionHealthPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*P2SVpnConnectionHealthResponse, error) {
@@ -548,7 +548,7 @@ func (client *P2SVpnGatewaysClient) ResumeGetP2SVpnConnectionHealthDetailed(toke
 		return nil, err
 	}
 	return &p2SVpnConnectionHealthPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -560,7 +560,7 @@ func (client *P2SVpnGatewaysClient) GetP2SVpnConnectionHealthDetailed(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -576,7 +576,7 @@ func (client *P2SVpnGatewaysClient) GetP2SVpnConnectionHealthDetailedCreateReque
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{gatewayName}", url.PathEscape(gatewayName))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -605,7 +605,7 @@ func (client *P2SVpnGatewaysClient) GetP2SVpnConnectionHealthDetailedHandleError
 // List - Lists all the P2SVpnGateways in a subscription.
 func (client *P2SVpnGatewaysClient) List(options *P2SVpnGatewaysListOptions) ListP2SVpnGatewaysResultPager {
 	return &listP2SVpnGatewaysResultPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListCreateRequest(ctx, options)
 		},
@@ -622,7 +622,7 @@ func (client *P2SVpnGatewaysClient) List(options *P2SVpnGatewaysListOptions) Lis
 func (client *P2SVpnGatewaysClient) ListCreateRequest(ctx context.Context, options *P2SVpnGatewaysListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/p2svpnGateways"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -651,7 +651,7 @@ func (client *P2SVpnGatewaysClient) ListHandleError(resp *azcore.Response) error
 // ListByResourceGroup - Lists all the P2SVpnGateways in a resource group.
 func (client *P2SVpnGatewaysClient) ListByResourceGroup(resourceGroupName string, options *P2SVpnGatewaysListByResourceGroupOptions) ListP2SVpnGatewaysResultPager {
 	return &listP2SVpnGatewaysResultPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListByResourceGroupCreateRequest(ctx, resourceGroupName, options)
 		},
@@ -669,7 +669,7 @@ func (client *P2SVpnGatewaysClient) ListByResourceGroupCreateRequest(ctx context
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -701,7 +701,7 @@ func (client *P2SVpnGatewaysClient) UpdateTags(ctx context.Context, resourceGrou
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -721,7 +721,7 @@ func (client *P2SVpnGatewaysClient) UpdateTagsCreateRequest(ctx context.Context,
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{gatewayName}", url.PathEscape(gatewayName))
-	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

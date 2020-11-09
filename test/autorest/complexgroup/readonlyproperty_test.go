@@ -13,7 +13,7 @@ import (
 )
 
 func newReadonlypropertyClient() ReadonlypropertyOperations {
-	return NewReadonlypropertyClient(NewDefaultClient(nil))
+	return NewReadonlypropertyClient(NewDefaultConnection(nil))
 }
 
 func TestReadonlypropertyGetValid(t *testing.T) {

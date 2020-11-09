@@ -24,18 +24,18 @@ type LoadBalancerBackendAddressPoolsOperations interface {
 // LoadBalancerBackendAddressPoolsClient implements the LoadBalancerBackendAddressPoolsOperations interface.
 // Don't use this type directly, use NewLoadBalancerBackendAddressPoolsClient() instead.
 type LoadBalancerBackendAddressPoolsClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewLoadBalancerBackendAddressPoolsClient creates a new instance of LoadBalancerBackendAddressPoolsClient with the specified values.
-func NewLoadBalancerBackendAddressPoolsClient(c *Client, subscriptionID string) LoadBalancerBackendAddressPoolsOperations {
-	return &LoadBalancerBackendAddressPoolsClient{Client: c, subscriptionID: subscriptionID}
+func NewLoadBalancerBackendAddressPoolsClient(con *Connection, subscriptionID string) LoadBalancerBackendAddressPoolsOperations {
+	return &LoadBalancerBackendAddressPoolsClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *LoadBalancerBackendAddressPoolsClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *LoadBalancerBackendAddressPoolsClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // Get - Gets load balancer backend address pool.
@@ -44,7 +44,7 @@ func (client *LoadBalancerBackendAddressPoolsClient) Get(ctx context.Context, re
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -65,7 +65,7 @@ func (client *LoadBalancerBackendAddressPoolsClient) GetCreateRequest(ctx contex
 	urlPath = strings.ReplaceAll(urlPath, "{loadBalancerName}", url.PathEscape(loadBalancerName))
 	urlPath = strings.ReplaceAll(urlPath, "{backendAddressPoolName}", url.PathEscape(backendAddressPoolName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -94,7 +94,7 @@ func (client *LoadBalancerBackendAddressPoolsClient) GetHandleError(resp *azcore
 // List - Gets all the load balancer backed address pools.
 func (client *LoadBalancerBackendAddressPoolsClient) List(resourceGroupName string, loadBalancerName string, options *LoadBalancerBackendAddressPoolsListOptions) LoadBalancerBackendAddressPoolListResultPager {
 	return &loadBalancerBackendAddressPoolListResultPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListCreateRequest(ctx, resourceGroupName, loadBalancerName, options)
 		},
@@ -113,7 +113,7 @@ func (client *LoadBalancerBackendAddressPoolsClient) ListCreateRequest(ctx conte
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{loadBalancerName}", url.PathEscape(loadBalancerName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -23,17 +23,17 @@ type Operations interface {
 // OperationsClient implements the Operations interface.
 // Don't use this type directly, use NewOperationsClient() instead.
 type OperationsClient struct {
-	*Client
+	con *Connection
 }
 
 // NewOperationsClient creates a new instance of OperationsClient with the specified values.
-func NewOperationsClient(c *Client) Operations {
-	return &OperationsClient{Client: c}
+func NewOperationsClient(con *Connection) Operations {
+	return &OperationsClient{con: con}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *OperationsClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *OperationsClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // List - Gets a list of compute operations.
@@ -42,7 +42,7 @@ func (client *OperationsClient) List(ctx context.Context, options *OperationsLis
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -59,7 +59,7 @@ func (client *OperationsClient) List(ctx context.Context, options *OperationsLis
 // ListCreateRequest creates the List request.
 func (client *OperationsClient) ListCreateRequest(ctx context.Context, options *OperationsListOptions) (*azcore.Request, error) {
 	urlPath := "/providers/Microsoft.Compute/operations"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

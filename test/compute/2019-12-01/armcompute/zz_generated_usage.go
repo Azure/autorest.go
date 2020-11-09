@@ -25,24 +25,24 @@ type UsageOperations interface {
 // UsageClient implements the UsageOperations interface.
 // Don't use this type directly, use NewUsageClient() instead.
 type UsageClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewUsageClient creates a new instance of UsageClient with the specified values.
-func NewUsageClient(c *Client, subscriptionID string) UsageOperations {
-	return &UsageClient{Client: c, subscriptionID: subscriptionID}
+func NewUsageClient(con *Connection, subscriptionID string) UsageOperations {
+	return &UsageClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *UsageClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *UsageClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // List - Gets, for the specified location, the current compute resource usage information as well as the limits for compute resources under the subscription.
 func (client *UsageClient) List(location string, options *UsageListOptions) ListUsagesResultPager {
 	return &listUsagesResultPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListCreateRequest(ctx, location, options)
 		},
@@ -60,7 +60,7 @@ func (client *UsageClient) ListCreateRequest(ctx context.Context, location strin
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/usages"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

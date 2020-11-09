@@ -14,12 +14,12 @@ import (
 )
 
 type bigDataPoolsClient struct {
-	*client
+	con *connection
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *bigDataPoolsClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *bigDataPoolsClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // Get - Get Big Data Pool
@@ -28,7 +28,7 @@ func (client *bigDataPoolsClient) Get(ctx context.Context, bigDataPoolName strin
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -46,7 +46,7 @@ func (client *bigDataPoolsClient) Get(ctx context.Context, bigDataPoolName strin
 func (client *bigDataPoolsClient) GetCreateRequest(ctx context.Context, bigDataPoolName string, options *BigDataPoolsGetOptions) (*azcore.Request, error) {
 	urlPath := "/bigDataPools/{bigDataPoolName}"
 	urlPath = strings.ReplaceAll(urlPath, "{bigDataPoolName}", url.PathEscape(bigDataPoolName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -78,7 +78,7 @@ func (client *bigDataPoolsClient) List(ctx context.Context, options *BigDataPool
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -95,7 +95,7 @@ func (client *bigDataPoolsClient) List(ctx context.Context, options *BigDataPool
 // ListCreateRequest creates the List request.
 func (client *bigDataPoolsClient) ListCreateRequest(ctx context.Context, options *BigDataPoolsListOptions) (*azcore.Request, error) {
 	urlPath := "/bigDataPools"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

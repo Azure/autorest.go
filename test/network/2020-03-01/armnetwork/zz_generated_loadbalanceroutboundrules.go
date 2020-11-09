@@ -24,18 +24,18 @@ type LoadBalancerOutboundRulesOperations interface {
 // LoadBalancerOutboundRulesClient implements the LoadBalancerOutboundRulesOperations interface.
 // Don't use this type directly, use NewLoadBalancerOutboundRulesClient() instead.
 type LoadBalancerOutboundRulesClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewLoadBalancerOutboundRulesClient creates a new instance of LoadBalancerOutboundRulesClient with the specified values.
-func NewLoadBalancerOutboundRulesClient(c *Client, subscriptionID string) LoadBalancerOutboundRulesOperations {
-	return &LoadBalancerOutboundRulesClient{Client: c, subscriptionID: subscriptionID}
+func NewLoadBalancerOutboundRulesClient(con *Connection, subscriptionID string) LoadBalancerOutboundRulesOperations {
+	return &LoadBalancerOutboundRulesClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *LoadBalancerOutboundRulesClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *LoadBalancerOutboundRulesClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // Get - Gets the specified load balancer outbound rule.
@@ -44,7 +44,7 @@ func (client *LoadBalancerOutboundRulesClient) Get(ctx context.Context, resource
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -65,7 +65,7 @@ func (client *LoadBalancerOutboundRulesClient) GetCreateRequest(ctx context.Cont
 	urlPath = strings.ReplaceAll(urlPath, "{loadBalancerName}", url.PathEscape(loadBalancerName))
 	urlPath = strings.ReplaceAll(urlPath, "{outboundRuleName}", url.PathEscape(outboundRuleName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -94,7 +94,7 @@ func (client *LoadBalancerOutboundRulesClient) GetHandleError(resp *azcore.Respo
 // List - Gets all the outbound rules in a load balancer.
 func (client *LoadBalancerOutboundRulesClient) List(resourceGroupName string, loadBalancerName string, options *LoadBalancerOutboundRulesListOptions) LoadBalancerOutboundRuleListResultPager {
 	return &loadBalancerOutboundRuleListResultPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListCreateRequest(ctx, resourceGroupName, loadBalancerName, options)
 		},
@@ -113,7 +113,7 @@ func (client *LoadBalancerOutboundRulesClient) ListCreateRequest(ctx context.Con
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{loadBalancerName}", url.PathEscape(loadBalancerName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

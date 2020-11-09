@@ -14,12 +14,12 @@ import (
 )
 
 type datasetsClient struct {
-	*client
+	con *connection
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *datasetsClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *datasetsClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // Rename - Renames a dataset.
@@ -28,7 +28,7 @@ func (client *datasetsClient) Rename(ctx context.Context, datasetName string, re
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -42,7 +42,7 @@ func (client *datasetsClient) Rename(ctx context.Context, datasetName string, re
 func (client *datasetsClient) RenameCreateRequest(ctx context.Context, datasetName string, request ArtifactRenameRequest, options *DatasetsRenameOptions) (*azcore.Request, error) {
 	urlPath := "/datasets/{datasetName}/rename"
 	urlPath = strings.ReplaceAll(urlPath, "{datasetName}", url.PathEscape(datasetName))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

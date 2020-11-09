@@ -24,18 +24,18 @@ type DefaultSecurityRulesOperations interface {
 // DefaultSecurityRulesClient implements the DefaultSecurityRulesOperations interface.
 // Don't use this type directly, use NewDefaultSecurityRulesClient() instead.
 type DefaultSecurityRulesClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewDefaultSecurityRulesClient creates a new instance of DefaultSecurityRulesClient with the specified values.
-func NewDefaultSecurityRulesClient(c *Client, subscriptionID string) DefaultSecurityRulesOperations {
-	return &DefaultSecurityRulesClient{Client: c, subscriptionID: subscriptionID}
+func NewDefaultSecurityRulesClient(con *Connection, subscriptionID string) DefaultSecurityRulesOperations {
+	return &DefaultSecurityRulesClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *DefaultSecurityRulesClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *DefaultSecurityRulesClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // Get - Get the specified default network security rule.
@@ -44,7 +44,7 @@ func (client *DefaultSecurityRulesClient) Get(ctx context.Context, resourceGroup
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -65,7 +65,7 @@ func (client *DefaultSecurityRulesClient) GetCreateRequest(ctx context.Context, 
 	urlPath = strings.ReplaceAll(urlPath, "{networkSecurityGroupName}", url.PathEscape(networkSecurityGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{defaultSecurityRuleName}", url.PathEscape(defaultSecurityRuleName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -94,7 +94,7 @@ func (client *DefaultSecurityRulesClient) GetHandleError(resp *azcore.Response) 
 // List - Gets all default security rules in a network security group.
 func (client *DefaultSecurityRulesClient) List(resourceGroupName string, networkSecurityGroupName string, options *DefaultSecurityRulesListOptions) SecurityRuleListResultPager {
 	return &securityRuleListResultPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, options)
 		},
@@ -113,7 +113,7 @@ func (client *DefaultSecurityRulesClient) ListCreateRequest(ctx context.Context,
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkSecurityGroupName}", url.PathEscape(networkSecurityGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

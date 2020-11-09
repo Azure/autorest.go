@@ -15,12 +15,12 @@ import (
 )
 
 type pipelineRunClient struct {
-	*client
+	con *connection
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *pipelineRunClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *pipelineRunClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // CancelPipelineRun - Cancel a pipeline run by its run ID.
@@ -29,7 +29,7 @@ func (client *pipelineRunClient) CancelPipelineRun(ctx context.Context, runId st
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -43,7 +43,7 @@ func (client *pipelineRunClient) CancelPipelineRun(ctx context.Context, runId st
 func (client *pipelineRunClient) CancelPipelineRunCreateRequest(ctx context.Context, runId string, options *PipelineRunCancelPipelineRunOptions) (*azcore.Request, error) {
 	urlPath := "/pipelineruns/{runId}/cancel"
 	urlPath = strings.ReplaceAll(urlPath, "{runId}", url.PathEscape(runId))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -72,7 +72,7 @@ func (client *pipelineRunClient) GetPipelineRun(ctx context.Context, runId strin
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -90,7 +90,7 @@ func (client *pipelineRunClient) GetPipelineRun(ctx context.Context, runId strin
 func (client *pipelineRunClient) GetPipelineRunCreateRequest(ctx context.Context, runId string, options *PipelineRunGetPipelineRunOptions) (*azcore.Request, error) {
 	urlPath := "/pipelineruns/{runId}"
 	urlPath = strings.ReplaceAll(urlPath, "{runId}", url.PathEscape(runId))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -122,7 +122,7 @@ func (client *pipelineRunClient) QueryActivityRuns(ctx context.Context, pipeline
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -141,7 +141,7 @@ func (client *pipelineRunClient) QueryActivityRunsCreateRequest(ctx context.Cont
 	urlPath := "/pipelines/{pipelineName}/pipelineruns/{runId}/queryActivityruns"
 	urlPath = strings.ReplaceAll(urlPath, "{pipelineName}", url.PathEscape(pipelineName))
 	urlPath = strings.ReplaceAll(urlPath, "{runId}", url.PathEscape(runId))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -173,7 +173,7 @@ func (client *pipelineRunClient) QueryPipelineRunsByWorkspace(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -190,7 +190,7 @@ func (client *pipelineRunClient) QueryPipelineRunsByWorkspace(ctx context.Contex
 // QueryPipelineRunsByWorkspaceCreateRequest creates the QueryPipelineRunsByWorkspace request.
 func (client *pipelineRunClient) QueryPipelineRunsByWorkspaceCreateRequest(ctx context.Context, filterParameters RunFilterParameters, options *PipelineRunQueryPipelineRunsByWorkspaceOptions) (*azcore.Request, error) {
 	urlPath := "/queryPipelineRuns"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

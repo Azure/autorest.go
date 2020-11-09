@@ -14,12 +14,12 @@ import (
 )
 
 type sqlPoolsClient struct {
-	*client
+	con *connection
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *sqlPoolsClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *sqlPoolsClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // Get - Get Sql Pool
@@ -28,7 +28,7 @@ func (client *sqlPoolsClient) Get(ctx context.Context, sqlPoolName string, optio
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -46,7 +46,7 @@ func (client *sqlPoolsClient) Get(ctx context.Context, sqlPoolName string, optio
 func (client *sqlPoolsClient) GetCreateRequest(ctx context.Context, sqlPoolName string, options *SQLPoolsGetOptions) (*azcore.Request, error) {
 	urlPath := "/sqlPools/{sqlPoolName}"
 	urlPath = strings.ReplaceAll(urlPath, "{sqlPoolName}", url.PathEscape(sqlPoolName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -78,7 +78,7 @@ func (client *sqlPoolsClient) List(ctx context.Context, options *SQLPoolsListOpt
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -95,7 +95,7 @@ func (client *sqlPoolsClient) List(ctx context.Context, options *SQLPoolsListOpt
 // ListCreateRequest creates the List request.
 func (client *sqlPoolsClient) ListCreateRequest(ctx context.Context, options *SQLPoolsListOptions) (*azcore.Request, error) {
 	urlPath := "/sqlPools"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

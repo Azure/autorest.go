@@ -15,10 +15,10 @@ import (
 )
 
 func newHTTPRetryClient() HTTPRetryOperations {
-	options := DefaultClientOptions()
+	options := DefaultConnectionOptions()
 	options.Retry.RetryDelay = 10 * time.Millisecond
 	options.HTTPClient = httpClientWithCookieJar()
-	return NewHTTPRetryClient(NewDefaultClient(&options))
+	return NewHTTPRetryClient(NewDefaultConnection(&options))
 }
 
 func httpClientWithCookieJar() azcore.Transport {

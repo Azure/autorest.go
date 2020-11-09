@@ -22,7 +22,7 @@ func toTimePtr(layout string, value string) *time.Time {
 }
 
 func newXMLClient() XMLOperations {
-	return NewXMLClient(NewDefaultClient(nil))
+	return NewXMLClient(NewDefaultConnection(nil))
 }
 
 func TestGetACLs(t *testing.T) {

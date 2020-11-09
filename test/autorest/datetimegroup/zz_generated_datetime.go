@@ -63,17 +63,17 @@ type DatetimeOperations interface {
 // DatetimeClient implements the DatetimeOperations interface.
 // Don't use this type directly, use NewDatetimeClient() instead.
 type DatetimeClient struct {
-	*Client
+	con *Connection
 }
 
 // NewDatetimeClient creates a new instance of DatetimeClient with the specified values.
-func NewDatetimeClient(c *Client) DatetimeOperations {
-	return &DatetimeClient{Client: c}
+func NewDatetimeClient(con *Connection) DatetimeOperations {
+	return &DatetimeClient{con: con}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *DatetimeClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *DatetimeClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // GetInvalid - Get invalid datetime value
@@ -82,7 +82,7 @@ func (client *DatetimeClient) GetInvalid(ctx context.Context, options *DatetimeG
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -99,7 +99,7 @@ func (client *DatetimeClient) GetInvalid(ctx context.Context, options *DatetimeG
 // GetInvalidCreateRequest creates the GetInvalid request.
 func (client *DatetimeClient) GetInvalidCreateRequest(ctx context.Context, options *DatetimeGetInvalidOptions) (*azcore.Request, error) {
 	urlPath := "/datetime/invalid"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -129,7 +129,7 @@ func (client *DatetimeClient) GetLocalNegativeOffsetLowercaseMaxDateTime(ctx con
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -146,7 +146,7 @@ func (client *DatetimeClient) GetLocalNegativeOffsetLowercaseMaxDateTime(ctx con
 // GetLocalNegativeOffsetLowercaseMaxDateTimeCreateRequest creates the GetLocalNegativeOffsetLowercaseMaxDateTime request.
 func (client *DatetimeClient) GetLocalNegativeOffsetLowercaseMaxDateTimeCreateRequest(ctx context.Context, options *DatetimeGetLocalNegativeOffsetLowercaseMaxDateTimeOptions) (*azcore.Request, error) {
 	urlPath := "/datetime/max/localnegativeoffset/lowercase"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -176,7 +176,7 @@ func (client *DatetimeClient) GetLocalNegativeOffsetMinDateTime(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -193,7 +193,7 @@ func (client *DatetimeClient) GetLocalNegativeOffsetMinDateTime(ctx context.Cont
 // GetLocalNegativeOffsetMinDateTimeCreateRequest creates the GetLocalNegativeOffsetMinDateTime request.
 func (client *DatetimeClient) GetLocalNegativeOffsetMinDateTimeCreateRequest(ctx context.Context, options *DatetimeGetLocalNegativeOffsetMinDateTimeOptions) (*azcore.Request, error) {
 	urlPath := "/datetime/min/localnegativeoffset"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -223,7 +223,7 @@ func (client *DatetimeClient) GetLocalNegativeOffsetUppercaseMaxDateTime(ctx con
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -240,7 +240,7 @@ func (client *DatetimeClient) GetLocalNegativeOffsetUppercaseMaxDateTime(ctx con
 // GetLocalNegativeOffsetUppercaseMaxDateTimeCreateRequest creates the GetLocalNegativeOffsetUppercaseMaxDateTime request.
 func (client *DatetimeClient) GetLocalNegativeOffsetUppercaseMaxDateTimeCreateRequest(ctx context.Context, options *DatetimeGetLocalNegativeOffsetUppercaseMaxDateTimeOptions) (*azcore.Request, error) {
 	urlPath := "/datetime/max/localnegativeoffset/uppercase"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -270,7 +270,7 @@ func (client *DatetimeClient) GetLocalNoOffsetMinDateTime(ctx context.Context, o
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -287,7 +287,7 @@ func (client *DatetimeClient) GetLocalNoOffsetMinDateTime(ctx context.Context, o
 // GetLocalNoOffsetMinDateTimeCreateRequest creates the GetLocalNoOffsetMinDateTime request.
 func (client *DatetimeClient) GetLocalNoOffsetMinDateTimeCreateRequest(ctx context.Context, options *DatetimeGetLocalNoOffsetMinDateTimeOptions) (*azcore.Request, error) {
 	urlPath := "/datetime/min/localnooffset"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -317,7 +317,7 @@ func (client *DatetimeClient) GetLocalPositiveOffsetLowercaseMaxDateTime(ctx con
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -334,7 +334,7 @@ func (client *DatetimeClient) GetLocalPositiveOffsetLowercaseMaxDateTime(ctx con
 // GetLocalPositiveOffsetLowercaseMaxDateTimeCreateRequest creates the GetLocalPositiveOffsetLowercaseMaxDateTime request.
 func (client *DatetimeClient) GetLocalPositiveOffsetLowercaseMaxDateTimeCreateRequest(ctx context.Context, options *DatetimeGetLocalPositiveOffsetLowercaseMaxDateTimeOptions) (*azcore.Request, error) {
 	urlPath := "/datetime/max/localpositiveoffset/lowercase"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -364,7 +364,7 @@ func (client *DatetimeClient) GetLocalPositiveOffsetMinDateTime(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -381,7 +381,7 @@ func (client *DatetimeClient) GetLocalPositiveOffsetMinDateTime(ctx context.Cont
 // GetLocalPositiveOffsetMinDateTimeCreateRequest creates the GetLocalPositiveOffsetMinDateTime request.
 func (client *DatetimeClient) GetLocalPositiveOffsetMinDateTimeCreateRequest(ctx context.Context, options *DatetimeGetLocalPositiveOffsetMinDateTimeOptions) (*azcore.Request, error) {
 	urlPath := "/datetime/min/localpositiveoffset"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -411,7 +411,7 @@ func (client *DatetimeClient) GetLocalPositiveOffsetUppercaseMaxDateTime(ctx con
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -428,7 +428,7 @@ func (client *DatetimeClient) GetLocalPositiveOffsetUppercaseMaxDateTime(ctx con
 // GetLocalPositiveOffsetUppercaseMaxDateTimeCreateRequest creates the GetLocalPositiveOffsetUppercaseMaxDateTime request.
 func (client *DatetimeClient) GetLocalPositiveOffsetUppercaseMaxDateTimeCreateRequest(ctx context.Context, options *DatetimeGetLocalPositiveOffsetUppercaseMaxDateTimeOptions) (*azcore.Request, error) {
 	urlPath := "/datetime/max/localpositiveoffset/uppercase"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -458,7 +458,7 @@ func (client *DatetimeClient) GetNull(ctx context.Context, options *DatetimeGetN
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -475,7 +475,7 @@ func (client *DatetimeClient) GetNull(ctx context.Context, options *DatetimeGetN
 // GetNullCreateRequest creates the GetNull request.
 func (client *DatetimeClient) GetNullCreateRequest(ctx context.Context, options *DatetimeGetNullOptions) (*azcore.Request, error) {
 	urlPath := "/datetime/null"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -505,7 +505,7 @@ func (client *DatetimeClient) GetOverflow(ctx context.Context, options *Datetime
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -522,7 +522,7 @@ func (client *DatetimeClient) GetOverflow(ctx context.Context, options *Datetime
 // GetOverflowCreateRequest creates the GetOverflow request.
 func (client *DatetimeClient) GetOverflowCreateRequest(ctx context.Context, options *DatetimeGetOverflowOptions) (*azcore.Request, error) {
 	urlPath := "/datetime/overflow"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -552,7 +552,7 @@ func (client *DatetimeClient) GetUTCLowercaseMaxDateTime(ctx context.Context, op
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -569,7 +569,7 @@ func (client *DatetimeClient) GetUTCLowercaseMaxDateTime(ctx context.Context, op
 // GetUTCLowercaseMaxDateTimeCreateRequest creates the GetUTCLowercaseMaxDateTime request.
 func (client *DatetimeClient) GetUTCLowercaseMaxDateTimeCreateRequest(ctx context.Context, options *DatetimeGetUTCLowercaseMaxDateTimeOptions) (*azcore.Request, error) {
 	urlPath := "/datetime/max/utc/lowercase"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -599,7 +599,7 @@ func (client *DatetimeClient) GetUTCMinDateTime(ctx context.Context, options *Da
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -616,7 +616,7 @@ func (client *DatetimeClient) GetUTCMinDateTime(ctx context.Context, options *Da
 // GetUTCMinDateTimeCreateRequest creates the GetUTCMinDateTime request.
 func (client *DatetimeClient) GetUTCMinDateTimeCreateRequest(ctx context.Context, options *DatetimeGetUTCMinDateTimeOptions) (*azcore.Request, error) {
 	urlPath := "/datetime/min/utc"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -646,7 +646,7 @@ func (client *DatetimeClient) GetUTCUppercaseMaxDateTime(ctx context.Context, op
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -663,7 +663,7 @@ func (client *DatetimeClient) GetUTCUppercaseMaxDateTime(ctx context.Context, op
 // GetUTCUppercaseMaxDateTimeCreateRequest creates the GetUTCUppercaseMaxDateTime request.
 func (client *DatetimeClient) GetUTCUppercaseMaxDateTimeCreateRequest(ctx context.Context, options *DatetimeGetUTCUppercaseMaxDateTimeOptions) (*azcore.Request, error) {
 	urlPath := "/datetime/max/utc/uppercase"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -693,7 +693,7 @@ func (client *DatetimeClient) GetUTCUppercaseMaxDateTime7Digits(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -710,7 +710,7 @@ func (client *DatetimeClient) GetUTCUppercaseMaxDateTime7Digits(ctx context.Cont
 // GetUTCUppercaseMaxDateTime7DigitsCreateRequest creates the GetUTCUppercaseMaxDateTime7Digits request.
 func (client *DatetimeClient) GetUTCUppercaseMaxDateTime7DigitsCreateRequest(ctx context.Context, options *DatetimeGetUTCUppercaseMaxDateTime7DigitsOptions) (*azcore.Request, error) {
 	urlPath := "/datetime/max/utc7ms/uppercase"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -740,7 +740,7 @@ func (client *DatetimeClient) GetUnderflow(ctx context.Context, options *Datetim
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -757,7 +757,7 @@ func (client *DatetimeClient) GetUnderflow(ctx context.Context, options *Datetim
 // GetUnderflowCreateRequest creates the GetUnderflow request.
 func (client *DatetimeClient) GetUnderflowCreateRequest(ctx context.Context, options *DatetimeGetUnderflowOptions) (*azcore.Request, error) {
 	urlPath := "/datetime/underflow"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -787,7 +787,7 @@ func (client *DatetimeClient) PutLocalNegativeOffsetMaxDateTime(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -800,7 +800,7 @@ func (client *DatetimeClient) PutLocalNegativeOffsetMaxDateTime(ctx context.Cont
 // PutLocalNegativeOffsetMaxDateTimeCreateRequest creates the PutLocalNegativeOffsetMaxDateTime request.
 func (client *DatetimeClient) PutLocalNegativeOffsetMaxDateTimeCreateRequest(ctx context.Context, datetimeBody time.Time, options *DatetimePutLocalNegativeOffsetMaxDateTimeOptions) (*azcore.Request, error) {
 	urlPath := "/datetime/max/localnegativeoffset"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -823,7 +823,7 @@ func (client *DatetimeClient) PutLocalNegativeOffsetMinDateTime(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -836,7 +836,7 @@ func (client *DatetimeClient) PutLocalNegativeOffsetMinDateTime(ctx context.Cont
 // PutLocalNegativeOffsetMinDateTimeCreateRequest creates the PutLocalNegativeOffsetMinDateTime request.
 func (client *DatetimeClient) PutLocalNegativeOffsetMinDateTimeCreateRequest(ctx context.Context, datetimeBody time.Time, options *DatetimePutLocalNegativeOffsetMinDateTimeOptions) (*azcore.Request, error) {
 	urlPath := "/datetime/min/localnegativeoffset"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -859,7 +859,7 @@ func (client *DatetimeClient) PutLocalPositiveOffsetMaxDateTime(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -872,7 +872,7 @@ func (client *DatetimeClient) PutLocalPositiveOffsetMaxDateTime(ctx context.Cont
 // PutLocalPositiveOffsetMaxDateTimeCreateRequest creates the PutLocalPositiveOffsetMaxDateTime request.
 func (client *DatetimeClient) PutLocalPositiveOffsetMaxDateTimeCreateRequest(ctx context.Context, datetimeBody time.Time, options *DatetimePutLocalPositiveOffsetMaxDateTimeOptions) (*azcore.Request, error) {
 	urlPath := "/datetime/max/localpositiveoffset"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -895,7 +895,7 @@ func (client *DatetimeClient) PutLocalPositiveOffsetMinDateTime(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -908,7 +908,7 @@ func (client *DatetimeClient) PutLocalPositiveOffsetMinDateTime(ctx context.Cont
 // PutLocalPositiveOffsetMinDateTimeCreateRequest creates the PutLocalPositiveOffsetMinDateTime request.
 func (client *DatetimeClient) PutLocalPositiveOffsetMinDateTimeCreateRequest(ctx context.Context, datetimeBody time.Time, options *DatetimePutLocalPositiveOffsetMinDateTimeOptions) (*azcore.Request, error) {
 	urlPath := "/datetime/min/localpositiveoffset"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -931,7 +931,7 @@ func (client *DatetimeClient) PutUTCMaxDateTime(ctx context.Context, datetimeBod
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -944,7 +944,7 @@ func (client *DatetimeClient) PutUTCMaxDateTime(ctx context.Context, datetimeBod
 // PutUTCMaxDateTimeCreateRequest creates the PutUTCMaxDateTime request.
 func (client *DatetimeClient) PutUTCMaxDateTimeCreateRequest(ctx context.Context, datetimeBody time.Time, options *DatetimePutUTCMaxDateTimeOptions) (*azcore.Request, error) {
 	urlPath := "/datetime/max/utc"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -967,7 +967,7 @@ func (client *DatetimeClient) PutUTCMaxDateTime7Digits(ctx context.Context, date
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -980,7 +980,7 @@ func (client *DatetimeClient) PutUTCMaxDateTime7Digits(ctx context.Context, date
 // PutUTCMaxDateTime7DigitsCreateRequest creates the PutUTCMaxDateTime7Digits request.
 func (client *DatetimeClient) PutUTCMaxDateTime7DigitsCreateRequest(ctx context.Context, datetimeBody time.Time, options *DatetimePutUTCMaxDateTime7DigitsOptions) (*azcore.Request, error) {
 	urlPath := "/datetime/max/utc7ms"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1003,7 +1003,7 @@ func (client *DatetimeClient) PutUTCMinDateTime(ctx context.Context, datetimeBod
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1016,7 +1016,7 @@ func (client *DatetimeClient) PutUTCMinDateTime(ctx context.Context, datetimeBod
 // PutUTCMinDateTimeCreateRequest creates the PutUTCMinDateTime request.
 func (client *DatetimeClient) PutUTCMinDateTimeCreateRequest(ctx context.Context, datetimeBody time.Time, options *DatetimePutUTCMinDateTimeOptions) (*azcore.Request, error) {
 	urlPath := "/datetime/min/utc"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

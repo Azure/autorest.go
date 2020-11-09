@@ -12,7 +12,7 @@ import (
 )
 
 func newPetClient() PetOperations {
-	return NewPetClient(NewDefaultClient(nil))
+	return NewPetClient(NewDefaultConnection(nil))
 }
 
 func TestAddPet(t *testing.T) {

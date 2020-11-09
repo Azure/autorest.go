@@ -11,7 +11,7 @@ import (
 )
 
 func newImplicitClient() ImplicitOperations {
-	return NewImplicitClient(NewDefaultClient(nil), "", "", nil)
+	return NewImplicitClient(NewDefaultConnection(nil), "", "", nil)
 }
 
 func TestImplicitGetOptionalGlobalQuery(t *testing.T) {

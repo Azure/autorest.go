@@ -26,18 +26,18 @@ type VpnSitesConfigurationOperations interface {
 // VpnSitesConfigurationClient implements the VpnSitesConfigurationOperations interface.
 // Don't use this type directly, use NewVpnSitesConfigurationClient() instead.
 type VpnSitesConfigurationClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewVpnSitesConfigurationClient creates a new instance of VpnSitesConfigurationClient with the specified values.
-func NewVpnSitesConfigurationClient(c *Client, subscriptionID string) VpnSitesConfigurationOperations {
-	return &VpnSitesConfigurationClient{Client: c, subscriptionID: subscriptionID}
+func NewVpnSitesConfigurationClient(con *Connection, subscriptionID string) VpnSitesConfigurationOperations {
+	return &VpnSitesConfigurationClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *VpnSitesConfigurationClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *VpnSitesConfigurationClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 func (client *VpnSitesConfigurationClient) BeginDownload(ctx context.Context, resourceGroupName string, virtualWanName string, request GetVpnSitesConfigurationRequest, options *VpnSitesConfigurationDownloadOptions) (*HTTPPollerResponse, error) {
@@ -54,7 +54,7 @@ func (client *VpnSitesConfigurationClient) BeginDownload(ctx context.Context, re
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -69,7 +69,7 @@ func (client *VpnSitesConfigurationClient) ResumeDownload(token string) (HTTPPol
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -80,7 +80,7 @@ func (client *VpnSitesConfigurationClient) Download(ctx context.Context, resourc
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -96,7 +96,7 @@ func (client *VpnSitesConfigurationClient) DownloadCreateRequest(ctx context.Con
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualWANName}", url.PathEscape(virtualWanName))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

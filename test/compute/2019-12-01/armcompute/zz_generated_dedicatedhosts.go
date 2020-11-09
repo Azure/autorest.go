@@ -42,18 +42,18 @@ type DedicatedHostsOperations interface {
 // DedicatedHostsClient implements the DedicatedHostsOperations interface.
 // Don't use this type directly, use NewDedicatedHostsClient() instead.
 type DedicatedHostsClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewDedicatedHostsClient creates a new instance of DedicatedHostsClient with the specified values.
-func NewDedicatedHostsClient(c *Client, subscriptionID string) DedicatedHostsOperations {
-	return &DedicatedHostsClient{Client: c, subscriptionID: subscriptionID}
+func NewDedicatedHostsClient(con *Connection, subscriptionID string) DedicatedHostsOperations {
+	return &DedicatedHostsClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *DedicatedHostsClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *DedicatedHostsClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 func (client *DedicatedHostsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHost, options *DedicatedHostsCreateOrUpdateOptions) (*DedicatedHostPollerResponse, error) {
@@ -70,7 +70,7 @@ func (client *DedicatedHostsClient) BeginCreateOrUpdate(ctx context.Context, res
 	}
 	poller := &dedicatedHostPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*DedicatedHostResponse, error) {
@@ -85,7 +85,7 @@ func (client *DedicatedHostsClient) ResumeCreateOrUpdate(token string) (Dedicate
 		return nil, err
 	}
 	return &dedicatedHostPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -96,7 +96,7 @@ func (client *DedicatedHostsClient) CreateOrUpdate(ctx context.Context, resource
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -113,7 +113,7 @@ func (client *DedicatedHostsClient) CreateOrUpdateCreateRequest(ctx context.Cont
 	urlPath = strings.ReplaceAll(urlPath, "{hostGroupName}", url.PathEscape(hostGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{hostName}", url.PathEscape(hostName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -156,7 +156,7 @@ func (client *DedicatedHostsClient) BeginDelete(ctx context.Context, resourceGro
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -171,7 +171,7 @@ func (client *DedicatedHostsClient) ResumeDelete(token string) (HTTPPoller, erro
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -182,7 +182,7 @@ func (client *DedicatedHostsClient) Delete(ctx context.Context, resourceGroupNam
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -199,7 +199,7 @@ func (client *DedicatedHostsClient) DeleteCreateRequest(ctx context.Context, res
 	urlPath = strings.ReplaceAll(urlPath, "{hostGroupName}", url.PathEscape(hostGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{hostName}", url.PathEscape(hostName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -227,7 +227,7 @@ func (client *DedicatedHostsClient) Get(ctx context.Context, resourceGroupName s
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -248,7 +248,7 @@ func (client *DedicatedHostsClient) GetCreateRequest(ctx context.Context, resour
 	urlPath = strings.ReplaceAll(urlPath, "{hostGroupName}", url.PathEscape(hostGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{hostName}", url.PathEscape(hostName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -284,7 +284,7 @@ func (client *DedicatedHostsClient) GetHandleError(resp *azcore.Response) error 
 // of dedicated hosts.
 func (client *DedicatedHostsClient) ListByHostGroup(resourceGroupName string, hostGroupName string, options *DedicatedHostsListByHostGroupOptions) DedicatedHostListResultPager {
 	return &dedicatedHostListResultPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListByHostGroupCreateRequest(ctx, resourceGroupName, hostGroupName, options)
 		},
@@ -303,7 +303,7 @@ func (client *DedicatedHostsClient) ListByHostGroupCreateRequest(ctx context.Con
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{hostGroupName}", url.PathEscape(hostGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -346,7 +346,7 @@ func (client *DedicatedHostsClient) BeginUpdate(ctx context.Context, resourceGro
 	}
 	poller := &dedicatedHostPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*DedicatedHostResponse, error) {
@@ -361,7 +361,7 @@ func (client *DedicatedHostsClient) ResumeUpdate(token string) (DedicatedHostPol
 		return nil, err
 	}
 	return &dedicatedHostPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -372,7 +372,7 @@ func (client *DedicatedHostsClient) Update(ctx context.Context, resourceGroupNam
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -389,7 +389,7 @@ func (client *DedicatedHostsClient) UpdateCreateRequest(ctx context.Context, res
 	urlPath = strings.ReplaceAll(urlPath, "{hostGroupName}", url.PathEscape(hostGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{hostName}", url.PathEscape(hostName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

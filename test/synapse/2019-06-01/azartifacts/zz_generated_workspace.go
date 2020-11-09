@@ -12,12 +12,12 @@ import (
 )
 
 type workspaceClient struct {
-	*client
+	con *connection
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *workspaceClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *workspaceClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // Get - Get Workspace
@@ -26,7 +26,7 @@ func (client *workspaceClient) Get(ctx context.Context, options *WorkspaceGetOpt
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -43,7 +43,7 @@ func (client *workspaceClient) Get(ctx context.Context, options *WorkspaceGetOpt
 // GetCreateRequest creates the Get request.
 func (client *workspaceClient) GetCreateRequest(ctx context.Context, options *WorkspaceGetOptions) (*azcore.Request, error) {
 	urlPath := "/workspace"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

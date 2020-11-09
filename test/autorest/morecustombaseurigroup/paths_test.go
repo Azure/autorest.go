@@ -13,7 +13,7 @@ import (
 )
 
 func newPathsClient() PathsOperations {
-	client := NewClient(to.StringPtr(":3000"), nil)
+	client := NewConnection(to.StringPtr(":3000"), nil)
 	// dnsSuffix string, subscriptionID string
 	return NewPathsClient(client, "test12")
 }

@@ -13,7 +13,7 @@ import (
 )
 
 func newIntClient() IntOperations {
-	return NewIntClient(NewDefaultClient(nil))
+	return NewIntClient(NewDefaultConnection(nil))
 }
 
 func TestIntGetInvalid(t *testing.T) {

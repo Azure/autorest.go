@@ -22,24 +22,24 @@ type AvailableDelegationsOperations interface {
 // AvailableDelegationsClient implements the AvailableDelegationsOperations interface.
 // Don't use this type directly, use NewAvailableDelegationsClient() instead.
 type AvailableDelegationsClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewAvailableDelegationsClient creates a new instance of AvailableDelegationsClient with the specified values.
-func NewAvailableDelegationsClient(c *Client, subscriptionID string) AvailableDelegationsOperations {
-	return &AvailableDelegationsClient{Client: c, subscriptionID: subscriptionID}
+func NewAvailableDelegationsClient(con *Connection, subscriptionID string) AvailableDelegationsOperations {
+	return &AvailableDelegationsClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *AvailableDelegationsClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *AvailableDelegationsClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // List - Gets all of the available subnet delegations for this subscription in this region.
 func (client *AvailableDelegationsClient) List(location string, options *AvailableDelegationsListOptions) AvailableDelegationsResultPager {
 	return &availableDelegationsResultPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListCreateRequest(ctx, location, options)
 		},
@@ -57,7 +57,7 @@ func (client *AvailableDelegationsClient) ListCreateRequest(ctx context.Context,
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availableDelegations"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

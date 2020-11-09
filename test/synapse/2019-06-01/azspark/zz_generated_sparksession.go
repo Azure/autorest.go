@@ -18,12 +18,12 @@ import (
 )
 
 type sparkSessionClient struct {
-	*client
+	con *connection
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *sparkSessionClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *sparkSessionClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // CancelSparkSession - Cancels a running spark session.
@@ -32,7 +32,7 @@ func (client *sparkSessionClient) CancelSparkSession(ctx context.Context, sessio
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -46,7 +46,7 @@ func (client *sparkSessionClient) CancelSparkSession(ctx context.Context, sessio
 func (client *sparkSessionClient) CancelSparkSessionCreateRequest(ctx context.Context, sessionId int32, options *SparkSessionCancelSparkSessionOptions) (*azcore.Request, error) {
 	urlPath := "/sessions/{sessionId}"
 	urlPath = strings.ReplaceAll(urlPath, "{sessionId}", url.PathEscape(strconv.FormatInt(int64(sessionId), 10)))
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -71,7 +71,7 @@ func (client *sparkSessionClient) CancelSparkStatement(ctx context.Context, sess
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -90,7 +90,7 @@ func (client *sparkSessionClient) CancelSparkStatementCreateRequest(ctx context.
 	urlPath := "/sessions/{sessionId}/statements/{statementId}/cancel"
 	urlPath = strings.ReplaceAll(urlPath, "{sessionId}", url.PathEscape(strconv.FormatInt(int64(sessionId), 10)))
 	urlPath = strings.ReplaceAll(urlPath, "{statementId}", url.PathEscape(strconv.FormatInt(int64(statementId), 10)))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -122,7 +122,7 @@ func (client *sparkSessionClient) CreateSparkSession(ctx context.Context, sparkS
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -139,7 +139,7 @@ func (client *sparkSessionClient) CreateSparkSession(ctx context.Context, sparkS
 // CreateSparkSessionCreateRequest creates the CreateSparkSession request.
 func (client *sparkSessionClient) CreateSparkSessionCreateRequest(ctx context.Context, sparkSessionOptions SparkSessionOptions, options *SparkSessionCreateSparkSessionOptions) (*azcore.Request, error) {
 	urlPath := "/sessions"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -176,7 +176,7 @@ func (client *sparkSessionClient) CreateSparkStatement(ctx context.Context, sess
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -194,7 +194,7 @@ func (client *sparkSessionClient) CreateSparkStatement(ctx context.Context, sess
 func (client *sparkSessionClient) CreateSparkStatementCreateRequest(ctx context.Context, sessionId int32, sparkStatementOptions SparkStatementOptions, options *SparkSessionCreateSparkStatementOptions) (*azcore.Request, error) {
 	urlPath := "/sessions/{sessionId}/statements"
 	urlPath = strings.ReplaceAll(urlPath, "{sessionId}", url.PathEscape(strconv.FormatInt(int64(sessionId), 10)))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -226,7 +226,7 @@ func (client *sparkSessionClient) GetSparkSession(ctx context.Context, sessionId
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -244,7 +244,7 @@ func (client *sparkSessionClient) GetSparkSession(ctx context.Context, sessionId
 func (client *sparkSessionClient) GetSparkSessionCreateRequest(ctx context.Context, sessionId int32, options *SparkSessionGetSparkSessionOptions) (*azcore.Request, error) {
 	urlPath := "/sessions/{sessionId}"
 	urlPath = strings.ReplaceAll(urlPath, "{sessionId}", url.PathEscape(strconv.FormatInt(int64(sessionId), 10)))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -281,7 +281,7 @@ func (client *sparkSessionClient) GetSparkSessions(ctx context.Context, options 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -298,7 +298,7 @@ func (client *sparkSessionClient) GetSparkSessions(ctx context.Context, options 
 // GetSparkSessionsCreateRequest creates the GetSparkSessions request.
 func (client *sparkSessionClient) GetSparkSessionsCreateRequest(ctx context.Context, options *SparkSessionGetSparkSessionsOptions) (*azcore.Request, error) {
 	urlPath := "/sessions"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -341,7 +341,7 @@ func (client *sparkSessionClient) GetSparkStatement(ctx context.Context, session
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -360,7 +360,7 @@ func (client *sparkSessionClient) GetSparkStatementCreateRequest(ctx context.Con
 	urlPath := "/sessions/{sessionId}/statements/{statementId}"
 	urlPath = strings.ReplaceAll(urlPath, "{sessionId}", url.PathEscape(strconv.FormatInt(int64(sessionId), 10)))
 	urlPath = strings.ReplaceAll(urlPath, "{statementId}", url.PathEscape(strconv.FormatInt(int64(statementId), 10)))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -392,7 +392,7 @@ func (client *sparkSessionClient) GetSparkStatements(ctx context.Context, sessio
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -410,7 +410,7 @@ func (client *sparkSessionClient) GetSparkStatements(ctx context.Context, sessio
 func (client *sparkSessionClient) GetSparkStatementsCreateRequest(ctx context.Context, sessionId int32, options *SparkSessionGetSparkStatementsOptions) (*azcore.Request, error) {
 	urlPath := "/sessions/{sessionId}/statements"
 	urlPath = strings.ReplaceAll(urlPath, "{sessionId}", url.PathEscape(strconv.FormatInt(int64(sessionId), 10)))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -442,7 +442,7 @@ func (client *sparkSessionClient) ResetSparkSessionTimeout(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -456,7 +456,7 @@ func (client *sparkSessionClient) ResetSparkSessionTimeout(ctx context.Context, 
 func (client *sparkSessionClient) ResetSparkSessionTimeoutCreateRequest(ctx context.Context, sessionId int32, options *SparkSessionResetSparkSessionTimeoutOptions) (*azcore.Request, error) {
 	urlPath := "/sessions/{sessionId}/reset-timeout"
 	urlPath = strings.ReplaceAll(urlPath, "{sessionId}", url.PathEscape(strconv.FormatInt(int64(sessionId), 10)))
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

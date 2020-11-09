@@ -14,12 +14,12 @@ import (
 )
 
 type dataFlowsClient struct {
-	*client
+	con *connection
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *dataFlowsClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *dataFlowsClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // Rename - Renames a dataflow.
@@ -28,7 +28,7 @@ func (client *dataFlowsClient) Rename(ctx context.Context, dataFlowName string, 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -42,7 +42,7 @@ func (client *dataFlowsClient) Rename(ctx context.Context, dataFlowName string, 
 func (client *dataFlowsClient) RenameCreateRequest(ctx context.Context, dataFlowName string, request ArtifactRenameRequest, options *DataFlowsRenameOptions) (*azcore.Request, error) {
 	urlPath := "/dataflows/{dataFlowName}/rename"
 	urlPath = strings.ReplaceAll(urlPath, "{dataFlowName}", url.PathEscape(dataFlowName))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

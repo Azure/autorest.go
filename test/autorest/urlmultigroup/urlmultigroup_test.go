@@ -12,7 +12,7 @@ import (
 )
 
 func newQueriesClient() QueriesOperations {
-	return NewQueriesClient(NewDefaultClient(nil))
+	return NewQueriesClient(NewDefaultConnection(nil))
 }
 
 func TestURLMultiArrayStringMultiEmpty(t *testing.T) {

@@ -11,7 +11,7 @@ import (
 )
 
 func newBoolClient() BoolOperations {
-	return NewBoolClient(NewDefaultClient(nil))
+	return NewBoolClient(NewDefaultConnection(nil))
 }
 
 func TestGetTrue(t *testing.T) {

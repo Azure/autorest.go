@@ -26,17 +26,17 @@ type HTTPServerFailureOperations interface {
 // HTTPServerFailureClient implements the HTTPServerFailureOperations interface.
 // Don't use this type directly, use NewHTTPServerFailureClient() instead.
 type HTTPServerFailureClient struct {
-	*Client
+	con *Connection
 }
 
 // NewHTTPServerFailureClient creates a new instance of HTTPServerFailureClient with the specified values.
-func NewHTTPServerFailureClient(c *Client) HTTPServerFailureOperations {
-	return &HTTPServerFailureClient{Client: c}
+func NewHTTPServerFailureClient(con *Connection) HTTPServerFailureOperations {
+	return &HTTPServerFailureClient{con: con}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *HTTPServerFailureClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *HTTPServerFailureClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // Delete505 - Return 505 status code - should be represented in the client as an error
@@ -45,7 +45,7 @@ func (client *HTTPServerFailureClient) Delete505(ctx context.Context, options *H
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -58,7 +58,7 @@ func (client *HTTPServerFailureClient) Delete505(ctx context.Context, options *H
 // Delete505CreateRequest creates the Delete505 request.
 func (client *HTTPServerFailureClient) Delete505CreateRequest(ctx context.Context, options *HTTPServerFailureDelete505Options) (*azcore.Request, error) {
 	urlPath := "/http/failure/server/505"
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -81,7 +81,7 @@ func (client *HTTPServerFailureClient) Get501(ctx context.Context, options *HTTP
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -94,7 +94,7 @@ func (client *HTTPServerFailureClient) Get501(ctx context.Context, options *HTTP
 // Get501CreateRequest creates the Get501 request.
 func (client *HTTPServerFailureClient) Get501CreateRequest(ctx context.Context, options *HTTPServerFailureGet501Options) (*azcore.Request, error) {
 	urlPath := "/http/failure/server/501"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -117,7 +117,7 @@ func (client *HTTPServerFailureClient) Head501(ctx context.Context, options *HTT
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -130,7 +130,7 @@ func (client *HTTPServerFailureClient) Head501(ctx context.Context, options *HTT
 // Head501CreateRequest creates the Head501 request.
 func (client *HTTPServerFailureClient) Head501CreateRequest(ctx context.Context, options *HTTPServerFailureHead501Options) (*azcore.Request, error) {
 	urlPath := "/http/failure/server/501"
-	req, err := azcore.NewRequest(ctx, http.MethodHead, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodHead, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -153,7 +153,7 @@ func (client *HTTPServerFailureClient) Post505(ctx context.Context, options *HTT
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -166,7 +166,7 @@ func (client *HTTPServerFailureClient) Post505(ctx context.Context, options *HTT
 // Post505CreateRequest creates the Post505 request.
 func (client *HTTPServerFailureClient) Post505CreateRequest(ctx context.Context, options *HTTPServerFailurePost505Options) (*azcore.Request, error) {
 	urlPath := "/http/failure/server/505"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

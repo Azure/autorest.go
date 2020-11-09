@@ -24,17 +24,17 @@ type QueriesOperations interface {
 // QueriesClient implements the QueriesOperations interface.
 // Don't use this type directly, use NewQueriesClient() instead.
 type QueriesClient struct {
-	*Client
+	con *Connection
 }
 
 // NewQueriesClient creates a new instance of QueriesClient with the specified values.
-func NewQueriesClient(c *Client) QueriesOperations {
-	return &QueriesClient{Client: c}
+func NewQueriesClient(con *Connection) QueriesOperations {
+	return &QueriesClient{con: con}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *QueriesClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *QueriesClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // ArrayStringMultiEmpty - Get an empty array [] of string using the multi-array format
@@ -43,7 +43,7 @@ func (client *QueriesClient) ArrayStringMultiEmpty(ctx context.Context, options 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -56,7 +56,7 @@ func (client *QueriesClient) ArrayStringMultiEmpty(ctx context.Context, options 
 // ArrayStringMultiEmptyCreateRequest creates the ArrayStringMultiEmpty request.
 func (client *QueriesClient) ArrayStringMultiEmptyCreateRequest(ctx context.Context, options *QueriesArrayStringMultiEmptyOptions) (*azcore.Request, error) {
 	urlPath := "/queries/array/multi/string/empty"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -86,7 +86,7 @@ func (client *QueriesClient) ArrayStringMultiNull(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -99,7 +99,7 @@ func (client *QueriesClient) ArrayStringMultiNull(ctx context.Context, options *
 // ArrayStringMultiNullCreateRequest creates the ArrayStringMultiNull request.
 func (client *QueriesClient) ArrayStringMultiNullCreateRequest(ctx context.Context, options *QueriesArrayStringMultiNullOptions) (*azcore.Request, error) {
 	urlPath := "/queries/array/multi/string/null"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -129,7 +129,7 @@ func (client *QueriesClient) ArrayStringMultiValid(ctx context.Context, options 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -142,7 +142,7 @@ func (client *QueriesClient) ArrayStringMultiValid(ctx context.Context, options 
 // ArrayStringMultiValidCreateRequest creates the ArrayStringMultiValid request.
 func (client *QueriesClient) ArrayStringMultiValidCreateRequest(ctx context.Context, options *QueriesArrayStringMultiValidOptions) (*azcore.Request, error) {
 	urlPath := "/queries/array/multi/string/valid"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

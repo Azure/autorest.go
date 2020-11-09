@@ -145,17 +145,17 @@ type LrosaDsOperations interface {
 // LrosaDsClient implements the LrosaDsOperations interface.
 // Don't use this type directly, use NewLrosaDsClient() instead.
 type LrosaDsClient struct {
-	*Client
+	con *Connection
 }
 
 // NewLrosaDsClient creates a new instance of LrosaDsClient with the specified values.
-func NewLrosaDsClient(c *Client) LrosaDsOperations {
-	return &LrosaDsClient{Client: c}
+func NewLrosaDsClient(con *Connection) LrosaDsOperations {
+	return &LrosaDsClient{con: con}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *LrosaDsClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *LrosaDsClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 func (client *LrosaDsClient) BeginDelete202NonRetry400(ctx context.Context, options *LrosaDsDelete202NonRetry400Options) (*HTTPPollerResponse, error) {
@@ -172,7 +172,7 @@ func (client *LrosaDsClient) BeginDelete202NonRetry400(ctx context.Context, opti
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -187,7 +187,7 @@ func (client *LrosaDsClient) ResumeDelete202NonRetry400(token string) (HTTPPolle
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -198,7 +198,7 @@ func (client *LrosaDsClient) Delete202NonRetry400(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -211,7 +211,7 @@ func (client *LrosaDsClient) Delete202NonRetry400(ctx context.Context, options *
 // Delete202NonRetry400CreateRequest creates the Delete202NonRetry400 request.
 func (client *LrosaDsClient) Delete202NonRetry400CreateRequest(ctx context.Context, options *LrosaDsDelete202NonRetry400Options) (*azcore.Request, error) {
 	urlPath := "/lro/nonretryerror/delete/202/retry/400"
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -242,7 +242,7 @@ func (client *LrosaDsClient) BeginDelete202RetryInvalidHeader(ctx context.Contex
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -257,7 +257,7 @@ func (client *LrosaDsClient) ResumeDelete202RetryInvalidHeader(token string) (HT
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -269,7 +269,7 @@ func (client *LrosaDsClient) Delete202RetryInvalidHeader(ctx context.Context, op
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -282,7 +282,7 @@ func (client *LrosaDsClient) Delete202RetryInvalidHeader(ctx context.Context, op
 // Delete202RetryInvalidHeaderCreateRequest creates the Delete202RetryInvalidHeader request.
 func (client *LrosaDsClient) Delete202RetryInvalidHeaderCreateRequest(ctx context.Context, options *LrosaDsDelete202RetryInvalidHeaderOptions) (*azcore.Request, error) {
 	urlPath := "/lro/error/delete/202/retry/invalidheader"
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -313,7 +313,7 @@ func (client *LrosaDsClient) BeginDelete204Succeeded(ctx context.Context, option
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -328,7 +328,7 @@ func (client *LrosaDsClient) ResumeDelete204Succeeded(token string) (HTTPPoller,
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -339,7 +339,7 @@ func (client *LrosaDsClient) Delete204Succeeded(ctx context.Context, options *Lr
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -352,7 +352,7 @@ func (client *LrosaDsClient) Delete204Succeeded(ctx context.Context, options *Lr
 // Delete204SucceededCreateRequest creates the Delete204Succeeded request.
 func (client *LrosaDsClient) Delete204SucceededCreateRequest(ctx context.Context, options *LrosaDsDelete204SucceededOptions) (*azcore.Request, error) {
 	urlPath := "/lro/error/delete/204/nolocation"
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -383,7 +383,7 @@ func (client *LrosaDsClient) BeginDeleteAsyncRelativeRetry400(ctx context.Contex
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -398,7 +398,7 @@ func (client *LrosaDsClient) ResumeDeleteAsyncRelativeRetry400(token string) (HT
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -410,7 +410,7 @@ func (client *LrosaDsClient) DeleteAsyncRelativeRetry400(ctx context.Context, op
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -423,7 +423,7 @@ func (client *LrosaDsClient) DeleteAsyncRelativeRetry400(ctx context.Context, op
 // DeleteAsyncRelativeRetry400CreateRequest creates the DeleteAsyncRelativeRetry400 request.
 func (client *LrosaDsClient) DeleteAsyncRelativeRetry400CreateRequest(ctx context.Context, options *LrosaDsDeleteAsyncRelativeRetry400Options) (*azcore.Request, error) {
 	urlPath := "/lro/nonretryerror/deleteasync/retry/400"
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -454,7 +454,7 @@ func (client *LrosaDsClient) BeginDeleteAsyncRelativeRetryInvalidHeader(ctx cont
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -469,7 +469,7 @@ func (client *LrosaDsClient) ResumeDeleteAsyncRelativeRetryInvalidHeader(token s
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -481,7 +481,7 @@ func (client *LrosaDsClient) DeleteAsyncRelativeRetryInvalidHeader(ctx context.C
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -494,7 +494,7 @@ func (client *LrosaDsClient) DeleteAsyncRelativeRetryInvalidHeader(ctx context.C
 // DeleteAsyncRelativeRetryInvalidHeaderCreateRequest creates the DeleteAsyncRelativeRetryInvalidHeader request.
 func (client *LrosaDsClient) DeleteAsyncRelativeRetryInvalidHeaderCreateRequest(ctx context.Context, options *LrosaDsDeleteAsyncRelativeRetryInvalidHeaderOptions) (*azcore.Request, error) {
 	urlPath := "/lro/error/deleteasync/retry/invalidheader"
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -525,7 +525,7 @@ func (client *LrosaDsClient) BeginDeleteAsyncRelativeRetryInvalidJSONPolling(ctx
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -540,7 +540,7 @@ func (client *LrosaDsClient) ResumeDeleteAsyncRelativeRetryInvalidJSONPolling(to
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -552,7 +552,7 @@ func (client *LrosaDsClient) DeleteAsyncRelativeRetryInvalidJSONPolling(ctx cont
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -565,7 +565,7 @@ func (client *LrosaDsClient) DeleteAsyncRelativeRetryInvalidJSONPolling(ctx cont
 // DeleteAsyncRelativeRetryInvalidJSONPollingCreateRequest creates the DeleteAsyncRelativeRetryInvalidJSONPolling request.
 func (client *LrosaDsClient) DeleteAsyncRelativeRetryInvalidJSONPollingCreateRequest(ctx context.Context, options *LrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingOptions) (*azcore.Request, error) {
 	urlPath := "/lro/error/deleteasync/retry/invalidjsonpolling"
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -596,7 +596,7 @@ func (client *LrosaDsClient) BeginDeleteAsyncRelativeRetryNoStatus(ctx context.C
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -611,7 +611,7 @@ func (client *LrosaDsClient) ResumeDeleteAsyncRelativeRetryNoStatus(token string
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -623,7 +623,7 @@ func (client *LrosaDsClient) DeleteAsyncRelativeRetryNoStatus(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -636,7 +636,7 @@ func (client *LrosaDsClient) DeleteAsyncRelativeRetryNoStatus(ctx context.Contex
 // DeleteAsyncRelativeRetryNoStatusCreateRequest creates the DeleteAsyncRelativeRetryNoStatus request.
 func (client *LrosaDsClient) DeleteAsyncRelativeRetryNoStatusCreateRequest(ctx context.Context, options *LrosaDsDeleteAsyncRelativeRetryNoStatusOptions) (*azcore.Request, error) {
 	urlPath := "/lro/error/deleteasync/retry/nostatus"
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -667,7 +667,7 @@ func (client *LrosaDsClient) BeginDeleteNonRetry400(ctx context.Context, options
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -682,7 +682,7 @@ func (client *LrosaDsClient) ResumeDeleteNonRetry400(token string) (HTTPPoller, 
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -693,7 +693,7 @@ func (client *LrosaDsClient) DeleteNonRetry400(ctx context.Context, options *Lro
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -706,7 +706,7 @@ func (client *LrosaDsClient) DeleteNonRetry400(ctx context.Context, options *Lro
 // DeleteNonRetry400CreateRequest creates the DeleteNonRetry400 request.
 func (client *LrosaDsClient) DeleteNonRetry400CreateRequest(ctx context.Context, options *LrosaDsDeleteNonRetry400Options) (*azcore.Request, error) {
 	urlPath := "/lro/nonretryerror/delete/400"
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -737,7 +737,7 @@ func (client *LrosaDsClient) BeginPost202NoLocation(ctx context.Context, options
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -752,7 +752,7 @@ func (client *LrosaDsClient) ResumePost202NoLocation(token string) (HTTPPoller, 
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -763,7 +763,7 @@ func (client *LrosaDsClient) Post202NoLocation(ctx context.Context, options *Lro
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -776,7 +776,7 @@ func (client *LrosaDsClient) Post202NoLocation(ctx context.Context, options *Lro
 // Post202NoLocationCreateRequest creates the Post202NoLocation request.
 func (client *LrosaDsClient) Post202NoLocationCreateRequest(ctx context.Context, options *LrosaDsPost202NoLocationOptions) (*azcore.Request, error) {
 	urlPath := "/lro/error/post/202/nolocation"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -810,7 +810,7 @@ func (client *LrosaDsClient) BeginPost202NonRetry400(ctx context.Context, option
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -825,7 +825,7 @@ func (client *LrosaDsClient) ResumePost202NonRetry400(token string) (HTTPPoller,
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -836,7 +836,7 @@ func (client *LrosaDsClient) Post202NonRetry400(ctx context.Context, options *Lr
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -849,7 +849,7 @@ func (client *LrosaDsClient) Post202NonRetry400(ctx context.Context, options *Lr
 // Post202NonRetry400CreateRequest creates the Post202NonRetry400 request.
 func (client *LrosaDsClient) Post202NonRetry400CreateRequest(ctx context.Context, options *LrosaDsPost202NonRetry400Options) (*azcore.Request, error) {
 	urlPath := "/lro/nonretryerror/post/202/retry/400"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -883,7 +883,7 @@ func (client *LrosaDsClient) BeginPost202RetryInvalidHeader(ctx context.Context,
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -898,7 +898,7 @@ func (client *LrosaDsClient) ResumePost202RetryInvalidHeader(token string) (HTTP
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -909,7 +909,7 @@ func (client *LrosaDsClient) Post202RetryInvalidHeader(ctx context.Context, opti
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -922,7 +922,7 @@ func (client *LrosaDsClient) Post202RetryInvalidHeader(ctx context.Context, opti
 // Post202RetryInvalidHeaderCreateRequest creates the Post202RetryInvalidHeader request.
 func (client *LrosaDsClient) Post202RetryInvalidHeaderCreateRequest(ctx context.Context, options *LrosaDsPost202RetryInvalidHeaderOptions) (*azcore.Request, error) {
 	urlPath := "/lro/error/post/202/retry/invalidheader"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -956,7 +956,7 @@ func (client *LrosaDsClient) BeginPostAsyncRelativeRetry400(ctx context.Context,
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -971,7 +971,7 @@ func (client *LrosaDsClient) ResumePostAsyncRelativeRetry400(token string) (HTTP
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -983,7 +983,7 @@ func (client *LrosaDsClient) PostAsyncRelativeRetry400(ctx context.Context, opti
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -996,7 +996,7 @@ func (client *LrosaDsClient) PostAsyncRelativeRetry400(ctx context.Context, opti
 // PostAsyncRelativeRetry400CreateRequest creates the PostAsyncRelativeRetry400 request.
 func (client *LrosaDsClient) PostAsyncRelativeRetry400CreateRequest(ctx context.Context, options *LrosaDsPostAsyncRelativeRetry400Options) (*azcore.Request, error) {
 	urlPath := "/lro/nonretryerror/postasync/retry/400"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1030,7 +1030,7 @@ func (client *LrosaDsClient) BeginPostAsyncRelativeRetryInvalidHeader(ctx contex
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -1045,7 +1045,7 @@ func (client *LrosaDsClient) ResumePostAsyncRelativeRetryInvalidHeader(token str
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -1058,7 +1058,7 @@ func (client *LrosaDsClient) PostAsyncRelativeRetryInvalidHeader(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1071,7 +1071,7 @@ func (client *LrosaDsClient) PostAsyncRelativeRetryInvalidHeader(ctx context.Con
 // PostAsyncRelativeRetryInvalidHeaderCreateRequest creates the PostAsyncRelativeRetryInvalidHeader request.
 func (client *LrosaDsClient) PostAsyncRelativeRetryInvalidHeaderCreateRequest(ctx context.Context, options *LrosaDsPostAsyncRelativeRetryInvalidHeaderOptions) (*azcore.Request, error) {
 	urlPath := "/lro/error/postasync/retry/invalidheader"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1105,7 +1105,7 @@ func (client *LrosaDsClient) BeginPostAsyncRelativeRetryInvalidJSONPolling(ctx c
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -1120,7 +1120,7 @@ func (client *LrosaDsClient) ResumePostAsyncRelativeRetryInvalidJSONPolling(toke
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -1133,7 +1133,7 @@ func (client *LrosaDsClient) PostAsyncRelativeRetryInvalidJSONPolling(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1146,7 +1146,7 @@ func (client *LrosaDsClient) PostAsyncRelativeRetryInvalidJSONPolling(ctx contex
 // PostAsyncRelativeRetryInvalidJSONPollingCreateRequest creates the PostAsyncRelativeRetryInvalidJSONPolling request.
 func (client *LrosaDsClient) PostAsyncRelativeRetryInvalidJSONPollingCreateRequest(ctx context.Context, options *LrosaDsPostAsyncRelativeRetryInvalidJSONPollingOptions) (*azcore.Request, error) {
 	urlPath := "/lro/error/postasync/retry/invalidjsonpolling"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1180,7 +1180,7 @@ func (client *LrosaDsClient) BeginPostAsyncRelativeRetryNoPayload(ctx context.Co
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -1195,7 +1195,7 @@ func (client *LrosaDsClient) ResumePostAsyncRelativeRetryNoPayload(token string)
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -1208,7 +1208,7 @@ func (client *LrosaDsClient) PostAsyncRelativeRetryNoPayload(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1221,7 +1221,7 @@ func (client *LrosaDsClient) PostAsyncRelativeRetryNoPayload(ctx context.Context
 // PostAsyncRelativeRetryNoPayloadCreateRequest creates the PostAsyncRelativeRetryNoPayload request.
 func (client *LrosaDsClient) PostAsyncRelativeRetryNoPayloadCreateRequest(ctx context.Context, options *LrosaDsPostAsyncRelativeRetryNoPayloadOptions) (*azcore.Request, error) {
 	urlPath := "/lro/error/postasync/retry/nopayload"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1255,7 +1255,7 @@ func (client *LrosaDsClient) BeginPostNonRetry400(ctx context.Context, options *
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -1270,7 +1270,7 @@ func (client *LrosaDsClient) ResumePostNonRetry400(token string) (HTTPPoller, er
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -1281,7 +1281,7 @@ func (client *LrosaDsClient) PostNonRetry400(ctx context.Context, options *Lrosa
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1294,7 +1294,7 @@ func (client *LrosaDsClient) PostNonRetry400(ctx context.Context, options *Lrosa
 // PostNonRetry400CreateRequest creates the PostNonRetry400 request.
 func (client *LrosaDsClient) PostNonRetry400CreateRequest(ctx context.Context, options *LrosaDsPostNonRetry400Options) (*azcore.Request, error) {
 	urlPath := "/lro/nonretryerror/post/400"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1328,7 +1328,7 @@ func (client *LrosaDsClient) BeginPut200InvalidJSON(ctx context.Context, options
 	}
 	poller := &productPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
@@ -1343,7 +1343,7 @@ func (client *LrosaDsClient) ResumePut200InvalidJSON(token string) (ProductPolle
 		return nil, err
 	}
 	return &productPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -1354,7 +1354,7 @@ func (client *LrosaDsClient) Put200InvalidJSON(ctx context.Context, options *Lro
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1367,7 +1367,7 @@ func (client *LrosaDsClient) Put200InvalidJSON(ctx context.Context, options *Lro
 // Put200InvalidJSONCreateRequest creates the Put200InvalidJSON request.
 func (client *LrosaDsClient) Put200InvalidJSONCreateRequest(ctx context.Context, options *LrosaDsPut200InvalidJSONOptions) (*azcore.Request, error) {
 	urlPath := "/lro/error/put/200/invalidjson"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1407,7 +1407,7 @@ func (client *LrosaDsClient) BeginPutAsyncRelativeRetry400(ctx context.Context, 
 	}
 	poller := &productPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
@@ -1422,7 +1422,7 @@ func (client *LrosaDsClient) ResumePutAsyncRelativeRetry400(token string) (Produ
 		return nil, err
 	}
 	return &productPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -1434,7 +1434,7 @@ func (client *LrosaDsClient) PutAsyncRelativeRetry400(ctx context.Context, optio
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1447,7 +1447,7 @@ func (client *LrosaDsClient) PutAsyncRelativeRetry400(ctx context.Context, optio
 // PutAsyncRelativeRetry400CreateRequest creates the PutAsyncRelativeRetry400 request.
 func (client *LrosaDsClient) PutAsyncRelativeRetry400CreateRequest(ctx context.Context, options *LrosaDsPutAsyncRelativeRetry400Options) (*azcore.Request, error) {
 	urlPath := "/lro/nonretryerror/putasync/retry/400"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1487,7 +1487,7 @@ func (client *LrosaDsClient) BeginPutAsyncRelativeRetryInvalidHeader(ctx context
 	}
 	poller := &productPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
@@ -1502,7 +1502,7 @@ func (client *LrosaDsClient) ResumePutAsyncRelativeRetryInvalidHeader(token stri
 		return nil, err
 	}
 	return &productPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -1514,7 +1514,7 @@ func (client *LrosaDsClient) PutAsyncRelativeRetryInvalidHeader(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1527,7 +1527,7 @@ func (client *LrosaDsClient) PutAsyncRelativeRetryInvalidHeader(ctx context.Cont
 // PutAsyncRelativeRetryInvalidHeaderCreateRequest creates the PutAsyncRelativeRetryInvalidHeader request.
 func (client *LrosaDsClient) PutAsyncRelativeRetryInvalidHeaderCreateRequest(ctx context.Context, options *LrosaDsPutAsyncRelativeRetryInvalidHeaderOptions) (*azcore.Request, error) {
 	urlPath := "/lro/error/putasync/retry/invalidheader"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1567,7 +1567,7 @@ func (client *LrosaDsClient) BeginPutAsyncRelativeRetryInvalidJSONPolling(ctx co
 	}
 	poller := &productPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
@@ -1582,7 +1582,7 @@ func (client *LrosaDsClient) ResumePutAsyncRelativeRetryInvalidJSONPolling(token
 		return nil, err
 	}
 	return &productPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -1595,7 +1595,7 @@ func (client *LrosaDsClient) PutAsyncRelativeRetryInvalidJSONPolling(ctx context
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1608,7 +1608,7 @@ func (client *LrosaDsClient) PutAsyncRelativeRetryInvalidJSONPolling(ctx context
 // PutAsyncRelativeRetryInvalidJSONPollingCreateRequest creates the PutAsyncRelativeRetryInvalidJSONPolling request.
 func (client *LrosaDsClient) PutAsyncRelativeRetryInvalidJSONPollingCreateRequest(ctx context.Context, options *LrosaDsPutAsyncRelativeRetryInvalidJSONPollingOptions) (*azcore.Request, error) {
 	urlPath := "/lro/error/putasync/retry/invalidjsonpolling"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1648,7 +1648,7 @@ func (client *LrosaDsClient) BeginPutAsyncRelativeRetryNoStatus(ctx context.Cont
 	}
 	poller := &productPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
@@ -1663,7 +1663,7 @@ func (client *LrosaDsClient) ResumePutAsyncRelativeRetryNoStatus(token string) (
 		return nil, err
 	}
 	return &productPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -1676,7 +1676,7 @@ func (client *LrosaDsClient) PutAsyncRelativeRetryNoStatus(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1689,7 +1689,7 @@ func (client *LrosaDsClient) PutAsyncRelativeRetryNoStatus(ctx context.Context, 
 // PutAsyncRelativeRetryNoStatusCreateRequest creates the PutAsyncRelativeRetryNoStatus request.
 func (client *LrosaDsClient) PutAsyncRelativeRetryNoStatusCreateRequest(ctx context.Context, options *LrosaDsPutAsyncRelativeRetryNoStatusOptions) (*azcore.Request, error) {
 	urlPath := "/lro/error/putasync/retry/nostatus"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1729,7 +1729,7 @@ func (client *LrosaDsClient) BeginPutAsyncRelativeRetryNoStatusPayload(ctx conte
 	}
 	poller := &productPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
@@ -1744,7 +1744,7 @@ func (client *LrosaDsClient) ResumePutAsyncRelativeRetryNoStatusPayload(token st
 		return nil, err
 	}
 	return &productPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -1757,7 +1757,7 @@ func (client *LrosaDsClient) PutAsyncRelativeRetryNoStatusPayload(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1770,7 +1770,7 @@ func (client *LrosaDsClient) PutAsyncRelativeRetryNoStatusPayload(ctx context.Co
 // PutAsyncRelativeRetryNoStatusPayloadCreateRequest creates the PutAsyncRelativeRetryNoStatusPayload request.
 func (client *LrosaDsClient) PutAsyncRelativeRetryNoStatusPayloadCreateRequest(ctx context.Context, options *LrosaDsPutAsyncRelativeRetryNoStatusPayloadOptions) (*azcore.Request, error) {
 	urlPath := "/lro/error/putasync/retry/nostatuspayload"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1810,7 +1810,7 @@ func (client *LrosaDsClient) BeginPutError201NoProvisioningStatePayload(ctx cont
 	}
 	poller := &productPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
@@ -1825,7 +1825,7 @@ func (client *LrosaDsClient) ResumePutError201NoProvisioningStatePayload(token s
 		return nil, err
 	}
 	return &productPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -1836,7 +1836,7 @@ func (client *LrosaDsClient) PutError201NoProvisioningStatePayload(ctx context.C
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1849,7 +1849,7 @@ func (client *LrosaDsClient) PutError201NoProvisioningStatePayload(ctx context.C
 // PutError201NoProvisioningStatePayloadCreateRequest creates the PutError201NoProvisioningStatePayload request.
 func (client *LrosaDsClient) PutError201NoProvisioningStatePayloadCreateRequest(ctx context.Context, options *LrosaDsPutError201NoProvisioningStatePayloadOptions) (*azcore.Request, error) {
 	urlPath := "/lro/error/put/201/noprovisioningstatepayload"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1889,7 +1889,7 @@ func (client *LrosaDsClient) BeginPutNonRetry201Creating400(ctx context.Context,
 	}
 	poller := &productPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
@@ -1904,7 +1904,7 @@ func (client *LrosaDsClient) ResumePutNonRetry201Creating400(token string) (Prod
 		return nil, err
 	}
 	return &productPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -1915,7 +1915,7 @@ func (client *LrosaDsClient) PutNonRetry201Creating400(ctx context.Context, opti
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1928,7 +1928,7 @@ func (client *LrosaDsClient) PutNonRetry201Creating400(ctx context.Context, opti
 // PutNonRetry201Creating400CreateRequest creates the PutNonRetry201Creating400 request.
 func (client *LrosaDsClient) PutNonRetry201Creating400CreateRequest(ctx context.Context, options *LrosaDsPutNonRetry201Creating400Options) (*azcore.Request, error) {
 	urlPath := "/lro/nonretryerror/put/201/creating/400"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1968,7 +1968,7 @@ func (client *LrosaDsClient) BeginPutNonRetry201Creating400InvalidJSON(ctx conte
 	}
 	poller := &productPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
@@ -1983,7 +1983,7 @@ func (client *LrosaDsClient) ResumePutNonRetry201Creating400InvalidJSON(token st
 		return nil, err
 	}
 	return &productPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -1994,7 +1994,7 @@ func (client *LrosaDsClient) PutNonRetry201Creating400InvalidJSON(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2007,7 +2007,7 @@ func (client *LrosaDsClient) PutNonRetry201Creating400InvalidJSON(ctx context.Co
 // PutNonRetry201Creating400InvalidJSONCreateRequest creates the PutNonRetry201Creating400InvalidJSON request.
 func (client *LrosaDsClient) PutNonRetry201Creating400InvalidJSONCreateRequest(ctx context.Context, options *LrosaDsPutNonRetry201Creating400InvalidJSONOptions) (*azcore.Request, error) {
 	urlPath := "/lro/nonretryerror/put/201/creating/400/invalidjson"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2047,7 +2047,7 @@ func (client *LrosaDsClient) BeginPutNonRetry400(ctx context.Context, options *L
 	}
 	poller := &productPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
@@ -2062,7 +2062,7 @@ func (client *LrosaDsClient) ResumePutNonRetry400(token string) (ProductPoller, 
 		return nil, err
 	}
 	return &productPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -2073,7 +2073,7 @@ func (client *LrosaDsClient) PutNonRetry400(ctx context.Context, options *LrosaD
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2086,7 +2086,7 @@ func (client *LrosaDsClient) PutNonRetry400(ctx context.Context, options *LrosaD
 // PutNonRetry400CreateRequest creates the PutNonRetry400 request.
 func (client *LrosaDsClient) PutNonRetry400CreateRequest(ctx context.Context, options *LrosaDsPutNonRetry400Options) (*azcore.Request, error) {
 	urlPath := "/lro/nonretryerror/put/400"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

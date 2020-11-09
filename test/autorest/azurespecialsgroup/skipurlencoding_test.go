@@ -11,7 +11,7 @@ import (
 )
 
 func newSkipURLEncodingClient() SkipURLEncodingOperations {
-	return NewSkipURLEncodingClient(NewDefaultClient(nil))
+	return NewSkipURLEncodingClient(NewDefaultConnection(nil))
 }
 
 // GetMethodPathValid - Get method with unencoded path parameter with value 'path1/path2/path3'

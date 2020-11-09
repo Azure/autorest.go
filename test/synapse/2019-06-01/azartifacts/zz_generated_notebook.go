@@ -14,12 +14,12 @@ import (
 )
 
 type notebookClient struct {
-	*client
+	con *connection
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *notebookClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *notebookClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // CreateOrUpdateNotebook - Creates or updates a Note Book.
@@ -28,7 +28,7 @@ func (client *notebookClient) CreateOrUpdateNotebook(ctx context.Context, notebo
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -42,7 +42,7 @@ func (client *notebookClient) CreateOrUpdateNotebook(ctx context.Context, notebo
 func (client *notebookClient) CreateOrUpdateNotebookCreateRequest(ctx context.Context, notebookName string, notebook NotebookResource, options *NotebookCreateOrUpdateNotebookOptions) (*azcore.Request, error) {
 	urlPath := "/notebooks/{notebookName}"
 	urlPath = strings.ReplaceAll(urlPath, "{notebookName}", url.PathEscape(notebookName))
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -77,7 +77,7 @@ func (client *notebookClient) DeleteNotebook(ctx context.Context, notebookName s
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -91,7 +91,7 @@ func (client *notebookClient) DeleteNotebook(ctx context.Context, notebookName s
 func (client *notebookClient) DeleteNotebookCreateRequest(ctx context.Context, notebookName string, options *NotebookDeleteNotebookOptions) (*azcore.Request, error) {
 	urlPath := "/notebooks/{notebookName}"
 	urlPath = strings.ReplaceAll(urlPath, "{notebookName}", url.PathEscape(notebookName))
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -117,7 +117,7 @@ func (client *notebookClient) GetNotebook(ctx context.Context, notebookName stri
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -135,7 +135,7 @@ func (client *notebookClient) GetNotebook(ctx context.Context, notebookName stri
 func (client *notebookClient) GetNotebookCreateRequest(ctx context.Context, notebookName string, options *NotebookGetNotebookOptions) (*azcore.Request, error) {
 	urlPath := "/notebooks/{notebookName}"
 	urlPath = strings.ReplaceAll(urlPath, "{notebookName}", url.PathEscape(notebookName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -167,7 +167,7 @@ func (client *notebookClient) GetNotebookHandleError(resp *azcore.Response) erro
 // GetNotebookSummaryByWorkSpace - Lists a summary of Notebooks.
 func (client *notebookClient) GetNotebookSummaryByWorkSpace(options *NotebookGetNotebookSummaryByWorkSpaceOptions) NotebookListResponsePager {
 	return &notebookListResponsePager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.GetNotebookSummaryByWorkSpaceCreateRequest(ctx, options)
 		},
@@ -183,7 +183,7 @@ func (client *notebookClient) GetNotebookSummaryByWorkSpace(options *NotebookGet
 // GetNotebookSummaryByWorkSpaceCreateRequest creates the GetNotebookSummaryByWorkSpace request.
 func (client *notebookClient) GetNotebookSummaryByWorkSpaceCreateRequest(ctx context.Context, options *NotebookGetNotebookSummaryByWorkSpaceOptions) (*azcore.Request, error) {
 	urlPath := "/notebooks/summary"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -212,7 +212,7 @@ func (client *notebookClient) GetNotebookSummaryByWorkSpaceHandleError(resp *azc
 // GetNotebooksByWorkspace - Lists Notebooks.
 func (client *notebookClient) GetNotebooksByWorkspace(options *NotebookGetNotebooksByWorkspaceOptions) NotebookListResponsePager {
 	return &notebookListResponsePager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.GetNotebooksByWorkspaceCreateRequest(ctx, options)
 		},
@@ -228,7 +228,7 @@ func (client *notebookClient) GetNotebooksByWorkspace(options *NotebookGetNotebo
 // GetNotebooksByWorkspaceCreateRequest creates the GetNotebooksByWorkspace request.
 func (client *notebookClient) GetNotebooksByWorkspaceCreateRequest(ctx context.Context, options *NotebookGetNotebooksByWorkspaceOptions) (*azcore.Request, error) {
 	urlPath := "/notebooks"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

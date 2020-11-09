@@ -25,18 +25,18 @@ type VirtualMachineSizesOperations interface {
 // VirtualMachineSizesClient implements the VirtualMachineSizesOperations interface.
 // Don't use this type directly, use NewVirtualMachineSizesClient() instead.
 type VirtualMachineSizesClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewVirtualMachineSizesClient creates a new instance of VirtualMachineSizesClient with the specified values.
-func NewVirtualMachineSizesClient(c *Client, subscriptionID string) VirtualMachineSizesOperations {
-	return &VirtualMachineSizesClient{Client: c, subscriptionID: subscriptionID}
+func NewVirtualMachineSizesClient(con *Connection, subscriptionID string) VirtualMachineSizesOperations {
+	return &VirtualMachineSizesClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *VirtualMachineSizesClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *VirtualMachineSizesClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // List - This API is deprecated. Use Resources Skus [https://docs.microsoft.com/en-us/rest/api/compute/resourceskus/list]
@@ -45,7 +45,7 @@ func (client *VirtualMachineSizesClient) List(ctx context.Context, location stri
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -64,7 +64,7 @@ func (client *VirtualMachineSizesClient) ListCreateRequest(ctx context.Context, 
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/vmSizes"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

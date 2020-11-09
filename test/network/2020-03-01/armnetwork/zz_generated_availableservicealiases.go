@@ -24,24 +24,24 @@ type AvailableServiceAliasesOperations interface {
 // AvailableServiceAliasesClient implements the AvailableServiceAliasesOperations interface.
 // Don't use this type directly, use NewAvailableServiceAliasesClient() instead.
 type AvailableServiceAliasesClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewAvailableServiceAliasesClient creates a new instance of AvailableServiceAliasesClient with the specified values.
-func NewAvailableServiceAliasesClient(c *Client, subscriptionID string) AvailableServiceAliasesOperations {
-	return &AvailableServiceAliasesClient{Client: c, subscriptionID: subscriptionID}
+func NewAvailableServiceAliasesClient(con *Connection, subscriptionID string) AvailableServiceAliasesOperations {
+	return &AvailableServiceAliasesClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *AvailableServiceAliasesClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *AvailableServiceAliasesClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // List - Gets all available service aliases for this subscription in this region.
 func (client *AvailableServiceAliasesClient) List(location string, options *AvailableServiceAliasesListOptions) AvailableServiceAliasesResultPager {
 	return &availableServiceAliasesResultPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListCreateRequest(ctx, location, options)
 		},
@@ -59,7 +59,7 @@ func (client *AvailableServiceAliasesClient) ListCreateRequest(ctx context.Conte
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availableServiceAliases"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -88,7 +88,7 @@ func (client *AvailableServiceAliasesClient) ListHandleError(resp *azcore.Respon
 // ListByResourceGroup - Gets all available service aliases for this resource group in this region.
 func (client *AvailableServiceAliasesClient) ListByResourceGroup(resourceGroupName string, location string, options *AvailableServiceAliasesListByResourceGroupOptions) AvailableServiceAliasesResultPager {
 	return &availableServiceAliasesResultPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListByResourceGroupCreateRequest(ctx, resourceGroupName, location, options)
 		},
@@ -107,7 +107,7 @@ func (client *AvailableServiceAliasesClient) ListByResourceGroupCreateRequest(ct
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

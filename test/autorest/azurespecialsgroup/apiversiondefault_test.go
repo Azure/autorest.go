@@ -11,7 +11,7 @@ import (
 )
 
 func newAPIVersionDefaultClient() APIVersionDefaultOperations {
-	return NewAPIVersionDefaultClient(NewDefaultClient(nil))
+	return NewAPIVersionDefaultClient(NewDefaultConnection(nil))
 }
 
 // GetMethodGlobalNotProvidedValid - GET method with api-version modeled in global settings.

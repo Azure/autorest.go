@@ -22,17 +22,17 @@ type AutoRestReportServiceOperations interface {
 // AutoRestReportServiceClient implements the AutoRestReportServiceOperations interface.
 // Don't use this type directly, use NewAutoRestReportServiceClient() instead.
 type AutoRestReportServiceClient struct {
-	*Client
+	con *Connection
 }
 
 // NewAutoRestReportServiceClient creates a new instance of AutoRestReportServiceClient with the specified values.
-func NewAutoRestReportServiceClient(c *Client) AutoRestReportServiceOperations {
-	return &AutoRestReportServiceClient{Client: c}
+func NewAutoRestReportServiceClient(con *Connection) AutoRestReportServiceOperations {
+	return &AutoRestReportServiceClient{con: con}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *AutoRestReportServiceClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *AutoRestReportServiceClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // GetOptionalReport - Get optional test coverage report
@@ -41,7 +41,7 @@ func (client *AutoRestReportServiceClient) GetOptionalReport(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -58,7 +58,7 @@ func (client *AutoRestReportServiceClient) GetOptionalReport(ctx context.Context
 // GetOptionalReportCreateRequest creates the GetOptionalReport request.
 func (client *AutoRestReportServiceClient) GetOptionalReportCreateRequest(ctx context.Context, options *AutoRestReportServiceGetOptionalReportOptions) (*azcore.Request, error) {
 	urlPath := "/report/optional"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -92,7 +92,7 @@ func (client *AutoRestReportServiceClient) GetReport(ctx context.Context, option
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -109,7 +109,7 @@ func (client *AutoRestReportServiceClient) GetReport(ctx context.Context, option
 // GetReportCreateRequest creates the GetReport request.
 func (client *AutoRestReportServiceClient) GetReportCreateRequest(ctx context.Context, options *AutoRestReportServiceGetReportOptions) (*azcore.Request, error) {
 	urlPath := "/report"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

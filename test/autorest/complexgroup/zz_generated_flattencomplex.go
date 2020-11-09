@@ -22,17 +22,17 @@ type FlattencomplexOperations interface {
 // FlattencomplexClient implements the FlattencomplexOperations interface.
 // Don't use this type directly, use NewFlattencomplexClient() instead.
 type FlattencomplexClient struct {
-	*Client
+	con *Connection
 }
 
 // NewFlattencomplexClient creates a new instance of FlattencomplexClient with the specified values.
-func NewFlattencomplexClient(c *Client) FlattencomplexOperations {
-	return &FlattencomplexClient{Client: c}
+func NewFlattencomplexClient(con *Connection) FlattencomplexOperations {
+	return &FlattencomplexClient{con: con}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *FlattencomplexClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *FlattencomplexClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 func (client *FlattencomplexClient) GetValid(ctx context.Context, options *FlattencomplexGetValidOptions) (*MyBaseTypeResponse, error) {
@@ -40,7 +40,7 @@ func (client *FlattencomplexClient) GetValid(ctx context.Context, options *Flatt
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -57,7 +57,7 @@ func (client *FlattencomplexClient) GetValid(ctx context.Context, options *Flatt
 // GetValidCreateRequest creates the GetValid request.
 func (client *FlattencomplexClient) GetValidCreateRequest(ctx context.Context, options *FlattencomplexGetValidOptions) (*azcore.Request, error) {
 	urlPath := "/complex/flatten/valid"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

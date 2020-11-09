@@ -14,12 +14,12 @@ import (
 )
 
 type dataFlowClient struct {
-	*client
+	con *connection
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *dataFlowClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *dataFlowClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // CreateOrUpdateDataFlow - Creates or updates a data flow.
@@ -28,7 +28,7 @@ func (client *dataFlowClient) CreateOrUpdateDataFlow(ctx context.Context, dataFl
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -42,7 +42,7 @@ func (client *dataFlowClient) CreateOrUpdateDataFlow(ctx context.Context, dataFl
 func (client *dataFlowClient) CreateOrUpdateDataFlowCreateRequest(ctx context.Context, dataFlowName string, dataFlow DataFlowResource, options *DataFlowCreateOrUpdateDataFlowOptions) (*azcore.Request, error) {
 	urlPath := "/dataflows/{dataFlowName}"
 	urlPath = strings.ReplaceAll(urlPath, "{dataFlowName}", url.PathEscape(dataFlowName))
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -77,7 +77,7 @@ func (client *dataFlowClient) DeleteDataFlow(ctx context.Context, dataFlowName s
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -91,7 +91,7 @@ func (client *dataFlowClient) DeleteDataFlow(ctx context.Context, dataFlowName s
 func (client *dataFlowClient) DeleteDataFlowCreateRequest(ctx context.Context, dataFlowName string, options *DataFlowDeleteDataFlowOptions) (*azcore.Request, error) {
 	urlPath := "/dataflows/{dataFlowName}"
 	urlPath = strings.ReplaceAll(urlPath, "{dataFlowName}", url.PathEscape(dataFlowName))
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -117,7 +117,7 @@ func (client *dataFlowClient) GetDataFlow(ctx context.Context, dataFlowName stri
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -135,7 +135,7 @@ func (client *dataFlowClient) GetDataFlow(ctx context.Context, dataFlowName stri
 func (client *dataFlowClient) GetDataFlowCreateRequest(ctx context.Context, dataFlowName string, options *DataFlowGetDataFlowOptions) (*azcore.Request, error) {
 	urlPath := "/dataflows/{dataFlowName}"
 	urlPath = strings.ReplaceAll(urlPath, "{dataFlowName}", url.PathEscape(dataFlowName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -167,7 +167,7 @@ func (client *dataFlowClient) GetDataFlowHandleError(resp *azcore.Response) erro
 // GetDataFlowsByWorkspace - Lists data flows.
 func (client *dataFlowClient) GetDataFlowsByWorkspace(options *DataFlowGetDataFlowsByWorkspaceOptions) DataFlowListResponsePager {
 	return &dataFlowListResponsePager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.GetDataFlowsByWorkspaceCreateRequest(ctx, options)
 		},
@@ -183,7 +183,7 @@ func (client *dataFlowClient) GetDataFlowsByWorkspace(options *DataFlowGetDataFl
 // GetDataFlowsByWorkspaceCreateRequest creates the GetDataFlowsByWorkspace request.
 func (client *dataFlowClient) GetDataFlowsByWorkspaceCreateRequest(ctx context.Context, options *DataFlowGetDataFlowsByWorkspaceOptions) (*azcore.Request, error) {
 	urlPath := "/dataflows"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

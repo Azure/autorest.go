@@ -28,17 +28,17 @@ type MediaTypesClientOperations interface {
 // MediaTypesClient implements the MediaTypesClientOperations interface.
 // Don't use this type directly, use NewMediaTypesClient() instead.
 type MediaTypesClient struct {
-	*Client
+	con *Connection
 }
 
 // NewMediaTypesClient creates a new instance of MediaTypesClient with the specified values.
-func NewMediaTypesClient(c *Client) MediaTypesClientOperations {
-	return &MediaTypesClient{Client: c}
+func NewMediaTypesClient(con *Connection) MediaTypesClientOperations {
+	return &MediaTypesClient{con: con}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *MediaTypesClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *MediaTypesClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // AnalyzeBody - Analyze body, that could be different media types.
@@ -47,7 +47,7 @@ func (client *MediaTypesClient) AnalyzeBody(ctx context.Context, contentType Con
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -64,7 +64,7 @@ func (client *MediaTypesClient) AnalyzeBody(ctx context.Context, contentType Con
 // AnalyzeBodyCreateRequest creates the AnalyzeBody request.
 func (client *MediaTypesClient) AnalyzeBodyCreateRequest(ctx context.Context, contentType ContentType, input azcore.ReadSeekCloser, options *MediaTypesClientAnalyzeBodyOptions) (*azcore.Request, error) {
 	urlPath := "/mediatypes/analyze"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -97,7 +97,7 @@ func (client *MediaTypesClient) AnalyzeBodyWithSourcePath(ctx context.Context, o
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -114,7 +114,7 @@ func (client *MediaTypesClient) AnalyzeBodyWithSourcePath(ctx context.Context, o
 // AnalyzeBodyWithSourcePathCreateRequest creates the AnalyzeBodyWithSourcePath request.
 func (client *MediaTypesClient) AnalyzeBodyWithSourcePathCreateRequest(ctx context.Context, options *MediaTypesClientAnalyzeBodyWithSourcePathOptions) (*azcore.Request, error) {
 	urlPath := "/mediatypes/analyze"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -149,7 +149,7 @@ func (client *MediaTypesClient) ContentTypeWithEncoding(ctx context.Context, inp
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -166,7 +166,7 @@ func (client *MediaTypesClient) ContentTypeWithEncoding(ctx context.Context, inp
 // ContentTypeWithEncodingCreateRequest creates the ContentTypeWithEncoding request.
 func (client *MediaTypesClient) ContentTypeWithEncodingCreateRequest(ctx context.Context, input string) (*azcore.Request, error) {
 	urlPath := "/mediatypes/contentTypeWithEncoding"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

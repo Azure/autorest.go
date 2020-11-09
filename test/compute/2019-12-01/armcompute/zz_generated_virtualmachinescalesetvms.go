@@ -85,18 +85,18 @@ type VirtualMachineScaleSetVMSOperations interface {
 // VirtualMachineScaleSetVMSClient implements the VirtualMachineScaleSetVMSOperations interface.
 // Don't use this type directly, use NewVirtualMachineScaleSetVMSClient() instead.
 type VirtualMachineScaleSetVMSClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewVirtualMachineScaleSetVMSClient creates a new instance of VirtualMachineScaleSetVMSClient with the specified values.
-func NewVirtualMachineScaleSetVMSClient(c *Client, subscriptionID string) VirtualMachineScaleSetVMSOperations {
-	return &VirtualMachineScaleSetVMSClient{Client: c, subscriptionID: subscriptionID}
+func NewVirtualMachineScaleSetVMSClient(con *Connection, subscriptionID string) VirtualMachineScaleSetVMSOperations {
+	return &VirtualMachineScaleSetVMSClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *VirtualMachineScaleSetVMSClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *VirtualMachineScaleSetVMSClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 func (client *VirtualMachineScaleSetVMSClient) BeginDeallocate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSDeallocateOptions) (*HTTPPollerResponse, error) {
@@ -113,7 +113,7 @@ func (client *VirtualMachineScaleSetVMSClient) BeginDeallocate(ctx context.Conte
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -128,7 +128,7 @@ func (client *VirtualMachineScaleSetVMSClient) ResumeDeallocate(token string) (H
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -141,7 +141,7 @@ func (client *VirtualMachineScaleSetVMSClient) Deallocate(ctx context.Context, r
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -158,7 +158,7 @@ func (client *VirtualMachineScaleSetVMSClient) DeallocateCreateRequest(ctx conte
 	urlPath = strings.ReplaceAll(urlPath, "{vmScaleSetName}", url.PathEscape(vmScaleSetName))
 	urlPath = strings.ReplaceAll(urlPath, "{instanceId}", url.PathEscape(instanceId))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -194,7 +194,7 @@ func (client *VirtualMachineScaleSetVMSClient) BeginDelete(ctx context.Context, 
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -209,7 +209,7 @@ func (client *VirtualMachineScaleSetVMSClient) ResumeDelete(token string) (HTTPP
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -220,7 +220,7 @@ func (client *VirtualMachineScaleSetVMSClient) Delete(ctx context.Context, resou
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -237,7 +237,7 @@ func (client *VirtualMachineScaleSetVMSClient) DeleteCreateRequest(ctx context.C
 	urlPath = strings.ReplaceAll(urlPath, "{vmScaleSetName}", url.PathEscape(vmScaleSetName))
 	urlPath = strings.ReplaceAll(urlPath, "{instanceId}", url.PathEscape(instanceId))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -265,7 +265,7 @@ func (client *VirtualMachineScaleSetVMSClient) Get(ctx context.Context, resource
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -286,7 +286,7 @@ func (client *VirtualMachineScaleSetVMSClient) GetCreateRequest(ctx context.Cont
 	urlPath = strings.ReplaceAll(urlPath, "{vmScaleSetName}", url.PathEscape(vmScaleSetName))
 	urlPath = strings.ReplaceAll(urlPath, "{instanceId}", url.PathEscape(instanceId))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -324,7 +324,7 @@ func (client *VirtualMachineScaleSetVMSClient) GetInstanceView(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -345,7 +345,7 @@ func (client *VirtualMachineScaleSetVMSClient) GetInstanceViewCreateRequest(ctx 
 	urlPath = strings.ReplaceAll(urlPath, "{vmScaleSetName}", url.PathEscape(vmScaleSetName))
 	urlPath = strings.ReplaceAll(urlPath, "{instanceId}", url.PathEscape(instanceId))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -377,7 +377,7 @@ func (client *VirtualMachineScaleSetVMSClient) GetInstanceViewHandleError(resp *
 // List - Gets a list of all virtual machines in a VM scale sets.
 func (client *VirtualMachineScaleSetVMSClient) List(resourceGroupName string, virtualMachineScaleSetName string, options *VirtualMachineScaleSetVMSListOptions) VirtualMachineScaleSetVMListResultPager {
 	return &virtualMachineScaleSetVMListResultPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, options)
 		},
@@ -396,7 +396,7 @@ func (client *VirtualMachineScaleSetVMSClient) ListCreateRequest(ctx context.Con
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualMachineScaleSetName}", url.PathEscape(virtualMachineScaleSetName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -448,7 +448,7 @@ func (client *VirtualMachineScaleSetVMSClient) BeginPerformMaintenance(ctx conte
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -463,7 +463,7 @@ func (client *VirtualMachineScaleSetVMSClient) ResumePerformMaintenance(token st
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -475,7 +475,7 @@ func (client *VirtualMachineScaleSetVMSClient) PerformMaintenance(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -492,7 +492,7 @@ func (client *VirtualMachineScaleSetVMSClient) PerformMaintenanceCreateRequest(c
 	urlPath = strings.ReplaceAll(urlPath, "{vmScaleSetName}", url.PathEscape(vmScaleSetName))
 	urlPath = strings.ReplaceAll(urlPath, "{instanceId}", url.PathEscape(instanceId))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -528,7 +528,7 @@ func (client *VirtualMachineScaleSetVMSClient) BeginPowerOff(ctx context.Context
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -543,7 +543,7 @@ func (client *VirtualMachineScaleSetVMSClient) ResumePowerOff(token string) (HTT
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -556,7 +556,7 @@ func (client *VirtualMachineScaleSetVMSClient) PowerOff(ctx context.Context, res
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -573,7 +573,7 @@ func (client *VirtualMachineScaleSetVMSClient) PowerOffCreateRequest(ctx context
 	urlPath = strings.ReplaceAll(urlPath, "{vmScaleSetName}", url.PathEscape(vmScaleSetName))
 	urlPath = strings.ReplaceAll(urlPath, "{instanceId}", url.PathEscape(instanceId))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -612,7 +612,7 @@ func (client *VirtualMachineScaleSetVMSClient) BeginRedeploy(ctx context.Context
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -627,7 +627,7 @@ func (client *VirtualMachineScaleSetVMSClient) ResumeRedeploy(token string) (HTT
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -638,7 +638,7 @@ func (client *VirtualMachineScaleSetVMSClient) Redeploy(ctx context.Context, res
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -655,7 +655,7 @@ func (client *VirtualMachineScaleSetVMSClient) RedeployCreateRequest(ctx context
 	urlPath = strings.ReplaceAll(urlPath, "{vmScaleSetName}", url.PathEscape(vmScaleSetName))
 	urlPath = strings.ReplaceAll(urlPath, "{instanceId}", url.PathEscape(instanceId))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -691,7 +691,7 @@ func (client *VirtualMachineScaleSetVMSClient) BeginReimage(ctx context.Context,
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -706,7 +706,7 @@ func (client *VirtualMachineScaleSetVMSClient) ResumeReimage(token string) (HTTP
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -717,7 +717,7 @@ func (client *VirtualMachineScaleSetVMSClient) Reimage(ctx context.Context, reso
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -734,7 +734,7 @@ func (client *VirtualMachineScaleSetVMSClient) ReimageCreateRequest(ctx context.
 	urlPath = strings.ReplaceAll(urlPath, "{vmScaleSetName}", url.PathEscape(vmScaleSetName))
 	urlPath = strings.ReplaceAll(urlPath, "{instanceId}", url.PathEscape(instanceId))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -773,7 +773,7 @@ func (client *VirtualMachineScaleSetVMSClient) BeginReimageAll(ctx context.Conte
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -788,7 +788,7 @@ func (client *VirtualMachineScaleSetVMSClient) ResumeReimageAll(token string) (H
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -800,7 +800,7 @@ func (client *VirtualMachineScaleSetVMSClient) ReimageAll(ctx context.Context, r
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -817,7 +817,7 @@ func (client *VirtualMachineScaleSetVMSClient) ReimageAllCreateRequest(ctx conte
 	urlPath = strings.ReplaceAll(urlPath, "{vmScaleSetName}", url.PathEscape(vmScaleSetName))
 	urlPath = strings.ReplaceAll(urlPath, "{instanceId}", url.PathEscape(instanceId))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -853,7 +853,7 @@ func (client *VirtualMachineScaleSetVMSClient) BeginRestart(ctx context.Context,
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -868,7 +868,7 @@ func (client *VirtualMachineScaleSetVMSClient) ResumeRestart(token string) (HTTP
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -879,7 +879,7 @@ func (client *VirtualMachineScaleSetVMSClient) Restart(ctx context.Context, reso
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -896,7 +896,7 @@ func (client *VirtualMachineScaleSetVMSClient) RestartCreateRequest(ctx context.
 	urlPath = strings.ReplaceAll(urlPath, "{vmScaleSetName}", url.PathEscape(vmScaleSetName))
 	urlPath = strings.ReplaceAll(urlPath, "{instanceId}", url.PathEscape(instanceId))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -932,7 +932,7 @@ func (client *VirtualMachineScaleSetVMSClient) BeginRunCommand(ctx context.Conte
 	}
 	poller := &runCommandResultPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*RunCommandResultResponse, error) {
@@ -947,7 +947,7 @@ func (client *VirtualMachineScaleSetVMSClient) ResumeRunCommand(token string) (R
 		return nil, err
 	}
 	return &runCommandResultPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -958,7 +958,7 @@ func (client *VirtualMachineScaleSetVMSClient) RunCommand(ctx context.Context, r
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -975,7 +975,7 @@ func (client *VirtualMachineScaleSetVMSClient) RunCommandCreateRequest(ctx conte
 	urlPath = strings.ReplaceAll(urlPath, "{vmScaleSetName}", url.PathEscape(vmScaleSetName))
 	urlPath = strings.ReplaceAll(urlPath, "{instanceId}", url.PathEscape(instanceId))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1011,7 +1011,7 @@ func (client *VirtualMachineScaleSetVMSClient) SimulateEviction(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1028,7 +1028,7 @@ func (client *VirtualMachineScaleSetVMSClient) SimulateEvictionCreateRequest(ctx
 	urlPath = strings.ReplaceAll(urlPath, "{vmScaleSetName}", url.PathEscape(vmScaleSetName))
 	urlPath = strings.ReplaceAll(urlPath, "{instanceId}", url.PathEscape(instanceId))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1064,7 +1064,7 @@ func (client *VirtualMachineScaleSetVMSClient) BeginStart(ctx context.Context, r
 	}
 	poller := &httpPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -1079,7 +1079,7 @@ func (client *VirtualMachineScaleSetVMSClient) ResumeStart(token string) (HTTPPo
 		return nil, err
 	}
 	return &httpPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -1090,7 +1090,7 @@ func (client *VirtualMachineScaleSetVMSClient) Start(ctx context.Context, resour
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1107,7 +1107,7 @@ func (client *VirtualMachineScaleSetVMSClient) StartCreateRequest(ctx context.Co
 	urlPath = strings.ReplaceAll(urlPath, "{vmScaleSetName}", url.PathEscape(vmScaleSetName))
 	urlPath = strings.ReplaceAll(urlPath, "{instanceId}", url.PathEscape(instanceId))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1143,7 +1143,7 @@ func (client *VirtualMachineScaleSetVMSClient) BeginUpdate(ctx context.Context, 
 	}
 	poller := &virtualMachineScaleSetVMPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*VirtualMachineScaleSetVMResponse, error) {
@@ -1158,7 +1158,7 @@ func (client *VirtualMachineScaleSetVMSClient) ResumeUpdate(token string) (Virtu
 		return nil, err
 	}
 	return &virtualMachineScaleSetVMPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -1169,7 +1169,7 @@ func (client *VirtualMachineScaleSetVMSClient) Update(ctx context.Context, resou
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1186,7 +1186,7 @@ func (client *VirtualMachineScaleSetVMSClient) UpdateCreateRequest(ctx context.C
 	urlPath = strings.ReplaceAll(urlPath, "{vmScaleSetName}", url.PathEscape(vmScaleSetName))
 	urlPath = strings.ReplaceAll(urlPath, "{instanceId}", url.PathEscape(instanceId))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

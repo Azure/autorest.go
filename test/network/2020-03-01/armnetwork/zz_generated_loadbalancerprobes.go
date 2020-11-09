@@ -24,18 +24,18 @@ type LoadBalancerProbesOperations interface {
 // LoadBalancerProbesClient implements the LoadBalancerProbesOperations interface.
 // Don't use this type directly, use NewLoadBalancerProbesClient() instead.
 type LoadBalancerProbesClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewLoadBalancerProbesClient creates a new instance of LoadBalancerProbesClient with the specified values.
-func NewLoadBalancerProbesClient(c *Client, subscriptionID string) LoadBalancerProbesOperations {
-	return &LoadBalancerProbesClient{Client: c, subscriptionID: subscriptionID}
+func NewLoadBalancerProbesClient(con *Connection, subscriptionID string) LoadBalancerProbesOperations {
+	return &LoadBalancerProbesClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *LoadBalancerProbesClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *LoadBalancerProbesClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // Get - Gets load balancer probe.
@@ -44,7 +44,7 @@ func (client *LoadBalancerProbesClient) Get(ctx context.Context, resourceGroupNa
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -65,7 +65,7 @@ func (client *LoadBalancerProbesClient) GetCreateRequest(ctx context.Context, re
 	urlPath = strings.ReplaceAll(urlPath, "{loadBalancerName}", url.PathEscape(loadBalancerName))
 	urlPath = strings.ReplaceAll(urlPath, "{probeName}", url.PathEscape(probeName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -94,7 +94,7 @@ func (client *LoadBalancerProbesClient) GetHandleError(resp *azcore.Response) er
 // List - Gets all the load balancer probes.
 func (client *LoadBalancerProbesClient) List(resourceGroupName string, loadBalancerName string, options *LoadBalancerProbesListOptions) LoadBalancerProbeListResultPager {
 	return &loadBalancerProbeListResultPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListCreateRequest(ctx, resourceGroupName, loadBalancerName, options)
 		},
@@ -113,7 +113,7 @@ func (client *LoadBalancerProbesClient) ListCreateRequest(ctx context.Context, r
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{loadBalancerName}", url.PathEscape(loadBalancerName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

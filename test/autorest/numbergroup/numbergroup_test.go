@@ -11,7 +11,7 @@ import (
 )
 
 func newNumberClient() NumberOperations {
-	return NewNumberClient(NewDefaultClient(nil))
+	return NewNumberClient(NewDefaultConnection(nil))
 }
 
 func TestNumberGetBigDecimal(t *testing.T) {

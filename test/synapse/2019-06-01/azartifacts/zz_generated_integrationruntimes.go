@@ -14,12 +14,12 @@ import (
 )
 
 type integrationRuntimesClient struct {
-	*client
+	con *connection
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *integrationRuntimesClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *integrationRuntimesClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // Get - Get Integration Runtime
@@ -28,7 +28,7 @@ func (client *integrationRuntimesClient) Get(ctx context.Context, integrationRun
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -46,7 +46,7 @@ func (client *integrationRuntimesClient) Get(ctx context.Context, integrationRun
 func (client *integrationRuntimesClient) GetCreateRequest(ctx context.Context, integrationRuntimeName string, options *IntegrationRuntimesGetOptions) (*azcore.Request, error) {
 	urlPath := "/integrationRuntimes/{integrationRuntimeName}"
 	urlPath = strings.ReplaceAll(urlPath, "{integrationRuntimeName}", url.PathEscape(integrationRuntimeName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -78,7 +78,7 @@ func (client *integrationRuntimesClient) List(ctx context.Context, options *Inte
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -95,7 +95,7 @@ func (client *integrationRuntimesClient) List(ctx context.Context, options *Inte
 // ListCreateRequest creates the List request.
 func (client *integrationRuntimesClient) ListCreateRequest(ctx context.Context, options *IntegrationRuntimesListOptions) (*azcore.Request, error) {
 	urlPath := "/integrationRuntimes"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

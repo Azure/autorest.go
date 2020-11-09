@@ -22,24 +22,24 @@ type VpnLinkConnectionsOperations interface {
 // VpnLinkConnectionsClient implements the VpnLinkConnectionsOperations interface.
 // Don't use this type directly, use NewVpnLinkConnectionsClient() instead.
 type VpnLinkConnectionsClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewVpnLinkConnectionsClient creates a new instance of VpnLinkConnectionsClient with the specified values.
-func NewVpnLinkConnectionsClient(c *Client, subscriptionID string) VpnLinkConnectionsOperations {
-	return &VpnLinkConnectionsClient{Client: c, subscriptionID: subscriptionID}
+func NewVpnLinkConnectionsClient(con *Connection, subscriptionID string) VpnLinkConnectionsOperations {
+	return &VpnLinkConnectionsClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *VpnLinkConnectionsClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *VpnLinkConnectionsClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // ListByVpnConnection - Retrieves all vpn site link connections for a particular virtual wan vpn gateway vpn connection.
 func (client *VpnLinkConnectionsClient) ListByVpnConnection(resourceGroupName string, gatewayName string, connectionName string, options *VpnLinkConnectionsListByVpnConnectionOptions) ListVpnSiteLinkConnectionsResultPager {
 	return &listVpnSiteLinkConnectionsResultPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListByVpnConnectionCreateRequest(ctx, resourceGroupName, gatewayName, connectionName, options)
 		},
@@ -59,7 +59,7 @@ func (client *VpnLinkConnectionsClient) ListByVpnConnectionCreateRequest(ctx con
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{gatewayName}", url.PathEscape(gatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{connectionName}", url.PathEscape(connectionName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

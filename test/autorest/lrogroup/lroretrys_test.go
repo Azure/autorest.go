@@ -13,10 +13,10 @@ import (
 )
 
 func newLRORetrysClient() LroRetrysOperations {
-	options := DefaultClientOptions()
+	options := DefaultConnectionOptions()
 	options.Retry.RetryDelay = 10 * time.Millisecond
 	options.HTTPClient = httpClientWithCookieJar()
-	return NewLroRetrysClient(NewDefaultClient(&options))
+	return NewLroRetrysClient(NewDefaultConnection(&options))
 }
 
 func TestLRORetrysBeginDelete202Retry200(t *testing.T) {

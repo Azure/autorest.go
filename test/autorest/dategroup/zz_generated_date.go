@@ -35,17 +35,17 @@ type DateOperations interface {
 // DateClient implements the DateOperations interface.
 // Don't use this type directly, use NewDateClient() instead.
 type DateClient struct {
-	*Client
+	con *Connection
 }
 
 // NewDateClient creates a new instance of DateClient with the specified values.
-func NewDateClient(c *Client) DateOperations {
-	return &DateClient{Client: c}
+func NewDateClient(con *Connection) DateOperations {
+	return &DateClient{con: con}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *DateClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *DateClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // GetInvalidDate - Get invalid date value
@@ -54,7 +54,7 @@ func (client *DateClient) GetInvalidDate(ctx context.Context, options *DateGetIn
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -71,7 +71,7 @@ func (client *DateClient) GetInvalidDate(ctx context.Context, options *DateGetIn
 // GetInvalidDateCreateRequest creates the GetInvalidDate request.
 func (client *DateClient) GetInvalidDateCreateRequest(ctx context.Context, options *DateGetInvalidDateOptions) (*azcore.Request, error) {
 	urlPath := "/date/invaliddate"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -101,7 +101,7 @@ func (client *DateClient) GetMaxDate(ctx context.Context, options *DateGetMaxDat
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -118,7 +118,7 @@ func (client *DateClient) GetMaxDate(ctx context.Context, options *DateGetMaxDat
 // GetMaxDateCreateRequest creates the GetMaxDate request.
 func (client *DateClient) GetMaxDateCreateRequest(ctx context.Context, options *DateGetMaxDateOptions) (*azcore.Request, error) {
 	urlPath := "/date/max"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -148,7 +148,7 @@ func (client *DateClient) GetMinDate(ctx context.Context, options *DateGetMinDat
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -165,7 +165,7 @@ func (client *DateClient) GetMinDate(ctx context.Context, options *DateGetMinDat
 // GetMinDateCreateRequest creates the GetMinDate request.
 func (client *DateClient) GetMinDateCreateRequest(ctx context.Context, options *DateGetMinDateOptions) (*azcore.Request, error) {
 	urlPath := "/date/min"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -195,7 +195,7 @@ func (client *DateClient) GetNull(ctx context.Context, options *DateGetNullOptio
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -212,7 +212,7 @@ func (client *DateClient) GetNull(ctx context.Context, options *DateGetNullOptio
 // GetNullCreateRequest creates the GetNull request.
 func (client *DateClient) GetNullCreateRequest(ctx context.Context, options *DateGetNullOptions) (*azcore.Request, error) {
 	urlPath := "/date/null"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -242,7 +242,7 @@ func (client *DateClient) GetOverflowDate(ctx context.Context, options *DateGetO
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -259,7 +259,7 @@ func (client *DateClient) GetOverflowDate(ctx context.Context, options *DateGetO
 // GetOverflowDateCreateRequest creates the GetOverflowDate request.
 func (client *DateClient) GetOverflowDateCreateRequest(ctx context.Context, options *DateGetOverflowDateOptions) (*azcore.Request, error) {
 	urlPath := "/date/overflowdate"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -289,7 +289,7 @@ func (client *DateClient) GetUnderflowDate(ctx context.Context, options *DateGet
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -306,7 +306,7 @@ func (client *DateClient) GetUnderflowDate(ctx context.Context, options *DateGet
 // GetUnderflowDateCreateRequest creates the GetUnderflowDate request.
 func (client *DateClient) GetUnderflowDateCreateRequest(ctx context.Context, options *DateGetUnderflowDateOptions) (*azcore.Request, error) {
 	urlPath := "/date/underflowdate"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -336,7 +336,7 @@ func (client *DateClient) PutMaxDate(ctx context.Context, dateBody time.Time, op
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -349,7 +349,7 @@ func (client *DateClient) PutMaxDate(ctx context.Context, dateBody time.Time, op
 // PutMaxDateCreateRequest creates the PutMaxDate request.
 func (client *DateClient) PutMaxDateCreateRequest(ctx context.Context, dateBody time.Time, options *DatePutMaxDateOptions) (*azcore.Request, error) {
 	urlPath := "/date/max"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -372,7 +372,7 @@ func (client *DateClient) PutMinDate(ctx context.Context, dateBody time.Time, op
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -385,7 +385,7 @@ func (client *DateClient) PutMinDate(ctx context.Context, dateBody time.Time, op
 // PutMinDateCreateRequest creates the PutMinDate request.
 func (client *DateClient) PutMinDateCreateRequest(ctx context.Context, dateBody time.Time, options *DatePutMinDateOptions) (*azcore.Request, error) {
 	urlPath := "/date/min"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

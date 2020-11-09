@@ -44,17 +44,17 @@ type StringOperations interface {
 // StringClient implements the StringOperations interface.
 // Don't use this type directly, use NewStringClient() instead.
 type StringClient struct {
-	*Client
+	con *Connection
 }
 
 // NewStringClient creates a new instance of StringClient with the specified values.
-func NewStringClient(c *Client) StringOperations {
-	return &StringClient{Client: c}
+func NewStringClient(con *Connection) StringOperations {
+	return &StringClient{con: con}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *StringClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *StringClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // GetBase64Encoded - Get value that is base64 encoded
@@ -63,7 +63,7 @@ func (client *StringClient) GetBase64Encoded(ctx context.Context, options *Strin
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +80,7 @@ func (client *StringClient) GetBase64Encoded(ctx context.Context, options *Strin
 // GetBase64EncodedCreateRequest creates the GetBase64Encoded request.
 func (client *StringClient) GetBase64EncodedCreateRequest(ctx context.Context, options *StringGetBase64EncodedOptions) (*azcore.Request, error) {
 	urlPath := "/string/base64Encoding"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -109,7 +109,7 @@ func (client *StringClient) GetBase64URLEncoded(ctx context.Context, options *St
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -126,7 +126,7 @@ func (client *StringClient) GetBase64URLEncoded(ctx context.Context, options *St
 // GetBase64URLEncodedCreateRequest creates the GetBase64URLEncoded request.
 func (client *StringClient) GetBase64URLEncodedCreateRequest(ctx context.Context, options *StringGetBase64URLEncodedOptions) (*azcore.Request, error) {
 	urlPath := "/string/base64UrlEncoding"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -155,7 +155,7 @@ func (client *StringClient) GetEmpty(ctx context.Context, options *StringGetEmpt
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -172,7 +172,7 @@ func (client *StringClient) GetEmpty(ctx context.Context, options *StringGetEmpt
 // GetEmptyCreateRequest creates the GetEmpty request.
 func (client *StringClient) GetEmptyCreateRequest(ctx context.Context, options *StringGetEmptyOptions) (*azcore.Request, error) {
 	urlPath := "/string/empty"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -201,7 +201,7 @@ func (client *StringClient) GetMBCS(ctx context.Context, options *StringGetMBCSO
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -218,7 +218,7 @@ func (client *StringClient) GetMBCS(ctx context.Context, options *StringGetMBCSO
 // GetMBCSCreateRequest creates the GetMBCS request.
 func (client *StringClient) GetMBCSCreateRequest(ctx context.Context, options *StringGetMBCSOptions) (*azcore.Request, error) {
 	urlPath := "/string/mbcs"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -247,7 +247,7 @@ func (client *StringClient) GetNotProvided(ctx context.Context, options *StringG
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -264,7 +264,7 @@ func (client *StringClient) GetNotProvided(ctx context.Context, options *StringG
 // GetNotProvidedCreateRequest creates the GetNotProvided request.
 func (client *StringClient) GetNotProvidedCreateRequest(ctx context.Context, options *StringGetNotProvidedOptions) (*azcore.Request, error) {
 	urlPath := "/string/notProvided"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -293,7 +293,7 @@ func (client *StringClient) GetNull(ctx context.Context, options *StringGetNullO
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -310,7 +310,7 @@ func (client *StringClient) GetNull(ctx context.Context, options *StringGetNullO
 // GetNullCreateRequest creates the GetNull request.
 func (client *StringClient) GetNullCreateRequest(ctx context.Context, options *StringGetNullOptions) (*azcore.Request, error) {
 	urlPath := "/string/null"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -339,7 +339,7 @@ func (client *StringClient) GetNullBase64URLEncoded(ctx context.Context, options
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -356,7 +356,7 @@ func (client *StringClient) GetNullBase64URLEncoded(ctx context.Context, options
 // GetNullBase64URLEncodedCreateRequest creates the GetNullBase64URLEncoded request.
 func (client *StringClient) GetNullBase64URLEncodedCreateRequest(ctx context.Context, options *StringGetNullBase64URLEncodedOptions) (*azcore.Request, error) {
 	urlPath := "/string/nullBase64UrlEncoding"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -385,7 +385,7 @@ func (client *StringClient) GetWhitespace(ctx context.Context, options *StringGe
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -402,7 +402,7 @@ func (client *StringClient) GetWhitespace(ctx context.Context, options *StringGe
 // GetWhitespaceCreateRequest creates the GetWhitespace request.
 func (client *StringClient) GetWhitespaceCreateRequest(ctx context.Context, options *StringGetWhitespaceOptions) (*azcore.Request, error) {
 	urlPath := "/string/whitespace"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -431,7 +431,7 @@ func (client *StringClient) PutBase64URLEncoded(ctx context.Context, stringBody 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -444,7 +444,7 @@ func (client *StringClient) PutBase64URLEncoded(ctx context.Context, stringBody 
 // PutBase64URLEncodedCreateRequest creates the PutBase64URLEncoded request.
 func (client *StringClient) PutBase64URLEncodedCreateRequest(ctx context.Context, stringBody []byte, options *StringPutBase64URLEncodedOptions) (*azcore.Request, error) {
 	urlPath := "/string/base64UrlEncoding"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -467,7 +467,7 @@ func (client *StringClient) PutEmpty(ctx context.Context, options *StringPutEmpt
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -480,7 +480,7 @@ func (client *StringClient) PutEmpty(ctx context.Context, options *StringPutEmpt
 // PutEmptyCreateRequest creates the PutEmpty request.
 func (client *StringClient) PutEmptyCreateRequest(ctx context.Context, options *StringPutEmptyOptions) (*azcore.Request, error) {
 	urlPath := "/string/empty"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -503,7 +503,7 @@ func (client *StringClient) PutMBCS(ctx context.Context, options *StringPutMBCSO
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -516,7 +516,7 @@ func (client *StringClient) PutMBCS(ctx context.Context, options *StringPutMBCSO
 // PutMBCSCreateRequest creates the PutMBCS request.
 func (client *StringClient) PutMBCSCreateRequest(ctx context.Context, options *StringPutMBCSOptions) (*azcore.Request, error) {
 	urlPath := "/string/mbcs"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -539,7 +539,7 @@ func (client *StringClient) PutNull(ctx context.Context, options *StringPutNullO
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -552,7 +552,7 @@ func (client *StringClient) PutNull(ctx context.Context, options *StringPutNullO
 // PutNullCreateRequest creates the PutNull request.
 func (client *StringClient) PutNullCreateRequest(ctx context.Context, options *StringPutNullOptions) (*azcore.Request, error) {
 	urlPath := "/string/null"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -578,7 +578,7 @@ func (client *StringClient) PutWhitespace(ctx context.Context, options *StringPu
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -591,7 +591,7 @@ func (client *StringClient) PutWhitespace(ctx context.Context, options *StringPu
 // PutWhitespaceCreateRequest creates the PutWhitespace request.
 func (client *StringClient) PutWhitespaceCreateRequest(ctx context.Context, options *StringPutWhitespaceOptions) (*azcore.Request, error) {
 	urlPath := "/string/whitespace"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

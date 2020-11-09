@@ -11,7 +11,7 @@ import (
 )
 
 func newEnumClient() EnumOperations {
-	return NewEnumClient(NewDefaultClient(nil))
+	return NewEnumClient(NewDefaultConnection(nil))
 }
 
 func TestEnumGetNotExpandable(t *testing.T) {

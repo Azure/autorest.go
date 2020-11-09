@@ -13,7 +13,7 @@ import (
 )
 
 func newDurationClient() DurationOperations {
-	return NewDurationClient(NewDefaultClient(nil))
+	return NewDurationClient(NewDefaultConnection(nil))
 }
 
 func TestGetInvalid(t *testing.T) {

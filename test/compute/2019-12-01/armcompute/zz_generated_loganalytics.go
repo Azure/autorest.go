@@ -33,18 +33,18 @@ type LogAnalyticsOperations interface {
 // LogAnalyticsClient implements the LogAnalyticsOperations interface.
 // Don't use this type directly, use NewLogAnalyticsClient() instead.
 type LogAnalyticsClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewLogAnalyticsClient creates a new instance of LogAnalyticsClient with the specified values.
-func NewLogAnalyticsClient(c *Client, subscriptionID string) LogAnalyticsOperations {
-	return &LogAnalyticsClient{Client: c, subscriptionID: subscriptionID}
+func NewLogAnalyticsClient(con *Connection, subscriptionID string) LogAnalyticsOperations {
+	return &LogAnalyticsClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *LogAnalyticsClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *LogAnalyticsClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 func (client *LogAnalyticsClient) BeginExportRequestRateByInterval(ctx context.Context, location string, parameters RequestRateByIntervalInput, options *LogAnalyticsExportRequestRateByIntervalOptions) (*LogAnalyticsOperationResultPollerResponse, error) {
@@ -61,7 +61,7 @@ func (client *LogAnalyticsClient) BeginExportRequestRateByInterval(ctx context.C
 	}
 	poller := &logAnalyticsOperationResultPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*LogAnalyticsOperationResultResponse, error) {
@@ -76,7 +76,7 @@ func (client *LogAnalyticsClient) ResumeExportRequestRateByInterval(token string
 		return nil, err
 	}
 	return &logAnalyticsOperationResultPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -87,7 +87,7 @@ func (client *LogAnalyticsClient) ExportRequestRateByInterval(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -102,7 +102,7 @@ func (client *LogAnalyticsClient) ExportRequestRateByIntervalCreateRequest(ctx c
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/logAnalytics/apiAccess/getRequestRateByInterval"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -145,7 +145,7 @@ func (client *LogAnalyticsClient) BeginExportThrottledRequests(ctx context.Conte
 	}
 	poller := &logAnalyticsOperationResultPoller{
 		pt:       pt,
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*LogAnalyticsOperationResultResponse, error) {
@@ -160,7 +160,7 @@ func (client *LogAnalyticsClient) ResumeExportThrottledRequests(token string) (L
 		return nil, err
 	}
 	return &logAnalyticsOperationResultPoller{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
@@ -171,7 +171,7 @@ func (client *LogAnalyticsClient) ExportThrottledRequests(ctx context.Context, l
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -186,7 +186,7 @@ func (client *LogAnalyticsClient) ExportThrottledRequestsCreateRequest(ctx conte
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/logAnalytics/apiAccess/getThrottledRequests"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

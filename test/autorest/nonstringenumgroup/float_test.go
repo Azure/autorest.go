@@ -11,7 +11,7 @@ import (
 )
 
 func newFloatClient() FloatOperations {
-	return NewFloatClient(NewDefaultClient(nil))
+	return NewFloatClient(NewDefaultConnection(nil))
 }
 
 // Get - Get a float enum

@@ -14,12 +14,12 @@ import (
 )
 
 type datasetClient struct {
-	*client
+	con *connection
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *datasetClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *datasetClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // CreateOrUpdateDataset - Creates or updates a dataset.
@@ -28,7 +28,7 @@ func (client *datasetClient) CreateOrUpdateDataset(ctx context.Context, datasetN
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -42,7 +42,7 @@ func (client *datasetClient) CreateOrUpdateDataset(ctx context.Context, datasetN
 func (client *datasetClient) CreateOrUpdateDatasetCreateRequest(ctx context.Context, datasetName string, dataset DatasetResource, options *DatasetCreateOrUpdateDatasetOptions) (*azcore.Request, error) {
 	urlPath := "/datasets/{datasetName}"
 	urlPath = strings.ReplaceAll(urlPath, "{datasetName}", url.PathEscape(datasetName))
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -77,7 +77,7 @@ func (client *datasetClient) DeleteDataset(ctx context.Context, datasetName stri
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -91,7 +91,7 @@ func (client *datasetClient) DeleteDataset(ctx context.Context, datasetName stri
 func (client *datasetClient) DeleteDatasetCreateRequest(ctx context.Context, datasetName string, options *DatasetDeleteDatasetOptions) (*azcore.Request, error) {
 	urlPath := "/datasets/{datasetName}"
 	urlPath = strings.ReplaceAll(urlPath, "{datasetName}", url.PathEscape(datasetName))
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -117,7 +117,7 @@ func (client *datasetClient) GetDataset(ctx context.Context, datasetName string,
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -135,7 +135,7 @@ func (client *datasetClient) GetDataset(ctx context.Context, datasetName string,
 func (client *datasetClient) GetDatasetCreateRequest(ctx context.Context, datasetName string, options *DatasetGetDatasetOptions) (*azcore.Request, error) {
 	urlPath := "/datasets/{datasetName}"
 	urlPath = strings.ReplaceAll(urlPath, "{datasetName}", url.PathEscape(datasetName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -167,7 +167,7 @@ func (client *datasetClient) GetDatasetHandleError(resp *azcore.Response) error 
 // GetDatasetsByWorkspace - Lists datasets.
 func (client *datasetClient) GetDatasetsByWorkspace(options *DatasetGetDatasetsByWorkspaceOptions) DatasetListResponsePager {
 	return &datasetListResponsePager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.GetDatasetsByWorkspaceCreateRequest(ctx, options)
 		},
@@ -183,7 +183,7 @@ func (client *datasetClient) GetDatasetsByWorkspace(options *DatasetGetDatasetsB
 // GetDatasetsByWorkspaceCreateRequest creates the GetDatasetsByWorkspace request.
 func (client *datasetClient) GetDatasetsByWorkspaceCreateRequest(ctx context.Context, options *DatasetGetDatasetsByWorkspaceOptions) (*azcore.Request, error) {
 	urlPath := "/datasets"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

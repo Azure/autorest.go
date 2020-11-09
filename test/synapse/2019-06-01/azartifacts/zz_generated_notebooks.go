@@ -14,12 +14,12 @@ import (
 )
 
 type notebooksClient struct {
-	*client
+	con *connection
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *notebooksClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *notebooksClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // Rename - Renames a notebook.
@@ -28,7 +28,7 @@ func (client *notebooksClient) Rename(ctx context.Context, notebookName string, 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -42,7 +42,7 @@ func (client *notebooksClient) Rename(ctx context.Context, notebookName string, 
 func (client *notebooksClient) RenameCreateRequest(ctx context.Context, notebookName string, request ArtifactRenameRequest, options *NotebooksRenameOptions) (*azcore.Request, error) {
 	urlPath := "/notebooks/{notebookName}/rename"
 	urlPath = strings.ReplaceAll(urlPath, "{notebookName}", url.PathEscape(notebookName))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

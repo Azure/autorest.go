@@ -11,7 +11,7 @@ import (
 )
 
 func newIntClient() IntOperations {
-	return NewIntClient(NewDefaultClient(nil))
+	return NewIntClient(NewDefaultConnection(nil))
 }
 
 // Get - Get an int enum

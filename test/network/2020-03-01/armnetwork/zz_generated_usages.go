@@ -22,24 +22,24 @@ type UsagesOperations interface {
 // UsagesClient implements the UsagesOperations interface.
 // Don't use this type directly, use NewUsagesClient() instead.
 type UsagesClient struct {
-	*Client
+	con            *Connection
 	subscriptionID string
 }
 
 // NewUsagesClient creates a new instance of UsagesClient with the specified values.
-func NewUsagesClient(c *Client, subscriptionID string) UsagesOperations {
-	return &UsagesClient{Client: c, subscriptionID: subscriptionID}
+func NewUsagesClient(con *Connection, subscriptionID string) UsagesOperations {
+	return &UsagesClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *UsagesClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *UsagesClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // List - List network usages for a subscription.
 func (client *UsagesClient) List(location string, options *UsagesListOptions) UsagesListResultPager {
 	return &usagesListResultPager{
-		pipeline: client.p,
+		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.ListCreateRequest(ctx, location, options)
 		},
@@ -57,7 +57,7 @@ func (client *UsagesClient) ListCreateRequest(ctx context.Context, location stri
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/usages"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

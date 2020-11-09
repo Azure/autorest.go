@@ -11,10 +11,10 @@ import (
 )
 
 func newLrosaDsClient() LrosaDsOperations {
-	options := DefaultClientOptions()
+	options := DefaultConnectionOptions()
 	options.Retry.RetryDelay = 10 * time.Millisecond
 	options.HTTPClient = httpClientWithCookieJar()
-	return NewLrosaDsClient(NewDefaultClient(&options))
+	return NewLrosaDsClient(NewDefaultConnection(&options))
 }
 
 func TestLROSADSBeginDelete202NonRetry400(t *testing.T) {

@@ -30,17 +30,17 @@ type PetsOperations interface {
 // PetsClient implements the PetsOperations interface.
 // Don't use this type directly, use NewPetsClient() instead.
 type PetsClient struct {
-	*Client
+	con *Connection
 }
 
 // NewPetsClient creates a new instance of PetsClient with the specified values.
-func NewPetsClient(c *Client) PetsOperations {
-	return &PetsClient{Client: c}
+func NewPetsClient(con *Connection) PetsOperations {
+	return &PetsClient{con: con}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *PetsClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *PetsClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // CreateApInProperties - Create a Pet which contains more properties than what is defined.
@@ -49,7 +49,7 @@ func (client *PetsClient) CreateApInProperties(ctx context.Context, createParame
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -66,7 +66,7 @@ func (client *PetsClient) CreateApInProperties(ctx context.Context, createParame
 // CreateApInPropertiesCreateRequest creates the CreateApInProperties request.
 func (client *PetsClient) CreateApInPropertiesCreateRequest(ctx context.Context, createParameters PetApInProperties, options *PetsCreateApInPropertiesOptions) (*azcore.Request, error) {
 	urlPath := "/additionalProperties/in/properties"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -95,7 +95,7 @@ func (client *PetsClient) CreateApInPropertiesWithApstring(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -112,7 +112,7 @@ func (client *PetsClient) CreateApInPropertiesWithApstring(ctx context.Context, 
 // CreateApInPropertiesWithApstringCreateRequest creates the CreateApInPropertiesWithApstring request.
 func (client *PetsClient) CreateApInPropertiesWithApstringCreateRequest(ctx context.Context, createParameters PetApInPropertiesWithApstring, options *PetsCreateApInPropertiesWithApstringOptions) (*azcore.Request, error) {
 	urlPath := "/additionalProperties/in/properties/with/additionalProperties/string"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -141,7 +141,7 @@ func (client *PetsClient) CreateApObject(ctx context.Context, createParameters P
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -158,7 +158,7 @@ func (client *PetsClient) CreateApObject(ctx context.Context, createParameters P
 // CreateApObjectCreateRequest creates the CreateApObject request.
 func (client *PetsClient) CreateApObjectCreateRequest(ctx context.Context, createParameters PetApObject, options *PetsCreateApObjectOptions) (*azcore.Request, error) {
 	urlPath := "/additionalProperties/type/object"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -187,7 +187,7 @@ func (client *PetsClient) CreateApString(ctx context.Context, createParameters P
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -204,7 +204,7 @@ func (client *PetsClient) CreateApString(ctx context.Context, createParameters P
 // CreateApStringCreateRequest creates the CreateApString request.
 func (client *PetsClient) CreateApStringCreateRequest(ctx context.Context, createParameters PetApString, options *PetsCreateApStringOptions) (*azcore.Request, error) {
 	urlPath := "/additionalProperties/type/string"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -233,7 +233,7 @@ func (client *PetsClient) CreateApTrue(ctx context.Context, createParameters Pet
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -250,7 +250,7 @@ func (client *PetsClient) CreateApTrue(ctx context.Context, createParameters Pet
 // CreateApTrueCreateRequest creates the CreateApTrue request.
 func (client *PetsClient) CreateApTrueCreateRequest(ctx context.Context, createParameters PetApTrue, options *PetsCreateApTrueOptions) (*azcore.Request, error) {
 	urlPath := "/additionalProperties/true"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -279,7 +279,7 @@ func (client *PetsClient) CreateCatApTrue(ctx context.Context, createParameters 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -296,7 +296,7 @@ func (client *PetsClient) CreateCatApTrue(ctx context.Context, createParameters 
 // CreateCatApTrueCreateRequest creates the CreateCatApTrue request.
 func (client *PetsClient) CreateCatApTrueCreateRequest(ctx context.Context, createParameters CatApTrue, options *PetsCreateCatApTrueOptions) (*azcore.Request, error) {
 	urlPath := "/additionalProperties/true-subclass"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

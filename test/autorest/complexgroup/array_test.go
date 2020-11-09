@@ -11,7 +11,7 @@ import (
 )
 
 func newArrayClient() ArrayOperations {
-	return NewArrayClient(NewDefaultClient(nil))
+	return NewArrayClient(NewDefaultConnection(nil))
 }
 
 func TestArrayGetEmpty(t *testing.T) {

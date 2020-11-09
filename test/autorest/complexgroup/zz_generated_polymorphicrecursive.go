@@ -22,17 +22,17 @@ type PolymorphicrecursiveOperations interface {
 // PolymorphicrecursiveClient implements the PolymorphicrecursiveOperations interface.
 // Don't use this type directly, use NewPolymorphicrecursiveClient() instead.
 type PolymorphicrecursiveClient struct {
-	*Client
+	con *Connection
 }
 
 // NewPolymorphicrecursiveClient creates a new instance of PolymorphicrecursiveClient with the specified values.
-func NewPolymorphicrecursiveClient(c *Client) PolymorphicrecursiveOperations {
-	return &PolymorphicrecursiveClient{Client: c}
+func NewPolymorphicrecursiveClient(con *Connection) PolymorphicrecursiveOperations {
+	return &PolymorphicrecursiveClient{con: con}
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *PolymorphicrecursiveClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *PolymorphicrecursiveClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // GetValid - Get complex types that are polymorphic and have recursive references
@@ -41,7 +41,7 @@ func (client *PolymorphicrecursiveClient) GetValid(ctx context.Context, options 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -58,7 +58,7 @@ func (client *PolymorphicrecursiveClient) GetValid(ctx context.Context, options 
 // GetValidCreateRequest creates the GetValid request.
 func (client *PolymorphicrecursiveClient) GetValidCreateRequest(ctx context.Context, options *PolymorphicrecursiveGetValidOptions) (*azcore.Request, error) {
 	urlPath := "/complex/polymorphicrecursive/valid"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -87,7 +87,7 @@ func (client *PolymorphicrecursiveClient) PutValid(ctx context.Context, complexB
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -100,7 +100,7 @@ func (client *PolymorphicrecursiveClient) PutValid(ctx context.Context, complexB
 // PutValidCreateRequest creates the PutValid request.
 func (client *PolymorphicrecursiveClient) PutValidCreateRequest(ctx context.Context, complexBody FishClassification, options *PolymorphicrecursivePutValidOptions) (*azcore.Request, error) {
 	urlPath := "/complex/polymorphicrecursive/valid"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

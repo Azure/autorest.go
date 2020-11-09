@@ -14,12 +14,12 @@ import (
 )
 
 type triggerRunClient struct {
-	*client
+	con *connection
 }
 
-// Do invokes the Do() method on the pipeline associated with this client.
-func (client *triggerRunClient) Do(req *azcore.Request) (*azcore.Response, error) {
-	return client.p.Do(req)
+// Pipeline returns the pipeline associated with this client.
+func (client *triggerRunClient) Pipeline() azcore.Pipeline {
+	return client.con.Pipeline()
 }
 
 // CancelTriggerInstance - Cancel single trigger instance by runId.
@@ -28,7 +28,7 @@ func (client *triggerRunClient) CancelTriggerInstance(ctx context.Context, trigg
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -43,7 +43,7 @@ func (client *triggerRunClient) CancelTriggerInstanceCreateRequest(ctx context.C
 	urlPath := "/triggers/{triggerName}/triggerRuns/{runId}/cancel"
 	urlPath = strings.ReplaceAll(urlPath, "{triggerName}", url.PathEscape(triggerName))
 	urlPath = strings.ReplaceAll(urlPath, "{runId}", url.PathEscape(runId))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -69,7 +69,7 @@ func (client *triggerRunClient) QueryTriggerRunsByWorkspace(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -86,7 +86,7 @@ func (client *triggerRunClient) QueryTriggerRunsByWorkspace(ctx context.Context,
 // QueryTriggerRunsByWorkspaceCreateRequest creates the QueryTriggerRunsByWorkspace request.
 func (client *triggerRunClient) QueryTriggerRunsByWorkspaceCreateRequest(ctx context.Context, filterParameters RunFilterParameters, options *TriggerRunQueryTriggerRunsByWorkspaceOptions) (*azcore.Request, error) {
 	urlPath := "/queryTriggerRuns"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -118,7 +118,7 @@ func (client *triggerRunClient) RerunTriggerInstance(ctx context.Context, trigge
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
+	resp, err := client.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -133,7 +133,7 @@ func (client *triggerRunClient) RerunTriggerInstanceCreateRequest(ctx context.Co
 	urlPath := "/triggers/{triggerName}/triggerRuns/{runId}/rerun"
 	urlPath = strings.ReplaceAll(urlPath, "{triggerName}", url.PathEscape(triggerName))
 	urlPath = strings.ReplaceAll(urlPath, "{runId}", url.PathEscape(runId))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.u, urlPath))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
