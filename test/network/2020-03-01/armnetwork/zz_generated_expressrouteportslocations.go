@@ -7,6 +7,7 @@ package armnetwork
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -25,12 +26,12 @@ type ExpressRoutePortsLocationsOperations interface {
 // ExpressRoutePortsLocationsClient implements the ExpressRoutePortsLocationsOperations interface.
 // Don't use this type directly, use NewExpressRoutePortsLocationsClient() instead.
 type ExpressRoutePortsLocationsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewExpressRoutePortsLocationsClient creates a new instance of ExpressRoutePortsLocationsClient with the specified values.
-func NewExpressRoutePortsLocationsClient(con *Connection, subscriptionID string) ExpressRoutePortsLocationsOperations {
+func NewExpressRoutePortsLocationsClient(con *armcore.Connection, subscriptionID string) ExpressRoutePortsLocationsOperations {
 	return &ExpressRoutePortsLocationsClient{con: con, subscriptionID: subscriptionID}
 }
 

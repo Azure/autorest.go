@@ -38,12 +38,12 @@ type VirtualWansOperations interface {
 // VirtualWansClient implements the VirtualWansOperations interface.
 // Don't use this type directly, use NewVirtualWansClient() instead.
 type VirtualWansClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewVirtualWansClient creates a new instance of VirtualWansClient with the specified values.
-func NewVirtualWansClient(con *Connection, subscriptionID string) VirtualWansOperations {
+func NewVirtualWansClient(con *armcore.Connection, subscriptionID string) VirtualWansOperations {
 	return &VirtualWansClient{con: con, subscriptionID: subscriptionID}
 }
 

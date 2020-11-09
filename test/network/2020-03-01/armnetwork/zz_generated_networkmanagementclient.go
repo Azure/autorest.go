@@ -47,12 +47,12 @@ type NetworkManagementClientOperations interface {
 // NetworkManagementClient implements the NetworkManagementClientOperations interface.
 // Don't use this type directly, use NewNetworkManagementClient() instead.
 type NetworkManagementClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewNetworkManagementClient creates a new instance of NetworkManagementClient with the specified values.
-func NewNetworkManagementClient(con *Connection, subscriptionID string) NetworkManagementClientOperations {
+func NewNetworkManagementClient(con *armcore.Connection, subscriptionID string) NetworkManagementClientOperations {
 	return &NetworkManagementClient{con: con, subscriptionID: subscriptionID}
 }
 

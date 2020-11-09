@@ -34,12 +34,12 @@ type PrivateDNSZoneGroupsOperations interface {
 // PrivateDNSZoneGroupsClient implements the PrivateDNSZoneGroupsOperations interface.
 // Don't use this type directly, use NewPrivateDNSZoneGroupsClient() instead.
 type PrivateDNSZoneGroupsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewPrivateDNSZoneGroupsClient creates a new instance of PrivateDNSZoneGroupsClient with the specified values.
-func NewPrivateDNSZoneGroupsClient(con *Connection, subscriptionID string) PrivateDNSZoneGroupsOperations {
+func NewPrivateDNSZoneGroupsClient(con *armcore.Connection, subscriptionID string) PrivateDNSZoneGroupsOperations {
 	return &PrivateDNSZoneGroupsClient{con: con, subscriptionID: subscriptionID}
 }
 

@@ -44,12 +44,12 @@ type ImagesOperations interface {
 // ImagesClient implements the ImagesOperations interface.
 // Don't use this type directly, use NewImagesClient() instead.
 type ImagesClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewImagesClient creates a new instance of ImagesClient with the specified values.
-func NewImagesClient(con *Connection, subscriptionID string) ImagesOperations {
+func NewImagesClient(con *armcore.Connection, subscriptionID string) ImagesOperations {
 	return &ImagesClient{con: con, subscriptionID: subscriptionID}
 }
 

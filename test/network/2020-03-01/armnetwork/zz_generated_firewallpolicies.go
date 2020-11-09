@@ -36,12 +36,12 @@ type FirewallPoliciesOperations interface {
 // FirewallPoliciesClient implements the FirewallPoliciesOperations interface.
 // Don't use this type directly, use NewFirewallPoliciesClient() instead.
 type FirewallPoliciesClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewFirewallPoliciesClient creates a new instance of FirewallPoliciesClient with the specified values.
-func NewFirewallPoliciesClient(con *Connection, subscriptionID string) FirewallPoliciesOperations {
+func NewFirewallPoliciesClient(con *armcore.Connection, subscriptionID string) FirewallPoliciesOperations {
 	return &FirewallPoliciesClient{con: con, subscriptionID: subscriptionID}
 }
 

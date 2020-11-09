@@ -7,6 +7,7 @@ package armnetwork
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -22,12 +23,12 @@ type AvailableDelegationsOperations interface {
 // AvailableDelegationsClient implements the AvailableDelegationsOperations interface.
 // Don't use this type directly, use NewAvailableDelegationsClient() instead.
 type AvailableDelegationsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewAvailableDelegationsClient creates a new instance of AvailableDelegationsClient with the specified values.
-func NewAvailableDelegationsClient(con *Connection, subscriptionID string) AvailableDelegationsOperations {
+func NewAvailableDelegationsClient(con *armcore.Connection, subscriptionID string) AvailableDelegationsOperations {
 	return &AvailableDelegationsClient{con: con, subscriptionID: subscriptionID}
 }
 

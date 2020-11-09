@@ -38,12 +38,12 @@ type IPAllocationsOperations interface {
 // IPAllocationsClient implements the IPAllocationsOperations interface.
 // Don't use this type directly, use NewIPAllocationsClient() instead.
 type IPAllocationsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewIPAllocationsClient creates a new instance of IPAllocationsClient with the specified values.
-func NewIPAllocationsClient(con *Connection, subscriptionID string) IPAllocationsOperations {
+func NewIPAllocationsClient(con *armcore.Connection, subscriptionID string) IPAllocationsOperations {
 	return &IPAllocationsClient{con: con, subscriptionID: subscriptionID}
 }
 

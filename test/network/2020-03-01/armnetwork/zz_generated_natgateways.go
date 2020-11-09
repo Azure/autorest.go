@@ -38,12 +38,12 @@ type NatGatewaysOperations interface {
 // NatGatewaysClient implements the NatGatewaysOperations interface.
 // Don't use this type directly, use NewNatGatewaysClient() instead.
 type NatGatewaysClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewNatGatewaysClient creates a new instance of NatGatewaysClient with the specified values.
-func NewNatGatewaysClient(con *Connection, subscriptionID string) NatGatewaysOperations {
+func NewNatGatewaysClient(con *armcore.Connection, subscriptionID string) NatGatewaysOperations {
 	return &NatGatewaysClient{con: con, subscriptionID: subscriptionID}
 }
 

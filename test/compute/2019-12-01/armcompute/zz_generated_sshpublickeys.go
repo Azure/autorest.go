@@ -9,6 +9,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"io/ioutil"
 	"net/http"
@@ -41,12 +42,12 @@ type SSHPublicKeysOperations interface {
 // SSHPublicKeysClient implements the SSHPublicKeysOperations interface.
 // Don't use this type directly, use NewSSHPublicKeysClient() instead.
 type SSHPublicKeysClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewSSHPublicKeysClient creates a new instance of SSHPublicKeysClient with the specified values.
-func NewSSHPublicKeysClient(con *Connection, subscriptionID string) SSHPublicKeysOperations {
+func NewSSHPublicKeysClient(con *armcore.Connection, subscriptionID string) SSHPublicKeysOperations {
 	return &SSHPublicKeysClient{con: con, subscriptionID: subscriptionID}
 }
 

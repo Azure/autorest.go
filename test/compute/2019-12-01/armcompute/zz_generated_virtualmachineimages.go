@@ -9,6 +9,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"io/ioutil"
 	"net/http"
@@ -34,12 +35,12 @@ type VirtualMachineImagesOperations interface {
 // VirtualMachineImagesClient implements the VirtualMachineImagesOperations interface.
 // Don't use this type directly, use NewVirtualMachineImagesClient() instead.
 type VirtualMachineImagesClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewVirtualMachineImagesClient creates a new instance of VirtualMachineImagesClient with the specified values.
-func NewVirtualMachineImagesClient(con *Connection, subscriptionID string) VirtualMachineImagesOperations {
+func NewVirtualMachineImagesClient(con *armcore.Connection, subscriptionID string) VirtualMachineImagesOperations {
 	return &VirtualMachineImagesClient{con: con, subscriptionID: subscriptionID}
 }
 

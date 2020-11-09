@@ -38,12 +38,12 @@ type GalleryImagesOperations interface {
 // GalleryImagesClient implements the GalleryImagesOperations interface.
 // Don't use this type directly, use NewGalleryImagesClient() instead.
 type GalleryImagesClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewGalleryImagesClient creates a new instance of GalleryImagesClient with the specified values.
-func NewGalleryImagesClient(con *Connection, subscriptionID string) GalleryImagesOperations {
+func NewGalleryImagesClient(con *armcore.Connection, subscriptionID string) GalleryImagesOperations {
 	return &GalleryImagesClient{con: con, subscriptionID: subscriptionID}
 }
 

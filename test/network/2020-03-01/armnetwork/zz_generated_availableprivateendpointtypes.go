@@ -7,6 +7,7 @@ package armnetwork
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -24,12 +25,12 @@ type AvailablePrivateEndpointTypesOperations interface {
 // AvailablePrivateEndpointTypesClient implements the AvailablePrivateEndpointTypesOperations interface.
 // Don't use this type directly, use NewAvailablePrivateEndpointTypesClient() instead.
 type AvailablePrivateEndpointTypesClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewAvailablePrivateEndpointTypesClient creates a new instance of AvailablePrivateEndpointTypesClient with the specified values.
-func NewAvailablePrivateEndpointTypesClient(con *Connection, subscriptionID string) AvailablePrivateEndpointTypesOperations {
+func NewAvailablePrivateEndpointTypesClient(con *armcore.Connection, subscriptionID string) AvailablePrivateEndpointTypesOperations {
 	return &AvailablePrivateEndpointTypesClient{con: con, subscriptionID: subscriptionID}
 }
 

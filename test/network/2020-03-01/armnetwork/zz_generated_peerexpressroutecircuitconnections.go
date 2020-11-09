@@ -7,6 +7,7 @@ package armnetwork
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -24,12 +25,12 @@ type PeerExpressRouteCircuitConnectionsOperations interface {
 // PeerExpressRouteCircuitConnectionsClient implements the PeerExpressRouteCircuitConnectionsOperations interface.
 // Don't use this type directly, use NewPeerExpressRouteCircuitConnectionsClient() instead.
 type PeerExpressRouteCircuitConnectionsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewPeerExpressRouteCircuitConnectionsClient creates a new instance of PeerExpressRouteCircuitConnectionsClient with the specified values.
-func NewPeerExpressRouteCircuitConnectionsClient(con *Connection, subscriptionID string) PeerExpressRouteCircuitConnectionsOperations {
+func NewPeerExpressRouteCircuitConnectionsClient(con *armcore.Connection, subscriptionID string) PeerExpressRouteCircuitConnectionsOperations {
 	return &PeerExpressRouteCircuitConnectionsClient{con: con, subscriptionID: subscriptionID}
 }
 

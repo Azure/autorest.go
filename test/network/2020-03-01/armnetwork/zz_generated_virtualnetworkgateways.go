@@ -106,12 +106,12 @@ type VirtualNetworkGatewaysOperations interface {
 // VirtualNetworkGatewaysClient implements the VirtualNetworkGatewaysOperations interface.
 // Don't use this type directly, use NewVirtualNetworkGatewaysClient() instead.
 type VirtualNetworkGatewaysClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewVirtualNetworkGatewaysClient creates a new instance of VirtualNetworkGatewaysClient with the specified values.
-func NewVirtualNetworkGatewaysClient(con *Connection, subscriptionID string) VirtualNetworkGatewaysOperations {
+func NewVirtualNetworkGatewaysClient(con *armcore.Connection, subscriptionID string) VirtualNetworkGatewaysOperations {
 	return &VirtualNetworkGatewaysClient{con: con, subscriptionID: subscriptionID}
 }
 

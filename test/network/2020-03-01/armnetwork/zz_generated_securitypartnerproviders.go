@@ -38,12 +38,12 @@ type SecurityPartnerProvidersOperations interface {
 // SecurityPartnerProvidersClient implements the SecurityPartnerProvidersOperations interface.
 // Don't use this type directly, use NewSecurityPartnerProvidersClient() instead.
 type SecurityPartnerProvidersClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewSecurityPartnerProvidersClient creates a new instance of SecurityPartnerProvidersClient with the specified values.
-func NewSecurityPartnerProvidersClient(con *Connection, subscriptionID string) SecurityPartnerProvidersOperations {
+func NewSecurityPartnerProvidersClient(con *armcore.Connection, subscriptionID string) SecurityPartnerProvidersOperations {
 	return &SecurityPartnerProvidersClient{con: con, subscriptionID: subscriptionID}
 }
 

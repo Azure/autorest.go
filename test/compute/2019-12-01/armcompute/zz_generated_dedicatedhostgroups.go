@@ -9,6 +9,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"io/ioutil"
 	"net/http"
@@ -38,12 +39,12 @@ type DedicatedHostGroupsOperations interface {
 // DedicatedHostGroupsClient implements the DedicatedHostGroupsOperations interface.
 // Don't use this type directly, use NewDedicatedHostGroupsClient() instead.
 type DedicatedHostGroupsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewDedicatedHostGroupsClient creates a new instance of DedicatedHostGroupsClient with the specified values.
-func NewDedicatedHostGroupsClient(con *Connection, subscriptionID string) DedicatedHostGroupsOperations {
+func NewDedicatedHostGroupsClient(con *armcore.Connection, subscriptionID string) DedicatedHostGroupsOperations {
 	return &DedicatedHostGroupsClient{con: con, subscriptionID: subscriptionID}
 }
 

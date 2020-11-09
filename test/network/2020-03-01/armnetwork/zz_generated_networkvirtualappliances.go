@@ -38,12 +38,12 @@ type NetworkVirtualAppliancesOperations interface {
 // NetworkVirtualAppliancesClient implements the NetworkVirtualAppliancesOperations interface.
 // Don't use this type directly, use NewNetworkVirtualAppliancesClient() instead.
 type NetworkVirtualAppliancesClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewNetworkVirtualAppliancesClient creates a new instance of NetworkVirtualAppliancesClient with the specified values.
-func NewNetworkVirtualAppliancesClient(con *Connection, subscriptionID string) NetworkVirtualAppliancesOperations {
+func NewNetworkVirtualAppliancesClient(con *armcore.Connection, subscriptionID string) NetworkVirtualAppliancesOperations {
 	return &NetworkVirtualAppliancesClient{con: con, subscriptionID: subscriptionID}
 }
 

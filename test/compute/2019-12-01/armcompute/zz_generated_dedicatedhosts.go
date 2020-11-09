@@ -42,12 +42,12 @@ type DedicatedHostsOperations interface {
 // DedicatedHostsClient implements the DedicatedHostsOperations interface.
 // Don't use this type directly, use NewDedicatedHostsClient() instead.
 type DedicatedHostsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewDedicatedHostsClient creates a new instance of DedicatedHostsClient with the specified values.
-func NewDedicatedHostsClient(con *Connection, subscriptionID string) DedicatedHostsOperations {
+func NewDedicatedHostsClient(con *armcore.Connection, subscriptionID string) DedicatedHostsOperations {
 	return &DedicatedHostsClient{con: con, subscriptionID: subscriptionID}
 }
 

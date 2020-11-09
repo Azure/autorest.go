@@ -45,12 +45,12 @@ type PublicIPAddressesOperations interface {
 // PublicIPAddressesClient implements the PublicIPAddressesOperations interface.
 // Don't use this type directly, use NewPublicIPAddressesClient() instead.
 type PublicIPAddressesClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewPublicIPAddressesClient creates a new instance of PublicIPAddressesClient with the specified values.
-func NewPublicIPAddressesClient(con *Connection, subscriptionID string) PublicIPAddressesOperations {
+func NewPublicIPAddressesClient(con *armcore.Connection, subscriptionID string) PublicIPAddressesOperations {
 	return &PublicIPAddressesClient{con: con, subscriptionID: subscriptionID}
 }
 

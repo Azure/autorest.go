@@ -7,6 +7,7 @@ package armnetwork
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -22,12 +23,12 @@ type ExpressRouteServiceProvidersOperations interface {
 // ExpressRouteServiceProvidersClient implements the ExpressRouteServiceProvidersOperations interface.
 // Don't use this type directly, use NewExpressRouteServiceProvidersClient() instead.
 type ExpressRouteServiceProvidersClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewExpressRouteServiceProvidersClient creates a new instance of ExpressRouteServiceProvidersClient with the specified values.
-func NewExpressRouteServiceProvidersClient(con *Connection, subscriptionID string) ExpressRouteServiceProvidersOperations {
+func NewExpressRouteServiceProvidersClient(con *armcore.Connection, subscriptionID string) ExpressRouteServiceProvidersOperations {
 	return &ExpressRouteServiceProvidersClient{con: con, subscriptionID: subscriptionID}
 }
 

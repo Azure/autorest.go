@@ -38,12 +38,12 @@ type VirtualNetworkTapsOperations interface {
 // VirtualNetworkTapsClient implements the VirtualNetworkTapsOperations interface.
 // Don't use this type directly, use NewVirtualNetworkTapsClient() instead.
 type VirtualNetworkTapsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewVirtualNetworkTapsClient creates a new instance of VirtualNetworkTapsClient with the specified values.
-func NewVirtualNetworkTapsClient(con *Connection, subscriptionID string) VirtualNetworkTapsOperations {
+func NewVirtualNetworkTapsClient(con *armcore.Connection, subscriptionID string) VirtualNetworkTapsOperations {
 	return &VirtualNetworkTapsClient{con: con, subscriptionID: subscriptionID}
 }
 

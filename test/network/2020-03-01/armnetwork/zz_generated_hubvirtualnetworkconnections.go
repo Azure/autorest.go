@@ -7,6 +7,7 @@ package armnetwork
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -24,12 +25,12 @@ type HubVirtualNetworkConnectionsOperations interface {
 // HubVirtualNetworkConnectionsClient implements the HubVirtualNetworkConnectionsOperations interface.
 // Don't use this type directly, use NewHubVirtualNetworkConnectionsClient() instead.
 type HubVirtualNetworkConnectionsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewHubVirtualNetworkConnectionsClient creates a new instance of HubVirtualNetworkConnectionsClient with the specified values.
-func NewHubVirtualNetworkConnectionsClient(con *Connection, subscriptionID string) HubVirtualNetworkConnectionsOperations {
+func NewHubVirtualNetworkConnectionsClient(con *armcore.Connection, subscriptionID string) HubVirtualNetworkConnectionsOperations {
 	return &HubVirtualNetworkConnectionsClient{con: con, subscriptionID: subscriptionID}
 }
 

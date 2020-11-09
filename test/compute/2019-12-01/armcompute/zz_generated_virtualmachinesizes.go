@@ -9,6 +9,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"io/ioutil"
 	"net/http"
@@ -25,12 +26,12 @@ type VirtualMachineSizesOperations interface {
 // VirtualMachineSizesClient implements the VirtualMachineSizesOperations interface.
 // Don't use this type directly, use NewVirtualMachineSizesClient() instead.
 type VirtualMachineSizesClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewVirtualMachineSizesClient creates a new instance of VirtualMachineSizesClient with the specified values.
-func NewVirtualMachineSizesClient(con *Connection, subscriptionID string) VirtualMachineSizesOperations {
+func NewVirtualMachineSizesClient(con *armcore.Connection, subscriptionID string) VirtualMachineSizesOperations {
 	return &VirtualMachineSizesClient{con: con, subscriptionID: subscriptionID}
 }
 

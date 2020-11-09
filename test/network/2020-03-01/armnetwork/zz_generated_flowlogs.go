@@ -34,12 +34,12 @@ type FlowLogsOperations interface {
 // FlowLogsClient implements the FlowLogsOperations interface.
 // Don't use this type directly, use NewFlowLogsClient() instead.
 type FlowLogsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewFlowLogsClient creates a new instance of FlowLogsClient with the specified values.
-func NewFlowLogsClient(con *Connection, subscriptionID string) FlowLogsOperations {
+func NewFlowLogsClient(con *armcore.Connection, subscriptionID string) FlowLogsOperations {
 	return &FlowLogsClient{con: con, subscriptionID: subscriptionID}
 }
 

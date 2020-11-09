@@ -7,6 +7,7 @@ package armnetwork
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -24,12 +25,12 @@ type DefaultSecurityRulesOperations interface {
 // DefaultSecurityRulesClient implements the DefaultSecurityRulesOperations interface.
 // Don't use this type directly, use NewDefaultSecurityRulesClient() instead.
 type DefaultSecurityRulesClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewDefaultSecurityRulesClient creates a new instance of DefaultSecurityRulesClient with the specified values.
-func NewDefaultSecurityRulesClient(con *Connection, subscriptionID string) DefaultSecurityRulesOperations {
+func NewDefaultSecurityRulesClient(con *armcore.Connection, subscriptionID string) DefaultSecurityRulesOperations {
 	return &DefaultSecurityRulesClient{con: con, subscriptionID: subscriptionID}
 }
 

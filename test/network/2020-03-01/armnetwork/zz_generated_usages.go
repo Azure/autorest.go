@@ -7,6 +7,7 @@ package armnetwork
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -22,12 +23,12 @@ type UsagesOperations interface {
 // UsagesClient implements the UsagesOperations interface.
 // Don't use this type directly, use NewUsagesClient() instead.
 type UsagesClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewUsagesClient creates a new instance of UsagesClient with the specified values.
-func NewUsagesClient(con *Connection, subscriptionID string) UsagesOperations {
+func NewUsagesClient(con *armcore.Connection, subscriptionID string) UsagesOperations {
 	return &UsagesClient{con: con, subscriptionID: subscriptionID}
 }
 

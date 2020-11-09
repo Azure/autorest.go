@@ -34,12 +34,12 @@ type VirtualRouterPeeringsOperations interface {
 // VirtualRouterPeeringsClient implements the VirtualRouterPeeringsOperations interface.
 // Don't use this type directly, use NewVirtualRouterPeeringsClient() instead.
 type VirtualRouterPeeringsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewVirtualRouterPeeringsClient creates a new instance of VirtualRouterPeeringsClient with the specified values.
-func NewVirtualRouterPeeringsClient(con *Connection, subscriptionID string) VirtualRouterPeeringsOperations {
+func NewVirtualRouterPeeringsClient(con *armcore.Connection, subscriptionID string) VirtualRouterPeeringsOperations {
 	return &VirtualRouterPeeringsClient{con: con, subscriptionID: subscriptionID}
 }
 

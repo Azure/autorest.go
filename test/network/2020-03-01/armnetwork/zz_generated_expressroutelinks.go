@@ -7,6 +7,7 @@ package armnetwork
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -24,12 +25,12 @@ type ExpressRouteLinksOperations interface {
 // ExpressRouteLinksClient implements the ExpressRouteLinksOperations interface.
 // Don't use this type directly, use NewExpressRouteLinksClient() instead.
 type ExpressRouteLinksClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewExpressRouteLinksClient creates a new instance of ExpressRouteLinksClient with the specified values.
-func NewExpressRouteLinksClient(con *Connection, subscriptionID string) ExpressRouteLinksOperations {
+func NewExpressRouteLinksClient(con *armcore.Connection, subscriptionID string) ExpressRouteLinksOperations {
 	return &ExpressRouteLinksClient{con: con, subscriptionID: subscriptionID}
 }
 

@@ -34,12 +34,12 @@ type ExpressRouteCrossConnectionPeeringsOperations interface {
 // ExpressRouteCrossConnectionPeeringsClient implements the ExpressRouteCrossConnectionPeeringsOperations interface.
 // Don't use this type directly, use NewExpressRouteCrossConnectionPeeringsClient() instead.
 type ExpressRouteCrossConnectionPeeringsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewExpressRouteCrossConnectionPeeringsClient creates a new instance of ExpressRouteCrossConnectionPeeringsClient with the specified values.
-func NewExpressRouteCrossConnectionPeeringsClient(con *Connection, subscriptionID string) ExpressRouteCrossConnectionPeeringsOperations {
+func NewExpressRouteCrossConnectionPeeringsClient(con *armcore.Connection, subscriptionID string) ExpressRouteCrossConnectionPeeringsOperations {
 	return &ExpressRouteCrossConnectionPeeringsClient{con: con, subscriptionID: subscriptionID}
 }
 

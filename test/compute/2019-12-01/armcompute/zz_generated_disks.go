@@ -51,12 +51,12 @@ type DisksOperations interface {
 // DisksClient implements the DisksOperations interface.
 // Don't use this type directly, use NewDisksClient() instead.
 type DisksClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewDisksClient creates a new instance of DisksClient with the specified values.
-func NewDisksClient(con *Connection, subscriptionID string) DisksOperations {
+func NewDisksClient(con *armcore.Connection, subscriptionID string) DisksOperations {
 	return &DisksClient{con: con, subscriptionID: subscriptionID}
 }
 

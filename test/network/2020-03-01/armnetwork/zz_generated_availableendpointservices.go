@@ -7,6 +7,7 @@ package armnetwork
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -22,12 +23,12 @@ type AvailableEndpointServicesOperations interface {
 // AvailableEndpointServicesClient implements the AvailableEndpointServicesOperations interface.
 // Don't use this type directly, use NewAvailableEndpointServicesClient() instead.
 type AvailableEndpointServicesClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewAvailableEndpointServicesClient creates a new instance of AvailableEndpointServicesClient with the specified values.
-func NewAvailableEndpointServicesClient(con *Connection, subscriptionID string) AvailableEndpointServicesOperations {
+func NewAvailableEndpointServicesClient(con *armcore.Connection, subscriptionID string) AvailableEndpointServicesOperations {
 	return &AvailableEndpointServicesClient{con: con, subscriptionID: subscriptionID}
 }
 

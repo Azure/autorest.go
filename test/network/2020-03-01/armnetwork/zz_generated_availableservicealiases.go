@@ -7,6 +7,7 @@ package armnetwork
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -24,12 +25,12 @@ type AvailableServiceAliasesOperations interface {
 // AvailableServiceAliasesClient implements the AvailableServiceAliasesOperations interface.
 // Don't use this type directly, use NewAvailableServiceAliasesClient() instead.
 type AvailableServiceAliasesClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewAvailableServiceAliasesClient creates a new instance of AvailableServiceAliasesClient with the specified values.
-func NewAvailableServiceAliasesClient(con *Connection, subscriptionID string) AvailableServiceAliasesOperations {
+func NewAvailableServiceAliasesClient(con *armcore.Connection, subscriptionID string) AvailableServiceAliasesOperations {
 	return &AvailableServiceAliasesClient{con: con, subscriptionID: subscriptionID}
 }
 

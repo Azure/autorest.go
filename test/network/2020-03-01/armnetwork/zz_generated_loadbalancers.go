@@ -38,12 +38,12 @@ type LoadBalancersOperations interface {
 // LoadBalancersClient implements the LoadBalancersOperations interface.
 // Don't use this type directly, use NewLoadBalancersClient() instead.
 type LoadBalancersClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewLoadBalancersClient creates a new instance of LoadBalancersClient with the specified values.
-func NewLoadBalancersClient(con *Connection, subscriptionID string) LoadBalancersOperations {
+func NewLoadBalancersClient(con *armcore.Connection, subscriptionID string) LoadBalancersOperations {
 	return &LoadBalancersClient{con: con, subscriptionID: subscriptionID}
 }
 

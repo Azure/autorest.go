@@ -51,12 +51,12 @@ type SnapshotsOperations interface {
 // SnapshotsClient implements the SnapshotsOperations interface.
 // Don't use this type directly, use NewSnapshotsClient() instead.
 type SnapshotsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewSnapshotsClient creates a new instance of SnapshotsClient with the specified values.
-func NewSnapshotsClient(con *Connection, subscriptionID string) SnapshotsOperations {
+func NewSnapshotsClient(con *armcore.Connection, subscriptionID string) SnapshotsOperations {
 	return &SnapshotsClient{con: con, subscriptionID: subscriptionID}
 }
 

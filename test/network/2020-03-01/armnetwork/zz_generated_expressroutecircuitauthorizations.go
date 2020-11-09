@@ -34,12 +34,12 @@ type ExpressRouteCircuitAuthorizationsOperations interface {
 // ExpressRouteCircuitAuthorizationsClient implements the ExpressRouteCircuitAuthorizationsOperations interface.
 // Don't use this type directly, use NewExpressRouteCircuitAuthorizationsClient() instead.
 type ExpressRouteCircuitAuthorizationsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewExpressRouteCircuitAuthorizationsClient creates a new instance of ExpressRouteCircuitAuthorizationsClient with the specified values.
-func NewExpressRouteCircuitAuthorizationsClient(con *Connection, subscriptionID string) ExpressRouteCircuitAuthorizationsOperations {
+func NewExpressRouteCircuitAuthorizationsClient(con *armcore.Connection, subscriptionID string) ExpressRouteCircuitAuthorizationsOperations {
 	return &ExpressRouteCircuitAuthorizationsClient{con: con, subscriptionID: subscriptionID}
 }
 

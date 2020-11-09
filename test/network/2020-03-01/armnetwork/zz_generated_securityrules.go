@@ -34,12 +34,12 @@ type SecurityRulesOperations interface {
 // SecurityRulesClient implements the SecurityRulesOperations interface.
 // Don't use this type directly, use NewSecurityRulesClient() instead.
 type SecurityRulesClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewSecurityRulesClient creates a new instance of SecurityRulesClient with the specified values.
-func NewSecurityRulesClient(con *Connection, subscriptionID string) SecurityRulesOperations {
+func NewSecurityRulesClient(con *armcore.Connection, subscriptionID string) SecurityRulesOperations {
 	return &SecurityRulesClient{con: con, subscriptionID: subscriptionID}
 }
 

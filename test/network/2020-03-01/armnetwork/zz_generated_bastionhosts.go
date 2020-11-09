@@ -36,12 +36,12 @@ type BastionHostsOperations interface {
 // BastionHostsClient implements the BastionHostsOperations interface.
 // Don't use this type directly, use NewBastionHostsClient() instead.
 type BastionHostsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewBastionHostsClient creates a new instance of BastionHostsClient with the specified values.
-func NewBastionHostsClient(con *Connection, subscriptionID string) BastionHostsOperations {
+func NewBastionHostsClient(con *armcore.Connection, subscriptionID string) BastionHostsOperations {
 	return &BastionHostsClient{con: con, subscriptionID: subscriptionID}
 }
 

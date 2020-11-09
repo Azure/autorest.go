@@ -7,6 +7,7 @@ package armnetwork
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -22,12 +23,12 @@ type BgpServiceCommunitiesOperations interface {
 // BgpServiceCommunitiesClient implements the BgpServiceCommunitiesOperations interface.
 // Don't use this type directly, use NewBgpServiceCommunitiesClient() instead.
 type BgpServiceCommunitiesClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewBgpServiceCommunitiesClient creates a new instance of BgpServiceCommunitiesClient with the specified values.
-func NewBgpServiceCommunitiesClient(con *Connection, subscriptionID string) BgpServiceCommunitiesOperations {
+func NewBgpServiceCommunitiesClient(con *armcore.Connection, subscriptionID string) BgpServiceCommunitiesOperations {
 	return &BgpServiceCommunitiesClient{con: con, subscriptionID: subscriptionID}
 }
 

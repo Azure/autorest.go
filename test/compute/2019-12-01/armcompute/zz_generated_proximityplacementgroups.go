@@ -9,6 +9,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"io/ioutil"
 	"net/http"
@@ -35,12 +36,12 @@ type ProximityPlacementGroupsOperations interface {
 // ProximityPlacementGroupsClient implements the ProximityPlacementGroupsOperations interface.
 // Don't use this type directly, use NewProximityPlacementGroupsClient() instead.
 type ProximityPlacementGroupsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewProximityPlacementGroupsClient creates a new instance of ProximityPlacementGroupsClient with the specified values.
-func NewProximityPlacementGroupsClient(con *Connection, subscriptionID string) ProximityPlacementGroupsOperations {
+func NewProximityPlacementGroupsClient(con *armcore.Connection, subscriptionID string) ProximityPlacementGroupsOperations {
 	return &ProximityPlacementGroupsClient{con: con, subscriptionID: subscriptionID}
 }
 

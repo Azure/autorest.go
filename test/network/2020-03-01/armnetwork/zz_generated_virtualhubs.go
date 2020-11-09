@@ -38,12 +38,12 @@ type VirtualHubsOperations interface {
 // VirtualHubsClient implements the VirtualHubsOperations interface.
 // Don't use this type directly, use NewVirtualHubsClient() instead.
 type VirtualHubsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewVirtualHubsClient creates a new instance of VirtualHubsClient with the specified values.
-func NewVirtualHubsClient(con *Connection, subscriptionID string) VirtualHubsOperations {
+func NewVirtualHubsClient(con *armcore.Connection, subscriptionID string) VirtualHubsOperations {
 	return &VirtualHubsClient{con: con, subscriptionID: subscriptionID}
 }
 

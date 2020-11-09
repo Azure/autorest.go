@@ -55,12 +55,12 @@ type P2SVpnGatewaysOperations interface {
 // P2SVpnGatewaysClient implements the P2SVpnGatewaysOperations interface.
 // Don't use this type directly, use NewP2SVpnGatewaysClient() instead.
 type P2SVpnGatewaysClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewP2SVpnGatewaysClient creates a new instance of P2SVpnGatewaysClient with the specified values.
-func NewP2SVpnGatewaysClient(con *Connection, subscriptionID string) P2SVpnGatewaysOperations {
+func NewP2SVpnGatewaysClient(con *armcore.Connection, subscriptionID string) P2SVpnGatewaysOperations {
 	return &P2SVpnGatewaysClient{con: con, subscriptionID: subscriptionID}
 }
 

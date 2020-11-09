@@ -7,6 +7,7 @@ package armnetwork
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -22,12 +23,12 @@ type ServiceAssociationLinksOperations interface {
 // ServiceAssociationLinksClient implements the ServiceAssociationLinksOperations interface.
 // Don't use this type directly, use NewServiceAssociationLinksClient() instead.
 type ServiceAssociationLinksClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewServiceAssociationLinksClient creates a new instance of ServiceAssociationLinksClient with the specified values.
-func NewServiceAssociationLinksClient(con *Connection, subscriptionID string) ServiceAssociationLinksOperations {
+func NewServiceAssociationLinksClient(con *armcore.Connection, subscriptionID string) ServiceAssociationLinksOperations {
 	return &ServiceAssociationLinksClient{con: con, subscriptionID: subscriptionID}
 }
 

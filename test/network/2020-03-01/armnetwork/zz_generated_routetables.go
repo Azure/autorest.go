@@ -38,12 +38,12 @@ type RouteTablesOperations interface {
 // RouteTablesClient implements the RouteTablesOperations interface.
 // Don't use this type directly, use NewRouteTablesClient() instead.
 type RouteTablesClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewRouteTablesClient creates a new instance of RouteTablesClient with the specified values.
-func NewRouteTablesClient(con *Connection, subscriptionID string) RouteTablesOperations {
+func NewRouteTablesClient(con *armcore.Connection, subscriptionID string) RouteTablesOperations {
 	return &RouteTablesClient{con: con, subscriptionID: subscriptionID}
 }
 

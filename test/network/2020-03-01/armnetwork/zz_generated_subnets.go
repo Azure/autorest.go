@@ -42,12 +42,12 @@ type SubnetsOperations interface {
 // SubnetsClient implements the SubnetsOperations interface.
 // Don't use this type directly, use NewSubnetsClient() instead.
 type SubnetsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewSubnetsClient creates a new instance of SubnetsClient with the specified values.
-func NewSubnetsClient(con *Connection, subscriptionID string) SubnetsOperations {
+func NewSubnetsClient(con *armcore.Connection, subscriptionID string) SubnetsOperations {
 	return &SubnetsClient{con: con, subscriptionID: subscriptionID}
 }
 

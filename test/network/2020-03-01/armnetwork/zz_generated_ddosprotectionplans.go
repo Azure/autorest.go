@@ -38,12 +38,12 @@ type DdosProtectionPlansOperations interface {
 // DdosProtectionPlansClient implements the DdosProtectionPlansOperations interface.
 // Don't use this type directly, use NewDdosProtectionPlansClient() instead.
 type DdosProtectionPlansClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewDdosProtectionPlansClient creates a new instance of DdosProtectionPlansClient with the specified values.
-func NewDdosProtectionPlansClient(con *Connection, subscriptionID string) DdosProtectionPlansOperations {
+func NewDdosProtectionPlansClient(con *armcore.Connection, subscriptionID string) DdosProtectionPlansOperations {
 	return &DdosProtectionPlansClient{con: con, subscriptionID: subscriptionID}
 }
 

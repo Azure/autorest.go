@@ -38,12 +38,12 @@ type ExpressRoutePortsOperations interface {
 // ExpressRoutePortsClient implements the ExpressRoutePortsOperations interface.
 // Don't use this type directly, use NewExpressRoutePortsClient() instead.
 type ExpressRoutePortsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewExpressRoutePortsClient creates a new instance of ExpressRoutePortsClient with the specified values.
-func NewExpressRoutePortsClient(con *Connection, subscriptionID string) ExpressRoutePortsOperations {
+func NewExpressRoutePortsClient(con *armcore.Connection, subscriptionID string) ExpressRoutePortsOperations {
 	return &ExpressRoutePortsClient{con: con, subscriptionID: subscriptionID}
 }
 

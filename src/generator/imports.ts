@@ -35,7 +35,9 @@ export class ImportManager {
 
   // returns the import list as Go source code
   text(): string {
-    if (this.imports.length === 1) {
+    if (this.imports.length === 0) {
+      return '';
+    } else if (this.imports.length === 1) {
       const first = this.imports[0];
       return `import ${this.alias(first)}"${first.imp}"\n\n`;
     }

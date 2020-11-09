@@ -38,12 +38,12 @@ type IPGroupsOperations interface {
 // IPGroupsClient implements the IPGroupsOperations interface.
 // Don't use this type directly, use NewIPGroupsClient() instead.
 type IPGroupsClient struct {
-	con            *Connection
+	con            *armcore.Connection
 	subscriptionID string
 }
 
 // NewIPGroupsClient creates a new instance of IPGroupsClient with the specified values.
-func NewIPGroupsClient(con *Connection, subscriptionID string) IPGroupsOperations {
+func NewIPGroupsClient(con *armcore.Connection, subscriptionID string) IPGroupsOperations {
 	return &IPGroupsClient{con: con, subscriptionID: subscriptionID}
 }
 
