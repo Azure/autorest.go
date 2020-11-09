@@ -17,7 +17,7 @@ export const datetimeRFC1123Format = 'time.RFC1123';
 // returns the common source-file preamble (license comment, package name etc)
 export async function contentPreamble(session: Session<CodeModel>): Promise<string> {
   const headerText = comment(await session.getValue('header-text', 'MISSING LICENSE HEADER'), '// ');
-  let text = `${headerText}\n\n`;
+  let text = `// +build go1.13\n\n${headerText}\n\n`;
   text += `package ${session.model.language.go!.packageName}\n\n`;
   return text;
 }
