@@ -49,6 +49,7 @@ func (client *pipelineRunClient) CancelPipelineRunCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if options != nil && options.IsRecursive != nil {
 		query.Set("isRecursive", strconv.FormatBool(*options.IsRecursive))
@@ -96,6 +97,7 @@ func (client *pipelineRunClient) GetPipelineRunCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-06-01-preview")
 	req.URL.RawQuery = query.Encode()
@@ -147,6 +149,7 @@ func (client *pipelineRunClient) QueryActivityRunsCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-06-01-preview")
 	req.URL.RawQuery = query.Encode()
@@ -196,6 +199,7 @@ func (client *pipelineRunClient) QueryPipelineRunsByWorkspaceCreateRequest(ctx c
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-06-01-preview")
 	req.URL.RawQuery = query.Encode()

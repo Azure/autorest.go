@@ -116,6 +116,7 @@ func (client *AzureFirewallsClient) CreateOrUpdateCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
@@ -198,6 +199,7 @@ func (client *AzureFirewallsClient) DeleteCreateRequest(ctx context.Context, res
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
@@ -244,6 +246,7 @@ func (client *AzureFirewallsClient) GetCreateRequest(ctx context.Context, resour
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
@@ -291,6 +294,7 @@ func (client *AzureFirewallsClient) ListCreateRequest(ctx context.Context, resou
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
@@ -337,6 +341,7 @@ func (client *AzureFirewallsClient) ListAllCreateRequest(ctx context.Context, op
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
@@ -419,6 +424,7 @@ func (client *AzureFirewallsClient) UpdateTagsCreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()

@@ -118,6 +118,7 @@ func (client *VpnGatewaysClient) CreateOrUpdateCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
@@ -200,6 +201,7 @@ func (client *VpnGatewaysClient) DeleteCreateRequest(ctx context.Context, resour
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
@@ -246,6 +248,7 @@ func (client *VpnGatewaysClient) GetCreateRequest(ctx context.Context, resourceG
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
@@ -292,6 +295,7 @@ func (client *VpnGatewaysClient) ListCreateRequest(ctx context.Context, options 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
@@ -339,6 +343,7 @@ func (client *VpnGatewaysClient) ListByResourceGroupCreateRequest(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
@@ -421,6 +426,7 @@ func (client *VpnGatewaysClient) ResetCreateRequest(ctx context.Context, resourc
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
@@ -473,6 +479,7 @@ func (client *VpnGatewaysClient) UpdateTagsCreateRequest(ctx context.Context, re
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()

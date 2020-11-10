@@ -70,6 +70,7 @@ func (client *PetClient) DoSomethingCreateRequest(ctx context.Context, whatActio
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -126,6 +127,7 @@ func (client *PetClient) GetPetByIDCreateRequest(ctx context.Context, petId stri
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }

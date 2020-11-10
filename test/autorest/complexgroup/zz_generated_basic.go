@@ -72,6 +72,7 @@ func (client *BasicClient) GetEmptyCreateRequest(ctx context.Context, options *B
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -118,6 +119,7 @@ func (client *BasicClient) GetInvalidCreateRequest(ctx context.Context, options 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -164,6 +166,7 @@ func (client *BasicClient) GetNotProvidedCreateRequest(ctx context.Context, opti
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -210,6 +213,7 @@ func (client *BasicClient) GetNullCreateRequest(ctx context.Context, options *Ba
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -256,6 +260,7 @@ func (client *BasicClient) GetValidCreateRequest(ctx context.Context, options *B
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -298,6 +303,7 @@ func (client *BasicClient) PutValidCreateRequest(ctx context.Context, complexBod
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2016-02-29")
 	req.URL.RawQuery = query.Encode()

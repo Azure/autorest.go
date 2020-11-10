@@ -101,6 +101,7 @@ func (client *PagingClient) GetMultiplePagesCreateRequest(ctx context.Context, o
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	if options != nil && options.ClientRequestId != nil {
 		req.Header.Set("client-request-id", *options.ClientRequestId)
 	}
@@ -155,6 +156,7 @@ func (client *PagingClient) GetMultiplePagesFailureCreateRequest(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -200,6 +202,7 @@ func (client *PagingClient) GetMultiplePagesFailureURICreateRequest(ctx context.
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -246,6 +249,7 @@ func (client *PagingClient) GetMultiplePagesFragmentNextLinkCreateRequest(ctx co
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api_version", apiVersion)
 	req.URL.RawQuery = query.Encode()
@@ -295,6 +299,7 @@ func (client *PagingClient) GetMultiplePagesFragmentWithGroupingNextLinkCreateRe
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api_version", customParameterGroup.ApiVersion)
 	req.URL.RawQuery = query.Encode()
@@ -388,6 +393,7 @@ func (client *PagingClient) GetMultiplePagesLroCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	if options != nil && options.ClientRequestId != nil {
 		req.Header.Set("client-request-id", *options.ClientRequestId)
 	}
@@ -443,6 +449,7 @@ func (client *PagingClient) GetMultiplePagesRetryFirstCreateRequest(ctx context.
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -489,6 +496,7 @@ func (client *PagingClient) GetMultiplePagesRetrySecondCreateRequest(ctx context
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -535,6 +543,7 @@ func (client *PagingClient) GetMultiplePagesWithOffsetCreateRequest(ctx context.
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	if pagingGetMultiplePagesWithOffsetOptions.ClientRequestId != nil {
 		req.Header.Set("client-request-id", *pagingGetMultiplePagesWithOffsetOptions.ClientRequestId)
 	}
@@ -589,6 +598,7 @@ func (client *PagingClient) GetNoItemNamePagesCreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -638,6 +648,7 @@ func (client *PagingClient) GetNullNextLinkNamePagesCreateRequest(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -683,6 +694,7 @@ func (client *PagingClient) GetOdataMultiplePagesCreateRequest(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	if options != nil && options.ClientRequestId != nil {
 		req.Header.Set("client-request-id", *options.ClientRequestId)
 	}
@@ -737,6 +749,7 @@ func (client *PagingClient) GetPagingModelWithItemNameWithXmsClientNameCreateReq
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -782,6 +795,7 @@ func (client *PagingClient) GetSinglePagesCreateRequest(ctx context.Context, opt
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -827,6 +841,7 @@ func (client *PagingClient) GetSinglePagesFailureCreateRequest(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -873,6 +888,7 @@ func (client *PagingClient) GetWithQueryParamsCreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("requiredQueryParameter", strconv.FormatInt(int64(requiredQueryParameter), 10))
 	query.Set("queryConstant", "true")
@@ -908,6 +924,7 @@ func (client *PagingClient) NextFragmentCreateRequest(ctx context.Context, apiVe
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api_version", apiVersion)
 	req.URL.RawQuery = query.Encode()
@@ -942,6 +959,7 @@ func (client *PagingClient) NextFragmentWithGroupingCreateRequest(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api_version", customParameterGroup.ApiVersion)
 	req.URL.RawQuery = query.Encode()
@@ -974,6 +992,7 @@ func (client *PagingClient) NextOperationWithQueryParamsCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("queryConstant", "true")
 	req.URL.RawQuery = query.Encode()

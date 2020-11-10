@@ -62,6 +62,7 @@ func (client *PathsClient) GetEmptyCreateRequest(ctx context.Context, accountNam
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }

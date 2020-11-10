@@ -58,6 +58,7 @@ func (client *blockBlobClient) CommitBlockListCreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("comp", "blocklist")
 	if blockBlobCommitBlockListOptions != nil && blockBlobCommitBlockListOptions.Timeout != nil {
@@ -225,6 +226,7 @@ func (client *blockBlobClient) GetBlockListCreateRequest(ctx context.Context, li
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("comp", "blocklist")
 	if blockBlobGetBlockListOptions != nil && blockBlobGetBlockListOptions.Snapshot != nil {
@@ -323,6 +325,7 @@ func (client *blockBlobClient) StageBlockCreateRequest(ctx context.Context, bloc
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("comp", "block")
 	query.Set("blockid", blockId)
@@ -444,6 +447,7 @@ func (client *blockBlobClient) StageBlockFromURLCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("comp", "block")
 	query.Set("blockid", blockId)
@@ -584,6 +588,7 @@ func (client *blockBlobClient) UploadCreateRequest(ctx context.Context, contentL
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if blockBlobUploadOptions != nil && blockBlobUploadOptions.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*blockBlobUploadOptions.Timeout), 10))

@@ -111,6 +111,7 @@ func (client *FlowLogsClient) CreateOrUpdateCreateRequest(ctx context.Context, r
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
@@ -194,6 +195,7 @@ func (client *FlowLogsClient) DeleteCreateRequest(ctx context.Context, resourceG
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
@@ -241,6 +243,7 @@ func (client *FlowLogsClient) GetCreateRequest(ctx context.Context, resourceGrou
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
@@ -289,6 +292,7 @@ func (client *FlowLogsClient) ListCreateRequest(ctx context.Context, resourceGro
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()

@@ -63,6 +63,7 @@ func (client *XMSClientRequestIDClient) GetCreateRequest(ctx context.Context, op
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	return req, nil
 }
 
@@ -101,6 +102,7 @@ func (client *XMSClientRequestIDClient) ParamGetCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("x-ms-client-request-id", xMSClientRequestId)
 	req.Header.Set("Accept", "application/json")
 	return req, nil

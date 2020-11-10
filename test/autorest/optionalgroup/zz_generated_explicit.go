@@ -109,6 +109,7 @@ func (client *ExplicitClient) PostOptionalArrayHeaderCreateRequest(ctx context.C
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	if options != nil && options.HeaderParameter != nil {
 		req.Header.Set("headerParameter", strings.Join(*options.HeaderParameter, ","))
 	}
@@ -148,6 +149,7 @@ func (client *ExplicitClient) PostOptionalArrayParameterCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	if options != nil {
 		return req, req.MarshalAsJSON(options.BodyParameter)
@@ -187,6 +189,7 @@ func (client *ExplicitClient) PostOptionalArrayPropertyCreateRequest(ctx context
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	if options != nil {
 		return req, req.MarshalAsJSON(options.BodyParameter)
@@ -226,6 +229,7 @@ func (client *ExplicitClient) PostOptionalClassParameterCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	if options != nil {
 		return req, req.MarshalAsJSON(options.BodyParameter)
@@ -265,6 +269,7 @@ func (client *ExplicitClient) PostOptionalClassPropertyCreateRequest(ctx context
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	if options != nil {
 		return req, req.MarshalAsJSON(options.BodyParameter)
@@ -304,6 +309,7 @@ func (client *ExplicitClient) PostOptionalIntegerHeaderCreateRequest(ctx context
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	if options != nil && options.HeaderParameter != nil {
 		req.Header.Set("headerParameter", strconv.FormatInt(int64(*options.HeaderParameter), 10))
 	}
@@ -343,6 +349,7 @@ func (client *ExplicitClient) PostOptionalIntegerParameterCreateRequest(ctx cont
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	if options != nil {
 		return req, req.MarshalAsJSON(options.BodyParameter)
@@ -382,6 +389,7 @@ func (client *ExplicitClient) PostOptionalIntegerPropertyCreateRequest(ctx conte
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	if options != nil {
 		return req, req.MarshalAsJSON(options.BodyParameter)
@@ -421,6 +429,7 @@ func (client *ExplicitClient) PostOptionalStringHeaderCreateRequest(ctx context.
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	if options != nil && options.BodyParameter != nil {
 		req.Header.Set("bodyParameter", *options.BodyParameter)
 	}
@@ -460,6 +469,7 @@ func (client *ExplicitClient) PostOptionalStringParameterCreateRequest(ctx conte
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	if options != nil {
 		return req, req.MarshalAsJSON(options.BodyParameter)
@@ -499,6 +509,7 @@ func (client *ExplicitClient) PostOptionalStringPropertyCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	if options != nil {
 		return req, req.MarshalAsJSON(options.BodyParameter)
@@ -539,6 +550,7 @@ func (client *ExplicitClient) PostRequiredArrayHeaderCreateRequest(ctx context.C
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("headerParameter", strings.Join(headerParameter, ","))
 	req.Header.Set("Accept", "application/json")
 	return req, nil
@@ -576,6 +588,7 @@ func (client *ExplicitClient) PostRequiredArrayParameterCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(bodyParameter)
 }
@@ -613,6 +626,7 @@ func (client *ExplicitClient) PostRequiredArrayPropertyCreateRequest(ctx context
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(bodyParameter)
 }
@@ -649,6 +663,7 @@ func (client *ExplicitClient) PostRequiredClassParameterCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(bodyParameter)
 }
@@ -686,6 +701,7 @@ func (client *ExplicitClient) PostRequiredClassPropertyCreateRequest(ctx context
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(bodyParameter)
 }
@@ -723,6 +739,7 @@ func (client *ExplicitClient) PostRequiredIntegerHeaderCreateRequest(ctx context
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("headerParameter", strconv.FormatInt(int64(headerParameter), 10))
 	req.Header.Set("Accept", "application/json")
 	return req, nil
@@ -760,6 +777,7 @@ func (client *ExplicitClient) PostRequiredIntegerParameterCreateRequest(ctx cont
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(bodyParameter)
 }
@@ -797,6 +815,7 @@ func (client *ExplicitClient) PostRequiredIntegerPropertyCreateRequest(ctx conte
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(bodyParameter)
 }
@@ -834,6 +853,7 @@ func (client *ExplicitClient) PostRequiredStringHeaderCreateRequest(ctx context.
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("headerParameter", headerParameter)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
@@ -871,6 +891,7 @@ func (client *ExplicitClient) PostRequiredStringParameterCreateRequest(ctx conte
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(bodyParameter)
 }
@@ -908,6 +929,7 @@ func (client *ExplicitClient) PostRequiredStringPropertyCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(bodyParameter)
 }

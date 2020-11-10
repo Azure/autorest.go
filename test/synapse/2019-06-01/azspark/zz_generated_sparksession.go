@@ -52,6 +52,7 @@ func (client *sparkSessionClient) CancelSparkSessionCreateRequest(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	return req, nil
 }
 
@@ -96,6 +97,7 @@ func (client *sparkSessionClient) CancelSparkStatementCreateRequest(ctx context.
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -145,6 +147,7 @@ func (client *sparkSessionClient) CreateSparkSessionCreateRequest(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if options != nil && options.Detailed != nil {
 		query.Set("detailed", strconv.FormatBool(*options.Detailed))
@@ -200,6 +203,7 @@ func (client *sparkSessionClient) CreateSparkStatementCreateRequest(ctx context.
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(sparkStatementOptions)
 }
@@ -250,6 +254,7 @@ func (client *sparkSessionClient) GetSparkSessionCreateRequest(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if options != nil && options.Detailed != nil {
 		query.Set("detailed", strconv.FormatBool(*options.Detailed))
@@ -304,6 +309,7 @@ func (client *sparkSessionClient) GetSparkSessionsCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if options != nil && options.From != nil {
 		query.Set("from", strconv.FormatInt(int64(*options.From), 10))
@@ -366,6 +372,7 @@ func (client *sparkSessionClient) GetSparkStatementCreateRequest(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -416,6 +423,7 @@ func (client *sparkSessionClient) GetSparkStatementsCreateRequest(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -462,6 +470,7 @@ func (client *sparkSessionClient) ResetSparkSessionTimeoutCreateRequest(ctx cont
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	return req, nil
 }
 

@@ -48,6 +48,7 @@ func (client *dataFlowClient) CreateOrUpdateDataFlowCreateRequest(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-06-01-preview")
 	req.URL.RawQuery = query.Encode()
@@ -97,6 +98,7 @@ func (client *dataFlowClient) DeleteDataFlowCreateRequest(ctx context.Context, d
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-06-01-preview")
 	req.URL.RawQuery = query.Encode()
@@ -141,6 +143,7 @@ func (client *dataFlowClient) GetDataFlowCreateRequest(ctx context.Context, data
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-06-01-preview")
 	req.URL.RawQuery = query.Encode()
@@ -189,6 +192,7 @@ func (client *dataFlowClient) GetDataFlowsByWorkspaceCreateRequest(ctx context.C
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-06-01-preview")
 	req.URL.RawQuery = query.Encode()

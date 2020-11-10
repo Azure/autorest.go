@@ -62,6 +62,7 @@ func (client *AutoRestReportServiceForAzureClient) GetReportCreateRequest(ctx co
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if options != nil && options.Qualifier != nil {
 		query.Set("qualifier", *options.Qualifier)

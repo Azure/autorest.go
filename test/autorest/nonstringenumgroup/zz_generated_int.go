@@ -67,6 +67,7 @@ func (client *IntClient) GetCreateRequest(ctx context.Context, options *IntGetOp
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -116,6 +117,7 @@ func (client *IntClient) PutCreateRequest(ctx context.Context, options *IntPutOp
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	if options != nil {
 		return req, req.MarshalAsJSON(options.Input)

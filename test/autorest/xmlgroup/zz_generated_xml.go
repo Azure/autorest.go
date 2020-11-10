@@ -125,6 +125,7 @@ func (client *XMLClient) GetACLsCreateRequest(ctx context.Context, options *XMLG
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("comp", "acl")
 	query.Set("restype", "container")
@@ -178,6 +179,7 @@ func (client *XMLClient) GetComplexTypeRefNoMetaCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
@@ -227,6 +229,7 @@ func (client *XMLClient) GetComplexTypeRefWithMetaCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
@@ -276,6 +279,7 @@ func (client *XMLClient) GetEmptyChildElementCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
@@ -325,6 +329,7 @@ func (client *XMLClient) GetEmptyListCreateRequest(ctx context.Context, options 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
@@ -374,6 +379,7 @@ func (client *XMLClient) GetEmptyRootListCreateRequest(ctx context.Context, opti
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
@@ -423,6 +429,7 @@ func (client *XMLClient) GetEmptyWrappedListsCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
@@ -472,6 +479,7 @@ func (client *XMLClient) GetHeadersCreateRequest(ctx context.Context, options *X
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	return req, nil
 }
 
@@ -523,6 +531,7 @@ func (client *XMLClient) GetRootListCreateRequest(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
@@ -572,6 +581,7 @@ func (client *XMLClient) GetRootListSingleItemCreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
@@ -621,6 +631,7 @@ func (client *XMLClient) GetServicePropertiesCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("comp", "properties")
 	query.Set("restype", "service")
@@ -674,6 +685,7 @@ func (client *XMLClient) GetSimpleCreateRequest(ctx context.Context, options *XM
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
@@ -720,6 +732,7 @@ func (client *XMLClient) GetWrappedListsCreateRequest(ctx context.Context, optio
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
@@ -770,6 +783,7 @@ func (client *XMLClient) GetXMSTextCreateRequest(ctx context.Context, options *X
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
@@ -815,6 +829,7 @@ func (client *XMLClient) JSONInputCreateRequest(ctx context.Context, properties 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	return req, req.MarshalAsJSON(properties)
 }
 
@@ -857,6 +872,7 @@ func (client *XMLClient) JSONOutputCreateRequest(ctx context.Context, options *X
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -906,6 +922,7 @@ func (client *XMLClient) ListBlobsCreateRequest(ctx context.Context, options *XM
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("comp", "list")
 	query.Set("restype", "container")
@@ -959,6 +976,7 @@ func (client *XMLClient) ListContainersCreateRequest(ctx context.Context, option
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("comp", "list")
 	req.URL.RawQuery = query.Encode()
@@ -1007,6 +1025,7 @@ func (client *XMLClient) PutACLsCreateRequest(ctx context.Context, properties []
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("comp", "acl")
 	query.Set("restype", "container")
@@ -1053,6 +1072,7 @@ func (client *XMLClient) PutComplexTypeRefNoMetaCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	return req, req.MarshalAsXML(model)
 }
 
@@ -1091,6 +1111,7 @@ func (client *XMLClient) PutComplexTypeRefWithMetaCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	return req, req.MarshalAsXML(model)
 }
 
@@ -1129,6 +1150,7 @@ func (client *XMLClient) PutEmptyChildElementCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	return req, req.MarshalAsXML(banana)
 }
 
@@ -1167,6 +1189,7 @@ func (client *XMLClient) PutEmptyListCreateRequest(ctx context.Context, slidesho
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	return req, req.MarshalAsXML(slideshow)
 }
 
@@ -1205,6 +1228,7 @@ func (client *XMLClient) PutEmptyRootListCreateRequest(ctx context.Context, bana
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	type wrapper struct {
 		XMLName xml.Name  `xml:"bananas"`
 		Bananas *[]Banana `xml:"banana"`
@@ -1247,6 +1271,7 @@ func (client *XMLClient) PutEmptyWrappedListsCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	return req, req.MarshalAsXML(appleBarrel)
 }
 
@@ -1285,6 +1310,7 @@ func (client *XMLClient) PutRootListCreateRequest(ctx context.Context, bananas [
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	type wrapper struct {
 		XMLName xml.Name  `xml:"bananas"`
 		Bananas *[]Banana `xml:"banana"`
@@ -1327,6 +1353,7 @@ func (client *XMLClient) PutRootListSingleItemCreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	type wrapper struct {
 		XMLName xml.Name  `xml:"bananas"`
 		Bananas *[]Banana `xml:"banana"`
@@ -1369,6 +1396,7 @@ func (client *XMLClient) PutServicePropertiesCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("comp", "properties")
 	query.Set("restype", "service")
@@ -1411,6 +1439,7 @@ func (client *XMLClient) PutSimpleCreateRequest(ctx context.Context, slideshow S
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/xml")
 	return req, req.MarshalAsXML(slideshow)
 }
@@ -1447,6 +1476,7 @@ func (client *XMLClient) PutWrappedListsCreateRequest(ctx context.Context, wrapp
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/xml")
 	return req, req.MarshalAsXML(wrappedLists)
 }

@@ -132,6 +132,7 @@ func (client *LroRetrysClient) Delete202Retry200CreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -203,6 +204,7 @@ func (client *LroRetrysClient) DeleteAsyncRelativeRetrySucceededCreateRequest(ct
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -275,6 +277,7 @@ func (client *LroRetrysClient) DeleteProvisioning202Accepted200SucceededCreateRe
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -352,6 +355,7 @@ func (client *LroRetrysClient) Post202Retry200CreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	if options != nil {
 		return req, req.MarshalAsJSON(options.Product)
@@ -427,6 +431,7 @@ func (client *LroRetrysClient) PostAsyncRelativeRetrySucceededCreateRequest(ctx 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	if options != nil {
 		return req, req.MarshalAsJSON(options.Product)
@@ -502,6 +507,7 @@ func (client *LroRetrysClient) Put201CreatingSucceeded200CreateRequest(ctx conte
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	if options != nil {
 		return req, req.MarshalAsJSON(options.Product)
@@ -583,6 +589,7 @@ func (client *LroRetrysClient) PutAsyncRelativeRetrySucceededCreateRequest(ctx c
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	if options != nil {
 		return req, req.MarshalAsJSON(options.Product)

@@ -52,6 +52,7 @@ func (client *sparkBatchClient) CancelSparkBatchJobCreateRequest(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	return req, nil
 }
 
@@ -94,6 +95,7 @@ func (client *sparkBatchClient) CreateSparkBatchJobCreateRequest(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if options != nil && options.Detailed != nil {
 		query.Set("detailed", strconv.FormatBool(*options.Detailed))
@@ -149,6 +151,7 @@ func (client *sparkBatchClient) GetSparkBatchJobCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if options != nil && options.Detailed != nil {
 		query.Set("detailed", strconv.FormatBool(*options.Detailed))
@@ -203,6 +206,7 @@ func (client *sparkBatchClient) GetSparkBatchJobsCreateRequest(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if options != nil && options.From != nil {
 		query.Set("from", strconv.FormatInt(int64(*options.From), 10))

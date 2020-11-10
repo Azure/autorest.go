@@ -114,6 +114,7 @@ func (client *NatGatewaysClient) CreateOrUpdateCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
@@ -196,6 +197,7 @@ func (client *NatGatewaysClient) DeleteCreateRequest(ctx context.Context, resour
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
@@ -242,6 +244,7 @@ func (client *NatGatewaysClient) GetCreateRequest(ctx context.Context, resourceG
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	if options != nil && options.Expand != nil {
@@ -292,6 +295,7 @@ func (client *NatGatewaysClient) ListCreateRequest(ctx context.Context, resource
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
@@ -338,6 +342,7 @@ func (client *NatGatewaysClient) ListAllCreateRequest(ctx context.Context, optio
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
@@ -390,6 +395,7 @@ func (client *NatGatewaysClient) UpdateTagsCreateRequest(ctx context.Context, re
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()

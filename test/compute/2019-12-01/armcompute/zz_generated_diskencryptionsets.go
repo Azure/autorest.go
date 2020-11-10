@@ -116,6 +116,7 @@ func (client *DiskEncryptionSetsClient) CreateOrUpdateCreateRequest(ctx context.
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-11-01")
 	req.URL.RawQuery = query.Encode()
@@ -198,6 +199,7 @@ func (client *DiskEncryptionSetsClient) DeleteCreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-11-01")
 	req.URL.RawQuery = query.Encode()
@@ -244,6 +246,7 @@ func (client *DiskEncryptionSetsClient) GetCreateRequest(ctx context.Context, re
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-11-01")
 	req.URL.RawQuery = query.Encode()
@@ -290,6 +293,7 @@ func (client *DiskEncryptionSetsClient) ListCreateRequest(ctx context.Context, o
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-11-01")
 	req.URL.RawQuery = query.Encode()
@@ -337,6 +341,7 @@ func (client *DiskEncryptionSetsClient) ListByResourceGroupCreateRequest(ctx con
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-11-01")
 	req.URL.RawQuery = query.Encode()
@@ -419,6 +424,7 @@ func (client *DiskEncryptionSetsClient) UpdateCreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-11-01")
 	req.URL.RawQuery = query.Encode()

@@ -72,6 +72,7 @@ func (client *SkipURLEncodingClient) GetMethodPathValidCreateRequest(ctx context
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -108,6 +109,7 @@ func (client *SkipURLEncodingClient) GetMethodQueryNullCreateRequest(ctx context
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	unencodedParams := []string{}
 	if options != nil && options.Q1 != nil {
 		unencodedParams = append(unencodedParams, "q1="+*options.Q1)
@@ -149,6 +151,7 @@ func (client *SkipURLEncodingClient) GetMethodQueryValidCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	unencodedParams := []string{}
 	unencodedParams = append(unencodedParams, "q1="+q1)
 	req.URL.RawQuery = strings.Join(unencodedParams, "&")
@@ -188,6 +191,7 @@ func (client *SkipURLEncodingClient) GetPathQueryValidCreateRequest(ctx context.
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	unencodedParams := []string{}
 	unencodedParams = append(unencodedParams, "q1="+q1)
 	req.URL.RawQuery = strings.Join(unencodedParams, "&")
@@ -228,6 +232,7 @@ func (client *SkipURLEncodingClient) GetPathValidCreateRequest(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -265,6 +270,7 @@ func (client *SkipURLEncodingClient) GetSwaggerPathValidCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -301,6 +307,7 @@ func (client *SkipURLEncodingClient) GetSwaggerQueryValidCreateRequest(ctx conte
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	unencodedParams := []string{}
 	unencodedParams = append(unencodedParams, "q1="+"value1&q2=value2&q3=value3")
 	req.URL.RawQuery = strings.Join(unencodedParams, "&")

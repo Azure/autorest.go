@@ -53,6 +53,7 @@ func (client *containerClient) AcquireLeaseCreateRequest(ctx context.Context, co
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("comp", "lease")
 	query.Set("restype", "container")
@@ -151,6 +152,7 @@ func (client *containerClient) BreakLeaseCreateRequest(ctx context.Context, cont
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("comp", "lease")
 	query.Set("restype", "container")
@@ -251,6 +253,7 @@ func (client *containerClient) ChangeLeaseCreateRequest(ctx context.Context, lea
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("comp", "lease")
 	query.Set("restype", "container")
@@ -345,6 +348,7 @@ func (client *containerClient) CreateCreateRequest(ctx context.Context, containe
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("restype", "container")
 	if containerCreateOptions != nil && containerCreateOptions.Timeout != nil {
@@ -440,6 +444,7 @@ func (client *containerClient) DeleteCreateRequest(ctx context.Context, containe
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("restype", "container")
 	if containerDeleteOptions != nil && containerDeleteOptions.Timeout != nil {
@@ -520,6 +525,7 @@ func (client *containerClient) GetAccessPolicyCreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("restype", "container")
 	query.Set("comp", "acl")
@@ -608,6 +614,7 @@ func (client *containerClient) GetAccountInfoCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("restype", "account")
 	query.Set("comp", "properties")
@@ -681,6 +688,7 @@ func (client *containerClient) GetPropertiesCreateRequest(ctx context.Context, c
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("restype", "container")
 	if containerGetPropertiesOptions != nil && containerGetPropertiesOptions.Timeout != nil {
@@ -805,6 +813,7 @@ func (client *containerClient) ListBlobFlatSegmentCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("restype", "container")
 	query.Set("comp", "list")
@@ -888,6 +897,7 @@ func (client *containerClient) ListBlobHierarchySegmentCreateRequest(ctx context
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("restype", "container")
 	query.Set("comp", "list")
@@ -976,6 +986,7 @@ func (client *containerClient) ReleaseLeaseCreateRequest(ctx context.Context, le
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("comp", "lease")
 	query.Set("restype", "container")
@@ -1066,6 +1077,7 @@ func (client *containerClient) RenewLeaseCreateRequest(ctx context.Context, leas
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("comp", "lease")
 	query.Set("restype", "container")
@@ -1159,6 +1171,7 @@ func (client *containerClient) SetAccessPolicyCreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("restype", "container")
 	query.Set("comp", "acl")
@@ -1260,6 +1273,7 @@ func (client *containerClient) SetMetadataCreateRequest(ctx context.Context, con
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("restype", "container")
 	query.Set("comp", "metadata")

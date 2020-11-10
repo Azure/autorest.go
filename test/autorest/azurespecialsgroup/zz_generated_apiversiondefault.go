@@ -64,6 +64,7 @@ func (client *APIVersionDefaultClient) GetMethodGlobalNotProvidedValidCreateRequ
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2015-07-01-preview")
 	req.URL.RawQuery = query.Encode()
@@ -103,6 +104,7 @@ func (client *APIVersionDefaultClient) GetMethodGlobalValidCreateRequest(ctx con
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2015-07-01-preview")
 	req.URL.RawQuery = query.Encode()
@@ -142,6 +144,7 @@ func (client *APIVersionDefaultClient) GetPathGlobalValidCreateRequest(ctx conte
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2015-07-01-preview")
 	req.URL.RawQuery = query.Encode()
@@ -181,6 +184,7 @@ func (client *APIVersionDefaultClient) GetSwaggerGlobalValidCreateRequest(ctx co
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2015-07-01-preview")
 	req.URL.RawQuery = query.Encode()

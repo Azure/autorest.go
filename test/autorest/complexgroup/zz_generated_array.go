@@ -70,6 +70,7 @@ func (client *ArrayClient) GetEmptyCreateRequest(ctx context.Context, options *A
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -116,6 +117,7 @@ func (client *ArrayClient) GetNotProvidedCreateRequest(ctx context.Context, opti
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -162,6 +164,7 @@ func (client *ArrayClient) GetValidCreateRequest(ctx context.Context, options *A
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -204,6 +207,7 @@ func (client *ArrayClient) PutEmptyCreateRequest(ctx context.Context, complexBod
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(complexBody)
 }
@@ -240,6 +244,7 @@ func (client *ArrayClient) PutValidCreateRequest(ctx context.Context, complexBod
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(complexBody)
 }

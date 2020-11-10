@@ -67,6 +67,7 @@ func (client *PathsClient) GetEmptyCreateRequest(ctx context.Context, vault stri
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if options != nil && options.KeyVersion != nil {
 		query.Set("keyVersion", *options.KeyVersion)

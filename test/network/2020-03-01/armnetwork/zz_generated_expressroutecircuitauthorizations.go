@@ -111,6 +111,7 @@ func (client *ExpressRouteCircuitAuthorizationsClient) CreateOrUpdateCreateReque
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
@@ -194,6 +195,7 @@ func (client *ExpressRouteCircuitAuthorizationsClient) DeleteCreateRequest(ctx c
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
@@ -241,6 +243,7 @@ func (client *ExpressRouteCircuitAuthorizationsClient) GetCreateRequest(ctx cont
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
@@ -289,6 +292,7 @@ func (client *ExpressRouteCircuitAuthorizationsClient) ListCreateRequest(ctx con
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()

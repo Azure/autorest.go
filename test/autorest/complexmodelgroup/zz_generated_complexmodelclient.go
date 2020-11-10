@@ -72,6 +72,7 @@ func (client *ComplexModelClient) CreateCreateRequest(ctx context.Context, subsc
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2014-04-01-preview")
 	req.URL.RawQuery = query.Encode()
@@ -125,6 +126,7 @@ func (client *ComplexModelClient) ListCreateRequest(ctx context.Context, resourc
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2014-04-01-preview")
 	req.URL.RawQuery = query.Encode()
@@ -176,6 +178,7 @@ func (client *ComplexModelClient) UpdateCreateRequest(ctx context.Context, subsc
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2014-04-01-preview")
 	req.URL.RawQuery = query.Encode()

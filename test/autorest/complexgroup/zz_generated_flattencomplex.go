@@ -63,6 +63,7 @@ func (client *FlattencomplexClient) GetValidCreateRequest(ctx context.Context, o
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }

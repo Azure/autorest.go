@@ -49,6 +49,7 @@ func (client *pipelineClient) CreateOrUpdatePipelineCreateRequest(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-06-01-preview")
 	req.URL.RawQuery = query.Encode()
@@ -102,6 +103,7 @@ func (client *pipelineClient) CreatePipelineRunCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-06-01-preview")
 	if options != nil && options.ReferencePipelineRunId != nil {
@@ -160,6 +162,7 @@ func (client *pipelineClient) DeletePipelineCreateRequest(ctx context.Context, p
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-06-01-preview")
 	req.URL.RawQuery = query.Encode()
@@ -204,6 +207,7 @@ func (client *pipelineClient) GetPipelineCreateRequest(ctx context.Context, pipe
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-06-01-preview")
 	req.URL.RawQuery = query.Encode()
@@ -252,6 +256,7 @@ func (client *pipelineClient) GetPipelinesByWorkspaceCreateRequest(ctx context.C
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-06-01-preview")
 	req.URL.RawQuery = query.Encode()

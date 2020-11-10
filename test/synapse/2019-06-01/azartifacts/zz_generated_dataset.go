@@ -48,6 +48,7 @@ func (client *datasetClient) CreateOrUpdateDatasetCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-06-01-preview")
 	req.URL.RawQuery = query.Encode()
@@ -97,6 +98,7 @@ func (client *datasetClient) DeleteDatasetCreateRequest(ctx context.Context, dat
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-06-01-preview")
 	req.URL.RawQuery = query.Encode()
@@ -141,6 +143,7 @@ func (client *datasetClient) GetDatasetCreateRequest(ctx context.Context, datase
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-06-01-preview")
 	req.URL.RawQuery = query.Encode()
@@ -189,6 +192,7 @@ func (client *datasetClient) GetDatasetsByWorkspaceCreateRequest(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-06-01-preview")
 	req.URL.RawQuery = query.Encode()

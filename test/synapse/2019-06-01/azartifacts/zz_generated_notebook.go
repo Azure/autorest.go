@@ -48,6 +48,7 @@ func (client *notebookClient) CreateOrUpdateNotebookCreateRequest(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-06-01-preview")
 	req.URL.RawQuery = query.Encode()
@@ -97,6 +98,7 @@ func (client *notebookClient) DeleteNotebookCreateRequest(ctx context.Context, n
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-06-01-preview")
 	req.URL.RawQuery = query.Encode()
@@ -141,6 +143,7 @@ func (client *notebookClient) GetNotebookCreateRequest(ctx context.Context, note
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-06-01-preview")
 	req.URL.RawQuery = query.Encode()
@@ -189,6 +192,7 @@ func (client *notebookClient) GetNotebookSummaryByWorkSpaceCreateRequest(ctx con
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-06-01-preview")
 	req.URL.RawQuery = query.Encode()
@@ -234,6 +238,7 @@ func (client *notebookClient) GetNotebooksByWorkspaceCreateRequest(ctx context.C
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-06-01-preview")
 	req.URL.RawQuery = query.Encode()

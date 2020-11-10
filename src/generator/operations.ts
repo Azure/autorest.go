@@ -361,6 +361,7 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
   text += '\tif err != nil {\n';
   text += '\t\treturn nil, err\n';
   text += '\t}\n';
+  text += '\treq.Telemetry(telemetryInfo)\n';
   const hasQueryParams = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'query'; }).any();
   // helper to build nil checks for param groups
   const emitParamGroupCheck = function (gp: GroupProperty, param: Parameter): string {

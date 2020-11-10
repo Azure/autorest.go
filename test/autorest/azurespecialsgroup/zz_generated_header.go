@@ -66,6 +66,7 @@ func (client *HeaderClient) CustomNamedRequestIDCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("foo-client-request-id", fooClientRequestId)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
@@ -116,6 +117,7 @@ func (client *HeaderClient) CustomNamedRequestIDHeadCreateRequest(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("foo-client-request-id", fooClientRequestId)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
@@ -169,6 +171,7 @@ func (client *HeaderClient) CustomNamedRequestIDParamGroupingCreateRequest(ctx c
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("foo-client-request-id", headerCustomNamedRequestIdParamGroupingParameters.FooClientRequestId)
 	req.Header.Set("Accept", "application/json")
 	return req, nil

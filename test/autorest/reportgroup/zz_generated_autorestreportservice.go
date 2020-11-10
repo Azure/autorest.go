@@ -64,6 +64,7 @@ func (client *AutoRestReportServiceClient) GetOptionalReportCreateRequest(ctx co
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if options != nil && options.Qualifier != nil {
 		query.Set("qualifier", *options.Qualifier)
@@ -115,6 +116,7 @@ func (client *AutoRestReportServiceClient) GetReportCreateRequest(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if options != nil && options.Qualifier != nil {
 		query.Set("qualifier", *options.Qualifier)

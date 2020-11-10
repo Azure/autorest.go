@@ -82,6 +82,7 @@ func (client *ProximityPlacementGroupsClient) CreateOrUpdateCreateRequest(ctx co
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-12-01")
 	req.URL.RawQuery = query.Encode()
@@ -133,6 +134,7 @@ func (client *ProximityPlacementGroupsClient) DeleteCreateRequest(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-12-01")
 	req.URL.RawQuery = query.Encode()
@@ -181,6 +183,7 @@ func (client *ProximityPlacementGroupsClient) GetCreateRequest(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if options != nil && options.IncludeColocationStatus != nil {
 		query.Set("includeColocationStatus", *options.IncludeColocationStatus)
@@ -234,6 +237,7 @@ func (client *ProximityPlacementGroupsClient) ListByResourceGroupCreateRequest(c
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-12-01")
 	req.URL.RawQuery = query.Encode()
@@ -283,6 +287,7 @@ func (client *ProximityPlacementGroupsClient) ListBySubscriptionCreateRequest(ct
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-12-01")
 	req.URL.RawQuery = query.Encode()
@@ -338,6 +343,7 @@ func (client *ProximityPlacementGroupsClient) UpdateCreateRequest(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-12-01")
 	req.URL.RawQuery = query.Encode()

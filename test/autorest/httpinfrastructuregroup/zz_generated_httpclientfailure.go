@@ -108,6 +108,7 @@ func (client *HTTPClientFailureClient) Delete400CreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
@@ -144,6 +145,7 @@ func (client *HTTPClientFailureClient) Delete407CreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
@@ -180,6 +182,7 @@ func (client *HTTPClientFailureClient) Delete417CreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
@@ -216,6 +219,7 @@ func (client *HTTPClientFailureClient) Get400CreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -252,6 +256,7 @@ func (client *HTTPClientFailureClient) Get402CreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -288,6 +293,7 @@ func (client *HTTPClientFailureClient) Get403CreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -324,6 +330,7 @@ func (client *HTTPClientFailureClient) Get411CreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -360,6 +367,7 @@ func (client *HTTPClientFailureClient) Get412CreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -396,6 +404,7 @@ func (client *HTTPClientFailureClient) Get416CreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -432,6 +441,7 @@ func (client *HTTPClientFailureClient) Head400CreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -468,6 +478,7 @@ func (client *HTTPClientFailureClient) Head401CreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -504,6 +515,7 @@ func (client *HTTPClientFailureClient) Head410CreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -540,6 +552,7 @@ func (client *HTTPClientFailureClient) Head429CreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -576,6 +589,7 @@ func (client *HTTPClientFailureClient) Options400CreateRequest(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -612,6 +626,7 @@ func (client *HTTPClientFailureClient) Options403CreateRequest(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -648,6 +663,7 @@ func (client *HTTPClientFailureClient) Options412CreateRequest(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -684,6 +700,7 @@ func (client *HTTPClientFailureClient) Patch400CreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
@@ -720,6 +737,7 @@ func (client *HTTPClientFailureClient) Patch405CreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
@@ -756,6 +774,7 @@ func (client *HTTPClientFailureClient) Patch414CreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
@@ -792,6 +811,7 @@ func (client *HTTPClientFailureClient) Post400CreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
@@ -828,6 +848,7 @@ func (client *HTTPClientFailureClient) Post406CreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
@@ -864,6 +885,7 @@ func (client *HTTPClientFailureClient) Post415CreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
@@ -900,6 +922,7 @@ func (client *HTTPClientFailureClient) Put400CreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
@@ -936,6 +959,7 @@ func (client *HTTPClientFailureClient) Put404CreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
@@ -972,6 +996,7 @@ func (client *HTTPClientFailureClient) Put409CreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
@@ -1008,6 +1033,7 @@ func (client *HTTPClientFailureClient) Put413CreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }

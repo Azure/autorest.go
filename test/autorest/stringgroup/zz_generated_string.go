@@ -86,6 +86,7 @@ func (client *StringClient) GetBase64EncodedCreateRequest(ctx context.Context, o
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -132,6 +133,7 @@ func (client *StringClient) GetBase64URLEncodedCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -178,6 +180,7 @@ func (client *StringClient) GetEmptyCreateRequest(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -224,6 +227,7 @@ func (client *StringClient) GetMBCSCreateRequest(ctx context.Context, options *S
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -270,6 +274,7 @@ func (client *StringClient) GetNotProvidedCreateRequest(ctx context.Context, opt
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -316,6 +321,7 @@ func (client *StringClient) GetNullCreateRequest(ctx context.Context, options *S
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -362,6 +368,7 @@ func (client *StringClient) GetNullBase64URLEncodedCreateRequest(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -408,6 +415,7 @@ func (client *StringClient) GetWhitespaceCreateRequest(ctx context.Context, opti
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -450,6 +458,7 @@ func (client *StringClient) PutBase64URLEncodedCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsByteArray(stringBody, azcore.Base64URLFormat)
 }
@@ -486,6 +495,7 @@ func (client *StringClient) PutEmptyCreateRequest(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON("")
 }
@@ -522,6 +532,7 @@ func (client *StringClient) PutMBCSCreateRequest(ctx context.Context, options *S
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON("啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€")
 }
@@ -558,6 +569,7 @@ func (client *StringClient) PutNullCreateRequest(ctx context.Context, options *S
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	if options != nil {
 		return req, req.MarshalAsJSON(options.StringBody)
@@ -597,6 +609,7 @@ func (client *StringClient) PutWhitespaceCreateRequest(ctx context.Context, opti
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON("    Now is the time for all good men to come to the aid of their country    ")
 }

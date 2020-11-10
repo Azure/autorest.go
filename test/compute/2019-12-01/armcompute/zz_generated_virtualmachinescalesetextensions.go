@@ -118,6 +118,7 @@ func (client *VirtualMachineScaleSetExtensionsClient) CreateOrUpdateCreateReques
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-12-01")
 	req.URL.RawQuery = query.Encode()
@@ -204,6 +205,7 @@ func (client *VirtualMachineScaleSetExtensionsClient) DeleteCreateRequest(ctx co
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-12-01")
 	req.URL.RawQuery = query.Encode()
@@ -253,6 +255,7 @@ func (client *VirtualMachineScaleSetExtensionsClient) GetCreateRequest(ctx conte
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if options != nil && options.Expand != nil {
 		query.Set("$expand", *options.Expand)
@@ -307,6 +310,7 @@ func (client *VirtualMachineScaleSetExtensionsClient) ListCreateRequest(ctx cont
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-12-01")
 	req.URL.RawQuery = query.Encode()
@@ -393,6 +397,7 @@ func (client *VirtualMachineScaleSetExtensionsClient) UpdateCreateRequest(ctx co
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-12-01")
 	req.URL.RawQuery = query.Encode()

@@ -119,6 +119,7 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) CancelCreateRequest(c
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-12-01")
 	req.URL.RawQuery = query.Encode()
@@ -167,6 +168,7 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) GetLatestCreateReques
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-12-01")
 	req.URL.RawQuery = query.Encode()
@@ -254,6 +256,7 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) StartExtensionUpgrade
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-12-01")
 	req.URL.RawQuery = query.Encode()
@@ -334,6 +337,7 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) StartOSUpgradeCreateR
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-12-01")
 	req.URL.RawQuery = query.Encode()

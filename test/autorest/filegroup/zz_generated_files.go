@@ -62,6 +62,7 @@ func (client *FilesClient) GetEmptyFileCreateRequest(ctx context.Context, option
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.SkipBodyDownload()
 	req.Header.Set("Accept", "image/png, application/json")
 	return req, nil
@@ -99,6 +100,7 @@ func (client *FilesClient) GetFileCreateRequest(ctx context.Context, options *Fi
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.SkipBodyDownload()
 	req.Header.Set("Accept", "image/png, application/json")
 	return req, nil
@@ -136,6 +138,7 @@ func (client *FilesClient) GetFileLargeCreateRequest(ctx context.Context, option
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.SkipBodyDownload()
 	req.Header.Set("Accept", "image/png, application/json")
 	return req, nil

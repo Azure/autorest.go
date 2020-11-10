@@ -203,6 +203,7 @@ func (client *ArrayClient) GetArrayEmptyCreateRequest(ctx context.Context, optio
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -249,6 +250,7 @@ func (client *ArrayClient) GetArrayItemEmptyCreateRequest(ctx context.Context, o
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -295,6 +297,7 @@ func (client *ArrayClient) GetArrayItemNullCreateRequest(ctx context.Context, op
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -341,6 +344,7 @@ func (client *ArrayClient) GetArrayNullCreateRequest(ctx context.Context, option
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -387,6 +391,7 @@ func (client *ArrayClient) GetArrayValidCreateRequest(ctx context.Context, optio
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -433,6 +438,7 @@ func (client *ArrayClient) GetBase64URLCreateRequest(ctx context.Context, option
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -479,6 +485,7 @@ func (client *ArrayClient) GetBooleanInvalidNullCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -525,6 +532,7 @@ func (client *ArrayClient) GetBooleanInvalidStringCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -571,6 +579,7 @@ func (client *ArrayClient) GetBooleanTfftCreateRequest(ctx context.Context, opti
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -617,6 +626,7 @@ func (client *ArrayClient) GetByteInvalidNullCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -663,6 +673,7 @@ func (client *ArrayClient) GetByteValidCreateRequest(ctx context.Context, option
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -709,6 +720,7 @@ func (client *ArrayClient) GetComplexEmptyCreateRequest(ctx context.Context, opt
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -755,6 +767,7 @@ func (client *ArrayClient) GetComplexItemEmptyCreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -801,6 +814,7 @@ func (client *ArrayClient) GetComplexItemNullCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -847,6 +861,7 @@ func (client *ArrayClient) GetComplexNullCreateRequest(ctx context.Context, opti
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -893,6 +908,7 @@ func (client *ArrayClient) GetComplexValidCreateRequest(ctx context.Context, opt
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -939,6 +955,7 @@ func (client *ArrayClient) GetDateInvalidCharsCreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -992,6 +1009,7 @@ func (client *ArrayClient) GetDateInvalidNullCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1045,6 +1063,7 @@ func (client *ArrayClient) GetDateTimeInvalidCharsCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1098,6 +1117,7 @@ func (client *ArrayClient) GetDateTimeInvalidNullCreateRequest(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1151,6 +1171,7 @@ func (client *ArrayClient) GetDateTimeRFC1123ValidCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1204,6 +1225,7 @@ func (client *ArrayClient) GetDateTimeValidCreateRequest(ctx context.Context, op
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1257,6 +1279,7 @@ func (client *ArrayClient) GetDateValidCreateRequest(ctx context.Context, option
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1310,6 +1333,7 @@ func (client *ArrayClient) GetDictionaryEmptyCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1357,6 +1381,7 @@ func (client *ArrayClient) GetDictionaryItemEmptyCreateRequest(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1404,6 +1429,7 @@ func (client *ArrayClient) GetDictionaryItemNullCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1450,6 +1476,7 @@ func (client *ArrayClient) GetDictionaryNullCreateRequest(ctx context.Context, o
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1497,6 +1524,7 @@ func (client *ArrayClient) GetDictionaryValidCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1543,6 +1571,7 @@ func (client *ArrayClient) GetDoubleInvalidNullCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1589,6 +1618,7 @@ func (client *ArrayClient) GetDoubleInvalidStringCreateRequest(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1635,6 +1665,7 @@ func (client *ArrayClient) GetDoubleValidCreateRequest(ctx context.Context, opti
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1681,6 +1712,7 @@ func (client *ArrayClient) GetDurationValidCreateRequest(ctx context.Context, op
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1727,6 +1759,7 @@ func (client *ArrayClient) GetEmptyCreateRequest(ctx context.Context, options *A
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1773,6 +1806,7 @@ func (client *ArrayClient) GetEnumValidCreateRequest(ctx context.Context, option
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1819,6 +1853,7 @@ func (client *ArrayClient) GetFloatInvalidNullCreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1865,6 +1900,7 @@ func (client *ArrayClient) GetFloatInvalidStringCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1911,6 +1947,7 @@ func (client *ArrayClient) GetFloatValidCreateRequest(ctx context.Context, optio
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1957,6 +1994,7 @@ func (client *ArrayClient) GetIntInvalidNullCreateRequest(ctx context.Context, o
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -2003,6 +2041,7 @@ func (client *ArrayClient) GetIntInvalidStringCreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -2049,6 +2088,7 @@ func (client *ArrayClient) GetIntegerValidCreateRequest(ctx context.Context, opt
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -2095,6 +2135,7 @@ func (client *ArrayClient) GetInvalidCreateRequest(ctx context.Context, options 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -2141,6 +2182,7 @@ func (client *ArrayClient) GetLongInvalidNullCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -2187,6 +2229,7 @@ func (client *ArrayClient) GetLongInvalidStringCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -2233,6 +2276,7 @@ func (client *ArrayClient) GetLongValidCreateRequest(ctx context.Context, option
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -2279,6 +2323,7 @@ func (client *ArrayClient) GetNullCreateRequest(ctx context.Context, options *Ar
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -2325,6 +2370,7 @@ func (client *ArrayClient) GetStringEnumValidCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -2371,6 +2417,7 @@ func (client *ArrayClient) GetStringValidCreateRequest(ctx context.Context, opti
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -2417,6 +2464,7 @@ func (client *ArrayClient) GetStringWithInvalidCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -2463,6 +2511,7 @@ func (client *ArrayClient) GetStringWithNullCreateRequest(ctx context.Context, o
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -2509,6 +2558,7 @@ func (client *ArrayClient) GetUUIDInvalidCharsCreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -2555,6 +2605,7 @@ func (client *ArrayClient) GetUUIDValidCreateRequest(ctx context.Context, option
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -2597,6 +2648,7 @@ func (client *ArrayClient) PutArrayValidCreateRequest(ctx context.Context, array
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
 }
@@ -2633,6 +2685,7 @@ func (client *ArrayClient) PutBooleanTfftCreateRequest(ctx context.Context, arra
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
 }
@@ -2669,6 +2722,7 @@ func (client *ArrayClient) PutByteValidCreateRequest(ctx context.Context, arrayB
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
 }
@@ -2705,6 +2759,7 @@ func (client *ArrayClient) PutComplexValidCreateRequest(ctx context.Context, arr
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
 }
@@ -2741,6 +2796,7 @@ func (client *ArrayClient) PutDateTimeRFC1123ValidCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	aux := make([]timeRFC1123, len(arrayBody), len(arrayBody))
 	for i := 0; i < len(arrayBody); i++ {
@@ -2781,6 +2837,7 @@ func (client *ArrayClient) PutDateTimeValidCreateRequest(ctx context.Context, ar
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
 }
@@ -2817,6 +2874,7 @@ func (client *ArrayClient) PutDateValidCreateRequest(ctx context.Context, arrayB
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	aux := make([]dateType, len(arrayBody), len(arrayBody))
 	for i := 0; i < len(arrayBody); i++ {
@@ -2858,6 +2916,7 @@ func (client *ArrayClient) PutDictionaryValidCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
 }
@@ -2894,6 +2953,7 @@ func (client *ArrayClient) PutDoubleValidCreateRequest(ctx context.Context, arra
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
 }
@@ -2930,6 +2990,7 @@ func (client *ArrayClient) PutDurationValidCreateRequest(ctx context.Context, ar
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
 }
@@ -2966,6 +3027,7 @@ func (client *ArrayClient) PutEmptyCreateRequest(ctx context.Context, arrayBody 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
 }
@@ -3002,6 +3064,7 @@ func (client *ArrayClient) PutEnumValidCreateRequest(ctx context.Context, arrayB
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
 }
@@ -3038,6 +3101,7 @@ func (client *ArrayClient) PutFloatValidCreateRequest(ctx context.Context, array
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
 }
@@ -3074,6 +3138,7 @@ func (client *ArrayClient) PutIntegerValidCreateRequest(ctx context.Context, arr
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
 }
@@ -3110,6 +3175,7 @@ func (client *ArrayClient) PutLongValidCreateRequest(ctx context.Context, arrayB
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
 }
@@ -3146,6 +3212,7 @@ func (client *ArrayClient) PutStringEnumValidCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
 }
@@ -3182,6 +3249,7 @@ func (client *ArrayClient) PutStringValidCreateRequest(ctx context.Context, arra
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
 }
@@ -3218,6 +3286,7 @@ func (client *ArrayClient) PutUUIDValidCreateRequest(ctx context.Context, arrayB
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
 }
