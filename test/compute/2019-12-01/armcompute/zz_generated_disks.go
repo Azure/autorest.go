@@ -127,6 +127,7 @@ func (client *DisksClient) CreateOrUpdateCreateRequest(ctx context.Context, reso
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-11-01")
 	req.URL.RawQuery = query.Encode()
@@ -212,6 +213,7 @@ func (client *DisksClient) DeleteCreateRequest(ctx context.Context, resourceGrou
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-11-01")
 	req.URL.RawQuery = query.Encode()
@@ -260,6 +262,7 @@ func (client *DisksClient) GetCreateRequest(ctx context.Context, resourceGroupNa
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-11-01")
 	req.URL.RawQuery = query.Encode()
@@ -345,6 +348,7 @@ func (client *DisksClient) GrantAccessCreateRequest(ctx context.Context, resourc
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-11-01")
 	req.URL.RawQuery = query.Encode()
@@ -394,6 +398,7 @@ func (client *DisksClient) ListCreateRequest(ctx context.Context, options *Disks
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-11-01")
 	req.URL.RawQuery = query.Encode()
@@ -444,6 +449,7 @@ func (client *DisksClient) ListByResourceGroupCreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-11-01")
 	req.URL.RawQuery = query.Encode()
@@ -529,6 +535,7 @@ func (client *DisksClient) RevokeAccessCreateRequest(ctx context.Context, resour
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-11-01")
 	req.URL.RawQuery = query.Encode()
@@ -607,6 +614,7 @@ func (client *DisksClient) UpdateCreateRequest(ctx context.Context, resourceGrou
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-11-01")
 	req.URL.RawQuery = query.Encode()

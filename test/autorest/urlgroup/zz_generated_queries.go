@@ -131,6 +131,7 @@ func (client *QueriesClient) ArrayStringCSVEmptyCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if options != nil && options.ArrayQuery != nil {
 		query.Set("arrayQuery", strings.Join(*options.ArrayQuery, ","))
@@ -172,6 +173,7 @@ func (client *QueriesClient) ArrayStringCSVNullCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if options != nil && options.ArrayQuery != nil {
 		query.Set("arrayQuery", strings.Join(*options.ArrayQuery, ","))
@@ -213,6 +215,7 @@ func (client *QueriesClient) ArrayStringCSVValidCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if options != nil && options.ArrayQuery != nil {
 		query.Set("arrayQuery", strings.Join(*options.ArrayQuery, ","))
@@ -255,6 +258,7 @@ func (client *QueriesClient) ArrayStringNoCollectionFormatEmptyCreateRequest(ctx
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if options != nil && options.ArrayQuery != nil {
 		query.Set("arrayQuery", strings.Join(*options.ArrayQuery, ","))
@@ -296,6 +300,7 @@ func (client *QueriesClient) ArrayStringPipesValidCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if options != nil && options.ArrayQuery != nil {
 		query.Set("arrayQuery", strings.Join(*options.ArrayQuery, "|"))
@@ -337,6 +342,7 @@ func (client *QueriesClient) ArrayStringSsvValidCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if options != nil && options.ArrayQuery != nil {
 		query.Set("arrayQuery", strings.Join(*options.ArrayQuery, " "))
@@ -378,6 +384,7 @@ func (client *QueriesClient) ArrayStringTsvValidCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if options != nil && options.ArrayQuery != nil {
 		query.Set("arrayQuery", strings.Join(*options.ArrayQuery, "\t"))
@@ -419,6 +426,7 @@ func (client *QueriesClient) ByteEmptyCreateRequest(ctx context.Context, options
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("byteQuery", "")
 	req.URL.RawQuery = query.Encode()
@@ -458,6 +466,7 @@ func (client *QueriesClient) ByteMultiByteCreateRequest(ctx context.Context, opt
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if options != nil && options.ByteQuery != nil {
 		query.Set("byteQuery", base64.StdEncoding.EncodeToString(*options.ByteQuery))
@@ -499,6 +508,7 @@ func (client *QueriesClient) ByteNullCreateRequest(ctx context.Context, options 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if options != nil && options.ByteQuery != nil {
 		query.Set("byteQuery", base64.StdEncoding.EncodeToString(*options.ByteQuery))
@@ -540,6 +550,7 @@ func (client *QueriesClient) DateNullCreateRequest(ctx context.Context, options 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if options != nil && options.DateQuery != nil {
 		query.Set("dateQuery", options.DateQuery.Format("2006-01-02"))
@@ -581,6 +592,7 @@ func (client *QueriesClient) DateTimeNullCreateRequest(ctx context.Context, opti
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if options != nil && options.DateTimeQuery != nil {
 		query.Set("dateTimeQuery", options.DateTimeQuery.Format(time.RFC3339Nano))
@@ -622,6 +634,7 @@ func (client *QueriesClient) DateTimeValidCreateRequest(ctx context.Context, opt
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("dateTimeQuery", "2012-01-01T01:01:01Z")
 	req.URL.RawQuery = query.Encode()
@@ -661,6 +674,7 @@ func (client *QueriesClient) DateValidCreateRequest(ctx context.Context, options
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("dateQuery", "2012-01-01")
 	req.URL.RawQuery = query.Encode()
@@ -700,6 +714,7 @@ func (client *QueriesClient) DoubleDecimalNegativeCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("doubleQuery", "-9999999.999")
 	req.URL.RawQuery = query.Encode()
@@ -739,6 +754,7 @@ func (client *QueriesClient) DoubleDecimalPositiveCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("doubleQuery", "9999999.999")
 	req.URL.RawQuery = query.Encode()
@@ -778,6 +794,7 @@ func (client *QueriesClient) DoubleNullCreateRequest(ctx context.Context, option
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if options != nil && options.DoubleQuery != nil {
 		query.Set("doubleQuery", strconv.FormatFloat(*options.DoubleQuery, 'f', -1, 64))
@@ -819,6 +836,7 @@ func (client *QueriesClient) EnumNullCreateRequest(ctx context.Context, options 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if options != nil && options.EnumQuery != nil {
 		query.Set("enumQuery", string(*options.EnumQuery))
@@ -860,6 +878,7 @@ func (client *QueriesClient) EnumValidCreateRequest(ctx context.Context, options
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if options != nil && options.EnumQuery != nil {
 		query.Set("enumQuery", string(*options.EnumQuery))
@@ -901,6 +920,7 @@ func (client *QueriesClient) FloatNullCreateRequest(ctx context.Context, options
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if options != nil && options.FloatQuery != nil {
 		query.Set("floatQuery", strconv.FormatFloat(float64(*options.FloatQuery), 'f', -1, 32))
@@ -942,6 +962,7 @@ func (client *QueriesClient) FloatScientificNegativeCreateRequest(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("floatQuery", "-1.034e-20")
 	req.URL.RawQuery = query.Encode()
@@ -981,6 +1002,7 @@ func (client *QueriesClient) FloatScientificPositiveCreateRequest(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("floatQuery", "103400000000000000000")
 	req.URL.RawQuery = query.Encode()
@@ -1020,6 +1042,7 @@ func (client *QueriesClient) GetBooleanFalseCreateRequest(ctx context.Context, o
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("boolQuery", "false")
 	req.URL.RawQuery = query.Encode()
@@ -1059,6 +1082,7 @@ func (client *QueriesClient) GetBooleanNullCreateRequest(ctx context.Context, op
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if options != nil && options.BoolQuery != nil {
 		query.Set("boolQuery", strconv.FormatBool(*options.BoolQuery))
@@ -1100,6 +1124,7 @@ func (client *QueriesClient) GetBooleanTrueCreateRequest(ctx context.Context, op
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("boolQuery", "true")
 	req.URL.RawQuery = query.Encode()
@@ -1139,6 +1164,7 @@ func (client *QueriesClient) GetIntNegativeOneMillionCreateRequest(ctx context.C
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("intQuery", "-1000000")
 	req.URL.RawQuery = query.Encode()
@@ -1178,6 +1204,7 @@ func (client *QueriesClient) GetIntNullCreateRequest(ctx context.Context, option
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if options != nil && options.IntQuery != nil {
 		query.Set("intQuery", strconv.FormatInt(int64(*options.IntQuery), 10))
@@ -1219,6 +1246,7 @@ func (client *QueriesClient) GetIntOneMillionCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("intQuery", "1000000")
 	req.URL.RawQuery = query.Encode()
@@ -1258,6 +1286,7 @@ func (client *QueriesClient) GetLongNullCreateRequest(ctx context.Context, optio
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if options != nil && options.LongQuery != nil {
 		query.Set("longQuery", strconv.FormatInt(*options.LongQuery, 10))
@@ -1299,6 +1328,7 @@ func (client *QueriesClient) GetNegativeTenBillionCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("longQuery", "-10000000000")
 	req.URL.RawQuery = query.Encode()
@@ -1338,6 +1368,7 @@ func (client *QueriesClient) GetTenBillionCreateRequest(ctx context.Context, opt
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("longQuery", "10000000000")
 	req.URL.RawQuery = query.Encode()
@@ -1377,6 +1408,7 @@ func (client *QueriesClient) StringEmptyCreateRequest(ctx context.Context, optio
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("stringQuery", "")
 	req.URL.RawQuery = query.Encode()
@@ -1416,6 +1448,7 @@ func (client *QueriesClient) StringNullCreateRequest(ctx context.Context, option
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if options != nil && options.StringQuery != nil {
 		query.Set("stringQuery", *options.StringQuery)
@@ -1457,6 +1490,7 @@ func (client *QueriesClient) StringURLEncodedCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("stringQuery", "begin!*'();:@ &=+$,/?#[]end")
 	req.URL.RawQuery = query.Encode()
@@ -1496,6 +1530,7 @@ func (client *QueriesClient) StringUnicodeCreateRequest(ctx context.Context, opt
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("stringQuery", "啊齄丂狛狜隣郎隣兀﨩")
 	req.URL.RawQuery = query.Encode()

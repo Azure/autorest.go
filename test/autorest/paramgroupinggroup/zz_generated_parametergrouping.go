@@ -67,6 +67,7 @@ func (client *ParameterGroupingClient) PostMultiParamGroupsCreateRequest(ctx con
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if firstParameterGroup != nil && firstParameterGroup.QueryOne != nil {
 		query.Set("query-one", strconv.FormatInt(int64(*firstParameterGroup.QueryOne), 10))
@@ -117,6 +118,7 @@ func (client *ParameterGroupingClient) PostOptionalCreateRequest(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if options != nil && options.Query != nil {
 		query.Set("query", strconv.FormatInt(int64(*options.Query), 10))
@@ -162,6 +164,7 @@ func (client *ParameterGroupingClient) PostRequiredCreateRequest(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if parameterGroupingPostRequiredParameters.Query != nil {
 		query.Set("query", strconv.FormatInt(int64(*parameterGroupingPostRequiredParameters.Query), 10))
@@ -206,6 +209,7 @@ func (client *ParameterGroupingClient) PostSharedParameterGroupObjectCreateReque
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if options != nil && options.QueryOne != nil {
 		query.Set("query-one", strconv.FormatInt(int64(*options.QueryOne), 10))

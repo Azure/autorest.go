@@ -72,6 +72,7 @@ func (client *VpnSiteLinksClient) GetCreateRequest(ctx context.Context, resource
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
@@ -120,6 +121,7 @@ func (client *VpnSiteLinksClient) ListByVpnSiteCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()

@@ -74,6 +74,7 @@ func (client *HTTPRetryClient) Delete503CreateRequest(ctx context.Context, optio
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
@@ -110,6 +111,7 @@ func (client *HTTPRetryClient) Get502CreateRequest(ctx context.Context, options 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -149,6 +151,7 @@ func (client *HTTPRetryClient) Head408CreateRequest(ctx context.Context, options
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -189,6 +192,7 @@ func (client *HTTPRetryClient) Options502CreateRequest(ctx context.Context, opti
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -231,6 +235,7 @@ func (client *HTTPRetryClient) Patch500CreateRequest(ctx context.Context, option
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
@@ -267,6 +272,7 @@ func (client *HTTPRetryClient) Patch504CreateRequest(ctx context.Context, option
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
@@ -303,6 +309,7 @@ func (client *HTTPRetryClient) Post503CreateRequest(ctx context.Context, options
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
@@ -339,6 +346,7 @@ func (client *HTTPRetryClient) Put500CreateRequest(ctx context.Context, options 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }
@@ -375,6 +383,7 @@ func (client *HTTPRetryClient) Put504CreateRequest(ctx context.Context, options 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }

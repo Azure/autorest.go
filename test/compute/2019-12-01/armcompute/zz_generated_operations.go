@@ -66,6 +66,7 @@ func (client *OperationsClient) ListCreateRequest(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-12-01")
 	req.URL.RawQuery = query.Encode()

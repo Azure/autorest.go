@@ -199,6 +199,7 @@ func (client *DictionaryClient) GetArrayEmptyCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -245,6 +246,7 @@ func (client *DictionaryClient) GetArrayItemEmptyCreateRequest(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -291,6 +293,7 @@ func (client *DictionaryClient) GetArrayItemNullCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -337,6 +340,7 @@ func (client *DictionaryClient) GetArrayNullCreateRequest(ctx context.Context, o
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -383,6 +387,7 @@ func (client *DictionaryClient) GetArrayValidCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -429,6 +434,7 @@ func (client *DictionaryClient) GetBase64URLCreateRequest(ctx context.Context, o
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -475,6 +481,7 @@ func (client *DictionaryClient) GetBooleanInvalidNullCreateRequest(ctx context.C
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -521,6 +528,7 @@ func (client *DictionaryClient) GetBooleanInvalidStringCreateRequest(ctx context
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -567,6 +575,7 @@ func (client *DictionaryClient) GetBooleanTfftCreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -613,6 +622,7 @@ func (client *DictionaryClient) GetByteInvalidNullCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -659,6 +669,7 @@ func (client *DictionaryClient) GetByteValidCreateRequest(ctx context.Context, o
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -705,6 +716,7 @@ func (client *DictionaryClient) GetComplexEmptyCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -751,6 +763,7 @@ func (client *DictionaryClient) GetComplexItemEmptyCreateRequest(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -797,6 +810,7 @@ func (client *DictionaryClient) GetComplexItemNullCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -843,6 +857,7 @@ func (client *DictionaryClient) GetComplexNullCreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -890,6 +905,7 @@ func (client *DictionaryClient) GetComplexValidCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -936,6 +952,7 @@ func (client *DictionaryClient) GetDateInvalidCharsCreateRequest(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -989,6 +1006,7 @@ func (client *DictionaryClient) GetDateInvalidNullCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1042,6 +1060,7 @@ func (client *DictionaryClient) GetDateTimeInvalidCharsCreateRequest(ctx context
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1095,6 +1114,7 @@ func (client *DictionaryClient) GetDateTimeInvalidNullCreateRequest(ctx context.
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1149,6 +1169,7 @@ func (client *DictionaryClient) GetDateTimeRFC1123ValidCreateRequest(ctx context
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1202,6 +1223,7 @@ func (client *DictionaryClient) GetDateTimeValidCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1255,6 +1277,7 @@ func (client *DictionaryClient) GetDateValidCreateRequest(ctx context.Context, o
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1308,6 +1331,7 @@ func (client *DictionaryClient) GetDictionaryEmptyCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1355,6 +1379,7 @@ func (client *DictionaryClient) GetDictionaryItemEmptyCreateRequest(ctx context.
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1402,6 +1427,7 @@ func (client *DictionaryClient) GetDictionaryItemNullCreateRequest(ctx context.C
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1448,6 +1474,7 @@ func (client *DictionaryClient) GetDictionaryNullCreateRequest(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1495,6 +1522,7 @@ func (client *DictionaryClient) GetDictionaryValidCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1541,6 +1569,7 @@ func (client *DictionaryClient) GetDoubleInvalidNullCreateRequest(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1587,6 +1616,7 @@ func (client *DictionaryClient) GetDoubleInvalidStringCreateRequest(ctx context.
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1633,6 +1663,7 @@ func (client *DictionaryClient) GetDoubleValidCreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1679,6 +1710,7 @@ func (client *DictionaryClient) GetDurationValidCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1725,6 +1757,7 @@ func (client *DictionaryClient) GetEmptyCreateRequest(ctx context.Context, optio
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1771,6 +1804,7 @@ func (client *DictionaryClient) GetEmptyStringKeyCreateRequest(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1817,6 +1851,7 @@ func (client *DictionaryClient) GetFloatInvalidNullCreateRequest(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1863,6 +1898,7 @@ func (client *DictionaryClient) GetFloatInvalidStringCreateRequest(ctx context.C
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1909,6 +1945,7 @@ func (client *DictionaryClient) GetFloatValidCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1955,6 +1992,7 @@ func (client *DictionaryClient) GetIntInvalidNullCreateRequest(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -2001,6 +2039,7 @@ func (client *DictionaryClient) GetIntInvalidStringCreateRequest(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -2047,6 +2086,7 @@ func (client *DictionaryClient) GetIntegerValidCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -2093,6 +2133,7 @@ func (client *DictionaryClient) GetInvalidCreateRequest(ctx context.Context, opt
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -2139,6 +2180,7 @@ func (client *DictionaryClient) GetLongInvalidNullCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -2185,6 +2227,7 @@ func (client *DictionaryClient) GetLongInvalidStringCreateRequest(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -2231,6 +2274,7 @@ func (client *DictionaryClient) GetLongValidCreateRequest(ctx context.Context, o
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -2277,6 +2321,7 @@ func (client *DictionaryClient) GetNullCreateRequest(ctx context.Context, option
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -2323,6 +2368,7 @@ func (client *DictionaryClient) GetNullKeyCreateRequest(ctx context.Context, opt
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -2369,6 +2415,7 @@ func (client *DictionaryClient) GetNullValueCreateRequest(ctx context.Context, o
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -2415,6 +2462,7 @@ func (client *DictionaryClient) GetStringValidCreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -2461,6 +2509,7 @@ func (client *DictionaryClient) GetStringWithInvalidCreateRequest(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -2507,6 +2556,7 @@ func (client *DictionaryClient) GetStringWithNullCreateRequest(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -2549,6 +2599,7 @@ func (client *DictionaryClient) PutArrayValidCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
 }
@@ -2585,6 +2636,7 @@ func (client *DictionaryClient) PutBooleanTfftCreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
 }
@@ -2621,6 +2673,7 @@ func (client *DictionaryClient) PutByteValidCreateRequest(ctx context.Context, a
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
 }
@@ -2658,6 +2711,7 @@ func (client *DictionaryClient) PutComplexValidCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
 }
@@ -2695,6 +2749,7 @@ func (client *DictionaryClient) PutDateTimeRFC1123ValidCreateRequest(ctx context
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	aux := map[string]timeRFC1123{}
 	for k, v := range arrayBody {
@@ -2735,6 +2790,7 @@ func (client *DictionaryClient) PutDateTimeValidCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	aux := map[string]timeRFC3339{}
 	for k, v := range arrayBody {
@@ -2775,6 +2831,7 @@ func (client *DictionaryClient) PutDateValidCreateRequest(ctx context.Context, a
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	aux := map[string]dateType{}
 	for k, v := range arrayBody {
@@ -2816,6 +2873,7 @@ func (client *DictionaryClient) PutDictionaryValidCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
 }
@@ -2852,6 +2910,7 @@ func (client *DictionaryClient) PutDoubleValidCreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
 }
@@ -2888,6 +2947,7 @@ func (client *DictionaryClient) PutDurationValidCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
 }
@@ -2924,6 +2984,7 @@ func (client *DictionaryClient) PutEmptyCreateRequest(ctx context.Context, array
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
 }
@@ -2960,6 +3021,7 @@ func (client *DictionaryClient) PutFloatValidCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
 }
@@ -2996,6 +3058,7 @@ func (client *DictionaryClient) PutIntegerValidCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
 }
@@ -3032,6 +3095,7 @@ func (client *DictionaryClient) PutLongValidCreateRequest(ctx context.Context, a
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
 }
@@ -3068,6 +3132,7 @@ func (client *DictionaryClient) PutStringValidCreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(arrayBody)
 }

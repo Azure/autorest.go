@@ -77,6 +77,7 @@ func (client *DateClient) GetInvalidDateCreateRequest(ctx context.Context, optio
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -124,6 +125,7 @@ func (client *DateClient) GetMaxDateCreateRequest(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -171,6 +173,7 @@ func (client *DateClient) GetMinDateCreateRequest(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -218,6 +221,7 @@ func (client *DateClient) GetNullCreateRequest(ctx context.Context, options *Dat
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -265,6 +269,7 @@ func (client *DateClient) GetOverflowDateCreateRequest(ctx context.Context, opti
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -312,6 +317,7 @@ func (client *DateClient) GetUnderflowDateCreateRequest(ctx context.Context, opt
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -355,6 +361,7 @@ func (client *DateClient) PutMaxDateCreateRequest(ctx context.Context, dateBody 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(dateType(dateBody))
 }
@@ -391,6 +398,7 @@ func (client *DateClient) PutMinDateCreateRequest(ctx context.Context, dateBody 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(dateType(dateBody))
 }

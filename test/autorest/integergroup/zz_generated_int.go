@@ -89,6 +89,7 @@ func (client *IntClient) GetInvalidCreateRequest(ctx context.Context, options *I
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -135,6 +136,7 @@ func (client *IntClient) GetInvalidUnixTimeCreateRequest(ctx context.Context, op
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -182,6 +184,7 @@ func (client *IntClient) GetNullCreateRequest(ctx context.Context, options *IntG
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -228,6 +231,7 @@ func (client *IntClient) GetNullUnixTimeCreateRequest(ctx context.Context, optio
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -275,6 +279,7 @@ func (client *IntClient) GetOverflowInt32CreateRequest(ctx context.Context, opti
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -321,6 +326,7 @@ func (client *IntClient) GetOverflowInt64CreateRequest(ctx context.Context, opti
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -367,6 +373,7 @@ func (client *IntClient) GetUnderflowInt32CreateRequest(ctx context.Context, opt
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -413,6 +420,7 @@ func (client *IntClient) GetUnderflowInt64CreateRequest(ctx context.Context, opt
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -459,6 +467,7 @@ func (client *IntClient) GetUnixTimeCreateRequest(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -502,6 +511,7 @@ func (client *IntClient) PutMax32CreateRequest(ctx context.Context, intBody int3
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(intBody)
 }
@@ -538,6 +548,7 @@ func (client *IntClient) PutMax64CreateRequest(ctx context.Context, intBody int6
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(intBody)
 }
@@ -574,6 +585,7 @@ func (client *IntClient) PutMin32CreateRequest(ctx context.Context, intBody int3
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(intBody)
 }
@@ -610,6 +622,7 @@ func (client *IntClient) PutMin64CreateRequest(ctx context.Context, intBody int6
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(intBody)
 }
@@ -646,6 +659,7 @@ func (client *IntClient) PutUnixTimeDateCreateRequest(ctx context.Context, intBo
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	aux := timeUnix(intBody)
 	return req, req.MarshalAsJSON(aux)

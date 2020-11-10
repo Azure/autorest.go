@@ -67,6 +67,7 @@ func (client *FloatClient) GetCreateRequest(ctx context.Context, options *FloatG
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -116,6 +117,7 @@ func (client *FloatClient) PutCreateRequest(ctx context.Context, options *FloatP
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	if options != nil {
 		return req, req.MarshalAsJSON(options.Input)

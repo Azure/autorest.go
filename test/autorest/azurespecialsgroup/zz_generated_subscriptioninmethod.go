@@ -69,6 +69,7 @@ func (client *SubscriptionInMethodClient) PostMethodLocalNullCreateRequest(ctx c
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -106,6 +107,7 @@ func (client *SubscriptionInMethodClient) PostMethodLocalValidCreateRequest(ctx 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -143,6 +145,7 @@ func (client *SubscriptionInMethodClient) PostPathLocalValidCreateRequest(ctx co
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -180,6 +183,7 @@ func (client *SubscriptionInMethodClient) PostSwaggerLocalValidCreateRequest(ctx
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }

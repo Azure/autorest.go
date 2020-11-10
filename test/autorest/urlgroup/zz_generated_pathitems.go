@@ -81,6 +81,7 @@ func (client *PathItemsClient) GetAllWithValuesCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if options != nil && options.PathItemStringQuery != nil {
 		query.Set("pathItemStringQuery", *options.PathItemStringQuery)
@@ -133,6 +134,7 @@ func (client *PathItemsClient) GetGlobalAndLocalQueryNullCreateRequest(ctx conte
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if options != nil && options.PathItemStringQuery != nil {
 		query.Set("pathItemStringQuery", *options.PathItemStringQuery)
@@ -185,6 +187,7 @@ func (client *PathItemsClient) GetGlobalQueryNullCreateRequest(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if options != nil && options.PathItemStringQuery != nil {
 		query.Set("pathItemStringQuery", *options.PathItemStringQuery)
@@ -237,6 +240,7 @@ func (client *PathItemsClient) GetLocalPathItemQueryNullCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if options != nil && options.PathItemStringQuery != nil {
 		query.Set("pathItemStringQuery", *options.PathItemStringQuery)

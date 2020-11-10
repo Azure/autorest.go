@@ -48,6 +48,7 @@ func (client *dataFlowsClient) RenameCreateRequest(ctx context.Context, dataFlow
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-06-01-preview")
 	req.URL.RawQuery = query.Encode()

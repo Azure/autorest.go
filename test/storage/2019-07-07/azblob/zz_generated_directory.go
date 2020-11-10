@@ -55,6 +55,7 @@ func (client *directoryClient) CreateCreateRequest(ctx context.Context, director
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("resource", "directory")
 	if directoryCreateOptions != nil && directoryCreateOptions.Timeout != nil {
@@ -182,6 +183,7 @@ func (client *directoryClient) DeleteCreateRequest(ctx context.Context, recursiv
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if directoryDeleteOptions != nil && directoryDeleteOptions.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*directoryDeleteOptions.Timeout), 10))
@@ -274,6 +276,7 @@ func (client *directoryClient) GetAccessControlCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("action", "getAccessControl")
 	if directoryGetAccessControlOptions != nil && directoryGetAccessControlOptions.Timeout != nil {
@@ -386,6 +389,7 @@ func (client *directoryClient) RenameCreateRequest(ctx context.Context, renameSo
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if directoryRenameOptions != nil && directoryRenameOptions.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*directoryRenameOptions.Timeout), 10))
@@ -537,6 +541,7 @@ func (client *directoryClient) SetAccessControlCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("action", "setAccessControl")
 	if directorySetAccessControlOptions != nil && directorySetAccessControlOptions.Timeout != nil {

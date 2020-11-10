@@ -79,6 +79,7 @@ func (client *VirtualMachineExtensionImagesClient) GetCreateRequest(ctx context.
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-12-01")
 	req.URL.RawQuery = query.Encode()
@@ -134,6 +135,7 @@ func (client *VirtualMachineExtensionImagesClient) ListTypesCreateRequest(ctx co
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-12-01")
 	req.URL.RawQuery = query.Encode()
@@ -190,6 +192,7 @@ func (client *VirtualMachineExtensionImagesClient) ListVersionsCreateRequest(ctx
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if options != nil && options.Filter != nil {
 		query.Set("$filter", *options.Filter)

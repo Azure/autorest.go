@@ -68,6 +68,7 @@ func (client *HTTPSuccessClient) Head200CreateRequest(ctx context.Context, optio
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	return req, nil
 }
 
@@ -109,6 +110,7 @@ func (client *HTTPSuccessClient) Head204CreateRequest(ctx context.Context, optio
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	return req, nil
 }
 
@@ -150,6 +152,7 @@ func (client *HTTPSuccessClient) Head404CreateRequest(ctx context.Context, optio
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	return req, nil
 }
 

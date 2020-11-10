@@ -124,6 +124,7 @@ func (client *ContainerServicesClient) CreateOrUpdateCreateRequest(ctx context.C
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2017-01-31")
 	req.URL.RawQuery = query.Encode()
@@ -212,6 +213,7 @@ func (client *ContainerServicesClient) DeleteCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2017-01-31")
 	req.URL.RawQuery = query.Encode()
@@ -262,6 +264,7 @@ func (client *ContainerServicesClient) GetCreateRequest(ctx context.Context, res
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2017-01-31")
 	req.URL.RawQuery = query.Encode()
@@ -313,6 +316,7 @@ func (client *ContainerServicesClient) ListCreateRequest(ctx context.Context, op
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2017-01-31")
 	req.URL.RawQuery = query.Encode()
@@ -365,6 +369,7 @@ func (client *ContainerServicesClient) ListByResourceGroupCreateRequest(ctx cont
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2017-01-31")
 	req.URL.RawQuery = query.Encode()

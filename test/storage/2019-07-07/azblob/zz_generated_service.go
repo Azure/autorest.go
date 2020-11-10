@@ -50,6 +50,7 @@ func (client *serviceClient) GetAccountInfoCreateRequest(ctx context.Context, op
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("restype", "account")
 	query.Set("comp", "properties")
@@ -123,6 +124,7 @@ func (client *serviceClient) GetPropertiesCreateRequest(ctx context.Context, opt
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("restype", "service")
 	query.Set("comp", "properties")
@@ -189,6 +191,7 @@ func (client *serviceClient) GetStatisticsCreateRequest(ctx context.Context, opt
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("restype", "service")
 	query.Set("comp", "stats")
@@ -261,6 +264,7 @@ func (client *serviceClient) GetUserDelegationKeyCreateRequest(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("restype", "service")
 	query.Set("comp", "userdelegationkey")
@@ -329,6 +333,7 @@ func (client *serviceClient) ListContainersSegmentCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("comp", "list")
 	if options != nil && options.Prefix != nil {
@@ -406,6 +411,7 @@ func (client *serviceClient) SetPropertiesCreateRequest(ctx context.Context, sto
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("restype", "service")
 	query.Set("comp", "properties")
@@ -471,6 +477,7 @@ func (client *serviceClient) SubmitBatchCreateRequest(ctx context.Context, conte
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("comp", "batch")
 	if options != nil && options.Timeout != nil {

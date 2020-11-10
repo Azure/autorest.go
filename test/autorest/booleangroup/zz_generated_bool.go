@@ -72,6 +72,7 @@ func (client *BoolClient) GetFalseCreateRequest(ctx context.Context, options *Bo
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -118,6 +119,7 @@ func (client *BoolClient) GetInvalidCreateRequest(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -164,6 +166,7 @@ func (client *BoolClient) GetNullCreateRequest(ctx context.Context, options *Boo
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -210,6 +213,7 @@ func (client *BoolClient) GetTrueCreateRequest(ctx context.Context, options *Boo
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -252,6 +256,7 @@ func (client *BoolClient) PutFalseCreateRequest(ctx context.Context, options *Bo
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(false)
 }
@@ -288,6 +293,7 @@ func (client *BoolClient) PutTrueCreateRequest(ctx context.Context, options *Boo
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(true)
 }

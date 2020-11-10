@@ -64,6 +64,7 @@ func (client *APIVersionLocalClient) GetMethodLocalNullCreateRequest(ctx context
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if options != nil && options.ApiVersion != nil {
 		query.Set("api-version", *options.ApiVersion)
@@ -105,6 +106,7 @@ func (client *APIVersionLocalClient) GetMethodLocalValidCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2.0")
 	req.URL.RawQuery = query.Encode()
@@ -144,6 +146,7 @@ func (client *APIVersionLocalClient) GetPathLocalValidCreateRequest(ctx context.
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2.0")
 	req.URL.RawQuery = query.Encode()
@@ -183,6 +186,7 @@ func (client *APIVersionLocalClient) GetSwaggerLocalValidCreateRequest(ctx conte
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2.0")
 	req.URL.RawQuery = query.Encode()

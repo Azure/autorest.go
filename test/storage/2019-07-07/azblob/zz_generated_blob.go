@@ -55,6 +55,7 @@ func (client *blobClient) AbortCopyFromURLCreateRequest(ctx context.Context, cop
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("comp", "copy")
 	query.Set("copyid", copyId)
@@ -131,6 +132,7 @@ func (client *blobClient) AcquireLeaseCreateRequest(ctx context.Context, blobAcq
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("comp", "lease")
 	if blobAcquireLeaseOptions != nil && blobAcquireLeaseOptions.Timeout != nil {
@@ -234,6 +236,7 @@ func (client *blobClient) BreakLeaseCreateRequest(ctx context.Context, blobBreak
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("comp", "lease")
 	if blobBreakLeaseOptions != nil && blobBreakLeaseOptions.Timeout != nil {
@@ -339,6 +342,7 @@ func (client *blobClient) ChangeLeaseCreateRequest(ctx context.Context, leaseId 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("comp", "lease")
 	if blobChangeLeaseOptions != nil && blobChangeLeaseOptions.Timeout != nil {
@@ -438,6 +442,7 @@ func (client *blobClient) CopyFromURLCreateRequest(ctx context.Context, copySour
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if blobCopyFromUrlOptions != nil && blobCopyFromUrlOptions.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*blobCopyFromUrlOptions.Timeout), 10))
@@ -578,6 +583,7 @@ func (client *blobClient) CreateSnapshotCreateRequest(ctx context.Context, blobC
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("comp", "snapshot")
 	if blobCreateSnapshotOptions != nil && blobCreateSnapshotOptions.Timeout != nil {
@@ -711,6 +717,7 @@ func (client *blobClient) DeleteCreateRequest(ctx context.Context, blobDeleteOpt
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if blobDeleteOptions != nil && blobDeleteOptions.Snapshot != nil {
 		query.Set("snapshot", *blobDeleteOptions.Snapshot)
@@ -803,6 +810,7 @@ func (client *blobClient) DownloadCreateRequest(ctx context.Context, blobDownloa
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if blobDownloadOptions != nil && blobDownloadOptions.Snapshot != nil {
 		query.Set("snapshot", *blobDownloadOptions.Snapshot)
@@ -1039,6 +1047,7 @@ func (client *blobClient) GetAccessControlCreateRequest(ctx context.Context, blo
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("action", "getAccessControl")
 	if blobGetAccessControlOptions != nil && blobGetAccessControlOptions.Timeout != nil {
@@ -1147,6 +1156,7 @@ func (client *blobClient) GetAccountInfoCreateRequest(ctx context.Context, optio
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("restype", "account")
 	query.Set("comp", "properties")
@@ -1220,6 +1230,7 @@ func (client *blobClient) GetPropertiesCreateRequest(ctx context.Context, blobGe
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if blobGetPropertiesOptions != nil && blobGetPropertiesOptions.Snapshot != nil {
 		query.Set("snapshot", *blobGetPropertiesOptions.Snapshot)
@@ -1466,6 +1477,7 @@ func (client *blobClient) ReleaseLeaseCreateRequest(ctx context.Context, leaseId
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("comp", "lease")
 	if blobReleaseLeaseOptions != nil && blobReleaseLeaseOptions.Timeout != nil {
@@ -1565,6 +1577,7 @@ func (client *blobClient) RenameCreateRequest(ctx context.Context, renameSource 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if blobRenameOptions != nil && blobRenameOptions.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*blobRenameOptions.Timeout), 10))
@@ -1710,6 +1723,7 @@ func (client *blobClient) RenewLeaseCreateRequest(ctx context.Context, leaseId s
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("comp", "lease")
 	if blobRenewLeaseOptions != nil && blobRenewLeaseOptions.Timeout != nil {
@@ -1808,6 +1822,7 @@ func (client *blobClient) SetAccessControlCreateRequest(ctx context.Context, blo
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("action", "setAccessControl")
 	if blobSetAccessControlOptions != nil && blobSetAccessControlOptions.Timeout != nil {
@@ -1913,6 +1928,7 @@ func (client *blobClient) SetHTTPHeadersCreateRequest(ctx context.Context, blobS
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("comp", "properties")
 	if blobSetHttpHeadersOptions != nil && blobSetHttpHeadersOptions.Timeout != nil {
@@ -2034,6 +2050,7 @@ func (client *blobClient) SetMetadataCreateRequest(ctx context.Context, blobSetM
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("comp", "metadata")
 	if blobSetMetadataOptions != nil && blobSetMetadataOptions.Timeout != nil {
@@ -2163,6 +2180,7 @@ func (client *blobClient) SetTierCreateRequest(ctx context.Context, tier AccessT
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("comp", "tier")
 	if blobSetTierOptions != nil && blobSetTierOptions.Timeout != nil {
@@ -2234,6 +2252,7 @@ func (client *blobClient) StartCopyFromURLCreateRequest(ctx context.Context, cop
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if blobStartCopyFromUrlOptions != nil && blobStartCopyFromUrlOptions.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*blobStartCopyFromUrlOptions.Timeout), 10))
@@ -2359,6 +2378,7 @@ func (client *blobClient) UndeleteCreateRequest(ctx context.Context, options *Bl
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("comp", "undelete")
 	if options != nil && options.Timeout != nil {

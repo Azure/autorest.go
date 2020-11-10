@@ -79,6 +79,7 @@ func (client *Datetimerfc1123Client) GetInvalidCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -126,6 +127,7 @@ func (client *Datetimerfc1123Client) GetNullCreateRequest(ctx context.Context, o
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -173,6 +175,7 @@ func (client *Datetimerfc1123Client) GetOverflowCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -220,6 +223,7 @@ func (client *Datetimerfc1123Client) GetUTCLowercaseMaxDateTimeCreateRequest(ctx
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -267,6 +271,7 @@ func (client *Datetimerfc1123Client) GetUTCMinDateTimeCreateRequest(ctx context.
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -314,6 +319,7 @@ func (client *Datetimerfc1123Client) GetUTCUppercaseMaxDateTimeCreateRequest(ctx
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -361,6 +367,7 @@ func (client *Datetimerfc1123Client) GetUnderflowCreateRequest(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -404,6 +411,7 @@ func (client *Datetimerfc1123Client) PutUTCMaxDateTimeCreateRequest(ctx context.
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	aux := timeRFC1123(datetimeBody)
 	return req, req.MarshalAsJSON(aux)
@@ -441,6 +449,7 @@ func (client *Datetimerfc1123Client) PutUTCMinDateTimeCreateRequest(ctx context.
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	aux := timeRFC1123(datetimeBody)
 	return req, req.MarshalAsJSON(aux)

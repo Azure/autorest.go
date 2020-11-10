@@ -70,6 +70,7 @@ func (client *ByteClient) GetEmptyCreateRequest(ctx context.Context, options *By
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -116,6 +117,7 @@ func (client *ByteClient) GetInvalidCreateRequest(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -162,6 +164,7 @@ func (client *ByteClient) GetNonASCIICreateRequest(ctx context.Context, options 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -208,6 +211,7 @@ func (client *ByteClient) GetNullCreateRequest(ctx context.Context, options *Byt
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -250,6 +254,7 @@ func (client *ByteClient) PutNonASCIICreateRequest(ctx context.Context, byteBody
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsByteArray(byteBody, azcore.Base64StdFormat)
 }

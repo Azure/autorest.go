@@ -115,6 +115,7 @@ func (client *PathsClient) ArrayCSVInPathCreateRequest(ctx context.Context, arra
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -152,6 +153,7 @@ func (client *PathsClient) Base64URLCreateRequest(ctx context.Context, base64Url
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -189,6 +191,7 @@ func (client *PathsClient) ByteEmptyCreateRequest(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -226,6 +229,7 @@ func (client *PathsClient) ByteMultiByteCreateRequest(ctx context.Context, byteP
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -263,6 +267,7 @@ func (client *PathsClient) ByteNullCreateRequest(ctx context.Context, bytePath [
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -300,6 +305,7 @@ func (client *PathsClient) DateNullCreateRequest(ctx context.Context, datePath t
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -337,6 +343,7 @@ func (client *PathsClient) DateTimeNullCreateRequest(ctx context.Context, dateTi
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -374,6 +381,7 @@ func (client *PathsClient) DateTimeValidCreateRequest(ctx context.Context, optio
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -411,6 +419,7 @@ func (client *PathsClient) DateValidCreateRequest(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -448,6 +457,7 @@ func (client *PathsClient) DoubleDecimalNegativeCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -485,6 +495,7 @@ func (client *PathsClient) DoubleDecimalPositiveCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -522,6 +533,7 @@ func (client *PathsClient) EnumNullCreateRequest(ctx context.Context, enumPath U
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -559,6 +571,7 @@ func (client *PathsClient) EnumValidCreateRequest(ctx context.Context, enumPath 
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -596,6 +609,7 @@ func (client *PathsClient) FloatScientificNegativeCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -633,6 +647,7 @@ func (client *PathsClient) FloatScientificPositiveCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -670,6 +685,7 @@ func (client *PathsClient) GetBooleanFalseCreateRequest(ctx context.Context, opt
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -707,6 +723,7 @@ func (client *PathsClient) GetBooleanTrueCreateRequest(ctx context.Context, opti
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -744,6 +761,7 @@ func (client *PathsClient) GetIntNegativeOneMillionCreateRequest(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -781,6 +799,7 @@ func (client *PathsClient) GetIntOneMillionCreateRequest(ctx context.Context, op
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -818,6 +837,7 @@ func (client *PathsClient) GetNegativeTenBillionCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -855,6 +875,7 @@ func (client *PathsClient) GetTenBillionCreateRequest(ctx context.Context, optio
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -892,6 +913,7 @@ func (client *PathsClient) StringEmptyCreateRequest(ctx context.Context, options
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -929,6 +951,7 @@ func (client *PathsClient) StringNullCreateRequest(ctx context.Context, stringPa
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -966,6 +989,7 @@ func (client *PathsClient) StringURLEncodedCreateRequest(ctx context.Context, op
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1003,6 +1027,7 @@ func (client *PathsClient) StringURLNonEncodedCreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1040,6 +1065,7 @@ func (client *PathsClient) StringUnicodeCreateRequest(ctx context.Context, optio
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1077,6 +1103,7 @@ func (client *PathsClient) UnixTimeURLCreateRequest(ctx context.Context, unixTim
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }

@@ -54,6 +54,7 @@ func (client *appendBlobClient) AppendBlockCreateRequest(ctx context.Context, co
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("comp", "appendblock")
 	if appendBlobAppendBlockOptions != nil && appendBlobAppendBlockOptions.Timeout != nil {
@@ -215,6 +216,7 @@ func (client *appendBlobClient) AppendBlockFromURLCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("comp", "appendblock")
 	if appendBlobAppendBlockFromUrlOptions != nil && appendBlobAppendBlockFromUrlOptions.Timeout != nil {
@@ -390,6 +392,7 @@ func (client *appendBlobClient) CreateCreateRequest(ctx context.Context, content
 	if err != nil {
 		return nil, err
 	}
+	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	if appendBlobCreateOptions != nil && appendBlobCreateOptions.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*appendBlobCreateOptions.Timeout), 10))
