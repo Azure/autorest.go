@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/Azure/go-autorest/autorest/date"
-	uuid "github.com/satori/go.uuid"
+	"github.com/gofrs/uuid"
 	chk "gopkg.in/check.v1"
 )
 
