@@ -28,8 +28,8 @@
   version = "13.4.0"
 
 [[constraint]]
-  name = "github.com/satori/go.uuid"
-  version = "1.2.0"
+  name = "github.com/gofrs/uuid"
+  version = "3.3.0"
 
 [[constraint]]
   name = "github.com/shopspring/decimal"
