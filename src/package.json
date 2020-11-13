@@ -55,7 +55,7 @@
     "@autorest/autorest": "~3.0.6173",
     "eslint": "~6.6.0",
     "@azure-tools/codegen": "~2.5.288",
-    "@azure-tools/codemodel": "~4.13.347"
+    "@azure-tools/codemodel": "~4.13.348"
   },
   "dependencies": {
     "@azure-tools/async-io": "~3.0.0",
