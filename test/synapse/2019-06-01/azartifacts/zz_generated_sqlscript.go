@@ -218,3 +218,44 @@ func (client *sqlScriptClient) GetSQLScriptsByWorkspaceHandleError(resp *azcore.
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
+
+// RenameSQLScript - Renames a sqlScript.
+func (client *sqlScriptClient) RenameSQLScript(ctx context.Context, sqlScriptName string, request ArtifactRenameRequest, options *SQLScriptRenameSQLScriptOptions) (*azcore.Response, error) {
+	req, err := client.RenameSQLScriptCreateRequest(ctx, sqlScriptName, request, options)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Pipeline().Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.RenameSQLScriptHandleError(resp)
+	}
+	return resp, nil
+}
+
+// RenameSQLScriptCreateRequest creates the RenameSQLScript request.
+func (client *sqlScriptClient) RenameSQLScriptCreateRequest(ctx context.Context, sqlScriptName string, request ArtifactRenameRequest, options *SQLScriptRenameSQLScriptOptions) (*azcore.Request, error) {
+	urlPath := "/sqlScripts/{sqlScriptName}/rename"
+	urlPath = strings.ReplaceAll(urlPath, "{sqlScriptName}", url.PathEscape(sqlScriptName))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Telemetry(telemetryInfo)
+	query := req.URL.Query()
+	query.Set("api-version", "2019-06-01-preview")
+	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
+	return req, req.MarshalAsJSON(request)
+}
+
+// RenameSQLScriptHandleError handles the RenameSQLScript error response.
+func (client *sqlScriptClient) RenameSQLScriptHandleError(resp *azcore.Response) error {
+	var err CloudError
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return azcore.NewResponseError(&err, resp.Response)
+}

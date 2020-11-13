@@ -5627,12 +5627,6 @@ func (a *AzureTableStorageLinkedService) UnmarshalJSON(data []byte) error {
 	return a.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Babylon Configuration
-type BabylonConfiguration struct {
-	// Babylon Resource ID
-	BabylonResourceID *string `json:"babylonResourceId,omitempty"`
-}
-
 // Big data pool reference.
 type BigDataPoolReference struct {
 	// Reference big data pool name.
@@ -5687,9 +5681,6 @@ type BigDataPoolResourceProperties struct {
 	// The time when the Big Data pool was created.
 	CreationDate *time.Time `json:"creationDate,omitempty"`
 
-	// List of custom libraries/packages associated with the spark pool.
-	CustomLibraries *[]LibraryInfo `json:"customLibraries,omitempty"`
-
 	// The default folder where Spark logs will be written.
 	DefaultSparkLogFolder *string `json:"defaultSparkLogFolder,omitempty"`
 
@@ -5710,9 +5701,6 @@ type BigDataPoolResourceProperties struct {
 
 	// The state of the Big Data pool.
 	ProvisioningState *string `json:"provisioningState,omitempty"`
-
-	// Whether session level library/package management is enabled or not.
-	SessionLevelPackagesEnabled *bool `json:"sessionLevelPackagesEnabled,omitempty"`
 
 	// Spark configuration file to specify additional properties
 	SparkConfigProperties *LibraryRequirements `json:"sparkConfigProperties,omitempty"`
@@ -5736,9 +5724,6 @@ func (b BigDataPoolResourceProperties) MarshalJSON() ([]byte, error) {
 	if b.CreationDate != nil {
 		objectMap["creationDate"] = (*timeRFC3339)(b.CreationDate)
 	}
-	if b.CustomLibraries != nil {
-		objectMap["customLibraries"] = b.CustomLibraries
-	}
 	if b.DefaultSparkLogFolder != nil {
 		objectMap["defaultSparkLogFolder"] = b.DefaultSparkLogFolder
 	}
@@ -5759,9 +5744,6 @@ func (b BigDataPoolResourceProperties) MarshalJSON() ([]byte, error) {
 	}
 	if b.ProvisioningState != nil {
 		objectMap["provisioningState"] = b.ProvisioningState
-	}
-	if b.SessionLevelPackagesEnabled != nil {
-		objectMap["sessionLevelPackagesEnabled"] = b.SessionLevelPackagesEnabled
 	}
 	if b.SparkConfigProperties != nil {
 		objectMap["sparkConfigProperties"] = b.SparkConfigProperties
@@ -5801,11 +5783,6 @@ func (b *BigDataPoolResourceProperties) UnmarshalJSON(data []byte) error {
 				b.CreationDate = (*time.Time)(&aux)
 			}
 			delete(rawMsg, key)
-		case "customLibraries":
-			if val != nil {
-				err = json.Unmarshal(*val, &b.CustomLibraries)
-			}
-			delete(rawMsg, key)
 		case "defaultSparkLogFolder":
 			if val != nil {
 				err = json.Unmarshal(*val, &b.DefaultSparkLogFolder)
@@ -5839,11 +5816,6 @@ func (b *BigDataPoolResourceProperties) UnmarshalJSON(data []byte) error {
 		case "provisioningState":
 			if val != nil {
 				err = json.Unmarshal(*val, &b.ProvisioningState)
-			}
-			delete(rawMsg, key)
-		case "sessionLevelPackagesEnabled":
-			if val != nil {
-				err = json.Unmarshal(*val, &b.SessionLevelPackagesEnabled)
 			}
 			delete(rawMsg, key)
 		case "sparkConfigProperties":
@@ -8931,6 +8903,11 @@ func (d *DataFlowReference) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// DataFlowRenameDataFlowOptions contains the optional parameters for the DataFlow.RenameDataFlow method.
+type DataFlowRenameDataFlowOptions struct {
+	// placeholder for future optional parameters
+}
+
 // Data flow resource type.
 type DataFlowResource struct {
 	AzureEntityResource
@@ -9046,11 +9023,6 @@ type DataFlowStagingInfo struct {
 
 	// Staging linked service reference.
 	LinkedService *LinkedServiceReference `json:"linkedService,omitempty"`
-}
-
-// DataFlowsRenameOptions contains the optional parameters for the DataFlows.Rename method.
-type DataFlowsRenameOptions struct {
-	// placeholder for future optional parameters
 }
 
 // Data Lake Analytics U-SQL activity.
@@ -9763,6 +9735,11 @@ type DatasetReference struct {
 	Type *DatasetReferenceType `json:"type,omitempty"`
 }
 
+// DatasetRenameDatasetOptions contains the optional parameters for the Dataset.RenameDataset method.
+type DatasetRenameDatasetOptions struct {
+	// placeholder for future optional parameters
+}
+
 // Dataset resource type.
 type DatasetResource struct {
 	AzureEntityResource
@@ -9984,11 +9961,6 @@ func (d *DatasetZipDeflateCompression) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return d.DatasetCompression.unmarshalInternal(rawMsg)
-}
-
-// DatasetsRenameOptions contains the optional parameters for the Datasets.Rename method.
-type DatasetsRenameOptions struct {
-	// placeholder for future optional parameters
 }
 
 // Linked service for DB2 data source.
@@ -17523,111 +17495,6 @@ func (j *JiraSource) UnmarshalJSON(data []byte) error {
 	return j.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// Library/package information of a Big Data pool powered by Apache Spark
-type LibraryInfo struct {
-	// Storage blob container name.
-	ContainerName *string `json:"containerName,omitempty"`
-
-	// READ-ONLY; Creator Id of the library/package.
-	CreatorID *string `json:"creatorId,omitempty" azure:"ro"`
-
-	// Name of the library.
-	Name *string `json:"name,omitempty"`
-
-	// Storage blob path of library.
-	Path *string `json:"path,omitempty"`
-
-	// READ-ONLY; Provisioning status of the library/package.
-	ProvisioningStatus *string `json:"provisioningStatus,omitempty" azure:"ro"`
-
-	// Type of the library.
-	Type *string `json:"type,omitempty"`
-
-	// The last update time of the library.
-	UploadedTimestamp *time.Time `json:"uploadedTimestamp,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type LibraryInfo.
-func (l LibraryInfo) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if l.ContainerName != nil {
-		objectMap["containerName"] = l.ContainerName
-	}
-	if l.CreatorID != nil {
-		objectMap["creatorId"] = l.CreatorID
-	}
-	if l.Name != nil {
-		objectMap["name"] = l.Name
-	}
-	if l.Path != nil {
-		objectMap["path"] = l.Path
-	}
-	if l.ProvisioningStatus != nil {
-		objectMap["provisioningStatus"] = l.ProvisioningStatus
-	}
-	if l.Type != nil {
-		objectMap["type"] = l.Type
-	}
-	if l.UploadedTimestamp != nil {
-		objectMap["uploadedTimestamp"] = (*timeRFC3339)(l.UploadedTimestamp)
-	}
-	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type LibraryInfo.
-func (l *LibraryInfo) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "containerName":
-			if val != nil {
-				err = json.Unmarshal(*val, &l.ContainerName)
-			}
-			delete(rawMsg, key)
-		case "creatorId":
-			if val != nil {
-				err = json.Unmarshal(*val, &l.CreatorID)
-			}
-			delete(rawMsg, key)
-		case "name":
-			if val != nil {
-				err = json.Unmarshal(*val, &l.Name)
-			}
-			delete(rawMsg, key)
-		case "path":
-			if val != nil {
-				err = json.Unmarshal(*val, &l.Path)
-			}
-			delete(rawMsg, key)
-		case "provisioningStatus":
-			if val != nil {
-				err = json.Unmarshal(*val, &l.ProvisioningStatus)
-			}
-			delete(rawMsg, key)
-		case "type":
-			if val != nil {
-				err = json.Unmarshal(*val, &l.Type)
-			}
-			delete(rawMsg, key)
-		case "uploadedTimestamp":
-			if val != nil {
-				var aux timeRFC3339
-				err = json.Unmarshal(*val, &aux)
-				l.UploadedTimestamp = (*time.Time)(&aux)
-			}
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	return nil
-}
-
 // Library requirements for a Big Data pool powered by Apache Spark
 type LibraryRequirements struct {
 	// The library requirements.
@@ -18010,6 +17877,11 @@ type LinkedServiceReference struct {
 	Type *Type `json:"type,omitempty"`
 }
 
+// LinkedServiceRenameLinkedServiceOptions contains the optional parameters for the LinkedService.RenameLinkedService method.
+type LinkedServiceRenameLinkedServiceOptions struct {
+	// placeholder for future optional parameters
+}
+
 // Linked service resource type.
 type LinkedServiceResource struct {
 	AzureEntityResource
@@ -18036,11 +17908,6 @@ type LinkedServiceResourceResponse struct {
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LinkedServicesRenameOptions contains the optional parameters for the LinkedServices.Rename method.
-type LinkedServicesRenameOptions struct {
-	// placeholder for future optional parameters
 }
 
 // Log storage settings.
@@ -20358,6 +20225,11 @@ func (n *NotebookMetadata) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// NotebookRenameNotebookOptions contains the optional parameters for the Notebook.RenameNotebook method.
+type NotebookRenameNotebookOptions struct {
+	// placeholder for future optional parameters
+}
+
 // Notebook resource type.
 type NotebookResource struct {
 	// READ-ONLY; Resource Etag.
@@ -20413,11 +20285,6 @@ type NotebookSessionProperties struct {
 
 	// Number of executors to launch for this session.
 	NumExecutors *int32 `json:"numExecutors,omitempty"`
-}
-
-// NotebooksRenameOptions contains the optional parameters for the Notebooks.Rename method.
-type NotebooksRenameOptions struct {
-	// placeholder for future optional parameters
 }
 
 // Open Data Protocol (OData) linked service.
@@ -22410,6 +22277,11 @@ type PipelineReference struct {
 	Type *PipelineReferenceType `json:"type,omitempty"`
 }
 
+// PipelineRenamePipelineOptions contains the optional parameters for the Pipeline.RenamePipeline method.
+type PipelineRenamePipelineOptions struct {
+	// placeholder for future optional parameters
+}
+
 // Pipeline resource type.
 type PipelineResource struct {
 	AzureEntityResource
@@ -22735,11 +22607,6 @@ type PipelineRunsQueryResponseResponse struct {
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// PipelinesRenameOptions contains the optional parameters for the Pipelines.Rename method.
-type PipelinesRenameOptions struct {
-	// placeholder for future optional parameters
 }
 
 // PolyBase settings.
@@ -23274,6 +23141,12 @@ type PrivateLinkServiceConnectionState struct {
 // The resource model definition for a Azure Resource Manager proxy resource. It will not have tags and a location
 type ProxyResource struct {
 	Resource
+}
+
+// Purview Configuration
+type PurviewConfiguration struct {
+	// Purview Resource ID
+	PurviewResourceID *string `json:"purviewResourceId,omitempty"`
 }
 
 // A list of active debug sessions.
@@ -25542,6 +25415,11 @@ func (s *SQLScriptMetadata) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// SQLScriptRenameSQLScriptOptions contains the optional parameters for the SQLScript.RenameSQLScript method.
+type SQLScriptRenameSQLScriptOptions struct {
+	// placeholder for future optional parameters
+}
+
 // Sql Script resource type.
 type SQLScriptResource struct {
 	// READ-ONLY; Resource Etag.
@@ -25585,11 +25463,6 @@ type SQLScriptsListResponseResponse struct {
 
 	// A list of sql scripts resources.
 	SQLScriptsListResponse *SQLScriptsListResponse
-}
-
-// SQLScriptsRenameOptions contains the optional parameters for the SQLScripts.Rename method.
-type SQLScriptsRenameOptions struct {
-	// placeholder for future optional parameters
 }
 
 // SQL Server linked service.
@@ -29635,6 +29508,11 @@ type SparkJobDefinitionGetSparkJobDefinitionsByWorkspaceOptions struct {
 	// placeholder for future optional parameters
 }
 
+// SparkJobDefinitionRenameSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinition.RenameSparkJobDefinition method.
+type SparkJobDefinitionRenameSparkJobDefinitionOptions struct {
+	// placeholder for future optional parameters
+}
+
 // Spark job definition resource type.
 type SparkJobDefinitionResource struct {
 	AzureEntityResource
@@ -29667,11 +29545,6 @@ type SparkJobDefinitionsListResponseResponse struct {
 
 	// A list of spark job definitions resources.
 	SparkJobDefinitionsListResponse *SparkJobDefinitionsListResponse
-}
-
-// SparkJobDefinitionsRenameOptions contains the optional parameters for the SparkJobDefinitions.Rename method.
-type SparkJobDefinitionsRenameOptions struct {
-	// placeholder for future optional parameters
 }
 
 // The properties of the Spark job.
@@ -33513,9 +33386,6 @@ type WorkspaceKeyDetails struct {
 
 // Workspace properties
 type WorkspaceProperties struct {
-	// Babylon Configuration
-	BabylonConfiguration *BabylonConfiguration `json:"babylonConfiguration,omitempty"`
-
 	// Connectivity endpoints
 	ConnectivityEndpoints *map[string]string `json:"connectivityEndpoints,omitempty"`
 
@@ -33544,6 +33414,9 @@ type WorkspaceProperties struct {
 
 	// READ-ONLY; Resource provisioning state
 	ProvisioningState *string `json:"provisioningState,omitempty" azure:"ro"`
+
+	// Purview Configuration
+	PurviewConfiguration *PurviewConfiguration `json:"purviewConfiguration,omitempty"`
 
 	// Login for workspace SQL active directory administrator
 	SQLAdministratorLogin *string `json:"sqlAdministratorLogin,omitempty"`

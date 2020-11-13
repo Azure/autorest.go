@@ -214,3 +214,44 @@ func (client *dataFlowClient) GetDataFlowsByWorkspaceHandleError(resp *azcore.Re
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
+
+// RenameDataFlow - Renames a dataflow.
+func (client *dataFlowClient) RenameDataFlow(ctx context.Context, dataFlowName string, request ArtifactRenameRequest, options *DataFlowRenameDataFlowOptions) (*azcore.Response, error) {
+	req, err := client.RenameDataFlowCreateRequest(ctx, dataFlowName, request, options)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Pipeline().Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.RenameDataFlowHandleError(resp)
+	}
+	return resp, nil
+}
+
+// RenameDataFlowCreateRequest creates the RenameDataFlow request.
+func (client *dataFlowClient) RenameDataFlowCreateRequest(ctx context.Context, dataFlowName string, request ArtifactRenameRequest, options *DataFlowRenameDataFlowOptions) (*azcore.Request, error) {
+	urlPath := "/dataflows/{dataFlowName}/rename"
+	urlPath = strings.ReplaceAll(urlPath, "{dataFlowName}", url.PathEscape(dataFlowName))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Telemetry(telemetryInfo)
+	query := req.URL.Query()
+	query.Set("api-version", "2019-06-01-preview")
+	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
+	return req, req.MarshalAsJSON(request)
+}
+
+// RenameDataFlowHandleError handles the RenameDataFlow error response.
+func (client *dataFlowClient) RenameDataFlowHandleError(resp *azcore.Response) error {
+	var err CloudError
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return azcore.NewResponseError(&err, resp.Response)
+}

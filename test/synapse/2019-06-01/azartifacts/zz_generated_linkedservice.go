@@ -214,3 +214,44 @@ func (client *linkedServiceClient) GetLinkedServicesByWorkspaceHandleError(resp 
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
+
+// RenameLinkedService - Renames a linked service.
+func (client *linkedServiceClient) RenameLinkedService(ctx context.Context, linkedServiceName string, request ArtifactRenameRequest, options *LinkedServiceRenameLinkedServiceOptions) (*azcore.Response, error) {
+	req, err := client.RenameLinkedServiceCreateRequest(ctx, linkedServiceName, request, options)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Pipeline().Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.RenameLinkedServiceHandleError(resp)
+	}
+	return resp, nil
+}
+
+// RenameLinkedServiceCreateRequest creates the RenameLinkedService request.
+func (client *linkedServiceClient) RenameLinkedServiceCreateRequest(ctx context.Context, linkedServiceName string, request ArtifactRenameRequest, options *LinkedServiceRenameLinkedServiceOptions) (*azcore.Request, error) {
+	urlPath := "/linkedservices/{linkedServiceName}/rename"
+	urlPath = strings.ReplaceAll(urlPath, "{linkedServiceName}", url.PathEscape(linkedServiceName))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Telemetry(telemetryInfo)
+	query := req.URL.Query()
+	query.Set("api-version", "2019-06-01-preview")
+	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
+	return req, req.MarshalAsJSON(request)
+}
+
+// RenameLinkedServiceHandleError handles the RenameLinkedService error response.
+func (client *linkedServiceClient) RenameLinkedServiceHandleError(resp *azcore.Response) error {
+	var err CloudError
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return azcore.NewResponseError(&err, resp.Response)
+}

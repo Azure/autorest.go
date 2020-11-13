@@ -278,3 +278,44 @@ func (client *pipelineClient) GetPipelinesByWorkspaceHandleError(resp *azcore.Re
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
+
+// RenamePipeline - Renames a pipeline.
+func (client *pipelineClient) RenamePipeline(ctx context.Context, pipelineName string, request ArtifactRenameRequest, options *PipelineRenamePipelineOptions) (*azcore.Response, error) {
+	req, err := client.RenamePipelineCreateRequest(ctx, pipelineName, request, options)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Pipeline().Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.RenamePipelineHandleError(resp)
+	}
+	return resp, nil
+}
+
+// RenamePipelineCreateRequest creates the RenamePipeline request.
+func (client *pipelineClient) RenamePipelineCreateRequest(ctx context.Context, pipelineName string, request ArtifactRenameRequest, options *PipelineRenamePipelineOptions) (*azcore.Request, error) {
+	urlPath := "/pipelines/{pipelineName}/rename"
+	urlPath = strings.ReplaceAll(urlPath, "{pipelineName}", url.PathEscape(pipelineName))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Telemetry(telemetryInfo)
+	query := req.URL.Query()
+	query.Set("api-version", "2019-06-01-preview")
+	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
+	return req, req.MarshalAsJSON(request)
+}
+
+// RenamePipelineHandleError handles the RenamePipeline error response.
+func (client *pipelineClient) RenamePipelineHandleError(resp *azcore.Response) error {
+	var err CloudError
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return azcore.NewResponseError(&err, resp.Response)
+}
