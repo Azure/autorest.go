@@ -260,3 +260,44 @@ func (client *notebookClient) GetNotebooksByWorkspaceHandleError(resp *azcore.Re
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
+
+// RenameNotebook - Renames a notebook.
+func (client *notebookClient) RenameNotebook(ctx context.Context, notebookName string, request ArtifactRenameRequest, options *NotebookRenameNotebookOptions) (*azcore.Response, error) {
+	req, err := client.RenameNotebookCreateRequest(ctx, notebookName, request, options)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Pipeline().Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.RenameNotebookHandleError(resp)
+	}
+	return resp, nil
+}
+
+// RenameNotebookCreateRequest creates the RenameNotebook request.
+func (client *notebookClient) RenameNotebookCreateRequest(ctx context.Context, notebookName string, request ArtifactRenameRequest, options *NotebookRenameNotebookOptions) (*azcore.Request, error) {
+	urlPath := "/notebooks/{notebookName}/rename"
+	urlPath = strings.ReplaceAll(urlPath, "{notebookName}", url.PathEscape(notebookName))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Telemetry(telemetryInfo)
+	query := req.URL.Query()
+	query.Set("api-version", "2019-06-01-preview")
+	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
+	return req, req.MarshalAsJSON(request)
+}
+
+// RenameNotebookHandleError handles the RenameNotebook error response.
+func (client *notebookClient) RenameNotebookHandleError(resp *azcore.Response) error {
+	var err CloudError
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return azcore.NewResponseError(&err, resp.Response)
+}

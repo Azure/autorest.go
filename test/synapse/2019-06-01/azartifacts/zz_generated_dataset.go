@@ -214,3 +214,44 @@ func (client *datasetClient) GetDatasetsByWorkspaceHandleError(resp *azcore.Resp
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
+
+// RenameDataset - Renames a dataset.
+func (client *datasetClient) RenameDataset(ctx context.Context, datasetName string, request ArtifactRenameRequest, options *DatasetRenameDatasetOptions) (*azcore.Response, error) {
+	req, err := client.RenameDatasetCreateRequest(ctx, datasetName, request, options)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Pipeline().Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.RenameDatasetHandleError(resp)
+	}
+	return resp, nil
+}
+
+// RenameDatasetCreateRequest creates the RenameDataset request.
+func (client *datasetClient) RenameDatasetCreateRequest(ctx context.Context, datasetName string, request ArtifactRenameRequest, options *DatasetRenameDatasetOptions) (*azcore.Request, error) {
+	urlPath := "/datasets/{datasetName}/rename"
+	urlPath = strings.ReplaceAll(urlPath, "{datasetName}", url.PathEscape(datasetName))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Telemetry(telemetryInfo)
+	query := req.URL.Query()
+	query.Set("api-version", "2019-06-01-preview")
+	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
+	return req, req.MarshalAsJSON(request)
+}
+
+// RenameDatasetHandleError handles the RenameDataset error response.
+func (client *datasetClient) RenameDatasetHandleError(resp *azcore.Response) error {
+	var err CloudError
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return azcore.NewResponseError(&err, resp.Response)
+}

@@ -311,3 +311,44 @@ func (client *sparkJobDefinitionClient) GetSparkJobDefinitionsByWorkspaceHandleE
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
+
+// RenameSparkJobDefinition - Renames a sparkJobDefinition.
+func (client *sparkJobDefinitionClient) RenameSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, request ArtifactRenameRequest, options *SparkJobDefinitionRenameSparkJobDefinitionOptions) (*azcore.Response, error) {
+	req, err := client.RenameSparkJobDefinitionCreateRequest(ctx, sparkJobDefinitionName, request, options)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Pipeline().Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.RenameSparkJobDefinitionHandleError(resp)
+	}
+	return resp, nil
+}
+
+// RenameSparkJobDefinitionCreateRequest creates the RenameSparkJobDefinition request.
+func (client *sparkJobDefinitionClient) RenameSparkJobDefinitionCreateRequest(ctx context.Context, sparkJobDefinitionName string, request ArtifactRenameRequest, options *SparkJobDefinitionRenameSparkJobDefinitionOptions) (*azcore.Request, error) {
+	urlPath := "/sparkJobDefinitions/{sparkJobDefinitionName}/rename"
+	urlPath = strings.ReplaceAll(urlPath, "{sparkJobDefinitionName}", url.PathEscape(sparkJobDefinitionName))
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Telemetry(telemetryInfo)
+	query := req.URL.Query()
+	query.Set("api-version", "2019-06-01-preview")
+	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
+	return req, req.MarshalAsJSON(request)
+}
+
+// RenameSparkJobDefinitionHandleError handles the RenameSparkJobDefinition error response.
+func (client *sparkJobDefinitionClient) RenameSparkJobDefinitionHandleError(resp *azcore.Response) error {
+	var err CloudError
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return azcore.NewResponseError(&err, resp.Response)
+}
