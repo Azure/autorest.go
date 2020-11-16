@@ -132,6 +132,7 @@ async function process(session: Session<CodeModel>) {
 function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolean): string {
   switch (schema.type) {
     case SchemaType.Any:
+      schema.language.go!.byValue = true;
       return 'interface{}';
     case SchemaType.Array:
       const arraySchema = <ArraySchema>schema;

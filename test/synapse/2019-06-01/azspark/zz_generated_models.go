@@ -783,12 +783,12 @@ type SparkStatementOptions struct {
 
 type SparkStatementOutput struct {
 	// Any object
-	Data           *interface{} `json:"data,omitempty"`
-	ErrorName      *string      `json:"ename,omitempty"`
-	ErrorValue     *string      `json:"evalue,omitempty"`
-	ExecutionCount *int32       `json:"execution_count,omitempty"`
-	Status         *string      `json:"status,omitempty"`
-	Traceback      *[]string    `json:"traceback,omitempty"`
+	Data           interface{} `json:"data,omitempty"`
+	ErrorName      *string     `json:"ename,omitempty"`
+	ErrorValue     *string     `json:"evalue,omitempty"`
+	ExecutionCount *int32      `json:"execution_count,omitempty"`
+	Status         *string     `json:"status,omitempty"`
+	Traceback      *[]string   `json:"traceback,omitempty"`
 }
 
 // SparkStatementResponse is the response envelope for operations that return a SparkStatement type.
