@@ -538,23 +538,23 @@ namespace AutoRest.Go
             {
                 x.AddRange(p.Constraints
                     .Where(c => c.IsValidConstraint())
-                    .Select(c => GetConstraint(name, c.Key.ToString(), c.Value)).ToList());
+                    .Select(c => GetConstraint(name, p.ModelTypeName, c.Key.ToString(), c.Value)).ToList());
             }
 
             List<string> y = new List<string>();
             if (x.Count > 0)
             {
                 if (p.CheckNull() || isCompositeProperties)
-                    y.AddRange(x.AddChain(name, NullConstraint, p.IsRequired));
+                    y.AddRange(x.AddChain(name, p.ModelTypeName, NullConstraint, p.IsRequired));
                 else if (!p.IsRequired && p.ModelType.PrimaryType(KnownPrimaryType.String))
-                    y.AddRange(x.AddChain(name, EmptyConstraint, p.IsRequired));
+                    y.AddRange(x.AddChain(name, p.ModelTypeName, EmptyConstraint, p.IsRequired));
                 else
                     y.AddRange(x);
             }
             else
             {
                 if (p.IsRequired && (p.CheckNull() || isCompositeProperties))
-                    y.AddNullValidation(name, p.IsRequired);
+                    y.AddNullValidation(name, p.ModelTypeName, p.IsRequired);
             }
             return y;
         }
@@ -591,7 +591,7 @@ namespace AutoRest.Go
                     {
                         if (ancestors.Contains(composite.Name))
                         {
-                            x.AddNullValidation($"{name}.{propName}", p.IsRequired);
+                            x.AddNullValidation($"{name}.{propName}", p.ModelTypeName, p.IsRequired);
                         }
                         else
                         {
@@ -607,14 +607,14 @@ namespace AutoRest.Go
             if (x.Count > 0)
             {
                 if (p.CheckNull() || isCompositeProperties)
-                    y.AddRange(x.AddChain(name, NullConstraint, p.IsRequired));
+                    y.AddRange(x.AddChain(name, p.ModelTypeName, NullConstraint, p.IsRequired));
                 else
                     y.AddRange(x);
             }
             else
             {
                 if (p.IsRequired && (p.CheckNull() || isCompositeProperties))
-                    y.AddNullValidation(name, p.IsRequired);
+                    y.AddNullValidation(name, p.ModelTypeName, p.IsRequired);
             }
             return y;
         }
@@ -625,9 +625,9 @@ namespace AutoRest.Go
         /// <param name="v"></param>
         /// <param name="name"></param>
         /// <param name="isRequired"></param>
-        public static void AddNullValidation(this List<string> v, string name, bool isRequired = false)
+        public static void AddNullValidation(this List<string> v, string name, string type, bool isRequired = false)
         {
-            v.Add(GetConstraint(name, NullConstraint, $"{isRequired}".ToLower()));
+            v.Add(GetConstraint(name, type, NullConstraint, $"{isRequired}".ToLower()));
         }
 
         /// <summary>
@@ -638,11 +638,11 @@ namespace AutoRest.Go
         /// <param name="constraint"></param>
         /// <param name="isRequired"></param>
         /// <returns></returns>
-        public static List<string> AddChain(this List<string> x, string name, string constraint, bool isRequired)
+        public static List<string> AddChain(this List<string> x, string name, string type, string constraint, bool isRequired)
         {
             List<string> a = new List<string>
             {
-                GetConstraint(name, constraint, $"{isRequired}".ToLower(), true),
+                GetConstraint(name, type, constraint, $"{isRequired}".ToLower(), true),
                 $"Chain: []validation.Constraint{{{x[0]}"
             };
             a.AddRange(x.GetRange(1, x.Count - 1));
@@ -704,7 +704,7 @@ namespace AutoRest.Go
         /// <param name="constraintValue"></param>
         /// <param name="chain"></param>
         /// <returns></returns>
-        public static string GetConstraint(string name, string constraintName, string constraintValue, bool chain = false)
+        public static string GetConstraint(string name, string type, string constraintName, string constraintValue, bool chain = false)
         {
             var value = constraintValue;
             if (constraintName == Constraint.Pattern.ToString())
@@ -717,13 +717,17 @@ namespace AutoRest.Go
                 // swagger spec states that InclusiveMaximum should be a number
                 // however the validation code supports int64 and float64.  to be
                 // on the safe side handle both cases here.
-                if (constraintValue.IndexOf('.') > -1)
+                switch (type)
                 {
-                    value = $"float64({constraintValue})";
-                }
-                else
-                {
-                    value = $"int64({constraintValue})";
+                    case "float64":
+                        value = $"float64({constraintValue})";
+                        break;
+                    case "int32":
+                    case "int64":
+                        value = $"int64({constraintValue})";
+                        break;
+                    default:
+                        throw new InvalidOperationException($"Constraint {constraintName} only supports numbers, but got ${type}");
                 }
             }
 
