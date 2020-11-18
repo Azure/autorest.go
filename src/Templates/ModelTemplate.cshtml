@@ -414,7 +414,7 @@ if (modelType is DictionaryTypeGo dictionaryType && dictionaryType.SupportsAddit
         }
 
         // Creates a new instance of the @Model.Name type with full parameters.
-        func New@(Model.Name)WithPage (cur @(modelPageType.ContentType.Name), getNextPage @(modelPageType.NextPageFunctionSig)) @Model.Name {
+        func New@(Model.Name)Full (cur @(modelPageType.ContentType.Name), getNextPage @(modelPageType.NextPageFunctionSig)) @Model.Name {
         return @(Model.Name){
         @(modelPageType.FnFieldName): getNextPage,
         @(modelPageType.ResultFieldName): cur,
