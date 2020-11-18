@@ -413,12 +413,18 @@ if (modelType is DictionaryTypeGo dictionaryType && dictionaryType.SupportsAddit
         return *page.@(modelPageType.ResultFieldName).@itemName
         }
 
-        // Creates a new instance of the @Model.Name type.
-        func New@(Model.Name) (cur @(modelPageType.ContentType.Name), getNextPage @(modelPageType.NextPageFunctionSig)) @Model.Name {
+        // Creates a new instance of the @Model.Name type with full parameters.
+        func New@(Model.Name)WithPage (cur @(modelPageType.ContentType.Name), getNextPage @(modelPageType.NextPageFunctionSig)) @Model.Name {
         return @(Model.Name){
         @(modelPageType.FnFieldName): getNextPage,
         @(modelPageType.ResultFieldName): cur,
         }
+        }
+
+        // Creates a new instance of the @Model.Name type.
+        // Deprecated: use New@(Model.Name)WithPage instead
+        func New@(Model.Name) (getNextPage @(modelPageType.NextPageFunctionSig)) @Model.Name {
+        return @(Model.Name){@(modelPageType.FnFieldName): getNextPage}
         }
     </text>
 }

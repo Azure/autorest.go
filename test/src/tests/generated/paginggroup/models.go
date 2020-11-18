@@ -167,12 +167,18 @@ func (page OdataProductResultPage) Values() []Product {
 	return *page.opr.Values
 }
 
-// Creates a new instance of the OdataProductResultPage type.
-func NewOdataProductResultPage(cur OdataProductResult, getNextPage func(context.Context, OdataProductResult) (OdataProductResult, error)) OdataProductResultPage {
+// Creates a new instance of the OdataProductResultPage type with full parameters.
+func NewOdataProductResultPageWithPage(cur OdataProductResult, getNextPage func(context.Context, OdataProductResult) (OdataProductResult, error)) OdataProductResultPage {
 	return OdataProductResultPage{
 		fn:  getNextPage,
 		opr: cur,
 	}
+}
+
+// Creates a new instance of the OdataProductResultPage type.
+// Deprecated: use NewOdataProductResultPageWithPage instead
+func NewOdataProductResultPage(getNextPage func(context.Context, OdataProductResult) (OdataProductResult, error)) OdataProductResultPage {
+	return OdataProductResultPage{fn: getNextPage}
 }
 
 // OperationResult ...
@@ -399,12 +405,18 @@ func (page ProductResultPage) Values() []Product {
 	return *page.pr.Values
 }
 
-// Creates a new instance of the ProductResultPage type.
-func NewProductResultPage(cur ProductResult, getNextPage func(context.Context, ProductResult) (ProductResult, error)) ProductResultPage {
+// Creates a new instance of the ProductResultPage type with full parameters.
+func NewProductResultPageWithPage(cur ProductResult, getNextPage func(context.Context, ProductResult) (ProductResult, error)) ProductResultPage {
 	return ProductResultPage{
 		fn: getNextPage,
 		pr: cur,
 	}
+}
+
+// Creates a new instance of the ProductResultPage type.
+// Deprecated: use NewProductResultPageWithPage instead
+func NewProductResultPage(getNextPage func(context.Context, ProductResult) (ProductResult, error)) ProductResultPage {
+	return ProductResultPage{fn: getNextPage}
 }
 
 // ProductResultValue ...
@@ -556,10 +568,16 @@ func (page ProductResultValuePage) Values() []Product {
 	return *page.prv.Value
 }
 
-// Creates a new instance of the ProductResultValuePage type.
-func NewProductResultValuePage(cur ProductResultValue, getNextPage func(context.Context, ProductResultValue) (ProductResultValue, error)) ProductResultValuePage {
+// Creates a new instance of the ProductResultValuePage type with full parameters.
+func NewProductResultValuePageWithPage(cur ProductResultValue, getNextPage func(context.Context, ProductResultValue) (ProductResultValue, error)) ProductResultValuePage {
 	return ProductResultValuePage{
 		fn:  getNextPage,
 		prv: cur,
 	}
+}
+
+// Creates a new instance of the ProductResultValuePage type.
+// Deprecated: use NewProductResultValuePageWithPage instead
+func NewProductResultValuePage(getNextPage func(context.Context, ProductResultValue) (ProductResultValue, error)) ProductResultValuePage {
+	return ProductResultValuePage{fn: getNextPage}
 }
